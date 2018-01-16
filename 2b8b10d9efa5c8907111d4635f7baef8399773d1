@@ -70,6 +70,30 @@
       "revId": "2b8b10d9efa5c8907111d4635f7baef8399773d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8111bc74_3cec6d36",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T19:05:34Z",
+      "side": 1,
+      "message": "Hmmm IMO requires-mutual-exclusion \u003d\u003d non-thread-safe. Thread-affine is another very specific token and it\u0027s because you\u0027re non-thread-safe that it should mean thread-affine.\n\nIMO that\u0027s as different as saying that non-thread-safe could mean \"bound to thread 123456\", sure it *could* mean that but that\u0027s so specific that if it\u0027s not mentioned it\u0027s not assumed.\n\nWhen you say \"non-thread-safe\" without other qualifiers, it\u0027s implicitly the loosest version of thread-safety that\u0027s required.\n\nYay?",
+      "parentUuid": "dbdfe5d7_48986799",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "2b8b10d9efa5c8907111d4635f7baef8399773d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
