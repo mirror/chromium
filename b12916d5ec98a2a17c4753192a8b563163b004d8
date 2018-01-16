@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2335060b_f51ffc57",
+        "filename": "content/test/gpu/gpu_tests/gpu_process_integration_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-16T22:26:46Z",
+      "side": 0,
+      "message": "This test is well covered by existing gpu_control_list_entry_unittest test cases. Simply remove it.",
+      "revId": "b12916d5ec98a2a17c4753192a8b563163b004d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa2c3f18_64f1af4f",
+        "filename": "content/test/gpu/gpu_tests/gpu_process_integration_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-16T22:26:46Z",
+      "side": 0,
+      "message": "These four tests are moved to gpu_info_collect_unittest.",
+      "range": {
+        "startLine": 365,
+        "startChar": 6,
+        "endLine": 365,
+        "endChar": 38
+      },
+      "revId": "b12916d5ec98a2a17c4753192a8b563163b004d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
