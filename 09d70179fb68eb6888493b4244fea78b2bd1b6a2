@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1bced7cf_8593a61b",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/global_memory_dump.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-01-16T13:48:23Z",
+      "side": 1,
+      "message": "The docs have that you can do emplace_after with before iterator when collection is empty (see http://www.cplusplus.com/reference/forward_list/forward_list/emplace_after/)\n\nWhat you suggest wouldn\u0027t work as if the list is empty, begin() \u003d\u003d end() and you cannot insert after end() as it is the past end iterator.",
+      "parentUuid": "959b02cc_97567078",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "09d70179fb68eb6888493b4244fea78b2bd1b6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e7f43b4_915d8ed7",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/global_memory_dump.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3b1532c6_4a9ca712",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/global_memory_dump.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-01-16T13:48:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e7f43b4_915d8ed7",
+      "range": {
+        "startLine": 22,
+        "startChar": 29,
+        "endLine": 22,
+        "endChar": 45
+      },
+      "revId": "09d70179fb68eb6888493b4244fea78b2bd1b6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26da0c2f_ebfe798f",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/global_memory_dump.h",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "09d70179fb68eb6888493b4244fea78b2bd1b6a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac4678e_71281e1a",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/global_memory_dump.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-01-16T13:48:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26da0c2f_ebfe798f",
+      "range": {
+        "startLine": 36,
+        "startChar": 32,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "09d70179fb68eb6888493b4244fea78b2bd1b6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
