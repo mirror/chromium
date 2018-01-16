@@ -1,0 +1,279 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a4f874_d64853e8",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T11:51:30Z",
+      "side": 1,
+      "message": "copy-n-paste? :-)\n\nit would be nice to have a comment explaining a little bit.",
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35d9f87_75ed8b05",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T11:51:30Z",
+      "side": 1,
+      "message": "nit: use \"explicit\" for single-arg ctors (https://google.github.io/styleguide/cppguide.html#Implicit_Conversions)",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 5
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6f9c9e_97cd6dd2",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T11:51:30Z",
+      "side": 1,
+      "message": "could you change |blocked| to something closer to how it relates to the log? |allow_duplicates| (with opposite polarity) seems accurate given the current impl (though see my question below -- it\u0027s not clear to me why they\u0027re allowed in any case).",
+      "range": {
+        "startLine": 39,
+        "startChar": 11,
+        "endLine": 39,
+        "endChar": 18
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec19338_9254e41d",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T11:51:30Z",
+      "side": 1,
+      "message": "nit: const method",
+      "range": {
+        "startLine": 43,
+        "startChar": 24,
+        "endLine": 43,
+        "endChar": 25
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10734002_e52e9ab7",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T11:51:30Z",
+      "side": 1,
+      "message": "why does this compare only happen for blocks? will a load-\u003eunload-\u003eload result in duplicate entries?",
+      "range": {
+        "startLine": 56,
+        "startChar": 21,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc97907e_c06857b5",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T11:51:30Z",
+      "side": 1,
+      "message": "nit: const method",
+      "range": {
+        "startLine": 73,
+        "startChar": 63,
+        "endLine": 73,
+        "endChar": 64
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a12a1c1_8739a0bf",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T11:51:30Z",
+      "side": 1,
+      "message": "nit: const method",
+      "range": {
+        "startLine": 84,
+        "startChar": 49,
+        "endLine": 84,
+        "endChar": 50
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d2f29f_9d2a164e",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T11:51:30Z",
+      "side": 1,
+      "message": "nit: i\u0027d call this |entries_| or something since the \"Log\" is the higher-level construct implemented by this class.",
+      "range": {
+        "startLine": 96,
+        "startChar": 32,
+        "endLine": 96,
+        "endChar": 36
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060622fa_c4052e7a",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T11:51:30Z",
+      "side": 1,
+      "message": "nit: LogLoadAttempt uses DWORD, whereas this uses uint32_t. can one type be used throughout? if not, how about a static_assert somewhere to be sure that they\u0027re the same size?",
+      "range": {
+        "startLine": 127,
+        "startChar": 52,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711fe3ad_5e3bbd82",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T11:51:30Z",
+      "side": 1,
+      "message": "nit: change either this type or the fn\u0027s return type so they match.",
+      "range": {
+        "startLine": 196,
+        "startChar": 2,
+        "endLine": 196,
+        "endChar": 7
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86fc2aa5_28998a67",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T11:51:30Z",
+      "side": 1,
+      "message": "there\u0027s quite a bit of duplicated code here. could a single Log::Drain method replace them? for example, here:\n\n  DWORD bytes_written \u003d 0;\n\n  GetBlockedLog().Drain(buffer, buffer_size, \u0026bytes_written);\n  GetAllowedLog().Drain(buffer, buffer_size, \u0026bytes_written);\n\nand elsewhere:\n\n// Writes entries from the start of the log to offset |bytes_written| of\n// |buffer| until either all entries have been written or until no more will fit\n// within |buffer_size|. Emitted entries are removed from the log.\n// |bytes_written| is updated to include all new data written to the buffer.\nvoid Log::Drain(uint8_t* buffer,\n                uint32_t buffer_size,\n                uint32_t* bytes_written) {\n  // ... (either pass |blocked| in, or set it in emitted entries based on\n  // whether or not the log\u0027s entries have a path? maybe that\u0027s too magical) ...\n}",
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbdf2d74_9828b9da",
+        "filename": "chrome_elf/whitelist/whitelist_log.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T11:51:30Z",
+      "side": 1,
+      "message": "this still isn\u0027t quite in-line with https://google.github.io/styleguide/cppguide.html#Function_Comments. how about:\n\n// Adds a load attempt to the internal load log. |blocked| indicates whether the\n// attempt was blocked (true) or not (false). |basename_hash| and |code_id_hash|\n// must each point to a 20-byte buffer holding a SHA-1 digest (of the module\u0027s\n// basename and code identifier, respectively). For loads that are allowed,\n// |full_image_path| indicates the full path of the loaded image.",
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "309e691f_1dbc57e0",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T11:51:30Z",
+      "side": 1,
+      "message": "can this function be simplified to:\n  // Include padding in the size to fill it to a 32-bit boundary (add one byte\n  // for the string terminator and up to three bytes of padding, which will be\n  // truncated down to the proper amount).\n  return (offsetof(LogEntry, path) + path_len + 4) \u0026 ~3U);",
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
