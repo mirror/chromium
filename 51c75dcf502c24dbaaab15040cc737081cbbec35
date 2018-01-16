@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6aed6f24_b2c533ec",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32870,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-16T13:52:58Z",
+      "side": 1,
+      "message": "As written in the CL description, we probably want these stats for input as well. This stat could e.g. indicate if streams are terminated too early due to some bug.",
+      "parentUuid": "ec41003b_05f12124",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89782d72_79f48784",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -68,6 +86,24 @@
       "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1003d9a_17fa7e96",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 33039,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-16T13:52:58Z",
+      "side": 1,
+      "message": "Removed this one.",
+      "parentUuid": "89782d72_79f48784",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "13d49d6a_88eaf6c4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 33097,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-16T13:52:58Z",
+      "side": 1,
+      "message": "Ok, made this into a stat only used to debug the specific issue I\u0027m investigating now.",
+      "parentUuid": "694130a6_9c630930",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea916a25_de2c8bbe",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -102,6 +156,24 @@
       "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc05c69_f5d48dbc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 33280,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-16T13:52:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea916a25_de2c8bbe",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6717edc9_3b4f582e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 33283,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-16T13:52:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1f82c16_d585c866",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3df731f2_81c14109",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -136,6 +226,24 @@
       "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de72a1a_70e64844",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34983,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-16T13:52:58Z",
+      "side": 1,
+      "message": "Did you just explain to me how the code that I just wrote works? :D\n\n\"Played\" would be confusing in this context, as it usually doesn\u0027t just refer to a single point in time. In the sentence \"we played some music\", \"played\" refers to the entire time the music was going, not just the instant it began.\n\nI changed \"paused or closed\" to \"stopped\", and added a sentence explaining what stopped means.",
+      "parentUuid": "3df731f2_81c14109",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
