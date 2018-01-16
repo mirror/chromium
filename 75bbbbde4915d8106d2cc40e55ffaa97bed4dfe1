@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77fe63b4_a4885374",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T09:53:08Z",
+      "side": 1,
+      "message": "Inside the test body it would have to be static so it would be the same. Testing it from the anon-namespace is aligned with what other tests are doing in this file and I don\u0027t a reason to diverge.",
+      "parentUuid": "834c66ec_27bdc3fe",
+      "range": {
+        "startLine": 275,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 30
+      },
+      "revId": "75bbbbde4915d8106d2cc40e55ffaa97bed4dfe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4ef2c35_e870537a",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5a2bf8ac_75790942",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T09:53:08Z",
+      "side": 1,
+      "message": "Agreed, but I\u0027d rather not as:\n\n1) I\u0027m trying to avoid synchronization primitives altogether so that this test doesn\u0027t resolve just because of the way a kernel happens to handle a signalled thread. By using atomics I\u0027m not priming any kernel heuristics (at least not more so than lazy_instance.cc).\n2) WaitableEvent requires handling new/delete for static object in the heap and would make the test more complex IMO.",
+      "parentUuid": "d4ef2c35_e870537a",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 293,
+        "endChar": 70
+      },
+      "revId": "75bbbbde4915d8106d2cc40e55ffaa97bed4dfe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61ce7504_130031fc",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "75bbbbde4915d8106d2cc40e55ffaa97bed4dfe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53efdf3_ec047b25",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T09:53:08Z",
+      "side": 1,
+      "message": ":), indeed, done!",
+      "parentUuid": "61ce7504_130031fc",
+      "range": {
+        "startLine": 301,
+        "startChar": 65,
+        "endLine": 303,
+        "endChar": 28
+      },
+      "revId": "75bbbbde4915d8106d2cc40e55ffaa97bed4dfe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
