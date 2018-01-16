@@ -95,6 +95,7 @@ NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
   network_service_->RegisterNetworkContext(this);
   binding_.set_connection_error_handler(base::BindOnce(
       &NetworkContext::OnConnectionError, base::Unretained(this)));
+  resource_scheduler_ = std::make_unique<ResourceScheduler>(true);
 }
 
 // TODO(mmenke): Share URLRequestContextBulder configuration between two
@@ -115,6 +116,7 @@ NetworkContext::NetworkContext(
   network_service_->RegisterNetworkContext(this);
   cookie_manager_ = std::make_unique<network::CookieManager>(
       url_request_context_->cookie_store());
+  resource_scheduler_ = std::make_unique<ResourceScheduler>(true);
 }
 
 NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
@@ -128,6 +130,7 @@ NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
   // May be nullptr in tests.
   if (network_service_)
     network_service_->RegisterNetworkContext(this);
+  resource_scheduler_ = std::make_unique<ResourceScheduler>(true);
 }
 
 NetworkContext::~NetworkContext() {
@@ -208,6 +211,7 @@ NetworkContext::NetworkContext(mojom::NetworkContextParamsPtr params)
     : network_service_(nullptr), params_(std::move(params)), binding_(this) {
   url_request_context_owner_ = MakeURLRequestContext(params_.get());
   url_request_context_ = url_request_context_owner_.url_request_context.get();
+  resource_scheduler_ = std::make_unique<ResourceScheduler>(true);
 }
 
 void NetworkContext::OnConnectionError() {
