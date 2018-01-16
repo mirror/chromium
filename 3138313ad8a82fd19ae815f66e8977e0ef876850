@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54f197a3_ab978f91",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-16T08:22:05Z",
+      "side": 1,
+      "message": "+1, if it can happen then we definitely should have a small test case that reminds us of the scenario.",
+      "parentUuid": "e862049b_e70a757e",
+      "revId": "3138313ad8a82fd19ae815f66e8977e0ef876850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aab302a5_89b789d7",
         "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-16T05:56:01Z",
       "side": 1,
       "message": "I need to ask Michael but I think \"Traits::kWeakHandlingFlag \u003d\u003d kWeakHandlingInCollections\" is a sufficient check. i.e., it\u0027s possible that a weak hash table is traced with Traits::kWeakHandlingFlag being kNoWeakHandlingInCollections.\n\nWe should really clean up the flag...\n\nA more reliable approach would be to introduce a flag to HashTable (e.g., HashTable::weak_callback_registered).",
+      "revId": "3138313ad8a82fd19ae815f66e8977e0ef876850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345e6154_2319a5ce",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-16T08:22:05Z",
+      "side": 1,
+      "message": "Still need to check the flags; I think this is fine for now though.",
+      "parentUuid": "aab302a5_89b789d7",
       "revId": "3138313ad8a82fd19ae815f66e8977e0ef876850",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
