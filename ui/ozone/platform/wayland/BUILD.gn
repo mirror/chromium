@@ -101,9 +101,12 @@ source_set("wayland_unittests") {
       "mock_wayland_xkb_keyboard_layout_engine.cc",
       "mock_wayland_xkb_keyboard_layout_engine.h",
     ]
+    deps = [
+      "//ui/events/keycodes:xkb",
+    ]
   }
 
-  deps = [
+  deps += [
     ":wayland",
     "//testing/gmock",
     "//testing/gtest",
