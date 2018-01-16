@@ -187,6 +187,30 @@
       "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f589182_37661814",
+        "filename": "gin/v8_initializer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-16T07:24:41Z",
+      "side": 1,
+      "message": "Oops, I overlooked this.\nBut I prefer not having such DCHECK() for some unit tests.\n\nFor example, extensions_unittests does not require customized v8::Context in v8_context_snapshot.bin in its test implementations, so it calls LoadV8Snapshot(kDefault)\nin extensions::APIBindingTest::SetUp().\nHowever, because of class inheritances, it also calls LoadV8Snapshot(kV8Context)\nfirst in content::TestBlinkWebUnitTestSupport::TestBlinkWebUnitTestSupport.\n\nI think it is not good to force extensions_unittests to depend on v8_context_snapshot,\nwhich can result in the same problem with net_unittests in our discussion.",
+      "parentUuid": "f5650258_2f9c3b6d",
+      "range": {
+        "startLine": 308,
+        "startChar": 20,
+        "endLine": 308,
+        "endChar": 41
+      },
+      "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
