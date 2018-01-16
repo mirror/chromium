@@ -213,7 +213,7 @@ void LocationBarControllerImpl::OnAutocompleteAccept(
   if (gurl.is_valid()) {
     transition = ui::PageTransitionFromInt(
         transition | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
-    [delegate_ loadGURLFromLocationBar:gurl transition:transition];
+    [URLLoader_ loadGURLFromLocationBar:gurl transition:transition];
   }
 }
 
