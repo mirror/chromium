@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9d5e191_216238bd",
+        "filename": "chrome/browser/safe_search_api/safe_search_url_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-16T17:12:15Z",
+      "side": 1,
+      "message": "I\u0027m refactoring/deduplicating/renaming those methods, classes and variables that clash in a jumbo configuration I have locally. That configuration is much more aggressive than the default settings, with all of chrome/browser in a single translation unit (that takes 4 minutes to compile). That is to catch problems bound to happen, not just the ones that buildbot would find today.\n\nSo variables that have generic names but just happen to be alone will be safe, but on the other hand, if the code has managed 10 years with only one with that name, maybe it will manage 10 years more. It seems to be copy+paste that is a bigger problem than generic variable names.\n\nIn general there is a problem with sharing code in the code base, especially between sibling code. I have no good idea for this but I think it\u0027s harming the code base.\n\nOk, end side track, back to main track:\n\nWe have people looking at making a clang supported version of jumbo. I don\u0027t know how likely that is to succeed, but if it does, then many of the collisions will no longer be collisions (some will though). There is also the question of jumbo in CQ. It was meant to happen before Christmas but resource problems have delayed it and I don\u0027t know for how long. It\u0027s not something I can affect. Barring those two, there will be breakage every now and then and it will have to be manually fixed. Usually, depending on the time zone, when it happens, someone will notice and fix within a few hours which is better than nothing.",
+      "parentUuid": "956df415_412a685a",
+      "range": {
+        "startLine": 41,
+        "startChar": 48,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "94727af2ecd71d25c8d5371d98663f3a68619ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "330af178_ffdac46d",
         "filename": "chrome/browser/signin/force_signin_verifier.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5b23d122_4d0009fc",
+        "filename": "chrome/browser/signin/force_signin_verifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-16T17:12:15Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "330af178_ffdac46d",
+      "range": {
+        "startLine": 18,
+        "startChar": 32,
+        "endLine": 18,
+        "endChar": 65
+      },
+      "revId": "94727af2ecd71d25c8d5371d98663f3a68619ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7a47645_79212aec",
         "filename": "chrome/browser/supervised_user/child_accounts/child_account_service.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-16T14:34:56Z",
       "side": 1,
       "message": "nit: kFamilyFetchBackoffPolicy, or maybe kFamilyInfoFetchBackoffPolicy.",
+      "range": {
+        "startLine": 52,
+        "startChar": 32,
+        "endLine": 52,
+        "endChar": 63
+      },
+      "revId": "94727af2ecd71d25c8d5371d98663f3a68619ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bacf3ae_81fd765e",
+        "filename": "chrome/browser/supervised_user/child_accounts/child_account_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-16T17:12:15Z",
+      "side": 1,
+      "message": "Are you sure? This is in child_account_service.cc and not in family_info_fetcher.cc which has a different rename below.",
+      "parentUuid": "e7a47645_79212aec",
       "range": {
         "startLine": 52,
         "startChar": 32,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f6d9fed0_0f7215df",
+        "filename": "chrome/browser/supervised_user/child_accounts/family_info_fetcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-16T17:12:15Z",
+      "side": 1,
+      "message": "Could be. I don\u0027t mind if it changes name. Do you want me to rename it kFamilyScope or something similar?\n\nLooking at the source, there are a number of kScope in the source but almost all in unittests where people prefer short and simple names.",
+      "parentUuid": "110ff652_e6eb9154",
+      "range": {
+        "startLine": 24,
+        "startChar": 76,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "94727af2ecd71d25c8d5371d98663f3a68619ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf87fcbb_17a1ccb3",
         "filename": "chrome/browser/supervised_user/supervised_user_constants.h",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-16T14:34:56Z",
       "side": 1,
       "message": "Hrm, this really has nothing to do with supervised users, it\u0027s just the OAuth2 header format. Oh well, I suppose having it here is no worse than having it in a bunch of .cc files.",
+      "range": {
+        "startLine": 16,
+        "startChar": 47,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "94727af2ecd71d25c8d5371d98663f3a68619ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d928343_59a8ebde",
+        "filename": "chrome/browser/supervised_user/supervised_user_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-16T17:12:15Z",
+      "side": 1,
+      "message": "Yes, and there are more code that use that string outside of chrome/browser but I just didn\u0027t know where to put it. The downside of visiting new and unknown code. I\u0027m accepting suggestions!",
+      "parentUuid": "bf87fcbb_17a1ccb3",
       "range": {
         "startLine": 16,
         "startChar": 47,
