@@ -69,6 +69,24 @@
       "revId": "93c5ef8022ebb26b78c4dcc968214ad57783822d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0cd399_df0e758b",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-16T17:35:44Z",
+      "side": 1,
+      "message": "This is just forwarding requests from the android device. If there is a policy on the android device prohibiting some requests (like no websockets, for example, or whatever else), we are not going to forward that.\n\nNot sure that matters though.\n\nAnd yes, this applies to tethering_handler as well.",
+      "parentUuid": "180e31c5_1db31ffe",
+      "revId": "93c5ef8022ebb26b78c4dcc968214ad57783822d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
