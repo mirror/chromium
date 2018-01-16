@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33a7e64b_da733e54",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T20:02:44Z",
+      "side": 1,
+      "message": "What is this for? If this is for color, we probably should read the color then use solid color layer.",
+      "revId": "0cca07ada65cc95d013181390c125e5904de046a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2500690_e1a4acfc",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T20:02:44Z",
+      "side": 1,
+      "message": "According to the document, the callback gets called immediately if the salt is available, so you probably don\u0027t need to check it? (and eliminate GetCanFilesId)\n\nditto for the rest",
+      "revId": "0cca07ada65cc95d013181390c125e5904de046a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
