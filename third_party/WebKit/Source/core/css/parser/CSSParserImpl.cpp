@@ -16,6 +16,7 @@
 #include "core/css/StyleRuleNamespace.h"
 #include "core/css/StyleSheetContents.h"
 #include "core/css/parser/AtRuleDescriptorParser.h"
+#include "core/css/parser/AtRuleDescriptorValueSet.h"
 #include "core/css/parser/CSSAtRuleID.h"
 #include "core/css/parser/CSSLazyParsingState.h"
 #include "core/css/parser/CSSLazyPropertyParserImpl.h"
@@ -704,8 +705,12 @@ StyleRuleFontFace* CSSParserImpl::ConsumeFontFaceRule(
     style_sheet_->SetHasFontFaceRule();
 
   ConsumeDeclarationList(stream, StyleRule::kFontFace);
-  return StyleRuleFontFace::Create(
-      CreateCSSPropertyValueSet(parsed_properties_, kCSSFontFaceRuleMode));
+  StyleRuleFontFace* result =
+      StyleRuleFontFace::Create(AtRuleDescriptorValueSet::Create(
+          parsed_properties_, kCSSFontFaceRuleMode,
+          AtRuleDescriptorValueSet::kFontFaceType));
+  parsed_properties_.clear();
+  return result;
 }
 
 StyleRuleKeyframes* CSSParserImpl::ConsumeKeyframesRule(
