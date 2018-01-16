@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa18c0a5_3c6d9acc",
+        "filename": "chrome/browser/resources/media_router/extension/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-16T18:33:55Z",
+      "side": 1,
+      "message": "Can you please file a bug in Monorail describing exactly what needs to be done here,\nand change this to TODO(crbug.com/XXX)?",
+      "revId": "2d5f8c3420e8112d91c8afff8e4f218b8243cc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c064903_10a7e677",
+        "filename": "chrome/browser/resources/media_router/extension/compile.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-16T18:33:55Z",
+      "side": 1,
+      "message": "Remove commented out line",
+      "revId": "2d5f8c3420e8112d91c8afff8e4f218b8243cc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c044948_efe154d3",
+        "filename": "chrome/browser/resources/media_router/extension/compile.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-16T18:33:55Z",
+      "side": 1,
+      "message": "Is nothing useful printed to stdout?",
+      "revId": "2d5f8c3420e8112d91c8afff8e4f218b8243cc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5e7173_31c4bd23",
+        "filename": "chrome/browser/resources/media_router/extension/compile.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-16T18:33:55Z",
+      "side": 1,
+      "message": "Just use string concatenation",
+      "revId": "2d5f8c3420e8112d91c8afff8e4f218b8243cc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4cd7ce0_3f8ca254",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-16T18:33:55Z",
+      "side": 1,
+      "message": "This is referred to in comments, but not actually used.  Please remove.",
+      "revId": "2d5f8c3420e8112d91c8afff8e4f218b8243cc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "818e465f_c38c47de",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-16T18:33:55Z",
+      "side": 1,
+      "message": "\"management\" is required, apparently, in the event page startup code, so it should be added back.",
+      "revId": "2d5f8c3420e8112d91c8afff8e4f218b8243cc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a848fd_345ae56a",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-16T18:33:55Z",
+      "side": 1,
+      "message": "networkingPrivate is used by mirroring code to detect if TDLS is available.",
+      "revId": "2d5f8c3420e8112d91c8afff8e4f218b8243cc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae29eba_bbd65b7f",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-16T18:33:55Z",
+      "side": 1,
+      "message": "Feedback and Cast Setup are not included in this component, so there\u0027s no Web content.  The CSP can be simplified to:\n\n\"default-src \u0027self\u0027; style-src \u0027self\u0027 \u0027unsafe-inline\u0027; script-src \u0027self\u0027; connect-src \u0027self\u0027 http://*:* https://*:*;\",",
+      "revId": "2d5f8c3420e8112d91c8afff8e4f218b8243cc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
