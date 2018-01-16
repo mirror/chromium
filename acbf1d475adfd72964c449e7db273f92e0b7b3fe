@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "463f3f0f_349b70cb",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-01-16T15:52:01Z",
+      "side": 1,
+      "message": "Should this have been inside the else clause?  With possibly different message for the PostCrossThreadTask clause?\n\nMight be a bit confusing if AudioWorklets are enabled.",
+      "revId": "acbf1d475adfd72964c449e7db273f92e0b7b3fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
