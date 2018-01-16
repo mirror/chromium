@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb118ced_ecfb9bd0",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2018-01-16T11:59:43Z",
+      "side": 1,
+      "message": "The block setting wBitsPerSample is a bit tough to follow, IMO. I suggest moving the \"format is PCM\" check into its own function, perhaps a lambda:\n\n  auto is_pcm \u003d [] (const WAVEFORMATEX* format) {\n    if (format-\u003ewFormatTag \u003d\u003d WAVE_FORMAT_PCM)\n      return true;\n    if (format-\u003ewFormatTag \u003d\u003d WAVE_FORMAT_EXTENSIBLE) {\n      WAVEFORMATEXTENSIBLE* format_ex \u003d\n          reinterpret_cast\u003cWAVEFORMATEXTENSIBLE*\u003e(format.get());\n      return format_ex-\u003eSubFormat \u003d\u003d KSDATAFORMAT_SUBTYPE_PCM;\n    }\n    return false;\n  }\n\n[...]\n\n  new_format.wBitsPerSample \u003d is_pcm(closest_match)\n                              ? closest_match-\u003ewBitsPerSample\n                              : format-\u003ewBitsPerSample;\n\nYou could also just do the check separately, like so:\n  const bool is_pcm \u003d closest_match-\u003ewFormatTag \u003d\u003d WAVE_FORMAT_PCM ||\n      (closest_match-\u003ewFormatTag \u003d\u003d WAVE_FORMAT_EXTENSIBLE \u0026\u0026\n       reinterpret_cast\u003cWAVEFORMATEXTENSIBLE*\u003e(closest_match.get())\n       -\u003eSubFormat \u003d\u003d KSDATAFORMAT_SUBTYPE_PCM);\n\nBut that looks pretty horrible to me. :)",
+      "revId": "b3bd5d52e02f28ef9a3694aa72be379e347a3691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
