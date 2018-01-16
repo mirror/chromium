@@ -22,6 +22,30 @@
       "revId": "e09b8920b9e82d2eedeac02fe84e4ca83a6be0cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763aaf3e_e8ace704",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-16T14:39:39Z",
+      "side": 1,
+      "message": "Ack! Thanks for the test case. It shows that we need to keep this line unchanged for now. Done.\n\nThe test case also demonstrates why we need to fix crbug.com/801162. Currently spatnav scrolls the div even when it doesn\u0027t have focus. That looks strange, right? But indeed, it is better than not being able to scroll it at all... When we fix crbug.com/801162 we can add that HTML (or similar) to test that the div is only scrolled once it has focus.",
+      "parentUuid": "889dd388_fc84947b",
+      "range": {
+        "startLine": 1407,
+        "startChar": 0,
+        "endLine": 1407,
+        "endChar": 50
+      },
+      "revId": "e09b8920b9e82d2eedeac02fe84e4ca83a6be0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
