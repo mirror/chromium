@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7ef99d4_87d59d0a",
+        "filename": "ash/public/cpp/ash_switches.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-16T22:18:39Z",
+      "side": 1,
+      "message": "how about \"show-power-button-menu\" or \"show-menu-for-power-button\" or something similar?\n\nthe problem with using a broadly-named flag that describes the device\u0027s form factor is that it\u0027ll inevitably also be used to control other features, and then we\u0027ll run into trouble and need to introduce additional flags to describe exactly how a given device should behave.",
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcbde0f8_d132a4c1",
+        "filename": "ash/resources/vector_icons/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-16T22:18:39Z",
+      "side": 1,
+      "message": "please keep build files sorted (i\u0027m surprised that a presubmit check didn\u0027t catch this)",
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb598057_096138a5",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-16T22:18:39Z",
+      "side": 1,
+      "message": "is it expected that both convertible_controller_ and tablet_controller_ can be null, or that both of them can be non-null? if not, please add a DCHECK to verify that exactly one of them is set.",
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a318cf8_fa31d339",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-16T22:18:39Z",
+      "side": 1,
+      "message": "nit: except",
+      "range": {
+        "startLine": 413,
+        "startChar": 31,
+        "endLine": 413,
+        "endChar": 38
+      },
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73af7fd0_b2cc55fd",
+        "filename": "ash/system/power/power_button_test_base.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-16T22:18:39Z",
+      "side": 1,
+      "message": "how are you planning to set these? will kAshEnableTabletMode get passed on convertible devices but not anywhere else? if so, that feels surprising to me. i\u0027d prefer that this code instead use a new flag to tell it to use convertible-style power button behavior. maybe we should even just have a --power-button-mode\u003d string flag that takes values like \"tablet\", \"convertible\", \"clamshell\", etc. otherwise, i worry that it\u0027ll get confusing if we have multiple flags with overlapping semantics.",
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec317aa_33c2f1a8",
+        "filename": "ash/system/power/power_button_test_base.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-16T22:18:39Z",
+      "side": 1,
+      "message": "nit: except",
+      "range": {
+        "startLine": 150,
+        "startChar": 49,
+        "endLine": 150,
+        "endChar": 56
+      },
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7cee4b_a7e4def2",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-16T22:18:39Z",
+      "side": 1,
+      "message": "a lot of this code is duplicated from ConvertiblePowerButtonController, right? that seems unfortunate. i wonder if it\u0027d be possible to move these checks into a helper class that can be shared by both controllers.",
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e39206e4_e2d87fe4",
+        "filename": "ash/system/power/tablet_power_button_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-16T22:18:39Z",
+      "side": 1,
+      "message": "nit: ... before starting to show the power",
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
