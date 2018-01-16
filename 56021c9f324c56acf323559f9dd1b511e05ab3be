@@ -22,6 +22,30 @@
       "revId": "56021c9f324c56acf323559f9dd1b511e05ab3be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7abf6709_b476bfed",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-16T17:33:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58be8c94_855a2a81",
+      "range": {
+        "startLine": 911,
+        "startChar": 38,
+        "endLine": 911,
+        "endChar": 77
+      },
+      "revId": "56021c9f324c56acf323559f9dd1b511e05ab3be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
