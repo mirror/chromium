@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7949e344_c6ea4a3a",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-16T20:50:03Z",
+      "side": 1,
+      "message": "Add a comment here as it\u0027s not clear why we\u0027re retrieving the value but never use it.",
+      "range": {
+        "startLine": 495,
+        "startChar": 0,
+        "endLine": 495,
+        "endChar": 30
+      },
+      "revId": "4b941fbf32523cd0fcb0cfc82589d428d88bdb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
