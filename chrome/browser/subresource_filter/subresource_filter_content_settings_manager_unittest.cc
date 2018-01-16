@@ -42,7 +42,12 @@ class SubresourceFilterContentSettingsManagerTest : public testing::Test {
   void SetUp() override {
     scoped_feature_toggle().ResetSubresourceFilterState(
         base::FeatureList::OVERRIDE_ENABLE_FEATURE,
-        "SubresourceFilterExperimentalUI" /* additional_features */);
+        subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI.name
+        /* additional_features */);
+    scoped_feature_list_.InitAndEnableFeatureWithParameters(
+        subresource_filter::kSafeBrowsingSubresourceFilter,
+        {{subresource_filter::kSmartUiDelayParam, "10"}});
+
     settings_manager_ =
         SubresourceFilterProfileContextFactory::GetForProfile(&testing_profile_)
             ->settings_manager();
@@ -92,6 +97,10 @@ class SubresourceFilterContentSettingsManagerTest : public testing::Test {
   ScopedSubresourceFilterFeatureToggle scoped_feature_toggle_;
   base::HistogramTester histogram_tester_;
   TestingProfile testing_profile_;
+
+  // Use another ScopedFeatureList to change the |smart_ui_delay| param, which
+  // is outside of Configuration (since it is global).
+  base::test::ScopedFeatureList scoped_feature_list_;
 
   // Owned by the testing_profile_.
   SubresourceFilterContentSettingsManager* settings_manager_ = nullptr;
@@ -200,8 +209,33 @@ TEST_F(SubresourceFilterContentSettingsManagerTest, SmartUI) {
   histogram_tester().ExpectTotalCount(kActionsHistogram, 0);
 
   // Fast forward the clock.
-  test_clock()->Advance(
-      SubresourceFilterContentSettingsManager::kDelayBeforeShowingInfobarAgain);
+  test_clock()->Advance(subresource_filter::GetSmartUiDelay());
+  EXPECT_TRUE(settings_manager()->ShouldShowUIForSite(url));
+  EXPECT_TRUE(settings_manager()->ShouldShowUIForSite(url2));
+}
+
+TEST_F(SubresourceFilterContentSettingsManagerTest, SmartUIVariationParam) {
+  GURL url("https://example.test/");
+  GURL url2("https://example.test/path");
+  EXPECT_TRUE(settings_manager()->ShouldShowUIForSite(url));
+  EXPECT_TRUE(settings_manager()->ShouldShowUIForSite(url2));
+
+  EXPECT_EQ(CONTENT_SETTING_DEFAULT,
+            GetContentSettingMatchingUrlWithEmptyPath(url));
+  settings_manager()->OnDidShowUI(url);
+
+  // Subsequent same-origin navigations should not show UI.
+  EXPECT_FALSE(settings_manager()->ShouldShowUIForSite(url));
+  EXPECT_FALSE(settings_manager()->ShouldShowUIForSite(url2));
+
+  // Showing the UI should trigger a forced content setting update, but no
+  // metrics should be recorded.
+  histogram_tester().ExpectTotalCount(kActionsHistogram, 0);
+
+  // Fast forward the clock.
+  EXPECT_EQ(base::TimeDelta::FromSeconds(10),
+            subresource_filter::GetSmartUiDelay());
+  test_clock()->Advance(base::TimeDelta::FromSeconds(10));
   EXPECT_TRUE(settings_manager()->ShouldShowUIForSite(url));
   EXPECT_TRUE(settings_manager()->ShouldShowUIForSite(url2));
 }
