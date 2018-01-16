@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93e2d9dc_1aa97196",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-16T07:12:15Z",
+      "side": 1,
+      "message": "Could you add a unit test and add a line like this above the BUG?\n    TEST\u003dMessageCenterViewTest.DoNotShowArrowWhenLocked",
+      "revId": "4f63bb310dc82b88917e3df3682ec5758fd9655e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
