@@ -137,6 +137,9 @@ class WebDocument : public WebNode {
 
   BLINK_EXPORT WebDistillabilityFeatures DistillabilityFeatures();
 
+  BLINK_EXPORT void SetIsAdSubframe(bool is_ad_subframe);
+  BLINK_EXPORT bool GetIsAdSubframe();
+
 #if INSIDE_BLINK
   BLINK_EXPORT WebDocument(Document*);
   BLINK_EXPORT WebDocument& operator=(Document*);

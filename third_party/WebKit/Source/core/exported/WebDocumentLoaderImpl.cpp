@@ -168,8 +168,9 @@ void WebDocumentLoaderImpl::DetachFromFrame() {
 
 void WebDocumentLoaderImpl::SetSubresourceFilter(
     WebDocumentSubresourceFilter* subresource_filter) {
+  Document* document = GetFrame()->GetDocument();
   DocumentLoader::SetSubresourceFilter(SubresourceFilter::Create(
-      *GetFrame()->GetDocument(), WTF::WrapUnique(subresource_filter)));
+      *document, WTF::WrapUnique(subresource_filter)));
 }
 
 void WebDocumentLoaderImpl::SetServiceWorkerNetworkProvider(
