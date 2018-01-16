@@ -46,6 +46,30 @@
       "revId": "d22d3189522804ebecd586a5f1856b2aa0314b3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e120b475_1a9afeed",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-16T20:39:13Z",
+      "side": 1,
+      "message": "Strict means DCHECK if the cast fails. ObjCCast will return nil if it\u0027s not convertible. We\u0027re only calling -tabWindowController if there\u0027s a |nsWindowController|. So by changing it to non-Strict, we don\u0027t DCHECK (which looks like is currently causing test failures).",
+      "parentUuid": "e58c03b1_26a860a7",
+      "range": {
+        "startLine": 150,
+        "startChar": 19,
+        "endLine": 150,
+        "endChar": 33
+      },
+      "revId": "d22d3189522804ebecd586a5f1856b2aa0314b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
