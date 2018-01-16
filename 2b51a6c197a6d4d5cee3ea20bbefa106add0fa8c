@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "375d814d_b4bdd078",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-16T18:02:46Z",
+      "side": 1,
+      "message": "Why do you need the include if nothing in the header is referenced?",
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "892a3197_3e2959a3",
         "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
         "patchSetId": 6
@@ -42,6 +59,23 @@
         "endLine": 717,
         "endChar": 24
       },
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5edf3a02_9608d99a",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-16T18:02:46Z",
+      "side": 1,
+      "message": "\"destroy\" seems a bit misleading here.",
       "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
