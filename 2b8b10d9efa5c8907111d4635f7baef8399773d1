@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26540610_cc4571a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-16T18:28:30Z",
+      "side": 1,
+      "message": "This might be better worded as MessageLoop::ScheduleWork() assumes all calls to it are mutually exclusive. Non-thread-safe has an implicit implication that only one thread may call MessageLoop::ScheduleWork at any time.",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "2b8b10d9efa5c8907111d4635f7baef8399773d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
