@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.Callback;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.DisabledTest;
@@ -63,10 +64,17 @@ public class SavePasswordsPreferencesTest {
         private final PasswordListObserver mObserver;
 
         // The faked contents of the password store to be displayed.
-        private ArrayList<SavedPasswordEntry> mSavedPasswords;
+        private ArrayList<SavedPasswordEntry> mSavedPasswords = new ArrayList<SavedPasswordEntry>();
+
+        // This is set to true when serializePasswords is called.
+        private boolean mSerializePasswordsCalled;
 
         public void setSavedPasswords(ArrayList<SavedPasswordEntry> savedPasswords) {
             mSavedPasswords = savedPasswords;
+        }
+
+        public boolean getSerializePasswordsCalled() {
+            return mSerializePasswordsCalled;
         }
 
         /**
@@ -108,6 +116,11 @@ public class SavePasswordsPreferencesTest {
             // Define this method before starting to use it in tests.
             assert false;
             return;
+        }
+
+        @Override
+        public void serializePasswords(Callback<String> callback) {
+            mSerializePasswordsCalled = true;
         }
     }
 
@@ -346,6 +359,35 @@ public class SavePasswordsPreferencesTest {
         // OVERFLOW_BUTTON_MATCHER specifies the string directly, not via string resource, so this
         // is also done below.
         Espresso.onView(withContentDescription("More options")).check(doesNotExist());
+    }
+
+    /**
+     * Check that tapping the export menu requests the passwords to be serialised in the background.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures("PasswordExport")
+    public void testExportTriggersSerialization() throws Exception {
+        setPasswordSource(new SavedPasswordEntry("https://example.com", "test user", "password"));
+
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
+        ReauthenticationManager.setScreenLockSetUpOverride(
+                ReauthenticationManager.OverrideState.AVAILABLE);
+
+        final Preferences preferences =
+                PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                        SavePasswordsPreferences.class.getName());
+
+        Espresso.openActionBarOverflowOrOptionsMenu(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
+        // Before tapping the menu item for export, pretend that the last successful
+        // reauthentication just happened. This will allow the export flow to continue.
+        ReauthenticationManager.setLastReauthTimeMillis(System.currentTimeMillis());
+        Espresso.onView(withText(R.string.save_password_preferences_export_action_title))
+                .perform(click());
+
+        Assert.assertTrue(mHandler.getSerializePasswordsCalled());
     }
 
     /**

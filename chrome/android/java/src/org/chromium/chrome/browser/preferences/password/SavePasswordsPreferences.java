@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.Callback;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.PasswordManagerHandler;
@@ -117,6 +118,19 @@ public class SavePasswordsPreferences
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.export_passwords) {
+            // Start fetching the serialized passwords now to use the time the user spends
+            // reauthenticating and reading the warning message. If the user cancels the export or
+            // fails the reauthentication, the serialised passwords will simply get ignored when
+            // they arrive.
+            PasswordManagerHandlerProvider.getInstance()
+                    .getPasswordManagerHandler()
+                    .serializePasswords(new Callback<String>() {
+                        @Override
+                        public void onResult(String serializedPasswords) {
+                            // TODO(crbug.com/788701): Synchronise with end of the UI flow and pass
+                            // the data.
+                        }
+                    });
             if (!ReauthenticationManager.isScreenLockSetUp(getActivity().getApplicationContext())) {
                 Toast.makeText(getActivity().getApplicationContext(),
                              R.string.password_export_set_lock_screen, Toast.LENGTH_LONG)
@@ -150,7 +164,8 @@ public class SavePasswordsPreferences
     }
 
     private void exportAfterWarning() {
-        // TODO(crbug.com/788701): Start the export.
+        // TODO(crbug.com/788701): Synchronise with obtaining serialised passwords and pass them to
+        // the intent.
     }
 
     /**
