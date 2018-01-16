@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b650550f_25794b1c",
+        "filename": "ios/chrome/browser/broadercaster.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-16T18:44:50Z",
+      "side": 1,
+      "message": "I respectfully disagree: this is better for memory usage. I am an ARC expert.",
+      "parentUuid": "5fefb048_a74c5d68",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66f41590_21b217e1",
         "filename": "ios/chrome/browser/broadercaster.h",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-16T13:58:20Z",
       "side": 1,
       "message": "This should be called \u0027observificate\u0027, to match \u0027broadcastify\u0027.\n\nAlso, it could be more convenient if it took care of other annoying boilerplate:\n\n[[Broadercaster defaultBroadercasterer] observe:[klass class]   \\\n                                        selector:@selector(selector) \\\n                                        observer:self];   \\",
+      "range": {
+        "startLine": 38,
+        "startChar": 16,
+        "endLine": 38,
+        "endChar": 21
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5868772c_2e296f0b",
+        "filename": "ios/chrome/browser/broadercaster.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-16T18:44:50Z",
+      "side": 1,
+      "message": "I like this, but how to do this and keep another pleasing at-sign in the call sites?",
+      "parentUuid": "66f41590_21b217e1",
       "range": {
         "startLine": 38,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "117a6c3f_f382fd16",
+        "filename": "ios/chrome/browser/broadercaster.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-16T18:44:50Z",
+      "side": 1,
+      "message": "I checked on a very old mac pro on a simulator of a very old device and it\u0027s ok on my machine. Maybe this can wait until s14n comes to ios, then we can spin up a retry service?",
+      "parentUuid": "03b37656_57b09e3b",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 13
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "955b1fa7_53f7f0b7",
         "filename": "ios/chrome/browser/broadercaster.mm",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-16T13:58:20Z",
       "side": 1,
       "message": "We want to be sure this is actually a null pointer, so maybe you should use a more accurate floating point zero?",
+      "range": {
+        "startLine": 40,
+        "startChar": 29,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd86fe29_975f8aff",
+        "filename": "ios/chrome/browser/broadercaster.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-16T18:44:50Z",
+      "side": 1,
+      "message": "Could you specify wether you prefer +0.0, -0.0, or unsigned float?",
+      "parentUuid": "955b1fa7_53f7f0b7",
       "range": {
         "startLine": 40,
         "startChar": 29,
