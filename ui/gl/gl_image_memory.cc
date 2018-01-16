@@ -30,6 +30,7 @@ bool ValidInternalFormat(unsigned internalformat) {
     case GL_RG:
     case GL_RGB:
     case GL_RGBA:
+    case GL_RGB10:
     case GL_BGRA_EXT:
       return true;
     default:
@@ -52,10 +53,10 @@ bool ValidFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::RGBX_8888:
     case gfx::BufferFormat::RGBA_8888:
     case gfx::BufferFormat::BGRX_8888:
+    case gfx::BufferFormat::BGRX_1010102:
     case gfx::BufferFormat::BGRA_8888:
     case gfx::BufferFormat::RGBA_F16:
       return true;
-    case gfx::BufferFormat::BGRX_1010102:
     case gfx::BufferFormat::YVU_420:
     case gfx::BufferFormat::YUV_420_BIPLANAR:
     case gfx::BufferFormat::UYVY_422:
@@ -83,9 +84,9 @@ bool IsCompressedFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::RGBA_8888:
     case gfx::BufferFormat::BGRX_8888:
     case gfx::BufferFormat::BGRA_8888:
+    case gfx::BufferFormat::BGRX_1010102:
     case gfx::BufferFormat::RGBA_F16:
       return false;
-    case gfx::BufferFormat::BGRX_1010102:
     case gfx::BufferFormat::YVU_420:
     case gfx::BufferFormat::YUV_420_BIPLANAR:
     case gfx::BufferFormat::UYVY_422:
@@ -126,6 +127,7 @@ GLenum TextureFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::BGRX_8888:
       return GL_RGB;
     case gfx::BufferFormat::BGRX_1010102:
+      return GL_RGBA;
     case gfx::BufferFormat::YVU_420:
     case gfx::BufferFormat::YUV_420_BIPLANAR:
     case gfx::BufferFormat::UYVY_422:
@@ -147,6 +149,7 @@ GLenum DataFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::RGBA_4444:
     case gfx::BufferFormat::RGBA_8888:
     case gfx::BufferFormat::BGRA_8888:
+    case gfx::BufferFormat::BGRX_1010102:
     case gfx::BufferFormat::RGBA_F16:
     case gfx::BufferFormat::R_8:
     case gfx::BufferFormat::R_16:
@@ -157,7 +160,6 @@ GLenum DataFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::DXT5:
     case gfx::BufferFormat::ETC1:
       return TextureFormat(format);
-    case gfx::BufferFormat::BGRX_1010102:
     case gfx::BufferFormat::YVU_420:
     case gfx::BufferFormat::YUV_420_BIPLANAR:
     case gfx::BufferFormat::UYVY_422:
@@ -186,12 +188,13 @@ GLenum DataType(gfx::BufferFormat format) {
       return GL_UNSIGNED_SHORT;
     case gfx::BufferFormat::RGBA_F16:
       return GL_HALF_FLOAT_OES;
+    case gfx::BufferFormat::BGRX_1010102:
+      return GL_UNSIGNED_INT_2_10_10_10_REV;
     case gfx::BufferFormat::ATC:
     case gfx::BufferFormat::ATCIA:
     case gfx::BufferFormat::DXT1:
     case gfx::BufferFormat::DXT5:
     case gfx::BufferFormat::ETC1:
-    case gfx::BufferFormat::BGRX_1010102:
     case gfx::BufferFormat::YVU_420:
     case gfx::BufferFormat::YUV_420_BIPLANAR:
     case gfx::BufferFormat::UYVY_422:
@@ -214,6 +217,7 @@ GLint DataRowLength(size_t stride, gfx::BufferFormat format) {
     case gfx::BufferFormat::RGBA_8888:
     case gfx::BufferFormat::BGRX_8888:
     case gfx::BufferFormat::BGRA_8888:
+    case gfx::BufferFormat::BGRX_1010102:
       return base::checked_cast<GLint>(stride) / 4;
     case gfx::BufferFormat::RGBA_F16:
       return base::checked_cast<GLint>(stride) / 8;
@@ -224,7 +228,6 @@ GLint DataRowLength(size_t stride, gfx::BufferFormat format) {
     case gfx::BufferFormat::DXT1:
     case gfx::BufferFormat::DXT5:
     case gfx::BufferFormat::ETC1:
-    case gfx::BufferFormat::BGRX_1010102:
     case gfx::BufferFormat::YVU_420:
     case gfx::BufferFormat::YUV_420_BIPLANAR:
     case gfx::BufferFormat::UYVY_422:
@@ -395,7 +398,7 @@ bool GLImageMemory::Initialize(const unsigned char* memory,
   }
 
   if (!ValidFormat(format)) {
-    LOG(ERROR) << "Invalid format: " << static_cast<int>(format);
+    LOG(ERROR) << "Invalid format: " << gfx::BufferFormatToString(format);
     return false;
   }
 
