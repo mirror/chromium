@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "9810c212_fe6abbcd",
+        "filename": "build/fuchsia/layout_test_proxy/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-16T18:39:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51e3f5c3_86fb17f7",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "084cc96f_6a30eed1",
         "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
         "patchSetId": 4
@@ -545,6 +569,30 @@
     },
     {
       "key": {
+        "uuid": "cca2b923_6123ed28",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-16T18:39:11Z",
+      "side": 1,
+      "message": "Yes, it\u0027s used in many places, but I don\u0027t think it\u0027s the best practice. Replaced these two lines with\n    bool initialized \u003d !ocsp_proxy_-\u003eInitialize();\n    CHECK(initialized);",
+      "parentUuid": "b8a1c605_1873904c",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 58
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d04337b_afc387d9",
         "filename": "net/test/spawned_test_server/remote_test_server.cc",
         "patchSetId": 4
@@ -707,6 +755,30 @@
       "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161e2080_9703445d",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-16T18:39:11Z",
+      "side": 1,
+      "message": "\u003e If the calling code is going to handle this condition then we really need to signal it back to the caller, rather than just logging the error, surely?\n\nIt\u0027s signaled back to the caller by leaving local_port_ set to 0. There is also test for this case. It verify that Initialize() false when it fails.\n\n\u003e \n\u003e As for logging vs crashing, I disagree - I think logging and then continuing on as though nothing went wrong makes it _harder_ to debug, if anything, since it is then likely that the test will sit idle and eventually timeout, or we\u0027ll crash at some other point because things are in a weird state.\n\nIt doesn\u0027t continue. The layout_test_proxy will exit with a non-zero exit code after it fails to initialize the proxy.\n\n\u003e \n\u003e If you just don\u0027t want to log-spew a backtrace for a well-defined error then perhaps just LOG(ERROR) and then exit.",
+      "parentUuid": "42a20705_22e996f0",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 40
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -910,6 +982,30 @@
       "side": 1,
       "message": "As discussed offline, the confusion was in the |remote_address| naming - essentially we call Initialize(port) and then Start(remote_address_and_port) to tell it what to proxy through to.\n\nPerhaps it would be clearer to actually rename the methods to StartListening(port) and StartProxying(remote_endpoint)?",
       "parentUuid": "d175fcbb_e958164d",
+      "range": {
+        "startLine": 39,
+        "startChar": 58,
+        "endLine": 41,
+        "endChar": 32
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4463d391_d74ee0c2",
+        "filename": "net/test/tcp_socket_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-16T18:39:11Z",
+      "side": 1,
+      "message": "Renamed it to remote_endpoint and added a comment saying that local and remote port numbers may be different.",
+      "parentUuid": "87b102ac_047e1ec4",
       "range": {
         "startLine": 39,
         "startChar": 58,
