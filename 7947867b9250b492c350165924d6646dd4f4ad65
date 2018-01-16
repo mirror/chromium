@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c07ff303_e21eee14",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-16T18:09:48Z",
+      "side": 1,
+      "message": "nit: comma after \"Before\"?",
+      "revId": "7947867b9250b492c350165924d6646dd4f4ad65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582b66e0_2c3a5b13",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-16T18:09:48Z",
+      "side": 1,
+      "message": "nit: add \"in https://crrev.com/c/830517\" after \"the recent refactor\", or use the CL instead of the text.",
+      "revId": "7947867b9250b492c350165924d6646dd4f4ad65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
