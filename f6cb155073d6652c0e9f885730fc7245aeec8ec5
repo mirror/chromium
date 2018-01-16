@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5835bc9_f586afca",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-16T06:15:43Z",
+      "side": 1,
+      "message": "I\u0027m not sure why these variables are needed. Isn\u0027t it good to just call\n\nservice()-\u003etask_service()-\u003ePostStaticTask(kComTaskRunner, base::BindOnce(..., std::move(port_manager_in_), std::move(port_manager_out_)));\n\n?",
+      "revId": "f6cb155073d6652c0e9f885730fc7245aeec8ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
