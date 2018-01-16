@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da21c2ec_be4b4451",
+        "filename": "tools/web_bluetooth/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-16T19:00:46Z",
+      "side": 0,
+      "message": "Does this need a comment in the commit message?",
+      "revId": "72ece810c9398440582d98c1162af5779461d30b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
