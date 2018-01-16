@@ -6,6 +6,7 @@
 
 #include "base/logging.h"
 #include "build/build_config.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/ui/global_error/global_error_service.h"
 #include "chrome/browser/ui/global_error/global_error_service_factory.h"
@@ -46,13 +47,13 @@ bool ShouldAnimateUpgradeLevel(
 }
 
 // Returns true if we should show the upgrade recommended icon.
-bool ShouldShowUpgradeRecommended() {
+bool ShouldShowUpgradeRecommended(UpgradeDetector* upgrade_detector) {
 #if defined(OS_CHROMEOS)
   // In chromeos, the update recommendation is shown in the system tray. So it
   // should not be displayed in the app menu.
   return false;
 #else
-  return UpgradeDetector::GetInstance()->notify_upgrade();
+  return upgrade_detector->notify_upgrade();
 #endif
 }
 
@@ -77,7 +78,8 @@ AppMenuIconController::AppMenuIconController(Profile* profile,
   registrar_.Add(this, chrome::NOTIFICATION_GLOBAL_ERRORS_CHANGED,
                  content::Source<Profile>(profile_));
 
-  UpgradeDetector::GetInstance()->AddObserver(this);
+  if (g_browser_process->upgrade_detector())
+    g_browser_process->upgrade_detector()->AddObserver(this);
 
 #if defined(OS_WIN)
   if (!base::FeatureList::IsEnabled(features::kModuleDatabase)) {
@@ -89,7 +91,8 @@ AppMenuIconController::AppMenuIconController(Profile* profile,
 }
 
 AppMenuIconController::~AppMenuIconController() {
-  UpgradeDetector::GetInstance()->RemoveObserver(this);
+  if (g_browser_process->upgrade_detector())
+    g_browser_process->upgrade_detector()->RemoveObserver(this);
 
 #if defined(OS_WIN)
   if (!base::FeatureList::IsEnabled(features::kModuleDatabase))
@@ -98,9 +101,10 @@ AppMenuIconController::~AppMenuIconController() {
 }
 
 void AppMenuIconController::UpdateDelegate() {
-  if (ShouldShowUpgradeRecommended()) {
+  UpgradeDetector* upgrade_detector = g_browser_process->upgrade_detector();
+  if (upgrade_detector && ShouldShowUpgradeRecommended(upgrade_detector)) {
     UpgradeDetector::UpgradeNotificationAnnoyanceLevel level =
-        UpgradeDetector::GetInstance()->upgrade_notification_stage();
+        upgrade_detector->upgrade_notification_stage();
     delegate_->UpdateSeverity(IconType::UPGRADE_NOTIFICATION,
                               SeverityFromUpgradeLevel(level),
                               ShouldAnimateUpgradeLevel(level));

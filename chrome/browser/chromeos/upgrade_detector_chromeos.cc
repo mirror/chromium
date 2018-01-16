@@ -7,7 +7,7 @@
 #include <stdint.h>
 
 #include "base/macros.h"
-#include "base/memory/singleton.h"
+#include "base/memory/ptr_util.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/update_engine_client.h"
 
@@ -79,7 +79,10 @@ UpgradeDetectorChromeos::~UpgradeDetectorChromeos() {
 }
 
 void UpgradeDetectorChromeos::Init() {
-  DBusThreadManager::Get()->GetUpdateEngineClient()->AddObserver(this);
+  auto* client = DBusThreadManager::Get()->GetUpdateEngineClient();
+  client->AddObserver(this);
+  // Handle the current status in case an update arrived before this Init().
+  UpdateStatusChanged(client->GetLastStatus());
   initialized_ = true;
 }
 
@@ -88,6 +91,7 @@ void UpgradeDetectorChromeos::Shutdown() {
   if (!initialized_)
     return;
   DBusThreadManager::Get()->GetUpdateEngineClient()->RemoveObserver(this);
+  initialized_ = false;
 }
 
 void UpgradeDetectorChromeos::UpdateStatusChanged(
@@ -112,6 +116,7 @@ void UpgradeDetectorChromeos::OnUpdateOverCellularOneTimePermissionGranted() {
 }
 
 void UpgradeDetectorChromeos::NotifyOnUpgrade() {
+  UpgradeNotificationAnnoyanceLevel level = upgrade_notification_stage();
   base::TimeDelta delta = base::Time::Now() - upgrade_detected_time_;
   int64_t time_passed = delta.InDays();
 
@@ -122,21 +127,21 @@ void UpgradeDetectorChromeos::NotifyOnUpgrade() {
 
   // These if statements must be sorted (highest interval first).
   if (time_passed >= kSevereThreshold) {
-    set_upgrade_notification_stage(UPGRADE_ANNOYANCE_SEVERE);
+    level = UPGRADE_ANNOYANCE_SEVERE;
 
     // We can't get any higher, baby.
     upgrade_notification_timer_.Stop();
   } else if (time_passed >= kHighThreshold) {
-    set_upgrade_notification_stage(UPGRADE_ANNOYANCE_HIGH);
+    level = UPGRADE_ANNOYANCE_HIGH;
   } else if (time_passed >= kElevatedThreshold) {
-    set_upgrade_notification_stage(UPGRADE_ANNOYANCE_ELEVATED);
+    level = UPGRADE_ANNOYANCE_ELEVATED;
   } else if (time_passed >= kLowThreshold) {
-    set_upgrade_notification_stage(UPGRADE_ANNOYANCE_LOW);
+    level = UPGRADE_ANNOYANCE_LOW;
   } else {
     return;  // Not ready to recommend upgrade.
   }
 
-  NotifyUpgrade();
+  NotifyUpgrade(level);
 }
 
 void UpgradeDetectorChromeos::OnChannelsReceived(
@@ -160,11 +165,6 @@ void UpgradeDetectorChromeos::OnChannelsReceived(
 }
 
 // static
-UpgradeDetectorChromeos* UpgradeDetectorChromeos::GetInstance() {
-  return base::Singleton<UpgradeDetectorChromeos>::get();
-}
-
-// static
-UpgradeDetector* UpgradeDetector::GetInstance() {
-  return UpgradeDetectorChromeos::GetInstance();
+std::unique_ptr<UpgradeDetector> UpgradeDetector::Create() {
+  return base::WrapUnique(new UpgradeDetectorChromeos());
 }

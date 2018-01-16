@@ -39,6 +39,7 @@ class PrefService;
 class ProfileManager;
 class StatusTray;
 class SystemNetworkContextManager;
+class UpgradeDetector;
 class WatchDogThread;
 #if BUILDFLAG(ENABLE_WEBRTC)
 class WebRtcLogUploader;
@@ -313,6 +314,8 @@ class BrowserProcess {
   virtual physical_web::PhysicalWebDataSource* GetPhysicalWebDataSource() = 0;
 
   virtual prefs::InProcessPrefServiceFactory* pref_service_factory() const = 0;
+
+  virtual UpgradeDetector* upgrade_detector() = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BrowserProcess);
