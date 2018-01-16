@@ -58136,6 +58136,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="PageLoad.Experimental.Cache.RequestPercent.ParseStop"
     units="%">
+  <obsolete>
+    Removed Jan 2018
+  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     The percent of resources loaded from cache for the given page load. Recorded
@@ -58145,6 +58148,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="PageLoad.Experimental.Cache.TotalRequests.ParseStop"
     units="requests">
+  <obsolete>
+    Removed Jan 2018
+  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     The number of resources a given page finished loading from cache at parse
@@ -58331,6 +58337,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="PageLoad.Experimental.ParseDuration.CachedPercent.0-50"
     units="ms">
+  <obsolete>
+    Removed Jan 2018
+  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     The parse duration of the page load where 0-50% of all subresources (loaded
@@ -58340,6 +58349,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="PageLoad.Experimental.ParseDuration.CachedPercent.51-100"
     units="ms">
+  <obsolete>
+    Removed Jan 2018
+  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     The parse duration of the page load where 51-100% of all subresources
@@ -58392,6 +58404,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="PageLoad.Experimental.TotalRequests.ParseStop"
     units="requests">
+  <obsolete>
+    Removed Jan 2018
+  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     The number of resources a given page finished loading at parse stop.
