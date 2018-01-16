@@ -31,6 +31,8 @@ var BrowserBridge = (function() {
     this.crosONCFileParseObservers_ = [];
     this.storeDebugLogsObservers_ = [];
     this.setNetworkDebugModeObservers_ = [];
+    this.serviceDiscoveryObservers_ = [];
+
     // Unprocessed data received before the constants.  This serves to protect
     // against passing along data before having information on how to interpret
     // it.
@@ -220,6 +222,14 @@ var BrowserBridge = (function() {
       this.send('getDataReductionProxyInfo');
     },
 
+    sendStartServiceDiscovery: function(service_name) {
+      this.send('startServiceDiscovery', [service_name]);
+    },
+
+    sendStopServiceDiscovery: function() {
+      this.send('stopServiceDiscovery');
+    },
+
     setCaptureMode: function(captureMode) {
       this.send('setCaptureMode', ['' + captureMode]);
     },
@@ -299,6 +309,21 @@ var BrowserBridge = (function() {
 
     receivedServiceProviders: function(serviceProviders) {
       this.pollableDataHelpers_.serviceProviders.update(serviceProviders);
+    },
+
+    receivedServiceDiscoveryDeviceChanged: function(record) {
+      for (var i = 0; i < this.serviceDiscoveryObservers_.length; i++)
+        this.serviceDiscoveryObservers_[i].onDeviceChanged(record);
+    },
+
+    receivedServiceDiscoveryDeviceRemoved: function(record) {
+      for (var i = 0; i < this.serviceDiscoveryObservers_.length; i++)
+        this.serviceDiscoveryObservers_[i].onDeviceRemoved(record);
+    },
+
+    receivedServiceDiscoveryDeviceCacheFlushed: function(time) {
+      for (var i = 0; i < this.serviceDiscoveryObservers_.length; i++)
+        this.serviceDiscoveryObservers_[i].onDeviceCacheFlushed(time);
     },
 
     receivedStartConnectionTestSuite: function() {
@@ -528,6 +553,17 @@ var BrowserBridge = (function() {
         this.pollableDataHelpers_.serviceProviders.addObserver(
             observer, ignoreWhenUnchanged);
       }
+    },
+
+    /**
+     * Adds a listener for the service discovery updates.
+     * The observer will be called back with:
+     *   observer.onDeviceChanged();
+     *   observer.onDeviceRemoved();
+     *   observer.onDeviceCacheFlushed();
+     */
+    addServiceDiscoveryObserver: function(observer) {
+      this.serviceDiscoveryObservers_.push(observer);
     },
 
     /**

@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 #include <vector>
@@ -36,6 +37,8 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/io_thread.h"
+#include "chrome/browser/local_discovery/service_discovery_device_lister.h"
+#include "chrome/browser/local_discovery/service_discovery_shared_client.h"
 #include "chrome/browser/net/chrome_network_delegate.h"
 #include "chrome/browser/net/net_export_helper.h"
 #include "chrome/browser/profiles/profile.h"
@@ -91,6 +94,9 @@ using base::Value;
 using content::BrowserThread;
 using content::WebContents;
 using content::WebUIMessageHandler;
+using local_discovery::ServiceDescription;
+using local_discovery::ServiceDiscoveryDeviceLister;
+using local_discovery::ServiceDiscoverySharedClient;
 
 namespace {
 
@@ -191,12 +197,14 @@ content::WebUIDataSource* CreateNetInternalsHTMLSource() {
 //
 // Since the network code we want to run lives on the IO thread, we proxy
 // almost everything over to NetInternalsMessageHandler::IOThreadImpl, which
-// runs on the IO thread.
+// runs on the IO thread.  The ServiceDiscovery support is the exception
+// to this rule, as it also has UI thread affinity requirements.
 //
 // TODO(eroman): Can we start on the IO thread to begin with?
 class NetInternalsMessageHandler
     : public WebUIMessageHandler,
-      public base::SupportsWeakPtr<NetInternalsMessageHandler> {
+      public base::SupportsWeakPtr<NetInternalsMessageHandler>,
+      public ServiceDiscoveryDeviceLister::Delegate {
  public:
   NetInternalsMessageHandler();
   ~NetInternalsMessageHandler() override;
@@ -217,6 +225,8 @@ class NetInternalsMessageHandler
   void OnGetSessionNetworkStats(const base::ListValue* list);
   void OnGetExtensionInfo(const base::ListValue* list);
   void OnGetDataReductionProxyInfo(const base::ListValue* list);
+  void OnStartServiceDiscovery(const base::ListValue* list);
+  void OnStopServiceDiscovery(const base::ListValue* list);
 #if defined(OS_CHROMEOS)
   void OnImportONCFile(const base::ListValue* list);
   void OnStoreDebugLogs(const base::ListValue* list);
@@ -241,11 +251,29 @@ class NetInternalsMessageHandler
       net::ScopedCERTCertificateList onc_trusted_certificates);
 #endif
 
+  // ServiceDiscoveryDeviceLister::Delegate implementation.
+  void OnDeviceChanged(bool added,
+                       const ServiceDescription& service_description) override;
+  void OnDeviceRemoved(const std::string& service_name) override;
+  void OnDeviceCacheFlushed() override;
+
  private:
   class IOThreadImpl;
 
   // This is the "real" message handler, which lives on the IO thread.
   scoped_refptr<IOThreadImpl> proxy_;
+
+  // We don't use discovery_client_ directly other than to instantiate
+  // discovery_device_lister_, however, we are required to keep a reference
+  // to the client to ensure it stays alive for the life of
+  // discovery_device_lister_;
+  scoped_refptr<ServiceDiscoverySharedClient> discovery_client_;
+
+  // This is instantiated when discovery is started.
+  std::unique_ptr<ServiceDiscoveryDeviceLister> discovery_device_lister_;
+
+  // Time at which service discovery capture began.
+  base::Time discovery_start_time_;
 
   DISALLOW_COPY_AND_ASSIGN(NetInternalsMessageHandler);
 };
@@ -505,6 +533,14 @@ void NetInternalsMessageHandler::RegisterMessages() {
       "getDataReductionProxyInfo",
       base::Bind(&NetInternalsMessageHandler::OnGetDataReductionProxyInfo,
                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "startServiceDiscovery",
+      base::BindRepeating(&NetInternalsMessageHandler::OnStartServiceDiscovery,
+                          base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "stopServiceDiscovery",
+      base::BindRepeating(&NetInternalsMessageHandler::OnStopServiceDiscovery,
+                          base::Unretained(this)));
 #if defined(OS_CHROMEOS)
   web_ui()->RegisterMessageCallback(
       "importONCFile",
@@ -587,6 +623,81 @@ void NetInternalsMessageHandler::OnGetDataReductionProxyInfo(
   SendJavascriptCommand("receivedDataReductionProxyInfo",
                         chrome_browser_net::GetDataReductionProxyInfo(
                             Profile::FromWebUI(web_ui())));
+}
+
+void NetInternalsMessageHandler::OnStartServiceDiscovery(
+    const base::ListValue* list) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  std::string service_name;
+  if (!list->GetString(0, &service_name)) {
+    NOTREACHED();
+    return;
+  }
+
+  if (discovery_client_ == nullptr) {
+    discovery_client_ = ServiceDiscoverySharedClient::GetInstance();
+  }
+  discovery_start_time_ = base::Time::Now();
+  discovery_device_lister_ = std::make_unique<ServiceDiscoveryDeviceLister>(
+      this, discovery_client_.get(), service_name);
+  discovery_device_lister_->Start();
+  discovery_device_lister_->DiscoverNewDevices();
+}
+
+void NetInternalsMessageHandler::OnStopServiceDiscovery(
+    const base::ListValue* list) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  discovery_device_lister_.reset();
+}
+
+void NetInternalsMessageHandler::OnDeviceChanged(
+    bool added,
+    const ServiceDescription& service_description) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  auto report = std::make_unique<base::DictionaryValue>();
+  report->SetPath(
+      {"time"},
+      base::Value((base::Time::Now() - discovery_start_time_).InSecondsF()));
+  report->SetPath({"added"}, base::Value(added));
+  report->SetPath({"service_name"},
+                  base::Value(service_description.service_name));
+  report->SetPath({"address"},
+                  base::Value(service_description.address.ToString()));
+  if (!service_description.ip_address.IsZero()) {
+    report->SetPath({"ip"},
+                    base::Value(service_description.ip_address.ToString()));
+  } else {
+    report->SetPath({"ip"}, base::Value(""));
+  }
+
+  report->SetPath(
+      {"last_seen"},
+      base::Value(
+          (base::Time::Now() - service_description.last_seen).InSecondsF()));
+  report->SetPath({"metadata"}, base::Value(base::JoinString(
+                                    service_description.metadata, ";")));
+  SendJavascriptCommand("receivedServiceDiscoveryDeviceChanged",
+                        std::move(report));
+}
+void NetInternalsMessageHandler::OnDeviceRemoved(
+    const std::string& service_name) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  auto report = std::make_unique<base::DictionaryValue>();
+  report->SetPath(
+      {"time"},
+      base::Value((base::Time::Now() - discovery_start_time_).InSecondsF()));
+  report->SetPath({"service_name"}, base::Value(service_name));
+  SendJavascriptCommand("receivedServiceDiscoveryDeviceRemoved",
+                        std::move(report));
+}
+void NetInternalsMessageHandler::OnDeviceCacheFlushed() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  auto arg = std::make_unique<base::Value>(
+      (base::Time::Now() - discovery_start_time_).InSecondsF());
+  SendJavascriptCommand(
+      "receivedServiceDiscoveryDeviceCacheFlushed",
+      std::make_unique<base::Value>(
+          (base::Time::Now() - discovery_start_time_).InSecondsF()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,33 @@
+/* Copyright (c) 2018 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+/*
+ * These styles are chosen to be similar in feel to the events view
+ */
+#service-discovery-events-table {
+  border-right: 1px solid #afafaf;
+  border-spacing: 0;
+  border-top: 1px solid #afafaf;
+  padding: 0;
+}
+
+#service-discovery-events-table thead td {
+  background: rgb(229, 236, 249);
+  font-weight: bold;
+  text-align: left;
+}
+
+#service-discovery-events-table td {
+  border-bottom: 1px solid #afafaf;
+  border-left: 1px solid #afafaf;
+  padding: 3px;
+}
+
+#service-discovery-events-tbody tr {
+  background: rgb(244,255,245);
+}
+
+#service-discovery-events-tbody tr:hover {
+  background: rgb(244,244,255);
+}

@@ -194,6 +194,7 @@ var MainView = (function() {
       addTab(DomainSecurityPolicyView);
       addTab(BandwidthView);
       addTab(PrerenderView);
+      addTab(ServiceDiscoveryView);
       addTab(CrosView);
 
       this.tabSwitcher_.showTabLink(CrosView.TAB_ID, cr.isChromeOS);
