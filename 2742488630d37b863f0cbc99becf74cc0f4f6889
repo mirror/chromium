@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee80eb00_94908f80",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-16T20:09:54Z",
+      "side": 1,
+      "message": "Not sure this is quite what you want, though in practice it shouldn\u0027t matter.\n\nThe typical use of this for singletons is to force e.g. the Downloads page to open with the non-incognito profile, even when invoked from an incognito window.  But this code would also allow the reverse: an open page in an incognito window could be switched to from a non-incognito window.  I don\u0027t know whether we want to allow that.  Maybe we only want to ask if the target window\u0027s profile type equals the source window\u0027s original profile type?\n\nThat said, I don\u0027t think we ever try to invoke as SINGLETON something that can be open in an incognito window, so I don\u0027t know if users could hit this?",
+      "revId": "2742488630d37b863f0cbc99becf74cc0f4f6889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
