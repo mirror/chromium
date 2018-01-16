@@ -211,6 +211,30 @@
       "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cd2ed9f_b5ccebd4",
+        "filename": "gin/v8_initializer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-16T15:16:04Z",
+      "side": 1,
+      "message": "Thanks for making the enum change, however I still think we should have the DCHECK (though I\u0027m fine with doing this in a followup CL where we can clear up these dependencies) - I don\u0027t think the reasoning above holds - if  extensions::APIBindingTest is a subclass of content::TestBlinkWebUnitTestSupport, then it is fundamentally dependent on Blink, and therefore also dependent on v8_context_snapshot. This was not the case with net_unittests, which I agree should not depend on v8_context_snapshot, however it should only ever call LoadV8Snapshot(kDefault) if it doesn\u0027t depend on Blink.\n\nCould you investigate adding this DCHECK in a followup CL please.",
+      "parentUuid": "2f589182_37661814",
+      "range": {
+        "startLine": 308,
+        "startChar": 20,
+        "endLine": 308,
+        "endChar": 41
+      },
+      "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

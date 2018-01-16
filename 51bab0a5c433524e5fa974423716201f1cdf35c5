@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "474ccb27_565f31a3",
+        "filename": "content/public/test/content_test_suite_base.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-16T15:16:04Z",
+      "side": 1,
+      "message": "nit - could you pull this out as a constant - e.g., kSnapshotType, which is defined based on USE_V8_CONTEXT_SNAPSHOT and call LoadV8Snapshot(kSnapshotType) here only once.",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 54
+      },
+      "revId": "51bab0a5c433524e5fa974423716201f1cdf35c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80163c5_efd26e26",
+        "filename": "content/test/test_blink_web_unit_test_support.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-16T15:16:04Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 139,
+        "startChar": 26,
+        "endLine": 139,
+        "endChar": 42
+      },
+      "revId": "51bab0a5c433524e5fa974423716201f1cdf35c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b731de7_61497ee1",
+        "filename": "gin/v8_initializer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-16T15:16:04Z",
+      "side": 1,
+      "message": "Please this to be inline comments in the enum next to kV8Context and update to read:\n \"Snapshot augmented with an additional context specific snapshot, which can be deserialized using v8::Context::FromSnapshot\"",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "51bab0a5c433524e5fa974423716201f1cdf35c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1464f62_7b9c614b",
+        "filename": "gin/v8_initializer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-16T15:16:04Z",
+      "side": 1,
+      "message": "V8SnapshotFileType",
+      "range": {
+        "startLine": 40,
+        "startChar": 13,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "51bab0a5c433524e5fa974423716201f1cdf35c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a64f592_bf980dc1",
+        "filename": "gin/v8_initializer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-16T15:16:04Z",
+      "side": 1,
+      "message": "kContext",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 14
+      },
+      "revId": "51bab0a5c433524e5fa974423716201f1cdf35c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd879d58_22844745",
+        "filename": "media/blink/run_all_unittests.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-16T15:16:04Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 42
+      },
+      "revId": "51bab0a5c433524e5fa974423716201f1cdf35c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497ff35b_987d22a1",
+        "filename": "services/data_decoder/image_decoder_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-16T15:16:04Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 56
+      },
+      "revId": "51bab0a5c433524e5fa974423716201f1cdf35c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
