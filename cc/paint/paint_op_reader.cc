@@ -254,6 +254,7 @@ void PaintOpReader::Read(PaintImage* image) {
   if (transfer_cache_entry_id == kInvalidImageTransferCacheEntryId)
     return;
 
+  // Test.
   if (auto* entry = transfer_cache_->GetEntryAs<ServiceImageTransferCacheEntry>(
           transfer_cache_entry_id)) {
     *image = PaintImageBuilder::WithDefault()
