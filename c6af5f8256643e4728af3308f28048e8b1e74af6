@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7b19a5b_ec597e57",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2106,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T19:01:49Z",
+      "side": 1,
+      "message": "Let\u0027s check that chrome://inspect can indeed open chrome://inspect.",
+      "revId": "c6af5f8256643e4728af3308f28048e8b1e74af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "837bbcac_36055025",
+        "filename": "chrome/browser/devtools/devtools_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T19:01:49Z",
+      "side": 1,
+      "message": "We should filter against GetInspectedWebContents() instead.\nAlso, GetRenderViewHost() may return null.",
+      "revId": "c6af5f8256643e4728af3308f28048e8b1e74af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
