@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f67cbfb_94148547",
+        "filename": "components/autofill/content/common/autofill_driver.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T18:18:15Z",
+      "side": 1,
+      "message": "Please don\u0027t specify values in Mojo enums that are placeholders. Perhaps just omit this value.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#Do-not-define-things-that-are-not-used",
+      "revId": "6a9dce015a564693490beef95234954644b742e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab07454_46f4a2a2",
+        "filename": "components/autofill/content/common/submission_source_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T18:18:15Z",
+      "side": 1,
+      "message": "Please define a typemap and use that instead of manually converting (https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#Do-not-write-one_off-functions-to-convert-to_from-Mojo-types)",
+      "revId": "6a9dce015a564693490beef95234954644b742e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
