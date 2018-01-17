@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5ef7347_027e659d",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-17T09:56:57Z",
+      "side": 1,
+      "message": "nit: It seems to me a std::array might be cleaner choice here.",
+      "range": {
+        "startLine": 223,
+        "startChar": 36,
+        "endLine": 223,
+        "endChar": 65
+      },
+      "revId": "bd51a2f799884c295f1e9444f724d8c3009eb01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944e3bc5_fc5fefae",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-17T09:56:57Z",
+      "side": 1,
+      "message": "nit: I think this function is overkill. It adds indirection to a function call that is not going to fit on the same line where this function is called for pretty much all cases.",
+      "range": {
+        "startLine": 239,
+        "startChar": 7,
+        "endLine": 239,
+        "endChar": 44
+      },
+      "revId": "bd51a2f799884c295f1e9444f724d8c3009eb01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53189e1_41f3be94",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-17T09:56:57Z",
+      "side": 1,
+      "message": "nit: constexpr [std::array if you take my other suggestion].",
+      "range": {
+        "startLine": 579,
+        "startChar": 2,
+        "endLine": 579,
+        "endChar": 6
+      },
+      "revId": "bd51a2f799884c295f1e9444f724d8c3009eb01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f3663d_f40ca809",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-17T09:56:57Z",
+      "side": 1,
+      "message": "nit: same here",
+      "range": {
+        "startLine": 583,
+        "startChar": 2,
+        "endLine": 583,
+        "endChar": 6
+      },
+      "revId": "bd51a2f799884c295f1e9444f724d8c3009eb01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
