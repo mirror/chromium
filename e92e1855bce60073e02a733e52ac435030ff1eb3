@@ -16,6 +16,52 @@
       "revId": "e92e1855bce60073e02a733e52ac435030ff1eb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1453b57_e6d489a6",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-17T16:05:48Z",
+      "side": 1,
+      "message": "sp: shwon \u003d\u003e shown",
+      "range": {
+        "startLine": 340,
+        "startChar": 136,
+        "endLine": 340,
+        "endChar": 141
+      },
+      "revId": "e92e1855bce60073e02a733e52ac435030ff1eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb63097_307c08aa",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-17T16:05:48Z",
+      "side": 1,
+      "message": "nit: I think you can remove DelegateView and LocationBar from the name of this function. Also s/Show/Activate. So, ActivateFirstInactiveBubbleForAccessibility",
+      "range": {
+        "startLine": 655,
+        "startChar": 38,
+        "endLine": 655,
+        "endChar": 50
+      },
+      "revId": "e92e1855bce60073e02a733e52ac435030ff1eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
