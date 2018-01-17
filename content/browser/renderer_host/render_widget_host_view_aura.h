@@ -26,6 +26,7 @@
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/compositor/image_transport_factory.h"
 #include "content/browser/compositor/owned_mailbox.h"
+#include "content/browser/keyboard_lock/keyboard_lock_host.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/renderer_host/render_widget_host_view_event_handler.h"
 #include "content/browser/renderer_host/text_input_manager.h"
@@ -173,6 +174,9 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   void SetMainFrameAXTreeID(ui::AXTreeIDRegistry::AXTreeID id) override;
   bool LockMouse() override;
   void UnlockMouse() override;
+  void ReserveKeys(const std::vector<std::string>& codes,
+                   base::OnceCallback<void(bool)> done) override;
+  void ClearReservedKeys() override;
   void DidCreateNewRendererCompositorFrameSink(
       viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink)
       override;
@@ -596,6 +600,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   bool virtual_keyboard_requested_;
 
   std::unique_ptr<ui::OnScreenKeyboardObserver> keyboard_observer_;
+
+  KeyboardLockHost keyboard_lock_host_;
 
   gfx::Point last_mouse_move_location_;
 #endif

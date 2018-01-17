@@ -409,6 +409,7 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(
       legacy_render_widget_host_HWND_(nullptr),
       legacy_window_destroyed_(false),
       virtual_keyboard_requested_(false),
+      keyboard_lock_host_(this),
 #endif
       has_snapped_to_boundary_(false),
       is_guest_view_hack_(is_guest_view_hack),
@@ -1210,6 +1211,21 @@ void RenderWidgetHostViewAura::UnlockMouse() {
   event_handler_->UnlockMouse();
 }
 
+void RenderWidgetHostViewAura::ReserveKeys(
+    const std::vector<std::string>& codes,
+    base::OnceCallback<void(bool)> done) {
+  keyboard_lock_host_.ReserveKeys(codes, std::move(done));
+
+  // TODO: add fullscreen logic fpr activating / deactivating.
+  // if (fullscreen && focused) {
+  //   keyboard_lock_host_.Activate();
+  // }
+}
+
+void RenderWidgetHostViewAura::ClearReservedKeys() {
+  keyboard_lock_host_.ClearReservedKeys();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // RenderWidgetHostViewAura, ui::TextInputClient implementation:
 void RenderWidgetHostViewAura::SetCompositionText(
@@ -1777,11 +1793,16 @@ void RenderWidgetHostViewAura::OnWindowFocused(aura::Window* gained_focus,
         host_->GetRootBrowserAccessibilityManager();
     if (manager)
       manager->OnWindowFocused();
+
+    LOG(ERROR) << "OnWindowFocused: " << is_fullscreen_;
+    keyboard_lock_host_.Activate();
   } else if (window_ == lost_focus) {
     host_->SetActive(false);
     host_->LostFocus();
 
     DetachFromInputMethod();
+
+    keyboard_lock_host_.Deactivate();
 
     // TODO(wjmaclean): Do we need to let TouchSelectionControllerClientAura
     // handle this, just in case it stomps on a new highlight in another view
@@ -2028,6 +2049,9 @@ void RenderWidgetHostViewAura::WasResized() {
   if (host_->auto_resize_enabled()) {
     host_->DidAllocateLocalSurfaceIdForAutoResize(
         host_->last_auto_resize_request_number());
+  }
+  if (false) {
+    // blergh
   }
 }
 

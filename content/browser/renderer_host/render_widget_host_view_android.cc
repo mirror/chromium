@@ -1805,12 +1805,12 @@ BrowserAccessibilityManager*
       delegate);
 }
 
-bool RenderWidgetHostViewAndroid::LockMouse() {
+bool RenderWidgetHostViewMac::LockMouse() {
   NOTIMPLEMENTED();
   return false;
 }
 
-void RenderWidgetHostViewAndroid::UnlockMouse() {
+void RenderWidgetHostViewMac::UnlockMouse() {
   NOTIMPLEMENTED();
 }
 

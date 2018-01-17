@@ -157,6 +157,11 @@ class CONTENT_EXPORT RenderWidgetHostView {
   // Returns true if the mouse pointer is currently locked.
   virtual bool IsMouseLocked() = 0;
 
+  // TODO: COMMENT
+  virtual void ReserveKeys(const std::vector<std::string>& codes,
+                           base::OnceCallback<void(bool)> done) = 0;
+  virtual void ClearReservedKeys() = 0;
+
   // Retrives the size of the viewport for the visible region. May be smaller
   // than the view size if a portion of the view is obstructed (e.g. by a
   // virtual keyboard).
