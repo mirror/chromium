@@ -384,7 +384,7 @@ void LocationBarView::GetOmniboxPopupPositioningInfo(
 
   // The popup itself may either be the same width as the contents, or as wide
   // as the toolbar.
-  bool narrow_popup =
+  bool narrow_popup = true ||
       base::FeatureList::IsEnabled(omnibox::kUIExperimentNarrowDropdown);
   const int popup_left = narrow_popup ? popup_contents_left : 0;
   const int popup_right =

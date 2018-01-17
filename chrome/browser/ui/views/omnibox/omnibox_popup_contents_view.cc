@@ -32,6 +32,7 @@
 #include "ui/views/controls/image_view.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/non_client_view.h"
+#include "ui/gfx/shadow_util.h"
 
 namespace {
 
@@ -42,7 +43,19 @@ base::LazyInstance<gfx::ImageSkia>::DestructorAtExit g_top_shadow =
 base::LazyInstance<gfx::ImageSkia>::DestructorAtExit g_bottom_shadow =
     LAZY_INSTANCE_INITIALIZER;
 
-const int kPopupVerticalPadding = 4;
+constexpr int kPopupVerticalPadding = 4;
+constexpr int kTouchableBackbufferHeight = 1000;
+constexpr int kTouchableRadius = 8;
+constexpr int kTouchableElevation = 16;
+
+bool IsTouchable() {
+  return true;
+}
+
+bool IsNarrow() {
+  return IsTouchable() ||
+      base::FeatureList::IsEnabled(omnibox::kUIExperimentNarrowDropdown);
+}
 
 }  // namespace
 
@@ -56,6 +69,76 @@ class OmniboxPopupContentsView::AutocompletePopupWidget
 
  private:
   DISALLOW_COPY_AND_ASSIGN(AutocompletePopupWidget);
+};
+
+class OmniboxPopupContentsView::AutocompleteClipFrame : public views::View {
+ public:
+  // Inserts a AutocompleteClipFrame into the view hierarchy and returns a ref.
+  static AutocompleteClipFrame* Create(AutocompletePopupWidget* widget, OmniboxPopupContentsView* contents) {
+    AutocompleteClipFrame* frame = new AutocompleteClipFrame(contents);
+    frame->Init();
+    widget->SetContentsView(frame);
+    return frame;
+  }
+
+  static gfx::Insets GetBorderInsets() {
+    // gfx::ShadowDetails::Get() is cached.
+    return gfx::ShadowValue::GetBlurRegion(gfx::ShadowDetails::Get(kTouchableElevation, kTouchableRadius).values) + gfx::Insets(kTouchableRadius);
+  }
+
+  void SetTargetSize(const gfx::Size& size) {
+    DLOG(INFO) << "SetTargetSize() : " << size.ToString() << " bounds() =" << bounds().ToString();
+    clip_view_->SetSize(size);
+    shadow_layer_->SetBounds(gfx::Rect(0, 0, size.width() + insets_.width(), size.height() + insets_.height()));
+  }
+
+  // views::View:
+  void Layout() override {
+    gfx::Rect rect = GetLocalBounds();
+    shadow_layer_->SetBounds(rect);
+    rect.Inset(insets_);
+    clip_view_->SetBoundsRect(rect);
+    contents_->SetSize(gfx::Size(rect.width(), kTouchableBackbufferHeight));
+  }
+
+ private:
+  AutocompleteClipFrame(OmniboxPopupContentsView* contents) : contents_(contents), shadow_(gfx::ShadowDetails::Get(kTouchableElevation, kTouchableRadius)), insets_(GetBorderInsets()) {}
+  void Init() {
+    clip_view_ = new View();
+    clip_view_->SetPaintToLayer();
+    clip_view_->AddChildView(contents_);
+
+    ui::Layer* clip_layer = clip_view_->layer();
+    clip_layer->set_name("OmniboxPopupClip");
+    clip_layer->SetFillsBoundsOpaquely(true);
+    clip_layer->SetMasksToBounds(true);
+    // TODO: add rounded rectangles to clip_layer -> opaque -> false.
+
+    shadow_layer_ = new ui::Layer(ui::LAYER_NINE_PATCH);
+    shadow_layer_->set_name("OmniboxPopupShadow");
+    shadow_layer_->UpdateNinePatchLayerImage(shadow_.ninebox_image);
+
+    gfx::Rect aperture(shadow_.ninebox_image.size());
+    aperture.Inset(insets_);
+    shadow_layer_->UpdateNinePatchLayerAperture(aperture);
+
+    SetPaintToLayer();
+    layer()->SetFillsBoundsOpaquely(false);
+    //layer()->Add(shadow_layer_);
+
+    //layer->SetOpacity(0.f);
+    //layer->SetVisible(false);
+
+    AddChildView(clip_view_);
+  }
+
+  OmniboxPopupContentsView* contents_;
+  const gfx::ShadowDetails shadow_;
+  const gfx::Insets insets_;
+  views::View* clip_view_  = nullptr;
+  ui::Layer* shadow_layer_ = nullptr;
+
+  DISALLOW_COPY_AND_ASSIGN(AutocompleteClipFrame);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -76,8 +159,7 @@ OmniboxPopupContentsView::OmniboxPopupContentsView(
   // The contents is owned by the LocationBarView.
   set_owned_by_client();
 
-  bool narrow_popup =
-      base::FeatureList::IsEnabled(omnibox::kUIExperimentNarrowDropdown);
+  const bool narrow_popup = IsNarrow();
 
   if (g_top_shadow.Get().isNull() && !narrow_popup) {
     std::vector<gfx::ShadowValue> shadows;
@@ -217,8 +299,7 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
     child_at(i)->SetVisible(false);
 
   int top_edge_overlap = 0;
-  bool narrow_popup =
-      base::FeatureList::IsEnabled(omnibox::kUIExperimentNarrowDropdown);
+  bool narrow_popup = IsNarrow();
   if (!narrow_popup) {
     // We want the popup to appear to overlay the bottom of the toolbar. So we
     // shift the popup to completely cover the client edge, and then draw an
@@ -235,9 +316,12 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
   gfx::Rect new_target_bounds(top_left_screen_coord,
                               gfx::Size(width, CalculatePopupHeight()));
 
-  if (narrow_popup) {
-    SkColor background_color = GetNativeTheme()->GetSystemColor(
-        ui::NativeTheme::kColorId_ResultsTableNormalBackground);
+  SkColor background_color = GetNativeTheme()->GetSystemColor(
+      ui::NativeTheme::kColorId_ResultsTableNormalBackground);
+  if (IsTouchable()) {
+    new_target_bounds.Inset(-AutocompleteClipFrame::GetBorderInsets());
+    SetBackground(views::CreateSolidBackground(background_color));
+  } else if (narrow_popup) {
     auto border = base::MakeUnique<views::BubbleBorder>(
         views::BubbleBorder::NONE, views::BubbleBorder::SMALL_SHADOW,
         background_color);
@@ -273,6 +357,9 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
     params.opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
     params.parent = popup_parent->GetNativeView();
     params.bounds = GetPopupBounds();
+    if (IsTouchable())
+      params.bounds.set_height(kTouchableBackbufferHeight);
+
     params.context = popup_parent->GetNativeWindow();
     popup_->Init(params);
     // Third-party software such as DigitalPersona identity verification can
@@ -283,7 +370,11 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
     if (!popup_)
       return;
     popup_->SetVisibilityAnimationTransition(views::Widget::ANIMATE_NONE);
-    popup_->SetContentsView(this);
+    if (IsTouchable()) {
+      clip_frame_ = AutocompleteClipFrame::Create(popup_.get(), this);
+    } else {
+      popup_->SetContentsView(this);
+    }
     popup_->StackAbove(omnibox_view_->GetRelativeWindowForPopup());
     if (!popup_) {
       // For some IMEs GetRelativeWindowForPopup triggers the omnibox to lose
@@ -293,6 +384,8 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
       return;
     }
     popup_->ShowInactive();
+  } else if (IsTouchable()) {
+    UpdatePopupBounds();  // Don't start a UI animation.
   } else {
     // Animate the popup shrinking, but don't animate growing larger since that
     // would make the popup feel less responsive.
@@ -301,7 +394,7 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
       size_animation_.Show();
     else
       start_bounds_ = target_bounds_;
-    popup_->SetBounds(GetPopupBounds());
+    UpdatePopupBounds();
   }
 
   Layout();
@@ -328,6 +421,8 @@ void OmniboxPopupContentsView::OnDragCanceled() {
 
 void OmniboxPopupContentsView::AnimationProgressed(
     const gfx::Animation* animation) {
+  // Touchable Chrome doesn't use UI-thread animations.
+  DCHECK(!IsTouchable());
   // We should only be running the animation when the popup is already visible.
   DCHECK(popup_);
   popup_->SetBounds(GetPopupBounds());
@@ -404,6 +499,14 @@ int OmniboxPopupContentsView::CalculatePopupHeight() {
          g_top_shadow.Get().height() + g_bottom_shadow.Get().height();
 }
 
+void OmniboxPopupContentsView::UpdatePopupBounds() {
+  if (IsTouchable()) {
+    clip_frame_->SetTargetSize(GetTargetBounds().size());
+  } else {
+    popup_->SetBounds(GetPopupBounds());
+  }
+}
+
 void OmniboxPopupContentsView::LayoutChildren() {
   gfx::Rect contents_rect = GetContentsBounds();
   contents_rect.Inset(gfx::Insets(kPopupVerticalPadding, 0));
@@ -463,7 +566,7 @@ const char* OmniboxPopupContentsView::GetClassName() const {
 }
 
 void OmniboxPopupContentsView::OnPaint(gfx::Canvas* canvas) {
-  if (base::FeatureList::IsEnabled(omnibox::kUIExperimentNarrowDropdown)) {
+  if (IsNarrow()) {
     View::OnPaint(canvas);
     return;
   }
@@ -477,7 +580,7 @@ void OmniboxPopupContentsView::OnPaint(gfx::Canvas* canvas) {
 
 void OmniboxPopupContentsView::PaintChildren(
     const views::PaintInfo& paint_info) {
-  if (base::FeatureList::IsEnabled(omnibox::kUIExperimentNarrowDropdown)) {
+  if (IsNarrow()) {
     View::PaintChildren(paint_info);
     return;
   }
