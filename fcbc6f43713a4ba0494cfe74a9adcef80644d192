@@ -16,6 +16,24 @@
       "revId": "fcbc6f43713a4ba0494cfe74a9adcef80644d192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01fa1d59_e4142df3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/FileSystemWorkspaceBinding.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-17T21:05:48Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b2db55bd_33ac5c02",
+      "revId": "fcbc6f43713a4ba0494cfe74a9adcef80644d192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
