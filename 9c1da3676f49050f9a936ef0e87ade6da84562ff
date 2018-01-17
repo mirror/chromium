@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92898a65_0b5ca4dd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 21504,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-17T00:40:38Z",
+      "side": 1,
+      "message": "Optional nit: Maybe link to crbug.com/650338 as well?",
+      "range": {
+        "startLine": 21504,
+        "startChar": 69,
+        "endLine": 21504,
+        "endChar": 0
+      },
+      "revId": "9c1da3676f49050f9a936ef0e87ade6da84562ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
