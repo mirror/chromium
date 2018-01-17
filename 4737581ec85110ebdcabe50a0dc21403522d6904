@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fc9bb813_d4c9376c",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-17T09:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "403a5715_6fa9d308",
+      "range": {
+        "startLine": 478,
+        "startChar": 2,
+        "endLine": 478,
+        "endChar": 38
+      },
+      "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13cf8600_ce743f79",
         "filename": "content/common/frame.mojom",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec12cf0a_36f00ea7",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-17T09:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13cf8600_ce743f79",
+      "range": {
+        "startLine": 255,
+        "startChar": 37,
+        "endLine": 255,
+        "endChar": 41
+      },
+      "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "aa9eea58_869b98e2",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 7107,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-17T09:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e35bae2_5eadfc94",
+      "range": {
+        "startLine": 7107,
+        "startChar": 15,
+        "endLine": 7107,
+        "endChar": 43
+      },
+      "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25da3178_fe991c71",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 14
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "56cb5b9d_b1d51d11",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1716,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-17T09:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25da3178_fe991c71",
+      "range": {
+        "startLine": 1716,
+        "startChar": 28,
+        "endLine": 1716,
+        "endChar": 29
+      },
+      "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d0b1e04_1cd29184",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 14
@@ -105,6 +201,24 @@
       "writtenOn": "2018-01-17T01:58:01Z",
       "side": 1,
       "message": "Perhaps 1,3,4 better belong down on line 1739, where this policy is?  And if you move it there, 2 can probably be removed, since that\u0027s already covered in line 1728.",
+      "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0ace4f_7b8325b8",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1718,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-17T09:26:40Z",
+      "side": 1,
+      "message": "I like having this comment. In one place, readers can understand exactly what kind of URLs are upgraded.",
+      "parentUuid": "0d0b1e04_1cd29184",
       "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "a334cb02_5396e4f4",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1720,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-17T09:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e579dc64_985cf34c",
+      "range": {
+        "startLine": 1720,
+        "startChar": 22,
+        "endLine": 1720,
+        "endChar": 73
+      },
+      "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ad30674_1b8e08ac",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 14
@@ -148,6 +286,24 @@
       "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bcfe178_741f7d1d",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-17T09:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ad30674_1b8e08ac",
+      "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
