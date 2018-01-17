@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3df302c0_06715b58",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-17T15:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d922e91_3fa835a0",
+      "revId": "3b4c8e1d3820a5484441368b1a8d6543767c642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26385cd1_b0cdd2f8",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tab_grid_button.h",
         "patchSetId": 5
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "8fc0ea1e_fb6d8857",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tab_grid_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-17T15:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26385cd1_b0cdd2f8",
+      "revId": "3b4c8e1d3820a5484441368b1a8d6543767c642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1615817_21dc85d1",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tab_grid_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-17T15:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb64fde2_d8acaefb",
+      "range": {
+        "startLine": 10,
+        "startChar": 73,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "3b4c8e1d3820a5484441368b1a8d6543767c642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1340c5df_9b489abd",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tab_grid_button.h",
         "patchSetId": 5
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "ab17d5bc_0998563a",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tab_grid_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-17T15:54:34Z",
+      "side": 1,
+      "message": "I am receiving an int.",
+      "parentUuid": "1340c5df_9b489abd",
+      "revId": "3b4c8e1d3820a5484441368b1a8d6543767c642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4742d746_6c119366",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tab_grid_button.mm",
         "patchSetId": 5
@@ -90,6 +168,24 @@
       "revId": "3b4c8e1d3820a5484441368b1a8d6543767c642e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e4a992c_164e3418",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tab_grid_button.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-17T15:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4742d746_6c119366",
+      "revId": "3b4c8e1d3820a5484441368b1a8d6543767c642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

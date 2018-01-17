@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "0edf6082_63c381e2",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-17T15:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d068a116_3acc5a4a",
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47f4228f_377b41ff",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
         "patchSetId": 3
