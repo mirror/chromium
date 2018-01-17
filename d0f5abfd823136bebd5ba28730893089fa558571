@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ab7d1f0_277cb9ca",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-17T19:17:05Z",
+      "side": 1,
+      "message": "Can this method be remove since it is empty now?",
+      "revId": "d0f5abfd823136bebd5ba28730893089fa558571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf430bdc_a07e03de",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-17T19:17:05Z",
+      "side": 1,
+      "message": "Can AppListView derive from WidgetDelegateView since it is no longer a bubble?",
+      "range": {
+        "startLine": 58,
+        "startChar": 50,
+        "endLine": 58,
+        "endChar": 74
+      },
+      "revId": "d0f5abfd823136bebd5ba28730893089fa558571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13396658_d0a0332b",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-17T19:17:05Z",
+      "side": 1,
+      "message": "remove ?",
+      "revId": "d0f5abfd823136bebd5ba28730893089fa558571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76022699_31727467",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-17T19:17:05Z",
+      "side": 1,
+      "message": "remove ?",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 79
+      },
+      "revId": "d0f5abfd823136bebd5ba28730893089fa558571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
