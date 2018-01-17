@@ -157,6 +157,24 @@
       "revId": "069d9d6d192680654e24bb5aa104f40ded3182dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f24805_6d9a99d2",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-17T07:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2567dd42_3de98e87",
+      "revId": "069d9d6d192680654e24bb5aa104f40ded3182dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "0ae07a7aa4db579c8d9e5ec302a92b548b1be3c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a97b9e5e_50881c25",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2278,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-17T07:57:38Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ve been using the metric names without sec suffix, so I think it should be ok. I\u0027ll check with ukm team as well.",
+      "parentUuid": "1faa655b_38d483f5",
+      "revId": "0ae07a7aa4db579c8d9e5ec302a92b548b1be3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
