@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93f8ab86_fd5bb7b8",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T18:10:20Z",
+      "side": 1,
+      "message": "Let\u0027s instead put this block in extension_action_handler.cc, near the other exceptions:\nhttps://chromium.googlesource.com/chromium/src/+/8f4c57cb0db64b9dc0c5aadcf50e0b1e457c612d/chrome/common/extensions/manifest_handlers/extension_action_handler.cc#85\n\nThis way, if in the future the extension provides its own browser/page action, we correctly display it.",
+      "revId": "90fee4b27ce239cc4ae5b1ba62ec53704a3ccd2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
