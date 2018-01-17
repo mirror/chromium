@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "722c8cb4_799733e9",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T19:28:51Z",
+      "side": 1,
+      "message": "Oh wow amazing. Thanks! Can you write this out some more in the comment to explain? This is really awesome explanation for me and I learnt a lot here. Don\u0027t worry about the comment being too large, this is a really obscure thing and we should document it as much as needed.",
+      "parentUuid": "378c0ed8_c279245a",
+      "revId": "ef8a3d8d19a5eb3d4e77426c29d5a3e8a4728bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebc2f50b_802104ff",
         "filename": "base/optional_unittest.cc",
         "patchSetId": 2
