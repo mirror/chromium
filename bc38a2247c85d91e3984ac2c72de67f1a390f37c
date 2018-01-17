@@ -22,6 +22,30 @@
       "revId": "bc38a2247c85d91e3984ac2c72de67f1a390f37c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8fa70f_77a1d8df",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-17T07:43:11Z",
+      "side": 1,
+      "message": "With the current pattern, this dirty job has to be done somewhere.\n\nSigh...",
+      "parentUuid": "fbefcf85_67cb4829",
+      "range": {
+        "startLine": 249,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 40
+      },
+      "revId": "bc38a2247c85d91e3984ac2c72de67f1a390f37c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
