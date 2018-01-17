@@ -52,6 +52,24 @@
       "revId": "92c6cd53ed470ed510eee6502cdfc3dc8e746baf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04f0a86_04b7152f",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2018-01-17T11:13:33Z",
+      "side": 1,
+      "message": "yes, oskar told me that he knew that I wanted you to let him know that he\u0027d be telling me that.",
+      "parentUuid": "eb9b7ceb_08ff67fc",
+      "revId": "92c6cd53ed470ed510eee6502cdfc3dc8e746baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
