@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "161d679f_36b5a28a",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-17T02:09:56Z",
+      "side": 1,
+      "message": "Better to return |CompositedSelectionBound()| here.",
+      "revId": "9f10ba49158ae1b30d595f3ce76a9a1a91a71c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f8f686_5bc399b4",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-17T02:09:56Z",
+      "side": 1,
+      "message": "Could you rebase on top of crrev.com/c/867818, and move the definition of |bound| here to make its lifetime more compact?",
+      "revId": "9f10ba49158ae1b30d595f3ce76a9a1a91a71c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
