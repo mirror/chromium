@@ -28,10 +28,6 @@ void ConfirmBubbleModel::Accept() {
 void ConfirmBubbleModel::Cancel() {
 }
 
-base::string16 ConfirmBubbleModel::GetLinkText() const {
-  return base::string16();
-}
-
 GURL ConfirmBubbleModel::GetLinkURL() const {
   return GURL();
 }

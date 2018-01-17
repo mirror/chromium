@@ -50,10 +50,6 @@ void TestConfirmBubbleModel::Cancel() {
     *cancel_clicked_ = true;
 }
 
-base::string16 TestConfirmBubbleModel::GetLinkText() const {
-  return base::ASCIIToUTF16("Link");
-}
-
 void TestConfirmBubbleModel::LinkClicked() {
   if (link_clicked_)
     *link_clicked_ = true;

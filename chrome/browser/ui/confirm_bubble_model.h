@@ -45,10 +45,6 @@ class ConfirmBubbleModel {
   // Called when the Cancel button is pressed.
   virtual void Cancel();
 
-  // Returns the text of the link to be displayed, if any. Otherwise returns
-  // an empty string.
-  virtual base::string16 GetLinkText() const;
-
   // Returns the URL of the link to be displayed.
   virtual GURL GetLinkURL() const;
 

@@ -26,7 +26,6 @@ class TestConfirmBubbleModel : public ConfirmBubbleModel {
   base::string16 GetButtonLabel(BubbleButton button) const override;
   void Accept() override;
   void Cancel() override;
-  base::string16 GetLinkText() const override;
   void LinkClicked() override;
 
  private:
