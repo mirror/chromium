@@ -85,7 +85,7 @@ ServiceWorkerResponse GetServiceWorkerResponseFromWebResponse(
     const blink::WebServiceWorkerResponse& web_response) {
   scoped_refptr<storage::BlobHandle> blob;
   auto blob_pipe = web_response.CloneBlobPtr();
-  if (blob_pipe.is_valid()) {
+  if (blob_pipe) {
     blink::mojom::BlobPtr blob_ptr;
     blob_ptr.Bind(blink::mojom::BlobPtrInfo(std::move(blob_pipe),
                                             blink::mojom::Blob::Version_));
@@ -106,7 +106,7 @@ ServiceWorkerResponse GetServiceWorkerResponseFromWebResponse(
   response.side_data_blob_uuid = web_response.SideDataBlobUUID().Utf8();
   response.side_data_blob_size = web_response.SideDataBlobSize();
   auto side_data_blob_pipe = web_response.CloneSideDataBlobPtr();
-  if (side_data_blob_pipe.is_valid()) {
+  if (side_data_blob_pipe) {
     blink::mojom::BlobPtr side_data_blob_ptr;
     side_data_blob_ptr.Bind(blink::mojom::BlobPtrInfo(
         std::move(side_data_blob_pipe), blink::mojom::Blob::Version_));

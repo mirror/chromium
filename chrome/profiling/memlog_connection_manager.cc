@@ -296,7 +296,7 @@ void MemlogConnectionManager::DoDumpOneProcessForTracing(
 
   mojo::ScopedSharedBufferHandle buffer =
       mojo::SharedBufferHandle::Create(reply.size());
-  if (!buffer.is_valid()) {
+  if (!buffer) {
     DLOG(ERROR) << "Could not create Mojo shared buffer";
   } else {
     mojo::ScopedSharedBufferMapping mapping = buffer->Map(reply.size());

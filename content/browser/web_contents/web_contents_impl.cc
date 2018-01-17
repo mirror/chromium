@@ -4547,7 +4547,7 @@ void WebContentsImpl::OnInterfaceRequest(
   for (auto& observer : observers_) {
     observer.OnInterfaceRequestFromFrame(render_frame_host, interface_name,
                                          interface_pipe);
-    if (!interface_pipe->is_valid())
+    if (!*interface_pipe)
       break;
   }
 }

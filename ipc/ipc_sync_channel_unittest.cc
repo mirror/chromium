@@ -136,7 +136,7 @@ class Worker : public Listener, public Sender {
     return result;
   }
   mojo::MessagePipeHandle TakeChannelHandle() {
-    DCHECK(channel_handle_.is_valid());
+    DCHECK(channel_handle_);
     return channel_handle_.release();
   }
   Channel::Mode mode() { return mode_; }

@@ -122,11 +122,11 @@ TEST(CoreCppTest, Basic) {
 
   // |MakeScopedHandle| (just compilation tests):
   {
-    EXPECT_FALSE(MakeScopedHandle(Handle()).is_valid());
-    EXPECT_FALSE(MakeScopedHandle(MessagePipeHandle()).is_valid());
-    EXPECT_FALSE(MakeScopedHandle(DataPipeProducerHandle()).is_valid());
-    EXPECT_FALSE(MakeScopedHandle(DataPipeConsumerHandle()).is_valid());
-    EXPECT_FALSE(MakeScopedHandle(SharedBufferHandle()).is_valid());
+    EXPECT_FALSE(MakeScopedHandle(Handle()));
+    EXPECT_FALSE(MakeScopedHandle(MessagePipeHandle()));
+    EXPECT_FALSE(MakeScopedHandle(DataPipeProducerHandle()));
+    EXPECT_FALSE(MakeScopedHandle(DataPipeConsumerHandle()));
+    EXPECT_FALSE(MakeScopedHandle(SharedBufferHandle()));
   }
 
   // |MessagePipeHandle|/|ScopedMessagePipeHandle| functions:
@@ -370,22 +370,22 @@ TEST(CoreCppTest, TearDownWithMessagesEnqueued) {
 
 TEST(CoreCppTest, ScopedHandleMoveCtor) {
   ScopedSharedBufferHandle buffer1 = SharedBufferHandle::Create(1024);
-  EXPECT_TRUE(buffer1.is_valid());
+  EXPECT_TRUE(buffer1);
 
   ScopedSharedBufferHandle buffer2 = SharedBufferHandle::Create(1024);
-  EXPECT_TRUE(buffer2.is_valid());
+  EXPECT_TRUE(buffer2);
 
   // If this fails to close buffer1, ScopedHandleBase::CloseIfNecessary() will
   // assert.
   buffer1 = std::move(buffer2);
 
-  EXPECT_TRUE(buffer1.is_valid());
-  EXPECT_FALSE(buffer2.is_valid());
+  EXPECT_TRUE(buffer1);
+  EXPECT_FALSE(buffer2);
 }
 
 TEST(CoreCppTest, BasicSharedBuffer) {
   ScopedSharedBufferHandle h0 = SharedBufferHandle::Create(100);
-  ASSERT_TRUE(h0.is_valid());
+  ASSERT_TRUE(h0);
 
   // Map everything.
   ScopedSharedBufferMapping mapping = h0->Map(100);
@@ -395,7 +395,7 @@ TEST(CoreCppTest, BasicSharedBuffer) {
   // Duplicate |h0| to |h1|.
   ScopedSharedBufferHandle h1 =
       h0->Clone(SharedBufferHandle::AccessMode::READ_ONLY);
-  ASSERT_TRUE(h1.is_valid());
+  ASSERT_TRUE(h1);
 
   // Close |h0|.
   h0.reset();
@@ -419,7 +419,7 @@ TEST(CoreCppTest, BasicSharedBuffer) {
   h1.reset();
 
   // Creating a 1 EB shared buffer should fail without crashing.
-  EXPECT_FALSE(SharedBufferHandle::Create(1ULL << 60).is_valid());
+  EXPECT_FALSE(SharedBufferHandle::Create(1ULL << 60));
 }
 
 // TODO(vtl): Write data pipe tests.

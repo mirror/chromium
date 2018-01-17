@@ -168,7 +168,7 @@ class BlobURLLoader : public storage::MojoBlobReader::Delegate,
   }
 
   void DidRead(int num_bytes) override {
-    if (response_body_consumer_handle_.is_valid()) {
+    if (response_body_consumer_handle_) {
       // Send the data pipe on the first OnReadCompleted call.
       client_->OnStartLoadingResponseBody(
           std::move(response_body_consumer_handle_));
