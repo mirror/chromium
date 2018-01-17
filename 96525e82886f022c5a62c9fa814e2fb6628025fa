@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f635804_53159f67",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba82a5b7_60978f5c",
+      "range": {
+        "startLine": 1,
+        "startChar": 30,
+        "endLine": 1,
+        "endChar": 31
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c21dcfb_6aeede29",
         "filename": "docs/luci_migration_faq.md",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-17T01:18:00Z",
       "side": 1,
       "message": "nit: gitiles already styles headers in a certain way. Styling it further is not needed.\n\nBesides, it makes this file inconsistent with all other .md files in this dir",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 6
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547090ad_35e0ccb4",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5c21dcfb_6aeede29",
       "range": {
         "startLine": 17,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ae3e79b0_a4e6bc9e",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "37073505_69477c45",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 1
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a8fca53_c5a9f214",
         "filename": "docs/luci_migration_faq.md",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46993c71_c47a8506",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a8fca53_c5a9f214",
+      "range": {
+        "startLine": 27,
+        "startChar": 66,
+        "endLine": 29,
+        "endChar": 60
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "63ea793b_39563036",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95dceb29_2a7630d9",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 91
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5243e895_1db5569b",
         "filename": "docs/luci_migration_faq.md",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de474136_24557e0c",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5243e895_1db5569b",
+      "range": {
+        "startLine": 66,
+        "startChar": 19,
+        "endLine": 66,
+        "endChar": 34
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f9ade080_9f2c22cc",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbc4bfa1_a0f1e16b",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 3
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27eaab88_2989e943",
         "filename": "docs/luci_migration_faq.md",
         "patchSetId": 8
@@ -183,6 +351,30 @@
       "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c019a2_3b1c0a32",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27eaab88_2989e943",
+      "range": {
+        "startLine": 76,
+        "startChar": 3,
+        "endLine": 76,
+        "endChar": 27
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "9a9a2393_bd5e1216",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81364de7_0c238eef",
+      "range": {
+        "startLine": 80,
+        "startChar": 20,
+        "endLine": 80,
+        "endChar": 24
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05f218ed_09e82957",
         "filename": "docs/luci_migration_faq.md",
         "patchSetId": 8
@@ -229,6 +445,30 @@
       "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb3f0f7_b5568778",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05f218ed_09e82957",
+      "range": {
+        "startLine": 89,
+        "startChar": 1,
+        "endLine": 89,
+        "endChar": 14
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "a31d49cf_9c074ef2",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a693ee76_c237f7c0",
+      "range": {
+        "startLine": 89,
+        "startChar": 39,
+        "endLine": 90,
+        "endChar": 51
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4570a7a0_a49313d6",
         "filename": "docs/luci_migration_faq.md",
         "patchSetId": 8
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "92bf88bb_c0dfdf1c",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4570a7a0_a49313d6",
+      "range": {
+        "startLine": 99,
+        "startChar": 16,
+        "endLine": 99,
+        "endChar": 29
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e46cedd4_6fd56061",
         "filename": "docs/luci_migration_faq.md",
         "patchSetId": 8
@@ -289,6 +577,30 @@
       "writtenOn": "2018-01-17T01:18:00Z",
       "side": 1,
       "message": "does not apply to Chromium. All Chromium builders have build numbers enabled. They wouldn\u0027t work without numbers.",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99bc9e35_eb2c9d55",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Aware that is the case, but wanted to note this in case someone stumbles onto the URL. Keeping this and noting that it is not the case for Chromium",
+      "parentUuid": "e46cedd4_6fd56061",
       "range": {
         "startLine": 99,
         "startChar": 0,
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "52e6e067_15fab4a2",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45dabea5_30b9e70a",
+      "range": {
+        "startLine": 126,
+        "startChar": 29,
+        "endLine": 126,
+        "endChar": 38
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5813ea14_280c4d6a",
         "filename": "docs/luci_migration_faq.md",
         "patchSetId": 8
@@ -338,6 +674,24 @@
       "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ae3de7_a5b93338",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2018-01-17T02:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5813ea14_280c4d6a",
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
