@@ -748,6 +748,28 @@ void RenderFrameHostManager::OnDidUpdateFrameOwnerProperties(
   }
 }
 
+void RenderFrameHostManager::OnDidAddResourceTimingToParent() {
+  // This flag is unused for the main frame.
+  if (!frame_tree_node_->parent())
+    return;
+
+  SiteInstance* parent_instance =
+      frame_tree_node_->parent()->current_frame_host()->GetSiteInstance();
+
+  // Notify this frame's proxies if they live in a different process from its
+  // parent, so that subsequent navigations will know not to generate a resource
+  // timing info at all.
+  //
+  // TODO(alexmos): It would be sufficient to only send this update to proxies
+  // in the current FrameTree.
+  for (const auto& pair : proxy_hosts_) {
+    if (pair.second->GetSiteInstance() != parent_instance) {
+      pair.second->Send(new FrameMsg_DidAddResourceTimingToParent(
+          pair.second->GetRoutingID()));
+    }
+  }
+}
+
 void RenderFrameHostManager::OnDidUpdateOrigin(
     const url::Origin& origin,
     bool is_potentially_trustworthy_unique_origin) {

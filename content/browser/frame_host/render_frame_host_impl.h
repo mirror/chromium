@@ -137,6 +137,7 @@ struct FileChooserParams;
 struct FrameOwnerProperties;
 struct RequestNavigationParams;
 struct ResourceResponse;
+struct ResourceTimingInfo;
 struct SubresourceLoaderParams;
 
 class CONTENT_EXPORT RenderFrameHostImpl
@@ -781,6 +782,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
                      blink::WebTextDirection title_direction);
   void OnDidBlockFramebust(const GURL& url);
   void OnAbortNavigation();
+  void OnDidAddResourceTimingToParent();
+  void OnForwardResourceTimingToParent(
+      const ResourceTimingInfo& resource_timing);
   void OnDispatchLoad();
   void OnAccessibilityEvents(
       const std::vector<AccessibilityHostMsg_EventParams>& params,

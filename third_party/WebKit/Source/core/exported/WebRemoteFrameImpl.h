@@ -70,7 +70,9 @@ class CORE_EXPORT WebRemoteFrameImpl final
       WebContentSecurityPolicySource) override;
   void ResetReplicatedContentSecurityPolicy() override;
   void SetReplicatedInsecureRequestPolicy(WebInsecureRequestPolicy) override;
-  void DispatchLoadEventOnFrameOwner() override;
+  void DidAddResourceTimingToParent() override;
+  void ForwardResourceTimingToParent(const WebResourceTimingInfo&) override;
+  void DispatchLoadEventForFrameOwner() override;
   void DidStartLoading() override;
   void DidStopLoading() override;
   bool IsIgnoredForHitTest() const override;

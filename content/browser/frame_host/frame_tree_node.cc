@@ -314,8 +314,13 @@ void FrameTreeNode::SetOriginalOpener(FrameTreeNode* opener) {
 }
 
 void FrameTreeNode::SetCurrentURL(const GURL& url) {
-  if (!has_committed_real_load_ && url != url::kAboutBlankURL)
+  if (!has_committed_real_load_ && url != url::kAboutBlankURL) {
     has_committed_real_load_ = true;
+  } else if (has_committed_real_load_) {
+    // The frame has committed multiple real loads. Ensure all further resource
+    // timing info is suppressed in case of an IPC race or malicious renderer.
+    DidSendResourceTimingInfoToParent();
+  }
   current_frame_host()->SetLastCommittedUrl(url);
   blame_context_.TakeSnapshot();
 }

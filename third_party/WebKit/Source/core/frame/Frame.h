@@ -54,7 +54,6 @@ class LayoutEmbeddedContent;
 class LocalFrame;
 class KURL;
 class Page;
-class ResourceTimingInfo;
 class SecurityContext;
 class Settings;
 class WindowProxy;
@@ -86,8 +85,6 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   // to be started on a timer. Use the method above in such cases.
   virtual void Navigate(const FrameLoadRequest&) = 0;
   virtual void Reload(FrameLoadType, ClientRedirectPolicy) = 0;
-
-  virtual void AddResourceTiming(const ResourceTimingInfo&) = 0;
 
   virtual void Detach(FrameDetachType);
   void DisconnectOwnerElement();
@@ -198,6 +195,13 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   virtual void SetIsInert(bool) = 0;
   void UpdateInertIfPossible();
 
+  bool has_sent_resource_timing_to_parent() const {
+    return has_sent_resource_timing_to_parent_;
+  }
+  void DidSendResourceTimingToParent() {
+    has_sent_resource_timing_to_parent_ = true;
+  }
+
   String GetDevToolsFrameToken() const { return devtools_frame_token_; }
 
  protected:
@@ -235,6 +239,7 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   const Member<WindowProxyManager> window_proxy_manager_;
   // TODO(sashab): Investigate if this can be represented with m_lifecycle.
   bool is_loading_;
+  bool has_sent_resource_timing_to_parent_ = false;
   String devtools_frame_token_;
 };
 

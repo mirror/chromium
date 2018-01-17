@@ -385,6 +385,10 @@ class CONTENT_EXPORT RenderFrameHostManager
   // skipping the parent process.
   void OnDidUpdateFrameOwnerProperties(const FrameOwnerProperties& properties);
 
+  // Called to notify all the proxies of a frame that this frame has sent
+  // resource timing info, skipping the parent process.
+  void OnDidAddResourceTimingToParent();
+
   // Notify the proxies that the active sandbox flags on the frame have been
   // changed during page load. This happens when a CSP header sets sandbox
   // flags.
