@@ -16,6 +16,24 @@
       "revId": "83146debf1c6ccb473d20b8a9415d70dd08ef98a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfc7083_873b8dd2",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-17T22:22:24Z",
+      "side": 0,
+      "message": "When mirror mode is set, mirroring source and destination displays should not be cleared before OnNativeDisplaysChanged() is called, because the function uses the info to determine whether to restore mirror mode.\nI also checked the references to SetMultiDisplayMode() and it is safe to remove \"ClearMirroringSourceAndDestination();\" here.",
+      "parentUuid": "33ed5ebb_547ed6e6",
+      "revId": "83146debf1c6ccb473d20b8a9415d70dd08ef98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
