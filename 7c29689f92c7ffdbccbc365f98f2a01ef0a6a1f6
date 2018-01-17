@@ -742,6 +742,24 @@
     },
     {
       "key": {
+        "uuid": "46959e1d_0a9f05e3",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-17T01:27:11Z",
+      "side": 1,
+      "message": "After some further thinking, I think here I need to add an extra boolean return parameter to the OnCertificateRequested() mojom interface to distinguish between the third case and the second case. What do you think?",
+      "parentUuid": "691f3e5b_112a0847",
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb3a0a40_d770150d",
         "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
         "patchSetId": 12
