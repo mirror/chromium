@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf1b3de7_5f042ace",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-17T21:54:27Z",
+      "side": 1,
+      "message": "Add ? to make nullable",
+      "revId": "2433b0376163dc33f3e019936148c36976ba511e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c4c4f87_d2044e4e",
+        "filename": "third_party/WebKit/public/platform/AOMEnums.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-17T21:54:27Z",
+      "side": 1,
+      "message": "Can we share this with AOMUIntProperty rather than having two enums?",
+      "revId": "2433b0376163dc33f3e019936148c36976ba511e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
