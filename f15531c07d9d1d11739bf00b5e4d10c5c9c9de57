@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "c751a3a9_21cc2a57",
+        "filename": "chrome/browser/extensions/process_manager_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T15:53:38Z",
+      "side": 1,
+      "message": "nit: without context, it\u0027s not immediately clear to me that this is an html tag, instead of just emphasizing the phrase \"a download\".  Can we say something like \"downloaded via an HTML anchor tag with the download attribute (i.e., \u003ca download\u003e), which starts out as a...\"?  Or something similar?",
+      "range": {
+        "startLine": 863,
+        "startChar": 53,
+        "endLine": 863,
+        "endChar": 65
+      },
+      "revId": "f15531c07d9d1d11739bf00b5e4d10c5c9c9de57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35537ff1_20f870f5",
+        "filename": "chrome/browser/extensions/process_manager_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T15:53:38Z",
+      "side": 1,
+      "message": "nit: I think this might be slightly more readable extracted out and with StringPrintf - something like:\n\nstd::string script \u003d base::StringPrintf(\n    R\"(var anchor \u003d document.createElement(\u0027a\u0027);\n       anchor.href \u003d \u0027%s\u0027;\n       anchor.download \u003d \u0027\u0027;\n       anchor.click();)\",\n    nested_urls[i].spec().c_str());\nEXPECT_TRUE(ExecuteScript(popup, script));",
+      "revId": "f15531c07d9d1d11739bf00b5e4d10c5c9c9de57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02b1547b_e1e35a08",
         "filename": "content/browser/frame_host/navigation_handle_impl.cc",
         "patchSetId": 7
@@ -53,6 +93,23 @@
       "writtenOn": "2018-01-17T15:09:00Z",
       "side": 1,
       "message": "nit: Technically, you can get cross-origin filesystem or blob URL, if the other origin tells you one and I think it is allowed to navigate to, so it is a bit strange to see excluding these URLs from being cross-origin.\nIt is existing code, so I don\u0027t expect to see any changes here, just pondering why this is written this way.",
+      "revId": "f15531c07d9d1d11739bf00b5e4d10c5c9c9de57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c713b04a_a4c29947",
+        "filename": "extensions/browser/extension_navigation_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T15:53:38Z",
+      "side": 1,
+      "message": "nit: link crbug?",
       "revId": "f15531c07d9d1d11739bf00b5e4d10c5c9c9de57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
