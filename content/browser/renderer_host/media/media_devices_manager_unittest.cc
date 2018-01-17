@@ -23,6 +23,7 @@
 #include "media/audio/test_audio_thread.h"
 #include "media/capture/video/fake_video_capture_device_factory.h"
 #include "media/capture/video/video_capture_system_impl.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -32,6 +33,9 @@ using testing::SaveArg;
 namespace content {
 
 namespace {
+
+const int kRenderProcessId = 1;
+const int kRenderFrameId = 3;
 
 // Number of client enumerations to simulate on each test run.
 // This allows testing that a single call to low-level enumeration functions
@@ -118,10 +122,21 @@ class MockVideoCaptureDeviceFactory
   }
 };
 
-class MockMediaDeviceChangeSubscriber : public MediaDeviceChangeSubscriber {
+class MockMediaDevicesListener : public blink::mojom::MediaDevicesListener {
  public:
+  MockMediaDevicesListener() : binding_(this) {}
+
   MOCK_METHOD2(OnDevicesChanged,
                void(MediaDeviceType, const MediaDeviceInfoArray&));
+
+  blink::mojom::MediaDevicesListenerPtr CreateInterfacePtrAndBind() {
+    blink::mojom::MediaDevicesListenerPtr listener;
+    binding_.Bind(mojo::MakeRequest(&listener));
+    return listener;
+  }
+
+ private:
+  mojo::Binding<blink::mojom::MediaDevicesListener> binding_;
 };
 
 }  // namespace
@@ -139,6 +154,11 @@ class MediaDevicesManagerTest : public ::testing::Test {
                          const MediaDeviceEnumeration& result) {
     MockCallback(result);
     run_loop->Quit();
+  }
+
+  std::pair<std::string, url::Origin> GetSaltAndOrigin(int /* process_id */,
+                                                       int /* frame_id */) {
+    return std::make_pair(std::string(), url::Origin());
   }
 
  protected:
@@ -159,6 +179,9 @@ class MediaDevicesManagerTest : public ::testing::Test {
         std::move(video_capture_provider), kIgnoreLogMessageCB);
     media_devices_manager_.reset(new MediaDevicesManager(
         audio_system_.get(), video_capture_manager_, nullptr));
+    media_devices_manager_->set_salt_and_origin_callback_for_testing(
+        base::BindRepeating(&MediaDevicesManagerTest::GetSaltAndOrigin,
+                            base::Unretained(this)));
   }
 
   void EnableCache(MediaDeviceType type) {
@@ -490,55 +513,31 @@ TEST_F(MediaDevicesManagerTest, SubscribeDeviceChanges) {
                  base::Unretained(this), &run_loop));
   run_loop.Run();
 
-  // Add device-change event subscribers.
-  MockMediaDeviceChangeSubscriber subscriber_audio_input;
-  MockMediaDeviceChangeSubscriber subscriber_video_input;
-  MockMediaDeviceChangeSubscriber subscriber_audio_output;
-  MockMediaDeviceChangeSubscriber subscriber_all;
-
-  media_devices_manager_->SubscribeDeviceChangeNotifications(
-      MEDIA_DEVICE_TYPE_AUDIO_INPUT, &subscriber_audio_input);
-  media_devices_manager_->SubscribeDeviceChangeNotifications(
-      MEDIA_DEVICE_TYPE_VIDEO_INPUT, &subscriber_video_input);
-  media_devices_manager_->SubscribeDeviceChangeNotifications(
-      MEDIA_DEVICE_TYPE_AUDIO_OUTPUT, &subscriber_audio_output);
-  media_devices_manager_->SubscribeDeviceChangeNotifications(
-      MEDIA_DEVICE_TYPE_AUDIO_INPUT, &subscriber_all);
-  media_devices_manager_->SubscribeDeviceChangeNotifications(
-      MEDIA_DEVICE_TYPE_VIDEO_INPUT, &subscriber_all);
-  media_devices_manager_->SubscribeDeviceChangeNotifications(
-      MEDIA_DEVICE_TYPE_AUDIO_OUTPUT, &subscriber_all);
+  // Subscribe to device-change event.
+  MediaDevicesManager::BoolDeviceTypes devices_to_subscribe;
+  devices_to_subscribe.fill(true);
+  MockMediaDevicesListener device_change_listener;
+  uint32_t subscription_id =
+      media_devices_manager_->SubscribeDeviceChangeNotifications(
+          kRenderProcessId, kRenderFrameId,
+          std::string("fake_group_id_salt_base"), devices_to_subscribe,
+          device_change_listener.CreateInterfacePtrAndBind());
 
   MediaDeviceInfoArray notification_audio_input;
   MediaDeviceInfoArray notification_video_input;
   MediaDeviceInfoArray notification_audio_output;
-  MediaDeviceInfoArray notification_all_audio_input;
-  MediaDeviceInfoArray notification_all_video_input;
-  MediaDeviceInfoArray notification_all_audio_output;
-  EXPECT_CALL(subscriber_audio_input,
+  EXPECT_CALL(device_change_listener,
               OnDevicesChanged(MEDIA_DEVICE_TYPE_AUDIO_INPUT, _))
       .Times(1)
       .WillOnce(SaveArg<1>(&notification_audio_input));
-  EXPECT_CALL(subscriber_video_input,
+  EXPECT_CALL(device_change_listener,
               OnDevicesChanged(MEDIA_DEVICE_TYPE_VIDEO_INPUT, _))
       .Times(1)
       .WillOnce(SaveArg<1>(&notification_video_input));
-  EXPECT_CALL(subscriber_audio_output,
+  EXPECT_CALL(device_change_listener,
               OnDevicesChanged(MEDIA_DEVICE_TYPE_AUDIO_OUTPUT, _))
       .Times(1)
       .WillOnce(SaveArg<1>(&notification_audio_output));
-  EXPECT_CALL(subscriber_all,
-              OnDevicesChanged(MEDIA_DEVICE_TYPE_AUDIO_INPUT, _))
-      .Times(2)
-      .WillRepeatedly(SaveArg<1>(&notification_all_audio_input));
-  EXPECT_CALL(subscriber_all,
-              OnDevicesChanged(MEDIA_DEVICE_TYPE_VIDEO_INPUT, _))
-      .Times(2)
-      .WillRepeatedly(SaveArg<1>(&notification_all_video_input));
-  EXPECT_CALL(subscriber_all,
-              OnDevicesChanged(MEDIA_DEVICE_TYPE_AUDIO_OUTPUT, _))
-      .Times(2)
-      .WillRepeatedly(SaveArg<1>(&notification_all_audio_output));
 
   // Simulate device changes.
   num_audio_input_devices = 3;
@@ -555,19 +554,12 @@ TEST_F(MediaDevicesManagerTest, SubscribeDeviceChanges) {
   EXPECT_EQ(num_audio_input_devices, notification_audio_input.size());
   EXPECT_EQ(num_video_input_devices, notification_video_input.size());
   EXPECT_EQ(num_audio_output_devices, notification_audio_output.size());
-  EXPECT_EQ(num_audio_input_devices, notification_all_audio_input.size());
-  EXPECT_EQ(num_video_input_devices, notification_all_video_input.size());
-  EXPECT_EQ(num_audio_output_devices, notification_all_audio_output.size());
 
-  media_devices_manager_->UnsubscribeDeviceChangeNotifications(
-      MEDIA_DEVICE_TYPE_AUDIO_INPUT, &subscriber_audio_input);
-  media_devices_manager_->UnsubscribeDeviceChangeNotifications(
-      MEDIA_DEVICE_TYPE_VIDEO_INPUT, &subscriber_video_input);
-  media_devices_manager_->UnsubscribeDeviceChangeNotifications(
-      MEDIA_DEVICE_TYPE_AUDIO_OUTPUT, &subscriber_audio_output);
+  // Unsubscribe.
+  media_devices_manager_->UnsubscribeDeviceChangeNotifications(subscription_id);
 
-  // Simulate further device changes. Only the objects still subscribed to the
-  // device-change events will receive notifications.
+  // Simulate further device changes. Device-change events notifications will no
+  // longer be received as we have unsubscribed.
   num_audio_input_devices = 2;
   num_video_input_devices = 1;
   num_audio_output_devices = 3;
@@ -579,9 +571,9 @@ TEST_F(MediaDevicesManagerTest, SubscribeDeviceChanges) {
   media_devices_manager_->OnDevicesChanged(
       base::SystemMonitor::DEVTYPE_VIDEO_CAPTURE);
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(num_audio_input_devices, notification_all_audio_input.size());
-  EXPECT_EQ(num_video_input_devices, notification_all_video_input.size());
-  EXPECT_EQ(num_audio_output_devices, notification_all_audio_output.size());
+  EXPECT_NE(num_audio_input_devices, notification_audio_input.size());
+  EXPECT_NE(num_video_input_devices, notification_video_input.size());
+  EXPECT_NE(num_audio_output_devices, notification_audio_output.size());
 }
 
 }  // namespace content
