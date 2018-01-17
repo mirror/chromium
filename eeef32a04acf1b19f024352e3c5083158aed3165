@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4d70ed90_15d308ff",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-17T04:20:16Z",
+      "side": 1,
+      "message": "As base::IDMap\u0027s value type should be a dereferenceable type (a raw pointer or smart pointer), seems saving base::OnceCallback inside it is not so easy. Not sure we can save std::unique_ptr\u003cbase::OnceCallback\u003e instead? Any ideas?",
+      "parentUuid": "b5da1041_d1ae1fe0",
+      "range": {
+        "startLine": 316,
+        "startChar": 1,
+        "endLine": 316,
+        "endChar": 11
+      },
+      "revId": "eeef32a04acf1b19f024352e3c5083158aed3165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0d279b7_307c8026",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 3
