@@ -13,20 +13,21 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/url_constants.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/devtools_frontend_host.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/browser/url_data_source.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
+#include "content/public/common/simple_url_loader.h"
 #include "content/public/common/user_agent.h"
 #include "net/base/filename_util.h"
 #include "net/base/load_flags.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
-#include "net/url_request/url_fetcher.h"
-#include "net/url_request/url_fetcher_delegate.h"
-#include "net/url_request/url_request_context_getter.h"
 #include "third_party/WebKit/public/public_features.h"
 
+using content::BrowserContext;
 using content::BrowserThread;
 using content::WebContents;
 
@@ -73,12 +74,11 @@ std::string GetMimeTypeForPath(const std::string& path) {
 // 2. /remote/: remote DevTools frontend is served from App Engine.
 // 3. /custom/: custom DevTools frontend is served from the server as specified
 //    by the --custom-devtools-frontend flag.
-class DevToolsDataSource : public content::URLDataSource,
-                           public net::URLFetcherDelegate {
+class DevToolsDataSource : public content::URLDataSource {
  public:
   using GotDataCallback = content::URLDataSource::GotDataCallback;
 
-  explicit DevToolsDataSource(net::URLRequestContextGetter* request_context);
+  explicit DevToolsDataSource(BrowserContext* browser_context);
 
   // content::URLDataSource implementation.
   std::string GetSource() const override;
@@ -95,8 +95,8 @@ class DevToolsDataSource : public content::URLDataSource,
   bool ShouldDenyXFrameOptions() const override;
   bool ShouldServeMimeTypeAsContentTypeHeader() const override;
 
-  // net::URLFetcherDelegate overrides.
-  void OnURLFetchComplete(const net::URLFetcher* source) override;
+  void OnSimpleLoaderComplete(content::SimpleURLLoader* source,
+                              std::unique_ptr<std::string> response_body);
 
   // Serves bundled DevTools frontend from ResourceBundle.
   void StartBundledDataRequest(const std::string& path,
@@ -112,18 +112,16 @@ class DevToolsDataSource : public content::URLDataSource,
 
   ~DevToolsDataSource() override;
 
-  scoped_refptr<net::URLRequestContextGetter> request_context_;
-
-  using PendingRequestsMap = std::map<const net::URLFetcher*, GotDataCallback>;
+  BrowserContext* browser_context_;
+  using PendingRequestsMap =
+      std::map<content::SimpleURLLoader*, GotDataCallback>;
   PendingRequestsMap pending_;
 
   DISALLOW_COPY_AND_ASSIGN(DevToolsDataSource);
 };
 
-DevToolsDataSource::DevToolsDataSource(
-    net::URLRequestContextGetter* request_context)
-    : request_context_(request_context) {
-}
+DevToolsDataSource::DevToolsDataSource(BrowserContext* browser_context)
+    : browser_context_(browser_context) {}
 
 DevToolsDataSource::~DevToolsDataSource() {
   for (const auto& pair : pending_) {
@@ -261,12 +259,20 @@ void DevToolsDataSource::StartRemoteDataRequest(
             }
           }
         })");
-  net::URLFetcher* fetcher = net::URLFetcher::Create(url, net::URLFetcher::GET,
-                                                     this, traffic_annotation)
-                                 .release();
-  pending_[fetcher] = callback;
-  fetcher->SetRequestContext(request_context_.get());
-  fetcher->Start();
+  auto resource_request = std::make_unique<content::ResourceRequest>();
+  resource_request->url = url;
+  std::unique_ptr<content::SimpleURLLoader> simple_loader =
+      content::SimpleURLLoader::Create(std::move(resource_request),
+                                       traffic_annotation);
+  pending_[simple_loader.get()] = callback;
+  content::mojom::URLLoaderFactory* loader_factory =
+      content::BrowserContext::GetDefaultStoragePartition(browser_context_)
+          ->GetURLLoaderFactoryForBrowserProcess();
+  simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
+      loader_factory,
+      base::BindOnce(&DevToolsDataSource::OnSimpleLoaderComplete,
+                     base::Unretained(this),
+                     base::Unretained(simple_loader.get())));
 }
 
 void DevToolsDataSource::StartCustomDataRequest(
@@ -305,23 +311,31 @@ void DevToolsDataSource::StartCustomDataRequest(
             }
           }
         })");
-  net::URLFetcher* fetcher = net::URLFetcher::Create(url, net::URLFetcher::GET,
-                                                     this, traffic_annotation)
-                                 .release();
-  pending_[fetcher] = callback;
-  fetcher->SetRequestContext(request_context_.get());
-  fetcher->SetLoadFlags(net::LOAD_DISABLE_CACHE);
-  fetcher->Start();
+  auto resource_request = std::make_unique<content::ResourceRequest>();
+  resource_request->url = url;
+  resource_request->load_flags = net::LOAD_DISABLE_CACHE;
+  std::unique_ptr<content::SimpleURLLoader> simple_loader =
+      content::SimpleURLLoader::Create(std::move(resource_request),
+                                       traffic_annotation);
+  pending_[simple_loader.get()] = callback;
+  content::mojom::URLLoaderFactory* loader_factory =
+      content::BrowserContext::GetDefaultStoragePartition(browser_context_)
+          ->GetURLLoaderFactoryForBrowserProcess();
+  simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
+      loader_factory,
+      base::BindOnce(&DevToolsDataSource::OnSimpleLoaderComplete,
+                     base::Unretained(this),
+                     base::Unretained(simple_loader.get())));
 }
 
-void DevToolsDataSource::OnURLFetchComplete(const net::URLFetcher* source) {
+void DevToolsDataSource::OnSimpleLoaderComplete(
+    content::SimpleURLLoader* source,
+    std::unique_ptr<std::string> response_body) {
   DCHECK(source);
   PendingRequestsMap::iterator it = pending_.find(source);
   DCHECK(it != pending_.end());
-  std::string response;
-  source->GetResponseAsString(&response);
-  delete source;
-  it->second.Run(base::RefCountedString::TakeString(&response));
+  //delete source;
+  it->second.Run(base::RefCountedString::TakeString(response_body.get()));
   pending_.erase(it);
 }
 
@@ -378,9 +392,7 @@ DevToolsUI::DevToolsUI(content::WebUI* web_ui)
     : WebUIController(web_ui), bindings_(web_ui->GetWebContents()) {
   web_ui->SetBindings(0);
   Profile* profile = Profile::FromWebUI(web_ui);
-  content::URLDataSource::Add(
-      profile,
-      new DevToolsDataSource(profile->GetRequestContext()));
+  content::URLDataSource::Add(profile, new DevToolsDataSource(profile));
 }
 
 DevToolsUI::~DevToolsUI() {
