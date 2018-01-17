@@ -51,6 +51,20 @@ static inline bool ShouldStopAtShadowRoot(Event& event,
                                           ShadowRoot& shadow_root,
                                           EventTarget& target) {
   if (shadow_root.IsV1()) {
+    // TODO(kochi): crbug.com/802009 This is a temporary hack so that tests
+    // passing with V0 UA shadow root can also pass on V1 UA shadow root not to
+    // get V1 conversion blocked on external discussion at
+    // https://github.com/w3c/clipboard-apis/issues/61
+    // about whether clipboard events are composed or not.
+    if (shadow_root.IsUserAgent() &&
+        ((event.type() == EventTypeNames::beforecopy) ||
+         (event.type() == EventTypeNames::beforecut) ||
+         (event.type() == EventTypeNames::beforepaste) ||
+         (event.type() == EventTypeNames::copy) ||
+         (event.type() == EventTypeNames::cut) ||
+         (event.type() == EventTypeNames::paste))) {
+      return false;
+    }
     // In v1, an event is scoped by default unless event.composed flag is set.
     return !event.composed() && target.ToNode() &&
            target.ToNode()->OwnerShadowHost() == shadow_root.host();
