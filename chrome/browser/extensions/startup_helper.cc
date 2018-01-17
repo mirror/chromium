@@ -17,9 +17,11 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/chrome_extensions_client.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/service_manager_connection.h"
 #include "extensions/browser/extension_file_task_runner.h"
 #include "extensions/browser/sandboxed_unpacker.h"
 #include "extensions/common/extension.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 using content::BrowserThread;
 
@@ -86,13 +88,17 @@ class ValidateCrxHelper : public SandboxedUnpackerClient {
         quit_closure_(std::move(quit_closure)),
         success_(false) {}
 
-  bool success() { return success_; }
-  const base::string16& error() { return error_; }
+  bool success() const { return success_; }
+  const base::string16& error() const { return error_; }
 
   void Start() {
+    std::unique_ptr<::service_manager::Connector> connector =
+        content::ServiceManagerConnection::GetForProcess()
+            ->GetConnector()
+            ->Clone();
     GetExtensionFileTaskRunner()->PostTask(
-        FROM_HERE,
-        base::BindOnce(&ValidateCrxHelper::StartOnBlockingThread, this));
+        FROM_HERE, base::BindOnce(&ValidateCrxHelper::StartOnBlockingThread,
+                                  this, std::move(connector)));
   }
 
  protected:
@@ -126,10 +132,12 @@ class ValidateCrxHelper : public SandboxedUnpackerClient {
     std::move(quit_closure_).Run();
   }
 
-  void StartOnBlockingThread() {
+  void StartOnBlockingThread(
+      std::unique_ptr<service_manager::Connector> connector) {
     DCHECK(GetExtensionFileTaskRunner()->RunsTasksInCurrentSequence());
     scoped_refptr<SandboxedUnpacker> unpacker(new SandboxedUnpacker(
-        Manifest::INTERNAL, 0, /* no special creation flags */
+        std::move(connector), Manifest::INTERNAL,
+        0, /* no special creation flags */
         temp_dir_, GetExtensionFileTaskRunner().get(), this));
     unpacker->StartWithCrx(crx_file_);
   }
