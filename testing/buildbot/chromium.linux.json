@@ -655,6 +655,18 @@
         "test": "browser_tests"
       },
       {
+        "args": [
+          "--enable-viz",
+          "--test-launcher-filter-file=../../testing/buildbot/filters/viz.browser_tests.filter"
+        ],
+        "name": "viz_browser_tests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "shards": 10
+        },
+        "test": "browser_tests"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -1394,6 +1406,18 @@
         "test": "browser_tests"
       },
       {
+        "args": [
+          "--enable-viz",
+          "--test-launcher-filter-file=../../testing/buildbot/filters/viz.browser_tests.filter"
+        ],
+        "name": "viz_browser_tests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "shards": 10
+        },
+        "test": "browser_tests"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -2077,6 +2101,18 @@
           "--test-launcher-filter-file=../../testing/buildbot/filters/mojo.fyi.network_browser_tests.filter"
         ],
         "name": "network_service_browser_tests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "shards": 10
+        },
+        "test": "browser_tests"
+      },
+      {
+        "args": [
+          "--enable-viz",
+          "--test-launcher-filter-file=../../testing/buildbot/filters/viz.browser_tests.filter"
+        ],
+        "name": "viz_browser_tests",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "shards": 10
