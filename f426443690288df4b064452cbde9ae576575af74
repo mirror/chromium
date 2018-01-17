@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1f04c3f_97382408",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-17T19:54:23Z",
+      "side": 1,
+      "message": "\"DnsTransaction\" (class name), or \"DNS Transaction\"",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 28
+      },
+      "revId": "f426443690288df4b064452cbde9ae576575af74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
