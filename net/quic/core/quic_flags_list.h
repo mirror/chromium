@@ -169,3 +169,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_write_index, false)
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_streams_unblocked_by_session,
           false)
+
+// If true, inspects CHLO packets for indicator tags to allow early session
+// creation.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_inspect_chlo_tags, false)
