@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f04e6e53_6f7acad8",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_time_zone_pref_base.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-17T22:08:23Z",
+      "side": 1,
+      "message": "Time zone settings can be policy-bound (for all users), or primary-user bound (for secondary users in multiprofile mode). Otherwise do not modify default values.",
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
