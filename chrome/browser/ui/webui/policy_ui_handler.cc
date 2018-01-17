@@ -139,11 +139,11 @@ void GetStatusFromCore(const policy::CloudPolicyCore* core,
   std::string username = policy ? policy->username() : std::string();
 
   if (policy && policy->has_annotated_asset_id())
-    dict->SetString("assetId", policy->annotated_asset_id());
+    dict->SetKey("assetId", base::Value(policy->annotated_asset_id()));
   if (policy && policy->has_annotated_location())
-    dict->SetString("location", policy->annotated_location());
+    dict->SetKey("location", base::Value(policy->annotated_location()));
   if (policy && policy->has_directory_api_id())
-    dict->SetString("directoryApiId", policy->directory_api_id());
+    dict->SetKey("directoryApiId", base::Value(policy->directory_api_id()));
 
   base::TimeDelta refresh_interval =
       base::TimeDelta::FromMilliseconds(refresh_scheduler ?
@@ -154,27 +154,29 @@ void GetStatusFromCore(const policy::CloudPolicyCore* core,
 
   bool no_error = store->status() == policy::CloudPolicyStore::STATUS_OK &&
                   client && client->status() == policy::DM_STATUS_SUCCESS;
-  dict->SetBoolean("error", !no_error);
-  dict->SetString("status", status);
-  dict->SetString("clientId", client_id);
-  dict->SetString("username", username);
-  dict->SetString("refreshInterval",
-                  ui::TimeFormat::Simple(ui::TimeFormat::FORMAT_DURATION,
-                                         ui::TimeFormat::LENGTH_SHORT,
-                                         refresh_interval));
-  dict->SetString("timeSinceLastRefresh", last_refresh_time.is_null() ?
-      l10n_util::GetStringUTF16(IDS_POLICY_NEVER_FETCHED) :
-      ui::TimeFormat::Simple(ui::TimeFormat::FORMAT_ELAPSED,
-                             ui::TimeFormat::LENGTH_SHORT,
-                             base::Time::NowFromSystemTime() -
-                                 last_refresh_time));
+  dict->SetKey("error", base::Value(!no_error));
+  dict->SetKey("status", base::Value(status));
+  dict->SetKey("clientId", base::Value(client_id));
+  dict->SetKey("username", base::Value(username));
+  dict->SetKey("refreshInterval",
+               base::Value(ui::TimeFormat::Simple(
+                   ui::TimeFormat::FORMAT_DURATION,
+                   ui::TimeFormat::LENGTH_SHORT, refresh_interval)));
+  dict->SetKey(
+      "timeSinceLastRefresh",
+      base::Value(last_refresh_time.is_null()
+                      ? l10n_util::GetStringUTF16(IDS_POLICY_NEVER_FETCHED)
+                      : ui::TimeFormat::Simple(ui::TimeFormat::FORMAT_ELAPSED,
+                                               ui::TimeFormat::LENGTH_SHORT,
+                                               base::Time::NowFromSystemTime() -
+                                                   last_refresh_time)));
 }
 
 void ExtractDomainFromUsername(base::DictionaryValue* dict) {
   std::string username;
   dict->GetString("username", &username);
   if (!username.empty())
-    dict->SetString("domain", gaia::ExtractDomainName(username));
+    dict->SetKey("domain", base::Value(gaia::ExtractDomainName(username)));
 }
 
 }  // namespace
@@ -711,7 +713,7 @@ void PolicyUIHandler::SendPolicyNames() const {
         extensions::manifest_keys::kStorageManagedSchema))
       continue;
     auto extension_value = std::make_unique<base::DictionaryValue>();
-    extension_value->SetString("name", extension->name());
+    extension_value->SetKey("name", base::Value(extension->name()));
     const policy::Schema* schema =
         schema_map->GetSchema(policy::PolicyNamespace(
             policy::POLICY_DOMAIN_EXTENSIONS, extension->id()));
@@ -747,13 +749,14 @@ void PolicyUIHandler::SendStatus() const {
       new base::DictionaryValue);
   device_status_provider_->GetStatus(device_status.get());
   if (!device_domain_.empty())
-    device_status->SetString("domain", device_domain_);
+    device_status->SetKey("domain", base::Value(device_domain_));
   std::unique_ptr<base::DictionaryValue> user_status(new base::DictionaryValue);
   user_status_provider_->GetStatus(user_status.get());
   std::string username;
   user_status->GetString("username", &username);
   if (!username.empty())
-    user_status->SetString("domain", gaia::ExtractDomainName(username));
+    user_status->SetKey("domain",
+                        base::Value(gaia::ExtractDomainName(username)));
 
   base::DictionaryValue status;
   if (!device_status->empty())

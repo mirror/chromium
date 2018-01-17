@@ -697,9 +697,9 @@ TEST(ValuesTest, Basic) {
   ASSERT_EQ(std::string("http://google.com"), homepage);
 
   ASSERT_FALSE(settings.Get("global", nullptr));
-  settings.SetBoolean("global", true);
+  settings.SetKey("global", base::Value(true));
   ASSERT_TRUE(settings.Get("global", nullptr));
-  settings.SetString("global.homepage", "http://scurvy.com");
+  settings.SetPath({"global", "homepage"}, base::Value("http://scurvy.com"));
   ASSERT_TRUE(settings.Get("global", nullptr));
   homepage = "http://google.com";
   ASSERT_TRUE(settings.GetString("global.homepage", &homepage));
@@ -715,8 +715,8 @@ TEST(ValuesTest, Basic) {
   ASSERT_TRUE(settings.GetList("global.toolbar.bookmarks", &toolbar_bookmarks));
 
   std::unique_ptr<DictionaryValue> new_bookmark(new DictionaryValue);
-  new_bookmark->SetString("name", "Froogle");
-  new_bookmark->SetString("url", "http://froogle.com");
+  new_bookmark->SetKey("name", base::Value("Froogle"));
+  new_bookmark->SetKey("url", base::Value("http://froogle.com"));
   toolbar_bookmarks->Append(std::move(new_bookmark));
 
   ListValue* bookmark_list;
@@ -908,28 +908,29 @@ TEST(ValuesTest, DictionarySetReturnsPointer) {
 
   {
     DictionaryValue dict;
-    Value* int_ptr = dict.SetInteger("foo.bar", 42);
+    Value* int_ptr = dict.SetPath({"foo", "bar"}, base::Value(42));
     EXPECT_EQ(Value::Type::INTEGER, int_ptr->type());
     EXPECT_EQ(42, int_ptr->GetInt());
   }
 
   {
     DictionaryValue dict;
-    Value* double_ptr = dict.SetDouble("foo.bar", 3.142);
+    Value* double_ptr = dict.SetPath({"foo", "bar"}, base::Value(3.142));
     EXPECT_EQ(Value::Type::DOUBLE, double_ptr->type());
     EXPECT_EQ(3.142, double_ptr->GetDouble());
   }
 
   {
     DictionaryValue dict;
-    Value* string_ptr = dict.SetString("foo.bar", "foo");
+    Value* string_ptr = dict.SetPath({"foo", "bar"}, base::Value("foo"));
     EXPECT_EQ(Value::Type::STRING, string_ptr->type());
     EXPECT_EQ("foo", string_ptr->GetString());
   }
 
   {
     DictionaryValue dict;
-    Value* string16_ptr = dict.SetString("foo.bar", ASCIIToUTF16("baz"));
+    Value* string16_ptr =
+        dict.SetPath({"foo", "bar"}, base::Value(ASCIIToUTF16("baz")));
     EXPECT_EQ(Value::Type::STRING, string16_ptr->type());
     EXPECT_EQ("baz", string16_ptr->GetString());
   }
@@ -1020,8 +1021,8 @@ TEST(ValuesTest, DictionaryWithoutPathExpansionDeprecated) {
 
 TEST(ValuesTest, DictionaryRemovePath) {
   DictionaryValue dict;
-  dict.SetInteger("a.long.way.down", 1);
-  dict.SetBoolean("a.long.key.path", true);
+  dict.SetPath({"a", "long", "way", "down"}, base::Value(1));
+  dict.SetPath({"a", "long", "key", "path"}, base::Value(true));
 
   std::unique_ptr<Value> removed_item;
   EXPECT_TRUE(dict.RemovePath("a.long.way.down", &removed_item));
@@ -1068,7 +1069,7 @@ TEST(ValuesTest, DeepCopy) {
 
   DictionaryValue* dict_weak = original_dict.SetDictionary(
       "dictionary", std::make_unique<DictionaryValue>());
-  dict_weak->SetString("key", "value");
+  dict_weak->SetKey("key", base::Value("value"));
 
   auto copy_dict = original_dict.CreateDeepCopy();
   ASSERT_TRUE(copy_dict.get());
@@ -1184,11 +1185,11 @@ TEST(ValuesTest, Equals) {
   EXPECT_NE(*null1, boolean);
 
   DictionaryValue dv;
-  dv.SetBoolean("a", false);
-  dv.SetInteger("b", 2);
-  dv.SetDouble("c", 2.5);
-  dv.SetString("d1", "string");
-  dv.SetString("d2", ASCIIToUTF16("http://google.com"));
+  dv.SetKey("a", base::Value(false));
+  dv.SetKey("b", base::Value(2));
+  dv.SetKey("c", base::Value(2.5));
+  dv.SetKey("d1", base::Value("string"));
+  dv.SetKey("d2", base::Value(ASCIIToUTF16("http://google.com")));
   dv.Set("e", std::make_unique<Value>());
 
   auto copy = dv.CreateDeepCopy();
@@ -1211,7 +1212,7 @@ TEST(ValuesTest, Equals) {
   copy = dv.CreateDeepCopy();
   EXPECT_EQ(dv, *copy);
   copy->Remove("a", nullptr);
-  copy->SetBoolean("aa", false);
+  copy->SetKey("aa", base::Value(false));
   EXPECT_NE(dv, *copy);
 }
 
@@ -1311,8 +1312,8 @@ TEST(ValuesTest, Comparisons) {
   // Test Non Empty Dict Values.
   DictionaryValue int_dict1;
   DictionaryValue int_dict2;
-  int_dict1.SetInteger("key", 1);
-  int_dict2.SetInteger("key", 2);
+  int_dict1.SetKey("key", base::Value(1));
+  int_dict2.SetKey("key", base::Value(2));
   EXPECT_FALSE(int_dict1 == int_dict2);
   EXPECT_NE(int_dict1, int_dict2);
   EXPECT_LT(int_dict1, int_dict2);
@@ -1391,9 +1392,9 @@ TEST(ValuesTest, RemoveEmptyChildren) {
   EXPECT_TRUE(root->empty());
 
   // Make sure we don't prune too much.
-  root->SetBoolean("bool", true);
+  root->SetKey("bool", base::Value(true));
   root->Set("empty_dict", std::make_unique<DictionaryValue>());
-  root->SetString("empty_string", std::string());
+  root->SetKey("empty_string", base::Value(std::string()));
   root = root->DeepCopyWithoutEmptyChildren();
   EXPECT_EQ(2U, root->size());
 
@@ -1460,19 +1461,22 @@ TEST(ValuesTest, RemoveEmptyChildren) {
 
 TEST(ValuesTest, MergeDictionary) {
   std::unique_ptr<DictionaryValue> base(new DictionaryValue);
-  base->SetString("base_key", "base_key_value_base");
-  base->SetString("collide_key", "collide_key_value_base");
+  base->SetKey("base_key", base::Value("base_key_value_base"));
+  base->SetKey("collide_key", base::Value("collide_key_value_base"));
   std::unique_ptr<DictionaryValue> base_sub_dict(new DictionaryValue);
-  base_sub_dict->SetString("sub_base_key", "sub_base_key_value_base");
-  base_sub_dict->SetString("sub_collide_key", "sub_collide_key_value_base");
+  base_sub_dict->SetKey("sub_base_key", base::Value("sub_base_key_value_base"));
+  base_sub_dict->SetKey("sub_collide_key",
+                        base::Value("sub_collide_key_value_base"));
   base->Set("sub_dict_key", std::move(base_sub_dict));
 
   std::unique_ptr<DictionaryValue> merge(new DictionaryValue);
-  merge->SetString("merge_key", "merge_key_value_merge");
-  merge->SetString("collide_key", "collide_key_value_merge");
+  merge->SetKey("merge_key", base::Value("merge_key_value_merge"));
+  merge->SetKey("collide_key", base::Value("collide_key_value_merge"));
   std::unique_ptr<DictionaryValue> merge_sub_dict(new DictionaryValue);
-  merge_sub_dict->SetString("sub_merge_key", "sub_merge_key_value_merge");
-  merge_sub_dict->SetString("sub_collide_key", "sub_collide_key_value_merge");
+  merge_sub_dict->SetKey("sub_merge_key",
+                         base::Value("sub_merge_key_value_merge"));
+  merge_sub_dict->SetKey("sub_collide_key",
+                         base::Value("sub_collide_key_value_merge"));
   merge->Set("sub_dict_key", std::move(merge_sub_dict));
 
   base->MergeDictionary(merge.get());
@@ -1506,7 +1510,7 @@ TEST(ValuesTest, MergeDictionary) {
 TEST(ValuesTest, MergeDictionaryDeepCopy) {
   std::unique_ptr<DictionaryValue> child(new DictionaryValue);
   DictionaryValue* original_child = child.get();
-  child->SetString("test", "value");
+  child->SetKey("test", base::Value("value"));
   EXPECT_EQ(1U, child->size());
 
   std::string value;
@@ -1529,7 +1533,7 @@ TEST(ValuesTest, MergeDictionaryDeepCopy) {
   EXPECT_TRUE(ptr->GetString("test", &value));
   EXPECT_EQ("value", value);
 
-  original_child->SetString("test", "overwrite");
+  original_child->SetKey("test", base::Value("overwrite"));
   base.reset();
   EXPECT_TRUE(ptr->GetString("test", &value));
   EXPECT_EQ("value", value);
@@ -1896,8 +1900,8 @@ TEST(ValuesTest, SelfSwap) {
 
 TEST(ValuesTest, FromToUniquePtrValue) {
   std::unique_ptr<DictionaryValue> dict = std::make_unique<DictionaryValue>();
-  dict->SetString("name", "Froogle");
-  dict->SetString("url", "http://froogle.com");
+  dict->SetKey("name", base::Value("Froogle"));
+  dict->SetKey("url", base::Value("http://froogle.com"));
   Value dict_copy = dict->Clone();
 
   Value dict_converted = Value::FromUniquePtrValue(std::move(dict));

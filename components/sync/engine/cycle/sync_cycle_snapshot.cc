@@ -58,41 +58,44 @@ SyncCycleSnapshot::~SyncCycleSnapshot() {}
 
 std::unique_ptr<base::DictionaryValue> SyncCycleSnapshot::ToValue() const {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
-  value->SetInteger("numSuccessfulCommits",
-                    model_neutral_state_.num_successful_commits);
-  value->SetInteger("numSuccessfulBookmarkCommits",
-                    model_neutral_state_.num_successful_bookmark_commits);
-  value->SetInteger("numUpdatesDownloadedTotal",
-                    model_neutral_state_.num_updates_downloaded_total);
-  value->SetInteger(
+  value->SetKey("numSuccessfulCommits",
+                base::Value(model_neutral_state_.num_successful_commits));
+  value->SetKey(
+      "numSuccessfulBookmarkCommits",
+      base::Value(model_neutral_state_.num_successful_bookmark_commits));
+  value->SetKey("numUpdatesDownloadedTotal",
+                base::Value(model_neutral_state_.num_updates_downloaded_total));
+  value->SetKey(
       "numTombstoneUpdatesDownloadedTotal",
-      model_neutral_state_.num_tombstone_updates_downloaded_total);
-  value->SetInteger(
+      base::Value(model_neutral_state_.num_tombstone_updates_downloaded_total));
+  value->SetKey(
       "numReflectedUpdatesDownloadedTotal",
-      model_neutral_state_.num_reflected_updates_downloaded_total);
-  value->SetInteger("numLocalOverwrites",
-                    model_neutral_state_.num_local_overwrites);
-  value->SetInteger("numServerOverwrites",
-                    model_neutral_state_.num_server_overwrites);
+      base::Value(model_neutral_state_.num_reflected_updates_downloaded_total));
+  value->SetKey("numLocalOverwrites",
+                base::Value(model_neutral_state_.num_local_overwrites));
+  value->SetKey("numServerOverwrites",
+                base::Value(model_neutral_state_.num_server_overwrites));
   value->Set("downloadProgressMarkers",
              ProgressMarkerMapToValue(download_progress_markers_));
-  value->SetBoolean("isSilenced", is_silenced_);
+  value->SetKey("isSilenced", base::Value(is_silenced_));
   // We don't care too much if we lose precision here, also.
-  value->SetInteger("numEncryptionConflicts", num_encryption_conflicts_);
-  value->SetInteger("numHierarchyConflicts", num_hierarchy_conflicts_);
-  value->SetInteger("numServerConflicts", num_server_conflicts_);
-  value->SetInteger("numEntries", num_entries_);
-  value->SetString("legacySource", ProtoEnumToString(legacy_updates_source_));
-  value->SetBoolean("notificationsEnabled", notifications_enabled_);
+  value->SetKey("numEncryptionConflicts",
+                base::Value(num_encryption_conflicts_));
+  value->SetKey("numHierarchyConflicts", base::Value(num_hierarchy_conflicts_));
+  value->SetKey("numServerConflicts", base::Value(num_server_conflicts_));
+  value->SetKey("numEntries", base::Value(static_cast<int>(num_entries_)));
+  value->SetKey("legacySource",
+                base::Value(ProtoEnumToString(legacy_updates_source_)));
+  value->SetKey("notificationsEnabled", base::Value(notifications_enabled_));
 
   std::unique_ptr<base::DictionaryValue> counter_entries(
       new base::DictionaryValue());
   for (int i = FIRST_REAL_MODEL_TYPE; i < MODEL_TYPE_COUNT; i++) {
     std::unique_ptr<base::DictionaryValue> type_entries(
         new base::DictionaryValue());
-    type_entries->SetInteger("numEntries", num_entries_by_type_[i]);
-    type_entries->SetInteger("numToDeleteEntries",
-                             num_to_delete_entries_by_type_[i]);
+    type_entries->SetKey("numEntries", base::Value(num_entries_by_type_[i]));
+    type_entries->SetKey("numToDeleteEntries",
+                         base::Value(num_to_delete_entries_by_type_[i]));
 
     const std::string model_type = ModelTypeToString(static_cast<ModelType>(i));
     counter_entries->Set(model_type, std::move(type_entries));

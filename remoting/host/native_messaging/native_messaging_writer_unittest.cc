@@ -40,7 +40,7 @@ void NativeMessagingWriterTest::SetUp() {
 
 TEST_F(NativeMessagingWriterTest, GoodMessage) {
   base::DictionaryValue message;
-  message.SetInteger("foo", 42);
+  message.SetKey("foo", base::Value(42));
   EXPECT_TRUE(writer_->WriteMessage(message));
 
   // Read from the pipe and verify the content.
@@ -67,7 +67,7 @@ TEST_F(NativeMessagingWriterTest, GoodMessage) {
 TEST_F(NativeMessagingWriterTest, SecondMessage) {
   base::DictionaryValue message1;
   base::DictionaryValue message2;
-  message2.SetInteger("foo", 42);
+  message2.SetKey("foo", base::Value(42));
   EXPECT_TRUE(writer_->WriteMessage(message1));
   EXPECT_TRUE(writer_->WriteMessage(message2));
   writer_.reset(nullptr);

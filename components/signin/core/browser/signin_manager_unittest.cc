@@ -437,9 +437,9 @@ TEST_F(SigninManagerTest, GaiaIdMigration) {
                           AccountTrackerService::kAccountInfoPref);
     update->Clear();
     auto dict = std::make_unique<base::DictionaryValue>();
-    dict->SetString("account_id", base::UTF8ToUTF16(email));
-    dict->SetString("email", base::UTF8ToUTF16(email));
-    dict->SetString("gaia", base::UTF8ToUTF16(gaia_id));
+    dict->SetKey("account_id", base::Value(base::UTF8ToUTF16(email)));
+    dict->SetKey("email", base::Value(base::UTF8ToUTF16(email)));
+    dict->SetKey("gaia", base::Value(base::UTF8ToUTF16(gaia_id)));
     update->Append(std::move(dict));
 
     account_tracker()->Shutdown();
@@ -467,9 +467,9 @@ TEST_F(SigninManagerTest, VeryOldProfileGaiaIdMigration) {
                           AccountTrackerService::kAccountInfoPref);
     update->Clear();
     auto dict = std::make_unique<base::DictionaryValue>();
-    dict->SetString("account_id", base::UTF8ToUTF16(email));
-    dict->SetString("email", base::UTF8ToUTF16(email));
-    dict->SetString("gaia", base::UTF8ToUTF16(gaia_id));
+    dict->SetKey("account_id", base::Value(base::UTF8ToUTF16(email)));
+    dict->SetKey("email", base::Value(base::UTF8ToUTF16(email)));
+    dict->SetKey("gaia", base::Value(base::UTF8ToUTF16(gaia_id)));
     update->Append(std::move(dict));
 
     account_tracker()->Shutdown();
@@ -497,9 +497,9 @@ TEST_F(SigninManagerTest, GaiaIdMigrationCrashInTheMiddle) {
                           AccountTrackerService::kAccountInfoPref);
     update->Clear();
     auto dict = std::make_unique<base::DictionaryValue>();
-    dict->SetString("account_id", base::UTF8ToUTF16(email));
-    dict->SetString("email", base::UTF8ToUTF16(email));
-    dict->SetString("gaia", base::UTF8ToUTF16(gaia_id));
+    dict->SetKey("account_id", base::Value(base::UTF8ToUTF16(email)));
+    dict->SetKey("email", base::Value(base::UTF8ToUTF16(email)));
+    dict->SetKey("gaia", base::Value(base::UTF8ToUTF16(gaia_id)));
     update->Append(std::move(dict));
 
     account_tracker()->Shutdown();

@@ -244,14 +244,14 @@ TEST_F(MenuManagerTest, PopulateFromValue) {
   target_url_patterns->AppendString("http://www.facebook.com/*");
 
   base::DictionaryValue value;
-  value.SetBoolean("incognito", incognito);
-  value.SetString("string_uid", std::string());
-  value.SetInteger("type", type);
-  value.SetString("title", title);
-  value.SetBoolean("checked", checked);
-  value.SetBoolean("visible", visible);
-  value.SetBoolean("enabled", enabled);
-  value.SetInteger("contexts", contexts_value);
+  value.SetKey("incognito", base::Value(incognito));
+  value.SetKey("string_uid", base::Value(std::string()));
+  value.SetKey("type", base::Value(type));
+  value.SetKey("title", base::Value(title));
+  value.SetKey("checked", base::Value(checked));
+  value.SetKey("visible", base::Value(visible));
+  value.SetKey("enabled", base::Value(enabled));
+  value.SetKey("contexts", base::Value(contexts_value));
   std::string error;
   URLPatternSet document_url_pattern_set;
   document_url_pattern_set.Populate(*document_url_patterns,

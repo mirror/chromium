@@ -129,35 +129,35 @@ TEST(FirefoxImporterUtilsTest, GetFirefoxProfilePath) {
             GetFirefoxProfilePathFromDictionary(no_profiles).MaybeAsASCII());
 
   base::DictionaryValue single_profile;
-  single_profile.SetString("Profile0.Path", "first");
-  single_profile.SetString("Profile0.IsRelative", "0");
-  single_profile.SetString("Profile0.Default", "1");
+  single_profile.SetPath({"Profile0", "Path"}, base::Value("first"));
+  single_profile.SetPath({"Profile0", "IsRelative"}, base::Value("0"));
+  single_profile.SetPath({"Profile0", "Default"}, base::Value("1"));
   EXPECT_EQ("first",
             GetFirefoxProfilePathFromDictionary(single_profile).MaybeAsASCII());
 
   base::DictionaryValue no_default;
-  no_default.SetString("Profile0.Path", "first");
-  no_default.SetString("Profile0.IsRelative", "0");
-  no_default.SetString("Profile1.Path", "second");
-  no_default.SetString("Profile1.IsRelative", "0");
+  no_default.SetPath({"Profile0", "Path"}, base::Value("first"));
+  no_default.SetPath({"Profile0", "IsRelative"}, base::Value("0"));
+  no_default.SetPath({"Profile1", "Path"}, base::Value("second"));
+  no_default.SetPath({"Profile1", "IsRelative"}, base::Value("0"));
   EXPECT_EQ("first",
             GetFirefoxProfilePathFromDictionary(no_default).MaybeAsASCII());
 
   base::DictionaryValue default_first;
-  default_first.SetString("Profile0.Path", "first");
-  default_first.SetString("Profile0.IsRelative", "0");
-  default_first.SetString("Profile0.Default", "1");
-  default_first.SetString("Profile1.Path", "second");
-  default_first.SetString("Profile1.IsRelative", "0");
+  default_first.SetPath({"Profile0", "Path"}, base::Value("first"));
+  default_first.SetPath({"Profile0", "IsRelative"}, base::Value("0"));
+  default_first.SetPath({"Profile0", "Default"}, base::Value("1"));
+  default_first.SetPath({"Profile1", "Path"}, base::Value("second"));
+  default_first.SetPath({"Profile1", "IsRelative"}, base::Value("0"));
   EXPECT_EQ("first",
             GetFirefoxProfilePathFromDictionary(default_first).MaybeAsASCII());
 
   base::DictionaryValue default_second;
-  default_second.SetString("Profile0.Path", "first");
-  default_second.SetString("Profile0.IsRelative", "0");
-  default_second.SetString("Profile1.Path", "second");
-  default_second.SetString("Profile1.IsRelative", "0");
-  default_second.SetString("Profile1.Default", "1");
+  default_second.SetPath({"Profile0", "Path"}, base::Value("first"));
+  default_second.SetPath({"Profile0", "IsRelative"}, base::Value("0"));
+  default_second.SetPath({"Profile1", "Path"}, base::Value("second"));
+  default_second.SetPath({"Profile1", "IsRelative"}, base::Value("0"));
+  default_second.SetPath({"Profile1", "Default"}, base::Value("1"));
   EXPECT_EQ("second",
             GetFirefoxProfilePathFromDictionary(default_second).MaybeAsASCII());
 }

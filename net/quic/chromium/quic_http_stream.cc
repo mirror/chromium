@@ -37,8 +37,8 @@ std::unique_ptr<base::Value> NetLogQuicPushStreamCallback(
     const GURL* url,
     NetLogCaptureMode capture_mode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("stream_id", stream_id);
-  dict->SetString("url", url->spec());
+  dict->SetKey("stream_id", base::Value(static_cast<int>(stream_id)));
+  dict->SetKey("url", base::Value(url->spec()));
   return std::move(dict);
 }
 

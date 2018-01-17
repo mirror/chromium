@@ -37,9 +37,9 @@ std::unique_ptr<base::Value> NetLogSpdyStreamErrorCallback(
     const SpdyString* description,
     NetLogCaptureMode /* capture_mode */) {
   auto dict = std::make_unique<base::DictionaryValue>();
-  dict->SetInteger("stream_id", static_cast<int>(stream_id));
-  dict->SetString("net_error", ErrorToShortString(net_error));
-  dict->SetString("description", *description);
+  dict->SetKey("stream_id", base::Value(static_cast<int>(stream_id)));
+  dict->SetKey("net_error", base::Value(ErrorToShortString(net_error)));
+  dict->SetKey("description", base::Value(*description));
   return std::move(dict);
 }
 
@@ -49,9 +49,9 @@ std::unique_ptr<base::Value> NetLogSpdyStreamWindowUpdateCallback(
     int32_t window_size,
     NetLogCaptureMode /* capture_mode */) {
   auto dict = std::make_unique<base::DictionaryValue>();
-  dict->SetInteger("stream_id", stream_id);
-  dict->SetInteger("delta", delta);
-  dict->SetInteger("window_size", window_size);
+  dict->SetKey("stream_id", base::Value(static_cast<int>(stream_id)));
+  dict->SetKey("delta", base::Value(delta));
+  dict->SetKey("window_size", base::Value(window_size));
   return std::move(dict);
 }
 

@@ -47,11 +47,13 @@ class DeterminingLoadStateDevToolsClient : public StubDevToolsClient {
     if (method == "DOM.getDocument") {
       base::DictionaryValue result_dict;
       if (has_empty_base_url_) {
-        result_dict.SetString("root.baseURL", "about:blank");
-        result_dict.SetString("root.documentURL", "http://test");
+        result_dict.SetPath({"root", "baseURL"}, base::Value("about:blank"));
+        result_dict.SetPath({"root", "documentURL"},
+                            base::Value("http://test"));
       } else {
-        result_dict.SetString("root.baseURL", "http://test");
-        result_dict.SetString("root.documentURL", "http://test");
+        result_dict.SetPath({"root", "baseURL"}, base::Value("http://test"));
+        result_dict.SetPath({"root", "documentURL"},
+                            base::Value("http://test"));
       }
       result->reset(result_dict.DeepCopy());
       return Status(kOk);
@@ -59,7 +61,7 @@ class DeterminingLoadStateDevToolsClient : public StubDevToolsClient {
       std::string expression;
       if (params.GetString("expression", &expression) && expression == "1") {
         base::DictionaryValue result_dict;
-        result_dict.SetInteger("result.value", 1);
+        result_dict.SetPath({"result", "value"}, base::Value(1));
         result->reset(result_dict.DeepCopy());
         return Status(kOk);
       }
@@ -75,7 +77,7 @@ class DeterminingLoadStateDevToolsClient : public StubDevToolsClient {
     }
 
     base::DictionaryValue result_dict;
-    result_dict.SetBoolean("result.value", is_loading_);
+    result_dict.SetPath({"result", "value"}, base::Value(is_loading_));
     result->reset(result_dict.DeepCopy());
     return Status(kOk);
   }
@@ -97,7 +99,7 @@ TEST(NavigationTracker, FrameLoadStartStop) {
   NavigationTracker tracker(&client, &browser_info, &dialog_manager);
 
   base::DictionaryValue params;
-  params.SetString("frameId", "f");
+  params.SetKey("frameId", base::Value("f"));
 
   ASSERT_EQ(
       kOk, tracker.OnEvent(&client, "Page.frameStartedLoading", params).code());
@@ -118,7 +120,7 @@ TEST(NavigationTracker, FrameLoadStartStartStop) {
   NavigationTracker tracker(&client, &browser_info, &dialog_manager);
 
   base::DictionaryValue params;
-  params.SetString("frameId", "f");
+  params.SetKey("frameId", base::Value("f"));
 
   ASSERT_EQ(
       kOk, tracker.OnEvent(&client, "Page.frameStartedLoading", params).code());
@@ -140,27 +142,27 @@ TEST(NavigationTracker, MultipleFramesLoad) {
   base::DictionaryValue params;
 
   // pending_frames_set_.size() == 0
-  params.SetString("frameId", "1");
+  params.SetKey("frameId", base::Value("1"));
   ASSERT_EQ(
       kOk, tracker.OnEvent(&client, "Page.frameStartedLoading", params).code());
   // pending_frames_set_.size() == 1
   ASSERT_NO_FATAL_FAILURE(AssertPendingState(&tracker, "1", true));
-  params.SetString("frameId", "2");
+  params.SetKey("frameId", base::Value("2"));
   ASSERT_EQ(
       kOk, tracker.OnEvent(&client, "Page.frameStartedLoading", params).code());
   // pending_frames_set_.size() == 2
   ASSERT_NO_FATAL_FAILURE(AssertPendingState(&tracker, "2", true));
-  params.SetString("frameId", "2");
+  params.SetKey("frameId", base::Value("2"));
   ASSERT_EQ(
       kOk, tracker.OnEvent(&client, "Page.frameStoppedLoading", params).code());
   // pending_frames_set_.size() == 1
   ASSERT_NO_FATAL_FAILURE(AssertPendingState(&tracker, "2", true));
-  params.SetString("frameId", "1");
+  params.SetKey("frameId", base::Value("1"));
   ASSERT_EQ(
       kOk, tracker.OnEvent(&client, "Page.frameStoppedLoading", params).code());
   // pending_frames_set_.size() == 0
   ASSERT_NO_FATAL_FAILURE(AssertPendingState(&tracker, "1", false));
-  params.SetString("frameId", "3");
+  params.SetKey("frameId", base::Value("3"));
   ASSERT_EQ(
       kOk, tracker.OnEvent(&client, "Page.frameStoppedLoading", params).code());
   // pending_frames_set_.size() == 0
@@ -179,10 +181,10 @@ TEST(NavigationTracker, NavigationScheduledThenLoaded) {
   NavigationTracker tracker(
       &client, NavigationTracker::kNotLoading, &browser_info, &dialog_manager);
   base::DictionaryValue params;
-  params.SetString("frameId", "f");
+  params.SetKey("frameId", base::Value("f"));
   base::DictionaryValue params_scheduled;
-  params_scheduled.SetInteger("delay", 0);
-  params_scheduled.SetString("frameId", "f");
+  params_scheduled.SetKey("delay", base::Value(0));
+  params_scheduled.SetKey("frameId", base::Value("f"));
 
   ASSERT_EQ(
       kOk,
@@ -210,8 +212,8 @@ TEST(NavigationTracker, NavigationScheduledForOtherFrame) {
   NavigationTracker tracker(
       &client, NavigationTracker::kNotLoading, &browser_info, &dialog_manager);
   base::DictionaryValue params_scheduled;
-  params_scheduled.SetInteger("delay", 0);
-  params_scheduled.SetString("frameId", "other");
+  params_scheduled.SetKey("delay", base::Value(0));
+  params_scheduled.SetKey("frameId", base::Value("other"));
 
   ASSERT_EQ(
       kOk,
@@ -228,10 +230,10 @@ TEST(NavigationTracker, NavigationScheduledThenCancelled) {
   NavigationTracker tracker(
       &client, NavigationTracker::kNotLoading, &browser_info, &dialog_manager);
   base::DictionaryValue params;
-  params.SetString("frameId", "f");
+  params.SetKey("frameId", base::Value("f"));
   base::DictionaryValue params_scheduled;
-  params_scheduled.SetInteger("delay", 0);
-  params_scheduled.SetString("frameId", "f");
+  params_scheduled.SetKey("delay", base::Value(0));
+  params_scheduled.SetKey("frameId", base::Value("f"));
 
   ASSERT_EQ(
       kOk,
@@ -254,8 +256,8 @@ TEST(NavigationTracker, NavigationScheduledTooFarAway) {
       &client, NavigationTracker::kNotLoading, &browser_info, &dialog_manager);
 
   base::DictionaryValue params_scheduled;
-  params_scheduled.SetInteger("delay", 10);
-  params_scheduled.SetString("frameId", "f");
+  params_scheduled.SetKey("delay", base::Value(10));
+  params_scheduled.SetKey("frameId", base::Value("f"));
   ASSERT_EQ(
       kOk,
       tracker.OnEvent(
@@ -272,8 +274,8 @@ TEST(NavigationTracker, DiscardScheduledNavigationsOnMainFrameCommit) {
       &client, NavigationTracker::kNotLoading, &browser_info, &dialog_manager);
 
   base::DictionaryValue params_scheduled;
-  params_scheduled.SetString("frameId", "subframe");
-  params_scheduled.SetInteger("delay", 0);
+  params_scheduled.SetKey("frameId", base::Value("subframe"));
+  params_scheduled.SetKey("delay", base::Value(0));
   Status status = tracker.OnEvent(&client,
                                   "Page.frameScheduledNavigation",
                                   params_scheduled);
@@ -281,15 +283,15 @@ TEST(NavigationTracker, DiscardScheduledNavigationsOnMainFrameCommit) {
   ASSERT_NO_FATAL_FAILURE(AssertPendingState(&tracker, "subframe", true));
 
   base::DictionaryValue params_navigated;
-  params_navigated.SetString("frame.parentId", "something");
-  params_navigated.SetString("frame.name", std::string());
-  params_navigated.SetString("frame.url", "http://abc.xyz");
+  params_navigated.SetPath({"frame", "parentId"}, base::Value("something"));
+  params_navigated.SetPath({"frame", "name"}, base::Value(std::string()));
+  params_navigated.SetPath({"frame", "url"}, base::Value("http://abc.xyz"));
   status = tracker.OnEvent(&client, "Page.frameNavigated", params_navigated);
   ASSERT_EQ(kOk, status.code()) << status.message();
   ASSERT_NO_FATAL_FAILURE(AssertPendingState(&tracker, "subframe", true));
   params_navigated.Clear();
-  params_navigated.SetString("frame.id", "something");
-  params_navigated.SetString("frame.url", "http://abc.xyz");
+  params_navigated.SetPath({"frame", "id"}, base::Value("something"));
+  params_navigated.SetPath({"frame", "url"}, base::Value("http://abc.xyz"));
   status = tracker.OnEvent(&client, "Page.frameNavigated", params_navigated);
   ASSERT_EQ(kOk, status.code()) << status.message();
   ASSERT_NO_FATAL_FAILURE(AssertPendingState(&tracker, "subframe", false));
@@ -310,7 +312,7 @@ class FailToEvalScriptDevToolsClient : public StubDevToolsClient {
     if (!is_dom_getDocument_requested_ && method == "DOM.getDocument") {
       is_dom_getDocument_requested_ = true;
       base::DictionaryValue result_dict;
-      result_dict.SetString("root.baseURL", "http://test");
+      result_dict.SetPath({"root", "baseURL"}, base::Value("http://test"));
       result->reset(result_dict.DeepCopy());
       return Status(kOk);
     }
@@ -356,7 +358,7 @@ TEST(NavigationTracker, UnknownStateForcesStart) {
 
 TEST(NavigationTracker, UnknownStateForcesStartReceivesStop) {
   base::DictionaryValue params;
-  params.SetString("frameId", "f");
+  params.SetKey("frameId", base::Value("f"));
   DeterminingLoadStateDevToolsClient client(
       false, true, "Page.frameStoppedLoading", &params);
   BrowserInfo browser_info;
@@ -377,13 +379,13 @@ TEST(NavigationTracker, OnSuccessfulNavigate) {
   NavigationTracker tracker(
       &client, NavigationTracker::kNotLoading, &browser_info, &dialog_manager);
   base::DictionaryValue result;
-  result.SetString("frameId", "f");
+  result.SetKey("frameId", base::Value("f"));
   tracker.OnCommandSuccess(&client, "Page.navigate", result, Timeout());
   ASSERT_NO_FATAL_FAILURE(AssertPendingState(&tracker, "f", true));
   tracker.OnEvent(&client, "Page.loadEventFired", params);
   ASSERT_NO_FATAL_FAILURE(AssertPendingState(&tracker, "f", true));
   params.Clear();
-  params.SetString("frameId", "f");
+  params.SetKey("frameId", base::Value("f"));
   tracker.OnEvent(&client, "Page.frameStoppedLoading", params);
   ASSERT_NO_FATAL_FAILURE(AssertPendingState(&tracker, "f", false));
 }

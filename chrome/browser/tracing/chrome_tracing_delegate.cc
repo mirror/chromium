@@ -187,7 +187,7 @@ ChromeTracingDelegate::GenerateMetadataDict() {
     variations_list->AppendString(it);
 
   metadata_dict->Set("field-trials", std::move(variations_list));
-  metadata_dict->SetString("revision", version_info::GetLastChange());
+  metadata_dict->SetKey("revision", base::Value(version_info::GetLastChange()));
   return metadata_dict;
 }
 

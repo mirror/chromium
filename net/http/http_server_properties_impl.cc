@@ -529,7 +529,7 @@ HttpServerPropertiesImpl::GetAlternativeServiceInfoAsValue() const {
     if (alternative_service_list->empty())
       continue;
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-    dict->SetString("server", server.Serialize());
+    dict->SetKey("server", base::Value(server.Serialize()));
     dict->Set("alternative_service", std::unique_ptr<base::Value>(
                                          std::move(alternative_service_list)));
     dict_list->Append(std::move(dict));

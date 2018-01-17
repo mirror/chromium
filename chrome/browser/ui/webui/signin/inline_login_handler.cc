@@ -91,10 +91,12 @@ void InlineLoginHandler::ContinueHandleInitializeMessage() {
   base::DictionaryValue params;
 
   const std::string& app_locale = g_browser_process->GetApplicationLocale();
-  params.SetString("hl", app_locale);
+  params.SetKey("hl", base::Value(app_locale));
   GaiaUrls* gaiaUrls = GaiaUrls::GetInstance();
-  params.SetString("gaiaUrl", gaiaUrls->gaia_url().spec());
-  params.SetInteger("authMode", InlineLoginHandler::kDesktopAuthMode);
+  params.SetKey("gaiaUrl", base::Value(gaiaUrls->gaia_url().spec()));
+  params.SetKey(
+      "authMode",
+      base::Value(static_cast<int>(InlineLoginHandler::kDesktopAuthMode)));
 
   const GURL& current_url = web_ui()->GetWebContents()->GetURL();
   signin_metrics::AccessPoint access_point =
@@ -108,10 +110,11 @@ void InlineLoginHandler::ContinueHandleInitializeMessage() {
     signin_metrics::LogSigninAccessPointStarted(access_point);
     signin_metrics::RecordSigninUserActionForAccessPoint(access_point);
     base::RecordAction(base::UserMetricsAction("Signin_SigninPage_Loading"));
-    params.SetBoolean("isLoginPrimaryAccount", true);
+    params.SetKey("isLoginPrimaryAccount", base::Value(true));
   }
 
-  params.SetString("continueUrl", signin::GetLandingURL(access_point).spec());
+  params.SetKey("continueUrl",
+                base::Value(signin::GetLandingURL(access_point).spec()));
 
   Profile* profile = Profile::FromWebUI(web_ui());
   std::string default_email;
@@ -124,7 +127,7 @@ void InlineLoginHandler::ContinueHandleInitializeMessage() {
       default_email.clear();
   }
   if (!default_email.empty())
-    params.SetString("email", default_email);
+    params.SetKey("email", base::Value(default_email));
 
   std::string is_constrained;
   net::GetValueForKeyInQuery(
@@ -135,7 +138,7 @@ void InlineLoginHandler::ContinueHandleInitializeMessage() {
   // TODO(rogerta): this needs to be passed on to gaia somehow.
   std::string read_only_email;
   net::GetValueForKeyInQuery(current_url, "readOnlyEmail", &read_only_email);
-  params.SetBoolean("readOnlyEmail", !read_only_email.empty());
+  params.SetKey("readOnlyEmail", base::Value(!read_only_email.empty()));
 
   SetExtraInitParams(params);
   CallJavascriptFunction("inline.login.loadAuthExtension", params);

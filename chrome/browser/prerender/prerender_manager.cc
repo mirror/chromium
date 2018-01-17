@@ -687,18 +687,19 @@ std::unique_ptr<base::DictionaryValue> PrerenderManager::CopyAsValue() const {
   auto dict_value = base::MakeUnique<base::DictionaryValue>();
   dict_value->Set("history", prerender_history_->CopyEntriesAsValue());
   dict_value->Set("active", GetActivePrerendersAsValue());
-  dict_value->SetBoolean("enabled",
-      GetPredictionStatus() == NetworkPredictionStatus::ENABLED);
+  dict_value->SetKey("enabled", base::Value(GetPredictionStatus() ==
+                                            NetworkPredictionStatus::ENABLED));
   std::string disabled_note;
   if (GetPredictionStatus() == NetworkPredictionStatus::DISABLED_ALWAYS)
     disabled_note = "Disabled by user setting";
   if (GetPredictionStatus() == NetworkPredictionStatus::DISABLED_DUE_TO_NETWORK)
     disabled_note = "Disabled on cellular connection by default";
-  dict_value->SetString("disabled_note", disabled_note);
-  dict_value->SetBoolean("omnibox_enabled", IsOmniboxEnabled(profile_));
+  dict_value->SetKey("disabled_note", base::Value(disabled_note));
+  dict_value->SetKey("omnibox_enabled",
+                     base::Value(IsOmniboxEnabled(profile_)));
   // If prerender is disabled via a flag this method is not even called.
   std::string enabled_note;
-  dict_value->SetString("enabled_note", enabled_note);
+  dict_value->SetKey("enabled_note", base::Value(enabled_note));
   return dict_value;
 }
 

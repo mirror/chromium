@@ -43,8 +43,8 @@ bool InvalidationVersionLessThan::operator()(const Invalidation& a,
 std::unique_ptr<base::DictionaryValue> ObjectIdToValue(
     const invalidation::ObjectId& object_id) {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
-  value->SetInteger("source", object_id.source());
-  value->SetString("name", object_id.name());
+  value->SetKey("source", base::Value(object_id.source()));
+  value->SetKey("name", base::Value(object_id.name()));
   return value;
 }
 

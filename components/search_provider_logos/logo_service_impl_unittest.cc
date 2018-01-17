@@ -153,23 +153,24 @@ std::string MakeServerResponse(const SkBitmap& image,
   data_uri += ";base64,";
   data_uri += EncodeBitmapAsPNGBase64(image);
 
-  dict.SetString("ddljson.target_url", on_click_url);
-  dict.SetString("ddljson.alt_text", alt_text);
+  dict.SetPath({"ddljson", "target_url"}, base::Value(on_click_url));
+  dict.SetPath({"ddljson", "alt_text"}, base::Value(alt_text));
   if (animated_url.empty()) {
-    dict.SetString("ddljson.doodle_type", "SIMPLE");
+    dict.SetPath({"ddljson", "doodle_type"}, base::Value("SIMPLE"));
     if (!image.isNull())
-      dict.SetString("ddljson.data_uri", data_uri);
+      dict.SetPath({"ddljson", "data_uri"}, base::Value(data_uri));
   } else {
-    dict.SetString("ddljson.doodle_type", "ANIMATED");
-    dict.SetBoolean("ddljson.large_image.is_animated_gif", true);
-    dict.SetString("ddljson.large_image.url", animated_url);
+    dict.SetPath({"ddljson", "doodle_type"}, base::Value("ANIMATED"));
+    dict.SetPath({"ddljson", "large_image", "is_animated_gif"},
+                 base::Value(true));
+    dict.SetPath({"ddljson", "large_image", "url"}, base::Value(animated_url));
     if (!image.isNull())
-      dict.SetString("ddljson.cta_data_uri", data_uri);
+      dict.SetPath({"ddljson", "cta_data_uri"}, base::Value(data_uri));
   }
-  dict.SetString("ddljson.fingerprint", fingerprint);
+  dict.SetPath({"ddljson", "fingerprint"}, base::Value(fingerprint));
   if (time_to_live != base::TimeDelta())
-    dict.SetInteger("ddljson.time_to_live_ms",
-                    static_cast<int>(time_to_live.InMilliseconds()));
+    dict.SetPath({"ddljson", "time_to_live_ms"},
+                 base::Value(static_cast<int>(time_to_live.InMilliseconds())));
 
   std::string output;
   base::JSONWriter::Write(dict, &output);

@@ -834,7 +834,7 @@ bool IndexedDBBackingStore::RecordCorruptionInfo(const FilePath& path_base,
     return false;
 
   base::DictionaryValue root_dict;
-  root_dict.SetString("message", message);
+  root_dict.SetKey("message", base::Value(message));
   std::string output_js;
   base::JSONWriter::Write(root_dict, &output_js);
 

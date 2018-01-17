@@ -105,9 +105,9 @@ void AttachProperties(const Properties& properties,
         visibility_as_string = "PUBLIC";
         break;
     }
-    property_value->SetString("visibility", visibility_as_string);
-    property_value->SetString("key", property.key());
-    property_value->SetString("value", property.value());
+    property_value->SetKey("visibility", base::Value(visibility_as_string));
+    property_value->SetKey("key", base::Value(property.key()));
+    property_value->SetKey("value", base::Value(property.value()));
     properties_value->Append(std::move(property_value));
   }
   request_body->Set("properties", std::move(properties_value));
@@ -124,7 +124,7 @@ std::string CreateMultipartUploadMetadataJson(
     const Properties& properties) {
   base::DictionaryValue root;
   if (!title.empty())
-    root.SetString("title", title);
+    root.SetKey("title", base::Value(title));
 
   // Fill parent link.
   if (!parent_resource_id.empty()) {
@@ -134,13 +134,15 @@ std::string CreateMultipartUploadMetadataJson(
   }
 
   if (!modified_date.is_null()) {
-    root.SetString("modifiedDate",
-                   google_apis::util::FormatTimeAsString(modified_date));
+    root.SetKey(
+        "modifiedDate",
+        base::Value(google_apis::util::FormatTimeAsString(modified_date)));
   }
 
   if (!last_viewed_by_me_date.is_null()) {
-    root.SetString("lastViewedByMeDate", google_apis::util::FormatTimeAsString(
-                                             last_viewed_by_me_date));
+    root.SetKey("lastViewedByMeDate",
+                base::Value(google_apis::util::FormatTimeAsString(
+                    last_viewed_by_me_date)));
   }
 
   AttachProperties(properties, &root);
@@ -377,28 +379,29 @@ bool FilesInsertRequest::GetContentData(std::string* upload_content_type,
   base::DictionaryValue root;
 
   if (!last_viewed_by_me_date_.is_null()) {
-    root.SetString("lastViewedByMeDate",
-                   util::FormatTimeAsString(last_viewed_by_me_date_));
+    root.SetKey("lastViewedByMeDate",
+                base::Value(util::FormatTimeAsString(last_viewed_by_me_date_)));
   }
 
   if (!mime_type_.empty())
-    root.SetString("mimeType", mime_type_);
+    root.SetKey("mimeType", base::Value(mime_type_));
 
   if (!modified_date_.is_null())
-    root.SetString("modifiedDate", util::FormatTimeAsString(modified_date_));
+    root.SetKey("modifiedDate",
+                base::Value(util::FormatTimeAsString(modified_date_)));
 
   if (!parents_.empty()) {
     auto parents_value = base::MakeUnique<base::ListValue>();
     for (size_t i = 0; i < parents_.size(); ++i) {
       auto parent = base::MakeUnique<base::DictionaryValue>();
-      parent->SetString("id", parents_[i]);
+      parent->SetKey("id", base::Value(parents_[i]));
       parents_value->Append(std::move(parent));
     }
     root.Set("parents", std::move(parents_value));
   }
 
   if (!title_.empty())
-    root.SetString("title", title_);
+    root.SetKey("title", base::Value(title_));
 
   AttachProperties(properties_, &root);
   base::JSONWriter::Write(root, upload_content);
@@ -455,21 +458,22 @@ bool FilesPatchRequest::GetContentData(std::string* upload_content_type,
 
   base::DictionaryValue root;
   if (!title_.empty())
-    root.SetString("title", title_);
+    root.SetKey("title", base::Value(title_));
 
   if (!modified_date_.is_null())
-    root.SetString("modifiedDate", util::FormatTimeAsString(modified_date_));
+    root.SetKey("modifiedDate",
+                base::Value(util::FormatTimeAsString(modified_date_)));
 
   if (!last_viewed_by_me_date_.is_null()) {
-    root.SetString("lastViewedByMeDate",
-                   util::FormatTimeAsString(last_viewed_by_me_date_));
+    root.SetKey("lastViewedByMeDate",
+                base::Value(util::FormatTimeAsString(last_viewed_by_me_date_)));
   }
 
   if (!parents_.empty()) {
     auto parents_value = base::MakeUnique<base::ListValue>();
     for (size_t i = 0; i < parents_.size(); ++i) {
       auto parent = base::MakeUnique<base::DictionaryValue>();
-      parent->SetString("id", parents_[i]);
+      parent->SetKey("id", base::Value(parents_[i]));
       parents_value->Append(std::move(parent));
     }
     root.Set("parents", std::move(parents_value));
@@ -517,20 +521,21 @@ bool FilesCopyRequest::GetContentData(std::string* upload_content_type,
   base::DictionaryValue root;
 
   if (!modified_date_.is_null())
-    root.SetString("modifiedDate", util::FormatTimeAsString(modified_date_));
+    root.SetKey("modifiedDate",
+                base::Value(util::FormatTimeAsString(modified_date_)));
 
   if (!parents_.empty()) {
     auto parents_value = base::MakeUnique<base::ListValue>();
     for (size_t i = 0; i < parents_.size(); ++i) {
       auto parent = base::MakeUnique<base::DictionaryValue>();
-      parent->SetString("id", parents_[i]);
+      parent->SetKey("id", base::Value(parents_[i]));
       parents_value->Append(std::move(parent));
     }
     root.Set("parents", std::move(parents_value));
   }
 
   if (!title_.empty())
-    root.SetString("title", title_);
+    root.SetKey("title", base::Value(title_));
 
   base::JSONWriter::Write(root, upload_content);
   DVLOG(1) << "FilesCopy data: " << *upload_content_type << ", ["
@@ -760,7 +765,7 @@ bool ChildrenInsertRequest::GetContentData(std::string* upload_content_type,
   *upload_content_type = util::kContentTypeApplicationJson;
 
   base::DictionaryValue root;
-  root.SetString("id", id_);
+  root.SetKey("id", base::Value(id_));
 
   base::JSONWriter::Write(root, upload_content);
   DVLOG(1) << "InsertResource data: " << *upload_content_type << ", ["
@@ -821,7 +826,7 @@ bool InitiateUploadNewFileRequest::GetContentData(
   *upload_content_type = util::kContentTypeApplicationJson;
 
   base::DictionaryValue root;
-  root.SetString("title", title_);
+  root.SetKey("title", base::Value(title_));
 
   // Fill parent link.
   auto parents = base::MakeUnique<base::ListValue>();
@@ -829,11 +834,12 @@ bool InitiateUploadNewFileRequest::GetContentData(
   root.Set("parents", std::move(parents));
 
   if (!modified_date_.is_null())
-    root.SetString("modifiedDate", util::FormatTimeAsString(modified_date_));
+    root.SetKey("modifiedDate",
+                base::Value(util::FormatTimeAsString(modified_date_)));
 
   if (!last_viewed_by_me_date_.is_null()) {
-    root.SetString("lastViewedByMeDate",
-                   util::FormatTimeAsString(last_viewed_by_me_date_));
+    root.SetKey("lastViewedByMeDate",
+                base::Value(util::FormatTimeAsString(last_viewed_by_me_date_)));
   }
 
   AttachProperties(properties_, &root);
@@ -890,14 +896,15 @@ bool InitiateUploadExistingFileRequest::GetContentData(
   }
 
   if (!title_.empty())
-    root.SetString("title", title_);
+    root.SetKey("title", base::Value(title_));
 
   if (!modified_date_.is_null())
-    root.SetString("modifiedDate", util::FormatTimeAsString(modified_date_));
+    root.SetKey("modifiedDate",
+                base::Value(util::FormatTimeAsString(modified_date_)));
 
   if (!last_viewed_by_me_date_.is_null()) {
-    root.SetString("lastViewedByMeDate",
-                   util::FormatTimeAsString(last_viewed_by_me_date_));
+    root.SetKey("lastViewedByMeDate",
+                base::Value(util::FormatTimeAsString(last_viewed_by_me_date_)));
   }
 
   AttachProperties(properties_, &root);
@@ -1123,30 +1130,30 @@ bool PermissionsInsertRequest::GetContentData(std::string* upload_content_type,
   base::DictionaryValue root;
   switch (type_) {
     case PERMISSION_TYPE_ANYONE:
-      root.SetString("type", "anyone");
+      root.SetKey("type", base::Value("anyone"));
       break;
     case PERMISSION_TYPE_DOMAIN:
-      root.SetString("type", "domain");
+      root.SetKey("type", base::Value("domain"));
       break;
     case PERMISSION_TYPE_GROUP:
-      root.SetString("type", "group");
+      root.SetKey("type", base::Value("group"));
       break;
     case PERMISSION_TYPE_USER:
-      root.SetString("type", "user");
+      root.SetKey("type", base::Value("user"));
       break;
   }
   switch (role_) {
     case PERMISSION_ROLE_OWNER:
-      root.SetString("role", "owner");
+      root.SetKey("role", base::Value("owner"));
       break;
     case PERMISSION_ROLE_READER:
-      root.SetString("role", "reader");
+      root.SetKey("role", base::Value("reader"));
       break;
     case PERMISSION_ROLE_WRITER:
-      root.SetString("role", "writer");
+      root.SetKey("role", base::Value("writer"));
       break;
     case PERMISSION_ROLE_COMMENTER:
-      root.SetString("role", "reader");
+      root.SetKey("role", base::Value("reader"));
       {
         auto list = base::MakeUnique<base::ListValue>();
         list->AppendString("commenter");
@@ -1154,7 +1161,7 @@ bool PermissionsInsertRequest::GetContentData(std::string* upload_content_type,
       }
       break;
   }
-  root.SetString("value", value_);
+  root.SetKey("value", base::Value(value_));
   base::JSONWriter::Write(root, upload_content);
   return true;
 }

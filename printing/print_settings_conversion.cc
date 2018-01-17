@@ -58,8 +58,8 @@ void SetSizeToJobSettings(const std::string& json_path,
                           const gfx::Size& size,
                           base::DictionaryValue* job_settings) {
   auto dict = base::MakeUnique<base::DictionaryValue>();
-  dict->SetInteger("width", size.width());
-  dict->SetInteger("height", size.height());
+  dict->SetKey("width", base::Value(size.width()));
+  dict->SetKey("height", base::Value(size.height()));
   job_settings->Set(json_path, std::move(dict));
 }
 
@@ -67,10 +67,10 @@ void SetRectToJobSettings(const std::string& json_path,
                           const gfx::Rect& rect,
                           base::DictionaryValue* job_settings) {
   auto dict = base::MakeUnique<base::DictionaryValue>();
-  dict->SetInteger("x", rect.x());
-  dict->SetInteger("y", rect.y());
-  dict->SetInteger("width", rect.width());
-  dict->SetInteger("height", rect.height());
+  dict->SetKey("x", base::Value(rect.x()));
+  dict->SetKey("y", base::Value(rect.y()));
+  dict->SetKey("width", base::Value(rect.width()));
+  dict->SetKey("height", base::Value(rect.height()));
   job_settings->Set(json_path, std::move(dict));
 }
 
@@ -252,10 +252,13 @@ void PrintSettingsToJobSettingsDebug(const PrintSettings& settings,
   // Following values are not read form JSON by InitSettings, so do not have
   // common public constants. So just serialize in "debug" section.
   auto debug = base::MakeUnique<base::DictionaryValue>();
-  debug->SetInteger("dpi", settings.dpi());
-  debug->SetInteger("deviceUnitsPerInch", settings.device_units_per_inch());
-  debug->SetBoolean("support_alpha_blend", settings.should_print_backgrounds());
-  debug->SetString("media_vendor_id", settings.requested_media().vendor_id);
+  debug->SetKey("dpi", base::Value(settings.dpi()));
+  debug->SetKey("deviceUnitsPerInch",
+                base::Value(settings.device_units_per_inch()));
+  debug->SetKey("support_alpha_blend",
+                base::Value(settings.should_print_backgrounds()));
+  debug->SetKey("media_vendor_id",
+                base::Value(settings.requested_media().vendor_id));
   SetSizeToJobSettings("media_size", settings.requested_media().size_microns,
                        debug.get());
   SetMarginsToJobSettings("requested_custom_margins_in_points",

@@ -120,7 +120,7 @@ TEST_F(MicroBenchmarkControllerTest, MultipleBenchmarkRan) {
 TEST_F(MicroBenchmarkControllerTest, BenchmarkImplRan) {
   int run_count = 0;
   std::unique_ptr<base::DictionaryValue> settings(new base::DictionaryValue);
-  settings->SetBoolean("run_benchmark_impl", true);
+  settings->SetKey("run_benchmark_impl", base::Value(true));
 
   // Schedule a main thread benchmark.
   int id = layer_tree_host_->ScheduleMicroBenchmark(
@@ -144,7 +144,7 @@ TEST_F(MicroBenchmarkControllerTest, BenchmarkImplRan) {
 TEST_F(MicroBenchmarkControllerTest, SendMessage) {
   // Send valid message to invalid benchmark (id = 0)
   std::unique_ptr<base::DictionaryValue> message(new base::DictionaryValue);
-  message->SetBoolean("can_handle", true);
+  message->SetKey("can_handle", base::Value(true));
   bool message_handled =
       layer_tree_host_->SendMessageToMicroBenchmark(0, std::move(message));
   EXPECT_FALSE(message_handled);
@@ -158,14 +158,14 @@ TEST_F(MicroBenchmarkControllerTest, SendMessage) {
 
   // Send valid message to valid benchmark
   message = base::WrapUnique(new base::DictionaryValue);
-  message->SetBoolean("can_handle", true);
+  message->SetKey("can_handle", base::Value(true));
   message_handled =
       layer_tree_host_->SendMessageToMicroBenchmark(id, std::move(message));
   EXPECT_TRUE(message_handled);
 
   // Send invalid message to valid benchmark
   message = base::WrapUnique(new base::DictionaryValue);
-  message->SetBoolean("can_handle", false);
+  message->SetKey("can_handle", base::Value(false));
   message_handled =
       layer_tree_host_->SendMessageToMicroBenchmark(id, std::move(message));
   EXPECT_FALSE(message_handled);

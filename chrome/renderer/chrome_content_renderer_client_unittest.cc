@@ -112,9 +112,9 @@ scoped_refptr<const extensions::Extension> CreateTestExtension(
       extensions::Extension::NO_FLAGS;
 
   base::DictionaryValue manifest;
-  manifest.SetString("name", "NaCl Extension");
-  manifest.SetString("version", "1");
-  manifest.SetInteger("manifest_version", 2);
+  manifest.SetKey("name", base::Value("NaCl Extension"));
+  manifest.SetKey("version", base::Value("1"));
+  manifest.SetKey("manifest_version", base::Value(2));
   if (is_hosted_app) {
     auto url_list = base::MakeUnique<base::ListValue>();
     url_list->AppendString(app_url);

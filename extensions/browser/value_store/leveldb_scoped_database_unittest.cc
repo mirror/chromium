@@ -99,14 +99,14 @@ TEST_F(LeveldbScopedDatabaseUnitTest, TestWrite) {
   EXPECT_EQ(0u, db_values.size());
 
   base::DictionaryValue scope1_values;
-  scope1_values.SetString("s1_key1", "s1_value1");
-  scope1_values.SetString("s1_key2", "s1_value2");
+  scope1_values.SetKey("s1_key1", base::Value("s1_value1"));
+  scope1_values.SetKey("s1_key2", base::Value("s1_value2"));
   EXPECT_FALSE(db_->Write("", scope1_values).ok());
   EXPECT_TRUE(db_->Write("scope1", scope1_values).ok());
 
   base::DictionaryValue scope2_values;
-  scope2_values.SetString("s2_key1", "s2_value1");
-  scope2_values.SetString("s2_key2", "s2_value2");
+  scope2_values.SetKey("s2_key1", base::Value("s2_value1"));
+  scope2_values.SetKey("s2_key2", base::Value("s2_value2"));
   EXPECT_TRUE(db_->Write("scope2", scope2_values).ok());
 
   // Read all values using raw leveldb. Values are JSON strings.
@@ -119,8 +119,8 @@ TEST_F(LeveldbScopedDatabaseUnitTest, TestWrite) {
 
   // Intentionally overwrite value (with a new value).
   base::DictionaryValue changed_scope2_values;
-  changed_scope2_values.SetString("s2_key1", "s2_value1");
-  changed_scope2_values.SetString("s2_key2", "s2_value3");
+  changed_scope2_values.SetKey("s2_key1", base::Value("s2_value1"));
+  changed_scope2_values.SetKey("s2_key2", base::Value("s2_value3"));
   EXPECT_TRUE(db_->Write("scope2", changed_scope2_values).ok());
 
   EXPECT_TRUE(ReadAllValues(&db_values).ok());
@@ -133,13 +133,13 @@ TEST_F(LeveldbScopedDatabaseUnitTest, TestWrite) {
 
 TEST_F(LeveldbScopedDatabaseUnitTest, TestRead) {
   base::DictionaryValue scope1_values;
-  scope1_values.SetString("s1_key1", "s1_value1");
-  scope1_values.SetString("s1_key2", "s1_value2");
+  scope1_values.SetKey("s1_key1", base::Value("s1_value1"));
+  scope1_values.SetKey("s1_key2", base::Value("s1_value2"));
   EXPECT_TRUE(db_->Write("scope1", scope1_values).ok());
 
   base::DictionaryValue scope2_values;
-  scope2_values.SetString("s2_key1", "s2_value1");
-  scope2_values.SetString("s2_key2", "s2_value2");
+  scope2_values.SetKey("s2_key1", base::Value("s2_value1"));
+  scope2_values.SetKey("s2_key2", base::Value("s2_value2"));
   EXPECT_TRUE(db_->Write("scope2", scope2_values).ok());
 
   // And test an empty scope.
@@ -157,7 +157,7 @@ TEST_F(LeveldbScopedDatabaseUnitTest, TestRead) {
 
 TEST_F(LeveldbScopedDatabaseUnitTest, TestEmptyValue) {
   base::DictionaryValue values;
-  values.SetString("s1_key1", "");
+  values.SetKey("s1_key1", base::Value(""));
   EXPECT_TRUE(db_->Write("scope1", values).ok());
 
   std::unique_ptr<base::Value> value;
@@ -169,7 +169,7 @@ TEST_F(LeveldbScopedDatabaseUnitTest, TestEmptyValue) {
 
 TEST_F(LeveldbScopedDatabaseUnitTest, TestValueContainingDelimiter) {
   base::DictionaryValue values;
-  values.SetString("s1_key1", "with:delimiter");
+  values.SetKey("s1_key1", base::Value("with:delimiter"));
   EXPECT_TRUE(db_->Write("scope1", values).ok());
 
   std::unique_ptr<base::Value> value;
@@ -181,13 +181,13 @@ TEST_F(LeveldbScopedDatabaseUnitTest, TestValueContainingDelimiter) {
 
 TEST_F(LeveldbScopedDatabaseUnitTest, TestDeleteValues) {
   base::DictionaryValue scope1_values;
-  scope1_values.SetString("s1_key1", "s1_value1");
-  scope1_values.SetString("s1_key2", "s1_value2");
+  scope1_values.SetKey("s1_key1", base::Value("s1_value1"));
+  scope1_values.SetKey("s1_key2", base::Value("s1_value2"));
   EXPECT_TRUE(db_->Write("scope1", scope1_values).ok());
 
   base::DictionaryValue scope2_values;
-  scope2_values.SetString("s2_key1", "s2_value1");
-  scope2_values.SetString("s2_key2", "s2_value2");
+  scope2_values.SetKey("s2_key1", base::Value("s2_value1"));
+  scope2_values.SetKey("s2_key2", base::Value("s2_value2"));
   EXPECT_TRUE(db_->Write("scope2", scope2_values).ok());
 
   std::vector<std::string> keys;

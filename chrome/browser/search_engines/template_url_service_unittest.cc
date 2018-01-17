@@ -311,14 +311,15 @@ std::unique_ptr<TemplateURL> TemplateURLServiceTest::CreatePreloadedTemplateURL(
 void TemplateURLServiceTest::SetOverriddenEngines() {
   // Set custom search engine as default fallback through overrides.
   auto entry = base::MakeUnique<base::DictionaryValue>();
-  entry->SetString("name", "override_name");
-  entry->SetString("keyword", "override_keyword");
-  entry->SetString("search_url", "http://override.com/s?q={searchTerms}");
-  entry->SetString("favicon_url", "http://override.com/favicon.ico");
-  entry->SetString("encoding", "UTF-8");
-  entry->SetInteger("id", 1001);
-  entry->SetString("suggest_url",
-                   "http://override.com/suggest?q={searchTerms}");
+  entry->SetKey("name", base::Value("override_name"));
+  entry->SetKey("keyword", base::Value("override_keyword"));
+  entry->SetKey("search_url",
+                base::Value("http://override.com/s?q={searchTerms}"));
+  entry->SetKey("favicon_url", base::Value("http://override.com/favicon.ico"));
+  entry->SetKey("encoding", base::Value("UTF-8"));
+  entry->SetKey("id", base::Value(1001));
+  entry->SetKey("suggest_url",
+                base::Value("http://override.com/suggest?q={searchTerms}"));
 
   auto overrides_list = base::MakeUnique<base::ListValue>();
   overrides_list->Append(std::move(entry));

@@ -94,12 +94,13 @@ void DefaultBrowserHandler::OnDefaultBrowserWorkerFinished(
   }
 
   base::DictionaryValue dict;
-  dict.SetBoolean("isDefault", state == shell_integration::IS_DEFAULT);
-  dict.SetBoolean("canBeDefault",
-      shell_integration::CanSetAsDefaultBrowser());
-  dict.SetBoolean("isUnknownError",
-      state == shell_integration::UNKNOWN_DEFAULT);
-  dict.SetBoolean("isDisabledByPolicy", DefaultBrowserIsDisabledByPolicy());
+  dict.SetKey("isDefault", base::Value(state == shell_integration::IS_DEFAULT));
+  dict.SetKey("canBeDefault",
+              base::Value(shell_integration::CanSetAsDefaultBrowser()));
+  dict.SetKey("isUnknownError",
+              base::Value(state == shell_integration::UNKNOWN_DEFAULT));
+  dict.SetKey("isDisabledByPolicy",
+              base::Value(DefaultBrowserIsDisabledByPolicy()));
 
   FireWebUIListener("settings.updateDefaultBrowserState", dict);
 }

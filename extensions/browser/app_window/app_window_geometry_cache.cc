@@ -119,17 +119,18 @@ void AppWindowGeometryCache::SyncToStorage() {
       DCHECK(!bounds.IsEmpty());
       DCHECK(!screen_bounds.IsEmpty());
       DCHECK(it->second.window_state != ui::SHOW_STATE_DEFAULT);
-      value->SetInteger("x", bounds.x());
-      value->SetInteger("y", bounds.y());
-      value->SetInteger("w", bounds.width());
-      value->SetInteger("h", bounds.height());
-      value->SetInteger("screen_bounds_x", screen_bounds.x());
-      value->SetInteger("screen_bounds_y", screen_bounds.y());
-      value->SetInteger("screen_bounds_w", screen_bounds.width());
-      value->SetInteger("screen_bounds_h", screen_bounds.height());
-      value->SetInteger("state", it->second.window_state);
-      value->SetString(
-          "ts", base::Int64ToString(it->second.last_change.ToInternalValue()));
+      value->SetKey("x", base::Value(bounds.x()));
+      value->SetKey("y", base::Value(bounds.y()));
+      value->SetKey("w", base::Value(bounds.width()));
+      value->SetKey("h", base::Value(bounds.height()));
+      value->SetKey("screen_bounds_x", base::Value(screen_bounds.x()));
+      value->SetKey("screen_bounds_y", base::Value(screen_bounds.y()));
+      value->SetKey("screen_bounds_w", base::Value(screen_bounds.width()));
+      value->SetKey("screen_bounds_h", base::Value(screen_bounds.height()));
+      value->SetKey("state",
+                    base::Value(static_cast<int>(it->second.window_state)));
+      value->SetKey("ts", base::Value(base::Int64ToString(
+                              it->second.last_change.ToInternalValue())));
       dict->SetWithoutPathExpansion(it->first, std::move(value));
 
       for (auto& observer : observers_)

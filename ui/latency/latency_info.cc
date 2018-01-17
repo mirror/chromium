@@ -372,17 +372,20 @@ LatencyInfo::AsTraceableData() {
   for (const auto& lc : latency_components_) {
     std::unique_ptr<base::DictionaryValue> component_info(
         new base::DictionaryValue());
-    component_info->SetDouble("comp_id", static_cast<double>(lc.first.second));
-    component_info->SetDouble(
-        "time", static_cast<double>(
-                    lc.second.event_time.since_origin().InMicroseconds()));
-    component_info->SetDouble("count", lc.second.event_count);
-    component_info->SetDouble("sequence_number",
-                              lc.second.sequence_number);
+    component_info->SetKey("comp_id",
+                           base::Value(static_cast<double>(lc.first.second)));
+    component_info->SetKey(
+        "time", base::Value(static_cast<double>(
+                    lc.second.event_time.since_origin().InMicroseconds())));
+    component_info->SetKey(
+        "count", base::Value(static_cast<double>(lc.second.event_count)));
+    component_info->SetKey(
+        "sequence_number",
+        base::Value(static_cast<double>(lc.second.sequence_number)));
     record_data->Set(GetComponentName(lc.first.first),
                      std::move(component_info));
   }
-  record_data->SetDouble("trace_id", static_cast<double>(trace_id_));
+  record_data->SetKey("trace_id", base::Value(static_cast<double>(trace_id_)));
   return LatencyInfoTracedValue::FromValue(std::move(record_data));
 }
 

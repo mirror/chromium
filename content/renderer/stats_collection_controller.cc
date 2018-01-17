@@ -62,14 +62,17 @@ void ConvertLoadTimeToJSON(
   if (load_start_time.is_null()) {
     item.Set("load_start_ms", std::make_unique<base::Value>());
   } else {
-    item.SetDouble("load_start_ms", (load_start_time - base::Time::UnixEpoch())
-                   .InMillisecondsF());
+    item.SetKey(
+        "load_start_ms",
+        base::Value(
+            (load_start_time - base::Time::UnixEpoch()).InMillisecondsF()));
   }
   if (load_start_time.is_null() || load_stop_time.is_null()) {
     item.Set("load_duration_ms", std::make_unique<base::Value>());
   } else {
-    item.SetDouble("load_duration_ms",
-        (load_stop_time - load_start_time).InMillisecondsF());
+    item.SetKey(
+        "load_duration_ms",
+        base::Value((load_stop_time - load_start_time).InMillisecondsF()));
   }
   base::JSONWriter::Write(item, result);
 }

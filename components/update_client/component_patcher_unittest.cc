@@ -85,10 +85,10 @@ TEST_F(ComponentPatcherOperationTest, CheckCreateOperation) {
 
   std::unique_ptr<base::DictionaryValue> command_args =
       std::make_unique<base::DictionaryValue>();
-  command_args->SetString("output", "output.bin");
-  command_args->SetString("sha256", binary_output_hash);
-  command_args->SetString("op", "create");
-  command_args->SetString("patch", "binary_output.bin");
+  command_args->SetKey("output", base::Value("output.bin"));
+  command_args->SetKey("sha256", base::Value(binary_output_hash));
+  command_args->SetKey("op", base::Value("create"));
+  command_args->SetKey("patch", base::Value("binary_output.bin"));
 
   TestCallback callback;
   scoped_refptr<DeltaUpdateOp> op = base::MakeRefCounted<DeltaUpdateOpCreate>();
@@ -113,10 +113,10 @@ TEST_F(ComponentPatcherOperationTest, CheckCopyOperation) {
 
   std::unique_ptr<base::DictionaryValue> command_args =
       std::make_unique<base::DictionaryValue>();
-  command_args->SetString("output", "output.bin");
-  command_args->SetString("sha256", binary_output_hash);
-  command_args->SetString("op", "copy");
-  command_args->SetString("input", "binary_output.bin");
+  command_args->SetKey("output", base::Value("output.bin"));
+  command_args->SetKey("sha256", base::Value(binary_output_hash));
+  command_args->SetKey("op", base::Value("copy"));
+  command_args->SetKey("input", base::Value("binary_output.bin"));
 
   TestCallback callback;
   scoped_refptr<DeltaUpdateOp> op = base::MakeRefCounted<DeltaUpdateOpCopy>();
@@ -144,11 +144,11 @@ TEST_F(ComponentPatcherOperationTest, CheckCourgetteOperation) {
 
   std::unique_ptr<base::DictionaryValue> command_args =
       std::make_unique<base::DictionaryValue>();
-  command_args->SetString("output", "output.bin");
-  command_args->SetString("sha256", binary_output_hash);
-  command_args->SetString("op", "courgette");
-  command_args->SetString("input", "binary_input.bin");
-  command_args->SetString("patch", "binary_courgette_patch.bin");
+  command_args->SetKey("output", base::Value("output.bin"));
+  command_args->SetKey("sha256", base::Value(binary_output_hash));
+  command_args->SetKey("op", base::Value("courgette"));
+  command_args->SetKey("input", base::Value("binary_input.bin"));
+  command_args->SetKey("patch", base::Value("binary_courgette_patch.bin"));
 
   // The operation needs a connector to access the PatchService.
   std::unique_ptr<service_manager::TestConnectorFactory> connector_factory =
@@ -184,11 +184,11 @@ TEST_F(ComponentPatcherOperationTest, CheckBsdiffOperation) {
 
   std::unique_ptr<base::DictionaryValue> command_args =
       std::make_unique<base::DictionaryValue>();
-  command_args->SetString("output", "output.bin");
-  command_args->SetString("sha256", binary_output_hash);
-  command_args->SetString("op", "courgette");
-  command_args->SetString("input", "binary_input.bin");
-  command_args->SetString("patch", "binary_bsdiff_patch.bin");
+  command_args->SetKey("output", base::Value("output.bin"));
+  command_args->SetKey("sha256", base::Value(binary_output_hash));
+  command_args->SetKey("op", base::Value("courgette"));
+  command_args->SetKey("input", base::Value("binary_input.bin"));
+  command_args->SetKey("patch", base::Value("binary_bsdiff_patch.bin"));
 
   // The operation needs a connector to access the PatchService.
   std::unique_ptr<service_manager::TestConnectorFactory> connector_factory =

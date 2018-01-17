@@ -70,9 +70,9 @@ TEST(HttpHandlerTest, HandleNewSession) {
   handler.Handle(request, base::Bind(&OnResponse, &response));
   ASSERT_EQ(net::HTTP_OK, response.status_code());
   base::DictionaryValue body;
-  body.SetInteger("status", kOk);
-  body.SetInteger("value", 1);
-  body.SetString("sessionId", "session_id");
+  body.SetKey("status", base::Value(static_cast<int>(kOk)));
+  body.SetKey("value", base::Value(1));
+  body.SetKey("sessionId", base::Value("session_id"));
   std::string json;
   base::JSONWriter::Write(body, &json);
   ASSERT_EQ(json, response.body());
@@ -115,9 +115,9 @@ TEST(HttpHandlerTest, HandleCommand) {
   handler.Handle(request, base::Bind(&OnResponse, &response));
   ASSERT_EQ(net::HTTP_OK, response.status_code());
   base::DictionaryValue body;
-  body.SetInteger("status", kOk);
-  body.SetInteger("value", 1);
-  body.SetString("sessionId", "session_id");
+  body.SetKey("status", base::Value(static_cast<int>(kOk)));
+  body.SetKey("value", base::Value(1));
+  body.SetKey("sessionId", base::Value("session_id"));
   std::string json;
   base::JSONWriter::Write(body, &json);
   ASSERT_EQ(json, response.body());

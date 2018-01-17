@@ -268,16 +268,16 @@ TEST_F(DataReductionProxyEventStoreTest, TestFeedbackLastBypassEventFullURL) {
   // Set bypass event time to be 4 minutes ago.
   std::string time = net::NetLog::TickCountToString(
       base::TimeTicks::Now() - base::TimeDelta::FromMinutes(4));
-  bypass_event->SetString("time", time);
-  sanitized_event->SetString("bypass_time", time);
-  bypass_params->SetInteger("bypass_type", 4);
-  sanitized_event->SetInteger("bypass_type", 4);
-  bypass_params->SetString("bypass_duration_seconds", "40");
-  sanitized_event->SetString("bypass_seconds", "40");
-  bypass_params->SetString("url", "http://www.foo.com/bar?baz=1234");
-  sanitized_event->SetString("url", "http://www.foo.com/bar");
-  bypass_params->SetString("method", "GET");
-  sanitized_event->SetString("method", "GET");
+  bypass_event->SetKey("time", base::Value(time));
+  sanitized_event->SetKey("bypass_time", base::Value(time));
+  bypass_params->SetKey("bypass_type", base::Value(4));
+  sanitized_event->SetKey("bypass_type", base::Value(4));
+  bypass_params->SetKey("bypass_duration_seconds", base::Value("40"));
+  sanitized_event->SetKey("bypass_seconds", base::Value("40"));
+  bypass_params->SetKey("url", base::Value("http://www.foo.com/bar?baz=1234"));
+  sanitized_event->SetKey("url", base::Value("http://www.foo.com/bar"));
+  bypass_params->SetKey("method", base::Value("GET"));
+  sanitized_event->SetKey("method", base::Value("GET"));
 
   bypass_event->Set("params", std::move(bypass_params));
   std::string sanitized_output;
@@ -306,16 +306,16 @@ TEST_F(DataReductionProxyEventStoreTest, TestFeedbackLastBypassEventHostOnly) {
   // Set bypass event time to be 6 minutes ago.
   std::string time = net::NetLog::TickCountToString(
       base::TimeTicks::Now() - base::TimeDelta::FromMinutes(6));
-  bypass_event->SetString("time", time);
-  sanitized_event->SetString("bypass_time", time);
-  bypass_params->SetInteger("bypass_type", 4);
-  sanitized_event->SetInteger("bypass_type", 4);
-  bypass_params->SetString("bypass_duration_seconds", "40");
-  sanitized_event->SetString("bypass_seconds", "40");
-  bypass_params->SetString("url", "http://www.foo.com/bar?baz=1234");
-  sanitized_event->SetString("url", "www.foo.com");
-  bypass_params->SetString("method", "GET");
-  sanitized_event->SetString("method", "GET");
+  bypass_event->SetKey("time", base::Value(time));
+  sanitized_event->SetKey("bypass_time", base::Value(time));
+  bypass_params->SetKey("bypass_type", base::Value(4));
+  sanitized_event->SetKey("bypass_type", base::Value(4));
+  bypass_params->SetKey("bypass_duration_seconds", base::Value("40"));
+  sanitized_event->SetKey("bypass_seconds", base::Value("40"));
+  bypass_params->SetKey("url", base::Value("http://www.foo.com/bar?baz=1234"));
+  sanitized_event->SetKey("url", base::Value("www.foo.com"));
+  bypass_params->SetKey("method", base::Value("GET"));
+  sanitized_event->SetKey("method", base::Value("GET"));
 
   bypass_event->Set("params", std::move(bypass_params));
   std::string sanitized_output;

@@ -196,8 +196,9 @@ class DevToolsChannelData : public base::trace_event::ConvertableToTraceFormat {
 std::unique_ptr<base::trace_event::ConvertableToTraceFormat>
 DevToolsChannelData::CreateForChannel(GpuChannel* channel) {
   std::unique_ptr<base::DictionaryValue> res(new base::DictionaryValue);
-  res->SetInteger("renderer_pid", channel->GetClientPID());
-  res->SetDouble("used_bytes", channel->GetMemoryUsage());
+  res->SetKey("renderer_pid", base::Value(channel->GetClientPID()));
+  res->SetKey("used_bytes",
+              base::Value(static_cast<double>(channel->GetMemoryUsage())));
   return base::WrapUnique(new DevToolsChannelData(res.release()));
 }
 

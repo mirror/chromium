@@ -12,7 +12,7 @@ TEST(JsonSchemaCompilerAnyTest, AnyTypePopulate) {
     AnyType any_type;
     std::unique_ptr<base::DictionaryValue> any_type_value(
         new base::DictionaryValue());
-    any_type_value->SetString("any", "value");
+    any_type_value->SetKey("any", base::Value("value"));
     EXPECT_TRUE(AnyType::Populate(*any_type_value, &any_type));
     std::unique_ptr<base::Value> any_type_to_value(any_type.ToValue());
     EXPECT_TRUE(any_type_value->Equals(any_type_to_value.get()));
@@ -21,7 +21,7 @@ TEST(JsonSchemaCompilerAnyTest, AnyTypePopulate) {
     AnyType any_type;
     std::unique_ptr<base::DictionaryValue> any_type_value(
         new base::DictionaryValue());
-    any_type_value->SetInteger("any", 5);
+    any_type_value->SetKey("any", base::Value(5));
     EXPECT_TRUE(AnyType::Populate(*any_type_value, &any_type));
     std::unique_ptr<base::Value> any_type_to_value(any_type.ToValue());
     EXPECT_TRUE(any_type_value->Equals(any_type_to_value.get()));

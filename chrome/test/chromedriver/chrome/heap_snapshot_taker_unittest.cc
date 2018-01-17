@@ -23,8 +23,8 @@ const char* const chunks[] = {"{\"a\": 1,", "\"b\": 2}"};
 
 std::unique_ptr<base::Value> GetSnapshotAsValue() {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("a", 1);
-  dict->SetInteger("b", 2);
+  dict->SetKey("a", base::Value(1));
+  dict->SetKey("b", base::Value(2));
   return std::move(dict);
 }
 
@@ -41,9 +41,9 @@ class DummyDevToolsClient : public StubDevToolsClient {
 
   Status SendAddHeapSnapshotChunkEvent() {
     base::DictionaryValue event_params;
-    event_params.SetInteger("uid", uid_);
+    event_params.SetKey("uid", base::Value(uid_));
     for (size_t i = 0; i < arraysize(chunks); ++i) {
-      event_params.SetString("chunk", chunks[i]);
+      event_params.SetKey("chunk", base::Value(chunks[i]));
       Status status = listeners_.front()->OnEvent(
           this, "HeapProfiler.addHeapSnapshotChunk", event_params);
       if (status.IsError())

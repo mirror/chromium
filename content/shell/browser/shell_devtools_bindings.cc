@@ -209,7 +209,7 @@ void ShellDevToolsBindings::HandleMessageFromDevToolsFrontend(
     GURL gurl(url);
     if (!gurl.is_valid()) {
       base::DictionaryValue response;
-      response.SetInteger("statusCode", 404);
+      response.SetKey("statusCode", base::Value(404));
       SendMessageAck(request_id, &response);
       return;
     }
@@ -324,7 +324,7 @@ void ShellDevToolsBindings::OnURLFetchComplete(const net::URLFetcher* source) {
   base::DictionaryValue response;
   auto headers = std::make_unique<base::DictionaryValue>();
   net::HttpResponseHeaders* rh = source->GetResponseHeaders();
-  response.SetInteger("statusCode", rh ? rh->response_code() : 200);
+  response.SetKey("statusCode", base::Value(rh ? rh->response_code() : 200));
 
   size_t iterator = 0;
   std::string name;

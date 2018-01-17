@@ -19,7 +19,7 @@ TEST(JsonSchemaCompilerCallbacksTest, ReturnsObjectResultCreate) {
 
   std::unique_ptr<base::DictionaryValue> expected_dict(
       new base::DictionaryValue());
-  expected_dict->SetString("state", "foo");
+  expected_dict->SetKey("state", base::Value("foo"));
   base::ListValue expected;
   expected.Append(std::move(expected_dict));
   EXPECT_TRUE(results->Equals(&expected));
@@ -33,7 +33,7 @@ TEST(JsonSchemaCompilerCallbacksTest, ReturnsMultipleResultCreate) {
 
   std::unique_ptr<base::DictionaryValue> expected_dict(
       new base::DictionaryValue());
-  expected_dict->SetString("state", "foo");
+  expected_dict->SetKey("state", base::Value("foo"));
   base::ListValue expected;
   expected.AppendInteger(5);
   expected.Append(std::move(expected_dict));

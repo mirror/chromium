@@ -166,12 +166,14 @@ void TracingControllerImpl::AddAgents() {
 std::unique_ptr<base::DictionaryValue>
 TracingControllerImpl::GenerateMetadataDict() const {
   auto metadata_dict = std::make_unique<base::DictionaryValue>();
-  metadata_dict->SetString("trace-config", trace_config_->ToString());
+  metadata_dict->SetKey("trace-config", base::Value(trace_config_->ToString()));
 
-  metadata_dict->SetString("network-type", GetNetworkTypeString());
-  metadata_dict->SetString("product-version", GetContentClient()->GetProduct());
-  metadata_dict->SetString("v8-version", V8_VERSION_STRING);
-  metadata_dict->SetString("user-agent", GetContentClient()->GetUserAgent());
+  metadata_dict->SetKey("network-type", base::Value(GetNetworkTypeString()));
+  metadata_dict->SetKey("product-version",
+                        base::Value(GetContentClient()->GetProduct()));
+  metadata_dict->SetKey("v8-version", base::Value(V8_VERSION_STRING));
+  metadata_dict->SetKey("user-agent",
+                        base::Value(GetContentClient()->GetUserAgent()));
 
   // OS
 #if defined(OS_CHROMEOS)
@@ -187,57 +189,64 @@ TracingControllerImpl::GenerateMetadataDict() const {
       "os-version", base::StringPrintf("%d.%d.%d", major_version, minor_version,
                                        bugfix_version));
 #else
-  metadata_dict->SetString("os-name", base::SysInfo::OperatingSystemName());
-  metadata_dict->SetString("os-version",
-                           base::SysInfo::OperatingSystemVersion());
+  metadata_dict->SetKey("os-name",
+                        base::Value(base::SysInfo::OperatingSystemName()));
+  metadata_dict->SetKey("os-version",
+                        base::Value(base::SysInfo::OperatingSystemVersion()));
 #endif
-  metadata_dict->SetString("os-arch",
-                           base::SysInfo::OperatingSystemArchitecture());
+  metadata_dict->SetKey(
+      "os-arch", base::Value(base::SysInfo::OperatingSystemArchitecture()));
 
   // CPU
   base::CPU cpu;
-  metadata_dict->SetInteger("cpu-family", cpu.family());
-  metadata_dict->SetInteger("cpu-model", cpu.model());
-  metadata_dict->SetInteger("cpu-stepping", cpu.stepping());
-  metadata_dict->SetInteger("num-cpus", base::SysInfo::NumberOfProcessors());
-  metadata_dict->SetInteger("physical-memory",
-                            base::SysInfo::AmountOfPhysicalMemoryMB());
+  metadata_dict->SetKey("cpu-family", base::Value(cpu.family()));
+  metadata_dict->SetKey("cpu-model", base::Value(cpu.model()));
+  metadata_dict->SetKey("cpu-stepping", base::Value(cpu.stepping()));
+  metadata_dict->SetKey("num-cpus",
+                        base::Value(base::SysInfo::NumberOfProcessors()));
+  metadata_dict->SetKey("physical-memory",
+                        base::Value(base::SysInfo::AmountOfPhysicalMemoryMB()));
 
-  metadata_dict->SetString("cpu-brand", cpu.cpu_brand());
+  metadata_dict->SetKey("cpu-brand", base::Value(cpu.cpu_brand()));
 
   // GPU
   gpu::GPUInfo gpu_info = content::GpuDataManager::GetInstance()->GetGPUInfo();
 
 #if !defined(OS_ANDROID)
-  metadata_dict->SetInteger("gpu-venid", gpu_info.gpu.vendor_id);
-  metadata_dict->SetInteger("gpu-devid", gpu_info.gpu.device_id);
+  metadata_dict->SetKey("gpu-venid",
+                        base::Value(static_cast<int>(gpu_info.gpu.vendor_id)));
+  metadata_dict->SetKey("gpu-devid",
+                        base::Value(static_cast<int>(gpu_info.gpu.device_id)));
 #endif
 
-  metadata_dict->SetString("gpu-driver", gpu_info.driver_version);
-  metadata_dict->SetString("gpu-psver", gpu_info.pixel_shader_version);
-  metadata_dict->SetString("gpu-vsver", gpu_info.vertex_shader_version);
+  metadata_dict->SetKey("gpu-driver", base::Value(gpu_info.driver_version));
+  metadata_dict->SetKey("gpu-psver",
+                        base::Value(gpu_info.pixel_shader_version));
+  metadata_dict->SetKey("gpu-vsver",
+                        base::Value(gpu_info.vertex_shader_version));
 
 #if defined(OS_MACOSX)
   metadata_dict->SetString("gpu-glver", gpu_info.gl_version);
 #elif defined(OS_POSIX)
-  metadata_dict->SetString("gpu-gl-vendor", gpu_info.gl_vendor);
-  metadata_dict->SetString("gpu-gl-renderer", gpu_info.gl_renderer);
+  metadata_dict->SetKey("gpu-gl-vendor", base::Value(gpu_info.gl_vendor));
+  metadata_dict->SetKey("gpu-gl-renderer", base::Value(gpu_info.gl_renderer));
 #endif
 
-  metadata_dict->SetString("clock-domain", GetClockString());
-  metadata_dict->SetBoolean("highres-ticks",
-                            base::TimeTicks::IsHighResolution());
+  metadata_dict->SetKey("clock-domain", base::Value(GetClockString()));
+  metadata_dict->SetKey("highres-ticks",
+                        base::Value(base::TimeTicks::IsHighResolution()));
 
-  metadata_dict->SetString(
+  metadata_dict->SetKey(
       "command_line",
-      base::CommandLine::ForCurrentProcess()->GetCommandLineString());
+      base::Value(
+          base::CommandLine::ForCurrentProcess()->GetCommandLineString()));
 
   base::Time::Exploded ctime;
   base::Time::Now().UTCExplode(&ctime);
   std::string time_string = base::StringPrintf(
       "%u-%u-%u %d:%d:%d", ctime.year, ctime.month, ctime.day_of_month,
       ctime.hour, ctime.minute, ctime.second);
-  metadata_dict->SetString("trace-capture-datetime", time_string);
+  metadata_dict->SetKey("trace-capture-datetime", base::Value(time_string));
 
   // TODO(crbug.com/737049): The central controller doesn't know about
   // metadata filters, so we temporarily filter here as the controller is

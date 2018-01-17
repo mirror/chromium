@@ -107,7 +107,7 @@ std::unique_ptr<base::Value> NetLogQuicStreamFactoryJobCallback(
     const QuicServerId* server_id,
     NetLogCaptureMode capture_mode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("server_id", server_id->ToString());
+  dict->SetKey("server_id", base::Value(server_id->ToString()));
   return std::move(dict);
 }
 
@@ -115,7 +115,7 @@ std::unique_ptr<base::Value> NetLogQuicConnectionMigrationTriggerCallback(
     std::string trigger,
     NetLogCaptureMode capture_mode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("trigger", trigger);
+  dict->SetKey("trigger", base::Value(trigger));
   return std::move(dict);
 }
 

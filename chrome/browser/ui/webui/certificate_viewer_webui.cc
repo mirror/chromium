@@ -76,7 +76,7 @@ class CertNodeBuilder {
 };
 
 CertNodeBuilder::CertNodeBuilder(base::StringPiece label) {
-  node_.SetString("label", label);
+  node_.SetKey("label", base::Value(label));
 }
 
 CertNodeBuilder::CertNodeBuilder(int label_id)
@@ -84,7 +84,7 @@ CertNodeBuilder::CertNodeBuilder(int label_id)
 
 CertNodeBuilder& CertNodeBuilder::Payload(base::StringPiece payload) {
   DCHECK(!node_.HasKey("payload.val"));
-  node_.SetString("payload.val", payload);
+  node_.SetPath({"payload", "val"}, base::Value(payload));
   return *this;
 }
 
@@ -202,33 +202,38 @@ std::string CertificateViewerModalDialog::GetDialogArgs() const {
     }
     usagestr += *it;
   }
-  cert_info.SetString("general.usages", usagestr);
+  cert_info.SetPath({"general", "usages"}, base::Value(usagestr));
 
   // Standard certificate details.
   const std::string alternative_text =
       l10n_util::GetStringUTF8(IDS_CERT_INFO_FIELD_NOT_PRESENT);
-  cert_info.SetString(
-      "general.title",
-      l10n_util::GetStringFUTF8(
+  cert_info.SetPath(
+      {"general", "title"},
+      base::Value(l10n_util::GetStringFUTF8(
           IDS_CERT_INFO_DIALOG_TITLE,
-          base::UTF8ToUTF16(x509_certificate_model::GetTitle(cert_hnd))));
+          base::UTF8ToUTF16(x509_certificate_model::GetTitle(cert_hnd)))));
 
   // Issued to information.
-  cert_info.SetString("general.issued-cn",
-      x509_certificate_model::GetSubjectCommonName(cert_hnd, alternative_text));
-  cert_info.SetString("general.issued-o",
-      x509_certificate_model::GetSubjectOrgName(cert_hnd, alternative_text));
-  cert_info.SetString("general.issued-ou",
-      x509_certificate_model::GetSubjectOrgUnitName(cert_hnd,
-                                                    alternative_text));
+  cert_info.SetPath({"general", "issued-cn"},
+                    base::Value(x509_certificate_model::GetSubjectCommonName(
+                        cert_hnd, alternative_text)));
+  cert_info.SetPath({"general", "issued-o"},
+                    base::Value(x509_certificate_model::GetSubjectOrgName(
+                        cert_hnd, alternative_text)));
+  cert_info.SetPath({"general", "issued-ou"},
+                    base::Value(x509_certificate_model::GetSubjectOrgUnitName(
+                        cert_hnd, alternative_text)));
 
   // Issuer information.
-  cert_info.SetString("general.issuer-cn",
-      x509_certificate_model::GetIssuerCommonName(cert_hnd, alternative_text));
-  cert_info.SetString("general.issuer-o",
-      x509_certificate_model::GetIssuerOrgName(cert_hnd, alternative_text));
-  cert_info.SetString("general.issuer-ou",
-      x509_certificate_model::GetIssuerOrgUnitName(cert_hnd, alternative_text));
+  cert_info.SetPath({"general", "issuer-cn"},
+                    base::Value(x509_certificate_model::GetIssuerCommonName(
+                        cert_hnd, alternative_text)));
+  cert_info.SetPath({"general", "issuer-o"},
+                    base::Value(x509_certificate_model::GetIssuerOrgName(
+                        cert_hnd, alternative_text)));
+  cert_info.SetPath({"general", "issuer-ou"},
+                    base::Value(x509_certificate_model::GetIssuerOrgUnitName(
+                        cert_hnd, alternative_text)));
 
   // Validity period.
   base::Time issued, expires;
@@ -242,13 +247,15 @@ std::string CertificateViewerModalDialog::GetDialogArgs() const {
     issued_str = alternative_text;
     expires_str = alternative_text;
   }
-  cert_info.SetString("general.issue-date", issued_str);
-  cert_info.SetString("general.expiry-date", expires_str);
+  cert_info.SetPath({"general", "issue-date"}, base::Value(issued_str));
+  cert_info.SetPath({"general", "expiry-date"}, base::Value(expires_str));
 
-  cert_info.SetString("general.sha256",
-      x509_certificate_model::HashCertSHA256(cert_hnd));
-  cert_info.SetString("general.sha1",
-      x509_certificate_model::HashCertSHA1(cert_hnd));
+  cert_info.SetPath(
+      {"general", "sha256"},
+      base::Value(x509_certificate_model::HashCertSHA256(cert_hnd)));
+  cert_info.SetPath(
+      {"general", "sha1"},
+      base::Value(x509_certificate_model::HashCertSHA1(cert_hnd)));
 
   // Certificate hierarchy is constructed from bottom up.
   std::unique_ptr<base::ListValue> children;
@@ -258,9 +265,11 @@ std::string CertificateViewerModalDialog::GetDialogArgs() const {
     std::unique_ptr<base::DictionaryValue> cert_node(
         new base::DictionaryValue());
     base::ListValue cert_details;
-    cert_node->SetString("label",
-                         x509_certificate_model::GetTitle(i->get()).c_str());
-    cert_node->SetDouble("payload.index", index);
+    cert_node->SetKey(
+        "label",
+        base::Value(x509_certificate_model::GetTitle(i->get()).c_str()));
+    cert_node->SetPath({"payload", "index"},
+                       base::Value(static_cast<double>(index)));
     // Add the child from the previous iteration.
     if (children)
       cert_node->Set("children", std::move(children));

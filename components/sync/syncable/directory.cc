@@ -1254,7 +1254,8 @@ std::unique_ptr<base::ListValue> Directory::GetNodeDetailsForType(
     // in EntryKernel) because the EntryKernel does not have access to its
     // siblings.
     if (kernel->ShouldMaintainPosition() && !kernel->ref(IS_DEL)) {
-      node->SetInteger("positionIndex", GetPositionIndex(trans, kernel));
+      node->SetKey("positionIndex",
+                   base::Value(GetPositionIndex(trans, kernel)));
     }
 
     nodes->Append(std::move(node));

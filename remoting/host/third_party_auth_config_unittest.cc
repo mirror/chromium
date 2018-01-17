@@ -147,7 +147,7 @@ TEST(ThirdPartyAuthConfig, ExtractEmpty) {
 
 TEST(ThirdPartyAuthConfig, ExtractUnknown) {
   base::DictionaryValue dict;
-  dict.SetString("unknownName", "someValue");
+  dict.SetKey("unknownName", base::Value("someValue"));
 
   std::string url1, url2, cert;
   EXPECT_FALSE(ThirdPartyAuthConfig::ExtractStrings(dict, &url1, &url2, &cert));

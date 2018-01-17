@@ -43,11 +43,11 @@ void TopSitesGetFunction::OnMostVisitedURLsAvailable(
     if (!url.url.is_empty()) {
       std::unique_ptr<base::DictionaryValue> page_value(
           new base::DictionaryValue());
-      page_value->SetString("url", url.url.spec());
+      page_value->SetKey("url", base::Value(url.url.spec()));
       if (url.title.empty())
-        page_value->SetString("title", url.url.spec());
+        page_value->SetKey("title", base::Value(url.url.spec()));
       else
-        page_value->SetString("title", url.title);
+        page_value->SetKey("title", base::Value(url.title));
       pages_value->Append(std::move(page_value));
     }
   }

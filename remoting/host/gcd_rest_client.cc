@@ -55,11 +55,11 @@ void GcdRestClient::PatchState(
   // GCD doesn't accept fractional values.
   double now = clock_->Now().ToJavaTime();
   std::unique_ptr<base::DictionaryValue> patch_dict(new base::DictionaryValue);
-  patch_dict->SetDouble("requestTimeMs", now);
+  patch_dict->SetKey("requestTimeMs", base::Value(now));
   std::unique_ptr<base::ListValue> patch_list(new base::ListValue);
   std::unique_ptr<base::DictionaryValue> patch_item(new base::DictionaryValue);
   patch_item->Set("patch", std::move(patch_details));
-  patch_item->SetDouble("timeMs", now);
+  patch_item->SetKey("timeMs", base::Value(now));
   patch_list->Append(std::move(patch_item));
   patch_dict->Set("patches", std::move(patch_list));
 

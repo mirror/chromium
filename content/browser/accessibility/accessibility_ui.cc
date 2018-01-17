@@ -356,7 +356,7 @@ void AccessibilityUIMessageHandler::RequestWebContentsTree(
     std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue());
     result->SetInteger(kProcessIdField, process_id);
     result->SetInteger(kRouteIdField, route_id);
-    result->SetString("error", "Renderer no longer exists.");
+    result->SetKey("error", base::Value("Renderer no longer exists."));
     CallJavascriptFunction("accessibility.showTree", *(result.get()));
     return;
   }
@@ -384,7 +384,8 @@ void AccessibilityUIMessageHandler::RequestWebContentsTree(
   DCHECK(ax_mgr);
   formatter->FormatAccessibilityTree(ax_mgr->GetRoot(),
                                      &accessibility_contents_utf16);
-  result->SetString("tree", base::UTF16ToUTF8(accessibility_contents_utf16));
+  result->SetKey("tree",
+                 base::Value(base::UTF16ToUTF8(accessibility_contents_utf16)));
   CallJavascriptFunction("accessibility.showTree", *(result.get()));
 }
 
@@ -400,7 +401,7 @@ void AccessibilityUIMessageHandler::RequestNativeUITree(
   std::string str = RecursiveDumpAXPlatformNodeAsString(node, 0);
 
   std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue());
-  result->SetString("tree", str);
+  result->SetKey("tree", base::Value(str));
   CallJavascriptFunction("accessibility.showNativeUITree", *(result.get()));
 }
 

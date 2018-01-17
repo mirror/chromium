@@ -38,21 +38,22 @@ std::unique_ptr<base::DictionaryValue> SCTToDictionary(
     ct::SCTVerifyStatus status) {
   std::unique_ptr<base::DictionaryValue> out(new base::DictionaryValue());
 
-  out->SetString("origin", OriginToString(sct.origin));
-  out->SetString("verification_status", StatusToString(status));
-  out->SetInteger("version", sct.version);
+  out->SetKey("origin", base::Value(OriginToString(sct.origin)));
+  out->SetKey("verification_status", base::Value(StatusToString(status)));
+  out->SetKey("version", base::Value(static_cast<int>(sct.version)));
 
   SetBinaryData("log_id", sct.log_id, out.get());
   base::TimeDelta time_since_unix_epoch =
       sct.timestamp - base::Time::UnixEpoch();
-  out->SetString("timestamp",
-      base::Int64ToString(time_since_unix_epoch.InMilliseconds()));
+  out->SetKey(
+      "timestamp",
+      base::Value(base::Int64ToString(time_since_unix_epoch.InMilliseconds())));
   SetBinaryData("extensions", sct.extensions, out.get());
 
-  out->SetString("hash_algorithm",
-                 HashAlgorithmToString(sct.signature.hash_algorithm));
-  out->SetString("signature_algorithm",
-                 SignatureAlgorithmToString(sct.signature.signature_algorithm));
+  out->SetKey("hash_algorithm",
+              base::Value(HashAlgorithmToString(sct.signature.hash_algorithm)));
+  out->SetKey("signature_algorithm", base::Value(SignatureAlgorithmToString(
+                                         sct.signature.signature_algorithm)));
   SetBinaryData("signature_data", sct.signature.signature_data, out.get());
 
   return out;

@@ -126,12 +126,12 @@ TEST_F(TemplateURLPrepopulateDataTest, ProvidersFromPrefs) {
   auto overrides = std::make_unique<base::ListValue>();
   std::unique_ptr<base::DictionaryValue> entry(new base::DictionaryValue);
   // Set only the minimal required settings for a search provider configuration.
-  entry->SetString("name", "foo");
-  entry->SetString("keyword", "fook");
-  entry->SetString("search_url", "http://foo.com/s?q={searchTerms}");
-  entry->SetString("favicon_url", "http://foi.com/favicon.ico");
-  entry->SetString("encoding", "UTF-8");
-  entry->SetInteger("id", 1001);
+  entry->SetKey("name", base::Value("foo"));
+  entry->SetKey("keyword", base::Value("fook"));
+  entry->SetKey("search_url", base::Value("http://foo.com/s?q={searchTerms}"));
+  entry->SetKey("favicon_url", base::Value("http://foi.com/favicon.ico"));
+  entry->SetKey("encoding", base::Value("UTF-8"));
+  entry->SetKey("id", base::Value(1001));
   overrides->Append(entry->CreateDeepCopy());
   prefs_.SetUserPref(prefs::kSearchProviderOverrides, std::move(overrides));
 
@@ -157,7 +157,8 @@ TEST_F(TemplateURLPrepopulateDataTest, ProvidersFromPrefs) {
   EXPECT_TRUE(t_urls[0]->last_modified.is_null());
 
   // Test the optional settings too.
-  entry->SetString("suggest_url", "http://foo.com/suggest?q={searchTerms}");
+  entry->SetKey("suggest_url",
+                base::Value("http://foo.com/suggest?q={searchTerms}"));
   auto alternate_urls = std::make_unique<base::ListValue>();
   alternate_urls->AppendString("http://foo.com/alternate?q={searchTerms}");
   entry->Set("alternate_urls", std::move(alternate_urls));
@@ -184,15 +185,15 @@ TEST_F(TemplateURLPrepopulateDataTest, ProvidersFromPrefs) {
   // provider has an incomplete configuration.
   overrides = std::make_unique<base::ListValue>();
   overrides->Append(entry->CreateDeepCopy());
-  entry->SetInteger("id", 1002);
-  entry->SetString("name", "bar");
-  entry->SetString("keyword", "bark");
-  entry->SetString("encoding", std::string());
+  entry->SetKey("id", base::Value(1002));
+  entry->SetKey("name", base::Value("bar"));
+  entry->SetKey("keyword", base::Value("bark"));
+  entry->SetKey("encoding", base::Value(std::string()));
   overrides->Append(entry->CreateDeepCopy());
-  entry->SetInteger("id", 1003);
-  entry->SetString("name", "baz");
-  entry->SetString("keyword", "bazk");
-  entry->SetString("encoding", "UTF-8");
+  entry->SetKey("id", base::Value(1003));
+  entry->SetKey("name", base::Value("baz"));
+  entry->SetKey("keyword", base::Value("bazk"));
+  entry->SetKey("encoding", base::Value("UTF-8"));
   overrides->Append(entry->CreateDeepCopy());
   prefs_.SetUserPref(prefs::kSearchProviderOverrides, std::move(overrides));
 
@@ -208,12 +209,12 @@ TEST_F(TemplateURLPrepopulateDataTest, ClearProvidersFromPrefs) {
   auto overrides = std::make_unique<base::ListValue>();
   std::unique_ptr<base::DictionaryValue> entry(new base::DictionaryValue);
   // Set only the minimal required settings for a search provider configuration.
-  entry->SetString("name", "foo");
-  entry->SetString("keyword", "fook");
-  entry->SetString("search_url", "http://foo.com/s?q={searchTerms}");
-  entry->SetString("favicon_url", "http://foi.com/favicon.ico");
-  entry->SetString("encoding", "UTF-8");
-  entry->SetInteger("id", 1001);
+  entry->SetKey("name", base::Value("foo"));
+  entry->SetKey("keyword", base::Value("fook"));
+  entry->SetKey("search_url", base::Value("http://foo.com/s?q={searchTerms}"));
+  entry->SetKey("favicon_url", base::Value("http://foi.com/favicon.ico"));
+  entry->SetKey("encoding", base::Value("UTF-8"));
+  entry->SetKey("id", base::Value(1001));
   overrides->Append(std::move(entry));
   prefs_.SetUserPref(prefs::kSearchProviderOverrides, std::move(overrides));
 

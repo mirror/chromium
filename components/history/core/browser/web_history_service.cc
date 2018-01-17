@@ -330,11 +330,11 @@ std::unique_ptr<base::DictionaryValue> CreateDeletion(
     const std::string& max_time,
     const GURL& url) {
   std::unique_ptr<base::DictionaryValue> deletion(new base::DictionaryValue);
-  deletion->SetString("type", "CHROME_HISTORY");
+  deletion->SetKey("type", base::Value("CHROME_HISTORY"));
   if (url.is_valid())
-    deletion->SetString("url", url.spec());
-  deletion->SetString("min_timestamp_usec", min_time);
-  deletion->SetString("max_timestamp_usec", max_time);
+    deletion->SetKey("url", base::Value(url.spec()));
+  deletion->SetKey("min_timestamp_usec", base::Value(min_time));
+  deletion->SetKey("max_timestamp_usec", base::Value(max_time));
   return deletion;
 }
 
@@ -499,9 +499,9 @@ void WebHistoryService::SetAudioHistoryEnabled(
       CreateRequest(url, completion_callback, partial_traffic_annotation));
 
   base::DictionaryValue enable_audio_history;
-  enable_audio_history.SetBoolean("enable_history_recording",
-                                  new_enabled_value);
-  enable_audio_history.SetString("client", "audio");
+  enable_audio_history.SetKey("enable_history_recording",
+                              base::Value(new_enabled_value));
+  enable_audio_history.SetKey("client", base::Value("audio"));
   std::string post_data;
   base::JSONWriter::Write(enable_audio_history, &post_data);
   request->SetPostData(post_data);

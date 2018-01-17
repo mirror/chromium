@@ -132,8 +132,8 @@ class MessageSender : public content::NotificationObserver {
       const bool last_message,
       const std::string& data) {
     std::unique_ptr<base::DictionaryValue> event(new base::DictionaryValue());
-    event->SetBoolean("lastMessage", last_message);
-    event->SetString("data", data);
+    event->SetKey("lastMessage", base::Value(last_message));
+    event->SetKey("data", base::Value(data));
     std::unique_ptr<base::ListValue> arguments(new base::ListValue());
     arguments->Append(std::move(event));
     return arguments;

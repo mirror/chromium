@@ -1013,8 +1013,8 @@ void PrintPreviewHandler::SendPrinterSetup(
     success = false;
   }
 
-  response->SetString("printerId", printer_name);
-  response->SetBoolean("success", success);
+  response->SetKey("printerId", base::Value(printer_name));
+  response->SetKey("success", base::Value(success));
   response->Set("capabilities", std::move(caps));
 
   ResolveJavascriptCallback(base::Value(callback_id), *response);

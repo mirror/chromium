@@ -129,24 +129,29 @@ void SystemInfoUIHTMLSource::SysInfoComplete(
 
 void SystemInfoUIHTMLSource::RequestComplete() {
   base::DictionaryValue strings;
-  strings.SetString("title", l10n_util::GetStringUTF16(IDS_ABOUT_SYS_TITLE));
-  strings.SetString("description",
-                    l10n_util::GetStringUTF16(IDS_ABOUT_SYS_DESC));
-  strings.SetString("tableTitle",
-                    l10n_util::GetStringUTF16(IDS_ABOUT_SYS_TABLE_TITLE));
-  strings.SetString(
-      "logFileTableTitle",
-      l10n_util::GetStringUTF16(IDS_ABOUT_SYS_LOG_FILE_TABLE_TITLE));
-  strings.SetString("expandAllBtn",
-                    l10n_util::GetStringUTF16(IDS_ABOUT_SYS_EXPAND_ALL));
-  strings.SetString("collapseAllBtn",
-                    l10n_util::GetStringUTF16(IDS_ABOUT_SYS_COLLAPSE_ALL));
-  strings.SetString("expandBtn",
-                    l10n_util::GetStringUTF16(IDS_ABOUT_SYS_EXPAND));
-  strings.SetString("collapseBtn",
-                    l10n_util::GetStringUTF16(IDS_ABOUT_SYS_COLLAPSE));
-  strings.SetString("parseError",
-                    l10n_util::GetStringUTF16(IDS_ABOUT_SYS_PARSE_ERROR));
+  strings.SetKey("title",
+                 base::Value(l10n_util::GetStringUTF16(IDS_ABOUT_SYS_TITLE)));
+  strings.SetKey("description",
+                 base::Value(l10n_util::GetStringUTF16(IDS_ABOUT_SYS_DESC)));
+  strings.SetKey(
+      "tableTitle",
+      base::Value(l10n_util::GetStringUTF16(IDS_ABOUT_SYS_TABLE_TITLE)));
+  strings.SetKey("logFileTableTitle", base::Value(l10n_util::GetStringUTF16(
+                                          IDS_ABOUT_SYS_LOG_FILE_TABLE_TITLE)));
+  strings.SetKey(
+      "expandAllBtn",
+      base::Value(l10n_util::GetStringUTF16(IDS_ABOUT_SYS_EXPAND_ALL)));
+  strings.SetKey(
+      "collapseAllBtn",
+      base::Value(l10n_util::GetStringUTF16(IDS_ABOUT_SYS_COLLAPSE_ALL)));
+  strings.SetKey("expandBtn",
+                 base::Value(l10n_util::GetStringUTF16(IDS_ABOUT_SYS_EXPAND)));
+  strings.SetKey(
+      "collapseBtn",
+      base::Value(l10n_util::GetStringUTF16(IDS_ABOUT_SYS_COLLAPSE)));
+  strings.SetKey(
+      "parseError",
+      base::Value(l10n_util::GetStringUTF16(IDS_ABOUT_SYS_PARSE_ERROR)));
 
   const std::string& app_locale = g_browser_process->GetApplicationLocale();
   webui::SetLoadTimeDataDefaults(app_locale, &strings);
@@ -157,8 +162,8 @@ void SystemInfoUIHTMLSource::RequestComplete() {
          it != response_->end();
          ++it) {
       std::unique_ptr<base::DictionaryValue> val(new base::DictionaryValue);
-      val->SetString("statName", it->first);
-      val->SetString("statValue", it->second);
+      val->SetKey("statName", base::Value(it->first));
+      val->SetKey("statValue", base::Value(it->second));
       details->Append(std::move(val));
     }
     strings.Set("details", std::move(details));

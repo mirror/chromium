@@ -239,7 +239,7 @@ TEST_F(PersistentPrefStoreClientTest, SubPrefUpdates_NestedUpdateBeforeSet) {
   auto& split_updates = update->get_split_updates();
   ASSERT_EQ(1u, split_updates.size());
   base::DictionaryValue expected_value;
-  expected_value.SetInteger("integer", 1);
+  expected_value.SetKey("integer", base::Value(1));
   EXPECT_EQ(expected_value, *split_updates[0]->value);
   EXPECT_EQ((std::vector<std::string>{"path", "to"}), split_updates[0]->path);
 }
@@ -297,7 +297,7 @@ TEST_F(PersistentPrefStoreClientTest,
   auto& split_updates = update->get_split_updates();
   ASSERT_EQ(1u, split_updates.size());
   base::DictionaryValue expected_value;
-  expected_value.SetString("string", "string value");
+  expected_value.SetKey("string", base::Value("string value"));
   EXPECT_EQ(expected_value, *split_updates[0]->value);
   EXPECT_EQ((std::vector<std::string>{"path", "to"}), split_updates[0]->path);
 }
@@ -330,7 +330,7 @@ TEST_F(PersistentPrefStoreClientTest,
   auto update = WaitForUpdate();
   ASSERT_TRUE(update->is_atomic_update());
   base::DictionaryValue expected_value;
-  expected_value.SetInteger("path.to.integer", 1);
+  expected_value.SetPath({"path", "to", "integer"}, base::Value(1));
   EXPECT_EQ(expected_value, *update->get_atomic_update());
 }
 

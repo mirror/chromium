@@ -38,8 +38,8 @@ std::unique_ptr<base::DictionaryValue> ChangeRecord::ToValue() const {
       action_str = "Unknown";
       break;
   }
-  value->SetString("action", action_str);
-  value->SetString("id", base::Int64ToString(id));
+  value->SetKey("action", base::Value(action_str));
+  value->SetKey("id", base::Value(base::Int64ToString(id)));
   if (action == ACTION_DELETE) {
     if (extra.get()) {
       value->Set("extra", extra->ToValue());

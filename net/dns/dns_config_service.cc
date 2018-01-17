@@ -74,15 +74,16 @@ std::unique_ptr<base::Value> DnsConfig::ToValue() const {
     list->AppendString(search[i]);
   dict->Set("search", std::move(list));
 
-  dict->SetBoolean("unhandled_options", unhandled_options);
-  dict->SetBoolean("append_to_multi_label_name", append_to_multi_label_name);
-  dict->SetInteger("ndots", ndots);
-  dict->SetDouble("timeout", timeout.InSecondsF());
-  dict->SetInteger("attempts", attempts);
-  dict->SetBoolean("rotate", rotate);
-  dict->SetBoolean("edns0", edns0);
-  dict->SetBoolean("use_local_ipv6", use_local_ipv6);
-  dict->SetInteger("num_hosts", hosts.size());
+  dict->SetKey("unhandled_options", base::Value(unhandled_options));
+  dict->SetKey("append_to_multi_label_name",
+               base::Value(append_to_multi_label_name));
+  dict->SetKey("ndots", base::Value(ndots));
+  dict->SetKey("timeout", base::Value(timeout.InSecondsF()));
+  dict->SetKey("attempts", base::Value(attempts));
+  dict->SetKey("rotate", base::Value(rotate));
+  dict->SetKey("edns0", base::Value(edns0));
+  dict->SetKey("use_local_ipv6", base::Value(use_local_ipv6));
+  dict->SetKey("num_hosts", base::Value(static_cast<int>(hosts.size())));
 
   return std::move(dict);
 }

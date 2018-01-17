@@ -39,10 +39,10 @@ class ReportingServiceProxyImpl : public blink::mojom::ReportingServiceProxy {
                                int line_number,
                                int column_number) override {
     auto body = std::make_unique<base::DictionaryValue>();
-    body->SetString("message", message);
-    body->SetString("sourceFile", source_file);
-    body->SetInteger("lineNumber", line_number);
-    body->SetInteger("columnNumber", column_number);
+    body->SetKey("message", base::Value(message));
+    body->SetKey("sourceFile", base::Value(source_file));
+    body->SetKey("lineNumber", base::Value(line_number));
+    body->SetKey("columnNumber", base::Value(column_number));
     QueueReport(url, "default", "intervention", std::move(body));
   }
 
@@ -54,13 +54,14 @@ class ReportingServiceProxyImpl : public blink::mojom::ReportingServiceProxy {
                               int line_number,
                               int column_number) override {
     auto body = std::make_unique<base::DictionaryValue>();
-    body->SetString("id", id);
+    body->SetKey("id", base::Value(id));
     if (anticipatedRemoval.is_null())
-      body->SetDouble("anticipatedRemoval", anticipatedRemoval.ToDoubleT());
-    body->SetString("message", message);
-    body->SetString("sourceFile", source_file);
-    body->SetInteger("lineNumber", line_number);
-    body->SetInteger("columnNumber", column_number);
+      body->SetKey("anticipatedRemoval",
+                   base::Value(anticipatedRemoval.ToDoubleT()));
+    body->SetKey("message", base::Value(message));
+    body->SetKey("sourceFile", base::Value(source_file));
+    body->SetKey("lineNumber", base::Value(line_number));
+    body->SetKey("columnNumber", base::Value(column_number));
     QueueReport(url, "default", "deprecation", std::move(body));
   }
 
@@ -79,21 +80,21 @@ class ReportingServiceProxyImpl : public blink::mojom::ReportingServiceProxy {
                                int status_code,
                                const std::string& script_sample) override {
     auto body = std::make_unique<base::DictionaryValue>();
-    body->SetString("document-uri", document_uri);
-    body->SetString("referrer", referrer);
-    body->SetString("violated-directive", violated_directive);
-    body->SetString("effective-directive", effective_directive);
-    body->SetString("original-policy", original_policy);
-    body->SetString("disposition", disposition);
-    body->SetString("blocked-uri", blocked_uri);
+    body->SetKey("document-uri", base::Value(document_uri));
+    body->SetKey("referrer", base::Value(referrer));
+    body->SetKey("violated-directive", base::Value(violated_directive));
+    body->SetKey("effective-directive", base::Value(effective_directive));
+    body->SetKey("original-policy", base::Value(original_policy));
+    body->SetKey("disposition", base::Value(disposition));
+    body->SetKey("blocked-uri", base::Value(blocked_uri));
     if (line_number)
-      body->SetInteger("line-number", line_number);
+      body->SetKey("line-number", base::Value(line_number));
     if (column_number)
-      body->SetInteger("column-number", column_number);
-    body->SetString("source-file", source_file);
+      body->SetKey("column-number", base::Value(column_number));
+    body->SetKey("source-file", base::Value(source_file));
     if (status_code)
-      body->SetInteger("status-code", status_code);
-    body->SetString("script-sample", script_sample);
+      body->SetKey("status-code", base::Value(status_code));
+    body->SetKey("script-sample", base::Value(script_sample));
     QueueReport(url, group, "csp", std::move(body));
   }
 

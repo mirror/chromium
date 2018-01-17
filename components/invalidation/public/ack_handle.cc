@@ -36,9 +36,9 @@ bool AckHandle::Equals(const AckHandle& other) const {
 
 std::unique_ptr<base::DictionaryValue> AckHandle::ToValue() const {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
-  value->SetString("state", state_);
-  value->SetString("timestamp",
-                   base::Int64ToString(timestamp_.ToInternalValue()));
+  value->SetKey("state", base::Value(state_));
+  value->SetKey("timestamp",
+                base::Value(base::Int64ToString(timestamp_.ToInternalValue())));
   return value;
 }
 

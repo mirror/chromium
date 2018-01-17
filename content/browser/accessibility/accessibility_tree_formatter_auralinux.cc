@@ -50,7 +50,7 @@ AccessibilityTreeFormatterAuraLinux::~AccessibilityTreeFormatterAuraLinux() {
 void AccessibilityTreeFormatterAuraLinux::AddProperties(
     const BrowserAccessibility& node,
     base::DictionaryValue* dict) {
-  dict->SetInteger("id", node.GetId());
+  dict->SetKey("id", base::Value(node.GetId()));
   BrowserAccessibilityAuraLinux* acc_obj =
       ToBrowserAccessibilityAuraLinux(const_cast<BrowserAccessibility*>(&node));
 

@@ -30,9 +30,9 @@ TEST(JavaScriptDialogManager, HandleDialogPassesParams) {
   BrowserInfo browser_info;
   JavaScriptDialogManager manager(&client, &browser_info);
   base::DictionaryValue params;
-  params.SetString("message", "hi");
-  params.SetString("type", "prompt");
-  params.SetString("defaultPrompt", "This is a default text");
+  params.SetKey("message", base::Value("hi"));
+  params.SetKey("type", base::Value("prompt"));
+  params.SetKey("defaultPrompt", base::Value("This is a default text"));
   ASSERT_EQ(
       kOk,
       manager.OnEvent(&client, "Page.javascriptDialogOpening", params).code());
@@ -49,9 +49,9 @@ TEST(JavaScriptDialogManager, HandleDialogNullPrompt) {
   BrowserInfo browser_info;
   JavaScriptDialogManager manager(&client, &browser_info);
   base::DictionaryValue params;
-  params.SetString("message", "hi");
-  params.SetString("type", "prompt");
-  params.SetString("defaultPrompt", "");
+  params.SetKey("message", base::Value("hi"));
+  params.SetKey("type", base::Value("prompt"));
+  params.SetKey("defaultPrompt", base::Value(""));
   ASSERT_EQ(
       kOk,
       manager.OnEvent(&client, "Page.javascriptDialogOpening", params).code());
@@ -65,9 +65,9 @@ TEST(JavaScriptDialogManager, ReconnectClearsStateAndSendsEnable) {
   BrowserInfo browser_info;
   JavaScriptDialogManager manager(&client, &browser_info);
   base::DictionaryValue params;
-  params.SetString("message", "hi");
-  params.SetString("type", "alert");
-  params.SetString("defaultPrompt", "");
+  params.SetKey("message", base::Value("hi"));
+  params.SetKey("type", base::Value("alert"));
+  params.SetKey("defaultPrompt", base::Value(""));
   ASSERT_EQ(
       kOk,
       manager.OnEvent(&client, "Page.javascriptDialogOpening", params).code());
@@ -124,9 +124,9 @@ TEST(JavaScriptDialogManager, OneDialog) {
   BrowserInfo browser_info;
   JavaScriptDialogManager manager(&client, &browser_info);
   base::DictionaryValue params;
-  params.SetString("message", "hi");
-  params.SetString("type", "alert");
-  params.SetString("defaultPrompt", "");
+  params.SetKey("message", base::Value("hi"));
+  params.SetKey("type", base::Value("alert"));
+  params.SetKey("defaultPrompt", base::Value(""));
   ASSERT_FALSE(manager.IsDialogOpen());
   std::string message;
   ASSERT_EQ(kNoAlertOpen, manager.GetDialogMessage(&message).code());
@@ -153,14 +153,14 @@ TEST(JavaScriptDialogManager, TwoDialogs) {
   BrowserInfo browser_info;
   JavaScriptDialogManager manager(&client, &browser_info);
   base::DictionaryValue params;
-  params.SetString("message", "1");
-  params.SetString("type", "confirm");
-  params.SetString("defaultPrompt", "");
+  params.SetKey("message", base::Value("1"));
+  params.SetKey("type", base::Value("confirm"));
+  params.SetKey("defaultPrompt", base::Value(""));
   ASSERT_EQ(
       kOk,
       manager.OnEvent(&client, "Page.javascriptDialogOpening", params).code());
-  params.SetString("message", "2");
-  params.SetString("type", "alert");
+  params.SetKey("message", base::Value("2"));
+  params.SetKey("type", base::Value("alert"));
   ASSERT_EQ(
       kOk,
       manager.OnEvent(&client, "Page.javascriptDialogOpening", params).code());
@@ -192,9 +192,9 @@ TEST(JavaScriptDialogManager, OneDialogManualClose) {
   BrowserInfo browser_info;
   JavaScriptDialogManager manager(&client, &browser_info);
   base::DictionaryValue params;
-  params.SetString("message", "hi");
-  params.SetString("type", "alert");
-  params.SetString("defaultPrompt", "");
+  params.SetKey("message", base::Value("hi"));
+  params.SetKey("type", base::Value("alert"));
+  params.SetKey("defaultPrompt", base::Value(""));
   ASSERT_FALSE(manager.IsDialogOpen());
   std::string message;
   ASSERT_EQ(kNoAlertOpen, manager.GetDialogMessage(&message).code());

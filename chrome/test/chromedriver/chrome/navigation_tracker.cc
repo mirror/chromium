@@ -90,7 +90,7 @@ Status NavigationTracker::IsPendingNavigation(const std::string& frame_id,
     // renderer process, and make sure that we notice any pending navigations
     // (see crbug.com/524079).
     base::DictionaryValue params;
-    params.SetString("expression", "1");
+    params.SetKey("expression", base::Value("1"));
     std::unique_ptr<base::DictionaryValue> result;
     Status status = client_->SendCommandAndGetResultWithTimeout(
         "Runtime.evaluate", params, timeout, &result);
@@ -179,7 +179,8 @@ Status NavigationTracker::IsPendingNavigation(const std::string& frame_id,
        "  }, 0);"
        "}", kDummyFrameName, kDummyFrameUrl);
     base::DictionaryValue params;
-    params.SetString("expression", kStartLoadingIfMainFrameNotLoading);
+    params.SetKey("expression",
+                  base::Value(kStartLoadingIfMainFrameNotLoading));
     status = client_->SendCommandAndGetResultWithTimeout(
         "Runtime.evaluate", params, timeout, &result);
     if (status.IsError())
@@ -207,7 +208,7 @@ Status NavigationTracker::IsPendingNavigation(const std::string& frame_id,
 Status NavigationTracker::CheckFunctionExists(const Timeout* timeout,
                                               bool* exists) {
   base::DictionaryValue params;
-  params.SetString("expression", "typeof(getWindowInfo)");
+  params.SetKey("expression", base::Value("typeof(getWindowInfo)"));
   std::unique_ptr<base::DictionaryValue> result;
   Status status = client_->SendCommandAndGetResultWithTimeout(
       "Runtime.evaluate", params, timeout, &result);
@@ -247,7 +248,7 @@ Status NavigationTracker::OnEvent(DevToolsClient* client,
     if (browser_info_->major_version >= 63) {
       // Check if the document is really loading.
       base::DictionaryValue params;
-      params.SetString("expression", "document.readyState");
+      params.SetKey("expression", base::Value("document.readyState"));
       std::unique_ptr<base::DictionaryValue> result;
       Status status =
           client_->SendCommandAndGetResult("Runtime.evaluate", params, &result);
@@ -460,7 +461,7 @@ Status NavigationTracker::OnCommandSuccess(
     // yet. In that case, expect a load to happen in the future.
     loading_state_ = kUnknown;
     base::DictionaryValue params;
-    params.SetString("expression", "document.URL");
+    params.SetKey("expression", base::Value("document.URL"));
     std::unique_ptr<base::DictionaryValue> result;
     Status status = client_->SendCommandAndGetResultWithTimeout(
         "Runtime.evaluate", params, &command_timeout, &result);

@@ -33,15 +33,17 @@ bool TestLauncherTracer::Dump(const FilePath& path) {
   std::unique_ptr<ListValue> json_events(new ListValue);
   for (const Event& event : events_) {
     std::unique_ptr<DictionaryValue> json_event(new DictionaryValue);
-    json_event->SetString("name", event.name);
-    json_event->SetString("ph", "X");
-    json_event->SetInteger(
-        "ts", (event.timestamp - trace_start_time_).InMicroseconds());
-    json_event->SetInteger("dur", event.duration.InMicroseconds());
-    json_event->SetInteger("tid", event.thread_id);
+    json_event->SetKey("name", base::Value(event.name));
+    json_event->SetKey("ph", base::Value("X"));
+    json_event->SetKey(
+        "ts", base::Value(static_cast<int>(
+                  (event.timestamp - trace_start_time_).InMicroseconds())));
+    json_event->SetKey(
+        "dur", base::Value(static_cast<int>(event.duration.InMicroseconds())));
+    json_event->SetKey("tid", base::Value(event.thread_id));
 
     // Add fake values required by the trace viewer.
-    json_event->SetInteger("pid", 0);
+    json_event->SetKey("pid", base::Value(0));
 
     json_events->Append(std::move(json_event));
   }

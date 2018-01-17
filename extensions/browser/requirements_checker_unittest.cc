@@ -57,8 +57,8 @@ class RequirementsCheckerTest : public ExtensionsTest {
   ~RequirementsCheckerTest() override {}
 
   void CreateExtension() {
-    manifest_dict_->SetString("name", "dummy name");
-    manifest_dict_->SetString("version", "1");
+    manifest_dict_->SetKey("name", base::Value("dummy name"));
+    manifest_dict_->SetKey("version", base::Value("1"));
 
     std::string error;
     extension_ =
@@ -76,7 +76,8 @@ class RequirementsCheckerTest : public ExtensionsTest {
   }
 
   void RequireWindowShape() {
-    manifest_dict_->SetBoolean("requirements.window.shape", true);
+    manifest_dict_->SetPath({"requirements", "window", "shape"},
+                            base::Value(true));
   }
 
   void RequireFeature(const char feature[]) {

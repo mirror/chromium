@@ -35,28 +35,29 @@ void SetOverrides(sync_preferences::TestingPrefServiceSyncable* prefs,
   auto overrides = std::make_unique<base::ListValue>();
   auto entry = std::make_unique<base::DictionaryValue>();
 
-  entry->SetString("name", update ? "new_foo" : "foo");
-  entry->SetString("keyword", update ? "new_fook" : "fook");
-  entry->SetString("search_url", "http://foo.com/s?q={searchTerms}");
-  entry->SetString("favicon_url", "http://foi.com/favicon.ico");
-  entry->SetString("encoding", "UTF-8");
-  entry->SetInteger("id", 1001);
-  entry->SetString("suggest_url", "http://foo.com/suggest?q={searchTerms}");
+  entry->SetKey("name", base::Value(update ? "new_foo" : "foo"));
+  entry->SetKey("keyword", base::Value(update ? "new_fook" : "fook"));
+  entry->SetKey("search_url", base::Value("http://foo.com/s?q={searchTerms}"));
+  entry->SetKey("favicon_url", base::Value("http://foi.com/favicon.ico"));
+  entry->SetKey("encoding", base::Value("UTF-8"));
+  entry->SetKey("id", base::Value(1001));
+  entry->SetKey("suggest_url",
+                base::Value("http://foo.com/suggest?q={searchTerms}"));
   auto alternate_urls = std::make_unique<base::ListValue>();
   alternate_urls->AppendString("http://foo.com/alternate?q={searchTerms}");
   entry->Set("alternate_urls", std::move(alternate_urls));
   overrides->Append(std::move(entry));
 
   entry = std::make_unique<base::DictionaryValue>();
-  entry->SetInteger("id", 1002);
-  entry->SetString("name", update ? "new_bar" : "bar");
-  entry->SetString("keyword", update ? "new_bark" : "bark");
-  entry->SetString("encoding", std::string());
+  entry->SetKey("id", base::Value(1002));
+  entry->SetKey("name", base::Value(update ? "new_bar" : "bar"));
+  entry->SetKey("keyword", base::Value(update ? "new_bark" : "bark"));
+  entry->SetKey("encoding", base::Value(std::string()));
   overrides->Append(std::make_unique<base::Value>(entry->Clone()));
-  entry->SetInteger("id", 1003);
-  entry->SetString("name", "baz");
-  entry->SetString("keyword", "bazk");
-  entry->SetString("encoding", "UTF-8");
+  entry->SetKey("id", base::Value(1003));
+  entry->SetKey("name", base::Value("baz"));
+  entry->SetKey("keyword", base::Value("bazk"));
+  entry->SetKey("encoding", base::Value("UTF-8"));
   overrides->Append(std::move(entry));
   prefs->SetUserPref(prefs::kSearchProviderOverrides, std::move(overrides));
 }

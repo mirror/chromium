@@ -124,10 +124,11 @@ bool GetHPKPReport(const HostPortPair& host_port_pair,
 
   base::DictionaryValue report;
   base::Time now = base::Time::Now();
-  report.SetString("hostname", host_port_pair.host());
-  report.SetInteger("port", host_port_pair.port());
-  report.SetBoolean("include-subdomains", pkp_state.include_subdomains);
-  report.SetString("noted-hostname", pkp_state.domain);
+  report.SetKey("hostname", base::Value(host_port_pair.host()));
+  report.SetKey("port", base::Value(static_cast<int>(host_port_pair.port())));
+  report.SetKey("include-subdomains",
+                base::Value(pkp_state.include_subdomains));
+  report.SetKey("noted-hostname", base::Value(pkp_state.domain));
 
   std::unique_ptr<base::ListValue> served_certificate_chain_list =
       GetPEMEncodedChainAsList(served_certificate_chain);
@@ -174,9 +175,9 @@ bool GetHPKPReport(const HostPortPair& host_port_pair,
     return false;
   }
 
-  report.SetString("date-time", TimeToISO8601(now));
-  report.SetString("effective-expiration-date",
-                   TimeToISO8601(pkp_state.expiry));
+  report.SetKey("date-time", base::Value(TimeToISO8601(now)));
+  report.SetKey("effective-expiration-date",
+                base::Value(TimeToISO8601(pkp_state.expiry)));
   if (!base::JSONWriter::Write(report, serialized_report)) {
     LOG(ERROR) << "Failed to serialize HPKP violation report.";
     return false;
@@ -709,22 +710,22 @@ bool SerializeExpectStapleReport(const HostPortPair& host_port_pair,
                                  std::string* out_serialized_report) {
   DCHECK(ssl_info.is_issued_by_known_root);
   base::DictionaryValue report;
-  report.SetString("date-time", TimeToISO8601(base::Time::Now()));
-  report.SetString("hostname", host_port_pair.host());
-  report.SetInteger("port", host_port_pair.port());
-  report.SetString("response-status",
-                   SerializeExpectStapleResponseStatus(
-                       ssl_info.ocsp_result.response_status));
+  report.SetKey("date-time", base::Value(TimeToISO8601(base::Time::Now())));
+  report.SetKey("hostname", base::Value(host_port_pair.host()));
+  report.SetKey("port", base::Value(static_cast<int>(host_port_pair.port())));
+  report.SetKey("response-status",
+                base::Value(SerializeExpectStapleResponseStatus(
+                    ssl_info.ocsp_result.response_status)));
 
   if (!ocsp_response.empty()) {
     std::string encoded_ocsp_response;
     base::Base64Encode(ocsp_response, &encoded_ocsp_response);
-    report.SetString("ocsp-response", encoded_ocsp_response);
+    report.SetKey("ocsp-response", base::Value(encoded_ocsp_response));
   }
   if (ssl_info.ocsp_result.response_status == OCSPVerifyResult::PROVIDED) {
-    report.SetString("cert-status",
-                     SerializeExpectStapleRevocationStatus(
-                         ssl_info.ocsp_result.revocation_status));
+    report.SetKey("cert-status",
+                  base::Value(SerializeExpectStapleRevocationStatus(
+                      ssl_info.ocsp_result.revocation_status)));
   }
 
   report.Set("served-certificate-chain",

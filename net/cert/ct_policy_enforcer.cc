@@ -102,9 +102,9 @@ std::unique_ptr<base::Value> NetLogCertComplianceCheckResultCallback(
     NetLogCaptureMode capture_mode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
   dict->Set("certificate", NetLogX509CertificateCallback(cert, capture_mode));
-  dict->SetBoolean("build_timely", build_timely);
-  dict->SetString("ct_compliance_status",
-                  CTPolicyComplianceToString(compliance));
+  dict->SetKey("build_timely", base::Value(build_timely));
+  dict->SetKey("ct_compliance_status",
+               base::Value(CTPolicyComplianceToString(compliance)));
   return std::move(dict);
 }
 

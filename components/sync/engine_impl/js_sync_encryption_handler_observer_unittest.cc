@@ -64,13 +64,15 @@ TEST_F(JsSyncEncryptionHandlerObserverTest, OnPassphraseRequired) {
   base::DictionaryValue reason_encryption_details;
   base::DictionaryValue reason_decryption_details;
 
-  reason_passphrase_not_required_details.SetString(
+  reason_passphrase_not_required_details.SetKey(
+      "reason", base::Value(PassphraseRequiredReasonToString(
+                    REASON_PASSPHRASE_NOT_REQUIRED)));
+  reason_encryption_details.SetKey(
       "reason",
-      PassphraseRequiredReasonToString(REASON_PASSPHRASE_NOT_REQUIRED));
-  reason_encryption_details.SetString(
-      "reason", PassphraseRequiredReasonToString(REASON_ENCRYPTION));
-  reason_decryption_details.SetString(
-      "reason", PassphraseRequiredReasonToString(REASON_DECRYPTION));
+      base::Value(PassphraseRequiredReasonToString(REASON_ENCRYPTION)));
+  reason_decryption_details.SetKey(
+      "reason",
+      base::Value(PassphraseRequiredReasonToString(REASON_DECRYPTION)));
 
   EXPECT_CALL(mock_js_event_handler_,
               HandleJsEvent("onPassphraseRequired",
@@ -94,8 +96,9 @@ TEST_F(JsSyncEncryptionHandlerObserverTest, OnPassphraseRequired) {
 
 TEST_F(JsSyncEncryptionHandlerObserverTest, OnBootstrapTokenUpdated) {
   base::DictionaryValue bootstrap_token_details;
-  bootstrap_token_details.SetString("bootstrapToken", "<redacted>");
-  bootstrap_token_details.SetString("type", "PASSPHRASE_BOOTSTRAP_TOKEN");
+  bootstrap_token_details.SetKey("bootstrapToken", base::Value("<redacted>"));
+  bootstrap_token_details.SetKey("type",
+                                 base::Value("PASSPHRASE_BOOTSTRAP_TOKEN"));
 
   EXPECT_CALL(mock_js_event_handler_,
               HandleJsEvent("onBootstrapTokenUpdated",
@@ -119,7 +122,7 @@ TEST_F(JsSyncEncryptionHandlerObserverTest, OnEncryptedTypesChanged) {
   base::DictionaryValue expected_details;
   const bool kEncrytEverything = false;
   expected_details.Set("encryptedTypes", std::move(encrypted_type_values));
-  expected_details.SetBoolean("encryptEverything", kEncrytEverything);
+  expected_details.SetKey("encryptEverything", base::Value(kEncrytEverything));
 
   EXPECT_CALL(mock_js_event_handler_,
               HandleJsEvent("onEncryptedTypesChanged",
@@ -134,8 +137,8 @@ TEST_F(JsSyncEncryptionHandlerObserverTest, OnCryptographerStateChanged) {
   base::DictionaryValue expected_details;
   bool expected_ready = false;
   bool expected_pending = false;
-  expected_details.SetBoolean("ready", expected_ready);
-  expected_details.SetBoolean("hasPendingKeys", expected_pending);
+  expected_details.SetKey("ready", base::Value(expected_ready));
+  expected_details.SetKey("hasPendingKeys", base::Value(expected_pending));
   ModelTypeSet encrypted_types;
 
   EXPECT_CALL(mock_js_event_handler_,
@@ -154,9 +157,9 @@ TEST_F(JsSyncEncryptionHandlerObserverTest, OnPassphraseTypeChanged) {
   InSequence dummy;
 
   base::DictionaryValue passphrase_type_details;
-  passphrase_type_details.SetString("passphraseType",
-                                    "PassphraseType::IMPLICIT_PASSPHRASE");
-  passphrase_type_details.SetInteger("explicitPassphraseTime", 10);
+  passphrase_type_details.SetKey(
+      "passphraseType", base::Value("PassphraseType::IMPLICIT_PASSPHRASE"));
+  passphrase_type_details.SetKey("explicitPassphraseTime", base::Value(10));
   EXPECT_CALL(mock_js_event_handler_,
               HandleJsEvent("onPassphraseTypeChanged",
                             HasDetailsAsDictionary(passphrase_type_details)));

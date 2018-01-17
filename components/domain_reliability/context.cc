@@ -91,10 +91,11 @@ void DomainReliabilityContext::ClearBeacons() {
 std::unique_ptr<Value> DomainReliabilityContext::GetWebUIData() const {
   DictionaryValue* context_value = new DictionaryValue();
 
-  context_value->SetString("origin", config().origin.spec());
-  context_value->SetInteger("beacon_count", static_cast<int>(beacons_.size()));
-  context_value->SetInteger("uploading_beacon_count",
-      static_cast<int>(uploading_beacons_size_));
+  context_value->SetKey("origin", base::Value(config().origin.spec()));
+  context_value->SetKey("beacon_count",
+                        base::Value(static_cast<int>(beacons_.size())));
+  context_value->SetKey("uploading_beacon_count",
+                        base::Value(static_cast<int>(uploading_beacons_size_)));
   context_value->Set("scheduler", scheduler_.GetWebUIData());
 
   return std::unique_ptr<Value>(context_value);
@@ -202,7 +203,7 @@ std::unique_ptr<const Value> DomainReliabilityContext::CreateReport(
   }
 
   std::unique_ptr<DictionaryValue> report_value(new DictionaryValue());
-  report_value->SetString("reporter", upload_reporter_string_);
+  report_value->SetKey("reporter", base::Value(upload_reporter_string_));
   report_value->Set("entries", std::move(beacons_value));
 
   *max_upload_depth_out = max_upload_depth;

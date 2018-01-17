@@ -74,14 +74,14 @@ TEST(PaymentRequestTest, ParsingFullyPopulatedRequestDictionarySucceeds) {
   // Add the same values to the dictionary to be parsed.
   auto details_dict = std::make_unique<base::DictionaryValue>();
   auto total_dict = std::make_unique<base::DictionaryValue>();
-  total_dict->SetString("label", "TOTAL");
+  total_dict->SetKey("label", base::Value("TOTAL"));
   auto amount_dict = std::make_unique<base::DictionaryValue>();
-  amount_dict->SetString("currency", "GBP");
-  amount_dict->SetString("value", "6.66");
+  amount_dict->SetKey("currency", base::Value("GBP"));
+  amount_dict->SetKey("value", base::Value("6.66"));
   total_dict->Set("amount", std::move(amount_dict));
   details_dict->Set("total", std::move(total_dict));
-  details_dict->SetString("id", "12345");
-  details_dict->SetString("error", "Error in details");
+  details_dict->SetKey("id", base::Value("12345"));
+  details_dict->SetKey("error", base::Value("Error in details"));
   request_dict.Set("details", std::move(details_dict));
 
   auto method_data_list = std::make_unique<base::ListValue>();
@@ -91,7 +91,7 @@ TEST(PaymentRequestTest, ParsingFullyPopulatedRequestDictionarySucceeds) {
   method_data_dict->Set("supportedMethods", std::move(supported_methods_list));
   method_data_list->Append(std::move(method_data_dict));
   request_dict.Set("methodData", std::move(method_data_list));
-  request_dict.SetString("id", "123456789");
+  request_dict.SetKey("id", base::Value("123456789"));
 
   // With the required values present, parsing should succeed.
   EXPECT_TRUE(output_request.FromDictionaryValue(request_dict));
@@ -99,9 +99,9 @@ TEST(PaymentRequestTest, ParsingFullyPopulatedRequestDictionarySucceeds) {
 
   // If payment options are present, parse those as well.
   auto options_dict = std::make_unique<base::DictionaryValue>();
-  options_dict->SetBoolean("requestPayerPhone", true);
-  options_dict->SetBoolean("requestShipping", true);
-  options_dict->SetString("shippingType", "delivery");
+  options_dict->SetKey("requestPayerPhone", base::Value(true));
+  options_dict->SetKey("requestShipping", base::Value(true));
+  options_dict->SetKey("shippingType", base::Value("delivery"));
   request_dict.Set("options", std::move(options_dict));
 
   PaymentOptions payment_options;

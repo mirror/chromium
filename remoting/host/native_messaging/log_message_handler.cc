@@ -118,11 +118,11 @@ void LogMessageHandler::SendLogMessageToClient(
   base::TrimWhitespaceASCII(message, base::TRIM_ALL, &message);
 
   std::unique_ptr<base::DictionaryValue> dictionary(new base::DictionaryValue);
-  dictionary->SetString("type", kDebugMessageTypeName);
-  dictionary->SetString("severity", severity_string);
-  dictionary->SetString("message", message);
-  dictionary->SetString("file", file);
-  dictionary->SetInteger("line", line);
+  dictionary->SetKey("type", base::Value(kDebugMessageTypeName));
+  dictionary->SetKey("severity", base::Value(severity_string));
+  dictionary->SetKey("message", base::Value(message));
+  dictionary->SetKey("file", base::Value(file));
+  dictionary->SetKey("line", base::Value(line));
 
   // Protect against this instance being torn down after the delegate is run.
   base::WeakPtr<LogMessageHandler> self = weak_ptr_factory_.GetWeakPtr();

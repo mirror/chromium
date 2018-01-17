@@ -55,11 +55,15 @@ void FakeSoftwareVideoEncoder::Encode(
   encoded_frame->reference_time = reference_time;
 
   base::DictionaryValue values;
-  values.SetBoolean("key",
-                    encoded_frame->dependency == EncodedFrame::KEY);
-  values.SetInteger("ref", encoded_frame->referenced_frame_id.lower_32_bits());
-  values.SetInteger("id", encoded_frame->frame_id.lower_32_bits());
-  values.SetInteger("size", frame_size_);
+  values.SetKey("key",
+                base::Value(encoded_frame->dependency == EncodedFrame::KEY));
+  values.SetKey("ref",
+                base::Value(static_cast<int>(
+                    encoded_frame->referenced_frame_id.lower_32_bits())));
+  values.SetKey(
+      "id",
+      base::Value(static_cast<int>(encoded_frame->frame_id.lower_32_bits())));
+  values.SetKey("size", base::Value(frame_size_));
   base::JSONWriter::Write(values, &encoded_frame->data);
   encoded_frame->data.resize(
       std::max<size_t>(encoded_frame->data.size(), frame_size_), ' ');

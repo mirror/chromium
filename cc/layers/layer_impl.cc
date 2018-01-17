@@ -382,8 +382,8 @@ void LayerImpl::SetIsResizedByBrowserControls(bool resized) {
 
 std::unique_ptr<base::DictionaryValue> LayerImpl::LayerAsJson() {
   std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue);
-  result->SetInteger("LayerId", id());
-  result->SetString("LayerType", LayerTypeAsString());
+  result->SetKey("LayerId", base::Value(id()));
+  result->SetKey("LayerType", base::Value(LayerTypeAsString()));
 
   auto list = std::make_unique<base::ListValue>();
   list->AppendInteger(bounds().width());
@@ -403,15 +403,15 @@ std::unique_ptr<base::DictionaryValue> LayerImpl::LayerAsJson() {
     list->AppendDouble(transform[i]);
   result->Set("Transform", std::move(list));
 
-  result->SetBoolean("DrawsContent", draws_content_);
-  result->SetBoolean("HitTestableWithoutDrawsContent",
-                     hit_testable_without_draws_content_);
-  result->SetBoolean("Is3dSorted", Is3dSorted());
-  result->SetDouble("OPACITY", Opacity());
-  result->SetBoolean("ContentsOpaque", contents_opaque_);
+  result->SetKey("DrawsContent", base::Value(draws_content_));
+  result->SetKey("HitTestableWithoutDrawsContent",
+                 base::Value(hit_testable_without_draws_content_));
+  result->SetKey("Is3dSorted", base::Value(Is3dSorted()));
+  result->SetKey("OPACITY", base::Value(static_cast<double>(Opacity())));
+  result->SetKey("ContentsOpaque", base::Value(contents_opaque_));
 
   if (scrollable())
-    result->SetBoolean("Scrollable", true);
+    result->SetKey("Scrollable", base::Value(true));
 
   if (!touch_action_region_.region().IsEmpty()) {
     std::unique_ptr<base::Value> region =

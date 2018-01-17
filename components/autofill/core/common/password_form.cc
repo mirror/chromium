@@ -20,60 +20,71 @@ namespace {
 // Serializes a PasswordForm to a JSON object. Used only for logging in tests.
 void PasswordFormToJSON(const PasswordForm& form,
                         base::DictionaryValue* target) {
-  target->SetInteger("scheme", form.scheme);
-  target->SetString("signon_realm", form.signon_realm);
-  target->SetBoolean("is_public_suffix_match", form.is_public_suffix_match);
-  target->SetBoolean("is_affiliation_based_match",
-                     form.is_affiliation_based_match);
-  target->SetString("origin", form.origin.possibly_invalid_spec());
-  target->SetString("action", form.action.possibly_invalid_spec());
-  target->SetString("submit_element", form.submit_element);
-  target->SetString("username_elem", form.username_element);
-  target->SetBoolean("username_marked_by_site", form.username_marked_by_site);
-  target->SetString("username_value", form.username_value);
-  target->SetString("password_elem", form.password_element);
-  target->SetString("password_value", form.password_value);
-  target->SetBoolean("password_value_is_default",
-                     form.password_value_is_default);
-  target->SetString("new_password_element", form.new_password_element);
-  target->SetString("new_password_value", form.new_password_value);
-  target->SetBoolean("new_password_value_is_default",
-                     form.new_password_value_is_default);
-  target->SetBoolean("new_password_marked_by_site",
-                     form.new_password_marked_by_site);
-  target->SetString(
-      "other_possible_usernames",
-      OtherPossibleUsernamesToString(form.other_possible_usernames));
-  target->SetString("all_possible_passwords",
-                    AllPossiblePasswordsToString(form.all_possible_passwords));
-  target->SetBoolean("blacklisted", form.blacklisted_by_user);
-  target->SetBoolean("preferred", form.preferred);
-  target->SetDouble("date_created", form.date_created.ToDoubleT());
-  target->SetDouble("date_synced", form.date_synced.ToDoubleT());
-  target->SetInteger("type", form.type);
-  target->SetInteger("times_used", form.times_used);
+  target->SetKey("scheme", base::Value(static_cast<int>(form.scheme)));
+  target->SetKey("signon_realm", base::Value(form.signon_realm));
+  target->SetKey("is_public_suffix_match",
+                 base::Value(form.is_public_suffix_match));
+  target->SetKey("is_affiliation_based_match",
+                 base::Value(form.is_affiliation_based_match));
+  target->SetKey("origin", base::Value(form.origin.possibly_invalid_spec()));
+  target->SetKey("action", base::Value(form.action.possibly_invalid_spec()));
+  target->SetKey("submit_element", base::Value(form.submit_element));
+  target->SetKey("username_elem", base::Value(form.username_element));
+  target->SetKey("username_marked_by_site",
+                 base::Value(form.username_marked_by_site));
+  target->SetKey("username_value", base::Value(form.username_value));
+  target->SetKey("password_elem", base::Value(form.password_element));
+  target->SetKey("password_value", base::Value(form.password_value));
+  target->SetKey("password_value_is_default",
+                 base::Value(form.password_value_is_default));
+  target->SetKey("new_password_element",
+                 base::Value(form.new_password_element));
+  target->SetKey("new_password_value", base::Value(form.new_password_value));
+  target->SetKey("new_password_value_is_default",
+                 base::Value(form.new_password_value_is_default));
+  target->SetKey("new_password_marked_by_site",
+                 base::Value(form.new_password_marked_by_site));
+  target->SetKey("other_possible_usernames",
+                 base::Value(OtherPossibleUsernamesToString(
+                     form.other_possible_usernames)));
+  target->SetKey(
+      "all_possible_passwords",
+      base::Value(AllPossiblePasswordsToString(form.all_possible_passwords)));
+  target->SetKey("blacklisted", base::Value(form.blacklisted_by_user));
+  target->SetKey("preferred", base::Value(form.preferred));
+  target->SetKey("date_created", base::Value(form.date_created.ToDoubleT()));
+  target->SetKey("date_synced", base::Value(form.date_synced.ToDoubleT()));
+  target->SetKey("type", base::Value(static_cast<int>(form.type)));
+  target->SetKey("times_used", base::Value(form.times_used));
   std::ostringstream form_data_string_stream;
   form_data_string_stream << form.form_data;
-  target->SetString("form_data", form_data_string_stream.str());
-  target->SetInteger("generation_upload_status", form.generation_upload_status);
-  target->SetString("display_name", form.display_name);
-  target->SetString("icon_url", form.icon_url.possibly_invalid_spec());
-  target->SetString("federation_origin", form.federation_origin.Serialize());
-  target->SetBoolean("skip_next_zero_click", form.skip_zero_click);
+  target->SetKey("form_data", base::Value(form_data_string_stream.str()));
+  target->SetKey("generation_upload_status",
+                 base::Value(static_cast<int>(form.generation_upload_status)));
+  target->SetKey("display_name", base::Value(form.display_name));
+  target->SetKey("icon_url",
+                 base::Value(form.icon_url.possibly_invalid_spec()));
+  target->SetKey("federation_origin",
+                 base::Value(form.federation_origin.Serialize()));
+  target->SetKey("skip_next_zero_click", base::Value(form.skip_zero_click));
   std::ostringstream layout_string_stream;
   layout_string_stream << form.layout;
-  target->SetString("layout", layout_string_stream.str());
-  target->SetBoolean("was_parsed_using_autofill_predictions",
-                     form.was_parsed_using_autofill_predictions);
-  target->SetString("affiliated_web_realm", form.affiliated_web_realm);
-  target->SetString("app_display_name", form.app_display_name);
-  target->SetString("app_icon_url", form.app_icon_url.possibly_invalid_spec());
-  target->SetBoolean("does_look_like_signup_form",
-                     form.does_look_like_signup_form);
+  target->SetKey("layout", base::Value(layout_string_stream.str()));
+  target->SetKey("was_parsed_using_autofill_predictions",
+                 base::Value(form.was_parsed_using_autofill_predictions));
+  target->SetKey("affiliated_web_realm",
+                 base::Value(form.affiliated_web_realm));
+  target->SetKey("app_display_name", base::Value(form.app_display_name));
+  target->SetKey("app_icon_url",
+                 base::Value(form.app_icon_url.possibly_invalid_spec()));
+  target->SetKey("does_look_like_signup_form",
+                 base::Value(form.does_look_like_signup_form));
   std::ostringstream submission_event_string_stream;
   submission_event_string_stream << form.submission_event;
-  target->SetString("submission_event", submission_event_string_stream.str());
-  target->SetBoolean("only_for_fallback_saving", form.only_for_fallback_saving);
+  target->SetKey("submission_event",
+                 base::Value(submission_event_string_stream.str()));
+  target->SetKey("only_for_fallback_saving",
+                 base::Value(form.only_for_fallback_saving));
 }
 
 }  // namespace

@@ -55,13 +55,13 @@ void DispatchOnLaunchedEventImpl(
                             app_runtime::LaunchSource::LAUNCH_SOURCE_LAST + 1);
 
   // "Forced app mode" is true for Chrome OS kiosk mode.
-  launch_data->SetBoolean(
+  launch_data->SetKey(
       "isKioskSession",
-      ExtensionsBrowserClient::Get()->IsRunningInForcedAppMode());
+      base::Value(ExtensionsBrowserClient::Get()->IsRunningInForcedAppMode()));
 
-  launch_data->SetBoolean(
+  launch_data->SetKey(
       "isPublicSession",
-      ExtensionsBrowserClient::Get()->IsLoggedInAsPublicAccount());
+      base::Value(ExtensionsBrowserClient::Get()->IsLoggedInAsPublicAccount()));
 
   std::unique_ptr<base::ListValue> args(new base::ListValue());
   args->Append(std::move(launch_data));
@@ -167,10 +167,11 @@ void AppRuntimeEventRouter::DispatchOnLaunchedEventWithFileEntries(
   // TODO(sergeygs): Use the same way of creating an event (using the generated
   // boilerplate) as below in DispatchOnLaunchedEventWithUrl.
   std::unique_ptr<base::DictionaryValue> launch_data(new base::DictionaryValue);
-  launch_data->SetString("id", handler_id);
+  launch_data->SetKey("id", base::Value(handler_id));
 
   if (extensions::FeatureSwitch::trace_app_source()->IsEnabled()) {
-    launch_data->SetString("source", app_runtime::ToString(source_enum));
+    launch_data->SetKey("source",
+                        base::Value(app_runtime::ToString(source_enum)));
   }
 
   if (action_data)
@@ -185,11 +186,13 @@ void AppRuntimeEventRouter::DispatchOnLaunchedEventWithFileEntries(
     // TODO: The launch item type should be documented in the idl so that this
     // entire function can be strongly typed and built using an
     // app_runtime::LaunchData instance.
-    launch_item->SetString("fileSystemId", file_entries[i].filesystem_id);
-    launch_item->SetString("baseName", file_entries[i].registered_name);
-    launch_item->SetString("mimeType", entries[i].mime_type);
-    launch_item->SetString("entryId", file_entries[i].id);
-    launch_item->SetBoolean("isDirectory", entries[i].is_directory);
+    launch_item->SetKey("fileSystemId",
+                        base::Value(file_entries[i].filesystem_id));
+    launch_item->SetKey("baseName",
+                        base::Value(file_entries[i].registered_name));
+    launch_item->SetKey("mimeType", base::Value(entries[i].mime_type));
+    launch_item->SetKey("entryId", base::Value(file_entries[i].id));
+    launch_item->SetKey("isDirectory", base::Value(entries[i].is_directory));
     items->Append(std::move(launch_item));
   }
   launch_data->Set("items", std::move(items));

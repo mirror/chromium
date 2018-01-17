@@ -124,12 +124,12 @@ std::unique_ptr<base::ListValue> ManageProfileHandler::GetAvailableIcons() {
     if (icon) {
       auto gaia_picture_info = std::make_unique<base::DictionaryValue>();
       gfx::Image avatar_icon = profiles::GetAvatarIconForWebUI(*icon, true);
-      gaia_picture_info->SetString(
-          "url", webui::GetBitmapDataUrl(avatar_icon.AsBitmap()));
-      gaia_picture_info->SetString(
-          "label",
-          l10n_util::GetStringUTF16(IDS_SETTINGS_CHANGE_PICTURE_PROFILE_PHOTO));
-      gaia_picture_info->SetBoolean("isGaiaAvatar", true);
+      gaia_picture_info->SetKey(
+          "url", base::Value(webui::GetBitmapDataUrl(avatar_icon.AsBitmap())));
+      gaia_picture_info->SetKey(
+          "label", base::Value(l10n_util::GetStringUTF16(
+                       IDS_SETTINGS_CHANGE_PICTURE_PROFILE_PHOTO)));
+      gaia_picture_info->SetKey("isGaiaAvatar", base::Value(true));
       image_url_list->Insert(0, std::move(gaia_picture_info));
     }
   }

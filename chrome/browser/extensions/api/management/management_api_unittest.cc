@@ -199,7 +199,7 @@ TEST_F(ManagementApiUnitTest, ManagementUninstall) {
 
     // Try again, using showConfirmDialog: false.
     std::unique_ptr<base::DictionaryValue> options(new base::DictionaryValue());
-    options->SetBoolean("showConfirmDialog", false);
+    options->SetKey("showConfirmDialog", base::Value(false));
     uninstall_args.Append(std::move(options));
     function = new ManagementUninstallFunction();
     EXPECT_TRUE(registry()->enabled_extensions().Contains(extension_id));

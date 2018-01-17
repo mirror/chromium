@@ -26,10 +26,11 @@ std::unique_ptr<base::DictionaryValue> GetHeadlessConstants() {
   // Add a dictionary with client information
   auto dict = std::make_unique<base::DictionaryValue>();
 
-  dict->SetString("name", "headless");
-  dict->SetString(
+  dict->SetKey("name", base::Value("headless"));
+  dict->SetKey(
       "command_line",
-      base::CommandLine::ForCurrentProcess()->GetCommandLineString());
+      base::Value(
+          base::CommandLine::ForCurrentProcess()->GetCommandLineString()));
 
   constants_dict->Set("clientInfo", std::move(dict));
 

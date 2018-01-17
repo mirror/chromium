@@ -1308,12 +1308,13 @@ void AutomationInternalCustomBindings::SendAutomationEvent(
     int target_id,
     api::automation::EventType event_type) {
   auto event_params = base::MakeUnique<base::DictionaryValue>();
-  event_params->SetInteger("treeID", params.tree_id);
-  event_params->SetInteger("targetID", target_id);
-  event_params->SetString("eventType", api::automation::ToString(event_type));
-  event_params->SetString("eventFrom", ToString(params.event_from));
-  event_params->SetInteger("mouseX", params.mouse_location.x());
-  event_params->SetInteger("mouseY", params.mouse_location.y());
+  event_params->SetKey("treeID", base::Value(params.tree_id));
+  event_params->SetKey("targetID", base::Value(target_id));
+  event_params->SetKey("eventType",
+                       base::Value(api::automation::ToString(event_type)));
+  event_params->SetKey("eventFrom", base::Value(ToString(params.event_from)));
+  event_params->SetKey("mouseX", base::Value(params.mouse_location.x()));
+  event_params->SetKey("mouseY", base::Value(params.mouse_location.y()));
   base::ListValue args;
   args.Append(std::move(event_params));
   bindings_system_->DispatchEventInContext(

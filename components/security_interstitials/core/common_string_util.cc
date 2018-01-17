@@ -25,28 +25,32 @@ base::string16 GetFormattedHostName(const GURL& gurl) {
 
 void PopulateSSLLayoutStrings(int cert_error,
                               base::DictionaryValue* load_time_data) {
-  load_time_data->SetString("type", "SSL");
-  load_time_data->SetString("errorCode", net::ErrorToString(cert_error));
-  load_time_data->SetString(
-      "openDetails", l10n_util::GetStringUTF16(IDS_SSL_OPEN_DETAILS_BUTTON));
-  load_time_data->SetString(
-      "closeDetails", l10n_util::GetStringUTF16(IDS_SSL_CLOSE_DETAILS_BUTTON));
+  load_time_data->SetKey("type", base::Value("SSL"));
+  load_time_data->SetKey("errorCode",
+                         base::Value(net::ErrorToString(cert_error)));
+  load_time_data->SetKey(
+      "openDetails",
+      base::Value(l10n_util::GetStringUTF16(IDS_SSL_OPEN_DETAILS_BUTTON)));
+  load_time_data->SetKey(
+      "closeDetails",
+      base::Value(l10n_util::GetStringUTF16(IDS_SSL_CLOSE_DETAILS_BUTTON)));
 }
 
 void PopulateSSLDebuggingStrings(const net::SSLInfo ssl_info,
                                  const base::Time time_triggered,
                                  base::DictionaryValue* load_time_data) {
-  load_time_data->SetString("subject",
-                            ssl_info.cert->subject().GetDisplayName());
-  load_time_data->SetString("issuer", ssl_info.cert->issuer().GetDisplayName());
-  load_time_data->SetString(
+  load_time_data->SetKey(
+      "subject", base::Value(ssl_info.cert->subject().GetDisplayName()));
+  load_time_data->SetKey("issuer",
+                         base::Value(ssl_info.cert->issuer().GetDisplayName()));
+  load_time_data->SetKey(
       "expirationDate",
-      base::TimeFormatShortDate(ssl_info.cert->valid_expiry()));
-  load_time_data->SetString("currentDate",
-                            base::TimeFormatShortDate(time_triggered));
+      base::Value(base::TimeFormatShortDate(ssl_info.cert->valid_expiry())));
+  load_time_data->SetKey(
+      "currentDate", base::Value(base::TimeFormatShortDate(time_triggered)));
   std::vector<std::string> encoded_chain;
   ssl_info.cert->GetPEMEncodedChain(&encoded_chain);
-  load_time_data->SetString("pem", base::StrCat(encoded_chain));
+  load_time_data->SetKey("pem", base::Value(base::StrCat(encoded_chain)));
 }
 
 }  // namespace common_string_util

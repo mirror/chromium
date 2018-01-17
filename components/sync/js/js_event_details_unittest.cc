@@ -23,7 +23,7 @@ TEST_F(JsEventDetailsTest, EmptyList) {
 
 TEST_F(JsEventDetailsTest, FromDictionary) {
   base::DictionaryValue dict;
-  dict.SetString("foo", "bar");
+  dict.SetKey("foo", base::Value("bar"));
   dict.Set("baz", std::make_unique<base::ListValue>());
 
   auto dict_copy = dict.Clone();

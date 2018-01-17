@@ -125,8 +125,8 @@ void PerformanceLogger::AddLogEntry(
     const std::string& method,
     const base::DictionaryValue& params) {
   base::DictionaryValue log_message_dict;
-  log_message_dict.SetString("webview", webview);
-  log_message_dict.SetString("message.method", method);
+  log_message_dict.SetKey("webview", base::Value(webview));
+  log_message_dict.SetPath({"message", "method"}, base::Value(method));
   log_message_dict.SetPath({"message", "params"}, params.Clone());
   std::string log_message_json;
   base::JSONWriter::Write(log_message_dict, &log_message_json);
@@ -203,7 +203,7 @@ Status PerformanceLogger::HandleTraceEvents(
       base::DictionaryValue params;
       std::string err("Chrome's trace buffer filled while collecting events, "
                       "so some trace events may have been lost");
-      params.SetString("error", err);
+      params.SetKey("error", base::Value(err));
       // Expose error to client via perf log using same format as other entries.
       AddLogEntry(Log::kWarning,
                   DevToolsClientImpl::kBrowserwideDevToolsClientId,
@@ -230,10 +230,11 @@ Status PerformanceLogger::StartTrace() {
                                               base::SPLIT_WANT_NONEMPTY));
   base::DictionaryValue params;
   params.Set("traceConfig.includedCategories", std::move(categories));
-  params.SetString("traceConfig.recordingMode", "recordAsMuchAsPossible");
+  params.SetPath({"traceConfig", "recordingMode"},
+                 base::Value("recordAsMuchAsPossible"));
   // Ask DevTools to report buffer usage.
-  params.SetInteger("bufferUsageReportingInterval",
-                    prefs_.buffer_usage_reporting_interval);
+  params.SetKey("bufferUsageReportingInterval",
+                base::Value(prefs_.buffer_usage_reporting_interval));
   Status status = browser_client_->SendCommand("Tracing.start", params);
   if (status.IsError()) {
     LOG(ERROR) << "error when starting trace: " << status.message();

@@ -2805,9 +2805,9 @@ TEST_F(ExtensionServiceTest, LoadExtensionsCanDowngrade) {
 
   // Start with version 2.0.
   base::DictionaryValue manifest;
-  manifest.SetString("version", "2.0");
-  manifest.SetString("name", "LOAD Downgrade Test");
-  manifest.SetInteger("manifest_version", 2);
+  manifest.SetKey("version", base::Value("2.0"));
+  manifest.SetKey("name", base::Value("LOAD Downgrade Test"));
+  manifest.SetKey("manifest_version", base::Value(2));
 
   JSONFileValueSerializer serializer(manifest_path);
   ASSERT_TRUE(serializer.Serialize(manifest));
@@ -2823,7 +2823,7 @@ TEST_F(ExtensionServiceTest, LoadExtensionsCanDowngrade) {
 
   // Now set the version number to 1.0, reload the extensions and verify that
   // the downgrade was accepted.
-  manifest.SetString("version", "1.0");
+  manifest.SetKey("version", base::Value("1.0"));
   ASSERT_TRUE(serializer.Serialize(manifest));
 
   extensions::UnpackedInstaller::Create(service())->Load(extension_path);

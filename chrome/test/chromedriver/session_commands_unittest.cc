@@ -44,13 +44,13 @@ TEST(SessionCommandsTest, ExecuteGetTimeouts) {
 
 TEST(SessionCommandsTest, MergeCapabilities) {
   base::DictionaryValue primary;
-  primary.SetString("strawberry", "velociraptor");
-  primary.SetString("pear", "unicorn");
+  primary.SetKey("strawberry", base::Value("velociraptor"));
+  primary.SetKey("pear", base::Value("unicorn"));
 
   base::DictionaryValue secondary;
-  secondary.SetString("broccoli", "giraffe");
-  secondary.SetString("celery", "hippo");
-  secondary.SetString("eggplant", "elephant");
+  secondary.SetKey("broccoli", base::Value("giraffe"));
+  secondary.SetKey("celery", base::Value("hippo"));
+  secondary.SetKey("eggplant", base::Value("elephant"));
 
   base::DictionaryValue merged;
 
@@ -76,7 +76,7 @@ TEST(SessionCommandsTest, FileUpload) {
       "UEsDBBQAAAAAAMROi0K/wAzGBAAAAAQAAAADAAAAbW9vQ09XClBLAQIUAxQAAAAAAMROi0K/"
       "wAzG\nBAAAAAQAAAADAAAAAAAAAAAAAACggQAAAABtb29QSwUGAAAAAAEAAQAxAAAAJQAAAA"
       "AA\n";
-  params.SetString("file", kBase64ZipEntry);
+  params.SetKey("file", base::Value(kBase64ZipEntry));
   Status status = ExecuteUploadFile(&session, params, &value);
   ASSERT_EQ(kOk, status.code()) << status.message();
   base::FilePath::StringType path;
@@ -107,12 +107,12 @@ class DetachChrome : public StubChrome {
 
 TEST(SessionCommandsTest, MatchCapabilities) {
   base::DictionaryValue merged;
-  merged.SetString("browserName", "not chrome");
+  merged.SetKey("browserName", base::Value("not chrome"));
 
   ASSERT_FALSE(MatchCapabilities(&merged));
 
   merged.Clear();
-  merged.SetString("browserName", "chrome");
+  merged.SetKey("browserName", base::Value("chrome"));
 
   ASSERT_TRUE(MatchCapabilities(&merged));
 }
@@ -187,7 +187,7 @@ TEST(SessionCommandsTest, AutoReporting) {
   ASSERT_EQ(kUnknownError, status_code);
 
   // try to enable autoreporting
-  params.SetBoolean("enabled", true);
+  params.SetKey("enabled", base::Value(true));
   status_code = ExecuteSetAutoReporting(&session, params, &value).code();
   ASSERT_EQ(kOk, status_code);
   ASSERT_TRUE(session.auto_reporting_enabled);
@@ -199,7 +199,7 @@ TEST(SessionCommandsTest, AutoReporting) {
   ASSERT_TRUE(enabled);
 
   // try to disable autoreporting
-  params.SetBoolean("enabled", false);
+  params.SetKey("enabled", base::Value(false));
   status_code = ExecuteSetAutoReporting(&session, params, &value).code();
   ASSERT_EQ(kOk, status_code);
   ASSERT_FALSE(session.auto_reporting_enabled);

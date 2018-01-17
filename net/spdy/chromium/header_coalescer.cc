@@ -25,12 +25,13 @@ std::unique_ptr<base::Value> ElideNetLogHeaderCallback(
     SpdyStringPiece error_message,
     NetLogCaptureMode capture_mode) {
   auto dict = std::make_unique<base::DictionaryValue>();
-  dict->SetString("header_name", EscapeExternalHandlerValue(header_name));
-  dict->SetString(
+  dict->SetKey("header_name",
+               base::Value(EscapeExternalHandlerValue(header_name)));
+  dict->SetKey(
       "header_value",
-      EscapeExternalHandlerValue(ElideHeaderValueForNetLog(
-          capture_mode, header_name.as_string(), header_value.as_string())));
-  dict->SetString("error", error_message);
+      base::Value(EscapeExternalHandlerValue(ElideHeaderValueForNetLog(
+          capture_mode, header_name.as_string(), header_value.as_string()))));
+  dict->SetKey("error", base::Value(error_message));
   return std::move(dict);
 }
 

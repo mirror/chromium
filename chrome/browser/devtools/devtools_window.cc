@@ -303,13 +303,14 @@ bool DevToolsEventForwarder::ForwardEvent(
     return false;
 
   base::DictionaryValue event_data;
-  event_data.SetString("type", event_type);
-  event_data.SetString("key", ui::KeycodeConverter::DomKeyToKeyString(
-                                  static_cast<ui::DomKey>(event.dom_key)));
-  event_data.SetString("code", ui::KeycodeConverter::DomCodeToCodeString(
-                                   static_cast<ui::DomCode>(event.dom_code)));
-  event_data.SetInteger("keyCode", key_code);
-  event_data.SetInteger("modifiers", modifiers);
+  event_data.SetKey("type", base::Value(event_type));
+  event_data.SetKey("key", base::Value(ui::KeycodeConverter::DomKeyToKeyString(
+                               static_cast<ui::DomKey>(event.dom_key))));
+  event_data.SetKey("code",
+                    base::Value(ui::KeycodeConverter::DomCodeToCodeString(
+                        static_cast<ui::DomCode>(event.dom_code))));
+  event_data.SetKey("keyCode", base::Value(key_code));
+  event_data.SetKey("modifiers", base::Value(modifiers));
   devtools_window_->bindings_->CallClientFunction(
       "DevToolsAPI.keyEventUnhandled", &event_data, NULL, NULL);
   return true;
@@ -1315,10 +1316,10 @@ void DevToolsWindow::SetEyeDropperActive(bool active) {
 
 void DevToolsWindow::ColorPickedInEyeDropper(int r, int g, int b, int a) {
   base::DictionaryValue color;
-  color.SetInteger("r", r);
-  color.SetInteger("g", g);
-  color.SetInteger("b", b);
-  color.SetInteger("a", a);
+  color.SetKey("r", base::Value(r));
+  color.SetKey("g", base::Value(g));
+  color.SetKey("b", base::Value(b));
+  color.SetKey("a", base::Value(a));
   bindings_->CallClientFunction("DevToolsAPI.eyeDropperPickedColor", &color,
                                 nullptr, nullptr);
 }
@@ -1445,12 +1446,12 @@ void DevToolsWindow::CreateDevToolsBrowser() {
     DictionaryPrefUpdate update(prefs, prefs::kAppWindowPlacement);
     base::DictionaryValue* wp_prefs = update.Get();
     auto dev_tools_defaults = base::MakeUnique<base::DictionaryValue>();
-    dev_tools_defaults->SetInteger("left", 100);
-    dev_tools_defaults->SetInteger("top", 100);
-    dev_tools_defaults->SetInteger("right", 740);
-    dev_tools_defaults->SetInteger("bottom", 740);
-    dev_tools_defaults->SetBoolean("maximized", false);
-    dev_tools_defaults->SetBoolean("always_on_top", false);
+    dev_tools_defaults->SetKey("left", base::Value(100));
+    dev_tools_defaults->SetKey("top", base::Value(100));
+    dev_tools_defaults->SetKey("right", base::Value(740));
+    dev_tools_defaults->SetKey("bottom", base::Value(740));
+    dev_tools_defaults->SetKey("maximized", base::Value(false));
+    dev_tools_defaults->SetKey("always_on_top", base::Value(false));
     wp_prefs->Set(kDevToolsApp, std::move(dev_tools_defaults));
   }
 

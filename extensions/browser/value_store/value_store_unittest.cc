@@ -378,7 +378,7 @@ TEST_P(ValueStoreTest, DotsInKeyNames) {
 TEST_P(ValueStoreTest, DotsInKeyNamesWithDicts) {
   base::DictionaryValue outer_dict;
   base::DictionaryValue inner_dict;
-  inner_dict.SetString("bar", "baz");
+  inner_dict.SetKey("bar", base::Value("baz"));
   outer_dict.Set("foo", inner_dict.CreateDeepCopy());
 
   {

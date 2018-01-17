@@ -29,11 +29,15 @@ std::unique_ptr<base::Value> NetworkQualityChangedNetLogCallback(
     EffectiveConnectionType effective_connection_type,
     NetLogCaptureMode capture_mode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("http_rtt_ms", http_rtt.InMilliseconds());
-  dict->SetInteger("transport_rtt_ms", transport_rtt.InMilliseconds());
-  dict->SetInteger("downstream_throughput_kbps", downstream_throughput_kbps);
-  dict->SetString("effective_connection_type",
-                  GetNameForEffectiveConnectionType(effective_connection_type));
+  dict->SetKey("http_rtt_ms",
+               base::Value(static_cast<int>(http_rtt.InMilliseconds())));
+  dict->SetKey("transport_rtt_ms",
+               base::Value(static_cast<int>(transport_rtt.InMilliseconds())));
+  dict->SetKey("downstream_throughput_kbps",
+               base::Value(downstream_throughput_kbps));
+  dict->SetKey("effective_connection_type",
+               base::Value(GetNameForEffectiveConnectionType(
+                   effective_connection_type)));
   return std::move(dict);
 }
 

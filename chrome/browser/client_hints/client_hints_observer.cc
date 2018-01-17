@@ -85,7 +85,8 @@ void ClientHintsObserver::PersistClientHints(
   auto expiration_times_dictionary = std::make_unique<base::DictionaryValue>();
   expiration_times_dictionary->SetList("client_hints",
                                        std::move(expiration_times_list));
-  expiration_times_dictionary->SetDouble("expiration_time", expiration_time);
+  expiration_times_dictionary->SetKey("expiration_time",
+                                      base::Value(expiration_time));
 
   // TODO(tbansal): crbug.com/735518. Disable updates to client hints settings
   // when cookies are disabled for |primary_origin|.

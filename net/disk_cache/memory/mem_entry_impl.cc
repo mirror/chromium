@@ -79,8 +79,8 @@ std::unique_ptr<base::Value> NetLogEntryCreationCallback(
       key = GenerateChildName(entry->parent()->key(), entry->child_id());
       break;
   }
-  dict->SetString("key", key);
-  dict->SetBoolean("created", true);
+  dict->SetKey("key", base::Value(key));
+  dict->SetKey("created", base::Value(true));
   return std::move(dict);
 }
 

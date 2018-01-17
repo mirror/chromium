@@ -169,11 +169,12 @@ class GeolocationNetworkProviderTest : public testing::Test {
     std::vector<std::string> wifi_data;
     for (int i = 0; i < ap_count; ++i) {
       std::unique_ptr<base::DictionaryValue> ap(new base::DictionaryValue());
-      ap->SetString("macAddress", base::StringPrintf("%02d-34-56-78-54-32", i));
-      ap->SetInteger("signalStrength", start_index + ap_count - i);
-      ap->SetInteger("age", 0);
-      ap->SetInteger("channel", IndexToChannel(i));
-      ap->SetInteger("signalToNoiseRatio", i + 42);
+      ap->SetKey("macAddress",
+                 base::Value(base::StringPrintf("%02d-34-56-78-54-32", i)));
+      ap->SetKey("signalStrength", base::Value(start_index + ap_count - i));
+      ap->SetKey("age", base::Value(0));
+      ap->SetKey("channel", base::Value(IndexToChannel(i)));
+      ap->SetKey("signalToNoiseRatio", base::Value(i + 42));
       wifi_access_point_list->Append(std::move(ap));
     }
   }

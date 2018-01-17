@@ -479,10 +479,12 @@ const LocalizedErrorMap* LookupErrorMap(const std::string& error_domain,
 // app menu, and the advanced settings button.
 base::DictionaryValue* GetStandardMenuItemsText() {
   base::DictionaryValue* standard_menu_items_text = new base::DictionaryValue();
-  standard_menu_items_text->SetString("settingsTitle",
-      l10n_util::GetStringUTF16(IDS_SETTINGS_TITLE));
-  standard_menu_items_text->SetString("advancedTitle",
-      l10n_util::GetStringUTF16(IDS_SETTINGS_SHOW_ADVANCED_SETTINGS));
+  standard_menu_items_text->SetKey(
+      "settingsTitle",
+      base::Value(l10n_util::GetStringUTF16(IDS_SETTINGS_TITLE)));
+  standard_menu_items_text->SetKey("advancedTitle",
+                                   base::Value(l10n_util::GetStringUTF16(
+                                       IDS_SETTINGS_SHOW_ADVANCED_SETTINGS)));
   return standard_menu_items_text;
 }
 
@@ -515,11 +517,10 @@ void AddGoogleCachedCopyButton(base::ListValue* suggestions_summary_list,
       suggestion->GetInteger("trackingId", &cache_tracking_id);
       std::unique_ptr<base::DictionaryValue> cache_button(
           new base::DictionaryValue);
-      cache_button->SetString(
-            "msg",
-            l10n_util::GetStringUTF16(IDS_ERRORPAGES_BUTTON_SHOW_SAVED_COPY));
-      cache_button->SetString("cacheUrl", cache_url);
-      cache_button->SetInteger("trackingId", cache_tracking_id);
+      cache_button->SetKey("msg", base::Value(l10n_util::GetStringUTF16(
+                                      IDS_ERRORPAGES_BUTTON_SHOW_SAVED_COPY)));
+      cache_button->SetKey("cacheUrl", base::Value(cache_url));
+      cache_button->SetKey("trackingId", base::Value(cache_tracking_id));
       error_strings->Set("cacheButton", std::move(cache_button));
 
       // Remove the item from suggestions dictionary so that it does not get
@@ -579,9 +580,9 @@ void AddLinkedSuggestionToList(const int error_code,
 
   std::unique_ptr<base::DictionaryValue> suggestion_list_item(
       new base::DictionaryValue);
-  suggestion_list_item->SetString("summary", suggestion_string);
-  suggestion_list_item->SetString("learnMoreUrl",
-      learn_more_url_with_locale.spec());
+  suggestion_list_item->SetKey("summary", base::Value(suggestion_string));
+  suggestion_list_item->SetKey("learnMoreUrl",
+                               base::Value(learn_more_url_with_locale.spec()));
   suggestions_summary_list->Append(std::move(suggestion_list_item));
 }
 
@@ -658,10 +659,10 @@ void GetSuggestionsSummaryList(int error_code,
       return;
 
     auto suggestion = base::MakeUnique<base::DictionaryValue>();
-    suggestion->SetString("summary",
-                          l10n_util::GetStringUTF16(
-                              IDS_ERRORPAGES_SUGGESTION_NAVIGATE_TO_ORIGIN));
-    suggestion->SetString("originURL", failed_origin.Serialize());
+    suggestion->SetKey("summary",
+                       base::Value(l10n_util::GetStringUTF16(
+                           IDS_ERRORPAGES_SUGGESTION_NAVIGATE_TO_ORIGIN)));
+    suggestion->SetKey("originURL", base::Value(failed_origin.Serialize()));
     suggestions_summary_list->Append(std::move(suggestion));
     return;
   }
@@ -750,8 +751,9 @@ void GetSuggestionsSummaryList(int error_code,
         // (defined(OS_MACOSX) && !defined(OS_IOS))
 
   // Add list prefix header.
-  error_strings->SetString("suggestionsSummaryListHeader",
-      l10n_util::GetStringUTF16(IDS_ERRORPAGES_SUGGESTION_LIST_HEADER));
+  error_strings->SetKey("suggestionsSummaryListHeader",
+                        base::Value(l10n_util::GetStringUTF16(
+                            IDS_ERRORPAGES_SUGGESTION_LIST_HEADER)));
 }
 
 // Creates a dictionary with "header" and "body" entries and adds it
@@ -769,12 +771,12 @@ base::DictionaryValue* AddSuggestionDetailDictionaryToList(
   }
 
   if (header_message_id) {
-    suggestion_list_item->SetString("header",
-        l10n_util::GetStringUTF16(header_message_id));
+    suggestion_list_item->SetKey(
+        "header", base::Value(l10n_util::GetStringUTF16(header_message_id)));
   }
   if (body_message_id) {
-    suggestion_list_item->SetString("body",
-        l10n_util::GetStringUTF16(body_message_id));
+    suggestion_list_item->SetKey(
+        "body", base::Value(l10n_util::GetStringUTF16(body_message_id)));
   }
   list->Append(base::WrapUnique(suggestion_list_item));
   // |suggestion_list_item| is invalidated at this point, so it needs to be
@@ -806,10 +808,10 @@ void AddSuggestionsDetails(int error_code,
             IDS_ERRORPAGES_SUGGESTION_NETWORK_PREDICTION_HEADER,
             IDS_ERRORPAGES_SUGGESTION_NETWORK_PREDICTION_BODY, true);
 
-    suggest_network_prediction->SetString(
+    suggest_network_prediction->SetKey(
         "noNetworkPredictionTitle",
-        l10n_util::GetStringUTF16(
-            IDS_NETWORK_PREDICTION_ENABLED_DESCRIPTION));
+        base::Value(l10n_util::GetStringUTF16(
+            IDS_NETWORK_PREDICTION_ENABLED_DESCRIPTION)));
   }
 
   if (suggestions & SUGGEST_FIREWALL_CONFIG) {
@@ -825,13 +827,15 @@ void AddSuggestionsDetails(int error_code,
             0, true);
 
     // Custom body string.
-    suggest_proxy_config->SetString("body",
-        l10n_util::GetStringFUTF16(IDS_ERRORPAGES_SUGGESTION_PROXY_CONFIG_BODY,
-            l10n_util::GetStringUTF16(
-                IDS_ERRORPAGES_SUGGESTION_PROXY_DISABLE_PLATFORM)));
+    suggest_proxy_config->SetKey(
+        "body", base::Value(l10n_util::GetStringFUTF16(
+                    IDS_ERRORPAGES_SUGGESTION_PROXY_CONFIG_BODY,
+                    l10n_util::GetStringUTF16(
+                        IDS_ERRORPAGES_SUGGESTION_PROXY_DISABLE_PLATFORM))));
 
-    suggest_proxy_config->SetString("proxyTitle",
-        l10n_util::GetStringUTF16(IDS_OPTIONS_PROXIES_CONFIGURE_BUTTON));
+    suggest_proxy_config->SetKey("proxyTitle",
+                                 base::Value(l10n_util::GetStringUTF16(
+                                     IDS_OPTIONS_PROXIES_CONFIGURE_BUTTON)));
   }
 #endif
 
@@ -904,24 +908,26 @@ void LocalizedError::GetStrings(
 
   base::string16 host_name(url_formatter::IDNToUnicode(failed_url.host()));
   if (failed_url.SchemeIsHTTPOrHTTPS())
-    error_strings->SetString("title", host_name);
+    error_strings->SetKey("title", base::Value(host_name));
   else
-    error_strings->SetString("title", failed_url_string);
+    error_strings->SetKey("title", base::Value(failed_url_string));
 
   std::string icon_class = GetIconClassForError(error_domain, error_code);
-  error_strings->SetString("iconClass", icon_class);
+  error_strings->SetKey("iconClass", base::Value(icon_class));
 
   auto heading = base::MakeUnique<base::DictionaryValue>();
-  heading->SetString("msg",
-                     l10n_util::GetStringUTF16(options.heading_resource_id));
-  heading->SetString("hostName", host_name);
+  heading->SetKey(
+      "msg",
+      base::Value(l10n_util::GetStringUTF16(options.heading_resource_id)));
+  heading->SetKey("hostName", base::Value(host_name));
   error_strings->Set("heading", std::move(heading));
 
   auto summary = base::MakeUnique<base::DictionaryValue>();
 
   // Set summary message under the heading.
-  summary->SetString(
-      "msg", l10n_util::GetStringUTF16(options.summary_resource_id));
+  summary->SetKey(
+      "msg",
+      base::Value(l10n_util::GetStringUTF16(options.summary_resource_id)));
 
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
 
@@ -929,18 +935,20 @@ void LocalizedError::GetStrings(
   if (command_line->HasSwitch(
           error_page::switches::kDisableDinosaurEasterEgg)) {
     // The presence of this string disables the easter egg. Acts as a flag.
-    error_strings->SetString("disabledEasterEgg",
-        l10n_util::GetStringUTF16(IDS_ERRORPAGE_FUN_DISABLED));
+    error_strings->SetKey(
+        "disabledEasterEgg",
+        base::Value(l10n_util::GetStringUTF16(IDS_ERRORPAGE_FUN_DISABLED)));
   }
 
-  summary->SetString("failedUrl", failed_url_string);
-  summary->SetString("hostName", host_name);
+  summary->SetKey("failedUrl", base::Value(failed_url_string));
+  summary->SetKey("hostName", base::Value(host_name));
 
-  error_strings->SetString(
-      "details", l10n_util::GetStringUTF16(IDS_ERRORPAGE_NET_BUTTON_DETAILS));
-  error_strings->SetString(
-      "hideDetails", l10n_util::GetStringUTF16(
-          IDS_ERRORPAGE_NET_BUTTON_HIDE_DETAILS));
+  error_strings->SetKey(
+      "details",
+      base::Value(l10n_util::GetStringUTF16(IDS_ERRORPAGE_NET_BUTTON_DETAILS)));
+  error_strings->SetKey("hideDetails",
+                        base::Value(l10n_util::GetStringUTF16(
+                            IDS_ERRORPAGE_NET_BUTTON_HIDE_DETAILS)));
   error_strings->Set("summary", std::move(summary));
 
   base::string16 error_string;
@@ -955,7 +963,7 @@ void LocalizedError::GetStrings(
     DCHECK_EQ(Error::kHttpErrorDomain, error_domain);
     error_string = base::ASCIIToUTF16(HttpErrorCodeToString(error_code));
   }
-  error_strings->SetString("errorCode", error_string);
+  error_strings->SetKey("errorCode", base::Value(error_string));
 
   // If no parameters were provided, use the defaults.
   if (!params) {
@@ -983,13 +991,15 @@ void LocalizedError::GetStrings(
   if (params->search_url.is_valid()) {
     std::unique_ptr<base::DictionaryValue> search_suggestion(
         new base::DictionaryValue);
-    search_suggestion->SetString("summary",l10n_util::GetStringUTF16(
-        IDS_ERRORPAGES_SUGGESTION_GOOGLE_SEARCH_SUMMARY));
-    search_suggestion->SetString("searchUrl", params->search_url.spec() +
-                                 params->search_terms);
-    search_suggestion->SetString("searchTerms", params->search_terms);
-    search_suggestion->SetInteger("trackingId",
-                                  params->search_tracking_id);
+    search_suggestion->SetKey(
+        "summary", base::Value(l10n_util::GetStringUTF16(
+                       IDS_ERRORPAGES_SUGGESTION_GOOGLE_SEARCH_SUMMARY)));
+    search_suggestion->SetKey(
+        "searchUrl",
+        base::Value(params->search_url.spec() + params->search_terms));
+    search_suggestion->SetKey("searchTerms", base::Value(params->search_terms));
+    search_suggestion->SetKey("trackingId",
+                              base::Value(params->search_tracking_id));
     suggestions_summary_list->Append(std::move(search_suggestion));
   }
 
@@ -1003,10 +1013,12 @@ void LocalizedError::GetStrings(
     reload_visible = true;
 #endif  // defined(OS_ANDROID)
     auto reload_button = base::MakeUnique<base::DictionaryValue>();
-    reload_button->SetString(
-        "msg", l10n_util::GetStringUTF16(IDS_ERRORPAGES_BUTTON_RELOAD));
-    reload_button->SetString("reloadUrl", failed_url.spec());
-    reload_button->SetInteger("reloadTrackingId", params->reload_tracking_id);
+    reload_button->SetKey(
+        "msg",
+        base::Value(l10n_util::GetStringUTF16(IDS_ERRORPAGES_BUTTON_RELOAD)));
+    reload_button->SetKey("reloadUrl", base::Value(failed_url.spec()));
+    reload_button->SetKey("reloadTrackingId",
+                          base::Value(params->reload_tracking_id));
     error_strings->Set("reloadButton", std::move(reload_button));
   }
 
@@ -1042,14 +1054,14 @@ void LocalizedError::GetStrings(
 
   if (show_saved_copy_visible) {
     auto show_saved_copy_button = base::MakeUnique<base::DictionaryValue>();
-    show_saved_copy_button->SetString(
-        "msg", l10n_util::GetStringUTF16(
-            IDS_ERRORPAGES_BUTTON_SHOW_SAVED_COPY));
-    show_saved_copy_button->SetString(
-        "title",
-        l10n_util::GetStringUTF16(IDS_ERRORPAGES_BUTTON_SHOW_SAVED_COPY_HELP));
+    show_saved_copy_button->SetKey("msg",
+                                   base::Value(l10n_util::GetStringUTF16(
+                                       IDS_ERRORPAGES_BUTTON_SHOW_SAVED_COPY)));
+    show_saved_copy_button->SetKey(
+        "title", base::Value(l10n_util::GetStringUTF16(
+                     IDS_ERRORPAGES_BUTTON_SHOW_SAVED_COPY_HELP)));
     if (show_saved_copy_primary)
-      show_saved_copy_button->SetString("primary", "true");
+      show_saved_copy_button->SetKey("primary", base::Value("true"));
     error_strings->Set("showSavedCopyButton",
                        std::move(show_saved_copy_button));
   }

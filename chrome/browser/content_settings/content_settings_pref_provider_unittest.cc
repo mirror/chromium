@@ -154,7 +154,8 @@ TEST_F(PrefProviderTest, DiscardObsoleteFullscreenAndMouselockPreferences) {
   // {"[*.]example.com": {"setting": 1}}
   base::DictionaryValue pref_data;
   auto data_for_pattern = base::MakeUnique<base::DictionaryValue>();
-  data_for_pattern->SetInteger("setting", CONTENT_SETTING_ALLOW);
+  data_for_pattern->SetKey(
+      "setting", base::Value(static_cast<int>(CONTENT_SETTING_ALLOW)));
   pref_data.SetWithoutPathExpansion(kPattern, std::move(data_for_pattern));
   prefs->Set(kFullscreenPrefPath, pref_data);
 #if !defined(OS_ANDROID)

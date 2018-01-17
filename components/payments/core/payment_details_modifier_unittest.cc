@@ -18,7 +18,7 @@ TEST(PaymentRequestTest, EmptyPaymentDetailsModifierDictionary) {
   std::unique_ptr<base::ListValue> supported_methods_list =
       std::make_unique<base::ListValue>();
   expected_value.SetList("supportedMethods", std::move(supported_methods_list));
-  expected_value.SetString("data", "");
+  expected_value.SetKey("data", base::Value(""));
 
   PaymentDetailsModifier payment_details_modifier;
   EXPECT_TRUE(expected_value.Equals(
@@ -35,18 +35,18 @@ TEST(PaymentRequestTest, PopulatedDetailsModifierDictionary) {
   supported_methods_list->GetList().emplace_back("basic-card");
   supported_methods_list->GetList().emplace_back("amex");
   expected_value.SetList("supportedMethods", std::move(supported_methods_list));
-  expected_value.SetString("data",
-                           "{\"supportedNetworks\":[\"visa\",\"mastercard\"]}");
+  expected_value.SetKey(
+      "data", base::Value("{\"supportedNetworks\":[\"visa\",\"mastercard\"]}"));
   std::unique_ptr<base::DictionaryValue> item_dict =
       std::make_unique<base::DictionaryValue>();
-  item_dict->SetString("label", "Gratuity");
+  item_dict->SetKey("label", base::Value("Gratuity"));
   std::unique_ptr<base::DictionaryValue> amount_dict =
       std::make_unique<base::DictionaryValue>();
-  amount_dict->SetString("currency", "USD");
-  amount_dict->SetString("value", "139.99");
-  amount_dict->SetString("currencySystem", "urn:iso:std:iso:4217");
+  amount_dict->SetKey("currency", base::Value("USD"));
+  amount_dict->SetKey("value", base::Value("139.99"));
+  amount_dict->SetKey("currencySystem", base::Value("urn:iso:std:iso:4217"));
   item_dict->SetDictionary("amount", std::move(amount_dict));
-  item_dict->SetBoolean("pending", false);
+  item_dict->SetKey("pending", base::Value(false));
   expected_value.SetDictionary("total", std::move(item_dict));
 
   PaymentDetailsModifier payment_details_modifier;

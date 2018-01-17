@@ -41,13 +41,14 @@ std::unique_ptr<base::Value> GlobalStorageInfo::NewValue() const {
   // TODO(tzik): Add CreateLongIntegerValue to base/values.h and remove
   // all static_cast<double> in this file.
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
-  dict->SetString("type", StorageTypeToString(type_));
+  dict->SetKey("type", base::Value(StorageTypeToString(type_)));
   if (usage_ >= 0)
-    dict->SetDouble("usage", static_cast<double>(usage_));
+    dict->SetKey("usage", base::Value(static_cast<double>(usage_)));
   if (unlimited_usage_ >= 0)
-    dict->SetDouble("unlimitedUsage", static_cast<double>(unlimited_usage_));
+    dict->SetKey("unlimitedUsage",
+                 base::Value(static_cast<double>(unlimited_usage_)));
   if (quota_ >= 0)
-    dict->SetDouble("quota", static_cast<double>(quota_));
+    dict->SetKey("quota", base::Value(static_cast<double>(quota_)));
   return std::move(dict);
 }
 
@@ -60,12 +61,12 @@ PerHostStorageInfo::~PerHostStorageInfo() {}
 std::unique_ptr<base::Value> PerHostStorageInfo::NewValue() const {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
   DCHECK(!host_.empty());
-  dict->SetString("host", host_);
-  dict->SetString("type", StorageTypeToString(type_));
+  dict->SetKey("host", base::Value(host_));
+  dict->SetKey("type", base::Value(StorageTypeToString(type_)));
   if (usage_ >= 0)
-    dict->SetDouble("usage", static_cast<double>(usage_));
+    dict->SetKey("usage", base::Value(static_cast<double>(usage_)));
   if (quota_ >= 0)
-    dict->SetDouble("quota", static_cast<double>(quota_));
+    dict->SetKey("quota", base::Value(static_cast<double>(quota_)));
   return std::move(dict);
 }
 
@@ -86,18 +87,19 @@ std::unique_ptr<base::Value> PerOriginStorageInfo::NewValue() const {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
   DCHECK(!origin_.is_empty());
   DCHECK(!host_.empty());
-  dict->SetString("origin", origin_.spec());
-  dict->SetString("type", StorageTypeToString(type_));
-  dict->SetString("host", host_);
+  dict->SetKey("origin", base::Value(origin_.spec()));
+  dict->SetKey("type", base::Value(StorageTypeToString(type_)));
+  dict->SetKey("host", base::Value(host_));
   if (in_use_ >= 0)
-    dict->SetBoolean("inUse", (in_use_ > 0));
+    dict->SetKey("inUse", base::Value((in_use_ > 0)));
   if (used_count_ >= 0)
-    dict->SetInteger("usedCount", used_count_);
+    dict->SetKey("usedCount", base::Value(used_count_));
   if (!last_access_time_.is_null())
-    dict->SetDouble("lastAccessTime", last_access_time_.ToDoubleT() * 1000.0);
+    dict->SetKey("lastAccessTime",
+                 base::Value(last_access_time_.ToDoubleT() * 1000.0));
   if (!last_modified_time_.is_null()) {
-    dict->SetDouble("lastModifiedTime",
-                    last_modified_time_.ToDoubleT() * 1000.0);
+    dict->SetKey("lastModifiedTime",
+                 base::Value(last_modified_time_.ToDoubleT() * 1000.0));
   }
   return std::move(dict);
 }

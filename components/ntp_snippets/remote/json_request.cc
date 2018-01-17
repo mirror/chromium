@@ -106,8 +106,8 @@ std::string ISO639FromPosixLocale(const std::string& locale) {
 void AppendLanguageInfoToList(base::ListValue* list,
                               const UrlLanguageHistogram::LanguageInfo& info) {
   auto lang = std::make_unique<base::DictionaryValue>();
-  lang->SetString("language", info.language_code);
-  lang->SetDouble("frequency", info.frequency);
+  lang->SetKey("language", base::Value(info.language_code));
+  lang->SetKey("frequency", base::Value(static_cast<double>(info.frequency)));
   list->Append(std::move(lang));
 }
 
@@ -301,12 +301,12 @@ std::string JsonRequest::Builder::BuildBody() const {
   auto request = std::make_unique<base::DictionaryValue>();
   std::string user_locale = PosixLocaleFromBCP47Language(params_.language_code);
   if (!user_locale.empty()) {
-    request->SetString("uiLanguage", user_locale);
+    request->SetKey("uiLanguage", base::Value(user_locale));
   }
 
-  request->SetString("priority", params_.interactive_request
-                                     ? "USER_ACTION"
-                                     : "BACKGROUND_PREFETCH");
+  request->SetKey("priority", base::Value(params_.interactive_request
+                                              ? "USER_ACTION"
+                                              : "BACKGROUND_PREFETCH"));
 
   auto excluded = std::make_unique<base::ListValue>();
   for (const auto& id : params_.excluded_ids) {
@@ -315,7 +315,7 @@ std::string JsonRequest::Builder::BuildBody() const {
   request->Set("excludedSuggestionIds", std::move(excluded));
 
   if (!user_class_.empty()) {
-    request->SetString("userActivenessClass", user_class_);
+    request->SetKey("userActivenessClass", base::Value(user_class_));
   }
 
   language::UrlLanguageHistogram::LanguageInfo ui_language;
@@ -336,10 +336,10 @@ std::string JsonRequest::Builder::BuildBody() const {
   // |exclusive_category|.
   if (params_.exclusive_category.has_value()) {
     base::DictionaryValue exclusive_category_parameters;
-    exclusive_category_parameters.SetInteger(
-        "id", params_.exclusive_category->remote_id());
-    exclusive_category_parameters.SetInteger("numSuggestions",
-                                             params_.count_to_fetch);
+    exclusive_category_parameters.SetKey(
+        "id", base::Value(params_.exclusive_category->remote_id()));
+    exclusive_category_parameters.SetKey("numSuggestions",
+                                         base::Value(params_.count_to_fetch));
     base::ListValue category_parameters;
     category_parameters.GetList().push_back(
         std::move(exclusive_category_parameters));

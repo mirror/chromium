@@ -19,7 +19,8 @@ std::unique_ptr<base::Value> NetLogPushLookupTransactionCallback(
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
   net_log.AddToEventParameters(dict.get());
-  dict->SetString("push_url", push_helper->GetURL().possibly_invalid_spec());
+  dict->SetKey("push_url",
+               base::Value(push_helper->GetURL().possibly_invalid_spec()));
   return std::move(dict);
 }
 

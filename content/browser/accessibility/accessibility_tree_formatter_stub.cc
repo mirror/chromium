@@ -41,7 +41,7 @@ AccessibilityTreeFormatterStub::~AccessibilityTreeFormatterStub() {
 void AccessibilityTreeFormatterStub::AddProperties(
     const BrowserAccessibility& node,
     base::DictionaryValue* dict) {
-  dict->SetInteger("id", node.GetId());
+  dict->SetKey("id", base::Value(node.GetId()));
 }
 
 base::string16 AccessibilityTreeFormatterStub::ProcessTreeForOutput(

@@ -889,12 +889,14 @@ class PrefHashBrowserTestChangedSplitPref : public PrefHashBrowserTestBase {
     int good_crx_state;
     EXPECT_TRUE(good_crx_dict->GetInteger("state", &good_crx_state));
     EXPECT_EQ(extensions::Extension::ENABLED, good_crx_state);
-    good_crx_dict->SetInteger("state", extensions::Extension::DISABLED);
+    good_crx_dict->SetKey(
+        "state",
+        base::Value(static_cast<int>(extensions::Extension::DISABLED)));
 
     // Drop a fake extension (for the purpose of this test, dropped settings
     // don't need to be valid extension settings).
     auto fake_extension = base::MakeUnique<base::DictionaryValue>();
-    fake_extension->SetString("name", "foo");
+    fake_extension->SetKey("name", base::Value("foo"));
     extensions_dict->Set(std::string(32, 'a'), std::move(fake_extension));
   }
 

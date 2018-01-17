@@ -34,8 +34,9 @@ std::unique_ptr<base::Value> NetLogParameterChannelBindings(
     return std::move(dict);
 
   dict.reset(new base::DictionaryValue());
-  dict->SetString("token", base::HexEncode(channel_binding_token.data(),
-                                           channel_binding_token.size()));
+  dict->SetKey("token",
+               base::Value(base::HexEncode(channel_binding_token.data(),
+                                           channel_binding_token.size())));
   return std::move(dict);
 }
 

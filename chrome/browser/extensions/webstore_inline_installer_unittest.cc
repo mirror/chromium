@@ -85,7 +85,7 @@ bool WebstoreInlineInstallerTest::TestSingleVerifiedSite(
     const std::string& requestor_url,
     const std::string& verified_site) {
   base::DictionaryValue webstore_data;
-  webstore_data.SetString("verified_site", verified_site);
+  webstore_data.SetKey("verified_site", base::Value(verified_site));
 
   scoped_refptr<TestWebstoreInlineInstaller> installer =
     new TestWebstoreInlineInstaller(web_contents_.get(), requestor_url);

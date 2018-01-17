@@ -292,10 +292,10 @@ TEST_P(ConfigurationPolicyProviderTest, StringListValue) {
 
 TEST_P(ConfigurationPolicyProviderTest, DictionaryValue) {
   base::DictionaryValue expected_value;
-  expected_value.SetBoolean("bool", true);
-  expected_value.SetDouble("double", 123.456);
-  expected_value.SetInteger("int", 123);
-  expected_value.SetString("string", "omg");
+  expected_value.SetKey("bool", base::Value(true));
+  expected_value.SetKey("double", base::Value(123.456));
+  expected_value.SetKey("int", base::Value(123));
+  expected_value.SetKey("string", base::Value("omg"));
 
   auto list = std::make_unique<base::ListValue>();
   list->AppendString("first");
@@ -303,15 +303,15 @@ TEST_P(ConfigurationPolicyProviderTest, DictionaryValue) {
   expected_value.Set("array", std::move(list));
 
   auto dict = std::make_unique<base::DictionaryValue>();
-  dict->SetString("sub", "value");
+  dict->SetKey("sub", base::Value("value"));
   list = std::make_unique<base::ListValue>();
   auto sub = std::make_unique<base::DictionaryValue>();
-  sub->SetInteger("aaa", 111);
-  sub->SetInteger("bbb", 222);
+  sub->SetKey("aaa", base::Value(111));
+  sub->SetKey("bbb", base::Value(222));
   list->Append(std::move(sub));
   sub = std::make_unique<base::DictionaryValue>();
-  sub->SetString("ccc", "333");
-  sub->SetString("ddd", "444");
+  sub->SetKey("ccc", base::Value("333"));
+  sub->SetKey("ddd", base::Value("444"));
   list->Append(std::move(sub));
   dict->Set("sublist", std::move(list));
   expected_value.Set("dictionary", std::move(dict));
@@ -361,15 +361,15 @@ Configuration3rdPartyPolicyProviderTest::
 
 TEST_P(Configuration3rdPartyPolicyProviderTest, Load3rdParty) {
   base::DictionaryValue policy_dict;
-  policy_dict.SetBoolean("bool", true);
-  policy_dict.SetDouble("double", 123.456);
-  policy_dict.SetInteger("int", 789);
-  policy_dict.SetString("string", "string value");
+  policy_dict.SetKey("bool", base::Value(true));
+  policy_dict.SetKey("double", base::Value(123.456));
+  policy_dict.SetKey("int", base::Value(789));
+  policy_dict.SetKey("string", base::Value("string value"));
 
   auto list = std::make_unique<base::ListValue>();
   for (int i = 0; i < 2; ++i) {
     auto dict = std::make_unique<base::DictionaryValue>();
-    dict->SetInteger("subdictindex", i);
+    dict->SetKey("subdictindex", base::Value(i));
     dict->SetKey("subdict", policy_dict.Clone());
     list->Append(std::move(dict));
   }
@@ -388,8 +388,8 @@ TEST_P(Configuration3rdPartyPolicyProviderTest, Load3rdParty) {
   // Install invalid 3rd party policies that shouldn't be loaded. These also
   // help detecting memory leaks in the code paths that detect invalid input.
   policy_3rdparty.SetPath({"invalid-domain", "component"}, policy_dict.Clone());
-  policy_3rdparty.SetString("extensions.cccccccccccccccccccccccccccccccc",
-                            "invalid-value");
+  policy_3rdparty.SetPath({"extensions", "cccccccccccccccccccccccccccccccc"},
+                          base::Value("invalid-value"));
   test_harness_->Install3rdPartyPolicy(&policy_3rdparty);
 
   provider_->RefreshPolicies();

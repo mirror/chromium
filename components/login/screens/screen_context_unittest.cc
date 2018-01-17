@@ -133,9 +133,9 @@ TEST_F(ScreenContextTest, ApplyChanges) {
   ASSERT_FALSE(context().HasChanges());
 
   base::DictionaryValue changes;
-  changes.SetString("key0", "value0");
-  changes.SetInteger("key1", 1);
-  changes.SetBoolean("key2", true);
+  changes.SetKey("key0", base::Value("value0"));
+  changes.SetKey("key1", base::Value(1));
+  changes.SetKey("key2", base::Value(true));
 
   std::vector<std::string> keys;
   context().ApplyChanges(changes, &keys);

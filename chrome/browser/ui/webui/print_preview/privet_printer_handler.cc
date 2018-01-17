@@ -34,14 +34,15 @@ void FillPrinterDescription(const std::string& name,
                             base::DictionaryValue* printer_value) {
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
 
-  printer_value->SetString("serviceName", name);
-  printer_value->SetString("name", description.name);
-  printer_value->SetBoolean("hasLocalPrinting", has_local_printing);
-  printer_value->SetBoolean(
+  printer_value->SetKey("serviceName", base::Value(name));
+  printer_value->SetKey("name", base::Value(description.name));
+  printer_value->SetKey("hasLocalPrinting", base::Value(has_local_printing));
+  printer_value->SetKey(
       "isUnregistered",
-      description.id.empty() &&
-          command_line->HasSwitch(switches::kEnablePrintPreviewRegisterPromos));
-  printer_value->SetString("cloudID", description.id);
+      base::Value(description.id.empty() &&
+                  command_line->HasSwitch(
+                      switches::kEnablePrintPreviewRegisterPromos)));
+  printer_value->SetKey("cloudID", base::Value(description.id));
 }
 }  //  namespace
 

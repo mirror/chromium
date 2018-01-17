@@ -30,7 +30,7 @@ TEST(URLMatcherFactoryTest, CreateFromURLFilterDictionary) {
 
   // Invalid key: {"invalid": "foobar"}
   base::DictionaryValue invalid_condition;
-  invalid_condition.SetString("invalid", "foobar");
+  invalid_condition.SetKey("invalid", base::Value("foobar"));
 
   // Invalid value type: {"hostSuffix": []}
   base::DictionaryValue invalid_condition2;

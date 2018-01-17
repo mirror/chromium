@@ -70,17 +70,17 @@ void SSLErrorUI::PopulateStringsForHTML(base::DictionaryValue* load_time_data) {
                                                   load_time_data);
 
   // Shared values for both the overridable and non-overridable versions.
-  load_time_data->SetBoolean("bad_clock", false);
-  load_time_data->SetBoolean("hide_primary_button", false);
-  load_time_data->SetString("tabTitle",
-                            l10n_util::GetStringUTF16(IDS_SSL_V2_TITLE));
-  load_time_data->SetString("heading",
-                            l10n_util::GetStringUTF16(IDS_SSL_V2_HEADING));
-  load_time_data->SetString(
+  load_time_data->SetKey("bad_clock", base::Value(false));
+  load_time_data->SetKey("hide_primary_button", base::Value(false));
+  load_time_data->SetKey(
+      "tabTitle", base::Value(l10n_util::GetStringUTF16(IDS_SSL_V2_TITLE)));
+  load_time_data->SetKey(
+      "heading", base::Value(l10n_util::GetStringUTF16(IDS_SSL_V2_HEADING)));
+  load_time_data->SetKey(
       "primaryParagraph",
-      l10n_util::GetStringFUTF16(
+      base::Value(l10n_util::GetStringFUTF16(
           IDS_SSL_V2_PRIMARY_PARAGRAPH,
-          common_string_util::GetFormattedHostName(request_url_)));
+          common_string_util::GetFormattedHostName(request_url_))));
 
   if (soft_override_enabled_)
     PopulateOverridableStrings(load_time_data);
@@ -113,15 +113,16 @@ void SSLErrorUI::PopulateOverridableStrings(
       ssl_errors::ErrorInfo::NetErrorToErrorType(cert_error_),
       ssl_info_.cert.get(), request_url_);
 
-  load_time_data->SetBoolean("overridable", true);
-  load_time_data->SetBoolean("hide_primary_button", false);
-  load_time_data->SetString("explanationParagraph", error_info.details());
-  load_time_data->SetString(
-      "primaryButtonText",
-      l10n_util::GetStringUTF16(IDS_SSL_OVERRIDABLE_SAFETY_BUTTON));
-  load_time_data->SetString(
-      "finalParagraph",
-      l10n_util::GetStringFUTF16(IDS_SSL_OVERRIDABLE_PROCEED_PARAGRAPH, url));
+  load_time_data->SetKey("overridable", base::Value(true));
+  load_time_data->SetKey("hide_primary_button", base::Value(false));
+  load_time_data->SetKey("explanationParagraph",
+                         base::Value(error_info.details()));
+  load_time_data->SetKey("primaryButtonText",
+                         base::Value(l10n_util::GetStringUTF16(
+                             IDS_SSL_OVERRIDABLE_SAFETY_BUTTON)));
+  load_time_data->SetKey("finalParagraph",
+                         base::Value(l10n_util::GetStringFUTF16(
+                             IDS_SSL_OVERRIDABLE_PROCEED_PARAGRAPH, url)));
 }
 
 void SSLErrorUI::PopulateNonOverridableStrings(
@@ -132,18 +133,19 @@ void SSLErrorUI::PopulateNonOverridableStrings(
   ssl_errors::ErrorInfo::ErrorType type =
       ssl_errors::ErrorInfo::NetErrorToErrorType(cert_error_);
 
-  load_time_data->SetBoolean("overridable", false);
-  load_time_data->SetBoolean("hide_primary_button", false);
-  load_time_data->SetString(
-      "explanationParagraph",
-      l10n_util::GetStringFUTF16(IDS_SSL_NONOVERRIDABLE_MORE, url));
-  load_time_data->SetString("primaryButtonText",
-                            l10n_util::GetStringUTF16(IDS_SSL_RELOAD));
+  load_time_data->SetKey("overridable", base::Value(false));
+  load_time_data->SetKey("hide_primary_button", base::Value(false));
+  load_time_data->SetKey("explanationParagraph",
+                         base::Value(l10n_util::GetStringFUTF16(
+                             IDS_SSL_NONOVERRIDABLE_MORE, url)));
+  load_time_data->SetKey(
+      "primaryButtonText",
+      base::Value(l10n_util::GetStringUTF16(IDS_SSL_RELOAD)));
 
   // Customize the help link depending on the specific error type.
   // Only mark as HSTS if none of the more specific error types apply,
   // and use INVALID as a fallback if no other string is appropriate.
-  load_time_data->SetInteger("errorType", type);
+  load_time_data->SetKey("errorType", base::Value(static_cast<int>(type)));
   int help_string = IDS_SSL_NONOVERRIDABLE_INVALID;
   switch (type) {
     case ssl_errors::ErrorInfo::CERT_REVOKED:
@@ -159,8 +161,9 @@ void SSLErrorUI::PopulateNonOverridableStrings(
       if (requested_strict_enforcement_)
         help_string = IDS_SSL_NONOVERRIDABLE_HSTS;
   }
-  load_time_data->SetString("finalParagraph",
-                            l10n_util::GetStringFUTF16(help_string, url));
+  load_time_data->SetKey(
+      "finalParagraph",
+      base::Value(l10n_util::GetStringFUTF16(help_string, url)));
 }
 
 void SSLErrorUI::HandleCommand(SecurityInterstitialCommand command) {

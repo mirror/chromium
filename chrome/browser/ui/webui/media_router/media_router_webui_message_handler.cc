@@ -102,7 +102,8 @@ std::unique_ptr<base::DictionaryValue> SinksAndIdentityToValue(
   std::string user_domain;
   if (account_info.IsValid()) {
     user_domain = account_info.hosted_domain;
-    sink_list_and_identity->SetString("userEmail", account_info.email);
+    sink_list_and_identity->SetKey("userEmail",
+                                   base::Value(account_info.email));
   }
 
   auto sinks_val = std::make_unique<base::ListValue>();
@@ -111,11 +112,12 @@ std::unique_ptr<base::DictionaryValue> SinksAndIdentityToValue(
     auto sink_val = std::make_unique<base::DictionaryValue>();
 
     const MediaSink& sink = sink_with_cast_modes.sink;
-    sink_val->SetString("id", sink.id());
-    sink_val->SetString("name", sink.name());
-    sink_val->SetInteger("iconType", static_cast<int>(sink.icon_type()));
+    sink_val->SetKey("id", base::Value(sink.id()));
+    sink_val->SetKey("name", base::Value(sink.name()));
+    sink_val->SetKey("iconType",
+                     base::Value(static_cast<int>(sink.icon_type())));
     if (sink.description())
-      sink_val->SetString("description", *sink.description());
+      sink_val->SetKey("description", base::Value(*sink.description()));
 
     bool is_pseudo_sink =
         base::StartsWith(sink.id(), "pseudo:", base::CompareCase::SENSITIVE);
@@ -130,7 +132,7 @@ std::unique_ptr<base::DictionaryValue> SinksAndIdentityToValue(
         }
       }
 
-      sink_val->SetString("domain", domain);
+      sink_val->SetKey("domain", base::Value(domain));
 
       show_email = show_email || !is_pseudo_sink;
       if (!domain.empty() && domain != user_domain) {
@@ -142,14 +144,14 @@ std::unique_ptr<base::DictionaryValue> SinksAndIdentityToValue(
     for (MediaCastMode cast_mode : sink_with_cast_modes.cast_modes)
       cast_mode_bits |= cast_mode;
 
-    sink_val->SetInteger("castModes", cast_mode_bits);
-    sink_val->SetBoolean("isPseudoSink", is_pseudo_sink);
+    sink_val->SetKey("castModes", base::Value(cast_mode_bits));
+    sink_val->SetKey("isPseudoSink", base::Value(is_pseudo_sink));
     sinks_val->Append(std::move(sink_val));
   }
 
   sink_list_and_identity->Set("sinks", std::move(sinks_val));
-  sink_list_and_identity->SetBoolean("showEmail", show_email);
-  sink_list_and_identity->SetBoolean("showDomain", show_domain);
+  sink_list_and_identity->SetKey("showEmail", base::Value(show_email));
+  sink_list_and_identity->SetKey("showDomain", base::Value(show_domain));
   return sink_list_and_identity;
 }
 
@@ -159,15 +161,16 @@ std::unique_ptr<base::DictionaryValue> RouteToValue(
     bool incognito,
     int current_cast_mode) {
   auto dictionary = std::make_unique<base::DictionaryValue>();
-  dictionary->SetString("id", route.media_route_id());
-  dictionary->SetString("sinkId", route.media_sink_id());
-  dictionary->SetString("description", route.description());
-  dictionary->SetBoolean("isLocal", route.is_local());
-  dictionary->SetBoolean("supportsWebUiController",
-                         route.controller_type() != RouteControllerType::kNone);
-  dictionary->SetBoolean("canJoin", can_join);
+  dictionary->SetKey("id", base::Value(route.media_route_id()));
+  dictionary->SetKey("sinkId", base::Value(route.media_sink_id()));
+  dictionary->SetKey("description", base::Value(route.description()));
+  dictionary->SetKey("isLocal", base::Value(route.is_local()));
+  dictionary->SetKey(
+      "supportsWebUiController",
+      base::Value(route.controller_type() != RouteControllerType::kNone));
+  dictionary->SetKey("canJoin", base::Value(can_join));
   if (current_cast_mode > 0) {
-    dictionary->SetInteger("currentCastMode", current_cast_mode);
+    dictionary->SetKey("currentCastMode", base::Value(current_cast_mode));
   }
 
   return dictionary;
@@ -181,12 +184,13 @@ std::unique_ptr<base::ListValue> CastModesToValue(
 
   for (const MediaCastMode& cast_mode : cast_modes) {
     auto cast_mode_val = std::make_unique<base::DictionaryValue>();
-    cast_mode_val->SetInteger("type", cast_mode);
-    cast_mode_val->SetString(
-        "description", MediaCastModeToDescription(cast_mode, source_host));
-    cast_mode_val->SetString("host", source_host);
-    cast_mode_val->SetBoolean(
-        "isForced", forced_cast_mode && forced_cast_mode == cast_mode);
+    cast_mode_val->SetKey("type", base::Value(static_cast<int>(cast_mode)));
+    cast_mode_val->SetKey("description", base::Value(MediaCastModeToDescription(
+                                             cast_mode, source_host)));
+    cast_mode_val->SetKey("host", base::Value(source_host));
+    cast_mode_val->SetKey(
+        "isForced",
+        base::Value(forced_cast_mode && forced_cast_mode == cast_mode));
     value->Append(std::move(cast_mode_val));
   }
 
@@ -197,21 +201,22 @@ std::unique_ptr<base::ListValue> CastModesToValue(
 std::unique_ptr<base::DictionaryValue> IssueToValue(const Issue& issue) {
   const IssueInfo& issue_info = issue.info();
   auto dictionary = std::make_unique<base::DictionaryValue>();
-  dictionary->SetInteger("id", issue.id());
-  dictionary->SetString("title", issue_info.title);
-  dictionary->SetString("message", issue_info.message);
-  dictionary->SetInteger("defaultActionType",
-                         static_cast<int>(issue_info.default_action));
+  dictionary->SetKey("id", base::Value(issue.id()));
+  dictionary->SetKey("title", base::Value(issue_info.title));
+  dictionary->SetKey("message", base::Value(issue_info.message));
+  dictionary->SetKey("defaultActionType",
+                     base::Value(static_cast<int>(issue_info.default_action)));
   if (!issue_info.secondary_actions.empty()) {
     DCHECK_EQ(1u, issue_info.secondary_actions.size());
-    dictionary->SetInteger("secondaryActionType",
-                           static_cast<int>(issue_info.secondary_actions[0]));
+    dictionary->SetKey(
+        "secondaryActionType",
+        base::Value(static_cast<int>(issue_info.secondary_actions[0])));
   }
   if (!issue_info.route_id.empty())
-    dictionary->SetString("routeId", issue_info.route_id);
-  dictionary->SetBoolean("isBlocking", issue_info.is_blocking);
+    dictionary->SetKey("routeId", base::Value(issue_info.route_id));
+  dictionary->SetKey("isBlocking", base::Value(issue_info.is_blocking));
   if (issue_info.help_page_id > 0)
-    dictionary->SetInteger("helpPageId", issue_info.help_page_id);
+    dictionary->SetKey("helpPageId", base::Value(issue_info.help_page_id));
 
   return dictionary;
 }
@@ -327,17 +332,22 @@ void MediaRouterWebUIMessageHandler::UpdateMediaRouteStatus(
   current_media_status_ = base::make_optional<MediaStatus>(MediaStatus(status));
 
   base::DictionaryValue status_value;
-  status_value.SetString("title", status.title);
-  status_value.SetString("description", status.description);
-  status_value.SetBoolean("canPlayPause", status.can_play_pause);
-  status_value.SetBoolean("canMute", status.can_mute);
-  status_value.SetBoolean("canSetVolume", status.can_set_volume);
-  status_value.SetBoolean("canSeek", status.can_seek);
-  status_value.SetInteger("playState", static_cast<int>(status.play_state));
-  status_value.SetBoolean("isMuted", status.is_muted);
-  status_value.SetInteger("duration", status.duration.InSeconds());
-  status_value.SetInteger("currentTime", status.current_time.InSeconds());
-  status_value.SetDouble("volume", status.volume);
+  status_value.SetKey("title", base::Value(status.title));
+  status_value.SetKey("description", base::Value(status.description));
+  status_value.SetKey("canPlayPause", base::Value(status.can_play_pause));
+  status_value.SetKey("canMute", base::Value(status.can_mute));
+  status_value.SetKey("canSetVolume", base::Value(status.can_set_volume));
+  status_value.SetKey("canSeek", base::Value(status.can_seek));
+  status_value.SetKey("playState",
+                      base::Value(static_cast<int>(status.play_state)));
+  status_value.SetKey("isMuted", base::Value(status.is_muted));
+  status_value.SetKey(
+      "duration", base::Value(static_cast<int>(status.duration.InSeconds())));
+  status_value.SetKey(
+      "currentTime",
+      base::Value(static_cast<int>(status.current_time.InSeconds())));
+  status_value.SetKey("volume",
+                      base::Value(static_cast<double>(status.volume)));
 
   if (status.hangouts_extra_data) {
     base::Value hangouts_extra_data(base::Value::Type::DICTIONARY);
@@ -502,8 +512,8 @@ void MediaRouterWebUIMessageHandler::OnRequestInitialData(
   base::DictionaryValue initial_data;
 
   // "No Cast devices found?" Chromecast help center page.
-  initial_data.SetString("deviceMissingUrl",
-                         base::StringPrintf(kHelpPageUrlPrefix, 3249268));
+  initial_data.SetKey("deviceMissingUrl", base::Value(base::StringPrintf(
+                                              kHelpPageUrlPrefix, 3249268)));
 
   std::unique_ptr<base::DictionaryValue> sinks_and_identity(
       SinksAndIdentityToValue(media_router_ui_->sinks(), GetAccountInfo()));
@@ -526,7 +536,7 @@ void MediaRouterWebUIMessageHandler::OnRequestInitialData(
   bool use_tab_mirroring =
       base::ContainsKey(cast_modes, MediaCastMode::TAB_MIRROR) &&
       media_router_ui_->UserSelectedTabMirroringForCurrentOrigin();
-  initial_data.SetBoolean("useTabMirroring", use_tab_mirroring);
+  initial_data.SetKey("useTabMirroring", base::Value(use_tab_mirroring));
 
   web_ui()->CallJavascriptFunctionUnsafe(kSetInitialData, initial_data);
   media_router_ui_->UIInitialized();
@@ -1064,9 +1074,9 @@ void MediaRouterWebUIMessageHandler::MaybeUpdateFirstRunFlowData() {
 
       show_cloud_pref = true;
       // "Casting to a Hangout from Chrome" Chromecast help center page.
-      first_run_flow_data.SetString(
+      first_run_flow_data.SetKey(
           "firstRunFlowCloudPrefLearnMoreUrl",
-          base::StringPrintf(kHelpPageUrlPrefix, 6320939));
+          base::Value(base::StringPrintf(kHelpPageUrlPrefix, 6320939)));
     }
   }
 
@@ -1075,11 +1085,12 @@ void MediaRouterWebUIMessageHandler::MaybeUpdateFirstRunFlowData() {
     return;
 
   // General Chromecast learn more page.
-  first_run_flow_data.SetString("firstRunFlowLearnMoreUrl",
-                                kCastLearnMorePageUrl);
-  first_run_flow_data.SetBoolean("wasFirstRunFlowAcknowledged",
-                                 first_run_flow_acknowledged);
-  first_run_flow_data.SetBoolean("showFirstRunFlowCloudPref", show_cloud_pref);
+  first_run_flow_data.SetKey("firstRunFlowLearnMoreUrl",
+                             base::Value(kCastLearnMorePageUrl));
+  first_run_flow_data.SetKey("wasFirstRunFlowAcknowledged",
+                             base::Value(first_run_flow_acknowledged));
+  first_run_flow_data.SetKey("showFirstRunFlowCloudPref",
+                             base::Value(show_cloud_pref));
   web_ui()->CallJavascriptFunctionUnsafe(kSetFirstRunFlowData,
                                          first_run_flow_data);
 }

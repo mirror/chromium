@@ -15,7 +15,7 @@ TEST(JsonSchemaCompilerEnumsTest, EnumTypePopulate) {
   {
     EnumType enum_type;
     base::DictionaryValue value;
-    value.SetString("type", "one");
+    value.SetKey("type", base::Value("one"));
     EXPECT_TRUE(EnumType::Populate(value, &enum_type));
     EXPECT_EQ(ENUMERATION_ONE, enum_type.type);
     EXPECT_TRUE(value.Equals(enum_type.ToValue().get()));
@@ -23,7 +23,7 @@ TEST(JsonSchemaCompilerEnumsTest, EnumTypePopulate) {
   {
     EnumType enum_type;
     base::DictionaryValue value;
-    value.SetString("type", "invalid");
+    value.SetKey("type", base::Value("invalid"));
     EXPECT_FALSE(EnumType::Populate(value, &enum_type));
   }
 }
@@ -51,11 +51,11 @@ TEST(JsonSchemaCompilerEnumsTest, EnumsAsTypes) {
     base::DictionaryValue value;
     ASSERT_FALSE(HasEnumeration::Populate(value, &enumeration));
 
-    value.SetString("enumeration", "one");
+    value.SetKey("enumeration", base::Value("one"));
     ASSERT_TRUE(HasEnumeration::Populate(value, &enumeration));
     EXPECT_TRUE(value.Equals(enumeration.ToValue().get()));
 
-    value.SetString("optional_enumeration", "two");
+    value.SetKey("optional_enumeration", base::Value("two"));
     ASSERT_TRUE(HasEnumeration::Populate(value, &enumeration));
     EXPECT_TRUE(value.Equals(enumeration.ToValue().get()));
   }
@@ -64,7 +64,7 @@ TEST(JsonSchemaCompilerEnumsTest, EnumsAsTypes) {
     base::DictionaryValue value;
     ASSERT_FALSE(ReferenceEnum::Populate(value, &enumeration));
 
-    value.SetString("reference_enum", "one");
+    value.SetKey("reference_enum", base::Value("one"));
     ASSERT_TRUE(ReferenceEnum::Populate(value, &enumeration));
     EXPECT_TRUE(value.Equals(enumeration.ToValue().get()));
   }
@@ -123,7 +123,7 @@ TEST(JsonSchemaCompilerEnumsTest, OptionalEnumTypePopulate) {
   {
     OptionalEnumType enum_type;
     base::DictionaryValue value;
-    value.SetString("type", "two");
+    value.SetKey("type", base::Value("two"));
     EXPECT_TRUE(OptionalEnumType::Populate(value, &enum_type));
     EXPECT_EQ(ENUMERATION_TWO, enum_type.type);
     EXPECT_TRUE(value.Equals(enum_type.ToValue().get()));
@@ -138,7 +138,7 @@ TEST(JsonSchemaCompilerEnumsTest, OptionalEnumTypePopulate) {
   {
     OptionalEnumType enum_type;
     base::DictionaryValue value;
-    value.SetString("type", "invalid");
+    value.SetKey("type", base::Value("invalid"));
     EXPECT_FALSE(OptionalEnumType::Populate(value, &enum_type));
   }
 }
