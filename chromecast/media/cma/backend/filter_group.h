@@ -88,8 +88,10 @@ class FilterGroup {
   // on each mixing iteration.
   void ClearActiveInputs();
 
-  // Retrieves a pointer to the output buffer.
-  float* interleaved() { return interleaved_.get(); }
+  // Retrieves a pointer to the output buffer. This will crash if called before
+  // MixAndFilter(), and the data & memory location may change each time
+  // MixAndFilter() is called.
+  float* GetOutputBuffer();
 
   // Get the last used volume.
   float last_volume() const { return last_volume_; }
@@ -97,7 +99,7 @@ class FilterGroup {
   std::string name() const { return name_; }
 
   // Returns number of audio output channels from the filter group.
-  int GetOutputChannelCount() const;
+  int GetOutputChannelCount();
 
   // Sends configuration string |config| to all post processors with the given
   // |name|.
@@ -114,7 +116,9 @@ class FilterGroup {
   AudioContentType content_type() const { return content_type_; }
 
  private:
-  void ResizeBuffersIfNecessary(int chunk_size);
+  // Resizes temp_ and mixed_ if they are too small to hold |chunk_size| frames.
+  // Returns |true| if |chunk_size| is larger than all previous |chunk_size|.
+  bool ResizeBuffersIfNecessary(int chunk_size);
 
   const int num_channels_;
   const GroupType type_;
