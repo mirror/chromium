@@ -804,16 +804,10 @@ String HTMLElement::autocapitalize() const {
   DEFINE_STATIC_LOCAL(const AtomicString, words, ("words"));
   DEFINE_STATIC_LOCAL(const AtomicString, sentences, ("sentences"));
 
-  if (auto* input = ToHTMLInputElementOrNull(*this)) {
-    const AtomicString& input_type = input->type();
-    if (input_type != InputTypeNames::text &&
-        input_type != InputTypeNames::search) {
-      // Autocapitalize is only supported for these two input types.
-      return none;
-    }
-  }
-
   const AtomicString& value = FastGetAttribute(autocapitalizeAttr);
+  if (value.IsEmpty())
+    return "";
+
   if (DeprecatedEqualIgnoringCase(value, none) ||
       DeprecatedEqualIgnoringCase(value, off))
     return none;
@@ -821,7 +815,7 @@ String HTMLElement::autocapitalize() const {
     return characters;
   if (DeprecatedEqualIgnoringCase(value, words))
     return words;
-  // "sentences", "on", empty string, or an invalid value
+  // "sentences", "on", or an invalid value
   return sentences;
 }
 
