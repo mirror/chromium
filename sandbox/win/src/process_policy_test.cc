@@ -282,6 +282,7 @@ DWORD WINAPI TestThreadFunc(LPVOID lpdwThreadParam) {
     return 1;
   return 0;
 }
+// blah
 
 SBOX_TESTS_COMMAND int Process_CreateThread(int argc, wchar_t** argv) {
   DWORD pid = ::GetCurrentProcessId();
