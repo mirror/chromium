@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ba3a57f_de195aa0",
+        "filename": "components/signin/core/browser/avatar_icon_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T12:36:54Z",
+      "side": 1,
+      "message": "Let\u0027s rename this to GetAvatarImageURLWithOptions",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 27
+      },
+      "revId": "e072c992cc18508af23cca60365ddfca935281d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e6f5be4_548862bf",
+        "filename": "components/signin/core/browser/avatar_icon_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T12:36:54Z",
+      "side": 1,
+      "message": "These also need to be changed to GetAvatarImageURLWithOptions",
+      "range": {
+        "startLine": 12,
+        "startChar": 25,
+        "endLine": 12,
+        "endChar": 60
+      },
+      "revId": "e072c992cc18508af23cca60365ddfca935281d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
