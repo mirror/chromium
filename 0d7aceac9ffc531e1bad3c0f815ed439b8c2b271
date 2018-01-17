@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a4026c0_37789185",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T16:43:51Z",
+      "side": 1,
+      "message": "Ah, right! Removed condition.\n\nI  want to change all of them in this CL to avoid a temporary histograms.xml state (and some more obsoletes).",
+      "parentUuid": "74374136_5e39d417",
+      "range": {
+        "startLine": 169,
+        "startChar": 43,
+        "endLine": 169,
+        "endChar": 77
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fb23b6c_a2b8f207",
         "filename": "base/task_scheduler/task_tracker.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5cbb1c44_5372ddd6",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T16:43:51Z",
+      "side": 1,
+      "message": "Done in https://chromium-review.googlesource.com/c/chromium/src/+/870390/4",
+      "parentUuid": "1fb23b6c_a2b8f207",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 51
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eedf5260_4e46204d",
         "filename": "base/task_scheduler/task_tracker.h",
         "patchSetId": 4
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "3b9afc59_24dae6d0",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T16:43:51Z",
+      "side": 1,
+      "message": "I didn\u0027t bother since I\u0027m already removing it in follow-up CL (https://chromium-review.googlesource.com/c/chromium/src/+/870390/4)",
+      "parentUuid": "eedf5260_4e46204d",
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5025b41e_8ba2bb31",
         "filename": "base/task_scheduler/task_tracker.h",
         "patchSetId": 4
@@ -79,6 +145,24 @@
       "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398234e7_9fbe5abb",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T16:43:51Z",
+      "side": 1,
+      "message": "Done in https://chromium-review.googlesource.com/c/chromium/src/+/870390/4",
+      "parentUuid": "5025b41e_8ba2bb31",
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "9672aa1a_8ba0a374",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T16:43:51Z",
+      "side": 1,
+      "message": "Done already in https://chromium-review.googlesource.com/c/chromium/src/+/870390/4",
+      "parentUuid": "84ecad5a_7652591d",
+      "range": {
+        "startLine": 904,
+        "startChar": 22,
+        "endLine": 904,
+        "endChar": 35
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d811773b_a1946afd",
         "filename": "base/task_scheduler/task_tracker_unittest.cc",
         "patchSetId": 4
@@ -148,6 +256,30 @@
       "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2cc145_41502e09",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T16:43:51Z",
+      "side": 1,
+      "message": "Ditto",
+      "parentUuid": "d811773b_a1946afd",
+      "range": {
+        "startLine": 983,
+        "startChar": 22,
+        "endLine": 983,
+        "endChar": 35
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "0b0dee27_b33671b5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 110721,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T16:43:51Z",
+      "side": 1,
+      "message": "Hmmm? This adds Renderer/ContentChild suffixes. Then in https://chromium-review.googlesource.com/c/chromium/src/+/870390/4 I\u0027m adding \"Browser\" to the suffixes applied to these histograms but these are not going obsolete.",
+      "parentUuid": "e6f9da6c_4fa9453c",
+      "range": {
+        "startLine": 110719,
+        "startChar": 2,
+        "endLine": 110721,
+        "endChar": 65
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d806bd5d_47a8a974",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -197,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "33581a86_e0398415",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 110764,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T16:43:51Z",
+      "side": 1,
+      "message": "Good catch, forgot to remove after deciding to merge TaskPriority/MayBlock.\n\nDone.",
+      "parentUuid": "d806bd5d_47a8a974",
+      "range": {
+        "startLine": 110762,
+        "startChar": 2,
+        "endLine": 110764,
+        "endChar": 77
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ee28920_00d6486b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -211,6 +391,24 @@
       "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92046d2c_d156cece",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 110788,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T16:43:51Z",
+      "side": 1,
+      "message": "Cool didn\u0027t know about that one. It\u0027s already there on TaskScheduler.TaskLatencyMicroseconds looks like but added to the TaskSchedulerName suffixes :)",
+      "parentUuid": "1ee28920_00d6486b",
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -234,6 +432,30 @@
       "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b811d085_7d92c041",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 110840,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T16:43:51Z",
+      "side": 1,
+      "message": "Why? I removed the empty case there but other than that these are still relevant. And as mentioned I think it\u0027s easier to add them all at once for histograms.xml (avoids having a world where we have Renderer.* and RendererFooPool.*; now Renderer is always followed by a \".\").",
+      "parentUuid": "9b522abe_6a47ad8c",
+      "range": {
+        "startLine": 110808,
+        "startChar": 2,
+        "endLine": 110840,
+        "endChar": 74
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
