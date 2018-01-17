@@ -86,6 +86,7 @@ gfx::Transform WindowTreeHost::GetRootTransform() const {
 }
 
 void WindowTreeHost::SetRootTransform(const gfx::Transform& transform) {
+  LOG(ERROR) << __FUNCTION__ << " " << transform.ToString();
   window()->SetTransform(transform);
   UpdateRootWindowSizeInPixels(GetBoundsInPixels().size());
 }
@@ -131,6 +132,10 @@ void WindowTreeHost::UpdateRootWindowSizeInPixels(
       gfx::ScaleRect(gfx::RectF(bounds), 1.0f / scale_factor);
   window()->layer()->transform().TransformRect(&new_bounds);
   window()->SetBounds(gfx::ToEnclosingRect(new_bounds));
+  LOG(ERROR) << __FUNCTION__ << " bounds=" << bounds.x() << ", " << bounds.y() << ", " << bounds.width()
+             << ", " << bounds.height()
+             << " new_bounds=" << new_bounds.x() << ", " << new_bounds.y() << ", " << new_bounds.width()
+             << ", " << new_bounds.height() << " scale=" << scale_factor;
 }
 
 void WindowTreeHost::ConvertDIPToScreenInPixels(gfx::Point* point) const {

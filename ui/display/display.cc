@@ -161,6 +161,7 @@ Display::Display(int64_t id, const gfx::Rect& bounds)
       color_space_(gfx::ColorSpace::CreateSRGB()),
       color_depth_(DEFAULT_BITS_PER_PIXEL),
       depth_per_component_(DEFAULT_BITS_PER_COMPONENT) {
+  LOG_IF(ERROR, id_ != -1) << __FUNCTION__ << " " << id << " " << bounds.ToString();
   if (HasForceColorProfile())
     SetColorSpaceAndDepth(GetForcedColorProfile());
 #if defined(USE_AURA)
@@ -188,6 +189,7 @@ int Display::RotationAsDegree() const {
 }
 
 void Display::SetRotationAsDegree(int rotation) {
+  LOG(ERROR) << __FUNCTION__ << " " << rotation;
   switch (rotation) {
     case 0:
       rotation_ = ROTATE_0;
@@ -215,6 +217,11 @@ gfx::Insets Display::GetWorkAreaInsets() const {
 
 void Display::SetScaleAndBounds(float device_scale_factor,
                                 const gfx::Rect& bounds_in_pixel) {
+  if (id_ != -1) {
+  LOG_IF(ERROR, id_ != -1) << __FUNCTION__ << " " << device_scale_factor << " "
+             << bounds_in_pixel.x() << ", " << bounds_in_pixel.y() << ", "
+             << bounds_in_pixel.width() << ", " << bounds_in_pixel.height();
+  }
   gfx::Insets insets = bounds_.InsetsFrom(work_area_);
   if (!HasForceDeviceScaleFactor()) {
 #if defined(OS_MACOSX)
@@ -236,6 +243,8 @@ void Display::SetScaleAndBounds(float device_scale_factor,
 }
 
 void Display::SetSize(const gfx::Size& size_in_pixel) {
+  LOG(ERROR) << __FUNCTION__ << " " << size_in_pixel.width() << ", "
+             << size_in_pixel.height();
   gfx::Point origin = bounds_.origin();
 #if defined(USE_AURA)
   origin = gfx::ScaleToFlooredPoint(origin, device_scale_factor_);

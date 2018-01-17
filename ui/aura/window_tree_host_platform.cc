@@ -98,6 +98,7 @@ gfx::Rect WindowTreeHostPlatform::GetBoundsInPixels() const {
 }
 
 void WindowTreeHostPlatform::SetBoundsInPixels(const gfx::Rect& bounds) {
+  LOG(ERROR) << __FUNCTION__ << " " << bounds.ToString();
   platform_window_->SetBounds(bounds);
 }
 
