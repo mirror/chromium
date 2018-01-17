@@ -99,6 +99,9 @@ class InMemoryDownload : public net::URLFetcherDelegate {
   uint64_t bytes_downloaded() const { return bytes_downloaded_; }
   State state() const { return state_; }
 
+  // Returns the estimate of dynamically allocated memory in bytes.
+  size_t EstimateMemoryUsage() const;
+
  private:
   // net::URLFetcherDelegate implementation.
   void OnURLFetchDownloadProgress(const net::URLFetcher* source,
