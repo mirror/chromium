@@ -72,7 +72,8 @@ struct CONTENT_EXPORT CommonNavigationParams {
                          base::Optional<SourceLocation> source_location,
                          CSPDisposition should_check_main_world_csp,
                          bool started_from_context_menu,
-                         bool has_user_gesture);
+                         bool has_user_gesture,
+                         bool should_squelch_downloads);
   CommonNavigationParams(const CommonNavigationParams& other);
   ~CommonNavigationParams();
 
@@ -154,6 +155,9 @@ struct CONTENT_EXPORT CommonNavigationParams {
 
   // True if the request was user initiated.
   bool has_user_gesture;
+
+  // True if a download should be squelched due to policies.
+  bool should_squelch_downloads;
 };
 
 // Provided by the browser -----------------------------------------------------

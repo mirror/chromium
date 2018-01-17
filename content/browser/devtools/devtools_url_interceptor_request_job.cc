@@ -131,6 +131,7 @@ DevToolsURLInterceptorRequestJob::SubRequest::SubRequest(
       resource_request_info->should_replace_current_entry(),
       resource_request_info->IsDownload(), resource_request_info->is_stream(),
       resource_request_info->allow_download(),
+      resource_request_info->should_squelch_download(),
       resource_request_info->HasUserGesture(),
       resource_request_info->is_load_timing_enabled(),
       resource_request_info->is_upload_progress_enabled(),

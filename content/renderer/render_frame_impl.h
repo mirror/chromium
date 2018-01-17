@@ -1564,6 +1564,7 @@ class CONTENT_EXPORT RenderFrameImpl
     bool cache_disabled;
     blink::WebFormElement form;
     blink::WebSourceLocation source_location;
+    bool should_squelch_downloads;
 
     explicit PendingNavigationInfo(const NavigationPolicyInfo& info);
   };
