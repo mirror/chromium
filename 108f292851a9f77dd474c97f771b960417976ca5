@@ -16,6 +16,24 @@
       "revId": "108f292851a9f77dd474c97f771b960417976ca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f3da558_cb87e940",
+        "filename": "chrome/browser/extensions/active_tab_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2018-01-17T13:31:35Z",
+      "side": 1,
+      "message": "Done. I also updated missing includes in other files.",
+      "parentUuid": "12dd57bb_5ca83051",
+      "revId": "108f292851a9f77dd474c97f771b960417976ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
