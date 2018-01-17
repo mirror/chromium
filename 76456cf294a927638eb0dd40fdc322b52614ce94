@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d0cc1ac_7a5c1daf",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-17T17:26:35Z",
+      "side": 1,
+      "message": "nit: There is a difference when ArcStartRequested and ArcStarted (from the session manager point of view, not runner).\nFrom your code is actually OnArcStarted",
+      "range": {
+        "startLine": 112,
+        "startChar": 17,
+        "endLine": 112,
+        "endChar": 36
+      },
+      "revId": "76456cf294a927638eb0dd40fdc322b52614ce94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
