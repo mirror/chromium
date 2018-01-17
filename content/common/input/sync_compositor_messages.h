@@ -172,4 +172,9 @@ IPC_MESSAGE_ROUTED2(SyncCompositorHostMsg_ReturnFrame,
                     uint32_t /* layer_tree_frame_sink_id */,
                     base::Optional<viz::CompositorFrame>)
 
+// Sent if the BeginFrame did not cause a SwapCompositorFrame (e.g. because no
+// updates were required or because it was aborted in the renderer).
+IPC_MESSAGE_ROUTED1(SyncCompositorHostMsg_DidNotProduceFrame,
+                    viz::BeginFrameAck /* ack */)
+
 #endif  // CONTENT_COMMON_SYNC_COMPOSITOR_MESSAGES_H_
