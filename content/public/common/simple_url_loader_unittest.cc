@@ -1198,7 +1198,7 @@ class MockURLLoader : public mojom::URLLoader {
         }
         case TestLoaderEvent::kReadLongUploadBody: {
           ASSERT_TRUE(data_pipe_getter_);
-          ASSERT_TRUE(upload_data_pipe_.is_valid());
+          ASSERT_TRUE(upload_data_pipe_);
           std::string upload_body;
           while (true) {
             char read_buffer[32 * 1024];
@@ -1218,7 +1218,7 @@ class MockURLLoader : public mojom::URLLoader {
         }
         case TestLoaderEvent::kReadFirstByteOfLongUploadBody: {
           ASSERT_TRUE(data_pipe_getter_);
-          ASSERT_TRUE(upload_data_pipe_.is_valid());
+          ASSERT_TRUE(upload_data_pipe_);
           MojoResult result;
           char byte;
           uint32_t read_size;

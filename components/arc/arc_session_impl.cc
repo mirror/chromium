@@ -224,7 +224,7 @@ mojo::ScopedMessagePipeHandle ArcSessionDelegateImpl::ConnectMojoInternal(
 void ArcSessionDelegateImpl::OnMojoConnected(
     ConnectMojoCallback callback,
     mojo::ScopedMessagePipeHandle server_pipe) {
-  if (!server_pipe.is_valid()) {
+  if (!server_pipe) {
     LOG(ERROR) << "Invalid pipe";
     std::move(callback).Run(nullptr);
     return;

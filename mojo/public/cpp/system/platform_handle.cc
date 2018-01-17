@@ -99,7 +99,7 @@ MojoResult UnwrapSharedMemoryHandle(ScopedSharedBufferHandle handle,
                                     base::SharedMemoryHandle* memory_handle,
                                     size_t* size,
                                     bool* read_only) {
-  if (!handle.is_valid())
+  if (!handle)
     return MOJO_RESULT_INVALID_ARGUMENT;
   MojoPlatformHandle platform_handle;
   platform_handle.struct_size = sizeof(MojoPlatformHandle);

@@ -29,7 +29,7 @@ bool ParamTraits<mojo::MessagePipeHandle>::Read(const base::Pickle* m,
   mojo::ScopedMessagePipeHandle handle;
   if (!MojoMessageHelper::ReadMessagePipeFrom(m, iter, &handle))
     return false;
-  DCHECK(handle.is_valid());
+  DCHECK(handle);
   *r = handle.release();
   return true;
 }
@@ -79,7 +79,7 @@ bool ParamTraits<mojo::DataPipeConsumerHandle>::Read(const base::Pickle* m,
           ->TakeHandle()
           .release()
           .value()));
-  DCHECK(handle.is_valid());
+  DCHECK(handle);
   *r = handle.release();
   return true;
 }

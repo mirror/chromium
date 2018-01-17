@@ -302,7 +302,7 @@ void ServiceWorkerURLLoaderJob::StartResponse(
   CommitResponseHeaders();
 
   // Handle a stream response body.
-  if (!body_as_stream.is_null() && body_as_stream->stream.is_valid()) {
+  if (!body_as_stream.is_null() && body_as_stream->stream) {
     stream_waiter_ = std::make_unique<StreamWaiter>(
         this, std::move(version), std::move(body_as_stream->callback_request));
     url_loader_client_->OnStartLoadingResponseBody(

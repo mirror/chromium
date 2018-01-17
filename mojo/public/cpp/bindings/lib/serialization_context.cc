@@ -19,7 +19,7 @@ SerializationContext::~SerializationContext() = default;
 
 void SerializationContext::AddHandle(mojo::ScopedHandle handle,
                                      Handle_Data* out_data) {
-  if (!handle.is_valid()) {
+  if (!handle) {
     out_data->value = kEncodedInvalidHandleValue;
   } else {
     DCHECK_LT(handles_.size(), std::numeric_limits<uint32_t>::max());

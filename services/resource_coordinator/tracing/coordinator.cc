@@ -96,7 +96,7 @@ class Coordinator::TraceStreamer : public base::SupportsWeakPtr<TraceStreamer> {
   // shutdown. We either will not write to the stream afterwards or do not care
   // what happens to what we try to write.
   void CloseStream() {
-    DCHECK(stream_.is_valid());
+    DCHECK(stream_);
     stream_.reset();
   }
 
@@ -377,7 +377,7 @@ void Coordinator::StopAndFlushAgent(mojo::ScopedDataPipeProducerHandle stream,
     return;
   }
   DCHECK(!trace_streamer_);
-  DCHECK(stream.is_valid());
+  DCHECK(stream);
   is_tracing_ = false;
 
   // Do not send |StartTracing| to agents that connect from now on.

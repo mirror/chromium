@@ -87,7 +87,7 @@ class MOJO_CPP_BINDINGS_EXPORT Message {
   void Reset();
 
   // Indicates whether this Message is uninitialized.
-  bool IsNull() const { return !handle_.is_valid(); }
+  bool IsNull() const { return !handle_; }
 
   // Indicates whether this Message is serialized.
   bool is_serialized() const { return serialized_; }

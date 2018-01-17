@@ -98,7 +98,7 @@ bool StructTraits<
     return false;
 
   mojo::ScopedSharedBufferHandle handle = input.TakeMemoryHandle();
-  if (!handle.is_valid())
+  if (!handle)
     return false;
 
   base::SharedMemoryHandle memory_handle;

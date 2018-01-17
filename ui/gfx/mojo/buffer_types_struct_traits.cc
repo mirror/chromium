@@ -97,7 +97,7 @@ bool StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
       out->type == gfx::DXGI_SHARED_HANDLE ||
       out->type == gfx::ANDROID_HARDWARE_BUFFER) {
     mojo::ScopedSharedBufferHandle handle = data.TakeSharedMemoryHandle();
-    if (handle.is_valid()) {
+    if (handle) {
       MojoResult unwrap_result = mojo::UnwrapSharedMemoryHandle(
           std::move(handle), &out->handle, nullptr, nullptr);
       if (unwrap_result != MOJO_RESULT_OK)

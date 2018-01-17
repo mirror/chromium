@@ -273,7 +273,7 @@ bool Connector::Accept(Message* message) {
 
   internal::MayAutoLock locker(&lock_);
 
-  if (!message_pipe_.is_valid() || drop_writes_)
+  if (!message_pipe_ || drop_writes_)
     return true;
 
   MojoResult rv =
@@ -387,7 +387,7 @@ void Connector::WaitToReadMore() {
       message_pipe_.get(), MOJO_HANDLE_SIGNAL_READABLE,
       base::Bind(&Connector::OnWatcherHandleReady, base::Unretained(this)));
 
-  if (message_pipe_.is_valid()) {
+  if (message_pipe_) {
     peer_remoteness_tracker_.emplace(message_pipe_.get(),
                                      MOJO_HANDLE_SIGNAL_PEER_REMOTE);
   }
@@ -507,7 +507,7 @@ void Connector::CancelWait() {
 }
 
 void Connector::HandleError(bool force_pipe_reset, bool force_async_handler) {
-  if (error_ || !message_pipe_.is_valid())
+  if (error_ || !message_pipe_)
     return;
 
   if (paused_) {
