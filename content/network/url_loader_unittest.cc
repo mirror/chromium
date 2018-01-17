@@ -47,7 +47,7 @@
 #include "net/url_request/url_request_status.h"
 #include "net/url_request/url_request_test_job.h"
 #include "services/network/public/cpp/resource_request.h"
-#include "services/network/public/interfaces/data_pipe_getter.mojom.h"
+#include "services/network/test/test_data_pipe_getter.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
@@ -162,110 +162,6 @@ class MultipleWritesInterceptor : public net::URLRequestInterceptor {
   bool async_reads_;
 
   DISALLOW_COPY_AND_ASSIGN(MultipleWritesInterceptor);
-};
-
-class TestDataPipeGetter : public network::mojom::DataPipeGetter {
- public:
-  TestDataPipeGetter(const std::string& upload_string,
-                     network::mojom::DataPipeGetterRequest request)
-      : upload_string_(upload_string) {
-    bindings_.AddBinding(this, std::move(request));
-  }
-
-  ~TestDataPipeGetter() override = default;
-
-  // If set to anything other than net::OK, won't bother to upload the body.
-  void set_start_error(net::Error start_error) { start_error_ = start_error; }
-
-  // If set to true, will advertise the body size as being 1 byte larger than
-  // upload string, so the data pipe will be closed when the URLLoader is still
-  // expecting more data.
-  void set_pipe_closed_early(bool pipe_closed_early) {
-    pipe_closed_early_ = pipe_closed_early;
-  }
-
-  // network::mojom::DataPipeGetter implementation:
-  void Read(mojo::ScopedDataPipeProducerHandle pipe,
-            ReadCallback callback) override {
-    uint64_t advertised_length = upload_string_.length();
-    if (pipe_closed_early_)
-      advertised_length += 1;
-    std::move(callback).Run(start_error_, advertised_length);
-    if (start_error_ != net::OK)
-      return;
-
-    write_position_ = 0;
-    upload_body_pipe_ = std::move(pipe);
-    handle_watcher_ = std::make_unique<mojo::SimpleWatcher>(
-        FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL);
-    handle_watcher_->Watch(
-        upload_body_pipe_.get(),
-        // Don't bother watching for close - rely on read pipes for errors.
-        MOJO_HANDLE_SIGNAL_WRITABLE, MOJO_WATCH_CONDITION_SATISFIED,
-        base::BindRepeating(&TestDataPipeGetter::MojoReadyCallback,
-                            base::Unretained(this)));
-    WriteData();
-  }
-
-  void Clone(network::mojom::DataPipeGetterRequest request) override {
-    bindings_.AddBinding(this, std::move(request));
-  }
-
- private:
-  void MojoReadyCallback(MojoResult result,
-                         const mojo::HandleSignalsState& state) {
-    WriteData();
-  }
-
-  void WriteData() {
-    DCHECK_LE(write_position_, upload_string_.length());
-
-    while (true) {
-      uint32_t write_size = static_cast<uint32_t>(
-          std::min(static_cast<size_t>(32 * 1024),
-                   upload_string_.length() - write_position_));
-      if (write_size == 0) {
-        // Upload is done. Close the upload body pipe and wait for another call
-        // to Read().
-        handle_watcher_.reset();
-        upload_body_pipe_.reset();
-        return;
-      }
-
-      int result =
-          upload_body_pipe_->WriteData(upload_string_.data() + write_position_,
-                                       &write_size, MOJO_WRITE_DATA_FLAG_NONE);
-      if (result == MOJO_RESULT_SHOULD_WAIT) {
-        handle_watcher_->ArmOrNotify();
-        return;
-      }
-
-      if (result != MOJO_RESULT_OK) {
-        // Ignore the pipe being closed - the upload may still be retried with
-        // another call to Read.
-        handle_watcher_.reset();
-        upload_body_pipe_.reset();
-        return;
-      }
-
-      write_position_ += write_size;
-      DCHECK_LE(write_position_, upload_string_.length());
-    }
-  }
-
- private:
-  const std::string upload_string_;
-  net::Error start_error_ = net::OK;
-  bool pipe_closed_early_ = false;
-
-  mojo::BindingSet<network::mojom::DataPipeGetter> bindings_;
-
-  mojo::ScopedDataPipeProducerHandle upload_body_pipe_;
-  // Must be below |upload_body_pipe_|, so it's deleted first.
-  std::unique_ptr<mojo::SimpleWatcher> handle_watcher_;
-  size_t write_position_ = 0;
-
-  DISALLOW_COPY_AND_ASSIGN(TestDataPipeGetter);
 };
 
 class RequestInterceptor : public net::URLRequestInterceptor {
@@ -1214,7 +1110,7 @@ TEST_F(URLLoaderTest, UploadDataPipe) {
   const std::string kRequestBody = "Request Body";
 
   network::mojom::DataPipeGetterPtr data_pipe_getter_ptr;
-  auto data_pipe_getter = std::make_unique<TestDataPipeGetter>(
+  auto data_pipe_getter = std::make_unique<network::TestDataPipeGetter>(
       kRequestBody, mojo::MakeRequest(&data_pipe_getter_ptr));
 
   auto resource_request_body =
@@ -1232,7 +1128,7 @@ TEST_F(URLLoaderTest, UploadDataPipe_Redirect307) {
   const std::string kRequestBody = "Request Body";
 
   network::mojom::DataPipeGetterPtr data_pipe_getter_ptr;
-  auto data_pipe_getter = std::make_unique<TestDataPipeGetter>(
+  auto data_pipe_getter = std::make_unique<network::TestDataPipeGetter>(
       kRequestBody, mojo::MakeRequest(&data_pipe_getter_ptr));
 
   auto resource_request_body =
@@ -1258,7 +1154,7 @@ TEST_F(URLLoaderTest, UploadDataPipeWithLotsOfData) {
     request_body.append("foppity");
 
   network::mojom::DataPipeGetterPtr data_pipe_getter_ptr;
-  auto data_pipe_getter = std::make_unique<TestDataPipeGetter>(
+  auto data_pipe_getter = std::make_unique<network::TestDataPipeGetter>(
       request_body, mojo::MakeRequest(&data_pipe_getter_ptr));
 
   auto resource_request_body =
@@ -1275,7 +1171,7 @@ TEST_F(URLLoaderTest, UploadDataPipeError) {
   const std::string kRequestBody = "Request Body";
 
   network::mojom::DataPipeGetterPtr data_pipe_getter_ptr;
-  auto data_pipe_getter = std::make_unique<TestDataPipeGetter>(
+  auto data_pipe_getter = std::make_unique<network::TestDataPipeGetter>(
       kRequestBody, mojo::MakeRequest(&data_pipe_getter_ptr));
   data_pipe_getter->set_start_error(net::ERR_ACCESS_DENIED);
 
@@ -1291,7 +1187,7 @@ TEST_F(URLLoaderTest, UploadDataPipeClosedEarly) {
   const std::string kRequestBody = "Request Body";
 
   network::mojom::DataPipeGetterPtr data_pipe_getter_ptr;
-  auto data_pipe_getter = std::make_unique<TestDataPipeGetter>(
+  auto data_pipe_getter = std::make_unique<network::TestDataPipeGetter>(
       kRequestBody, mojo::MakeRequest(&data_pipe_getter_ptr));
   data_pipe_getter->set_pipe_closed_early(true);
 
@@ -1392,7 +1288,7 @@ class MockHTTPSURLRequestJob : public net::URLRequestTestJob {
 
 class MockHTTPSJobURLRequestInterceptor : public net::URLRequestInterceptor {
  public:
-  explicit MockHTTPSJobURLRequestInterceptor() {}
+  MockHTTPSJobURLRequestInterceptor() {}
   ~MockHTTPSJobURLRequestInterceptor() override {}
 
   // net::URLRequestInterceptor:
