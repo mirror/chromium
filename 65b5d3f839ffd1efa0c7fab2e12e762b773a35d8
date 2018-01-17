@@ -46,6 +46,30 @@
       "revId": "65b5d3f839ffd1efa0c7fab2e12e762b773a35d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4a52665_7cbbd478",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridgeBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-17T17:48:33Z",
+      "side": 0,
+      "message": "Oh, I see what you meant. Fixed.",
+      "parentUuid": "fcdcf535_819b6ef0",
+      "range": {
+        "startLine": 85,
+        "startChar": 20,
+        "endLine": 85,
+        "endChar": 52
+      },
+      "revId": "65b5d3f839ffd1efa0c7fab2e12e762b773a35d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
