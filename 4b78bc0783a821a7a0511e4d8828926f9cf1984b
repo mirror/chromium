@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f26ef872_d4ed853a",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done. I have added a comment.",
+      "parentUuid": "e77e240f_1b5c9388",
+      "range": {
+        "startLine": 730,
+        "startChar": 12,
+        "endLine": 730,
+        "endChar": 26
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9299984c_0afa935f",
         "filename": "content/test/BUILD.gn",
         "patchSetId": 36
@@ -45,6 +69,30 @@
       "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244c8841_b7f0312a",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 36
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "This is so I can use services/network/udp_socket_test_util.h/cc in content/network/network_context_unittest.cc",
+      "parentUuid": "9299984c_0afa935f",
+      "range": {
+        "startLine": 1715,
+        "startChar": 16,
+        "endLine": 1715,
+        "endChar": 36
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "55143a85_ad67510e",
+        "filename": "services/BUILD.gn",
+        "patchSetId": 36
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dca30e2b_80860436",
+      "range": {
+        "startLine": 22,
+        "startChar": 16,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccc6d0a6_6fbbfafa",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 36
@@ -91,6 +163,30 @@
       "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3dc5ff9_380539d7",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 36
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Ack. I will leave this as is. I slightly prefer silently capping the value over handling negative size input.",
+      "parentUuid": "ccc6d0a6_6fbbfafa",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 19
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "33b12023_5e42034d",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 36
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46af55c0_df349ef2",
+      "range": {
+        "startLine": 110,
+        "startChar": 5,
+        "endLine": 110,
+        "endChar": 12
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "944e5c35_0071f886",
         "filename": "services/network/udp_socket.cc",
         "patchSetId": 36
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "04452e35_863eb82e",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done. I got rid of the customization part. I changed the naming.",
+      "parentUuid": "944e5c35_0071f886",
+      "range": {
+        "startLine": 27,
+        "startChar": 15,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51a5a56c_68e90cdb",
         "filename": "services/network/udp_socket.cc",
         "patchSetId": 36
@@ -160,6 +304,30 @@
       "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5f77f6_d032ff0d",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51a5a56c_68e90cdb",
+      "range": {
+        "startLine": 133,
+        "startChar": 4,
+        "endLine": 133,
+        "endChar": 17
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,54 @@
     },
     {
       "key": {
+        "uuid": "0dbb43a2_47ff3e10",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done. Good catch. Thanks! I have updated test expectation.",
+      "parentUuid": "249f96d3_060f9b54",
+      "range": {
+        "startLine": 163,
+        "startChar": 22,
+        "endLine": 163,
+        "endChar": 35
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb24e0db_a3d75e92",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2052a483_71beef1c",
+      "range": {
+        "startLine": 163,
+        "startChar": 7,
+        "endLine": 163,
+        "endChar": 17
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e855a353_bd7bb276",
         "filename": "services/network/udp_socket.cc",
         "patchSetId": 36
@@ -220,6 +436,30 @@
       "writtenOn": "2018-01-17T19:09:30Z",
       "side": 1,
       "message": "Are you sure this usage is ok?  Could you give me a sense as to why?  Naively looking at the mojom structure definition, it looks to me as if the data will be copied when the message is sent, but not copied here (which is sorta the point of base::span\u003c\u003e as I read it) and the original data will be freed when the C++ call that implements the Mojom method completes.  So it looks like this\u0027ll be pointing at freed memory immediate after the return below.  What am I missing?",
+      "range": {
+        "startLine": 248,
+        "startChar": 18,
+        "endLine": 248,
+        "endChar": 19
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca046f6_ddfb5587",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "The mojom callback hasn\u0027t been invoked, so the original data isn\u0027t freed.\nI will double check and get back to you on this.",
+      "parentUuid": "e855a353_bd7bb276",
       "range": {
         "startLine": 248,
         "startChar": 18,
@@ -255,6 +495,54 @@
     },
     {
       "key": {
+        "uuid": "d89cae3f_b876e076",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "8f0d92bf_76223889",
+      "range": {
+        "startLine": 280,
+        "startChar": 23,
+        "endLine": 280,
+        "endChar": 36
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d154eeb7_57b52418",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f0d92bf_76223889",
+      "range": {
+        "startLine": 280,
+        "startChar": 23,
+        "endLine": 280,
+        "endChar": 36
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36a7a199_aad09fb5",
         "filename": "services/network/udp_socket.h",
         "patchSetId": 36
@@ -275,6 +563,30 @@
       "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d8cdea_2367c2e6",
+        "filename": "services/network/udp_socket.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "36a7a199_aad09fb5",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "7be6aec6_38a83469",
+        "filename": "services/network/udp_socket_factory.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Ack. I thought about this too, but I wasn\u0027t able to make it work nicely with just a set of bindings. I will leave it as is.",
+      "parentUuid": "ea67a621_b3e33e98",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7a0645a_de417750",
         "filename": "services/network/udp_socket_factory.cc",
         "patchSetId": 36
@@ -321,6 +657,30 @@
       "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb94872_addcfe7c",
+        "filename": "services/network/udp_socket_factory.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Yes, if this linear search becomes a bottleneck, I will revisit. This is the pattern most commonly used in the codebase, so I just copied it over. I am hoping mojo can better handle the connection pipe errors, and this becomes a non-issue and consumers don\u0027t need to do this boilerplate.",
+      "parentUuid": "b7a0645a_de417750",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +707,30 @@
     },
     {
       "key": {
+        "uuid": "f5852143_7ef37315",
+        "filename": "services/network/udp_socket_test_util.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a3ea7b2_65ebbbbf",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 21
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dcbfb40_cd214d73",
         "filename": "services/network/udp_socket_test_util.cc",
         "patchSetId": 36
@@ -370,6 +754,30 @@
     },
     {
       "key": {
+        "uuid": "0258b541_965035d1",
+        "filename": "services/network/udp_socket_test_util.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dcbfb40_cd214d73",
+      "range": {
+        "startLine": 73,
+        "startChar": 59,
+        "endLine": 73,
+        "endChar": 65
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0fa5944_50ebbd18",
         "filename": "services/network/udp_socket_test_util.h",
         "patchSetId": 36
@@ -381,6 +789,30 @@
       "writtenOn": "2018-01-17T19:09:30Z",
       "side": 1,
       "message": "Suggestion, totally up to you and your preference: Make this class hold non-static methods and be initialized with a UDPSocketPtr*.",
+      "range": {
+        "startLine": 29,
+        "startChar": 29,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae17abd9_553e9c30",
+        "filename": "services/network/udp_socket_test_util.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Good idea. I can handle this in a follow-up. I added a TODO",
+      "parentUuid": "b0fa5944_50ebbd18",
       "range": {
         "startLine": 29,
         "startChar": 29,
@@ -416,6 +848,30 @@
     },
     {
       "key": {
+        "uuid": "1a967b62_81271b9b",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6a991d8_ac39504d",
+      "range": {
+        "startLine": 141,
+        "startChar": 11,
+        "endLine": 141,
+        "endChar": 14
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "263e612f_12886976",
         "filename": "services/network/udp_socket_unittest.cc",
         "patchSetId": 36
@@ -436,6 +892,30 @@
       "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4484197_f6807d1b",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "263e612f_12886976",
+      "range": {
+        "startLine": 204,
+        "startChar": 19,
+        "endLine": 204,
+        "endChar": 43
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -462,6 +942,30 @@
     },
     {
       "key": {
+        "uuid": "ea56d0aa_2d7f4a1d",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done. I clarified the comment.",
+      "parentUuid": "7f7c7996_006fddf8",
+      "range": {
+        "startLine": 208,
+        "startChar": 3,
+        "endLine": 208,
+        "endChar": 12
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4900d83c_021026ae",
         "filename": "services/network/udp_socket_unittest.cc",
         "patchSetId": 36
@@ -485,6 +989,30 @@
     },
     {
       "key": {
+        "uuid": "ae68e537_ee53c6b4",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done. I exposed kMaxPendingSendRequests.",
+      "parentUuid": "4900d83c_021026ae",
+      "range": {
+        "startLine": 267,
+        "startChar": 3,
+        "endLine": 267,
+        "endChar": 29
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "601e8943_a5cfff74",
         "filename": "services/network/udp_socket_unittest.cc",
         "patchSetId": 36
@@ -505,6 +1033,30 @@
       "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a29e70_2155410e",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T20:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "601e8943_a5cfff74",
+      "range": {
+        "startLine": 275,
+        "startChar": 7,
+        "endLine": 275,
+        "endChar": 22
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
