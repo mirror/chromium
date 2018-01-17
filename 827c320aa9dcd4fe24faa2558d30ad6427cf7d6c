@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02e4001b_b7948693",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-17T00:59:03Z",
+      "side": 1,
+      "message": "Added a second case with an open composition. isComposing should be true here! (https://crbug.com/802916)",
+      "revId": "827c320aa9dcd4fe24faa2558d30ad6427cf7d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
