@@ -140,6 +140,30 @@
       "revId": "c6450690fe342d129b51728b40b659043bc3354a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b959637e_f5b681fc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/script-tests/server/invalid-service-name.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T19:15:30Z",
+      "side": 1,
+      "message": "Anywhere you think it would improve readability. The strings with a single quoted string are probably fine.",
+      "parentUuid": "5698732e_287c5f92",
+      "range": {
+        "startLine": 4,
+        "startChar": 4,
+        "endLine": 4,
+        "endChar": 5
+      },
+      "revId": "c6450690fe342d129b51728b40b659043bc3354a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
