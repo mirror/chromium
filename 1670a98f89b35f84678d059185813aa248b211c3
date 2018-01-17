@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba8ae3e7_5089fb3a",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/overflow-overlay-content-layering.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-17T10:32:02Z",
+      "side": 1,
+      "message": "Unused class.",
+      "revId": "1670a98f89b35f84678d059185813aa248b211c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a0c94d_373b9b2d",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/overflow-overlay-content-layering.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-17T10:32:02Z",
+      "side": 1,
+      "message": "Could you wrap comments at 80 chars instead?",
+      "revId": "1670a98f89b35f84678d059185813aa248b211c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
