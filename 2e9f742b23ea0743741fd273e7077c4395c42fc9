@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d461d3e_7453514f",
+        "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-17T10:24:35Z",
+      "side": 1,
+      "message": "Can you remove this now?",
+      "range": {
+        "startLine": 801,
+        "startChar": 37,
+        "endLine": 801,
+        "endChar": 43
+      },
+      "revId": "2e9f742b23ea0743741fd273e7077c4395c42fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78c14e3_ea121c44",
+        "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-17T10:24:35Z",
+      "side": 1,
+      "message": "I would ASSERT or something. If this fails, something is going very wrong, and no one is going to notice an error log message.",
+      "range": {
+        "startLine": 809,
+        "startChar": 4,
+        "endLine": 809,
+        "endChar": 54
+      },
+      "revId": "2e9f742b23ea0743741fd273e7077c4395c42fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef8aa8d_c68998ee",
+        "filename": "chrome/test/base/testing_profile_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-17T10:24:35Z",
+      "side": 1,
+      "message": "This comment conveys no information that isn\u0027t already in the code :) What path does it override?",
+      "range": {
+        "startLine": 132,
+        "startChar": 5,
+        "endLine": 132,
+        "endChar": 45
+      },
+      "revId": "2e9f742b23ea0743741fd273e7077c4395c42fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
