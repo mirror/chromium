@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f937332_10dc01c4",
+        "filename": "ash/magnifier/magnification_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-17T01:01:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0a11a21_d275d3d6",
+      "revId": "0e39c474dec9760afb5c75b6019fe51a25b87c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40e0ab67_9c2bcc01",
         "filename": "ash/magnifier/magnification_controller.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "0e39c474dec9760afb5c75b6019fe51a25b87c6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd15f59a_f2ea5830",
+        "filename": "ash/magnifier/magnification_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-17T01:01:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40e0ab67_9c2bcc01",
+      "revId": "0e39c474dec9760afb5c75b6019fe51a25b87c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "eeed13f0_02bf6e36",
+        "filename": "ash/magnifier/magnification_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-17T01:01:17Z",
+      "side": 1,
+      "message": "Done -- only I had to make it \u0027protected\u0027 so that MagnificationControllerImpl could call this function since it\u0027s declared in MagnificationController.",
+      "parentUuid": "cdc747b7_a0e2d73b",
+      "revId": "0e39c474dec9760afb5c75b6019fe51a25b87c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27e56dbb_b0119dbe",
         "filename": "ash/magnifier/magnification_controller.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "0e39c474dec9760afb5c75b6019fe51a25b87c6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad86224_defdf673",
+        "filename": "ash/magnifier/magnification_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-17T01:01:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "27e56dbb_b0119dbe",
+      "revId": "0e39c474dec9760afb5c75b6019fe51a25b87c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
