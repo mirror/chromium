@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4132b033_92d29a02",
+        "filename": "base/fuchsia/fuchsia_logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2018-01-17T21:06:40Z",
+      "side": 1,
+      "message": "This construction makes it impossible to write\n\n  ZX_CHECK_OK(zx_cprng_draw(\u0026b, l, \u0026a));\n\nand have it do what it looks like it should. It’d be nice if that was possible. It doesn’t have to be made to work, though, but if it doesn’t work, there should at least be a compile-time prohibition against it (which is probably harder than making it work).\n\nMaking it possible while preserving streamability is an extra gotcha-wrinkle here.",
+      "revId": "d17b87a994dbebb0b0a20a43b650e95169186641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
