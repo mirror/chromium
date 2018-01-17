@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15942cf4_fdd7013d",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-17T15:34:48Z",
+      "side": 1,
+      "message": "I added the two particular errors you mentioned. I hesitate to add more, because we (1) apparently don\u0027t know exactly yet how we will use this date, and (2) more specifics can be added later on (moving cases from OTHER to the specific buckets).",
+      "parentUuid": "9e4c3c25_40d7151b",
+      "revId": "a676eea3ee651c95666ca9ade467e84fe3266464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce2bc787_f0357f87",
         "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
         "patchSetId": 2
