@@ -109,6 +109,13 @@ public class SavePasswordsPreferencesTest {
             assert false;
             return;
         }
+
+        @Override
+        public void addPasswordEntry(String site, String username, String password, String origin) {
+            // Define this method before starting to use it in tests.
+            assert false;
+            return;
+        }
     }
 
     // Used to provide fake lists of stored passwords. Tests which need it can use setPasswordSource
@@ -306,7 +313,8 @@ public class SavePasswordsPreferencesTest {
     @Feature({"Preferences"})
     @EnableFeatures("PasswordExport")
     public void testExportMenuEnabled() throws Exception {
-        setPasswordSource(new SavedPasswordEntry("https://example.com", "test user", "password"));
+        setPasswordSource(
+                new SavedPasswordEntry("id", "https://example.com", "test user", "password"));
 
         ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
 
@@ -357,7 +365,8 @@ public class SavePasswordsPreferencesTest {
     @Feature({"Preferences"})
     @EnableFeatures("PasswordExport")
     public void testExportMenuItem() throws Exception {
-        setPasswordSource(new SavedPasswordEntry("https://example.com", "test user", "password"));
+        setPasswordSource(
+                new SavedPasswordEntry("id", "https://example.com", "test user", "password"));
 
         ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setScreenLockSetUpOverride(
@@ -388,7 +397,8 @@ public class SavePasswordsPreferencesTest {
     @EnableFeatures("PasswordExport")
     @DisabledTest(message = "crbug.com/796939")
     public void testExportMenuItemNoLock() throws Exception {
-        setPasswordSource(new SavedPasswordEntry("https://example.com", "test user", "password"));
+        setPasswordSource(
+                new SavedPasswordEntry("id", "https://example.com", "test user", "password"));
 
         ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setScreenLockSetUpOverride(
@@ -414,7 +424,8 @@ public class SavePasswordsPreferencesTest {
     @SmallTest
     @Feature({"Preferences"})
     public void testViewPasswordNoLock() throws Exception {
-        setPasswordSource(new SavedPasswordEntry("https://example.com", "test user", "password"));
+        setPasswordSource(
+                new SavedPasswordEntry("id", "https://example.com", "test user", "password"));
 
         ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setScreenLockSetUpOverride(
@@ -441,7 +452,7 @@ public class SavePasswordsPreferencesTest {
     @Feature({"Preferences"})
     public void testViewPassword() throws Exception {
         setPasswordSource(
-                new SavedPasswordEntry("https://example.com", "test user", "test password"));
+                new SavedPasswordEntry("id", "https://example.com", "test user", "test password"));
 
         ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setScreenLockSetUpOverride(

@@ -61,4 +61,9 @@ public interface PasswordManagerHandler {
      * @param index of exception entry.
      */
     public void removeSavedPasswordException(int index);
+
+    /**
+     * Adds new credential to the database.
+     */
+    public void addPasswordEntry(String site, String username, String password, String origin);
 }

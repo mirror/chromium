@@ -85,16 +85,19 @@ public class EditorFieldModel {
     /** Indicates a credit card input. */
     public static final int INPUT_TYPE_HINT_CREDIT_CARD = 7;
 
-    private static final int INPUT_TYPE_HINT_MAX_TEXT_INPUT_EXCLUSIVE = 8;
+    /** Indicates a URL. */
+    public static final int INPUT_TYPE_HINT_URL = 8;
+
+    private static final int INPUT_TYPE_HINT_MAX_TEXT_INPUT_EXCLUSIVE = 9;
 
     /** Indicates a dropdown. */
-    public static final int INPUT_TYPE_HINT_DROPDOWN = 8;
+    public static final int INPUT_TYPE_HINT_DROPDOWN = 10;
 
     /** Indicates a list of icons. */
-    public static final int INPUT_TYPE_HINT_ICONS = 9;
+    public static final int INPUT_TYPE_HINT_ICONS = 11;
 
     /** Indicates a checkbox. */
-    public static final int INPUT_TYPE_HINT_CHECKBOX = 10;
+    public static final int INPUT_TYPE_HINT_CHECKBOX = 12;
 
     /**
      * Indicates a label, e.g., for a server credit card.
