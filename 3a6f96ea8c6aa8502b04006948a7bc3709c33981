@@ -22,6 +22,30 @@
       "revId": "3a6f96ea8c6aa8502b04006948a7bc3709c33981",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0a1a091_e2aaa18a",
+        "filename": "ios/build/tools/setup-gn.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-17T10:35:13Z",
+      "side": 1,
+      "message": "The script is run as part of \"gclient runhooks\". AFAICT, there is no way to say that a hook should not be run on the bots in the DEPS file. Is there a way to detect the code is running on a bot that would work with current bots and with LUCI?",
+      "parentUuid": "e3dabdb8_5027a66f",
+      "range": {
+        "startLine": 29,
+        "startChar": 50,
+        "endLine": 29,
+        "endChar": 59
+      },
+      "revId": "3a6f96ea8c6aa8502b04006948a7bc3709c33981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
