@@ -404,6 +404,30 @@
     },
     {
       "key": {
+        "uuid": "d34bac3d_df4b3fef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-17T21:38:09Z",
+      "side": 1,
+      "message": "Before we can launch, we need to do all of these, but yes that sounds right.\n\nIf the checks here fail, I think we should just log an exception.  We could potentially show a toast or something, but I wouldn\u0027t spend too much time on that.\n\nIf the custom tab viewer itself attempts to render something non-media related, I think we should potentially show an interstitial or something very scary about something malicious is likely happening right now.",
+      "parentUuid": "bdb07a35_1c158f27",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "d871a9ff34fbb46a68efb146def13703474cc567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75bdb35c_9b173114",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerActivity.java",
         "patchSetId": 1
@@ -511,6 +535,30 @@
       "side": 1,
       "message": "Do you know who the right person/group is to discuss these questions with?",
       "parentUuid": "c54ff811_fab209b3",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 51
+      },
+      "revId": "d871a9ff34fbb46a68efb146def13703474cc567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76eeb847_7a012934",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-17T21:38:09Z",
+      "side": 1,
+      "message": "Add rsesek@, palmer@, and mariakhomenko@.  The first two for security (palmer@ for the historical context) and the latter for more knowledge of it\u0027s usage within Chrome.\n\nReally, this is both a security and UX question but I\u0027d like security to weigh in first.  Security indicators don\u0027t really make sense for content:// URIs that Chrome itself renders, so this might be a moot point.\n\nThe main thing we need to harden is that our media viewing activity can\u0027t be maliciously used for rendering non media content.\n\nIt might be ok to say these intents are trusted as the bouncer is doing more validation.  The other option would be to extend CustomTabActivity and make an explicit MediaViewerActivity and then ensure it isn\u0027t marked as exported and can only be started from within Chrome.  We\u0027d still need to ensure the viewer never renders anything but media content, but maybe that is OK.\n\nThe gotcha is that I\u0027m not familiar with all the places that the trusted bit is used for the media intent, so someone needs to check that over (and that likely falls into dtrainor@s ownership area).",
+      "parentUuid": "28e89f19_a63ca41b",
       "range": {
         "startLine": 32,
         "startChar": 22,
