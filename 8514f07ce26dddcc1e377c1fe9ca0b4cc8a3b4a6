@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d68a1851_5f3eaee4",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-17T16:11:26Z",
+      "side": 1,
+      "message": "I will tighten the assert to 2 GiB, which should prevent those cases (except exactly INT_MIN).",
+      "parentUuid": "37da18da_d88e78c7",
+      "revId": "8514f07ce26dddcc1e377c1fe9ca0b4cc8a3b4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aec71553_068f3b15",
         "filename": "base/allocator/partition_allocator/partition_alloc.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-17T04:31:40Z",
       "side": 1,
       "message": "Also, just out of curiosity: is it really the `- kSystemPageSize` that is making lots of WebAssembly apps fail?\n\nDo they really need exactly 2 GiB, or are we rounding the size up for simplicity, or some other reason?",
+      "revId": "8514f07ce26dddcc1e377c1fe9ca0b4cc8a3b4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e0bb53_57871432",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-17T16:11:26Z",
+      "side": 1,
+      "message": "WASM memory size is now rounded up to nearest power of 2 as a SH mitigation. This causes allocations \u003e 1 GiB to fail. It was possible to create them before.",
+      "parentUuid": "aec71553_068f3b15",
       "revId": "8514f07ce26dddcc1e377c1fe9ca0b4cc8a3b4a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
