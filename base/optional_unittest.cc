@@ -1597,34 +1597,34 @@ TEST(OptionalTest, NotEqualsNull) {
 
 TEST(OptionalTest, MakeOptional) {
   {
-    Optional<float> o = base::make_optional(32.f);
+    Optional<float> o = make_optional(32.f);
     EXPECT_TRUE(o);
     EXPECT_EQ(32.f, *o);
 
     float value = 3.f;
-    o = base::make_optional(std::move(value));
+    o = make_optional(std::move(value));
     EXPECT_TRUE(o);
     EXPECT_EQ(3.f, *o);
   }
 
   {
-    Optional<std::string> o = base::make_optional(std::string("foo"));
+    Optional<std::string> o = make_optional(std::string("foo"));
     EXPECT_TRUE(o);
     EXPECT_EQ("foo", *o);
 
     std::string value = "bar";
-    o = base::make_optional(std::move(value));
+    o = make_optional(std::move(value));
     EXPECT_TRUE(o);
     EXPECT_EQ(std::string("bar"), *o);
   }
 
   {
-    Optional<TestObject> o = base::make_optional(TestObject(3, 0.1));
+    Optional<TestObject> o = make_optional(TestObject(3, 0.1));
     EXPECT_TRUE(!!o);
     EXPECT_TRUE(TestObject(3, 0.1) == *o);
 
     TestObject value = TestObject(0, 0.42);
-    o = base::make_optional(std::move(value));
+    o = make_optional(std::move(value));
     EXPECT_TRUE(!!o);
     EXPECT_TRUE(TestObject(0, 0.42) == *o);
     EXPECT_EQ(TestObject::State::MOVED_FROM, value.state());
@@ -1632,6 +1632,22 @@ TEST(OptionalTest, MakeOptional) {
 
     EXPECT_EQ(TestObject::State::MOVE_CONSTRUCTED,
               base::make_optional(std::move(value))->state());
+  }
+
+  {
+    struct Test {
+      Test(int a, double b, bool c) : a(a), b(b), c(c) {}
+
+      int a;
+      double b;
+      bool c;
+    };
+
+    Optional<Test> o = make_optional<Test>(1, 2.0, true);
+    EXPECT_TRUE(!!o);
+    EXPECT_EQ(1, o->a);
+    EXPECT_EQ(2.0, o->b);
+    EXPECT_TRUE(o->c);
   }
 
   {
