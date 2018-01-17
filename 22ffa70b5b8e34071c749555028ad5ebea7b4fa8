@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe34d233_d92fa72e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2378,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-17T22:03:15Z",
+      "side": 1,
+      "message": "Seems like size is changing, not ScreenInfo?",
+      "range": {
+        "startLine": 2377,
+        "startChar": 58,
+        "endLine": 2378,
+        "endChar": 10
+      },
+      "revId": "22ffa70b5b8e34071c749555028ad5ebea7b4fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
