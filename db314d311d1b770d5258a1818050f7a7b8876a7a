@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41f2c2c2_7beb0520",
+        "filename": "ui/app_list/presenter/app_list_presenter_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-17T19:21:10Z",
+      "side": 1,
+      "message": "nit: Could this be an UMA_HISTOGRAM_EXACT_LINEAR, or even better, a sparse histogram?",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 41
+      },
+      "revId": "db314d311d1b770d5258a1818050f7a7b8876a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
