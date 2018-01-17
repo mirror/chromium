@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b149b3c3_c7c4fa16",
+        "filename": "services/network/test/test_data_pipe_getter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-17T07:39:29Z",
+      "side": 1,
+      "message": "probably should remove references to \"upload\" from here, as it can be used more generically?",
+      "range": {
+        "startLine": 19,
+        "startChar": 39,
+        "endLine": 19,
+        "endChar": 53
+      },
+      "revId": "23019f636a9045b2a3b80625c13dde00c2067cd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
