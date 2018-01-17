@@ -110,7 +110,7 @@ static constexpr float kSplashScreenTextVerticalOffsetDMM = -0.072f;
 static constexpr float kSplashScreenMinDurationSeconds = 2;
 
 static constexpr float kButtonDiameterDMM = 0.088f;
-static constexpr float kButtonZOffsetHoverDMM = 0.048;
+static constexpr float kButtonZOffsetHoverDMM = 0.048f;
 
 static constexpr float kCloseButtonDistance = 2.4f;
 static constexpr float kCloseButtonVerticalOffset =
