@@ -3317,9 +3317,9 @@ crbug.com/781935 fast/mediastream/MediaStreamTrack-observer-iterate-no-crash.htm
 crbug.com/781935 fast/mediastream/MediaStreamTrack.html [ Timeout ]
 
 # Slight anti-aliased texture changes due to Skia change
-crbug.com/801562 virtual/gpu-rasterization/images/color-profile-background-image-cross-fade-png.html [ NeedsManualRebaseline ]
-crbug.com/801562 virtual/gpu-rasterization/images/color-profile-background-image-cross-fade.html [ NeedsManualRebaseline ]
-crbug.com/801562 virtual/gpu-rasterization/images/color-profile-image-canvas-pattern.html [ NeedsManualRebaseline ]
+crbug.com/801562 [ Mac ] virtual/gpu-rasterization/images/color-profile-background-image-cross-fade-png.html [ NeedsManualRebaseline ]
+crbug.com/801562 [ Mac ] virtual/gpu-rasterization/images/color-profile-background-image-cross-fade.html [ NeedsManualRebaseline ]
+crbug.com/801562 [ Mac ] virtual/gpu-rasterization/images/color-profile-image-canvas-pattern.html [ NeedsManualRebaseline ]
 crbug.com/801562 virtual/gpu-rasterization/images/color-profile-image-canvas-svg.html [ NeedsManualRebaseline ]
 crbug.com/801562 virtual/gpu-rasterization/images/color-profile-image-canvas.html [ NeedsManualRebaseline ]
 crbug.com/801562 [ Win Linux Android ] virtual/gpu-rasterization/images/color-profile-munsell-adobe-to-srgb.html [ NeedsManualRebaseline ]
@@ -3328,7 +3328,7 @@ crbug.com/801562 virtual/gpu-rasterization/images/cross-fade-background-size.htm
 crbug.com/801562 virtual/gpu-rasterization/images/cross-fade-simple.html [ NeedsManualRebaseline ]
 crbug.com/801562 virtual/gpu-rasterization/images/cross-fade-sizing.html [ NeedsManualRebaseline ]
 crbug.com/801562 virtual/gpu-rasterization/images/cross-fade-tiled.html [ NeedsManualRebaseline ]
-crbug.com/801562 virtual/gpu-rasterization/images/jpeg-yuv-progressive-canvas.html [ NeedsManualRebaseline ]
+crbug.com/801562 [ Mac ] virtual/gpu-rasterization/images/jpeg-yuv-progressive-canvas.html [ NeedsManualRebaseline ]
 crbug.com/801562 virtual/gpu-rasterization/images/optimize-contrast-canvas.html [ NeedsManualRebaseline ]
 crbug.com/801562 virtual/gpu-rasterization/images/optimize-contrast-image.html [ NeedsManualRebaseline ]
 crbug.com/801562 virtual/gpu-rasterization/images/paint-subrect.html [ NeedsManualRebaseline ]
