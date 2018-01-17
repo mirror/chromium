@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ee69039_61002cf9",
+        "filename": "content/common/throttling_url_loader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-17T17:59:48Z",
+      "side": 1,
+      "message": "My original plan was to keep this WeakWrapper even after the conversion. It could be useful. For example, imagine:\n- class Foo implements mojom::URLLoaderFactory.\n- Foo creates a WeakWrapper, initializes it with |this| and retains a reference.\n- Foo gives out scoped_refptr\u003cSharedURLLoaderFacotry\u003e.\n- When Foo is destructed, it can call Detach() on the WeakWrapper ref it retains.\n\nThe benefit of the pattern above is that there is no mojo call cost to use the returned scoped_refptr\u003cSharedURLLoaderFactory\u003e. (At the same time, it is very easy to support using the factory on multiple threads, as long as Foo implements mojom::URLLoaderFactory::Clone() properly.)\n\nWDYT? Thanks!\n(I will land this CL as-is, but happy to continue the discussion and make necessary changes if needed. There will be multiple follow-up CLs anyway.)",
+      "parentUuid": "33bb295f_d268a67e",
+      "revId": "b2cd308d230792e40a33aebdf754b99f01643148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19df1e74_0cf59540",
         "filename": "content/public/common/shared_url_loader_factory.h",
         "patchSetId": 9
