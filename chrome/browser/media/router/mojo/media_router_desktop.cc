@@ -8,6 +8,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/media/router/media_router_factory.h"
 #include "chrome/browser/media/router/media_router_feature.h"
+#include "chrome/browser/media/router/media_sinks_observer.h"
 #include "chrome/browser/media/router/mojo/media_route_controller.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_metrics.h"
 #include "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.h"
@@ -61,6 +62,24 @@ MediaRouterDesktop::GetProviderIdForPresentation(
     return MediaRouteProviderId::EXTENSION;
   }
   return MediaRouterMojoImpl::GetProviderIdForPresentation(presentation_id);
+}
+
+bool MediaRouterDesktop::RegisterMediaSinksObserver(
+    MediaSinksObserver* observer) {
+  DCHECK(observer);
+  if (media_sink_service_)
+    media_sink_service_->RegisterMediaSinksObserver(observer);
+
+  return MediaRouterMojoImpl::RegisterMediaSinksObserver(observer);
+}
+
+void MediaRouterDesktop::UnregisterMediaSinksObserver(
+    MediaSinksObserver* observer) {
+  DCHECK(observer);
+  if (media_sink_service_)
+    media_sink_service_->UnregisterMediaSinksObserver(observer);
+
+  return MediaRouterMojoImpl::UnregisterMediaSinksObserver(observer);
 }
 
 MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context)
