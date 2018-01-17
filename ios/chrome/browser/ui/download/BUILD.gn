@@ -5,6 +5,8 @@
 source_set("download") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
+    "download_manager_view_controller.h",
+    "download_manager_view_controller.mm",
     "legacy_download_manager_controller.h",
     "legacy_download_manager_controller.mm",
     "pass_kit_coordinator.h",
