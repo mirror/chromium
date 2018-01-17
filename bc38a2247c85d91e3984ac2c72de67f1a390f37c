@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f571686d_aa83a3f9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-17T19:40:27Z",
+      "side": 1,
+      "message": "I\u0027m trying not to pass |offset_to_container_box| to the TryXXX functions, because the offset is redundant info for the caret resolution process. The only reason it\u0027s in |NGCaretPosition| is because it\u0027s needed by the caret rect calculation.\n\nSo I\u0027d like to keep it as far as possible from the core logic, so that it will be easier to clean up if there\u0027s a possibility in the future.",
+      "parentUuid": "6a31aa6f_452d2400",
+      "revId": "bc38a2247c85d91e3984ac2c72de67f1a390f37c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23793387_dc383aaf",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 34
