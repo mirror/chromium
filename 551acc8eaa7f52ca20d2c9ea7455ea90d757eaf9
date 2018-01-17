@@ -22,6 +22,30 @@
       "revId": "551acc8eaa7f52ca20d2c9ea7455ea90d757eaf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ab804f_860857e1",
+        "filename": "chrome/browser/ui/webui/web_ui_test_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1260872
+      },
+      "writtenOn": "2018-01-17T07:42:29Z",
+      "side": 1,
+      "message": "Ok, no problem. I think something like this should be ok:\n\n// Waiting runloop quit closure.",
+      "parentUuid": "efaaf98c_36836aa2",
+      "range": {
+        "startLine": 70,
+        "startChar": 1,
+        "endLine": 70,
+        "endChar": 33
+      },
+      "revId": "551acc8eaa7f52ca20d2c9ea7455ea90d757eaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
