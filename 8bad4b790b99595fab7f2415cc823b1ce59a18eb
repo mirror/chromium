@@ -81,6 +81,30 @@
       "revId": "8bad4b790b99595fab7f2415cc823b1ce59a18eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d23fc0a_aa52be91",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-17T15:00:48Z",
+      "side": 1,
+      "message": "We added the nativeGetBoolean and nativeSetBoolean methods fairly recently for non-content settings. I agree that switching over other content settings is out of scope for this CL, but it\u0027d be great to introduce nativeIsContentSettingEnabled() and nativeSetContentSettingEnabled() methods so that we can use them for clipboard settings and other content settings in the future.\n\nOr, per raymes@ comment, perhaps these really belong in WebsitePreferenceBridge.java?",
+      "parentUuid": "9bf5128c_dbd4c7f0",
+      "range": {
+        "startLine": 1068,
+        "startChar": 3,
+        "endLine": 1069,
+        "endChar": 72
+      },
+      "revId": "8bad4b790b99595fab7f2415cc823b1ce59a18eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
