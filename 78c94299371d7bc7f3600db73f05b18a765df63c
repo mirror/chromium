@@ -16,6 +16,24 @@
       "revId": "78c94299371d7bc7f3600db73f05b18a765df63c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd43f963_0acdf3e0",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 5925,
+      "author": {
+        "id": 1181784
+      },
+      "writtenOn": "2018-01-17T05:32:03Z",
+      "side": 1,
+      "message": "Currently, when a new render view is created, UpdateRenderViewSizeForRenderManager resize both the view_ and the rwhv to the emulated device size. This means view_-\u003eGetViewBounds() is not the one we want.\n\nHow about modify UpdateRenderViewSizeForRenderManager to be:\n\ngfx::Size size \u003d GetSizeForNewRenderView(false);\nif (!size.IsEmpty())\n  view_-\u003eSizeContents(size);\nif (!device_emulation_size_.IsEmpty())\n  GetMainFrame()-\u003eGetView()-\u003eSetSize(device_emulation_size_);\n\nSo that only the rwhv size is affected by emulation.",
+      "parentUuid": "e4d22654_d084ae9b",
+      "revId": "78c94299371d7bc7f3600db73f05b18a765df63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
