@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15bf6476_1a57c5b8",
+        "filename": "ash/wm/window_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-17T14:40:47Z",
+      "side": 1,
+      "message": "nit: remove L132 and L134?",
+      "revId": "17f837c4ef645b74e2ccb14f231dbb3bbbdbd397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
