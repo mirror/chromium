@@ -752,7 +752,7 @@ void BrowserView::OnActiveTabChanged(content::WebContents* old_contents,
   // we don't want any WebContents to be attached, so that we
   // avoid an unnecessary resize and re-layout of a WebContents.
   if (change_tab_contents) {
-    contents_web_view_->SetWebContents(nullptr);
+    contents_web_view_->ClearAndPrepareForNewWebContents();
     devtools_web_view_->SetWebContents(nullptr);
   }
 

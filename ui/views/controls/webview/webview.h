@@ -51,6 +51,10 @@ class WEBVIEW_EXPORT WebView : public View,
   // those it implicitly creates via GetWebContents() above.
   void SetWebContents(content::WebContents* web_contents);
 
+  // Used to clear web contents before SetWebContents(). Similar to using
+  // SetWebContents(nullptr) but without any focus side effects.
+  void ClearAndPrepareForNewWebContents();
+
   // If |mode| is true, WebView will register itself with WebContents as a
   // WebContentsObserver, monitor for the showing/destruction of fullscreen
   // render widgets, and alter its child view hierarchy to embed the fullscreen

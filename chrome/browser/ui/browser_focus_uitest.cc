@@ -48,6 +48,9 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "ui/views/controls/webview/webview.h"
+#include "ui/views/focus/focus_manager.h"
+#include "ui/views/widget/widget.h"
 
 using content::RenderViewHost;
 using content::WebContents;
@@ -207,6 +210,38 @@ class TestInterstitialPage : public content::InterstitialPageDelegate {
   DISALLOW_COPY_AND_ASSIGN(TestInterstitialPage);
 };
 
+// Helper class that counts the number of focus changes.
+class FocusChangeRecorder : public views::FocusChangeListener {
+ public:
+  explicit FocusChangeRecorder(views::FocusManager* focus_manager)
+      : focus_manager_(focus_manager) {
+    focus_manager_->AddFocusChangeListener(this);
+  }
+
+  ~FocusChangeRecorder() override {
+    focus_manager_->RemoveFocusChangeListener(this);
+  }
+
+  std::vector<std::string>& GetFocusClasses() { return focus_classes_; }
+
+ private:
+  // Inherited from FocusChangeListener
+  void OnWillChangeFocus(views::View* focused_before,
+                         views::View* focused_now) override {}
+  void OnDidChangeFocus(views::View* focused_before,
+                        views::View* focused_now) override {
+    std::string class_name;
+    if (focused_now)
+      class_name = focused_now->GetClassName();
+    focus_classes_.push_back(class_name);
+  }
+
+  views::FocusManager* focus_manager_;
+  std::vector<std::string> focus_classes_;
+
+  DISALLOW_COPY_AND_ASSIGN(FocusChangeRecorder);
+};
+
 // Flaky on Mac (http://crbug.com/67301).
 #if defined(OS_MACOSX)
 #define MAYBE_ClickingMovesFocus DISABLED_ClickingMovesFocus
@@ -320,6 +355,46 @@ IN_PROC_BROWSER_TEST_F(BrowserFocusTest, TabsRememberFocus) {
           browser(), ui::VKEY_TAB, true, true, false, false));
     }
   }
+}
+
+// Switching tabs does focuses nothing and then the new content.
+// It does not temporarily focus elements in the user interface.
+IN_PROC_BROWSER_TEST_F(BrowserFocusTest, TabsChangesAvoidSpuriousFocus) {
+  ASSERT_TRUE(ui_test_utils::BringBrowserWindowToFront(browser()));
+  const GURL url = embedded_test_server()->GetURL(kSimplePage);
+  ui_test_utils::NavigateToURL(browser(), url);
+
+  // Create 2 tabs.
+  for (int i = 0; i < 2; ++i) {
+    chrome::AddSelectedTabWithURL(browser(), url, ui::PAGE_TRANSITION_TYPED);
+  }
+
+  // Focus the web contents within each tab.
+  for (int j = 0; j < 2; j++) {
+    // Activate the tab.
+    browser()->tab_strip_model()->ActivateTabAt(j, true);
+    // Focus the web contents.
+    browser()->tab_strip_model()->GetWebContentsAt(j)->Focus();
+  }
+
+  // Begin recording focus changes.
+  gfx::NativeWindow window = browser()->window()->GetNativeWindow();
+  views::Widget* widget = views::Widget::GetWidgetForNativeWindow(window);
+  views::FocusManager* focus_manager = widget->GetFocusManager();
+  FocusChangeRecorder focus_change_recorder(focus_manager);
+
+  // Switch tabs using ctrl+tab.
+  ASSERT_TRUE(ui_test_utils::SendKeyPressSync(browser(), ui::VKEY_TAB, true,
+                                              false, false, false));
+
+  std::vector<std::string>& focused_classes =
+      focus_change_recorder.GetFocusClasses();
+  // Two focus changes occur.
+  EXPECT_EQ(2U, focused_classes.size());
+  // Focus is first cleared.
+  EXPECT_EQ(std::string(""), focused_classes[0]);
+  // Focus then goes to WebView.
+  EXPECT_EQ(views::WebView::kViewClassName, focused_classes[1]);
 }
 
 // Tabs remember focus with find-in-page box.
