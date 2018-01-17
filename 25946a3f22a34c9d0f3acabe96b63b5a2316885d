@@ -52,6 +52,24 @@
       "revId": "25946a3f22a34c9d0f3acabe96b63b5a2316885d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75661d0a_f8360825",
+        "filename": "extensions/browser/extension_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-17T12:21:11Z",
+      "side": 1,
+      "message": "added a test, and an invariant",
+      "parentUuid": "c7a8a8ab_b531e9ac",
+      "revId": "25946a3f22a34c9d0f3acabe96b63b5a2316885d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
