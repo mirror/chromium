@@ -28,14 +28,40 @@
 #include "build/build_config.h"
 
 #include <string.h>
+#include <unordered_map>
 #if defined(OS_LINUX)
 #include "sandbox/linux/services/resource_limits.h"  // nogncheck
 #endif
 #include "base/allocator/partition_allocator/partition_alloc.h"
 #include "platform/wtf/Assertions.h"
+#include "platform/wtf/HashMap.h"
 #include "platform/wtf/allocator/Partitions.h"
 
 namespace WTF {
+
+namespace {
+
+typedef std::unique_ptr<base::PartitionAllocatorGeneric> AllocatorPtr;
+typedef WTF::HashMap<void*, AllocatorPtr> PartitionMap;
+
+base::PartitionRootGeneric* FindOrCreatePartition(void* partition_key) {
+  DEFINE_STATIC_LOCAL(PartitionMap, partition_map, ());
+  auto it = partition_map.find(partition_key);
+  if (it == partition_map.end()) {
+    // Partitions are expensive; restrict them so we don't run out of memory.
+    constexpr size_t kMaxPartitions = 4;
+    if (partition_map.size() >= kMaxPartitions) {
+      // Use the global partition if we're at the limit.
+      return Partitions::ArrayBufferPartition();
+    }
+    PartitionMap::AddResult result = partition_map.Set(
+        partition_key, AllocatorPtr(new base::PartitionAllocatorGeneric));
+    result.stored_value->value->init();
+  }
+  return it->value->root();
+}
+
+}  // namespace
 
 void ArrayBufferContents::DefaultAdjustAmountOfExternalAllocatedMemoryFunction(
     int64_t diff) {
@@ -108,12 +134,21 @@ void ArrayBufferContents::CopyTo(ArrayBufferContents& other) {
   other.holder_->CopyMemoryFrom(*holder_);
 }
 
-void* ArrayBufferContents::AllocateMemoryWithFlags(size_t size,
-                                                   InitializationPolicy policy,
-                                                   int flags) {
-  void* data = PartitionAllocGenericFlags(
-      Partitions::ArrayBufferPartition(), flags, size,
+void* ArrayBufferContents::AllocateMemoryWithFlags(
+    base::PartitionRootGeneric* partition_root,
+    size_t size,
+    InitializationPolicy policy,
+    int flags) {
+  // Allocate extra space for a partition pointer at the beginning.
+  size_t alloc_size = sizeof(void*) + size;
+  // Check for overflow.
+  CHECK_GT(alloc_size, size);
+  void* base_ptr = PartitionAllocGenericFlags(
+      partition_root, flags, alloc_size,
       WTF_HEAP_PROFILER_TYPE_NAME(ArrayBufferContents));
+  void** partition_root_ptr = reinterpret_cast<void**>(base_ptr);
+  *partition_root_ptr = partition_root;
+  void* data = reinterpret_cast<void*>(partition_root_ptr + 1);
   if (policy == kZeroInitialize && data)
     memset(data, '\0', size);
   return data;
@@ -121,7 +156,15 @@ void* ArrayBufferContents::AllocateMemoryWithFlags(size_t size,
 
 void* ArrayBufferContents::AllocateMemoryOrNull(size_t size,
                                                 InitializationPolicy policy) {
-  return AllocateMemoryWithFlags(size, policy, base::PartitionAllocReturnNull);
+  return AllocateMemoryWithFlags(Partitions::ArrayBufferPartition(), size,
+                                 policy, base::PartitionAllocReturnNull);
+}
+
+void* ArrayBufferContents::AllocateMemoryOrNull(void* partition_key,
+                                                size_t size,
+                                                InitializationPolicy policy) {
+  return AllocateMemoryWithFlags(FindOrCreatePartition(partition_key), size,
+                                 policy, base::PartitionAllocReturnNull);
 }
 
 // This method is used by V8's WebAssembly implementation to reserve a large
@@ -152,7 +195,11 @@ void* ArrayBufferContents::ReserveMemory(size_t size) {
 }
 
 void ArrayBufferContents::FreeMemory(void* data) {
-  Partitions::ArrayBufferPartition()->Free(data);
+  // The partition pointer is just before |data|. See |AllocateMemoryWithFlags|.
+  base::PartitionRootGeneric** partition_root_ptr =
+      reinterpret_cast<base::PartitionRootGeneric**>(data) - 1;
+  void* base_ptr = reinterpret_cast<void*>(partition_root_ptr);
+  (*partition_root_ptr)->Free(base_ptr);
 }
 
 void ArrayBufferContents::ReleaseReservedMemory(void* data, size_t size) {
