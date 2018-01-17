@@ -39,10 +39,6 @@ WebUILoginView* LoginDisplayHostViews::GetWebUILoginView() const {
   return nullptr;
 }
 
-void LoginDisplayHostViews::BeforeSessionStart() {
-  NOTIMPLEMENTED();
-}
-
 void LoginDisplayHostViews::Finalize(base::OnceClosure completion_callback) {
   delete this;
   std::move(completion_callback).Run();
@@ -103,6 +99,10 @@ void LoginDisplayHostViews::OnStartAppLaunch() {
 }
 
 void LoginDisplayHostViews::OnStartArcKiosk() {
+  NOTIMPLEMENTED();
+}
+
+void LoginDisplayHostViews::OnBrowserCreated() {
   NOTIMPLEMENTED();
 }
 

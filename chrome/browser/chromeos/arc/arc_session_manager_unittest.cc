@@ -98,7 +98,6 @@ class FakeLoginDisplayHost : public chromeos::LoginDisplayHost {
   chromeos::WebUILoginView* GetWebUILoginView() const override {
     return nullptr;
   }
-  void BeforeSessionStart() override {}
   void Finalize(base::OnceClosure) override {}
   void SetStatusAreaVisible(bool visible) override {}
   void StartWizard(chromeos::OobeScreen first_screen) override {
@@ -121,6 +120,7 @@ class FakeLoginDisplayHost : public chromeos::LoginDisplayHost {
   void OnPreferencesChanged() override {}
   void OnStartAppLaunch() override {}
   void OnStartArcKiosk() override {}
+  void OnBrowserCreated() override {}
   void StartVoiceInteractionOobe() override {
     is_voice_interaction_oobe_ = true;
   }

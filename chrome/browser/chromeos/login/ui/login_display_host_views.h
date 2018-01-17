@@ -31,7 +31,6 @@ class LoginDisplayHostViews : public LoginDisplayHost,
   gfx::NativeWindow GetNativeWindow() const override;
   OobeUI* GetOobeUI() const override;
   WebUILoginView* GetWebUILoginView() const override;
-  void BeforeSessionStart() override;
   void Finalize(base::OnceClosure completion_callback) override;
   void SetStatusAreaVisible(bool visible) override;
   void StartWizard(OobeScreen first_screen) override;
@@ -42,6 +41,7 @@ class LoginDisplayHostViews : public LoginDisplayHost,
   void OnPreferencesChanged() override;
   void OnStartAppLaunch() override;
   void OnStartArcKiosk() override;
+  void OnBrowserCreated() override;
   void StartVoiceInteractionOobe() override;
   bool IsVoiceInteractionOobe() override;
 
