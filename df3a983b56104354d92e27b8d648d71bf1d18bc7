@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a795238_38c4c0e5",
+        "filename": "chrome/app/vector_icons/signin_button_drop_down_arrow.icon",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57d295e2_33906546",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c04deb77_0447af0d",
         "filename": "chrome/browser/signin/signin_ui_util.cc",
         "patchSetId": 18
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-16T21:10:43Z",
       "side": 1,
       "message": "I\u0027m assuming your other reviewer is looking at the sigin related changes.",
+      "range": {
+        "startLine": 85,
+        "startChar": 5,
+        "endLine": 85,
+        "endChar": 41
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f469524_c2115c84",
+        "filename": "chrome/browser/signin/signin_ui_util.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "Yes (already reviewed by droger@). FYI, this change is just moving code around as it is used now in 2 places.",
+      "parentUuid": "c04deb77_0447af0d",
       "range": {
         "startLine": 85,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5db9a427_0928d711",
+        "filename": "chrome/browser/signin/signin_ui_util.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "I do not think I can forward declare classes that are used as entries in an std::vector.",
+      "parentUuid": "b5d8f670_bd343d30",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 23
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7c7f75d_3201dd9b",
         "filename": "chrome/browser/ui/bookmarks/bookmark_bubble_sign_in_delegate.cc",
         "patchSetId": 18
@@ -91,6 +163,30 @@
       "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7d9451_19715415",
+        "filename": "chrome/browser/ui/bookmarks/bookmark_bubble_sign_in_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7c7f75d_3201dd9b",
+      "range": {
+        "startLine": 48,
+        "startChar": 29,
+        "endLine": 48,
+        "endChar": 38
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "441934ce_2c4cb544",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e529cb6e_f42fb2ab",
+      "range": {
+        "startLine": 295,
+        "startChar": 2,
+        "endLine": 295,
+        "endChar": 12
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae1f6986_61f39d9d",
         "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.cc",
         "patchSetId": 18
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "1291cda2_f7c43069",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae1f6986_61f39d9d",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4abfaf8_b555e28c",
         "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.cc",
         "patchSetId": 18
@@ -151,6 +295,30 @@
       "writtenOn": "2018-01-16T21:10:43Z",
       "side": 1,
       "message": "Generally we avoid this level of spam (same comment on 68).",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6f43bd_c4470127",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "This is only logged on debug mode is module logging for dice_bubble_sync_promo_view is set to 1. So apart from me or other people working on DiceBubbleSyncPromoView, nobody will see these logs. I think this is the main reason for using DVLOG.",
+      "parentUuid": "c4abfaf8_b555e28c",
       "range": {
         "startLine": 59,
         "startChar": 4,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "a72d761e_e64e7d50",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16e66e8c_ceae5396",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad9fd7ae_55f47eb8",
         "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.h",
         "patchSetId": 18
@@ -206,6 +398,30 @@
       "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5eed7b8_e06b5718",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad9fd7ae_55f47eb8",
+      "range": {
+        "startLine": 22,
+        "startChar": 26,
+        "endLine": 23,
+        "endChar": 56
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "72ccf5a4_561712ba",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59b06e81_556570c1",
+      "range": {
+        "startLine": 30,
+        "startChar": 12,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdee4676_0ddcd634",
         "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.h",
         "patchSetId": 18
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "d2d06513_a8baf440",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdee4676_0ddcd634",
+      "range": {
+        "startLine": 36,
+        "startChar": 20,
+        "endLine": 36,
+        "endChar": 34
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6a70b12_2976dbaf",
         "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
         "patchSetId": 18
@@ -266,6 +530,30 @@
       "writtenOn": "2018-01-16T21:10:43Z",
       "side": 1,
       "message": "Why is the arrow a child? That seems ok based on the visual, but that the arrow is also a view means you can click on it independent of the button the arrow is visually part of that. That seems wrong. I would expect the arrow to be created as part of the button and if you release over the arrow then it triggers whatever is different about releasing over the arrow.",
+      "range": {
+        "startLine": 67,
+        "startChar": 15,
+        "endLine": 67,
+        "endChar": 21
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e74a866_a88e8ce1",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "I chose this design based on the specs and mocks (copied in-line from the document):\n* “Sync to” button should ideally be a single button with 2 targets: \n* If the user taps on Sync to \u003caccount name\u003e, then sync should start\n* If the user taps on the arrow, then it should present a menu on top of the parent bubble. This is still TODO and out of scope for this CL.\n* The ink ripple effect when clicking on the \"Sync to Joel\" portion of the button should go all the way through to the rightward-facing arrow (it should feel like one button)\n* The ink ripple effect for the drop-down arrow is local only to the the drop-down arrow with a circle (like for Chrome back button)\n* Tapping \"tab\" should focus first on the \"Sync to Joel\" portion of the button, followed by the arrow part of the button (i.e. we should have two focus targets)\n\nMore in the internal document (see https://docs.google.com/document/d/1-1pja18vZWEERpCAmAZ7nGI2tkUNmk_3afhotz1zbzs/edit#bookmark\u003did.cyu9k5hgabc1)",
+      "parentUuid": "c6a70b12_2976dbaf",
       "range": {
         "startLine": 67,
         "startChar": 15,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "92c59296_f2f47329",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "I need to extract the padding on the left and on the right, that\u0027s why I multiply by 2. If you think it makes the code more readable, then I can change this to: \nchild_area.width() - kDividerHorizontalPadding - kDividerWidth - kDividerHorizontalPadding - kDropDownArrowButtonWidth",
+      "parentUuid": "d7cf130e_38d64a5d",
+      "range": {
+        "startLine": 99,
+        "startChar": 44,
+        "endLine": 99,
+        "endChar": 45
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18b1e344_ba5bd394",
         "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
         "patchSetId": 18
@@ -321,6 +633,30 @@
       "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeffeff6_54670c7c",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18b1e344_ba5bd394",
+      "range": {
+        "startLine": 104,
+        "startChar": 23,
+        "endLine": 104,
+        "endChar": 29
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "b6f2d415_b6f95b4e",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86cca95f_059296f2",
+      "range": {
+        "startLine": 110,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 17
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b547ec87_143687cb",
         "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
         "patchSetId": 18
@@ -358,6 +718,30 @@
       "writtenOn": "2018-01-16T21:10:43Z",
       "side": 1,
       "message": "How do you know giving the label half the requested height is going to fit?",
+      "range": {
+        "startLine": 114,
+        "startChar": 49,
+        "endLine": 114,
+        "endChar": 72
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742391ba_ac8dda7a",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "This works in my case as the MD button size is always at least 28 pixels - see comment at https://cs.chromium.org/chromium/src/ui/views/controls/button/md_text_button.cc?rcl\u003deedb5c3144bf2c346bf239f79430db4d4d97a096\u0026l\u003d209\n\nI have spent at least 3 hours seeing if I can make this work differently, but the problem is that no matter what I do in my class, the MDButton::UpdatePadding always breaks my sizing. I guess this means 2 things:\n1. Keep the code as is now because it works and basically rely on the fact that the MDButton has a height of 28 pixels and thus label() and subtitle fit one below the other.\n2. Add a subtitle to the MDTextButton and change the MDTextButton to accept a title and a subtitle. Then subclass it here.\n3. Change DiceSigninButton to subclass LabeLButton and copy all the logic related to colors from MDTextButton.\n\nI think I prefer myself Option 1 now for the following reasons:\n* allows me to move forward and add the promos on all bubbles\n* has the same look and feel and the rest of the MD buttons (this is part of spec)\n* avoid code duplication\n\nIn parallel, I could start moving forward with either Option 2 or 3, but I would need guidance on which one you think is the best approach as my knowledge of views is fairly limited at this point.",
+      "parentUuid": "b547ec87_143687cb",
       "range": {
         "startLine": 114,
         "startChar": 49,
@@ -390,6 +774,30 @@
       "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee132d04_06ffb652",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T14:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "440522d0_ae0b9130",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 29
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
