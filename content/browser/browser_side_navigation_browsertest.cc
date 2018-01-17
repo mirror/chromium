@@ -527,13 +527,6 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, BackFollowedByReload) {
 // properly.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest,
                        CancelRequestAfterReadyToCommit) {
-  // This test cancels the request using the ResourceDispatchHost. With the
-  // NetworkService, it is not used so the request is not canceled.
-  // TODO(arthursonzogni): Find a way to cancel a request from the browser
-  // with the NetworkService.
-  if (base::FeatureList::IsEnabled(features::kNetworkService))
-    return;
-
   ControllableHttpResponse response(embedded_test_server(), "/main_document");
   ASSERT_TRUE(embedded_test_server()->Start());
 
@@ -572,6 +565,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest,
   };
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
                           base::BindOnce(cancel_request, global_id));
+
+  // The server send more data.
 
   // 3) Check that the load stops properly.
   EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));

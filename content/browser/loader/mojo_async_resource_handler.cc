@@ -78,12 +78,17 @@ class MojoAsyncResourceHandler::WriterIOBuffer final
   //  2. |this| instance is alive.
   WriterIOBuffer(scoped_refptr<SharedWriter> writer, void* data, size_t size)
       : net::IOBufferWithSize(static_cast<char*>(data), size),
-        writer_(std::move(writer)) {}
+        writer_(std::move(writer)) {
+    LOG(ERROR) << __func__ << " " << this;
+  }
+
+  void ReleaseWriter() { writer_ = nullptr; }
 
  private:
   ~WriterIOBuffer() override {
     // Avoid deleting |data_| in the IOBuffer destructor.
     data_ = nullptr;
+    LOG(ERROR) << __func__ << " " << this;
   }
 
   // This member is for keeping the writer alive.
@@ -106,6 +111,7 @@ MojoAsyncResourceHandler::MojoAsyncResourceHandler(
       handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       url_loader_client_(std::move(url_loader_client)),
       weak_factory_(this) {
+  LOG(ERROR) << __func__ << " " << this;
   DCHECK(IsResourceTypeFrame(resource_type) ||
          !(url_loader_options_ & mojom::kURLLoadOptionSendSSLInfoWithResponse));
   DCHECK(resource_type == RESOURCE_TYPE_MAIN_FRAME ||
@@ -127,8 +133,13 @@ MojoAsyncResourceHandler::MojoAsyncResourceHandler(
 }
 
 MojoAsyncResourceHandler::~MojoAsyncResourceHandler() {
+  LOG(ERROR) << __func__ << " " << this;
   if (has_checked_for_sufficient_resources_)
     rdh_->FinishedWithResourcesForRequest(request());
+
+  if (buffer_) {
+    static_cast<WriterIOBuffer*>(buffer_.get())->ReleaseWriter();
+  }
 }
 
 void MojoAsyncResourceHandler::InitializeResourceBufferConstants() {

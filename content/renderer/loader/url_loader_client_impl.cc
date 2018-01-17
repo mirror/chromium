@@ -341,8 +341,10 @@ void URLLoaderClientImpl::StoreAndDispatch(
 }
 
 void URLLoaderClientImpl::OnConnectionClosed() {
+  LOG(ERROR) << __func__;
   // If the connection aborts before the load completes, mark it as aborted.
   if (!has_received_complete_) {
+    LOG(ERROR) << __func__ << " for real";
     OnComplete(network::URLLoaderCompletionStatus(net::ERR_ABORTED));
     return;
   }
