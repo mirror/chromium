@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.annotations.MainDex;
 
 import java.io.File;
@@ -19,6 +21,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -344,9 +347,10 @@ public abstract class CommandLine {
                 }
 
                 if (parseSwitches && arg.startsWith(SWITCH_PREFIX)) {
-                    String[] parts = arg.split(SWITCH_VALUE_SEPARATOR, 2);
-                    String value = parts.length > 1 ? parts[1] : null;
-                    appendSwitchWithValue(parts[0].substring(SWITCH_PREFIX.length()), value);
+                    List<String> parts =
+                            Splitter.on(SWITCH_VALUE_SEPARATOR).limit(2).splitToList(arg);
+                    String value = parts.size() > 1 ? parts.get(1) : null;
+                    appendSwitchWithValue(parts.get(0).substring(SWITCH_PREFIX.length()), value);
                 } else {
                     mArgs.add(arg);
                 }

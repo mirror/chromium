@@ -6,11 +6,14 @@ package org.chromium.chrome.browser.download;
 
 import android.text.TextUtils;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.components.offline_items_collection.ContentId;
 import org.chromium.components.offline_items_collection.LegacyHelpers;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -86,15 +89,15 @@ public class DownloadSharedPreferenceEntry {
     }
 
     static DownloadSharedPreferenceEntry parseFromVersion1(String string) {
-        String[] entries = string.split(",", 6);
-        if (entries.length != 6) return INVALID_ENTRY;
+        List<String> entries = Splitter.on(",").limit(6).splitToList(string);
+        if (entries.size() != 6) return INVALID_ENTRY;
         // VERSION,NOTIFICATIONID,ONTHERECORD,METERED,GUID,FILENAME
-        String stringVersion = entries[0];
-        String stringNotificationId = entries[1];
-        String stringOnTheRecord = entries[2];
-        String stringMetered = entries[3];
-        String stringGuid = entries[4];
-        String stringFileName = entries[5];
+        String stringVersion = entries.get(0);
+        String stringNotificationId = entries.get(1);
+        String stringOnTheRecord = entries.get(2);
+        String stringMetered = entries.get(3);
+        String stringGuid = entries.get(4);
+        String stringFileName = entries.get(5);
 
         boolean onTheRecord = "1".equals(stringOnTheRecord);
         boolean metered = "1".equals(stringMetered);
@@ -116,15 +119,15 @@ public class DownloadSharedPreferenceEntry {
     }
 
     static DownloadSharedPreferenceEntry parseFromVersion2(String string) {
-        String[] entries = string.split(",", 6);
-        if (entries.length != 6) return INVALID_ENTRY;
+        List<String> entries = Splitter.on(",").limit(6).splitToList(string);
+        if (entries.size() != 6) return INVALID_ENTRY;
         // VERSION,NOTIFICATIONID,OFFTHERECORD,METERED,GUID,FILENAME
-        String stringVersion = entries[0];
-        String stringNotificationId = entries[1];
-        String stringOffTheRecord = entries[2];
-        String stringMetered = entries[3];
-        String stringGuid = entries[4];
-        String stringFileName = entries[5];
+        String stringVersion = entries.get(0);
+        String stringNotificationId = entries.get(1);
+        String stringOffTheRecord = entries.get(2);
+        String stringMetered = entries.get(3);
+        String stringGuid = entries.get(4);
+        String stringFileName = entries.get(5);
 
         boolean offTheRecord = "1".equals(stringOffTheRecord);
         boolean metered = "1".equals(stringMetered);
@@ -149,16 +152,16 @@ public class DownloadSharedPreferenceEntry {
         final int itemTypeDownload = 1;
         final int itemTypeOfflinePage = 2;
 
-        String[] entries = string.split(",", 7);
-        if (entries.length != 7) return INVALID_ENTRY;
+        List<String> entries = Splitter.on(",").limit(7).splitToList(string);
+        if (entries.size() != 7) return INVALID_ENTRY;
         // VERSION,NOTIFICATIONID,ITEMTYPE,OFFTHERECORD,METERED,GUID,FILENAME
-        String stringVersion = entries[0];
-        String stringNotificationId = entries[1];
-        String stringItemType = entries[2];
-        String stringOffTheRecord = entries[3];
-        String stringMetered = entries[4];
-        String stringGuid = entries[5];
-        String stringFileName = entries[6];
+        String stringVersion = entries.get(0);
+        String stringNotificationId = entries.get(1);
+        String stringItemType = entries.get(2);
+        String stringOffTheRecord = entries.get(3);
+        String stringMetered = entries.get(4);
+        String stringGuid = entries.get(5);
+        String stringFileName = entries.get(6);
 
         boolean offTheRecord = "1".equals(stringOffTheRecord);
         boolean metered = "1".equals(stringMetered);
@@ -190,17 +193,17 @@ public class DownloadSharedPreferenceEntry {
         final int itemTypeDownload = 1;
         final int itemTypeOfflinePage = 2;
 
-        String[] entries = string.split(",", 8);
-        if (entries.length != 8) return INVALID_ENTRY;
+        List<String> entries = Splitter.on(",").limit(8).splitToList(string);
+        if (entries.size() != 8) return INVALID_ENTRY;
         // VERSION,NOTIFICATIONID,TYPE,OFFTHERECORD,METEREDOK,AUTORESUMEOK,GUID,FILENAME
-        String stringVersion = entries[0];
-        String stringNotificationId = entries[1];
-        String stringItemType = entries[2];
-        String stringOffTheRecord = entries[3];
-        String stringMetered = entries[4];
-        String stringAutoResume = entries[5];
-        String stringGuid = entries[6];
-        String stringFileName = entries[7];
+        String stringVersion = entries.get(0);
+        String stringNotificationId = entries.get(1);
+        String stringItemType = entries.get(2);
+        String stringOffTheRecord = entries.get(3);
+        String stringMetered = entries.get(4);
+        String stringAutoResume = entries.get(5);
+        String stringGuid = entries.get(6);
+        String stringFileName = entries.get(7);
 
         boolean offTheRecord = "1".equals(stringOffTheRecord);
         boolean metered = "1".equals(stringMetered);
@@ -230,17 +233,17 @@ public class DownloadSharedPreferenceEntry {
     }
 
     static DownloadSharedPreferenceEntry parseFromVersion5(String string) {
-        String[] entries = string.split(",", 8);
-        if (entries.length != 8) return INVALID_ENTRY;
+        List<String> entries = Splitter.on(",").limit(8).splitToList(string);
+        if (entries.size() != 8) return INVALID_ENTRY;
         // VERSION,NOTIFICATIONID,NAMESPACE,GUID,OFFTHERECORD,METEREDOK,AUTORESUMEOK,FILENAME
-        String stringVersion = entries[0];
-        String stringNotificationId = entries[1];
-        String stringNamespace = entries[2];
-        String stringGuid = entries[3];
-        String stringOffTheRecord = entries[4];
-        String stringMetered = entries[5];
-        String stringAutoResume = entries[6];
-        String stringFileName = entries[7];
+        String stringVersion = entries.get(0);
+        String stringNotificationId = entries.get(1);
+        String stringNamespace = entries.get(2);
+        String stringGuid = entries.get(3);
+        String stringOffTheRecord = entries.get(4);
+        String stringMetered = entries.get(5);
+        String stringAutoResume = entries.get(6);
+        String stringFileName = entries.get(7);
 
         boolean offTheRecord = "1".equals(stringOffTheRecord);
         boolean metered = "1".equals(stringMetered);
@@ -263,19 +266,19 @@ public class DownloadSharedPreferenceEntry {
     }
 
     static DownloadSharedPreferenceEntry parseFromVersion6(String string) {
-        String[] entries = string.split(",", 9);
-        if (entries.length != 9) return INVALID_ENTRY;
+        List<String> entries = Splitter.on(",").limit(9).splitToList(string);
+        if (entries.size() != 9) return INVALID_ENTRY;
         // VERSION,NOTIFICATIONID,NAMESPACE,ID,OFFTHERECORD,METEREDOK,AUTORESUMEOK,ISTRANSIENT,
         // FILENAME
-        String stringVersion = entries[0];
-        String stringNotificationId = entries[1];
-        String stringNamespace = entries[2];
-        String stringId = entries[3];
-        String stringOffTheRecord = entries[4];
-        String stringMetered = entries[5];
-        String stringAutoResume = entries[6];
-        String stringTransient = entries[7];
-        String stringFileName = entries[8];
+        String stringVersion = entries.get(0);
+        String stringNotificationId = entries.get(1);
+        String stringNamespace = entries.get(2);
+        String stringId = entries.get(3);
+        String stringOffTheRecord = entries.get(4);
+        String stringMetered = entries.get(5);
+        String stringAutoResume = entries.get(6);
+        String stringTransient = entries.get(7);
+        String stringFileName = entries.get(8);
 
         boolean offTheRecord = "1".equals(stringOffTheRecord);
         boolean metered = "1".equals(stringMetered);

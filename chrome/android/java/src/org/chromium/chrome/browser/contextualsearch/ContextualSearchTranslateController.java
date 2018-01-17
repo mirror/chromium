@@ -8,6 +8,8 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.ui.UiUtils;
 
@@ -157,7 +159,7 @@ public class ContextualSearchTranslateController  {
         List<String> result = new ArrayList<String>();
         String acceptLanguages = getNativeAcceptLanguages();
         if (!TextUtils.isEmpty(acceptLanguages)) {
-            for (String language : acceptLanguages.split(",")) {
+            for (String language : Splitter.on(",").splitToList(acceptLanguages)) {
                 result.add(language);
             }
         }

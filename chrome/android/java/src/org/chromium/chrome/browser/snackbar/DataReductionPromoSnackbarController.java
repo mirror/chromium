@@ -7,6 +7,8 @@ package org.chromium.chrome.browser.snackbar;
 import android.content.Context;
 import android.content.Intent;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.CommandLine;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.preferences.PreferencesLauncher;
@@ -14,6 +16,8 @@ import org.chromium.chrome.browser.preferences.datareduction.DataReductionPrefer
 import org.chromium.chrome.browser.preferences.datareduction.DataReductionPromoUtils;
 import org.chromium.chrome.browser.preferences.datareduction.DataReductionProxyUma;
 import org.chromium.components.variations.VariationsAssociatedData;
+
+import java.util.List;
 
 /**
  * The controller for the Data Reduction Proxy promo that lets users of the proxy know when Chrome
@@ -60,19 +64,19 @@ public class DataReductionPromoSnackbarController implements SnackbarManager.Sna
             }
         } else {
             variationParamValue = variationParamValue.replace(" ", "");
-            String[] promoDataSavingStrings = variationParamValue.split(";");
+            List<String> promoDataSavingStrings = Splitter.on(";").splitToList(variationParamValue);
 
             if (CommandLine.getInstance()
                     .hasSwitch(ENABLE_DATA_REDUCTION_PROXY_SAVINGS_PROMO_SWITCH)) {
-                mPromoDataSavingsMB = new int[promoDataSavingStrings.length + 1];
-                mPromoDataSavingsMB[promoDataSavingStrings.length] = 1;
+                mPromoDataSavingsMB = new int[promoDataSavingStrings.size() + 1];
+                mPromoDataSavingsMB[promoDataSavingStrings.size()] = 1;
             } else {
-                mPromoDataSavingsMB = new int[promoDataSavingStrings.length];
+                mPromoDataSavingsMB = new int[promoDataSavingStrings.size()];
             }
 
-            for (int i = 0; i < promoDataSavingStrings.length; i++) {
+            for (int i = 0; i < promoDataSavingStrings.size(); i++) {
                 try {
-                    mPromoDataSavingsMB[i] = Integer.parseInt(promoDataSavingStrings[i]);
+                    mPromoDataSavingsMB[i] = Integer.parseInt(promoDataSavingStrings.get(i));
                 } catch (NumberFormatException e) {
                     mPromoDataSavingsMB[i] = -1;
                 }

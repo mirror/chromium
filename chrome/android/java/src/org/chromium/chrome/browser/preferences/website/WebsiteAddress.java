@@ -6,6 +6,8 @@ package org.chromium.chrome.browser.preferences.website;
 
 import android.net.Uri;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.util.UrlUtilities;
 
@@ -169,7 +171,9 @@ public class WebsiteAddress implements Comparable<WebsiteAddress>, Serializable 
         }
         int endIndex = mAddress.indexOf(getDomainAndRegistry());
         return --endIndex > startIndex
-                ? mAddress.substring(startIndex, endIndex).split("\\.")
+                ? Splitter.on(".")
+                          .splitToList(mAddress.substring(startIndex, endIndex))
+                          .toArray(new String[0])
                 : new String[0];
     }
 

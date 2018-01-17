@@ -1,0 +1,12 @@
+# https://github.com/google/guava/wiki/UseGuavaInYourBuild:
+#  "Guava depends on some artifacts that contain annotations.
+#  This is primarily for use by static analysis tools and certain compilers,
+#  so these annotations need not be present in your runtime classpath
+#  unless you want your app to recognize those annotations.
+#  In many cases, they need not be present even in your compile-time classpath."
+-dontwarn com.google.errorprone.annotations.**
+
+-dontwarn com.google.j2objc.**
+-dontwarn java.lang.ClassValue
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn sun.misc.Unsafe

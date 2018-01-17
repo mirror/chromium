@@ -12,6 +12,8 @@ import android.content.Context;
 import android.os.Build;
 import android.support.annotation.Nullable;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.ContextUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.notifications.NotificationChannelStatus;
@@ -133,9 +135,9 @@ public class SiteChannelsManager {
     private static SiteChannel toSiteChannel(NotificationChannel channel) {
         String originAndTimestamp =
                 channel.getId().substring(ChannelDefinitions.CHANNEL_ID_PREFIX_SITES.length());
-        String[] parts = originAndTimestamp.split(CHANNEL_ID_SEPARATOR);
-        assert parts.length == 2;
-        return new SiteChannel(channel.getId(), parts[0], Long.parseLong(parts[1]),
+        List<String> parts = Splitter.on(CHANNEL_ID_SEPARATOR).splitToList(originAndTimestamp);
+        assert parts.size() == 2;
+        return new SiteChannel(channel.getId(), parts.get(0), Long.parseLong(parts.get(1)),
                 toChannelStatus(channel.getImportance()));
     }
 
@@ -161,8 +163,10 @@ public class SiteChannelsManager {
      */
     public static String toSiteOrigin(String channelId) {
         assert channelId.startsWith(ChannelDefinitions.CHANNEL_ID_PREFIX_SITES);
-        return channelId.substring(ChannelDefinitions.CHANNEL_ID_PREFIX_SITES.length())
-                .split(CHANNEL_ID_SEPARATOR)[0];
+        return Splitter.on(CHANNEL_ID_SEPARATOR)
+                .splitToList(
+                        channelId.substring(ChannelDefinitions.CHANNEL_ID_PREFIX_SITES.length()))
+                .get(0);
     }
 
     /**
