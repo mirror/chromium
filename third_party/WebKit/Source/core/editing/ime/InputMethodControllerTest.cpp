@@ -3053,4 +3053,22 @@ TEST_F(
   EXPECT_EQ(1u, input->selectionEnd());
 }
 
+TEST_F(InputMethodControllerTest, ExecCommandDuringComposition) {
+  Element* div =
+      InsertHTMLElement("<div id='sample' contenteditable></div>", "sample");
+
+  // Open a composition.
+  Controller().SetComposition(String::FromUTF8("hello"), Vector<ImeTextSpan>(),
+                              5, 5);
+  // Turn on bold formatting.
+  GetDocument().execCommand("bold", false, "", ASSERT_NO_EXCEPTION);
+
+  // Extend the composition with some more text.
+  Controller().SetComposition(String::FromUTF8("helloworld"),
+                              Vector<ImeTextSpan>(), 10, 10);
+
+  // "world" should be bold.
+  EXPECT_EQ("hello<b>world</b>", div->InnerHTMLAsString());
+}
+
 }  // namespace blink

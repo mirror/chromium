@@ -375,7 +375,8 @@ void InputMethodController::SelectComposition() const {
   // The composition can start inside a composed character sequence, so we have
   // to override checks. See <http://bugs.webkit.org/show_bug.cgi?id=15781>
   GetFrame().Selection().SetSelection(
-      SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build());
+      SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build(),
+      SetSelectionOptions::Builder().SetShouldClearTypingStyle(false).Build());
 }
 
 bool IsTextTooLongAt(const Position& position) {
