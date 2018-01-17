@@ -42,46 +42,6 @@ class HomedirMethodsImpl : public HomedirMethods {
                        weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
-  void CheckKeyEx(const Identification& id,
-                  const cryptohome::AuthorizationRequest& auth,
-                  const cryptohome::CheckKeyRequest& request,
-                  const Callback& callback) override {
-    DBusThreadManager::Get()->GetCryptohomeClient()->CheckKeyEx(
-        id, auth, request,
-        base::BindOnce(&HomedirMethodsImpl::OnBaseReplyCallback,
-                       weak_ptr_factory_.GetWeakPtr(), callback));
-  }
-
-  void AddKeyEx(const Identification& id,
-                const AuthorizationRequest& auth,
-                const AddKeyRequest& request,
-                const Callback& callback) override {
-    DBusThreadManager::Get()->GetCryptohomeClient()->AddKeyEx(
-        id, auth, request,
-        base::BindOnce(&HomedirMethodsImpl::OnBaseReplyCallback,
-                       weak_ptr_factory_.GetWeakPtr(), callback));
-  }
-
-  void RemoveKeyEx(const Identification& id,
-                   const AuthorizationRequest& auth,
-                   const RemoveKeyRequest& request,
-                   const Callback& callback) override {
-    DBusThreadManager::Get()->GetCryptohomeClient()->RemoveKeyEx(
-        id, auth, request,
-        base::BindOnce(&HomedirMethodsImpl::OnBaseReplyCallback,
-                       weak_ptr_factory_.GetWeakPtr(), callback));
-  }
-
-  void UpdateKeyEx(const Identification& id,
-                   const AuthorizationRequest& auth,
-                   const UpdateKeyRequest& request,
-                   const Callback& callback) override {
-    DBusThreadManager::Get()->GetCryptohomeClient()->UpdateKeyEx(
-        id, auth, request,
-        base::BindOnce(&HomedirMethodsImpl::OnBaseReplyCallback,
-                       weak_ptr_factory_.GetWeakPtr(), callback));
-  }
-
   void RenameCryptohome(const Identification& id_from,
                         const Identification& id_to,
                         const Callback& callback) override {

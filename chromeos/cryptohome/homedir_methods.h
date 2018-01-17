@@ -45,38 +45,6 @@ class CHROMEOS_EXPORT HomedirMethods {
                             const GetKeyDataRequest& request,
                             const GetKeyDataCallback& callback) = 0;
 
-  // Asks cryptohomed to attempt authorization for user identified by |id| using
-  // |auth|. This can be used to unlock a user session.
-  virtual void CheckKeyEx(const Identification& id,
-                          const AuthorizationRequest& auth,
-                          const CheckKeyRequest& request,
-                          const Callback& callback) = 0;
-
-  // Asks cryptohomed to try to add another key for the user identified by |id|
-  // using |auth| to unlock the key.
-  // Key used in |auth| should have the PRIV_ADD privilege.
-  // |callback| will be called with status info on completion.
-  virtual void AddKeyEx(const Identification& id,
-                        const AuthorizationRequest& auth,
-                        const AddKeyRequest& request,
-                        const Callback& callback) = 0;
-
-  // Asks cryptohomed to update the key for the user identified by |id| using
-  // |auth| to unlock the key. Label for |auth| and the requested key have to be
-  // the same. Key used in |auth| should have PRIV_AUTHORIZED_UPDATE privilege.
-  // |callback| will be called with status info on completion.
-  virtual void UpdateKeyEx(const Identification& id,
-                           const AuthorizationRequest& auth,
-                           const UpdateKeyRequest& request,
-                           const Callback& callback) = 0;
-
-  // Asks cryptohomed to remove a specific key for the user identified by |id|
-  // using |auth|.
-  virtual void RemoveKeyEx(const Identification& id,
-                           const AuthorizationRequest& auth,
-                           const RemoveKeyRequest& request,
-                           const Callback& callback) = 0;
-
   // Asks cryptohomed to change cryptohome identification |id_from| to |id_to|,
   // which results in cryptohome directory renaming.
   virtual void RenameCryptohome(const Identification& id_from,
