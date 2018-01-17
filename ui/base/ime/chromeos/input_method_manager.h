@@ -87,6 +87,7 @@ class UI_BASE_IME_EXPORT InputMethodManager {
         bool is_emoji_enabled,
         bool is_handwriting_enabled,
         bool is_voice_enabled){};
+    virtual void ActiveInputMethodsChanged(InputMethodManager* manager) {}
   };
 
   // CandidateWindowObserver is notified of events related to the candidate

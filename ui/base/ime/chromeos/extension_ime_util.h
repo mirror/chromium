@@ -54,6 +54,10 @@ std::string UI_BASE_IME_EXPORT
 GetComponentInputMethodID(const std::string& extension_id,
                           const std::string& engine_id);
 
+std::string UI_BASE_IME_EXPORT
+GetContainerInputMethodID(const std::string& extension_id,
+                          const std::string& engine_id);
+
 // Returns extension ID if |input_method_id| is extension IME ID or component
 // extension IME ID. Otherwise returns an empty string ("").
 std::string UI_BASE_IME_EXPORT
@@ -76,6 +80,9 @@ bool UI_BASE_IME_EXPORT IsExtensionIME(const std::string& input_method_id);
 // IME, please use ComponentExtensionIMEManager::IsWhitelisted instead.
 bool UI_BASE_IME_EXPORT
 IsComponentExtensionIME(const std::string& input_method_id);
+
+bool UI_BASE_IME_EXPORT
+IsContainerExtensionIME(const std::string& input_method_id);
 
 // Returns true if the |input_method| is a member of |extension_id| of extension
 // IME, otherwise returns false.
