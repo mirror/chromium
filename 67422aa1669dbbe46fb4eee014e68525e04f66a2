@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d18dbc3d_08f005c1",
+        "filename": "chromeos/test/data/network/shill_wifi_eap_ttls_with_password_variable.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2018-01-17T22:11:49Z",
+      "side": 1,
+      "message": "I forgot the resolution about when we do \"foo${PASSWORD}\". Did we decide we only care when its the exact string?",
+      "revId": "67422aa1669dbbe46fb4eee014e68525e04f66a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
