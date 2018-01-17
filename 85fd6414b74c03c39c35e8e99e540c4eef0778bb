@@ -124,6 +124,24 @@
       "revId": "85fd6414b74c03c39c35e8e99e540c4eef0778bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb52d66_78be0f6c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-4/styles-invalid-color-values-expected.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-17T18:33:47Z",
+      "side": 1,
+      "message": "No worries, I appreciate your insight. :)",
+      "parentUuid": "137f8795_e871cf61",
+      "revId": "85fd6414b74c03c39c35e8e99e540c4eef0778bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
