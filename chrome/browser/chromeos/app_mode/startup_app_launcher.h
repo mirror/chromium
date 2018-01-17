@@ -88,6 +88,7 @@ class StartupAppLauncher : public extensions::InstallObserver,
 
   void MaybeInitializeNetwork();
   void MaybeInstallSecondaryApps();
+  void SetSecondaryAppsEnabledState(const extensions::Extension* primary_app);
   void MaybeLaunchApp();
 
   void MaybeCheckExtensionUpdate();
