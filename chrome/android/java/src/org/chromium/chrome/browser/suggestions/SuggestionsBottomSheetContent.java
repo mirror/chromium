@@ -19,6 +19,7 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
 import org.chromium.base.CollectionUtil;
+import org.chromium.base.Log;
 import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
@@ -30,6 +31,7 @@ import org.chromium.chrome.browser.ntp.LogoBridge.LogoObserver;
 import org.chromium.chrome.browser.ntp.LogoDelegateImpl;
 import org.chromium.chrome.browser.ntp.LogoView;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageAdapter;
+import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.omnibox.LocationBarPhone;
 import org.chromium.chrome.browser.omnibox.UrlFocusChangeListener;
@@ -50,6 +52,12 @@ import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 import org.chromium.content.browser.BrowserStartupController;
 
 import java.util.List;
+
+import javax.inject.Inject;
+
+import dagger.Component;
+import dagger.Module;
+import dagger.Provides;
 
 /**
  * Provides content to be displayed inside of the Home tab of bottom sheet.
@@ -112,8 +120,38 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
      */
     private boolean mIsAttachedToWindow;
 
+    @Inject
+    public SnippetArticle article;
+
+    @Component(modules = TestModule.class)
+    interface TestComponent {
+        TestInjectable injectable();
+    }
+
+    @Module
+    public static class TestModule {
+        @Provides
+        static TestInjectable provideTestInjectable(SnippetArticle article) {
+            return new TestInjectable();
+        }
+
+        @Provides
+        static SnippetArticle provideSnippetArticle() {
+            return new SnippetArticle(0, "", "", "", "", 0, 0, 0, false, null);
+        }
+    }
+
+    public static class TestInjectable {
+        public void foo() {
+            Log.d("DGN", "foo");
+        }
+    }
+
     public SuggestionsBottomSheetContent(final ChromeActivity activity, final BottomSheet sheet,
             TabModelSelector tabModelSelector, SnackbarManager snackbarManager) {
+        TestComponent tc = DaggerSuggestionsBottomSheetContent_TestComponent.create();
+        tc.injectable().foo();
+
         mActivity = activity;
         mSheet = sheet;
 

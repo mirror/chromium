@@ -1,5 +1,7 @@
 # Ignore all the content of repository except the README files.
 # Other files will be fetched via CIPD.
 
-repository/*/*
-!repository/*/README.chromium
+# Directly submitting the binaries for WIP version, they will be using
+# CIPD or similar when the CL is ready.
+# repository/*/*
+# !repository/*/README.chromium

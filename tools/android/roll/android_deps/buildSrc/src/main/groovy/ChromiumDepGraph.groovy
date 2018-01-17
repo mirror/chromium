@@ -20,6 +20,30 @@ import org.gradle.maven.MavenPomArtifact
 class ChromiumDepGraph {
     final def dependencies = new HashMap<String, DependencyDescription>()
 
+    // Some libraries (including many Google libraries 😒) don't properly fill their POM with the
+    // appropriate infomation. It is provided here form manual lookups.
+    final def FALLBACK_PROPERTIES = [
+        'com_google_errorprone_error_prone_annotations' : new DependencyDescription(
+          url: "https://github.com/google/error-prone",
+          licenseUrl: "https://www.apache.org/licenses/LICENSE-2.0.txt",
+          licenseName: "Apache License 2.0"),
+        'com_google_googlejavaformat_google_java_format': new DependencyDescription(
+          url: "https://github.com/google/google-java-format",
+          licenseUrl: "https://www.apache.org/licenses/LICENSE-2.0.txt",
+          licenseName: "Apache License 2.0"),
+        'com_google_guava_guava': new DependencyDescription(
+          url: "https://github.com/google/guava",
+          licenseUrl: "https://www.apache.org/licenses/LICENSE-2.0.txt",
+          licenseName: "Apache License 2.0"),
+        'org_codehaus_mojo_animal_sniffer_annotations': new DependencyDescription(
+          url: "http://www.mojohaus.org/animal-sniffer/animal-sniffer-annotations/",
+          licenseUrl: "https://opensource.org/licenses/mit-license.php",
+          licenseName: "MIT"),
+        'org_checkerframework_checker_compat_qual' :new DependencyDescription(
+          licenseUrl: "https://github.com/typetools/checker-framework/blob/master/LICENSE.txt",
+          licenseName: "GNU General Public License, version 2 (GPL2), with the classpath exception"),
+    ]
+
     Project project
 
     void collectDependencies() {
@@ -141,6 +165,13 @@ class ChromiumDepGraph {
       }
 
       if (error.isEmpty()) return [licenses[0].name.text(), licenses[0].url.text()]
+
+      def fallbackProperties = FALLBACK_PROPERTIES.get(id)
+      if (fallbackProperties != null) {
+          project.logger.debug("Using fallback properties for ${id}")
+          return [fallbackProperties.licenseName, fallbackProperties.licenseUrl]
+      }
+
 
       project.logger.warn(error)
       return ['', '']
