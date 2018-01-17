@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eab8a45b_e7996f79",
+        "filename": "ash/public/interfaces/login_screen.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-17T01:38:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cb39a7c_4171def9",
+      "range": {
+        "startLine": 97,
+        "startChar": 3,
+        "endLine": 97,
+        "endChar": 4
+      },
+      "revId": "c3dfe87371a24860f938b7a7201b9bf45902f9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "665b875f_ef8db76f",
         "filename": "components/password_manager/public/interfaces/BUILD.gn",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "c3dfe87371a24860f938b7a7201b9bf45902f9ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6c7ba7_dcb15a68",
+        "filename": "components/password_manager/public/interfaces/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-17T01:38:41Z",
+      "side": 1,
+      "message": "Ah! how time flies~",
+      "parentUuid": "665b875f_ef8db76f",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "c3dfe87371a24860f938b7a7201b9bf45902f9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "22c050d5_00f5cc00",
+        "filename": "components/password_manager/public/interfaces/OWNERS",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-17T01:38:41Z",
+      "side": 1,
+      "message": "Updated after changing to sync_password_data_struct_traits.h\n\nThese are suggested by presubmit warnings:\n** Presubmit Warnings **\nFound OWNERS files that need to be updated for IPC security review coverage.\nPlease update the OWNERS files below:\n\n***************\ncomponents/password_manager/public/interfaces/OWNERS needs the following lines added:\n\nper-file *_struct_traits*.*\u003dset noparent\nper-file *_struct_traits*.*\u003dfile://ipc/SECURITY_OWNERS\n\nfor files:\n  components/password_manager/public/interfaces/sync_password_data.mojom\n  components/password_manager/public/interfaces/sync_password_data_struct_traits.h\n  components/password_manager/public/interfaces/sync_password_data.typemap\n***************",
+      "parentUuid": "ed03e7f2_8c58e021",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 74
+      },
+      "revId": "c3dfe87371a24860f938b7a7201b9bf45902f9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85af3a07_2b4a0156",
         "filename": "components/password_manager/public/interfaces/sync_password_data.typemap",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "c3dfe87371a24860f938b7a7201b9bf45902f9ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e5d29d_7c7e1793",
+        "filename": "components/password_manager/public/interfaces/sync_password_data.typemap",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-17T01:38:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85af3a07_2b4a0156",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "c3dfe87371a24860f938b7a7201b9bf45902f9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -137,6 +233,30 @@
       "revId": "c3dfe87371a24860f938b7a7201b9bf45902f9ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c75c749_1d7adcbe",
+        "filename": "components/password_manager/public/interfaces/sync_password_data_traits.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-17T01:38:41Z",
+      "side": 1,
+      "message": "renamed to sync_password_data_struct_traits.h",
+      "parentUuid": "dec2307c_0d9c5708",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 82
+      },
+      "revId": "c3dfe87371a24860f938b7a7201b9bf45902f9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
