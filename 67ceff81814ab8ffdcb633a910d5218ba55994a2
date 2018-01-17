@@ -52,6 +52,24 @@
       "revId": "67ceff81814ab8ffdcb633a910d5218ba55994a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f2669b5_82929379",
+        "filename": "base/message_loop/message_pump_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T14:02:47Z",
+      "side": 1,
+      "message": "Right, but it\u0027s extern in the header and defined as a const in this compilation unit. Therefore it\u0027s const at runtime when this is hit.\n\nAs for racy initialization, it\u0027s not a problem because this is called as part of SetModeMask() in the MessagePumpCFRunLoopBase() constructor (which in practice runs on the main thread before creating any other threads). I think TSAN would catch it if multiple threads raced to dynamically initialized this. I can open a bug if you disagree but I don\u0027t think we should block adding the flag for this.",
+      "parentUuid": "0a116136_a8b5d18e",
+      "revId": "67ceff81814ab8ffdcb633a910d5218ba55994a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
