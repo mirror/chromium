@@ -16,6 +16,24 @@
       "revId": "e966e7c897489aaa6fc00f676ca9a9edb5f35396",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0958a2e6_111ca66f",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedAnimationController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-17T10:45:26Z",
+      "side": 1,
+      "message": "Agreed.\n\nSome common pattern is to call RequestAnimationFrame recursively inside the callback invoked by RequestAnimationFrame.  So, this collection would be never empty.  But it\u0027s by design.",
+      "parentUuid": "1150fcff_1351f692",
+      "revId": "e966e7c897489aaa6fc00f676ca9a9edb5f35396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
