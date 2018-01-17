@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2bbee3_05f379bb",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T19:51:37Z",
+      "side": 1,
+      "message": "I don\u0027t see this histogram name in histograms.xml.",
+      "revId": "0b4bfaae61d02a7cf2592d3487b53ed654e9862a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc292c47_fe97f539",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 96370,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T19:51:37Z",
+      "side": 1,
+      "message": "I\u0027m confused that you list a bunch of histograms that should be created automatically using the suffix list below.  Why don\u0027t you just list the base class for those?  What are you trying to do here?",
+      "revId": "0b4bfaae61d02a7cf2592d3487b53ed654e9862a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef85dc0_363c5b08",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 110744,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T19:51:37Z",
+      "side": 1,
+      "message": "nit: phrasing \u0026 typo",
+      "range": {
+        "startLine": 110744,
+        "startChar": 40,
+        "endLine": 110744,
+        "endChar": 62
+      },
+      "revId": "0b4bfaae61d02a7cf2592d3487b53ed654e9862a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575920dc_2761604c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 110752,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T19:51:37Z",
+      "side": 1,
+      "message": "Why are some affected histograms listed near the top and some listed near the bottom?",
+      "revId": "0b4bfaae61d02a7cf2592d3487b53ed654e9862a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
