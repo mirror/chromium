@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ee8c66e1_4d0afec0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-17T21:47:28Z",
+      "side": 1,
+      "message": "This could also have been called:\n\n  ScrollableAreaOrDocumentOf()\n\nHmm... I might rename this before landing.",
+      "range": {
+        "startLine": 15,
+        "startChar": 5,
+        "endLine": 15,
+        "endChar": 42
+      },
+      "revId": "b1391283cc8756ecef49d26324b3d6b3eef0132f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b89c83d_b522751f",
         "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
         "patchSetId": 10
@@ -13,6 +36,24 @@
       "writtenOn": "2018-01-17T18:43:43Z",
       "side": 1,
       "message": "In future patches, I would encourage you to try and use more of the existing layout tree traversal code, rather than rolling your own loops.  For example, this loop could probably be implemented more efficiently as a traversal of PaintLayer\u0027s, using LayoutObject::EnclosingLayer and PaintLayer::ContainingLayer.",
+      "revId": "b1391283cc8756ecef49d26324b3d6b3eef0132f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "584a3cbc_8fc3fbf4",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-17T21:47:28Z",
+      "side": 1,
+      "message": "Yes, this is something I\u0027d like look into. Blink must already have logic for finding the closest scrollable ancestor, somewhere... I guess element.scrollIntoView() depends on it already.",
+      "parentUuid": "7b89c83d_b522751f",
       "revId": "b1391283cc8756ecef49d26324b3d6b3eef0132f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
