@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3f1baa5_0e49f2c5",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T23:42:05Z",
+      "side": 1,
+      "message": "could this instead DCHECK_LE(browser_actions_-\u003eGetPreferredSize().height(), height()); and always pick browser_actions_-\u003eGetPreferredSize().height()? (otherwise comment why we need min(..) - I think it suggests the browser actions may overflow the height of the toolbar, which might be bad :)",
+      "revId": "5527996ee2e2280d547693ab9df22b8a1273883a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
