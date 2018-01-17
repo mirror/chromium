@@ -69,4 +69,11 @@ interface AccessibilityControllerClient {
   // TODO(warx): replace string with enum once ax_enums.idl is converted to
   // mojom file.
   HandleAccessibilityGesture(string gesture);
+
+  // Whether or not to enable toggling spoken feedback via holding down two
+  // fingers on the screen.
+  ShouldToggleSpokenFeedbackViaTouch() => (bool should);
+
+  // Play tick sound indicating spoken feedback will be toggled after countdown.
+  PlaySpokenFeedbackToggleCountdown(int tick_count);
 };

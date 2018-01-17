@@ -124,9 +124,6 @@ void AshTouchExplorationManager::OnTwoFingerTouchStop() {
 
 void AshTouchExplorationManager::PlaySpokenFeedbackToggleCountdown(
     int tick_count) {
-  AccessibilityDelegate* delegate = Shell::Get()->accessibility_delegate();
-  if (delegate->ShouldToggleSpokenFeedbackViaTouch())
-    delegate->PlaySpokenFeedbackToggleCountdown(tick_count);
 }
 
 void AshTouchExplorationManager::PlayTouchTypeEarcon() {
@@ -135,13 +132,14 @@ void AshTouchExplorationManager::PlayTouchTypeEarcon() {
 }
 
 void AshTouchExplorationManager::ToggleSpokenFeedback() {
-  AccessibilityDelegate* delegate = Shell::Get()->accessibility_delegate();
-  if (delegate->ShouldToggleSpokenFeedbackViaTouch()) {
-    AccessibilityController* controller =
-        Shell::Get()->accessibility_controller();
-    controller->SetSpokenFeedbackEnabled(!controller->IsSpokenFeedbackEnabled(),
-                                         ash::A11Y_NOTIFICATION_SHOW);
-  }
+  //AccessibilityController* controller =
+      //Shell::Get()->accessibility_controller();
+  //controller->ShouldToggleSpokenFeedbackViaTouch(
+      //base::BindOnce([](bool should) {
+        //controller->SetSpokenFeedbackEnabled(
+            //!controller->IsSpokenFeedbackEnabled(),
+            //ash::A11Y_NOTIFICATION_SHOW);
+      //}));
 }
 
 void AshTouchExplorationManager::OnWindowActivated(
