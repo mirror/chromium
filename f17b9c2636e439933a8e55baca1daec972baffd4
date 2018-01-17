@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0e084c1_b20a2054",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-17T12:33:48Z",
+      "side": 1,
+      "message": "Doesn\u0027t need CORE_EXPORT? Because it is used for SpatialNavigationTest.",
+      "revId": "f17b9c2636e439933a8e55baca1daec972baffd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

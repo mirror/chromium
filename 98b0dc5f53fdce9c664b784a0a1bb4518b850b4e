@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "823296f6_134eb7a2",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-stay-in-overflow-div.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-17T12:33:48Z",
+      "side": 1,
+      "message": "It seems this test case pass without this CL.",
+      "revId": "98b0dc5f53fdce9c664b784a0a1bb4518b850b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
