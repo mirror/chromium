@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cfdca287_4e3189f0",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-17T17:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33ccdea2_04de25a3",
+      "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30189fda_eac180ce",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b021a5_b8e95924",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-17T17:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30189fda_eac180ce",
+      "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "52780e25_529ed424",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-17T17:24:19Z",
+      "side": 1,
+      "message": "I thought it\u0027d be easier to check the histogram enum if both had numbers. But since it caused confusion during review, it\u0027s better to simply remove here.",
+      "parentUuid": "1bfd5b14_17023f1d",
+      "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e724062_89a7a80a",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d8a875_35cd40b1",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 39801,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-17T17:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e724062_89a7a80a",
+      "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5e3a5020_93d4ec3e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 83919,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-17T17:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "957a246f_cf81c173",
+      "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63f52183_a996858a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b55edbe_8ed66cb1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 111042,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-17T17:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63f52183_a996858a",
+      "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
