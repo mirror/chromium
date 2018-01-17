@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a755912_c0210b9b",
+        "filename": "content/browser/devtools/service_worker_devtools_agent_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T22:58:33Z",
+      "side": 1,
+      "message": "- I think process should not be null (but that\u0027s more a question to service workers team).\n- Passing null process to session is fine, it does not use it for messaging, but rather for some network stuff (like retrieving storage partition and such). Null process means some network protocol commands won\u0027t work, but that\u0027s expected.\n- I\u0027ve added a comment.",
+      "parentUuid": "815e3692_2e05fb3b",
+      "revId": "ffb6675f6fae3ccecd2666bd8a9b330603c92b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49e40ec8_e25fc7a1",
         "filename": "content/browser/devtools/service_worker_devtools_agent_host.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-17T22:36:40Z",
       "side": 1,
       "message": "Ditto here. Or maybe a header level comment that describes the state transitions of this class? It currently has no class-level comments \u003d)\n\nFollowup is OK.",
+      "revId": "ffb6675f6fae3ccecd2666bd8a9b330603c92b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ad0d99_3f7e6ee4",
+        "filename": "content/browser/devtools/service_worker_devtools_agent_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T22:58:33Z",
+      "side": 1,
+      "message": "Placed the same comment here. I\u0027ll followup with more class-level comments once I cleanup after Mojo migration (there are quite a few things to be simplified).",
+      "parentUuid": "49e40ec8_e25fc7a1",
       "revId": "ffb6675f6fae3ccecd2666bd8a9b330603c92b5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
