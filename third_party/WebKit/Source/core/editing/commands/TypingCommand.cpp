@@ -444,7 +444,11 @@ void TypingCommand::InsertText(
         current_selection.AsSelection();
     command->SetEndingSelection(
         SelectionForUndoStep::From(current_selection_as_dom));
-    frame->Selection().SetSelection(current_selection_as_dom);
+    frame->Selection().SetSelection(
+        current_selection_as_dom,
+        SetSelectionOptions::Builder()
+            .SetIsDirectional(frame->Selection().IsDirectional())
+            .Build());
   }
 }
 
@@ -810,6 +814,7 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   SelectionModifier selection_modifier(*frame, EndingSelection().AsSelection());
+  selection_modifier.SetSelectionIsDirectional(SelectionIsDirectional());
   selection_modifier.Modify(SelectionModifyAlteration::kExtend,
                             SelectionModifyDirection::kBackward, granularity);
   if (kill_ring && selection_modifier.Selection().IsCaret() &&
@@ -985,6 +990,7 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
   // Do nothing in the case that the caret is at the start of a
   // root editable element or at the start of a document.
   SelectionModifier selection_modifier(*frame, EndingSelection().AsSelection());
+  selection_modifier.SetSelectionIsDirectional(SelectionIsDirectional());
   selection_modifier.Modify(SelectionModifyAlteration::kExtend,
                             SelectionModifyDirection::kForward, granularity);
   if (kill_ring && selection_modifier.Selection().IsCaret() &&
