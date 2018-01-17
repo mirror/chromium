@@ -18,6 +18,7 @@ CHECKSTYLE_ROOT = os.path.join(CHROMIUM_SRC, 'third_party', 'checkstyle',
 
 def FormatCheckstyleOutput(checkstyle_output):
   lines = checkstyle_output.splitlines(True)
+  print(lines)
   if 'Checkstyle ends with' in lines[-1]:
     return ''.join(lines[:-1])
   else:
@@ -25,6 +26,7 @@ def FormatCheckstyleOutput(checkstyle_output):
 
 
 def RunCheckstyle(input_api, output_api, style_file, black_list=None):
+  print("*** RunCheckStyle")
   if not os.path.exists(style_file):
     file_error = ('  Java checkstyle configuration file is missing: '
                   + style_file)
@@ -57,6 +59,7 @@ def RunCheckstyle(input_api, output_api, style_file, black_list=None):
   result_errors = []
   result_warnings = []
 
+  print("ABOUT TO FORMAT")
   formatted_checkstyle_output = FormatCheckstyleOutput(stdout)
 
   local_path = input_api.PresubmitLocalPath()
