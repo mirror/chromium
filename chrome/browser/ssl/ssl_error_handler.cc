@@ -888,8 +888,9 @@ void SSLErrorHandler::ShowDynamicInterstitial(
       return;
     case chrome_browser_ssl::DynamicInterstitial::
         INTERSTITIAL_PAGE_MITM_SOFTWARE:
-      // TODO(spqchan): Implement support for MitM dynamic interstitials.
-      NOTREACHED();
+      delegate_->ShowMITMSoftwareInterstitial(
+          dynamic_interstitial.mitm_software.name,
+          g_config.Pointer()->IsEnterpriseManaged());
       return;
   }
 }
