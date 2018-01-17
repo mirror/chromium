@@ -7,12 +7,32 @@
 #include "core/editing/PositionWithAffinity.h"
 #include "core/editing/TextAffinity.h"
 #include "core/editing/testing/EditingTestBase.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 
 namespace blink {
 
 class LocalCaretRectTest : public EditingTestBase {};
 
-TEST_F(LocalCaretRectTest, DOMAndFlatTrees) {
+// Helper class to run the same test code with and without LayoutNG
+class ParameterizedLocalCaretRectTest
+    : public ::testing::WithParamInterface<bool>,
+      private ScopedLayoutNGForTest,
+      private ScopedLayoutNGPaintFragmentsForTest,
+      public LocalCaretRectTest {
+ public:
+  ParameterizedLocalCaretRectTest()
+      : ScopedLayoutNGForTest(GetParam()),
+        ScopedLayoutNGPaintFragmentsForTest(GetParam()) {}
+
+ protected:
+  bool LayoutNGEnabled() const { return GetParam(); }
+};
+
+INSTANTIATE_TEST_CASE_P(All,
+                        ParameterizedLocalCaretRectTest,
+                        ::testing::Bool());
+
+TEST_P(ParameterizedLocalCaretRectTest, DOMAndFlatTrees) {
   const char* body_content =
       "<p id='host'><b id='one'>1</b></p><b id='two'>22</b>";
   const char* shadow_content =
@@ -34,7 +54,7 @@ TEST_F(LocalCaretRectTest, DOMAndFlatTrees) {
   EXPECT_EQ(caret_rect_from_dom_tree.rect, caret_rect_from_flat_tree.rect);
 }
 
-TEST_F(LocalCaretRectTest, SimpleText) {
+TEST_P(ParameterizedLocalCaretRectTest, SimpleText) {
   // This test only records the current behavior. Future changes are allowed.
 
   LoadAhem();
@@ -60,7 +80,7 @@ TEST_F(LocalCaretRectTest, SimpleText) {
           .rect);
 }
 
-TEST_F(LocalCaretRectTest, MixedHeightText) {
+TEST_P(ParameterizedLocalCaretRectTest, MixedHeightText) {
   // This test only records the current behavior. Future changes are allowed.
 
   LoadAhem();
@@ -86,7 +106,7 @@ TEST_F(LocalCaretRectTest, MixedHeightText) {
           .rect);
 }
 
-TEST_F(LocalCaretRectTest, RtlText) {
+TEST_P(ParameterizedLocalCaretRectTest, RtlText) {
   // This test only records the current behavior. Future changes are allowed.
 
   LoadAhem();
@@ -113,6 +133,7 @@ TEST_F(LocalCaretRectTest, RtlText) {
           .rect);
 }
 
+// TODO(xiaochengh): Fix NG LocalCaretText computation for vertical text.
 TEST_F(LocalCaretRectTest, VerticalText) {
   // This test only records the current behavior. Future changes are allowed.
 
@@ -140,7 +161,7 @@ TEST_F(LocalCaretRectTest, VerticalText) {
           .rect);
 }
 
-TEST_F(LocalCaretRectTest, TwoLinesOfTextWithSoftWrap) {
+TEST_P(ParameterizedLocalCaretRectTest, TwoLinesOfTextWithSoftWrap) {
   // This test only records the current behavior. Future changes are allowed.
 
   LoadAhem();
