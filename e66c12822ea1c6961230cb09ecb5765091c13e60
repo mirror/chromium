@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8fa13b7_7ab76f39",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-17T22:35:36Z",
+      "side": 1,
+      "message": "should this not be if / else if / else if ? Or maybe turn this into a loop over a vector like\n\n  std::vector\u003cBubbleIconView*\u003e icons \u003d {manage_passwords_icon_view_,\n                                        saved_credit_card_icon_view_,\n                                        translate_icon_view_};\n\nIt would be nice if we had a way to make sure this stayed in the same order as the icons in the UI, or is that not a goal?\n\nAs far as ShouldViewWithBubbleTriggerAccessibilityFocus, that should either be a file local static or a lambda within this function; there\u0027s no need to make it a member function. In fact if you use the loop mentioned above you can just inline the fn body.",
+      "range": {
+        "startLine": 656,
+        "startChar": 6,
+        "endLine": 664,
+        "endChar": 12
+      },
+      "revId": "e66c12822ea1c6961230cb09ecb5765091c13e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
