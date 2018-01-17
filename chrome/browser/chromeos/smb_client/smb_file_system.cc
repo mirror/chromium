@@ -133,12 +133,24 @@ SmbProviderClient* SmbFileSystem::GetSmbProviderClient() const {
   return chromeos::DBusThreadManager::Get()->GetSmbProviderClient();
 }
 
+void SmbFileSystem::Abort() {
+  // TODO(zentaro): To implement Abort() correctly will require storing a
+  // request id unique to each method call. For now just provide this
+  // no-op implementation.
+  LOG(WARNING) << "Ignoring abort request. Abort is not implemented yet.";
+}
+
+AbortCallback CreateAbortCallback() {
+  // TODO(zentaro): Add a request id parameter and bind it to the abort method.
+  return base::BindOnce(&SmbFileSystem::Abort, weak_ptr_factory_.GetWeakPtr());
+}
+
 AbortCallback SmbFileSystem::RequestUnmount(
     const storage::AsyncFileUtil::StatusCallback& callback) {
   GetSmbProviderClient()->Unmount(
       GetMountId(), base::BindOnce(&SmbFileSystem::HandleRequestUnmountCallback,
                                    weak_ptr_factory_.GetWeakPtr(), callback));
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 void SmbFileSystem::HandleRequestUnmountCallback(
@@ -155,7 +167,7 @@ AbortCallback SmbFileSystem::GetMetadata(
       GetMountId(), entry_path,
       base::BindOnce(&SmbFileSystem::HandleRequestGetMetadataEntryCallback,
                      weak_ptr_factory_.GetWeakPtr(), fields, callback));
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 AbortCallback SmbFileSystem::GetActions(
@@ -164,7 +176,7 @@ AbortCallback SmbFileSystem::GetActions(
   const std::vector<file_system_provider::Action> actions;
   // No actions are currently supported.
   callback.Run(actions, base::File::FILE_OK);
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 AbortCallback SmbFileSystem::ExecuteAction(
@@ -172,7 +184,7 @@ AbortCallback SmbFileSystem::ExecuteAction(
     const std::string& action_id,
     const storage::AsyncFileUtil::StatusCallback& callback) {
   NOTIMPLEMENTED();
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 AbortCallback SmbFileSystem::ReadDirectory(
@@ -182,7 +194,7 @@ AbortCallback SmbFileSystem::ReadDirectory(
       GetMountId(), directory_path,
       base::BindOnce(&SmbFileSystem::HandleRequestReadDirectoryCallback,
                      weak_ptr_factory_.GetWeakPtr(), callback));
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 AbortCallback SmbFileSystem::OpenFile(const base::FilePath& file_path,
@@ -194,7 +206,7 @@ AbortCallback SmbFileSystem::OpenFile(const base::FilePath& file_path,
       GetMountId(), file_path, writeable,
       base::BindOnce(&SmbFileSystem::HandleRequestOpenFileCallback,
                      weak_ptr_factory_.GetWeakPtr(), callback));
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 void SmbFileSystem::HandleRequestOpenFileCallback(
@@ -211,7 +223,7 @@ AbortCallback SmbFileSystem::CloseFile(
       GetMountId(), file_handle,
       base::BindOnce(&SmbFileSystem::HandleRequestCloseFileCallback,
                      weak_ptr_factory_.GetWeakPtr(), callback));
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 // TODO(baileyberro): refactor basic error callbacks out into one function.
@@ -228,7 +240,7 @@ AbortCallback SmbFileSystem::ReadFile(
     int length,
     const ReadChunkReceivedCallback& callback) {
   NOTIMPLEMENTED();
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 AbortCallback SmbFileSystem::CreateDirectory(
@@ -236,14 +248,14 @@ AbortCallback SmbFileSystem::CreateDirectory(
     bool recursive,
     const storage::AsyncFileUtil::StatusCallback& callback) {
   NOTIMPLEMENTED();
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 AbortCallback SmbFileSystem::CreateFile(
     const base::FilePath& file_path,
     const storage::AsyncFileUtil::StatusCallback& callback) {
   NOTIMPLEMENTED();
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 AbortCallback SmbFileSystem::DeleteEntry(
@@ -251,7 +263,7 @@ AbortCallback SmbFileSystem::DeleteEntry(
     bool recursive,
     const storage::AsyncFileUtil::StatusCallback& callback) {
   NOTIMPLEMENTED();
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 AbortCallback SmbFileSystem::CopyEntry(
@@ -259,7 +271,7 @@ AbortCallback SmbFileSystem::CopyEntry(
     const base::FilePath& target_path,
     const storage::AsyncFileUtil::StatusCallback& callback) {
   NOTIMPLEMENTED();
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 AbortCallback SmbFileSystem::MoveEntry(
@@ -267,7 +279,7 @@ AbortCallback SmbFileSystem::MoveEntry(
     const base::FilePath& target_path,
     const storage::AsyncFileUtil::StatusCallback& callback) {
   NOTIMPLEMENTED();
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 AbortCallback SmbFileSystem::Truncate(
@@ -275,7 +287,7 @@ AbortCallback SmbFileSystem::Truncate(
     int64_t length,
     const storage::AsyncFileUtil::StatusCallback& callback) {
   NOTIMPLEMENTED();
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 AbortCallback SmbFileSystem::WriteFile(
@@ -285,7 +297,7 @@ AbortCallback SmbFileSystem::WriteFile(
     int length,
     const storage::AsyncFileUtil::StatusCallback& callback) {
   NOTIMPLEMENTED();
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 AbortCallback SmbFileSystem::AddWatcher(
@@ -300,7 +312,7 @@ AbortCallback SmbFileSystem::AddWatcher(
   // This method should not be getting called since watchable is set to false.
   // crbug.com/796334.
   callback.Run(base::File::FILE_ERROR_INVALID_OPERATION);
-  return AbortCallback();
+  return CreateAbortCallback();
 }
 
 void SmbFileSystem::RemoveWatcher(
