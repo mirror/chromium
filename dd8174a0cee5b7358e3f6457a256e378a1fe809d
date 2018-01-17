@@ -39,6 +39,24 @@
       "revId": "dd8174a0cee5b7358e3f6457a256e378a1fe809d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d8b8efc_d9d5bb3b",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-17T17:58:34Z",
+      "side": 1,
+      "message": "Don\u0027t we need to check IsAvailable() after firing beforeinput?\n\nI was also predicting you\u0027d want me to use WARN_UNUSED_RESULT and return the final value of IsAvailable(). Do you not want me to do this?",
+      "parentUuid": "f472058e_32c15903",
+      "revId": "dd8174a0cee5b7358e3f6457a256e378a1fe809d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
