@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c75356a3_e6534964",
+        "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-17T16:15:55Z",
+      "side": 1,
+      "message": "Polygerrit is currently having issues showing results from previous try jobs, but this test fails without the code fix. It shows {\"IconLabelBubbleView\", \"WebView\"} -- except on Mac, where it shows {\"IconLabelBubbleView\", \"IconLabelBubbleView\", \"WebView\", \"WebView\"}.\n\nThe IconLabelBubbleView should not get focused when switching tabs.",
+      "revId": "e0963947a67f1b45ceccae3aa502b13f10d38eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
