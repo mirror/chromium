@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1ae2e2e_bd995597",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-17T06:11:23Z",
+      "side": 1,
+      "message": "If we receive key event sequence like (press Space -\u003e press Ctrl -\u003e release Space -\u003e release Ctrl), press Space event is sent to the client, but release Space event will not be sent to the client because it\u0027s a reserved shortcut.\nIt\u0027s not desired behavior, so I added this check as same as in L72.",
+      "parentUuid": "5327c77b_292ddc8c",
+      "revId": "fc260ca4a039c223469d39279553490877dba542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40fbbdb2_95581a86",
         "filename": "components/exo/keyboard.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-16T14:48:35Z",
       "side": 1,
       "message": "should we wait with this until we receive a key that is not a reserved accelerator?\n\ndo we need to clear pending_keys_acks_ when we do this?\n\nnormally we send the modifiers before the enter event, this doing that differently. it would be better if we could be consistent.\n\ncan we call \"SetFocus(focus_)\" to solve some of the above issues?",
+      "revId": "fc260ca4a039c223469d39279553490877dba542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58407e9b_78ec4719",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-17T06:11:23Z",
+      "side": 1,
+      "message": "I think we don\u0027t need to wait another key event before sending enter/leave event.\n\nWe don\u0027t want to clear pending_keys_acks_ here because focused window is not changed actually. Non-reserved shortcuts pressed before a reserved shortcut are still valid and should be processed if they are not consumed by the client.\n\nI moved this part to after sending the modifiers.",
+      "parentUuid": "40fbbdb2_95581a86",
       "revId": "fc260ca4a039c223469d39279553490877dba542",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
