@@ -313,6 +313,24 @@
     },
     {
       "key": {
+        "uuid": "6d2c20d6_2fad2321",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-17T08:28:42Z",
+      "side": 1,
+      "message": "Thank you. Done.",
+      "parentUuid": "4afdae37_f3db4e7a",
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7be76c8_8862e0dc",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
         "patchSetId": 4
