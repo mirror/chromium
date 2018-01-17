@@ -501,7 +501,9 @@
                 {
                     "name": "EnabledWithGoogleBranding_Launched",
                     "enable_features": [
-                        "AutofillUpstreamRequestCvcIfMissing"
+                        "AutofillUpstreamRequestCvcIfMissing",
+                        "AutofillUpstreamShowGoogleLogo",
+                        "AutofillUpstreamShowNewUi"
                     ]
                 }
             ]
