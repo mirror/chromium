@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5bd5753_c7013138",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T02:45:31Z",
+      "side": 1,
+      "message": "mac_views_browser\u003d1 actually doesn\u0027t have a milestone yet. you could be waiting a long time :/\n\nWhat _does_ have a milestone (currently m66) is --enable-features\u003dSecondaryUiMd which enables a bunch of secondary UI on Mac to use Views instead of Cocoa, but not the main browser window.\n\nbut unless you are trying to modify chrome/browser/ui/views/browser_view and its subviews (toolbar, omnibox, etc.) I don\u0027t think you actually need to depend on mac_views_browser\u003d1. \n\nTBH I think all your stuff should Just Work on Mac (you don\u0027t even need --enable-features\u003dSecondaryUiMd).\n\nIt\u0027s true we haven\u0027t played much with views::Webview; it shouldn\u0027t be blocked by mac_views_browser\u003d1, but it might need some tweaks, e.g., to ensure the correct WebContentsViewDelegate is attached.\n\nWhat\u0027s the current set of problems you\u0027re running into on Mac?",
+      "revId": "def6a65684c6b2b74d2f12cf51f16a37dc0fc737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0745cae9_cd41e116",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 3154,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T02:45:31Z",
+      "side": 1,
+      "message": "this [i.e. if (mac) { sources -\u003d foo_mac.cc} ] looks weird enough to probably deserve a comment",
+      "revId": "def6a65684c6b2b74d2f12cf51f16a37dc0fc737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
