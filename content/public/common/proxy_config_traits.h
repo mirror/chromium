@@ -7,10 +7,10 @@
 
 #include "content/common/content_export.h"
 #include "content/public/common/proxy_config.mojom.h"
-#include "net/proxy/proxy_bypass_rules.h"
-#include "net/proxy/proxy_config.h"
-#include "net/proxy/proxy_config_source.h"
-#include "net/proxy/proxy_list.h"
+#include "net/proxy_resolution/proxy_bypass_rules.h"
+#include "net/proxy_resolution/proxy_config.h"
+#include "net/proxy_resolution/proxy_config_source.h"
+#include "net/proxy_resolution/proxy_list.h"
 #include "url/mojo/url_gurl_struct_traits.h"
 
 // This file handles the serialization of net::ProxyConfig.
