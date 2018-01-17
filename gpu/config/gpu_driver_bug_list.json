@@ -66,6 +66,9 @@
       "comment": "Corresponds to software rendering list #140",
       "description": "Disable depth textures on older Qualcomm GPUs (legacy blacklist entry, original problem unclear)",
       "cr_bugs": [682075],
+      "os": {
+        "type": "android"
+      },
       "gl_renderer": "Adreno \\(TM\\) [23].*",
       "features": [
         "disable_depth_texture"
@@ -174,6 +177,9 @@
       "id": 31,
       "cr_bugs": [154715, 10068, 269829, 294779, 285292],
       "description": "The Mali-Txxx driver does not guarantee flush ordering",
+      "os": {
+        "type": "android"
+      },
       "gl_vendor": "ARM.*",
       "gl_renderer": "Mali-T.*",
       "features": [
@@ -195,6 +201,9 @@
     {
       "id": 33,
       "description": "Share group-related crashes and poor context switching perf on Imagination drivers",
+      "os": {
+        "type": "android"
+      },
       "gl_vendor": "Imagination.*",
       "features": [
         "use_virtualized_gl_contexts"
@@ -952,6 +961,9 @@
       "id": 108,
       "cr_bugs": [449150],
       "description": "Mali-4xx does not support GL_RGB format",
+      "os": {
+        "type": "android"
+      },
       "gl_vendor": "ARM.*",
       "gl_renderer": ".*Mali-4.*",
       "features": [
@@ -1652,6 +1664,9 @@
       "id": 165,
       "cr_bugs": [596774],
       "description": "Unpacking overlapping rows from unpack buffers is unstable on NVIDIA GL driver",
+      "os": {
+        "type": "linux"
+      },
       "gl_vendor": "NVIDIA.*",
       "features": [
         "unpack_overlapping_rows_separately_unpack_buffer"
@@ -2003,18 +2018,14 @@
       "id": 192,
       "description": "Decode and encode before generateMipmap for srgb format textures on os except macosx",
       "cr_bugs": [634519],
+      "os": {
+        "type": "linux"
+      },
       "gl_type": "gl",
       "gl_version": {
         "op": "<",
         "value": "4.4"
       },
-      "exceptions": [
-        {
-          "os": {
-            "type": "macosx"
-          }
-        }
-      ],
       "features": [
         "decode_encode_srgb_for_generatemipmap"
       ]
@@ -2264,6 +2275,9 @@
       "id": 213,
       "description": "The Mali-Gxx driver does not guarantee flush ordering",
       "cr_bugs": [678508],
+      "os": {
+        "type": "android"
+      },
       "gl_vendor": "ARM.*",
       "gl_renderer": "Mali-G.*",
       "features": [
@@ -2279,6 +2293,9 @@
       ],
       "description": "Some Adreno 3xx don't setup scissor state correctly when FBO0 is bound, nor support MSAA properly.",
       "cr_bugs": [670607, 682075, 696627, 698197, 707839],
+      "os": {
+        "type": "android"
+      },
       "gl_renderer": "Adreno \\(TM\\) 3.*",
       "features": [
         "force_update_scissor_state_when_binding_fbo0",

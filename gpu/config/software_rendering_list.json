@@ -1214,21 +1214,6 @@
       ]
     },
     {
-      "id": 126,
-      "description": "Don't allow ES3 on Mac core profile < 4.1",
-      "cr_bugs": [295792],
-      "os": {
-        "type": "macosx"
-      },
-      "gl_version": {
-        "op": "<",
-        "value": "4.1"
-      },
-      "features": [
-        "accelerated_webgl2"
-      ]
-    },
-    {
       "id":129,
       "description": "Intel drivers are buggy on Linux 2.x",
       "cr_bugs": [662909],
@@ -1386,6 +1371,9 @@
       "comment": "Corresponds to GPU driver bugs #19, #214",
       "description": "MSAA and depth texture buggy on Adreno 3xx, also disable WebGL2",
       "cr_bugs": [449116, 698197],
+      "os": {
+        "type": "android"
+      },
       "gl_renderer": "Adreno \\(TM\\) 3.*",
       "features": [
         "accelerated_webgl2"

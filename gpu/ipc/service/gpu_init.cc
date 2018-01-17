@@ -125,6 +125,8 @@ bool GpuInit::InitializeAndStartSandbox(base::CommandLine* command_line,
       gpu_info_.driver_vendor == "NVIDIA" && !CanAccessNvidiaDeviceFile())
     return false;
 #endif
+
+#if defined(OS_MACOSX) || defined(OS_WIN)
   if (!PopGpuFeatureInfoCache(&gpu_feature_info_)) {
     // Compute blacklist and driver bug workaround decisions based on basic GPU
     // info.
@@ -133,11 +135,13 @@ bool GpuInit::InitializeAndStartSandbox(base::CommandLine* command_line,
         gpu_preferences.disable_gpu_driver_bug_workarounds,
         gpu_preferences.log_gpu_control_list_decisions, command_line);
   }
+  // The dual-GPU switching mechanim is only effective on MacOSX at the moment.
   if (gpu::SwitchableGPUsSupported(gpu_info_, *command_line)) {
     gpu::InitializeSwitchableGPUs(
         gpu_feature_info_.enabled_gpu_driver_bug_workarounds);
   }
-#endif  // OS_ANDROID
+#endif  // OS_MACOSX || OS_WIN
+#endif  // !OS_ANDROID
   gpu_info_.in_process_gpu = false;
 
   bool enable_watchdog = !gpu_preferences.disable_gpu_watchdog &&
@@ -228,6 +232,7 @@ bool GpuInit::InitializeAndStartSandbox(base::CommandLine* command_line,
     if (gpu_info_.context_info_state == gpu::kCollectInfoFatalFailure)
       return false;
     gpu::SetKeysForCrashLogging(gpu_info_);
+#if !defined(OS_WIN)
     gpu_feature_info_ = gpu::ComputeGpuFeatureInfo(
         gpu_info_, gpu_preferences.ignore_gpu_blacklist,
         gpu_preferences.disable_gpu_driver_bug_workarounds,
@@ -242,8 +247,9 @@ bool GpuInit::InitializeAndStartSandbox(base::CommandLine* command_line,
         return false;
       }
     }
+#endif  // !OS_WIN
   }
-#endif
+#endif  // !OS_MACOSX
   if (use_swiftshader) {
     AdjustInfoToSwiftShader();
   }
@@ -378,8 +384,9 @@ bool GpuInit::ShouldEnableSwiftShader(base::CommandLine* command_line) {
   // Don't overwrite user preference.
   if (command_line->HasSwitch(switches::kUseGL))
     return false;
-  if (gpu_feature_info_.status_values[GPU_FEATURE_TYPE_ACCELERATED_WEBGL] !=
-      kGpuFeatureStatusEnabled) {
+  if (gpu_feature_info_.IsInitialized() &&
+      gpu_feature_info_.status_values[GPU_FEATURE_TYPE_ACCELERATED_WEBGL] !=
+          kGpuFeatureStatusEnabled) {
     command_line->AppendSwitchASCII(
         switches::kUseGL, gl::kGLImplementationSwiftShaderForWebGLName);
     return true;
@@ -391,7 +398,13 @@ bool GpuInit::ShouldEnableSwiftShader(base::CommandLine* command_line) {
 }
 
 void GpuInit::AdjustInfoToSwiftShader() {
+  // Still save the applied GPU blacklist entries, so in about:gpu users can
+  // see why Chrome switches to SwiftShader.
+  std::vector<uint32_t> saved_applied_gpu_blacklist_entries(
+      gpu_feature_info_.applied_gpu_blacklist_entries);
   gpu_feature_info_ = ComputeGpuFeatureInfoForSwiftShader();
+  gpu_feature_info_.applied_gpu_blacklist_entries =
+      saved_applied_gpu_blacklist_entries;
   gpu_info_.gl_vendor = "Google Inc. (" + gpu_info_.gl_vendor + ")";
   gpu_info_.gl_renderer = "Google SwiftShader (" + gpu_info_.gl_renderer + ")";
   gpu_info_.gl_version =
