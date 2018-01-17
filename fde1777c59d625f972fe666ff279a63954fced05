@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aee0ff0f_f9a8c8fd",
+        "filename": "base/fuchsia/fuchsia_logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T20:39:52Z",
+      "side": 1,
+      "message": "What I meant in the comment on the original CL was to wrap this in an #if DCHECK_IS_ON(), so that it can reduce to just EAT_STREAM_PARAMETERS when DCHECK is off.\n\nThere\u0027s an intentional difference in whether |condition| is referenced, even though it\u0027s not actually run or even compiled-in, necessarily, in non-DCHECK builds, between DCHECK (which always references |condition|) and DLOG_IF (which only references it when DCHECKs are enabled).",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 50
+      },
+      "revId": "fde1777c59d625f972fe666ff279a63954fced05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
