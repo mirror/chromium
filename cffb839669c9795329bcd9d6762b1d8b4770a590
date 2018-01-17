@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "729d97ad_4212cbab",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2018-01-17T12:40:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6af6214_e55007aa",
+      "range": {
+        "startLine": 184,
+        "startChar": 56,
+        "endLine": 184,
+        "endChar": 60
+      },
+      "revId": "cffb839669c9795329bcd9d6762b1d8b4770a590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afbd59f8_fcdbbf8c",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "cffb839669c9795329bcd9d6762b1d8b4770a590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1abb87ab_df82ffe9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2018-01-17T12:40:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afbd59f8_fcdbbf8c",
+      "range": {
+        "startLine": 185,
+        "startChar": 15,
+        "endLine": 185,
+        "endChar": 21
+      },
+      "revId": "cffb839669c9795329bcd9d6762b1d8b4770a590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
