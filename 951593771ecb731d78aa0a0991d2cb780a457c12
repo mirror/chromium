@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b0a41bd_6b9980ed",
+        "filename": "content/test/proxy_service_mojo_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-17T19:28:53Z",
+      "side": 1,
+      "message": "Rename this to proxy_resolution_service_?",
+      "range": {
+        "startLine": 149,
+        "startChar": 47,
+        "endLine": 149,
+        "endChar": 61
+      },
+      "revId": "951593771ecb731d78aa0a0991d2cb780a457c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
