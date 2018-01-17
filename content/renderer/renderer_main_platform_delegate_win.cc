@@ -53,7 +53,10 @@ void RendererMainPlatformDelegate::PlatformInitialize() {
     std::unique_ptr<icu::TimeZone> zone(icu::TimeZone::createDefault());
   }
 
-  InitializeDWriteFontProxy();
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce([]() {
+        InitializeDWriteFontProxy(ChildThread::Get()->GetConnector());
+      }));
 
   // TODO(robliao): This should use WebScreenInfo. See http://crbug.com/604555.
   blink::WebFontRendering::SetDeviceScaleFactor(display::win::GetDPIScale());

@@ -87,11 +87,11 @@ class DWriteFontCollectionProxy
 
   bool CreateFamily(UINT32 family_index);
 
-  void SetProxy(mojom::DWriteFontProxyPtrInfo);
-
   mojom::DWriteFontProxy& GetFontProxy();
 
  private:
+  void SetProxy(mojom::DWriteFontProxyPtrInfo);
+
   Microsoft::WRL::ComPtr<IDWriteFactory> factory_;
   std::vector<Microsoft::WRL::ComPtr<DWriteFontFamilyProxy>> families_;
   std::map<base::string16, UINT32> family_names_;
