@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "403a5715_6fa9d308",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T01:58:01Z",
+      "side": 1,
+      "message": "nit: just frame_tree_node",
+      "range": {
+        "startLine": 478,
+        "startChar": 2,
+        "endLine": 478,
+        "endChar": 38
+      },
+      "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13cf8600_ce743f79",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T01:58:01Z",
+      "side": 1,
+      "message": "nit: s/host/hosts/  (Sorry, I had a typo of my own when I suggested this)",
+      "range": {
+        "startLine": 255,
+        "startChar": 37,
+        "endLine": 255,
+        "endChar": 41
+      },
+      "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e35bae2_5eadfc94",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 7107,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T01:58:01Z",
+      "side": 1,
+      "message": "I\u0027d rename this to DidEnforceInsecureRequestPolicy(), given that enforcement is now done before calling into this.  And similarly for EnforceInsecureNavigationsSet below.",
+      "range": {
+        "startLine": 7107,
+        "startChar": 15,
+        "endLine": 7107,
+        "endChar": 43
+      },
+      "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25da3178_fe991c71",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1716,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T01:58:01Z",
+      "side": 1,
+      "message": "tiny nit: end with period.",
+      "range": {
+        "startLine": 1716,
+        "startChar": 28,
+        "endLine": 1716,
+        "endChar": 29
+      },
+      "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0b1e04_1cd29184",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1718,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T01:58:01Z",
+      "side": 1,
+      "message": "Perhaps 1,3,4 better belong down on line 1739, where this policy is?  And if you move it there, 2 can probably be removed, since that\u0027s already covered in line 1728.",
+      "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e579dc64_985cf34c",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1720,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T01:58:01Z",
+      "side": 1,
+      "message": "nit: maybe rephrase as \"a browser-initiated main frame navigation\"?",
+      "range": {
+        "startLine": 1720,
+        "startChar": 22,
+        "endLine": 1720,
+        "endChar": 73
+      },
+      "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad30674_1b8e08ac",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T01:58:01Z",
+      "side": 1,
+      "message": "Perhaps elaborate that for the browser-initiated case, no upgrade is needed, and a navigation via a RemoteFrame should\u0027ve already been upgraded in the initiator\u0027s process?",
+      "revId": "4737581ec85110ebdcabe50a0dc21403522d6904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
