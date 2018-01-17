@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9ebd0d2_d1bebd51",
+        "filename": "cc/base/switches.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T23:53:18Z",
+      "side": 1,
+      "message": "aborts what?",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d884aea9_e4123c5d",
+        "filename": "cc/base/switches.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T23:53:18Z",
+      "side": 1,
+      "message": "i\u0027d prefer not to put a cc prefix on flags",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61040e6_82d93f22",
+        "filename": "cc/scheduler/scheduler.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T23:53:18Z",
+      "side": 1,
+      "message": "\"Returns whether the frame\"",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133b8d61_1d3a1261",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T23:53:18Z",
+      "side": 1,
+      "message": "The integration test at the LayerTreeTest level is good, but a unit test of the scheduler only would be nice too, to verify if this returns false that it does the abort correctly and sets the right states?",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a8a165_0cbfb336",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T23:53:18Z",
+      "side": 1,
+      "message": "nit: id drop the \"through |handle_visibility_changed|\" as that doesnt refer to any variable visible from here.",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ba6ecd_dbf16fc1",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T23:53:18Z",
+      "side": 1,
+      "message": "There\u0027s nothing to reset if there\u0027s no damage right?",
+      "range": {
+        "startLine": 891,
+        "startChar": 16,
+        "endLine": 891,
+        "endChar": 45
+      },
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "065487e7_a3e2845f",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 2137,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T23:53:18Z",
+      "side": 1,
+      "message": "Oh, right, also HasDamage() expects CanDraw() to be true at this time. Can you mention that so we can remember if/when that changes.",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7045d8bc_b9d84740",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 2139,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T23:53:18Z",
+      "side": 1,
+      "message": "So I looked at other calls of this and noticed that it can return false. And then I think HasDamage could crash?\n\nIf it returns false, it\u0027s cuz we\u0027re not going to draw until we get a new LayerTreeFrameSink/GLContext or until we have a non-empty layer tree. Both of these cases should be unit testable to verify we handle them in a sane way.",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d365ffdf_ef638169",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T23:53:18Z",
+      "side": 1,
+      "message": "Can you add comments throughout this test explaining what its doing and what its checking for?",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
