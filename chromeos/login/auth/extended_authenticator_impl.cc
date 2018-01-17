@@ -280,6 +280,7 @@ void ExtendedAuthenticatorImpl::OnMountComplete(
     }
     return;
   }
+  LOG(WARNING) << "MountEx failed. Error: " << return_code;
   AuthState state = FAILED_MOUNT;
   if (return_code == cryptohome::MOUNT_ERROR_TPM_COMM_ERROR ||
       return_code == cryptohome::MOUNT_ERROR_TPM_DEFEND_LOCK ||

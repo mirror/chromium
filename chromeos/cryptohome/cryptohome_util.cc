@@ -26,10 +26,6 @@ MountError BaseReplyToMountError(const base::Optional<BaseReply>& reply) {
     LOGIN_LOG(ERROR) << "MountEx failed with no MountReply extension in reply.";
     return MOUNT_ERROR_FATAL;
   }
-  if (reply->has_error() && reply->error() != CRYPTOHOME_ERROR_NOT_SET) {
-    LOGIN_LOG(ERROR) << "MountEx failed (CryptohomeErrorCode): "
-                     << reply->error();
-  }
   return CryptohomeErrorToMountError(reply->error());
 }
 

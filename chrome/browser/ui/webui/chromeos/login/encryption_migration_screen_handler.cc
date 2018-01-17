@@ -581,11 +581,12 @@ void EncryptionMigrationScreenHandler::StartMigration() {
 
 void EncryptionMigrationScreenHandler::OnMountExistingVault(
     base::Optional<cryptohome::BaseReply> reply) {
-  if (cryptohome::BaseReplyToMountError(reply) !=
-      cryptohome::MOUNT_ERROR_NONE) {
+  cryptohome::MountError return_code = cryptohome::BaseReplyToMountError(reply);
+  if (return_code != cryptohome::MOUNT_ERROR_NONE) {
     RecordMigrationResultMountFailure(IsResumingIncompleteMigration(),
                                       IsArcKiosk());
     UpdateUIState(UIState::MIGRATION_FAILED);
+    LOG(WARNING) << "Mount existing vault failed. Error: " << return_code;
     return;
   }
 
