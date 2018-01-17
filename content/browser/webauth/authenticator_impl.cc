@@ -10,19 +10,60 @@
 
 #include "base/logging.h"
 #include "base/timer/timer.h"
+#include "content/browser/bad_message.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/common/origin_util.h"
 #include "content/public/common/service_manager_connection.h"
 #include "crypto/sha2.h"
 #include "device/u2f/u2f_hid_discovery.h"
 #include "device/u2f/u2f_register.h"
 #include "device/u2f/u2f_request.h"
 #include "device/u2f/u2f_return_code.h"
+#include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "services/service_manager/public/cpp/connector.h"
 
 namespace content {
 
 namespace {
 constexpr int32_t kCoseEs256 = -7;
+
+// Ensure that the origin's effective domain is a valid domain.
+// Only the domain format of host is valid.
+bool HasValidEffectiveDomain(url::Origin caller_origin) {
+  if (caller_origin.unique() || caller_origin.GetURL().HostIsIPAddress() ||
+      !content::IsOriginSecure(caller_origin.GetURL())) {
+    return false;
+  }
+  return true;
+}
+
+// Ensure the RpID is a registrable domain suffix of or equal to the origin's
+// effective domain,
+bool IsRelyingPartyIdValid(const std::string& relying_party_id,
+                           url::Origin caller_origin) {
+  if (relying_party_id.empty()) {
+    return false;
+  }
+
+  if (caller_origin.host() == relying_party_id) {
+    return true;
+  }
+
+  if (caller_origin.DomainIs(relying_party_id)) {
+    if (net::registry_controlled_domains::HostHasRegistryControlledDomain(
+            caller_origin.host(),
+            net::registry_controlled_domains::INCLUDE_UNKNOWN_REGISTRIES,
+            net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES)) {
+      if (net::registry_controlled_domains::HostHasRegistryControlledDomain(
+              relying_party_id,
+              net::registry_controlled_domains::INCLUDE_UNKNOWN_REGISTRIES,
+              net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
 bool HasValidAlgorithm(
     const std::vector<webauth::mojom::PublicKeyCredentialParametersPtr>&
@@ -84,27 +125,22 @@ void AuthenticatorImpl::MakeCredential(
         webauth::mojom::AuthenticatorStatus::PENDING_REQUEST, nullptr);
     return;
   }
-
-  // Steps 6 & 7 of https://w3c.github.io/webauthn/#createCredential
-  // opaque origin
   url::Origin caller_origin = render_frame_host_->GetLastCommittedOrigin();
-  if (caller_origin.unique()) {
-    std::move(callback).Run(
-        webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR, nullptr);
+
+  if (!HasValidEffectiveDomain(caller_origin)) {
+    bad_message::ReceivedBadMessage(render_frame_host_->GetProcess(),
+                                    bad_message::AUTH_INVALID_EFFECTIVE_DOMAIN);
+    std::move(callback).Run(webauth::mojom::AuthenticatorStatus::INVALID_DOMAIN,
+                            nullptr);
     return;
   }
 
-  std::string relying_party_id;
-  if (options->relying_party->id) {
-    // TODO(kpaulhamus): Check if relyingPartyId is a registrable domain
-    // suffix of and equal to effectiveDomain and set relyingPartyId
-    // appropriately.
-    // TODO(kpaulhamus): Add unit tests for domains. http://crbug.com/785950.
-    relying_party_id = *options->relying_party->id;
-  } else {
-    // Use the effective domain of the caller origin.
-    relying_party_id = caller_origin.host();
-    DCHECK(!relying_party_id.empty());
+  if (!IsRelyingPartyIdValid(options->relying_party->id, caller_origin)) {
+    bad_message::ReceivedBadMessage(render_frame_host_->GetProcess(),
+                                    bad_message::AUTH_INVALID_RELYING_PARTY);
+    std::move(callback).Run(webauth::mojom::AuthenticatorStatus::INVALID_DOMAIN,
+                            nullptr);
+    return;
   }
 
   // Check that at least one of the cryptographic parameters is supported.
@@ -130,7 +166,8 @@ void AuthenticatorImpl::MakeCredential(
   // the application identity (i.e. relying_party_id) of the application
   // requesting the registration.
   std::vector<uint8_t> application_parameter(crypto::kSHA256Length);
-  crypto::SHA256HashString(relying_party_id, application_parameter.data(),
+  crypto::SHA256HashString(options->relying_party->id,
+                           application_parameter.data(),
                            application_parameter.size());
 
   // Start the timer (step 16 - https://w3c.github.io/webauthn/#makeCredential).
@@ -163,7 +200,8 @@ void AuthenticatorImpl::MakeCredential(
   // http://crbug.com/785955.
   u2f_request_ = device::U2fRegister::TryRegistration(
       registered_keys, client_data_hash, application_parameter,
-      relying_party_id, {u2f_discovery_.get()}, std::move(response_callback));
+      options->relying_party->id, {u2f_discovery_.get()},
+      std::move(response_callback));
 }
 
 // Callback to handle the async registration response from a U2fDevice.
