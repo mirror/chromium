@@ -7,7 +7,8 @@ include_rules = [
   "+ui/gfx",
   "+ui/gl/test",
   "+ui/views",
-  "+ui/wm/public",
+  "+ui/wm/core",
+  "+ui/wm/public",	
 ]
 
 specific_include_rules = {
