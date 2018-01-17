@@ -20,6 +20,7 @@
 #include "public/platform/modules/permissions/permission.mojom-blink.h"
 #include "public/platform/modules/permissions/permission_status.mojom-blink.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
+#include "third_party/skia/include/core/SkBitmap.h"
 
 namespace blink {
 
@@ -112,7 +113,8 @@ void NotificationManager::OnPermissionServiceConnectionError() {
 void NotificationManager::DisplayNonPersistentNotification(
     const WebNotificationData& notification_data) {
   // TODO(crbug.com/595685): Pass the notification resources through here too.
-  GetNotificationService()->DisplayNonPersistentNotification(notification_data);
+  GetNotificationService()->DisplayNonPersistentNotification(notification_data,
+                                                             SkBitmap());
 }
 
 const mojom::blink::NotificationServicePtr&

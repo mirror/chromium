@@ -12,6 +12,7 @@
 #include "mojo/common/common_custom_types_struct_traits.h"
 #include "mojo/common/string16_struct_traits.h"
 #include "mojo/public/cpp/bindings/struct_traits.h"
+#include "skia/public/interfaces/bitmap_skbitmap_struct_traits.h"
 #include "third_party/WebKit/public/platform/modules/notifications/notification.mojom.h"
 #include "url/gurl.h"
 #include "url/mojo/url_gurl_struct_traits.h"

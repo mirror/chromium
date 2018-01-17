@@ -75,7 +75,8 @@ void BlinkNotificationServiceImpl::OnConnectionError() {
 }
 
 void BlinkNotificationServiceImpl::DisplayNonPersistentNotification(
-    const PlatformNotificationData& platform_notification_data) {
+    const PlatformNotificationData& platform_notification_data,
+    const SkBitmap& icon) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!Service())
     return;
