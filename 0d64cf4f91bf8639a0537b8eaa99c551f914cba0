@@ -183,6 +183,217 @@
       "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0ed220_66958447",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:33:50Z",
+      "side": 1,
+      "message": "Please add a TODO to introduce the assert-counterpart of CheckPublicKeySecurityRequirements here.",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5d824b_709638c8",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOriginTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:33:50Z",
+      "side": 1,
+      "message": "nit: Remove comment as it does not add much information.",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49236d52_7d2ecdd0",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOriginTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:33:50Z",
+      "side": 1,
+      "message": "nit: s/expected_effective_domain/",
+      "range": {
+        "startLine": 621,
+        "startChar": 16,
+        "endLine": 621,
+        "endChar": 32
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387281c8_f366f89a",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOriginTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:33:50Z",
+      "side": 1,
+      "message": "style nit: kTestCases, same below.",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb9167f_ee7b36e9",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOriginTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:33:50Z",
+      "side": 1,
+      "message": "nit: I\u0027d just remove this line and the one above, an origin can never look like this given that `about:` and `data:` are considered unique origins.",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd47c4dd_b98a5c12",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOriginTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:33:50Z",
+      "side": 1,
+      "message": "Please add a line for:\n\n\"example.com\", \"file://example.com/foo\"",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90072776_297c854d",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOriginTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:33:50Z",
+      "side": 1,
+      "message": "Please add a test with an IPV4 and IPV6 address too. According to the spec, those are not valid domains, but can be the values of the effective domain.",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf0d839_8f08a20c",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOriginTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:33:50Z",
+      "side": 1,
+      "message": "nit: No need to name the test struct. Here and above.\nnit: constexpr. Here and above.",
+      "range": {
+        "startLine": 646,
+        "startChar": 9,
+        "endLine": 646,
+        "endChar": 26
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33478769_9548b50f",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOriginTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:33:50Z",
+      "side": 1,
+      "message": "nit: Split this in a separate test.",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa26a84_91201f31",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOriginTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:33:50Z",
+      "side": 1,
+      "message": "nit: domain_set_from_dom",
+      "range": {
+        "startLine": 647,
+        "startChar": 16,
+        "endLine": 647,
+        "endChar": 26
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7214bbe_cac2fb6f",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOriginTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:33:50Z",
+      "side": 1,
+      "message": "nit: expected_effective_domain",
+      "range": {
+        "startLine": 648,
+        "startChar": 16,
+        "endLine": 648,
+        "endChar": 32
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
