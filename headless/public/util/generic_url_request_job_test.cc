@@ -78,8 +78,9 @@ class MockFetcher : public URLFetcher {
 
     // Record the request.
     std::string url = request->GetURLRequest()->url().spec();
-    fetch_request_->SetString("url", url);
-    fetch_request_->SetString("method", request->GetURLRequest()->method());
+    fetch_request_->SetKey("url", base::Value(url));
+    fetch_request_->SetKey("method",
+                           base::Value(request->GetURLRequest()->method()));
     std::unique_ptr<base::DictionaryValue> headers(new base::DictionaryValue);
     for (net::HttpRequestHeaders::Iterator it(request->GetHttpRequestHeaders());
          it.GetNext();) {
@@ -88,7 +89,7 @@ class MockFetcher : public URLFetcher {
     fetch_request_->Set("headers", std::move(headers));
     *received_post_data_ = request->GetPostData();
     if (!received_post_data_->empty() && received_post_data_->size() < 1024)
-      fetch_request_->SetString("post_data", *received_post_data_);
+      fetch_request_->SetKey("post_data", base::Value(*received_post_data_));
 
     const auto find_it = json_fetch_reply_map_->find(url);
     if (find_it == json_fetch_reply_map_->end()) {

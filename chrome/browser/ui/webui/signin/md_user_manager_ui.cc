@@ -130,6 +130,6 @@ void MDUserManagerUI::GetLocalizedStrings(
 #if defined(GOOGLE_CHROME_BUILD)
   localized_strings->SetString("buildType", "chrome");
 #else
-  localized_strings->SetString("buildType", "chromium");
+  localized_strings->SetKey("buildType", base::Value("chromium"));
 #endif
 }

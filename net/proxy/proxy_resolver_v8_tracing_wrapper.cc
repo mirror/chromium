@@ -28,8 +28,8 @@ std::unique_ptr<base::Value> NetLogErrorCallback(
     const base::string16* message,
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("line_number", line_number);
-  dict->SetString("message", *message);
+  dict->SetKey("line_number", base::Value(line_number));
+  dict->SetKey("message", base::Value(*message));
   return std::move(dict);
 }
 

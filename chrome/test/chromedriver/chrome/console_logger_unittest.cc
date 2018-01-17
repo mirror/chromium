@@ -132,17 +132,17 @@ void ConsoleLogParams(base::DictionaryValue* out_params,
                       int column,
                       const char* text) {
   if (source)
-    out_params->SetString("message.source", source);
+    out_params->SetPath({"message", "source"}, base::Value(source));
   if (url)
-    out_params->SetString("message.url", url);
+    out_params->SetPath({"message", "url"}, base::Value(url));
   if (level)
-    out_params->SetString("message.level", level);
+    out_params->SetPath({"message", "level"}, base::Value(level));
   if (line != -1)
-    out_params->SetInteger("message.line", line);
+    out_params->SetPath({"message", "line"}, base::Value(line));
   if (column != -1)
-    out_params->SetInteger("message.column", column);
+    out_params->SetPath({"message", "column"}, base::Value(column));
   if (text)
-    out_params->SetString("message.text", text);
+    out_params->SetPath({"message", "text"}, base::Value(text));
 }
 
 }  // namespace
@@ -188,7 +188,7 @@ TEST(ConsoleLogger, ConsoleMessages) {
   ASSERT_EQ(kOk, client.TriggerEvent("Console.messageAdded", params7).code());
 
   base::DictionaryValue params8;  // No message object.
-  params8.SetInteger("gaga", 8);
+  params8.SetKey("gaga", base::Value(8));
   ASSERT_EQ(kOk, client.TriggerEvent("Console.messageAdded", params8).code());
 
   EXPECT_TRUE(client.PopSentCommand().empty());  // No other commands sent.

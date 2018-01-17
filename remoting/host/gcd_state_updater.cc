@@ -118,8 +118,8 @@ void GcdStateUpdater::MaybeSendStateUpdate() {
   std::unique_ptr<base::DictionaryValue> patch(new base::DictionaryValue);
   std::unique_ptr<base::DictionaryValue> base_state(new base::DictionaryValue);
   pending_request_jid_ = signal_strategy_->GetLocalAddress().jid();
-  base_state->SetString("_jabberId", pending_request_jid_);
-  base_state->SetString("_hostVersion", STRINGIZE(VERSION));
+  base_state->SetKey("_jabberId", base::Value(pending_request_jid_));
+  base_state->SetKey("_hostVersion", base::Value(STRINGIZE(VERSION)));
   patch->Set("base", std::move(base_state));
 
   // Send the update to GCD.

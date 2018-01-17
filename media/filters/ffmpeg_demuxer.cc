@@ -1606,11 +1606,11 @@ void FFmpegDemuxer::LogMetadata(AVFormatContext* avctx,
                         video_config.is_encrypted());
     }
   }
-  params.SetBoolean("found_audio_stream", (audio_track_count > 0));
-  params.SetBoolean("found_video_stream", (video_track_count > 0));
+  params.SetKey("found_audio_stream", base::Value((audio_track_count > 0)));
+  params.SetKey("found_video_stream", base::Value((video_track_count > 0)));
   SetTimeProperty(metadata_event.get(), "max_duration", max_duration);
   SetTimeProperty(metadata_event.get(), "start_time", start_time_);
-  metadata_event->params.SetInteger("bitrate", bitrate_);
+  metadata_event->params.SetKey("bitrate", base::Value(bitrate_));
   media_log_->AddEvent(std::move(metadata_event));
 }
 

@@ -21,8 +21,8 @@ std::unique_ptr<base::Value> NetLogSocketErrorCallback(
     int os_error,
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("net_error", net_error);
-  dict->SetInteger("os_error", os_error);
+  dict->SetKey("net_error", base::Value(net_error));
+  dict->SetKey("os_error", base::Value(os_error));
   return std::move(dict);
 }
 
@@ -30,7 +30,7 @@ std::unique_ptr<base::Value> NetLogHostPortPairCallback(
     const HostPortPair* host_and_port,
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("host_and_port", host_and_port->ToString());
+  dict->SetKey("host_and_port", base::Value(host_and_port->ToString()));
   return std::move(dict);
 }
 
@@ -38,7 +38,7 @@ std::unique_ptr<base::Value> NetLogIPEndPointCallback(
     const IPEndPoint* address,
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("address", address->ToString());
+  dict->SetKey("address", base::Value(address->ToString()));
   return std::move(dict);
 }
 
@@ -50,7 +50,7 @@ std::unique_ptr<base::Value> NetLogSourceAddressCallback(
   IPEndPoint ipe;
   bool result = ipe.FromSockAddr(net_address, address_len);
   DCHECK(result);
-  dict->SetString("source_address", ipe.ToString());
+  dict->SetKey("source_address", base::Value(ipe.ToString()));
   return std::move(dict);
 }
 

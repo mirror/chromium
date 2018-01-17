@@ -36,9 +36,9 @@ std::unique_ptr<base::Value> NetLogHttpStreamJobProxyServerResolved(
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
 
-  dict->SetString("proxy_server", proxy_server.is_valid()
-                                      ? proxy_server.ToPacString()
-                                      : std::string());
+  dict->SetKey("proxy_server",
+               base::Value(proxy_server.is_valid() ? proxy_server.ToPacString()
+                                                   : std::string()));
   return std::move(dict);
 }
 
@@ -53,8 +53,8 @@ std::unique_ptr<base::Value> NetLogJobControllerCallback(
     bool is_preconnect,
     NetLogCaptureMode /* capture_mode */) {
   auto dict = std::make_unique<base::DictionaryValue>();
-  dict->SetString("url", url->possibly_invalid_spec());
-  dict->SetBoolean("is_preconnect", is_preconnect);
+  dict->SetKey("url", base::Value(url->possibly_invalid_spec()));
+  dict->SetKey("is_preconnect", base::Value(is_preconnect));
   return std::move(dict);
 }
 

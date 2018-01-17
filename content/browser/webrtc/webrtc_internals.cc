@@ -147,13 +147,13 @@ void WebRTCInternals::OnAddPeerConnection(int render_process_id,
   // minimal impact if chrome://webrtc-internals isn't open.
 
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("rid", render_process_id);
-  dict->SetInteger("pid", static_cast<int>(pid));
-  dict->SetInteger("lid", lid);
-  dict->SetString("rtcConfiguration", rtc_configuration);
-  dict->SetString("constraints", constraints);
-  dict->SetString("url", url);
-  dict->SetBoolean("isOpen", true);
+  dict->SetKey("rid", base::Value(render_process_id));
+  dict->SetKey("pid", base::Value(static_cast<int>(pid)));
+  dict->SetKey("lid", base::Value(lid));
+  dict->SetKey("rtcConfiguration", base::Value(rtc_configuration));
+  dict->SetKey("constraints", base::Value(constraints));
+  dict->SetKey("url", base::Value(url));
+  dict->SetKey("isOpen", base::Value(true));
 
   if (observers_.might_have_observers())
     SendUpdate("addPeerConnection", dict->CreateDeepCopy());
@@ -181,8 +181,8 @@ void WebRTCInternals::OnRemovePeerConnection(ProcessId pid, int lid) {
 
   if (observers_.might_have_observers()) {
     std::unique_ptr<base::DictionaryValue> id(new base::DictionaryValue());
-    id->SetInteger("pid", static_cast<int>(pid));
-    id->SetInteger("lid", lid);
+    id->SetKey("pid", base::Value(static_cast<int>(pid)));
+    id->SetKey("lid", base::Value(lid));
     SendUpdate("removePeerConnection", std::move(id));
   }
 }
@@ -206,13 +206,13 @@ void WebRTCInternals::OnUpdatePeerConnection(
 
   double epoch_time = base::Time::Now().ToJsTime();
   string time = base::NumberToString(epoch_time);
-  log_entry->SetString("time", time);
-  log_entry->SetString("type", type);
-  log_entry->SetString("value", value);
+  log_entry->SetKey("time", base::Value(time));
+  log_entry->SetKey("type", base::Value(type));
+  log_entry->SetKey("value", base::Value(value));
 
   auto update = std::make_unique<base::DictionaryValue>();
-  update->SetInteger("pid", static_cast<int>(pid));
-  update->SetInteger("lid", lid);
+  update->SetKey("pid", base::Value(static_cast<int>(pid)));
+  update->SetKey("lid", base::Value(lid));
   update->MergeDictionary(log_entry.get());
 
   SendUpdate("updatePeerConnection", std::move(update));
@@ -227,8 +227,8 @@ void WebRTCInternals::OnAddStats(base::ProcessId pid, int lid,
     return;
 
   auto dict = std::make_unique<base::DictionaryValue>();
-  dict->SetInteger("pid", static_cast<int>(pid));
-  dict->SetInteger("lid", lid);
+  dict->SetKey("pid", base::Value(static_cast<int>(pid)));
+  dict->SetKey("lid", base::Value(lid));
 
   dict->SetKey("reports", value.Clone());
 
@@ -245,13 +245,13 @@ void WebRTCInternals::OnGetUserMedia(int rid,
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   auto dict = std::make_unique<base::DictionaryValue>();
-  dict->SetInteger("rid", rid);
-  dict->SetInteger("pid", static_cast<int>(pid));
-  dict->SetString("origin", origin);
+  dict->SetKey("rid", base::Value(rid));
+  dict->SetKey("pid", base::Value(static_cast<int>(pid)));
+  dict->SetKey("origin", base::Value(origin));
   if (audio)
-    dict->SetString("audio", audio_constraints);
+    dict->SetKey("audio", base::Value(audio_constraints));
   if (video)
-    dict->SetString("video", video_constraints);
+    dict->SetKey("video", base::Value(video_constraints));
 
   if (observers_.might_have_observers())
     SendUpdate("addGetUserMedia", dict->CreateDeepCopy());
@@ -481,8 +481,8 @@ void WebRTCInternals::OnRendererExit(int render_process_id) {
 
         std::unique_ptr<base::DictionaryValue> update(
             new base::DictionaryValue());
-        update->SetInteger("lid", lid);
-        update->SetInteger("pid", pid);
+        update->SetKey("lid", base::Value(lid));
+        update->SetKey("pid", base::Value(pid));
         SendUpdate("removePeerConnection", std::move(update));
       }
       MaybeClosePeerConnection(record);
@@ -509,7 +509,7 @@ void WebRTCInternals::OnRendererExit(int render_process_id) {
 
   if (found_any && observers_.might_have_observers()) {
     std::unique_ptr<base::DictionaryValue> update(new base::DictionaryValue());
-    update->SetInteger("rid", render_process_id);
+    update->SetKey("rid", base::Value(render_process_id));
     SendUpdate("removeGetUserMediaForRenderer", std::move(update));
   }
 }
@@ -546,7 +546,7 @@ void WebRTCInternals::MaybeClosePeerConnection(base::DictionaryValue* record) {
   if (!is_open)
     return;
 
-  record->SetBoolean("isOpen", false);
+  record->SetKey("isOpen", base::Value(false));
   --num_open_connections_;
   DCHECK_GE(num_open_connections_, 0);
   UpdateWakeLock();

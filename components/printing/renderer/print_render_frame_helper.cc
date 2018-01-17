@@ -614,17 +614,17 @@ void PrintRenderFrameHelper::PrintHeaderAndFooter(
 
   auto options = base::MakeUnique<base::DictionaryValue>();
   options->SetDouble(kSettingHeaderFooterDate, base::Time::Now().ToJsTime());
-  options->SetDouble("width", page_size.width);
-  options->SetDouble("height", page_size.height);
-  options->SetDouble("topMargin", page_layout.margin_top);
-  options->SetDouble("bottomMargin", page_layout.margin_bottom);
-  options->SetInteger("pageNumber", page_number);
-  options->SetInteger("totalPages", total_pages);
-  options->SetString("url", params.url);
+  options->SetKey("width", base::Value(static_cast<double>(page_size.width)));
+  options->SetKey("height", base::Value(static_cast<double>(page_size.height)));
+  options->SetKey("topMargin", base::Value(page_layout.margin_top));
+  options->SetKey("bottomMargin", base::Value(page_layout.margin_bottom));
+  options->SetKey("pageNumber", base::Value(page_number));
+  options->SetKey("totalPages", base::Value(total_pages));
+  options->SetKey("url", base::Value(params.url));
   base::string16 title = source_frame.GetDocument().Title().Utf16();
-  options->SetString("title", title.empty() ? params.title : title);
-  options->SetString("headerTemplate", params.header_template);
-  options->SetString("footerTemplate", params.footer_template);
+  options->SetKey("title", base::Value(title.empty() ? params.title : title));
+  options->SetKey("headerTemplate", base::Value(params.header_template));
+  options->SetKey("footerTemplate", base::Value(params.footer_template));
 
   ExecuteScript(frame, kPageSetupScriptFormat, *options);
 

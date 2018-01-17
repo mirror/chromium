@@ -85,8 +85,9 @@ void OnTraceBufferStatusResult(const WebUIDataSource::GotDataCallback& callback,
                                float percent_full,
                                size_t approximate_event_count) {
   base::DictionaryValue status;
-  status.SetDouble("percentFull", percent_full);
-  status.SetInteger("approximateEventCount", approximate_event_count);
+  status.SetKey("percentFull", base::Value(static_cast<double>(percent_full)));
+  status.SetKey("approximateEventCount",
+                base::Value(static_cast<int>(approximate_event_count)));
 
   std::string status_json;
   base::JSONWriter::Write(status, &status_json);

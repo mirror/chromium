@@ -211,7 +211,7 @@ EventResponseDelta::~EventResponseDelta() {
 std::unique_ptr<base::Value> MakeHeaderModificationLogValue(
     const EventResponseDelta* delta) {
   auto dict = std::make_unique<base::DictionaryValue>();
-  dict->SetString("extension_id", delta->extension_id);
+  dict->SetKey("extension_id", base::Value(delta->extension_id));
 
   auto modified_headers = std::make_unique<base::ListValue>();
   net::HttpRequestHeaders::Iterator modification(

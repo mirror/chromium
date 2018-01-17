@@ -805,9 +805,9 @@ std::unique_ptr<base::ListValue> GpuDataManagerImplPrivate::GetLogMessages()
   auto value = std::make_unique<base::ListValue>();
   for (size_t ii = 0; ii < log_messages_.size(); ++ii) {
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-    dict->SetInteger("level", log_messages_[ii].level);
-    dict->SetString("header", log_messages_[ii].header);
-    dict->SetString("message", log_messages_[ii].message);
+    dict->SetKey("level", base::Value(log_messages_[ii].level));
+    dict->SetKey("header", base::Value(log_messages_[ii].header));
+    dict->SetKey("message", base::Value(log_messages_[ii].message));
     value->Append(std::move(dict));
   }
   return value;

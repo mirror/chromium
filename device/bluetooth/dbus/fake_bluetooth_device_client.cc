@@ -842,240 +842,259 @@ FakeBluetoothDeviceClient::GetBluetoothDevicesAsDictionaries() const {
   std::unique_ptr<base::ListValue> predefined_devices(new base::ListValue);
   std::unique_ptr<base::DictionaryValue> pairedDevice(
       new base::DictionaryValue);
-  pairedDevice->SetString("path", kPairedDevicePath);
-  pairedDevice->SetString("address", kPairedDeviceAddress);
-  pairedDevice->SetString("name", kPairedDeviceName);
-  pairedDevice->SetString("alias", kPairedDeviceName);
-  pairedDevice->SetString("pairingMethod", "");
-  pairedDevice->SetString("pairingAuthToken", "");
-  pairedDevice->SetString("pairingAction", "");
-  pairedDevice->SetInteger("classValue", kPairedDeviceClass);
-  pairedDevice->SetBoolean("discoverable", true);
-  pairedDevice->SetBoolean("isTrusted", true);
-  pairedDevice->SetBoolean("paired", true);
-  pairedDevice->SetBoolean("incoming", false);
+  pairedDevice->SetKey("path", base::Value(kPairedDevicePath));
+  pairedDevice->SetKey("address", base::Value(kPairedDeviceAddress));
+  pairedDevice->SetKey("name", base::Value(kPairedDeviceName));
+  pairedDevice->SetKey("alias", base::Value(kPairedDeviceName));
+  pairedDevice->SetKey("pairingMethod", base::Value(""));
+  pairedDevice->SetKey("pairingAuthToken", base::Value(""));
+  pairedDevice->SetKey("pairingAction", base::Value(""));
+  pairedDevice->SetKey("classValue",
+                       base::Value(static_cast<int>(kPairedDeviceClass)));
+  pairedDevice->SetKey("discoverable", base::Value(true));
+  pairedDevice->SetKey("isTrusted", base::Value(true));
+  pairedDevice->SetKey("paired", base::Value(true));
+  pairedDevice->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(pairedDevice));
 
   std::unique_ptr<base::DictionaryValue> legacyDevice(
       new base::DictionaryValue);
-  legacyDevice->SetString("path", kLegacyAutopairPath);
-  legacyDevice->SetString("address", kLegacyAutopairAddress);
-  legacyDevice->SetString("name", kLegacyAutopairName);
-  legacyDevice->SetString("alias", kLegacyAutopairName);
-  legacyDevice->SetString("pairingMethod", "");
-  legacyDevice->SetString("pairingAuthToken", "");
-  legacyDevice->SetString("pairingAction", "");
-  legacyDevice->SetInteger("classValue", kLegacyAutopairClass);
-  legacyDevice->SetBoolean("isTrusted", true);
-  legacyDevice->SetBoolean("discoverable", false);
-  legacyDevice->SetBoolean("paired", false);
-  legacyDevice->SetBoolean("incoming", false);
+  legacyDevice->SetKey("path", base::Value(kLegacyAutopairPath));
+  legacyDevice->SetKey("address", base::Value(kLegacyAutopairAddress));
+  legacyDevice->SetKey("name", base::Value(kLegacyAutopairName));
+  legacyDevice->SetKey("alias", base::Value(kLegacyAutopairName));
+  legacyDevice->SetKey("pairingMethod", base::Value(""));
+  legacyDevice->SetKey("pairingAuthToken", base::Value(""));
+  legacyDevice->SetKey("pairingAction", base::Value(""));
+  legacyDevice->SetKey("classValue",
+                       base::Value(static_cast<int>(kLegacyAutopairClass)));
+  legacyDevice->SetKey("isTrusted", base::Value(true));
+  legacyDevice->SetKey("discoverable", base::Value(false));
+  legacyDevice->SetKey("paired", base::Value(false));
+  legacyDevice->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(legacyDevice));
 
   std::unique_ptr<base::DictionaryValue> pin(new base::DictionaryValue);
-  pin->SetString("path", kDisplayPinCodePath);
-  pin->SetString("address", kDisplayPinCodeAddress);
-  pin->SetString("name", kDisplayPinCodeName);
-  pin->SetString("alias", kDisplayPinCodeName);
-  pin->SetString("pairingMethod", kPairingMethodPinCode);
-  pin->SetString("pairingAuthToken", kTestPinCode);
-  pin->SetString("pairingAction", kPairingActionDisplay);
-  pin->SetInteger("classValue", kDisplayPinCodeClass);
-  pin->SetBoolean("isTrusted", false);
-  pin->SetBoolean("discoverable", false);
-  pin->SetBoolean("paired", false);
-  pin->SetBoolean("incoming", false);
+  pin->SetKey("path", base::Value(kDisplayPinCodePath));
+  pin->SetKey("address", base::Value(kDisplayPinCodeAddress));
+  pin->SetKey("name", base::Value(kDisplayPinCodeName));
+  pin->SetKey("alias", base::Value(kDisplayPinCodeName));
+  pin->SetKey("pairingMethod", base::Value(kPairingMethodPinCode));
+  pin->SetKey("pairingAuthToken", base::Value(kTestPinCode));
+  pin->SetKey("pairingAction", base::Value(kPairingActionDisplay));
+  pin->SetKey("classValue",
+              base::Value(static_cast<int>(kDisplayPinCodeClass)));
+  pin->SetKey("isTrusted", base::Value(false));
+  pin->SetKey("discoverable", base::Value(false));
+  pin->SetKey("paired", base::Value(false));
+  pin->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(pin));
 
   std::unique_ptr<base::DictionaryValue> vanishing(new base::DictionaryValue);
-  vanishing->SetString("path", kVanishingDevicePath);
-  vanishing->SetString("address", kVanishingDeviceAddress);
-  vanishing->SetString("name", kVanishingDeviceName);
-  vanishing->SetString("alias", kVanishingDeviceName);
-  vanishing->SetString("pairingMethod", "");
-  vanishing->SetString("pairingAuthToken", "");
-  vanishing->SetString("pairingAction", "");
-  vanishing->SetInteger("classValue", kVanishingDeviceClass);
-  vanishing->SetBoolean("isTrusted", false);
-  vanishing->SetBoolean("discoverable", false);
-  vanishing->SetBoolean("paired", false);
-  vanishing->SetBoolean("incoming", false);
+  vanishing->SetKey("path", base::Value(kVanishingDevicePath));
+  vanishing->SetKey("address", base::Value(kVanishingDeviceAddress));
+  vanishing->SetKey("name", base::Value(kVanishingDeviceName));
+  vanishing->SetKey("alias", base::Value(kVanishingDeviceName));
+  vanishing->SetKey("pairingMethod", base::Value(""));
+  vanishing->SetKey("pairingAuthToken", base::Value(""));
+  vanishing->SetKey("pairingAction", base::Value(""));
+  vanishing->SetKey("classValue",
+                    base::Value(static_cast<int>(kVanishingDeviceClass)));
+  vanishing->SetKey("isTrusted", base::Value(false));
+  vanishing->SetKey("discoverable", base::Value(false));
+  vanishing->SetKey("paired", base::Value(false));
+  vanishing->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(vanishing));
 
   std::unique_ptr<base::DictionaryValue> connect_unpairable(
       new base::DictionaryValue);
-  connect_unpairable->SetString("path", kConnectUnpairablePath);
-  connect_unpairable->SetString("address", kConnectUnpairableAddress);
-  connect_unpairable->SetString("name", kConnectUnpairableName);
-  connect_unpairable->SetString("pairingMethod", "");
-  connect_unpairable->SetString("pairingAuthToken", "");
-  connect_unpairable->SetString("pairingAction", "");
-  connect_unpairable->SetString("alias", kConnectUnpairableName);
-  connect_unpairable->SetInteger("classValue", kConnectUnpairableClass);
-  connect_unpairable->SetBoolean("isTrusted", false);
-  connect_unpairable->SetBoolean("discoverable", false);
-  connect_unpairable->SetBoolean("paired", false);
-  connect_unpairable->SetBoolean("incoming", false);
+  connect_unpairable->SetKey("path", base::Value(kConnectUnpairablePath));
+  connect_unpairable->SetKey("address", base::Value(kConnectUnpairableAddress));
+  connect_unpairable->SetKey("name", base::Value(kConnectUnpairableName));
+  connect_unpairable->SetKey("pairingMethod", base::Value(""));
+  connect_unpairable->SetKey("pairingAuthToken", base::Value(""));
+  connect_unpairable->SetKey("pairingAction", base::Value(""));
+  connect_unpairable->SetKey("alias", base::Value(kConnectUnpairableName));
+  connect_unpairable->SetKey(
+      "classValue", base::Value(static_cast<int>(kConnectUnpairableClass)));
+  connect_unpairable->SetKey("isTrusted", base::Value(false));
+  connect_unpairable->SetKey("discoverable", base::Value(false));
+  connect_unpairable->SetKey("paired", base::Value(false));
+  connect_unpairable->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(connect_unpairable));
 
   std::unique_ptr<base::DictionaryValue> passkey(new base::DictionaryValue);
-  passkey->SetString("path", kDisplayPasskeyPath);
-  passkey->SetString("address", kDisplayPasskeyAddress);
-  passkey->SetString("name", kDisplayPasskeyName);
-  passkey->SetString("alias", kDisplayPasskeyName);
-  passkey->SetString("pairingMethod", kPairingMethodPassKey);
-  passkey->SetInteger("pairingAuthToken", kTestPassKey);
-  passkey->SetString("pairingAction", kPairingActionDisplay);
-  passkey->SetInteger("classValue", kDisplayPasskeyClass);
-  passkey->SetBoolean("isTrusted", false);
-  passkey->SetBoolean("discoverable", false);
-  passkey->SetBoolean("paired", false);
-  passkey->SetBoolean("incoming", false);
+  passkey->SetKey("path", base::Value(kDisplayPasskeyPath));
+  passkey->SetKey("address", base::Value(kDisplayPasskeyAddress));
+  passkey->SetKey("name", base::Value(kDisplayPasskeyName));
+  passkey->SetKey("alias", base::Value(kDisplayPasskeyName));
+  passkey->SetKey("pairingMethod", base::Value(kPairingMethodPassKey));
+  passkey->SetKey("pairingAuthToken", base::Value(kTestPassKey));
+  passkey->SetKey("pairingAction", base::Value(kPairingActionDisplay));
+  passkey->SetKey("classValue",
+                  base::Value(static_cast<int>(kDisplayPasskeyClass)));
+  passkey->SetKey("isTrusted", base::Value(false));
+  passkey->SetKey("discoverable", base::Value(false));
+  passkey->SetKey("paired", base::Value(false));
+  passkey->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(passkey));
 
   std::unique_ptr<base::DictionaryValue> request_pin(new base::DictionaryValue);
-  request_pin->SetString("path", kRequestPinCodePath);
-  request_pin->SetString("address", kRequestPinCodeAddress);
-  request_pin->SetString("name", kRequestPinCodeName);
-  request_pin->SetString("alias", kRequestPinCodeName);
-  request_pin->SetString("pairingMethod", "");
-  request_pin->SetString("pairingAuthToken", "");
-  request_pin->SetString("pairingAction", kPairingActionRequest);
-  request_pin->SetInteger("classValue", kRequestPinCodeClass);
-  request_pin->SetBoolean("isTrusted", false);
-  request_pin->SetBoolean("discoverable", false);
-  request_pin->SetBoolean("paired", false);
-  request_pin->SetBoolean("incoming", false);
+  request_pin->SetKey("path", base::Value(kRequestPinCodePath));
+  request_pin->SetKey("address", base::Value(kRequestPinCodeAddress));
+  request_pin->SetKey("name", base::Value(kRequestPinCodeName));
+  request_pin->SetKey("alias", base::Value(kRequestPinCodeName));
+  request_pin->SetKey("pairingMethod", base::Value(""));
+  request_pin->SetKey("pairingAuthToken", base::Value(""));
+  request_pin->SetKey("pairingAction", base::Value(kPairingActionRequest));
+  request_pin->SetKey("classValue",
+                      base::Value(static_cast<int>(kRequestPinCodeClass)));
+  request_pin->SetKey("isTrusted", base::Value(false));
+  request_pin->SetKey("discoverable", base::Value(false));
+  request_pin->SetKey("paired", base::Value(false));
+  request_pin->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(request_pin));
 
   std::unique_ptr<base::DictionaryValue> confirm(new base::DictionaryValue);
-  confirm->SetString("path", kConfirmPasskeyPath);
-  confirm->SetString("address", kConfirmPasskeyAddress);
-  confirm->SetString("name", kConfirmPasskeyName);
-  confirm->SetString("alias", kConfirmPasskeyName);
-  confirm->SetString("pairingMethod", "");
-  confirm->SetInteger("pairingAuthToken", kTestPassKey);
-  confirm->SetString("pairingAction", kPairingActionConfirmation);
-  confirm->SetInteger("classValue", kConfirmPasskeyClass);
-  confirm->SetBoolean("isTrusted", false);
-  confirm->SetBoolean("discoverable", false);
-  confirm->SetBoolean("paired", false);
-  confirm->SetBoolean("incoming", false);
+  confirm->SetKey("path", base::Value(kConfirmPasskeyPath));
+  confirm->SetKey("address", base::Value(kConfirmPasskeyAddress));
+  confirm->SetKey("name", base::Value(kConfirmPasskeyName));
+  confirm->SetKey("alias", base::Value(kConfirmPasskeyName));
+  confirm->SetKey("pairingMethod", base::Value(""));
+  confirm->SetKey("pairingAuthToken", base::Value(kTestPassKey));
+  confirm->SetKey("pairingAction", base::Value(kPairingActionConfirmation));
+  confirm->SetKey("classValue",
+                  base::Value(static_cast<int>(kConfirmPasskeyClass)));
+  confirm->SetKey("isTrusted", base::Value(false));
+  confirm->SetKey("discoverable", base::Value(false));
+  confirm->SetKey("paired", base::Value(false));
+  confirm->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(confirm));
 
   std::unique_ptr<base::DictionaryValue> request_passkey(
       new base::DictionaryValue);
-  request_passkey->SetString("path", kRequestPasskeyPath);
-  request_passkey->SetString("address", kRequestPasskeyAddress);
-  request_passkey->SetString("name", kRequestPasskeyName);
-  request_passkey->SetString("alias", kRequestPasskeyName);
-  request_passkey->SetString("pairingMethod", kPairingMethodPassKey);
-  request_passkey->SetString("pairingAction", kPairingActionRequest);
-  request_passkey->SetInteger("pairingAuthToken", kTestPassKey);
-  request_passkey->SetInteger("classValue", kRequestPasskeyClass);
-  request_passkey->SetBoolean("isTrusted", false);
-  request_passkey->SetBoolean("discoverable", false);
-  request_passkey->SetBoolean("paired", false);
-  request_passkey->SetBoolean("incoming", false);
+  request_passkey->SetKey("path", base::Value(kRequestPasskeyPath));
+  request_passkey->SetKey("address", base::Value(kRequestPasskeyAddress));
+  request_passkey->SetKey("name", base::Value(kRequestPasskeyName));
+  request_passkey->SetKey("alias", base::Value(kRequestPasskeyName));
+  request_passkey->SetKey("pairingMethod", base::Value(kPairingMethodPassKey));
+  request_passkey->SetKey("pairingAction", base::Value(kPairingActionRequest));
+  request_passkey->SetKey("pairingAuthToken", base::Value(kTestPassKey));
+  request_passkey->SetKey("classValue",
+                          base::Value(static_cast<int>(kRequestPasskeyClass)));
+  request_passkey->SetKey("isTrusted", base::Value(false));
+  request_passkey->SetKey("discoverable", base::Value(false));
+  request_passkey->SetKey("paired", base::Value(false));
+  request_passkey->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(request_passkey));
 
   std::unique_ptr<base::DictionaryValue> unconnectable(
       new base::DictionaryValue);
-  unconnectable->SetString("path", kUnconnectableDevicePath);
-  unconnectable->SetString("address", kUnconnectableDeviceAddress);
-  unconnectable->SetString("name", kUnconnectableDeviceName);
-  unconnectable->SetString("alias", kUnconnectableDeviceName);
-  unconnectable->SetString("pairingMethod", "");
-  unconnectable->SetString("pairingAuthToken", "");
-  unconnectable->SetString("pairingAction", "");
-  unconnectable->SetInteger("classValue", kUnconnectableDeviceClass);
-  unconnectable->SetBoolean("isTrusted", true);
-  unconnectable->SetBoolean("discoverable", false);
-  unconnectable->SetBoolean("paired", false);
-  unconnectable->SetBoolean("incoming", false);
+  unconnectable->SetKey("path", base::Value(kUnconnectableDevicePath));
+  unconnectable->SetKey("address", base::Value(kUnconnectableDeviceAddress));
+  unconnectable->SetKey("name", base::Value(kUnconnectableDeviceName));
+  unconnectable->SetKey("alias", base::Value(kUnconnectableDeviceName));
+  unconnectable->SetKey("pairingMethod", base::Value(""));
+  unconnectable->SetKey("pairingAuthToken", base::Value(""));
+  unconnectable->SetKey("pairingAction", base::Value(""));
+  unconnectable->SetKey(
+      "classValue", base::Value(static_cast<int>(kUnconnectableDeviceClass)));
+  unconnectable->SetKey("isTrusted", base::Value(true));
+  unconnectable->SetKey("discoverable", base::Value(false));
+  unconnectable->SetKey("paired", base::Value(false));
+  unconnectable->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(unconnectable));
 
   std::unique_ptr<base::DictionaryValue> unpairable(new base::DictionaryValue);
-  unpairable->SetString("path", kUnpairableDevicePath);
-  unpairable->SetString("address", kUnpairableDeviceAddress);
-  unpairable->SetString("name", kUnpairableDeviceName);
-  unpairable->SetString("alias", kUnpairableDeviceName);
-  unpairable->SetString("pairingMethod", "");
-  unpairable->SetString("pairingAuthToken", "");
-  unpairable->SetString("pairingAction", kPairingActionFail);
-  unpairable->SetInteger("classValue", kUnpairableDeviceClass);
-  unpairable->SetBoolean("isTrusted", false);
-  unpairable->SetBoolean("discoverable", false);
-  unpairable->SetBoolean("paired", false);
-  unpairable->SetBoolean("incoming", false);
+  unpairable->SetKey("path", base::Value(kUnpairableDevicePath));
+  unpairable->SetKey("address", base::Value(kUnpairableDeviceAddress));
+  unpairable->SetKey("name", base::Value(kUnpairableDeviceName));
+  unpairable->SetKey("alias", base::Value(kUnpairableDeviceName));
+  unpairable->SetKey("pairingMethod", base::Value(""));
+  unpairable->SetKey("pairingAuthToken", base::Value(""));
+  unpairable->SetKey("pairingAction", base::Value(kPairingActionFail));
+  unpairable->SetKey("classValue",
+                     base::Value(static_cast<int>(kUnpairableDeviceClass)));
+  unpairable->SetKey("isTrusted", base::Value(false));
+  unpairable->SetKey("discoverable", base::Value(false));
+  unpairable->SetKey("paired", base::Value(false));
+  unpairable->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(unpairable));
 
   std::unique_ptr<base::DictionaryValue> just_works(new base::DictionaryValue);
-  just_works->SetString("path", kJustWorksPath);
-  just_works->SetString("address", kJustWorksAddress);
-  just_works->SetString("name", kJustWorksName);
-  just_works->SetString("alias", kJustWorksName);
-  just_works->SetString("pairingMethod", "");
-  just_works->SetString("pairingAuthToken", "");
-  just_works->SetString("pairingAction", "");
-  just_works->SetInteger("classValue", kJustWorksClass);
-  just_works->SetBoolean("isTrusted", false);
-  just_works->SetBoolean("discoverable", false);
-  just_works->SetBoolean("paired", false);
-  just_works->SetBoolean("incoming", false);
+  just_works->SetKey("path", base::Value(kJustWorksPath));
+  just_works->SetKey("address", base::Value(kJustWorksAddress));
+  just_works->SetKey("name", base::Value(kJustWorksName));
+  just_works->SetKey("alias", base::Value(kJustWorksName));
+  just_works->SetKey("pairingMethod", base::Value(""));
+  just_works->SetKey("pairingAuthToken", base::Value(""));
+  just_works->SetKey("pairingAction", base::Value(""));
+  just_works->SetKey("classValue",
+                     base::Value(static_cast<int>(kJustWorksClass)));
+  just_works->SetKey("isTrusted", base::Value(false));
+  just_works->SetKey("discoverable", base::Value(false));
+  just_works->SetKey("paired", base::Value(false));
+  just_works->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(just_works));
 
   std::unique_ptr<base::DictionaryValue> low_energy(new base::DictionaryValue);
-  low_energy->SetString("path", kLowEnergyPath);
-  low_energy->SetString("address", kLowEnergyAddress);
-  low_energy->SetString("name", kLowEnergyName);
-  low_energy->SetString("alias", kLowEnergyName);
-  low_energy->SetString("pairingMethod", "");
-  low_energy->SetString("pairingAuthToken", "");
-  low_energy->SetString("pairingAction", "");
-  low_energy->SetInteger("classValue", kLowEnergyClass);
-  low_energy->SetBoolean("isTrusted", false);
-  low_energy->SetBoolean("discoverable", false);
-  low_energy->SetBoolean("paireed", false);
-  low_energy->SetBoolean("incoming", false);
+  low_energy->SetKey("path", base::Value(kLowEnergyPath));
+  low_energy->SetKey("address", base::Value(kLowEnergyAddress));
+  low_energy->SetKey("name", base::Value(kLowEnergyName));
+  low_energy->SetKey("alias", base::Value(kLowEnergyName));
+  low_energy->SetKey("pairingMethod", base::Value(""));
+  low_energy->SetKey("pairingAuthToken", base::Value(""));
+  low_energy->SetKey("pairingAction", base::Value(""));
+  low_energy->SetKey("classValue",
+                     base::Value(static_cast<int>(kLowEnergyClass)));
+  low_energy->SetKey("isTrusted", base::Value(false));
+  low_energy->SetKey("discoverable", base::Value(false));
+  low_energy->SetKey("paireed", base::Value(false));
+  low_energy->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(low_energy));
 
   std::unique_ptr<base::DictionaryValue> paired_unconnectable(
       new base::DictionaryValue);
-  paired_unconnectable->SetString("path", kPairedUnconnectableDevicePath);
-  paired_unconnectable->SetString("address", kPairedUnconnectableDeviceAddress);
-  paired_unconnectable->SetString("name", kPairedUnconnectableDeviceName);
-  paired_unconnectable->SetString("pairingMethod", "");
-  paired_unconnectable->SetString("pairingAuthToken", "");
-  paired_unconnectable->SetString("pairingAction", "");
-  paired_unconnectable->SetString("alias", kPairedUnconnectableDeviceName);
-  paired_unconnectable->SetInteger("classValue",
-                                   kPairedUnconnectableDeviceClass);
-  paired_unconnectable->SetBoolean("isTrusted", false);
-  paired_unconnectable->SetBoolean("discoverable", true);
-  paired_unconnectable->SetBoolean("paired", true);
-  paired_unconnectable->SetBoolean("incoming", false);
+  paired_unconnectable->SetKey("path",
+                               base::Value(kPairedUnconnectableDevicePath));
+  paired_unconnectable->SetKey("address",
+                               base::Value(kPairedUnconnectableDeviceAddress));
+  paired_unconnectable->SetKey("name",
+                               base::Value(kPairedUnconnectableDeviceName));
+  paired_unconnectable->SetKey("pairingMethod", base::Value(""));
+  paired_unconnectable->SetKey("pairingAuthToken", base::Value(""));
+  paired_unconnectable->SetKey("pairingAction", base::Value(""));
+  paired_unconnectable->SetKey("alias",
+                               base::Value(kPairedUnconnectableDeviceName));
+  paired_unconnectable->SetKey(
+      "classValue",
+      base::Value(static_cast<int>(kPairedUnconnectableDeviceClass)));
+  paired_unconnectable->SetKey("isTrusted", base::Value(false));
+  paired_unconnectable->SetKey("discoverable", base::Value(true));
+  paired_unconnectable->SetKey("paired", base::Value(true));
+  paired_unconnectable->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(paired_unconnectable));
 
   std::unique_ptr<base::DictionaryValue> connected_trusted_not_paired(
       new base::DictionaryValue);
-  connected_trusted_not_paired->SetString("path",
-                                          kConnectedTrustedNotPairedDevicePath);
-  connected_trusted_not_paired->SetString(
-      "address", kConnectedTrustedNotPairedDeviceAddress);
-  connected_trusted_not_paired->SetString("name",
-                                          kConnectedTrustedNotPairedDeviceName);
-  connected_trusted_not_paired->SetString("pairingMethod", "");
-  connected_trusted_not_paired->SetString("pairingAuthToken", "");
-  connected_trusted_not_paired->SetString("pairingAction", "");
-  connected_trusted_not_paired->SetString("alias",
-                                          kConnectedTrustedNotPairedDeviceName);
-  connected_trusted_not_paired->SetInteger(
-      "classValue", kConnectedTrustedNotPairedDeviceClass);
-  connected_trusted_not_paired->SetBoolean("isTrusted", true);
-  connected_trusted_not_paired->SetBoolean("discoverable", true);
-  connected_trusted_not_paired->SetBoolean("paired", false);
-  connected_trusted_not_paired->SetBoolean("incoming", false);
+  connected_trusted_not_paired->SetKey(
+      "path", base::Value(kConnectedTrustedNotPairedDevicePath));
+  connected_trusted_not_paired->SetKey(
+      "address", base::Value(kConnectedTrustedNotPairedDeviceAddress));
+  connected_trusted_not_paired->SetKey(
+      "name", base::Value(kConnectedTrustedNotPairedDeviceName));
+  connected_trusted_not_paired->SetKey("pairingMethod", base::Value(""));
+  connected_trusted_not_paired->SetKey("pairingAuthToken", base::Value(""));
+  connected_trusted_not_paired->SetKey("pairingAction", base::Value(""));
+  connected_trusted_not_paired->SetKey(
+      "alias", base::Value(kConnectedTrustedNotPairedDeviceName));
+  connected_trusted_not_paired->SetKey(
+      "classValue",
+      base::Value(static_cast<int>(kConnectedTrustedNotPairedDeviceClass)));
+  connected_trusted_not_paired->SetKey("isTrusted", base::Value(true));
+  connected_trusted_not_paired->SetKey("discoverable", base::Value(true));
+  connected_trusted_not_paired->SetKey("paired", base::Value(false));
+  connected_trusted_not_paired->SetKey("incoming", base::Value(false));
   predefined_devices->Append(std::move(connected_trusted_not_paired));
 
   return predefined_devices;

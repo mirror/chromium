@@ -203,8 +203,8 @@ ProfileInfoHandler::GetAccountNameAndIcon() const {
 #endif  // defined(OS_CHROMEOS)
 
   auto response = std::make_unique<base::DictionaryValue>();
-  response->SetString("name", name);
-  response->SetString("iconUrl", icon_url);
+  response->SetKey("name", base::Value(name));
+  response->SetKey("iconUrl", base::Value(icon_url));
   return response;
 }
 

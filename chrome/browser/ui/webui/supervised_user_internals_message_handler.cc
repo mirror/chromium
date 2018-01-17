@@ -41,7 +41,7 @@ base::ListValue* AddSection(base::ListValue* parent_list,
                             const std::string& title) {
   std::unique_ptr<base::DictionaryValue> section(new base::DictionaryValue);
   std::unique_ptr<base::ListValue> section_contents(new base::ListValue);
-  section->SetString("title", title);
+  section->SetKey("title", base::Value(title));
   // Grab a raw pointer to the result before |Pass()|ing it on.
   base::ListValue* result =
       section->SetList("data", std::move(section_contents));
@@ -54,9 +54,9 @@ void AddSectionEntry(base::ListValue* section_list,
                      const std::string& name,
                      bool value) {
   std::unique_ptr<base::DictionaryValue> entry(new base::DictionaryValue);
-  entry->SetString("stat_name", name);
-  entry->SetBoolean("stat_value", value);
-  entry->SetBoolean("is_valid", true);
+  entry->SetKey("stat_name", base::Value(name));
+  entry->SetKey("stat_value", base::Value(value));
+  entry->SetKey("is_valid", base::Value(true));
   section_list->Append(std::move(entry));
 }
 
@@ -65,9 +65,9 @@ void AddSectionEntry(base::ListValue* section_list,
                      const std::string& name,
                      const std::string& value) {
   std::unique_ptr<base::DictionaryValue> entry(new base::DictionaryValue);
-  entry->SetString("stat_name", name);
-  entry->SetString("stat_value", value);
-  entry->SetBoolean("is_valid", true);
+  entry->SetKey("stat_name", base::Value(name));
+  entry->SetKey("stat_value", base::Value(value));
+  entry->SetKey("is_valid", base::Value(true));
   section_list->Append(std::move(entry));
 }
 
@@ -262,11 +262,12 @@ void SupervisedUserInternalsMessageHandler::OnTryURLResult(
   }
   std::string whitelists_str = base::JoinString(whitelists_list, "; ");
   base::DictionaryValue result;
-  result.SetString("allowResult",
-                   FilteringBehaviorToString(behavior, uncertain));
-  result.SetBoolean("manual", reason == supervised_user_error_page::MANUAL &&
-                                  behavior == SupervisedUserURLFilter::ALLOW);
-  result.SetString("whitelists", whitelists_str);
+  result.SetKey("allowResult",
+                base::Value(FilteringBehaviorToString(behavior, uncertain)));
+  result.SetKey("manual",
+                base::Value(reason == supervised_user_error_page::MANUAL &&
+                            behavior == SupervisedUserURLFilter::ALLOW));
+  result.SetKey("whitelists", base::Value(whitelists_str));
   web_ui()->CallJavascriptFunctionUnsafe(
       "chrome.supervised_user_internals.receiveTryURLResult", result);
 }
@@ -280,9 +281,10 @@ void SupervisedUserInternalsMessageHandler::OnURLChecked(
     bool uncertain) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   base::DictionaryValue result;
-  result.SetString("url", url.possibly_invalid_spec());
-  result.SetString("result", FilteringBehaviorToString(behavior, uncertain));
-  result.SetString("reason", FilteringBehaviorReasonToString(reason));
+  result.SetKey("url", base::Value(url.possibly_invalid_spec()));
+  result.SetKey("result",
+                base::Value(FilteringBehaviorToString(behavior, uncertain)));
+  result.SetKey("reason", base::Value(FilteringBehaviorReasonToString(reason)));
   web_ui()->CallJavascriptFunctionUnsafe(
       "chrome.supervised_user_internals.receiveFilteringResult", result);
 }

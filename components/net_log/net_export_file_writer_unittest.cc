@@ -91,12 +91,13 @@ WARN_UNUSED_RESULT ::testing::AssertionResult VerifyState(
     bool expected_log_capture_mode_known,
     const std::string& expected_log_capture_mode_string) {
   base::DictionaryValue expected_state;
-  expected_state.SetString("state", expected_state_string);
-  expected_state.SetBoolean("logExists", expected_log_exists);
-  expected_state.SetBoolean("logCaptureModeKnown",
-                            expected_log_capture_mode_known);
+  expected_state.SetKey("state", base::Value(expected_state_string));
+  expected_state.SetKey("logExists", base::Value(expected_log_exists));
+  expected_state.SetKey("logCaptureModeKnown",
+                        base::Value(expected_log_capture_mode_known));
   if (expected_log_capture_mode_known) {
-    expected_state.SetString("captureMode", expected_log_capture_mode_string);
+    expected_state.SetKey("captureMode",
+                          base::Value(expected_log_capture_mode_string));
   } else {
     state->Remove("captureMode", nullptr);
   }

@@ -218,51 +218,53 @@ MessageBundle* CreateManifestBundle() {
   auto catalog = std::make_unique<base::DictionaryValue>();
 
   auto name_tree = std::make_unique<base::DictionaryValue>();
-  name_tree->SetString("message", "name");
+  name_tree->SetKey("message", base::Value("name"));
   catalog->Set("name", std::move(name_tree));
 
   auto short_name_tree = std::make_unique<base::DictionaryValue>();
-  short_name_tree->SetString("message", "short_name");
+  short_name_tree->SetKey("message", base::Value("short_name"));
   catalog->Set("short_name", std::move(short_name_tree));
 
   auto description_tree = std::make_unique<base::DictionaryValue>();
-  description_tree->SetString("message", "description");
+  description_tree->SetKey("message", base::Value("description"));
   catalog->Set("description", std::move(description_tree));
 
   auto action_title_tree = std::make_unique<base::DictionaryValue>();
-  action_title_tree->SetString("message", "action title");
+  action_title_tree->SetKey("message", base::Value("action title"));
   catalog->Set("title", std::move(action_title_tree));
 
   auto omnibox_keyword_tree = std::make_unique<base::DictionaryValue>();
-  omnibox_keyword_tree->SetString("message", "omnibox keyword");
+  omnibox_keyword_tree->SetKey("message", base::Value("omnibox keyword"));
   catalog->Set("omnibox_keyword", std::move(omnibox_keyword_tree));
 
   auto file_handler_title_tree = std::make_unique<base::DictionaryValue>();
-  file_handler_title_tree->SetString("message", "file handler title");
+  file_handler_title_tree->SetKey("message", base::Value("file handler title"));
   catalog->Set("file_handler_title", std::move(file_handler_title_tree));
 
   auto launch_local_path_tree = std::make_unique<base::DictionaryValue>();
-  launch_local_path_tree->SetString("message", "main.html");
+  launch_local_path_tree->SetKey("message", base::Value("main.html"));
   catalog->Set("launch_local_path", std::move(launch_local_path_tree));
 
   auto launch_web_url_tree = std::make_unique<base::DictionaryValue>();
-  launch_web_url_tree->SetString("message", "http://www.google.com/");
+  launch_web_url_tree->SetKey("message", base::Value("http://www.google.com/"));
   catalog->Set("launch_web_url", std::move(launch_web_url_tree));
 
   auto first_command_description_tree =
       std::make_unique<base::DictionaryValue>();
-  first_command_description_tree->SetString("message", "first command");
+  first_command_description_tree->SetKey("message",
+                                         base::Value("first command"));
   catalog->Set("first_command_description",
                std::move(first_command_description_tree));
 
   auto second_command_description_tree =
       std::make_unique<base::DictionaryValue>();
-  second_command_description_tree->SetString("message", "second command");
+  second_command_description_tree->SetKey("message",
+                                          base::Value("second command"));
   catalog->Set("second_command_description",
                std::move(second_command_description_tree));
 
   auto url_country_tree = std::make_unique<base::DictionaryValue>();
-  url_country_tree->SetString("message", "de");
+  url_country_tree->SetKey("message", base::Value("de"));
   catalog->Set("country", std::move(url_country_tree));
 
   std::vector<std::unique_ptr<base::DictionaryValue>> catalogs;
@@ -546,11 +548,14 @@ TEST(ExtensionL10nUtil, LocalizeManifestWithSearchProviderMsgs) {
   manifest.SetString(keys::kDescription, "__MSG_description__");
 
   auto search_provider = std::make_unique<base::DictionaryValue>();
-  search_provider->SetString("name", "__MSG_country__");
-  search_provider->SetString("keyword", "__MSG_omnibox_keyword__");
-  search_provider->SetString("search_url", "http://www.foo.__MSG_country__");
-  search_provider->SetString("favicon_url", "http://www.foo.__MSG_country__");
-  search_provider->SetString("suggest_url", "http://www.foo.__MSG_country__");
+  search_provider->SetKey("name", base::Value("__MSG_country__"));
+  search_provider->SetKey("keyword", base::Value("__MSG_omnibox_keyword__"));
+  search_provider->SetKey("search_url",
+                          base::Value("http://www.foo.__MSG_country__"));
+  search_provider->SetKey("favicon_url",
+                          base::Value("http://www.foo.__MSG_country__"));
+  search_provider->SetKey("suggest_url",
+                          base::Value("http://www.foo.__MSG_country__"));
   manifest.Set(keys::kOverrideSearchProvider, std::move(search_provider));
 
   manifest.SetString(keys::kOverrideHomepage, "http://www.foo.__MSG_country__");

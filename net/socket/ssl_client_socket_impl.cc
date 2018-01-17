@@ -96,8 +96,8 @@ std::unique_ptr<base::Value> NetLogPrivateKeyOperationCallback(
     uint16_t algorithm,
     NetLogCaptureMode mode) {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue);
-  value->SetString("algorithm", SSL_get_signature_algorithm_name(
-                                    algorithm, 0 /* exclude curve */));
+  value->SetKey("algorithm", base::Value(SSL_get_signature_algorithm_name(
+                                 algorithm, 0 /* exclude curve */)));
   return std::move(value);
 }
 
@@ -106,10 +106,11 @@ std::unique_ptr<base::Value> NetLogChannelIDLookupCallback(
     NetLogCaptureMode capture_mode) {
   ChannelIDStore* store = channel_id_service->GetChannelIDStore();
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetBoolean("ephemeral", store->IsEphemeral());
-  dict->SetString("service", base::HexEncode(&channel_id_service,
-                                             sizeof(channel_id_service)));
-  dict->SetString("store", base::HexEncode(&store, sizeof(store)));
+  dict->SetKey("ephemeral", base::Value(store->IsEphemeral()));
+  dict->SetKey("service",
+               base::Value(base::HexEncode(&channel_id_service,
+                                           sizeof(channel_id_service))));
+  dict->SetKey("store", base::Value(base::HexEncode(&store, sizeof(store))));
   return std::move(dict);
 }
 
@@ -118,11 +119,11 @@ std::unique_ptr<base::Value> NetLogChannelIDLookupCompleteCallback(
     int result,
     NetLogCaptureMode capture_mode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("net_error", result);
+  dict->SetKey("net_error", base::Value(result));
   std::string raw_key;
   if (result == OK && key && key->ExportRawPublicKey(&raw_key)) {
     std::string key_to_log = base::HexEncode(raw_key.data(), raw_key.length());
-    dict->SetString("key", key_to_log);
+    dict->SetKey("key", base::Value(key_to_log));
   }
   return std::move(dict);
 }
@@ -138,14 +139,15 @@ std::unique_ptr<base::Value> NetLogSSLInfoCallback(
   const char* version_str;
   SSLVersionToString(&version_str,
                      SSLConnectionStatusToVersion(ssl_info.connection_status));
-  dict->SetString("version", version_str);
-  dict->SetBoolean("is_resumed",
-                   ssl_info.handshake_type == SSLInfo::HANDSHAKE_RESUME);
-  dict->SetInteger("cipher_suite", SSLConnectionStatusToCipherSuite(
-                                       ssl_info.connection_status));
+  dict->SetKey("version", base::Value(version_str));
+  dict->SetKey("is_resumed", base::Value(ssl_info.handshake_type ==
+                                         SSLInfo::HANDSHAKE_RESUME));
+  dict->SetKey("cipher_suite",
+               base::Value(static_cast<int>(SSLConnectionStatusToCipherSuite(
+                   ssl_info.connection_status))));
 
-  dict->SetString("next_proto",
-                  NextProtoToString(socket->GetNegotiatedProtocol()));
+  dict->SetKey("next_proto",
+               base::Value(NextProtoToString(socket->GetNegotiatedProtocol())));
 
   return std::move(dict);
 }
@@ -171,7 +173,7 @@ std::unique_ptr<base::Value> NetLogSSLAlertCallback(
     size_t len,
     NetLogCaptureMode capture_mode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("hex_encoded_bytes", base::HexEncode(bytes, len));
+  dict->SetKey("hex_encoded_bytes", base::Value(base::HexEncode(bytes, len)));
   return std::move(dict);
 }
 
@@ -189,7 +191,7 @@ std::unique_ptr<base::Value> NetLogSSLMessageCallback(
   // The handshake message type is the first byte. Include it so elided messages
   // still report their type.
   uint8_t type = reinterpret_cast<const uint8_t*>(bytes)[0];
-  dict->SetInteger("type", type);
+  dict->SetKey("type", base::Value(static_cast<int>(type)));
 
   // Elide client certificate messages unless logging socket bytes. The client
   // certificate does not contain information needed to impersonate the user
@@ -197,7 +199,7 @@ std::unique_ptr<base::Value> NetLogSSLMessageCallback(
   // information on the user's identity.
   if (!is_write || type != SSL3_MT_CERTIFICATE ||
       capture_mode.include_socket_bytes()) {
-    dict->SetString("hex_encoded_bytes", base::HexEncode(bytes, len));
+    dict->SetKey("hex_encoded_bytes", base::Value(base::HexEncode(bytes, len)));
   }
 
   return std::move(dict);

@@ -410,15 +410,15 @@ class CryptAuthDeviceManagerTest
                           base::Base64UrlEncodePolicy::INCLUDE_PADDING,
                           &bluetooth_address_b64);
 
-    device_dictionary->SetString("public_key", public_key_b64);
-    device_dictionary->SetString("device_name", device_name_b64);
-    device_dictionary->SetString("bluetooth_address",
-                                     bluetooth_address_b64);
-    device_dictionary->SetBoolean("unlock_key", kStoredUnlockKey);
-    device_dictionary->SetBoolean("unlockable", kStoredUnlockable);
+    device_dictionary->SetKey("public_key", base::Value(public_key_b64));
+    device_dictionary->SetKey("device_name", base::Value(device_name_b64));
+    device_dictionary->SetKey("bluetooth_address",
+                              base::Value(bluetooth_address_b64));
+    device_dictionary->SetKey("unlock_key", base::Value(kStoredUnlockKey));
+    device_dictionary->SetKey("unlockable", base::Value(kStoredUnlockable));
     device_dictionary->Set("beacon_seeds", base::MakeUnique<base::ListValue>());
-    device_dictionary->SetBoolean("mobile_hotspot_supported",
-                                  kStoredMobileHotspotSupported);
+    device_dictionary->SetKey("mobile_hotspot_supported",
+                              base::Value(kStoredMobileHotspotSupported));
     {
       ListPrefUpdate update(&pref_service_,
                             prefs::kCryptAuthDeviceSyncUnlockKeys);

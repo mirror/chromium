@@ -729,8 +729,8 @@ int main(int argc, char** argv) {
       cmd->GetSwitchValuePath(media::cast::kModelPath));
 
   base::DictionaryValue values;
-  values.SetBoolean("sim", true);
-  values.SetString("sim-id", sim_id);
+  values.SetKey("sim", base::Value(true));
+  values.SetKey("sim-id", base::Value(sim_id));
 
   std::string extra_data;
   base::JSONWriter::Write(values, &extra_data);

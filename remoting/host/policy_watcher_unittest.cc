@@ -131,9 +131,10 @@ class PolicyWatcherTest : public testing::Test {
         key::kRemoteAccessHostFirewallTraversal, true);
     nat_true_domain_empty_others_default_.Set(
         key::kRemoteAccessHostDomainList, base::MakeUnique<base::ListValue>());
-    unknown_policies_.SetString("UnknownPolicyOne", std::string());
-    unknown_policies_.SetString("UnknownPolicyTwo", std::string());
-    unknown_policies_.SetBoolean("RemoteAccessHostUnknownPolicyThree", true);
+    unknown_policies_.SetKey("UnknownPolicyOne", base::Value(std::string()));
+    unknown_policies_.SetKey("UnknownPolicyTwo", base::Value(std::string()));
+    unknown_policies_.SetKey("RemoteAccessHostUnknownPolicyThree",
+                             base::Value(true));
 
     pairing_true_.SetBoolean(key::kRemoteAccessHostAllowClientPairing, true);
     pairing_false_.SetBoolean(key::kRemoteAccessHostAllowClientPairing, false);

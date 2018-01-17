@@ -43,15 +43,15 @@ std::unique_ptr<base::Value> PrerenderHistory::CopyEntriesAsValue() const {
        ++it) {
     const Entry& entry = *it;
     auto entry_dict = base::MakeUnique<base::DictionaryValue>();
-    entry_dict->SetString("url", entry.url.spec());
-    entry_dict->SetString("final_status",
-                          NameFromFinalStatus(entry.final_status));
-    entry_dict->SetString("origin", NameFromOrigin(entry.origin));
+    entry_dict->SetKey("url", base::Value(entry.url.spec()));
+    entry_dict->SetKey("final_status",
+                       base::Value(NameFromFinalStatus(entry.final_status)));
+    entry_dict->SetKey("origin", base::Value(NameFromOrigin(entry.origin)));
     // Use a string to prevent overflow, as Values don't support 64-bit
     // integers.
-    entry_dict->SetString(
-        "end_time",
-        base::Int64ToString((entry.end_time - epoch_start).InMilliseconds()));
+    entry_dict->SetKey("end_time",
+                       base::Value(base::Int64ToString(
+                           (entry.end_time - epoch_start).InMilliseconds())));
     return_list->Append(std::move(entry_dict));
   }
   return std::move(return_list);

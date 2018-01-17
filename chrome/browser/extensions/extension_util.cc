@@ -282,14 +282,14 @@ std::unique_ptr<base::DictionaryValue> GetExtensionInfo(
   DCHECK(extension);
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
 
-  dict->SetString("id", extension->id());
-  dict->SetString("name", extension->name());
+  dict->SetKey("id", base::Value(extension->id()));
+  dict->SetKey("name", base::Value(extension->name()));
 
   GURL icon = extensions::ExtensionIconSource::GetIconURL(
       extension, extension_misc::EXTENSION_ICON_SMALLISH,
       ExtensionIconSet::MATCH_BIGGER,
       false);  // Not grayscale.
-  dict->SetString("icon", icon.spec());
+  dict->SetKey("icon", base::Value(icon.spec()));
 
   return dict;
 }

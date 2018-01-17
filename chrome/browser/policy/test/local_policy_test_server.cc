@@ -244,15 +244,16 @@ bool LocalPolicyTestServer::GenerateAdditionalArguments(
   if (!net::LocalTestServer::GenerateAdditionalArguments(arguments))
     return false;
 
-  arguments->SetString("config-file", config_file_.AsUTF8Unsafe());
+  arguments->SetKey("config-file", base::Value(config_file_.AsUTF8Unsafe()));
   if (!policy_key_.empty())
-    arguments->SetString("policy-key", policy_key_.AsUTF8Unsafe());
+    arguments->SetKey("policy-key", base::Value(policy_key_.AsUTF8Unsafe()));
   if (automatic_rotation_of_signing_keys_enabled_) {
     arguments->Set("rotate-policy-keys-automatically",
                    std::make_unique<base::Value>());
   }
   if (server_data_dir_.IsValid()) {
-    arguments->SetString("data-dir", server_data_dir_.GetPath().AsUTF8Unsafe());
+    arguments->SetKey("data-dir",
+                      base::Value(server_data_dir_.GetPath().AsUTF8Unsafe()));
 
     if (!clients_.empty()) {
       std::string json;
@@ -263,7 +264,8 @@ bool LocalPolicyTestServer::GenerateAdditionalArguments(
           base::checked_cast<int>(json.size())) {
         return false;
       }
-      arguments->SetString("client-state", client_state_file.AsUTF8Unsafe());
+      arguments->SetKey("client-state",
+                        base::Value(client_state_file.AsUTF8Unsafe()));
     }
   }
 

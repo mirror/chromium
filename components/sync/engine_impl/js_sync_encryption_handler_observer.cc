@@ -35,7 +35,8 @@ void JsSyncEncryptionHandlerObserver::OnPassphraseRequired(
     return;
   }
   base::DictionaryValue details;
-  details.SetString("reason", PassphraseRequiredReasonToString(reason));
+  details.SetKey("reason",
+                 base::Value(PassphraseRequiredReasonToString(reason)));
   HandleJsEvent(FROM_HERE, "onPassphraseRequired", JsEventDetails(&details));
 }
 
@@ -54,8 +55,8 @@ void JsSyncEncryptionHandlerObserver::OnBootstrapTokenUpdated(
     return;
   }
   base::DictionaryValue details;
-  details.SetString("bootstrapToken", "<redacted>");
-  details.SetString("type", BootstrapTokenTypeToString(type));
+  details.SetKey("bootstrapToken", base::Value("<redacted>"));
+  details.SetKey("type", base::Value(BootstrapTokenTypeToString(type)));
   HandleJsEvent(FROM_HERE, "onBootstrapTokenUpdated", JsEventDetails(&details));
 }
 
@@ -67,7 +68,7 @@ void JsSyncEncryptionHandlerObserver::OnEncryptedTypesChanged(
   }
   base::DictionaryValue details;
   details.Set("encryptedTypes", ModelTypeSetToValue(encrypted_types));
-  details.SetBoolean("encryptEverything", encrypt_everything);
+  details.SetKey("encryptEverything", base::Value(encrypt_everything));
   HandleJsEvent(FROM_HERE, "onEncryptedTypesChanged", JsEventDetails(&details));
 }
 
@@ -85,8 +86,9 @@ void JsSyncEncryptionHandlerObserver::OnCryptographerStateChanged(
     return;
   }
   base::DictionaryValue details;
-  details.SetBoolean("ready", cryptographer->is_ready());
-  details.SetBoolean("hasPendingKeys", cryptographer->has_pending_keys());
+  details.SetKey("ready", base::Value(cryptographer->is_ready()));
+  details.SetKey("hasPendingKeys",
+                 base::Value(cryptographer->has_pending_keys()));
   HandleJsEvent(FROM_HERE, "onCryptographerStateChanged",
                 JsEventDetails(&details));
 }
@@ -98,9 +100,10 @@ void JsSyncEncryptionHandlerObserver::OnPassphraseTypeChanged(
     return;
   }
   base::DictionaryValue details;
-  details.SetString("passphraseType", PassphraseTypeToString(type));
-  details.SetInteger("explicitPassphraseTime",
-                     TimeToProtoTime(explicit_passphrase_time));
+  details.SetKey("passphraseType", base::Value(PassphraseTypeToString(type)));
+  details.SetKey(
+      "explicitPassphraseTime",
+      base::Value(static_cast<int>(TimeToProtoTime(explicit_passphrase_time))));
   HandleJsEvent(FROM_HERE, "onPassphraseTypeChanged", JsEventDetails(&details));
 }
 

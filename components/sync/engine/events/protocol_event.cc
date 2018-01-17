@@ -15,9 +15,9 @@ std::unique_ptr<base::DictionaryValue> ProtocolEvent::ToValue(
     const ProtocolEvent& event,
     bool include_specifics) {
   auto dict = std::make_unique<base::DictionaryValue>();
-  dict->SetDouble("time", event.GetTimestamp().ToJsTime());
-  dict->SetString("type", event.GetType());
-  dict->SetString("details", event.GetDetails());
+  dict->SetKey("time", base::Value(event.GetTimestamp().ToJsTime()));
+  dict->SetKey("type", base::Value(event.GetType()));
+  dict->SetKey("details", base::Value(event.GetDetails()));
   dict->Set("proto", event.GetProtoMessage(include_specifics));
   return dict;
 }

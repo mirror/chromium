@@ -333,10 +333,10 @@ TEST(PerformanceLogger, RecordTraceEvents) {
   base::DictionaryValue params;
   auto trace_events = base::MakeUnique<base::ListValue>();
   auto event1 = base::MakeUnique<base::DictionaryValue>();
-  event1->SetString("cat", "foo");
+  event1->SetKey("cat", base::Value("foo"));
   trace_events->GetList().push_back(event1->Clone());
   auto event2 = base::MakeUnique<base::DictionaryValue>();
-  event2->SetString("cat", "bar");
+  event2->SetKey("cat", base::Value("bar"));
   trace_events->GetList().push_back(event2->Clone());
   params.Set("value", std::move(trace_events));
   ASSERT_EQ(kOk, client.TriggerEvent("Tracing.dataCollected", params).code());
@@ -382,7 +382,7 @@ TEST(PerformanceLogger, WarnWhenTraceBufferFull) {
   client.AddListener(&logger);
   logger.OnConnected(&client);
   base::DictionaryValue params;
-  params.SetDouble("percentFull", 1.0);
+  params.SetKey("percentFull", base::Value(1.0));
   ASSERT_EQ(kOk, client.TriggerEvent("Tracing.bufferUsage", params).code());
 
   ASSERT_EQ(1u, log.GetEntries().size());

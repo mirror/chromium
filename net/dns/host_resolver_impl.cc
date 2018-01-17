@@ -389,14 +389,15 @@ std::unique_ptr<base::Value> NetLogProcTaskFailedCallback(
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
   if (attempt_number)
-    dict->SetInteger("attempt_number", attempt_number);
+    dict->SetKey("attempt_number",
+                 base::Value(static_cast<int>(attempt_number)));
 
-  dict->SetInteger("net_error", net_error);
+  dict->SetKey("net_error", base::Value(net_error));
 
   if (os_error) {
-    dict->SetInteger("os_error", os_error);
+    dict->SetKey("os_error", base::Value(os_error));
 #if defined(OS_POSIX)
-    dict->SetString("os_error_string", gai_strerror(os_error));
+    dict->SetKey("os_error_string", base::Value(gai_strerror(os_error)));
 #elif defined(OS_WIN)
     // Map the error code to a human-readable string.
     LPWSTR error_string = nullptr;
@@ -421,9 +422,9 @@ std::unique_ptr<base::Value> NetLogDnsTaskFailedCallback(
     int dns_error,
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("net_error", net_error);
+  dict->SetKey("net_error", base::Value(net_error));
   if (dns_error)
-    dict->SetInteger("dns_error", dns_error);
+    dict->SetKey("dns_error", base::Value(dns_error));
   return std::move(dict);
 }
 
@@ -434,11 +435,12 @@ std::unique_ptr<base::Value> NetLogRequestInfoCallback(
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
 
-  dict->SetString("host", info->host_port_pair().ToString());
-  dict->SetInteger("address_family",
-                   static_cast<int>(info->address_family()));
-  dict->SetBoolean("allow_cached_response", info->allow_cached_response());
-  dict->SetBoolean("is_speculative", info->is_speculative());
+  dict->SetKey("host", base::Value(info->host_port_pair().ToString()));
+  dict->SetKey("address_family",
+               base::Value(static_cast<int>(info->address_family())));
+  dict->SetKey("allow_cached_response",
+               base::Value(info->allow_cached_response()));
+  dict->SetKey("is_speculative", base::Value(info->is_speculative()));
   return std::move(dict);
 }
 
@@ -449,7 +451,7 @@ std::unique_ptr<base::Value> NetLogJobCreationCallback(
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
   source.AddToEventParameters(dict.get());
-  dict->SetString("host", *host);
+  dict->SetKey("host", base::Value(*host));
   return std::move(dict);
 }
 
@@ -460,7 +462,7 @@ std::unique_ptr<base::Value> NetLogJobAttachCallback(
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
   source.AddToEventParameters(dict.get());
-  dict->SetString("priority", RequestPriorityToString(priority));
+  dict->SetKey("priority", base::Value(RequestPriorityToString(priority)));
   return std::move(dict);
 }
 
@@ -476,8 +478,8 @@ std::unique_ptr<base::Value> NetLogIPv6AvailableCallback(
     bool cached,
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetBoolean("ipv6_available", ipv6_available);
-  dict->SetBoolean("cached", cached);
+  dict->SetKey("ipv6_available", base::Value(ipv6_available));
+  dict->SetKey("cached", base::Value(cached));
   return std::move(dict);
 }
 

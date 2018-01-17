@@ -567,10 +567,11 @@ void HeadlessWebContentsImpl::SendNeedsBeginFramesEvent(int session_id) {
                needs_external_begin_frames_);
   DCHECK(agent_host_);
   auto params = std::make_unique<base::DictionaryValue>();
-  params->SetBoolean("needsBeginFrames", needs_external_begin_frames_);
+  params->SetKey("needsBeginFrames", base::Value(needs_external_begin_frames_));
 
   base::DictionaryValue event;
-  event.SetString("method", "HeadlessExperimental.needsBeginFramesChanged");
+  event.SetKey("method",
+               base::Value("HeadlessExperimental.needsBeginFramesChanged"));
   event.Set("params", std::move(params));
 
   std::string json_result;
@@ -588,8 +589,9 @@ void HeadlessWebContentsImpl::DidReceiveCompositorFrame() {
 
     // Send an event to the devtools clients.
     base::DictionaryValue event;
-    event.SetString("method",
-                    "HeadlessExperimental.mainFrameReadyForScreenshots");
+    event.SetKey(
+        "method",
+        base::Value("HeadlessExperimental.mainFrameReadyForScreenshots"));
     event.Set("params", std::make_unique<base::DictionaryValue>());
 
     std::string json_result;

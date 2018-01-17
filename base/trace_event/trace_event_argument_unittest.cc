@@ -102,11 +102,11 @@ TEST(TraceEventArgumentTest, PassBaseValue) {
   Value double_value(42.0f);
 
   auto dict_value = WrapUnique(new DictionaryValue);
-  dict_value->SetBoolean("bool", true);
-  dict_value->SetInteger("int", 42);
-  dict_value->SetDouble("double", 42.0f);
-  dict_value->SetString("string", std::string("a") + "b");
-  dict_value->SetString("string", std::string("a") + "b");
+  dict_value->SetKey("bool", base::Value(true));
+  dict_value->SetKey("int", base::Value(42));
+  dict_value->SetKey("double", base::Value(static_cast<double>(42.0f)));
+  dict_value->SetKey("string", base::Value(std::string("a") + "b"));
+  dict_value->SetKey("string", base::Value(std::string("a") + "b"));
 
   auto list_value = WrapUnique(new ListValue);
   list_value->AppendBoolean(false);

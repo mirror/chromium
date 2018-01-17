@@ -331,7 +331,7 @@ std::unique_ptr<base::Value> HttpNetworkSession::SpdySessionPoolInfoToValue()
 std::unique_ptr<base::Value> HttpNetworkSession::QuicInfoToValue() const {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
   dict->Set("sessions", quic_stream_factory_.QuicStreamFactoryInfoToValue());
-  dict->SetBoolean("quic_enabled", IsQuicEnabled());
+  dict->SetKey("quic_enabled", base::Value(IsQuicEnabled()));
 
   auto connection_options(std::make_unique<base::ListValue>());
   for (const auto& option : params_.quic_connection_options)
@@ -348,42 +348,49 @@ std::unique_ptr<base::Value> HttpNetworkSession::QuicInfoToValue() const {
     origins_to_force_quic_on->AppendString(origin.ToString());
   dict->Set("origins_to_force_quic_on", std::move(origins_to_force_quic_on));
 
-  dict->SetInteger("max_packet_length", params_.quic_max_packet_length);
-  dict->SetInteger("max_server_configs_stored_in_properties",
-                   params_.quic_max_server_configs_stored_in_properties);
-  dict->SetInteger("idle_connection_timeout_seconds",
-                   params_.quic_idle_connection_timeout_seconds);
-  dict->SetInteger("reduced_ping_timeout_seconds",
-                   params_.quic_reduced_ping_timeout_seconds);
-  dict->SetBoolean("mark_quic_broken_when_network_blackholes",
-                   params_.mark_quic_broken_when_network_blackholes);
-  dict->SetBoolean("retry_without_alt_svc_on_quic_errors",
-                   params_.retry_without_alt_svc_on_quic_errors);
-  dict->SetBoolean("race_cert_verification",
-                   params_.quic_race_cert_verification);
-  dict->SetBoolean("disable_bidirectional_streams",
-                   params_.quic_disable_bidirectional_streams);
-  dict->SetBoolean("close_sessions_on_ip_change",
-                   params_.quic_close_sessions_on_ip_change);
-  dict->SetBoolean("migrate_sessions_on_network_change",
-                   params_.quic_migrate_sessions_on_network_change);
-  dict->SetBoolean("migrate_sessions_early",
-                   params_.quic_migrate_sessions_early);
-  dict->SetBoolean("migrate_sessions_on_network_change_v2",
-                   params_.quic_migrate_sessions_on_network_change_v2);
-  dict->SetBoolean("migrate_sessions_early_v2",
-                   params_.quic_migrate_sessions_early_v2);
-  dict->SetInteger("max_time_on_non_default_network_seconds",
-                   params_.quic_max_time_on_non_default_network.InSeconds());
-  dict->SetInteger(
+  dict->SetKey("max_packet_length",
+               base::Value(static_cast<int>(params_.quic_max_packet_length)));
+  dict->SetKey("max_server_configs_stored_in_properties",
+               base::Value(static_cast<int>(
+                   params_.quic_max_server_configs_stored_in_properties)));
+  dict->SetKey("idle_connection_timeout_seconds",
+               base::Value(params_.quic_idle_connection_timeout_seconds));
+  dict->SetKey("reduced_ping_timeout_seconds",
+               base::Value(params_.quic_reduced_ping_timeout_seconds));
+  dict->SetKey("mark_quic_broken_when_network_blackholes",
+               base::Value(params_.mark_quic_broken_when_network_blackholes));
+  dict->SetKey("retry_without_alt_svc_on_quic_errors",
+               base::Value(params_.retry_without_alt_svc_on_quic_errors));
+  dict->SetKey("race_cert_verification",
+               base::Value(params_.quic_race_cert_verification));
+  dict->SetKey("disable_bidirectional_streams",
+               base::Value(params_.quic_disable_bidirectional_streams));
+  dict->SetKey("close_sessions_on_ip_change",
+               base::Value(params_.quic_close_sessions_on_ip_change));
+  dict->SetKey("migrate_sessions_on_network_change",
+               base::Value(params_.quic_migrate_sessions_on_network_change));
+  dict->SetKey("migrate_sessions_early",
+               base::Value(params_.quic_migrate_sessions_early));
+  dict->SetKey("migrate_sessions_on_network_change_v2",
+               base::Value(params_.quic_migrate_sessions_on_network_change_v2));
+  dict->SetKey("migrate_sessions_early_v2",
+               base::Value(params_.quic_migrate_sessions_early_v2));
+  dict->SetKey("max_time_on_non_default_network_seconds",
+               base::Value(static_cast<int>(
+                   params_.quic_max_time_on_non_default_network.InSeconds())));
+  dict->SetKey(
       "max_num_migrations_to_non_default_network_on_path_degrading",
-      params_.quic_max_migrations_to_non_default_network_on_path_degrading);
-  dict->SetBoolean("allow_server_migration",
-                   params_.quic_allow_server_migration);
-  dict->SetBoolean("estimate_initial_rtt", params_.quic_estimate_initial_rtt);
-  dict->SetBoolean("force_hol_blocking", params_.quic_force_hol_blocking);
-  dict->SetBoolean("server_push_cancellation",
-                   params_.enable_server_push_cancellation);
+      base::Value(
+          params_
+              .quic_max_migrations_to_non_default_network_on_path_degrading));
+  dict->SetKey("allow_server_migration",
+               base::Value(params_.quic_allow_server_migration));
+  dict->SetKey("estimate_initial_rtt",
+               base::Value(params_.quic_estimate_initial_rtt));
+  dict->SetKey("force_hol_blocking",
+               base::Value(params_.quic_force_hol_blocking));
+  dict->SetKey("server_push_cancellation",
+               base::Value(params_.enable_server_push_cancellation));
 
   return std::move(dict);
 }

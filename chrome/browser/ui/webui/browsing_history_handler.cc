@@ -104,7 +104,7 @@ void GetDeviceNameAndType(const browser_sync::ProfileSyncService* sync_service,
 void SetHistoryEntryUrlAndTitle(
     const BrowsingHistoryService::HistoryEntry& entry,
     base::DictionaryValue* result) {
-  result->SetString("url", entry.url.spec());
+  result->SetKey("url", base::Value(entry.url.spec()));
 
   bool using_url_as_the_title = false;
   base::string16 title_to_set(entry.title);
@@ -129,7 +129,7 @@ void SetHistoryEntryUrlAndTitle(
   if (title_to_set.size() > kShortTitleLength)
     title_to_set.resize(kShortTitleLength);
 
-  result->SetString("title", title_to_set);
+  result->SetKey("title", base::Value(title_to_set));
 }
 
 // Converts |entry| to a DictionaryValue to be owned by the caller.
@@ -152,13 +152,13 @@ std::unique_ptr<base::DictionaryValue> HistoryEntryToValue(
   // chrome/browser/resources/history/history.js in @typedef for
   // HistoryEntry. Please update it whenever you add or remove
   // any keys in result.
-  result->SetString("domain", domain);
+  result->SetKey("domain", base::Value(domain));
 
-  result->SetString(
+  result->SetKey(
       "fallbackFaviconText",
-      base::UTF16ToASCII(favicon::GetFallbackIconText(entry.url)));
+      base::Value(base::UTF16ToASCII(favicon::GetFallbackIconText(entry.url))));
 
-  result->SetDouble("time", entry.time.ToJsTime());
+  result->SetKey("time", base::Value(entry.time.ToJsTime()));
 
   // Pass the timestamps in a list.
   std::unique_ptr<base::ListValue> timestamps(new base::ListValue);
@@ -170,7 +170,8 @@ std::unique_ptr<base::DictionaryValue> HistoryEntryToValue(
 
   // Always pass the short date since it is needed both in the search and in
   // the monthly view.
-  result->SetString("dateShort", base::TimeFormatShortDate(entry.time));
+  result->SetKey("dateShort",
+                 base::Value(base::TimeFormatShortDate(entry.time)));
 
   base::string16 snippet_string;
   base::string16 date_relative_day;
@@ -203,8 +204,8 @@ std::unique_ptr<base::DictionaryValue> HistoryEntryToValue(
   if (!entry.client_id.empty())
     GetDeviceNameAndType(sync_service, entry.client_id, &device_name,
                          &device_type);
-  result->SetString("deviceName", device_name);
-  result->SetString("deviceType", device_type);
+  result->SetKey("deviceName", base::Value(device_name));
+  result->SetKey("deviceType", base::Value(device_type));
 
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
   if (supervised_user_service) {
@@ -217,12 +218,13 @@ std::unique_ptr<base::DictionaryValue> HistoryEntryToValue(
   }
 #endif
 
-  result->SetString("dateTimeOfDay", date_time_of_day);
-  result->SetString("dateRelativeDay", date_relative_day);
-  result->SetString("snippet", snippet_string);
-  result->SetBoolean("starred", bookmark_model->IsBookmarked(entry.url));
-  result->SetInteger("hostFilteringBehavior", host_filtering_behavior);
-  result->SetBoolean("blockedVisit", is_blocked_visit);
+  result->SetKey("dateTimeOfDay", base::Value(date_time_of_day));
+  result->SetKey("dateRelativeDay", base::Value(date_relative_day));
+  result->SetKey("snippet", base::Value(snippet_string));
+  result->SetKey("starred",
+                 base::Value(bookmark_model->IsBookmarked(entry.url)));
+  result->SetKey("hostFilteringBehavior", base::Value(host_filtering_behavior));
+  result->SetKey("blockedVisit", base::Value(is_blocked_visit));
 
   return result;
 }
@@ -374,8 +376,9 @@ void BrowsingHistoryHandler::OnQueryComplete(
   // described in chrome/browser/resources/history/history.js in @typedef for
   // HistoryQuery. Please update it whenever you add or remove any keys in
   // results_info_value_.
-  results_info.SetString("term", query_results_info.search_text);
-  results_info.SetBoolean("finished", query_results_info.reached_beginning);
+  results_info.SetKey("term", base::Value(query_results_info.search_text));
+  results_info.SetKey("finished",
+                      base::Value(query_results_info.reached_beginning));
 
   web_ui()->CallJavascriptFunctionUnsafe("historyResult", results_info,
                                          results_value);

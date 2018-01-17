@@ -73,8 +73,8 @@ void ExecuteStubGetSession(int* count,
   std::unique_ptr<base::DictionaryValue> capabilities(
       new base::DictionaryValue());
 
-  capabilities->SetString("capability1", "test1");
-  capabilities->SetString("capability2", "test2");
+  capabilities->SetKey("capability1", base::Value("test1"));
+  capabilities->SetKey("capability2", base::Value("test2"));
 
   callback.Run(Status(kOk), std::move(capabilities), session_id, false);
 }
@@ -235,7 +235,7 @@ TEST(CommandsTest, ExecuteSessionCommand) {
   map[id] = thread;
 
   base::DictionaryValue params;
-  params.SetInteger("param", 5);
+  params.SetKey("param", base::Value(5));
   base::Value expected_value(6);
   SessionCommand cmd = base::Bind(
       &ExecuteSimpleCommand, id, &params, &expected_value);
@@ -357,13 +357,13 @@ class FindElementWebView : public StubWebView {
       case kElementExistsTimeout: {
         if (only_one_) {
           base::DictionaryValue element;
-          element.SetString("ELEMENT", "1");
+          element.SetKey("ELEMENT", base::Value("1"));
           result_.reset(element.DeepCopy());
         } else {
           base::DictionaryValue element1;
-          element1.SetString("ELEMENT", "1");
+          element1.SetKey("ELEMENT", base::Value("1"));
           base::DictionaryValue element2;
-          element2.SetString("ELEMENT", "2");
+          element2.SetKey("ELEMENT", base::Value("2"));
           base::ListValue list;
           list.Append(element1.CreateDeepCopy());
           list.Append(element2.CreateDeepCopy());
@@ -453,14 +453,14 @@ TEST(CommandsTest, SuccessfulFindElement) {
   session.implicit_wait = base::TimeDelta::FromSeconds(1);
   session.SwitchToSubFrame("frame_id1", std::string());
   base::DictionaryValue params;
-  params.SetString("using", "id");
-  params.SetString("value", "a");
+  params.SetKey("using", base::Value("id"));
+  params.SetKey("value", base::Value("a"));
   std::unique_ptr<base::Value> result;
   ASSERT_EQ(kOk,
             ExecuteFindElement(1, &session, &web_view, params, &result,
                                nullptr).code());
   base::DictionaryValue param;
-  param.SetString("id", "a");
+  param.SetKey("id", base::Value("a"));
   base::ListValue expected_args;
   expected_args.Append(param.CreateDeepCopy());
   web_view.Verify("frame_id1", &expected_args, result.get());
@@ -470,8 +470,8 @@ TEST(CommandsTest, FailedFindElement) {
   FindElementWebView web_view(true, kElementNotExistsQueryOnce);
   Session session("id");
   base::DictionaryValue params;
-  params.SetString("using", "id");
-  params.SetString("value", "a");
+  params.SetKey("using", base::Value("id"));
+  params.SetKey("value", base::Value("a"));
   std::unique_ptr<base::Value> result;
   ASSERT_EQ(kNoSuchElement,
             ExecuteFindElement(1, &session, &web_view, params, &result,
@@ -484,14 +484,14 @@ TEST(CommandsTest, SuccessfulFindElements) {
   session.implicit_wait = base::TimeDelta::FromSeconds(1);
   session.SwitchToSubFrame("frame_id2", std::string());
   base::DictionaryValue params;
-  params.SetString("using", "name");
-  params.SetString("value", "b");
+  params.SetKey("using", base::Value("name"));
+  params.SetKey("value", base::Value("b"));
   std::unique_ptr<base::Value> result;
   ASSERT_EQ(kOk,
             ExecuteFindElements(1, &session, &web_view, params, &result,
                                 nullptr).code());
   base::DictionaryValue param;
-  param.SetString("name", "b");
+  param.SetKey("name", base::Value("b"));
   base::ListValue expected_args;
   expected_args.Append(param.CreateDeepCopy());
   web_view.Verify("frame_id2", &expected_args, result.get());
@@ -501,8 +501,8 @@ TEST(CommandsTest, FailedFindElements) {
   Session session("id");
   FindElementWebView web_view(false, kElementNotExistsQueryOnce);
   base::DictionaryValue params;
-  params.SetString("using", "id");
-  params.SetString("value", "a");
+  params.SetKey("using", base::Value("id"));
+  params.SetKey("value", base::Value("a"));
   std::unique_ptr<base::Value> result;
   ASSERT_EQ(kOk,
             ExecuteFindElements(1, &session, &web_view, params, &result,
@@ -518,8 +518,8 @@ TEST(CommandsTest, SuccessfulFindChildElement) {
   session.implicit_wait = base::TimeDelta::FromSeconds(1);
   session.SwitchToSubFrame("frame_id3", std::string());
   base::DictionaryValue params;
-  params.SetString("using", "tag name");
-  params.SetString("value", "div");
+  params.SetKey("using", base::Value("tag name"));
+  params.SetKey("value", base::Value("div"));
   std::string element_id = "1";
   std::unique_ptr<base::Value> result;
   ASSERT_EQ(
@@ -527,9 +527,9 @@ TEST(CommandsTest, SuccessfulFindChildElement) {
       ExecuteFindChildElement(
           1, &session, &web_view, element_id, params, &result).code());
   base::DictionaryValue locator_param;
-  locator_param.SetString("tag name", "div");
+  locator_param.SetKey("tag name", base::Value("div"));
   base::DictionaryValue root_element_param;
-  root_element_param.SetString("ELEMENT", element_id);
+  root_element_param.SetKey("ELEMENT", base::Value(element_id));
   base::ListValue expected_args;
   expected_args.Append(locator_param.CreateDeepCopy());
   expected_args.Append(root_element_param.CreateDeepCopy());
@@ -540,8 +540,8 @@ TEST(CommandsTest, FailedFindChildElement) {
   Session session("id");
   FindElementWebView web_view(true, kElementNotExistsQueryOnce);
   base::DictionaryValue params;
-  params.SetString("using", "id");
-  params.SetString("value", "a");
+  params.SetKey("using", base::Value("id"));
+  params.SetKey("value", base::Value("a"));
   std::string element_id = "1";
   std::unique_ptr<base::Value> result;
   ASSERT_EQ(
@@ -556,8 +556,8 @@ TEST(CommandsTest, SuccessfulFindChildElements) {
   session.implicit_wait = base::TimeDelta::FromSeconds(1);
   session.SwitchToSubFrame("frame_id4", std::string());
   base::DictionaryValue params;
-  params.SetString("using", "class name");
-  params.SetString("value", "c");
+  params.SetKey("using", base::Value("class name"));
+  params.SetKey("value", base::Value("c"));
   std::string element_id = "1";
   std::unique_ptr<base::Value> result;
   ASSERT_EQ(
@@ -565,9 +565,9 @@ TEST(CommandsTest, SuccessfulFindChildElements) {
       ExecuteFindChildElements(
           1, &session, &web_view, element_id, params, &result).code());
   base::DictionaryValue locator_param;
-  locator_param.SetString("class name", "c");
+  locator_param.SetKey("class name", base::Value("c"));
   base::DictionaryValue root_element_param;
-  root_element_param.SetString("ELEMENT", element_id);
+  root_element_param.SetKey("ELEMENT", base::Value(element_id));
   base::ListValue expected_args;
   expected_args.Append(locator_param.CreateDeepCopy());
   expected_args.Append(root_element_param.CreateDeepCopy());
@@ -578,8 +578,8 @@ TEST(CommandsTest, FailedFindChildElements) {
   Session session("id");
   FindElementWebView web_view(false, kElementNotExistsQueryOnce);
   base::DictionaryValue params;
-  params.SetString("using", "id");
-  params.SetString("value", "a");
+  params.SetKey("using", base::Value("id"));
+  params.SetKey("value", base::Value("a"));
   std::string element_id = "1";
   std::unique_ptr<base::Value> result;
   ASSERT_EQ(
@@ -596,9 +596,9 @@ TEST(CommandsTest, TimeoutInFindElement) {
   FindElementWebView web_view(true, kElementExistsTimeout);
   session.implicit_wait = base::TimeDelta::FromMilliseconds(2);
   base::DictionaryValue params;
-  params.SetString("using", "id");
-  params.SetString("value", "a");
-  params.SetString("id", "1");
+  params.SetKey("using", base::Value("id"));
+  params.SetKey("value", base::Value("a"));
+  params.SetKey("id", base::Value("1"));
   std::unique_ptr<base::Value> result;
   ASSERT_EQ(kNoSuchElement,
             ExecuteFindElement(1, &session, &web_view, params, &result,
@@ -631,8 +631,8 @@ TEST(CommandsTest, ErrorFindElement) {
   Session session("id");
   ErrorCallFunctionWebView web_view(kUnknownError);
   base::DictionaryValue params;
-  params.SetString("using", "id");
-  params.SetString("value", "a");
+  params.SetKey("using", base::Value("id"));
+  params.SetKey("value", base::Value("a"));
   std::unique_ptr<base::Value> value;
   ASSERT_EQ(kUnknownError,
             ExecuteFindElement(1, &session, &web_view, params, &value,
@@ -646,8 +646,8 @@ TEST(CommandsTest, ErrorFindChildElement) {
   Session session("id");
   ErrorCallFunctionWebView web_view(kStaleElementReference);
   base::DictionaryValue params;
-  params.SetString("using", "id");
-  params.SetString("value", "a");
+  params.SetKey("using", base::Value("id"));
+  params.SetKey("value", base::Value("a"));
   std::string element_id = "1";
   std::unique_ptr<base::Value> result;
   ASSERT_EQ(

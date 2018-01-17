@@ -611,7 +611,7 @@ TEST(SchemaTest, Validate) {
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, true);
 
   // Wrong type, expected integer.
-  bundle.SetBoolean("Integer", true);
+  bundle.SetKey("Integer", base::Value(true));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
 
   // Wrong type, expected list of strings.
@@ -627,23 +627,23 @@ TEST(SchemaTest, Validate) {
   {
     bundle.Clear();
     base::DictionaryValue dict;
-    dict.SetString("one", "one");
+    dict.SetKey("one", base::Value("one"));
     bundle.SetKey("Object", std::move(dict));
     TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
   }
 
   // Unknown name.
   bundle.Clear();
-  bundle.SetBoolean("Unknown", true);
+  bundle.SetKey("Unknown", base::Value(true));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
 
   // All of these will be valid.
   bundle.Clear();
-  bundle.SetBoolean("Boolean", true);
-  bundle.SetInteger("Integer", 123);
+  bundle.SetKey("Boolean", base::Value(true));
+  bundle.SetKey("Integer", base::Value(123));
   bundle.Set("Null", std::make_unique<base::Value>());
-  bundle.SetDouble("Number", 3.14);
-  bundle.SetString("String", "omg");
+  bundle.SetKey("Number", base::Value(3.14));
+  bundle.SetKey("String", base::Value("omg"));
 
   {
     base::ListValue list;
@@ -654,8 +654,8 @@ TEST(SchemaTest, Validate) {
 
   {
     base::DictionaryValue dict;
-    dict.SetString("one", "string");
-    dict.SetInteger("two", 2);
+    dict.SetKey("one", base::Value("string"));
+    dict.SetKey("two", base::Value(2));
     base::ListValue list;
     list.GetList().push_back(dict.Clone());
     list.GetList().push_back(std::move(dict));
@@ -674,56 +674,56 @@ TEST(SchemaTest, Validate) {
 
   {
     base::DictionaryValue dict;
-    dict.SetBoolean("one", true);
-    dict.SetInteger("two", 2);
-    dict.SetString("additionally", "a string");
-    dict.SetString("and also", "another string");
+    dict.SetKey("one", base::Value(true));
+    dict.SetKey("two", base::Value(2));
+    dict.SetKey("additionally", base::Value("a string"));
+    dict.SetKey("and also", base::Value("another string"));
     bundle.SetKey("Object", std::move(dict));
   }
 
-  bundle.SetInteger("IntegerWithEnums", 1);
-  bundle.SetInteger("IntegerWithEnumsGaps", 20);
-  bundle.SetString("StringWithEnums", "two");
-  bundle.SetInteger("IntegerWithRange", 3);
+  bundle.SetKey("IntegerWithEnums", base::Value(1));
+  bundle.SetKey("IntegerWithEnumsGaps", base::Value(20));
+  bundle.SetKey("StringWithEnums", base::Value("two"));
+  bundle.SetKey("IntegerWithRange", base::Value(3));
 
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, true);
 
-  bundle.SetInteger("IntegerWithEnums", 0);
+  bundle.SetKey("IntegerWithEnums", base::Value(0));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
-  bundle.SetInteger("IntegerWithEnums", 1);
+  bundle.SetKey("IntegerWithEnums", base::Value(1));
 
-  bundle.SetInteger("IntegerWithEnumsGaps", 0);
+  bundle.SetKey("IntegerWithEnumsGaps", base::Value(0));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
-  bundle.SetInteger("IntegerWithEnumsGaps", 9);
+  bundle.SetKey("IntegerWithEnumsGaps", base::Value(9));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
-  bundle.SetInteger("IntegerWithEnumsGaps", 10);
+  bundle.SetKey("IntegerWithEnumsGaps", base::Value(10));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, true);
-  bundle.SetInteger("IntegerWithEnumsGaps", 11);
+  bundle.SetKey("IntegerWithEnumsGaps", base::Value(11));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
-  bundle.SetInteger("IntegerWithEnumsGaps", 19);
+  bundle.SetKey("IntegerWithEnumsGaps", base::Value(19));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
-  bundle.SetInteger("IntegerWithEnumsGaps", 21);
+  bundle.SetKey("IntegerWithEnumsGaps", base::Value(21));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
-  bundle.SetInteger("IntegerWithEnumsGaps", 29);
+  bundle.SetKey("IntegerWithEnumsGaps", base::Value(29));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
-  bundle.SetInteger("IntegerWithEnumsGaps", 30);
+  bundle.SetKey("IntegerWithEnumsGaps", base::Value(30));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, true);
-  bundle.SetInteger("IntegerWithEnumsGaps", 31);
+  bundle.SetKey("IntegerWithEnumsGaps", base::Value(31));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
-  bundle.SetInteger("IntegerWithEnumsGaps", 100);
+  bundle.SetKey("IntegerWithEnumsGaps", base::Value(100));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
-  bundle.SetInteger("IntegerWithEnumsGaps", 20);
+  bundle.SetKey("IntegerWithEnumsGaps", base::Value(20));
 
-  bundle.SetString("StringWithEnums", "FOUR");
+  bundle.SetKey("StringWithEnums", base::Value("FOUR"));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
-  bundle.SetString("StringWithEnums", "two");
+  bundle.SetKey("StringWithEnums", base::Value("two"));
 
-  bundle.SetInteger("IntegerWithRange", 4);
+  bundle.SetKey("IntegerWithRange", base::Value(4));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
-  bundle.SetInteger("IntegerWithRange", 3);
+  bundle.SetKey("IntegerWithRange", base::Value(3));
 
   // Unknown top level property.
-  bundle.SetString("boom", "bang");
+  bundle.SetKey("boom", base::Value("bang"));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
   TestSchemaValidation(schema, bundle, SCHEMA_ALLOW_UNKNOWN_TOPLEVEL, true);
   TestSchemaValidation(schema, bundle, SCHEMA_ALLOW_UNKNOWN, true);
@@ -731,12 +731,12 @@ TEST(SchemaTest, Validate) {
   bundle.Remove("boom", nullptr);
 
   // Invalid top level property.
-  bundle.SetInteger("Boolean", 12345);
+  bundle.SetKey("Boolean", base::Value(12345));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
   TestSchemaValidation(schema, bundle, SCHEMA_ALLOW_INVALID_TOPLEVEL, true);
   TestSchemaValidation(schema, bundle, SCHEMA_ALLOW_INVALID, true);
   TestSchemaValidationWithPath(schema, bundle, "Boolean");
-  bundle.SetBoolean("Boolean", true);
+  bundle.SetKey("Boolean", base::Value(true));
 
   // Tests on ObjectOfObject.
   {
@@ -745,7 +745,7 @@ TEST(SchemaTest, Validate) {
     base::DictionaryValue root;
 
     // Unknown property.
-    root.SetBoolean("Object.three", false);
+    root.SetPath({"Object", "three"}, base::Value(false));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, false);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN_TOPLEVEL, false);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN, true);
@@ -755,7 +755,7 @@ TEST(SchemaTest, Validate) {
     root.Remove("Object.three", nullptr);
 
     // Invalid property.
-    root.SetInteger("Object.one", 12345);
+    root.SetPath({"Object", "one"}, base::Value(12345));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, false);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN_TOPLEVEL, false);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN, false);
@@ -774,7 +774,7 @@ TEST(SchemaTest, Validate) {
     // Unknown property.
     std::unique_ptr<base::DictionaryValue> dict_value(
         new base::DictionaryValue());
-    dict_value->SetBoolean("three", true);
+    dict_value->SetKey("three", base::Value(true));
     root.Append(std::move(dict_value));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, false);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN_TOPLEVEL, false);
@@ -786,7 +786,7 @@ TEST(SchemaTest, Validate) {
 
     // Invalid property.
     dict_value.reset(new base::DictionaryValue());
-    dict_value->SetBoolean("two", true);
+    dict_value->SetKey("two", base::Value(true));
     root.Append(std::move(dict_value));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, false);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN_TOPLEVEL, false);
@@ -883,42 +883,42 @@ TEST(SchemaTest, Validate) {
     ASSERT_EQ(2u, subschema.GetMatchingProperties("bar").size());
     ASSERT_TRUE(subschema.GetPatternProperties("foobar").empty());
 
-    root.SetInteger("fooo", 123);
+    root.SetKey("fooo", base::Value(123));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, true);
-    root.SetBoolean("fooo", false);
+    root.SetKey("fooo", base::Value(false));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, false);
     root.Remove("fooo", nullptr);
 
-    root.SetInteger("foo", 123);
+    root.SetKey("foo", base::Value(123));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, true);
-    root.SetBoolean("foo", false);
+    root.SetKey("foo", base::Value(false));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, false);
     root.Remove("foo", nullptr);
 
-    root.SetString("barr", "one");
+    root.SetKey("barr", base::Value("one"));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, true);
-    root.SetString("barr", "three");
+    root.SetKey("barr", base::Value("three"));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, false);
-    root.SetBoolean("barr", false);
+    root.SetKey("barr", base::Value(false));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, false);
     root.Remove("barr", nullptr);
 
-    root.SetString("bar", "one");
+    root.SetKey("bar", base::Value("one"));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, true);
-    root.SetString("bar", "two");
+    root.SetKey("bar", base::Value("two"));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, false);
-    root.SetString("bar", "three");
+    root.SetKey("bar", base::Value("three"));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, false);
     root.Remove("bar", nullptr);
 
-    root.SetInteger("foobar", 123);
+    root.SetKey("foobar", base::Value(123));
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, false);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN, true);
     root.Remove("foobar", nullptr);
   }
 
   // Test that integer to double promotion is allowed.
-  bundle.SetInteger("Number", 31415);
+  bundle.SetKey("Number", base::Value(31415));
   TestSchemaValidation(schema, bundle, SCHEMA_STRICT, true);
 }
 

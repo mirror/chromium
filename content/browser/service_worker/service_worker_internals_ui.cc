@@ -98,59 +98,62 @@ void UpdateVersionInfo(const ServiceWorkerVersionInfo& version,
                        DictionaryValue* info) {
   switch (version.running_status) {
     case EmbeddedWorkerStatus::STOPPED:
-      info->SetString("running_status", "STOPPED");
+      info->SetKey("running_status", base::Value("STOPPED"));
       break;
     case EmbeddedWorkerStatus::STARTING:
-      info->SetString("running_status", "STARTING");
+      info->SetKey("running_status", base::Value("STARTING"));
       break;
     case EmbeddedWorkerStatus::RUNNING:
-      info->SetString("running_status", "RUNNING");
+      info->SetKey("running_status", base::Value("RUNNING"));
       break;
     case EmbeddedWorkerStatus::STOPPING:
-      info->SetString("running_status", "STOPPING");
+      info->SetKey("running_status", base::Value("STOPPING"));
       break;
   }
 
   switch (version.status) {
     case ServiceWorkerVersion::NEW:
-      info->SetString("status", "NEW");
+      info->SetKey("status", base::Value("NEW"));
       break;
     case ServiceWorkerVersion::INSTALLING:
-      info->SetString("status", "INSTALLING");
+      info->SetKey("status", base::Value("INSTALLING"));
       break;
     case ServiceWorkerVersion::INSTALLED:
-      info->SetString("status", "INSTALLED");
+      info->SetKey("status", base::Value("INSTALLED"));
       break;
     case ServiceWorkerVersion::ACTIVATING:
-      info->SetString("status", "ACTIVATING");
+      info->SetKey("status", base::Value("ACTIVATING"));
       break;
     case ServiceWorkerVersion::ACTIVATED:
-      info->SetString("status", "ACTIVATED");
+      info->SetKey("status", base::Value("ACTIVATED"));
       break;
     case ServiceWorkerVersion::REDUNDANT:
-      info->SetString("status", "REDUNDANT");
+      info->SetKey("status", base::Value("REDUNDANT"));
       break;
   }
 
   switch (version.fetch_handler_existence) {
     case ServiceWorkerVersion::FetchHandlerExistence::UNKNOWN:
-      info->SetString("fetch_handler_existence", "UNKNOWN");
+      info->SetKey("fetch_handler_existence", base::Value("UNKNOWN"));
       break;
     case ServiceWorkerVersion::FetchHandlerExistence::EXISTS:
-      info->SetString("fetch_handler_existence", "EXISTS");
+      info->SetKey("fetch_handler_existence", base::Value("EXISTS"));
       break;
     case ServiceWorkerVersion::FetchHandlerExistence::DOES_NOT_EXIST:
-      info->SetString("fetch_handler_existence", "DOES_NOT_EXIST");
+      info->SetKey("fetch_handler_existence", base::Value("DOES_NOT_EXIST"));
       break;
   }
 
-  info->SetString("script_url", version.script_url.spec());
-  info->SetString("version_id", base::Int64ToString(version.version_id));
-  info->SetInteger("process_id",
-                   static_cast<int>(GetRealProcessId(version.process_id)));
-  info->SetInteger("process_host_id", version.process_id);
-  info->SetInteger("thread_id", version.thread_id);
-  info->SetInteger("devtools_agent_route_id", version.devtools_agent_route_id);
+  info->SetKey("script_url", base::Value(version.script_url.spec()));
+  info->SetKey("version_id",
+               base::Value(base::Int64ToString(version.version_id)));
+  info->SetKey(
+      "process_id",
+      base::Value(static_cast<int>(GetRealProcessId(version.process_id))));
+  info->SetKey("process_host_id", base::Value(version.process_id));
+  info->SetKey("thread_id", base::Value(version.thread_id));
+  info->SetKey("devtools_agent_route_id",
+               base::Value(version.devtools_agent_route_id));
 }
 
 std::unique_ptr<ListValue> GetRegistrationListValue(
@@ -162,14 +165,18 @@ std::unique_ptr<ListValue> GetRegistrationListValue(
        ++it) {
     const ServiceWorkerRegistrationInfo& registration = *it;
     auto registration_info = std::make_unique<DictionaryValue>();
-    registration_info->SetString("scope", registration.pattern.spec());
-    registration_info->SetString(
-        "registration_id", base::Int64ToString(registration.registration_id));
-    registration_info->SetBoolean("navigation_preload_enabled",
-                                  registration.navigation_preload_enabled);
-    registration_info->SetInteger(
+    registration_info->SetKey("scope",
+                              base::Value(registration.pattern.spec()));
+    registration_info->SetKey(
+        "registration_id",
+        base::Value(base::Int64ToString(registration.registration_id)));
+    registration_info->SetKey(
+        "navigation_preload_enabled",
+        base::Value(registration.navigation_preload_enabled));
+    registration_info->SetKey(
         "navigation_preload_header_length",
-        registration.navigation_preload_header_length);
+        base::Value(
+            static_cast<int>(registration.navigation_preload_header_length)));
 
     if (registration.active_version.version_id !=
         blink::mojom::kInvalidServiceWorkerVersionId) {
@@ -279,10 +286,10 @@ class ServiceWorkerInternalsUI::PartitionObserver
     args.push_back(std::make_unique<Value>(process_id));
     args.push_back(std::make_unique<Value>(thread_id));
     auto value = std::make_unique<DictionaryValue>();
-    value->SetString("message", info.error_message);
-    value->SetInteger("lineNumber", info.line_number);
-    value->SetInteger("columnNumber", info.column_number);
-    value->SetString("sourceURL", info.source_url.spec());
+    value->SetKey("message", base::Value(info.error_message));
+    value->SetKey("lineNumber", base::Value(info.line_number));
+    value->SetKey("columnNumber", base::Value(info.column_number));
+    value->SetKey("sourceURL", base::Value(info.source_url.spec()));
     args.push_back(std::move(value));
     web_ui_->CallJavascriptFunctionUnsafe("serviceworker.onErrorReported",
                                           ConvertToRawPtrVector(args));
@@ -298,11 +305,11 @@ class ServiceWorkerInternalsUI::PartitionObserver
     args.push_back(std::make_unique<Value>(process_id));
     args.push_back(std::make_unique<Value>(thread_id));
     auto value = std::make_unique<DictionaryValue>();
-    value->SetInteger("sourceIdentifier", message.source_identifier);
-    value->SetInteger("message_level", message.message_level);
-    value->SetString("message", message.message);
-    value->SetInteger("lineNumber", message.line_number);
-    value->SetString("sourceURL", message.source_url.spec());
+    value->SetKey("sourceIdentifier", base::Value(message.source_identifier));
+    value->SetKey("message_level", base::Value(message.message_level));
+    value->SetKey("message", base::Value(message.message));
+    value->SetKey("lineNumber", base::Value(message.line_number));
+    value->SetKey("sourceURL", base::Value(message.source_url.spec()));
     args.push_back(std::move(value));
     web_ui_->CallJavascriptFunctionUnsafe(
         "serviceworker.onConsoleMessageReported", ConvertToRawPtrVector(args));
@@ -383,9 +390,9 @@ ServiceWorkerInternalsUI::~ServiceWorkerInternalsUI() {
 
 void ServiceWorkerInternalsUI::GetOptions(const ListValue* args) {
   DictionaryValue options;
-  options.SetBoolean("debug_on_start",
-                     ServiceWorkerDevToolsManager::GetInstance()
-                         ->debug_service_worker_on_start());
+  options.SetKey("debug_on_start",
+                 base::Value(ServiceWorkerDevToolsManager::GetInstance()
+                                 ->debug_service_worker_on_start()));
   web_ui()->CallJavascriptFunctionUnsafe("serviceworker.onOptions", options);
 }
 

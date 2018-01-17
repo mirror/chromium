@@ -163,8 +163,8 @@ void SigninEmailConfirmationDialog::GetDialogSize(gfx::Size* size) const {
 std::string SigninEmailConfirmationDialog::GetDialogArgs() const {
   std::string data;
   base::DictionaryValue dialog_args;
-  dialog_args.SetString("lastEmail", last_email_);
-  dialog_args.SetString("newEmail", new_email_);
+  dialog_args.SetKey("lastEmail", base::Value(last_email_));
+  dialog_args.SetKey("newEmail", base::Value(new_email_));
   base::JSONWriter::Write(dialog_args, &data);
   return data;
 }

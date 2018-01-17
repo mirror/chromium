@@ -64,9 +64,9 @@ TEST_F(UserInfoFetcherTest, SuccessfulFetch) {
   // Generate what we expect our result will look like (should match
   // parsed kUserInfoResponse).
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("email", "test_user@test.com");
-  dict->SetBoolean("verified_email", true);
-  dict->SetString("hd", "test.com");
+  dict->SetKey("email", base::Value("test_user@test.com"));
+  dict->SetKey("verified_email", base::Value(true));
+  dict->SetKey("hd", base::Value("test.com"));
 
   // Fake a successful fetch - should result in the data being parsed and
   // the values passed off to the success callback.

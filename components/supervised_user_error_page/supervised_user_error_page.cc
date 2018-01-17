@@ -78,23 +78,26 @@ std::string BuildHtml(bool allow_access_requests,
                       FilteringBehaviorReason reason,
                       const std::string& app_locale) {
   base::DictionaryValue strings;
-  strings.SetString("blockPageTitle",
-                    l10n_util::GetStringUTF16(IDS_BLOCK_INTERSTITIAL_TITLE));
-  strings.SetBoolean("allowAccessRequests", allow_access_requests);
-  strings.SetString("avatarURL1x",
-                    BuildAvatarImageUrl(profile_image_url, kAvatarSize1x));
-  strings.SetString("avatarURL2x",
-                    BuildAvatarImageUrl(profile_image_url, kAvatarSize2x));
-  strings.SetString("secondAvatarURL1x",
-                    BuildAvatarImageUrl(profile_image_url2, kAvatarSize1x));
-  strings.SetString("secondAvatarURL2x",
-                    BuildAvatarImageUrl(profile_image_url2, kAvatarSize2x));
+  strings.SetKey(
+      "blockPageTitle",
+      base::Value(l10n_util::GetStringUTF16(IDS_BLOCK_INTERSTITIAL_TITLE)));
+  strings.SetKey("allowAccessRequests", base::Value(allow_access_requests));
+  strings.SetKey("avatarURL1x", base::Value(BuildAvatarImageUrl(
+                                    profile_image_url, kAvatarSize1x)));
+  strings.SetKey("avatarURL2x", base::Value(BuildAvatarImageUrl(
+                                    profile_image_url, kAvatarSize2x)));
+  strings.SetKey("secondAvatarURL1x", base::Value(BuildAvatarImageUrl(
+                                          profile_image_url2, kAvatarSize1x)));
+  strings.SetKey("secondAvatarURL2x", base::Value(BuildAvatarImageUrl(
+                                          profile_image_url2, kAvatarSize2x)));
   base::string16 custodian16 = base::UTF8ToUTF16(custodian);
-  strings.SetString("custodianName", custodian16);
-  strings.SetString("custodianEmail", base::UTF8ToUTF16(custodian_email));
-  strings.SetString("secondCustodianName", base::UTF8ToUTF16(second_custodian));
-  strings.SetString("secondCustodianEmail",
-                    base::UTF8ToUTF16(second_custodian_email));
+  strings.SetKey("custodianName", base::Value(custodian16));
+  strings.SetKey("custodianEmail",
+                 base::Value(base::UTF8ToUTF16(custodian_email)));
+  strings.SetKey("secondCustodianName",
+                 base::Value(base::UTF8ToUTF16(second_custodian)));
+  strings.SetKey("secondCustodianEmail",
+                 base::Value(base::UTF8ToUTF16(second_custodian_email)));
   base::string16 block_header;
   base::string16 block_message;
   if (reason == FilteringBehaviorReason::NOT_SIGNED_IN) {
@@ -121,29 +124,29 @@ std::string BuildHtml(bool allow_access_requests,
           IDS_BLOCK_INTERSTITIAL_MESSAGE_SUPERVISED_USERS_DEPRECATED);
     }
   }
-  strings.SetString("blockPageHeader", block_header);
-  strings.SetString("blockPageMessage", block_message);
-  strings.SetString("blockReasonMessage",
-                    l10n_util::GetStringUTF16(GetBlockMessageID(
-                        reason, is_child_account, second_custodian.empty())));
-  strings.SetString("blockReasonHeader", l10n_util::GetStringUTF16(
-                                             IDS_SUPERVISED_USER_BLOCK_HEADER));
+  strings.SetKey("blockPageHeader", base::Value(block_header));
+  strings.SetKey("blockPageMessage", base::Value(block_message));
+  strings.SetKey("blockReasonMessage",
+                 base::Value(l10n_util::GetStringUTF16(GetBlockMessageID(
+                     reason, is_child_account, second_custodian.empty()))));
+  strings.SetKey(
+      "blockReasonHeader",
+      base::Value(l10n_util::GetStringUTF16(IDS_SUPERVISED_USER_BLOCK_HEADER)));
   bool show_feedback = ReasonIsAutomatic(reason);
   DCHECK(is_child_account || !show_feedback);
 
-  strings.SetBoolean("showFeedbackLink", show_feedback);
-  strings.SetString("feedbackLink", l10n_util::GetStringUTF16(
-                                        IDS_BLOCK_INTERSTITIAL_SEND_FEEDBACK));
-  strings.SetString("backButton", l10n_util::GetStringUTF16(IDS_BACK_BUTTON));
-  strings.SetString(
-      "requestAccessButton",
-      l10n_util::GetStringUTF16(IDS_BLOCK_INTERSTITIAL_REQUEST_ACCESS_BUTTON));
-  strings.SetString(
-      "showDetailsLink",
-      l10n_util::GetStringUTF16(IDS_BLOCK_INTERSTITIAL_SHOW_DETAILS));
-  strings.SetString(
-      "hideDetailsLink",
-      l10n_util::GetStringUTF16(IDS_BLOCK_INTERSTITIAL_HIDE_DETAILS));
+  strings.SetKey("showFeedbackLink", base::Value(show_feedback));
+  strings.SetKey("feedbackLink", base::Value(l10n_util::GetStringUTF16(
+                                     IDS_BLOCK_INTERSTITIAL_SEND_FEEDBACK)));
+  strings.SetKey("backButton",
+                 base::Value(l10n_util::GetStringUTF16(IDS_BACK_BUTTON)));
+  strings.SetKey("requestAccessButton",
+                 base::Value(l10n_util::GetStringUTF16(
+                     IDS_BLOCK_INTERSTITIAL_REQUEST_ACCESS_BUTTON)));
+  strings.SetKey("showDetailsLink", base::Value(l10n_util::GetStringUTF16(
+                                        IDS_BLOCK_INTERSTITIAL_SHOW_DETAILS)));
+  strings.SetKey("hideDetailsLink", base::Value(l10n_util::GetStringUTF16(
+                                        IDS_BLOCK_INTERSTITIAL_HIDE_DETAILS)));
   base::string16 request_sent_message;
   base::string16 request_failed_message;
   if (is_child_account) {
@@ -164,8 +167,8 @@ std::string BuildHtml(bool allow_access_requests,
     request_failed_message = l10n_util::GetStringFUTF16(
         IDS_BLOCK_INTERSTITIAL_REQUEST_FAILED_MESSAGE, custodian16);
   }
-  strings.SetString("requestSentMessage", request_sent_message);
-  strings.SetString("requestFailedMessage", request_failed_message);
+  strings.SetKey("requestSentMessage", base::Value(request_sent_message));
+  strings.SetKey("requestFailedMessage", base::Value(request_failed_message));
   webui::SetLoadTimeDataDefaults(app_locale, &strings);
   std::string html =
       ui::ResourceBundle::GetSharedInstance()

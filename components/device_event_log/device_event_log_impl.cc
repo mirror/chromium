@@ -122,13 +122,16 @@ std::string LogEntryToString(const DeviceEventLogImpl::LogEntry& log_entry,
 
 void LogEntryToDictionary(const DeviceEventLogImpl::LogEntry& log_entry,
                           base::DictionaryValue* output) {
-  output->SetString("timestamp", DateAndTimeWithMicroseconds(log_entry.time));
-  output->SetString("timestampshort", TimeWithSeconds(log_entry.time));
-  output->SetString("level", kLogLevelName[log_entry.log_level]);
-  output->SetString("type", GetLogTypeString(log_entry.log_type));
-  output->SetString("file", base::StringPrintf("%s:%d ", log_entry.file.c_str(),
-                                               log_entry.file_line));
-  output->SetString("event", log_entry.event);
+  output->SetKey("timestamp",
+                 base::Value(DateAndTimeWithMicroseconds(log_entry.time)));
+  output->SetKey("timestampshort",
+                 base::Value(TimeWithSeconds(log_entry.time)));
+  output->SetKey("level", base::Value(kLogLevelName[log_entry.log_level]));
+  output->SetKey("type", base::Value(GetLogTypeString(log_entry.log_type)));
+  output->SetKey(
+      "file", base::Value(base::StringPrintf("%s:%d ", log_entry.file.c_str(),
+                                             log_entry.file_line)));
+  output->SetKey("event", base::Value(log_entry.event));
 }
 
 std::string LogEntryAsJSON(const DeviceEventLogImpl::LogEntry& log_entry) {

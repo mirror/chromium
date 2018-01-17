@@ -315,7 +315,7 @@ std::unique_ptr<base::Value> NetLogFinishedResolvingProxyCallback(
     const ProxyInfo* result,
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("pac_string", result->ToPacString());
+  dict->SetKey("pac_string", base::Value(result->ToPacString()));
   return std::move(dict);
 }
 

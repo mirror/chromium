@@ -121,9 +121,9 @@ void AppLauncherHandler::CreateAppInfo(
 
   // Communicate the kiosk flag so the apps page can disable showing the
   // context menu in kiosk mode.
-  value->SetBoolean(
-      "kioskMode",
-      base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kKioskMode));
+  value->SetKey("kioskMode",
+                base::Value(base::CommandLine::ForCurrentProcess()->HasSwitch(
+                    switches::kKioskMode)));
 
   // The Extension class 'helpfully' wraps bidi control characters that
   // impede our ability to determine directionality.
@@ -145,9 +145,10 @@ void AppLauncherHandler::CreateAppInfo(
                               extensions::ExtensionRegistry::TERMINATED);
   extensions::GetExtensionBasicInfo(extension, enabled, value);
 
-  value->SetBoolean("mayDisable", extensions::ExtensionSystem::Get(
-      service->profile())->management_policy()->UserMayModifySettings(
-      extension, NULL));
+  value->SetKey("mayDisable",
+                base::Value(extensions::ExtensionSystem::Get(service->profile())
+                                ->management_policy()
+                                ->UserMayModifySettings(extension, NULL)));
 
   auto icon_size = extension_misc::EXTENSION_ICON_LARGE;
   auto match_type = ExtensionIconSet::MATCH_BIGGER;
@@ -156,8 +157,8 @@ void AppLauncherHandler::CreateAppInfo(
            .is_empty();
   GURL large_icon = extensions::ExtensionIconSource::GetIconURL(
       extension, icon_size, match_type, false);
-  value->SetString("icon_big", large_icon.spec());
-  value->SetBoolean("icon_big_exists", has_non_default_large_icon);
+  value->SetKey("icon_big", base::Value(large_icon.spec()));
+  value->SetKey("icon_big_exists", base::Value(has_non_default_large_icon));
 
   icon_size = extension_misc::EXTENSION_ICON_BITTY;
   bool has_non_default_small_icon =
@@ -165,17 +166,20 @@ void AppLauncherHandler::CreateAppInfo(
            .is_empty();
   GURL small_icon = extensions::ExtensionIconSource::GetIconURL(
       extension, icon_size, match_type, false);
-  value->SetString("icon_small", small_icon.spec());
-  value->SetBoolean("icon_small_exists", has_non_default_small_icon);
+  value->SetKey("icon_small", base::Value(small_icon.spec()));
+  value->SetKey("icon_small_exists", base::Value(has_non_default_small_icon));
 
-  value->SetInteger("launch_container",
-                    extensions::AppLaunchInfo::GetLaunchContainer(extension));
+  value->SetKey("launch_container",
+                base::Value(static_cast<int>(
+                    extensions::AppLaunchInfo::GetLaunchContainer(extension))));
   ExtensionPrefs* prefs = ExtensionPrefs::Get(service->profile());
-  value->SetInteger("launch_type", extensions::GetLaunchType(prefs, extension));
-  value->SetBoolean("is_component",
-                    extension->location() == extensions::Manifest::COMPONENT);
-  value->SetBoolean("is_webstore",
-      extension->id() == extensions::kWebStoreAppId);
+  value->SetKey("launch_type",
+                base::Value(static_cast<int>(
+                    extensions::GetLaunchType(prefs, extension))));
+  value->SetKey("is_component", base::Value(extension->location() ==
+                                            extensions::Manifest::COMPONENT));
+  value->SetKey("is_webstore",
+                base::Value(extension->id() == extensions::kWebStoreAppId));
 
   AppSorting* sorting = ExtensionSystem::Get(service->profile())->app_sorting();
   syncer::StringOrdinal page_ordinal = sorting->GetPageOrdinal(extension->id());
@@ -187,8 +191,8 @@ void AppLauncherHandler::CreateAppInfo(
         sorting->GetNaturalAppPageOrdinal();
     sorting->SetPageOrdinal(extension->id(), page_ordinal);
   }
-  value->SetInteger("page_index",
-      sorting->PageStringOrdinalAsInteger(page_ordinal));
+  value->SetKey("page_index",
+                base::Value(sorting->PageStringOrdinalAsInteger(page_ordinal)));
 
   syncer::StringOrdinal app_launch_ordinal =
       sorting->GetAppLaunchOrdinal(extension->id());
@@ -201,7 +205,8 @@ void AppLauncherHandler::CreateAppInfo(
         sorting->CreateNextAppLaunchOrdinal(page_ordinal);
     sorting->SetAppLaunchOrdinal(extension->id(), app_launch_ordinal);
   }
-  value->SetString("app_launch_ordinal", app_launch_ordinal.ToInternalValue());
+  value->SetKey("app_launch_ordinal",
+                base::Value(app_launch_ordinal.ToInternalValue()));
 }
 
 // static
@@ -209,7 +214,7 @@ void AppLauncherHandler::GetLocalizedValues(Profile* profile,
                                             base::DictionaryValue* values) {
   PrefService* prefs = profile->GetPrefs();
   int shown_page = prefs->GetInteger(prefs::kNtpShownPage);
-  values->SetInteger("shown_page_index", shown_page & INDEX_MASK);
+  values->SetKey("shown_page_index", base::Value(shown_page & INDEX_MASK));
 }
 
 // static

@@ -92,15 +92,15 @@ void AppWindowGeometryCacheTest::AddGeometryAndLoadExtension(
       std::make_unique<base::DictionaryValue>();
   std::unique_ptr<base::DictionaryValue> value =
       std::make_unique<base::DictionaryValue>();
-  value->SetInteger("x", bounds.x());
-  value->SetInteger("y", bounds.y());
-  value->SetInteger("w", bounds.width());
-  value->SetInteger("h", bounds.height());
-  value->SetInteger("screen_bounds_x", screen_bounds.x());
-  value->SetInteger("screen_bounds_y", screen_bounds.y());
-  value->SetInteger("screen_bounds_w", screen_bounds.width());
-  value->SetInteger("screen_bounds_h", screen_bounds.height());
-  value->SetInteger("state", state);
+  value->SetKey("x", base::Value(bounds.x()));
+  value->SetKey("y", base::Value(bounds.y()));
+  value->SetKey("w", base::Value(bounds.width()));
+  value->SetKey("h", base::Value(bounds.height()));
+  value->SetKey("screen_bounds_x", base::Value(screen_bounds.x()));
+  value->SetKey("screen_bounds_y", base::Value(screen_bounds.y()));
+  value->SetKey("screen_bounds_w", base::Value(screen_bounds.width()));
+  value->SetKey("screen_bounds_h", base::Value(screen_bounds.height()));
+  value->SetKey("state", base::Value(static_cast<int>(state)));
   dict->SetWithoutPathExpansion(window_id, std::move(value));
   extension_prefs_->SetGeometryCache(extension_id, std::move(dict));
   LoadExtension(extension_id);

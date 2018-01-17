@@ -797,10 +797,11 @@ void Histogram::WriteAsciiBucketContext(const int64_t past,
 }
 
 void Histogram::GetParameters(DictionaryValue* params) const {
-  params->SetString("type", HistogramTypeToString(GetHistogramType()));
-  params->SetInteger("min", declared_min());
-  params->SetInteger("max", declared_max());
-  params->SetInteger("bucket_count", static_cast<int>(bucket_count()));
+  params->SetKey("type",
+                 base::Value(HistogramTypeToString(GetHistogramType())));
+  params->SetKey("min", base::Value(declared_min()));
+  params->SetKey("max", base::Value(declared_max()));
+  params->SetKey("bucket_count", base::Value(static_cast<int>(bucket_count())));
 }
 
 void Histogram::GetCountAndBucketData(Count* count,
@@ -814,10 +815,10 @@ void Histogram::GetCountAndBucketData(Count* count,
     Sample count_at_index = snapshot->GetCountAtIndex(i);
     if (count_at_index > 0) {
       std::unique_ptr<DictionaryValue> bucket_value(new DictionaryValue());
-      bucket_value->SetInteger("low", ranges(i));
+      bucket_value->SetKey("low", base::Value(ranges(i)));
       if (i != bucket_count() - 1)
-        bucket_value->SetInteger("high", ranges(i + 1));
-      bucket_value->SetInteger("count", count_at_index);
+        bucket_value->SetKey("high", base::Value(ranges(i + 1)));
+      bucket_value->SetKey("count", base::Value(count_at_index));
       buckets->Set(index, std::move(bucket_value));
       ++index;
     }

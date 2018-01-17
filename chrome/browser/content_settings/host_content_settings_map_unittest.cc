@@ -310,7 +310,8 @@ TEST_F(HostContentSettingsMapTest, GetWebsiteSettingsForOneType) {
   auto expiration_times_dictionary = std::make_unique<base::DictionaryValue>();
   expiration_times_dictionary->SetList("client_hints",
                                        std::move(expiration_times_list));
-  expiration_times_dictionary->SetDouble("expiration_time", expiration_time);
+  expiration_times_dictionary->SetKey("expiration_time",
+                                      base::Value(expiration_time));
   host_content_settings_map->SetWebsiteSettingDefaultScope(
       hosts[0], GURL(), CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
       base::MakeUnique<base::Value>(expiration_times_dictionary->Clone()));
@@ -1035,7 +1036,7 @@ TEST_F(HostContentSettingsMapTest, IncognitoDontInheritSetting) {
                          std::string(), nullptr));
 
   base::DictionaryValue test_value;
-  test_value.SetString("test", "value");
+  test_value.SetKey("test", base::Value("value"));
   host_content_settings_map->SetWebsiteSettingDefaultScope(
       host, host, CONTENT_SETTINGS_TYPE_USB_CHOOSER_DATA, std::string(),
       base::WrapUnique(test_value.DeepCopy()));
@@ -1122,7 +1123,8 @@ TEST_F(HostContentSettingsMapTest, CanonicalizeExceptionsUnicodeOnly) {
     ASSERT_TRUE(NULL != all_settings_dictionary);
 
     auto dummy_payload = base::MakeUnique<base::DictionaryValue>();
-    dummy_payload->SetInteger("setting", CONTENT_SETTING_ALLOW);
+    dummy_payload->SetKey("setting",
+                          base::Value(static_cast<int>(CONTENT_SETTING_ALLOW)));
     all_settings_dictionary->SetWithoutPathExpansion("[*.]\xC4\x87ira.com,*",
                                                      std::move(dummy_payload));
   }
@@ -1479,7 +1481,7 @@ TEST_F(HostContentSettingsMapTest, InvalidPattern) {
       HostContentSettingsMapFactory::GetForProfile(&profile);
   GURL unsupported_url = GURL("view-source:http://www.google.com");
   base::DictionaryValue test_value;
-  test_value.SetString("test", "value");
+  test_value.SetKey("test", base::Value("value"));
   host_content_settings_map->SetWebsiteSettingDefaultScope(
       unsupported_url, unsupported_url, CONTENT_SETTINGS_TYPE_APP_BANNER,
       std::string(), base::WrapUnique(test_value.DeepCopy()));

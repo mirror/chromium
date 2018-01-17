@@ -250,8 +250,8 @@ void PageCaptureSaveAsMHTMLFunction::ReturnSuccess(int64_t file_size) {
       child_id, mhtml_path_);
 
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("mhtmlFilePath", mhtml_path_.value());
-  dict->SetInteger("mhtmlFileLength", file_size);
+  dict->SetKey("mhtmlFilePath", base::Value(mhtml_path_.value()));
+  dict->SetKey("mhtmlFileLength", base::Value(static_cast<int>(file_size)));
   SetResult(std::move(dict));
 
   SendResponse(true);

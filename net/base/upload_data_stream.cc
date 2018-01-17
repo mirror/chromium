@@ -22,9 +22,9 @@ std::unique_ptr<base::Value> NetLogInitEndInfoCallback(
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
 
-  dict->SetInteger("net_error", result);
-  dict->SetInteger("total_size", total_size);
-  dict->SetBoolean("is_chunked", is_chunked);
+  dict->SetKey("net_error", base::Value(result));
+  dict->SetKey("total_size", base::Value(total_size));
+  dict->SetKey("is_chunked", base::Value(is_chunked));
   return std::move(dict);
 }
 
@@ -33,7 +33,7 @@ std::unique_ptr<base::Value> NetLogReadInfoCallback(
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
 
-  dict->SetInteger("current_position", current_position);
+  dict->SetKey("current_position", base::Value(current_position));
   return std::move(dict);
 }
 

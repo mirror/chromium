@@ -377,7 +377,7 @@ void HeadlessDevToolsClientImpl::FinalizeAndSendMessage(
   DCHECK(agent_host_);
   int id = next_message_id_;
   next_message_id_ += 2;  // We only send even numbered messages.
-  message->SetInteger("id", id);
+  message->SetKey("id", base::Value(id));
   std::string json_message;
   base::JSONWriter::Write(*message, &json_message);
   pending_messages_[id] = Callback(callback);
@@ -390,7 +390,7 @@ void HeadlessDevToolsClientImpl::SendMessageWithParams(
     std::unique_ptr<base::Value> params,
     CallbackType callback) {
   base::DictionaryValue message;
-  message.SetString("method", method);
+  message.SetKey("method", base::Value(method));
   message.Set("params", std::move(params));
   FinalizeAndSendMessage(&message, std::move(callback));
 }

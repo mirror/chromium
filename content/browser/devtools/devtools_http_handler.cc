@@ -500,12 +500,13 @@ void DevToolsHttpHandler::OnJsonRequest(
 
   if (command == "version") {
     base::DictionaryValue version;
-    version.SetString("Protocol-Version",
-                      DevToolsAgentHost::GetProtocolVersion());
-    version.SetString("WebKit-Version", GetWebKitVersion());
-    version.SetString("Browser", GetContentClient()->GetProduct());
-    version.SetString("User-Agent", GetContentClient()->GetUserAgent());
-    version.SetString("V8-Version", V8_VERSION_STRING);
+    version.SetKey("Protocol-Version",
+                   base::Value(DevToolsAgentHost::GetProtocolVersion()));
+    version.SetKey("WebKit-Version", base::Value(GetWebKitVersion()));
+    version.SetKey("Browser", base::Value(GetContentClient()->GetProduct()));
+    version.SetKey("User-Agent",
+                   base::Value(GetContentClient()->GetUserAgent()));
+    version.SetKey("V8-Version", base::Value(V8_VERSION_STRING));
     std::string host = info.headers["host"];
     version.SetString(
         kTargetWebSocketDebuggerUrlField,

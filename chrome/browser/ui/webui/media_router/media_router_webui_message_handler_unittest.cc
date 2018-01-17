@@ -583,7 +583,7 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, OnRouteDetailsOpenedAndClosed) {
   base::DictionaryValue* args;
   args_list.Append(std::make_unique<base::DictionaryValue>());
   args_list.GetDictionary(0, &args);
-  args->SetString("routeId", route_id);
+  args->SetKey("routeId", base::Value(route_id));
 
   EXPECT_CALL(*mock_media_router_ui_, OnMediaControllerUIAvailable(route_id));
   handler_->OnMediaControllerAvailable(&args_list);
@@ -615,18 +615,18 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, OnMediaCommandsReceived) {
   args_list.GetDictionary(0, &args);
 
   const int time = 50;
-  args->SetInteger("time", time);
+  args->SetKey("time", base::Value(time));
   EXPECT_CALL(*controller, Seek(base::TimeDelta::FromSeconds(time)));
   handler_->OnSeekCurrentMedia(&args_list);
 
   args->Clear();
-  args->SetBoolean("mute", true);
+  args->SetKey("mute", base::Value(true));
   EXPECT_CALL(*controller, SetMute(true));
   handler_->OnSetCurrentMediaMute(&args_list);
 
   const double volume = 0.4;
   args->Clear();
-  args->SetDouble("volume", volume);
+  args->SetKey("volume", base::Value(volume));
   EXPECT_CALL(*controller, SetVolume(volume));
   handler_->OnSetCurrentMediaVolume(&args_list);
 }
@@ -663,17 +663,17 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, OnInvalidMediaCommandsReceived) {
   args_list.GetDictionary(0, &args);
 
   // Seek positions greater than the duration or negative should be ignored.
-  args->SetInteger("time", 101);
+  args->SetKey("time", base::Value(101));
   handler_->OnSeekCurrentMedia(&args_list);
-  args->SetInteger("time", -10);
+  args->SetKey("time", base::Value(-10));
   handler_->OnSeekCurrentMedia(&args_list);
 
   args->Clear();
 
   // Volumes outside of the [0, 1] range should be ignored.
-  args->SetDouble("volume", 1.5);
+  args->SetKey("volume", base::Value(1.5));
   handler_->OnSetCurrentMediaVolume(&args_list);
-  args->SetDouble("volume", 1.5);
+  args->SetKey("volume", base::Value(1.5));
   handler_->OnSetCurrentMediaVolume(&args_list);
 }
 

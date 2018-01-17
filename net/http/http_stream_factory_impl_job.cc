@@ -133,11 +133,11 @@ std::unique_ptr<base::Value> NetLogHttpStreamJobCallback(
   auto dict = std::make_unique<base::DictionaryValue>();
   if (source.IsValid())
     source.AddToEventParameters(dict.get());
-  dict->SetString("original_url", original_url->GetOrigin().spec());
-  dict->SetString("url", url->GetOrigin().spec());
-  dict->SetString("expect_spdy", expect_spdy ? "true" : "false");
-  dict->SetString("using_quic", using_quic ? "true" : "false");
-  dict->SetString("priority", RequestPriorityToString(priority));
+  dict->SetKey("original_url", base::Value(original_url->GetOrigin().spec()));
+  dict->SetKey("url", base::Value(url->GetOrigin().spec()));
+  dict->SetKey("expect_spdy", base::Value(expect_spdy ? "true" : "false"));
+  dict->SetKey("using_quic", base::Value(using_quic ? "true" : "false"));
+  dict->SetKey("priority", base::Value(RequestPriorityToString(priority)));
   return std::move(dict);
 }
 
@@ -148,7 +148,7 @@ std::unique_ptr<base::Value> NetLogHttpStreamProtoCallback(
     NetLogCaptureMode /* capture_mode */) {
   auto dict = std::make_unique<base::DictionaryValue>();
 
-  dict->SetString("proto", NextProtoToString(negotiated_protocol));
+  dict->SetKey("proto", base::Value(NextProtoToString(negotiated_protocol)));
   return std::move(dict);
 }
 

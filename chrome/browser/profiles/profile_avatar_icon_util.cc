@@ -585,10 +585,11 @@ std::unique_ptr<base::ListValue> GetDefaultProfileAvatarIconsAndLabels() {
        ++i) {
     std::unique_ptr<base::DictionaryValue> avatar_info(
         new base::DictionaryValue());
-    avatar_info->SetString("url", profiles::GetDefaultAvatarIconUrl(i));
-    avatar_info->SetString(
-        "label", l10n_util::GetStringUTF16(
-                     profiles::GetDefaultAvatarLabelResourceIDAtIndex(i)));
+    avatar_info->SetKey("url",
+                        base::Value(profiles::GetDefaultAvatarIconUrl(i)));
+    avatar_info->SetKey(
+        "label", base::Value(l10n_util::GetStringUTF16(
+                     profiles::GetDefaultAvatarLabelResourceIDAtIndex(i))));
 
     avatars->Append(std::move(avatar_info));
   }

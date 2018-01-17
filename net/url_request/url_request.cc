@@ -283,7 +283,7 @@ LoadStateWithParam URLRequest::GetLoadState() const {
 
 std::unique_ptr<base::Value> URLRequest::GetStateAsValue() const {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("url", original_url().possibly_invalid_spec());
+  dict->SetKey("url", base::Value(original_url().possibly_invalid_spec()));
 
   if (url_chain_.size() > 1) {
     std::unique_ptr<base::ListValue> list(new base::ListValue());
@@ -293,38 +293,38 @@ std::unique_ptr<base::Value> URLRequest::GetStateAsValue() const {
     dict->Set("url_chain", std::move(list));
   }
 
-  dict->SetInteger("load_flags", load_flags_);
+  dict->SetKey("load_flags", base::Value(load_flags_));
 
   LoadStateWithParam load_state = GetLoadState();
-  dict->SetInteger("load_state", load_state.state);
+  dict->SetKey("load_state", base::Value(static_cast<int>(load_state.state)));
   if (!load_state.param.empty())
-    dict->SetString("load_state_param", load_state.param);
+    dict->SetKey("load_state_param", base::Value(load_state.param));
   if (!blocked_by_.empty())
-    dict->SetString("delegate_blocked_by", blocked_by_);
+    dict->SetKey("delegate_blocked_by", base::Value(blocked_by_));
 
-  dict->SetString("method", method_);
-  dict->SetBoolean("has_upload", has_upload());
-  dict->SetBoolean("is_pending", is_pending_);
+  dict->SetKey("method", base::Value(method_));
+  dict->SetKey("has_upload", base::Value(has_upload()));
+  dict->SetKey("is_pending", base::Value(is_pending_));
 
   // Add the status of the request.  The status should always be IO_PENDING, and
   // the error should always be OK, unless something is holding onto a request
   // that has finished or a request was leaked.  Neither of these should happen.
   switch (status_.status()) {
     case URLRequestStatus::SUCCESS:
-      dict->SetString("status", "SUCCESS");
+      dict->SetKey("status", base::Value("SUCCESS"));
       break;
     case URLRequestStatus::IO_PENDING:
-      dict->SetString("status", "IO_PENDING");
+      dict->SetKey("status", base::Value("IO_PENDING"));
       break;
     case URLRequestStatus::CANCELED:
-      dict->SetString("status", "CANCELED");
+      dict->SetKey("status", base::Value("CANCELED"));
       break;
     case URLRequestStatus::FAILED:
-      dict->SetString("status", "FAILED");
+      dict->SetKey("status", base::Value("FAILED"));
       break;
   }
   if (status_.error() != OK)
-    dict->SetInteger("net_error", status_.error());
+    dict->SetKey("net_error", base::Value(status_.error()));
   return std::move(dict);
 }
 

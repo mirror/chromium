@@ -84,11 +84,12 @@ std::unique_ptr<base::DictionaryValue> CreateBoundsDict(
     const HeadlessWebContentsImpl* web_contents) {
   auto bounds_object = std::make_unique<base::DictionaryValue>();
   gfx::Rect bounds = web_contents->web_contents()->GetContainerBounds();
-  bounds_object->SetInteger("left", bounds.x());
-  bounds_object->SetInteger("top", bounds.y());
-  bounds_object->SetInteger("width", bounds.width());
-  bounds_object->SetInteger("height", bounds.height());
-  bounds_object->SetString("windowState", web_contents->window_state());
+  bounds_object->SetKey("left", base::Value(bounds.x()));
+  bounds_object->SetKey("top", base::Value(bounds.y()));
+  bounds_object->SetKey("width", base::Value(bounds.width()));
+  bounds_object->SetKey("height", base::Value(bounds.height()));
+  bounds_object->SetKey("windowState",
+                        base::Value(web_contents->window_state()));
   return bounds_object;
 }
 
@@ -158,12 +159,13 @@ void OnBeginFrameFinished(
     bool main_frame_content_updated,
     std::unique_ptr<SkBitmap> bitmap) {
   auto result = std::make_unique<base::DictionaryValue>();
-  result->SetBoolean("hasDamage", has_damage);
-  result->SetBoolean("mainFrameContentUpdated", main_frame_content_updated);
+  result->SetKey("hasDamage", base::Value(has_damage));
+  result->SetKey("mainFrameContentUpdated",
+                 base::Value(main_frame_content_updated));
 
   if (bitmap && !bitmap->drawsNothing()) {
-    result->SetString("screenshotData",
-                      EncodeBitmap(*bitmap, encoding, quality));
+    result->SetKey("screenshotData",
+                   base::Value(EncodeBitmap(*bitmap, encoding, quality)));
   }
 
   callback.Run(CreateSuccessResponse(command_id, std::move(result)));
@@ -631,7 +633,7 @@ HeadlessDevToolsManagerDelegate::GetWindowForTarget(
   }
 
   auto result = std::make_unique<base::DictionaryValue>();
-  result->SetInteger("windowId", web_contents->window_id());
+  result->SetKey("windowId", base::Value(web_contents->window_id()));
   result->Set("bounds", CreateBoundsDict(web_contents));
   return CreateSuccessResponse(command_id, std::move(result));
 }

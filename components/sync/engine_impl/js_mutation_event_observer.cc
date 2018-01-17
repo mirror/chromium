@@ -53,9 +53,9 @@ void JsMutationEventObserver::OnChangesApplied(
     return;
   }
   base::DictionaryValue details;
-  details.SetString("modelType", ModelTypeToString(model_type));
-  details.SetString("writeTransactionId",
-                    base::Int64ToString(write_transaction_id));
+  details.SetKey("modelType", base::Value(ModelTypeToString(model_type)));
+  details.SetKey("writeTransactionId",
+                 base::Value(base::Int64ToString(write_transaction_id)));
   std::unique_ptr<base::Value> changes_value;
   const size_t changes_size = changes.Get().size();
   if (changes_size <= kChangeLimit) {
@@ -78,7 +78,7 @@ void JsMutationEventObserver::OnChangesComplete(ModelType model_type) {
     return;
   }
   base::DictionaryValue details;
-  details.SetString("modelType", ModelTypeToString(model_type));
+  details.SetKey("modelType", base::Value(ModelTypeToString(model_type)));
   HandleJsEvent(FROM_HERE, "onChangesComplete", JsEventDetails(&details));
 }
 

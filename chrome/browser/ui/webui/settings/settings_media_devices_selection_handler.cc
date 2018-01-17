@@ -125,8 +125,8 @@ void MediaDevicesSelectionHandler::UpdateDevicesMenu(
   base::ListValue device_list;
   for (size_t i = 0; i < devices.size(); ++i) {
     std::unique_ptr<base::DictionaryValue> entry(new base::DictionaryValue());
-    entry->SetString("name", GetDeviceDisplayName(devices[i]));
-    entry->SetString("id",  devices[i].id);
+    entry->SetKey("name", base::Value(GetDeviceDisplayName(devices[i])));
+    entry->SetKey("id", base::Value(devices[i].id));
     device_list.Append(std::move(entry));
     if (devices[i].id == default_device)
       default_id = default_device;

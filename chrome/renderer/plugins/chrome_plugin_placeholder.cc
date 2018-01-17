@@ -94,8 +94,9 @@ ChromePluginPlaceholder* ChromePluginPlaceholder::CreateLoadableMissingPlugin(
           IDR_BLOCKED_PLUGIN_HTML));
 
   base::DictionaryValue values;
-  values.SetString("message",
-                   l10n_util::GetStringUTF8(IDS_PLUGIN_NOT_SUPPORTED));
+  values.SetKey(
+      "message",
+      base::Value(l10n_util::GetStringUTF8(IDS_PLUGIN_NOT_SUPPORTED)));
 
   std::string html_data = webui::GetI18nTemplateHtml(template_html, &values);
 
@@ -115,19 +116,20 @@ ChromePluginPlaceholder* ChromePluginPlaceholder::CreateBlockedPlugin(
     const base::string16& message,
     const PowerSaverInfo& power_saver_info) {
   base::DictionaryValue values;
-  values.SetString("message", message);
-  values.SetString("name", name);
-  values.SetString("hide", l10n_util::GetStringUTF8(IDS_PLUGIN_HIDE));
-  values.SetString(
+  values.SetKey("message", base::Value(message));
+  values.SetKey("name", base::Value(name));
+  values.SetKey("hide", base::Value(l10n_util::GetStringUTF8(IDS_PLUGIN_HIDE)));
+  values.SetKey(
       "pluginType",
-      render_frame->IsMainFrame() &&
-              render_frame->GetWebFrame()->GetDocument().IsPluginDocument()
-          ? "document"
-          : "embedded");
+      base::Value(
+          render_frame->IsMainFrame() &&
+                  render_frame->GetWebFrame()->GetDocument().IsPluginDocument()
+              ? "document"
+              : "embedded"));
 
   if (!power_saver_info.poster_attribute.empty()) {
-    values.SetString("poster", power_saver_info.poster_attribute);
-    values.SetString("baseurl", power_saver_info.base_url.spec());
+    values.SetKey("poster", base::Value(power_saver_info.poster_attribute));
+    values.SetKey("baseurl", base::Value(power_saver_info.base_url.spec()));
 
     if (!power_saver_info.custom_poster_size.IsEmpty()) {
       float zoom_factor = blink::WebView::ZoomLevelToZoomFactor(
@@ -136,8 +138,10 @@ ChromePluginPlaceholder* ChromePluginPlaceholder::CreateBlockedPlugin(
           roundf(power_saver_info.custom_poster_size.width() / zoom_factor);
       int height =
           roundf(power_saver_info.custom_poster_size.height() / zoom_factor);
-      values.SetString("visibleWidth", base::IntToString(width) + "px");
-      values.SetString("visibleHeight", base::IntToString(height) + "px");
+      values.SetKey("visibleWidth",
+                    base::Value(base::IntToString(width) + "px"));
+      values.SetKey("visibleHeight",
+                    base::Value(base::IntToString(height) + "px"));
     }
   }
 

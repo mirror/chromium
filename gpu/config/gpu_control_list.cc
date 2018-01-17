@@ -614,7 +614,7 @@ void GpuControlList::GetReasons(base::ListValue* problem_list,
     const Entry& entry = entries_[index];
     auto problem = std::make_unique<base::DictionaryValue>();
 
-    problem->SetString("description", entry.description);
+    problem->SetKey("description", base::Value(entry.description));
 
     auto cr_bugs = std::make_unique<base::ListValue>();
     for (size_t jj = 0; jj < entry.cr_bug_size; ++jj)
@@ -626,7 +626,7 @@ void GpuControlList::GetReasons(base::ListValue* problem_list,
     problem->Set("affectedGpuSettings", std::move(features));
 
     DCHECK(tag == "workarounds" || tag == "disabledFeatures");
-    problem->SetString("tag", tag);
+    problem->SetKey("tag", base::Value(tag));
 
     problem_list->Append(std::move(problem));
   }

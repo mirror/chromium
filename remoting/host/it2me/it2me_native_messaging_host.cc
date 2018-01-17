@@ -146,7 +146,7 @@ void It2MeNativeMessagingHost::OnMessage(const std::string& message) {
     return;
   }
 
-  response->SetString("type", type + "Response");
+  response->SetKey("type", base::Value(type + "Response"));
 
   if (type == "hello") {
     ProcessHello(std::move(message_dict), std::move(response));
@@ -188,7 +188,7 @@ void It2MeNativeMessagingHost::ProcessHello(
 
   // No need to forward to the elevated process since no internal state is set.
 
-  response->SetString("version", STRINGIZE(VERSION));
+  response->SetKey("version", base::Value(STRINGIZE(VERSION)));
 
   // This list will be populated when new features are added.
   response->Set("supportedFeatures", base::MakeUnique<base::ListValue>());
@@ -407,8 +407,8 @@ void It2MeNativeMessagingHost::ProcessIncomingIq(
 
 void It2MeNativeMessagingHost::SendOutgoingIq(const std::string& iq) {
   std::unique_ptr<base::DictionaryValue> message(new base::DictionaryValue());
-  message->SetString("iq", iq);
-  message->SetString("type", "sendOutgoingIq");
+  message->SetKey("iq", base::Value(iq));
+  message->SetKey("type", base::Value("sendOutgoingIq"));
   SendMessageToClient(std::move(message));
 }
 
@@ -416,10 +416,10 @@ void It2MeNativeMessagingHost::SendErrorAndExit(
     std::unique_ptr<base::DictionaryValue> response,
     protocol::ErrorCode error_code) const {
   DCHECK(task_runner()->BelongsToCurrentThread());
-  response->SetString("type", "error");
-  response->SetString("error_code", ErrorCodeToString(error_code));
+  response->SetKey("type", base::Value("error"));
+  response->SetKey("error_code", base::Value(ErrorCodeToString(error_code)));
   // TODO(kelvinp): Remove this after M61 Webapp is pushed to 100%.
-  response->SetString("description", ErrorCodeToString(error_code));
+  response->SetKey("description", base::Value(ErrorCodeToString(error_code)));
   SendMessageToClient(std::move(response));
 
   // Trigger a host shutdown by sending an empty message.
@@ -430,7 +430,7 @@ void It2MeNativeMessagingHost::SendPolicyErrorAndExit() const {
   DCHECK(task_runner()->BelongsToCurrentThread());
 
   auto message = base::MakeUnique<base::DictionaryValue>();
-  message->SetString("type", "policyError");
+  message->SetKey("type", base::Value("policyError"));
   SendMessageToClient(std::move(message));
   client_->CloseChannel(std::string());
 }
@@ -443,18 +443,19 @@ void It2MeNativeMessagingHost::OnStateChanged(It2MeHostState state,
 
   std::unique_ptr<base::DictionaryValue> message(new base::DictionaryValue());
 
-  message->SetString("type", "hostStateChanged");
-  message->SetString("state", HostStateToString(state));
+  message->SetKey("type", base::Value("hostStateChanged"));
+  message->SetKey("state", base::Value(HostStateToString(state)));
 
   switch (state_) {
     case kReceivedAccessCode:
-      message->SetString("accessCode", access_code_);
-      message->SetInteger("accessCodeLifetime",
-                          access_code_lifetime_.InSeconds());
+      message->SetKey("accessCode", base::Value(access_code_));
+      message->SetKey(
+          "accessCodeLifetime",
+          base::Value(static_cast<int>(access_code_lifetime_.InSeconds())));
       break;
 
     case kConnected:
-      message->SetString("client", client_username_);
+      message->SetKey("client", base::Value(client_username_));
       break;
 
     case kDisconnected:
@@ -465,10 +466,11 @@ void It2MeNativeMessagingHost::OnStateChanged(It2MeHostState state,
       // kError is an internal-only state, sent to the web-app by a separate
       // "error" message so that errors that occur before the "connect" message
       // is sent can be communicated.
-      message->SetString("type", "error");
-      message->SetString("error_code", ErrorCodeToString(error_code));
+      message->SetKey("type", base::Value("error"));
+      message->SetKey("error_code", base::Value(ErrorCodeToString(error_code)));
       // TODO(kelvinp): Remove this after M61 Webapp is pushed to 100%.
-      message->SetString("description", ErrorCodeToString(error_code));
+      message->SetKey("description",
+                      base::Value(ErrorCodeToString(error_code)));
       break;
 
     default:
@@ -488,8 +490,8 @@ void It2MeNativeMessagingHost::OnNatPolicyChanged(bool nat_traversal_enabled) {
 
   std::unique_ptr<base::DictionaryValue> message(new base::DictionaryValue());
 
-  message->SetString("type", "natPolicyChanged");
-  message->SetBoolean("natTraversalEnabled", nat_traversal_enabled);
+  message->SetKey("type", base::Value("natPolicyChanged"));
+  message->SetKey("natTraversalEnabled", base::Value(nat_traversal_enabled));
   SendMessageToClient(std::move(message));
 }
 

@@ -286,8 +286,8 @@ void NTPResourceCache::CreateNewTabIncognitoHTML() {
 
 void NTPResourceCache::CreateNewTabGuestHTML() {
   base::DictionaryValue localized_strings;
-  localized_strings.SetString("title",
-      l10n_util::GetStringUTF16(IDS_NEW_TAB_TITLE));
+  localized_strings.SetKey(
+      "title", base::Value(l10n_util::GetStringUTF16(IDS_NEW_TAB_TITLE)));
   const char* guest_tab_link = kLearnMoreGuestSessionUrl;
   int guest_tab_ids = IDR_GUEST_TAB_HTML;
   int guest_tab_description_ids = IDS_NEW_TAB_GUEST_SESSION_DESCRIPTION;
@@ -328,13 +328,15 @@ void NTPResourceCache::CreateNewTabGuestHTML() {
   }
 #endif
 
-  localized_strings.SetString("guestTabDescription",
-      l10n_util::GetStringUTF16(guest_tab_description_ids));
-  localized_strings.SetString("guestTabHeading",
-      l10n_util::GetStringUTF16(guest_tab_heading_ids));
-  localized_strings.SetString("learnMore",
-      l10n_util::GetStringUTF16(guest_tab_link_ids));
-  localized_strings.SetString("learnMoreLink", guest_tab_link);
+  localized_strings.SetKey(
+      "guestTabDescription",
+      base::Value(l10n_util::GetStringUTF16(guest_tab_description_ids)));
+  localized_strings.SetKey(
+      "guestTabHeading",
+      base::Value(l10n_util::GetStringUTF16(guest_tab_heading_ids)));
+  localized_strings.SetKey(
+      "learnMore", base::Value(l10n_util::GetStringUTF16(guest_tab_link_ids)));
+  localized_strings.SetKey("learnMoreLink", base::Value(guest_tab_link));
 
   const std::string& app_locale = g_browser_process->GetApplicationLocale();
   webui::SetLoadTimeDataDefaults(app_locale, &localized_strings);
@@ -358,77 +360,104 @@ void NTPResourceCache::CreateNewTabHTML() {
   // profile is not the default.
   PrefService* prefs = profile_->GetPrefs();
   base::DictionaryValue load_time_data;
-  load_time_data.SetString(
+  load_time_data.SetKey(
       "bookmarkbarattached",
-      prefs->GetBoolean(bookmarks::prefs::kShowBookmarkBar) ? "true" : "false");
-  load_time_data.SetString("title",
-      l10n_util::GetStringUTF16(IDS_NEW_TAB_TITLE));
-  load_time_data.SetString("webStoreTitle",
-      l10n_util::GetStringUTF16(IDS_EXTENSION_WEB_STORE_TITLE));
-  load_time_data.SetString("webStoreTitleShort",
-      l10n_util::GetStringUTF16(IDS_EXTENSION_WEB_STORE_TITLE_SHORT));
-  load_time_data.SetString("attributionintro",
-      l10n_util::GetStringUTF16(IDS_NEW_TAB_ATTRIBUTION_INTRO));
-  load_time_data.SetString("appuninstall",
-      l10n_util::GetStringUTF16(IDS_EXTENSIONS_UNINSTALL));
-  load_time_data.SetString("appoptions",
-      l10n_util::GetStringUTF16(IDS_NEW_TAB_APP_OPTIONS));
-  load_time_data.SetString("appdetails",
-      l10n_util::GetStringUTF16(IDS_NEW_TAB_APP_DETAILS));
-  load_time_data.SetString("appinfodialog",
-      l10n_util::GetStringUTF16(IDS_APP_CONTEXT_MENU_SHOW_INFO));
-  load_time_data.SetString("appcreateshortcut",
-      l10n_util::GetStringUTF16(IDS_NEW_TAB_APP_CREATE_SHORTCUT));
-  load_time_data.SetString("appDefaultPageName",
-      l10n_util::GetStringUTF16(IDS_APP_DEFAULT_PAGE_NAME));
-  load_time_data.SetString("applaunchtypepinned",
-      l10n_util::GetStringUTF16(IDS_APP_CONTEXT_MENU_OPEN_PINNED));
-  load_time_data.SetString("applaunchtyperegular",
-      l10n_util::GetStringUTF16(IDS_APP_CONTEXT_MENU_OPEN_REGULAR));
-  load_time_data.SetString("applaunchtypewindow",
-      l10n_util::GetStringUTF16(IDS_APP_CONTEXT_MENU_OPEN_WINDOW));
-  load_time_data.SetString("applaunchtypefullscreen",
-      l10n_util::GetStringUTF16(IDS_APP_CONTEXT_MENU_OPEN_FULLSCREEN));
-  load_time_data.SetString("syncpromotext",
-      l10n_util::GetStringUTF16(IDS_SYNC_START_SYNC_BUTTON_LABEL));
-  load_time_data.SetString("syncLinkText",
-      l10n_util::GetStringUTF16(IDS_SYNC_ADVANCED_OPTIONS));
-  load_time_data.SetBoolean("shouldShowSyncLogin",
-                            AppLauncherLoginHandler::ShouldShow(profile_));
-  load_time_data.SetString("learnMore",
-      l10n_util::GetStringUTF16(IDS_LEARN_MORE));
+      base::Value(prefs->GetBoolean(bookmarks::prefs::kShowBookmarkBar)
+                      ? "true"
+                      : "false"));
+  load_time_data.SetKey(
+      "title", base::Value(l10n_util::GetStringUTF16(IDS_NEW_TAB_TITLE)));
+  load_time_data.SetKey(
+      "webStoreTitle",
+      base::Value(l10n_util::GetStringUTF16(IDS_EXTENSION_WEB_STORE_TITLE)));
+  load_time_data.SetKey("webStoreTitleShort",
+                        base::Value(l10n_util::GetStringUTF16(
+                            IDS_EXTENSION_WEB_STORE_TITLE_SHORT)));
+  load_time_data.SetKey(
+      "attributionintro",
+      base::Value(l10n_util::GetStringUTF16(IDS_NEW_TAB_ATTRIBUTION_INTRO)));
+  load_time_data.SetKey(
+      "appuninstall",
+      base::Value(l10n_util::GetStringUTF16(IDS_EXTENSIONS_UNINSTALL)));
+  load_time_data.SetKey(
+      "appoptions",
+      base::Value(l10n_util::GetStringUTF16(IDS_NEW_TAB_APP_OPTIONS)));
+  load_time_data.SetKey(
+      "appdetails",
+      base::Value(l10n_util::GetStringUTF16(IDS_NEW_TAB_APP_DETAILS)));
+  load_time_data.SetKey(
+      "appinfodialog",
+      base::Value(l10n_util::GetStringUTF16(IDS_APP_CONTEXT_MENU_SHOW_INFO)));
+  load_time_data.SetKey(
+      "appcreateshortcut",
+      base::Value(l10n_util::GetStringUTF16(IDS_NEW_TAB_APP_CREATE_SHORTCUT)));
+  load_time_data.SetKey(
+      "appDefaultPageName",
+      base::Value(l10n_util::GetStringUTF16(IDS_APP_DEFAULT_PAGE_NAME)));
+  load_time_data.SetKey(
+      "applaunchtypepinned",
+      base::Value(l10n_util::GetStringUTF16(IDS_APP_CONTEXT_MENU_OPEN_PINNED)));
+  load_time_data.SetKey("applaunchtyperegular",
+                        base::Value(l10n_util::GetStringUTF16(
+                            IDS_APP_CONTEXT_MENU_OPEN_REGULAR)));
+  load_time_data.SetKey(
+      "applaunchtypewindow",
+      base::Value(l10n_util::GetStringUTF16(IDS_APP_CONTEXT_MENU_OPEN_WINDOW)));
+  load_time_data.SetKey("applaunchtypefullscreen",
+                        base::Value(l10n_util::GetStringUTF16(
+                            IDS_APP_CONTEXT_MENU_OPEN_FULLSCREEN)));
+  load_time_data.SetKey(
+      "syncpromotext",
+      base::Value(l10n_util::GetStringUTF16(IDS_SYNC_START_SYNC_BUTTON_LABEL)));
+  load_time_data.SetKey(
+      "syncLinkText",
+      base::Value(l10n_util::GetStringUTF16(IDS_SYNC_ADVANCED_OPTIONS)));
+  load_time_data.SetKey(
+      "shouldShowSyncLogin",
+      base::Value(AppLauncherLoginHandler::ShouldShow(profile_)));
+  load_time_data.SetKey("learnMore",
+                        base::Value(l10n_util::GetStringUTF16(IDS_LEARN_MORE)));
   const std::string& app_locale = g_browser_process->GetApplicationLocale();
-  load_time_data.SetString(
-      "webStoreLink", google_util::AppendGoogleLocaleParam(
-                          extension_urls::GetWebstoreLaunchURL(), app_locale)
-                          .spec());
-  load_time_data.SetString("appInstallHintText",
-      l10n_util::GetStringUTF16(IDS_NEW_TAB_APP_INSTALL_HINT_LABEL));
-  load_time_data.SetString("learn_more",
-      l10n_util::GetStringUTF16(IDS_LEARN_MORE));
-  load_time_data.SetString("tile_grid_screenreader_accessible_description",
-      l10n_util::GetStringUTF16(IDS_NEW_TAB_TILE_GRID_ACCESSIBLE_DESCRIPTION));
-  load_time_data.SetString("page_switcher_change_title",
-      l10n_util::GetStringUTF16(IDS_NEW_TAB_PAGE_SWITCHER_CHANGE_TITLE));
-  load_time_data.SetString("page_switcher_same_title",
-      l10n_util::GetStringUTF16(IDS_NEW_TAB_PAGE_SWITCHER_SAME_TITLE));
+  load_time_data.SetKey(
+      "webStoreLink",
+      base::Value(google_util::AppendGoogleLocaleParam(
+                      extension_urls::GetWebstoreLaunchURL(), app_locale)
+                      .spec()));
+  load_time_data.SetKey("appInstallHintText",
+                        base::Value(l10n_util::GetStringUTF16(
+                            IDS_NEW_TAB_APP_INSTALL_HINT_LABEL)));
+  load_time_data.SetKey("learn_more",
+                        base::Value(l10n_util::GetStringUTF16(IDS_LEARN_MORE)));
+  load_time_data.SetKey("tile_grid_screenreader_accessible_description",
+                        base::Value(l10n_util::GetStringUTF16(
+                            IDS_NEW_TAB_TILE_GRID_ACCESSIBLE_DESCRIPTION)));
+  load_time_data.SetKey("page_switcher_change_title",
+                        base::Value(l10n_util::GetStringUTF16(
+                            IDS_NEW_TAB_PAGE_SWITCHER_CHANGE_TITLE)));
+  load_time_data.SetKey("page_switcher_same_title",
+                        base::Value(l10n_util::GetStringUTF16(
+                            IDS_NEW_TAB_PAGE_SWITCHER_SAME_TITLE)));
   // On Mac OS X 10.7+, horizontal scrolling can be treated as a back or
   // forward gesture. Pass through a flag that indicates whether or not that
   // feature is enabled.
-  load_time_data.SetBoolean("isSwipeTrackingFromScrollEventsEnabled",
-                            is_swipe_tracking_from_scroll_events_enabled_);
+  load_time_data.SetKey(
+      "isSwipeTrackingFromScrollEventsEnabled",
+      base::Value(is_swipe_tracking_from_scroll_events_enabled_));
 
-  load_time_data.SetBoolean("showWebStoreIcon",
-                            !prefs->GetBoolean(prefs::kHideWebStoreIcon));
+  load_time_data.SetKey(
+      "showWebStoreIcon",
+      base::Value(!prefs->GetBoolean(prefs::kHideWebStoreIcon)));
 
-  load_time_data.SetBoolean("enableNewBookmarkApps",
-                            extensions::util::IsNewBookmarkAppsEnabled());
+  load_time_data.SetKey(
+      "enableNewBookmarkApps",
+      base::Value(extensions::util::IsNewBookmarkAppsEnabled()));
 
-  load_time_data.SetBoolean("canHostedAppsOpenInWindows",
-                            extensions::util::CanHostedAppsOpenInWindows());
+  load_time_data.SetKey(
+      "canHostedAppsOpenInWindows",
+      base::Value(extensions::util::CanHostedAppsOpenInWindows()));
 
-  load_time_data.SetBoolean("canShowAppInfoDialog",
-                            CanShowAppInfoDialog());
+  load_time_data.SetKey("canShowAppInfoDialog",
+                        base::Value(CanShowAppInfoDialog()));
 
   AppLauncherHandler::GetLocalizedValues(profile_, &load_time_data);
   AppLauncherLoginHandler::GetLocalizedValues(profile_, &load_time_data);
@@ -436,12 +465,13 @@ void NTPResourceCache::CreateNewTabHTML() {
   webui::SetLoadTimeDataDefaults(app_locale, &load_time_data);
 
   // Control fade and resize animations.
-  load_time_data.SetBoolean("anim",
-                            gfx::Animation::ShouldRenderRichAnimation());
+  load_time_data.SetKey(
+      "anim", base::Value(gfx::Animation::ShouldRenderRichAnimation()));
 
-  load_time_data.SetBoolean(
+  load_time_data.SetKey(
       "isUserSignedIn",
-      SigninManagerFactory::GetForProfile(profile_)->IsAuthenticated());
+      base::Value(
+          SigninManagerFactory::GetForProfile(profile_)->IsAuthenticated()));
 
   // Load the new tab page appropriate for this build.
   base::StringPiece new_tab_html(

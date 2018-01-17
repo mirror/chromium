@@ -50,7 +50,8 @@ class SettingsOverridePermissionTest : public ChromeManifestTest {
     std::unique_ptr<base::DictionaryValue> settings_override(
         new base::DictionaryValue);
     if (flags & kHomepage)
-      settings_override->SetString("homepage", "http://www.google.com/home");
+      settings_override->SetKey("homepage",
+                                base::Value("http://www.google.com/home"));
     if (flags & kStartupPages) {
       std::unique_ptr<base::ListValue> startup_pages(new base::ListValue);
       startup_pages->AppendString("http://startup.com/startup.html");
@@ -59,13 +60,14 @@ class SettingsOverridePermissionTest : public ChromeManifestTest {
     if (flags & kSearchProvider) {
       std::unique_ptr<base::DictionaryValue> search_provider(
           new base::DictionaryValue);
-      search_provider->SetString("search_url", "http://google.com/search.html");
-      search_provider->SetString("name", "test");
-      search_provider->SetString("keyword", "lock");
-      search_provider->SetString("encoding", "UTF-8");
-      search_provider->SetBoolean("is_default", true);
-      search_provider->SetString("favicon_url",
-                                 "http://wikipedia.org/wiki/Favicon");
+      search_provider->SetKey("search_url",
+                              base::Value("http://google.com/search.html"));
+      search_provider->SetKey("name", base::Value("test"));
+      search_provider->SetKey("keyword", base::Value("lock"));
+      search_provider->SetKey("encoding", base::Value("UTF-8"));
+      search_provider->SetKey("is_default", base::Value(true));
+      search_provider->SetKey("favicon_url",
+                              base::Value("http://wikipedia.org/wiki/Favicon"));
       settings_override->Set("search_provider", std::move(search_provider));
     }
     ext_manifest.Set(manifest_keys::kSettingsOverride,

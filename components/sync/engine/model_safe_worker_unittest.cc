@@ -90,10 +90,10 @@ TEST_F(ModelSafeWorkerTest, ModelSafeRoutingInfoToValue) {
   routing_info[PREFERENCES] = GROUP_DB;
   routing_info[APPS] = GROUP_NON_BLOCKING;
   base::DictionaryValue expected_value;
-  expected_value.SetString("Apps", "Group Non Blocking");
-  expected_value.SetString("Bookmarks", "Group Passive");
-  expected_value.SetString("Encryption Keys", "Group UI");
-  expected_value.SetString("Preferences", "Group DB");
+  expected_value.SetKey("Apps", base::Value("Group Non Blocking"));
+  expected_value.SetKey("Bookmarks", base::Value("Group Passive"));
+  expected_value.SetKey("Encryption Keys", base::Value("Group UI"));
+  expected_value.SetKey("Preferences", base::Value("Group DB"));
   std::unique_ptr<base::DictionaryValue> value(
       ModelSafeRoutingInfoToValue(routing_info));
   EXPECT_TRUE(value->Equals(&expected_value));

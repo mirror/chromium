@@ -159,14 +159,14 @@ void HostStarter::StartHostProcess() {
   std::string host_secret_hash = remoting::MakeHostPinHash(host_id_, host_pin_);
   std::unique_ptr<base::DictionaryValue> config(new base::DictionaryValue());
   if (host_owner_ != xmpp_login_) {
-    config->SetString("host_owner", host_owner_);
+    config->SetKey("host_owner", base::Value(host_owner_));
   }
-  config->SetString("xmpp_login", xmpp_login_);
-  config->SetString("oauth_refresh_token", refresh_token_);
-  config->SetString("host_id", host_id_);
-  config->SetString("host_name", host_name_);
-  config->SetString("private_key", key_pair_->ToString());
-  config->SetString("host_secret_hash", host_secret_hash);
+  config->SetKey("xmpp_login", base::Value(xmpp_login_));
+  config->SetKey("oauth_refresh_token", base::Value(refresh_token_));
+  config->SetKey("host_id", base::Value(host_id_));
+  config->SetKey("host_name", base::Value(host_name_));
+  config->SetKey("private_key", base::Value(key_pair_->ToString()));
+  config->SetKey("host_secret_hash", base::Value(host_secret_hash));
   daemon_controller_->SetConfigAndStart(
       std::move(config), consent_to_data_collection_,
       base::Bind(&HostStarter::OnHostStarted, base::Unretained(this)));

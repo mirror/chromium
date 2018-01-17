@@ -177,9 +177,9 @@ TEST_F(SupervisedUserSettingsServiceTest, ProcessSplitSetting) {
   EXPECT_FALSE(settings_->GetWithoutPathExpansion(kSettingsName, &value));
 
   base::DictionaryValue dict;
-  dict.SetString("foo", "bar");
-  dict.SetBoolean("awesomesauce", true);
-  dict.SetInteger("eaudecologne", 4711);
+  dict.SetKey("foo", base::Value("bar"));
+  dict.SetKey("awesomesauce", base::Value(true));
+  dict.SetKey("eaudecologne", base::Value(4711));
 
   settings_.reset();
   syncer::SyncChangeList change_list;
@@ -223,8 +223,8 @@ TEST_F(SupervisedUserSettingsServiceTest, Merge) {
         kSettingsName, base::Value(kSettingsValue)));
     // Adding 2 SplitSettings from dictionary.
     base::DictionaryValue dict;
-    dict.SetString("foo", "bar");
-    dict.SetInteger("eaudecologne", 4711);
+    dict.SetKey("foo", base::Value("bar"));
+    dict.SetKey("eaudecologne", base::Value(4711));
     for (base::DictionaryValue::Iterator it(dict); !it.IsAtEnd();
          it.Advance()) {
       sync_data.push_back(
@@ -252,8 +252,8 @@ TEST_F(SupervisedUserSettingsServiceTest, Merge) {
     UploadSplitItem("item", "second");
 
     base::DictionaryValue dict;
-    dict.SetString("foo", "burp");
-    dict.SetString("item", "first");
+    dict.SetKey("foo", base::Value("burp"));
+    dict.SetKey("item", base::Value("first"));
     // Adding 2 SplitSettings from dictionary.
     for (base::DictionaryValue::Iterator it(dict); !it.IsAtEnd();
          it.Advance()) {

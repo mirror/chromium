@@ -301,9 +301,9 @@ TEST_F(PolicyMapTest, GetDifferingKeys) {
 
 TEST_F(PolicyMapTest, LoadFromSetsLevelScopeAndSource) {
   base::DictionaryValue policies;
-  policies.SetString("TestPolicy1", "google.com");
-  policies.SetBoolean("TestPolicy2", true);
-  policies.SetInteger("TestPolicy3", -12321);
+  policies.SetKey("TestPolicy1", base::Value("google.com"));
+  policies.SetKey("TestPolicy2", base::Value(true));
+  policies.SetKey("TestPolicy3", base::Value(-12321));
 
   PolicyMap loaded;
   loaded.LoadFrom(&policies,

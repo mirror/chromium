@@ -158,10 +158,12 @@ bool PushClientChannel::DecodeMessage(const std::string& data,
 std::unique_ptr<base::DictionaryValue> PushClientChannel::CollectDebugData()
     const {
   std::unique_ptr<base::DictionaryValue> status(new base::DictionaryValue);
-  status->SetString("PushClientChannel.NetworkChannel", "Push Client");
-  status->SetInteger("PushClientChannel.SentMessages", sent_messages_count_);
-  status->SetInteger("PushClientChannel.ReceivedMessages",
-                     SyncNetworkChannel::GetReceivedMessagesCount());
+  status->SetPath({"PushClientChannel", "NetworkChannel"},
+                  base::Value("Push Client"));
+  status->SetPath({"PushClientChannel", "SentMessages"},
+                  base::Value(sent_messages_count_));
+  status->SetPath({"PushClientChannel", "ReceivedMessages"},
+                  base::Value(SyncNetworkChannel::GetReceivedMessagesCount()));
   return status;
 }
 

@@ -61,7 +61,7 @@ TEST_F(ReportingDeliveryAgentTest, SuccessfulUpload) {
   static const int kAgeMillis = 12345;
 
   base::DictionaryValue body;
-  body.SetString("key", "value");
+  body.SetKey("key", base::Value("value"));
 
   SetClient(kOrigin_, kEndpoint_, kGroup_);
   cache()->AddReport(kUrl_, kGroup_, kType_, body.CreateDeepCopy(),

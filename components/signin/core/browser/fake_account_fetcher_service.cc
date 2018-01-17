@@ -20,13 +20,13 @@ void FakeAccountFetcherService::FakeUserInfoFetchSuccess(
     const std::string& locale,
     const std::string& picture_url) {
   base::DictionaryValue user_info;
-  user_info.SetString("id", gaia);
-  user_info.SetString("email", email);
-  user_info.SetString("hd", hosted_domain);
-  user_info.SetString("name", full_name);
-  user_info.SetString("given_name", given_name);
-  user_info.SetString("locale", locale);
-  user_info.SetString("picture", picture_url);
+  user_info.SetKey("id", base::Value(gaia));
+  user_info.SetKey("email", base::Value(email));
+  user_info.SetKey("hd", base::Value(hosted_domain));
+  user_info.SetKey("name", base::Value(full_name));
+  user_info.SetKey("given_name", base::Value(given_name));
+  user_info.SetKey("locale", base::Value(locale));
+  user_info.SetKey("picture", base::Value(picture_url));
   account_tracker_service()->SetAccountStateFromUserInfo(account_id,
                                                          &user_info);
 }

@@ -315,9 +315,9 @@ IN_PROC_BROWSER_TEST_F(PolicyUITest, WritePoliciesToJSONFile) {
   // This also checks that we save complex policies correctly.
   base::DictionaryValue unknown_policy;
   base::DictionaryValue body;
-  body.SetInteger("first", 0);
-  body.SetBoolean("second", true);
-  unknown_policy.SetInteger("head", 12);
+  body.SetKey("first", base::Value(0));
+  body.SetKey("second", base::Value(true));
+  unknown_policy.SetKey("head", base::Value(12));
   unknown_policy.SetDictionary("body", body.CreateDeepCopy());
   const std::string kUnknownPolicy = "NoSuchThing";
   values.Set(kUnknownPolicy, policy::POLICY_LEVEL_RECOMMENDED,

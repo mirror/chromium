@@ -83,10 +83,10 @@ namespace {
 base::ListValue* AddSection(base::ListValue* parent_list,
                             const std::string& title) {
   auto section = std::make_unique<base::DictionaryValue>();
-  section->SetString("title", title);
+  section->SetKey("title", base::Value(title));
   base::ListValue* section_contents =
       section->SetList("data", std::make_unique<base::ListValue>());
-  section->SetBoolean("is_sensitive", false);
+  section->SetKey("is_sensitive", base::Value(false));
   // If the following |Append| results in a reallocation, pointers to the
   // members of |parent_list| will be invalidated. This would result in
   // use-after-free in |*SyncStat::SetValue|. This is why the following DCHECK
@@ -102,10 +102,10 @@ base::ListValue* AddSection(base::ListValue* parent_list,
 base::ListValue* AddSensitiveSection(base::ListValue* parent_list,
                                      const std::string& title) {
   auto section = std::make_unique<base::DictionaryValue>();
-  section->SetString("title", title);
+  section->SetKey("title", base::Value(title));
   base::ListValue* section_contents =
       section->SetList("data", std::make_unique<base::ListValue>());
-  section->SetBoolean("is_sensitive", true);
+  section->SetKey("is_sensitive", base::Value(true));
   // If the following |Append| results in a reallocation, pointers to
   // |parent_list| and its members will be invalidated. This would result in
   // use-after-free in |*SyncStat::SetValue|. This is why the following DCHECK
@@ -137,9 +137,9 @@ class StringSyncStat {
 StringSyncStat::StringSyncStat(base::ListValue* section,
                                const std::string& key) {
   stat_ = new base::DictionaryValue();
-  stat_->SetString("stat_name", key);
-  stat_->SetString("stat_value", "Uninitialized");
-  stat_->SetBoolean("is_valid", false);
+  stat_->SetKey("stat_name", base::Value(key));
+  stat_->SetKey("stat_value", base::Value("Uninitialized"));
+  stat_->SetKey("is_valid", base::Value(false));
   // |stat_| will be invalidated by |Append|, so it needs to be reset.
   // Furthermore, if |Append| results in a reallocation, |stat_| members of
   // other SyncStats will be invalidated. This is why the following dcheck is
@@ -151,13 +151,13 @@ StringSyncStat::StringSyncStat(base::ListValue* section,
 }
 
 void StringSyncStat::SetValue(const std::string& value) {
-  stat_->SetString("stat_value", value);
-  stat_->SetBoolean("is_valid", true);
+  stat_->SetKey("stat_value", base::Value(value));
+  stat_->SetKey("is_valid", base::Value(true));
 }
 
 void StringSyncStat::SetValue(const base::string16& value) {
-  stat_->SetString("stat_value", value);
-  stat_->SetBoolean("is_valid", true);
+  stat_->SetKey("stat_value", base::Value(value));
+  stat_->SetKey("is_valid", base::Value(true));
 }
 
 class BoolSyncStat {
@@ -172,9 +172,9 @@ class BoolSyncStat {
 
 BoolSyncStat::BoolSyncStat(base::ListValue* section, const std::string& key) {
   stat_ = new base::DictionaryValue();
-  stat_->SetString("stat_name", key);
-  stat_->SetBoolean("stat_value", false);
-  stat_->SetBoolean("is_valid", false);
+  stat_->SetKey("stat_name", base::Value(key));
+  stat_->SetKey("stat_value", base::Value(false));
+  stat_->SetKey("is_valid", base::Value(false));
   // |stat_| will be invalidated by |Append|, so it needs to be reset.
   // Furthermore, if |Append| results in a reallocation, |stat_| members of
   // other SyncStats will be invalidated. This is why the following dcheck is
@@ -186,8 +186,8 @@ BoolSyncStat::BoolSyncStat(base::ListValue* section, const std::string& key) {
 }
 
 void BoolSyncStat::SetValue(bool value) {
-  stat_->SetBoolean("stat_value", value);
-  stat_->SetBoolean("is_valid", true);
+  stat_->SetKey("stat_value", base::Value(value));
+  stat_->SetKey("is_valid", base::Value(true));
 }
 
 class IntSyncStat {
@@ -202,9 +202,9 @@ class IntSyncStat {
 
 IntSyncStat::IntSyncStat(base::ListValue* section, const std::string& key) {
   stat_ = new base::DictionaryValue();
-  stat_->SetString("stat_name", key);
-  stat_->SetInteger("stat_value", 0);
-  stat_->SetBoolean("is_valid", false);
+  stat_->SetKey("stat_name", base::Value(key));
+  stat_->SetKey("stat_value", base::Value(0));
+  stat_->SetKey("is_valid", base::Value(false));
   // |stat_| will be invalidated by |Append|, so it needs to be reset.
   // Furthermore, if |Append| results in a reallocation, |stat_| members of
   // other SyncStats will be invalidated. This is why the following dcheck is
@@ -216,8 +216,8 @@ IntSyncStat::IntSyncStat(base::ListValue* section, const std::string& key) {
 }
 
 void IntSyncStat::SetValue(int value) {
-  stat_->SetInteger("stat_value", value);
-  stat_->SetBoolean("is_valid", true);
+  stat_->SetKey("stat_value", base::Value(value));
+  stat_->SetKey("is_valid", base::Value(true));
 }
 
 // Returns a string describing the chrome version environment. Version format:
@@ -583,8 +583,8 @@ std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
       full_status.sync_protocol_error.error_type != UNKNOWN_ERROR &&
       full_status.sync_protocol_error.error_type != SYNC_SUCCESS;
 
-  about_info->SetBoolean("actionable_error_detected",
-                         actionable_error_detected);
+  about_info->SetKey("actionable_error_detected",
+                     base::Value(actionable_error_detected));
 
   // NOTE: We won't bother showing any of the following values unless
   // actionable_error_detected is set.
@@ -608,16 +608,16 @@ std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
     description.SetValue(full_status.sync_protocol_error.error_description);
   }
 
-  about_info->SetBoolean("unrecoverable_error_detected",
-                         service->HasUnrecoverableError());
+  about_info->SetKey("unrecoverable_error_detected",
+                     base::Value(service->HasUnrecoverableError()));
 
   if (service->HasUnrecoverableError()) {
     std::string unrecoverable_error_message =
         "Unrecoverable error detected at " +
         service->unrecoverable_error_location().ToString() + ": " +
         service->unrecoverable_error_message();
-    about_info->SetString("unrecoverable_error_message",
-                          unrecoverable_error_message);
+    about_info->SetKey("unrecoverable_error_message",
+                       base::Value(unrecoverable_error_message));
   }
 
   about_info->Set("type_status", service->GetTypeStatusMap());

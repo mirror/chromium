@@ -113,10 +113,12 @@ base::LazyInstance<DevToolsUIBindingsList>::Leaky
 std::unique_ptr<base::DictionaryValue> CreateFileSystemValue(
     DevToolsFileHelper::FileSystem file_system) {
   auto file_system_value = base::MakeUnique<base::DictionaryValue>();
-  file_system_value->SetString("type", file_system.type);
-  file_system_value->SetString("fileSystemName", file_system.file_system_name);
-  file_system_value->SetString("rootURL", file_system.root_url);
-  file_system_value->SetString("fileSystemPath", file_system.file_system_path);
+  file_system_value->SetKey("type", base::Value(file_system.type));
+  file_system_value->SetKey("fileSystemName",
+                            base::Value(file_system.file_system_name));
+  file_system_value->SetKey("rootURL", base::Value(file_system.root_url));
+  file_system_value->SetKey("fileSystemPath",
+                            base::Value(file_system.file_system_path));
   return file_system_value;
 }
 
@@ -655,7 +657,7 @@ void DevToolsUIBindings::LoadNetworkResource(const DispatchCallback& callback,
   GURL gurl(url);
   if (!gurl.is_valid()) {
     base::DictionaryValue response;
-    response.SetInteger("statusCode", 404);
+    response.SetKey("statusCode", base::Value(404));
     callback.Run(&response);
     return;
   }
@@ -1074,7 +1076,7 @@ void DevToolsUIBindings::OnURLFetchComplete(const net::URLFetcher* source) {
   base::DictionaryValue response;
   auto headers = base::MakeUnique<base::DictionaryValue>();
   net::HttpResponseHeaders* rh = source->GetResponseHeaders();
-  response.SetInteger("statusCode", rh ? rh->response_code() : 200);
+  response.SetKey("statusCode", base::Value(rh ? rh->response_code() : 200));
 
   size_t iterator = 0;
   std::string name;
@@ -1233,14 +1235,16 @@ void DevToolsUIBindings::AddDevToolsExtensionsToClient() {
 
     std::unique_ptr<base::DictionaryValue> extension_info(
         new base::DictionaryValue());
-    extension_info->SetString(
+    extension_info->SetKey(
         "startPage",
-        extensions::chrome_manifest_urls::GetDevToolsPage(extension.get())
-            .spec());
-    extension_info->SetString("name", extension->name());
-    extension_info->SetBoolean("exposeExperimentalAPIs",
-                               extension->permissions_data()->HasAPIPermission(
-                                   extensions::APIPermission::kExperimental));
+        base::Value(
+            extensions::chrome_manifest_urls::GetDevToolsPage(extension.get())
+                .spec()));
+    extension_info->SetKey("name", base::Value(extension->name()));
+    extension_info->SetKey(
+        "exposeExperimentalAPIs",
+        base::Value(extension->permissions_data()->HasAPIPermission(
+            extensions::APIPermission::kExperimental)));
     results.Append(std::move(extension_info));
   }
 

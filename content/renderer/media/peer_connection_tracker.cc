@@ -287,7 +287,7 @@ static std::unique_ptr<base::DictionaryValue> GetDictValueStats(
   }
 
   auto dict = std::make_unique<base::DictionaryValue>();
-  dict->SetDouble("timestamp", report.timestamp());
+  dict->SetKey("timestamp", base::Value(report.timestamp()));
   dict->Set("values", std::move(values));
 
   return dict;
@@ -306,8 +306,8 @@ static std::unique_ptr<base::DictionaryValue> GetDictValue(
   // If you change it here, you must change webrtc_internals.js as well.
   auto result = std::make_unique<base::DictionaryValue>();
   result->Set("stats", std::move(stats));
-  result->SetString("id", report.id()->ToString());
-  result->SetString("type", report.TypeToString());
+  result->SetKey("id", base::Value(report.id()->ToString()));
+  result->SetKey("type", base::Value(report.TypeToString()));
 
   return result;
 }

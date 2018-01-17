@@ -120,7 +120,8 @@ void DidGetFileSyncStatusForDump(
   DCHECK(num_results);
 
   if (file)
-    file->SetString("status", SyncFileStatusToString(sync_file_status));
+    file->SetKey("status",
+                 base::Value(SyncFileStatusToString(sync_file_status)));
 
   // Once all results have been received, run the callback to signal end.
   DCHECK_LE(*num_results, files->GetSize());

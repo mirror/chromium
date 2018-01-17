@@ -39,9 +39,9 @@ void AddTestPolicies(PolicyMap* policy) {
               POLICY_SOURCE_CLOUD, std::make_unique<base::Value>(true),
               nullptr);
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetBoolean("false", false);
-  dict->SetInteger("int", 456);
-  dict->SetString("str", "bbq");
+  dict->SetKey("false", base::Value(false));
+  dict->SetKey("int", base::Value(456));
+  dict->SetKey("str", base::Value("bbq"));
   policy->Set("recommended-machine", POLICY_LEVEL_RECOMMENDED,
               POLICY_SCOPE_MACHINE, POLICY_SOURCE_CLOUD, std::move(dict),
               nullptr);

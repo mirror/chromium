@@ -42,11 +42,12 @@ std::string Base64EncodeUrlSafe(const std::vector<uint8_t>& input) {
 
 std::unique_ptr<base::DictionaryValue> CreatePublicKeyJwkDict() {
   std::unique_ptr<base::DictionaryValue> jwk(new base::DictionaryValue());
-  jwk->SetString("kty", "RSA");
-  jwk->SetString("n",
-                 Base64EncodeUrlSafe(HexStringToBytes(kPublicKeyModulusHex)));
-  jwk->SetString("e",
-                 Base64EncodeUrlSafe(HexStringToBytes(kPublicKeyExponentHex)));
+  jwk->SetKey("kty", base::Value("RSA"));
+  jwk->SetKey(
+      "n",
+      base::Value(Base64EncodeUrlSafe(HexStringToBytes(kPublicKeyModulusHex))));
+  jwk->SetKey("e", base::Value(Base64EncodeUrlSafe(
+                       HexStringToBytes(kPublicKeyExponentHex))));
   return jwk;
 }
 
@@ -80,7 +81,7 @@ TEST_F(WebCryptoRsaOaepTest, ImportPublicJwkWithNoAlg) {
 
 TEST_F(WebCryptoRsaOaepTest, ImportPublicJwkWithMatchingAlg) {
   std::unique_ptr<base::DictionaryValue> jwk(CreatePublicKeyJwkDict());
-  jwk->SetString("alg", "RSA-OAEP");
+  jwk->SetKey("alg", base::Value("RSA-OAEP"));
 
   blink::WebCryptoKey public_key;
   ASSERT_EQ(
@@ -94,7 +95,7 @@ TEST_F(WebCryptoRsaOaepTest, ImportPublicJwkWithMatchingAlg) {
 
 TEST_F(WebCryptoRsaOaepTest, ImportPublicJwkWithMismatchedAlgFails) {
   std::unique_ptr<base::DictionaryValue> jwk(CreatePublicKeyJwkDict());
-  jwk->SetString("alg", "RSA-OAEP-512");
+  jwk->SetKey("alg", base::Value("RSA-OAEP-512"));
 
   blink::WebCryptoKey public_key;
   ASSERT_EQ(
@@ -108,8 +109,8 @@ TEST_F(WebCryptoRsaOaepTest, ImportPublicJwkWithMismatchedAlgFails) {
 
 TEST_F(WebCryptoRsaOaepTest, ImportPublicJwkWithMismatchedTypeFails) {
   std::unique_ptr<base::DictionaryValue> jwk(CreatePublicKeyJwkDict());
-  jwk->SetString("kty", "oct");
-  jwk->SetString("alg", "RSA-OAEP");
+  jwk->SetKey("kty", base::Value("oct"));
+  jwk->SetKey("alg", base::Value("RSA-OAEP"));
 
   blink::WebCryptoKey public_key;
   ASSERT_EQ(
@@ -134,7 +135,7 @@ TEST_F(WebCryptoRsaOaepTest, ExportPublicJwk) {
     SCOPED_TRACE(test_data.expected_jwk_alg);
 
     std::unique_ptr<base::DictionaryValue> jwk(CreatePublicKeyJwkDict());
-    jwk->SetString("alg", test_data.expected_jwk_alg);
+    jwk->SetKey("alg", base::Value(test_data.expected_jwk_alg));
 
     // Import the key in a known-good format
     blink::WebCryptoKey public_key;

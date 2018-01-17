@@ -175,15 +175,15 @@ TEST_P(HttpServerPropertiesManagerTest,
   url::SchemeHostPort mail_server("https", "mail.google.com", 443);
 
   // Set supports_spdy for https://www.google.com:443.
-  server_pref_dict->SetBoolean("supports_spdy", true);
+  server_pref_dict->SetKey("supports_spdy", base::Value(true));
 
   // Set up alternative_services for https://www.google.com.
   auto alternative_service_dict0 = std::make_unique<base::DictionaryValue>();
-  alternative_service_dict0->SetInteger("port", 443);
-  alternative_service_dict0->SetString("protocol_str", "h2");
+  alternative_service_dict0->SetKey("port", base::Value(443));
+  alternative_service_dict0->SetKey("protocol_str", base::Value("h2"));
   auto alternative_service_dict1 = std::make_unique<base::DictionaryValue>();
-  alternative_service_dict1->SetInteger("port", 1234);
-  alternative_service_dict1->SetString("protocol_str", "quic");
+  alternative_service_dict1->SetKey("port", base::Value(1234));
+  alternative_service_dict1->SetKey("protocol_str", base::Value("quic"));
   auto alternative_service_list0 = std::make_unique<base::ListValue>();
   alternative_service_list0->Append(std::move(alternative_service_dict0));
   alternative_service_list0->Append(std::move(alternative_service_dict1));
@@ -192,7 +192,7 @@ TEST_P(HttpServerPropertiesManagerTest,
 
   // Set up ServerNetworkStats for https://www.google.com.
   auto stats = std::make_unique<base::DictionaryValue>();
-  stats->SetInteger("srtt", 10);
+  stats->SetKey("srtt", base::Value(10));
   server_pref_dict->SetWithoutPathExpansion("network_stats", std::move(stats));
 
   // Set the server preference for https://www.google.com.
@@ -211,12 +211,12 @@ TEST_P(HttpServerPropertiesManagerTest,
   auto server_pref_dict1 = std::make_unique<base::DictionaryValue>();
 
   // Set supports_spdy for https://mail.google.com.
-  server_pref_dict1->SetBoolean("supports_spdy", true);
+  server_pref_dict1->SetKey("supports_spdy", base::Value(true));
 
   // Set up alternative_services for https://mail.google.com.
   auto alternative_service_dict2 = std::make_unique<base::DictionaryValue>();
-  alternative_service_dict2->SetString("protocol_str", "h2");
-  alternative_service_dict2->SetInteger("port", 444);
+  alternative_service_dict2->SetKey("protocol_str", base::Value("h2"));
+  alternative_service_dict2->SetKey("port", base::Value(444));
   auto alternative_service_list1 = std::make_unique<base::ListValue>();
   alternative_service_list1->Append(std::move(alternative_service_dict2));
   server_pref_dict1->SetWithoutPathExpansion(
@@ -225,7 +225,7 @@ TEST_P(HttpServerPropertiesManagerTest,
   // Set up ServerNetworkStats for https://mail.google.com and it is the MRU
   // server.
   auto stats1 = std::make_unique<base::DictionaryValue>();
-  stats1->SetInteger("srtt", 20);
+  stats1->SetKey("srtt", base::Value(20));
   server_pref_dict1->SetWithoutPathExpansion("network_stats",
                                              std::move(stats1));
   // Set the server preference for https://mail.google.com.
@@ -250,8 +250,8 @@ TEST_P(HttpServerPropertiesManagerTest,
         "servers", std::move(servers_dict));
   }
   auto supports_quic = std::make_unique<base::DictionaryValue>();
-  supports_quic->SetBoolean("used_quic", true);
-  supports_quic->SetString("address", "127.0.0.1");
+  supports_quic->SetKey("used_quic", base::Value(true));
+  supports_quic->SetKey("address", base::Value("127.0.0.1"));
   http_server_properties_dict.SetWithoutPathExpansion("supports_quic",
                                                       std::move(supports_quic));
 
@@ -358,12 +358,12 @@ TEST_P(HttpServerPropertiesManagerTest, BadCachedHostPortPair) {
   auto server_pref_dict = std::make_unique<base::DictionaryValue>();
 
   // Set supports_spdy for www.google.com:65536.
-  server_pref_dict->SetBoolean("supports_spdy", true);
+  server_pref_dict->SetKey("supports_spdy", base::Value(true));
 
   // Set up alternative_service for www.google.com:65536.
   auto alternative_service_dict = std::make_unique<base::DictionaryValue>();
-  alternative_service_dict->SetString("protocol_str", "h2");
-  alternative_service_dict->SetInteger("port", 80);
+  alternative_service_dict->SetKey("protocol_str", base::Value("h2"));
+  alternative_service_dict->SetKey("port", base::Value(80));
   auto alternative_service_list = std::make_unique<base::ListValue>();
   alternative_service_list->Append(std::move(alternative_service_dict));
   server_pref_dict->SetWithoutPathExpansion(
@@ -371,7 +371,7 @@ TEST_P(HttpServerPropertiesManagerTest, BadCachedHostPortPair) {
 
   // Set up ServerNetworkStats for www.google.com:65536.
   auto stats = std::make_unique<base::DictionaryValue>();
-  stats->SetInteger("srtt", 10);
+  stats->SetKey("srtt", base::Value(10));
   server_pref_dict->SetWithoutPathExpansion("network_stats", std::move(stats));
 
   // Set the server preference for www.google.com:65536.
@@ -436,12 +436,12 @@ TEST_P(HttpServerPropertiesManagerTest, BadCachedAltProtocolPort) {
   auto server_pref_dict = std::make_unique<base::DictionaryValue>();
 
   // Set supports_spdy for www.google.com:80.
-  server_pref_dict->SetBoolean("supports_spdy", true);
+  server_pref_dict->SetKey("supports_spdy", base::Value(true));
 
   // Set up alternative_service for www.google.com:80.
   auto alternative_service_dict = std::make_unique<base::DictionaryValue>();
-  alternative_service_dict->SetString("protocol_str", "h2");
-  alternative_service_dict->SetInteger("port", 65536);
+  alternative_service_dict->SetKey("protocol_str", base::Value("h2"));
+  alternative_service_dict->SetKey("port", base::Value(65536));
   auto alternative_service_list = std::make_unique<base::ListValue>();
   alternative_service_list->Append(std::move(alternative_service_dict));
   server_pref_dict->SetWithoutPathExpansion(
@@ -850,8 +850,8 @@ TEST_P(HttpServerPropertiesManagerTest, BadSupportsQuic) {
   for (int i = 1; i <= 200; ++i) {
     // Set up alternative_service for www.google.com:i.
     auto alternative_service_dict = std::make_unique<base::DictionaryValue>();
-    alternative_service_dict->SetString("protocol_str", "quic");
-    alternative_service_dict->SetInteger("port", i);
+    alternative_service_dict->SetKey("protocol_str", base::Value("quic"));
+    alternative_service_dict->SetKey("port", base::Value(i));
     auto alternative_service_list = std::make_unique<base::ListValue>();
     alternative_service_list->Append(std::move(alternative_service_dict));
     auto server_pref_dict = std::make_unique<base::DictionaryValue>();
@@ -900,8 +900,8 @@ TEST_P(HttpServerPropertiesManagerTest, BadSupportsQuic) {
 
   // Set up SupportsQuic for 127.0.0.1
   auto supports_quic = std::make_unique<base::DictionaryValue>();
-  supports_quic->SetBoolean("used_quic", true);
-  supports_quic->SetString("address", "127.0.0.1");
+  supports_quic->SetKey("used_quic", base::Value(true));
+  supports_quic->SetKey("address", base::Value("127.0.0.1"));
   http_server_properties_dict.SetWithoutPathExpansion("supports_quic",
                                                       std::move(supports_quic));
 
@@ -1261,21 +1261,23 @@ TEST_P(HttpServerPropertiesManagerTest, DoNotPersistExpiredAlternativeService) {
 TEST_P(HttpServerPropertiesManagerTest, DoNotLoadExpiredAlternativeService) {
   auto alternative_service_list = std::make_unique<base::ListValue>();
   auto expired_dict = std::make_unique<base::DictionaryValue>();
-  expired_dict->SetString("protocol_str", "h2");
-  expired_dict->SetString("host", "expired.example.com");
-  expired_dict->SetInteger("port", 443);
+  expired_dict->SetKey("protocol_str", base::Value("h2"));
+  expired_dict->SetKey("host", base::Value("expired.example.com"));
+  expired_dict->SetKey("port", base::Value(443));
   base::Time time_one_day_ago =
       base::Time::Now() - base::TimeDelta::FromDays(1);
-  expired_dict->SetString(
-      "expiration", base::Int64ToString(time_one_day_ago.ToInternalValue()));
+  expired_dict->SetKey(
+      "expiration",
+      base::Value(base::Int64ToString(time_one_day_ago.ToInternalValue())));
   alternative_service_list->Append(std::move(expired_dict));
 
   auto valid_dict = std::make_unique<base::DictionaryValue>();
-  valid_dict->SetString("protocol_str", "h2");
-  valid_dict->SetString("host", "valid.example.com");
-  valid_dict->SetInteger("port", 443);
-  valid_dict->SetString(
-      "expiration", base::Int64ToString(one_day_from_now_.ToInternalValue()));
+  valid_dict->SetKey("protocol_str", base::Value("h2"));
+  valid_dict->SetKey("host", base::Value("valid.example.com"));
+  valid_dict->SetKey("port", base::Value(443));
+  valid_dict->SetKey(
+      "expiration",
+      base::Value(base::Int64ToString(one_day_from_now_.ToInternalValue())));
   alternative_service_list->Append(std::move(valid_dict));
 
   base::DictionaryValue server_pref_dict;

@@ -82,7 +82,7 @@ TEST(NetworkConditionsOverrideManager, SendsCommandOnNavigation) {
       AssertNetworkConditionsCommand(client.commands_[2], network_conditions));
 
   base::DictionaryValue sub_frame_params;
-  sub_frame_params.SetString("frame.parentId", "id");
+  sub_frame_params.SetPath({"frame", "parentId"}, base::Value("id"));
   ASSERT_EQ(
       kOk,
       manager.OnEvent(&client, "Page.frameNavigated", sub_frame_params).code());

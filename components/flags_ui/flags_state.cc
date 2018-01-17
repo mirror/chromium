@@ -187,9 +187,9 @@ std::unique_ptr<base::Value> CreateOptionsData(
   for (int i = 0; i < entry.num_options; ++i) {
     auto value = base::MakeUnique<base::DictionaryValue>();
     const std::string name = entry.NameForOption(i);
-    value->SetString("internal_name", name);
-    value->SetString("description", entry.DescriptionForOption(i));
-    value->SetBoolean("selected", enabled_entries.count(name) > 0);
+    value->SetKey("internal_name", base::Value(name));
+    value->SetKey("description", base::Value(entry.DescriptionForOption(i)));
+    value->SetKey("selected", base::Value(enabled_entries.count(name) > 0));
     result->Append(std::move(value));
   }
   return std::move(result);
@@ -512,26 +512,27 @@ void FlagsState::GetFlagFeatureEntries(
       continue;
 
     std::unique_ptr<base::DictionaryValue> data(new base::DictionaryValue());
-    data->SetString("internal_name", entry.internal_name);
-    data->SetString("name", base::StringPiece(entry.visible_name));
-    data->SetString("description",
-                    base::StringPiece(entry.visible_description));
+    data->SetKey("internal_name", base::Value(entry.internal_name));
+    data->SetKey("name", base::Value(base::StringPiece(entry.visible_name)));
+    data->SetKey("description",
+                 base::Value(base::StringPiece(entry.visible_description)));
 
     auto supported_platforms = base::MakeUnique<base::ListValue>();
     AddOsStrings(entry.supported_platforms, supported_platforms.get());
     data->Set("supported_platforms", std::move(supported_platforms));
     // True if the switch is not currently passed.
     bool is_default_value = IsDefaultValue(entry, enabled_entries);
-    data->SetBoolean("is_default", is_default_value);
+    data->SetKey("is_default", base::Value(is_default_value));
 
     switch (entry.type) {
       case FeatureEntry::SINGLE_VALUE:
       case FeatureEntry::SINGLE_DISABLE_VALUE:
-        data->SetBoolean(
+        data->SetKey(
             "enabled",
-            (!is_default_value && entry.type == FeatureEntry::SINGLE_VALUE) ||
-                (is_default_value &&
-                 entry.type == FeatureEntry::SINGLE_DISABLE_VALUE));
+            base::Value((!is_default_value &&
+                         entry.type == FeatureEntry::SINGLE_VALUE) ||
+                        (is_default_value &&
+                         entry.type == FeatureEntry::SINGLE_DISABLE_VALUE)));
         break;
       case FeatureEntry::MULTI_VALUE:
       case FeatureEntry::ENABLE_DISABLE_VALUE:

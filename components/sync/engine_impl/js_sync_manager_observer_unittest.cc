@@ -96,7 +96,8 @@ TEST_F(JsSyncManagerObserverTest, OnActionableError) {
 TEST_F(JsSyncManagerObserverTest, OnConnectionStatusChange) {
   const ConnectionStatus kStatus = CONNECTION_AUTH_ERROR;
   base::DictionaryValue expected_details;
-  expected_details.SetString("status", ConnectionStatusToString(kStatus));
+  expected_details.SetKey("status",
+                          base::Value(ConnectionStatusToString(kStatus)));
 
   EXPECT_CALL(mock_js_event_handler_,
               HandleJsEvent("onConnectionStatusChange",

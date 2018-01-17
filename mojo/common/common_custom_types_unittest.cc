@@ -293,11 +293,11 @@ TEST_F(CommonCustomTypesTest, Value) {
   EXPECT_EQ(*input, *output);
 
   auto dict = std::make_unique<base::DictionaryValue>();
-  dict->SetBoolean("bool", false);
-  dict->SetInteger("int", 2);
-  dict->SetString("string", "some string");
-  dict->SetBoolean("nested.bool", true);
-  dict->SetInteger("nested.int", 9);
+  dict->SetKey("bool", base::Value(false));
+  dict->SetKey("int", base::Value(2));
+  dict->SetKey("string", base::Value("some string"));
+  dict->SetPath({"nested", "bool"}, base::Value(true));
+  dict->SetPath({"nested", "int"}, base::Value(9));
   dict->Set("some_binary", base::Value::CreateWithCopiedBuffer("mojo", 4));
   dict->Set("null_value", std::make_unique<base::Value>());
   dict->SetKey("non_nested.int", base::Value(10));
@@ -325,7 +325,7 @@ TEST_F(CommonCustomTypesTest, Value) {
   {
     std::unique_ptr<base::DictionaryValue> list_dict(
         new base::DictionaryValue());
-    list_dict->SetString("string", "str");
+    list_dict->SetKey("string", base::Value("str"));
     list->Append(std::move(list_dict));
   }
   std::unique_ptr<base::ListValue> list_output;

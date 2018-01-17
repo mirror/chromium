@@ -88,16 +88,18 @@ std::unique_ptr<base::Value> CertVerifyResultCallback(
     const CertVerifyResult& verify_result,
     NetLogCaptureMode capture_mode) {
   std::unique_ptr<base::DictionaryValue> results(new base::DictionaryValue());
-  results->SetBoolean("has_md5", verify_result.has_md5);
-  results->SetBoolean("has_md2", verify_result.has_md2);
-  results->SetBoolean("has_md4", verify_result.has_md4);
-  results->SetBoolean("is_issued_by_known_root",
-                      verify_result.is_issued_by_known_root);
-  results->SetBoolean("is_issued_by_additional_trust_anchor",
-                      verify_result.is_issued_by_additional_trust_anchor);
-  results->SetBoolean("common_name_fallback_used",
-                      verify_result.common_name_fallback_used);
-  results->SetInteger("cert_status", verify_result.cert_status);
+  results->SetKey("has_md5", base::Value(verify_result.has_md5));
+  results->SetKey("has_md2", base::Value(verify_result.has_md2));
+  results->SetKey("has_md4", base::Value(verify_result.has_md4));
+  results->SetKey("is_issued_by_known_root",
+                  base::Value(verify_result.is_issued_by_known_root));
+  results->SetKey(
+      "is_issued_by_additional_trust_anchor",
+      base::Value(verify_result.is_issued_by_additional_trust_anchor));
+  results->SetKey("common_name_fallback_used",
+                  base::Value(verify_result.common_name_fallback_used));
+  results->SetKey("cert_status",
+                  base::Value(static_cast<int>(verify_result.cert_status)));
   results->Set("verified_cert",
                NetLogX509CertificateCallback(verify_result.verified_cert.get(),
                                              capture_mode));

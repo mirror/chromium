@@ -76,9 +76,9 @@ static void GetHandlersAsListValue(
   for (handler = handlers.begin(); handler != handlers.end(); ++handler) {
     std::unique_ptr<base::DictionaryValue> handler_value(
         new base::DictionaryValue());
-    handler_value->SetString("protocol", handler->protocol());
-    handler_value->SetString("spec", handler->url().spec());
-    handler_value->SetString("host", handler->url().host());
+    handler_value->SetKey("protocol", base::Value(handler->protocol()));
+    handler_value->SetKey("spec", base::Value(handler->url().spec()));
+    handler_value->SetKey("host", base::Value(handler->url().host()));
     handler_list->Append(std::move(handler_value));
   }
 }
@@ -87,14 +87,15 @@ void ProtocolHandlersHandler::GetHandlersForProtocol(
     const std::string& protocol,
     base::DictionaryValue* handlers_value) {
   ProtocolHandlerRegistry* registry = GetProtocolHandlerRegistry();
-  handlers_value->SetString("protocol", protocol);
-  handlers_value->SetInteger("default_handler",
-      registry->GetHandlerIndex(protocol));
-  handlers_value->SetBoolean(
-      "is_default_handler_set_by_user",
-      registry->IsRegisteredByUser(registry->GetHandlerFor(protocol)));
-  handlers_value->SetBoolean("has_policy_recommendations",
-                             registry->HasPolicyRegisteredHandler(protocol));
+  handlers_value->SetKey("protocol", base::Value(protocol));
+  handlers_value->SetKey("default_handler",
+                         base::Value(registry->GetHandlerIndex(protocol)));
+  handlers_value->SetKey("is_default_handler_set_by_user",
+                         base::Value(registry->IsRegisteredByUser(
+                             registry->GetHandlerFor(protocol))));
+  handlers_value->SetKey(
+      "has_policy_recommendations",
+      base::Value(registry->HasPolicyRegisteredHandler(protocol)));
 
   auto handlers_list = std::make_unique<base::ListValue>();
   GetHandlersAsListValue(registry->GetHandlersFor(protocol),

@@ -150,22 +150,28 @@ void RasterizeAndRecordBenchmarkImpl::DidCompleteCommit(
       });
 
   std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue());
-  result->SetDouble("rasterize_time_ms",
-                    rasterize_results_.total_best_time.InMillisecondsF());
-  result->SetDouble("total_pictures_in_pile_size",
-                    static_cast<int>(rasterize_results_.total_memory_usage));
-  result->SetInteger("pixels_rasterized", rasterize_results_.pixels_rasterized);
-  result->SetInteger("pixels_rasterized_with_non_solid_color",
-                     rasterize_results_.pixels_rasterized_with_non_solid_color);
-  result->SetInteger("pixels_rasterized_as_opaque",
-                     rasterize_results_.pixels_rasterized_as_opaque);
-  result->SetInteger("total_layers", rasterize_results_.total_layers);
-  result->SetInteger("total_picture_layers",
-                     rasterize_results_.total_picture_layers);
-  result->SetInteger("total_picture_layers_with_no_content",
-                     rasterize_results_.total_picture_layers_with_no_content);
-  result->SetInteger("total_picture_layers_off_screen",
-                     rasterize_results_.total_picture_layers_off_screen);
+  result->SetKey(
+      "rasterize_time_ms",
+      base::Value(rasterize_results_.total_best_time.InMillisecondsF()));
+  result->SetKey("total_pictures_in_pile_size",
+                 base::Value(static_cast<double>(
+                     static_cast<int>(rasterize_results_.total_memory_usage))));
+  result->SetKey("pixels_rasterized",
+                 base::Value(rasterize_results_.pixels_rasterized));
+  result->SetKey(
+      "pixels_rasterized_with_non_solid_color",
+      base::Value(rasterize_results_.pixels_rasterized_with_non_solid_color));
+  result->SetKey("pixels_rasterized_as_opaque",
+                 base::Value(rasterize_results_.pixels_rasterized_as_opaque));
+  result->SetKey("total_layers", base::Value(rasterize_results_.total_layers));
+  result->SetKey("total_picture_layers",
+                 base::Value(rasterize_results_.total_picture_layers));
+  result->SetKey(
+      "total_picture_layers_with_no_content",
+      base::Value(rasterize_results_.total_picture_layers_with_no_content));
+  result->SetKey(
+      "total_picture_layers_off_screen",
+      base::Value(rasterize_results_.total_picture_layers_off_screen));
 
   NotifyDone(std::move(result));
 }

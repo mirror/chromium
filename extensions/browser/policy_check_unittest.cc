@@ -77,8 +77,8 @@ class PolicyCheckTest : public ExtensionsTest {
     extensions_browser_client()->set_extension_system_factory(&factory_);
 
     base::DictionaryValue manifest_dict;
-    manifest_dict.SetString("name", "dummy name");
-    manifest_dict.SetString("version", "1");
+    manifest_dict.SetKey("name", base::Value("dummy name"));
+    manifest_dict.SetKey("version", base::Value("1"));
     std::string error;
 
     extension_ = Extension::Create(base::FilePath(), Manifest::UNPACKED,

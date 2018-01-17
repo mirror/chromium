@@ -623,12 +623,12 @@ void AboutHandler::SetUpdateStatus(VersionUpdater::Status status,
   DCHECK(status == VersionUpdater::UPDATING || progress == 0);
 
   std::unique_ptr<base::DictionaryValue> event(new base::DictionaryValue);
-  event->SetString("status", UpdateStatusToString(status));
-  event->SetString("message", message);
-  event->SetInteger("progress", progress);
-  event->SetString("version", version);
+  event->SetKey("status", base::Value(UpdateStatusToString(status)));
+  event->SetKey("message", base::Value(message));
+  event->SetKey("progress", base::Value(progress));
+  event->SetKey("version", base::Value(version));
   // DictionaryValue does not support int64_t, so convert to string.
-  event->SetString("size", base::Int64ToString(size));
+  event->SetKey("size", base::Value(base::Int64ToString(size)));
 #if defined(OS_CHROMEOS)
   if (status == VersionUpdater::FAILED_OFFLINE ||
       status == VersionUpdater::FAILED_CONNECTION_TYPE_DISALLOWED) {

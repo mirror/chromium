@@ -18,8 +18,8 @@ std::unique_ptr<base::Value> NetLogURLRequestConstructorCallback(
     RequestPriority priority,
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("url", url->possibly_invalid_spec());
-  dict->SetString("priority", RequestPriorityToString(priority));
+  dict->SetKey("url", base::Value(url->possibly_invalid_spec()));
+  dict->SetKey("priority", base::Value(RequestPriorityToString(priority)));
   return std::move(dict);
 }
 
@@ -30,11 +30,11 @@ std::unique_ptr<base::Value> NetLogURLRequestStartCallback(
     int64_t upload_id,
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("url", url->possibly_invalid_spec());
-  dict->SetString("method", *method);
-  dict->SetInteger("load_flags", load_flags);
+  dict->SetKey("url", base::Value(url->possibly_invalid_spec()));
+  dict->SetKey("method", base::Value(*method));
+  dict->SetKey("load_flags", base::Value(load_flags));
   if (upload_id > -1)
-    dict->SetString("upload_id", base::Int64ToString(upload_id));
+    dict->SetKey("upload_id", base::Value(base::Int64ToString(upload_id)));
   return std::move(dict);
 }
 

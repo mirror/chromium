@@ -735,8 +735,8 @@ TEST_P(PrefHashFilterTest, FilterSplitPrefUpdate) {
   base::DictionaryValue root_dict;
   base::DictionaryValue* dict_value = root_dict.SetDictionary(
       kSplitPref, std::make_unique<base::DictionaryValue>());
-  dict_value->SetString("a", "foo");
-  dict_value->SetInteger("b", 1234);
+  dict_value->SetKey("a", base::Value("foo"));
+  dict_value->SetKey("b", base::Value(1234));
 
   // No path should be stored on FilterUpdate.
   pref_hash_filter_->FilterUpdate(kSplitPref);
@@ -756,7 +756,7 @@ TEST_P(PrefHashFilterTest, FilterSplitPrefUpdate) {
 
 TEST_P(PrefHashFilterTest, FilterUntrackedPrefUpdate) {
   base::DictionaryValue root_dict;
-  root_dict.SetString("untracked", "some value");
+  root_dict.SetKey("untracked", base::Value("some value"));
   pref_hash_filter_->FilterUpdate("untracked");
 
   // No paths should be stored on FilterUpdate.
@@ -776,10 +776,10 @@ TEST_P(PrefHashFilterTest, MultiplePrefsFilterSerializeData) {
   base::Value* int_value1 = root_dict.SetInteger(kAtomicPref, 1);
   root_dict.SetInteger(kAtomicPref2, 2);
   root_dict.SetInteger(kAtomicPref3, 3);
-  root_dict.SetInteger("untracked", 4);
+  root_dict.SetKey("untracked", base::Value(4));
   base::DictionaryValue* dict_value = root_dict.SetDictionary(
       kSplitPref, std::make_unique<base::DictionaryValue>());
-  dict_value->SetBoolean("a", true);
+  dict_value->SetKey("a", base::Value(true));
 
   // Only update kAtomicPref, kAtomicPref3, and kSplitPref.
   pref_hash_filter_->FilterUpdate(kAtomicPref);
@@ -861,8 +861,8 @@ TEST_P(PrefHashFilterTest, InitialValueUnknown) {
 
   base::DictionaryValue* dict_value = pref_store_contents_->SetDictionary(
       kSplitPref, std::make_unique<base::DictionaryValue>());
-  dict_value->SetString("a", "foo");
-  dict_value->SetInteger("b", 1234);
+  dict_value->SetKey("a", base::Value("foo"));
+  dict_value->SetKey("b", base::Value(1234));
 
   ASSERT_TRUE(pref_store_contents_->Get(kAtomicPref, NULL));
   ASSERT_TRUE(pref_store_contents_->Get(kSplitPref, NULL));
@@ -926,8 +926,8 @@ TEST_P(PrefHashFilterTest, InitialValueTrustedUnknown) {
 
   auto* dict_value = pref_store_contents_->SetDictionary(
       kSplitPref, std::make_unique<base::DictionaryValue>());
-  dict_value->SetString("a", "foo");
-  dict_value->SetInteger("b", 1234);
+  dict_value->SetKey("a", base::Value("foo"));
+  dict_value->SetKey("b", base::Value(1234));
 
   ASSERT_TRUE(pref_store_contents_->Get(kAtomicPref, NULL));
   ASSERT_TRUE(pref_store_contents_->Get(kSplitPref, NULL));
@@ -974,10 +974,10 @@ TEST_P(PrefHashFilterTest, InitialValueChanged) {
 
   base::DictionaryValue* dict_value = pref_store_contents_->SetDictionary(
       kSplitPref, std::make_unique<base::DictionaryValue>());
-  dict_value->SetString("a", "foo");
-  dict_value->SetInteger("b", 1234);
-  dict_value->SetInteger("c", 56);
-  dict_value->SetBoolean("d", false);
+  dict_value->SetKey("a", base::Value("foo"));
+  dict_value->SetKey("b", base::Value(1234));
+  dict_value->SetKey("c", base::Value(56));
+  dict_value->SetKey("d", base::Value(false));
 
   ASSERT_TRUE(pref_store_contents_->Get(kAtomicPref, NULL));
   ASSERT_TRUE(pref_store_contents_->Get(kSplitPref, NULL));
@@ -1083,8 +1083,8 @@ TEST_P(PrefHashFilterTest, InitialValueUnchangedLegacyId) {
 
   base::DictionaryValue* dict_value = pref_store_contents_->SetDictionary(
       kSplitPref, std::make_unique<base::DictionaryValue>());
-  dict_value->SetString("a", "foo");
-  dict_value->SetInteger("b", 1234);
+  dict_value->SetKey("a", base::Value("foo"));
+  dict_value->SetKey("b", base::Value(1234));
 
   ASSERT_TRUE(pref_store_contents_->Get(kAtomicPref, NULL));
   ASSERT_TRUE(pref_store_contents_->Get(kSplitPref, NULL));
@@ -1138,7 +1138,7 @@ TEST_P(PrefHashFilterTest, DontResetReportOnly) {
   base::DictionaryValue* report_only_split_val =
       pref_store_contents_->SetDictionary(
           kReportOnlySplitPref, std::make_unique<base::DictionaryValue>());
-  report_only_split_val->SetInteger("a", 1234);
+  report_only_split_val->SetKey("a", base::Value(1234));
 
   ASSERT_TRUE(pref_store_contents_->Get(kAtomicPref, NULL));
   ASSERT_TRUE(pref_store_contents_->Get(kAtomicPref2, NULL));
@@ -1204,7 +1204,7 @@ TEST_P(PrefHashFilterTest, DontResetReportOnly) {
 TEST_P(PrefHashFilterTest, CallFilterSerializeDataCallbacks) {
   base::DictionaryValue root_dict;
   auto dict_value = std::make_unique<base::DictionaryValue>();
-  dict_value->SetBoolean("a", true);
+  dict_value->SetKey("a", base::Value(true));
   root_dict.SetInteger(kAtomicPref, 1);
   root_dict.SetInteger(kAtomicPref2, 2);
   root_dict.Set(kSplitPref, std::move(dict_value));
@@ -1278,10 +1278,10 @@ TEST_P(PrefHashFilterTest, ExternalValidationValueChanged) {
   pref_store_contents_->SetInteger(kAtomicPref, 1234);
 
   auto dict_value = std::make_unique<base::DictionaryValue>();
-  dict_value->SetString("a", "foo");
-  dict_value->SetInteger("b", 1234);
-  dict_value->SetInteger("c", 56);
-  dict_value->SetBoolean("d", false);
+  dict_value->SetKey("a", base::Value("foo"));
+  dict_value->SetKey("b", base::Value(1234));
+  dict_value->SetKey("c", base::Value(56));
+  dict_value->SetKey("d", base::Value(false));
   pref_store_contents_->Set(kSplitPref, std::move(dict_value));
 
   mock_external_validation_pref_hash_store_->SetCheckResult(

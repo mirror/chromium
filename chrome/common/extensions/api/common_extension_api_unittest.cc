@@ -421,9 +421,9 @@ TEST(ExtensionAPITest, LazyGetSchema) {
 scoped_refptr<Extension> CreateExtensionWithPermissions(
     const std::set<std::string>& permissions) {
   base::DictionaryValue manifest;
-  manifest.SetString("name", "extension");
-  manifest.SetString("version", "1.0");
-  manifest.SetInteger("manifest_version", 2);
+  manifest.SetKey("name", base::Value("extension"));
+  manifest.SetKey("version", base::Value("1.0"));
+  manifest.SetKey("manifest_version", base::Value(2));
   {
     std::unique_ptr<base::ListValue> permissions_list(new base::ListValue());
     for (std::set<std::string>::const_iterator i = permissions.begin();
