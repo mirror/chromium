@@ -94,6 +94,30 @@
       "revId": "75d3b510d6d9331a9b5e1b840760c94f7308c65f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50fea42c_d5cc67a0",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2018-01-17T08:06:38Z",
+      "side": 1,
+      "message": "I think this has something to do with unified headers (https://android.googlesource.com/platform/ndk/+/ndk-release-r16/docs/UnifiedHeaders.md).\n\nAnyway, I am sure I am missing something, maybe the comment in \"base/android/android_hardware_buffer_abi.h\" needs to be updated because this also depends on __ANDROID_API__. Let\u0027s ask to klausw@ who recently worked on this.",
+      "parentUuid": "15ca0a1d_d94a0550",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "75d3b510d6d9331a9b5e1b840760c94f7308c65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
