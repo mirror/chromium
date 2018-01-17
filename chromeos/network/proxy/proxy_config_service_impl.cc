@@ -264,7 +264,7 @@ void ProxyConfigServiceImpl::DetermineEffectiveConfigFromDefaultNetwork() {
     effective_config_state = ProxyPrefs::CONFIG_OTHER_PRECEDE;
   // If config is manual, add rule to bypass local host.
   if (effective_config.proxy_rules().type !=
-      net::ProxyConfig::ProxyRules::TYPE_NO_RULES) {
+      net::ProxyConfig::ProxyRules::Type::EMPTY) {
     effective_config.proxy_rules().bypass_rules.AddRuleToBypassLocal();
   }
   PrefProxyConfigTrackerImpl::OnProxyConfigChanged(effective_config_state,
