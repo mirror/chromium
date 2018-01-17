@@ -25,12 +25,16 @@
 //   based on pretendFullKeyboardAccessIsEnabled.
 @interface CocoaTestHelperWindow : NSWindow
 
+@property(getter=isVisible, nonatomic) BOOL visible;
+
 // Value to return for -isKeyWindow.
 @property(nonatomic) BOOL isKeyWindow;
 
 // Value to return for -occlusionState. Setting posts a
 // NSWindowDidChangeOcclusionStateNotification.
 @property(nonatomic) BOOL isOccluded;
+
+@property(nonatomic) BOOL isOnActiveSpace;
 
 // Whether to handle the key view loop as if full keyboard access is enabled.
 @property(nonatomic) BOOL fullKeyboardAccessIsEnabled;

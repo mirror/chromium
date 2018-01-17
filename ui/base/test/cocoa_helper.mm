@@ -33,8 +33,10 @@ void NOINLINE ForceSystemLeaks() {
 
 @synthesize isKeyWindow = isKeyWindow_;
 @synthesize isOccluded = isOccluded_;
+@synthesize isOnActiveSpace = isOnActiveSpace_;
 @synthesize fullKeyboardAccessIsEnabled = fullKeyboardAccessIsEnabled_;
 @synthesize useDefaultConstraints = useDefaultConstraints_;
+@synthesize visible = visible_;
 
 - (id)initWithContentRect:(NSRect)contentRect {
   self = [super initWithContentRect:contentRect
@@ -43,6 +45,8 @@ void NOINLINE ForceSystemLeaks() {
                               defer:NO];
   if (self) {
     useDefaultConstraints_ = YES;
+    visible_ = YES;
+    isOnActiveSpace_ = YES;
   }
   return self;
 }
@@ -72,6 +76,13 @@ void NOINLINE ForceSystemLeaks() {
   [[NSNotificationCenter defaultCenter]
       postNotificationName:NSWindowDidChangeOcclusionStateNotification
                     object:self];
+}
+
+- (void)setIsOnActiveSpace:(BOOL)isOnActiveSpace {
+  isOnActiveSpace_ = isOnActiveSpace;
+  [[NSWorkspace sharedWorkspace].notificationCenter
+      postNotificationName:NSWorkspaceActiveSpaceDidChangeNotification
+                    object:[NSWorkspace sharedWorkspace]];
 }
 
 - (void)setFullKeyboardAccessIsEnabled:(BOOL)enabled {
