@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d41afe2b_841f0fff",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:45:30Z",
+      "side": 1,
+      "message": "Could you put a comment in here about not using the delegate interface and why not?",
+      "range": {
+        "startLine": 280,
+        "startChar": 13,
+        "endLine": 280,
+        "endChar": 29
+      },
+      "revId": "dc6665fbace1b3d923ac4d1e165f00ac4d375ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc40850_610d15bf",
+        "filename": "content/network/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:45:30Z",
+      "side": 1,
+      "message": "Any reason not to make this a constructor argument?",
+      "range": {
+        "startLine": 77,
+        "startChar": 6,
+        "endLine": 77,
+        "endChar": 22
+      },
+      "revId": "dc6665fbace1b3d923ac4d1e165f00ac4d375ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b4ffeee_e55f8036",
+        "filename": "content/network/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:45:30Z",
+      "side": 1,
+      "message": "Why a RepeatingClosure rather than OnceClosure?  I think of the latter as preferable if it\u0027s all that\u0027s needed.",
+      "range": {
+        "startLine": 82,
+        "startChar": 10,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "dc6665fbace1b3d923ac4d1e165f00ac4d375ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
