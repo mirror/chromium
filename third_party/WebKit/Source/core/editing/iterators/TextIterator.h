@@ -192,6 +192,10 @@ class CORE_TEMPLATE_CLASS_EXPORT TextIteratorAlgorithm {
     return behavior_.SkipsUnselectableContent();
   }
 
+  bool SuppressesExtraNewlineEmission() const {
+    return behavior_.SuppressesExtraNewlineEmission();
+  }
+
   bool ForInnerText() const { return behavior_.ForInnerText(); }
 
   bool IsBetweenSurrogatePair(unsigned position) const;
