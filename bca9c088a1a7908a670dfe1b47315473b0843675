@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "15ef735b_14af9db2",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-17T20:19:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "604d2e4e_a1460d6f",
+      "range": {
+        "startLine": 1495,
+        "startChar": 51,
+        "endLine": 1495,
+        "endChar": 0
+      },
+      "revId": "bca9c088a1a7908a670dfe1b47315473b0843675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e6f6785_bb5ccc51",
         "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.cc",
         "patchSetId": 5
