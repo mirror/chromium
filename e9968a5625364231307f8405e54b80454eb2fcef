@@ -93,6 +93,30 @@
       "revId": "e9968a5625364231307f8405e54b80454eb2fcef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "98cbc393_c67aa11b",
+        "filename": "components/policy/core/common/preg_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-17T16:55:07Z",
+      "side": 1,
+      "message": "Yup, looks like you\u0027re right, although you have to look into the commit that\u0027s referenced by the libchrome ebuild, namely 7b88bc:\n\nhttps://chromium.googlesource.com/aosp/platform/external/libchrome/+/7b88bc885b9d8dc551beab840b853a79fa06494d/base/strings/string_split.h\n\nI\u0027ve mixed it up base::Value, which has a lot of new stuff in ToT.",
+      "parentUuid": "3b1ff91b_81878686",
+      "range": {
+        "startLine": 230,
+        "startChar": 19,
+        "endLine": 230,
+        "endChar": 32
+      },
+      "revId": "e9968a5625364231307f8405e54b80454eb2fcef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
