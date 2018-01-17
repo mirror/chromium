@@ -29,6 +29,15 @@ if (is_component_build) {
   link_target_type = "jumbo_static_library"
 }
 
+group("for_content_tests") {
+  visibility = [ "//content/test/*" ]
+  if (is_component_build) {
+    public_deps = [
+      ":gpu_sources",
+    ]
+  }
+}
+
 target(link_target_type, "gpu_sources") {
   # This is an internal content API. Code outside of the content "component"
   # (like content/test and content/shell) should depend on ":gpu" above.
