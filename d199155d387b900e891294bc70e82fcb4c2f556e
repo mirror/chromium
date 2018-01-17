@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3820565e_8666f3ac",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T21:05:38Z",
+      "side": 1,
+      "message": "Extra line.",
+      "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d321caf_0a14befb",
+        "filename": "chrome/browser/extensions/startup_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T21:05:38Z",
+      "side": 1,
+      "message": "auto unpacker \u003d base::MakeRefCounted\u003cSandboxedUnpacker\u003e",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 67
+      },
+      "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f075927e_1de2b8ac",
+        "filename": "extensions/browser/image_sanitizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T21:05:38Z",
+      "side": 1,
+      "message": "Document how this limit relates to the expected size of images, such as icons.",
+      "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ff3799_fd9029cd",
+        "filename": "extensions/browser/image_sanitizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T21:05:38Z",
+      "side": 1,
+      "message": "auto sanitizer \u003d std::make_unique\u003cImageSanitizer\u003e",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "325dde07_da5d1f5b",
+        "filename": "extensions/browser/image_sanitizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T21:05:38Z",
+      "side": 1,
+      "message": "|image_data| goes out of scope at the end of this function. |image_data_ptr| will be invalid by the time base::WriteFile has been called.",
+      "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c4e283_d0cabc5e",
+        "filename": "extensions/browser/image_sanitizer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T21:05:38Z",
+      "side": 1,
+      "message": "Remove the newlines between these unless you add comments explaining them.",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 53
+      },
+      "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
