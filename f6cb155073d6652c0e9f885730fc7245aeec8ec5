@@ -16,6 +16,24 @@
       "revId": "f6cb155073d6652c0e9f885730fc7245aeec8ec5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80c8beb_0c9a39f9",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-17T05:06:45Z",
+      "side": 1,
+      "message": "Ah, this was for calling detach methods, but we do need them any more.\nDone.",
+      "parentUuid": "d5835bc9_f586afca",
+      "revId": "f6cb155073d6652c0e9f885730fc7245aeec8ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
