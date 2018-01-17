@@ -167,6 +167,10 @@ class SmbFileSystem : public file_system_provider::ProvidedFileSystemInterface {
   base::WeakPtr<ProvidedFileSystemInterface> GetWeakPtr() override;
 
  private:
+  void Abort();
+
+  AbortCallback CreateAbortCallback();
+
   void HandleRequestUnmountCallback(
       const storage::AsyncFileUtil::StatusCallback& callback,
       smbprovider::ErrorType error) const;
