@@ -17,8 +17,8 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
+#include "base/sequenced_task_runner.h"
 #include "base/strings/string_piece.h"
-#include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
@@ -281,7 +281,7 @@ class MEDIA_EXPORT AudioOutputController
   SyncReader* const sync_reader_;
 
   // The message loop of audio manager thread that this object runs on.
-  const scoped_refptr<base::SingleThreadTaskRunner> message_loop_;
+  const scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   // Scans audio samples from OnMoreData() as input to compute power levels.
   AudioPowerMonitor power_monitor_;
