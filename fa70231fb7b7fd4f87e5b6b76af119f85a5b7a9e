@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a15b3e2a_f8854d40",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitorVerifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-17T18:38:31Z",
+      "side": 0,
+      "message": "The result was never used.",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "fa70231fb7b7fd4f87e5b6b76af119f85a5b7a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
