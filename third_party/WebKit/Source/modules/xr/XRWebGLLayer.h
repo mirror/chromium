@@ -8,6 +8,7 @@
 #include "bindings/modules/v8/webgl_rendering_context_or_webgl2_rendering_context.h"
 #include "modules/webgl/WebGL2RenderingContext.h"
 #include "modules/webgl/WebGLRenderingContext.h"
+#include "modules/xr/XRFrameProvider.h"
 #include "modules/xr/XRLayer.h"
 #include "modules/xr/XRWebGLLayerInit.h"
 #include "platform/graphics/gpu/XRWebGLDrawingBuffer.h"
