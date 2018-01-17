@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3d36c374_8a18b56c",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_accessor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T05:53:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "94fc5a22_1dee05a3",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02ecd556_5ee27f66",
         "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
         "patchSetId": 5
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "ccf7fa23_6a786d02",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T05:53:37Z",
+      "side": 1,
+      "message": "The new comment in the class declaration helps immensely.\n\nBut I think you need to add testing here.  UMA consent is a sensitive matter.  In particular, I\u0027d like to see a test that, if we read the consent state early in startup, change it before the full browser process comes up, and then the full browser process comes up, we end up with the right value (both in memory and recorded on disk; i.e., we recognize that something changes and the change needed to be propagated to disk).  This test should be both for granted and revoking consent in early startup.",
+      "parentUuid": "af090f1c_020b79f8",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65fae94f_2c9c0922",
         "filename": "chrome/browser/metrics/metrics_reporting_state.cc",
         "patchSetId": 5
@@ -154,6 +190,24 @@
       "side": 1,
       "message": "Another option is to make many of these functions take local state. At least they would be consistent. I can certainly look into this if you prefer it.",
       "parentUuid": "4620122f_2de45a94",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e151bd79_2d8e9a76",
+        "filename": "chrome/browser/metrics/metrics_reporting_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T05:53:37Z",
+      "side": 1,
+      "message": "\u003e Another option is to make many of these functions take local state. At least they would be consistent. I can certainly look into this if you prefer it.\n\nI would prefer that.  Rather than making people keep a mental model (that can be called early in startup; this cannot) just make everything valid to be called at any time, just with the proper variables.",
+      "parentUuid": "90df5cbf_a5e75ed2",
       "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
