@@ -26,14 +26,14 @@
 @interface CocoaTestHelperWindow : NSWindow
 
 // Value to return for -isKeyWindow.
-@property(nonatomic) BOOL pretendIsKeyWindow;
+@property(nonatomic) BOOL isKeyWindow;
 
 // Value to return for -occlusionState. Setting posts a
 // NSWindowDidChangeOcclusionStateNotification.
-@property(nonatomic) BOOL pretendIsOccluded;
+@property(nonatomic) BOOL isOccluded;
 
 // Whether to handle the key view loop as if full keyboard access is enabled.
-@property(nonatomic) BOOL pretendFullKeyboardAccessIsEnabled;
+@property(nonatomic) BOOL fullKeyboardAccessIsEnabled;
 
 // Whether to use or ignore the default contraints for window sizing and
 // placement.
