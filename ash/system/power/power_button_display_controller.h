@@ -27,7 +27,8 @@ class ScopedBacklightsForcedOff;
 
 // PowerButtonDisplayController performs display-related tasks (e.g. forcing
 // backlights off or disabling the touchscreen) on behalf of
-// PowerButtonController and TabletPowerButtonController.
+// PowerButtonController, ConvertiblePowerButtonController and
+// TabletPowerButtonController.
 class ASH_EXPORT PowerButtonDisplayController
     : public BacklightsForcedOffSetter::Observer,
       public chromeos::PowerManagerClient::Observer,

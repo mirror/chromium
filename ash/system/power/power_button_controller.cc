@@ -15,8 +15,10 @@
 #include "ash/system/power/convertible_power_button_controller.h"
 #include "ash/system/power/power_button_display_controller.h"
 #include "ash/system/power/power_button_screenshot_controller.h"
+#include "ash/system/power/tablet_power_button_controller.h"
 #include "ash/wm/lock_state_controller.h"
 #include "ash/wm/session_state_animator.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
 #include "base/time/default_tick_clock.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -187,8 +189,8 @@ void PowerButtonController::PowerButtonEventReceived(
     return;
 
   // PowerButtonDisplayController ignores power button events, so tell it to
-  // stop forcing the display off if ConvertiblePowerButtonController isn't
-  // being used.
+  // stop forcing the display off if neither ConvertiblePowerButtonController
+  // nor TabletPowerButtonController is being used.
   if (down && force_clamshell_power_button_)
     display_controller_->SetBacklightsForcedOff(false);
 
@@ -198,7 +200,17 @@ void PowerButtonController::PowerButtonEventReceived(
     return;
   }
 
-  // Handle tablet power button behavior.
+  // Handle tablet power button behavior. Should check tablet mode here for
+  // detachable devices.
+  if (button_type_ == ButtonType::NORMAL && tablet_controller_ &&
+      Shell::Get()
+          ->tablet_mode_controller()
+          ->IsTabletModeWindowManagerEnabled()) {
+    tablet_controller_->OnPowerButtonEvent(down, timestamp);
+    return;
+  }
+
+  // Handle convertible devices power button behavior.
   if (button_type_ == ButtonType::NORMAL && convertible_controller_) {
     convertible_controller_->OnPowerButtonEvent(down, timestamp);
     return;
@@ -215,16 +227,24 @@ void PowerButtonController::OnAccelerometerUpdated(
   // tablet mode, which must have seen accelerometer data before user actions.
   if (!enable_tablet_mode_)
     return;
-  if (!force_clamshell_power_button_ && !convertible_controller_) {
+  if (!force_clamshell_power_button_ && !is_tablet_or_detachable_ &&
+      !convertible_controller_) {
     convertible_controller_ =
         std::make_unique<ConvertiblePowerButtonController>(
             display_controller_.get(), tick_clock_.get());
   }
 
+  if (!force_clamshell_power_button_ && is_tablet_or_detachable_ &&
+      !tablet_controller_) {
+    tablet_controller_ = std::make_unique<TabletPowerButtonController>(
+        display_controller_.get(), backlights_forced_off_setter_,
+        tick_clock_.get());
+  }
+
   if (!screenshot_controller_) {
     screenshot_controller_ = std::make_unique<PowerButtonScreenshotController>(
-        convertible_controller_.get(), tick_clock_.get(),
-        force_clamshell_power_button_);
+        convertible_controller_.get(), tablet_controller_.get(),
+        tick_clock_.get(), force_clamshell_power_button_);
   }
 }
 
@@ -255,6 +275,8 @@ void PowerButtonController::ProcessCommandLine() {
   enable_tablet_mode_ = cl->HasSwitch(switches::kAshEnableTabletMode);
   force_clamshell_power_button_ =
       cl->HasSwitch(switches::kForceClamshellPowerButton);
+  is_tablet_or_detachable_ =
+      cl->HasSwitch(switches::kIsTabletOrDetachableDevice);
 }
 
 void PowerButtonController::ForceDisplayOffAfterLock() {
