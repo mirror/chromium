@@ -139,6 +139,39 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
       blink::mojom::ServiceWorkerObjectInfoPtr active) override;
   void UpdateFound() override;
 
+  using RegistrationObjectHostResponseCallback =
+      base::OnceCallback<void(blink::mojom::ServiceWorkerErrorType,
+                              const base::Optional<std::string>&)>;
+  // |callback| owns a Web*Callbacks instance which constraints itself to be
+  // destroyed on its' creation thread (the worker thread).
+  //
+  // But our |host_for_global_scope_| is a Mojo thread safe ptr, which is used
+  // to make Mojo calls on the worker thread but its' underlying Mojo connection
+  // is bound on the IO thread. Currently when we call |host_for_global_scope_|
+  // methods, we're moving |callback| along the way from the worker thread to
+  // the IO thread, then waiting until |callback| is posted back to the worker
+  // thread. However, the post back operation will fail if the worker thread has
+  // already gone away for some reasons, in such a case the poster on the IO
+  // thread has to destroy |callback| there, then causing a crash.
+  //
+  // To solve the above problem, this function creates a wrapper response
+  // callback adapting to run |callback|, this wrapper callback is thread-safe
+  // and can be destroyed on any thread, thus, we can pass this wrapper callback
+  // to |host_for_global_scope_| which can move this wrapper between the worker
+  // thread and IO thread freely.
+  //
+  // TODO(leonhsl): Once we can avoid using Mojo thread safe ptr for
+  // |host_for_global_scope_|, we can eliminate this wrapping mechanism.
+  RegistrationObjectHostResponseCallback
+  WrapRegistrationObjectHostResponseCallback(
+      RegistrationObjectHostResponseCallback callback);
+  // Gets the response callback from |callback_map_| with the key |callback_id|,
+  // then runs it.
+  void OnRegistrationObjectHostResponse(
+      uint64_t callback_id,
+      blink::mojom::ServiceWorkerErrorType error,
+      const base::Optional<std::string>& error_msg);
+
   // RefCounted traits implementation, rather than delete |impl| directly, calls
   // |impl->DetachAndMaybeDestroy()| to notify that the last reference to it has
   // gone away.
@@ -213,7 +246,7 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
       blink::mojom::ServiceWorkerErrorType error,
       const base::Optional<std::string>& error_msg);
   void OnDidGetNavigationPreloadState(
-      std::unique_ptr<WebGetNavigationPreloadStateCallbacks> callbacks,
+      uint64_t web_callbacks_id,
       blink::mojom::ServiceWorkerErrorType error,
       const base::Optional<std::string>& error_msg,
       blink::mojom::NavigationPreloadStatePtr state);
@@ -278,6 +311,15 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
   LifecycleState state_;
 
   std::vector<QueuedTask> queued_tasks_;
+
+  // Please see comments of WrapRegistrationObjectHostResponseCallback().
+  std::map<uint64_t, RegistrationObjectHostResponseCallback> callback_map_;
+  // Because the response callback of GetNavigationPreloadState() has different
+  // prototype with other methods of ServiceWorkerRegistrationObjectHost
+  // interface, we have to create this separate map for it.
+  std::map<uint64_t, std::unique_ptr<WebGetNavigationPreloadStateCallbacks>>
+      get_navigation_preload_state_callbacks_map_;
+  uint64_t next_request_id_ = 0;
 
   // For service worker client contexts, |this| is tracked (not owned) in
   // |provider_context_for_client_->controllee_state_->registrations_|.

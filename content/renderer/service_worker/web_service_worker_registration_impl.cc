@@ -254,8 +254,9 @@ void WebServiceWorkerRegistrationImpl::Update(
   DCHECK(state_ == LifecycleState::kAttachedAndBound ||
          state_ == LifecycleState::kUnbound);
   GetRegistrationObjectHost()->Update(
-      base::BindOnce(&WebServiceWorkerRegistrationImpl::OnUpdated,
-                     base::Unretained(this), std::move(callbacks)));
+      WrapRegistrationObjectHostResponseCallback(
+          base::BindOnce(&WebServiceWorkerRegistrationImpl::OnUpdated,
+                         base::Unretained(this), std::move(callbacks))));
 }
 
 void WebServiceWorkerRegistrationImpl::Unregister(
@@ -263,8 +264,9 @@ void WebServiceWorkerRegistrationImpl::Unregister(
   DCHECK(state_ == LifecycleState::kAttachedAndBound ||
          state_ == LifecycleState::kUnbound);
   GetRegistrationObjectHost()->Unregister(
-      base::BindOnce(&WebServiceWorkerRegistrationImpl::OnUnregistered,
-                     base::Unretained(this), std::move(callbacks)));
+      WrapRegistrationObjectHostResponseCallback(
+          base::BindOnce(&WebServiceWorkerRegistrationImpl::OnUnregistered,
+                         base::Unretained(this), std::move(callbacks))));
 }
 
 void WebServiceWorkerRegistrationImpl::EnableNavigationPreload(
@@ -274,18 +276,21 @@ void WebServiceWorkerRegistrationImpl::EnableNavigationPreload(
          state_ == LifecycleState::kUnbound);
   GetRegistrationObjectHost()->EnableNavigationPreload(
       enable,
-      base::BindOnce(
+      WrapRegistrationObjectHostResponseCallback(base::BindOnce(
           &WebServiceWorkerRegistrationImpl::OnDidEnableNavigationPreload,
-          base::Unretained(this), std::move(callbacks)));
+          base::Unretained(this), std::move(callbacks))));
 }
 
 void WebServiceWorkerRegistrationImpl::GetNavigationPreloadState(
     std::unique_ptr<WebGetNavigationPreloadStateCallbacks> callbacks) {
   DCHECK(state_ == LifecycleState::kAttachedAndBound ||
          state_ == LifecycleState::kUnbound);
+  const uint64_t web_callbacks_id = next_request_id_++;
+  get_navigation_preload_state_callbacks_map_[web_callbacks_id] =
+      std::move(callbacks);
   GetRegistrationObjectHost()->GetNavigationPreloadState(base::BindOnce(
       &WebServiceWorkerRegistrationImpl::OnDidGetNavigationPreloadState,
-      base::Unretained(this), std::move(callbacks)));
+      base::Unretained(this), web_callbacks_id));
 }
 
 void WebServiceWorkerRegistrationImpl::SetNavigationPreloadHeader(
@@ -295,9 +300,9 @@ void WebServiceWorkerRegistrationImpl::SetNavigationPreloadHeader(
          state_ == LifecycleState::kUnbound);
   GetRegistrationObjectHost()->SetNavigationPreloadHeader(
       value.Utf8(),
-      base::BindOnce(
+      WrapRegistrationObjectHostResponseCallback(base::BindOnce(
           &WebServiceWorkerRegistrationImpl::OnDidSetNavigationPreloadHeader,
-          base::Unretained(this), std::move(callbacks)));
+          base::Unretained(this), std::move(callbacks))));
 }
 
 int64_t WebServiceWorkerRegistrationImpl::RegistrationId() const {
@@ -348,10 +353,15 @@ void WebServiceWorkerRegistrationImpl::OnDidEnableNavigationPreload(
 }
 
 void WebServiceWorkerRegistrationImpl::OnDidGetNavigationPreloadState(
-    std::unique_ptr<WebGetNavigationPreloadStateCallbacks> callbacks,
+    uint64_t web_callbacks_id,
     blink::mojom::ServiceWorkerErrorType error,
     const base::Optional<std::string>& error_msg,
     blink::mojom::NavigationPreloadStatePtr state) {
+  std::unique_ptr<WebGetNavigationPreloadStateCallbacks> callbacks =
+      std::move(get_navigation_preload_state_callbacks_map_[web_callbacks_id]);
+  DCHECK(callbacks);
+  get_navigation_preload_state_callbacks_map_.erase(web_callbacks_id);
+
   if (error != blink::mojom::ServiceWorkerErrorType::kNone) {
     DCHECK(error_msg);
     callbacks->OnError(blink::WebServiceWorkerError(
@@ -476,6 +486,25 @@ void WebServiceWorkerRegistrationImpl::UpdateFound() {
     proxy_->DispatchUpdateFoundEvent();
   else
     queued_tasks_.push_back(QueuedTask(UPDATE_FOUND, nullptr));
+}
+
+WebServiceWorkerRegistrationImpl::RegistrationObjectHostResponseCallback
+WebServiceWorkerRegistrationImpl::WrapRegistrationObjectHostResponseCallback(
+    RegistrationObjectHostResponseCallback callback) {
+  const uint64_t callback_id = next_request_id_++;
+  callback_map_[callback_id] = std::move(callback);
+  return base::BindOnce(
+      &WebServiceWorkerRegistrationImpl::OnRegistrationObjectHostResponse,
+      base::Unretained(this), callback_id);
+}
+void WebServiceWorkerRegistrationImpl::OnRegistrationObjectHostResponse(
+    uint64_t callback_id,
+    blink::mojom::ServiceWorkerErrorType error,
+    const base::Optional<std::string>& error_msg) {
+  auto it = callback_map_.find(callback_id);
+  DCHECK(it != callback_map_.end());
+  std::move(it->second).Run(error, error_msg);
+  callback_map_.erase(it);
 }
 
 }  // namespace content
