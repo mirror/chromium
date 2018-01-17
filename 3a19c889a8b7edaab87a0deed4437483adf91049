@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b7c742e4_97b667bc",
+        "filename": "content/shell/test_runner/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-17T20:58:03Z",
+      "side": 1,
+      "message": "it was from back when the code was in WebKit. guess it\u0027s fine to depend on public/renderer now",
+      "parentUuid": "8d3e8f49_c45e067d",
+      "revId": "3a19c889a8b7edaab87a0deed4437483adf91049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "888c3d51_f88e8f82",
         "filename": "third_party/WebKit/Source/modules/screen_orientation/ScreenOrientationControllerImpl.h",
         "patchSetId": 7
