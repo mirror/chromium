@@ -380,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "bdb07a35_1c158f27",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-01-17T20:23:20Z",
+      "side": 1,
+      "message": "Sorry for the delay. So, to summarize, in this CL I should add a check here to make sure the reported MIME type is a media type. If this check fails, the app will (close|show an error)? In some followup CL, we will want to add logic to the media-viewing CustomTabActivity itself to sniff the actual MIME type. If that check fails, the app will (downgrade to traditional custom tab|something else TBD). Correct?",
+      "parentUuid": "dda47b21_c32a2211",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "d871a9ff34fbb46a68efb146def13703474cc567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75bdb35c_9b173114",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerActivity.java",
         "patchSetId": 1
@@ -463,6 +487,30 @@
       "side": 1,
       "message": "Yeah actually this feels a little odd, like we\u0027re wrapping an external intent in a trusted intent.  Thanks for bringing that up.  I think we need to answer a few questions that are going to probably be driven/limited by the security UX we want to show:\n\n1. What is the media experience we want for external intents?\n2. Do we want our internally triggered media experience to be the same?",
       "parentUuid": "5bb4aa57_6707f130",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 51
+      },
+      "revId": "d871a9ff34fbb46a68efb146def13703474cc567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e89f19_a63ca41b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-01-17T20:23:20Z",
+      "side": 1,
+      "message": "Do you know who the right person/group is to discuss these questions with?",
+      "parentUuid": "c54ff811_fab209b3",
       "range": {
         "startLine": 32,
         "startChar": 22,
