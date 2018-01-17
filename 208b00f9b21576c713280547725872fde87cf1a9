@@ -45,6 +45,29 @@
       "revId": "208b00f9b21576c713280547725872fde87cf1a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003ee7f2_d6372281",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-17T19:51:23Z",
+      "side": 1,
+      "message": "Also need to mention how we signal the socket being closed to the consumer, and how we pass along the exact net error for that.",
+      "range": {
+        "startLine": 11,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "208b00f9b21576c713280547725872fde87cf1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
