@@ -16,6 +16,24 @@
       "revId": "687129d16fdb6baf95c1cd56b934d1900299d730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50ef9fa_68dd04c8",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T23:34:03Z",
+      "side": 1,
+      "message": "From http://en.cppreference.com/w/cpp/language/constexpr:\n\u003e A constexpr variable must satisfy the following requirements:\n\u003e \n\u003e - its type must be a LiteralType.\n\u003e - it must be immediately initialized\n\u003e - the full-expression of its initialization, including all implicit conversions, constructors calls, etc, must be a constant expression\n\nFrom http://en.cppreference.com/w/cpp/concept/LiteralType:\n\u003e A literal type is any of the following:\n\u003e \n\u003e - possibly cv-qualified void (so that constexpr functions can return void);\n\u003e - scalar type;\n\u003e - reference type;\n\u003e - an array of literal type;\n\u003e - possibly cv-qualified class type that has all of the following properties:\n\u003e   - has a trivial destructor,\n\u003e   - is either\n\u003e     - an aggregate type,\n\u003e     - a type with at least one constexpr (possibly template) constructor that is not a copy or move constructor,\n\u003e   - all non-static data members and base classes are of non-volatile literal types.\n\nDue to the requirement of a trivial destructor, I think this should be safe by definition?",
+      "parentUuid": "ffadce2a_c156a242",
+      "revId": "687129d16fdb6baf95c1cd56b934d1900299d730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
