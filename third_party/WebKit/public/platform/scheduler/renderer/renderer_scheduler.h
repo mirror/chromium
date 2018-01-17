@@ -128,6 +128,8 @@ class BLINK_PLATFORM_EXPORT RendererScheduler : public ChildScheduler {
   // constructed. Must be called on the main thread.
   virtual void SetRendererBackgrounded(bool backgrounded) = 0;
 
+  virtual void SetWorkerKeepAlive(bool keep_alive) = 0;
+
 #if defined(OS_ANDROID)
   // Android WebView has very strange WebView.pauseTimers/resumeTimers API.
   // It's very old and very inconsistent. The API promises that this
