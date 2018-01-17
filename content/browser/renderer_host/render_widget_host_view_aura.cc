@@ -1588,6 +1588,10 @@ void RenderWidgetHostViewAura::OnDeviceScaleFactorChanged(
   host_->WasResized();
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized();
+  if (host_->auto_resize_enabled()) {
+    host_->DidAllocateLocalSurfaceIdForAutoResize(
+        host_->last_auto_resize_request_number());
+  }
 
   device_scale_factor_ = new_device_scale_factor;
   const display::Display display =
@@ -2181,6 +2185,10 @@ void RenderWidgetHostViewAura::InternalSetBounds(const gfx::Rect& rect) {
   host_->WasResized();
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized();
+  if (host_->auto_resize_enabled()) {
+    host_->DidAllocateLocalSurfaceIdForAutoResize(
+        host_->last_auto_resize_request_number());
+  }
 #if defined(OS_WIN)
   UpdateLegacyWin();
 
