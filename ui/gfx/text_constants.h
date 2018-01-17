@@ -133,7 +133,7 @@ enum class Typesetter {
   // from locations that are unaffected by the Mac Harfbuzz transition. Once all
   // callers rendering to Cocoa UI have been updated to BROWSER, this will
   // switch to HARFBUZZ.
-  DEFAULT = BROWSER
+  DEFAULT = HARFBUZZ
 };
 
 }  // namespace gfx

@@ -693,14 +693,7 @@ TEST(TextEliderTest, MAYBE_ElideRectangleText) {
 }
 
 // TODO(crbug.com/338784): Enable this on android.
-// Disabled on Mac: fails on 10.11. http://crbug.com/801029
-#if defined(OS_ANDROID) || defined(OS_MACOSX)
-#define MAYBE_ElideRectangleTextPunctuation \
-    DISABLED_ElideRectangleTextPunctuation
-#else
-#define MAYBE_ElideRectangleTextPunctuation ElideRectangleTextPunctuation
-#endif
-TEST(TextEliderTest, MAYBE_ElideRectangleTextPunctuation) {
+TEST(TextEliderTest, ElideRectangleTextPunctuation) {
   const FontList font_list;
   const int line_height = font_list.GetHeight();
   const float test_width = GetStringWidthF(ASCIIToUTF16("Test"), font_list);
@@ -742,13 +735,7 @@ TEST(TextEliderTest, MAYBE_ElideRectangleTextPunctuation) {
 }
 
 // TODO(crbug.com/338784): Enable this on android.
-// Disabled on Mac: fails on 10.11. http://crbug.com/801029
-#if defined(OS_ANDROID) || defined(OS_MACOSX)
-#define MAYBE_ElideRectangleTextLongWords DISABLED_ElideRectangleTextLongWords
-#else
-#define MAYBE_ElideRectangleTextLongWords ElideRectangleTextLongWords
-#endif
-TEST(TextEliderTest, MAYBE_ElideRectangleTextLongWords) {
+TEST(TextEliderTest, ElideRectangleTextLongWords) {
   const FontList font_list;
   const int kAvailableHeight = 1000;
   const base::string16 kElidedTesting =
