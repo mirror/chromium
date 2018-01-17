@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ead09c7_95c8f398",
+        "filename": "third_party/openh264/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2018-01-17T21:51:07Z",
+      "side": 1,
+      "message": "I\u0027m getting the following error now when trying to build chrome:\n\ntommi-macbookpro:GN tommi$ ninja chrome\n[1/1] Regenerating ninja files\nFAILED: build.ninja \n../../buildtools/mac/gn --root\u003d../.. -q gen .\nERROR at //third_party/openh264/BUILD.gn:49:16: Assignment had no effect.\nyasm_defines \u003d []\n               ^\nYou set the variable \"yasm_defines\" here and it was unused before it went\nout of scope.\nSee //content/renderer/BUILD.gn:950:17: which caused the file to be included.\n      deps +\u003d [ \"//third_party/openh264:encoder\" ]\n                ^-------------------------------\nninja: error: rebuilding \u0027build.ninja\u0027: subcommand failed",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 12
+      },
+      "revId": "308f0635f2ba71dc90f166f2d86b240a394ac5d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
