@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "948ed813_d21eba80",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsCategory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T00:36:57Z",
+      "side": 0,
+      "message": "Moved below for alphabetic order",
+      "range": {
+        "startLine": 238,
+        "startChar": 19,
+        "endLine": 238,
+        "endChar": 35
+      },
+      "revId": "4173576b1600fb51d7166b17009b3a16dcfdddaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
