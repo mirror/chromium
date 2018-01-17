@@ -197,34 +197,40 @@ CompleteProviderHostPreparation(
   return info;
 }
 
+void DidNavigateInPaymentHandlerWindow(
+    const GURL& url,
+    const GURL& script_url,
+    const base::WeakPtr<ServiceWorkerContextCore>& context,
+    const service_worker_client_utils::NavigationCallback& callback,
+    int process_id,
+    int frame_id) {
+  service_worker_client_utils::DidNavigate(context, url.GetOrigin(), callback,
+                                           process_id, frame_id);
+}
+
 void RunPaymentHandlerOpenWindowCallbackOnIO(
-    base::OnceCallback<void(ServiceWorkerStatusCode,
-                            const blink::mojom::ServiceWorkerClientInfo&)>
-        callback,
-    bool success) {
-  std::move(callback).Run(
-      success ? SERVICE_WORKER_OK : SERVICE_WORKER_ERROR_FAILED,
-      blink::mojom::ServiceWorkerClientInfo());
+    base::OnceCallback<void(int, int)> callback,
+    int render_process_id,
+    int render_frame_id) {
+  std::move(callback).Run(render_process_id, render_frame_id);
 }
 
 void OnOpenPaymentHandlerWindowOpenResponse(
-    base::OnceCallback<void(ServiceWorkerStatusCode,
-                            const blink::mojom::ServiceWorkerClientInfo&)>
-        callback,
-    bool success) {
+    base::OnceCallback<void(int, int)> callback,
+    bool success,
+    int render_process_id,
+    int render_frame_id) {
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&RunPaymentHandlerOpenWindowCallbackOnIO,
-                     std::move(callback), success));
+                     std::move(callback), render_process_id, render_frame_id));
 }
 
 void ShowPaymentHandlerWindowOnUI(
     ContentBrowserClient* browser,
     const scoped_refptr<ServiceWorkerContextWrapper>& context_wrapper,
     const GURL& url,
-    base::OnceCallback<void(ServiceWorkerStatusCode,
-                            const blink::mojom::ServiceWorkerClientInfo&)>
-        callback,
+    base::OnceCallback<void(int, int)> callback,
     base::OnceCallback<void(void)> fallback) {
   if (!browser->ShowPaymentHandlerWindow(
           context_wrapper->storage_partition()->browser_context(), url,
@@ -1236,14 +1242,16 @@ void ServiceWorkerVersion::OnOpenPaymentHandlerWindow(int request_id,
                                                       const GURL& url) {
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&ShowPaymentHandlerWindowOnUI,
-                     GetContentClient()->browser(),
-                     base::WrapRefCounted(context_->wrapper()), url,
-                     base::BindOnce(&ServiceWorkerVersion::OnOpenWindowFinished,
-                                    weak_factory_.GetWeakPtr(), request_id),
-                     base::BindOnce(&ServiceWorkerVersion::OnOpenWindow,
-                                    weak_factory_.GetWeakPtr(), request_id, url,
-                                    WindowOpenDisposition::NEW_POPUP)));
+      base::BindOnce(
+          &ShowPaymentHandlerWindowOnUI, GetContentClient()->browser(),
+          base::WrapRefCounted(context_->wrapper()), url,
+          base::BindOnce(&DidNavigateInPaymentHandlerWindow, url, script_url_,
+                         context_,
+                         base::Bind(&ServiceWorkerVersion::OnOpenWindowFinished,
+                                    weak_factory_.GetWeakPtr(), request_id)),
+          base::BindOnce(&ServiceWorkerVersion::OnOpenWindow,
+                         weak_factory_.GetWeakPtr(), request_id, url,
+                         WindowOpenDisposition::NEW_POPUP)));
 }
 
 void ServiceWorkerVersion::OnOpenWindow(int request_id,
