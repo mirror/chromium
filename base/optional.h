@@ -42,6 +42,16 @@ struct OptionalStorageBase {
   constexpr explicit OptionalStorageBase(in_place_t, Args&&... args)
       : is_null_(false), value_(std::forward<Args>(args)...) {}
 
+  // Declare copy and move constructors as default. Move constructor is hidden
+  // by the user defined destructor below. Then, the explicitly-defaulted move
+  // constructor to fix the hiding also hides the copy constructor. So both
+  // need to be declared.
+  // Note that the argument of the copy constructor is not marked "const"
+  // intentionally, which follows the implicit-declared copy constructor
+  // signature, thanks to spec 8.4.2.1.
+  OptionalStorageBase(OptionalStorageBase& other) = default;
+  OptionalStorageBase(OptionalStorageBase&& other) = default;
+
   // When T is not trivially destructible we must call its
   // destructor before deallocating its memory.
   ~OptionalStorageBase() {
@@ -77,9 +87,11 @@ struct OptionalStorageBase<T, true /* trivially destructible */> {
       : is_null_(false), value_(std::forward<Args>(args)...) {}
 
   // When T is trivially destructible (i.e. its destructor does nothing) there
-  // is no need to call it. Explicitly defaulting the destructor means it's not
-  // user-provided. Those two together make this destructor trivial.
-  ~OptionalStorageBase() = default;
+  // is no need to call it. Implicitly defined destructor is trivial, because
+  // both members (bool and union containing only variants which are trivially
+  // destructible) are trivially destructible.
+  // Explicitly-defaulted destructor is also trivial, but do not use it here,
+  // because it hides the implicit move constructor.
 
   template <class... Args>
   void Init(Args&&... args) {
