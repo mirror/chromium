@@ -4,6 +4,7 @@
 
 #include "base/task_scheduler/task_scheduler_impl.h"
 
+#include <string>
 #include <utility>
 
 #include "base/metrics/field_trial_params.h"
@@ -24,11 +25,12 @@ TaskSchedulerImpl::TaskSchedulerImpl(StringPiece name)
 TaskSchedulerImpl::TaskSchedulerImpl(
     StringPiece name,
     std::unique_ptr<TaskTrackerImpl> task_tracker)
-    : name_(name),
-      service_thread_("TaskSchedulerServiceThread"),
+    : service_thread_("TaskSchedulerServiceThread"),
       task_tracker_(std::move(task_tracker)),
       single_thread_task_runner_manager_(task_tracker_.get(),
                                          &delayed_task_manager_) {
+  DCHECK(!name.empty());
+
   static_assert(arraysize(worker_pools_) == ENVIRONMENT_COUNT,
                 "The size of |worker_pools_| must match ENVIRONMENT_COUNT.");
   static_assert(
@@ -37,8 +39,11 @@ TaskSchedulerImpl::TaskSchedulerImpl(
 
   for (int environment_type = 0; environment_type < ENVIRONMENT_COUNT;
        ++environment_type) {
+    std::string worker_pool_name(name);
+    worker_pool_name += ".";
+    worker_pool_name += kEnvironmentParams[environment_type].name_suffix;
     worker_pools_[environment_type] = std::make_unique<SchedulerWorkerPoolImpl>(
-        name_ + kEnvironmentParams[environment_type].name_suffix,
+        std::move(worker_pool_name),
         kEnvironmentParams[environment_type].priority_hint, task_tracker_.get(),
         &delayed_task_manager_);
   }
@@ -146,7 +151,7 @@ TaskSchedulerImpl::CreateSingleThreadTaskRunnerWithTraits(
     SingleThreadTaskRunnerThreadMode thread_mode) {
   return single_thread_task_runner_manager_
       .CreateSingleThreadTaskRunnerWithTraits(
-          name_, SetUserBlockingPriorityIfNeeded(traits), thread_mode);
+          SetUserBlockingPriorityIfNeeded(traits), thread_mode);
 }
 
 #if defined(OS_WIN)
@@ -155,7 +160,7 @@ TaskSchedulerImpl::CreateCOMSTATaskRunnerWithTraits(
     const TaskTraits& traits,
     SingleThreadTaskRunnerThreadMode thread_mode) {
   return single_thread_task_runner_manager_.CreateCOMSTATaskRunnerWithTraits(
-      name_, SetUserBlockingPriorityIfNeeded(traits), thread_mode);
+      SetUserBlockingPriorityIfNeeded(traits), thread_mode);
 }
 #endif  // defined(OS_WIN)
 
