@@ -18,6 +18,8 @@ function testTimeResolution(highResTimeFunc) {
     var expectedResolutionMilliseconds = 0.100;
     var integerMultipleOfResolution = (t1 - t0) / expectedResolutionMilliseconds;
     shouldBeNearZeroOrOne = integerMultipleOfResolution % 1;
+    if (shouldBeNearZeroOrOne >= 1e-5 && Math.abs(shouldBeNearZeroOrOne - 1) >= 1e-5)
+      debug("Delta: " + shouldBeNearZeroOrOne);
     shouldBe("shouldBeNearZeroOrOne < 1e-5 || Math.abs(shouldBeNearZeroOrOne - 1) < 1e-5", "true");
 }
 
