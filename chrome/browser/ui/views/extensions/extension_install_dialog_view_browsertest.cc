@@ -346,10 +346,12 @@ IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
 
 IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
                        InvokeUi_DetailedPermission) {
-  AddPermissionWithDetails("Example header permission",
-                           {base::ASCIIToUTF16("Detailed permission 1"),
-                            base::ASCIIToUTF16("Detailed permission 2"),
-                            base::ASCIIToUTF16("Detailed permission 3")});
+  AddPermissionWithDetails(
+      "Example header permission",
+      {base::ASCIIToUTF16("Detailed permission 1"),
+       base::ASCIIToUTF16("Detailed permission 2"),
+       base::ASCIIToUTF16("Very very very very very very long detailed "
+                          "permission that wraps to a new line")});
   ShowAndVerifyUi();
 }
 
@@ -371,6 +373,17 @@ IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
   AddRetainedDevice(
       "Another USB Device With A Very Very Very Very Very Very "
       "Long Name So That It Hopefully Wraps to A New Line");
+  ShowAndVerifyUi();
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
+                       InvokeUi_AllInfoTypes) {
+  AddPermission("Example permission");
+  AddPermissionWithDetails("This permission has details",
+                           {base::ASCIIToUTF16("Detailed permission 1"),
+                            base::ASCIIToUTF16("Detailed permission 2")});
+  AddRetainedDevice("USB Device");
+  AddRetainedFile(base::FilePath(FILE_PATH_LITERAL("/dev/null")));
   ShowAndVerifyUi();
 }
 
