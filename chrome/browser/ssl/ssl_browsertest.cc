@@ -4004,6 +4004,47 @@ IN_PROC_BROWSER_TEST_P(SSLUITestCommitted, ProceedLinkOverridable) {
   ASSERT_NO_FATAL_FAILURE(CheckProceedLinkExists(tab));
 }
 
+// Verifies that the proceed JS method used by committed interstitials proceeds
+// through the interstitial.
+IN_PROC_BROWSER_TEST_P(SSLUITestCommitted, ProceedLinkFunctional) {
+  if (!content::IsBrowserSideNavigationEnabled())
+    return;
+  const std::string javascript =
+      "window.certificateErrorPageController.proceed();";
+  ASSERT_TRUE(https_server_expired_.Start());
+  GURL url_expired_cert = https_server_expired_.GetURL("/ssl/google.html");
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  ui_test_utils::NavigateToURL(browser(), url_expired_cert);
+  ExpectSSLInterstitial(tab);
+  content::TestNavigationManager observer(tab, url_expired_cert);
+  EXPECT_TRUE(content::ExecuteScript(tab, javascript));
+  observer.WaitForNavigationFinished();
+  CheckSecurityState(tab, net::CERT_STATUS_DATE_INVALID,
+                     security_state::DANGEROUS, AuthState::NONE);
+}
+
+// Verifies that the dontProceed JS method used by committed interstitials sends
+// back to the previous page.
+IN_PROC_BROWSER_TEST_P(SSLUITestCommitted, DontProceedLinkFunctional) {
+  if (!content::IsBrowserSideNavigationEnabled())
+    return;
+  const std::string javascript =
+      "window.certificateErrorPageController.dontProceed();";
+  ASSERT_TRUE(https_server_.Start());
+  ASSERT_TRUE(https_server_expired_.Start());
+  GURL url_good_cert = https_server_.GetURL("/ssl/google.html");
+  GURL url_expired_cert = https_server_expired_.GetURL("/ssl/google.html");
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  ui_test_utils::NavigateToURL(browser(), url_good_cert);
+  ui_test_utils::NavigateToURL(browser(), url_expired_cert);
+  ExpectSSLInterstitial(tab);
+  content::TestNavigationManager observer(tab, url_good_cert);
+  EXPECT_TRUE(content::ExecuteScript(tab, javascript));
+  observer.WaitForNavigationFinished();
+  CheckSecurityState(tab, CertError::NONE, security_state::SECURE,
+                     AuthState::NONE);
+}
+
 // Verifies that a non-overridable interstitial does not have a proceed link.
 IN_PROC_BROWSER_TEST_P(SSLUITestHSTS, TestInterstitialOptionsNonOverridable) {
   ASSERT_TRUE(https_server_expired_.Start());
