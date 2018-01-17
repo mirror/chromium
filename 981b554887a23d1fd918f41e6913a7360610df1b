@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91a95e18_0037e7d8",
+        "filename": "third_party/webrtc_overrides/runtime_enabled_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-17T10:49:13Z",
+      "side": 1,
+      "message": "Ah, I overlooked this in the CL that added this file: please move this comment to below the copyright header, with and empty comment line before, i.e.:\n// Copyright (...)\n//\n// Define (...)",
+      "revId": "981b554887a23d1fd918f41e6913a7360610df1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0678543_b6be4bed",
+        "filename": "third_party/webrtc_overrides/runtime_enabled_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-17T10:49:13Z",
+      "side": 1,
+      "message": "Nit: Can you also remove the superfluous empty line?",
+      "revId": "981b554887a23d1fd918f41e6913a7360610df1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
