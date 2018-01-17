@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 
 #import "ios/chrome/browser/ui/commands/application_commands.h"
+#import "ios/chrome/browser/ui/settings/settings_navigation_controller_delegate.h"
 
 @protocol BrowserCommands;
 @protocol ImportDataControllerDelegate;
@@ -27,18 +28,6 @@ class ChromeBrowserState;
 
 @end
 
-@protocol SettingsNavigationControllerDelegate<NSObject>
-
-// Informs the delegate that the settings navigation controller should be
-// closed.
-- (void)closeSettings;
-
-// Asks the delegate for a dispatcher that can be passed into child view
-// controllers when they are created.
-- (id<ApplicationCommands, BrowserCommands>)dispatcherForSettings;
-
-@end
-
 // Controller to modify user settings.
 @interface SettingsNavigationController
     : UINavigationController<ApplicationSettingsCommands,
@@ -47,6 +36,9 @@ class ChromeBrowserState;
 // Whether sync changes should be committed when the settings are being
 // dismissed. Defaults to YES.
 @property(nonatomic, assign) BOOL shouldCommitSyncChangesOnDismissal;
+
+@property(class, nonatomic, weak)
+    SettingsNavigationController* sharedSettingsNavigationController;
 
 // Creates a new SettingsCollectionViewController and the chrome around it.
 // |browserState| is used to personalize some settings aspects and should not be
