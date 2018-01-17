@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "208a9be7_5cc82fdc",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-17T13:15:02Z",
+      "side": 1,
+      "message": "Don\u0027t catch exceptions and fail in a test, just let the exception propagate naturally.\n\nI guess here that means you have to make the runnable interface throw an arbitrary exception -- could you add a TODO(bauerb) to make ApplicationTestUtils.fireHomeScreenIntent throw more specific exceptions and update this class correspondingly?",
+      "range": {
+        "startLine": 194,
+        "startChar": 16,
+        "endLine": 194,
+        "endChar": 27
+      },
+      "revId": "47d6d4330ee2cfceffe3aa42894ec6aaba47cb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
