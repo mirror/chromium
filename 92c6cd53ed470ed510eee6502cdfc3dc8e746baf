@@ -34,6 +34,24 @@
       "revId": "92c6cd53ed470ed510eee6502cdfc3dc8e746baf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9b7ceb_08ff67fc",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-17T11:03:51Z",
+      "side": 1,
+      "message": "Hey, wait a minute, now that\u0027s a circular advise. Meaning I told Oskar I was considering adding this. :-) Anyway, that would be nice. I was mainly hesitating because of added strings weighed against usefulness. OK, I\u0027ll change it to log the formats (I\u0027d prefer having both.)",
+      "parentUuid": "0f0db9f9_db2cd067",
+      "revId": "92c6cd53ed470ed510eee6502cdfc3dc8e746baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
