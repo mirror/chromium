@@ -34,6 +34,24 @@
       "revId": "230f944dfe348a9ca724815c9f9a15d4829b36e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38b1f13_49992c67",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-17T15:29:05Z",
+      "side": 1,
+      "message": "Then how is it different from Trace?\n\nTrace is intended to be a general method to visit objects. What the Trace actually does is different depending on visitors (Mark, Record, Verify etc).\n\nMaybe the confusing part is that we also use \"Trace\" (or \"TraceWrappers\") for developer-facing APIs. If you really want to distinguish the developer-facing APIs from the visiting methods, you\u0027ll need to rename all visiting methods from \"Trace\" to \"Visit\" for consistency. (i.e., Oilpan\u0027s infrastructure uses Visit and Mark/Record/Verify. Developers use Trace/TraceWrappers.) (But I\u0027m not sure if it\u0027s worth an effort :-)",
+      "parentUuid": "09f80d74_7283d35f",
+      "revId": "230f944dfe348a9ca724815c9f9a15d4829b36e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
