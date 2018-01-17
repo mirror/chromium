@@ -63,11 +63,11 @@ content::mojom::ProxyRulesType
 EnumTraits<content::mojom::ProxyRulesType, net::ProxyConfig::ProxyRules::Type>::
     ToMojom(net::ProxyConfig::ProxyRules::Type net_proxy_rules_type) {
   switch (net_proxy_rules_type) {
-    case net::ProxyConfig::ProxyRules::TYPE_NO_RULES:
+    case net::ProxyConfig::ProxyRules::Type::EMPTY:
       return content::mojom::ProxyRulesType::TYPE_NO_RULES;
-    case net::ProxyConfig::ProxyRules::TYPE_SINGLE_PROXY:
+    case net::ProxyConfig::ProxyRules::Type::PROXY_LIST:
       return content::mojom::ProxyRulesType::TYPE_SINGLE_PROXY;
-    case net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME:
+    case net::ProxyConfig::ProxyRules::Type::PROXY_LIST_PER_SCHEME:
       return content::mojom::ProxyRulesType::TYPE_PROXY_PER_SCHEME;
   }
   return content::mojom::ProxyRulesType::TYPE_NO_RULES;
@@ -79,13 +79,13 @@ bool EnumTraits<content::mojom::ProxyRulesType,
               net::ProxyConfig::ProxyRules::Type* out) {
   switch (mojo_proxy_rules_type) {
     case content::mojom::ProxyRulesType::TYPE_NO_RULES:
-      *out = net::ProxyConfig::ProxyRules::TYPE_NO_RULES;
+      *out = net::ProxyConfig::ProxyRules::Type::EMPTY;
       return true;
     case content::mojom::ProxyRulesType::TYPE_SINGLE_PROXY:
-      *out = net::ProxyConfig::ProxyRules::TYPE_SINGLE_PROXY;
+      *out = net::ProxyConfig::ProxyRules::Type::PROXY_LIST;
       return true;
     case content::mojom::ProxyRulesType::TYPE_PROXY_PER_SCHEME:
-      *out = net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME;
+      *out = net::ProxyConfig::ProxyRules::Type::PROXY_LIST_PER_SCHEME;
       return true;
   }
   return false;
