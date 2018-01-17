@@ -4047,6 +4047,7 @@ test("unit_tests") {
       "comsupp.lib",
       "oleacc.lib",
       "rpcrt4.lib",
+      "runtimeobject.lib",
       "urlmon.lib",
       "winmm.lib",
     ]
