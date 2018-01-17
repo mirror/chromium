@@ -233,6 +233,8 @@
 
     <cr-menu id="gear-menu" class="chrome-menu files-menu" showShortcuts
              menu-item-selector="cr-menu-item, hr">
+      <cr-menu-item command="#paste" visibleif="full-page"></cr-menu-item>
+      <hr id="gear-menu-paste-separator">
       <cr-menu-item id="gear-menu-newwindow" command="#new-window"></cr-menu-item>
       <cr-menu-item id="gear-menu-newfolder" command="#new-folder"></cr-menu-item>
       <hr>
