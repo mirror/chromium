@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1150fcff_1351f692",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedAnimationController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-17T10:41:31Z",
+      "side": 1,
+      "message": "I think it\u0027s possible that this continues returning true forever but it would be okay since HasPendingActivity returns false after the context is destroyed.",
+      "revId": "e966e7c897489aaa6fc00f676ca9a9edb5f35396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
