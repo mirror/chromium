@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chromecast/browser/cast_web_view.h"
+#include "chromecast/browser/cast_web_view_default.h"
 
 #include <utility>
 
@@ -56,14 +56,15 @@ std::unique_ptr<content::WebContents> CreateWebContents(
 
 }  // namespace
 
-CastWebView::CastWebView(Delegate* delegate,
-                         CastWebContentsManager* web_contents_manager,
-                         content::BrowserContext* browser_context,
-                         scoped_refptr<content::SiteInstance> site_instance,
-                         bool transparent,
-                         bool allow_media_access,
-                         bool is_headless,
-                         bool enable_touch_input)
+CastWebViewDefault::CastWebViewDefault(
+    Delegate* delegate,
+    CastWebContentsManager* web_contents_manager,
+    content::BrowserContext* browser_context,
+    scoped_refptr<content::SiteInstance> site_instance,
+    bool transparent,
+    bool allow_media_access,
+    bool is_headless,
+    bool enable_touch_input)
     : delegate_(delegate),
       web_contents_manager_(web_contents_manager),
       browser_context_(browser_context),
@@ -74,8 +75,7 @@ CastWebView::CastWebView(Delegate* delegate,
                                                is_headless,
                                                enable_touch_input)),
       did_start_navigation_(false),
-      allow_media_access_(allow_media_access),
-      weak_factory_(this) {
+      allow_media_access_(allow_media_access) {
   DCHECK(delegate_);
   DCHECK(web_contents_manager_);
   DCHECK(browser_context_);
@@ -84,21 +84,29 @@ CastWebView::CastWebView(Delegate* delegate,
   web_contents_->SetDelegate(this);
 }
 
-CastWebView::~CastWebView() {}
+CastWebViewDefault::~CastWebViewDefault() {}
 
-void CastWebView::LoadUrl(GURL url) {
+shell::CastContentWindow* CastWebViewDefault::window() const {
+  return window_.get();
+}
+
+content::WebContents* CastWebViewDefault::web_contents() const {
+  return web_contents_.get();
+}
+
+void CastWebViewDefault::LoadUrl(GURL url) {
   web_contents_->GetController().LoadURL(url, content::Referrer(),
                                          ui::PAGE_TRANSITION_TYPED, "");
 }
 
-void CastWebView::ClosePage(const base::TimeDelta& shutdown_delay) {
+void CastWebViewDefault::ClosePage(const base::TimeDelta& shutdown_delay) {
   shutdown_delay_ = shutdown_delay;
   content::WebContentsObserver::Observe(nullptr);
   web_contents_->DispatchBeforeUnload();
   web_contents_->ClosePage();
 }
 
-void CastWebView::CloseContents(content::WebContents* source) {
+void CastWebViewDefault::CloseContents(content::WebContents* source) {
   DCHECK_EQ(source, web_contents_.get());
   window_.reset();  // Window destructor requires live web_contents on Android.
   // We need to delay the deletion of web_contents_ to give (and guarantee) the
@@ -109,7 +117,7 @@ void CastWebView::CloseContents(content::WebContents* source) {
   delegate_->OnPageStopped(net::OK);
 }
 
-void CastWebView::Show(CastWindowManager* window_manager) {
+void CastWebViewDefault::Show(CastWindowManager* window_manager) {
   if (media::CastMediaShlib::ClearVideoPlaneImage) {
     media::CastMediaShlib::ClearVideoPlaneImage();
   }
@@ -119,7 +127,7 @@ void CastWebView::Show(CastWindowManager* window_manager) {
   web_contents_->Focus();
 }
 
-content::WebContents* CastWebView::OpenURLFromTab(
+content::WebContents* CastWebViewDefault::OpenURLFromTab(
     content::WebContents* source,
     const content::OpenURLParams& params) {
   LOG(INFO) << "Change url: " << params.url;
@@ -134,19 +142,20 @@ content::WebContents* CastWebView::OpenURLFromTab(
   return source;
 }
 
-void CastWebView::LoadingStateChanged(content::WebContents* source,
-                                      bool to_different_document) {
+void CastWebViewDefault::LoadingStateChanged(content::WebContents* source,
+                                             bool to_different_document) {
   delegate_->OnLoadingStateChanged(source->IsLoading());
 }
 
-void CastWebView::ActivateContents(content::WebContents* contents) {
+void CastWebViewDefault::ActivateContents(content::WebContents* contents) {
   DCHECK_EQ(contents, web_contents_.get());
   contents->GetRenderViewHost()->GetWidget()->Focus();
 }
 
-bool CastWebView::CheckMediaAccessPermission(content::WebContents* web_contents,
-                                             const GURL& security_origin,
-                                             content::MediaStreamType type) {
+bool CastWebViewDefault::CheckMediaAccessPermission(
+    content::WebContents* web_contents,
+    const GURL& security_origin,
+    content::MediaStreamType type) {
   if (!base::FeatureList::IsEnabled(kAllowUserMediaAccess) &&
       !allow_media_access_) {
     LOG(WARNING) << __func__ << ": media access is disabled.";
@@ -173,7 +182,7 @@ const content::MediaStreamDevice* GetRequestedDeviceOrDefault(
   return nullptr;
 }
 
-void CastWebView::RequestMediaAccessPermission(
+void CastWebViewDefault::RequestMediaAccessPermission(
     content::WebContents* web_contents,
     const content::MediaStreamRequest& request,
     const content::MediaResponseCallback& callback) {
@@ -220,19 +229,20 @@ void CastWebView::RequestMediaAccessPermission(
 
 #if defined(OS_ANDROID)
 base::android::ScopedJavaLocalRef<jobject>
-CastWebView::GetContentVideoViewEmbedder() {
+CastWebViewDefault::GetContentVideoViewEmbedder() {
   DCHECK(web_contents_);
   auto* activity = shell::CastWebContentsActivity::Get(web_contents_.get());
   return activity->GetContentVideoViewEmbedder();
 }
 #endif  // defined(OS_ANDROID)
 
-void CastWebView::RenderProcessGone(base::TerminationStatus status) {
+void CastWebViewDefault::RenderProcessGone(base::TerminationStatus status) {
   LOG(INFO) << "APP_ERROR_CHILD_PROCESS_CRASHED";
   delegate_->OnPageStopped(net::ERR_UNEXPECTED);
 }
 
-void CastWebView::RenderViewCreated(content::RenderViewHost* render_view_host) {
+void CastWebViewDefault::RenderViewCreated(
+    content::RenderViewHost* render_view_host) {
   content::RenderWidgetHostView* view =
       render_view_host->GetWidget()->GetView();
   if (view) {
@@ -241,7 +251,7 @@ void CastWebView::RenderViewCreated(content::RenderViewHost* render_view_host) {
   }
 }
 
-void CastWebView::DidFinishNavigation(
+void CastWebViewDefault::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   // If the navigation was not committed, it means either the page was a
   // download or error 204/205, or the navigation never left the previous
@@ -272,10 +282,11 @@ void CastWebView::DidFinishNavigation(
   delegate_->OnPageStopped(error_code);
 }
 
-void CastWebView::DidFailLoad(content::RenderFrameHost* render_frame_host,
-                              const GURL& validated_url,
-                              int error_code,
-                              const base::string16& error_description) {
+void CastWebViewDefault::DidFailLoad(
+    content::RenderFrameHost* render_frame_host,
+    const GURL& validated_url,
+    int error_code,
+    const base::string16& error_description) {
   // Only report an error if we are the main frame.  See b/8433611.
   if (render_frame_host->GetParent()) {
     LOG(ERROR) << "Got error on sub-iframe: url=" << validated_url.spec()
@@ -293,11 +304,11 @@ void CastWebView::DidFailLoad(content::RenderFrameHost* render_frame_host,
   }
 }
 
-void CastWebView::DidFirstVisuallyNonEmptyPaint() {
+void CastWebViewDefault::DidFirstVisuallyNonEmptyPaint() {
   metrics::CastMetricsHelper::GetInstance()->LogTimeToFirstPaint();
 }
 
-void CastWebView::DidStartNavigation(
+void CastWebViewDefault::DidStartNavigation(
     content::NavigationHandle* navigation_handle) {
   if (did_start_navigation_) {
     return;
@@ -314,12 +325,12 @@ void CastWebView::DidStartNavigation(
 #endif
 }
 
-void CastWebView::MediaStartedPlaying(const MediaPlayerInfo& media_info,
-                                      const MediaPlayerId& id) {
+void CastWebViewDefault::MediaStartedPlaying(const MediaPlayerInfo& media_info,
+                                             const MediaPlayerId& id) {
   metrics::CastMetricsHelper::GetInstance()->LogMediaPlay();
 }
 
-void CastWebView::MediaStoppedPlaying(
+void CastWebViewDefault::MediaStoppedPlaying(
     const MediaPlayerInfo& media_info,
     const MediaPlayerId& id,
     WebContentsObserver::MediaStoppedReason reason) {
