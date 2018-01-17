@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c9350f4_35394b7e",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2018-01-17T07:05:44Z",
+      "side": 1,
+      "message": "Need a guard for source as source can be null here.",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 10
+      },
+      "revId": "4e7582714be506c8cbba365ff1e88c08b1279f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
