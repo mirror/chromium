@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "62967967_ac1e56ee",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-17T19:32:10Z",
+      "side": 1,
+      "message": "Please, as much as possible we avoid platform-specific code.\nHow about adding a unit test and having bots confirm?",
+      "parentUuid": "54b9fa90_3fe740ff",
+      "revId": "71d8146a5a169b33f9265ae7ff7fc14e49cb19d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0f3ce0c_489b0602",
         "filename": "gpu/command_buffer/service/feature_info.cc",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Assuming you mean gpu/.../gles2_cmd_validation_implementation_autogen.h,\nit already knows about GL_RGB10_A2 [1] -- not sure why it\u0027s there since\nGL_RGB10_A2(_UI) were added as part of Open GL ES 3.0; \n\nNote that this patch needs to add GL_RGB10_A2 explicitly to gl_bindings.h \n(with the same value, 0x8059) to make it available to command buffer \nclients (that seem to observe GLES 2.0).\n\n[1] https://cs.chromium.org/search/?q\u003dgpu/+GL_RGB10_A2+gles2_cmd_validation_implementation_autogen.h\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
       "parentUuid": "e0f3ce0c_489b0602",
+      "revId": "71d8146a5a169b33f9265ae7ff7fc14e49cb19d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e90e146c_efb508f2",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-17T19:32:10Z",
+      "side": 1,
+      "message": "\u003e Assuming you mean gpu/.../gles2_cmd_validation_implementation_autogen.h,\n\u003e it already knows about GL_RGB10_A2 [1] -- not sure why it\u0027s there since\n\u003e GL_RGB10_A2(_UI) were added as part of Open GL ES 3.0; \n\nThey are in the ES3-specific tables, for when the client requests an ES3 context (e.g. WebGL2).\nBut if the client requests an ES2 context, glTexStorage2D(..., GL_RGB10_A2, ...) would be rejected.\nSee what we do for e.g. GL_EXT_texture_rg around https://cs.chromium.org/chromium/src/gpu/command_buffer/service/feature_info.cc?type\u003dcs\u0026q\u003dGL_EXT_texture_rg\u0026sq\u003dpackage:chromium\u0026l\u003d1306, explicitly adding (sized) internal formats to validators_.texture_internal_format, validators_.render_buffer_format, validators_.texture_internal_format_storage\n\n\u003e Note that this patch needs to add GL_RGB10_A2 explicitly to gl_bindings.h \n\u003e (with the same value, 0x8059) to make it available to command buffer \n\u003e clients (that seem to observe GLES 2.0).\n\nBy itself, this doesn\u0027t really do anything to clients, which don\u0027t even include that header.",
+      "parentUuid": "e78d6e07_09a8a783",
       "revId": "71d8146a5a169b33f9265ae7ff7fc14e49cb19d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
