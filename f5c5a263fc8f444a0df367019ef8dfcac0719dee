@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afdaba5b_4e1d799f",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-17T19:01:28Z",
+      "side": 1,
+      "message": "Nit: Each UMA macro expands to a lot of code. Can you refactor the code such that there\u0027s only a single invocation of the macro for this histogram to avoid the bloat?\n\ne.g. make a helper function",
+      "range": {
+        "startLine": 453,
+        "startChar": 76,
+        "endLine": 453,
+        "endChar": 0
+      },
+      "revId": "f5c5a263fc8f444a0df367019ef8dfcac0719dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd8cde03_0d51aeb3",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-17T19:01:28Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 456,
+        "startChar": 75,
+        "endLine": 456,
+        "endChar": 0
+      },
+      "revId": "f5c5a263fc8f444a0df367019ef8dfcac0719dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ad6ab8_c9bf2964",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 83959,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-17T19:01:28Z",
+      "side": 1,
+      "message": "Nit: Can you use BooleanAccepted here?",
+      "range": {
+        "startLine": 83959,
+        "startChar": 72,
+        "endLine": 83959,
+        "endChar": 0
+      },
+      "revId": "f5c5a263fc8f444a0df367019ef8dfcac0719dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
