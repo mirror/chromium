@@ -372,10 +372,23 @@ struct IsSwappableImpl {
   template <typename T>
   static std::false_type Check(...);
 };
+
+template <typename T, bool = decltype(IsSwappableImpl::Check<T>(0))::value>
+struct IsNothrowSwappableImpl
+    : std::integral_constant<bool,
+                             noexcept(swap(std::declval<T>(),
+                                           std::declval<T>()))> {};
+
+template <typename T>
+struct IsNothrowSwappableImpl<T, false /* IsSwappable */> : std::false_type {};
+
 }  // namespace swappable_impl
 
 template <typename T>
 struct IsSwappable : decltype(swappable_impl::IsSwappableImpl::Check<T&>(0)) {};
+
+template <typename T>
+struct IsNothrowSwappable : swappable_impl::IsNothrowSwappableImpl<T&> {};
 
 // Forward compatibility for C++20.
 template <typename T>
@@ -407,11 +420,12 @@ class Optional
   using value_type = T;
 
   // Defer default/copy/move constructor implementation to OptionalBase.
-  constexpr Optional() = default;
+  constexpr Optional() noexcept = default;
   constexpr Optional(const Optional& other) = default;
-  constexpr Optional(Optional&& other) = default;
+  constexpr Optional(Optional&& other) noexcept(
+      std::is_nothrow_move_constructible<T>::value) = default;
 
-  constexpr Optional(nullopt_t) {}  // NOLINT(runtime/explicit)
+  constexpr Optional(nullopt_t) noexcept {}  // NOLINT(runtime/explicit)
 
   // Converting copy constructor. "explicit" only if
   // std::is_convertible<const U&, T>::value is false. It is implemented by
@@ -496,9 +510,11 @@ class Optional
 
   // Defer copy-/move- assign operator implementation to OptionalBase.
   Optional& operator=(const Optional& other) = default;
-  Optional& operator=(Optional&& other) = default;
+  Optional& operator=(Optional&& other) noexcept(
+      std::is_nothrow_move_assignable<T>::value&&
+          std::is_nothrow_move_constructible<T>::value) = default;
 
-  Optional& operator=(nullopt_t) {
+  Optional& operator=(nullopt_t) noexcept {
     FreeIfNeeded();
     return *this;
   }
@@ -551,9 +567,11 @@ class Optional
 
   constexpr T&& operator*() && { return std::move(value()); }
 
-  constexpr explicit operator bool() const { return !storage_.is_null_; }
+  constexpr explicit operator bool() const noexcept {
+    return !storage_.is_null_;
+  }
 
-  constexpr bool has_value() const { return !storage_.is_null_; }
+  constexpr bool has_value() const noexcept { return !storage_.is_null_; }
 
   constexpr T& value() & {
     DCHECK(!storage_.is_null_);
@@ -597,7 +615,9 @@ class Optional
                              : std::move(value());
   }
 
-  void swap(Optional& other) {
+  void swap(Optional& other) noexcept(
+      std::is_nothrow_move_constructible<T>::value&&
+          internal::IsNothrowSwappable<T>::value) {
     if (storage_.is_null_ && other.storage_.is_null_)
       return;
 
@@ -617,9 +637,7 @@ class Optional
     swap(**this, *other);
   }
 
-  void reset() {
-    FreeIfNeeded();
-  }
+  void reset() noexcept { FreeIfNeeded(); }
 
   template <class... Args>
   T& emplace(Args&&... args) {
@@ -709,62 +727,62 @@ constexpr bool operator>=(const Optional<T>& lhs, const Optional<U>& rhs) {
 }
 
 template <class T>
-constexpr bool operator==(const Optional<T>& opt, nullopt_t) {
+constexpr bool operator==(const Optional<T>& opt, nullopt_t) noexcept {
   return !opt;
 }
 
 template <class T>
-constexpr bool operator==(nullopt_t, const Optional<T>& opt) {
+constexpr bool operator==(nullopt_t, const Optional<T>& opt) noexcept {
   return !opt;
 }
 
 template <class T>
-constexpr bool operator!=(const Optional<T>& opt, nullopt_t) {
+constexpr bool operator!=(const Optional<T>& opt, nullopt_t) noexcept {
   return opt.has_value();
 }
 
 template <class T>
-constexpr bool operator!=(nullopt_t, const Optional<T>& opt) {
+constexpr bool operator!=(nullopt_t, const Optional<T>& opt) noexcept {
   return opt.has_value();
 }
 
 template <class T>
-constexpr bool operator<(const Optional<T>& opt, nullopt_t) {
+constexpr bool operator<(const Optional<T>& opt, nullopt_t) noexcept {
   return false;
 }
 
 template <class T>
-constexpr bool operator<(nullopt_t, const Optional<T>& opt) {
+constexpr bool operator<(nullopt_t, const Optional<T>& opt) noexcept {
   return opt.has_value();
 }
 
 template <class T>
-constexpr bool operator<=(const Optional<T>& opt, nullopt_t) {
+constexpr bool operator<=(const Optional<T>& opt, nullopt_t) noexcept {
   return !opt;
 }
 
 template <class T>
-constexpr bool operator<=(nullopt_t, const Optional<T>& opt) {
+constexpr bool operator<=(nullopt_t, const Optional<T>& opt) noexcept {
   return true;
 }
 
 template <class T>
-constexpr bool operator>(const Optional<T>& opt, nullopt_t) {
+constexpr bool operator>(const Optional<T>& opt, nullopt_t) noexcept {
   return opt.has_value();
 }
 
 template <class T>
-constexpr bool operator>(nullopt_t, const Optional<T>& opt) {
+constexpr bool operator>(nullopt_t, const Optional<T>& opt) noexcept {
   return false;
 }
 
 template <class T>
-constexpr bool operator>=(const Optional<T>& opt, nullopt_t) {
+constexpr bool operator>=(const Optional<T>& opt, nullopt_t) noexcept {
   return true;
 }
 
 template <class T>
-constexpr bool operator>=(nullopt_t, const Optional<T>& opt) {
+constexpr bool operator>=(nullopt_t, const Optional<T>& opt) noexcept {
   return !opt;
 }
 
@@ -851,7 +869,7 @@ constexpr Optional<T> make_optional(std::initializer_list<U> il,
 template <class T>
 std::enable_if_t<std::is_move_constructible<T>::value &&
                  internal::IsSwappable<T>::value>
-swap(Optional<T>& lhs, Optional<T>& rhs) {
+swap(Optional<T>& lhs, Optional<T>& rhs) noexcept(noexcept(lhs.swap(rhs))) {
   lhs.swap(rhs);
 }
 
