@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "403c8054_79454e97",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-17T15:30:46Z",
+      "side": 1,
+      "message": "Oh wait, I thought we wanted to do first _meaningful_ paint? Sorry if I got confused there...",
+      "range": {
+        "startLine": 271,
+        "startChar": 21,
+        "endLine": 271,
+        "endChar": 42
+      },
+      "revId": "bcf44f2358d438c2f146e74067c9988509e99d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb5f6b8_22280af8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-17T15:30:46Z",
+      "side": 1,
+      "message": "You can also move this to the member declaration.",
+      "range": {
+        "startLine": 56,
+        "startChar": 24,
+        "endLine": 56,
+        "endChar": 40
+      },
+      "revId": "bcf44f2358d438c2f146e74067c9988509e99d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
