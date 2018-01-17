@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2db55bd_33ac5c02",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/FileSystemWorkspaceBinding.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-17T20:05:29Z",
+      "side": 1,
+      "message": "return !!path \u0026\u0026 Persistence.FileSystemWorkspaceBinding.fileSystemType(this) !\u003d\u003d \u0027overrides\u0027;",
+      "revId": "fcbc6f43713a4ba0494cfe74a9adcef80644d192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
