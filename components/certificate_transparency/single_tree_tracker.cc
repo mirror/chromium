@@ -11,6 +11,7 @@
 
 #include "base/bind.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
 #include "components/certificate_transparency/log_dns_client.h"
@@ -84,6 +85,10 @@ enum SCTCanBeCheckedForInclusion {
   // privacy to do an inclusion check over DNS in this scenario.
   NOT_AUDITED_NO_DNS_LOOKUP = 4,
 
+  // This SCT was not audited because it could compromise the user's privacy,
+  // e.g. by leaking their browsing history.
+  NOT_AUDITED_FOR_PRIVACY = 5,
+
   SCT_CAN_BE_CHECKED_MAX
 };
 
@@ -152,15 +157,17 @@ enum AuditState {
 };
 
 // Maximal size of the checked entries cache.
-size_t kCheckedEntriesCacheSize = 100;
+const size_t kCheckedEntriesCacheSize = 100;
 
 // Maximal size of the pending entries queue.
-size_t kPendingEntriesQueueSize = 100;
+const size_t kPendingEntriesQueueSize = 100;
 
 // Maximum Merge Delay - logs can have individual MMD, but all known logs
 // currently have 24 hours MMD and Chrome's CT policy requires an MMD
 // that's no greater than that. For simplicity, use 24 hours for all logs.
 constexpr base::TimeDelta kMaximumMergeDelay = base::TimeDelta::FromHours(24);
+
+const double kProbabilityOfInclusionCheck = 0.5;
 
 // The log MUST incorporate the a certificate in the tree within the Maximum
 // Merge Delay, so an entry can be audited once the timestamp from the SCT +
@@ -296,6 +303,13 @@ void SingleTreeTracker::OnSCTVerified(base::StringPiece hostname,
   // Avoid queueing multiple instances of the same entry.
   if (GetAuditedEntryInclusionStatus(entry) != SCT_NOT_OBSERVED)
     return;
+
+  // Mitigate leaking of browsing history by only performing an inclusion check
+  // for some SCTs (chosen randomly).
+  if (base::RandDouble() >= kProbabilityOfInclusionCheck) {
+    LogCanBeCheckedForInclusionToUMA(NOT_AUDITED_FOR_PRIVACY);
+    return;
+  }
 
   if (pending_entries_.size() >= kPendingEntriesQueueSize) {
     // Queue is full - cannot audit SCT.
