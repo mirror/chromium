@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eec843c9_d1655053",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_system.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-17T11:29:50Z",
+      "side": 0,
+      "message": "Is this change related?",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "f30acbebb168b689df1b1f00c816a708d1bc308d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
