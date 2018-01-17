@@ -4,12 +4,29 @@
 
 #include "device/vr/openvr/openvr_device_provider.h"
 
+#include "base/metrics/histogram_macros.h"
 #include "device/gamepad/gamepad_data_fetcher_manager.h"
 #include "device/vr/openvr/openvr_device.h"
 #include "device/vr/openvr/openvr_gamepad_data_fetcher.h"
 #include "third_party/openvr/src/headers/openvr.h"
 
 namespace device {
+
+void OpenVRDeviceProvider::RecordApiInstall() {
+  VrApiAvailable api_available = VrApiAvailable::NONE;
+  if (vr::VR_IsRuntimeInstalled())
+    api_available = VrApiAvailable::OPENVR;
+  UMA_HISTOGRAM_ENUMERATION("VR.PlatformAvailable", api_available,
+                            VrApiAvailable::COUNT);
+}
+
+void OpenVRDeviceProvider::RecordHeadsetPresence() {
+  VrHeadsetAvailable headset_available = VrHeadsetAvailable::NONE;
+  if (vr::VR_IsRuntimeInstalled())
+    headset_available = VrHeadsetAvailable::OPENVR;
+  UMA_HISTOGRAM_ENUMERATION("VR.HardwareAvailable", headset_available,
+                            VrHeadsetAvailable::COUNT);
+}
 
 OpenVRDeviceProvider::OpenVRDeviceProvider() = default;
 

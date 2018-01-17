@@ -25,6 +25,20 @@ enum class VrViewerType {
   VIEWER_TYPE_COUNT,
 };
 
+// Must match VRHardwareAvailable in enums.xml.
+enum class VrHeadsetAvailable {
+  NONE = 0,
+  OPENVR = 1,
+  COUNT,
+};
+
+// Must match VRApiAvailable in enums.xml.
+enum class VrApiAvailable {
+  NONE = 0,
+  OPENVR = 1,
+  COUNT,
+};
+
 const unsigned int VR_DEVICE_LAST_ID = 0xFFFFFFFF;
 
 // Represents one of the platform's VR devices. Owned by the respective

@@ -158,6 +158,14 @@ void VRDeviceManager::RemoveDevice(device::VRDevice* device) {
   }
 }
 
+void VRDeviceManager::RecordVrStartupHistograms() {
+#if BUILDFLAG(ENABLE_OPENVR)
+  device::OpenVRDeviceProvider::RecordApiInstall();
+  if (base::FeatureList::IsEnabled(features::kOpenVR))
+    device::OpenVRDeviceProvider::RecordHeadsetPresence();
+#endif
+}
+
 device::VRDevice* VRDeviceManager::GetDevice(unsigned int index) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
