@@ -218,11 +218,25 @@ void ChromeDataUseAscriber::OnUrlRequestCompleted(
 
 void ChromeDataUseAscriber::OnUrlRequestDestroyed(net::URLRequest* request) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  DCHECK(request);
 
   const DataUseRecorderEntry entry = GetDataUseRecorderEntry(request);
 
   if (entry == data_use_recorders_.end())
     return;
+
+  {
+    const content::ResourceRequestInfo* request_info =
+        content::ResourceRequestInfo::ForRequest(request);
+    if (request_info &&
+        request_info->GetResourceType() == content::RESOURCE_TYPE_MAIN_FRAME &&
+        !request->status().is_success()) {
+      // If mainframe request was not successful, then NavigationHandle in
+      // DidFinishMainFrameNavigation will not have GlobalRequestID. So we erase
+      // the DataUseRecorderEntry here.
+      pending_navigation_data_use_map_.erase(entry->main_frame_request_id());
+    }
+  }
 
   const auto main_frame_it =
       main_render_frame_entry_map_.find(entry->main_frame_id());
