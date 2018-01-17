@@ -91,11 +91,11 @@ void ModelTypeDebugInfo::MergeDataWithMetadata(
       base::Value* server_id = metadata->FindKey("server_id");
       if (server_id) {
         // Set ID value as directory, "s" means server.
-        node->SetString("ID", "s" + server_id->GetString());
+        node->SetKey("ID", base::Value("s" + server_id->GetString()));
       }
       node->Set("metadata", std::move(metadata));
     }
-    node->SetString("modelType", type_string);
+    node->SetKey("modelType", base::Value(type_string));
     all_nodes->Append(std::move(node));
   }
 
@@ -108,11 +108,11 @@ void ModelTypeDebugInfo::MergeDataWithMetadata(
   // UNIQUE_SERVER_TAG to check if the node is root node. isChildOf in
   // sync_node_browser.js uses modelType to check if root node is parent of real
   // data node. NON_UNIQUE_NAME will be the name of node to display.
-  rootnode->SetString("PARENT_ID", "r");
-  rootnode->SetString("UNIQUE_SERVER_TAG", type_string);
-  rootnode->SetBoolean("IS_DIR", true);
-  rootnode->SetString("modelType", type_string);
-  rootnode->SetString("NON_UNIQUE_NAME", type_string);
+  rootnode->SetKey("PARENT_ID", base::Value("r"));
+  rootnode->SetKey("UNIQUE_SERVER_TAG", base::Value(type_string));
+  rootnode->SetKey("IS_DIR", base::Value(true));
+  rootnode->SetKey("modelType", base::Value(type_string));
+  rootnode->SetKey("NON_UNIQUE_NAME", base::Value(type_string));
   all_nodes->Append(std::move(rootnode));
 
   callback.Run(processor->type_, std::move(all_nodes));

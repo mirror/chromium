@@ -378,7 +378,7 @@ TEST_F(JsonPrefStoreTest, RemoveClearsEmptyParent) {
   auto pref_store = base::MakeRefCounted<JsonPrefStore>(pref_file);
 
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
-  dict->SetString("key", "value");
+  dict->SetKey("key", base::Value("value"));
   pref_store->SetValue("dict", std::move(dict),
                        WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
 

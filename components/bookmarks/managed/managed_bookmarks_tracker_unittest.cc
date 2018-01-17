@@ -100,8 +100,8 @@ class ManagedBookmarksTrackerTest : public testing::Test {
       const std::string& url) {
     EXPECT_TRUE(GURL(url).is_valid());
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-    dict->SetString("name", title);
-    dict->SetString("url", GURL(url).spec());
+    dict->SetKey("name", base::Value(title));
+    dict->SetKey("url", base::Value(GURL(url).spec()));
     return dict;
   }
 
@@ -109,7 +109,7 @@ class ManagedBookmarksTrackerTest : public testing::Test {
       const std::string& title,
       std::unique_ptr<base::ListValue> children) {
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-    dict->SetString("name", title);
+    dict->SetKey("name", base::Value(title));
     dict->Set("children", std::move(children));
     return dict;
   }

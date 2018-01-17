@@ -38,10 +38,10 @@ TEST_F(UsbChooserContextTest, CheckGrantAndRevokePermission) {
   UsbChooserContext* store = UsbChooserContextFactory::GetForProfile(profile());
 
   base::DictionaryValue object_dict;
-  object_dict.SetString("name", "Gizmo");
-  object_dict.SetInteger("vendor-id", 0);
-  object_dict.SetInteger("product-id", 0);
-  object_dict.SetString("serial-number", "123ABC");
+  object_dict.SetKey("name", base::Value("Gizmo"));
+  object_dict.SetKey("vendor-id", base::Value(0));
+  object_dict.SetKey("product-id", base::Value(0));
+  object_dict.SetKey("serial-number", base::Value("123ABC"));
 
   EXPECT_FALSE(store->HasDevicePermission(origin, origin, device));
   store->GrantDevicePermission(origin, origin, device->guid());
@@ -76,8 +76,8 @@ TEST_F(UsbChooserContextTest, CheckGrantAndRevokeEphemeralPermission) {
   UsbChooserContext* store = UsbChooserContextFactory::GetForProfile(profile());
 
   base::DictionaryValue object_dict;
-  object_dict.SetString("name", "Gizmo");
-  object_dict.SetString("ephemeral-guid", device->guid());
+  object_dict.SetKey("name", base::Value("Gizmo"));
+  object_dict.SetKey("ephemeral-guid", base::Value(device->guid()));
 
   EXPECT_FALSE(store->HasDevicePermission(origin, origin, device));
   store->GrantDevicePermission(origin, origin, device->guid());

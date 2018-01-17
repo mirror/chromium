@@ -244,15 +244,15 @@ TEST_F(UnackedInvalidationSetSerializationTest, InvalidConversionFromMap) {
   EXPECT_FALSE(UnackedInvalidationSet::DeserializeSetIntoMap(dict, &map));
 
   // Non-int source should fail.
-  dict.SetString("source", "foo");
+  dict.SetKey("source", base::Value("foo"));
   EXPECT_FALSE(UnackedInvalidationSet::DeserializeSetIntoMap(dict, &map));
 
   // Missing "name" should fail.
-  dict.SetString("source", base::IntToString(kObjectId_.source()));
+  dict.SetKey("source", base::Value(base::IntToString(kObjectId_.source())));
   EXPECT_FALSE(UnackedInvalidationSet::DeserializeSetIntoMap(dict, &map));
 
   // The "invalidation-list" is not required, so add "name" to make valid.
-  dict.SetString("name", kObjectId_.name());
+  dict.SetKey("name", base::Value(kObjectId_.name()));
   bool result = UnackedInvalidationSet::DeserializeSetIntoMap(dict, &map);
   EXPECT_TRUE(result);
   auto item = map.find(kObjectId_);

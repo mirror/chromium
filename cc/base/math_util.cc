@@ -610,8 +610,8 @@ gfx::Vector2dF MathUtil::ProjectVector(const gfx::Vector2dF& source,
 
 std::unique_ptr<base::Value> MathUtil::AsValue(const gfx::Size& s) {
   std::unique_ptr<base::DictionaryValue> res(new base::DictionaryValue());
-  res->SetDouble("width", s.width());
-  res->SetDouble("height", s.height());
+  res->SetKey("width", base::Value(static_cast<double>(s.width())));
+  res->SetKey("height", base::Value(static_cast<double>(s.height())));
   return std::move(res);
 }
 

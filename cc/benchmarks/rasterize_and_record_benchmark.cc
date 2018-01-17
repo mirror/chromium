@@ -97,9 +97,10 @@ void RasterizeAndRecordBenchmark::DidUpdateLayers(
 
   DCHECK(!results_.get());
   results_ = base::WrapUnique(new base::DictionaryValue);
-  results_->SetInteger("pixels_recorded", record_results_.pixels_recorded);
-  results_->SetInteger("picture_memory_usage",
-                       static_cast<int>(record_results_.bytes_used));
+  results_->SetKey("pixels_recorded",
+                   base::Value(record_results_.pixels_recorded));
+  results_->SetKey("picture_memory_usage",
+                   base::Value(static_cast<int>(record_results_.bytes_used)));
 
   for (int i = 0; i < RecordingSource::RECORDING_MODE_COUNT; i++) {
     std::string name = base::StringPrintf("record_time%s_ms", kModeSuffixes[i]);

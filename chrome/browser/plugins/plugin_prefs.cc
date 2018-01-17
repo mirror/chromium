@@ -200,7 +200,7 @@ void PluginPrefs::SetPrefs(PrefService* prefs) {
             if (!relative_path.empty()) {
               plugin_path = cur_internal_dir.Append(relative_path);
               path = plugin_path.value();
-              plugin->SetString("path", path);
+              plugin->SetKey("path", base::Value(path));
             }
           }
         }
@@ -265,9 +265,9 @@ void PluginPrefs::OnUpdatePreferences(
   std::set<base::string16> group_names;
   for (size_t i = 0; i < plugins.size(); ++i) {
     std::unique_ptr<base::DictionaryValue> summary(new base::DictionaryValue());
-    summary->SetString("path", plugins[i].path.value());
-    summary->SetString("name", plugins[i].name);
-    summary->SetString("version", plugins[i].version);
+    summary->SetKey("path", base::Value(plugins[i].path.value()));
+    summary->SetKey("name", base::Value(plugins[i].name));
+    summary->SetKey("version", base::Value(plugins[i].version));
     plugins_list->Append(std::move(summary));
 
     std::unique_ptr<PluginMetadata> plugin_metadata(
@@ -280,7 +280,7 @@ void PluginPrefs::OnUpdatePreferences(
   for (std::set<base::string16>::const_iterator it = group_names.begin();
       it != group_names.end(); ++it) {
     std::unique_ptr<base::DictionaryValue> summary(new base::DictionaryValue());
-    summary->SetString("name", *it);
+    summary->SetKey("name", base::Value(*it));
     plugins_list->Append(std::move(summary));
   }
 }

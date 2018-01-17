@@ -59,7 +59,7 @@ bool ConvertManifestRule(const linked_ptr<DeclarativeManifestData::Rule>& rule,
             return false;
           }
           dictionary->Remove("type", nullptr);
-          dictionary->SetString("instanceType", type);
+          dictionary->SetKey("instanceType", base::Value(type));
         }
         return true;
       };

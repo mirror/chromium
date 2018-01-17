@@ -158,16 +158,17 @@ void SetCountryData(const PersonalDataManager& manager,
                      ui_language_code);
   const std::vector<std::unique_ptr<autofill::AutofillCountry>>& countries =
       model.countries();
-  localized_strings->SetString("defaultCountryCode",
-                               countries.front()->country_code());
+  localized_strings->SetKey("defaultCountryCode",
+                            base::Value(countries.front()->country_code()));
 
   // An ordered list of options to show in the <select>.
   auto country_list = std::make_unique<base::ListValue>();
   for (size_t i = 0; i < countries.size(); ++i) {
     auto option_details = std::make_unique<base::DictionaryValue>();
-    option_details->SetString("name", model.GetItemAt(i));
-    option_details->SetString(
-        "value", countries[i] ? countries[i]->country_code() : "separator");
+    option_details->SetKey("name", base::Value(model.GetItemAt(i)));
+    option_details->SetKey(
+        "value",
+        base::Value(countries[i] ? countries[i]->country_code() : "separator"));
     country_list->Append(std::move(option_details));
   }
   localized_strings->Set("autofillCountrySelectList", std::move(country_list));
@@ -179,8 +180,8 @@ void SetCountryData(const PersonalDataManager& manager,
                        &default_country_language_code);
   localized_strings->Set("autofillDefaultCountryComponents",
                          std::move(default_country_components));
-  localized_strings->SetString("autofillDefaultCountryLanguageCode",
-                               default_country_language_code);
+  localized_strings->SetKey("autofillDefaultCountryLanguageCode",
+                            base::Value(default_country_language_code));
 }
 
 }  // namespace autofill

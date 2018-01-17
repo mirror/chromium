@@ -170,8 +170,8 @@ TEST_F(SchemaMapTest, FilterBundle) {
   map.Set("double", POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
           POLICY_SOURCE_CLOUD, std::make_unique<base::Value>(1.2), nullptr);
   base::DictionaryValue dict;
-  dict.SetString("a", "b");
-  dict.SetInteger("b", 2);
+  dict.SetKey("a", base::Value("b"));
+  dict.SetKey("b", base::Value(2));
   map.Set("object", POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
           POLICY_SOURCE_CLOUD, dict.CreateDeepCopy(), nullptr);
   map.Set("string", POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,

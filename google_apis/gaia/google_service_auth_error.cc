@@ -194,27 +194,31 @@ base::DictionaryValue* GoogleServiceAuthError::ToValue() const {
       NOTREACHED();
       break;
   }
-  value->SetString("state", state_str);
+  value->SetKey("state", base::Value(state_str));
   if (!error_message_.empty()) {
-    value->SetString("errorMessage", error_message_);
+    value->SetKey("errorMessage", base::Value(error_message_));
   }
   if (state_ == CAPTCHA_REQUIRED) {
     auto captcha_value = base::MakeUnique<base::DictionaryValue>();
-    captcha_value->SetString("token", captcha_.token);
-    captcha_value->SetString("audioUrl", captcha_.audio_url.spec());
-    captcha_value->SetString("imageUrl", captcha_.image_url.spec());
-    captcha_value->SetString("unlockUrl", captcha_.unlock_url.spec());
-    captcha_value->SetInteger("imageWidth", captcha_.image_width);
-    captcha_value->SetInteger("imageHeight", captcha_.image_height);
+    captcha_value->SetKey("token", base::Value(captcha_.token));
+    captcha_value->SetKey("audioUrl", base::Value(captcha_.audio_url.spec()));
+    captcha_value->SetKey("imageUrl", base::Value(captcha_.image_url.spec()));
+    captcha_value->SetKey("unlockUrl", base::Value(captcha_.unlock_url.spec()));
+    captcha_value->SetKey("imageWidth", base::Value(captcha_.image_width));
+    captcha_value->SetKey("imageHeight", base::Value(captcha_.image_height));
     value->Set("captcha", std::move(captcha_value));
   } else if (state_ == CONNECTION_FAILED) {
-    value->SetString("networkError", net::ErrorToString(network_error_));
+    value->SetKey("networkError",
+                  base::Value(net::ErrorToString(network_error_)));
   } else if (state_ == TWO_FACTOR) {
     auto two_factor_value = base::MakeUnique<base::DictionaryValue>();
-    two_factor_value->SetString("token", second_factor_.token);
-    two_factor_value->SetString("promptText", second_factor_.prompt_text);
-    two_factor_value->SetString("alternateText", second_factor_.alternate_text);
-    two_factor_value->SetInteger("fieldLength", second_factor_.field_length);
+    two_factor_value->SetKey("token", base::Value(second_factor_.token));
+    two_factor_value->SetKey("promptText",
+                             base::Value(second_factor_.prompt_text));
+    two_factor_value->SetKey("alternateText",
+                             base::Value(second_factor_.alternate_text));
+    two_factor_value->SetKey("fieldLength",
+                             base::Value(second_factor_.field_length));
     value->Set("two_factor", std::move(two_factor_value));
   }
   return value;

@@ -75,8 +75,8 @@ std::unique_ptr<base::DictionaryValue> NewDescriptionValuePair(
     const std::string& desc,
     const std::string& value) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("description", desc);
-  dict->SetString("value", value);
+  dict->SetKey("description", base::Value(desc));
+  dict->SetKey("value", base::Value(value));
   return dict;
 }
 
@@ -84,7 +84,7 @@ std::unique_ptr<base::DictionaryValue> NewDescriptionValuePair(
     const std::string& desc,
     std::unique_ptr<base::Value> value) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("description", desc);
+  dict->SetKey("description", base::Value(desc));
   dict->Set("value", std::move(value));
   return dict;
 }
@@ -564,17 +564,18 @@ std::unique_ptr<base::DictionaryValue> GpuMessageHandler::OnRequestClientInfo(
 
   auto dict = std::make_unique<base::DictionaryValue>();
 
-  dict->SetString("version", GetContentClient()->GetProduct());
-  dict->SetString("command_line",
-      base::CommandLine::ForCurrentProcess()->GetCommandLineString());
-  dict->SetString("operating_system",
-                  base::SysInfo::OperatingSystemName() + " " +
-                  base::SysInfo::OperatingSystemVersion());
-  dict->SetString("angle_commit_id", ANGLE_COMMIT_HASH);
-  dict->SetString("graphics_backend",
-                  std::string("Skia/" STRINGIZE(SK_MILESTONE)
-                              " " SKIA_COMMIT_HASH));
-  dict->SetString("revision_identifier", GPU_LISTS_VERSION);
+  dict->SetKey("version", base::Value(GetContentClient()->GetProduct()));
+  dict->SetKey(
+      "command_line",
+      base::Value(
+          base::CommandLine::ForCurrentProcess()->GetCommandLineString()));
+  dict->SetKey("operating_system",
+               base::Value(base::SysInfo::OperatingSystemName() + " " +
+                           base::SysInfo::OperatingSystemVersion()));
+  dict->SetKey("angle_commit_id", base::Value(ANGLE_COMMIT_HASH));
+  dict->SetKey("graphics_backend", base::Value(std::string("Skia/" STRINGIZE(
+                                       SK_MILESTONE) " " SKIA_COMMIT_HASH)));
+  dict->SetKey("revision_identifier", base::Value(GPU_LISTS_VERSION));
 
   return dict;
 }

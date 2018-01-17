@@ -395,7 +395,7 @@ IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest,
                        ExternalProtocolHandlerPrefs) {
   Profile* profile = browser()->profile();
   base::DictionaryValue prefs;
-  prefs.SetBoolean("tel", false);
+  prefs.SetKey("tel", base::Value(false));
   profile->GetPrefs()->Set(prefs::kExcludedSchemes, prefs);
   ExternalProtocolHandler::BlockState block_state =
       ExternalProtocolHandler::GetBlockState("tel", profile);

@@ -110,11 +110,11 @@ class SupervisedUserWhitelistServiceTest : public testing::Test {
 
     std::unique_ptr<base::DictionaryValue> whitelist_dict(
         new base::DictionaryValue);
-    whitelist_dict->SetString("name", "Whitelist A");
+    whitelist_dict->SetKey("name", base::Value("Whitelist A"));
     dict->Set("aaaa", std::move(whitelist_dict));
 
     whitelist_dict.reset(new base::DictionaryValue);
-    whitelist_dict->SetString("name", "Whitelist B");
+    whitelist_dict->SetKey("name", base::Value("Whitelist B"));
     dict->Set("bbbb", std::move(whitelist_dict));
 
     installer_->RegisterWhitelist(kClientId, "aaaa", "Whitelist A");

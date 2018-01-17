@@ -180,7 +180,7 @@ std::unique_ptr<MediaLogEvent> MediaLog::CreateCreatedEvent(
     const std::string& origin_url) {
   std::unique_ptr<MediaLogEvent> event(
       CreateEvent(MediaLogEvent::WEBMEDIAPLAYER_CREATED));
-  event->params.SetString("origin_url", origin_url);
+  event->params.SetKey("origin_url", base::Value(origin_url));
   return event;
 }
 
@@ -225,13 +225,13 @@ std::unique_ptr<MediaLogEvent> MediaLog::CreateTimeEvent(
 std::unique_ptr<MediaLogEvent> MediaLog::CreateLoadEvent(
     const std::string& url) {
   std::unique_ptr<MediaLogEvent> event(CreateEvent(MediaLogEvent::LOAD));
-  event->params.SetString("url", url);
+  event->params.SetKey("url", base::Value(url));
   return event;
 }
 
 std::unique_ptr<MediaLogEvent> MediaLog::CreateSeekEvent(double seconds) {
   std::unique_ptr<MediaLogEvent> event(CreateEvent(MediaLogEvent::SEEK));
-  event->params.SetDouble("seek_target", seconds);
+  event->params.SetKey("seek_target", base::Value(seconds));
   return event;
 }
 
@@ -239,8 +239,8 @@ std::unique_ptr<MediaLogEvent> MediaLog::CreatePipelineStateChangedEvent(
     PipelineImpl::State state) {
   std::unique_ptr<MediaLogEvent> event(
       CreateEvent(MediaLogEvent::PIPELINE_STATE_CHANGED));
-  event->params.SetString("pipeline_state",
-                          PipelineImpl::GetStateString(state));
+  event->params.SetKey("pipeline_state",
+                       base::Value(PipelineImpl::GetStateString(state)));
   return event;
 }
 
@@ -248,7 +248,7 @@ std::unique_ptr<MediaLogEvent> MediaLog::CreatePipelineErrorEvent(
     PipelineStatus error) {
   std::unique_ptr<MediaLogEvent> event(
       CreateEvent(MediaLogEvent::PIPELINE_ERROR));
-  event->params.SetInteger("pipeline_error", error);
+  event->params.SetKey("pipeline_error", base::Value(static_cast<int>(error)));
   return event;
 }
 
@@ -257,8 +257,8 @@ std::unique_ptr<MediaLogEvent> MediaLog::CreateVideoSizeSetEvent(
     size_t height) {
   std::unique_ptr<MediaLogEvent> event(
       CreateEvent(MediaLogEvent::VIDEO_SIZE_SET));
-  event->params.SetInteger("width", width);
-  event->params.SetInteger("height", height);
+  event->params.SetKey("width", base::Value(static_cast<int>(width)));
+  event->params.SetKey("height", base::Value(static_cast<int>(height)));
   return event;
 }
 

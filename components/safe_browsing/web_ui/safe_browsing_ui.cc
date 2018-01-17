@@ -143,30 +143,32 @@ void ParseFullHashInfo(
         full_hash_info,
     base::DictionaryValue* full_hash_info_dict) {
   if (full_hash_info.has_positive_expiry()) {
-    full_hash_info_dict->SetString(
-        "Positive expiry",
-        UserReadableTimeFromMillisSinceEpoch(full_hash_info.positive_expiry())
-            .GetString());
+    full_hash_info_dict->SetKey(
+        "Positive expiry", base::Value(UserReadableTimeFromMillisSinceEpoch(
+                                           full_hash_info.positive_expiry())
+                                           .GetString()));
   }
   if (full_hash_info.has_full_hash()) {
     std::string full_hash;
     base::Base64UrlEncode(full_hash_info.full_hash(),
                           base::Base64UrlEncodePolicy::INCLUDE_PADDING,
                           &full_hash);
-    full_hash_info_dict->SetString("Full hash (base64)", full_hash);
+    full_hash_info_dict->SetKey("Full hash (base64)", base::Value(full_hash));
   }
   if (full_hash_info.list_identifier().has_platform_type()) {
-    full_hash_info_dict->SetInteger(
-        "platform_type", full_hash_info.list_identifier().platform_type());
+    full_hash_info_dict->SetKey(
+        "platform_type",
+        base::Value(full_hash_info.list_identifier().platform_type()));
   }
   if (full_hash_info.list_identifier().has_threat_entry_type()) {
-    full_hash_info_dict->SetInteger(
+    full_hash_info_dict->SetKey(
         "threat_entry_type",
-        full_hash_info.list_identifier().threat_entry_type());
+        base::Value(full_hash_info.list_identifier().threat_entry_type()));
   }
   if (full_hash_info.list_identifier().has_threat_type()) {
-    full_hash_info_dict->SetInteger(
-        "threat_type", full_hash_info.list_identifier().threat_type());
+    full_hash_info_dict->SetKey(
+        "threat_type",
+        base::Value(full_hash_info.list_identifier().threat_type()));
   }
 }
 
@@ -179,14 +181,16 @@ void ParseFullHashCache(const FullHashCacheInfo::FullHashCache full_hash_cache,
     base::Base64UrlEncode(full_hash_cache.hash_prefix(),
                           base::Base64UrlEncodePolicy::INCLUDE_PADDING,
                           &hash_prefix);
-    full_hash_cache_parsed.SetString("Hash prefix (base64)", hash_prefix);
+    full_hash_cache_parsed.SetKey("Hash prefix (base64)",
+                                  base::Value(hash_prefix));
   }
   if (full_hash_cache.cached_hash_prefix_info().has_negative_expiry()) {
-    full_hash_cache_parsed.SetString(
+    full_hash_cache_parsed.SetKey(
         "Negative expiry",
-        UserReadableTimeFromMillisSinceEpoch(
-            full_hash_cache.cached_hash_prefix_info().negative_expiry())
-            .GetString());
+        base::Value(
+            UserReadableTimeFromMillisSinceEpoch(
+                full_hash_cache.cached_hash_prefix_info().negative_expiry())
+                .GetString()));
   }
 
   full_hash_cache_list->GetList().push_back(std::move(full_hash_cache_parsed));
@@ -203,8 +207,9 @@ void ParseFullHashCacheInfo(const FullHashCacheInfo full_hash_cache_info_proto,
                             base::ListValue* full_hash_cache_info) {
   if (full_hash_cache_info_proto.has_number_of_hits()) {
     base::DictionaryValue number_of_hits;
-    number_of_hits.SetInteger("Number of cache hits",
-                              full_hash_cache_info_proto.number_of_hits());
+    number_of_hits.SetKey(
+        "Number of cache hits",
+        base::Value(full_hash_cache_info_proto.number_of_hits()));
     full_hash_cache_info->GetList().push_back(std::move(number_of_hits));
   }
 
@@ -239,24 +244,27 @@ std::string ParseThreatDetailsInfo(
   std::string report_request_parsed;
   base::DictionaryValue report_request;
   if (report.has_type()) {
-    report_request.SetInteger("type", static_cast<int>(report.type()));
+    report_request.SetKey("type", base::Value(static_cast<int>(report.type())));
   }
   if (report.has_page_url())
-    report_request.SetString("page_url", report.page_url());
+    report_request.SetKey("page_url", base::Value(report.page_url()));
   if (report.has_client_country()) {
-    report_request.SetString("client_country", report.client_country());
+    report_request.SetKey("client_country",
+                          base::Value(report.client_country()));
   }
   if (report.has_repeat_visit()) {
-    report_request.SetInteger("repeat_visit", report.repeat_visit());
+    report_request.SetKey("repeat_visit",
+                          base::Value(static_cast<int>(report.repeat_visit())));
   }
   if (report.has_did_proceed()) {
-    report_request.SetInteger("did_proceed", report.did_proceed());
+    report_request.SetKey("did_proceed",
+                          base::Value(static_cast<int>(report.did_proceed())));
   }
   std::string serialized;
   if (report.SerializeToString(&serialized)) {
     std::string base64_encoded;
     base::Base64Encode(serialized, &base64_encoded);
-    report_request.SetString("csbrr(base64)", base64_encoded);
+    report_request.SetKey("csbrr(base64)", base::Value(base64_encoded));
   }
 
   base::Value* report_request_tree = &report_request;

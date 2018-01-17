@@ -177,14 +177,14 @@ void AudioLogImpl::OnCreated(int component_id,
   StoreComponentMetadata(component_id, &dict);
 
   dict.SetString(kAudioLogStatusKey, "created");
-  dict.SetString("device_id", device_id);
-  dict.SetString("device_type", FormatToString(params.format()));
-  dict.SetInteger("frames_per_buffer", params.frames_per_buffer());
-  dict.SetInteger("sample_rate", params.sample_rate());
-  dict.SetInteger("channels", params.channels());
-  dict.SetString("channel_layout",
-                 ChannelLayoutToString(params.channel_layout()));
-  dict.SetString("effects", EffectsToString(params.effects()));
+  dict.SetKey("device_id", base::Value(device_id));
+  dict.SetKey("device_type", base::Value(FormatToString(params.format())));
+  dict.SetKey("frames_per_buffer", base::Value(params.frames_per_buffer()));
+  dict.SetKey("sample_rate", base::Value(params.sample_rate()));
+  dict.SetKey("channels", base::Value(params.channels()));
+  dict.SetKey("channel_layout",
+              base::Value(ChannelLayoutToString(params.channel_layout())));
+  dict.SetKey("effects", base::Value(EffectsToString(params.effects())));
 
   media_internals_->UpdateAudioLog(MediaInternals::CREATE,
                                    FormatCacheKey(component_id),
@@ -215,7 +215,7 @@ void AudioLogImpl::OnError(int component_id) {
 void AudioLogImpl::OnSetVolume(int component_id, double volume) {
   base::DictionaryValue dict;
   StoreComponentMetadata(component_id, &dict);
-  dict.SetDouble("volume", volume);
+  dict.SetKey("volume", base::Value(volume));
   media_internals_->UpdateAudioLog(MediaInternals::UPDATE_IF_EXISTS,
                                    FormatCacheKey(component_id),
                                    kAudioLogUpdateFunction, &dict);
@@ -225,7 +225,7 @@ void AudioLogImpl::OnSwitchOutputDevice(int component_id,
                                         const std::string& device_id) {
   base::DictionaryValue dict;
   StoreComponentMetadata(component_id, &dict);
-  dict.SetString("device_id", device_id);
+  dict.SetKey("device_id", base::Value(device_id));
   media_internals_->UpdateAudioLog(MediaInternals::UPDATE_IF_EXISTS,
                                    FormatCacheKey(component_id),
                                    kAudioLogUpdateFunction, &dict);
@@ -270,8 +270,8 @@ void AudioLogImpl::SendWebContentsTitleHelper(
 
   // Note: by this point the given audio log entry could have been destroyed, so
   // we use UPDATE_IF_EXISTS to discard such instances.
-  dict->SetInteger("render_process_id", render_process_id);
-  dict->SetString("web_contents_title", web_contents->GetTitle());
+  dict->SetKey("render_process_id", base::Value(render_process_id));
+  dict->SetKey("web_contents_title", base::Value(web_contents->GetTitle()));
   MediaInternals::GetInstance()->UpdateAudioLog(
       MediaInternals::UPDATE_IF_EXISTS, cache_key, kAudioLogUpdateFunction,
       dict.get());
@@ -290,9 +290,9 @@ void AudioLogImpl::SendSingleStringUpdate(int component_id,
 
 void AudioLogImpl::StoreComponentMetadata(int component_id,
                                           base::DictionaryValue* dict) {
-  dict->SetInteger("owner_id", owner_id_);
-  dict->SetInteger("component_id", component_id);
-  dict->SetInteger("component_type", component_);
+  dict->SetKey("owner_id", base::Value(owner_id_));
+  dict->SetKey("component_id", base::Value(component_id));
+  dict->SetKey("component_type", base::Value(static_cast<int>(component_)));
 }
 
 // This class lives on the browser UI thread.
@@ -573,15 +573,16 @@ static bool ConvertEventToUpdate(int render_process_id,
   DCHECK(update);
 
   base::DictionaryValue dict;
-  dict.SetInteger("renderer", render_process_id);
-  dict.SetInteger("player", event.id);
-  dict.SetString("type", media::MediaLog::EventTypeToString(event.type));
+  dict.SetKey("renderer", base::Value(render_process_id));
+  dict.SetKey("player", base::Value(event.id));
+  dict.SetKey("type",
+              base::Value(media::MediaLog::EventTypeToString(event.type)));
 
   // TODO(dalecurtis): This is technically not correct.  TimeTicks "can't" be
   // converted to to a human readable time format.  See base/time/time.h.
   const double ticks = event.time.ToInternalValue();
   const double ticks_millis = ticks / base::Time::kMicrosecondsPerMillisecond;
-  dict.SetDouble("ticksMillis", ticks_millis);
+  dict.SetKey("ticksMillis", base::Value(ticks_millis));
 
   // Convert PipelineStatus to human readable string
   if (event.type == media::MediaLogEvent::PIPELINE_ERROR) {
@@ -592,8 +593,8 @@ static bool ConvertEventToUpdate(int render_process_id,
       return false;
     }
     media::PipelineStatus error = static_cast<media::PipelineStatus>(status);
-    dict.SetString("params.pipeline_error",
-                   media::MediaLog::PipelineStatusToString(error));
+    dict.SetPath({"params", "pipeline_error"},
+                 base::Value(media::MediaLog::PipelineStatusToString(error)));
   } else {
     dict.SetKey("params", event.params.Clone());
   }
@@ -699,12 +700,13 @@ void MediaInternals::UpdateVideoCaptureDeviceCapabilities(
 
     std::unique_ptr<base::DictionaryValue> device_dict(
         new base::DictionaryValue());
-    device_dict->SetString("id", descriptor.device_id);
-    device_dict->SetString("name", descriptor.GetNameAndModel());
+    device_dict->SetKey("id", base::Value(descriptor.device_id));
+    device_dict->SetKey("name", base::Value(descriptor.GetNameAndModel()));
     device_dict->Set("formats", std::move(format_list));
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX) || \
     defined(OS_ANDROID)
-    device_dict->SetString("captureApi", descriptor.GetCaptureApiTypeString());
+    device_dict->SetKey("captureApi",
+                        base::Value(descriptor.GetCaptureApiTypeString()));
 #endif
     video_capture_capabilities_cached_data_.Append(std::move(device_dict));
   }

@@ -28,7 +28,7 @@ PDFPluginPlaceholder* PDFPluginPlaceholder::CreatePDFPlaceholder(
       ui::ResourceBundle::GetSharedInstance().GetRawDataResource(
           IDR_PDF_PLUGIN_HTML));
   base::DictionaryValue values;
-  values.SetString("fileName", GURL(params.url).ExtractFileName());
+  values.SetKey("fileName", base::Value(GURL(params.url).ExtractFileName()));
   std::string html_data = webui::GetI18nTemplateHtml(template_html, &values);
   return new PDFPluginPlaceholder(render_frame, params, html_data);
 }

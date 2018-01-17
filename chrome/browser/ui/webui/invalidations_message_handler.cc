@@ -101,9 +101,9 @@ void InvalidationsMessageHandler::OnUpdateIds(
        it != ids.end();
        ++it) {
     std::unique_ptr<base::DictionaryValue> dic(new base::DictionaryValue());
-    dic->SetString("name", (it->first).name());
-    dic->SetInteger("source", (it->first).source());
-    dic->SetInteger("totalCount", it->second);
+    dic->SetKey("name", base::Value((it->first).name()));
+    dic->SetKey("source", base::Value((it->first).source()));
+    dic->SetKey("totalCount", base::Value(it->second));
     list_of_objects.Append(std::move(dic));
   }
   web_ui()->CallJavascriptFunctionUnsafe("chrome.invalidations.updateIds",

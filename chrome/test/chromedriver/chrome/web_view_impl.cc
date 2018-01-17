@@ -184,7 +184,7 @@ Status WebViewImpl::Load(const std::string& url, const Timeout* timeout) {
                        base::CompareCase::INSENSITIVE_ASCII))
     return Status(kUnknownError, "unsupported protocol");
   base::DictionaryValue params;
-  params.SetString("url", url);
+  params.SetKey("url", base::Value(url));
   if (browser_info_->major_version >= 63 &&
       navigation_tracker_->IsNonBlocking()) {
     // With non-bloakcing navigation tracker, the previous navigation might
@@ -199,7 +199,7 @@ Status WebViewImpl::Load(const std::string& url, const Timeout* timeout) {
 
 Status WebViewImpl::Reload(const Timeout* timeout) {
   base::DictionaryValue params;
-  params.SetBoolean("ignoreCache", false);
+  params.SetKey("ignoreCache", base::Value(false));
   return client_->SendCommandWithTimeout("Page.reload", params, timeout);
 }
 
@@ -257,7 +257,7 @@ Status WebViewImpl::TraverseHistory(int delta, const Timeout* timeout) {
   int entry_id;
   if (!entry->GetInteger("id", &entry_id))
     return Status(kUnknownError, "history entry does not have an id");
-  params.SetInteger("entryId", entry_id);
+  params.SetKey("entryId", base::Value(entry_id));
 
   return client_->SendCommandWithTimeout("Page.navigateToHistoryEntry", params,
                                          timeout);
@@ -369,12 +369,14 @@ Status WebViewImpl::DispatchMouseEvents(const std::list<MouseEvent>& events,
   for (std::list<MouseEvent>::const_iterator it = events.begin();
        it != events.end(); ++it) {
     base::DictionaryValue params;
-    params.SetString("type", GetAsString(it->type));
-    params.SetInteger("x", it->x * page_scale_factor);
-    params.SetInteger("y", it->y * page_scale_factor);
-    params.SetInteger("modifiers", it->modifiers);
-    params.SetString("button", GetAsString(it->button));
-    params.SetInteger("clickCount", it->click_count);
+    params.SetKey("type", base::Value(GetAsString(it->type)));
+    params.SetKey("x",
+                  base::Value(static_cast<int>(it->x * page_scale_factor)));
+    params.SetKey("y",
+                  base::Value(static_cast<int>(it->y * page_scale_factor)));
+    params.SetKey("modifiers", base::Value(it->modifiers));
+    params.SetKey("button", base::Value(GetAsString(it->button)));
+    params.SetKey("clickCount", base::Value(it->click_count));
     Status status = client_->SendCommand("Input.dispatchMouseEvent", params);
     if (status.IsError())
       return status;
@@ -405,23 +407,24 @@ Status WebViewImpl::DispatchKeyEvents(const std::list<KeyEvent>& events) {
   for (std::list<KeyEvent>::const_iterator it = events.begin();
        it != events.end(); ++it) {
     base::DictionaryValue params;
-    params.SetString("type", GetAsString(it->type));
+    params.SetKey("type", base::Value(GetAsString(it->type)));
     if (it->modifiers & kNumLockKeyModifierMask) {
-      params.SetBoolean("isKeypad", true);
-      params.SetInteger("modifiers",
-                        it->modifiers & ~kNumLockKeyModifierMask);
+      params.SetKey("isKeypad", base::Value(true));
+      params.SetKey("modifiers",
+                    base::Value(it->modifiers & ~kNumLockKeyModifierMask));
     } else {
-      params.SetInteger("modifiers", it->modifiers);
+      params.SetKey("modifiers", base::Value(it->modifiers));
     }
-    params.SetString("text", it->modified_text);
-    params.SetString("unmodifiedText", it->unmodified_text);
-    params.SetInteger("windowsVirtualKeyCode", it->key_code);
+    params.SetKey("text", base::Value(it->modified_text));
+    params.SetKey("unmodifiedText", base::Value(it->unmodified_text));
+    params.SetKey("windowsVirtualKeyCode",
+                  base::Value(static_cast<int>(it->key_code)));
     ui::DomCode dom_code = ui::UsLayoutKeyboardCodeToDomCode(it->key_code);
     std::string code = ui::KeycodeConverter::DomCodeToCodeString(dom_code);
     if (!code.empty())
-      params.SetString("code", code);
+      params.SetKey("code", base::Value(code));
     if (!it->key.empty())
-      params.SetString("key", it->key);
+      params.SetKey("key", base::Value(it->key));
     Status status = client_->SendCommand("Input.dispatchKeyEvent", params);
     if (status.IsError())
       return status;
@@ -462,15 +465,15 @@ Status WebViewImpl::DeleteCookie(const std::string& name,
                                  const std::string& domain,
                                  const std::string& path) {
   base::DictionaryValue params;
-  params.SetString("url", url);
+  params.SetKey("url", base::Value(url));
   std::string command;
   if (browser_info_->build_no >= 3189) {
-    params.SetString("name", name);
-    params.SetString("domain", domain);
-    params.SetString("path", path);
+    params.SetKey("name", base::Value(name));
+    params.SetKey("domain", base::Value(domain));
+    params.SetKey("path", base::Value(path));
     command = "Network.deleteCookies";
   } else {
-    params.SetString("cookieName", name);
+    params.SetKey("cookieName", base::Value(name));
     command = "Page.deleteCookie";
   }
 
@@ -486,15 +489,15 @@ Status WebViewImpl::AddCookie(const std::string& name,
                               bool httpOnly,
                               double expiry) {
   base::DictionaryValue params;
-  params.SetString("name", name);
-  params.SetString("url", url);
-  params.SetString("value", value);
-  params.SetString("domain", domain);
-  params.SetString("path", path);
-  params.SetBoolean("secure", secure);
-  params.SetBoolean("httpOnly", httpOnly);
-  params.SetDouble("expirationDate", expiry);
-  params.SetDouble("expires", expiry);
+  params.SetKey("name", base::Value(name));
+  params.SetKey("url", base::Value(url));
+  params.SetKey("value", base::Value(value));
+  params.SetKey("domain", base::Value(domain));
+  params.SetKey("path", base::Value(path));
+  params.SetKey("secure", base::Value(secure));
+  params.SetKey("httpOnly", base::Value(httpOnly));
+  params.SetKey("expirationDate", base::Value(expiry));
+  params.SetKey("expires", base::Value(expiry));
 
   std::unique_ptr<base::DictionaryValue> result;
   Status status =
@@ -605,7 +608,7 @@ Status WebViewImpl::SetFileInputFiles(
   if (!found_node)
     return Status(kUnknownError, "no node ID for file input");
   base::DictionaryValue params;
-  params.SetInteger("nodeId", node_id);
+  params.SetKey("nodeId", base::Value(node_id));
   params.SetKey("files", file_list.Clone());
   return client_->SendCommand("DOM.setFileInputFiles", params);
 }
@@ -685,11 +688,11 @@ Status WebViewImpl::SynthesizeTapGesture(int x,
                                          int tap_count,
                                          bool is_long_press) {
   base::DictionaryValue params;
-  params.SetInteger("x", x);
-  params.SetInteger("y", y);
-  params.SetInteger("tapCount", tap_count);
+  params.SetKey("x", base::Value(x));
+  params.SetKey("y", base::Value(y));
+  params.SetKey("tapCount", base::Value(tap_count));
   if (is_long_press)
-    params.SetInteger("duration", 1500);
+    params.SetKey("duration", base::Value(1500));
   return client_->SendCommand("Input.synthesizeTapGesture", params);
 }
 
@@ -698,21 +701,21 @@ Status WebViewImpl::SynthesizeScrollGesture(int x,
                                             int xoffset,
                                             int yoffset) {
   base::DictionaryValue params;
-  params.SetInteger("x", x);
-  params.SetInteger("y", y);
+  params.SetKey("x", base::Value(x));
+  params.SetKey("y", base::Value(y));
   // Chrome's synthetic scroll gesture is actually a "swipe" gesture, so the
   // direction of the swipe is opposite to the scroll (i.e. a swipe up scrolls
   // down, and a swipe left scrolls right).
-  params.SetInteger("xDistance", -xoffset);
-  params.SetInteger("yDistance", -yoffset);
+  params.SetKey("xDistance", base::Value(-xoffset));
+  params.SetKey("yDistance", base::Value(-yoffset));
   return client_->SendCommand("Input.synthesizeScrollGesture", params);
 }
 
 Status WebViewImpl::SynthesizePinchGesture(int x, int y, double scale_factor) {
   base::DictionaryValue params;
-  params.SetInteger("x", x);
-  params.SetInteger("y", y);
-  params.SetDouble("scaleFactor", scale_factor);
+  params.SetKey("x", base::Value(x));
+  params.SetKey("y", base::Value(y));
+  params.SetKey("scaleFactor", base::Value(scale_factor));
   return client_->SendCommand("Input.synthesizePinchGesture", params);
 }
 
@@ -730,7 +733,7 @@ Status WebViewImpl::GetScreenOrientation(std::string* orientation) {
 
 Status WebViewImpl::SetScreenOrientation(std::string orientation) {
   base::DictionaryValue params;
-  params.SetString("screenOrientation", orientation);
+  params.SetKey("screenOrientation", base::Value(orientation));
   Status status =
     client_->SendCommand("Emulation.lockScreenOrientation", params);
   if (status.IsError())
@@ -836,10 +839,10 @@ Status EvaluateScript(DevToolsClient* client,
                       EvaluateScriptReturnType return_type,
                       std::unique_ptr<base::DictionaryValue>* result) {
   base::DictionaryValue params;
-  params.SetString("expression", expression);
+  params.SetKey("expression", base::Value(expression));
   if (context_id)
-    params.SetInteger("contextId", context_id);
-  params.SetBoolean("returnByValue", return_type == ReturnByValue);
+    params.SetKey("contextId", base::Value(context_id));
+  params.SetKey("returnByValue", base::Value(return_type == ReturnByValue));
   std::unique_ptr<base::DictionaryValue> cmd_result;
   Status status = client->SendCommandAndGetResult(
       "Runtime.evaluate", params, &cmd_result);
@@ -968,14 +971,14 @@ Status GetNodeIdFromFunction(DevToolsClient* client,
   std::unique_ptr<base::DictionaryValue> cmd_result;
   {
     base::DictionaryValue params;
-    params.SetString("objectId", element_id);
+    params.SetKey("objectId", base::Value(element_id));
     status = client->SendCommandAndGetResult(
         "DOM.requestNode", params, &cmd_result);
   }
   {
     // Release the remote object before doing anything else.
     base::DictionaryValue params;
-    params.SetString("objectId", element_id);
+    params.SetKey("objectId", base::Value(element_id));
     Status release_status =
         client->SendCommand("Runtime.releaseObject", params);
     if (release_status.IsError()) {

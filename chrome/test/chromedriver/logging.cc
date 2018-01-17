@@ -203,12 +203,13 @@ void WebDriverLog::AddEntryTimestamped(const base::Time& timestamp,
 
   std::unique_ptr<base::DictionaryValue> log_entry_dict(
       new base::DictionaryValue());
-  log_entry_dict->SetDouble("timestamp",
-                            static_cast<int64_t>(timestamp.ToJsTime()));
-  log_entry_dict->SetString("level", LevelToName(level));
+  log_entry_dict->SetKey("timestamp",
+                         base::Value(static_cast<double>(
+                             static_cast<int64_t>(timestamp.ToJsTime()))));
+  log_entry_dict->SetKey("level", base::Value(LevelToName(level)));
   if (!source.empty())
-    log_entry_dict->SetString("source", source);
-  log_entry_dict->SetString("message", message);
+    log_entry_dict->SetKey("source", base::Value(source));
+  log_entry_dict->SetKey("message", base::Value(message));
   if (batches_of_entries_.empty() ||
       batches_of_entries_.back()->GetSize() >= internal::kMaxReturnedEntries) {
     std::unique_ptr<base::ListValue> list(new base::ListValue());

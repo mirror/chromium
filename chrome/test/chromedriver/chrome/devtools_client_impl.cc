@@ -267,8 +267,8 @@ Status DevToolsClientImpl::SendCommandInternal(
 
   int command_id = next_id_++;
   base::DictionaryValue command;
-  command.SetInteger("id", command_id);
-  command.SetString("method", method);
+  command.SetKey("id", base::Value(command_id));
+  command.SetKey("method", base::Value(method));
   command.SetKey("params", params.Clone());
   std::string message = SerializeValue(&command);
   if (IsVLogOn(1)) {
@@ -402,7 +402,8 @@ Status DevToolsClientImpl::ProcessEvent(const internal::InspectorEvent& event) {
     // a hang.
     int max_id = next_id_;
     base::DictionaryValue enable_params;
-    enable_params.SetString("purpose", "detect if alert blocked any cmds");
+    enable_params.SetKey("purpose",
+                         base::Value("detect if alert blocked any cmds"));
     Status enable_status = SendCommand("Inspector.enable", enable_params);
     for (ResponseInfoMap::const_iterator iter = response_info_map_.begin();
          iter != response_info_map_.end(); ++iter) {

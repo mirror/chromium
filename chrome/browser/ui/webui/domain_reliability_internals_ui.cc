@@ -50,7 +50,7 @@ void DomainReliabilityInternalsUI::UpdateData(
   DomainReliabilityService* service = factory->GetForBrowserContext(profile);
   if (!service) {
     base::DictionaryValue* data = new base::DictionaryValue();
-    data->SetString("error", "no_service");
+    data->SetKey("error", base::Value("no_service"));
     OnDataUpdated(std::unique_ptr<base::Value>(data));
     return;
   }

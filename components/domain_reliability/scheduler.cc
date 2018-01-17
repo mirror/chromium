@@ -164,31 +164,40 @@ std::unique_ptr<base::Value> DomainReliabilityScheduler::GetWebUIData() const {
 
   std::unique_ptr<base::DictionaryValue> data(new base::DictionaryValue());
 
-  data->SetBoolean("upload_pending", upload_pending_);
-  data->SetBoolean("upload_scheduled", upload_scheduled_);
-  data->SetBoolean("upload_running", upload_running_);
+  data->SetKey("upload_pending", base::Value(upload_pending_));
+  data->SetKey("upload_scheduled", base::Value(upload_scheduled_));
+  data->SetKey("upload_running", base::Value(upload_running_));
 
-  data->SetInteger("scheduled_min", (scheduled_min_time_ - now).InSeconds());
-  data->SetInteger("scheduled_max", (scheduled_max_time_ - now).InSeconds());
+  data->SetKey(
+      "scheduled_min",
+      base::Value(static_cast<int>((scheduled_min_time_ - now).InSeconds())));
+  data->SetKey(
+      "scheduled_max",
+      base::Value(static_cast<int>((scheduled_max_time_ - now).InSeconds())));
 
-  data->SetInteger("collector_index", static_cast<int>(collector_index_));
+  data->SetKey("collector_index",
+               base::Value(static_cast<int>(collector_index_)));
 
   if (last_upload_finished_) {
     std::unique_ptr<base::DictionaryValue> last(new base::DictionaryValue());
-    last->SetInteger("start_time", (now - last_upload_start_time_).InSeconds());
-    last->SetInteger("end_time", (now - last_upload_end_time_).InSeconds());
-    last->SetInteger("collector_index",
-        static_cast<int>(last_upload_collector_index_));
-    last->SetBoolean("success", last_upload_success_);
+    last->SetKey("start_time",
+                 base::Value(static_cast<int>(
+                     (now - last_upload_start_time_).InSeconds())));
+    last->SetKey("end_time", base::Value(static_cast<int>(
+                                 (now - last_upload_end_time_).InSeconds())));
+    last->SetKey("collector_index",
+                 base::Value(static_cast<int>(last_upload_collector_index_)));
+    last->SetKey("success", base::Value(last_upload_success_));
     data->Set("last_upload", std::move(last));
   }
 
   std::unique_ptr<base::ListValue> collectors_value(new base::ListValue());
   for (const auto& collector : collectors_) {
     std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
-    value->SetInteger("failures", collector->failure_count());
-    value->SetInteger("next_upload",
-        (collector->GetReleaseTime() - now).InSeconds());
+    value->SetKey("failures", base::Value(collector->failure_count()));
+    value->SetKey("next_upload",
+                  base::Value(static_cast<int>(
+                      (collector->GetReleaseTime() - now).InSeconds())));
     collectors_value->Append(std::move(value));
   }
   data->Set("collectors", std::move(collectors_value));

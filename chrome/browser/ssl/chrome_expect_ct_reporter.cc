@@ -90,7 +90,7 @@ void AddSCT(const net::SignedCertificateTimestampAndStatus& sct,
             base::ListValue* list) {
   std::unique_ptr<base::DictionaryValue> list_item(new base::DictionaryValue());
   // Chrome implements RFC6962, not 6962-bis, so the reports contain v1 SCTs.
-  list_item->SetInteger("version", 1);
+  list_item->SetKey("version", base::Value(1));
   std::string status;
   switch (sct.status) {
     case net::ct::SCT_STATUS_LOG_UNKNOWN:
@@ -106,13 +106,13 @@ void AddSCT(const net::SignedCertificateTimestampAndStatus& sct,
     case net::ct::SCT_STATUS_NONE:
       NOTREACHED();
   }
-  list_item->SetString("status", status);
-  list_item->SetString("source", SCTOriginToString(sct.sct->origin));
+  list_item->SetKey("status", base::Value(status));
+  list_item->SetKey("source", base::Value(SCTOriginToString(sct.sct->origin)));
   std::string serialized_sct;
   net::ct::EncodeSignedCertificateTimestamp(sct.sct, &serialized_sct);
   std::string encoded_serialized_sct;
   base::Base64Encode(serialized_sct, &encoded_serialized_sct);
-  list_item->SetString("serialized_sct", encoded_serialized_sct);
+  list_item->SetKey("serialized_sct", base::Value(encoded_serialized_sct));
   list->Append(std::move(list_item));
 }
 
@@ -172,10 +172,11 @@ void ChromeExpectCTReporter::OnExpectCTFailed(
   base::DictionaryValue outer_report;
   base::DictionaryValue* report = outer_report.SetDictionary(
       "expect-ct-report", base::MakeUnique<base::DictionaryValue>());
-  report->SetString("hostname", host_port_pair.host());
-  report->SetInteger("port", host_port_pair.port());
-  report->SetString("date-time", TimeToISO8601(base::Time::Now()));
-  report->SetString("effective-expiration-date", TimeToISO8601(expiration));
+  report->SetKey("hostname", base::Value(host_port_pair.host()));
+  report->SetKey("port", base::Value(static_cast<int>(host_port_pair.port())));
+  report->SetKey("date-time", base::Value(TimeToISO8601(base::Time::Now())));
+  report->SetKey("effective-expiration-date",
+                 base::Value(TimeToISO8601(expiration)));
   report->Set("served-certificate-chain",
               GetPEMEncodedChainAsList(served_certificate_chain));
   report->Set("validated-certificate-chain",

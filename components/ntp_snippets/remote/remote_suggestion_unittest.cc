@@ -218,8 +218,9 @@ std::unique_ptr<base::DictionaryValue> ContentSuggestionSnippet() {
 
 TEST(RemoteSuggestionTest, NotifcationInfoAllSpecified) {
   auto json = ContentSuggestionSnippet();
-  json->SetBoolean("notificationInfo.shouldNotify", true);
-  json->SetString("notificationInfo.deadline", "2016-06-30T13:01:37.000Z");
+  json->SetPath({"notificationInfo", "shouldNotify"}, base::Value(true));
+  json->SetPath({"notificationInfo", "deadline"},
+                base::Value("2016-06-30T13:01:37.000Z"));
   auto snippet = RemoteSuggestion::CreateFromContentSuggestionsDictionary(
       *json, 0, base::Time());
   EXPECT_TRUE(snippet->should_notify());
@@ -230,8 +231,8 @@ TEST(RemoteSuggestionTest, NotifcationInfoAllSpecified) {
 
 TEST(RemoteSuggestionTest, NotificationInfoDeadlineInvalid) {
   auto json = ContentSuggestionSnippet();
-  json->SetBoolean("notificationInfo.shouldNotify", true);
-  json->SetInteger("notificationInfo.notificationDeadline", 0);
+  json->SetPath({"notificationInfo", "shouldNotify"}, base::Value(true));
+  json->SetPath({"notificationInfo", "notificationDeadline"}, base::Value(0));
   auto snippet = RemoteSuggestion::CreateFromContentSuggestionsDictionary(
       *json, 0, base::Time());
   EXPECT_TRUE(snippet->should_notify());
@@ -240,7 +241,7 @@ TEST(RemoteSuggestionTest, NotificationInfoDeadlineInvalid) {
 
 TEST(RemoteSuggestionTest, NotificationInfoDeadlineAbsent) {
   auto json = ContentSuggestionSnippet();
-  json->SetBoolean("notificationInfo.shouldNotify", true);
+  json->SetPath({"notificationInfo", "shouldNotify"}, base::Value(true));
   auto snippet = RemoteSuggestion::CreateFromContentSuggestionsDictionary(
       *json, 0, base::Time());
   EXPECT_TRUE(snippet->should_notify());
@@ -249,7 +250,7 @@ TEST(RemoteSuggestionTest, NotificationInfoDeadlineAbsent) {
 
 TEST(RemoteSuggestionTest, NotificationInfoShouldNotifyInvalid) {
   auto json = ContentSuggestionSnippet();
-  json->SetString("notificationInfo.shouldNotify", "non-bool");
+  json->SetPath({"notificationInfo", "shouldNotify"}, base::Value("non-bool"));
   auto snippet = RemoteSuggestion::CreateFromContentSuggestionsDictionary(
       *json, 0, base::Time());
   EXPECT_FALSE(snippet->should_notify());
@@ -288,8 +289,9 @@ TEST(RemoteSuggestionTest, ToContentSuggestion) {
 
 TEST(RemoteSuggestionTest, ToContentSuggestionWithNotificationInfo) {
   auto json = ContentSuggestionSnippet();
-  json->SetBoolean("notificationInfo.shouldNotify", true);
-  json->SetString("notificationInfo.deadline", "2016-06-30T13:01:37.000Z");
+  json->SetPath({"notificationInfo", "shouldNotify"}, base::Value(true));
+  json->SetPath({"notificationInfo", "deadline"},
+                base::Value("2016-06-30T13:01:37.000Z"));
   auto snippet = RemoteSuggestion::CreateFromContentSuggestionsDictionary(
       *json, 0, base::Time());
   ASSERT_THAT(snippet, NotNull());
@@ -314,7 +316,7 @@ TEST(RemoteSuggestionTest, ToContentSuggestionWithNotificationInfo) {
 
 TEST(RemoteSuggestionTest, ToContentSuggestionWithContentTypeVideo) {
   auto json = ContentSuggestionSnippet();
-  json->SetString("contentType", "VIDEO");
+  json->SetKey("contentType", base::Value("VIDEO"));
   auto snippet = RemoteSuggestion::CreateFromContentSuggestionsDictionary(
       *json, 0, base::Time());
   ASSERT_THAT(snippet, NotNull());
@@ -326,7 +328,7 @@ TEST(RemoteSuggestionTest, ToContentSuggestionWithContentTypeVideo) {
 
 TEST(RemoteSuggestionTest, ToContentSuggestionWithContentTypeUnknown) {
   auto json = ContentSuggestionSnippet();
-  json->SetString("contentType", "UNKNOWN");
+  json->SetKey("contentType", base::Value("UNKNOWN"));
   auto snippet = RemoteSuggestion::CreateFromContentSuggestionsDictionary(
       *json, 0, base::Time());
   ASSERT_THAT(snippet, NotNull());
@@ -351,7 +353,7 @@ TEST(RemoteSuggestionTest, ToContentSuggestionWithLargeImageDominantColor) {
   auto json = ContentSuggestionSnippet();
   // JSON does not support unsigned types. As a result the value is parsed as
   // int if it fits and as double otherwise.
-  json->SetDouble("imageDominantColor", 4289379276.);
+  json->SetKey("imageDominantColor", base::Value(4289379276.));
   auto snippet = RemoteSuggestion::CreateFromContentSuggestionsDictionary(
       *json, 0, base::Time());
   ASSERT_THAT(snippet, NotNull());
@@ -367,7 +369,7 @@ TEST(RemoteSuggestionTest, ToContentSuggestionWithSmallImageDominantColor) {
   auto json = ContentSuggestionSnippet();
   // JSON does not support unsigned types. As a result the value is parsed as
   // int if it fits and as double otherwise.
-  json->SetInteger("imageDominantColor", 16777216 /*=0x1000000*/);
+  json->SetKey("imageDominantColor", base::Value(16777216 /*=0x1000000*/));
   auto snippet = RemoteSuggestion::CreateFromContentSuggestionsDictionary(
       *json, 0, base::Time());
   ASSERT_THAT(snippet, NotNull());

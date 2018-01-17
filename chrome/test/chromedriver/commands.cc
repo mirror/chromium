@@ -37,12 +37,12 @@ void ExecuteGetStatus(
     const std::string& session_id,
     const CommandCallback& callback) {
   base::DictionaryValue build;
-  build.SetString("version", "alpha");
+  build.SetKey("version", base::Value("alpha"));
 
   base::DictionaryValue os;
-  os.SetString("name", base::SysInfo::OperatingSystemName());
-  os.SetString("version", base::SysInfo::OperatingSystemVersion());
-  os.SetString("arch", base::SysInfo::OperatingSystemArchitecture());
+  os.SetKey("name", base::Value(base::SysInfo::OperatingSystemName()));
+  os.SetKey("version", base::Value(base::SysInfo::OperatingSystemVersion()));
+  os.SetKey("arch", base::Value(base::SysInfo::OperatingSystemArchitecture()));
 
   base::DictionaryValue info;
   info.SetKey("build", std::move(build));
@@ -93,7 +93,7 @@ void OnGetSession(const base::WeakPtr<size_t>& session_remaining_count,
   (*session_remaining_count)--;
 
   std::unique_ptr<base::DictionaryValue> session(new base::DictionaryValue());
-  session->SetString("id", session_id);
+  session->SetKey("id", base::Value(session_id));
   session->SetKey("capabilities",
                   base::Value::FromUniquePtrValue(std::move(value)));
   session_list->Append(std::move(session));

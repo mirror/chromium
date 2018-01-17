@@ -1726,13 +1726,13 @@ std::unique_ptr<base::Value> ProfileSyncService::GetTypeStatusMap() {
 
   std::unique_ptr<base::DictionaryValue> type_status_header(
       new base::DictionaryValue());
-  type_status_header->SetString("status", "header");
-  type_status_header->SetString("name", "Model Type");
-  type_status_header->SetString("num_entries", "Total Entries");
-  type_status_header->SetString("num_live", "Live Entries");
-  type_status_header->SetString("message", "Message");
-  type_status_header->SetString("state", "State");
-  type_status_header->SetString("group_type", "Group Type");
+  type_status_header->SetKey("status", base::Value("header"));
+  type_status_header->SetKey("name", base::Value("Model Type"));
+  type_status_header->SetKey("num_entries", base::Value("Total Entries"));
+  type_status_header->SetKey("num_live", base::Value("Live Entries"));
+  type_status_header->SetKey("message", base::Value("Message"));
+  type_status_header->SetKey("state", base::Value("State"));
+  type_status_header->SetKey("group_type", base::Value("Group Type"));
   result->Append(std::move(type_status_header));
 
   const DataTypeStatusTable::TypeErrorMap error_map =
@@ -1744,37 +1744,38 @@ std::unique_ptr<base::Value> ProfileSyncService::GetTypeStatusMap() {
     ModelType type = it.Get();
 
     auto type_status = std::make_unique<base::DictionaryValue>();
-    type_status->SetString("name", ModelTypeToString(type));
-    type_status->SetString("group_type",
-                           ModelSafeGroupToString(routing_info[type]));
+    type_status->SetKey("name", base::Value(ModelTypeToString(type)));
+    type_status->SetKey(
+        "group_type", base::Value(ModelSafeGroupToString(routing_info[type])));
 
     if (error_map.find(type) != error_map.end()) {
       const syncer::SyncError& error = error_map.find(type)->second;
       DCHECK(error.IsSet());
       switch (error.GetSeverity()) {
         case syncer::SyncError::SYNC_ERROR_SEVERITY_ERROR:
-          type_status->SetString("status", "error");
-          type_status->SetString(
-              "message", "Error: " + error.location().ToString() + ", " +
-                             error.GetMessagePrefix() + error.message());
+          type_status->SetKey("status", base::Value("error"));
+          type_status->SetKey(
+              "message",
+              base::Value("Error: " + error.location().ToString() + ", " +
+                          error.GetMessagePrefix() + error.message()));
           break;
         case syncer::SyncError::SYNC_ERROR_SEVERITY_INFO:
-          type_status->SetString("status", "disabled");
-          type_status->SetString("message", error.message());
+          type_status->SetKey("status", base::Value("disabled"));
+          type_status->SetKey("message", base::Value(error.message()));
           break;
       }
     } else if (throttled_types.Has(type)) {
-      type_status->SetString("status", "warning");
-      type_status->SetString("message", " Throttled");
+      type_status->SetKey("status", base::Value("warning"));
+      type_status->SetKey("message", base::Value(" Throttled"));
     } else if (backed_off_types.Has(type)) {
-      type_status->SetString("status", "warning");
-      type_status->SetString("message", "Backed off");
+      type_status->SetKey("status", base::Value("warning"));
+      type_status->SetKey("message", base::Value("Backed off"));
     } else if (routing_info.find(type) != routing_info.end()) {
-      type_status->SetString("status", "ok");
-      type_status->SetString("message", "");
+      type_status->SetKey("status", base::Value("ok"));
+      type_status->SetKey("message", base::Value(""));
     } else {
-      type_status->SetString("status", "warning");
-      type_status->SetString("message", "Disabled by User");
+      type_status->SetKey("status", base::Value("warning"));
+      type_status->SetKey("message", base::Value("Disabled by User"));
     }
 
     const auto& dtc_iter = data_type_controllers_.find(type);
@@ -1785,8 +1786,9 @@ std::unique_ptr<base::Value> ProfileSyncService::GetTypeStatusMap() {
       dtc_iter->second->GetStatusCounters(BindToCurrentThread(
           base::Bind(&ProfileSyncService::OnDatatypeStatusCounterUpdated,
                      base::Unretained(this))));
-      type_status->SetString("state", DataTypeController::StateToString(
-                                          dtc_iter->second->state()));
+      type_status->SetKey("state",
+                          base::Value(DataTypeController::StateToString(
+                              dtc_iter->second->state())));
     }
 
     result->Append(std::move(type_status));
@@ -2044,7 +2046,7 @@ void GetAllNodesRequestHelper::OnReceivedNodesForType(
 
   // Add these results to our list.
   std::unique_ptr<base::DictionaryValue> type_dict(new base::DictionaryValue());
-  type_dict->SetString("type", ModelTypeToString(type));
+  type_dict->SetKey("type", base::Value(ModelTypeToString(type)));
   type_dict->Set("nodes", std::move(node_list));
   result_accumulator_->Append(std::move(type_dict));
 

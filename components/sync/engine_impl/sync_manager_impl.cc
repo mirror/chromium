@@ -107,8 +107,8 @@ SyncManagerImpl::NotificationInfo::~NotificationInfo() {}
 
 base::DictionaryValue* SyncManagerImpl::NotificationInfo::ToValue() const {
   base::DictionaryValue* value = new base::DictionaryValue();
-  value->SetInteger("totalCount", total_count);
-  value->SetString("payload", payload);
+  value->SetKey("totalCount", base::Value(total_count));
+  value->SetKey("payload", base::Value(payload));
   return value;
 }
 

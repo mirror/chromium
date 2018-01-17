@@ -75,23 +75,26 @@ void SafeBrowsingLoudErrorUI::PopulateStringsForHtml(
     base::DictionaryValue* load_time_data) {
   DCHECK(load_time_data);
 
-  load_time_data->SetString("type", "SAFEBROWSING");
-  load_time_data->SetString(
-      "tabTitle", l10n_util::GetStringUTF16(IDS_SAFEBROWSING_V3_TITLE));
-  load_time_data->SetString(
-      "openDetails",
-      l10n_util::GetStringUTF16(IDS_SAFEBROWSING_V3_OPEN_DETAILS_BUTTON));
-  load_time_data->SetString(
-      "closeDetails",
-      l10n_util::GetStringUTF16(IDS_SAFEBROWSING_V3_CLOSE_DETAILS_BUTTON));
-  load_time_data->SetString(
-      "primaryButtonText",
-      l10n_util::GetStringUTF16(IDS_SAFEBROWSING_OVERRIDABLE_SAFETY_BUTTON));
-  load_time_data->SetBoolean("overridable", !is_proceed_anyway_disabled());
+  load_time_data->SetKey("type", base::Value("SAFEBROWSING"));
+  load_time_data->SetKey(
+      "tabTitle",
+      base::Value(l10n_util::GetStringUTF16(IDS_SAFEBROWSING_V3_TITLE)));
+  load_time_data->SetKey("openDetails",
+                         base::Value(l10n_util::GetStringUTF16(
+                             IDS_SAFEBROWSING_V3_OPEN_DETAILS_BUTTON)));
+  load_time_data->SetKey("closeDetails",
+                         base::Value(l10n_util::GetStringUTF16(
+                             IDS_SAFEBROWSING_V3_CLOSE_DETAILS_BUTTON)));
+  load_time_data->SetKey("primaryButtonText",
+                         base::Value(l10n_util::GetStringUTF16(
+                             IDS_SAFEBROWSING_OVERRIDABLE_SAFETY_BUTTON)));
+  load_time_data->SetKey("overridable",
+                         base::Value(!is_proceed_anyway_disabled()));
 
-  load_time_data->SetBoolean(
+  load_time_data->SetKey(
       "hide_primary_button",
-      always_show_back_to_safety() ? false : !controller()->CanGoBack());
+      base::Value(always_show_back_to_safety() ? false
+                                               : !controller()->CanGoBack()));
 
   switch (interstitial_reason()) {
     case BaseSafeBrowsingErrorUI::SB_REASON_MALWARE:
@@ -218,67 +221,71 @@ void SafeBrowsingLoudErrorUI::HandleCommand(
 
 void SafeBrowsingLoudErrorUI::PopulateMalwareLoadTimeData(
     base::DictionaryValue* load_time_data) {
-  load_time_data->SetBoolean("phishing", false);
-  load_time_data->SetString("heading",
-                            l10n_util::GetStringUTF16(IDS_MALWARE_V3_HEADING));
-  load_time_data->SetString(
+  load_time_data->SetKey("phishing", base::Value(false));
+  load_time_data->SetKey(
+      "heading",
+      base::Value(l10n_util::GetStringUTF16(IDS_MALWARE_V3_HEADING)));
+  load_time_data->SetKey(
       "primaryParagraph",
-      l10n_util::GetStringFUTF16(
+      base::Value(l10n_util::GetStringFUTF16(
           IDS_MALWARE_V3_PRIMARY_PARAGRAPH,
-          common_string_util::GetFormattedHostName(request_url())));
-  load_time_data->SetString(
+          common_string_util::GetFormattedHostName(request_url()))));
+  load_time_data->SetKey(
       "explanationParagraph",
-      is_main_frame_load_blocked()
-          ? l10n_util::GetStringFUTF16(
-                IDS_MALWARE_V3_EXPLANATION_PARAGRAPH,
-                common_string_util::GetFormattedHostName(request_url()))
-          : l10n_util::GetStringFUTF16(
-                IDS_MALWARE_V3_EXPLANATION_PARAGRAPH_SUBRESOURCE,
-                base::UTF8ToUTF16(main_frame_url().host()),
-                common_string_util::GetFormattedHostName(request_url())));
-  load_time_data->SetString(
+      base::Value(
+          is_main_frame_load_blocked()
+              ? l10n_util::GetStringFUTF16(
+                    IDS_MALWARE_V3_EXPLANATION_PARAGRAPH,
+                    common_string_util::GetFormattedHostName(request_url()))
+              : l10n_util::GetStringFUTF16(
+                    IDS_MALWARE_V3_EXPLANATION_PARAGRAPH_SUBRESOURCE,
+                    base::UTF8ToUTF16(main_frame_url().host()),
+                    common_string_util::GetFormattedHostName(request_url()))));
+  load_time_data->SetKey(
       "finalParagraph",
-      l10n_util::GetStringUTF16(IDS_MALWARE_V3_PROCEED_PARAGRAPH));
+      base::Value(l10n_util::GetStringUTF16(IDS_MALWARE_V3_PROCEED_PARAGRAPH)));
 }
 
 void SafeBrowsingLoudErrorUI::PopulateHarmfulLoadTimeData(
     base::DictionaryValue* load_time_data) {
-  load_time_data->SetBoolean("phishing", false);
-  load_time_data->SetString("heading",
-                            l10n_util::GetStringUTF16(IDS_HARMFUL_V3_HEADING));
-  load_time_data->SetString(
+  load_time_data->SetKey("phishing", base::Value(false));
+  load_time_data->SetKey(
+      "heading",
+      base::Value(l10n_util::GetStringUTF16(IDS_HARMFUL_V3_HEADING)));
+  load_time_data->SetKey(
       "primaryParagraph",
-      l10n_util::GetStringFUTF16(
+      base::Value(l10n_util::GetStringFUTF16(
           IDS_HARMFUL_V3_PRIMARY_PARAGRAPH,
-          common_string_util::GetFormattedHostName(request_url())));
-  load_time_data->SetString(
+          common_string_util::GetFormattedHostName(request_url()))));
+  load_time_data->SetKey(
       "explanationParagraph",
-      l10n_util::GetStringFUTF16(
+      base::Value(l10n_util::GetStringFUTF16(
           IDS_HARMFUL_V3_EXPLANATION_PARAGRAPH,
-          common_string_util::GetFormattedHostName(request_url())));
-  load_time_data->SetString(
+          common_string_util::GetFormattedHostName(request_url()))));
+  load_time_data->SetKey(
       "finalParagraph",
-      l10n_util::GetStringUTF16(IDS_HARMFUL_V3_PROCEED_PARAGRAPH));
+      base::Value(l10n_util::GetStringUTF16(IDS_HARMFUL_V3_PROCEED_PARAGRAPH)));
 }
 
 void SafeBrowsingLoudErrorUI::PopulatePhishingLoadTimeData(
     base::DictionaryValue* load_time_data) {
-  load_time_data->SetBoolean("phishing", true);
-  load_time_data->SetString("heading",
-                            l10n_util::GetStringUTF16(IDS_PHISHING_V4_HEADING));
-  load_time_data->SetString(
+  load_time_data->SetKey("phishing", base::Value(true));
+  load_time_data->SetKey(
+      "heading",
+      base::Value(l10n_util::GetStringUTF16(IDS_PHISHING_V4_HEADING)));
+  load_time_data->SetKey(
       "primaryParagraph",
-      l10n_util::GetStringFUTF16(
+      base::Value(l10n_util::GetStringFUTF16(
           IDS_PHISHING_V4_PRIMARY_PARAGRAPH,
-          common_string_util::GetFormattedHostName(request_url())));
-  load_time_data->SetString(
+          common_string_util::GetFormattedHostName(request_url()))));
+  load_time_data->SetKey(
       "explanationParagraph",
-      l10n_util::GetStringFUTF16(
+      base::Value(l10n_util::GetStringFUTF16(
           IDS_PHISHING_V4_EXPLANATION_PARAGRAPH,
-          common_string_util::GetFormattedHostName(request_url())));
-  load_time_data->SetString(
-      "finalParagraph",
-      l10n_util::GetStringUTF16(IDS_PHISHING_V4_PROCEED_AND_REPORT_PARAGRAPH));
+          common_string_util::GetFormattedHostName(request_url()))));
+  load_time_data->SetKey("finalParagraph",
+                         base::Value(l10n_util::GetStringUTF16(
+                             IDS_PHISHING_V4_PROCEED_AND_REPORT_PARAGRAPH)));
 }
 
 void SafeBrowsingLoudErrorUI::PopulateExtendedReportingOption(

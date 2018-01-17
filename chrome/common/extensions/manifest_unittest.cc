@@ -69,7 +69,7 @@ TEST_F(ManifestUnitTest, Extension) {
   manifest_value->SetString(keys::kVersion, "1");
   // Only supported in manifest_version=1.
   manifest_value->SetString(keys::kBackgroundPageLegacy, "bg.html");
-  manifest_value->SetString("unknown_key", "foo");
+  manifest_value->SetKey("unknown_key", base::Value("foo"));
 
   std::unique_ptr<Manifest> manifest(
       new Manifest(Manifest::INTERNAL, std::move(manifest_value)));

@@ -616,20 +616,20 @@ const size_t kDiskWeightedIOTime = 13;
 
 std::unique_ptr<DictionaryValue> SystemMemoryInfoKB::ToValue() const {
   auto res = std::make_unique<DictionaryValue>();
-  res->SetInteger("total", total);
-  res->SetInteger("free", free);
-  res->SetInteger("available", available);
-  res->SetInteger("buffers", buffers);
-  res->SetInteger("cached", cached);
-  res->SetInteger("active_anon", active_anon);
-  res->SetInteger("inactive_anon", inactive_anon);
-  res->SetInteger("active_file", active_file);
-  res->SetInteger("inactive_file", inactive_file);
-  res->SetInteger("swap_total", swap_total);
-  res->SetInteger("swap_free", swap_free);
-  res->SetInteger("swap_used", swap_total - swap_free);
-  res->SetInteger("dirty", dirty);
-  res->SetInteger("reclaimable", reclaimable);
+  res->SetKey("total", base::Value(total));
+  res->SetKey("free", base::Value(free));
+  res->SetKey("available", base::Value(available));
+  res->SetKey("buffers", base::Value(buffers));
+  res->SetKey("cached", base::Value(cached));
+  res->SetKey("active_anon", base::Value(active_anon));
+  res->SetKey("inactive_anon", base::Value(inactive_anon));
+  res->SetKey("active_file", base::Value(active_file));
+  res->SetKey("inactive_file", base::Value(inactive_file));
+  res->SetKey("swap_total", base::Value(swap_total));
+  res->SetKey("swap_free", base::Value(swap_free));
+  res->SetKey("swap_used", base::Value(swap_total - swap_free));
+  res->SetKey("dirty", base::Value(dirty));
+  res->SetKey("reclaimable", base::Value(reclaimable));
 #ifdef OS_CHROMEOS
   res->SetInteger("shmem", shmem);
   res->SetInteger("slab", slab);
@@ -781,9 +781,9 @@ bool GetSystemMemoryInfo(SystemMemoryInfoKB* meminfo) {
 
 std::unique_ptr<DictionaryValue> VmStatInfo::ToValue() const {
   auto res = std::make_unique<DictionaryValue>();
-  res->SetInteger("pswpin", pswpin);
-  res->SetInteger("pswpout", pswpout);
-  res->SetInteger("pgmajfault", pgmajfault);
+  res->SetKey("pswpin", base::Value(static_cast<int>(pswpin)));
+  res->SetKey("pswpout", base::Value(static_cast<int>(pswpout)));
+  res->SetKey("pgmajfault", base::Value(static_cast<int>(pgmajfault)));
   return res;
 }
 
@@ -825,17 +825,19 @@ std::unique_ptr<Value> SystemDiskInfo::ToValue() const {
 
   // Write out uint64_t variables as doubles.
   // Note: this may discard some precision, but for JS there's no other option.
-  res->SetDouble("reads", static_cast<double>(reads));
-  res->SetDouble("reads_merged", static_cast<double>(reads_merged));
-  res->SetDouble("sectors_read", static_cast<double>(sectors_read));
-  res->SetDouble("read_time", static_cast<double>(read_time));
-  res->SetDouble("writes", static_cast<double>(writes));
-  res->SetDouble("writes_merged", static_cast<double>(writes_merged));
-  res->SetDouble("sectors_written", static_cast<double>(sectors_written));
-  res->SetDouble("write_time", static_cast<double>(write_time));
-  res->SetDouble("io", static_cast<double>(io));
-  res->SetDouble("io_time", static_cast<double>(io_time));
-  res->SetDouble("weighted_io_time", static_cast<double>(weighted_io_time));
+  res->SetKey("reads", base::Value(static_cast<double>(reads)));
+  res->SetKey("reads_merged", base::Value(static_cast<double>(reads_merged)));
+  res->SetKey("sectors_read", base::Value(static_cast<double>(sectors_read)));
+  res->SetKey("read_time", base::Value(static_cast<double>(read_time)));
+  res->SetKey("writes", base::Value(static_cast<double>(writes)));
+  res->SetKey("writes_merged", base::Value(static_cast<double>(writes_merged)));
+  res->SetKey("sectors_written",
+              base::Value(static_cast<double>(sectors_written)));
+  res->SetKey("write_time", base::Value(static_cast<double>(write_time)));
+  res->SetKey("io", base::Value(static_cast<double>(io)));
+  res->SetKey("io_time", base::Value(static_cast<double>(io_time)));
+  res->SetKey("weighted_io_time",
+              base::Value(static_cast<double>(weighted_io_time)));
 
   return std::move(res);
 }

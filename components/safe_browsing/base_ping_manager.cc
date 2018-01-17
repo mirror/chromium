@@ -37,8 +37,8 @@ std::unique_ptr<base::Value> NetLogPingStartCallback(
     net::NetLogCaptureMode) {
   std::unique_ptr<base::DictionaryValue> event_params(
       new base::DictionaryValue());
-  event_params->SetString("url", url.spec());
-  event_params->SetString("payload", payload);
+  event_params->SetKey("url", base::Value(url.spec()));
+  event_params->SetKey("payload", base::Value(payload));
   net_log.source().AddToEventParameters(event_params.get());
   return std::move(event_params);
 }
@@ -51,8 +51,9 @@ std::unique_ptr<base::Value> NetLogPingEndCallback(
     net::NetLogCaptureMode) {
   std::unique_ptr<base::DictionaryValue> event_params(
       new base::DictionaryValue());
-  event_params->SetInteger("status", status.status());
-  event_params->SetInteger("error", status.error());
+  event_params->SetKey("status",
+                       base::Value(static_cast<int>(status.status())));
+  event_params->SetKey("error", base::Value(status.error()));
   net_log.source().AddToEventParameters(event_params.get());
   return std::move(event_params);
 }

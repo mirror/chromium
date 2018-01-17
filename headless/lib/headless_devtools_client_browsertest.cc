@@ -1186,10 +1186,11 @@ class RawDevtoolsProtocolTest
     devtools_client_->SetRawProtocolListener(this);
 
     base::DictionaryValue message;
-    message.SetInteger("id", devtools_client_->GetNextRawDevToolsMessageId());
-    message.SetString("method", "Runtime.evaluate");
+    message.SetKey(
+        "id", base::Value(devtools_client_->GetNextRawDevToolsMessageId()));
+    message.SetKey("method", base::Value("Runtime.evaluate"));
     std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
-    params->SetString("expression", "1+1");
+    params->SetKey("expression", base::Value("1+1"));
     message.Set("params", std::move(params));
     devtools_client_->SendRawDevToolsMessage(message);
   }
@@ -1276,20 +1277,21 @@ class DomTreeExtractionBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
 
       // Frame IDs are random.
       if (node_dict->FindKey("frameId"))
-        node_dict->SetString("frameId", "?");
+        node_dict->SetKey("frameId", base::Value("?"));
 
       // Ports are random.
       if (base::Value* base_url_value = node_dict->FindKey("baseURL")) {
-        node_dict->SetString("baseURL", GURL(base_url_value->GetString())
-                                            .ReplaceComponents(replace_port)
-                                            .spec());
+        node_dict->SetKey("baseURL",
+                          base::Value(GURL(base_url_value->GetString())
+                                          .ReplaceComponents(replace_port)
+                                          .spec()));
       }
 
       if (base::Value* document_url_value = node_dict->FindKey("documentURL")) {
-        node_dict->SetString("documentURL",
-                             GURL(document_url_value->GetString())
-                                 .ReplaceComponents(replace_port)
-                                 .spec());
+        node_dict->SetKey("documentURL",
+                          base::Value(GURL(document_url_value->GetString())
+                                          .ReplaceComponents(replace_port)
+                                          .spec()));
       }
 
       // Merge LayoutTreeNode data into the dictionary.
@@ -1306,10 +1308,12 @@ class DomTreeExtractionBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
                        layout_node->GetBoundingBox()->Serialize());
 
         if (layout_node->HasLayoutText())
-          node_dict->SetString("layoutText", layout_node->GetLayoutText());
+          node_dict->SetKey("layoutText",
+                            base::Value(layout_node->GetLayoutText()));
 
         if (layout_node->HasStyleIndex())
-          node_dict->SetInteger("styleIndex", layout_node->GetStyleIndex());
+          node_dict->SetKey("styleIndex",
+                            base::Value(layout_node->GetStyleIndex()));
 
         if (layout_node->HasInlineTextNodes()) {
           std::unique_ptr<base::ListValue> inline_text_nodes(

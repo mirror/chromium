@@ -49,8 +49,9 @@ std::unique_ptr<base::Value> EnableDataReductionProxyCallback(
     const std::vector<net::ProxyServer>& proxies_for_http,
     net::NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetBoolean("enabled", true);
-  dict->SetBoolean("secure_transport_restricted", secure_transport_restricted);
+  dict->SetKey("enabled", base::Value(true));
+  dict->SetKey("secure_transport_restricted",
+               base::Value(secure_transport_restricted));
   std::unique_ptr<base::ListValue> http_proxy_list(new base::ListValue());
   for (const auto& proxy : proxies_for_http)
     http_proxy_list->AppendString(proxy.ToURI());
@@ -65,7 +66,7 @@ std::unique_ptr<base::Value> EnableDataReductionProxyCallback(
 std::unique_ptr<base::Value> DisableDataReductionProxyCallback(
     net::NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetBoolean("enabled", false);
+  dict->SetKey("enabled", base::Value(false));
   return std::move(dict);
 }
 
@@ -80,13 +81,14 @@ std::unique_ptr<base::Value> UrlBypassActionCallback(
     int64_t expiration_ticks,
     net::NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("bypass_action_type", action);
-  dict->SetString("method", request_method);
-  dict->SetString("url", url.spec());
-  dict->SetBoolean("should_retry", should_retry);
-  dict->SetString("bypass_duration_seconds",
-                  base::Int64ToString(bypass_seconds));
-  dict->SetString("expiration", base::Int64ToString(expiration_ticks));
+  dict->SetKey("bypass_action_type", base::Value(static_cast<int>(action)));
+  dict->SetKey("method", base::Value(request_method));
+  dict->SetKey("url", base::Value(url.spec()));
+  dict->SetKey("should_retry", base::Value(should_retry));
+  dict->SetKey("bypass_duration_seconds",
+               base::Value(base::Int64ToString(bypass_seconds)));
+  dict->SetKey("expiration",
+               base::Value(base::Int64ToString(expiration_ticks)));
   return std::move(dict);
 }
 
@@ -101,13 +103,14 @@ std::unique_ptr<base::Value> UrlBypassTypeCallback(
     int64_t expiration_ticks,
     net::NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("bypass_type", bypass_type);
-  dict->SetString("method", request_method);
-  dict->SetString("url", url.spec());
-  dict->SetBoolean("should_retry", should_retry);
-  dict->SetString("bypass_duration_seconds",
-                  base::Int64ToString(bypass_seconds));
-  dict->SetString("expiration", base::Int64ToString(expiration_ticks));
+  dict->SetKey("bypass_type", base::Value(static_cast<int>(bypass_type)));
+  dict->SetKey("method", base::Value(request_method));
+  dict->SetKey("url", base::Value(url.spec()));
+  dict->SetKey("should_retry", base::Value(should_retry));
+  dict->SetKey("bypass_duration_seconds",
+               base::Value(base::Int64ToString(bypass_seconds)));
+  dict->SetKey("expiration",
+               base::Value(base::Int64ToString(expiration_ticks)));
   return std::move(dict);
 }
 
@@ -118,8 +121,8 @@ std::unique_ptr<base::Value> FallbackCallback(
     int net_error,
     net::NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("proxy", proxy_url);
-  dict->SetInteger("net_error", net_error);
+  dict->SetKey("proxy", base::Value(proxy_url));
+  dict->SetKey("net_error", base::Value(net_error));
   return std::move(dict);
 }
 
@@ -131,9 +134,9 @@ std::unique_ptr<base::Value> EndCanaryRequestCallback(
     bool succeeded,
     net::NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("net_error", net_error);
-  dict->SetInteger("http_response_code", http_response_code);
-  dict->SetBoolean("check_succeeded", succeeded);
+  dict->SetKey("net_error", base::Value(net_error));
+  dict->SetKey("http_response_code", base::Value(http_response_code));
+  dict->SetKey("check_succeeded", base::Value(succeeded));
   return std::move(dict);
 }
 
@@ -151,13 +154,15 @@ std::unique_ptr<base::Value> EndConfigRequestCallback(
   for (const auto& proxy : proxies_for_http)
     http_proxy_list->AppendString(proxy.ToURI());
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("net_error", net_error);
-  dict->SetInteger("http_response_code", http_response_code);
-  dict->SetInteger("failure_count", failure_count);
+  dict->SetKey("net_error", base::Value(net_error));
+  dict->SetKey("http_response_code", base::Value(http_response_code));
+  dict->SetKey("failure_count", base::Value(failure_count));
   dict->Set("http_proxy_list_in_config", std::move(http_proxy_list));
-  dict->SetString("refresh_duration",
-                  base::Int64ToString(refresh_duration_minutes) + " minutes");
-  dict->SetString("expiration", base::Int64ToString(expiration_ticks));
+  dict->SetKey(
+      "refresh_duration",
+      base::Value(base::Int64ToString(refresh_duration_minutes) + " minutes"));
+  dict->SetKey("expiration",
+               base::Value(base::Int64ToString(expiration_ticks)));
   return std::move(dict);
 }
 

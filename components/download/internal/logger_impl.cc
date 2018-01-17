@@ -142,9 +142,10 @@ std::unique_ptr<base::DictionaryValue> DriverEntryToValue(
     const DriverEntry& entry) {
   std::unique_ptr<base::DictionaryValue> serialized_entry =
       std::make_unique<base::DictionaryValue>();
-  serialized_entry->SetString("state", DriverEntryStateToString(entry.state));
-  serialized_entry->SetBoolean("paused", entry.paused);
-  serialized_entry->SetBoolean("done", entry.done);
+  serialized_entry->SetKey("state",
+                           base::Value(DriverEntryStateToString(entry.state)));
+  serialized_entry->SetKey("paused", base::Value(entry.paused));
+  serialized_entry->SetKey("done", base::Value(entry.done));
   return serialized_entry;
 }
 
@@ -154,33 +155,40 @@ std::unique_ptr<base::DictionaryValue> EntryToValue(
     const base::Optional<CompletionType>& completion_type) {
   std::unique_ptr<base::DictionaryValue> serialized_entry =
       std::make_unique<base::DictionaryValue>();
-  serialized_entry->SetString("client", ClientToString(entry.client));
-  serialized_entry->SetString("state", EntryStateToString(entry.state));
-  serialized_entry->SetString("guid", entry.guid);
+  serialized_entry->SetKey("client", base::Value(ClientToString(entry.client)));
+  serialized_entry->SetKey("state",
+                           base::Value(EntryStateToString(entry.state)));
+  serialized_entry->SetKey("guid", base::Value(entry.guid));
 
   // Convert the URL to a proper logging format.
   GURL::Replacements replacements;
   replacements.ClearQuery();
 
-  serialized_entry->SetString(
-      "url", entry.request_params.url.ReplaceComponents(replacements).spec());
-  serialized_entry->SetString("file_path",
-                              entry.target_file_path.MaybeAsASCII());
+  serialized_entry->SetKey(
+      "url",
+      base::Value(
+          entry.request_params.url.ReplaceComponents(replacements).spec()));
+  serialized_entry->SetKey("file_path",
+                           base::Value(entry.target_file_path.MaybeAsASCII()));
 
   if (driver.has_value()) {
-    serialized_entry->SetDouble("bytes_downloaded", driver->bytes_downloaded);
+    serialized_entry->SetKey(
+        "bytes_downloaded",
+        base::Value(static_cast<double>(driver->bytes_downloaded)));
     serialized_entry->SetDictionary("driver",
                                     DriverEntryToValue(driver.value()));
   } else {
-    serialized_entry->SetDouble("bytes_downloaded", entry.bytes_downloaded);
+    serialized_entry->SetKey(
+        "bytes_downloaded",
+        base::Value(static_cast<double>(entry.bytes_downloaded)));
   }
 
   if (completion_type.has_value()) {
-    serialized_entry->SetString(
-        "result", CompletionTypeToString(completion_type.value()));
+    serialized_entry->SetKey(
+        "result", base::Value(CompletionTypeToString(completion_type.value())));
   } else if (entry.state == Entry::State::COMPLETE) {
-    serialized_entry->SetString(
-        "result", CompletionTypeToString(CompletionType::SUCCEED));
+    serialized_entry->SetKey(
+        "result", base::Value(CompletionTypeToString(CompletionType::SUCCEED)));
   }
   return serialized_entry;
 }
@@ -213,11 +221,14 @@ base::Value LoggerImpl::GetServiceStatus() {
   Controller::State state = log_source_->GetControllerState();
   const StartupStatus& status = log_source_->GetStartupStatus();
 
-  service_status.SetString("serviceState", ControllerStateToString(state));
-  service_status.SetString("modelStatus", OptBoolToString(status.model_ok));
-  service_status.SetString("driverStatus", OptBoolToString(status.driver_ok));
-  service_status.SetString("fileMonitorStatus",
-                           OptBoolToString(status.file_monitor_ok));
+  service_status.SetKey("serviceState",
+                        base::Value(ControllerStateToString(state)));
+  service_status.SetKey("modelStatus",
+                        base::Value(OptBoolToString(status.model_ok)));
+  service_status.SetKey("driverStatus",
+                        base::Value(OptBoolToString(status.driver_ok)));
+  service_status.SetKey("fileMonitorStatus",
+                        base::Value(OptBoolToString(status.file_monitor_ok)));
 
   return std::move(service_status);
 }
@@ -291,9 +302,10 @@ void LoggerImpl::OnServiceRequestMade(
     return;
 
   base::DictionaryValue serialized_request;
-  serialized_request.SetString("client", ClientToString(client));
-  serialized_request.SetString("guid", guid);
-  serialized_request.SetString("result", StartResultToString(start_result));
+  serialized_request.SetKey("client", base::Value(ClientToString(client)));
+  serialized_request.SetKey("guid", base::Value(guid));
+  serialized_request.SetKey("result",
+                            base::Value(StartResultToString(start_result)));
   for (auto& observer : observers_)
     observer.OnServiceRequestMade(serialized_request);
 }

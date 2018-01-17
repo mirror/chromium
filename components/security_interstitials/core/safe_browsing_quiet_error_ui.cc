@@ -52,22 +52,25 @@ void SafeBrowsingQuietErrorUI::PopulateStringsForHtml(
     base::DictionaryValue* load_time_data) {
   DCHECK(load_time_data);
 
-  load_time_data->SetString("type", "SAFEBROWSING");
-  load_time_data->SetString(
-      "tabTitle", l10n_util::GetStringUTF16(IDS_SAFEBROWSING_V3_TITLE));
-  load_time_data->SetBoolean("overridable", !is_proceed_anyway_disabled());
-  load_time_data->SetString(
-      "openDetails",
-      l10n_util::GetStringUTF16(IDS_SAFEBROWSING_V3_OPEN_DETAILS_BUTTON));
-  load_time_data->SetBoolean("is_giant", is_giant_webview_);
+  load_time_data->SetKey("type", base::Value("SAFEBROWSING"));
+  load_time_data->SetKey(
+      "tabTitle",
+      base::Value(l10n_util::GetStringUTF16(IDS_SAFEBROWSING_V3_TITLE)));
+  load_time_data->SetKey("overridable",
+                         base::Value(!is_proceed_anyway_disabled()));
+  load_time_data->SetKey("openDetails",
+                         base::Value(l10n_util::GetStringUTF16(
+                             IDS_SAFEBROWSING_V3_OPEN_DETAILS_BUTTON)));
+  load_time_data->SetKey("is_giant", base::Value(is_giant_webview_));
 
   bool phishing =
       interstitial_reason() == BaseSafeBrowsingErrorUI::SB_REASON_PHISHING;
-  load_time_data->SetBoolean("phishing", phishing);
-  load_time_data->SetString(
-      "heading", phishing
-                     ? l10n_util::GetStringUTF16(IDS_PHISHING_WEBVIEW_HEADING)
-                     : l10n_util::GetStringUTF16(IDS_MALWARE_WEBVIEW_HEADING));
+  load_time_data->SetKey("phishing", base::Value(phishing));
+  load_time_data->SetKey(
+      "heading",
+      base::Value(
+          phishing ? l10n_util::GetStringUTF16(IDS_PHISHING_WEBVIEW_HEADING)
+                   : l10n_util::GetStringUTF16(IDS_MALWARE_WEBVIEW_HEADING)));
 
   int explanation_ids = -1;
   if (phishing)
@@ -76,8 +79,9 @@ void SafeBrowsingQuietErrorUI::PopulateStringsForHtml(
     explanation_ids = IDS_MALWARE_WEBVIEW_EXPLANATION_PARAGRAPH;
 
   if (explanation_ids > -1) {
-    load_time_data->SetString("explanationParagraph",
-                              l10n_util::GetStringUTF16(explanation_ids));
+    load_time_data->SetKey(
+        "explanationParagraph",
+        base::Value(l10n_util::GetStringUTF16(explanation_ids)));
   } else {
     NOTREACHED();
   }

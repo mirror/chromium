@@ -37,7 +37,7 @@ std::unique_ptr<base::Value> GetWebUIDataOnNetworkTaskRunner(
     base::WeakPtr<DomainReliabilityMonitor> monitor) {
   if (!monitor) {
     base::DictionaryValue* dict = new base::DictionaryValue();
-    dict->SetString("error", "no_monitor");
+    dict->SetKey("error", base::Value("no_monitor"));
     return std::unique_ptr<base::Value>(dict);
   }
 

@@ -73,8 +73,8 @@ scoped_refptr<const Extension> AddExtensionWithIdAndPermissions(
     Manifest::Type type,
     const std::set<std::string>& permissions_set) {
   base::DictionaryValue manifest;
-  manifest.SetString("name", std::string("Test extension ") + id);
-  manifest.SetString("version", "1.0");
+  manifest.SetKey("name", base::Value(std::string("Test extension ") + id));
+  manifest.SetKey("version", base::Value("1.0"));
 
   std::unique_ptr<base::ListValue> permissions(new base::ListValue());
   for (std::set<std::string>::const_iterator it = permissions_set.begin();
@@ -90,7 +90,7 @@ scoped_refptr<const Extension> AddExtensionWithIdAndPermissions(
     case Manifest::TYPE_LEGACY_PACKAGED_APP: {
       auto app = std::make_unique<base::DictionaryValue>();
       auto app_launch = std::make_unique<base::DictionaryValue>();
-      app_launch->SetString("local_path", "fake.html");
+      app_launch->SetKey("local_path", base::Value("fake.html"));
       app->Set("launch", std::move(app_launch));
       manifest.Set("app", std::move(app));
       break;

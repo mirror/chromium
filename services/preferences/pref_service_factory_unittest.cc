@@ -477,10 +477,10 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Basic) {
       },
       [](ScopedDictionaryPrefUpdate* update) {
         base::DictionaryValue dict;
-        dict.SetInteger("int", 1);
-        dict.SetDouble("double", 2);
-        dict.SetBoolean("bool", true);
-        dict.SetString("string", "four");
+        dict.SetKey("int", base::Value(1));
+        dict.SetKey("double", base::Value(static_cast<double>(2)));
+        dict.SetKey("bool", base::Value(true));
+        dict.SetKey("string", base::Value("four"));
         (*update)->Set("path.to.dict", dict.CreateDeepCopy());
         const base::DictionaryValue* out = nullptr;
         ASSERT_TRUE((*update)->GetDictionary("path.to.dict", &out));
@@ -488,10 +488,10 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Basic) {
       },
       [](ScopedDictionaryPrefUpdate* update) {
         base::DictionaryValue dict;
-        dict.SetInteger("int", 1);
-        dict.SetDouble("double", 2);
-        dict.SetBoolean("bool", true);
-        dict.SetString("string", "four");
+        dict.SetKey("int", base::Value(1));
+        dict.SetKey("double", base::Value(static_cast<double>(2)));
+        dict.SetKey("bool", base::Value(true));
+        dict.SetKey("string", base::Value("four"));
         (*update)->SetWithoutPathExpansion("key.for.dict",
                                            dict.CreateDeepCopy());
         const base::DictionaryValue* out = nullptr;

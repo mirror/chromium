@@ -491,9 +491,10 @@ void BaseTestServer::CleanUpWhenStoppingServer() {
 bool BaseTestServer::GenerateArguments(base::DictionaryValue* arguments) const {
   DCHECK(arguments);
 
-  arguments->SetString("host", host_port_pair_.host());
-  arguments->SetInteger("port", host_port_pair_.port());
-  arguments->SetString("data-dir", document_root_.value());
+  arguments->SetKey("host", base::Value(host_port_pair_.host()));
+  arguments->SetKey("port",
+                    base::Value(static_cast<int>(host_port_pair_.port())));
+  arguments->SetKey("data-dir", base::Value(document_root_.value()));
 
   if (VLOG_IS_ON(1) || log_to_console_)
     arguments->Set("log-to-console", std::make_unique<base::Value>());
@@ -526,7 +527,8 @@ bool BaseTestServer::GenerateArguments(base::DictionaryValue* arguments) const {
                    << " doesn't exist. Can't launch https server.";
         return false;
       }
-      arguments->SetString("cert-and-key-file", certificate_path.value());
+      arguments->SetKey("cert-and-key-file",
+                        base::Value(certificate_path.value()));
     }
 
     // Check the client certificate related arguments.
@@ -566,22 +568,25 @@ bool BaseTestServer::GenerateArguments(base::DictionaryValue* arguments) const {
 
     std::string ocsp_arg = ssl_options_.GetOCSPArgument();
     if (!ocsp_arg.empty())
-      arguments->SetString("ocsp", ocsp_arg);
+      arguments->SetKey("ocsp", base::Value(ocsp_arg));
 
     std::string ocsp_date_arg = ssl_options_.GetOCSPDateArgument();
     if (!ocsp_date_arg.empty())
-      arguments->SetString("ocsp-date", ocsp_date_arg);
+      arguments->SetKey("ocsp-date", base::Value(ocsp_date_arg));
 
     std::string ocsp_produced_arg = ssl_options_.GetOCSPProducedArgument();
     if (!ocsp_produced_arg.empty())
-      arguments->SetString("ocsp-produced", ocsp_produced_arg);
+      arguments->SetKey("ocsp-produced", base::Value(ocsp_produced_arg));
 
     if (ssl_options_.cert_serial != 0) {
-      arguments->SetInteger("cert-serial", ssl_options_.cert_serial);
+      arguments->SetKey(
+          "cert-serial",
+          base::Value(static_cast<int>(ssl_options_.cert_serial)));
     }
 
     if (!ssl_options_.cert_common_name.empty()) {
-      arguments->SetString("cert-common-name", ssl_options_.cert_common_name);
+      arguments->SetKey("cert-common-name",
+                        base::Value(ssl_options_.cert_common_name));
     }
 
     // Check key exchange argument.
@@ -597,7 +602,9 @@ bool BaseTestServer::GenerateArguments(base::DictionaryValue* arguments) const {
     if (ssl_options_.record_resume)
       arguments->Set("https-record-resume", std::make_unique<base::Value>());
     if (ssl_options_.tls_intolerant != SSLOptions::TLS_INTOLERANT_NONE) {
-      arguments->SetInteger("tls-intolerant", ssl_options_.tls_intolerant);
+      arguments->SetKey(
+          "tls-intolerant",
+          base::Value(static_cast<int>(ssl_options_.tls_intolerant)));
       arguments->Set("tls-intolerance-type", GetTLSIntoleranceType(
           ssl_options_.tls_intolerance_type));
     }
@@ -607,7 +614,8 @@ bool BaseTestServer::GenerateArguments(base::DictionaryValue* arguments) const {
       std::string b64_scts_tls_ext;
       base::Base64Encode(ssl_options_.signed_cert_timestamps_tls_ext,
                          &b64_scts_tls_ext);
-      arguments->SetString("signed-cert-timestamps-tls-ext", b64_scts_tls_ext);
+      arguments->SetKey("signed-cert-timestamps-tls-ext",
+                        base::Value(b64_scts_tls_ext));
     }
     if (ssl_options_.staple_ocsp_response)
       arguments->Set("staple-ocsp-response", std::make_unique<base::Value>());

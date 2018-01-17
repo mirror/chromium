@@ -22,9 +22,9 @@ class TracingUITest : public testing::Test {
 
 std::string GetOldStyleConfig() {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("categoryFilter", "filter1,-filter2");
-  dict->SetString("tracingRecordMode", "record-continuously");
-  dict->SetBoolean("useSystemTracing", true);
+  dict->SetKey("categoryFilter", base::Value("filter1,-filter2"));
+  dict->SetKey("tracingRecordMode", base::Value("record-continuously"));
+  dict->SetKey("useSystemTracing", base::Value(true));
 
   std::string results;
   if (!base::JSONWriter::Write(*dict.get(), &results))
@@ -47,14 +47,14 @@ std::string GetNewStyleConfig() {
 
   dict->SetList("included_categories", std::move(included));
   dict->SetList("excluded_categories", std::move(excluded));
-  dict->SetString("record_mode", "record-continuously");
-  dict->SetBoolean("enable_systrace", true);
+  dict->SetKey("record_mode", base::Value("record-continuously"));
+  dict->SetKey("enable_systrace", base::Value(true));
 
   std::unique_ptr<base::DictionaryValue> memory_config(
       new base::DictionaryValue());
   std::unique_ptr<base::DictionaryValue> trigger(new base::DictionaryValue());
-  trigger->SetString("mode", "detailed");
-  trigger->SetInteger("periodic_interval_ms", 10000);
+  trigger->SetKey("mode", base::Value("detailed"));
+  trigger->SetKey("periodic_interval_ms", base::Value(10000));
   std::unique_ptr<base::ListValue> triggers(new base::ListValue);
   triggers->Append(std::move(trigger));
   memory_config->SetList("triggers", std::move(triggers));

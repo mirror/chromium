@@ -142,25 +142,25 @@ bool CaptivePortalBlockingPage::ShouldCreateNewNavigation() const {
 
 void CaptivePortalBlockingPage::PopulateInterstitialStrings(
     base::DictionaryValue* load_time_data) {
-  load_time_data->SetString("iconClass", "icon-offline");
-  load_time_data->SetString("type", "CAPTIVE_PORTAL");
-  load_time_data->SetBoolean("overridable", false);
-  load_time_data->SetBoolean("hide_primary_button", false);
+  load_time_data->SetKey("iconClass", base::Value("icon-offline"));
+  load_time_data->SetKey("type", base::Value("CAPTIVE_PORTAL"));
+  load_time_data->SetKey("overridable", base::Value(false));
+  load_time_data->SetKey("hide_primary_button", base::Value(false));
 
   // |IsWifiConnection| isn't accurate on some platforms, so always try to get
   // the Wi-Fi SSID even if |IsWifiConnection| is false.
   std::string wifi_ssid = GetWiFiSSID();
   bool is_wifi = !wifi_ssid.empty() || IsWifiConnection();
 
-  load_time_data->SetString(
-      "primaryButtonText",
-      l10n_util::GetStringUTF16(IDS_CAPTIVE_PORTAL_BUTTON_OPEN_LOGIN_PAGE));
+  load_time_data->SetKey("primaryButtonText",
+                         base::Value(l10n_util::GetStringUTF16(
+                             IDS_CAPTIVE_PORTAL_BUTTON_OPEN_LOGIN_PAGE)));
 
   base::string16 tab_title =
       l10n_util::GetStringUTF16(is_wifi ? IDS_CAPTIVE_PORTAL_HEADING_WIFI
                                         : IDS_CAPTIVE_PORTAL_HEADING_WIRED);
-  load_time_data->SetString("tabTitle", tab_title);
-  load_time_data->SetString("heading", tab_title);
+  load_time_data->SetKey("tabTitle", base::Value(tab_title));
+  load_time_data->SetKey("heading", base::Value(tab_title));
 
   base::string16 paragraph;
   if (login_url_.is_empty() ||
@@ -200,12 +200,12 @@ void CaptivePortalBlockingPage::PopulateInterstitialStrings(
           net::EscapeForHTML(base::UTF8ToUTF16(wifi_ssid)), login_host);
     }
   }
-  load_time_data->SetString("primaryParagraph", paragraph);
+  load_time_data->SetKey("primaryParagraph", base::Value(paragraph));
   // Explicitly specify other expected fields to empty.
-  load_time_data->SetString("openDetails", base::string16());
-  load_time_data->SetString("closeDetails", base::string16());
-  load_time_data->SetString("explanationParagraph", base::string16());
-  load_time_data->SetString("finalParagraph", base::string16());
+  load_time_data->SetKey("openDetails", base::Value(base::string16()));
+  load_time_data->SetKey("closeDetails", base::Value(base::string16()));
+  load_time_data->SetKey("explanationParagraph", base::Value(base::string16()));
+  load_time_data->SetKey("finalParagraph", base::Value(base::string16()));
 
   if (cert_report_helper())
     cert_report_helper()->PopulateExtendedReportingOption(load_time_data);

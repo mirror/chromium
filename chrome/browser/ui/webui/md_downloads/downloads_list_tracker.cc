@@ -197,20 +197,22 @@ DownloadsListTracker::CreateDownloadItemValue(
   // any keys in file_value.
   std::unique_ptr<base::DictionaryValue> file_value(new base::DictionaryValue);
 
-  file_value->SetInteger(
-      "started", static_cast<int>(download_item->GetStartTime().ToTimeT()));
-  file_value->SetString(
-      "since_string", ui::TimeFormat::RelativeDate(
-          download_item->GetStartTime(), NULL));
-  file_value->SetString(
-      "date_string", TimeFormatLongDate(download_item->GetStartTime()));
+  file_value->SetKey(
+      "started",
+      base::Value(static_cast<int>(download_item->GetStartTime().ToTimeT())));
+  file_value->SetKey("since_string", base::Value(ui::TimeFormat::RelativeDate(
+                                         download_item->GetStartTime(), NULL)));
+  file_value->SetKey(
+      "date_string",
+      base::Value(TimeFormatLongDate(download_item->GetStartTime())));
 
-  file_value->SetString("id", base::NumberToString(download_item->GetId()));
+  file_value->SetKey("id",
+                     base::Value(base::NumberToString(download_item->GetId())));
 
   base::FilePath download_path(download_item->GetTargetFilePath());
   file_value->Set("file_path", base::CreateFilePathValue(download_path));
-  file_value->SetString("file_url",
-                        net::FilePathToFileURL(download_path).spec());
+  file_value->SetKey("file_url",
+                     base::Value(net::FilePathToFileURL(download_path).spec()));
 
   extensions::DownloadedByExtension* by_ext =
       extensions::DownloadedByExtension::Get(download_item);
@@ -231,21 +233,21 @@ DownloadsListTracker::CreateDownloadItemValue(
     if (extension)
       by_ext_name = extension->name();
   }
-  file_value->SetString("by_ext_id", by_ext_id);
-  file_value->SetString("by_ext_name", by_ext_name);
+  file_value->SetKey("by_ext_id", base::Value(by_ext_id));
+  file_value->SetKey("by_ext_name", base::Value(by_ext_name));
 
   // Keep file names as LTR. TODO(dbeam): why?
   base::string16 file_name =
       download_item->GetFileNameToReportUser().LossyDisplayName();
   file_name = base::i18n::GetDisplayStringInLTRDirectionality(file_name);
-  file_value->SetString("file_name", file_name);
-  file_value->SetString("url", download_item->GetURL().spec());
-  file_value->SetInteger("total", static_cast<int>(
-      download_item->GetTotalBytes()));
-  file_value->SetBoolean("file_externally_removed",
-                         download_item->GetFileExternallyRemoved());
-  file_value->SetBoolean("resume", download_item->CanResume());
-  file_value->SetBoolean("otr", IsIncognito(*download_item));
+  file_value->SetKey("file_name", base::Value(file_name));
+  file_value->SetKey("url", base::Value(download_item->GetURL().spec()));
+  file_value->SetKey(
+      "total", base::Value(static_cast<int>(download_item->GetTotalBytes())));
+  file_value->SetKey("file_externally_removed",
+                     base::Value(download_item->GetFileExternallyRemoved()));
+  file_value->SetKey("resume", base::Value(download_item->CanResume()));
+  file_value->SetKey("otr", base::Value(IsIncognito(*download_item)));
 
   const char* danger_type = "";
   base::string16 last_reason_text;
@@ -304,12 +306,12 @@ DownloadsListTracker::CreateDownloadItemValue(
 
   DCHECK(state);
 
-  file_value->SetString("danger_type", danger_type);
-  file_value->SetString("last_reason_text", last_reason_text);
-  file_value->SetInteger("percent", percent);
-  file_value->SetString("progress_status_text", progress_status_text);
-  file_value->SetBoolean("retry", retry);
-  file_value->SetString("state", state);
+  file_value->SetKey("danger_type", base::Value(danger_type));
+  file_value->SetKey("last_reason_text", base::Value(last_reason_text));
+  file_value->SetKey("percent", base::Value(percent));
+  file_value->SetKey("progress_status_text", base::Value(progress_status_text));
+  file_value->SetKey("retry", base::Value(retry));
+  file_value->SetKey("state", base::Value(state));
 
   return file_value;
 }

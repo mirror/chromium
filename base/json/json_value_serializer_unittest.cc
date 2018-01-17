@@ -300,7 +300,7 @@ TEST(JSONValueSerializerTest, StringEscape) {
   // Test JSONWriter interface
   std::string output_js;
   DictionaryValue valueRoot;
-  valueRoot.SetString("all_chars", all_chars);
+  valueRoot.SetKey("all_chars", base::Value(all_chars));
   JSONWriter::Write(valueRoot, &output_js);
   ASSERT_EQ(expected_output, output_js);
 
@@ -314,7 +314,7 @@ TEST(JSONValueSerializerTest, UnicodeStrings) {
   // unicode string json -> escaped ascii text
   DictionaryValue root;
   string16 test(WideToUTF16(L"\x7F51\x9875"));
-  root.SetString("web", test);
+  root.SetKey("web", base::Value(test));
 
   static const char kExpected[] = "{\"web\":\"\xE7\xBD\x91\xE9\xA1\xB5\"}";
 
@@ -339,7 +339,7 @@ TEST(JSONValueSerializerTest, HexStrings) {
   // hex string json -> escaped ascii text
   DictionaryValue root;
   string16 test(WideToUTF16(L"\x01\x02"));
-  root.SetString("test", test);
+  root.SetKey("test", base::Value(test));
 
   static const char kExpected[] = "{\"test\":\"\\u0001\\u0002\"}";
 

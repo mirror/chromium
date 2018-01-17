@@ -92,8 +92,8 @@ TEST(TabCaptureCaptureOffscreenTabTest, DetermineInitialSize) {
   options.video_constraints.reset(new MediaStreamConstraint());
   base::DictionaryValue* properties =
       &options.video_constraints->mandatory.additional_properties;
-  properties->SetInteger("maxWidth", 123);
-  properties->SetInteger("maxHeight", 456);
+  properties->SetKey("maxWidth", base::Value(123));
+  properties->SetKey("maxHeight", base::Value(456));
   EXPECT_EQ(gfx::Size(123, 456),
             TabCaptureCaptureOffscreenTabFunction::DetermineInitialSize(
                 options));
@@ -102,13 +102,13 @@ TEST(TabCaptureCaptureOffscreenTabTest, DetermineInitialSize) {
   // mandatory minimum size.
   options.video_constraints.reset(new MediaStreamConstraint());
   properties = &options.video_constraints->mandatory.additional_properties;
-  properties->SetInteger("minWidth", 123);
-  properties->SetInteger("minHeight", 456);
+  properties->SetKey("minWidth", base::Value(123));
+  properties->SetKey("minHeight", base::Value(456));
   EXPECT_EQ(gfx::Size(1280, 720),
             TabCaptureCaptureOffscreenTabFunction::DetermineInitialSize(
                 options));
-  properties->SetInteger("minWidth", 2560);
-  properties->SetInteger("minHeight", 1440);
+  properties->SetKey("minWidth", base::Value(2560));
+  properties->SetKey("minHeight", base::Value(1440));
   EXPECT_EQ(gfx::Size(2560, 1440),
             TabCaptureCaptureOffscreenTabFunction::DetermineInitialSize(
                 options));
@@ -118,16 +118,16 @@ TEST(TabCaptureCaptureOffscreenTabTest, DetermineInitialSize) {
   options.video_constraints->optional.reset(
       new MediaStreamConstraint::Optional());
   properties = &options.video_constraints->optional->additional_properties;
-  properties->SetInteger("maxWidth", 456);
-  properties->SetInteger("maxHeight", 123);
+  properties->SetKey("maxWidth", base::Value(456));
+  properties->SetKey("maxHeight", base::Value(123));
   EXPECT_EQ(gfx::Size(456, 123),
             TabCaptureCaptureOffscreenTabFunction::DetermineInitialSize(
                 options));
   // ...unless a mandatory minimum size was specified:
-  options.video_constraints->mandatory.additional_properties.SetInteger(
-      "minWidth", 500);
-  options.video_constraints->mandatory.additional_properties.SetInteger(
-      "minHeight", 600);
+  options.video_constraints->mandatory.additional_properties.SetKey(
+      "minWidth", base::Value(500));
+  options.video_constraints->mandatory.additional_properties.SetKey(
+      "minHeight", base::Value(600));
   EXPECT_EQ(gfx::Size(500, 600),
             TabCaptureCaptureOffscreenTabFunction::DetermineInitialSize(
                 options));
@@ -138,8 +138,8 @@ TEST(TabCaptureCaptureOffscreenTabTest, DetermineInitialSize) {
   options.video_constraints->optional.reset(
       new MediaStreamConstraint::Optional());
   properties = &options.video_constraints->optional->additional_properties;
-  properties->SetInteger("minWidth", 9999);
-  properties->SetInteger("minHeight", 8888);
+  properties->SetKey("minWidth", base::Value(9999));
+  properties->SetKey("minHeight", base::Value(8888));
   EXPECT_EQ(gfx::Size(9999, 8888),
             TabCaptureCaptureOffscreenTabFunction::DetermineInitialSize(
                 options));

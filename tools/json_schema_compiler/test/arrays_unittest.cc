@@ -44,7 +44,7 @@ static std::unique_ptr<base::DictionaryValue> CreateBasicArrayTypeDictionary() {
 
 std::unique_ptr<base::DictionaryValue> CreateItemValue(int val) {
   auto value = std::make_unique<base::DictionaryValue>();
-  value->SetInteger("val", val);
+  value->SetKey("val", base::Value(val));
   return value;
 }
 
@@ -269,10 +269,10 @@ TEST(JsonSchemaCompilerArrayTest, ReturnRefArrayResultCreate) {
   base::ListValue expected;
   std::unique_ptr<base::ListValue> expected_argument(new base::ListValue());
   std::unique_ptr<base::DictionaryValue> first(new base::DictionaryValue());
-  first->SetInteger("val", 1);
+  first->SetKey("val", base::Value(1));
   expected_argument->Append(std::move(first));
   std::unique_ptr<base::DictionaryValue> second(new base::DictionaryValue());
-  second->SetInteger("val", 2);
+  second->SetKey("val", base::Value(2));
   expected_argument->Append(std::move(second));
   expected.Append(std::move(expected_argument));
   EXPECT_TRUE(results->Equals(&expected));

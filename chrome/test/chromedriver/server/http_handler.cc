@@ -703,16 +703,16 @@ std::unique_ptr<net::HttpServerResponseInfo> HttpHandler::PrepareLegacyResponse(
         base::SysInfo::OperatingSystemVersion().c_str(),
         base::SysInfo::OperatingSystemArchitecture().c_str()));
     std::unique_ptr<base::DictionaryValue> error(new base::DictionaryValue());
-    error->SetString("message", full_status.message());
+    error->SetKey("message", base::Value(full_status.message()));
     value = std::move(error);
   }
   if (!value)
     value = base::MakeUnique<base::Value>();
 
   base::DictionaryValue body_params;
-  body_params.SetInteger("status", status.code());
+  body_params.SetKey("status", base::Value(static_cast<int>(status.code())));
   body_params.Set("value", std::move(value));
-  body_params.SetString("sessionId", session_id);
+  body_params.SetKey("sessionId", base::Value(session_id));
   std::string body;
   base::JSONWriter::WriteWithOptions(
       body_params, base::JSONWriter::OPTIONS_OMIT_DOUBLE_TYPE_PRESERVATION,
@@ -835,9 +835,9 @@ HttpHandler::PrepareStandardResponse(
       message += status_details[i];
     std::unique_ptr<base::DictionaryValue> inner_params(
         new base::DictionaryValue());
-    inner_params->SetString("error", status_details[0]);
-    inner_params->SetString("message", message);
-    inner_params->SetString("stacktrace", status.stack_trace());
+    inner_params->SetKey("error", base::Value(status_details[0]));
+    inner_params->SetKey("message", base::Value(message));
+    inner_params->SetKey("stacktrace", base::Value(status.stack_trace()));
     body_params.SetDictionary("value", std::move(inner_params));
   } else {
     body_params.Set("value", std::move(value));

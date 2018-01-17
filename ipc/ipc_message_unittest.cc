@@ -90,13 +90,13 @@ TEST(IPCMessageTest, ListValue) {
 TEST(IPCMessageTest, DictionaryValue) {
   base::DictionaryValue input;
   input.Set("null", std::make_unique<base::Value>());
-  input.SetBoolean("bool", true);
-  input.SetInteger("int", 42);
+  input.SetKey("bool", base::Value(true));
+  input.SetKey("int", base::Value(42));
   input.SetKey("int.with.dot", base::Value(43));
 
   auto subdict = std::make_unique<base::DictionaryValue>();
-  subdict->SetString("str", "forty two");
-  subdict->SetBoolean("bool", false);
+  subdict->SetKey("str", base::Value("forty two"));
+  subdict->SetKey("bool", base::Value(false));
 
   auto sublist = std::make_unique<base::ListValue>();
   sublist->AppendDouble(42.42);

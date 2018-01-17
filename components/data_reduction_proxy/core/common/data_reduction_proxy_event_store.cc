@@ -103,7 +103,7 @@ DataReductionProxyEventStore::GetSummaryValue() const {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   auto data_reduction_proxy_values = std::make_unique<base::DictionaryValue>();
-  data_reduction_proxy_values->SetBoolean("enabled", enabled_);
+  data_reduction_proxy_values->SetKey("enabled", base::Value(enabled_));
   if (current_configuration_) {
     data_reduction_proxy_values->SetKey("proxy_config",
                                         current_configuration_->Clone());
@@ -111,13 +111,13 @@ DataReductionProxyEventStore::GetSummaryValue() const {
 
   switch (secure_proxy_check_state_) {
     case CHECK_PENDING:
-      data_reduction_proxy_values->SetString("probe", "Pending");
+      data_reduction_proxy_values->SetKey("probe", base::Value("Pending"));
       break;
     case CHECK_SUCCESS:
-      data_reduction_proxy_values->SetString("probe", "Success");
+      data_reduction_proxy_values->SetKey("probe", base::Value("Success"));
       break;
     case CHECK_FAILED:
-      data_reduction_proxy_values->SetString("probe", "Failed");
+      data_reduction_proxy_values->SetKey("probe", base::Value("Failed"));
       break;
     case CHECK_UNKNOWN:
       break;
@@ -227,17 +227,17 @@ std::string DataReductionProxyEventStore::SanitizedLastBypassEvent() const {
   std::string str_value;
   int int_value;
   if (params_dict->GetInteger("bypass_type", &int_value))
-    last_bypass->SetInteger("bypass_type", int_value);
+    last_bypass->SetKey("bypass_type", base::Value(int_value));
 
   if (params_dict->GetInteger("bypass_action_type", &int_value))
-    last_bypass->SetInteger("bypass_action", int_value);
+    last_bypass->SetKey("bypass_action", base::Value(int_value));
 
   if (params_dict->GetString("bypass_duration_seconds", &str_value))
-    last_bypass->SetString("bypass_seconds", str_value);
+    last_bypass->SetKey("bypass_seconds", base::Value(str_value));
 
   bool truncate_url_to_host = true;
   if (bypass_dict->GetString("time", &str_value)) {
-    last_bypass->SetString("bypass_time", str_value);
+    last_bypass->SetKey("bypass_time", base::Value(str_value));
 
     int64_t bypass_ticks_ms;
     base::StringToInt64(str_value, &bypass_ticks_ms);
@@ -254,17 +254,17 @@ std::string DataReductionProxyEventStore::SanitizedLastBypassEvent() const {
   }
 
   if (params_dict->GetString("method", &str_value))
-    last_bypass->SetString("method", str_value);
+    last_bypass->SetKey("method", base::Value(str_value));
 
   if (params_dict->GetString("url", &str_value)) {
     GURL url(str_value);
     if (truncate_url_to_host) {
-      last_bypass->SetString("url", url.host());
+      last_bypass->SetKey("url", base::Value(url.host()));
     } else {
       GURL::Replacements replacements;
       replacements.ClearQuery();
       GURL clean_url = url.ReplaceComponents(replacements);
-      last_bypass->SetString("url", clean_url.spec());
+      last_bypass->SetKey("url", base::Value(clean_url.spec()));
     }
   }
 

@@ -67,23 +67,23 @@ ScreenlockBridge::UserPodCustomIconOptions::~UserPodCustomIconOptions() {
 std::unique_ptr<base::DictionaryValue>
 ScreenlockBridge::UserPodCustomIconOptions::ToDictionaryValue() const {
   auto result = base::MakeUnique<base::DictionaryValue>();
-  result->SetString("id", GetIDString());
+  result->SetKey("id", base::Value(GetIDString()));
 
   if (!tooltip_.empty()) {
     auto tooltip_options = base::MakeUnique<base::DictionaryValue>();
-    tooltip_options->SetString("text", tooltip_);
-    tooltip_options->SetBoolean("autoshow", autoshow_tooltip_);
+    tooltip_options->SetKey("text", base::Value(tooltip_));
+    tooltip_options->SetKey("autoshow", base::Value(autoshow_tooltip_));
     result->Set("tooltip", std::move(tooltip_options));
   }
 
   if (!aria_label_.empty())
-    result->SetString("ariaLabel", aria_label_);
+    result->SetKey("ariaLabel", base::Value(aria_label_));
 
   if (hardlock_on_click_)
-    result->SetBoolean("hardlockOnClick", true);
+    result->SetKey("hardlockOnClick", base::Value(true));
 
   if (is_trial_run_)
-    result->SetBoolean("isTrialRun", true);
+    result->SetKey("isTrialRun", base::Value(true));
 
   return result;
 }

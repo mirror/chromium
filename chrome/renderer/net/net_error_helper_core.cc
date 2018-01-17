@@ -189,19 +189,20 @@ std::string CreateRequestBody(
     const NetErrorHelperCore::NavigationCorrectionParams& correction_params,
     std::unique_ptr<base::DictionaryValue> params_dict) {
   // Set params common to all request types.
-  params_dict->SetString("key", correction_params.api_key);
-  params_dict->SetString("clientName", "chrome");
-  params_dict->SetString("error", error_param);
+  params_dict->SetKey("key", base::Value(correction_params.api_key));
+  params_dict->SetKey("clientName", base::Value("chrome"));
+  params_dict->SetKey("error", base::Value(error_param));
 
   if (!correction_params.language.empty())
-    params_dict->SetString("language", correction_params.language);
+    params_dict->SetKey("language", base::Value(correction_params.language));
 
   if (!correction_params.country_code.empty())
-    params_dict->SetString("originCountry", correction_params.country_code);
+    params_dict->SetKey("originCountry",
+                        base::Value(correction_params.country_code));
 
   base::DictionaryValue request_dict;
-  request_dict.SetString("method", method);
-  request_dict.SetString("apiVersion", "v1");
+  request_dict.SetKey("method", base::Value(method));
+  request_dict.SetKey("apiVersion", base::Value("v1"));
   request_dict.Set("params", std::move(params_dict));
 
   std::string request_body;
@@ -223,7 +224,7 @@ std::string CreateFixUrlRequestBody(
   // TODO(mmenke):  Investigate open sourcing the relevant protocol buffers and
   //                using those directly instead.
   std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
-  params->SetString("urlQuery", PrepareUrlForUpload(error.url()));
+  params->SetKey("urlQuery", base::Value(PrepareUrlForUpload(error.url())));
   return CreateRequestBody("linkdoctor.fixurl.fixurl", error_param,
                            correction_params, std::move(params));
 }
@@ -239,14 +240,16 @@ std::string CreateClickTrackingUrlRequestBody(
 
   std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
 
-  params->SetString("originalUrlQuery", PrepareUrlForUpload(error.url()));
+  params->SetKey("originalUrlQuery",
+                 base::Value(PrepareUrlForUpload(error.url())));
 
-  params->SetString("clickedUrlCorrection", correction.url_correction);
-  params->SetString("clickType", correction.click_type);
-  params->SetString("clickData", correction.click_data);
+  params->SetKey("clickedUrlCorrection",
+                 base::Value(correction.url_correction));
+  params->SetKey("clickType", base::Value(correction.click_type));
+  params->SetKey("clickData", base::Value(correction.click_data));
 
-  params->SetString("eventId", response.event_id);
-  params->SetString("fingerprint", response.fingerprint);
+  params->SetKey("eventId", base::Value(response.event_id));
+  params->SetKey("fingerprint", base::Value(response.fingerprint));
 
   return CreateRequestBody("linkdoctor.fixurl.clicktracking", error_param,
                            correction_params, std::move(params));
@@ -338,17 +341,18 @@ std::unique_ptr<error_page::ErrorPageParams> CreateErrorPageParams(
       }
       std::unique_ptr<base::DictionaryValue> suggest(
           new base::DictionaryValue());
-      suggest->SetString(
+      suggest->SetKey(
           "summary",
-          l10n_util::GetStringUTF16(
-              kCorrectionResourceTable[correction_index].resource_id));
-      suggest->SetString("urlCorrection", (*it)->url_correction);
-      suggest->SetString(
-          "urlCorrectionForDisplay",
-          FormatURLForDisplay(GURL((*it)->url_correction), is_rtl));
-      suggest->SetString("originalUrlForDisplay", original_url_for_display);
-      suggest->SetInteger("trackingId", tracking_id);
-      suggest->SetInteger("type", static_cast<int>(correction_index));
+          base::Value(l10n_util::GetStringUTF16(
+              kCorrectionResourceTable[correction_index].resource_id)));
+      suggest->SetKey("urlCorrection", base::Value((*it)->url_correction));
+      suggest->SetKey("urlCorrectionForDisplay",
+                      base::Value(FormatURLForDisplay(
+                          GURL((*it)->url_correction), is_rtl)));
+      suggest->SetKey("originalUrlForDisplay",
+                      base::Value(original_url_for_display));
+      suggest->SetKey("trackingId", base::Value(tracking_id));
+      suggest->SetKey("type", base::Value(static_cast<int>(correction_index)));
 
       params->override_suggestions->Append(std::move(suggest));
       LogCorrectionTypeShown(static_cast<int>(correction_index));

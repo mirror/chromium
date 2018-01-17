@@ -109,11 +109,11 @@ void DomDistillerHandler::HandleRequestEntries(const base::ListValue* args) {
     const ArticleEntry& article = *it;
     DCHECK(IsEntryValid(article));
     std::unique_ptr<base::DictionaryValue> entry(new base::DictionaryValue());
-    entry->SetString("entry_id", article.entry_id());
+    entry->SetKey("entry_id", base::Value(article.entry_id()));
     std::string title = (!article.has_title() || article.title().empty())
                             ? article.entry_id()
                             : article.title();
-    entry->SetString("title", net::EscapeForHTML(title));
+    entry->SetKey("title", base::Value(net::EscapeForHTML(title)));
     entries.Append(std::move(entry));
   }
   // TODO(nyquist): Write a test that ensures we sanitize the data we send.

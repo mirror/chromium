@@ -85,7 +85,7 @@ class TestDownloadsListTracker : public DownloadsListTracker {
       content::DownloadItem* item) const override {
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
     CHECK_LE(item->GetId(), static_cast<uint64_t>(INT_MAX));
-    dict->SetInteger("id", item->GetId());
+    dict->SetKey("id", base::Value(static_cast<int>(item->GetId())));
     return dict;
   }
 };

@@ -112,22 +112,22 @@ TEST(EvaluateScript, MissingWasThrown) {
 
 TEST(EvaluateScript, MissingResult) {
   base::DictionaryValue dict;
-  dict.SetBoolean("wasThrown", false);
+  dict.SetKey("wasThrown", base::Value(false));
   ASSERT_NO_FATAL_FAILURE(AssertEvalFails(dict));
 }
 
 TEST(EvaluateScript, Throws) {
   base::DictionaryValue dict;
-  dict.SetBoolean("wasThrown", true);
-  dict.SetString("result.type", "undefined");
+  dict.SetKey("wasThrown", base::Value(true));
+  dict.SetPath({"result", "type"}, base::Value("undefined"));
   ASSERT_NO_FATAL_FAILURE(AssertEvalFails(dict));
 }
 
 TEST(EvaluateScript, Ok) {
   std::unique_ptr<base::DictionaryValue> result;
   base::DictionaryValue dict;
-  dict.SetBoolean("wasThrown", false);
-  dict.SetInteger("result.key", 100);
+  dict.SetKey("wasThrown", base::Value(false));
+  dict.SetPath({"result", "key"}, base::Value(100));
   FakeDevToolsClient client;
   client.set_result(dict);
   ASSERT_TRUE(internal::EvaluateScript(
@@ -140,8 +140,8 @@ TEST(EvaluateScriptAndGetValue, MissingType) {
   std::unique_ptr<base::Value> result;
   FakeDevToolsClient client;
   base::DictionaryValue dict;
-  dict.SetBoolean("wasThrown", false);
-  dict.SetInteger("result.value", 1);
+  dict.SetKey("wasThrown", base::Value(false));
+  dict.SetPath({"result", "value"}, base::Value(1));
   client.set_result(dict);
   ASSERT_TRUE(internal::EvaluateScriptAndGetValue(
       &client, 0, std::string(), &result).IsError());
@@ -151,8 +151,8 @@ TEST(EvaluateScriptAndGetValue, Undefined) {
   std::unique_ptr<base::Value> result;
   FakeDevToolsClient client;
   base::DictionaryValue dict;
-  dict.SetBoolean("wasThrown", false);
-  dict.SetString("result.type", "undefined");
+  dict.SetKey("wasThrown", base::Value(false));
+  dict.SetPath({"result", "type"}, base::Value("undefined"));
   client.set_result(dict);
   Status status =
       internal::EvaluateScriptAndGetValue(&client, 0, std::string(), &result);
@@ -164,9 +164,9 @@ TEST(EvaluateScriptAndGetValue, Ok) {
   std::unique_ptr<base::Value> result;
   FakeDevToolsClient client;
   base::DictionaryValue dict;
-  dict.SetBoolean("wasThrown", false);
-  dict.SetString("result.type", "integer");
-  dict.SetInteger("result.value", 1);
+  dict.SetKey("wasThrown", base::Value(false));
+  dict.SetPath({"result", "type"}, base::Value("integer"));
+  dict.SetPath({"result", "value"}, base::Value(1));
   client.set_result(dict);
   Status status =
       internal::EvaluateScriptAndGetValue(&client, 0, std::string(), &result);
@@ -179,8 +179,8 @@ TEST(EvaluateScriptAndGetValue, Ok) {
 TEST(EvaluateScriptAndGetObject, NoObject) {
   FakeDevToolsClient client;
   base::DictionaryValue dict;
-  dict.SetBoolean("wasThrown", false);
-  dict.SetString("result.type", "integer");
+  dict.SetKey("wasThrown", base::Value(false));
+  dict.SetPath({"result", "type"}, base::Value("integer"));
   client.set_result(dict);
   bool got_object;
   std::string object_id;
@@ -193,8 +193,8 @@ TEST(EvaluateScriptAndGetObject, NoObject) {
 TEST(EvaluateScriptAndGetObject, Ok) {
   FakeDevToolsClient client;
   base::DictionaryValue dict;
-  dict.SetBoolean("wasThrown", false);
-  dict.SetString("result.objectId", "id");
+  dict.SetKey("wasThrown", base::Value(false));
+  dict.SetPath({"result", "objectId"}, base::Value("id"));
   client.set_result(dict);
   bool got_object;
   std::string object_id;
@@ -213,8 +213,8 @@ TEST(ParseCallFunctionResult, NotDict) {
 TEST(ParseCallFunctionResult, Ok) {
   std::unique_ptr<base::Value> result;
   base::DictionaryValue dict;
-  dict.SetInteger("status", 0);
-  dict.SetInteger("value", 1);
+  dict.SetKey("status", base::Value(0));
+  dict.SetKey("value", base::Value(1));
   Status status = internal::ParseCallFunctionResult(dict, &result);
   ASSERT_EQ(kOk, status.code());
   int value;
@@ -225,8 +225,8 @@ TEST(ParseCallFunctionResult, Ok) {
 TEST(ParseCallFunctionResult, ScriptError) {
   std::unique_ptr<base::Value> result;
   base::DictionaryValue dict;
-  dict.SetInteger("status", 1);
-  dict.SetInteger("value", 1);
+  dict.SetKey("status", base::Value(1));
+  dict.SetKey("value", base::Value(1));
   Status status = internal::ParseCallFunctionResult(dict, &result);
   ASSERT_EQ(1, status.code());
   ASSERT_FALSE(result);

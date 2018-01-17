@@ -67,10 +67,11 @@ bool AddFileToDirectory(const base::FilePath& directory,
 scoped_refptr<Extension> CreateTestExtension(const std::string& name,
                                              bool incognito_split_mode) {
   base::DictionaryValue manifest;
-  manifest.SetString("name", name);
-  manifest.SetString("version", "1");
-  manifest.SetInteger("manifest_version", 2);
-  manifest.SetString("incognito", incognito_split_mode ? "split" : "spanning");
+  manifest.SetKey("name", base::Value(name));
+  manifest.SetKey("version", base::Value("1"));
+  manifest.SetKey("manifest_version", base::Value(2));
+  manifest.SetKey("incognito",
+                  base::Value(incognito_split_mode ? "split" : "spanning"));
 
   base::FilePath path = GetTestPath("response_headers");
 
@@ -84,9 +85,9 @@ scoped_refptr<Extension> CreateTestExtension(const std::string& name,
 
 scoped_refptr<Extension> CreateWebStoreExtension() {
   base::DictionaryValue manifest;
-  manifest.SetString("name", "WebStore");
-  manifest.SetString("version", "1");
-  manifest.SetString("icons.16", "webstore_icon_16.png");
+  manifest.SetKey("name", base::Value("WebStore"));
+  manifest.SetKey("version", base::Value("1"));
+  manifest.SetPath({"icons", "16"}, base::Value("webstore_icon_16.png"));
 
   base::FilePath path;
   EXPECT_TRUE(PathService::Get(chrome::DIR_RESOURCES, &path));
@@ -102,8 +103,9 @@ scoped_refptr<Extension> CreateWebStoreExtension() {
 
 scoped_refptr<Extension> CreateTestResponseHeaderExtension() {
   base::DictionaryValue manifest;
-  manifest.SetString("name", "An extension with web-accessible resources");
-  manifest.SetString("version", "2");
+  manifest.SetKey("name",
+                  base::Value("An extension with web-accessible resources"));
+  manifest.SetKey("version", base::Value("2"));
 
   auto web_accessible_list = base::MakeUnique<base::ListValue>();
   web_accessible_list->AppendString("test.dat");

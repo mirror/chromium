@@ -65,13 +65,14 @@ std::unique_ptr<base::DictionaryValue> SessionTabToValue(
       new base::DictionaryValue());
   NewTabUI::SetUrlTitleAndDirection(dictionary.get(),
                                     current_navigation.title(), tab_url);
-  dictionary->SetString("type", "tab");
-  dictionary->SetDouble("timestamp",
-                        static_cast<double>(tab.timestamp.ToInternalValue()));
+  dictionary->SetKey("type", base::Value("tab"));
+  dictionary->SetKey(
+      "timestamp",
+      base::Value(static_cast<double>(tab.timestamp.ToInternalValue())));
   // TODO(jeremycho): This should probably be renamed to tabId to avoid
   // confusion with the ID corresponding to a session.  Investigate all the
   // places (C++ and JS) where this is being used.  (http://crbug.com/154865).
-  dictionary->SetInteger("sessionId", tab.tab_id.id());
+  dictionary->SetKey("sessionId", base::Value(tab.tab_id.id()));
   return dictionary;
 }
 
@@ -84,19 +85,22 @@ std::unique_ptr<base::DictionaryValue> BuildWindowData(
   // The items which are to be written into |dictionary| are also described in
   // chrome/browser/resources/ntp4/other_sessions.js in @typedef for WindowData.
   // Please update it whenever you add or remove any keys here.
-  dictionary->SetString("type", "window");
-  dictionary->SetDouble("timestamp", modification_time.ToInternalValue());
+  dictionary->SetKey("type", base::Value("window"));
+  dictionary->SetKey(
+      "timestamp",
+      base::Value(static_cast<double>(modification_time.ToInternalValue())));
   const base::TimeDelta last_synced = base::Time::Now() - modification_time;
   // If clock skew leads to a future time, or we last synced less than a minute
   // ago, output "Just now".
-  dictionary->SetString(
+  dictionary->SetKey(
       "userVisibleTimestamp",
-      last_synced < base::TimeDelta::FromMinutes(1)
-          ? l10n_util::GetStringUTF16(IDS_SYNC_TIME_JUST_NOW)
-          : ui::TimeFormat::Simple(ui::TimeFormat::FORMAT_ELAPSED,
-                                   ui::TimeFormat::LENGTH_SHORT, last_synced));
+      base::Value(last_synced < base::TimeDelta::FromMinutes(1)
+                      ? l10n_util::GetStringUTF16(IDS_SYNC_TIME_JUST_NOW)
+                      : ui::TimeFormat::Simple(ui::TimeFormat::FORMAT_ELAPSED,
+                                               ui::TimeFormat::LENGTH_SHORT,
+                                               last_synced)));
 
-  dictionary->SetInteger("sessionId", window_id);
+  dictionary->SetKey("sessionId", base::Value(window_id));
   return dictionary;
 }
 
@@ -282,15 +286,18 @@ void ForeignSessionHandler::HandleGetForeignSessions(
       // described in chrome/browser/resources/history/externs.js
       // @typedef for ForeignSession. Please update it whenever you add or
       // remove any keys here.
-      session_data->SetString("tag", session_tag);
-      session_data->SetString("name", session->session_name);
-      session_data->SetString("deviceType", session->DeviceTypeAsString());
-      session_data->SetString("modifiedTime",
-                              FormatSessionTime(session->modified_time));
-      session_data->SetDouble("timestamp", session->modified_time.ToJsTime());
+      session_data->SetKey("tag", base::Value(session_tag));
+      session_data->SetKey("name", base::Value(session->session_name));
+      session_data->SetKey("deviceType",
+                           base::Value(session->DeviceTypeAsString()));
+      session_data->SetKey(
+          "modifiedTime",
+          base::Value(FormatSessionTime(session->modified_time)));
+      session_data->SetKey("timestamp",
+                           base::Value(session->modified_time.ToJsTime()));
 
       bool is_collapsed = collapsed_sessions->HasKey(session_tag);
-      session_data->SetBoolean("collapsed", is_collapsed);
+      session_data->SetKey("collapsed", base::Value(is_collapsed));
       if (is_collapsed)
         current_collapsed_sessions->SetBoolean(session_tag, true);
 

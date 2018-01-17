@@ -76,7 +76,7 @@ std::unique_ptr<base::Value> ProxyScriptDecider::PacSource::NetLogCallback(
       source += effective_pac_url->possibly_invalid_spec();
       break;
   }
-  dict->SetString("source", source);
+  dict->SetKey("source", base::Value(source));
   return std::move(dict);
 }
 

@@ -496,14 +496,16 @@ WebSocketTransportClientSocketPool::GetInfoAsValue(
     const std::string& type,
     bool include_nested_pools) const {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("name", name);
-  dict->SetString("type", type);
-  dict->SetInteger("handed_out_socket_count", handed_out_socket_count_);
-  dict->SetInteger("connecting_socket_count", pending_connects_.size());
-  dict->SetInteger("idle_socket_count", 0);
-  dict->SetInteger("max_socket_count", max_sockets_);
-  dict->SetInteger("max_sockets_per_group", max_sockets_);
-  dict->SetInteger("pool_generation_number", 0);
+  dict->SetKey("name", base::Value(name));
+  dict->SetKey("type", base::Value(type));
+  dict->SetKey("handed_out_socket_count",
+               base::Value(handed_out_socket_count_));
+  dict->SetKey("connecting_socket_count",
+               base::Value(static_cast<int>(pending_connects_.size())));
+  dict->SetKey("idle_socket_count", base::Value(0));
+  dict->SetKey("max_socket_count", base::Value(max_sockets_));
+  dict->SetKey("max_sockets_per_group", base::Value(max_sockets_));
+  dict->SetKey("pool_generation_number", base::Value(0));
   return dict;
 }
 

@@ -73,85 +73,81 @@ SigninCreateProfileHandler::~SigninCreateProfileHandler() {
 
 void SigninCreateProfileHandler::GetLocalizedValues(
     base::DictionaryValue* localized_strings) {
-  localized_strings->SetString(
-      "createDesktopShortcutLabel",
-      l10n_util::GetStringUTF16(
-          IDS_PROFILES_CREATE_DESKTOP_SHORTCUT_LABEL));
-  localized_strings->SetString(
+  localized_strings->SetKey("createDesktopShortcutLabel",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_PROFILES_CREATE_DESKTOP_SHORTCUT_LABEL)));
+  localized_strings->SetKey(
       "manageProfilesSupervisedSignedInLabel",
-      l10n_util::GetStringUTF16(
-          IDS_PROFILES_CREATE_SUPERVISED_MULTI_SIGNED_IN_LABEL));
-  localized_strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_PROFILES_CREATE_SUPERVISED_MULTI_SIGNED_IN_LABEL)));
+  localized_strings->SetKey(
       "noSignedInUserMessage",
-      l10n_util::GetStringUTF16(
-          IDS_PROFILES_CREATE_SUPERVISED_NO_SIGNED_IN_USER_TEXT));
-  localized_strings->SetString("createProfileConfirm",
-                               l10n_util::GetStringUTF16(IDS_ADD));
-  localized_strings->SetString("learnMore",
-                               l10n_util::GetStringUTF16(IDS_LEARN_MORE));
-  localized_strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_PROFILES_CREATE_SUPERVISED_NO_SIGNED_IN_USER_TEXT)));
+  localized_strings->SetKey("createProfileConfirm",
+                            base::Value(l10n_util::GetStringUTF16(IDS_ADD)));
+  localized_strings->SetKey(
+      "learnMore", base::Value(l10n_util::GetStringUTF16(IDS_LEARN_MORE)));
+  localized_strings->SetKey(
       "selectAnAccount",
-      l10n_util::GetStringUTF16(
-          IDS_PROFILES_CREATE_SUPERVISED_SENTINEL_MENU_ITEM_TEXT));
-  localized_strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_PROFILES_CREATE_SUPERVISED_SENTINEL_MENU_ITEM_TEXT)));
+  localized_strings->SetKey(
       "createProfileTitle",
-      l10n_util::GetStringUTF16(IDS_PROFILES_CREATE_TITLE));
-  localized_strings->SetString(
-      "supervisedUserLearnMoreTitle",
-      l10n_util::GetStringUTF16(IDS_LEGACY_SUPERVISED_USER_LEARN_MORE_TITLE));
-  localized_strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(IDS_PROFILES_CREATE_TITLE)));
+  localized_strings->SetKey("supervisedUserLearnMoreTitle",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_LEGACY_SUPERVISED_USER_LEARN_MORE_TITLE)));
+  localized_strings->SetKey(
       "supervisedUserLearnMoreDone",
-      l10n_util::GetStringUTF16(
-          IDS_LEGACY_SUPERVISED_USER_LEARN_MORE_DONE_BUTTON));
-  localized_strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_LEGACY_SUPERVISED_USER_LEARN_MORE_DONE_BUTTON)));
+  localized_strings->SetKey(
       "supervisedUserLearnMoreText",
-      l10n_util::GetStringFUTF16(
+      base::Value(l10n_util::GetStringFUTF16(
           IDS_SUPERVISED_USER_LEARN_MORE_TEXT,
+          base::ASCIIToUTF16(chrome::kLegacySupervisedUserManagementURL),
           base::ASCIIToUTF16(
-              chrome::kLegacySupervisedUserManagementURL),
-          base::ASCIIToUTF16(
-              chrome::kLegacySupervisedUserManagementDisplayURL)));
-  localized_strings->SetString(
+              chrome::kLegacySupervisedUserManagementDisplayURL))));
+  localized_strings->SetKey(
       "importExistingSupervisedUserLink",
-      l10n_util::GetStringUTF16(
-          IDS_IMPORT_EXISTING_LEGACY_SUPERVISED_USER_TITLE));
-  localized_strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_IMPORT_EXISTING_LEGACY_SUPERVISED_USER_TITLE)));
+  localized_strings->SetKey(
       "manageProfilesExistingSupervisedUser",
-      l10n_util::GetStringUTF16(
-          IDS_PROFILES_CREATE_LEGACY_SUPERVISED_USER_ERROR_EXISTS_REMOTELY));
-  localized_strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_PROFILES_CREATE_LEGACY_SUPERVISED_USER_ERROR_EXISTS_REMOTELY)));
+  localized_strings->SetKey(
       "managedProfilesExistingLocalSupervisedUser",
-      l10n_util::GetStringUTF16(
-          IDS_PROFILES_CREATE_LEGACY_SUPERVISED_USER_ERROR_EXISTS_LOCALLY));
-  localized_strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_PROFILES_CREATE_LEGACY_SUPERVISED_USER_ERROR_EXISTS_LOCALLY)));
+  localized_strings->SetKey(
       "custodianAccountNotSelectedError",
-      l10n_util::GetStringUTF16(
-          IDS_PROFILES_CREATE_NO_CUSTODIAN_ACCOUNT_ERROR));
-  localized_strings->SetString(
-      "supervisedUserCreatedTitle",
-       l10n_util::GetStringUTF16(IDS_LEGACY_SUPERVISED_USER_CREATED_TITLE));
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_PROFILES_CREATE_NO_CUSTODIAN_ACCOUNT_ERROR)));
+  localized_strings->SetKey("supervisedUserCreatedTitle",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_LEGACY_SUPERVISED_USER_CREATED_TITLE)));
   // The first two substitution parameters remain to be filled by the page JS.
-  localized_strings->SetString(
+  localized_strings->SetKey(
       "supervisedUserCreatedText",
-      l10n_util::GetStringFUTF16(
-            IDS_SUPERVISED_USER_CREATED_TEXT,
-            base::ASCIIToUTF16("$1"),
-            base::ASCIIToUTF16("$2"),
-            base::ASCIIToUTF16(chrome::kLegacySupervisedUserManagementURL),
-            base::ASCIIToUTF16(
-                chrome::kLegacySupervisedUserManagementDisplayURL)));
-  localized_strings->SetString(
-      "exitAndChildlockLabel",
-      l10n_util::GetStringUTF16(
-          IDS_PROFILES_PROFILE_SIGNOUT_BUTTON));
-  localized_strings->SetString(
+      base::Value(l10n_util::GetStringFUTF16(
+          IDS_SUPERVISED_USER_CREATED_TEXT, base::ASCIIToUTF16("$1"),
+          base::ASCIIToUTF16("$2"),
+          base::ASCIIToUTF16(chrome::kLegacySupervisedUserManagementURL),
+          base::ASCIIToUTF16(
+              chrome::kLegacySupervisedUserManagementDisplayURL))));
+  localized_strings->SetKey("exitAndChildlockLabel",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_PROFILES_PROFILE_SIGNOUT_BUTTON)));
+  localized_strings->SetKey(
       "supervisedUserCreatedDone",
-      l10n_util::GetStringUTF16(
-          IDS_LEGACY_SUPERVISED_USER_CREATED_DONE_BUTTON));
-  localized_strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_LEGACY_SUPERVISED_USER_CREATED_DONE_BUTTON)));
+  localized_strings->SetKey(
       "supervisedUserCreatedSwitch",
-      l10n_util::GetStringUTF16(
-          IDS_LEGACY_SUPERVISED_USER_CREATED_SWITCH_BUTTON));
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_LEGACY_SUPERVISED_USER_CREATED_SWITCH_BUTTON)));
 }
 
 void SigninCreateProfileHandler::RegisterMessages() {
@@ -195,7 +191,7 @@ void SigninCreateProfileHandler::SendNewProfileDefaults() {
   ProfileAttributesStorage& storage =
       g_browser_process->profile_manager()->GetProfileAttributesStorage();
   base::DictionaryValue profile_info;
-  profile_info.SetString("name", storage.ChooseNameForNewProfile(0));
+  profile_info.SetKey("name", base::Value(storage.ChooseNameForNewProfile(0)));
 
   web_ui()->CallJavascriptFunctionUnsafe(
       "cr.webUIListenerCallback", base::Value("profile-defaults-received"),
@@ -215,8 +211,8 @@ void SigninCreateProfileHandler::RequestSignedInProfiles(
     base::string16 profile_path = entry->GetPath().AsUTF16Unsafe();
     std::unique_ptr<base::DictionaryValue> user_info(
         new base::DictionaryValue());
-    user_info->SetString("username", username);
-    user_info->SetString("profilePath", profile_path);
+    user_info->SetKey("username", base::Value(username));
+    user_info->SetKey("profilePath", base::Value(profile_path));
 
     user_info_list.Append(std::move(user_info));
   }
@@ -371,7 +367,8 @@ void SigninCreateProfileHandler::CreateShortcutAndShowSuccess(
   profile_path_being_created_.clear();
   DCHECK_NE(NO_CREATION_IN_PROGRESS, profile_creation_type_);
   base::DictionaryValue dict;
-  dict.SetString("name", profile->GetPrefs()->GetString(prefs::kProfileName));
+  dict.SetKey("name",
+              base::Value(profile->GetPrefs()->GetString(prefs::kProfileName)));
   dict.Set("filePath", base::CreateFilePathValue(profile->GetPath()));
 
   bool is_force_signin_enabled = signin_util::IsForceSigninEnabled();
@@ -387,18 +384,18 @@ void SigninCreateProfileHandler::CreateShortcutAndShowSuccess(
   open_new_window =
       open_new_window && profile_creation_type_ != SUPERVISED_PROFILE_CREATION;
 
-  dict.SetBoolean("showConfirmation",
-                  profile_creation_type_ == SUPERVISED_PROFILE_CREATION);
+  dict.SetKey("showConfirmation", base::Value(profile_creation_type_ ==
+                                              SUPERVISED_PROFILE_CREATION));
 
   bool is_supervised = profile_creation_type_ == SUPERVISED_PROFILE_CREATION ||
                        profile_creation_type_ == SUPERVISED_PROFILE_IMPORT;
-  dict.SetBoolean("isSupervised", is_supervised);
+  dict.SetKey("isSupervised", base::Value(is_supervised));
 
   if (is_supervised) {
     DCHECK(custodian_profile);
     if (custodian_profile) {
       std::string custodian_username = custodian_profile->GetProfileUserName();
-      dict.SetString("custodianUsername", custodian_username);
+      dict.SetKey("custodianUsername", base::Value(custodian_username));
     }
   }
 #endif

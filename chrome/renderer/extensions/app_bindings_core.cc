@@ -53,7 +53,7 @@ v8::Local<v8::Value> AppBindingsCore::GetDetails(
 
   std::unique_ptr<base::DictionaryValue> manifest_copy =
       extension->manifest()->value()->CreateDeepCopy();
-  manifest_copy->SetString("id", extension->id());
+  manifest_copy->SetKey("id", base::Value(extension->id()));
   return content::V8ValueConverter::Create()->ToV8Value(
       manifest_copy.get(), script_context->v8_context());
 }

@@ -30,10 +30,11 @@ std::unique_ptr<base::DictionaryValue> GetShellConstants(
   // Add a dictionary with client information
   auto dict = std::make_unique<base::DictionaryValue>();
 
-  dict->SetString("name", app_name);
-  dict->SetString(
+  dict->SetKey("name", base::Value(app_name));
+  dict->SetKey(
       "command_line",
-      base::CommandLine::ForCurrentProcess()->GetCommandLineString());
+      base::Value(
+          base::CommandLine::ForCurrentProcess()->GetCommandLineString()));
 
   constants_dict->Set("clientInfo", std::move(dict));
 

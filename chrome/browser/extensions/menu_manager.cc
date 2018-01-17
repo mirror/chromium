@@ -645,13 +645,13 @@ void MenuManager::ExecuteCommand(content::BrowserContext* context,
 
   switch (params.media_type) {
     case blink::WebContextMenuData::kMediaTypeImage:
-      properties->SetString("mediaType", "image");
+      properties->SetKey("mediaType", base::Value("image"));
       break;
     case blink::WebContextMenuData::kMediaTypeVideo:
-      properties->SetString("mediaType", "video");
+      properties->SetKey("mediaType", base::Value("video"));
       break;
     case blink::WebContextMenuData::kMediaTypeAudio:
-      properties->SetString("mediaType", "audio");
+      properties->SetKey("mediaType", base::Value("audio"));
       break;
     default:  {}  // Do nothing.
   }
@@ -662,16 +662,16 @@ void MenuManager::ExecuteCommand(content::BrowserContext* context,
   AddURLProperty(properties.get(), "frameUrl", params.frame_url);
 
   if (params.selection_text.length() > 0)
-    properties->SetString("selectionText", params.selection_text);
+    properties->SetKey("selectionText", base::Value(params.selection_text));
 
-  properties->SetBoolean("editable", params.is_editable);
+  properties->SetKey("editable", base::Value(params.is_editable));
 
   WebViewGuest* webview_guest = WebViewGuest::FromWebContents(web_contents);
   if (webview_guest) {
     // This is used in web_view_internalcustom_bindings.js.
     // The property is not exposed to developer API.
-    properties->SetInteger("webviewInstanceId",
-                           webview_guest->view_instance_id());
+    properties->SetKey("webviewInstanceId",
+                       base::Value(webview_guest->view_instance_id()));
   }
 
   auto args = base::MakeUnique<base::ListValue>();
@@ -690,7 +690,7 @@ void MenuManager::ExecuteCommand(content::BrowserContext* context,
     if (web_contents) {
       int frame_id = ExtensionApiFrameIdMap::GetFrameId(render_frame_host);
       if (frame_id != ExtensionApiFrameIdMap::kInvalidFrameId)
-        raw_properties->SetInteger("frameId", frame_id);
+        raw_properties->SetKey("frameId", base::Value(frame_id));
 
       args->Append(ExtensionTabUtil::CreateTabObject(web_contents)->ToValue());
     } else {
@@ -701,7 +701,7 @@ void MenuManager::ExecuteCommand(content::BrowserContext* context,
   if (item->type() == MenuItem::CHECKBOX ||
       item->type() == MenuItem::RADIO) {
     bool was_checked = item->checked();
-    raw_properties->SetBoolean("wasChecked", was_checked);
+    raw_properties->SetKey("wasChecked", base::Value(was_checked));
 
     // RADIO items always get set to true when you click on them, but CHECKBOX
     // items get their state toggled.
@@ -709,7 +709,7 @@ void MenuManager::ExecuteCommand(content::BrowserContext* context,
         (item->type() == MenuItem::RADIO) ? true : !was_checked;
 
     item->SetChecked(checked);
-    raw_properties->SetBoolean("checked", item->checked());
+    raw_properties->SetKey("checked", base::Value(item->checked()));
 
     if (extension)
       WriteToStorage(extension, item->id().extension_key);

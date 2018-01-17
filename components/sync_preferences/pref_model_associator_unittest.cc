@@ -333,10 +333,10 @@ TEST_F(DictionaryPreferenceMergeTest, MergeConflicts) {
 
 TEST_F(DictionaryPreferenceMergeTest, MergeValueToDictionary) {
   base::DictionaryValue local_dict_value;
-  local_dict_value.SetInteger("key", 0);
+  local_dict_value.SetKey("key", base::Value(0));
 
   base::DictionaryValue server_dict_value;
-  server_dict_value.SetInteger("key.subkey", 0);
+  server_dict_value.SetPath({"key", "subkey"}, base::Value(0));
 
   std::unique_ptr<base::Value> merged_value(pref_sync_service_->MergePreference(
       kDictionaryPrefName, local_dict_value, server_dict_value));

@@ -107,7 +107,7 @@ std::unique_ptr<base::Value> NetLogQuicConnectionMigrationTriggerCallback(
     std::string trigger,
     NetLogCaptureMode capture_mode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("trigger", trigger);
+  dict->SetKey("trigger", base::Value(trigger));
   return std::move(dict);
 }
 
@@ -116,8 +116,9 @@ std::unique_ptr<base::Value> NetLogQuicConnectionMigrationFailureCallback(
     std::string reason,
     NetLogCaptureMode capture_mode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("connection_id", base::NumberToString(connection_id));
-  dict->SetString("reason", reason);
+  dict->SetKey("connection_id",
+               base::Value(base::NumberToString(connection_id)));
+  dict->SetKey("reason", base::Value(reason));
   return std::move(dict);
 }
 
@@ -125,7 +126,8 @@ std::unique_ptr<base::Value> NetLogQuicConnectionMigrationSuccessCallback(
     QuicConnectionId connection_id,
     NetLogCaptureMode capture_mode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("connection_id", base::NumberToString(connection_id));
+  dict->SetKey("connection_id",
+               base::Value(base::NumberToString(connection_id)));
   return std::move(dict);
 }
 
@@ -185,12 +187,12 @@ std::unique_ptr<base::Value> NetLogQuicClientSessionCallback(
     bool require_confirmation,
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("host", server_id->host());
-  dict->SetInteger("port", server_id->port());
-  dict->SetBoolean("privacy_mode",
-                   server_id->privacy_mode() == PRIVACY_MODE_ENABLED);
-  dict->SetBoolean("require_confirmation", require_confirmation);
-  dict->SetInteger("cert_verify_flags", cert_verify_flags);
+  dict->SetKey("host", base::Value(server_id->host()));
+  dict->SetKey("port", base::Value(static_cast<int>(server_id->port())));
+  dict->SetKey("privacy_mode",
+               base::Value(server_id->privacy_mode() == PRIVACY_MODE_ENABLED));
+  dict->SetKey("require_confirmation", base::Value(require_confirmation));
+  dict->SetKey("cert_verify_flags", base::Value(cert_verify_flags));
   return std::move(dict);
 }
 
@@ -201,8 +203,9 @@ std::unique_ptr<base::Value> NetLogQuicPushPromiseReceivedCallback(
     NetLogCaptureMode capture_mode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
   dict->Set("headers", ElideSpdyHeaderBlockForNetLog(*headers, capture_mode));
-  dict->SetInteger("id", stream_id);
-  dict->SetInteger("promised_stream_id", promised_stream_id);
+  dict->SetKey("id", base::Value(static_cast<int>(stream_id)));
+  dict->SetKey("promised_stream_id",
+               base::Value(static_cast<int>(promised_stream_id)));
   return std::move(dict);
 }
 
@@ -2324,9 +2327,11 @@ void QuicChromiumClientSession::LogMetricsOnNetworkMadeDefault() {
 std::unique_ptr<base::Value> QuicChromiumClientSession::GetInfoAsValue(
     const std::set<HostPortPair>& aliases) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("version",
-                  QuicVersionToString(connection()->transport_version()));
-  dict->SetInteger("open_streams", GetNumOpenOutgoingStreams());
+  dict->SetKey(
+      "version",
+      base::Value(QuicVersionToString(connection()->transport_version())));
+  dict->SetKey("open_streams",
+               base::Value(static_cast<int>(GetNumOpenOutgoingStreams())));
   std::unique_ptr<base::ListValue> stream_list(new base::ListValue());
   for (DynamicStreamMap::const_iterator it = dynamic_streams().begin();
        it != dynamic_streams().end(); ++it) {
@@ -2334,14 +2339,19 @@ std::unique_ptr<base::Value> QuicChromiumClientSession::GetInfoAsValue(
   }
   dict->Set("active_streams", std::move(stream_list));
 
-  dict->SetInteger("total_streams", num_total_streams_);
-  dict->SetString("peer_address", peer_address().ToString());
-  dict->SetString("connection_id", base::NumberToString(connection_id()));
-  dict->SetBoolean("connected", connection()->connected());
+  dict->SetKey("total_streams",
+               base::Value(static_cast<int>(num_total_streams_)));
+  dict->SetKey("peer_address", base::Value(peer_address().ToString()));
+  dict->SetKey("connection_id",
+               base::Value(base::NumberToString(connection_id())));
+  dict->SetKey("connected", base::Value(connection()->connected()));
   const QuicConnectionStats& stats = connection()->GetStats();
-  dict->SetInteger("packets_sent", stats.packets_sent);
-  dict->SetInteger("packets_received", stats.packets_received);
-  dict->SetInteger("packets_lost", stats.packets_lost);
+  dict->SetKey("packets_sent",
+               base::Value(static_cast<int>(stats.packets_sent)));
+  dict->SetKey("packets_received",
+               base::Value(static_cast<int>(stats.packets_received)));
+  dict->SetKey("packets_lost",
+               base::Value(static_cast<int>(stats.packets_lost)));
   SSLInfo ssl_info;
 
   std::unique_ptr<base::ListValue> alias_list(new base::ListValue());

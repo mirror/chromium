@@ -17,8 +17,8 @@ TEST(PaymentRequestTest, PaymentCurrencyAmountFromDictionaryValueSuccess) {
   expected.value = "-438.23";
 
   base::DictionaryValue amount_dict;
-  amount_dict.SetString("currency", "AUD");
-  amount_dict.SetString("value", "-438.23");
+  amount_dict.SetKey("currency", base::Value("AUD"));
+  amount_dict.SetKey("value", base::Value("-438.23"));
 
   mojom::PaymentCurrencyAmount actual;
   EXPECT_TRUE(PaymentCurrencyAmountFromDictionaryValue(amount_dict, &actual));
@@ -26,7 +26,8 @@ TEST(PaymentRequestTest, PaymentCurrencyAmountFromDictionaryValueSuccess) {
   EXPECT_TRUE(expected.Equals(actual));
 
   expected.currency_system = "urn:iso:std:iso:123456789";
-  amount_dict.SetString("currencySystem", "urn:iso:std:iso:123456789");
+  amount_dict.SetKey("currencySystem",
+                     base::Value("urn:iso:std:iso:123456789"));
   EXPECT_TRUE(PaymentCurrencyAmountFromDictionaryValue(amount_dict, &actual));
   EXPECT_TRUE(expected.Equals(actual));
 }
@@ -40,12 +41,12 @@ TEST(PaymentRequestTest, PaymentCurrencyAmountFromDictionaryValueFailure) {
   EXPECT_FALSE(PaymentCurrencyAmountFromDictionaryValue(amount_dict, &actual));
 
   // Both values must be strings.
-  amount_dict.SetInteger("currency", 842);
-  amount_dict.SetString("value", "-438.23");
+  amount_dict.SetKey("currency", base::Value(842));
+  amount_dict.SetKey("value", base::Value("-438.23"));
   EXPECT_FALSE(PaymentCurrencyAmountFromDictionaryValue(amount_dict, &actual));
 
-  amount_dict.SetString("currency", "NZD");
-  amount_dict.SetDouble("value", -438.23);
+  amount_dict.SetKey("currency", base::Value("NZD"));
+  amount_dict.SetKey("value", base::Value(-438.23));
   EXPECT_FALSE(PaymentCurrencyAmountFromDictionaryValue(amount_dict, &actual));
 }
 
@@ -76,9 +77,9 @@ TEST(PaymentRequestTest, PaymentCurrencyAmountEquality) {
 TEST(PaymentRequestTest, EmptyPaymentCurrencyAmountDictionary) {
   base::DictionaryValue expected_value;
 
-  expected_value.SetString("currency", "");
-  expected_value.SetString("value", "");
-  expected_value.SetString("currencySystem", "urn:iso:std:iso:4217");
+  expected_value.SetKey("currency", base::Value(""));
+  expected_value.SetKey("value", base::Value(""));
+  expected_value.SetKey("currencySystem", base::Value("urn:iso:std:iso:4217"));
 
   mojom::PaymentCurrencyAmount payment_currency_amount;
   EXPECT_TRUE(expected_value.Equals(
@@ -90,9 +91,10 @@ TEST(PaymentRequestTest, EmptyPaymentCurrencyAmountDictionary) {
 TEST(PaymentRequestTest, PopulatedCurrencyAmountDictionary) {
   base::DictionaryValue expected_value;
 
-  expected_value.SetString("currency", "AUD");
-  expected_value.SetString("value", "-438.23");
-  expected_value.SetString("currencySystem", "urn:iso:std:iso:123456789");
+  expected_value.SetKey("currency", base::Value("AUD"));
+  expected_value.SetKey("value", base::Value("-438.23"));
+  expected_value.SetKey("currencySystem",
+                        base::Value("urn:iso:std:iso:123456789"));
 
   mojom::PaymentCurrencyAmount payment_currency_amount;
   payment_currency_amount.currency = "AUD";

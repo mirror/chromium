@@ -200,7 +200,7 @@ class ToValueVisitor {
   std::unique_ptr<base::DictionaryValue> ToValue(
       const sync_pb::PasswordSpecificsData& proto) const {
     auto value = ToValueImpl(proto);
-    value->SetString("password_value", "<redacted>");
+    value->SetKey("password_value", base::Value("<redacted>"));
     return value;
   }
 

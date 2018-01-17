@@ -96,17 +96,18 @@ void GetPolicyValues(const policy::PolicyMap& map,
     value->Set("value",
                CopyAndMaybeConvert(entry.second.value.get(), convert_values));
     if (entry.second.scope == policy::POLICY_SCOPE_USER)
-      value->SetString("scope", "user");
+      value->SetKey("scope", base::Value("user"));
     else
-      value->SetString("scope", "machine");
+      value->SetKey("scope", base::Value("machine"));
     if (entry.second.level == policy::POLICY_LEVEL_RECOMMENDED)
-      value->SetString("level", "recommended");
+      value->SetKey("level", base::Value("recommended"));
     else
-      value->SetString("level", "mandatory");
-    value->SetString("source", kPolicySources[entry.second.source].key);
+      value->SetKey("level", base::Value("mandatory"));
+    value->SetKey("source",
+                  base::Value(kPolicySources[entry.second.source].key));
     base::string16 error = errors->GetErrors(entry.first);
     if (!error.empty())
-      value->SetString("error", error);
+      value->SetKey("error", base::Value(error));
     values->SetWithoutPathExpansion(entry.first, std::move(value));
   }
 }

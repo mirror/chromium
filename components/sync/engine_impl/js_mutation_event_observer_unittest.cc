@@ -70,8 +70,8 @@ TEST_F(JsMutationEventObserverTest, OnChangesApplied) {
   for (int i = AUTOFILL_PROFILE; i < MODEL_TYPE_COUNT; ++i) {
     const std::string& model_type_str = ModelTypeToString(ModelTypeFromInt(i));
     base::DictionaryValue expected_details;
-    expected_details.SetString("modelType", model_type_str);
-    expected_details.SetString("writeTransactionId", "0");
+    expected_details.SetKey("modelType", base::Value(model_type_str));
+    expected_details.SetKey("writeTransactionId", base::Value("0"));
     auto expected_changes = std::make_unique<base::ListValue>();
     for (int j = i; j < MODEL_TYPE_COUNT; ++j) {
       expected_changes->Append(changes[j].ToValue());
@@ -97,8 +97,8 @@ TEST_F(JsMutationEventObserverTest, OnChangesComplete) {
 
   for (int i = FIRST_REAL_MODEL_TYPE; i < MODEL_TYPE_COUNT; ++i) {
     base::DictionaryValue expected_details;
-    expected_details.SetString("modelType",
-                               ModelTypeToString(ModelTypeFromInt(i)));
+    expected_details.SetKey(
+        "modelType", base::Value(ModelTypeToString(ModelTypeFromInt(i))));
     EXPECT_CALL(mock_js_event_handler_,
                 HandleJsEvent("onChangesComplete",
                               HasDetailsAsDictionary(expected_details)));

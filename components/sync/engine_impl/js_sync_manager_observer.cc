@@ -43,7 +43,7 @@ void JsSyncManagerObserver::OnConnectionStatusChange(ConnectionStatus status) {
     return;
   }
   base::DictionaryValue details;
-  details.SetString("status", ConnectionStatusToString(status));
+  details.SetKey("status", base::Value(ConnectionStatusToString(status)));
   HandleJsEvent(FROM_HERE, "onConnectionStatusChange",
                 JsEventDetails(&details));
 }

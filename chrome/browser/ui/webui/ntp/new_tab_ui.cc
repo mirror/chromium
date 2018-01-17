@@ -101,7 +101,7 @@ bool NewTabUI::IsNewTab(const GURL& url) {
 void NewTabUI::SetUrlTitleAndDirection(base::DictionaryValue* dictionary,
                                        const base::string16& title,
                                        const GURL& gurl) {
-  dictionary->SetString("url", gurl.spec());
+  dictionary->SetKey("url", base::Value(gurl.spec()));
 
   bool using_url_as_the_title = false;
   base::string16 title_to_set(title);
@@ -127,15 +127,16 @@ void NewTabUI::SetUrlTitleAndDirection(base::DictionaryValue* dictionary,
   else
     direction = GetHtmlTextDirection(title);
 
-  dictionary->SetString("title", title_to_set);
-  dictionary->SetString("direction", direction);
+  dictionary->SetKey("title", base::Value(title_to_set));
+  dictionary->SetKey("direction", base::Value(direction));
 }
 
 // static
 void NewTabUI::SetFullNameAndDirection(const base::string16& full_name,
                                        base::DictionaryValue* dictionary) {
-  dictionary->SetString("full_name", full_name);
-  dictionary->SetString("full_name_direction", GetHtmlTextDirection(full_name));
+  dictionary->SetKey("full_name", base::Value(full_name));
+  dictionary->SetKey("full_name_direction",
+                     base::Value(GetHtmlTextDirection(full_name)));
 }
 
 Profile* NewTabUI::GetProfile() const {

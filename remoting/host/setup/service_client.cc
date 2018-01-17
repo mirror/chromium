@@ -77,9 +77,9 @@ void ServiceClient::Core::RegisterHost(
   DCHECK(pending_request_type_ == PENDING_REQUEST_NONE);
   pending_request_type_ = PENDING_REQUEST_REGISTER_HOST;
   base::DictionaryValue post_body;
-  post_body.SetString("data.hostId", host_id);
-  post_body.SetString("data.hostName", host_name);
-  post_body.SetString("data.publicKey", public_key);
+  post_body.SetPath({"data", "hostId"}, base::Value(host_id));
+  post_body.SetPath({"data", "hostName"}, base::Value(host_name));
+  post_body.SetPath({"data", "publicKey"}, base::Value(public_key));
   std::string url_suffix;
   if (!host_client_id.empty())
     url_suffix = "?hostClientId=" + host_client_id;

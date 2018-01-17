@@ -257,7 +257,7 @@ class PasswordProtectionServiceTest
 
     std::unique_ptr<base::DictionaryValue> invalid_verdict_entry =
         std::make_unique<base::DictionaryValue>();
-    invalid_verdict_entry->SetString("invalid", "invalid_string");
+    invalid_verdict_entry->SetKey("invalid", base::Value("invalid_string"));
 
     verdict_dictionary->SetWithoutPathExpansion(
         "invalid_cache_expression", std::move(invalid_verdict_entry));
@@ -286,7 +286,8 @@ class PasswordProtectionServiceTest
 TEST_P(PasswordProtectionServiceTest, TestParseInvalidVerdictEntry) {
   std::unique_ptr<base::DictionaryValue> invalid_verdict_entry =
       std::make_unique<base::DictionaryValue>();
-  invalid_verdict_entry->SetString("cache_creation_time", "invalid_time");
+  invalid_verdict_entry->SetKey("cache_creation_time",
+                                base::Value("invalid_time"));
 
   int cache_creation_time;
   LoginReputationClientResponse response;

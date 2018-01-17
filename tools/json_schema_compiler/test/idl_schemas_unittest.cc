@@ -47,12 +47,12 @@ TEST(IdlCompiler, Basics) {
   // Test Function3, which takes a MyType1 parameter.
   list.Clear();
   std::unique_ptr<base::DictionaryValue> tmp(new base::DictionaryValue());
-  tmp->SetInteger("x", 17);
-  tmp->SetString("y", "hello");
-  tmp->SetString("z", "zstring");
-  tmp->SetString("a", "astring");
-  tmp->SetString("b", "bstring");
-  tmp->SetString("c", "cstring");
+  tmp->SetKey("x", base::Value(17));
+  tmp->SetKey("y", base::Value("hello"));
+  tmp->SetKey("z", base::Value("zstring"));
+  tmp->SetKey("a", base::Value("astring"));
+  tmp->SetKey("b", base::Value("bstring"));
+  tmp->SetKey("c", base::Value("cstring"));
   list.Append(std::move(tmp));
   std::unique_ptr<Function3::Params> f3_params =
       Function3::Params::Create(list);
@@ -110,12 +110,12 @@ TEST(IdlCompiler, OptionalArguments) {
   EXPECT_EQ(NULL, f9_params->arg.get());
   list.Clear();
   std::unique_ptr<base::DictionaryValue> tmp(new base::DictionaryValue());
-  tmp->SetInteger("x", 17);
-  tmp->SetString("y", "hello");
-  tmp->SetString("z", "zstring");
-  tmp->SetString("a", "astring");
-  tmp->SetString("b", "bstring");
-  tmp->SetString("c", "cstring");
+  tmp->SetKey("x", base::Value(17));
+  tmp->SetKey("y", base::Value("hello"));
+  tmp->SetKey("z", base::Value("zstring"));
+  tmp->SetKey("a", base::Value("astring"));
+  tmp->SetKey("b", base::Value("bstring"));
+  tmp->SetKey("c", base::Value("cstring"));
   list.Append(std::move(tmp));
   f9_params = Function9::Params::Create(list);
   ASSERT_TRUE(f9_params->arg.get() != NULL);
@@ -194,7 +194,7 @@ TEST(IdlCompiler, ObjectTypes) {
   // Test the params to the ObjectFunction1 function.
   std::unique_ptr<base::DictionaryValue> icon_props(
       new base::DictionaryValue());
-  icon_props->SetString("hello", "world");
+  icon_props->SetKey("hello", base::Value("world"));
   ObjectFunction1::Params::Icon icon;
   EXPECT_TRUE(ObjectFunction1::Params::Icon::Populate(*(icon_props.get()),
                                                       &icon));

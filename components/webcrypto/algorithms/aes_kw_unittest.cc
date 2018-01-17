@@ -57,8 +57,8 @@ TEST_F(WebCryptoAesKwTest, ImportKeyEmptyUsage) {
 TEST_F(WebCryptoAesKwTest, ImportKeyJwkKeyOpsWrapUnwrap) {
   blink::WebCryptoKey key;
   base::DictionaryValue dict;
-  dict.SetString("kty", "oct");
-  dict.SetString("k", "GADWrMRHwQfoNaXU5fZvTg");
+  dict.SetKey("kty", base::Value("oct"));
+  dict.SetKey("k", base::Value("GADWrMRHwQfoNaXU5fZvTg"));
   base::ListValue* key_ops =
       dict.SetList("key_ops", base::MakeUnique<base::ListValue>());
 

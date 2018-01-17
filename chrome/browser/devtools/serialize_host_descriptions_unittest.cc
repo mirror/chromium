@@ -17,7 +17,7 @@ namespace {
 
 HostDescriptionNode GetNodeWithLabel(const char* name, int label) {
   HostDescriptionNode node = {name, std::string(), base::DictionaryValue()};
-  node.representation.SetInteger("label", label);
+  node.representation.SetKey("label", base::Value(label));
   return node;
 }
 

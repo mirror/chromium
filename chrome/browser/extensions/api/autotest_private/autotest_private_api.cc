@@ -195,15 +195,18 @@ AutotestPrivateGetExtensionsInfoFunction::Run() {
     std::string id = extension->id();
     std::unique_ptr<base::DictionaryValue> extension_value(
         new base::DictionaryValue);
-    extension_value->SetString("id", id);
-    extension_value->SetString("version", extension->VersionString());
-    extension_value->SetString("name", extension->name());
-    extension_value->SetString("publicKey", extension->public_key());
-    extension_value->SetString("description", extension->description());
-    extension_value->SetString(
-        "backgroundUrl", BackgroundInfo::GetBackgroundURL(extension).spec());
-    extension_value->SetString(
-        "optionsUrl", OptionsPageInfo::GetOptionsPage(extension).spec());
+    extension_value->SetKey("id", base::Value(id));
+    extension_value->SetKey("version", base::Value(extension->VersionString()));
+    extension_value->SetKey("name", base::Value(extension->name()));
+    extension_value->SetKey("publicKey", base::Value(extension->public_key()));
+    extension_value->SetKey("description",
+                            base::Value(extension->description()));
+    extension_value->SetKey(
+        "backgroundUrl",
+        base::Value(BackgroundInfo::GetBackgroundURL(extension).spec()));
+    extension_value->SetKey(
+        "optionsUrl",
+        base::Value(OptionsPageInfo::GetOptionsPage(extension).spec()));
 
     extension_value->Set("hostPermissions",
                          GetHostPermissions(extension, false));
@@ -212,19 +215,21 @@ AutotestPrivateGetExtensionsInfoFunction::Run() {
     extension_value->Set("apiPermissions", GetAPIPermissions(extension));
 
     Manifest::Location location = extension->location();
-    extension_value->SetBoolean("isComponent",
-                                location == Manifest::COMPONENT);
-    extension_value->SetBoolean("isInternal",
-                                location == Manifest::INTERNAL);
-    extension_value->SetBoolean("isUserInstalled",
-        location == Manifest::INTERNAL ||
-        Manifest::IsUnpackedLocation(location));
-    extension_value->SetBoolean("isEnabled", service->IsExtensionEnabled(id));
-    extension_value->SetBoolean(
-        "allowedInIncognito", util::IsIncognitoEnabled(id, browser_context()));
-    extension_value->SetBoolean(
-        "hasPageAction",
-        extension_action_manager->GetPageAction(*extension) != NULL);
+    extension_value->SetKey("isComponent",
+                            base::Value(location == Manifest::COMPONENT));
+    extension_value->SetKey("isInternal",
+                            base::Value(location == Manifest::INTERNAL));
+    extension_value->SetKey(
+        "isUserInstalled", base::Value(location == Manifest::INTERNAL ||
+                                       Manifest::IsUnpackedLocation(location)));
+    extension_value->SetKey("isEnabled",
+                            base::Value(service->IsExtensionEnabled(id)));
+    extension_value->SetKey(
+        "allowedInIncognito",
+        base::Value(util::IsIncognitoEnabled(id, browser_context())));
+    extension_value->SetKey("hasPageAction",
+                            base::Value(extension_action_manager->GetPageAction(
+                                            *extension) != NULL));
 
     extensions_values->Append(std::move(extension_value));
   }

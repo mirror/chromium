@@ -44,11 +44,11 @@ Status JavaScriptDialogManager::HandleDialog(bool accept,
     return Status(kNoAlertOpen);
 
   base::DictionaryValue params;
-  params.SetBoolean("accept", accept);
+  params.SetKey("accept", base::Value(accept));
   if (text)
-    params.SetString("promptText", *text);
+    params.SetKey("promptText", base::Value(*text));
   else if (browser_info_->build_no >= 3175)
-    params.SetString("promptText", prompt_text_);
+    params.SetKey("promptText", base::Value(prompt_text_));
   Status status = client_->SendCommand("Page.handleJavaScriptDialog", params);
   if (status.IsError()) {
     // Retry once to work around

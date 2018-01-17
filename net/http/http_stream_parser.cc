@@ -70,9 +70,9 @@ std::unique_ptr<base::Value> NetLogSendRequestBodyCallback(
     bool did_merge,
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("length", static_cast<int>(length));
-  dict->SetBoolean("is_chunked", is_chunked);
-  dict->SetBoolean("did_merge", did_merge);
+  dict->SetKey("length", base::Value(static_cast<int>(length)));
+  dict->SetKey("is_chunked", base::Value(is_chunked));
+  dict->SetKey("did_merge", base::Value(did_merge));
   return std::move(dict);
 }
 

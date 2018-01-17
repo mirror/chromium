@@ -231,7 +231,7 @@ class Element : public Node {
   std::unique_ptr<base::Value> ToJson() override {
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
 
-    dict->SetString("e", tag_name_);
+    dict->SetKey("e", base::Value(tag_name_));
     if (!children_.empty())
       dict->Set("c", children_.ToJson());
     if (!attrs_.empty()) {
@@ -296,7 +296,7 @@ class Text : public Node {
 
   std::unique_ptr<base::Value> ToJson() override {
     base::DictionaryValue* result = new base::DictionaryValue();
-    result->SetString("t", text_);
+    result->SetKey("t", base::Value(text_));
     return std::unique_ptr<base::Value>(result);
   }
 

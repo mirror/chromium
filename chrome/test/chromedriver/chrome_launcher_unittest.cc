@@ -169,10 +169,10 @@ TEST(PrepareUserDataDir, CustomPrefs) {
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
 
   base::DictionaryValue prefs;
-  prefs.SetString("myPrefsKey", "ok");
+  prefs.SetKey("myPrefsKey", base::Value("ok"));
   prefs.SetKey("pref.sub", base::Value("1"));
   base::DictionaryValue local_state;
-  local_state.SetString("myLocalKey", "ok");
+  local_state.SetKey("myLocalKey", base::Value("ok"));
   local_state.SetKey("local.state.sub", base::Value("2"));
   Status status =
       internal::PrepareUserDataDir(temp_dir.GetPath(), &prefs, &local_state);

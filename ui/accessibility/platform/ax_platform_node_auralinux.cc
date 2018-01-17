@@ -1051,13 +1051,13 @@ void AXPlatformNodeAuraLinux::AddAccessibilityTreeProperties(
     base::DictionaryValue* dict) {
   AtkRole role = GetAtkRole();
   if (role != ATK_ROLE_UNKNOWN)
-    dict->SetString("role", std::string(atk_role_get_name(role)));
+    dict->SetKey("role", base::Value(std::string(atk_role_get_name(role))));
   const gchar* name = atk_object_get_name(atk_object_);
   if (name)
-    dict->SetString("name", std::string(name));
+    dict->SetKey("name", base::Value(std::string(name)));
   const gchar* description = atk_object_get_description(atk_object_);
   if (description)
-    dict->SetString("description", std::string(description));
+    dict->SetKey("description", base::Value(std::string(description)));
 
   AtkStateSet* state_set = atk_object_ref_state_set(atk_object_);
   auto states = std::make_unique<base::ListValue>();

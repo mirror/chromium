@@ -91,21 +91,22 @@ std::string GetConfiguration(const base::DictionaryValue* extra_values,
   base::DictionaryValue result;
   if (extra_values)
     result.MergeDictionary(extra_values);
-  result.SetBoolean("syncAllDataTypes", sync_all == SYNC_ALL_DATA);
-  result.SetBoolean("encryptAllData", encrypt_all == ENCRYPT_ALL_DATA);
+  result.SetKey("syncAllDataTypes", base::Value(sync_all == SYNC_ALL_DATA));
+  result.SetKey("encryptAllData", base::Value(encrypt_all == ENCRYPT_ALL_DATA));
   if (!passphrase.empty())
-    result.SetString("passphrase", passphrase);
+    result.SetKey("passphrase", base::Value(passphrase));
   // Add all of our data types.
-  result.SetBoolean("appsSynced", types.Has(syncer::APPS));
-  result.SetBoolean("autofillSynced", types.Has(syncer::AUTOFILL));
-  result.SetBoolean("bookmarksSynced", types.Has(syncer::BOOKMARKS));
-  result.SetBoolean("extensionsSynced", types.Has(syncer::EXTENSIONS));
-  result.SetBoolean("passwordsSynced", types.Has(syncer::PASSWORDS));
-  result.SetBoolean("preferencesSynced", types.Has(syncer::PREFERENCES));
-  result.SetBoolean("tabsSynced", types.Has(syncer::PROXY_TABS));
-  result.SetBoolean("themesSynced", types.Has(syncer::THEMES));
-  result.SetBoolean("typedUrlsSynced", types.Has(syncer::TYPED_URLS));
-  result.SetBoolean("paymentsIntegrationEnabled", false);
+  result.SetKey("appsSynced", base::Value(types.Has(syncer::APPS)));
+  result.SetKey("autofillSynced", base::Value(types.Has(syncer::AUTOFILL)));
+  result.SetKey("bookmarksSynced", base::Value(types.Has(syncer::BOOKMARKS)));
+  result.SetKey("extensionsSynced", base::Value(types.Has(syncer::EXTENSIONS)));
+  result.SetKey("passwordsSynced", base::Value(types.Has(syncer::PASSWORDS)));
+  result.SetKey("preferencesSynced",
+                base::Value(types.Has(syncer::PREFERENCES)));
+  result.SetKey("tabsSynced", base::Value(types.Has(syncer::PROXY_TABS)));
+  result.SetKey("themesSynced", base::Value(types.Has(syncer::THEMES)));
+  result.SetKey("typedUrlsSynced", base::Value(types.Has(syncer::TYPED_URLS)));
+  result.SetKey("paymentsIntegrationEnabled", base::Value(false));
   std::string args;
   base::JSONWriter::Write(result, &args);
   return args;
@@ -593,7 +594,7 @@ TEST_F(PeopleHandlerTest, TestPassphraseStillRequired) {
 
 TEST_F(PeopleHandlerTest, EnterExistingFrozenImplicitPassword) {
   base::DictionaryValue dict;
-  dict.SetBoolean("setNewPassphrase", false);
+  dict.SetKey("setNewPassphrase", base::Value(false));
   std::string args = GetConfiguration(&dict, SYNC_ALL_DATA, GetAllTypes(),
                                       "oldGaiaPassphrase", ENCRYPT_PASSWORDS);
   base::ListValue list_args;
@@ -616,7 +617,7 @@ TEST_F(PeopleHandlerTest, EnterExistingFrozenImplicitPassword) {
 
 TEST_F(PeopleHandlerTest, SetNewCustomPassphrase) {
   base::DictionaryValue dict;
-  dict.SetBoolean("setNewPassphrase", true);
+  dict.SetKey("setNewPassphrase", base::Value(true));
   std::string args = GetConfiguration(&dict, SYNC_ALL_DATA, GetAllTypes(),
                                       "custom_passphrase", ENCRYPT_ALL_DATA);
   base::ListValue list_args;
@@ -639,7 +640,7 @@ TEST_F(PeopleHandlerTest, SetNewCustomPassphrase) {
 
 TEST_F(PeopleHandlerTest, EnterWrongExistingPassphrase) {
   base::DictionaryValue dict;
-  dict.SetBoolean("setNewPassphrase", false);
+  dict.SetKey("setNewPassphrase", base::Value(false));
   std::string args = GetConfiguration(&dict, SYNC_ALL_DATA, GetAllTypes(),
                                       "invalid_passphrase", ENCRYPT_ALL_DATA);
   base::ListValue list_args;
@@ -664,7 +665,7 @@ TEST_F(PeopleHandlerTest, EnterWrongExistingPassphrase) {
 
 TEST_F(PeopleHandlerTest, EnterBlankExistingPassphrase) {
   base::DictionaryValue dict;
-  dict.SetBoolean("setNewPassphrase", false);
+  dict.SetKey("setNewPassphrase", base::Value(false));
   std::string args = GetConfiguration(&dict,
                                       SYNC_ALL_DATA,
                                       GetAllTypes(),

@@ -46,23 +46,24 @@ Status MobileEmulationOverrideManager::ApplyOverrideIfNeeded() {
     return Status(kOk);
 
   base::DictionaryValue params;
-  params.SetInteger("width", overridden_device_metrics_->width);
-  params.SetInteger("height", overridden_device_metrics_->height);
-  params.SetDouble("deviceScaleFactor",
-                   overridden_device_metrics_->device_scale_factor);
-  params.SetBoolean("mobile", overridden_device_metrics_->mobile);
-  params.SetBoolean("fitWindow", overridden_device_metrics_->fit_window);
-  params.SetBoolean("textAutosizing",
-                    overridden_device_metrics_->text_autosizing);
-  params.SetDouble("fontScaleFactor",
-                   overridden_device_metrics_->font_scale_factor);
+  params.SetKey("width", base::Value(overridden_device_metrics_->width));
+  params.SetKey("height", base::Value(overridden_device_metrics_->height));
+  params.SetKey("deviceScaleFactor",
+                base::Value(overridden_device_metrics_->device_scale_factor));
+  params.SetKey("mobile", base::Value(overridden_device_metrics_->mobile));
+  params.SetKey("fitWindow",
+                base::Value(overridden_device_metrics_->fit_window));
+  params.SetKey("textAutosizing",
+                base::Value(overridden_device_metrics_->text_autosizing));
+  params.SetKey("fontScaleFactor",
+                base::Value(overridden_device_metrics_->font_scale_factor));
   Status status = client_->SendCommand("Page.setDeviceMetricsOverride", params);
   if (status.IsError())
     return status;
 
   if (overridden_device_metrics_->touch) {
     base::DictionaryValue emulate_touch_params;
-    emulate_touch_params.SetBoolean("enabled", true);
+    emulate_touch_params.SetKey("enabled", base::Value(true));
     status = client_->SendCommand("Emulation.setTouchEmulationEnabled",
                                   emulate_touch_params);
     if (status.IsError())

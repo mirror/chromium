@@ -23,20 +23,20 @@ UpdateCounters::~UpdateCounters() {}
 std::unique_ptr<base::DictionaryValue> UpdateCounters::ToValue() const {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
 
-  value->SetInteger("numUpdatesReceived", num_updates_received);
-  value->SetInteger("numReflectedUpdatesReceived",
-                    num_reflected_updates_received);
-  value->SetInteger("numTombstoneUpdatesReceived",
-                    num_tombstone_updates_received);
+  value->SetKey("numUpdatesReceived", base::Value(num_updates_received));
+  value->SetKey("numReflectedUpdatesReceived",
+                base::Value(num_reflected_updates_received));
+  value->SetKey("numTombstoneUpdatesReceived",
+                base::Value(num_tombstone_updates_received));
 
-  value->SetInteger("numUpdatesApplied", num_updates_applied);
-  value->SetInteger("numHierarchyConflictApplicationFailures",
-                    num_hierarchy_conflict_application_failures);
-  value->SetInteger("numEncryptionConflictApplicationFailures",
-                    num_encryption_conflict_application_failures);
+  value->SetKey("numUpdatesApplied", base::Value(num_updates_applied));
+  value->SetKey("numHierarchyConflictApplicationFailures",
+                base::Value(num_hierarchy_conflict_application_failures));
+  value->SetKey("numEncryptionConflictApplicationFailures",
+                base::Value(num_encryption_conflict_application_failures));
 
-  value->SetInteger("numServerOverwrites", num_server_overwrites);
-  value->SetInteger("numLocalOverwrites", num_local_overwrites);
+  value->SetKey("numServerOverwrites", base::Value(num_server_overwrites));
+  value->SetKey("numLocalOverwrites", base::Value(num_local_overwrites));
 
   return value;
 }

@@ -349,7 +349,8 @@ void CookiesTreeModelUtil::GetChildNodeDetails(const CookieTreeNode* parent,
         // TODO(dschuyler): This ID path is an artifact from using tree nodes to
         // hold the cookies. Can this be changed to a dictionary with a key
         // lookup (and remove use of id_map_)?
-        dict->SetString("idPath", cookie_id_path + GetTreeNodeId(details));
+        dict->SetKey("idPath",
+                     base::Value(cookie_id_path + GetTreeNodeId(details)));
         list->Append(std::move(dict));
       }
     }

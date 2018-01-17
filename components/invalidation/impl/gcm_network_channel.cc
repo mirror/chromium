@@ -455,22 +455,24 @@ GCMNetworkChannelDiagnostic::GCMNetworkChannelDiagnostic(
 std::unique_ptr<base::DictionaryValue>
 GCMNetworkChannelDiagnostic::CollectDebugData() const {
   std::unique_ptr<base::DictionaryValue> status(new base::DictionaryValue);
-  status->SetString("GCMNetworkChannel.Channel", "GCM");
+  status->SetPath({"GCMNetworkChannel", "Channel"}, base::Value("GCM"));
   std::string reg_id_hash = base::SHA1HashString(registration_id_);
-  status->SetString("GCMNetworkChannel.HashedRegistrationID",
-                    base::HexEncode(reg_id_hash.c_str(), reg_id_hash.size()));
-  status->SetString("GCMNetworkChannel.RegistrationResult",
-                    GCMClientResultToString(registration_result_));
-  status->SetBoolean("GCMNetworkChannel.HadLastMessageEmptyEchoToken",
-                     last_message_empty_echo_token_);
-  status->SetString(
-      "GCMNetworkChannel.LastMessageReceivedTime",
-      base::TimeFormatShortDateAndTime(last_message_received_time_));
-  status->SetInteger("GCMNetworkChannel.LastPostResponseCode",
-                     last_post_response_code_);
-  status->SetInteger("GCMNetworkChannel.SentMessages", sent_messages_count_);
-  status->SetInteger("GCMNetworkChannel.ReceivedMessages",
-                     parent_->GetReceivedMessagesCount());
+  status->SetPath(
+      {"GCMNetworkChannel", "HashedRegistrationID"},
+      base::Value(base::HexEncode(reg_id_hash.c_str(), reg_id_hash.size())));
+  status->SetPath({"GCMNetworkChannel", "RegistrationResult"},
+                  base::Value(GCMClientResultToString(registration_result_)));
+  status->SetPath({"GCMNetworkChannel", "HadLastMessageEmptyEchoToken"},
+                  base::Value(last_message_empty_echo_token_));
+  status->SetPath({"GCMNetworkChannel", "LastMessageReceivedTime"},
+                  base::Value(base::TimeFormatShortDateAndTime(
+                      last_message_received_time_)));
+  status->SetPath({"GCMNetworkChannel", "LastPostResponseCode"},
+                  base::Value(last_post_response_code_));
+  status->SetPath({"GCMNetworkChannel", "SentMessages"},
+                  base::Value(sent_messages_count_));
+  status->SetPath({"GCMNetworkChannel", "ReceivedMessages"},
+                  base::Value(parent_->GetReceivedMessagesCount()));
   return status;
 }
 

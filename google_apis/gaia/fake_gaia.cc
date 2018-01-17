@@ -702,14 +702,14 @@ void FakeGaia::HandleAuthToken(const HttpRequest& request,
     }
 
     base::DictionaryValue response_dict;
-    response_dict.SetString("refresh_token",
-                            merge_session_params_.refresh_token);
+    response_dict.SetKey("refresh_token",
+                         base::Value(merge_session_params_.refresh_token));
     if (!device_id.empty())
       refresh_token_to_device_id_map_[merge_session_params_.refresh_token] =
           device_id;
-    response_dict.SetString("access_token",
-                            merge_session_params_.access_token);
-    response_dict.SetInteger("expires_in", 3600);
+    response_dict.SetKey("access_token",
+                         base::Value(merge_session_params_.access_token));
+    response_dict.SetKey("expires_in", base::Value(3600));
     FormatJSONResponse(response_dict, http_response);
     return;
   }
@@ -725,8 +725,8 @@ void FakeGaia::HandleAuthToken(const HttpRequest& request,
         FindAccessTokenInfo(refresh_token, client_id, scope);
     if (token_info) {
       base::DictionaryValue response_dict;
-      response_dict.SetString("access_token", token_info->token);
-      response_dict.SetInteger("expires_in", 3600);
+      response_dict.SetKey("access_token", base::Value(token_info->token));
+      response_dict.SetKey("expires_in", base::Value(3600));
       FormatJSONResponse(response_dict, http_response);
       return;
     }
@@ -748,14 +748,15 @@ void FakeGaia::HandleTokenInfo(const HttpRequest& request,
 
   if (token_info) {
     base::DictionaryValue response_dict;
-    response_dict.SetString("issued_to", token_info->issued_to);
-    response_dict.SetString("audience", token_info->audience);
-    response_dict.SetString("user_id", token_info->user_id);
+    response_dict.SetKey("issued_to", base::Value(token_info->issued_to));
+    response_dict.SetKey("audience", base::Value(token_info->audience));
+    response_dict.SetKey("user_id", base::Value(token_info->user_id));
     std::vector<base::StringPiece> scope_vector(token_info->scopes.begin(),
                                                 token_info->scopes.end());
-    response_dict.SetString("scope", base::JoinString(scope_vector, " "));
-    response_dict.SetInteger("expires_in", token_info->expires_in);
-    response_dict.SetString("email", token_info->email);
+    response_dict.SetKey("scope",
+                         base::Value(base::JoinString(scope_vector, " ")));
+    response_dict.SetKey("expires_in", base::Value(token_info->expires_in));
+    response_dict.SetKey("email", base::Value(token_info->email));
     FormatJSONResponse(response_dict, http_response);
   } else {
     http_response->set_code(net::HTTP_BAD_REQUEST);
@@ -774,10 +775,10 @@ void FakeGaia::HandleIssueToken(const HttpRequest& request,
         FindAccessTokenInfo(access_token, client_id, scope);
     if (token_info) {
       base::DictionaryValue response_dict;
-      response_dict.SetString("issueAdvice", "auto");
-      response_dict.SetString("expiresIn",
-                              base::IntToString(token_info->expires_in));
-      response_dict.SetString("token", token_info->token);
+      response_dict.SetKey("issueAdvice", base::Value("auto"));
+      response_dict.SetKey(
+          "expiresIn", base::Value(base::IntToString(token_info->expires_in)));
+      response_dict.SetKey("token", base::Value(token_info->token));
       FormatJSONResponse(response_dict, http_response);
       return;
     }
@@ -813,9 +814,10 @@ void FakeGaia::HandleOAuthUserInfo(
 
   if (token_info) {
     base::DictionaryValue response_dict;
-    response_dict.SetString("id", GetGaiaIdOfEmail(token_info->email));
-    response_dict.SetString("email", token_info->email);
-    response_dict.SetString("verified_email", token_info->email);
+    response_dict.SetKey("id",
+                         base::Value(GetGaiaIdOfEmail(token_info->email)));
+    response_dict.SetKey("email", base::Value(token_info->email));
+    response_dict.SetKey("verified_email", base::Value(token_info->email));
     FormatJSONResponse(response_dict, http_response);
   } else {
     http_response->set_code(net::HTTP_BAD_REQUEST);

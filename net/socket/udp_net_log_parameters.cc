@@ -21,11 +21,12 @@ std::unique_ptr<base::Value> NetLogUDPDataTranferCallback(
     const IPEndPoint* address,
     NetLogCaptureMode capture_mode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("byte_count", byte_count);
+  dict->SetKey("byte_count", base::Value(byte_count));
   if (capture_mode.include_socket_bytes())
-    dict->SetString("hex_encoded_bytes", base::HexEncode(bytes, byte_count));
+    dict->SetKey("hex_encoded_bytes",
+                 base::Value(base::HexEncode(bytes, byte_count)));
   if (address)
-    dict->SetString("address", address->ToString());
+    dict->SetKey("address", base::Value(address->ToString()));
   return std::move(dict);
 }
 
@@ -34,9 +35,9 @@ std::unique_ptr<base::Value> NetLogUDPConnectCallback(
     NetworkChangeNotifier::NetworkHandle network,
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("address", address->ToString());
+  dict->SetKey("address", base::Value(address->ToString()));
   if (network != NetworkChangeNotifier::kInvalidNetworkHandle)
-    dict->SetInteger("bound_to_network", network);
+    dict->SetKey("bound_to_network", base::Value(static_cast<int>(network)));
   return std::move(dict);
 }
 

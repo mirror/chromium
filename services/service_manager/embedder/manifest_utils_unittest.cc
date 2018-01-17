@@ -12,11 +12,11 @@ TEST(MergeManifestWithOverlayTest, Merge) {
   // |manifest| & |overlay| have three properties, "string", "list" and
   // "dictionary", which are then merged.
   base::DictionaryValue manifest;
-  manifest.SetString("string", "Hello, ");
+  manifest.SetKey("string", base::Value("Hello, "));
   std::unique_ptr<base::DictionaryValue> dict_value_original(
       std::make_unique<base::DictionaryValue>());
-  dict_value_original->SetString("key1", "original");
-  dict_value_original->SetString("key3", "original");
+  dict_value_original->SetKey("key1", base::Value("original"));
+  dict_value_original->SetKey("key3", base::Value("original"));
   manifest.Set("dictionary", std::move(dict_value_original));
   std::unique_ptr<base::ListValue> list(std::make_unique<base::ListValue>());
   list->AppendString("A");
@@ -24,11 +24,11 @@ TEST(MergeManifestWithOverlayTest, Merge) {
   manifest.Set("list", std::move(list));
 
   base::DictionaryValue overlay;
-  overlay.SetString("string", "World!");
+  overlay.SetKey("string", base::Value("World!"));
   std::unique_ptr<base::DictionaryValue> dict_value_replacement(
       std::make_unique<base::DictionaryValue>());
-  dict_value_replacement->SetString("key1", "new");
-  dict_value_replacement->SetString("key2", "new");
+  dict_value_replacement->SetKey("key1", base::Value("new"));
+  dict_value_replacement->SetKey("key2", base::Value("new"));
   overlay.Set("dictionary", std::move(dict_value_replacement));
   list = std::make_unique<base::ListValue>();
   list->AppendString("C");

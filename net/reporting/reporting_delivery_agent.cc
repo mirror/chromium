@@ -37,9 +37,11 @@ void SerializeReports(const std::vector<const ReportingReport*>& reports,
     std::unique_ptr<base::DictionaryValue> report_value =
         std::make_unique<base::DictionaryValue>();
 
-    report_value->SetInteger("age", (now - report->queued).InMilliseconds());
-    report_value->SetString("type", report->type);
-    report_value->SetString("url", report->url.spec());
+    report_value->SetKey(
+        "age",
+        base::Value(static_cast<int>((now - report->queued).InMilliseconds())));
+    report_value->SetKey("type", base::Value(report->type));
+    report_value->SetKey("url", base::Value(report->url.spec()));
     report_value->SetKey("report", report->body->Clone());
 
     reports_value.Append(std::move(report_value));

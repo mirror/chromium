@@ -34,7 +34,7 @@ Status DevToolsEventsLogger::OnEvent(DevToolsClient* client,
   std::unordered_set<std::string>::iterator it = events_.find(method);
   if (it != events_.end()) {
     base::DictionaryValue log_message_dict;
-    log_message_dict.SetString("method", method);
+    log_message_dict.SetKey("method", base::Value(method));
     log_message_dict.SetKey("params", params.Clone());
     std::string log_message_json;
     base::JSONWriter::Write(log_message_dict, &log_message_json);

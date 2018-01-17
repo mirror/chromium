@@ -131,7 +131,7 @@ class SyncInternalsMessageHandlerTest : public ::testing::Test {
     ++about_sync_data_delegate_call_count_;
     last_delegate_sync_service_ = service;
     auto dictionary = std::make_unique<DictionaryValue>();
-    dictionary->SetString("fake_key", "fake_value");
+    dictionary->SetKey("fake_key", base::Value("fake_value"));
     return dictionary;
   }
 

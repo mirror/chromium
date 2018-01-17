@@ -177,10 +177,11 @@ std::unique_ptr<base::Value> NetLogEntryAuditingEventCallback(
     net::NetLogCaptureMode capture_mode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
 
-  dict->SetString("log_entry",
-                  base::HexEncode(log_entry->data, crypto::kSHA256Length));
-  dict->SetString("log_id", base::HexEncode(log_id.data(), log_id.size()));
-  dict->SetBoolean("success", success);
+  dict->SetKey("log_entry", base::Value(base::HexEncode(
+                                log_entry->data, crypto::kSHA256Length)));
+  dict->SetKey("log_id",
+               base::Value(base::HexEncode(log_id.data(), log_id.size())));
+  dict->SetKey("success", base::Value(success));
 
   return std::move(dict);
 }

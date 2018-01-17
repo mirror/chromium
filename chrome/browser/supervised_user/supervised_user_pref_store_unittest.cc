@@ -134,8 +134,8 @@ TEST_F(SupervisedUserPrefStoreTest, ConfigureSettings) {
 
   // kSupervisedModeManualHosts can be configured by the custodian.
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
-  dict->SetBoolean("example.com", true);
-  dict->SetBoolean("moose.org", false);
+  dict->SetPath({"example", "com"}, base::Value(true));
+  dict->SetPath({"moose", "org"}, base::Value(false));
   service_.SetLocalSetting(supervised_users::kContentPackManualBehaviorHosts,
                            std::unique_ptr<base::Value>(dict->DeepCopy()));
   EXPECT_EQ(1u, fixture.changed_prefs()->size());

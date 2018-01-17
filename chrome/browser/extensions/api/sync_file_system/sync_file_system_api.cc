@@ -182,8 +182,8 @@ void SyncFileSystemRequestFileSystemFunction::DidOpenFileSystem(
   }
 
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("name", file_system_name);
-  dict->SetString("root", root_url.spec());
+  dict->SetKey("name", base::Value(file_system_name));
+  dict->SetKey("root", base::Value(root_url.spec()));
   SetResult(std::move(dict));
   SendResponse(true);
 }
@@ -300,11 +300,11 @@ void SyncFileSystemGetFileStatusesFunction::DidGetFileStatus(
 
     dict->Set("entry", CreateDictionaryValueForFileSystemEntry(
         url, sync_file_system::SYNC_FILE_TYPE_FILE));
-    dict->SetString("status", ToString(file_status));
+    dict->SetKey("status", base::Value(ToString(file_status)));
 
     if (file_error == sync_file_system::SYNC_STATUS_OK)
       continue;
-    dict->SetString("error", ErrorToString(file_error));
+    dict->SetKey("error", base::Value(ErrorToString(file_error)));
 
     status_array->Append(std::move(dict));
   }

@@ -381,7 +381,7 @@ void NinePatchGenerator::AsJson(base::DictionaryValue* dictionary) const {
 
   dictionary->Set("Border", MathUtil::AsValue(border_));
 
-  dictionary->SetBoolean("FillCenter", fill_center_);
+  dictionary->SetKey("FillCenter", base::Value(fill_center_));
 
   list = std::make_unique<base::ListValue>();
   list->AppendInteger(output_occlusion_.x());

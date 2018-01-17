@@ -53,9 +53,12 @@ void DataReductionProxyGetDataUsageFunction::ReplyWithDataUsage(
       for (const auto& site_usage : connection_usage.site_usage()) {
         std::unique_ptr<base::DictionaryValue> usage(
             new base::DictionaryValue());
-        usage->SetString("hostname", site_usage.hostname());
-        usage->SetDouble("data_used", site_usage.data_used());
-        usage->SetDouble("original_size", site_usage.original_size());
+        usage->SetKey("hostname", base::Value(site_usage.hostname()));
+        usage->SetKey("data_used",
+                      base::Value(static_cast<double>(site_usage.data_used())));
+        usage->SetKey(
+            "original_size",
+            base::Value(static_cast<double>(site_usage.original_size())));
         site_usage_list->Append(std::move(usage));
       }
       connection_usage_list->Append(std::move(site_usage_list));

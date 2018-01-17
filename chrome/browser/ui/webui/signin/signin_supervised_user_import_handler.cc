@@ -54,19 +54,25 @@ void SigninSupervisedUserImportHandler::GetLocalizedValues(
     base::DictionaryValue* localized_strings) {
   DCHECK(localized_strings);
 
-  localized_strings->SetString("supervisedUserImportTitle",
-      l10n_util::GetStringUTF16(
-          IDS_IMPORT_EXISTING_LEGACY_SUPERVISED_USER_TITLE));
-  localized_strings->SetString("supervisedUserImportText",
-      l10n_util::GetStringUTF16(
-          IDS_IMPORT_EXISTING_LEGACY_SUPERVISED_USER_TEXT));
-  localized_strings->SetString("noSupervisedUserImportText",
-      l10n_util::GetStringUTF16(IDS_IMPORT_NO_EXISTING_SUPERVISED_USER_TEXT));
-  localized_strings->SetString("supervisedUserImportOk",
-      l10n_util::GetStringUTF16(IDS_IMPORT_EXISTING_LEGACY_SUPERVISED_USER_OK));
-  localized_strings->SetString("supervisedUserAlreadyOnThisDevice",
-      l10n_util::GetStringUTF16(
-          IDS_LEGACY_SUPERVISED_USER_ALREADY_ON_THIS_DEVICE));
+  localized_strings->SetKey(
+      "supervisedUserImportTitle",
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_IMPORT_EXISTING_LEGACY_SUPERVISED_USER_TITLE)));
+  localized_strings->SetKey(
+      "supervisedUserImportText",
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_IMPORT_EXISTING_LEGACY_SUPERVISED_USER_TEXT)));
+  localized_strings->SetKey("noSupervisedUserImportText",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_IMPORT_NO_EXISTING_SUPERVISED_USER_TEXT)));
+  localized_strings->SetKey(
+      "supervisedUserImportOk",
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_IMPORT_EXISTING_LEGACY_SUPERVISED_USER_OK)));
+  localized_strings->SetKey(
+      "supervisedUserAlreadyOnThisDevice",
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_LEGACY_SUPERVISED_USER_ALREADY_ON_THIS_DEVICE)));
 }
 
 void SigninSupervisedUserImportHandler::RegisterMessages() {
@@ -264,8 +270,8 @@ void SigninSupervisedUserImportHandler::SendExistingSupervisedUsers(
 
     std::unique_ptr<base::DictionaryValue> supervised_user(
         new base::DictionaryValue);
-    supervised_user->SetString("id", it.key());
-    supervised_user->SetString("name", name);
+    supervised_user->SetKey("id", base::Value(it.key()));
+    supervised_user->SetKey("name", base::Value(name));
 
     int avatar_index = SupervisedUserSyncService::kNoAvatar;
     const base::Value* avatar_index_value =
@@ -286,10 +292,10 @@ void SigninSupervisedUserImportHandler::SendExistingSupervisedUsers(
             profiles::GetDefaultAvatarIconUrl(
                 profiles::GetPlaceholderAvatarIndex()) :
             profiles::GetDefaultAvatarIconUrl(avatar_index);
-    supervised_user->SetString("iconURL", avatar_url);
+    supervised_user->SetKey("iconURL", base::Value(avatar_url));
     bool on_current_device =
         supervised_user_ids.find(it.key()) != supervised_user_ids.end();
-    supervised_user->SetBoolean("onCurrentDevice", on_current_device);
+    supervised_user->SetKey("onCurrentDevice", base::Value(on_current_device));
 
     supervised_users.Append(std::move(supervised_user));
   }

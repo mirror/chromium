@@ -48,8 +48,8 @@ std::unique_ptr<base::Value> NetLogCallback(const GURL* url,
                                             const HttpRequestHeaders* headers,
                                             NetLogCaptureMode capture_mode) {
   auto dict = std::make_unique<base::DictionaryValue>();
-  dict->SetString("url", url->possibly_invalid_spec());
-  dict->SetString("method", *method);
+  dict->SetKey("url", base::Value(url->possibly_invalid_spec()));
+  dict->SetKey("method", base::Value(*method));
   std::string empty;
   std::unique_ptr<base::Value> headers_param(
       headers->NetLogCallback(&empty, capture_mode));

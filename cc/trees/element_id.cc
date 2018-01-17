@@ -50,7 +50,7 @@ std::string ElementId::ToString() const {
 
 std::unique_ptr<base::Value> ElementId::AsValue() const {
   std::unique_ptr<base::DictionaryValue> res(new base::DictionaryValue());
-  res->SetInteger("id_", id_);
+  res->SetKey("id_", base::Value(static_cast<int>(id_)));
   return std::move(res);
 }
 
