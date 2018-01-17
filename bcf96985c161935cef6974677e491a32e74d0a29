@@ -65,6 +65,23 @@
     },
     {
       "key": {
+        "uuid": "e26c6db0_0f4b514c",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-17T18:27:28Z",
+      "side": 1,
+      "message": "I was initially confused by \"nullptr, gfx::PointF()\", and thought we would want to send \"root_view, ComputeEventLocation(event)\" instead for the last two params? But I guess because the fallback here is the root-view itself, these values are not actually used? So this should be OK.",
+      "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f1f1e12_4845db7d",
         "filename": "content/browser/renderer_host/render_widget_targeter.h",
         "patchSetId": 8
