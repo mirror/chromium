@@ -27,4 +27,8 @@ static_library("hello_static") {
     "hello_static.cc",
     "hello_static.h",
   ]
+
+  public_deps = [
+    "//str",
+  ]
 }

@@ -3,7 +3,8 @@
 // found in the LICENSE file.
 
 #include "hello_static.h"
+#include "str.h"
 
-const char* GetStaticText() {
+str GetStaticText() {
   return "Hello";
 }
