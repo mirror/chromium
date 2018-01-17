@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23251387_a26531da",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "nit: Please add class documentation that explains why this is a gesture consumer and event rewriter (maybe just copy/paste from CL description). BTW - I like your CL description! It explains *why* you built it this way.",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9beed4_802b5524",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "nit: initialize this somewhere",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2592a22_fc9ee741",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "nit: document this",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a9b3101_18b2f1ee",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "Document what the int32_t is.",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9bae1a7_18997efb",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "std::make_unique here and below",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210a5bf9_59afe093",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "make_unique and/or emplace",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a4669e_1f0fbe70",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "Do you need a separate counter or can you just check press_event_map_.size()? I can\u0027t remember if it\u0027s possible to have two touch events with the same pointer id, such that touch_points_ would not be the same as press_event_map_.size().",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca3ef64_fe3bb5db",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "micro-optimization suggestion: I think foo*foo is faster than std::pow(foo, 2).",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88920a7c_eebc6fdf",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "DCHECK unless you really need it in production",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bfe0f77_cb026e05",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "make_unique",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07deab1_409a34c5",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "I\u0027m a little confused here. This block asserts there are 2 events in the map, but only erases one. Maybe comment here where the other one is removed?",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54fe9e4f_aa1127e3",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "This function is very long. Is there any way to break it into smaller parts?",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7d7bf0_8488140e",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "DCHECK here and below, unless you really need this on device",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8cf598_28f46896",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3691,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "super-nit: defined(OS_CHROMEOS)",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ebdaea_06b1e74d",
+        "filename": "chromeos/chromeos_switches.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T04:15:52Z",
+      "side": 1,
+      "message": "The feature seems to live in //ash. Should this go in ash_switches.h?",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
