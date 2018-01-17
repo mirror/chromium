@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75020f9b_1d5671d5",
+        "filename": "BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-17T02:46:30Z",
+      "side": 1,
+      "message": "nit: alphabetical.",
+      "revId": "e4438f231b6f255ec93a978c8119fff86b33adea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "120db27e_013d50ee",
+        "filename": "testing/scripts/run_performance_tests.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-17T02:46:30Z",
+      "side": 1,
+      "message": "Just curious -- why are we splitting this file?",
+      "revId": "e4438f231b6f255ec93a978c8119fff86b33adea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
