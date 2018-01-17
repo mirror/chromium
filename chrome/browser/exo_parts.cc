@@ -23,6 +23,13 @@
 #include "components/exo/wm_helper.h"
 #include "content/public/browser/browser_thread.h"
 #include "ui/arc/notification/arc_notification_surface_manager_impl.h"
+#include "storage/browser/fileapi/file_system_url.h"
+#include "storage/browser/fileapi/file_system_context.h"
+#include "chrome/browser/chromeos/file_manager/fileapi_util.h"
+#include "components/user_manager/user_manager.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/chromeos/file_manager/app_id.h"
+#include "chrome/browser/chromeos/arc/fileapi/arc_content_file_system_url_util.h"
 
 namespace {
 
@@ -41,11 +48,31 @@ class ChromeFileHelper : public exo::FileHelper {
                       const base::FilePath& path,
                       GURL* out) override {
     return file_manager::util::ConvertPathToArcUrl(path, out);
-  }
+  } 
   bool GetUrlFromFileSystemUrl(const std::string& app_id,
                                const GURL& url,
                                GURL* out) override {
-    return false;
+    // Obtain the primary profile.
+    if (!user_manager::UserManager::IsInitialized())
+      return false;
+    const user_manager::User* primary_user =
+        user_manager::UserManager::Get()->GetPrimaryUser();
+    if (!primary_user)
+      return false;
+    Profile* primary_profile =
+        chromeos::ProfileHelper::Get()->GetProfileByUser(primary_user);
+    if (!primary_profile)
+      return false;
+
+    // Obtain FileSystemContext and crack url with it.
+    storage::FileSystemContext* file_system_context =
+        file_manager::util::GetFileSystemContextForExtensionId(
+            primary_profile, file_manager::kFileManagerAppId);
+    const storage::FileSystemURL file_system_url =
+        file_system_context->CrackURL(url);
+    LOG(ERROR) << "--------------------------file_system_url.path= " << file_system_url.path();
+
+    return file_manager::util::ConvertPathToArcUrl(file_system_url.path(), out);
   }
 };
 
