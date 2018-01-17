@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62f1821b_2db6118f",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-17T08:19:36Z",
+      "side": 1,
+      "message": "We no longer need this branch.",
+      "parentUuid": "6689ae41_4e8f616d",
+      "revId": "a355fd226198d89be4aa2926cbceecf1ea987167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83f3ac3f_cbc7511f",
         "filename": "extensions/shell/installer/linux/common/installer.include",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-13T11:20:31Z",
       "side": 1,
       "message": "Is this a TODO? Looks like you are already doing it :).",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 36
+      },
+      "revId": "a355fd226198d89be4aa2926cbceecf1ea987167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5488ea_6544dcb3",
+        "filename": "extensions/shell/installer/linux/common/installer.include",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-17T08:19:36Z",
+      "side": 1,
+      "message": "We no longer need this branch.",
+      "parentUuid": "83f3ac3f_cbc7511f",
       "range": {
         "startLine": 129,
         "startChar": 6,
