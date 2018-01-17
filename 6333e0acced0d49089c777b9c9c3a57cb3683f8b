@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "974e8d29_1a7a2b78",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/rellist-feature-detection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-17T10:39:33Z",
+      "side": 1,
+      "message": "Can we simplify the code?  There is a trivial pattern in the code.\n\nlet supported_link_types \u003d [\u0027foo\u0027, \u0027bar\u0027, ...];\nlet unsupported_link_types \u003d [\u0027baz\u0027, ...];\n\nfor (let link_type in supported_rels) {\n  assert_true(element.relList.supports(link_type), \"tag \u003d \" + tag + \", link type \u003d \" + link_type + \"must be supported\");\n}\n\nThen, we can pass supported/unsupported arrays as parameters in test_rellist.\n\n\nOr, we can use two-dimensional array defined at\nhttps://html.spec.whatwg.org/multipage/links.html#linkTypes\ninstead of supported/unsupported arrays.\n\n\nMy only point is that we\u0027d prefer data/parameter-oriented way to hard-coding way.",
+      "revId": "6333e0acced0d49089c777b9c9c3a57cb3683f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
