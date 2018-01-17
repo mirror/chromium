@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "863b16a3_ed5444df",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-17T02:36:07Z",
+      "side": 1,
+      "message": "Add TODO(bbudge): Pass in the isolate parameter from V8.\n\nI think this will affect performance as well.",
+      "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31f3412_7b334a7c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-17T02:36:07Z",
+      "side": 1,
+      "message": "What happens if this runs on worker threads? Workers don\u0027t have DOMWindow.\n\nYou could use CurrentExecutionContext(isolate). It will work for workers.",
+      "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c1f420_86f21209",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-17T02:36:07Z",
+      "side": 1,
+      "message": "Use CheckNumeric to make sure that this doesn\u0027t overflow.",
+      "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d90fe8_c5942271",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-17T02:36:07Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6169d90_d8b60ae6",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-17T02:36:07Z",
+      "side": 1,
+      "message": "Use WTF::HashMap in Blink.",
+      "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e117a9e7_ec4e6789",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-17T02:36:07Z",
+      "side": 1,
+      "message": "Use DEFINE_STATIC_LOCAL in Blink.",
+      "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6829ed2_3e7643c5",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-17T02:36:07Z",
+      "side": 1,
+      "message": "As a safe guard, you could limit the number of partitions.\n\ni.e., when too many partitions are created, you could start mapping multiple keys to the same partition. Partition is very heavy.",
+      "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
