@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "205b13c6_1f262f68",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T20:51:51Z",
+      "side": 1,
+      "message": "Hmmm, I guess but then you\u0027re leaking every test run instead of using one static.\n\nAlso LazyInstance is meant to be used statically, so might as well test it that way as well.",
+      "parentUuid": "615e142b_b572f116",
+      "range": {
+        "startLine": 275,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 30
+      },
+      "revId": "75bbbbde4915d8106d2cc40e55ffaa97bed4dfe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4ef2c35_e870537a",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 6
