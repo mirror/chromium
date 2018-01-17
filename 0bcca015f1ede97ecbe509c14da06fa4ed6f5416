@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b05da8e3_54151f0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-17T20:52:46Z",
+      "side": 1,
+      "message": "nit. first line should be a summary and also needs to be \u003c80c",
+      "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
