@@ -21,7 +21,6 @@
 #include "content/browser/service_worker/service_worker_context_request_handler.h"
 #include "content/browser/service_worker/service_worker_controllee_request_handler.h"
 #include "content/browser/service_worker/service_worker_dispatcher_host.h"
-#include "content/browser/service_worker/service_worker_handle.h"
 #include "content/browser/service_worker/service_worker_registration_object_host.h"
 #include "content/browser/service_worker/service_worker_script_url_loader_factory.h"
 #include "content/browser/service_worker/service_worker_type_converters.h"
@@ -510,27 +509,25 @@ ServiceWorkerProviderHost::GetOrCreateServiceWorkerHandle(
   if (!context_ || !version)
     return blink::mojom::ServiceWorkerObjectInfo::New();
   if (!dispatcher_host_) {
+    DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
     // This is called before the dispatcher host is created.
-    auto info = blink::mojom::ServiceWorkerObjectInfo::New();
-    info->handle_id = context_->GetNewServiceWorkerHandleId();
-    info->url = version->script_url();
-    info->state =
-        mojo::ConvertTo<blink::mojom::ServiceWorkerState>(version->status());
-    info->version_id = version->version_id();
-    precreated_controller_handle_id_ = info->handle_id;
-    return info;
+    // |precreated_controller_handle_| instance's lifetime is controlled by its
+    // own internal Mojo connections.
+    precreated_controller_handle_ =
+        (new ServiceWorkerHandle(nullptr, context_, AsWeakPtr(), version))
+            ->AsWeakPtr();
+    return precreated_controller_handle_->CreateObjectInfo();
   }
   ServiceWorkerHandle* handle = dispatcher_host_->FindServiceWorkerHandle(
       provider_id(), version->version_id());
   if (handle) {
-    handle->IncrementRefCount();
     return handle->CreateObjectInfo();
   }
 
-  std::unique_ptr<ServiceWorkerHandle> new_handle(
-      ServiceWorkerHandle::Create(context_, AsWeakPtr(), version));
-  handle = new_handle.get();
-  dispatcher_host_->RegisterServiceWorkerHandle(std::move(new_handle));
+  // ServiceWorkerHandle ctor will register itself into |dispatcher_host_| to be
+  // owned there.
+  handle = new ServiceWorkerHandle(dispatcher_host_.get(), context_,
+                                   AsWeakPtr(), version);
   return handle->CreateObjectInfo();
 }
 
@@ -613,16 +610,15 @@ void ServiceWorkerProviderHost::CompleteNavigationInitialized(
   if (!controller_)
     return;
 
-  if (ServiceWorkerUtils::IsServicificationEnabled()) {
-    // S13nServiceWorker: register the controller service worker with the
-    // pre-created handle ID.
+  if (ServiceWorkerUtils::IsServicificationEnabled() &&
+      precreated_controller_handle_) {
+    // S13nServiceWorker: register the pre-created handle of controller service
+    // worker.
     DCHECK_NE(blink::mojom::kInvalidServiceWorkerHandleId,
-              precreated_controller_handle_id_);
-    std::unique_ptr<ServiceWorkerHandle> new_handle(
-        ServiceWorkerHandle::CreateWithID(context_, AsWeakPtr(),
-                                          controller_.get(),
-                                          precreated_controller_handle_id_));
-    dispatcher_host_->RegisterServiceWorkerHandle(std::move(new_handle));
+              precreated_controller_handle_->handle_id());
+    precreated_controller_handle_->RegisterIntoDispatcherHost(
+        dispatcher_host_.get());
+    precreated_controller_handle_ = nullptr;
   }
 
   // In S13nServiceWorker case the controller is already sent in navigation
