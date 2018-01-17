@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f97306b_c3d268bd",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T05:34:31Z",
+      "side": 1,
+      "message": "nit: \"description\" here and below",
+      "revId": "a630cf54a1ad165afd9b0b92c3c0c6e21b089d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a69f8a33_8b2629ac",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T05:34:31Z",
+      "side": 1,
+      "message": "nit: Mention in a comment that the key of the map is the description id, which is unique?",
+      "revId": "a630cf54a1ad165afd9b0b92c3c0c6e21b089d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
