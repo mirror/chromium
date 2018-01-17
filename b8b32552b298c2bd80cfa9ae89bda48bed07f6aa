@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "c13357a9_258511d9",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-17T18:58:15Z",
+      "side": 1,
+      "message": "That sounds good to me. My prior concern about the unclear BrowserThread initialization ordering no longer applies since this now would be unambiguously done after the initialization is complete. This way also results in a simpler interface.",
+      "parentUuid": "e84fea09_23f49b19",
+      "range": {
+        "startLine": 1227,
+        "startChar": 4,
+        "endLine": 1227,
+        "endChar": 27
+      },
+      "revId": "b8b32552b298c2bd80cfa9ae89bda48bed07f6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "169ac5b7_e0d607b7",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 15
