@@ -28,29 +28,45 @@
 
 #include "base/memory/scoped_refptr.h"
 #include "core/timing/PerformanceEntry.h"
+#include "platform/bindings/DOMWrapperWorld.h"
+#include "platform/bindings/TraceWrapperV8Reference.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
+class ScriptWrappableVisitor;
+
 class PerformanceMeasure final : public PerformanceEntry {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static PerformanceMeasure* Create(const String& name,
+  static PerformanceMeasure* Create(ScriptState* script_state,
+                                    const String& name,
                                     double start_time,
-                                    double end_time) {
-    return new PerformanceMeasure(name, start_time, end_time);
+                                    double end_time,
+                                    const ScriptValue& detail) {
+    return new PerformanceMeasure(script_state, name, start_time, end_time,
+                                  detail);
   }
+  ScriptValue detail(ScriptState*) const;
 
   virtual void Trace(blink::Visitor* visitor) {
     PerformanceEntry::Trace(visitor);
   }
 
+  void TraceWrappers(const ScriptWrappableVisitor*) const;
+
  private:
-  PerformanceMeasure(const String& name, double start_time, double end_time)
-      : PerformanceEntry(name, "measure", start_time, end_time) {}
+  PerformanceMeasure(ScriptState*,
+                     const String& name,
+                     double start_time,
+                     double end_time,
+                     const ScriptValue& detail);
   ~PerformanceMeasure() override = default;
+
+  scoped_refptr<DOMWrapperWorld> world_;
+  TraceWrapperV8Reference<v8::Value> detail_;
 };
 
 }  // namespace blink

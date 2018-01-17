@@ -42,6 +42,7 @@
 #include "core/loader/DocumentLoadTiming.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/timing/PerformanceLongTaskTiming.h"
+#include "core/timing/PerformanceMeasureOptions.h"
 #include "core/timing/PerformanceObserver.h"
 #include "core/timing/PerformanceResourceTiming.h"
 #include "core/timing/PerformanceUserTiming.h"
@@ -491,27 +492,73 @@ void PerformanceBase::clearMarks(const String& mark_name) {
   user_timing_->ClearMarks(mark_name);
 }
 
-void PerformanceBase::measure(const String& measure_name,
-                              const String& start_mark,
-                              const String& end_mark,
+void PerformanceBase::measure(ScriptState* script_state,
+                              const String& measure_name,
+                              ExceptionState& exception_state) {
+  const StringOrDouble start;
+  const StringOrDouble end;
+  const ScriptValue& detail = ScriptValue::CreateNull(script_state);
+  this->measure(script_state, measure_name, start, end, detail,
+                exception_state);
+}
+
+void PerformanceBase::measure(ScriptState* script_state,
+                              const String& measure_name,
+                              const StringOrDouble& start,
+                              ExceptionState& exception_state) {
+  const StringOrDouble end;
+  const ScriptValue& detail = ScriptValue::CreateNull(script_state);
+  this->measure(script_state, measure_name, start, end, detail,
+                exception_state);
+}
+
+void PerformanceBase::measure(ScriptState* script_state,
+                              const String& measure_name,
+                              const StringOrDouble& start,
+                              const StringOrDouble& end,
+                              ExceptionState& exception_state) {
+  const ScriptValue& detail = ScriptValue::CreateNull(script_state);
+  this->measure(script_state, measure_name, start, end, detail,
+                exception_state);
+}
+
+void PerformanceBase::measure(ScriptState* script_state,
+                              const String& measure_name,
+                              const PerformanceMeasureOptions& options,
+                              ExceptionState& exception_state) {
+  if (!options.hasStart() && !options.hasEnd()) {
+    exception_state.ThrowDOMException(
+        kSyntaxError, "At least one of |start| and |end| may be set.");
+    return;
+  }
+
+  this->measure(script_state, measure_name, options.start(), options.end(),
+                options.detail(), exception_state);
+}
+
+void PerformanceBase::measure(ScriptState* script_state,
+                              const String& measure_name,
+                              const StringOrDouble& start,
+                              const StringOrDouble& end,
+                              const ScriptValue& detail,
                               ExceptionState& exception_state) {
   UMA_HISTOGRAM_ENUMERATION(
       "Performance.PerformanceMeasurePassedInParameter.StartMark",
-      ToPerformanceMeasurePassedInParameterType(start_mark),
+      ToPerformanceMeasurePassedInParameterType(start),
       kPerformanceMeasurePassedInParameterCount);
   UMA_HISTOGRAM_ENUMERATION(
       "Performance.PerformanceMeasurePassedInParameter.EndMark",
-      ToPerformanceMeasurePassedInParameterType(end_mark),
+      ToPerformanceMeasurePassedInParameterType(end),
       kPerformanceMeasurePassedInParameterCount);
 
   ExecutionContext* execution_context = GetExecutionContext();
   if (execution_context) {
     PerformanceMeasurePassedInParameterType start_type =
-        ToPerformanceMeasurePassedInParameterType(start_mark);
+        ToPerformanceMeasurePassedInParameterType(start);
     PerformanceMeasurePassedInParameterType end_type =
-        ToPerformanceMeasurePassedInParameterType(end_mark);
+        ToPerformanceMeasurePassedInParameterType(end);
 
-    if (start_type == kObjectObject) {
+    if (!detail.IsEmpty() && detail.IsObject()) {
       UseCounter::Count(execution_context,
                         WebFeature::kPerformanceMeasurePassedInObject);
     }
@@ -527,7 +574,7 @@ void PerformanceBase::measure(const String& measure_name,
   if (!user_timing_)
     user_timing_ = UserTiming::Create(*this);
   if (PerformanceEntry* entry = user_timing_->Measure(
-          measure_name, start_mark, end_mark, exception_state))
+          script_state, measure_name, start, end, detail, exception_state))
     NotifyObserversOfEntry(*entry);
 }
 

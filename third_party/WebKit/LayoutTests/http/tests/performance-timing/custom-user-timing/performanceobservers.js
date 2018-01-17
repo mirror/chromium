@@ -10,7 +10,8 @@ function checkEntries(perfEntriesToCheck, expectedEntries) {
       if (ex.entryType === pe.entryType && ex.name === pe.name &&
           (ex.detail === undefined ||
               JSON.stringify(ex.detail) === JSON.stringify(pe.detail)) &&
-          (ex.startTime === undefined || ex.startTime === pe.startTime)) {
+          (ex.startTime === undefined || ex.startTime === pe.startTime) &&
+          (ex.duration === undefined || ex.duration === pe.duration)) {
         return ex;
       }
     }
