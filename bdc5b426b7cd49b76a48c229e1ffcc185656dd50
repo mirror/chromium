@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00735ec3_014a3975",
+        "filename": "chrome/browser/extensions/chrome_app_icon.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2018-01-17T00:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce74edf0_28d010e4",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 15
+      },
+      "revId": "bdc5b426b7cd49b76a48c229e1ffcc185656dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ea135f8_c933621a",
         "filename": "ui/app_list/presenter/app_list_presenter_impl.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-16T23:22:02Z",
       "side": 1,
       "message": "Does this \"11\" mean buckets 1~10 and out-of-range?",
+      "range": {
+        "startLine": 104,
+        "startChar": 37,
+        "endLine": 104,
+        "endChar": 39
+      },
+      "revId": "bdc5b426b7cd49b76a48c229e1ffcc185656dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8cba08_5694fe97",
+        "filename": "ui/app_list/presenter/app_list_presenter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2018-01-17T00:53:21Z",
+      "side": 1,
+      "message": "You caught me :)\nNow it\u0027s 12 buckets, underflow (incl 0), 10 buckets from 1 to 10, overflow, as per the bug.",
+      "parentUuid": "9ea135f8_c933621a",
       "range": {
         "startLine": 104,
         "startChar": 37,
