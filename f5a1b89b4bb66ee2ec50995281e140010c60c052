@@ -16,6 +16,24 @@
       "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f720fab_fc7db5e7",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-17T21:04:24Z",
+      "side": 1,
+      "message": "As for: AppListView Folder header, SearchBoxView, and Notification Views:\nThe UX designer for these features has already said that harmony is not intended to change CrOs, it was supposed to be isolated to Chrome.\n\nI\u0027ll check with the designer for Login View.\n\nPerhaps the proper answer is to have this behind #if defined(OS_CHROMEOS)",
+      "parentUuid": "832ad6c1_77b0d71e",
+      "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
