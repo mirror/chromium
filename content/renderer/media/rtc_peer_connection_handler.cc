@@ -1339,6 +1339,12 @@ bool RTCPeerConnectionHandler::Initialize(
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableRTCSmoothnessAlgorithm));
 
+  // TODO(nisse): Depends on webrtc cl
+  // https://webrtc-review.googlesource.com/c/src/+/39786
+  configuration_.set_experiment_cpu_load_estimator(
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kNewEncodeCpuLoadEstimator));
+
   // Copy all the relevant constraints into |config|.
   CopyConstraintsIntoRtcConfiguration(options, &configuration_);
 

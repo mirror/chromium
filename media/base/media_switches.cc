@@ -255,6 +255,9 @@ const base::Feature kMseFlacInIsobmff{"MseFlacInIsobmff",
 const base::Feature kNewRemotePlaybackPipeline{
     "NewRemotePlaybackPipeline", base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kNewEncodeCpuLoadEstimator{
+    "NewEncodeCpuLoadEstimator", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // CanPlayThrough issued according to standard.
 const base::Feature kSpecCompliantCanPlayThrough{
     "SpecCompliantCanPlayThrough", base::FEATURE_ENABLED_BY_DEFAULT};
