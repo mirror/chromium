@@ -23,6 +23,8 @@
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_paths.h"
 #include "extensions/common/switches.h"
+#include "services/data_decoder/public/cpp/test_data_decoder_service.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/zlib/google/zip.h"
@@ -83,7 +85,8 @@ class SandboxedUnpackerTest : public ExtensionsTest {
     client_ = new MockSandboxedUnpackerClient;
 
     sandboxed_unpacker_ = new SandboxedUnpacker(
-        Manifest::INTERNAL, Extension::NO_FLAGS, extensions_dir_.GetPath(),
+        test_data_decoder_service_.connector()->Clone(), Manifest::INTERNAL,
+        Extension::NO_FLAGS, extensions_dir_.GetPath(),
         base::ThreadTaskRunnerHandle::Get(), client_);
   }
 
@@ -152,6 +155,7 @@ class SandboxedUnpackerTest : public ExtensionsTest {
   base::string16 GetInstallError() { return client_->unpack_err(); }
 
  protected:
+  data_decoder::TestDataDecoderService test_data_decoder_service_;
   base::ScopedTempDir extensions_dir_;
   MockSandboxedUnpackerClient* client_;
   scoped_refptr<SandboxedUnpacker> sandboxed_unpacker_;
