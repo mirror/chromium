@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "652fbf6f_d873e126",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-17T16:19:43Z",
+      "side": 1,
+      "message": "Thanks. Done.",
+      "parentUuid": "5cc19a82_ab50ab76",
+      "revId": "ad91fa2d815ca81952fa6a074742953e6b20102f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6ad9043_57edd287",
         "filename": "/COMMIT_MSG",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-17T00:29:45Z",
       "side": 1,
       "message": "Please note that this is an abnormal condition: we should not be doing sending this widget (for a provisional main frame) any ipc calls. It would be good to make it clear that the real fix is to avoid sending these IPCs to begin with, rather than null checking in the renderer.",
+      "revId": "ad91fa2d815ca81952fa6a074742953e6b20102f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c94e94b_350e0429",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-17T16:19:43Z",
+      "side": 1,
+      "message": "Yes. Agreed. I have modified the description to reflect this point and emphasize that this is a temporary crash blocker as opposed to a fix.",
+      "parentUuid": "c6ad9043_57edd287",
       "revId": "ad91fa2d815ca81952fa6a074742953e6b20102f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
