@@ -106,6 +106,24 @@
       "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c50c83_1f9392fd",
+        "filename": "content/browser/service_manager/service_manager_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-17T23:55:17Z",
+      "side": 1,
+      "message": "Hmm. I started reviewing it, but it seems to drastically increase rather than decrease the complexity of EmbeddedInstanceManager. I\u0027m happy to take another look at EmbeddedInstanceManager myself if you like - I think it might be overdue for a complete rewrite at this point.",
+      "parentUuid": "09763b44_ba984ce7",
+      "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
