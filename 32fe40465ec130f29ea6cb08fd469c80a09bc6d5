@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b0d0b424_255804b3",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-17T11:02:09Z",
+      "side": 1,
+      "message": "Ah, you are right. We use iframe\u0027s document as a container, not iframe element.\nSo this condition prevents unnecessary work when pruned_sub_tree_root in AdvanceFocusDirectionallyInContainer() is iframe\u0027s document. In that case, FindFocusCandidateInContainer() can find pruned_sub_tree_root as iframe element again. So we can simply out at your condition or we will do unnecessary work again.",
+      "parentUuid": "6fc0c9ca_07cf476b",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33c75fe6_d4b7e77d",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 21
@@ -158,6 +176,24 @@
       "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e4d878c_182b3d82",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-17T11:02:09Z",
+      "side": 1,
+      "message": "Ack.\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d770147#c12",
+      "parentUuid": "3c2cd966_ad05e3ce",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -367,6 +403,24 @@
       "side": 1,
       "message": "Sorry. My idea was that we could land starting_rect\u0027s simplification + your suggestion about breaking out if (consumed) prior to landing this larger CL.",
       "parentUuid": "192e5c60_e5bd027e",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0898fd25_1e731bfd",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-17T11:02:09Z",
+      "side": 1,
+      "message": "Yes, I moved the change into: https://chromium-review.googlesource.com/c/chromium/src/+/870029/1",
+      "parentUuid": "ae5042fe_356c4a41",
       "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
