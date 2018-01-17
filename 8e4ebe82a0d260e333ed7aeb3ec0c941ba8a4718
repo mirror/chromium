@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2449e603_2a5a99a5",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-17T22:44:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "154d65c3_f8c56b9c",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 86,
+        "endChar": 20
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1b8bf5b_d711bf2e",
         "filename": "docs/memory/tools.md",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-17T22:25:18Z",
       "side": 1,
       "message": "I think you want a screenshot here that shows what that looks like and a mention of the difference between light and heavy dumps somewhere?",
+      "range": {
+        "startLine": 89,
+        "startChar": 13,
+        "endLine": 89,
+        "endChar": 0
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad46e248_691f4a9d",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-17T22:44:46Z",
+      "side": 1,
+      "message": "Agreed. Adding TODO()...\n\nI also need to figure out how to combine the existing memory-infra docs which are 90% correct, but at too much detail and harder to read...",
+      "parentUuid": "b1b8bf5b_d711bf2e",
       "range": {
         "startLine": 89,
         "startChar": 13,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "76be4bd9_6e86151b",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-17T22:44:46Z",
+      "side": 1,
+      "message": "There is actually a lot of docs in docs/memory-infra, but I can\u0027t tell what\u0027s out of date or not. This whole section needs a call out into the detailed doc....\n\nAdding link to that for now.",
+      "parentUuid": "ad3b0f2b_440eb8e4",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 6
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f09e6b8_5f2a848a",
         "filename": "docs/memory/tools.md",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-17T22:25:18Z",
       "side": 1,
       "message": "It may be worth mentioning somewhere that you can just select two snapshots to view their diff though.",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 10
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439a09f4_f2b1e791",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-17T22:44:46Z",
+      "side": 1,
+      "message": "doh. I forgot about that functionality completely. Rewriting.",
+      "parentUuid": "1f09e6b8_5f2a848a",
       "range": {
         "startLine": 108,
         "startChar": 4,
@@ -114,6 +210,30 @@
       "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d878564_a7b69544",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-17T22:44:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4932958_fde5ef1c",
+      "range": {
+        "startLine": 112,
+        "startChar": 10,
+        "endLine": 112,
+        "endChar": 11
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "f529b420_3aa700e8",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-17T22:44:46Z",
+      "side": 1,
+      "message": "yup... still punting down the road... next iteration I\u0027m hoping...",
+      "parentUuid": "bd30a060_5e6b657e",
+      "range": {
+        "startLine": 141,
+        "startChar": 38,
+        "endLine": 141,
+        "endChar": 39
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d74c623_14ed448a",
         "filename": "docs/memory/tools.md",
         "patchSetId": 2
@@ -183,6 +327,30 @@
       "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a14157b_6fd22163",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-17T22:44:46Z",
+      "side": 1,
+      "message": "Added TODO",
+      "parentUuid": "9d74c623_14ed448a",
+      "range": {
+        "startLine": 153,
+        "startChar": 12,
+        "endLine": 153,
+        "endChar": 20
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
