@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d0046be_af177bce",
+        "filename": "chrome/browser/signin/dice_tab_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T09:27:03Z",
+      "side": 1,
+      "message": "I think this method should be completely removed as on the new Chrome sync endpoint Migration, we ignore tab navigations when enabling sync. The old code was correct as it was returning when signin::GetAccountConsistencyMethod() !\u003d ignin::AccountConsistencyMethod::kDicePrepareMigration",
+      "range": {
+        "startLine": 38,
+        "startChar": 20,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "12476f182f04dacc581fa1643c1d4f84ab2f4a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0376ddf4_3e856a58",
+        "filename": "chrome/browser/signin/signin_promo.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T09:27:03Z",
+      "side": 1,
+      "message": "DCHECK(signin::IsDicePrepareMigrationEnabled());",
+      "range": {
+        "startLine": 277,
+        "startChar": 54,
+        "endLine": 277,
+        "endChar": 60
+      },
+      "revId": "12476f182f04dacc581fa1643c1d4f84ab2f4a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
