@@ -68,6 +68,7 @@ const prefsEmpty = {
 class TestSiteSettingsPrefsBrowserProxy extends TestBrowserProxy {
   constructor() {
     super([
+      'clearFlashPref',
       'fetchUsbDevices',
       'fetchZoomLevels',
       'getDefaultValueForContentType',
@@ -226,6 +227,11 @@ class TestSiteSettingsPrefsBrowserProxy extends TestBrowserProxy {
     this.setPrefs(this.prefs_);
     this.methodCalled(
         'setOriginPermissions', [origin, contentTypes, blanketSetting]);
+  }
+
+  /** @override */
+  clearFlashPref(origin) {
+    this.methodCalled('clearFlashPref', origin);
   }
 
   /** @override */
