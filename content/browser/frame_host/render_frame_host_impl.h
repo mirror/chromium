@@ -111,6 +111,7 @@ class GeolocationServiceImpl;
 class KeepAliveHandleFactory;
 class MediaInterfaceProxy;
 class NavigationHandleImpl;
+class NavigationRequest;
 class PermissionServiceContext;
 class PresentationServiceImpl;
 class RenderFrameHostDelegate;
@@ -371,18 +372,17 @@ class CONTENT_EXPORT RenderFrameHostImpl
   int nav_entry_id() const { return nav_entry_id_; }
   void set_nav_entry_id(int nav_entry_id) { nav_entry_id_ = nav_entry_id; }
 
-  // A NavigationHandle for the pending navigation in this frame, if any. This
+  // A NavigationRequest for the pending navigation in this frame, if any. This
   // is cleared when the navigation commits.
-  NavigationHandleImpl* navigation_handle() const {
-    return navigation_handle_.get();
-  }
+  NavigationRequest* navigation_request() { return navigation_request_.get(); }
 
-  // Called when a new navigation starts in this RenderFrameHost. Ownership of
-  // |navigation_handle| is transferred.
-  // PlzNavigate: called when a navigation is ready to commit in this
-  // RenderFrameHost.
-  void SetNavigationHandle(
-      std::unique_ptr<NavigationHandleImpl> navigation_handle);
+  // Returns the NavigationHandleImpl stored in the NavigationRequest returned
+  // by GetNavigationRequest(), if any.
+  NavigationHandleImpl* GetNavigationHandle();
+
+  // TODO(COMMENT)
+  void SetNavigationRequest(
+      std::unique_ptr<NavigationRequest> navigation_handle);
 
   // Tells the renderer that this RenderFrame is being swapped out for one in a
   // different renderer process.  It should run its unload handler and move to
@@ -980,6 +980,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
                                  bool success,
                                  const base::string16& user_input);
 
+  // TODO(ahemery): Update comment
   // Returns ownership of the NavigationHandle associated with a navigation that
   // just committed.
   std::unique_ptr<NavigationHandleImpl> TakeNavigationHandleForCommit(
@@ -1218,12 +1219,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   std::unique_ptr<resource_coordinator::FrameResourceCoordinator>
       frame_resource_coordinator_;
 
-  // Tracks a navigation happening in this frame. Note that while there can be
-  // two navigations in the same FrameTreeNode, there can only be one
-  // navigation per RenderFrameHost.
-  // Before the navigation is ready to be committed, the NavigationHandle for it
-  // is owned by the NavigationRequest.
-  std::unique_ptr<NavigationHandleImpl> navigation_handle_;
+  // (TODO)COMMENT
+  std::unique_ptr<NavigationRequest> navigation_request_;
 
   // The associated WebUIImpl and its type. They will be set if the current
   // document is from WebUI source. Otherwise they will be null and

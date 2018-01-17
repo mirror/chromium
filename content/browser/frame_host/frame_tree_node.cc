@@ -453,6 +453,11 @@ bool FrameTreeNode::CommitPendingFramePolicy() {
   return did_change_flags || did_change_container_policy;
 }
 
+void FrameTreeNode::TransferNavigationRequestOwnership(
+    RenderFrameHostImpl* render_frame_host) {
+  render_frame_host->SetNavigationRequest(std::move(navigation_request_));
+}
+
 void FrameTreeNode::CreatedNavigationRequest(
     std::unique_ptr<NavigationRequest> navigation_request) {
   CHECK(IsBrowserSideNavigationEnabled());
@@ -502,10 +507,12 @@ void FrameTreeNode::ResetNavigationRequest(bool keep_state,
 
   NavigationRequest::AssociatedSiteInstanceType site_instance_type =
       navigation_request_->associated_site_instance_type();
-  navigation_request_.reset();
 
-  if (keep_state)
+  if (keep_state) {
+    TransferNavigationRequestOwnership(current_frame_host());
     return;
+  }
+  navigation_request_.reset();
 
   // The RenderFrameHostManager should clean up any speculative RenderFrameHost
   // it created for the navigation. Also register that the load stopped.
