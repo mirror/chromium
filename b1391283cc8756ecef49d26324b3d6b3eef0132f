@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b89c83d_b522751f",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-17T18:43:43Z",
+      "side": 1,
+      "message": "In future patches, I would encourage you to try and use more of the existing layout tree traversal code, rather than rolling your own loops.  For example, this loop could probably be implemented more efficiently as a traversal of PaintLayer\u0027s, using LayoutObject::EnclosingLayer and PaintLayer::ContainingLayer.",
+      "revId": "b1391283cc8756ecef49d26324b3d6b3eef0132f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
