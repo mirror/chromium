@@ -315,19 +315,16 @@ void RenderedPosition::GetLocalSelectionEndpoints(
   }
 }
 
-void RenderedPosition::PositionInGraphicsLayerBacking(
-    CompositedSelectionBound& bound,
+CompositedSelectionBound RenderedPosition::PositionInGraphicsLayerBacking(
     bool selection_start) const {
-  bound.layer = nullptr;
-  bound.edge_top_in_layer = bound.edge_bottom_in_layer = FloatPoint();
-
   if (IsNull())
-    return;
+    return CompositedSelectionBound();
 
   LayoutPoint edge_top_in_layer;
   LayoutPoint edge_bottom_in_layer;
   GetLocalSelectionEndpoints(selection_start, edge_top_in_layer,
                              edge_bottom_in_layer);
+  CompositedSelectionBound bound;
   // Flipped blocks writing mode is not only vertical but also right to left.
   if (!layout_object_->Style()->IsHorizontalWritingMode()) {
     bound.is_text_direction_rtl = layout_object_->HasFlippedBlocksWritingMode();
@@ -337,6 +334,7 @@ void RenderedPosition::PositionInGraphicsLayerBacking(
       LocalToInvalidationBackingPoint(edge_top_in_layer, &bound.layer);
   bound.edge_bottom_in_layer =
       LocalToInvalidationBackingPoint(edge_bottom_in_layer, nullptr);
+  return bound;
 }
 
 LayoutPoint RenderedPosition::GetSamplePointForVisibility(
