@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e7559e7_059df0e4",
+        "filename": "components/policy/core/common/cloud/external_policy_data_updater.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-17T14:18:38Z",
+      "side": 0,
+      "message": "nit: Is this change intentional? The |retry_later_entry_| variable is still used.",
+      "range": {
+        "startLine": 227,
+        "startChar": 51,
+        "endLine": 227,
+        "endChar": 56
+      },
+      "revId": "d79a304e3aac4c17aabce6dfbe1048c0853276c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

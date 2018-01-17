@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd27ffab_e39cc44f",
+        "filename": "components/policy/core/common/cloud/external_policy_data_updater_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-17T14:18:38Z",
+      "side": 1,
+      "message": "nit: s/10/12/",
+      "range": {
+        "startLine": 333,
+        "startChar": 69,
+        "endLine": 333,
+        "endChar": 71
+      },
+      "revId": "7116932e60f734b6da074ee240a803d35b1db2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
