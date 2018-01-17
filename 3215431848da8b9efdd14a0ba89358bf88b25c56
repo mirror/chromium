@@ -22,6 +22,30 @@
       "revId": "3215431848da8b9efdd14a0ba89358bf88b25c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef0270d_030b7009",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-17T02:59:56Z",
+      "side": 1,
+      "message": "I think it\u0027s entirely possible that there will be/are more \"input,latency\" categories, yes. But I was hoping the id would be paired with the name of the trace, instead of the category(ies). Is that not the case?\n\nCan you point me to an example? It\u0027s not immediately obvious to me what a scope-string would look like.",
+      "parentUuid": "1d2eb83f_e0a8f2ad",
+      "range": {
+        "startLine": 35,
+        "startChar": 62,
+        "endLine": 35,
+        "endChar": 65
+      },
+      "revId": "3215431848da8b9efdd14a0ba89358bf88b25c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
