@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3057dd99_c571a9fa",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-17T22:27:56Z",
+      "side": 1,
+      "message": "|send_buffer_| doesn\u0027t own the underlying bytes, right?\n\nIn all cases where DoSendToOrWrite() is called, the buffer |data| pointing to goes away after this method returns. It seems problematic to me that we let it go away while letting |send_buffer_| refer to it.\n\nHave I misunderstood anything obvious?",
+      "revId": "622a791c750bb0b7472a2c49a4f5d55085ff1cd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
