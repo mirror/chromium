@@ -69,6 +69,30 @@
       "revId": "93749945e93040e339374edcf3d315eaaea4daf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab0ae66_9ae1a468",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-17T16:01:04Z",
+      "side": 1,
+      "message": "Daydream entirely fails to process the icon if I use an @color here. I used a 512x512 png because that\u0027s what daydream guidelines ask for, but since this is a placeholder and Daydream seems to scale the drawable just fine, it\u0027s not really necessary.\n\nI\u0027ve gone ahead and replaced the transparent resource with ic_launcher again, which looks about the same as the transparent background anyways.",
+      "parentUuid": "c9fcbc36_1c5de746",
+      "range": {
+        "startLine": 376,
+        "startChar": 44,
+        "endLine": 376,
+        "endChar": 58
+      },
+      "revId": "93749945e93040e339374edcf3d315eaaea4daf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
