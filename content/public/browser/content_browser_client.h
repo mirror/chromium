@@ -85,6 +85,7 @@ struct BindSourceInfo;
 namespace net {
 class ClientCertIdentity;
 using ClientCertIdentityList = std::vector<std::unique_ptr<ClientCertIdentity>>;
+class ClientCertStore;
 class CookieOptions;
 class HttpRequestHeaders;
 class NetLog;
@@ -1021,6 +1022,10 @@ class CONTENT_EXPORT ContentBrowserClient {
       content::BrowserContext* browser_context,
       const GURL& url,
       base::OnceCallback<void(bool)> callback);
+
+  // Get platform ClientCertStore. May return nullptr.
+  virtual std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
+      ResourceContext* resource_context);
 };
 
 }  // namespace content

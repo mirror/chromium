@@ -279,13 +279,6 @@
 -IOThreadBrowserTestWithHangingPacRequest.Shutdown
 -ProxySettingsApiTest.ProxyEventsParseError
 
-# http://crbug.com/783996
-# Add support for TLS client auth.
--PrerenderBrowserTest.PrerenderSSLClientCertIframe
--PrerenderBrowserTest.PrerenderSSLClientCertSubresource
--PrerenderBrowserTest.PrerenderSSLClientCertTopLevel
--SSLUITestWithClientCert.TestWSSClientCert
-
 # http://crbug.com/721414
 # TODO(rockot): add support for webRequest API.
 -DeclarativeApiTest.ExtensionLifetimeRulesHandling
