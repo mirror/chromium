@@ -16,6 +16,24 @@
       "revId": "b2cd308d230792e40a33aebdf754b99f01643148",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bdd607a_889eee0d",
+        "filename": "content/public/common/shared_url_loader_factory.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-17T04:46:23Z",
+      "side": 1,
+      "message": "Yes, I imagine we may add more options in the future (although I don\u0027t have examples in mind for now). CreateLoaderAndStart() already has quite some parameters, having a separate Constaints struct seems more clear to readers. \n\nI have already used default parameter for Constraints (line 65). The majority of callers don\u0027t need to worry about it at all.\n\nWDYT? Thanks!",
+      "parentUuid": "19df1e74_0cf59540",
+      "revId": "b2cd308d230792e40a33aebdf754b99f01643148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
