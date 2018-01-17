@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b0d4939_91b55f7b",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-17T06:10:43Z",
+      "side": 1,
+      "message": "If you call DiscardNonCommittedEntries() first, then there won\u0027t be any pending or transient entries, and CanPruneAllButLastCommitted() would only return true if there is no last committed (i.e., when there are no entries at all in the tab).\n\nThere\u0027s some risk to deleting the pending entry while a navigation is in progress, but you could (and probably should) cancel the navigation as well.",
+      "revId": "7cf10286e0ed65ed49b7fd797ede984fa3d127ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e0d046_358ac7c2",
+        "filename": "content/public/browser/navigation_details.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-17T06:10:43Z",
+      "side": 1,
+      "message": "How do you convey which index?",
+      "revId": "7cf10286e0ed65ed49b7fd797ede984fa3d127ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
