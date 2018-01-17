@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d1c74d15_cabcfedb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/components/DOMPresentationUtils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2018-01-17T20:01:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5672cd61_9f1a9bb8",
+      "revId": "3370ba7bc2d26eb5e70e40f0725dbba120840344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "764ab67f_ab0a5101",
         "filename": "third_party/WebKit/Source/devtools/front_end/components/DOMPresentationUtils.js",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "3370ba7bc2d26eb5e70e40f0725dbba120840344",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61bea5d_7196b199",
+        "filename": "third_party/WebKit/Source/devtools/front_end/components/DOMPresentationUtils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2018-01-17T20:01:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "764ab67f_ab0a5101",
+      "range": {
+        "startLine": 257,
+        "startChar": 16,
+        "endLine": 257,
+        "endChar": 35
+      },
+      "revId": "3370ba7bc2d26eb5e70e40f0725dbba120840344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
