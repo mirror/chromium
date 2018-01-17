@@ -22,6 +22,30 @@
       "revId": "78c8c9001469e8c2fc2fecde5f46c47340b53b2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574b165f_13c73f5c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1678,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-17T15:17:19Z",
+      "side": 1,
+      "message": "I am concerned that the toolbar might be created after this property is read for the first time if you start the app in landscape.\n\nSo if we use something depending on the toolbar (or childViewControllerForStatusBarHidden: with setNeedsStatusBarAppearanceUpdate), it might be briefly visible at startup.\n\nAlso I am not sure how to convey the \"self.hideStatusBar\" property into the toolbar.",
+      "parentUuid": "f1ea13ad_989c056c",
+      "range": {
+        "startLine": 1678,
+        "startChar": 6,
+        "endLine": 1678,
+        "endChar": 30
+      },
+      "revId": "78c8c9001469e8c2fc2fecde5f46c47340b53b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
