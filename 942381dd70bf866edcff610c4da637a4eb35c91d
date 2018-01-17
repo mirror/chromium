@@ -16,6 +16,24 @@
       "revId": "942381dd70bf866edcff610c4da637a4eb35c91d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4000a2f8_f862f147",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/hit-test-counts-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-17T19:41:34Z",
+      "side": 1,
+      "message": "ops, it\u0027s not because the cache size but because I used the wrong hit test type :(\nIt\u0027s fixed now. Current excepted counts match CL: crrev.com/c/771540 \u0027s before + after.",
+      "parentUuid": "00ec633c_1c99150b",
+      "revId": "942381dd70bf866edcff610c4da637a4eb35c91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
