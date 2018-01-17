@@ -22,6 +22,7 @@ class WebRemoteFrameClient;
 class WebString;
 class WebView;
 struct WebRect;
+struct WebResourceTimingInfo;
 struct WebScrollIntoViewParams;
 
 class WebRemoteFrame : public WebFrame {
@@ -88,7 +89,8 @@ class WebRemoteFrame : public WebFrame {
   // process.
   virtual void SetReplicatedInsecureRequestPolicy(WebInsecureRequestPolicy) = 0;
 
-  virtual void DispatchLoadEventOnFrameOwner() = 0;
+  virtual void DispatchLoadEventForFrameOwner() = 0;
+  virtual void AddResourceTimingForFrameOwner(const WebResourceTimingInfo&) = 0;
 
   virtual void DidStartLoading() = 0;
   virtual void DidStopLoading() = 0;

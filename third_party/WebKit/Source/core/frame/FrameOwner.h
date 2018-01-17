@@ -14,6 +14,7 @@
 namespace blink {
 
 class Frame;
+class ResourceTimingInfo;
 
 // Oilpan: all FrameOwner instances are GCed objects. FrameOwner additionally
 // derives from GarbageCollectedMixin so that Member<FrameOwner> references can
@@ -32,6 +33,7 @@ class CORE_EXPORT FrameOwner : public GarbageCollectedMixin {
 
   virtual SandboxFlags GetSandboxFlags() const = 0;
   virtual void DispatchLoad() = 0;
+  virtual void AddResourceTiming(const ResourceTimingInfo&) = 0;
 
   // On load failure, a frame can ask its owner to render fallback content
   // which replaces the frame contents.
@@ -59,7 +61,7 @@ class CORE_EXPORT FrameOwner : public GarbageCollectedMixin {
 // TODO(dcheng): This class is an internal implementation detail of provisional
 // frames. Move this into WebLocalFrameImpl.cpp and remove existing dependencies
 // on it.
-class CORE_EXPORT DummyFrameOwner
+class CORE_EXPORT DummyFrameOwner final
     : public GarbageCollectedFinalized<DummyFrameOwner>,
       public FrameOwner {
   USING_GARBAGE_COLLECTED_MIXIN(DummyFrameOwner);
@@ -75,6 +77,7 @@ class CORE_EXPORT DummyFrameOwner
   void ClearContentFrame() override {}
   SandboxFlags GetSandboxFlags() const override { return kSandboxNone; }
   void DispatchLoad() override {}
+  void AddResourceTiming(const ResourceTimingInfo&) override {}
   bool CanRenderFallbackContent() const override { return false; }
   void RenderFallbackContent() override {}
   void IntrinsicDimensionsChanged() override {}

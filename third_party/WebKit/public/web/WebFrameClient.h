@@ -118,6 +118,7 @@ struct WebContextMenuData;
 struct WebPluginParams;
 struct WebPopupMenuInfo;
 struct WebRect;
+struct WebResourceTimingInfo;
 struct WebScrollIntoViewParams;
 struct WebURLError;
 
@@ -481,6 +482,10 @@ class BLINK_EXPORT WebFrameClient {
   // Called to dispatch a load event for this frame in the FrameOwner of an
   // out-of-process parent frame.
   virtual void DispatchLoad() {}
+
+  // Called to report resource timing information for this frame in the
+  // FrameOwner of an out-of-process parent frame.
+  virtual void AddResourceTiming(const WebResourceTimingInfo&) {}
 
   // Returns the effective connection type when the frame was fetched.
   virtual WebEffectiveConnectionType GetEffectiveConnectionType() {

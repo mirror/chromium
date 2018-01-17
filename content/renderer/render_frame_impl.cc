@@ -177,6 +177,7 @@
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayerSource.h"
 #include "third_party/WebKit/public/platform/WebPoint.h"
+#include "third_party/WebKit/public/platform/WebResourceTimingInfo.h"
 #include "third_party/WebKit/public/platform/WebScrollIntoViewParams.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -4559,6 +4560,69 @@ void RenderFrameImpl::DidChangeThemeColor() {
 
 void RenderFrameImpl::DispatchLoad() {
   Send(new FrameHostMsg_DispatchLoad(routing_id_));
+}
+
+void RenderFrameImpl::AddResourceTiming(
+    const blink::WebResourceTimingInfo& web_resource_timing) {
+  // TODO(dcheng): This is sad. Move this to Mojo.
+  content::ResourceTimingInfo resource_timing;
+  resource_timing.name = web_resource_timing.name.Utf8();
+  resource_timing.start_time = web_resource_timing.start_time;
+
+  resource_timing.initiator_type = web_resource_timing.initiator_type.Utf8();
+  resource_timing.alpn_negotiated_protocol =
+      web_resource_timing.alpn_negotiated_protocol.Utf8();
+  resource_timing.connection_info = web_resource_timing.connection_info.Utf8();
+
+  resource_timing.timing.request_time =
+      web_resource_timing.timing.RequestTime();
+  resource_timing.timing.proxy_start = web_resource_timing.timing.ProxyStart();
+  resource_timing.timing.proxy_end = web_resource_timing.timing.ProxyEnd();
+  resource_timing.timing.dns_start = web_resource_timing.timing.DnsStart();
+  resource_timing.timing.dns_end = web_resource_timing.timing.DnsEnd();
+  resource_timing.timing.connect_start =
+      web_resource_timing.timing.ConnectStart();
+  resource_timing.timing.connect_end = web_resource_timing.timing.ConnectEnd();
+  resource_timing.timing.worker_start =
+      web_resource_timing.timing.WorkerStart();
+  resource_timing.timing.worker_ready =
+      web_resource_timing.timing.WorkerReady();
+  resource_timing.timing.send_start = web_resource_timing.timing.SendStart();
+  resource_timing.timing.send_end = web_resource_timing.timing.SendEnd();
+  resource_timing.timing.receive_headers_end =
+      web_resource_timing.timing.ReceiveHeadersEnd();
+  resource_timing.timing.ssl_start = web_resource_timing.timing.SslStart();
+  resource_timing.timing.ssl_end = web_resource_timing.timing.SslEnd();
+  resource_timing.timing.push_start = web_resource_timing.timing.PushStart();
+  resource_timing.timing.push_end = web_resource_timing.timing.PushEnd();
+  resource_timing.last_redirect_end_time =
+      web_resource_timing.last_redirect_end_time;
+  resource_timing.finish_time = web_resource_timing.finish_time;
+
+  resource_timing.transfer_size = web_resource_timing.transfer_size;
+  resource_timing.encoded_body_size = web_resource_timing.encoded_body_size;
+  resource_timing.decoded_body_size = web_resource_timing.decoded_body_size;
+
+  resource_timing.did_reuse_connection =
+      web_resource_timing.did_reuse_connection;
+
+  resource_timing.allow_timing_details =
+      web_resource_timing.allow_timing_details;
+  resource_timing.allow_redirect_details =
+      web_resource_timing.allow_redirect_details;
+
+  resource_timing.allow_negative_values =
+      web_resource_timing.allow_negative_values;
+
+  for (const auto& entry : web_resource_timing.server_timing) {
+    resource_timing.server_timing.emplace_back();
+    auto& new_entry = resource_timing.server_timing.back();
+    new_entry.name = entry.name.Utf8();
+    new_entry.duration = entry.duration;
+    new_entry.description = entry.description.Utf8();
+  }
+
+  Send(new FrameHostMsg_AddResourceTiming(routing_id_, resource_timing));
 }
 
 blink::WebEffectiveConnectionType

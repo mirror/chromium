@@ -64,6 +64,7 @@
 #include "core/paint/FirstMeaningfulPaintDetector.h"
 #include "core/probe/CoreProbes.h"
 #include "core/svg/graphics/SVGImageChromeClient.h"
+#include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "core/timing/PerformanceBase.h"
 #include "platform/Histogram.h"
@@ -720,14 +721,16 @@ void FrameFetchContext::AddResourceTiming(const ResourceTimingInfo& info) {
   if (!document_ || !document_->GetFrame())
     return;
 
-  Frame* initiator_frame = info.IsMainResource()
-                               ? document_->GetFrame()->Tree().Parent()
-                               : document_->GetFrame();
-
-  if (!initiator_frame)
+  if (info.IsMainResource()) {
+    // Main resources only get reported to parent frames.
+    if (FrameOwner* owner = document_->GetFrame()->Owner())
+      owner->AddResourceTiming(info);
     return;
+  }
 
-  initiator_frame->AddResourceTiming(info);
+  // All other resources are reported to the corresponding Document.
+  DOMWindowPerformance::performance(*document_->domWindow())
+      ->GenerateAndAddResourceTiming(info);
 }
 
 bool FrameFetchContext::AllowImage(bool images_enabled, const KURL& url) const {
@@ -808,16 +811,27 @@ bool FrameFetchContext::UpdateTimingInfoForIFrameNavigation(
 
   // <iframe>s should report the initial navigation requested by the parent
   // document, but not subsequent navigations.
-  // FIXME: Resource timing is broken when the parent is a remote frame.
-  if (!GetFrame()->DeprecatedLocalOwner() ||
-      GetFrame()->DeprecatedLocalOwner()->LoadedNonEmptyDocument())
+  if (!GetFrame()->Owner())
     return false;
-  GetFrame()->DeprecatedLocalOwner()->DidLoadNonEmptyDocument();
+  // Note that the renderer doesn't have global knowledge of whether or not
+  // a real document load has already happened in this frame, since this frame
+  // could have been swapped in the case of out-of-process iframes. The browser
+  // will perform the authoritative filtering. It means that this will
+  // occasionally cause loading to track more timing info than strictly needed.
+  // TODO(dcheng): Figure out a way to express this policy and centralize the
+  // calculation in one place.
+  if (GetFrame()->Loader().StateMachine()->CommittedFirstRealDocumentLoad())
+    return false;
   // Do not report iframe navigation that restored from history, since its
   // location may have been changed after initial navigation.
   if (MasterDocumentLoader()->LoadType() == kFrameLoadTypeInitialHistoryLoad)
     return false;
-  info->SetInitiatorType(GetFrame()->DeprecatedLocalOwner()->localName());
+  // TODO(dcheng): Plumb the tag name through for all frame owners. For now,
+  // skip the remote frame owner case...
+  if (GetFrame()->Owner()->IsLocal()) {
+    info->SetInitiatorType(
+        ToHTMLFrameOwnerElement(GetFrame()->Owner())->localName());
+  }
   return true;
 }
 

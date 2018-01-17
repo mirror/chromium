@@ -6,6 +6,8 @@
 
 #include "core/frame/LocalFrame.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "core/timing/PerformanceBase.h"
+#include "public/platform/WebResourceTimingInfo.h"
 #include "public/web/WebFrameClient.h"
 
 namespace blink {
@@ -50,6 +52,21 @@ void RemoteFrameOwner::DispatchLoad() {
   WebLocalFrameImpl* web_frame =
       WebLocalFrameImpl::FromFrame(ToLocalFrame(*frame_));
   web_frame->Client()->DispatchLoad();
+}
+
+void RemoteFrameOwner::AddResourceTiming(const ResourceTimingInfo& info) {
+  DCHECK(frame_);
+  // If reporting frame timing, the frame must be local, since a Document was
+  // just loaded in it.
+  LocalFrame& local_frame = *ToLocalFrame(frame_);
+
+  WebResourceTimingInfo resource_timing =
+      PerformanceBase::GenerateResourceTiming(
+          *frame_->Tree().Parent()->GetSecurityContext()->GetSecurityOrigin(),
+          info, *local_frame.GetDocument());
+
+  WebLocalFrameImpl* web_frame = WebLocalFrameImpl::FromFrame(local_frame);
+  web_frame->Client()->AddResourceTiming(resource_timing);
 }
 
 }  // namespace blink

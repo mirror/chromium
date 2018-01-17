@@ -31,6 +31,7 @@
 #include "content/common/frame_replication_state.h"
 #include "content/common/navigation_gesture.h"
 #include "content/common/navigation_params.h"
+#include "content/common/resource_timing_info.h"
 #include "content/common/savable_subframe.h"
 #include "content/public/common/common_param_traits.h"
 #include "content/public/common/console_message_level.h"
@@ -222,6 +223,50 @@ IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::PageImportanceSignals)
   IPC_STRUCT_TRAITS_MEMBER(had_form_interaction)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(content::ResourceLoadTiming)
+  IPC_STRUCT_TRAITS_MEMBER(request_time)
+  IPC_STRUCT_TRAITS_MEMBER(proxy_start)
+  IPC_STRUCT_TRAITS_MEMBER(proxy_end)
+  IPC_STRUCT_TRAITS_MEMBER(dns_start)
+  IPC_STRUCT_TRAITS_MEMBER(dns_end)
+  IPC_STRUCT_TRAITS_MEMBER(connect_start)
+  IPC_STRUCT_TRAITS_MEMBER(connect_end)
+  IPC_STRUCT_TRAITS_MEMBER(worker_start)
+  IPC_STRUCT_TRAITS_MEMBER(worker_ready)
+  IPC_STRUCT_TRAITS_MEMBER(send_start)
+  IPC_STRUCT_TRAITS_MEMBER(send_end)
+  IPC_STRUCT_TRAITS_MEMBER(receive_headers_end)
+  IPC_STRUCT_TRAITS_MEMBER(ssl_start)
+  IPC_STRUCT_TRAITS_MEMBER(ssl_end)
+  IPC_STRUCT_TRAITS_MEMBER(push_start)
+  IPC_STRUCT_TRAITS_MEMBER(push_end)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(content::ResourceTimingInfo)
+  IPC_STRUCT_TRAITS_MEMBER(name)
+  IPC_STRUCT_TRAITS_MEMBER(start_time)
+  IPC_STRUCT_TRAITS_MEMBER(initiator_type)
+  IPC_STRUCT_TRAITS_MEMBER(alpn_negotiated_protocol)
+  IPC_STRUCT_TRAITS_MEMBER(connection_info)
+  IPC_STRUCT_TRAITS_MEMBER(timing)
+  IPC_STRUCT_TRAITS_MEMBER(last_redirect_end_time)
+  IPC_STRUCT_TRAITS_MEMBER(finish_time)
+  IPC_STRUCT_TRAITS_MEMBER(transfer_size)
+  IPC_STRUCT_TRAITS_MEMBER(encoded_body_size)
+  IPC_STRUCT_TRAITS_MEMBER(decoded_body_size)
+  IPC_STRUCT_TRAITS_MEMBER(did_reuse_connection)
+  IPC_STRUCT_TRAITS_MEMBER(allow_timing_details)
+  IPC_STRUCT_TRAITS_MEMBER(allow_redirect_details)
+  IPC_STRUCT_TRAITS_MEMBER(allow_negative_values)
+  IPC_STRUCT_TRAITS_MEMBER(server_timing)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(content::ServerTimingInfo)
+  IPC_STRUCT_TRAITS_MEMBER(name)
+  IPC_STRUCT_TRAITS_MEMBER(duration)
+  IPC_STRUCT_TRAITS_MEMBER(description)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_BEGIN(FrameHostMsg_DidFailProvisionalLoadWithError_Params)
@@ -834,6 +879,9 @@ IPC_MESSAGE_ROUTED1(FrameMsg_SetAccessibilityMode, ui::AXMode)
 
 // Dispatch a load event in the iframe element containing this frame.
 IPC_MESSAGE_ROUTED0(FrameMsg_DispatchLoad)
+
+// Adds resource timing info for an iframe element contained in this frame.
+IPC_MESSAGE_ROUTED1(FrameMsg_AddResourceTiming, content::ResourceTimingInfo)
 
 // Sent to a subframe to control whether to collapse its the frame owner element
 // in the embedder document, that is, to remove it from the layout as if it did
@@ -1536,6 +1584,10 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_SuddenTerminationDisablerChanged,
 // Dispatch a load event for this frame in the iframe element of an
 // out-of-process parent frame.
 IPC_MESSAGE_ROUTED0(FrameHostMsg_DispatchLoad)
+
+// Forwards resource timing info for this frame to be added to the performance
+// entries of an out-of-process parent frame.
+IPC_MESSAGE_ROUTED1(FrameHostMsg_AddResourceTiming, content::ResourceTimingInfo)
 
 // Sent to the browser from a frame proxy to post a message to the frame's
 // active renderer.
