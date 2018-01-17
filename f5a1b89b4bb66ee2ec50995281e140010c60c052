@@ -142,6 +142,24 @@
       "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bbda8ce_fa51f77d",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-17T23:06:18Z",
+      "side": 1,
+      "message": "So with the new patchset with harmony disabled in CrOS, all is well.\n\nUnfortunately with Harmony enabled, harmony design is still leaking into CrOS system UI by overriding the expected default placeholder text color.\n\nThis patch will prevent harmony from overriding explicitly set placeholder text colors though, which is an improvement.\n\nEstade, what do you think about detecting if we are in Ash or Browser process (once the AppList migration is complete) before enforcing harmony?",
+      "parentUuid": "48ae229b_4a15ba32",
+      "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
