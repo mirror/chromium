@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06f8c921_faa30ca2",
+        "filename": "chrome/android/java/res/layout/accept_languages_item.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-17T00:59:24Z",
+      "side": 1,
+      "message": "This doesn\u0027t match search engine preferences or bookmarks, etc. What did you decide to base this off from?",
+      "range": {
+        "startLine": 30,
+        "startChar": 26,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "9dc42809c920a0011d4d27097997419b51ead2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
