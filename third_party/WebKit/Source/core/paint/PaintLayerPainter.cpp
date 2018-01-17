@@ -429,9 +429,10 @@ PaintResult PaintLayerPainter::PaintLayerContents(
   bool should_composite_for_blend_mode =
       paint_layer_.StackingNode()->IsStackingContext() &&
       paint_layer_.HasNonIsolatedDescendantWithBlendMode();
-  if (should_composite_for_blend_mode ||
-      paint_layer_.PaintsWithTransparency(
-          painting_info.GetGlobalPaintFlags())) {
+  if (!is_painting_overflow_contents &&
+      (should_composite_for_blend_mode ||
+       paint_layer_.PaintsWithTransparency(
+           painting_info.GetGlobalPaintFlags()))) {
     FloatRect compositing_bounds = FloatRect(paint_layer_.PaintingExtent(
         painting_info.root_layer, painting_info.sub_pixel_accumulation,
         painting_info.GetGlobalPaintFlags()));
