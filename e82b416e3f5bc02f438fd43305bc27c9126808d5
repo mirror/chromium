@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcc2d8c5_b7e263da",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/task_queue_throttler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-17T18:37:37Z",
+      "side": 1,
+      "message": "Can we land this separately from the finch config?",
+      "revId": "e82b416e3f5bc02f438fd43305bc27c9126808d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
