@@ -52,6 +52,24 @@
       "revId": "d17b87a994dbebb0b0a20a43b650e95169186641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f2ab6bf_60fd1863",
+        "filename": "base/fuchsia/fuchsia_logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2018-01-17T21:27:50Z",
+      "side": 1,
+      "message": "\u003e Gah, so sad. :(  I take it we can\u0027t just make it a compound statement that puts zx_err into a scoped temporary and then ZX_CHECKs?\n\nThat breaks streaming, as in\n\n  ZX_CHECK_OK(zx_cprng_draw(\u0026b, l, \u0026a)) \u003c\u003c \"zx_cprng_draw\";\n\n“Wait,” you say, “you wouldn’t write that anyway because zx_cprng_draw is already in the statement, so the logging system will write it without needing to stream anything.” And you’d be right, but the original use case is still broken:\n\n  const zx_status_t zs \u003d zx_cprng_draw(\u0026b, l, \u0026a);\n  ZX_CHECK_OK(zs) \u003c\u003c \"zx_cprng_draw\";\n\nAnd there’s no reason for that not to work either.\n\nMaybe you could do it without the extra scope, and instead have a temporary variable named based on __LINE__. That would limit you to one ZX_CHECK_OK per line, but that’d probably be OK since we don’t tend to put more than one statement-looking thing on a single line anyway, and you’d at least get an (obtuse) compilation error if you tried to break the rules. But that’s just a first terrible thought, there may be “cleaner” ways to achieve it.",
+      "parentUuid": "918aa787_b3df56a3",
+      "revId": "d17b87a994dbebb0b0a20a43b650e95169186641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
