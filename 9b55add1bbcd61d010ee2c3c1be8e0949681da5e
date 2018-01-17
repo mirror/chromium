@@ -610,6 +610,24 @@
     },
     {
       "key": {
+        "uuid": "baa657a8_1f19da7c",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-17T23:42:39Z",
+      "side": 1,
+      "message": "\u003e Yes because there is a subclass of SynchronousCompositorProxy now... And the SetOnlySynchronoulsyAnimatedRootFlings ends up calling back into this object on a virtual.\n\ncan you put that in a comment?",
+      "parentUuid": "b2e29ce9_aca60f70",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05858c60_8849aa8a",
         "filename": "content/renderer/android/synchronous_compositor_proxy.cc",
         "patchSetId": 8

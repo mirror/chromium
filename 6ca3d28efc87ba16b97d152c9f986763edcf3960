@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfcc8f02_f1a5035f",
+        "filename": "content/renderer/android/synchronous_compositor_filter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-17T23:42:39Z",
+      "side": 0,
+      "message": "just noticed this is gone, and not replaced with anything? This is important because LayerTreeFrameSink can be created and destroyed multiple times for the same compositor, and all of this initialization code need to correctly deal with that path",
+      "revId": "6ca3d28efc87ba16b97d152c9f986763edcf3960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

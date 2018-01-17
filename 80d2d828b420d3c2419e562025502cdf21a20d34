@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "319f60d0_03b264da",
+        "filename": "content/common/input/synchronous_compositor.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-17T23:42:39Z",
+      "side": 1,
+      "message": "just looking at the mojom right now without the code changes, what is this? how is this difference from LayerTreeFrameSinkCreated?",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 10
+      },
+      "revId": "80d2d828b420d3c2419e562025502cdf21a20d34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
