@@ -16,6 +16,24 @@
       "revId": "d17b87a994dbebb0b0a20a43b650e95169186641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1654de_acf2cfd1",
+        "filename": "base/fuchsia/fuchsia_logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-17T21:11:17Z",
+      "side": 1,
+      "message": "Oh geez, good point, that was kind of dumb since I specifically wrote zx_err in parens but didn\u0027t think about multiple instances.\n\nI\u0027ll fiddle with it a little, but I think probably just not having it is better.",
+      "parentUuid": "4132b033_92d29a02",
+      "revId": "d17b87a994dbebb0b0a20a43b650e95169186641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
