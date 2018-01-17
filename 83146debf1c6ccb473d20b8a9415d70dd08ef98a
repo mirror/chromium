@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3da6b1a7_1ac2a2f0",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_browsing_mode_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-17T18:10:30Z",
+      "side": 0,
+      "message": "I\u0027m confused. Don\u0027t we wanna sit in VR for a bit to measure data?",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "83146debf1c6ccb473d20b8a9415d70dd08ef98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
