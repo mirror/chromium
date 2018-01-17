@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include <stdint.h>
+#include <future>
 
 #include "base/command_line.h"
 #include "base/strings/stringprintf.h"
@@ -799,6 +800,55 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
       shell(), "window.domAutomationController.send(location.hash);",
       &reference_fragment));
   EXPECT_EQ("#foo", reference_fragment);
+}
+
+// (Maybe) Regression test for https://crbug.com/696204
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest,
+                       CookiesOn303Redirect) {
+  net::EmbeddedTestServer server(net::EmbeddedTestServer::TYPE_HTTPS);
+
+  server.RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+
+        if (request.relative_url == "/") {
+          // 303 redirect
+          http_response->set_code(net::HTTP_SEE_OTHER);
+          http_response->AddCustomHeader("Location", "/1");
+          return http_response;
+        }
+
+        if (request.relative_url == "/1") {
+          // 302 redirect
+          http_response->set_code(net::HTTP_FOUND);
+          http_response->AddCustomHeader("Location", "/2");
+
+          // Add a cookie
+          http_response->AddCustomHeader(
+              "Set-Cookie", "a=a;Secure;HttpOnly;SameSite=strict;Path=/");
+          return http_response;
+        }
+
+        if (request.relative_url == "/2") {
+          // Check that the cookie `a=a` was sent.
+          auto cookie_header = request.headers.find("Cookie");
+          EXPECT_NE(request.headers.end(), cookie_header);
+          EXPECT_EQ("a=a", cookie_header->second);
+
+          // Comeplete the test.
+          http_response->set_code(net::HTTP_INTERNAL_SERVER_ERROR);
+          return http_response;
+        }
+
+        NOTREACHED();
+        return nullptr;
+      }));
+
+  ASSERT_TRUE(server.Start());
+  GURL url = server.GetURL("/");
+  EXPECT_FALSE(NavigateToURL(shell(), url));
 }
 
 }  // namespace content
