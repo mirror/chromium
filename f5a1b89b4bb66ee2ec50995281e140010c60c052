@@ -124,6 +124,24 @@
       "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853982de_eef3684d",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-17T22:57:30Z",
+      "side": 1,
+      "message": "\u003e don\u0027t some textfields use the placeholder feature without setting the color? In those cases, shouldn\u0027t they use kDefaultPlaceholderTextColor \n\nWith this CL, in Harmony, no. They\u0027re using SkColorSetA(GetTextColor(), 0x83);",
+      "parentUuid": "48ae229b_4a15ba32",
+      "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
