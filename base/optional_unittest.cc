@@ -586,6 +586,17 @@ TEST(OptionalTest, AssignObject) {
     EXPECT_TRUE(!!b);
     EXPECT_EQ(a->foo(), b->foo());
   }
+
+  // Converting assignment.
+  {
+    Optional<int> a(1);
+    Optional<double> b;
+    b = a;
+
+    EXPECT_TRUE(!!a);
+    EXPECT_TRUE(!!b);
+    EXPECT_EQ(1.0, b.value());
+  }
 }
 
 TEST(OptionalTest, AssignObject_rvalue) {
@@ -653,6 +664,17 @@ TEST(OptionalTest, AssignObject_rvalue) {
     EXPECT_TRUE(!!a);
     EXPECT_TRUE(!!b);
     EXPECT_EQ(42, b->foo());
+  }
+
+  // Converting assignment.
+  {
+    Optional<int> a(1);
+    Optional<double> b;
+    b = std::move(a);
+
+    EXPECT_TRUE(!!a);
+    EXPECT_TRUE(!!b);
+    EXPECT_EQ(1.0, b.value());
   }
 }
 
