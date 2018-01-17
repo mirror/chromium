@@ -18,6 +18,7 @@
 #include "base/task/cancelable_task_tracker.h"
 #include "base/values.h"
 #include "components/history/core/browser/history_service_observer.h"
+#include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "components/safe_browsing/proto/csd.pb.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -183,7 +184,7 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   void RecordWarningAction(WarningUIType ui_type, WarningAction action);
 
   // If we want to show password reuse modal warning.
-  static bool ShouldShowModalWarning(
+  bool ShouldShowModalWarning(
       LoginReputationClientRequest::TriggerType trigger_type,
       bool matches_sync_password,
       LoginReputationClientRequest::PasswordReuseEvent::SyncAccountType
@@ -221,6 +222,8 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // showing in the corresponding web contents.
   std::unique_ptr<PasswordProtectionNavigationThrottle>
   MaybeCreateNavigationThrottle(content::NavigationHandle* navigation_handle);
+
+  virtual bool IsEventLoggingEnabled() = 0;
 
  protected:
   friend class PasswordProtectionRequest;
@@ -370,6 +373,12 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
       LoginReputationClientRequest::TriggerType trigger_type,
       RequestOutcome reason,
       bool matches_sync_password);
+
+  virtual PasswordProtectionTrigger GetPasswordProtectionWarningTriggerPref()
+      const = 0;
+  virtual PasswordProtectionTrigger GetPasswordProtectionRiskTriggerPref()
+      const = 0;
+
   // Number of verdict stored for this profile for password on focus pings.
   int stored_verdict_count_password_on_focus_;
 
