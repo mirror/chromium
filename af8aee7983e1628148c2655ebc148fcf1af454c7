@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1952aa5b_4c312c08",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T01:46:34Z",
+      "side": 1,
+      "message": "Also create a local variable for handle-\u003eGetWebContents() since it is called twice?",
+      "revId": "af8aee7983e1628148c2655ebc148fcf1af454c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c845f131_cc944ffa",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T01:46:34Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 35,
+        "startChar": 9,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "af8aee7983e1628148c2655ebc148fcf1af454c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5218092_51976164",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T01:46:34Z",
+      "side": 1,
+      "message": "net::HttpResponseHeaders* headers \u003d navigation_handle()-\u003eGetResponseHeaders();\n\nif (!headers)\n  ...",
+      "revId": "af8aee7983e1628148c2655ebc148fcf1af454c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b3f689_b3dcfa6c",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T01:46:34Z",
+      "side": 1,
+      "message": "Please add a class-level comment explaining what this throttle does. This should probably include when MaybeCreateThrottleFor() returns a new throttle, or document that in a separate comment.",
+      "revId": "af8aee7983e1628148c2655ebc148fcf1af454c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e880a5fe_1d452577",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T01:46:34Z",
+      "side": 1,
+      "message": "New file in 2018. (This is a substantial rewrite.)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "af8aee7983e1628148c2655ebc148fcf1af454c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
