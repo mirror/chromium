@@ -16,6 +16,24 @@
       "revId": "dd99488326761ea35be5cedf0f614bbffc458b49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc94236_227aa54a",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-17T04:25:35Z",
+      "side": 1,
+      "message": "Yup, that\u0027s exactly what we have to investigate, as the next step, so we can support style/layout lifecycle. I don\u0027t have a clear answer yet.\n\nMy *intuition* is that we have to walk recursively, however, I am not 100% sure of it until we can figure out how style/layout work with slots (in-flat-tree), and in which order dom trees should be traversed in layout (and layout tree should be constructed accordingly).\n\nNit; It looks that the current HTMLSlotElement::assignedElements doesn\u0027t consider IncrementalShadowDOM yet. That can be fixed as another issue.",
+      "parentUuid": "da165af2_360b69cd",
+      "revId": "dd99488326761ea35be5cedf0f614bbffc458b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
