@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aed6186d_0b05bb76",
+        "filename": "chromecast/browser/cast_extension_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-17T00:08:58Z",
+      "side": 1,
+      "message": "2018",
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093c23d4_ebd1f46d",
+        "filename": "chromecast/browser/cast_extension_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-17T00:08:58Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab61bbf_8b82dd52",
+        "filename": "chromecast/browser/cast_extension_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-17T00:08:58Z",
+      "side": 1,
+      "message": "fwd decl?",
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6281ea3a_cc0eea7d",
+        "filename": "chromecast/browser/cast_extension_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-17T00:08:58Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf1c93c_443d988d",
+        "filename": "chromecast/browser/cast_extension_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-17T00:08:58Z",
+      "side": 1,
+      "message": "fwd decl?",
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b59a37f_0830e734",
+        "filename": "chromecast/browser/cast_extension_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-17T00:08:58Z",
+      "side": 1,
+      "message": "fwd decl?",
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad194f36_3db0168f",
+        "filename": "chromecast/browser/cast_extension_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-17T00:08:58Z",
+      "side": 1,
+      "message": "why?",
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f53ba8_1964dad7",
+        "filename": "chromecast/browser/cast_extension_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-17T00:08:58Z",
+      "side": 1,
+      "message": "include base/macros.h",
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a4e09e1_3a121c16",
+        "filename": "chromecast/browser/cast_extension_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-17T00:08:58Z",
+      "side": 1,
+      "message": "// include guard comment",
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d372e63_bac80c18",
+        "filename": "chromecast/common/cast_content_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-17T00:08:58Z",
+      "side": 1,
+      "message": "guard with ENABLE_EXTENSIONS",
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
