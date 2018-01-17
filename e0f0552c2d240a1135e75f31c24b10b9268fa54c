@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9abb2f50_a2879115",
+        "filename": "chrome/browser/ui/views/page_info/chosen_object_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-17T23:47:58Z",
+      "side": 1,
+      "message": "I\u0027m not great with views so I don\u0027t really understand the padding bits here. You may want to get someone else to take a quick look.",
+      "revId": "e0f0552c2d240a1135e75f31c24b10b9268fa54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
