@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de9690b4_16b688f3",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T01:01:34Z",
+      "side": 1,
+      "message": "whether",
+      "range": {
+        "startLine": 86,
+        "startChar": 30,
+        "endLine": 86,
+        "endChar": 37
+      },
+      "revId": "aeb57791b5d322379e5b0dc1b11abd0428170ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454fbf64_2d8de05b",
+        "filename": "third_party/WebKit/Source/modules/vr/VRController.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T01:01:34Z",
+      "side": 1,
+      "message": "These very similar Booleans have different formats. Suggestion:\nhas_presentation_capable_display_ OR has_display_supporting_presentation_",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 37
+      },
+      "revId": "aeb57791b5d322379e5b0dc1b11abd0428170ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
