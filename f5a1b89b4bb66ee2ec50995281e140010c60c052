@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "832ad6c1_77b0d71e",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T20:18:01Z",
+      "side": 1,
+      "message": "This will not apply the MD alpha to other users of custom placeholder text colors:\n  https://cs.chromium.org/search/?q\u003dset_placeholder_text_color\u0026type\u003dcs\nAre you sure this change should also affect folder headers, login passwords, and notification inputs?\n\nOne possible alternative is to build that alpha into the default value of placeholder_text_color_ and the values passed to set_placeholder_text_color (with secondary MD on)",
+      "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
