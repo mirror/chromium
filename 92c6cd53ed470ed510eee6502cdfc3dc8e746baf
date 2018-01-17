@@ -88,6 +88,24 @@
       "revId": "92c6cd53ed470ed510eee6502cdfc3dc8e746baf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a0ebc5_e4ca0528",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2018-01-17T12:47:58Z",
+      "side": 1,
+      "message": "no need to worry, henrik already took care of it for both of us.\n\n(I have no clue what we\u0027re talking about at this point XD)",
+      "parentUuid": "2170749f_354631e5",
+      "revId": "92c6cd53ed470ed510eee6502cdfc3dc8e746baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
