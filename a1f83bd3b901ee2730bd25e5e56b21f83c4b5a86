@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "708e01a1_2272af01",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T21:04:20Z",
+      "side": 1,
+      "message": "If you don\u0027t want to hint anything to the kernel then why are you calling YieldCurrentThread()? Typically that is implemented as a zero-length sleep, which means it\u0027s either a no-op or hints something to the kernel - either way it\u0027s not useful, right?",
+      "parentUuid": "dabc45f9_e560aa7d",
+      "range": {
+        "startLine": 213,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 49
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c90fed21_2d405f92",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 8
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "44fec2ad_edae9a70",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T21:04:20Z",
+      "side": 1,
+      "message": "Sorry, I meant put them in a test-scoped class/struct, that you pass to the BlockingConstructor\u0027s constructor, to avoid the need for statics.",
+      "parentUuid": "4be77a3d_77756edb",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 30
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "998c847f_5119c0d6",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 8
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "Meh... I don\u0027t think so: it\u0027s not related to an action. The 5s is merely from local experimentation of timing in regression case.",
       "parentUuid": "998c847f_5119c0d6",
+      "range": {
+        "startLine": 321,
+        "startChar": 12,
+        "endLine": 321,
+        "endChar": 43
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cba9888_d806c0d2",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T21:04:20Z",
+      "side": 1,
+      "message": "action_timeout() and friends are what we override/adjust to account for differences in run-time on different environments, though - we may find that on Fuchsia+QEMU+GCE the timing is rather worse, for example. Speaking hypothetically, that is. ;)",
+      "parentUuid": "7ff4348a_6eff460e",
       "range": {
         "startLine": 321,
         "startChar": 12,
