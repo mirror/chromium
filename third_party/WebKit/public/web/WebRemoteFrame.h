@@ -88,7 +88,7 @@ class WebRemoteFrame : public WebFrame {
   // process.
   virtual void SetReplicatedInsecureRequestPolicy(WebInsecureRequestPolicy) = 0;
 
-  virtual void DispatchLoadEventOnFrameOwner() = 0;
+  virtual void DispatchLoadEventForFrameOwner() = 0;
 
   virtual void DidStartLoading() = 0;
   virtual void DidStopLoading() = 0;

@@ -250,6 +250,14 @@ class CONTENT_EXPORT FrameTreeNode {
     frame_owner_properties_ = frame_owner_properties;
   }
 
+  bool has_sent_resource_timing_info_to_parent() const {
+    return has_sent_resource_timing_info_to_parent_;
+  }
+
+  void DidSendResourceTimingInfoToParent() {
+    has_sent_resource_timing_info_to_parent_ = true;
+  }
+
   bool HasSameOrigin(const FrameTreeNode& node) const {
     return replication_state_.origin.IsSameOriginWith(
         node.replication_state_.origin);
@@ -460,6 +468,10 @@ class CONTENT_EXPORT FrameTreeNode {
   //
   // Note that dynamic updates only take effect on the next frame navigation.
   FrameOwnerProperties frame_owner_properties_;
+
+  // Tracks whether or not the resource timing info for the first real load has
+  // already been received.
+  bool has_sent_resource_timing_info_to_parent_;
 
   // Used to track this node's loading progress (from 0 to 1).
   double loading_progress_;

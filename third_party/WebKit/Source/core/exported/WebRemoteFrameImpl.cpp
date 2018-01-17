@@ -264,7 +264,7 @@ void WebRemoteFrameImpl::SetReplicatedInsecureRequestPolicy(
   GetFrame()->GetSecurityContext()->SetInsecureRequestPolicy(policy);
 }
 
-void WebRemoteFrameImpl::DispatchLoadEventOnFrameOwner() {
+void WebRemoteFrameImpl::DispatchLoadEventForFrameOwner() {
   DCHECK(GetFrame()->Owner()->IsLocal());
   GetFrame()->Owner()->DispatchLoad();
 }

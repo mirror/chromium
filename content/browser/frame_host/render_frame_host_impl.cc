@@ -921,6 +921,8 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidBlockFramebust, OnDidBlockFramebust)
     IPC_MESSAGE_HANDLER(FrameHostMsg_AbortNavigation, OnAbortNavigation)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DispatchLoad, OnDispatchLoad)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_AddResourceTimingToParent,
+                        OnAddResourceTimingToParent)
     IPC_MESSAGE_HANDLER(FrameHostMsg_TextSurroundingSelectionResponse,
                         OnTextSurroundingSelectionResponse)
     IPC_MESSAGE_HANDLER(AccessibilityHostMsg_Events, OnAccessibilityEvents)
@@ -2388,13 +2390,40 @@ void RenderFrameHostImpl::OnAbortNavigation() {
   frame_tree_node()->navigator()->OnAbortNavigation(frame_tree_node());
 }
 
+void RenderFrameHostImpl::OnAddResourceTimingToParent(
+    const ResourceTimingInfo& resource_timing) {
+  if (frame_tree_node_->has_sent_resource_timing_info_to_parent())
+    return;
+  // Ensure that no further resource timing info will be sent for this frame.
+  frame_tree_node_->DidSendResourceTimingInfoToParent();
+  // TODO(dcheng): update the RFH and all RFPH to suppress further resource
+  // timing info.
+
+  // Don't forward the resource timing if this RFH is pending deletion. This can
+  // happen in a race where this RenderFrameHost finishes loading just after
+  // the frame navigates away. See https://crbug.com/626802.
+  if (!is_active())
+    return;
+
+  RenderFrameProxyHost* proxy =
+      frame_tree_node()->render_manager()->GetProxyToParent();
+  if (!proxy) {
+    bad_message::ReceivedBadMessage(GetProcess(),
+                                    bad_message::RFH_NO_PROXY_TO_PARENT);
+    return;
+  }
+
+  proxy->Send(new FrameMsg_AddResourceTimingToParent(proxy->GetRoutingID(),
+                                                     resource_timing));
+}
+
 void RenderFrameHostImpl::OnDispatchLoad() {
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDispatchLoad",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
 
-  // Don't forward the load event if this RFH is pending deletion.  This can
+  // Don't forward the load event if this RFH is pending deletion. This can
   // happen in a race where this RenderFrameHost finishes loading just after
-  // the frame navigates away.  See https://crbug.com/626802.
+  // the frame navigates away. See https://crbug.com/626802.
   if (!is_active())
     return;
 

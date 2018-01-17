@@ -135,6 +135,7 @@
 #include "content/renderer/render_widget_fullscreen_pepper.h"
 #include "content/renderer/renderer_blink_platform_impl.h"
 #include "content/renderer/renderer_webapplicationcachehost_impl.h"
+#include "content/renderer/resource_timing_info_conversions.h"
 #include "content/renderer/savable_resources.h"
 #include "content/renderer/screen_orientation/screen_orientation_dispatcher.h"
 #include "content/renderer/service_worker/service_worker_handle_reference.h"
@@ -4559,6 +4560,12 @@ void RenderFrameImpl::DidChangeThemeColor() {
 
 void RenderFrameImpl::DispatchLoad() {
   Send(new FrameHostMsg_DispatchLoad(routing_id_));
+}
+
+void RenderFrameImpl::AddResourceTimingToParent(
+    const blink::WebResourceTimingInfo& info) {
+  Send(new FrameHostMsg_AddResourceTimingToParent(
+      routing_id_, WebResourceTimingInfoToResourceTimingInfo(info)));
 }
 
 blink::WebEffectiveConnectionType

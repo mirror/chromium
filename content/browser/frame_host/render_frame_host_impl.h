@@ -137,6 +137,7 @@ struct FileChooserParams;
 struct FrameOwnerProperties;
 struct RequestNavigationParams;
 struct ResourceResponse;
+struct ResourceTimingInfo;
 struct SubresourceLoaderParams;
 
 class CONTENT_EXPORT RenderFrameHostImpl
@@ -782,6 +783,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnDidBlockFramebust(const GURL& url);
   void OnAbortNavigation();
   void OnDispatchLoad();
+  void OnAddResourceTimingToParent(const ResourceTimingInfo& resource_timing);
   void OnAccessibilityEvents(
       const std::vector<AccessibilityHostMsg_EventParams>& params,
       int reset_token,

@@ -642,6 +642,8 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidUpdateCurrentHistoryItem() override;
   void DidChangeThemeColor() override;
   void DispatchLoad() override;
+  void AddResourceTimingToParent(
+      const blink::WebResourceTimingInfo& info) override;
   blink::WebEffectiveConnectionType GetEffectiveConnectionType() override;
   void SetEffectiveConnectionTypeForTesting(
       blink::WebEffectiveConnectionType) override;

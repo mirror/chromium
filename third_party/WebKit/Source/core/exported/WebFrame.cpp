@@ -19,6 +19,8 @@
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html_names.h"
 #include "core/page/Page.h"
+#include "core/timing/DOMWindowPerformance.h"
+#include "core/timing/Performance.h"
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "public/web/WebElement.h"
@@ -350,6 +352,16 @@ void WebFrame::DetachFromParent() {
   const blink::Frame* frame = ToCoreFrame(*this);
   if (frame->Owner() && frame->Owner()->ContentFrame() == frame)
     Parent()->RemoveChild(this);
+}
+
+void WebFrame::AddResourceTimingToParent(const WebResourceTimingInfo& info) {
+  DCHECK(Parent()->IsWebLocalFrame());
+  WebLocalFrameImpl* parent_frame =
+      ToWebLocalFrameImpl(Parent()->ToWebLocalFrame());
+  HTMLFrameOwnerElement* owner_element =
+      ToHTMLFrameOwnerElement(ToCoreFrame(*this)->Owner());
+  DOMWindowPerformance::performance(*parent_frame->GetFrame()->DomWindow())
+      ->AddResourceTiming(info, owner_element->localName());
 }
 
 Frame* WebFrame::ToCoreFrame(const WebFrame& frame) {

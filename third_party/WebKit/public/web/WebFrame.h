@@ -54,6 +54,7 @@ class WebView;
 enum class WebSandboxFlags;
 struct WebFrameOwnerProperties;
 struct WebRect;
+struct WebResourceTimingInfo;
 
 // Frames may be rendered in process ('local') or out of process ('remote').
 // A remote frame is always cross-site; a local frame may be either same-site or
@@ -181,6 +182,9 @@ class BLINK_EXPORT WebFrame {
   // Will return true if between didStartLoading and didStopLoading
   // notifications.
   virtual bool IsLoading() const;
+
+  // Reports resource timing info for a navigation in this frame.
+  void AddResourceTimingToParent(const WebResourceTimingInfo&);
 
   // Utility -------------------------------------------------------------
 
