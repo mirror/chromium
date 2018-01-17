@@ -134,6 +134,8 @@ public class WebsitePermissionsFetcher {
         queue.add(new AutoplayExceptionInfoFetcher());
         // USB device permission is per-origin and per-embedder.
         queue.add(new UsbInfoFetcher());
+        // Clipboard exceptions are host-based patterns.
+        queue.add(new ClipboardExceptionInfoFetcher());
 
         queue.add(new PermissionsAvailableCallbackRunner());
 
@@ -198,6 +200,9 @@ public class WebsitePermissionsFetcher {
         } else if (category.showUsbDevices()) {
             // USB device permission is per-origin.
             queue.add(new UsbInfoFetcher());
+        } else if (category.showClipboardSites()) {
+            // Clipboard exceptions are host-based patterns.
+            queue.add(new ClipboardExceptionInfoFetcher());
         }
         queue.add(new PermissionsAvailableCallbackRunner());
         queue.next();
@@ -230,6 +235,9 @@ public class WebsitePermissionsFetcher {
                     break;
                 case ContentSettingsType.CONTENT_SETTINGS_TYPE_BACKGROUND_SYNC:
                     site.setBackgroundSyncException(exception);
+                    break;
+                case ContentSettingsType.CONTENT_SETTINGS_TYPE_CLIPBOARD_READ:
+                    site.setClipboardException(exception);
                     break;
                 case ContentSettingsType.CONTENT_SETTINGS_TYPE_COOKIES:
                     site.setCookieException(exception);
@@ -335,6 +343,13 @@ public class WebsitePermissionsFetcher {
         @Override
         public void run() {
             setException(ContentSettingsType.CONTENT_SETTINGS_TYPE_SOUND);
+        }
+    }
+
+    private class ClipboardExceptionInfoFetcher extends Task {
+        @Override
+        public void run() {
+            setException(ContentSettingsType.CONTENT_SETTINGS_TYPE_CLIPBOARD_READ);
         }
     }
 
