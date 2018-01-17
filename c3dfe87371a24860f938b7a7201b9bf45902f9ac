@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cb39a7c_4171def9",
+        "filename": "ash/public/interfaces/login_screen.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T00:57:44Z",
+      "side": 1,
+      "message": "please add a description of |sync_password_data| here",
+      "range": {
+        "startLine": 97,
+        "startChar": 3,
+        "endLine": 97,
+        "endChar": 4
+      },
+      "revId": "c3dfe87371a24860f938b7a7201b9bf45902f9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665b875f_ef8db76f",
+        "filename": "components/password_manager/public/interfaces/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T00:57:44Z",
+      "side": 1,
+      "message": "nit: 2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "c3dfe87371a24860f938b7a7201b9bf45902f9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed03e7f2_8c58e021",
+        "filename": "components/password_manager/public/interfaces/OWNERS",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T00:57:44Z",
+      "side": 1,
+      "message": "Are these lines supposed to be here? Haven\u0027t seen anything like this in an OWNERS file before.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 74
+      },
+      "revId": "c3dfe87371a24860f938b7a7201b9bf45902f9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85af3a07_2b4a0156",
+        "filename": "components/password_manager/public/interfaces/sync_password_data.typemap",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T00:57:44Z",
+      "side": 1,
+      "message": "nit: 2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "c3dfe87371a24860f938b7a7201b9bf45902f9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96912bb1_062f96dd",
+        "filename": "components/password_manager/public/interfaces/sync_password_data_traits.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T00:57:44Z",
+      "side": 1,
+      "message": "nit: 2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c3dfe87371a24860f938b7a7201b9bf45902f9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec2307c_0d9c5708",
+        "filename": "components/password_manager/public/interfaces/sync_password_data_traits.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T00:57:44Z",
+      "side": 1,
+      "message": "I feel like struct_traits.h is the common filename convention, e.g. https://cs.chromium.org/chromium/src/url/mojo/origin_struct_traits.h?type\u003dcs",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 82
+      },
+      "revId": "c3dfe87371a24860f938b7a7201b9bf45902f9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
