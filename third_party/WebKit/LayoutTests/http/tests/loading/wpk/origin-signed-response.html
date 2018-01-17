@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<title>OriginSignedResponseHandler</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../../resources/get-host-info.js?pipe=sub"></script>
+
+<body>
+<script>
+
+function with_iframe(url, options) {
+return new Promise(function(resolve) {
+    var frame = document.createElement('iframe');
+    frame.src = url;
+    // Make sure the iframe stays in the viewport even if the test creates
+    // many of them. Otherwise some iframes may end up being throttled.
+    frame.style.position = 'absolute';
+    frame.onload = function() { resolve(frame); };
+    document.body.appendChild(frame);
+    if (typeof options === 'undefined')
+      options = {};
+    if (typeof options.auto_remove === 'undefined')
+      options.auto_remove = true;
+    if (options.auto_remove)
+      add_completion_callback(function() { frame.remove(); });
+  });
+}
+
+promise_test(function(t) {
+    var url = 'resources/origin-signed-response-iframe.php';
+    return with_iframe(url);
+  }, 'Location of OriginSignedResponseHandler');
+</script>
+</body>
+

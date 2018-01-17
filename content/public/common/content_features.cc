@@ -409,6 +409,10 @@ const base::Feature kWebAuth{"WebAuthentication",
 const base::Feature kWebGLImageChromium{"WebGLImageChromium",
                                         base::FEATURE_ENABLED_BY_DEFAULT};
 
+// OriginSignedResponse Loading
+const base::Feature kOriginSignedResponse{"OriginSignedResponse",
+                                          base::FEATURE_DISABLED_BY_DEFAULT};
+
 // The JavaScript API for payments on the web.
 const base::Feature kWebPayments{"WebPayments",
                                  base::FEATURE_ENABLED_BY_DEFAULT};
