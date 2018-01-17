@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "460bffb7_18d90e1e",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4429,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-17T22:47:08Z",
+      "side": 1,
+      "message": "can you double check if this fails without your change in display manager?",
+      "revId": "821266f57fbd96598d2b29ce43e1ec2a899198a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
