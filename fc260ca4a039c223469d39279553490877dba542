@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d1f96c49_92c2d2d3",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-17T15:27:28Z",
+      "side": 1,
+      "message": "hm, what we\u0027re trying to ensure is that the clients keyboard state is correct in terms of pressed keys. it\u0027s hard to see from this that we can guarantee this. I think I\u0027d prefer a brutal \"pressed_keys !\u003d seat_-\u003epressed_keys()\" check below to ensure that this is correct independent of how chrome implements accelerators. wdyt?",
+      "parentUuid": "a1ae2e2e_bd995597",
+      "revId": "fc260ca4a039c223469d39279553490877dba542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40fbbdb2_95581a86",
         "filename": "components/exo/keyboard.cc",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I think we don\u0027t need to wait another key event before sending enter/leave event.\n\nWe don\u0027t want to clear pending_keys_acks_ here because focused window is not changed actually. Non-reserved shortcuts pressed before a reserved shortcut are still valid and should be processed if they are not consumed by the client.\n\nI moved this part to after sending the modifiers.",
       "parentUuid": "40fbbdb2_95581a86",
+      "revId": "fc260ca4a039c223469d39279553490877dba542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0b861f_84630342",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-17T15:27:28Z",
+      "side": 1,
+      "message": "Not waiting is fine if you prefer. Either way should work properly and be valid according to protocol.\n\nHowever, the client doesn\u0027t know that the focus window is not changing. I think it\u0027s valid behavior by the client to assume that keys don\u0027t need to be acked after receiving a leave event. Seems like we either need to change the spec so that keys need to be acked even after leave event is sent or we need to be consistent here and always clear pending_key_acks_ when sending leave event.",
+      "parentUuid": "58407e9b_78ec4719",
       "revId": "fc260ca4a039c223469d39279553490877dba542",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
