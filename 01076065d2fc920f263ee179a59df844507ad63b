@@ -236,6 +236,30 @@
       "revId": "01076065d2fc920f263ee179a59df844507ad63b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91040925_2ec44cad",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T19:46:26Z",
+      "side": 1,
+      "message": "\u003e So I guess all these things you are saying are already be happening on windows and linux on high DPI machines?\n\nThat\u0027s correct. I think Android should work the same way but is a bit riskier in terms of compat since the only time you can get fractional scroll offsets today is under pinch-zoom. Pages have historically been pretty broken while zoomed so there isn\u0027t really an expectation of working while zoomed.",
+      "parentUuid": "1eca1684_aa9ac30d",
+      "range": {
+        "startLine": 291,
+        "startChar": 2,
+        "endLine": 291,
+        "endChar": 42
+      },
+      "revId": "01076065d2fc920f263ee179a59df844507ad63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
