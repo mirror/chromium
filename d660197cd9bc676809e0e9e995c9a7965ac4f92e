@@ -197,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "d239f698_ccca07b0",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T19:03:24Z",
+      "side": 1,
+      "message": "\u003e By that I mean at what point should the calls be made and what assertions would you like?\n\nIdeally, it would do all these things:\n1. have local state (on disk) say UMA is enabled.\n2. early startup, load preview version of local state\n3. check that consent is enabled (by calling appropriate metrics function)\n4. call ChangeMetricsReportingState() to disable UMA\n5. check that consent is disabled (by calling appropriate metrics function)\n6. let startup finish, so g_browser_process fully exists\n7. check that consent is disabled (by calling appropriate metrics function)\n8. check that the disable consent state has been mirrored to disk\n\nand again with disabled -\u003e enabled",
+      "parentUuid": "17ae2318_3b76ee28",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65fae94f_2c9c0922",
         "filename": "chrome/browser/metrics/metrics_reporting_state.cc",
         "patchSetId": 5
