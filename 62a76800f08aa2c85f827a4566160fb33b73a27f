@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1cbfcde1_ab15ae13",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-17T00:12:17Z",
+      "side": 1,
+      "message": "The problem is SurfaceLayer and SurfaceLayerImpl don\u0027t know what the default deadline is. We can plumb through the default deadline but then we would need to plumb this through ALL surfacelayers making this API simpler than the one you propose.",
+      "parentUuid": "cbc0a58f_7b727e95",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "62a76800f08aa2c85f827a4566160fb33b73a27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4369a7de_b5087749",
         "filename": "cc/layers/surface_layer.h",
         "patchSetId": 10
@@ -60,6 +84,30 @@
       "writtenOn": "2018-01-16T23:07:45Z",
       "side": 1,
       "message": "Should this be an optional argument? (deadline_in_frames \u003d base::nullopt)",
+      "range": {
+        "startLine": 26,
+        "startChar": 27,
+        "endLine": 26,
+        "endChar": 70
+      },
+      "revId": "62a76800f08aa2c85f827a4566160fb33b73a27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe7fb2cf_c960722a",
+        "filename": "cc/layers/surface_layer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-17T00:12:17Z",
+      "side": 1,
+      "message": "Optional arguments typically lead to bugs, I\u0027ve learnt.",
+      "parentUuid": "4369a7de_b5087749",
       "range": {
         "startLine": 26,
         "startChar": 27,
