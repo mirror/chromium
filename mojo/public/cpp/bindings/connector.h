@@ -141,7 +141,7 @@ class MOJO_CPP_BINDINGS_EXPORT Connector : public MessageReceiver {
   // Is the connector bound to a MessagePipe handle?
   bool is_valid() const {
     DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-    return message_pipe_.is_valid();
+    return static_cast<bool>(message_pipe_);
   }
 
   // Waits for the next message on the pipe, blocking until one arrives,

@@ -89,12 +89,12 @@ class TestRemoter final : public mojom::Remoter {
       mojo::ScopedDataPipeConsumerHandle video_pipe,
       mojom::RemotingDataStreamSenderRequest audio_sender_request,
       mojom::RemotingDataStreamSenderRequest video_sender_request) override {
-    if (audio_pipe.is_valid()) {
+    if (audio_pipe) {
       audio_stream_sender_.reset(new TestStreamSender(
           std::move(audio_sender_request), std::move(audio_pipe),
           DemuxerStream::AUDIO, send_frame_to_sink_cb_));
     }
-    if (video_pipe.is_valid()) {
+    if (video_pipe) {
       video_stream_sender_.reset(new TestStreamSender(
           std::move(video_sender_request), std::move(video_pipe),
           DemuxerStream::VIDEO, send_frame_to_sink_cb_));

@@ -143,7 +143,7 @@ class DataPipeTransportStrategy : public BlobTransportStrategy {
     // would include somehow teaching DataPipe to reuse the SharedMemory from a
     // previous DataPipe, or simply using a single BytesProvider for all bytes
     // elements. http://crbug.com/741159
-    DCHECK(!consumer_handle_.is_valid());
+    DCHECK(!consumer_handle_);
     mojo::ScopedDataPipeProducerHandle producer_handle;
     MojoCreateDataPipeOptions options;
     options.struct_size = sizeof(MojoCreateDataPipeOptions);

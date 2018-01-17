@@ -32,7 +32,7 @@ void TestURLLoaderClient::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
     const ResourceResponseHead& response_head) {
   EXPECT_FALSE(has_received_cached_metadata_);
-  EXPECT_FALSE(response_body_.is_valid());
+  EXPECT_FALSE(response_body_);
   EXPECT_FALSE(has_received_response_);
   // Use ClearHasReceivedRedirect to accept more redirects.
   EXPECT_FALSE(has_received_redirect_);
@@ -166,7 +166,7 @@ void TestURLLoaderClient::RunUntilCachedMetadataReceived() {
 }
 
 void TestURLLoaderClient::RunUntilResponseBodyArrived() {
-  if (response_body_.is_valid())
+  if (response_body_)
     return;
   base::RunLoop run_loop;
   quit_closure_for_on_start_loading_response_body_ = run_loop.QuitClosure();

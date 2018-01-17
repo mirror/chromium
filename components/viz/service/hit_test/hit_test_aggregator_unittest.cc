@@ -130,7 +130,7 @@ class TestHostFrameSinkManager : public HostFrameSinkManager {
       uint32_t active_handle_size,
       mojo::ScopedSharedBufferHandle idle_handle,
       uint32_t idle_handle_size) override {
-    DCHECK(active_handle.is_valid() && idle_handle.is_valid());
+    DCHECK(active_handle && idle_handle);
     buffer_frame_sink_id_ = frame_sink_id;
     handle_buffers_[0] = active_handle->Map(active_handle_size *
                                             sizeof(AggregatedHitTestRegion));
