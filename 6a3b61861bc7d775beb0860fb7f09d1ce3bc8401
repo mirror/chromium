@@ -141,6 +141,30 @@
       "revId": "6a3b61861bc7d775beb0860fb7f09d1ce3bc8401",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77b81ded_1b48ba7c",
+        "filename": "ios/web_view/test/scroll_view_kvo_inttest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-17T16:09:12Z",
+      "side": 1,
+      "message": "You can use WaitUntilConditionOrTimeout in ios/testing/wait_util.h\n\nFor example: https://cs.chromium.org/chromium/src/ios/web_view/test/web_view_test_util.mm\n\nHere is an example that asserts the wait finished and did not timeout:\nhttps://cs.chromium.org/chromium/src/ios/web/download/download_inttest.mm?rcl\u003d873bcd1dd9be8f92117408bdd12b72c5c1748748\u0026l\u003d73",
+      "parentUuid": "e6857ac9_817e4286",
+      "range": {
+        "startLine": 38,
+        "startChar": 61,
+        "endLine": 38,
+        "endChar": 73
+      },
+      "revId": "6a3b61861bc7d775beb0860fb7f09d1ce3bc8401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
