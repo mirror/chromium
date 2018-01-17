@@ -74,6 +74,9 @@ class CONTENT_EXPORT BrowserMainParts {
   // (or 0 if no error).
   virtual int PreCreateThreads();
 
+  // This is called right after the browser threads start.
+  virtual void BrowserThreadsStarted() {}
+
   virtual void ServiceManagerConnectionStarted(
       ServiceManagerConnection* connection) {}
 
