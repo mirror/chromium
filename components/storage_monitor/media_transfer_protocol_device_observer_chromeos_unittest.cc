@@ -44,8 +44,9 @@ const char kStorageVolumeIdentifier[] = "ExampleVolumeId";
 std::map<std::string, device::mojom::MtpStorageInfo> fake_storage_info_map;
 
 // Helper function to get fake MTP device details.
-const device::mojom::MtpStorageInfo* GetFakeMtpStorageInfo(
-    const std::string& storage_name) {
+void GetFakeMtpStorageInfo(
+    const std::string& storage_name,
+    device::MediaTransferProtocolManager::GetStorageInfoCallback callback) {
   // Fill the map out if it is empty.
   if (fake_storage_info_map.empty()) {
     // Add the invalid MTP storage info.
@@ -66,7 +67,11 @@ const device::mojom::MtpStorageInfo* GetFakeMtpStorageInfo(
   }
 
   const auto it = fake_storage_info_map.find(storage_name);
-  return it != fake_storage_info_map.end() ? &it->second : nullptr;
+  if(it == fake_storage_info_map.end()) {
+    std::move(callback).Run(nullptr);
+    return;
+  }
+  std::move(callback).Run(&it->second);
 }
 
 class TestMediaTransferProtocolDeviceObserverChromeOS

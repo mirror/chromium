@@ -100,11 +100,15 @@ class MediaTransferProtocolManagerImpl : public MediaTransferProtocolManager {
   }
 
   // MediaTransferProtocolManager override.
-  const mojom::MtpStorageInfo* GetStorageInfo(
-      const std::string& storage_name) const override {
+  void GetStorageInfo(const std::string& storage_name,
+                      GetStorageInfoCallback callback) const override {
     DCHECK(thread_checker_.CalledOnValidThread());
     const auto it = storage_info_map_.find(storage_name);
-    return it != storage_info_map_.end() ? &it->second : nullptr;
+    if (it == storage_info_map_.end()) {
+      std::move(callback).Run(nullptr);
+      return;
+    }
+    std::move(callback).Run(&it->second);
   }
 
   // MediaTransferProtocolManager override.
