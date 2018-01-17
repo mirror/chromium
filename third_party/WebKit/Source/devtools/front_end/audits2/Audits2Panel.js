@@ -199,12 +199,12 @@ Audits2.Audits2Panel = class extends UI.Panel {
     this._dialog = new UI.Dialog();
     this._dialog.setOutsideClickCallback(event => event.consume(true));
     var root = UI.createShadowRootWithCoreStyles(this._dialog.contentElement, 'audits2/audits2Dialog.css');
-    var auditsViewElement = root.createChild('div', 'audits2-view');
+    var auditsViewElement = root.createChild('div', 'audits2-view vbox');
 
     var closeButton = auditsViewElement.createChild('div', 'dialog-close-button', 'dt-close-button');
     closeButton.addEventListener('click', () => this._cancelAndClose());
 
-    var uiElement = auditsViewElement.createChild('div');
+    var uiElement = auditsViewElement.createChild('div', 'vbox');
     var headerElement = uiElement.createChild('header');
     this._headerTitleElement = headerElement.createChild('p');
     this._headerTitleElement.textContent = Common.UIString('Audits to perform');
@@ -233,7 +233,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
     this._cancelButton = UI.createTextButton(Common.UIString('Cancel'), this._cancel.bind(this));
     buttonsRow.appendChild(this._cancelButton);
 
-    this._dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.SetExactWidthMaxHeight);
+    this._dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.MeasureContent);
     this._dialog.setMaxContentSize(new UI.Size(500, 400));
     this._dialog.show(this._auditResultsElement);
     auditsViewElement.tabIndex = 0;
@@ -364,6 +364,8 @@ Audits2.Audits2Panel = class extends UI.Panel {
     } else {
       this._headerTitleElement.textContent = Common.UIString('Audits to perform');
     }
+    this._dialog.hide();
+    this._dialog.show();
   }
 
   /**
