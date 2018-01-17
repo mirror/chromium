@@ -1557,7 +1557,8 @@ pp::Buffer_Dev PDFiumEngine::PrintPagesAsRasterPDF(
     double source_page_height = FPDF_GetPageHeight(pdf_page);
     source_page_sizes.push_back(
         std::make_pair(source_page_width, source_page_height));
-
+    // For computing size in pixels, use a square dpi since the source PDF page
+    // has square DPI.
     int width_in_pixels =
         ConvertUnit(source_page_width, kPointsPerInch, print_settings.dpi);
     int height_in_pixels =
@@ -4367,15 +4368,16 @@ base::LazyInstance<PDFiumEngineExports>::Leaky g_pdf_engine_exports =
 int CalculatePosition(FPDF_PAGE page,
                       const PDFiumEngineExports::RenderingSettings& settings,
                       pp::Rect* dest) {
-  int page_width = static_cast<int>(ConvertUnitDouble(
-      FPDF_GetPageWidth(page), kPointsPerInch, settings.dpi_x));
-  int page_height = static_cast<int>(ConvertUnitDouble(
-      FPDF_GetPageHeight(page), kPointsPerInch, settings.dpi_y));
+  // settings.bounds is in terms of the max DPI. Convert page sizes to match.
+  int dpi = std::max(settings.dpi_x, settings.dpi_y);
+  int page_width = static_cast<int>(
+      ConvertUnitDouble(FPDF_GetPageWidth(page), kPointsPerInch, dpi));
+  int page_height = static_cast<int>(
+      ConvertUnitDouble(FPDF_GetPageHeight(page), kPointsPerInch, dpi));
 
   // Start by assuming that we will draw exactly to the bounds rect
   // specified.
   *dest = settings.bounds;
-
   int rotate = 0;  // normal orientation.
 
   // Auto-rotate landscape pages to print correctly.
@@ -4403,11 +4405,11 @@ int CalculatePosition(FPDF_PAGE page,
       scale_factor_x /= dest->width();
       double scale_factor_y = page_height;
       scale_factor_y /= dest->height();
-      if (scale_factor_x > scale_factor_y) {
+      // Scale back to device DPI for setting the final bounds.
+      if (scale_factor_x > scale_factor_y)
         dest->set_height(page_height / scale_factor_x);
-      } else {
+      else
         dest->set_width(page_width / scale_factor_y);
-      }
     }
   } else {
     // We are not scaling to bounds. Draw in the actual page size. If the
@@ -4417,9 +4419,16 @@ int CalculatePosition(FPDF_PAGE page,
     dest->set_height(page_height);
   }
 
+  // Scale the bounds to device units if DPI is rectangular.
+  if (settings.dpi_x != settings.dpi_y) {
+    dest->set_width(dest->width() * settings.dpi_x / dpi);
+    dest->set_height(dest->height() * settings.dpi_y / dpi);
+  }
+
   if (settings.center_in_bounds) {
-    pp::Point offset((settings.bounds.width() - dest->width()) / 2,
-                     (settings.bounds.height() - dest->height()) / 2);
+    pp::Point offset(
+        (settings.bounds.width() * settings.dpi_x / dpi - dest->width()) / 2,
+        (settings.bounds.height() * settings.dpi_y / dpi - dest->height()) / 2);
     dest->Offset(offset);
   }
   return rotate;

@@ -115,15 +115,18 @@ int GetDPI(const PrintMsg_Print_Params* print_params) {
   // on dpi.
   return kPointsPerInch;
 #else
-  return static_cast<int>(print_params->dpi);
+  // Use min to avoid laying out the page into too large an area.
+  return static_cast<int>(
+      std::max(print_params->dpi.width(), print_params->dpi.height()));
 #endif  // defined(OS_MACOSX)
 }
 
 bool PrintMsg_Print_Params_IsValid(const PrintMsg_Print_Params& params) {
   return !params.content_size.IsEmpty() && !params.page_size.IsEmpty() &&
          !params.printable_area.IsEmpty() && params.document_cookie &&
-         params.dpi && params.margin_top >= 0 && params.margin_left >= 0 &&
-         params.dpi > kMinDpi && params.document_cookie != 0;
+         !params.dpi.IsEmpty() && params.margin_top >= 0 &&
+         params.margin_left >= 0 && params.dpi.width() > kMinDpi &&
+         params.dpi.height() > kMinDpi && params.document_cookie != 0;
 }
 
 // Helper function to check for fit to page
@@ -523,6 +526,29 @@ PrintMsg_Print_Params CalculatePrintParamsForCss(
   return result_params;
 }
 
+#if defined(OS_WIN)
+void AdjustPageParamsForDpi(PrintHostMsg_DidPrintDocument_Params& page_params,
+                            const gfx::Size& dpi) {
+  // Adjust for rectangular DPI as needed. This does not do anything if the
+  // printer has square DPI (most cases). This is Windows only because
+  // only Windows can ever set a rectangular DPI in the print settings.
+  if (dpi.width() == dpi.height())
+    return;
+  int dpi_max = std::max(dpi.width(), dpi.height());
+  page_params.page_size =
+      gfx::Size(page_params.page_size.width() * dpi.width() / dpi_max,
+                page_params.page_size.height() * dpi.height() / dpi_max);
+  page_params.content_area =
+      gfx::Rect(page_params.content_area.x() * dpi.width() / dpi_max,
+                page_params.content_area.y() * dpi.height() / dpi_max,
+                page_params.content_area.width() * dpi.width() / dpi_max,
+                page_params.content_area.height() * dpi.height() / dpi_max);
+  page_params.physical_offsets.set_x(page_params.physical_offsets.x() *
+                                     dpi.width() / dpi_max);
+  page_params.physical_offsets.set_y(page_params.physical_offsets.y() *
+                                     dpi.height() / dpi_max);
+}
+#endif  // defined(OS_WIN)
 }  // namespace
 
 FrameReference::FrameReference(blink::WebLocalFrame* frame) {
@@ -1503,7 +1529,8 @@ void PrintRenderFrameHelper::Print(blink::WebLocalFrame* frame,
 
     print_settings.params.print_scaling_option = scaling_option;
     SetPrintPagesParams(print_settings);
-    if (!print_settings.params.dpi || !print_settings.params.document_cookie) {
+    if (print_settings.params.dpi.IsEmpty() ||
+        !print_settings.params.document_cookie) {
       DidFinishPrinting(OK);  // Release resources and fail silently on failure.
       return;
     }
@@ -1620,6 +1647,10 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
     PrintPageInternal(print_params, printed_pages[i], page_count, frame,
                       &metafile, nullptr, nullptr);
   }
+#if defined(OS_WIN)
+  page_params.physical_offsets = printer_printable_area_.origin();
+  AdjustPageParamsForDpi(page_params, print_params.dpi);
+#endif
 
   // blink::printEnd() for PDF should be called before metafile is closed.
   FinishFramePrinting();
@@ -1633,9 +1664,6 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
 
   page_params.data_size = metafile.GetDataSize();
   page_params.document_cookie = print_params.document_cookie;
-#if defined(OS_WIN)
-  page_params.physical_offsets = printer_printable_area_.origin();
-#endif
   Send(new PrintHostMsg_DidPrintDocument(routing_id(), page_params));
   return true;
 }
