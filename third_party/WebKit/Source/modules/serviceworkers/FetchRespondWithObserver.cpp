@@ -77,6 +77,11 @@ const String GetMessageForResponseError(ServiceWorkerResponseError error,
                       "an \"opaqueredirect\" type response was used for a "
                       "request whose redirect mode is not \"manual\".";
       break;
+    case ServiceWorkerResponseError::kResponseTypeCORS:
+      error_message = error_message +
+                      "an \"CORS\" type response was used for a "
+                      "request whose redirect mode is \"same-origin\".";
+      break;
     case ServiceWorkerResponseError::kBodyLocked:
       error_message = error_message +
                       "a Response whose \"body\" is locked cannot be used to "
@@ -175,6 +180,7 @@ void FetchRespondWithObserver::OnResponseFulfilled(const ScriptValue& value) {
       ToIsolate(GetExecutionContext()), value.V8Value());
   // "If one of the following conditions is true, return a network error:
   //   - |response|'s type is |error|.
+  //   - |request|'s mode is |same-origin| and |response|'s type is |cors|.
   //   - |request|'s mode is not |no-cors| and response's type is |opaque|.
   //   - |request| is a client request and |response|'s type is neither
   //     |basic| nor |default|."
@@ -182,6 +188,11 @@ void FetchRespondWithObserver::OnResponseFulfilled(const ScriptValue& value) {
       response->GetResponse()->GetType();
   if (response_type == network::mojom::FetchResponseType::kError) {
     OnResponseRejected(ServiceWorkerResponseError::kResponseTypeError);
+    return;
+  }
+  if (response_type == network::mojom::FetchResponseType::kCORS &&
+      request_mode_ == network::mojom::FetchRequestMode::kSameOrigin) {
+    OnResponseRejected(ServiceWorkerResponseError::kResponseTypeCORS);
     return;
   }
   if (response_type == network::mojom::FetchResponseType::kOpaque) {
