@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc9b996b_06cdb6eb",
+        "filename": "content/browser/renderer_host/media/video_capture_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-17T18:29:13Z",
+      "side": 1,
+      "message": "More useful description would be: \"Looks up a RenderProcessHost on demand based on a given |render_process_id| and invokes OnMediaStreamAdded() and OnMediaStreamRemoved().\"",
+      "revId": "510b025548c8d75c85e95453244b74795a057708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ecb02b_e88ce0b3",
+        "filename": "content/browser/renderer_host/media/video_capture_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-17T18:29:13Z",
+      "side": 1,
+      "message": "Is this supposed to be BrowserThread::IO?",
+      "revId": "510b025548c8d75c85e95453244b74795a057708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a278748c_18e39975",
+        "filename": "content/browser/renderer_host/media/video_capture_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-17T18:29:13Z",
+      "side": 1,
+      "message": "The description seems inaccurate. I think this should say \"Interface for notifying RenderProcessHost instance about ...\"",
+      "revId": "510b025548c8d75c85e95453244b74795a057708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23de33ab_0eba58a7",
+        "filename": "content/browser/renderer_host/media/video_capture_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-17T18:29:13Z",
+      "side": 1,
+      "message": "Instead of swapping out private parts of the instance under test, a cleaner solution would be to pass what we want it to use into the constructor.\n\nWith that and my other suggestions below it may be possible to remove the \"friend VideoCaptureTest\" from VideoCaptureHost.",
+      "revId": "510b025548c8d75c85e95453244b74795a057708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ca72c6_0974113c",
+        "filename": "content/browser/renderer_host/media/video_capture_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-17T18:29:13Z",
+      "side": 1,
+      "message": "Why not just make |host_| protected and allow the test case to directly interact with it?",
+      "revId": "510b025548c8d75c85e95453244b74795a057708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8750349d_43796d20",
+        "filename": "content/browser/renderer_host/media/video_capture_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-17T18:29:13Z",
+      "side": 1,
+      "message": "The direct verification of the private field |host_-\u003enumber_of_active_streams_| seems unnecessary. The EXPECT_CALLs above should be sufficient to verify the expected behavior. If we want to verify intermediate steps, it would be cleaner to add separate test cases.",
+      "revId": "510b025548c8d75c85e95453244b74795a057708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
