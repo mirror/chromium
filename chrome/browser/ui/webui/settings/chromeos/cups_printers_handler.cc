@@ -348,7 +348,6 @@ void CupsPrintersHandler::RegisterMessages() {
 
 void CupsPrintersHandler::OnJavascriptAllowed() {
   printers_manager_->AddObserver(this);
-  printers_manager_->Start();
 }
 
 void CupsPrintersHandler::OnJavascriptDisallowed() {
