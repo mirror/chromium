@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "551284a7_f65b1184",
+        "filename": "content/browser/android/ime_adapter_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-17T00:05:45Z",
+      "side": 1,
+      "message": "ImeAdapter sounds good. But changing to that is orthogonal to this change, so is optional.",
+      "parentUuid": "7e83f2fa_284d0c8d",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 17
+      },
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12068019_914415aa",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
         "patchSetId": 4
@@ -234,6 +258,30 @@
       "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e728286_0180d517",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-17T00:05:45Z",
+      "side": 1,
+      "message": "Thanks for the explanation. Makes sense.",
+      "parentUuid": "a4224fa8_bb29ee3f",
+      "range": {
+        "startLine": 177,
+        "startChar": 38,
+        "endLine": 177,
+        "endChar": 62
+      },
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
