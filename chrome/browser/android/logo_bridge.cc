@@ -39,7 +39,9 @@ ScopedJavaLocalRef<jobject> JNI_LogoBridge_MakeJavaLogo(
     const SkBitmap* bitmap,
     const GURL& on_click_url,
     const std::string& alt_text,
-    const GURL& animated_url) {
+    const GURL& animated_url,
+    const GURL& cta_log_url,
+    const GURL& log_url) {
   ScopedJavaLocalRef<jobject> j_bitmap = gfx::ConvertToJavaBitmap(bitmap);
 
   ScopedJavaLocalRef<jstring> j_on_click_url;
@@ -54,8 +56,16 @@ ScopedJavaLocalRef<jobject> JNI_LogoBridge_MakeJavaLogo(
   if (animated_url.is_valid())
     j_animated_url = ConvertUTF8ToJavaString(env, animated_url.spec());
 
+  ScopedJavaLocalRef<jstring> j_cta_log_url;
+  if (cta_log_url.is_valid())
+    j_cta_log_url = ConvertUTF8ToJavaString(env, cta_log_url.spec());
+
+  ScopedJavaLocalRef<jstring> j_log_url;
+  if (log_url.is_valid())
+    j_log_url = ConvertUTF8ToJavaString(env, log_url.spec());
+
   return Java_LogoBridge_createLogo(env, j_bitmap, j_on_click_url, j_alt_text,
-                                    j_animated_url);
+                                    j_animated_url, j_cta_log_url, j_log_url);
 }
 
 // Converts a C++ Logo to a Java Logo.
@@ -66,8 +76,9 @@ ScopedJavaLocalRef<jobject> JNI_LogoBridge_ConvertLogoToJavaObject(
     return ScopedJavaLocalRef<jobject>();
 
   return JNI_LogoBridge_MakeJavaLogo(
-      env, &logo->image, GURL(logo->metadata.on_click_url),
-      logo->metadata.alt_text, GURL(logo->metadata.animated_url));
+      env, &logo->image, logo->metadata.on_click_url, logo->metadata.alt_text,
+      logo->metadata.animated_url, logo->metadata.cta_log_url,
+      logo->metadata.log_url);
 }
 
 class LogoObserverAndroid : public search_provider_logos::LogoObserver {
@@ -104,6 +115,30 @@ class LogoObserverAndroid : public search_provider_logos::LogoObserver {
   base::android::ScopedJavaGlobalRef<jobject> j_logo_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(LogoObserverAndroid);
+};
+
+class LogoImpressionLogger : public net::URLFetcherDelegate {
+ public:
+  struct Result {
+    GURL interaction_log_url;
+    std::string target_url_params;
+  };
+
+  LogoImpressionLogger(const GURL& url, net::URLRequestContextGetter* context) {
+    fetcher_ = net::URLFetcher::Create(url, net::URLFetcher::GET, this);
+    fetcher_->SetRequestContext(context);
+    fetcher_->Start();
+  }
+
+ private:
+  // net::URLFetcherDelegate:
+  void OnURLFetchComplete(const net::URLFetcher* source) override {
+    std::string response;
+    source->GetResponseAsString(&response);
+    LOG(ERROR) << response;
+  }
+
+  std::unique_ptr<net::URLFetcher> fetcher_;
 };
 
 }  // namespace
@@ -185,14 +220,15 @@ static jlong JNI_LogoBridge_Init(JNIEnv* env,
 }
 
 LogoBridge::LogoBridge(const JavaRef<jobject>& j_profile)
-    : logo_service_(nullptr), weak_ptr_factory_(this) {
-  Profile* profile = ProfileAndroid::FromProfileAndroid(j_profile);
-  DCHECK(profile);
+    : profile_(ProfileAndroid::FromProfileAndroid(j_profile)),
+      logo_service_(nullptr),
+      weak_ptr_factory_(this) {
+  DCHECK(profile_);
 
-  logo_service_ = LogoServiceFactory::GetForProfile(profile);
+  logo_service_ = LogoServiceFactory::GetForProfile(profile_);
 
   animated_logo_fetcher_ =
-      std::make_unique<AnimatedLogoFetcher>(profile->GetRequestContext());
+      std::make_unique<AnimatedLogoFetcher>(profile_->GetRequestContext());
 }
 
 LogoBridge::~LogoBridge() {}
@@ -216,4 +252,14 @@ void LogoBridge::GetAnimatedLogo(JNIEnv* env,
                                  const JavaParamRef<jstring>& j_url) {
   GURL url = GURL(ConvertJavaStringToUTF8(env, j_url));
   animated_logo_fetcher_->Start(env, url, j_callback);
+}
+
+void LogoBridge::RecordImpression(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj,
+    const JavaParamRef<jstring>& j_log_url) {
+  GURL log_url = GURL(ConvertJavaStringToUTF8(env, j_log_url));
+  LOG(ERROR) << log_url;
+  // TODO memleak
+  new LogoImpressionLogger(log_url, profile_->GetRequestContext());
 }

@@ -97,8 +97,9 @@ public class LogoDelegateImpl implements LogoView.Delegate {
                 if (mIsDestroyed) return;
 
                 if (logo != null) {
-                    int logoType =
-                            logo.animatedLogoUrl == null ? STATIC_LOGO_SHOWN : CTA_IMAGE_SHOWN;
+                    boolean isAnimated = logo.animatedLogoUrl != null;
+
+                    int logoType = isAnimated ? CTA_IMAGE_SHOWN : STATIC_LOGO_SHOWN;
                     RecordHistogram.recordEnumeratedHistogram(
                             LOGO_SHOWN_UMA_NAME, logoType, LOGO_SHOWN_COUNT);
                     if (fromCache) {
@@ -108,6 +109,13 @@ public class LogoDelegateImpl implements LogoView.Delegate {
                         RecordHistogram.recordEnumeratedHistogram(
                                 LOGO_SHOWN_FRESH_UMA_NAME, logoType, LOGO_SHOWN_COUNT);
                     }
+
+                    // TODO this gets called twice, fromCache and not.
+                    String logUrl = isAnimated ? logo.ctaLogUrl : logo.logUrl;
+                    if (logUrl != null) {
+                        mLogoBridge.recordImpression(logUrl);
+                    }
+
                     if (mShouldRecordLoadTime) {
                         long loadTime = System.currentTimeMillis() - loadTimeStart;
                         RecordHistogram.recordMediumTimesHistogram(

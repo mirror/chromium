@@ -13,6 +13,8 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 
+class Profile;
+
 namespace search_provider_logos {
 class LogoService;
 }  // namespace search_provider_logos
@@ -47,10 +49,16 @@ class LogoBridge {
                        const base::android::JavaParamRef<jobject>& j_callback,
                        const base::android::JavaParamRef<jstring>& j_url);
 
+  void RecordImpression(JNIEnv* env,
+                        const base::android::JavaParamRef<jobject>& obj,
+                        const base::android::JavaParamRef<jstring>& j_log_url);
+
  private:
   class AnimatedLogoFetcher;
 
   virtual ~LogoBridge();
+
+  Profile* profile_;
 
   search_provider_logos::LogoService* logo_service_;
 

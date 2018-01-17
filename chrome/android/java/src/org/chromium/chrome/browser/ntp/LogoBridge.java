@@ -40,11 +40,18 @@ public class LogoBridge {
          */
         public final String animatedLogoUrl;
 
-        Logo(Bitmap image, String onClickUrl, String altText, String animatedLogoUrl) {
+        public final String ctaLogUrl;
+
+        public final String logUrl;
+
+        Logo(Bitmap image, String onClickUrl, String altText, String animatedLogoUrl,
+                String ctaLogUrl, String logUrl) {
             this.image = image;
             this.onClickUrl = onClickUrl;
             this.altText = altText;
             this.animatedLogoUrl = animatedLogoUrl;
+            this.ctaLogUrl = ctaLogUrl;
+            this.logUrl = logUrl;
         }
     }
 
@@ -120,9 +127,14 @@ public class LogoBridge {
         nativeGetAnimatedLogo(mNativeLogoBridge, callback, animatedLogoUrl);
     }
 
+    void recordImpression(String logUrl) {
+        nativeRecordImpression(mNativeLogoBridge, logUrl);
+    }
+
     @CalledByNative
-    private static Logo createLogo(Bitmap image, String onClickUrl, String altText, String gifUrl) {
-        return new Logo(image, onClickUrl, altText, gifUrl);
+    private static Logo createLogo(Bitmap image, String onClickUrl, String altText, String gifUrl,
+            String ctaLogUrl, String logUrl) {
+        return new Logo(image, onClickUrl, altText, gifUrl, ctaLogUrl, logUrl);
     }
 
     @CalledByNative
@@ -134,5 +146,6 @@ public class LogoBridge {
     private native void nativeGetCurrentLogo(long nativeLogoBridge, LogoObserver logoObserver);
     private native void nativeGetAnimatedLogo(long nativeLogoBridge, AnimatedLogoCallback callback,
             String gifUrl);
+    private native void nativeRecordImpression(long nativeLogoBridge, String logUrl);
     private native void nativeDestroy(long nativeLogoBridge);
 }
