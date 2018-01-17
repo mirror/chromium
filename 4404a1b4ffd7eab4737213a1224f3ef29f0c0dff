@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73b77560_969d14ed",
+        "filename": "tools/cygprofile/orderfile_generator_backend.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-17T16:14:14Z",
+      "side": 1,
+      "message": "I understand it is historical, but still naming the file with a list of offsets as \u0027out/Release/merged_cyglog\u0027 is not very intuitive, since a \u0027merged cyglog\u0027 and newline-separated offsets have completely different format. I guess we wanted to use the same constant for both instrumentation pipelines at some point, but I cannot see much value in it right now.\n\nCan we use something like self._REACHED_OFFSETS for the new pipeline which would return something like \u0027out/Release/reached_offsets\u0027?",
+      "range": {
+        "startLine": 544,
+        "startChar": 23,
+        "endLine": 544,
+        "endChar": 46
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b762596_7a37b9be",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-17T16:14:14Z",
+      "side": 1,
+      "message": "nit: I would phrase it slightly differently, since \u0027manipulate symbol offsets in binaries\u0027 may read as if we are mutating the binaries. How about:\n\n\u0027This class extracts symbol information from an ELF binary such as name and offset. Allows quickly translating between symbol names and offsets.\u0027",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 61
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ecc02e_d2e07686",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-17T16:14:14Z",
+      "side": 1,
+      "message": "nit: s/binariy/binary/",
+      "range": {
+        "startLine": 25,
+        "startChar": 38,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef5da7a7_3e361a92",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-17T16:14:14Z",
+      "side": 1,
+      "message": "jfyi: if extracting symbols is too slow for us, we can make it 10x faster by writing it in C without regexp and string splitting (it does not eliminate the need of reading only once though)",
+      "range": {
+        "startLine": 29,
+        "startChar": 47,
+        "endLine": 29,
+        "endChar": 65
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7506ecef_5650596f",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-17T16:14:14Z",
+      "side": 1,
+      "message": "s/_library_filename/_binary_filename/ ?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e5ac39_c0853ec1",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-17T16:14:14Z",
+      "side": 1,
+      "message": "s/SymbolInfo/SymbolInfos()/ ?",
+      "range": {
+        "startLine": 126,
+        "startChar": 48,
+        "endLine": 126,
+        "endChar": 58
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8a3645_92769126",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-17T16:14:14Z",
+      "side": 1,
+      "message": "We disable ICF for instrumented builds. Instead of calling these offsets \u0027primary\u0027, can we assert that no two reached symbols have the same offset?\n\nIf we happen not to disable ICF in instrumented builds, then ICF decisions would be different there, and we would need to extract all symbols, not only primary to avoid missing symbols. Hence an assert is better.\n\noh wait .., it used to do exactly the same thing .. let\u0027s try a different approach then .. please add the assert and if it breaks in your testing, plz comment it out and file a bug against it.",
+      "range": {
+        "startLine": 248,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 25
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
