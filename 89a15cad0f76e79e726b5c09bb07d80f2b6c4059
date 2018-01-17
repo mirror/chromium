@@ -90,6 +90,30 @@
     },
     {
       "key": {
+        "uuid": "b620e3d4_8043e578",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T23:22:24Z",
+      "side": 1,
+      "message": "If you\u0027re planning to change the meaning of the histogram in the future (e.g., only users who opt-in to all users), you may want to choose a temporary histogram name.  After all, if you change the meaning of the histogram in the future such as by changing when it is emitted, we\u0027d require you to change the histogram name so as not to mix two different meanings of data.  So if you expect to change the meaning of the histogram in the future, you may want to keep a name that you don\u0027t mind moving away from (VR.HardwareInstalled.OptInOnly?)",
+      "parentUuid": "0d5c1eab_64587a10",
+      "range": {
+        "startLine": 164,
+        "startChar": 2,
+        "endLine": 164,
+        "endChar": 54
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c64f78d7_50d3a314",
         "filename": "device/vr/openvr/openvr_device_provider.cc",
         "patchSetId": 1

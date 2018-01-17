@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03f8df28_529c843a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 94965,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T23:22:24Z",
+      "side": 1,
+      "message": "This still does not clearly state when the histogram is recorded.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#State-When-It-Is-Recorded",
+      "revId": "65f4aad56abf6b0d12db33947472f80b00a57de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
