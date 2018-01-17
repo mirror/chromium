@@ -22,6 +22,30 @@
       "revId": "3fa1194a5036bfbb8099e2699f13922cc7dce52c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ebc7415_3b2f0203",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-01-17T18:30:41Z",
+      "side": 1,
+      "message": "This is usually set false when user is on cellular and has some preference not to upload on wifi, e.g. https://cs.chromium.org/chromium/src/ios/chrome/browser/ios_chrome_main_parts.mm?q\u003dUpdateUploadPermissions\u0026dr\u003dC\u0026l\u003d249\n\nFor the purposes of these tests, it mostly shouldn\u0027t matter which way it is set, though I think some tests added later (may MetricsReportingCheck?) needed it true to trigger something.",
+      "parentUuid": "5c739b30_2c0a371a",
+      "range": {
+        "startLine": 91,
+        "startChar": 8,
+        "endLine": 91,
+        "endChar": 12
+      },
+      "revId": "3fa1194a5036bfbb8099e2699f13922cc7dce52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
