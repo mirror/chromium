@@ -437,6 +437,30 @@
     },
     {
       "key": {
+        "uuid": "7e884235_af9d65b4",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-17T21:44:26Z",
+      "side": 1,
+      "message": "OK, I\u0027m not certain we never get here on a failed response, so I went ahead and canceled like you suggested.",
+      "parentUuid": "6f16c9cb_d1680759",
+      "range": {
+        "startLine": 43,
+        "startChar": 48,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "bca9c088a1a7908a670dfe1b47315473b0843675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12f42c1c_12406ab9",
         "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.h",
         "patchSetId": 5
