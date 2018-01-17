@@ -14,6 +14,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/mock_callback.h"
 #include "base/values.h"
 #include "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.h"
 #include "chrome/browser/extensions/api/passwords_private/passwords_private_event_router.h"
@@ -256,6 +257,8 @@ TEST_F(PasswordsPrivateDelegateImplTest, TestFailedReauthOnView) {
 
 TEST_F(PasswordsPrivateDelegateImplTest, TestReauthOnExport) {
   SetUpPasswordStore({CreateSampleForm()});
+  base::MockCallback<base::OnceCallback<void(const std::string&)>>
+      mock_accepted_;
 
   PasswordsPrivateDelegateImpl delegate(&profile_);
   // Spin the loop to allow PasswordStore tasks posted on the creation of
@@ -266,12 +269,15 @@ TEST_F(PasswordsPrivateDelegateImplTest, TestReauthOnExport) {
   delegate.SetOsReauthCallForTesting(base::BindRepeating(
       &FakeOsReauthCall, &reauth_called, ReauthResult::PASS));
 
-  delegate.ExportPasswords(nullptr);
+  EXPECT_CALL(mock_accepted_, Run(std::string()));
+
+  delegate.ExportPasswords(mock_accepted_.Get(), nullptr);
   EXPECT_TRUE(reauth_called);
 
   // Export should ignore previous reauthentication results.
   reauth_called = false;
-  delegate.ExportPasswords(nullptr);
+  auto empty_callback = base::BindOnce([](const std::string&) -> void {});
+  delegate.ExportPasswords(std::move(empty_callback), nullptr);
   EXPECT_TRUE(reauth_called);
 
   // TODO(crbug.com/341477): Once the export flow has defined messages to UI,
