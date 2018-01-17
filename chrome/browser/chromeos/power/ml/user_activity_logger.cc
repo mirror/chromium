@@ -4,6 +4,8 @@
 
 #include "chrome/browser/chromeos/power/ml/user_activity_logger.h"
 
+#include <cmath>
+
 #include "base/timer/timer.h"
 #include "chromeos/dbus/power_manager/power_supply_properties.pb.h"
 #include "chromeos/system/devicetype.h"
@@ -43,6 +45,8 @@ UserActivityLogger::UserActivityLogger(
   power_manager_client->RequestStatusUpdate();
   power_manager_client->GetSwitchStates(base::BindOnce(
       &UserActivityLogger::OnReceiveSwitchStates, base::Unretained(this)));
+  power_manager_client->GetInactivityDelays(base::BindOnce(
+      &UserActivityLogger::OnReceiveInactivityDelays, base::Unretained(this)));
 
   DCHECK(session_manager);
   session_manager_observer_.Add(session_manager);
@@ -112,6 +116,11 @@ void UserActivityLogger::SuspendDone(
                 UserActivityEvent::Event::IDLE_SLEEP);
 }
 
+void UserActivityLogger::InactivityDelaysChanged(
+    const power_manager::PowerManagementPolicy::Delays& delays) {
+  OnReceiveInactivityDelays(delays);
+}
+
 void UserActivityLogger::OnVideoActivityStarted() {
   MaybeLogEvent(UserActivityEvent::Event::REACTIVATE,
                 UserActivityEvent::Event::VIDEO_ACTIVITY);
@@ -141,9 +150,26 @@ void UserActivityLogger::OnReceiveSwitchStates(
   }
 }
 
+void UserActivityLogger::OnReceiveInactivityDelays(
+    base::Optional<power_manager::PowerManagementPolicy::Delays> delays) {
+  if (delays.has_value()) {
+    screen_dim_ms_ = delays->screen_dim_ms();
+    screen_off_ms_ = delays->screen_off_ms();
+  }
+}
+
 void UserActivityLogger::ExtractFeatures(
     const IdleEventNotifier::ActivityData& activity_data) {
   features_.Clear();
+
+  // Set transition times for dim and screen-off.
+  if (screen_dim_ms_ != 0) {
+    features_.set_on_to_dim_sec(std::ceil(screen_dim_ms_ / 1000));
+  }
+  if (screen_off_ms_ != 0) {
+    features_.set_dim_to_screen_off_sec(
+        std::ceil((screen_off_ms_ - screen_dim_ms_) / 1000));
+  }
 
   // Set time related features.
   features_.set_last_activity_time_sec(
