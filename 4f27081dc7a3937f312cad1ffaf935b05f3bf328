@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c44dc351_f8f25baf",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-17T01:03:36Z",
+      "side": 1,
+      "message": "I have switched to ScopedAllowBaseSyncPrimitivesOutsideBlockingScope. I think the allowance may remain where it is now.",
+      "parentUuid": "e775e307_d1816dd1",
+      "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23e649ea_a83e0428",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 18
@@ -126,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "a4f9b5fc_e94bb4b3",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-17T01:03:36Z",
+      "side": 1,
+      "message": "I was about to upload another patch (with this comment), but then I decided not uploading it until getting comments from you. Anyway, now it is fixed. Sorry about the confusion.",
+      "parentUuid": "4ad0dc11_4bb01e36",
+      "range": {
+        "startLine": 841,
+        "startChar": 0,
+        "endLine": 841,
+        "endChar": 55
+      },
+      "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaecce70_73524bb2",
         "filename": "content/public/browser/browser_main_parts.h",
         "patchSetId": 18
@@ -173,6 +215,24 @@
       "side": 1,
       "message": "I think hooking BrowserThreadsStarted() should work since it\u0027s called immediately after CreateThreads. We just need to ensure that the task is posted prior to the base version of the function being invoked.",
       "parentUuid": "a17d3260_b3691997",
+      "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa5437b_39ecb50b",
+        "filename": "content/public/browser/browser_main_parts.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-17T01:03:36Z",
+      "side": 1,
+      "message": "I\u0027ve moved the profiler work to BrowserThreadsStarted.",
+      "parentUuid": "836328a1_d973144e",
       "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
