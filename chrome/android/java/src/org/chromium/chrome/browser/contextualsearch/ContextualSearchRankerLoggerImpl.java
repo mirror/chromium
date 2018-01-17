@@ -135,12 +135,11 @@ public class ContextualSearchRankerLoggerImpl implements ContextualSearchRankerL
 
     @Override
     public void logOutcome(Feature feature, Object value) {
+        assert mIsLoggingReadyForPage;
+        assert mHasInferenceOccurred;
         if (!isEnabled()) return;
 
-        // Since the panel can be closed at any time, we might try to log that outcome immediately.
-        if (!mIsLoggingReadyForPage) return;
-
-        if (mHasInferenceOccurred) logInternal(feature, value);
+        logInternal(feature, value);
     }
 
     @Override
@@ -155,6 +154,7 @@ public class ContextualSearchRankerLoggerImpl implements ContextualSearchRankerL
             mFeaturesLoggedForTesting = mFeaturesToLog;
             mFeaturesToLog = new HashMap<Feature, Object>();
             mAssistRankerPrediction = nativeRunInference(mNativePointer);
+            ContextualSearchUma.logRecordedFeaturesToRanker();
         }
         return mAssistRankerPrediction;
     }
@@ -186,6 +186,7 @@ public class ContextualSearchRankerLoggerImpl implements ContextualSearchRankerL
                     logObject(entry.getKey(), entry.getValue());
                 }
                 mOutcomesLoggedForTesting = mFeaturesToLog;
+                ContextualSearchUma.logRecordedOutcomesToRanker();
             }
             nativeWriteLogAndReset(mNativePointer);
         }

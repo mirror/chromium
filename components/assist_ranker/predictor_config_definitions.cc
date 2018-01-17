@@ -44,6 +44,8 @@ const base::flat_set<std::string>* GetContextualSearchFeatureWhitelist() {
                                        "IsSecondTapOverride",
                                        "IsShortWord",
                                        "IsWordEdge",
+                                       "OutcomeRankerDidPredict",
+                                       "OutcomeRankerPrediction",
                                        "OutcomeWasCardsDataShown",
                                        "OutcomeWasPanelOpened",
                                        "OutcomeWasQuickActionClicked",
