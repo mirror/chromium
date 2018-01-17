@@ -57,6 +57,10 @@
 #include "components/keep_alive_registry/keep_alive_registry.h"
 #endif
 
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
+#endif
+
 namespace {
 
 class MockNetworkConnectionTracker : public content::NetworkConnectionTracker {
@@ -73,6 +77,15 @@ class MockNetworkConnectionTracker : public content::NetworkConnectionTracker {
  private:
   DISALLOW_COPY_AND_ASSIGN(MockNetworkConnectionTracker);
 };
+
+std::unique_ptr<policy::ChromeBrowserPolicyConnector>
+CreateBrowserPolicyConnector() {
+#if defined(OS_CHROMEOS)
+  return std::make_unique<policy::BrowserPolicyConnectorChromeOS>();
+#else
+  return std::make_unique<policy::ChromeBrowserPolicyConnector>();
+#endif
+}
 
 }  // namespace
 
@@ -218,7 +231,7 @@ TestingBrowserProcess::browser_policy_connector() {
         chrome::DIR_POLICY_FILES, local_policy_path, true, false));
 #endif
 
-    browser_policy_connector_ = platform_part_->CreateBrowserPolicyConnector();
+    browser_policy_connector_ = CreateBrowserPolicyConnector();
 
     // Note: creating the ChromeBrowserPolicyConnector invokes BrowserThread::
     // GetTaskRunnerForThread(), which initializes a base::LazyInstance of

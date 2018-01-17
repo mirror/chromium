@@ -125,7 +125,11 @@ bool IsUserAllowed(const user_manager::User& user,
          user.GetType() == user_manager::USER_TYPE_CHILD);
 
   PrefValueMap prefs;
-  DeviceSettingsProvider::DecodePolicies(device_settings_proto, &prefs);
+  // XXX verify it's OK to use g_browser_process here.
+  DeviceSettingsProvider::DecodePolicies(
+      static_cast<policy::BrowserPolicyConnectorChromeOS*>(
+          g_browser_process->browser_policy_connector()),
+      device_settings_proto, &prefs);
 
   bool supervised_users_allowed = false;
   prefs.GetBoolean(kAccountsPrefSupervisedUsersEnabled,
