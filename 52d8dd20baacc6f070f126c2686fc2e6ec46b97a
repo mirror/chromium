@@ -19,6 +19,70 @@
     },
     {
       "key": {
+        "uuid": "2c402372_e4aa2563",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 50
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T13:19:09Z",
+      "side": 1,
+      "message": "I can\u0027t see why it would be, what does the error say?",
+      "parentUuid": "26f07474_d0676ffd",
+      "revId": "52d8dd20baacc6f070f126c2686fc2e6ec46b97a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e05d57_6243e3bc",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollCustomization.cpp",
+        "patchSetId": 50
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T13:19:09Z",
+      "side": 1,
+      "message": "Nit: Remove",
+      "range": {
+        "startLine": 44,
+        "startChar": 3,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "52d8dd20baacc6f070f126c2686fc2e6ec46b97a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0622b910_b187c758",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollCustomization.h",
+        "patchSetId": 50
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T13:19:09Z",
+      "side": 1,
+      "message": "hmm...style guide says lower case but it looks out of place and most sub-namespaces in Blink code are CamelCase (couldn\u0027t find any with an underscore). I\u0027d make this CamelCase to maintain consistency.",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 30
+      },
+      "revId": "52d8dd20baacc6f070f126c2686fc2e6ec46b97a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e61aca0a_95c1855d",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollCustomization.h",
         "patchSetId": 50
@@ -30,6 +94,47 @@
       "writtenOn": "2018-01-15T23:04:31Z",
       "side": 1,
       "message": "I get a strange compile error for \"uint8_t\". \"unsigned char\" works.",
+      "revId": "52d8dd20baacc6f070f126c2686fc2e6ec46b97a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a63ca3_8ae66775",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollCustomization.h",
+        "patchSetId": 50
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T13:19:09Z",
+      "side": 1,
+      "message": "IIRC style guide explicitly forbids relying on non uintX_t types if you need a specific width. Did you include \u003cstdint.h\u003e? platform/wtf/dtoa/utils.h includes that and does some defines on Windows which maybe is missing that so maybe that\u0027s better (though other examples like PODArena.h simply include stdint.h)?",
+      "parentUuid": "e61aca0a_95c1855d",
+      "revId": "52d8dd20baacc6f070f126c2686fc2e6ec46b97a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0338b5_0abf7c78",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollCustomization.h",
+        "patchSetId": 50
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T13:19:09Z",
+      "side": 1,
+      "message": "These should be constexpr. Can we not just assign them in the header and remove PLATFORM_EXPORT? There\u0027s no reason these should be allocated and linked rather than just inlined.",
+      "range": {
+        "startLine": 14,
+        "startChar": 23,
+        "endLine": 14,
+        "endChar": 28
+      },
       "revId": "52d8dd20baacc6f070f126c2686fc2e6ec46b97a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -155,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "8c5e796b_22f32028",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T13:19:09Z",
+      "side": 1,
+      "message": "It\u0027s not a bug since that\u0027s how the gesture recognizer really works. However, we should add an ability to turn of fling generation so we can make tests like this run quickly and reliably. Could you file a bug with that feature request against Navid?",
+      "parentUuid": "e45ad5b2_657bfa80",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b1a2e9a_ed55161d",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
         "patchSetId": 48
@@ -202,6 +220,30 @@
     },
     {
       "key": {
+        "uuid": "9e2170bf_74589aa2",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T13:19:09Z",
+      "side": 1,
+      "message": "Ah, yeah, since there\u0027s no displayed elements (e.g. \u003cdiv\u003e) above, any script run here will be run before \u003cbody\u003e is created. But since you\u0027re calling it from onload I\u0027d expect there to be a body by then. In any case, that\u0027s just FYI - looks good to me.",
+      "parentUuid": "699e9c97_dae9625d",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 76
+      },
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9d1ed_4f050bb6",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
         "patchSetId": 48
@@ -213,6 +255,24 @@
       "writtenOn": "2018-01-11T17:07:58Z",
       "side": 1,
       "message": "I am basically making sure the test runs after window.onload event. So I broke it up like this. The logic is intact.",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e0717e_980f7ca4",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T13:19:09Z",
+      "side": 1,
+      "message": "You mean during the onload event, right? My understanding is that a non-async tests are for cases where the test can complete in the load handler, like this. async_test is for tests that need to do something after load (e.g. requestAnimationFrame, event listeners, etc). It should be fairly straightforward to convert to non-async so I\u0027d suggest trying that but if you\u0027re still having issues and it\u0027s drawing too much time this is fine too.",
+      "parentUuid": "80d9d1ed_4f050bb6",
       "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
