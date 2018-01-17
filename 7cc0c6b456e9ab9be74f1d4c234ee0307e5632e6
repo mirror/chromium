@@ -148,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "97fa7d61_62b232c1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15476,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-17T18:04:40Z",
+      "side": 1,
+      "message": "No, I need to record for hardware mirroring as well. I would record metrics in the end of DisplayManager::UpdateDisplaysWith();",
+      "parentUuid": "8c59a9bb_9a8b7df2",
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49b4c40a_c82b0cab",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
