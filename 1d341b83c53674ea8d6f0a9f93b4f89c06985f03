@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40a90007_049eda17",
+        "filename": "chrome/browser/engagement/engagement_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-17T04:27:35Z",
+      "side": 1,
+      "message": "Nit: use std::make_unique",
+      "range": {
+        "startLine": 19,
+        "startChar": 17,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "1d341b83c53674ea8d6f0a9f93b4f89c06985f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077980e4_990d5b3e",
+        "filename": "chrome/browser/engagement/engagement_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-17T04:27:35Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "1d341b83c53674ea8d6f0a9f93b4f89c06985f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a1df535_5d411096",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-17T04:27:35Z",
+      "side": 1,
+      "message": "This header file actually seems to be unused....",
+      "range": {
+        "startLine": 11,
+        "startChar": 36,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "1d341b83c53674ea8d6f0a9f93b4f89c06985f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
