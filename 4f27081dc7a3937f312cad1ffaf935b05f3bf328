@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "1cae2923_0fd547bd",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-17T16:30:28Z",
+      "side": 1,
+      "message": "\u003e \u003e In this case we are not restarting the profiling, so there\u0027s guaranteed to be 0 wait here.\n\u003e \n\u003e Can we know this for sure here?\n\nYes. Reading the code one can easily verify that the event starts signalled, and the only waits on the event are in Start() and the destructor. So the only way this could possibly wait is if Start() is called multiple times, which it is not (and there would be no reason to do so for this use case).\n\n\u003e Add a boolean member that this StackSamplingProfiler was never started before? Add an enum class param to Start()?\n\u003e \n\u003e If we expect this to never wait than we should be able to DCHECK here that the event is signaled (this check can be done without ThreadRestrictions allowance).\n\u003e \n\u003e I don\u0027t like adding an allowance to wait even though we \"know it won\u0027t\".\n\nAdding the boolean member is fine with me if you prefer the additional level of assurance.",
+      "parentUuid": "b43ad6b9_a79d6111",
+      "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23e649ea_a83e0428",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 18
