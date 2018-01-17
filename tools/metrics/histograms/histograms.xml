@@ -94960,6 +94960,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="VR.HardwareInstalled" enum="VRHardwarePlatform">
+  <owner>billorr@chromium.org</owner>
+  <summary>Indicates which VR hardware is installed.</summary>
+</histogram>
+
 <histogram base="true" name="VR.NetworkConnectionType.OnEnter"
     enum="NetworkConnectionType">
   <owner>tiborg@chromium.org</owner>
@@ -94972,6 +94977,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Network connection type when registering the VR component(s).
   </summary>
+</histogram>
+
+<histogram name="VR.PlatformInstalled" enum="VRApi">
+  <owner>billorr@chromium.org</owner>
+  <summary>Indicates which VR APIs are installed.</summary>
 </histogram>
 
 <histogram name="VR.Session.VoiceSearch.StartedCount" units="searches">

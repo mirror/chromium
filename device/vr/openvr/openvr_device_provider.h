@@ -27,6 +27,9 @@ class DEVICE_VR_EXPORT OpenVRDeviceProvider : public VRDeviceProvider {
 
   bool Initialized() override;
 
+  static void RecordApiInstall();
+  static void RecordHeadsetPresence();
+
  private:
   void CreateDevice();
 
