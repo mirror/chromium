@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "829699af_01b88e36",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-17T07:51:19Z",
+      "side": 1,
+      "message": "|next_callback_id_| is better?",
+      "range": {
+        "startLine": 56,
+        "startChar": 33,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "5a93f86b3ff766729153d00ce26c4a100bdbeb8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f348611_8ca77818",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
         "patchSetId": 5
@@ -18,6 +41,53 @@
         "startChar": 2,
         "endLine": 269,
         "endChar": 32
+      },
+      "revId": "5a93f86b3ff766729153d00ce26c4a100bdbeb8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b71388_579ef5f2",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-17T07:51:19Z",
+      "side": 1,
+      "message": "Sounds good!",
+      "parentUuid": "0f348611_8ca77818",
+      "range": {
+        "startLine": 269,
+        "startChar": 2,
+        "endLine": 269,
+        "endChar": 32
+      },
+      "revId": "5a93f86b3ff766729153d00ce26c4a100bdbeb8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb7ffb5_163c8858",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-17T07:51:19Z",
+      "side": 1,
+      "message": "It looks good as is, but I think we can call it simpler as \"WebCallbacksHolder\".",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 45
       },
       "revId": "5a93f86b3ff766729153d00ce26c4a100bdbeb8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
