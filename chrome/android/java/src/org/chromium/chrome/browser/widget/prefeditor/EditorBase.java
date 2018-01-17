@@ -2,20 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.chrome.browser.payments;
+package org.chromium.chrome.browser.widget.prefeditor;
 
 import android.content.Context;
 
 import org.chromium.base.Callback;
-import org.chromium.chrome.browser.payments.ui.EditorDialog;
-import org.chromium.chrome.browser.payments.ui.PaymentOption;
 
 import javax.annotation.Nullable;
 
 /**
  * The base class for an editor controller.
  */
-abstract class EditorBase<T extends PaymentOption> {
+public abstract class EditorBase<T extends EditableOption> {
     @Nullable
     protected EditorDialog mEditorDialog;
     @Nullable protected Context mContext;

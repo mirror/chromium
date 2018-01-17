@@ -10,6 +10,10 @@ namespace password_manager {
 
 namespace features {
 
+// Controls the ability to add new passwords.
+const base::Feature kAddPassword = {"AddPassword",
+                                    base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enable affiliation based matching, so that credentials stored for an Android
 // application will also be considered matches for, and be filled into
 // corresponding Web applications.

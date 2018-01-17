@@ -26,8 +26,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.payments.ui.EditorDialog;
 import org.chromium.chrome.browser.widget.FadingEdgeScrollView;
+import org.chromium.chrome.browser.widget.prefeditor.EditorDialog;
 
 /** Base class for Autofill editors (e.g. credit cards and profiles). */
 public abstract class AutofillEditorBase

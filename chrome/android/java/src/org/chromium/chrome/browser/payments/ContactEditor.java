@@ -13,9 +13,10 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.autofill.PersonalDataManager;
 import org.chromium.chrome.browser.autofill.PersonalDataManager.AutofillProfile;
 import org.chromium.chrome.browser.autofill.PhoneNumberUtil;
-import org.chromium.chrome.browser.payments.ui.EditorFieldModel;
-import org.chromium.chrome.browser.payments.ui.EditorFieldModel.EditorFieldValidator;
-import org.chromium.chrome.browser.payments.ui.EditorModel;
+import org.chromium.chrome.browser.widget.prefeditor.EditorBase;
+import org.chromium.chrome.browser.widget.prefeditor.EditorFieldModel;
+import org.chromium.chrome.browser.widget.prefeditor.EditorFieldModel.EditorFieldValidator;
+import org.chromium.chrome.browser.widget.prefeditor.EditorModel;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -155,7 +156,8 @@ public class ContactEditor extends EditorBase<AutofillContact> {
                           mContext.getString(R.string.payments_name_field_in_contact_details),
                           mPayerNames, null /* suggestions */, null /* formatter */,
                           null /* validator */,
-                          mContext.getString(R.string.payments_field_required_validation_message),
+                          mContext.getString(
+                                  R.string.pref_edit_dialog_field_required_validation_message),
                           null, contact.getPayerName())
                 : null;
 
@@ -164,7 +166,8 @@ public class ContactEditor extends EditorBase<AutofillContact> {
                           mContext.getString(R.string.autofill_profile_editor_phone_number),
                           mPhoneNumbers, new PhoneNumberUtil.CountryAwareFormatTextWatcher(),
                           getPhoneValidator(), null,
-                          mContext.getString(R.string.payments_field_required_validation_message),
+                          mContext.getString(
+                                  R.string.pref_edit_dialog_field_required_validation_message),
                           mContext.getString(R.string.payments_phone_invalid_validation_message),
                           contact.getPayerPhone())
                 : null;
@@ -173,7 +176,8 @@ public class ContactEditor extends EditorBase<AutofillContact> {
                 ? EditorFieldModel.createTextInput(EditorFieldModel.INPUT_TYPE_HINT_EMAIL,
                           mContext.getString(R.string.autofill_profile_editor_email_address),
                           mEmailAddresses, null, getEmailValidator(), null,
-                          mContext.getString(R.string.payments_field_required_validation_message),
+                          mContext.getString(
+                                  R.string.pref_edit_dialog_field_required_validation_message),
                           mContext.getString(R.string.payments_email_invalid_validation_message),
                           contact.getPayerEmail())
                 : null;

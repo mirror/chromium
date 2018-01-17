@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.chrome.browser.payments.ui;
+package org.chromium.chrome.browser.widget.prefeditor;
 
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
  * An option that the user can select, e.g., a shipping option, a shipping address, or a payment
  * method.
  */
-public class PaymentOption implements Completable {
+public class EditableOption implements Completable {
     // By default a payment option is complete. It is up to the subclass to update this value if the
     // payment option is not complete.
     protected boolean mIsComplete = true;
@@ -26,8 +26,8 @@ public class PaymentOption implements Completable {
     private String[] mLabels = {null, null, null};
     private boolean mIsValid = true;
 
-    /** See {@link #PaymentOption(String, String, String, String, int)}. */
-    public PaymentOption(String id, @Nullable String label, @Nullable String sublabel,
+    /** See {@link #EditableOption(String, String, String, String, int)}. */
+    public EditableOption(String id, @Nullable String label, @Nullable String sublabel,
              @Nullable Drawable icon) {
         this(id, label, sublabel, null, icon);
     }
@@ -41,7 +41,7 @@ public class PaymentOption implements Completable {
      * @param tertiarylabel The optional tertiary label.
      * @param icon          The drawable icon or null.
      */
-    public PaymentOption(String id, @Nullable String label, @Nullable String sublabel,
+    public EditableOption(String id, @Nullable String label, @Nullable String sublabel,
             @Nullable String tertiarylabel, @Nullable Drawable icon) {
         updateIdentifierLabelsAndIcon(id, label, sublabel, tertiarylabel, icon);
     }

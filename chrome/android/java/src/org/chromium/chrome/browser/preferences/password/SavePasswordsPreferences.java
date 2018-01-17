@@ -6,6 +6,8 @@ package org.chromium.chrome.browser.preferences.password;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -21,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.StrictModeContext;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.PasswordManagerHandler;
@@ -62,16 +65,21 @@ public class SavePasswordsPreferences
     private static final String PREF_KEY_CATEGORY_EXCEPTIONS = "exceptions";
     private static final String PREF_KEY_MANAGE_ACCOUNT_LINK = "manage_account_link";
     private static final String PREF_KEY_SAVED_PASSWORDS_NO_TEXT = "saved_passwords_no_text";
+    private static final String PREF_KEY_ADD_CREDENTIAL = "add_credential";
 
     // Name of the feature controlling the password export functionality.
     private static final String EXPORT_PASSWORDS = "PasswordExport";
 
+    // Name of the feature controlling the password adding functionality.
+    private static final String ADD_PASSWORD = "AddPassword";
+
     private static final int ORDER_SWITCH = 0;
     private static final int ORDER_AUTO_SIGNIN_CHECKBOX = 1;
     private static final int ORDER_MANAGE_ACCOUNT_LINK = 2;
-    private static final int ORDER_SAVED_PASSWORDS = 3;
-    private static final int ORDER_EXCEPTIONS = 4;
-    private static final int ORDER_SAVED_PASSWORDS_NO_TEXT = 5;
+    private static final int ORDER_ADD_CREDENTIAL = 3;
+    private static final int ORDER_SAVED_PASSWORDS = 4;
+    private static final int ORDER_EXCEPTIONS = 5;
+    private static final int ORDER_SAVED_PASSWORDS_NO_TEXT = 6;
 
     private boolean mNoPasswords;
     private boolean mNoPasswordExceptions;
@@ -176,6 +184,9 @@ public class SavePasswordsPreferences
         getPreferenceScreen().removeAll();
         createSavePasswordsSwitch();
         createAutoSignInCheckbox();
+        if (ChromeFeatureList.isEnabled(ADD_PASSWORD)) {
+            addCredentialsButton();
+        }
         PasswordManagerHandlerProvider.getInstance()
                 .getPasswordManagerHandler()
                 .updatePasswordLists();
@@ -388,6 +399,23 @@ public class SavePasswordsPreferences
                 mLinkPref.setOrder(ORDER_MANAGE_ACCOUNT_LINK);
             }
             getPreferenceScreen().addPreference(mLinkPref);
+        }
+    }
+
+    private void addCredentialsButton() {
+        try (StrictModeContext unused = StrictModeContext.allowDiskWrites()) {
+            PasswordEntryEditorPreference pref = new PasswordEntryEditorPreference(getActivity());
+            Drawable plusIcon = ApiCompatibilityUtils.getDrawable(getResources(), R.drawable.plus);
+            plusIcon.mutate();
+            plusIcon.setColorFilter(
+                    ApiCompatibilityUtils.getColor(getResources(), R.color.pref_accent_color),
+                    PorterDuff.Mode.SRC_IN);
+            pref.setIcon(plusIcon);
+            pref.setTitle(R.string.password_entry_editor_add);
+            pref.setKey(PREF_KEY_ADD_CREDENTIAL);
+            pref.setOrder(ORDER_ADD_CREDENTIAL);
+
+            getPreferenceScreen().addPreference(pref);
         }
     }
 }
