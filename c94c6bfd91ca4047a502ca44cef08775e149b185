@@ -16,6 +16,24 @@
       "revId": "c94c6bfd91ca4047a502ca44cef08775e149b185",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acad93f4_fb10df7f",
+        "filename": "content/renderer/manifest/manifest_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-17T08:31:47Z",
+      "side": 1,
+      "message": "This was updated to IsUnique() in a later patchset (IsNull was my bad, didn\u0027t grok the SecurityOrigin API right). :)",
+      "parentUuid": "25e23152_91382ffd",
+      "revId": "c94c6bfd91ca4047a502ca44cef08775e149b185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
