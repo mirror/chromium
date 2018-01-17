@@ -46,6 +46,30 @@
       "revId": "3215431848da8b9efdd14a0ba89358bf88b25c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a5c923_464fd1d6",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-01-17T15:55:52Z",
+      "side": 1,
+      "message": "No, the ID is paired with the category. Instead of id_ you can use (assuming the ID is process local):\n\nTRACE_ID_WITH_SCOPE(\"UNIQUE SCOPE FOR THESE EVENTS\", TRACE_ID_LOCAL(id_))",
+      "parentUuid": "eef0270d_030b7009",
+      "range": {
+        "startLine": 35,
+        "startChar": 62,
+        "endLine": 35,
+        "endChar": 65
+      },
+      "revId": "3215431848da8b9efdd14a0ba89358bf88b25c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
