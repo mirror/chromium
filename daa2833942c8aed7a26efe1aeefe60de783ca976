@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "078221f9_a5501e1b",
+        "filename": "content/browser/net/accept_header_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-17T17:44:00Z",
+      "side": 1,
+      "message": "nit: QuitClosure().Run() \u003c\u003d\u003e Quit()",
+      "revId": "daa2833942c8aed7a26efe1aeefe60de783ca976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5592e51a_3468ba37",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-17T17:44:00Z",
+      "side": 1,
+      "message": "Is this just temporary?\n\nI\u0027m assuming it corresponds 1:1 to the resource_type field given by the URLRequest for a CreateLoaderAndStart call. It seems odd to have to network service plumb data from a client and back to the same client if it has no net effect on service behavior.",
+      "revId": "daa2833942c8aed7a26efe1aeefe60de783ca976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
