@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "1fd50939_4c655798",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-17T17:03:23Z",
+      "side": 1,
+      "message": "I\u0027m happy to write a test. That said, I\u0027m not sure what you have outlined is possible. AFAICT IsMetricsAndCrashReportingEnabled reads a pref from the pref service. Given that, how would the pref change between the time this code is called, and g_browser_process is created? While I\u0027m changing the ordering, we won\u0027t pump any events so I\u0027m not sure how the pref would change? Is there a specific case you can think of I should look at?",
+      "parentUuid": "ccf7fa23_6a786d02",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65fae94f_2c9c0922",
         "filename": "chrome/browser/metrics/metrics_reporting_state.cc",
         "patchSetId": 5
