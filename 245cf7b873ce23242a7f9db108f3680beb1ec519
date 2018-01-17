@@ -16,6 +16,24 @@
       "revId": "245cf7b873ce23242a7f9db108f3680beb1ec519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a6b971_6e3644ff",
+        "filename": "net/http/http_stream_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-17T16:51:10Z",
+      "side": 1,
+      "message": "Yes, the none mutable one cannot be updated,so wherever that we need an annotation that may be rewritten, we need to use the mutable.",
+      "parentUuid": "88fc3b98_242f4bdf",
+      "revId": "245cf7b873ce23242a7f9db108f3680beb1ec519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
