@@ -29,6 +29,8 @@ class HttpServerPropertiesManager;
 
 namespace content {
 class NetworkServiceImpl;
+class ResourceScheduler;
+class ResourceSchedulerClient;
 class URLLoader;
 class URLRequestContextBuilderMojo;
 
@@ -76,10 +78,17 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
 
   NetworkServiceImpl* network_service() { return network_service_; }
 
+  ResourceScheduler* resource_scheduler() { return resource_scheduler_.get(); }
+
   // These are called by individual url loaders as they are being created and
   // destroyed.
   void RegisterURLLoader(URLLoader* url_loader);
   void DeregisterURLLoader(URLLoader* url_loader);
+
+  void CreateURLLoaderFactory(
+      mojom::URLLoaderFactoryRequest request,
+      uint32_t process_id,
+      scoped_refptr<ResourceSchedulerClient> resource_scheduler_client);
 
   // mojom::NetworkContext implementation:
   void CreateURLLoaderFactory(mojom::URLLoaderFactoryRequest request,
@@ -136,6 +145,8 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
 
   net::URLRequestContext* url_request_context_ = nullptr;
 
+  std::unique_ptr<ResourceScheduler> resource_scheduler_;
+
   // Put it below |url_request_context_| so that it outlives all the
   // NetworkServiceURLLoaderFactory instances.
   mojo::StrongBindingSet<mojom::URLLoaderFactory> loader_factory_bindings_;
@@ -151,6 +162,11 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   mojo::Binding<mojom::NetworkContext> binding_;
 
   std::unique_ptr<network::CookieManager> cookie_manager_;
+
+  int current_resource_scheduler_client_id_ = 0;
+
+  // TODO(yhirano): Consult with switches::kDisableResourceScheduler.
+  constexpr static bool enable_resource_scheduler_ = true;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkContext);
 };

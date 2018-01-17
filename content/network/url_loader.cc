@@ -16,6 +16,7 @@
 #include "content/network/data_pipe_element_reader.h"
 #include "content/network/network_context.h"
 #include "content/network/network_service_impl.h"
+#include "content/network/resource_scheduler_client.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -190,14 +191,16 @@ std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
 
 }  // namespace
 
-URLLoader::URLLoader(NetworkContext* context,
-                     mojom::URLLoaderRequest url_loader_request,
-                     int32_t options,
-                     const network::ResourceRequest& request,
-                     bool report_raw_headers,
-                     mojom::URLLoaderClientPtr url_loader_client,
-                     const net::NetworkTrafficAnnotationTag& traffic_annotation,
-                     uint32_t process_id)
+URLLoader::URLLoader(
+    NetworkContext* context,
+    mojom::URLLoaderRequest url_loader_request,
+    int32_t options,
+    const network::ResourceRequest& request,
+    bool report_raw_headers,
+    mojom::URLLoaderClientPtr url_loader_client,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    uint32_t process_id,
+    scoped_refptr<ResourceSchedulerClient> resource_scheduler_client)
     : context_(context),
       options_(options),
       resource_type_(static_cast<ResourceType>(request.resource_type)),
@@ -212,6 +215,7 @@ URLLoader::URLLoader(NetworkContext* context,
       peer_closed_handle_watcher_(FROM_HERE,
                                   mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       report_raw_headers_(report_raw_headers),
+      resource_scheduler_client_(std::move(resource_scheduler_client)),
       weak_ptr_factory_(this) {
   context_->RegisterURLLoader(this);
   binding_.set_connection_error_handler(
@@ -266,8 +270,17 @@ URLLoader::URLLoader(NetworkContext* context,
   }
 
   AttachAcceptHeader(resource_type_, url_request_.get());
-
-  url_request_->Start();
+  resource_scheduler_request_handle_ =
+      resource_scheduler_client_->ScheduleRequest(
+          !(options_ & mojom::kURLLoadOptionSynchronous), url_request_.get());
+  resource_scheduler_request_handle_->set_resume_callback(
+      base::BindRepeating(&URLLoader::ResumeStart, base::Unretained(this)));
+  bool defer = false;
+  resource_scheduler_request_handle_->WillStartRequest(&defer);
+  if (defer)
+    url_request_->LogBlockedBy("URLLoader");
+  else
+    url_request_->Start();
 }
 
 URLLoader::~URLLoader() {
@@ -310,7 +323,10 @@ void URLLoader::ProceedWithResponse() {
 
 void URLLoader::SetPriority(net::RequestPriority priority,
                             int32_t intra_priority_value) {
-  NOTIMPLEMENTED();
+  if (url_request_) {
+    resource_scheduler_client_->ReprioritizeRequest(
+        url_request_.get(), priority, intra_priority_value);
+  }
 }
 
 void URLLoader::PauseReadingBodyFromNet() {
@@ -395,6 +411,11 @@ void URLLoader::OnSSLCertificateError(net::URLRequest* request,
                  weak_ptr_factory_.GetWeakPtr(), ssl_info));
 }
 
+void URLLoader::ResumeStart() {
+  url_request_->LogUnblocked();
+  url_request_->Start();
+}
+
 void URLLoader::OnResponseStarted(net::URLRequest* url_request, int net_error) {
   DCHECK(url_request == url_request_.get());
 
@@ -402,6 +423,12 @@ void URLLoader::OnResponseStarted(net::URLRequest* url_request, int net_error) {
     NotifyCompleted(net_error);
     // |this| may have been deleted.
     return;
+  }
+
+  if (url_request->was_fetched_via_proxy() &&
+      url_request->was_fetched_via_spdy() &&
+      url_request->url().SchemeIs(url::kHttpScheme)) {
+    resource_scheduler_client_->OnReceivedSpdyProxiedHttpResponse();
   }
 
   if (upload_progress_tracker_) {
@@ -601,6 +628,7 @@ void URLLoader::OnResponseBodyStreamReady(MojoResult result) {
 }
 
 void URLLoader::CloseResponseBodyStreamProducer() {
+  resource_scheduler_request_handle_.reset();
   url_request_.reset();
   peer_closed_handle_watcher_.Cancel();
   writable_handle_watcher_.Cancel();
