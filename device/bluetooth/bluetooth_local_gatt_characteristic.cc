@@ -10,7 +10,7 @@
 
 namespace device {
 
-#if !defined(OS_LINUX)
+#if defined(LINUX_WITHOUT_DBUS)
 // static
 base::WeakPtr<BluetoothLocalGattCharacteristic>
 BluetoothLocalGattCharacteristic::Create(const BluetoothUUID& uuid,
