@@ -4,7 +4,11 @@
 
 package org.chromium.chrome.browser.download;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.Log;
+
+import java.util.List;
 
 /**
  * SharedPreferences entries for for helping report UMA stats. A download may require several
@@ -45,19 +49,19 @@ public class DownloadUmaStatsEntry {
      * @return a DownloadUmaStatsEntry object.
      */
     static DownloadUmaStatsEntry parseFromString(String sharedPrefString) {
-        String[] values = sharedPrefString.split(",", 7);
-        if (values.length == 5 || values.length == 7) {
+        List<String> values = Splitter.on(",").limit(7).splitToList(sharedPrefString);
+        if (values.size() == 5 || values.size() == 7) {
             try {
-                boolean useDownloadManager = "1".equals(values[0]);
-                boolean isPaused = "1".equals(values[1]);
-                long downloadStartTime = Long.parseLong(values[2]);
-                int numInterruptions = Integer.parseInt(values[3]);
-                String id = values[4];
+                boolean useDownloadManager = "1".equals(values.get(0));
+                boolean isPaused = "1".equals(values.get(1));
+                long downloadStartTime = Long.parseLong(values.get(2));
+                int numInterruptions = Integer.parseInt(values.get(3));
+                String id = values.get(4);
                 long lastReceived = 0;
                 long wasted = 0;
-                if (values.length == 7) {
-                    lastReceived = Long.parseLong(values[5].trim());
-                    wasted = Long.parseLong(values[6].trim());
+                if (values.size() == 7) {
+                    lastReceived = Long.parseLong(values.get(5).trim());
+                    wasted = Long.parseLong(values.get(6).trim());
                 }
                 return new DownloadUmaStatsEntry(
                         id, downloadStartTime, numInterruptions, isPaused, useDownloadManager,

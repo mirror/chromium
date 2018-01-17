@@ -11,6 +11,8 @@ import android.support.test.filters.SmallTest;
 import android.util.Base64;
 import android.util.Pair;
 
+import com.google.common.base.Splitter;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.After;
@@ -171,10 +173,10 @@ public class LoadUrlTest {
             boolean shouldHeaderExist) throws Exception {
         String textContent =
                 mActivityTestRule.getJavaScriptResultBodyTextContent(awContents, contentsClient);
-        String[] header_values = textContent.split("\\\\n");
+        List<String> header_values = Splitter.onPattern("\\\\n").splitToList(textContent);
         for (int i = 0; i < extraHeader.length; i += 2) {
             Assert.assertEquals(
-                    shouldHeaderExist ? extraHeader[i + 1] : "None", header_values[i / 2]);
+                    shouldHeaderExist ? extraHeader[i + 1] : "None", header_values.get(i / 2));
         }
     }
 

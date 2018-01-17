@@ -12,6 +12,8 @@ import android.provider.Browser;
 import android.provider.ContactsContract;
 import android.support.customtabs.CustomTabsIntent;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.browser.DefaultBrowserInfo;
 import org.chromium.chrome.browser.IntentHandler;
@@ -148,8 +150,8 @@ public class TabContextMenuItemDelegate implements ContextMenuItemDelegate {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
         if (MailTo.isMailTo(url)) {
-            intent.putExtra(
-                    ContactsContract.Intents.Insert.EMAIL, MailTo.parse(url).getTo().split(",")[0]);
+            intent.putExtra(ContactsContract.Intents.Insert.EMAIL,
+                    Splitter.on(",").splitToList(MailTo.parse(url).getTo()).get(0));
         } else if (UrlUtilities.isTelScheme(url)) {
             intent.putExtra(ContactsContract.Intents.Insert.PHONE, UrlUtilities.getTelNumber(url));
         }

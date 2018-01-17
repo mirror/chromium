@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.view.ViewStructure;
 import android.view.autofill.AutofillValue;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.ThreadUtils;
 import org.chromium.components.autofill.AutofillProvider;
 import org.chromium.components.autofill.FormData;
@@ -24,6 +26,8 @@ import org.chromium.components.autofill.FormFieldData;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.display.DisplayAndroid;
+
+import java.util.List;
 
 /**
  * This class uses Android autofill service to fill web form. All methods are
@@ -78,7 +82,9 @@ public class AwAutofillProvider extends AutofillProvider {
                 int virtualId = toVirtualId(sessionId, fieldIndex++);
                 child.setAutofillId(structure.getAutofillId(), virtualId);
                 if (field.mAutocompleteAttr != null && !field.mAutocompleteAttr.isEmpty()) {
-                    child.setAutofillHints(field.mAutocompleteAttr.split(" +"));
+                    List<String> list =
+                            Splitter.onPattern(" +").splitToList(field.mAutocompleteAttr);
+                    child.setAutofillHints(list.toArray(new String[list.size()]));
                 }
                 child.setHint(field.mPlaceholder);
                 child.setHtmlInfo(child.newHtmlInfoBuilder("input")

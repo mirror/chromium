@@ -7,6 +7,8 @@ package org.chromium.chrome.browser.photo_picker;
 import android.support.annotation.NonNull;
 import android.webkit.MimeTypeMap;
 
+import com.google.common.base.Splitter;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.HashSet;
@@ -89,6 +91,6 @@ class MimeTypeFileFilter implements FileFilter {
 
     @NonNull
     private String getMimeSupertype(@NonNull String mimeType) {
-        return mimeType.split("/", 2)[0];
+        return Splitter.on("/").limit(2).splitToList(mimeType).get(0);
     }
 }

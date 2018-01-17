@@ -16,6 +16,8 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.BuildConfig;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
@@ -150,7 +152,7 @@ public class ProxyChangeListener {
                 String[] exclusionList;
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     String s = (String) getExclusionListMethod.invoke(props);
-                    exclusionList = s.split(",");
+                    exclusionList = Splitter.on(",").splitToList(s).toArray(new String[0]);
                 } else {
                     exclusionList = (String[]) getExclusionListMethod.invoke(props);
                 }

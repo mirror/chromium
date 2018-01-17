@@ -26,6 +26,8 @@ import android.text.TextUtils;
 import android.util.Pair;
 import android.widget.RemoteViews;
 
+import com.google.common.base.Splitter;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -1160,8 +1162,8 @@ public class CustomTabsConnection {
                 String line = null;
                 while ((line = reader.readLine()) != null) {
                     // line format: 2:cpu:/bg_non_interactive
-                    String fields[] = line.trim().split(":");
-                    if (fields.length == 3 && fields[1].equals("cpu")) return fields[2];
+                    List<String> fields = Splitter.on(":").splitToList(line.trim());
+                    if (fields.size() == 3 && fields.get(1).equals("cpu")) return fields.get(2);
                 }
             } finally {
                 reader.close();
