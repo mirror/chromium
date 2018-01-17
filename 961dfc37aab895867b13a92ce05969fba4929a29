@@ -34,6 +34,47 @@
       "revId": "961dfc37aab895867b13a92ce05969fba4929a29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61da50e6_40e10c7b",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-17T10:52:40Z",
+      "side": 1,
+      "message": "I see. So this shouldn\u0027t be in the \"Private methods\" section. Can you move it to the SettingsRootCollectionViewController section? I am fine with keeping the DCHECK.",
+      "parentUuid": "6bf23723_1e135a65",
+      "revId": "961dfc37aab895867b13a92ce05969fba4929a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d13db35f_ae319853",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-17T10:52:40Z",
+      "side": 1,
+      "message": "Nit: s/TRUE/YES.",
+      "range": {
+        "startLine": 459,
+        "startChar": 9,
+        "endLine": 459,
+        "endChar": 13
+      },
+      "revId": "961dfc37aab895867b13a92ce05969fba4929a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
