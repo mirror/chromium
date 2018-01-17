@@ -8,10 +8,10 @@
 #include <memory>
 
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/resources/resource_provider.h"
-#include "cc/resources/scoped_resource.h"
+#include "cc/resources/resource_pool.h"
 #include "components/viz/common/resources/platform_color.h"
 #include "components/viz/common/resources/resource_format_utils.h"
+#include "third_party/skia/include/core/SkColor.h"
 
 namespace cc {
 
@@ -52,13 +52,19 @@ class CC_EXPORT TileDrawInfo {
   viz::ResourceId resource_id() const {
     DCHECK(mode_ == RESOURCE_MODE);
     DCHECK(resource_);
-    return resource_->id();
+    return resource_.resource_id_for_export();
   }
 
   const gfx::Size& resource_size() const {
     DCHECK(mode_ == RESOURCE_MODE);
     DCHECK(resource_);
-    return resource_->size();
+    return resource_.size();
+  }
+
+  const viz::ResourceFormat& resource_format() const {
+    DCHECK(mode_ == RESOURCE_MODE);
+    DCHECK(resource_);
+    return resource_.format();
   }
 
   SkColor solid_color() const {
@@ -75,7 +81,7 @@ class CC_EXPORT TileDrawInfo {
   inline bool has_resource() const { return !!resource_; }
 
   inline bool has_compressed_resource() const {
-    return resource_ ? IsResourceFormatCompressed(resource_->format()) : false;
+    return resource_ ? IsResourceFormatCompressed(resource_.format()) : false;
   }
 
   bool is_checker_imaged() const {
@@ -91,23 +97,15 @@ class CC_EXPORT TileDrawInfo {
   friend class Tile;
   friend class TileManager;
 
-  const Resource* resource() const { return resource_; }
-
-  void set_resource(Resource* resource, bool resource_is_checker_imaged) {
-    DCHECK(!resource_is_checker_imaged || resource)
-        << "Need to have a resource for it to be checker-imaged";
-
-    mode_ = RESOURCE_MODE;
-    is_resource_ready_to_draw_ = false;
-    resource_is_checker_imaged_ = resource_is_checker_imaged;
-    resource_ = resource;
-  }
+  void SetResource(ResourcePool::InUsePoolResource resource,
+                   bool resource_is_checker_imaged,
+                   bool contents_swizzled);
+  const ResourcePool::InUsePoolResource& GetResource();
+  ResourcePool::InUsePoolResource TakeResource();
 
   void set_resource_ready_for_draw() {
     is_resource_ready_to_draw_ = true;
   }
-
-  Resource* TakeResource();
 
   void set_solid_color(const SkColor& color) {
     mode_ = SOLID_COLOR_MODE;
@@ -118,7 +116,7 @@ class CC_EXPORT TileDrawInfo {
 
   Mode mode_ = RESOURCE_MODE;
   SkColor solid_color_ = SK_ColorWHITE;
-  Resource* resource_ = nullptr;
+  ResourcePool::InUsePoolResource resource_;
   bool contents_swizzled_ = false;
   bool is_resource_ready_to_draw_ = false;
 
