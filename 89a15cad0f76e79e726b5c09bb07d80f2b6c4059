@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37a96b19_50fafbc2",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-17T20:32:38Z",
+      "side": 1,
+      "message": "Why are we gating this behind the feature being enabled? Isn\u0027t the presence of the headset independent from the feature being on? Do we want to track both of these things (how many users enable the flag, and how many users have a headset)?",
+      "range": {
+        "startLine": 164,
+        "startChar": 2,
+        "endLine": 164,
+        "endChar": 54
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29021f40_758d0dec",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-17T20:32:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure how this is distinct from RecordApiInstall(). Also, the runtime being installed doesn\u0027t tell you actual hardware is available, does it?",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
