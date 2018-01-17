@@ -70,6 +70,24 @@
       "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73817f8_30301df8",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-17T22:40:11Z",
+      "side": 1,
+      "message": "Chrome OS does also run Chrome, so I think you\u0027re talking about a distinction between ash (cros native ui) and the browser.\n\nUnfortunately (or fortunately), it\u0027s not easy to treat \"chrome\" and \"chrome os\" as totally separate products, so while I\u0027m sure Sebastien is correct in the sense that Harmony designers weren\u0027t explicitly thinking about Chrome OS, I\u0027m not sure we should maintain this line in the sand at all costs.\n\nIn short, I don\u0027t think we want to keep kDefaultPlaceholderTextColor. The search box in the bug Sebastien filed wasn\u0027t using that color anyway.",
+      "parentUuid": "939b7783_7d80f812",
+      "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
