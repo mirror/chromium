@@ -42,6 +42,7 @@ class CastSysInfoAndroid : public CastSysInfo {
   std::string GetGlVersion() override;
 
  private:
+  std::string GetAndroidProperty(const std::string& key);
   const base::android::BuildInfo* const build_info_;
 
   DISALLOW_COPY_AND_ASSIGN(CastSysInfoAndroid);
