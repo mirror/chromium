@@ -114,6 +114,10 @@ class FakeWebFrameScheduler : public WebFrameScheduler {
   WebFrameScheduler::FrameType GetFrameType() const override {
     return frame_type_;
   }
+  void SetInteractiveTime(double interactive_time) override {
+    interactive_time_ = interactive_time;
+  }
+  double GetInteractiveTime() const override { return interactive_time_; }
   scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) override {
     return nullptr;
   }
@@ -143,6 +147,7 @@ class FakeWebFrameScheduler : public WebFrameScheduler {
   WebFrameScheduler::FrameType frame_type_;
   bool is_cross_origin_;
   bool is_exempt_from_throttling_;
+  double interactive_time_ = 0.0;
   DISALLOW_COPY_AND_ASSIGN(FakeWebFrameScheduler);
 };
 

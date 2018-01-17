@@ -66,6 +66,8 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
   void SetCrossOrigin(bool cross_origin) override;
   bool IsCrossOrigin() const override;
   WebFrameScheduler::FrameType GetFrameType() const override;
+  void SetInteractiveTime(double interactive_time) override;
+  double GetInteractiveTime() const override;
   scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) override;
   WebViewScheduler* GetWebViewScheduler() const override;
   void DidStartProvisionalLoad(bool is_main_frame) override;
@@ -146,6 +148,7 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
   TraceableState<bool, kTracingCategoryNameInfo> frame_paused_;
   TraceableState<bool, kTracingCategoryNameInfo> cross_origin_;
   WebFrameScheduler::FrameType frame_type_;
+  double interactive_time_ = 0.0;
   int active_connection_count_;
 
   base::WeakPtrFactory<WebFrameSchedulerImpl> weak_factory_;
