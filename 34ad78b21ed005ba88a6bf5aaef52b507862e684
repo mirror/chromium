@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26f48f54_bfd2c3c6",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 7805,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2018-01-17T16:40:43Z",
+      "side": 1,
+      "message": "Replace \"user\" with \"the user\".",
+      "range": {
+        "startLine": 7805,
+        "startChar": 152,
+        "endLine": 7805,
+        "endChar": 158
+      },
+      "revId": "34ad78b21ed005ba88a6bf5aaef52b507862e684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32dec87_d9afc2d0",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 7808,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2018-01-17T16:40:43Z",
+      "side": 1,
+      "message": "Replace \"user\" with \"the user\"",
+      "range": {
+        "startLine": 7808,
+        "startChar": 132,
+        "endLine": 7808,
+        "endChar": 140
+      },
+      "revId": "34ad78b21ed005ba88a6bf5aaef52b507862e684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b6f286_e486c505",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 7811,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2018-01-17T16:40:43Z",
+      "side": 1,
+      "message": "(2x) Replace \"user\" with \"the user\"",
+      "revId": "34ad78b21ed005ba88a6bf5aaef52b507862e684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f25c96_64a86f1f",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 7814,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2018-01-17T16:40:43Z",
+      "side": 1,
+      "message": "(2x) Replace \"user\" with \"the user\"\nReplace \"domain\" with \"the domain\"",
+      "revId": "34ad78b21ed005ba88a6bf5aaef52b507862e684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
