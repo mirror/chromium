@@ -16,6 +16,24 @@
       "revId": "665464787b2d75faadcec6ea3200ffa4c9c670c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3818c15d_eeaaac52",
+        "filename": "chrome/browser/devtools/devtools_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1290,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-17T00:06:42Z",
+      "side": 1,
+      "message": "Done.\n\nNote: links to \u0027chrome://inspect\u0027 in DevTools will be filtered",
+      "parentUuid": "f97f1a97_5615b702",
+      "revId": "665464787b2d75faadcec6ea3200ffa4c9c670c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
