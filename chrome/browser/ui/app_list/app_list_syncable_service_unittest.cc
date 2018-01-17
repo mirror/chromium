@@ -6,6 +6,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/ui/app_list/app_list_model_builder.h"
 #include "chrome/browser/ui/app_list/app_list_model_updater.h"
 #include "chrome/browser/ui/app_list/app_list_test_util.h"
 #include "chrome/browser/ui/app_list/chrome_app_list_item.h"
@@ -180,6 +181,10 @@ class AppListSyncableServiceTest : public AppListTestBase {
     app_list_syncable_service_ =
         std::make_unique<app_list::AppListSyncableService>(profile_.get(),
                                                            extension_system);
+
+    // Make sure the extension system is ready and models are built.
+    base::RunLoop().RunUntilIdle();
+
     model_updater_test_api_ =
         std::make_unique<AppListModelUpdater::TestApi>(model_updater());
   }
@@ -267,6 +272,7 @@ TEST_F(AppListSyncableServiceTest, InitialMerge) {
   const std::string kItemId1 = GenerateId("item_id1");
   const std::string kItemId2 = GenerateId("item_id2");
 
+  AppListModelBuilder::OverrideItemModelUpdaterForTest(true);
   syncer::SyncDataList sync_list;
   sync_list.push_back(CreateAppRemoteData(kItemId1, "item_name1",
                                           GenerateId("parent_id1"), "ordinal",

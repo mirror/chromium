@@ -14,6 +14,7 @@
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 
 class AppListControllerDelegate;
+class AppListModelUpdater;
 class Profile;
 
 namespace extensions {
@@ -70,6 +71,8 @@ class ChromeAppListItem : public app_list::AppListItem {
   // Note the returned menu model is owned by this item.
   virtual ui::MenuModel* GetContextMenuModel();
 
+  void OverrideModelUpdaterForTest(AppListModelUpdater* model_updater);
+
   bool CompareForTest(const app_list::AppListItem* other) const override;
 
   std::string ToDebugString() const override;
@@ -84,6 +87,14 @@ class ChromeAppListItem : public app_list::AppListItem {
 
   AppListControllerDelegate* GetController();
 
+  // Returns the proper model updater for this item. There are several cases:
+  // - Returns nullptr when this item is being constructed because it's still
+  //   not ready to send changes to the ash model.
+  // - Returns |model_updater_for_test_| in some tests, see
+  //   |AppListModelBuilder::OverrideItemModelUpdaterForTest|.
+  // - Returns the model updater of AppListSyncableService in other cases.
+  AppListModelUpdater* GetModelUpdater() const;
+
   // Updates item position and name from |sync_item|. |sync_item| must be valid.
   void UpdateFromSync(
       const app_list::AppListSyncableService::SyncItem* sync_item);
@@ -93,6 +104,7 @@ class ChromeAppListItem : public app_list::AppListItem {
 
  private:
   Profile* profile_;
+  AppListModelUpdater* model_updater_for_test_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeAppListItem);
 };

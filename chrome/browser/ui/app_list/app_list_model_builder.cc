@@ -9,6 +9,17 @@
 
 #include "chrome/browser/ui/app_list/chrome_app_list_item.h"
 
+namespace {
+
+static bool g_override_item_model_updater_for_test = false;
+
+}  // namespace
+
+// static
+void AppListModelBuilder::OverrideItemModelUpdaterForTest(bool yes) {
+  g_override_item_model_updater_for_test = yes;
+}
+
 AppListModelBuilder::AppListModelBuilder(AppListControllerDelegate* controller,
                                          const char* item_type)
     : controller_(controller), item_type_(item_type) {}
@@ -28,6 +39,9 @@ void AppListModelBuilder::Initialize(app_list::AppListSyncableService* service,
 }
 
 void AppListModelBuilder::InsertApp(std::unique_ptr<ChromeAppListItem> app) {
+  if (g_override_item_model_updater_for_test)
+    app->OverrideModelUpdaterForTest(model_updater_);
+
   if (service_) {
     service_->AddItem(std::move(app));
     return;

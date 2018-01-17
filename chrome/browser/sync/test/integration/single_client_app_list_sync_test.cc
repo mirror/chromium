@@ -14,6 +14,8 @@
 #include "chrome/browser/sync/test/integration/updated_progress_marker_checker.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service_factory.h"
+#include "chrome/browser/ui/app_list/chrome_app_list_item.h"
+#include "chrome/browser/ui/app_list/chrome_app_list_model_updater.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "extensions/browser/extension_system.h"
 
@@ -155,6 +157,9 @@ IN_PROC_BROWSER_TEST_F(SingleClientAppListSyncTest, LocalStorage) {
 
   app_list::AppListSyncableService compare_service(
       profile, extensions::ExtensionSystem::Get(profile));
+
+  // Build models for |compare_service|.
+  base::RunLoop().RunUntilIdle();
 
   // Make sure that that on start, when sync has not been started yet, model
   // content is filled from local prefs and it matches latest state.
