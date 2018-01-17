@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e933d292_15f8f5cb",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-17T22:04:53Z",
+      "side": 1,
+      "message": "Questions:\n\n- Why be specific about the audio permission?  Why not say \"omnibox enabled and no modal prompt\"?\n- There\u0027s already a request focus binding above.  Why not expand that one with the modal condition?  I don\u0027t see a problem explicitly unfocusing the element when a modal dialog pops up, since that seems to be what\u0027s inadvertently happening already.",
+      "revId": "404e22f308a32854b94260fe711cda0687262522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
