@@ -39,6 +39,10 @@
 #include "extensions/common/manifest_constants.h"
 #include "extensions/common/one_shot_event.h"
 
+#if defined(OS_CHROMEOS)
+#include "chrome/common/chrome_version.h"
+#endif
+
 ToolbarActionsModel::ToolbarActionsModel(
     Profile* profile,
     extensions::ExtensionPrefs* extension_prefs)
@@ -299,6 +303,19 @@ bool ToolbarActionsModel::ShouldAddExtension(
   if (profile_->IsOffTheRecord() &&
       !extensions::util::IsIncognitoEnabled(extension->id(), profile_))
     return false;
+
+#if defined(OS_CHROMEOS)
+  // TODO(isandrk, https://crbug.com/801215): Don't display "Assessment
+  // Assistant" icon in the Chrome menu to avoid confusing users (temporary
+  // until M66 when it will become a component extension and won't be shown
+  // anyway).
+  constexpr char kAssessmentAssistantExtensionId[] =
+      "gndmhdcefbhlchkhipcnnbkcmicncehk";
+  const bool kChromeVersion =
+      [](int major, int, int, int) {return major;}(CHROME_VERSION);
+  if (kChromeVersion < 66 && extension->id() == kAssessmentAssistantExtensionId)
+    return false;
+#endif
 
   // In this case, we don't care about the browser action visibility, because
   // we want to show each extension regardless.
