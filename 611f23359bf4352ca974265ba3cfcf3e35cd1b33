@@ -22,6 +22,23 @@
       "revId": "611f23359bf4352ca974265ba3cfcf3e35cd1b33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9261f1a7_8195af51",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-17T17:02:27Z",
+      "side": 1,
+      "message": "DependsOn(IdentityManagerFactory::GetInstance());?",
+      "revId": "611f23359bf4352ca974265ba3cfcf3e35cd1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
