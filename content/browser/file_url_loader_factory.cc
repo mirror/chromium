@@ -522,8 +522,9 @@ class FileURLLoader : public mojom::URLLoader {
     }
 
     if (!net::GetMimeTypeFromFile(path, &head.mime_type)) {
-      net::SniffMimeType(initial_read_buffer, initial_read_result, request.url,
-                         head.mime_type, &head.mime_type);
+      net::SniffMimeType(
+          initial_read_buffer, initial_read_result, request.url, head.mime_type,
+          net::ForceSniffFileUrlsForHtml::kDisabled, &head.mime_type);
     }
     client->OnReceiveResponse(head, base::nullopt, nullptr);
     client->OnStartLoadingResponseBody(std::move(pipe.consumer_handle));
