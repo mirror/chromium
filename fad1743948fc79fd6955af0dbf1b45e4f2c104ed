@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "167efc0e_8ea3d861",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-17T17:12:12Z",
+      "side": 1,
+      "message": "It is not very clear to me selection of OnArcOptInBackgroundManagementCheckStarted. How Background Management Check affects showing the notification?\nWould it be more logical to add OnArcStarted callback instead (called from StartArc)?\n\nWDYT?",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 46
+      },
+      "revId": "fad1743948fc79fd6955af0dbf1b45e4f2c104ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
