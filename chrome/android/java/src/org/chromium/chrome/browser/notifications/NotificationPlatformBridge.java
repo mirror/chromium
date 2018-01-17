@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.service.notification.StatusBarNotification;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -738,6 +739,24 @@ public class NotificationPlatformBridge {
         } else {
             WebApkServiceClient.getInstance().cancelNotification(
                     webApkPackage, notificationId, PLATFORM_ID);
+        }
+    }
+
+    @CalledByNative
+    private String[] getActiveNotificationsIdList() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            StatusBarNotification[] activeNotifications =
+                    mNotificationManager.getActiveNotifications();
+            if (activeNotifications == null) return null;
+            String[] result = new String[activeNotifications.length];
+            int i = 0;
+            for (StatusBarNotification notification : activeNotifications) {
+                result[i] = notification.getTag();
+                i++;
+            }
+            return result;
+        } else {
+            return new String[0];
         }
     }
 
