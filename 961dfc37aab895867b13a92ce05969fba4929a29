@@ -16,6 +16,24 @@
       "revId": "961dfc37aab895867b13a92ce05969fba4929a29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf23723_1e135a65",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-17T10:49:08Z",
+      "side": 1,
+      "message": "I can\u0027t remove it because the base class returns FALSE. Do you want to remove the DCHECK still?",
+      "parentUuid": "284e1009_e57d5213",
+      "revId": "961dfc37aab895867b13a92ce05969fba4929a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
