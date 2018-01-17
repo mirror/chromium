@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "84505214_79368b06",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-17T18:33:32Z",
+      "side": 1,
+      "message": "The entire page will be unresponsive during that time, with any input events getting queued. After the timeout fires, any events queued in the meantime will be dispatched, now ignoring the unresponsive renderer. 5 seconds might feel a bit long when that happens, but we also don\u0027t want this to happen too often when JavaScript is just being a bit greedy, because it ultimately means we are deliberately mistargeting events. We can tweak the timeout up or down later if problematic use cases come up.",
+      "parentUuid": "4a1fb6b2_7bc42a71",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 69
+      },
+      "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b26aa42e_e01e4547",
         "filename": "content/browser/renderer_host/input/one_shot_timeout_monitor.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "60e63a0b_a76ee30f",
+        "filename": "content/browser/renderer_host/input/one_shot_timeout_monitor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-17T18:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b26aa42e_e01e4547",
+      "range": {
+        "startLine": 27,
+        "startChar": 45,
+        "endLine": 27,
+        "endChar": 59
+      },
+      "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7f02220_7f419bf4",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 8
@@ -62,6 +110,24 @@
       "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fec9edd_23af11d1",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-17T18:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7f02220_7f419bf4",
+      "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "660f4904_7059a8bc",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-17T18:33:32Z",
+      "side": 1,
+      "message": "That\u0027s correct. I expanded the header comment on QueryClient as Alex suggested, and that should make it a bit clearer.",
+      "parentUuid": "e26c6db0_0f4b514c",
+      "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f1f1e12_4845db7d",
         "filename": "content/browser/renderer_host/render_widget_targeter.h",
         "patchSetId": 8
@@ -96,6 +180,24 @@
       "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0717f4a8_b65d6d45",
+        "filename": "content/browser/renderer_host/render_widget_targeter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-17T18:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f1f1e12_4845db7d",
+      "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +238,48 @@
       "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fdbe33f_13052921",
+        "filename": "content/common/content_constants_internal.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-17T18:33:32Z",
+      "side": 1,
+      "message": "I think the interaction is reasonable because the hung renderer timeout only starts after we dispatch an event to a renderer process. So if the main frame\u0027s renderer becomes unresponsive and we happen to start an async hit test, then the effect will be that we add 5 seconds before the dialog appears -- 5 seconds to wait for a hit test query, and then a subsequent 30 seconds (on desktop) before the hung renderer triggers. This isn\u0027t relevant for OOPIFs, for which hung renderer dialogs don\u0027t trigger, as the existing bugs note. We could modify this interaction later when it is clear what we want to do with unresponsive OOPIFs.",
+      "parentUuid": "f1325532_5e454190",
+      "range": {
+        "startLine": 32,
+        "startChar": 14,
+        "endLine": 32,
+        "endChar": 34
+      },
+      "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52fd5519_74019822",
+        "filename": "content/common/content_constants_internal.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-17T18:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8991e562_f73d6ea3",
+      "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
