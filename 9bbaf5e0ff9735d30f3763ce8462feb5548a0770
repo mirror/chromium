@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7794f908_82f0a491",
+        "filename": "tools/clang/blink_gc_plugin/Config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-17T00:57:40Z",
+      "side": 1,
+      "message": "Do we need to limit the check to ScriptWrappableVisitor::TraceWrappers?\n\ni.e., can we more generally verify that TraceWrappers is tracing parent classes that have TraceWrappers?",
+      "revId": "9bbaf5e0ff9735d30f3763ce8462feb5548a0770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
