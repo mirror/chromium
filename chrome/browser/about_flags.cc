@@ -1013,8 +1013,6 @@ const FeatureEntry::Choice kEnableOutOfProcessHeapProfilingChoices[] = {
      switches::kMemlog, switches::kMemlogModeBrowser},
     {flag_descriptions::kEnableOutOfProcessHeapProfilingModeGpu,
      switches::kMemlog, switches::kMemlogModeGpu},
-    {flag_descriptions::kEnableOutOfProcessHeapProfilingModeRendererSampling,
-     switches::kMemlog, switches::kMemlogModeRendererSampling},
     {flag_descriptions::kEnableOutOfProcessHeapProfilingModeAllRenderers,
      switches::kMemlog, switches::kMemlogModeAllRenderers},
     {flag_descriptions::kEnableOutOfProcessHeapProfilingModeManual,
