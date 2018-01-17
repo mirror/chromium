@@ -31,6 +31,8 @@ jumbo_component("blink_common") {
     "common_export.h",
     "device_memory/approximated_device_memory.cc",
     "device_memory/approximated_device_memory.h",
+    "device_memory/sampling_native_heap_profiler.cc",
+    "device_memory/sampling_native_heap_profiler.h",
     "feature_policy/feature_policy.cc",
     "feature_policy/feature_policy.h",
     "frame_policy.cc",
