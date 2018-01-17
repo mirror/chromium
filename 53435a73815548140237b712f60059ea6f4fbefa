@@ -22,6 +22,30 @@
       "revId": "53435a73815548140237b712f60059ea6f4fbefa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e6e282_651bfb2c",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-17T20:41:06Z",
+      "side": 1,
+      "message": "Fixed. I forgot to run closure compiler.",
+      "parentUuid": "34c81716_ed99c8fd",
+      "range": {
+        "startLine": 108,
+        "startChar": 6,
+        "endLine": 108,
+        "endChar": 37
+      },
+      "revId": "53435a73815548140237b712f60059ea6f4fbefa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
