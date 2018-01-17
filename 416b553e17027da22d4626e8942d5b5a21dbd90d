@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2387af60_d3571b58",
+        "filename": "chrome/browser/resources/md_bookmarks/constants.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-17T00:38:06Z",
+      "side": 1,
+      "message": "Please document that these enum values are persisted to logs, and should therefore never be renumbered nor reused: https://chromium.googlesource.com/chromium/src/+/HEAD/tools/metrics/histograms/README.md#enum-histograms",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 63
+      },
+      "revId": "416b553e17027da22d4626e8942d5b5a21dbd90d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36feea5_a59c8e3f",
+        "filename": "chrome/browser/resources/md_bookmarks/constants.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-17T00:38:06Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest \"COUNT\" or \"NUM_VALUES\" for this name; \"max\" is often used as an alias to the last valid item in an enum.",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 11
+      },
+      "revId": "416b553e17027da22d4626e8942d5b5a21dbd90d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
