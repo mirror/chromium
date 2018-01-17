@@ -30,9 +30,6 @@ Polymer({
       notify: true,
     },
 
-    /** Reflects the bluetooth-page property. */
-    bluetoothToggleDisabled: Boolean,
-
     /**
      * The bluetooth adapter state, cached by bluetooth-page.
      * @type {!chrome.bluetooth.AdapterState|undefined}

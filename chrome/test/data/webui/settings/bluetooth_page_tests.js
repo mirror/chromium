@@ -77,6 +77,7 @@ suite('Bluetooth', function() {
     PolymerTest.clearBody();
     bluetoothPage = document.createElement('settings-bluetooth-page');
     bluetoothPage.prefs = getFakePrefs();
+    bluetoothPage.immediatelyUpdateAdapterState = true;
     assertTrue(!!bluetoothPage);
 
     bluetoothApi_.setDevicesForTest([]);
@@ -89,14 +90,14 @@ suite('Bluetooth', function() {
   });
 
   test('MainPage', function() {
-    assertFalse(bluetoothApi_.getAdapterStateForTest().powered);
+    assertFalse(bluetoothPage.prefs.ash.user.bluetooth.adapter_enabled.value);
     assertFalse(bluetoothPage.bluetoothToggleState_);
     // Test that tapping the single settings-box div enables bluetooth.
     const div = bluetoothPage.$$('div.settings-box');
     assertTrue(!!div);
     MockInteractions.tap(div);
     assertTrue(bluetoothPage.bluetoothToggleState_);
-    assertTrue(bluetoothApi_.getAdapterStateForTest().powered);
+    assertTrue(bluetoothPage.prefs.ash.user.bluetooth.adapter_enabled.value);
   });
 
   suite('SubPage', function() {
@@ -119,7 +120,6 @@ suite('Bluetooth', function() {
         subpage.listUpdateFrequencyMs = 0;
         assertTrue(!!subpage);
         assertTrue(subpage.bluetoothToggleState);
-        assertFalse(subpage.bluetoothToggleDisabled);
         assertEquals(0, subpage.listUpdateFrequencyMs);
       });
     });
@@ -133,7 +133,7 @@ suite('Bluetooth', function() {
 
       subpage.bluetoothToggleState = false;
       assertFalse(enableButton.checked);
-      assertFalse(bluetoothApi_.getAdapterStateForTest().powered);
+      assertFalse(bluetoothPage.prefs.ash.user.bluetooth.adapter_enabled.value);
       assertFalse(bluetoothPage.bluetoothToggleState_);
     });
 
