@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e58f5289_d41eca1e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-17T21:32:32Z",
+      "side": 1,
+      "message": "I just realized that we can avoid these lines here at the loop body. It\u0027s enough to do it once, before starting the search:\n\n  // Figure out the starting rect.\n  LayoutRect starting_rect \u003d\n      VirtualRectForDirection(type, NodeRectInAbsoluteCoordinates(container));\n  if (focused_element) {\n    container \u003d ScrollableEnclosingBoxOrParentFrameOf(focused_element);\n    if (!HasOffscreenRect(focused_element)) {\n      starting_rect \u003d NodeRectInAbsoluteCoordinates(focused_element,\n                                                    true /* ignore border */);\n    } else if (auto* area \u003d ToHTMLAreaElementOrNull(*focused_element)) {\n      if (area-\u003eImageElement()) {\n        focused_element \u003d area-\u003eImageElement();\n        starting_rect \u003d VirtualRectForAreaElementAndDirection(*area, type);\n      }\n    }\n  }",
+      "range": {
+        "startLine": 1406,
+        "startChar": 0,
+        "endLine": 1410,
+        "endChar": 28
+      },
+      "revId": "835f9b3d8574826dc1d3a5829a21a2cce4786a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9009250_9f941a13",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-17T21:32:32Z",
+      "side": 1,
+      "message": "These lines are not needed? I just tried to remove them and I didn\u0027t get any failing layout tests. :) When this container is popped from the stack, L1429 will do the same scroll, right? Would be nice to get rid of this duplicated call...",
+      "range": {
+        "startLine": 1464,
+        "startChar": 0,
+        "endLine": 1467,
+        "endChar": 5
+      },
+      "revId": "835f9b3d8574826dc1d3a5829a21a2cce4786a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92ae6e5_1996316e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-17T21:32:32Z",
+      "side": 1,
+      "message": "nit: // Search sub-container.",
+      "range": {
+        "startLine": 1469,
+        "startChar": 7,
+        "endLine": 1469,
+        "endChar": 48
+      },
+      "revId": "835f9b3d8574826dc1d3a5829a21a2cce4786a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
