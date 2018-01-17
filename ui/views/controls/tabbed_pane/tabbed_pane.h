@@ -29,7 +29,13 @@ class VIEWS_EXPORT TabbedPane : public View {
   // Internal class name.
   static const char kViewClassName[];
 
-  TabbedPane();
+  // The orientation of the tab alignment.
+  enum Orientation {
+    kHorizontal,
+    kVertical,
+  };
+
+  explicit TabbedPane(Orientation orientation = kHorizontal);
   ~TabbedPane() override;
 
   TabbedPaneListener* listener() const { return listener_; }
@@ -62,6 +68,9 @@ class VIEWS_EXPORT TabbedPane : public View {
   gfx::Size CalculatePreferredSize() const override;
   const char* GetClassName() const override;
 
+  // Returns true if the tab alignment is horizontal.
+  bool IsHorizontal() const { return orientation_ == TabbedPane::kHorizontal; }
+
  private:
   friend class FocusTraversalTest;
   friend class Tab;
@@ -90,6 +99,9 @@ class VIEWS_EXPORT TabbedPane : public View {
 
   // A listener notified when tab selection changes. Weak, not owned.
   TabbedPaneListener* listener_;
+
+  // The orientation of the tab alignment.
+  const TabbedPane::Orientation orientation_;
 
   // The tab strip and contents container. The child indices of these members
   // correspond to match each Tab with its respective content View.
@@ -135,6 +147,8 @@ class Tab : public View {
   // Called whenever |tab_state_| changes.
   virtual void OnStateChanged();
 
+  TabbedPane* tabbed_pane_;
+
  private:
   enum TabState {
     TAB_INACTIVE,
@@ -144,7 +158,6 @@ class Tab : public View {
 
   void SetState(TabState tab_state);
 
-  TabbedPane* tabbed_pane_;
   Label* title_;
   gfx::Size preferred_title_size_;
   TabState tab_state_;
@@ -154,13 +167,13 @@ class Tab : public View {
   DISALLOW_COPY_AND_ASSIGN(Tab);
 };
 
-// The tab strip shown above the tab contents.
+// The tab strip shown above/left of the tab contents.
 class TabStrip : public View {
  public:
   // Internal class name.
   static const char kViewClassName[];
 
-  TabStrip();
+  explicit TabStrip(TabbedPane* tabbed_pane);
   ~TabStrip() override;
 
   // Called by TabStrip when the selected tab changes. This function is only
@@ -176,6 +189,8 @@ class TabStrip : public View {
   Tab* GetTabAtDeltaFromSelected(int delta) const;
   Tab* GetTabAtIndex(int index) const;
   int GetSelectedTabIndex() const;
+
+  TabbedPane* tabbed_pane_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TabStrip);
