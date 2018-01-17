@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "6a31aa6f_452d2400",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-17T08:01:44Z",
+      "side": 1,
+      "message": "If we have NGPhysicalTextFragmentWithOffset, we can write\n\nCaretPositionResolution TryResolveCaretPositionInTextFragment(\n  const NGPhysicalFragmentWithOffset fragment_with_offset,\n  ...) {\nDCHECK(fragment_with_offset.fragment-\u003eIsText());\nNGPhysicalTextFragment\u0026 fragment \u003d ToNGPhysialTextFragment(*fragment_with_offset.fragment);\n...\n\nNGCaretPosition candidate \u003d {\n  \u0026fragment,\n  fragment_with_offset.offset_to_container_box,\n  NGCaretPositionType::kAtTextOffset, offset\n};\n\n\nI think it is more intuitive than \n      resolution.caret_position.offset_to_container_box \u003d\n          child.offset_to_container_box;",
+      "revId": "bc38a2247c85d91e3984ac2c72de67f1a390f37c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23793387_dc383aaf",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-17T08:01:44Z",
+      "side": 1,
+      "message": "nit: s/{}/NGPhysicalOffset()/\n\nlayout-team doesn\u0027t like {}.",
+      "range": {
+        "startLine": 105,
+        "startChar": 17,
+        "endLine": 105,
+        "endChar": 19
+      },
+      "revId": "bc38a2247c85d91e3984ac2c72de67f1a390f37c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cba9bc4_432eda5f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-17T08:01:44Z",
+      "side": 1,
+      "message": "nit: s/{}/NGPhysicalOffset()/\n\nlayout-team doesn\u0027t like {}.",
+      "range": {
+        "startLine": 159,
+        "startChar": 39,
+        "endLine": 159,
+        "endChar": 41
+      },
+      "revId": "bc38a2247c85d91e3984ac2c72de67f1a390f37c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbefcf85_67cb4829",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 34
