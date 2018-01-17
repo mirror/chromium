@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<title>media controls picture in picture button</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../media-file.js"></script>
+<script src="../media-controls.js"></script>
+<body>
+<script>
+async_test(function(t) {
+    enablePictureInPictureForTest(t); // internals not found error
+    // enableDoubleTapToJumpForTest(t); // <--- this seems to work
+
+    var video = document.createElement('video');
+    video.setAttribute('controls', '');
+    video.src = findMediaFile('video', '../content/test');
+    document.body.appendChild(video);
+
+    video.onloadedmetadata = t.step_func_done(function() {
+        // Should have a picture in picture button.
+        var button = pictureInPictureButton(video);
+        assert_equals(button.style.display, "none", "picture in picture button should be visible.");
+    });
+});
+</script>
+</body>
