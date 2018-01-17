@@ -32,6 +32,19 @@ std::pair<std::string, url::Origin> GetMediaDeviceSaltAndOrigin(
     int render_process_id,
     int render_frame_id);
 
+MediaDeviceInfo TranslateMediaDeviceInfo(bool has_permission,
+                                         const std::string& device_id_salt,
+                                         const std::string& group_id_salt,
+                                         const url::Origin& security_origin,
+                                         const MediaDeviceInfo& device_info);
+
+MediaDeviceInfoArray TranslateMediaDeviceInfoArray(
+    bool has_permission,
+    const std::string& device_id_salt,
+    const std::string& group_id_salt,
+    const url::Origin& security_origin,
+    const MediaDeviceInfoArray& input);
+
 // Type definition to make it easier to use mock alternatives to
 // GetMediaDeviceSaltAndOrigin.
 using MediaDeviceSaltAndOriginCallback =
