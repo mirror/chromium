@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2da30ecc_3becfa25",
+        "filename": "chrome/browser/ui/ash/auto_connect_notifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-17T00:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df0e031d_d69cda0b",
+      "range": {
+        "startLine": 135,
+        "startChar": 35,
+        "endLine": 135,
+        "endChar": 54
+      },
+      "revId": "ae1303eee5b0bd1688374ac118885b01eba4346f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6593e281_97f35e8b",
         "filename": "chrome/browser/ui/ash/auto_connect_notifier.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "ae1303eee5b0bd1688374ac118885b01eba4346f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef90778_8081909a",
+        "filename": "chrome/browser/ui/ash/auto_connect_notifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-17T00:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6593e281_97f35e8b",
+      "range": {
+        "startLine": 137,
+        "startChar": 1,
+        "endLine": 137,
+        "endChar": 54
+      },
+      "revId": "ae1303eee5b0bd1688374ac118885b01eba4346f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
