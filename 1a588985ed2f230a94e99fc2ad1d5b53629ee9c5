@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb6d6501_e8c2b388",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-17T23:59:04Z",
+      "side": 1,
+      "message": "nit: r489705",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 24
+      },
+      "revId": "1a588985ed2f230a94e99fc2ad1d5b53629ee9c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7366d65_f5a199ae",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-17T23:59:04Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think we need this. It\u0027s already false by default.",
+      "range": {
+        "startLine": 379,
+        "startChar": 37,
+        "endLine": 379,
+        "endChar": 69
+      },
+      "revId": "1a588985ed2f230a94e99fc2ad1d5b53629ee9c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
