@@ -4,6 +4,9 @@
 
 #include "chromecast/base/cast_sys_info_android.h"
 
+#include <sys/system_properties.h>
+#include <string>
+
 #include "base/android/build_info.h"
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
@@ -18,6 +21,18 @@ namespace chromecast {
 
 namespace {
 const char kBuildTypeUser[] = "user";
+
+std::string GetAndroidProperty(const std::string& key) {
+  char value[PROP_VALUE_MAX];
+  int ret = __system_property_get(key.c_str(), value);
+  if (ret < 0) {
+    LOG(ERROR) << "Failed to get property: " << key;
+    return "";
+  }
+
+  return std::string(value);
+}
+
 }  // namespace
 
 // static
@@ -92,7 +107,8 @@ std::string CastSysInfoAndroid::GetBoardRevision() {
 }
 
 std::string CastSysInfoAndroid::GetFactoryCountry() {
-  return "";
+  std::string ret = GetAndroidProperty("ro.boot.wificountrycode");
+  return ret.empty() ? GetAndroidProperty("ro.product.locale.region") : ret;
 }
 
 std::string CastSysInfoAndroid::GetFactoryLocale(std::string* second_locale) {
