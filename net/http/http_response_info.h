@@ -10,7 +10,7 @@
 #include "base/time/time.h"
 #include "net/base/net_export.h"
 #include "net/http/http_vary_data.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "net/ssl/ssl_info.h"
 
 namespace base {
