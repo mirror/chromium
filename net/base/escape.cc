@@ -391,6 +391,11 @@ static const Charmap kExternalHandlerCharmap = {{
   0xffffffffL, 0xffffffffL, 0xffffffffL, 0xffffffffL
 }};
 
+// Everything except alphanumerics, the reserved characters($&'()*+,-./")
+static const Charmap kCustomHandlerCharmap = {
+    {0xffffffffL, 0xd000002fL, 0x50000000L, 0xb8000001L, 0xffffffffL,
+     0xffffffffL, 0xffffffffL, 0xffffffffL}};
+
 }  // namespace
 
 std::string EscapeQueryParamValue(base::StringPiece text, bool use_plus) {
@@ -417,6 +422,10 @@ std::string EscapeNonASCII(base::StringPiece input) {
 
 std::string EscapeExternalHandlerValue(base::StringPiece text) {
   return Escape(text, kExternalHandlerCharmap, false, true);
+}
+
+std::string EscapeCustomHandlerValue(base::StringPiece text) {
+  return Escape(text, kCustomHandlerCharmap, false, true);
 }
 
 void AppendEscapedCharForHTML(char c, std::string* output) {

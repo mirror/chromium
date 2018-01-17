@@ -55,8 +55,7 @@ ProtocolHandler ProtocolHandler::CreateProtocolHandler(
 GURL ProtocolHandler::TranslateUrl(const GURL& url) const {
   std::string translatedUrlSpec(url_.spec());
   base::ReplaceFirstSubstringAfterOffset(
-      &translatedUrlSpec, 0, "%s",
-      net::EscapeQueryParamValue(url.spec(), true));
+      &translatedUrlSpec, 0, "%s", net::EscapeCustomHandlerValue(url.spec()));
   return GURL(translatedUrlSpec);
 }
 

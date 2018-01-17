@@ -572,5 +572,51 @@ TEST(EscapeTest, EscapeExternalHandlerValue) {
             EscapeExternalHandlerValue("http://[2001:db8:0:1]:80"));
 }
 
+TEST(EscapeTest, EscapeCustomHandlerValue) {
+  ASSERT_EQ(
+      // Escaped
+      "%02%0A%1D%20"
+      "%21%22%23$%25%60%7B%7D%3F%3C%3E%20"
+      "&'()*+,-./"
+      "0123456789:;"
+      "%3C=%3E%3F@ABCDEFGHIJKLMNOPQRSTUVWXYZ[%5C]%5E_"
+      "%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D~%7F%80%FF",
+      // Most of the character space we care about, un-escaped
+      EscapeCustomHandlerValue("\x02\n\x1d "
+                               "!\"#$%`{}?<> "
+                               "&'()*+,-./"
+                               "0123456789:;"
+                               "<=>?"
+                               "@ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                               "[\\]^_`abcdefghijklmnopqrstuvwxyz"
+                               "{|}~\x7f\x80\xff"));
+
+  ASSERT_EQ(
+      "%21%23"
+      "$&'()*+,-./"
+      "0123456789:;=%3F@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]_"
+      "abcdefghijklmnopqrstuvwxyz~",
+      EscapeCustomHandlerValue("!#"
+                               "$&'()*+,-./"
+                               "0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]_"
+                               "abcdefghijklmnopqrstuvwxyz~"));
+
+  ASSERT_EQ("%258k", EscapeCustomHandlerValue("%8k"));
+  ASSERT_EQ("a%25", EscapeCustomHandlerValue("a%"));
+  ASSERT_EQ("%25a", EscapeCustomHandlerValue("%a"));
+  ASSERT_EQ("a%258", EscapeCustomHandlerValue("a%8"));
+  ASSERT_EQ("%ab", EscapeCustomHandlerValue("%ab"));
+  ASSERT_EQ("%AB", EscapeCustomHandlerValue("%AB"));
+
+  ASSERT_EQ("http://example.com/path/sub%3Fq=a%7Cb%7Cc&q=1%7C2%7C3%23ref%7C",
+            EscapeCustomHandlerValue(
+                "http://example.com/path/sub?q=a|b|c&q=1|2|3#ref|"));
+  ASSERT_EQ("http://example.com/path/sub%3Fq=a%7Cb%7Cc&q=1%7C2%7C3%23ref%7C",
+            EscapeCustomHandlerValue(
+                "http://example.com/path/sub?q=a%7Cb%7Cc&q=1%7C2%7C3#ref%7C"));
+  ASSERT_EQ("http://[2001:db8:0:1]:80=%20",
+            EscapeCustomHandlerValue("http://[2001:db8:0:1]:80= "));
+}
+
 }  // namespace
 }  // namespace net
