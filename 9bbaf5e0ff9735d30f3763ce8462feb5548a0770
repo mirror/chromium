@@ -16,6 +16,24 @@
       "revId": "9bbaf5e0ff9735d30f3763ce8462feb5548a0770",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "386d0f73_72569f55",
+        "filename": "tools/clang/blink_gc_plugin/Config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-17T08:35:49Z",
+      "side": 1,
+      "message": "Sorry, this variable is a left over. We need to ignore the TraceWrappers on ScriptWrappableVisitor and WrapperMarkingData. \n\nOilpan can ignore by directories, which I don\u0027t think we can as we want to check for proper use of ScriptWrappable which also lives in platform/.\n\nThe plugin does exactly what you mentioned in your comment. It checks that you always dispatch to a parent class if there is a TraceWrappers method installed somewhere. It assumes that the TraceWrapperBase contains an abstract TraceWrappers which I will do in one of my next CLs.",
+      "parentUuid": "7794f908_82f0a491",
+      "revId": "9bbaf5e0ff9735d30f3763ce8462feb5548a0770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
