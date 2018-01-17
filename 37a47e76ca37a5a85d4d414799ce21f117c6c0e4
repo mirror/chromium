@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "6b32410d_6fd67316",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-17T23:52:44Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "37a47e76ca37a5a85d4d414799ce21f117c6c0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f44411_fc2c9254",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-17T23:52:44Z",
+      "side": 1,
+      "message": "the OOPIF",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "37a47e76ca37a5a85d4d414799ce21f117c6c0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94218bf4_ac8ef4ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-17T23:52:44Z",
+      "side": 1,
+      "message": "the OOPIF",
+      "range": {
+        "startLine": 11,
+        "startChar": 57,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "37a47e76ca37a5a85d4d414799ce21f117c6c0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce9853a_28b29d5c",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-17T23:52:44Z",
+      "side": 1,
+      "message": "Is this comment accurate?  What if an OOPIF were focused when a different OOPIF committed?  (That may not matter for the fix, and we can correct the comment later if needed.)",
+      "range": {
+        "startLine": 2036,
+        "startChar": 9,
+        "endLine": 2036,
+        "endChar": 49
+      },
+      "revId": "37a47e76ca37a5a85d4d414799ce21f117c6c0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca5c2161_ef1361bc",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 3
@@ -25,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "55d6014c_e41a2f7a",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2043,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-17T23:52:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ca5c2161_ef1361bc",
+      "range": {
+        "startLine": 2043,
+        "startChar": 27,
+        "endLine": 2043,
+        "endChar": 56
+      },
+      "revId": "37a47e76ca37a5a85d4d414799ce21f117c6c0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99a04fd8_f70cd18b",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 3
@@ -41,6 +157,70 @@
         "startChar": 10,
         "endLine": 2045,
         "endChar": 51
+      },
+      "revId": "37a47e76ca37a5a85d4d414799ce21f117c6c0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f0cac3_56b72a41",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2045,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-17T23:52:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "99a04fd8_f70cd18b",
+      "range": {
+        "startLine": 2044,
+        "startChar": 10,
+        "endLine": 2045,
+        "endChar": 51
+      },
+      "revId": "37a47e76ca37a5a85d4d414799ce21f117c6c0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082fd2df_cbbcdbe5",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2048,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-17T23:52:44Z",
+      "side": 1,
+      "message": "Sanity check: We\u0027re guaranteed to have a proxy here and not end up with a null pointer, right?  I think we usually create proxies in render_frame_host_\u0027s SiteInstance before render_frame_host_ itself, but I just want to make sure there\u0027s no race where a focused frame gets added after that and we get here before having a proxy for it.",
+      "revId": "37a47e76ca37a5a85d4d414799ce21f117c6c0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df1dba4_d6fca26d",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6387,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-17T23:52:44Z",
+      "side": 1,
+      "message": "Any reason to pick ExecuteScriptAsync over ExecuteScript here and above?  I think it\u0027s safe either way since they\u0027re all to the same process and followed by things that wait for the result (focus_observer.Wait(), NavigateFrameToURL), but it wasn\u0027t clear if there was a need.\n\nNo need to respin the CL for it, unless you spot an issue.",
+      "range": {
+        "startLine": 6387,
+        "startChar": 2,
+        "endLine": 6387,
+        "endChar": 20
       },
       "revId": "37a47e76ca37a5a85d4d414799ce21f117c6c0e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
