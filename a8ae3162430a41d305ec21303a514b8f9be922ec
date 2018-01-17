@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38d87c5f_e617ba6a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:24:51Z",
+      "side": 1,
+      "message": "|name_| is equal to task_scheduler_name + environment_name https://chromium-review.googlesource.com/c/chromium/src/+/870116/6/base/task_scheduler/task_scheduler_impl.cc#41\n\nThat means this line of code will generate histograms named:\n\n- TaskScheduler.DetachDuration.Background.Pool\n- TaskScheduler.DetachDuration.BackgroundBlocking.Pool\n- TaskScheduler.DetachDuration.Foreground.Pool\n- TaskScheduler.DetachDuration.ForegroundBlocking.Pool\n- TaskScheduler.DetachDuration.RendererBackground.Pool\n- TaskScheduler.DetachDuration.RendererBackgroundBlocking.Pool\n- TaskScheduler.DetachDuration.RendererForeground.Pool\n- TaskScheduler.DetachDuration.RendererForegroundBlocking.Pool\n- TaskScheduler.DetachDuration.ContentChildBackground.Pool\n- TaskScheduler.DetachDuration.ContentChildBackgroundBlocking.Pool\n- TaskScheduler.DetachDuration.ContentChildForeground.Pool\n- TaskScheduler.DetachDuration.ContentChildForegroundBlocking.Pool\n\nThis doesn\u0027t match what you have in histograms.xml:\n\n- TaskScheduler.DetachDuration.BackgroundPool\n- TaskScheduler.DetachDuration.BackgroundBlockingPool\n- TaskScheduler.DetachDuration.ForegroundPool\n- TaskScheduler.DetachDuration.ForegroundBlockingPool\n- TaskScheduler.DetachDuration.Renderer.BackgroundPool\n- TaskScheduler.DetachDuration.Renderer.BackgroundBlockingPool\n- TaskScheduler.DetachDuration.Renderer.ForegroundPool\n- TaskScheduler.DetachDuration.Renderer.ForegroundBlockingPool\n- TaskScheduler.DetachDuration.ContentChild.BackgroundPool\n- TaskScheduler.DetachDuration.ContentChild.BackgroundBlockingPool\n- TaskScheduler.DetachDuration.ContentChild.ForegroundPool\n- TaskScheduler.DetachDuration.ContentChild.ForegroundBlockingPool\n\nThe difference is the position of the last dot.\n\nMaybe add a dot in the pool name generated at task_scheduler_impl.cc:41 and not add a dot before kPoolNameSuffix here?",
+      "range": {
+        "startLine": 169,
+        "startChar": 43,
+        "endLine": 169,
+        "endChar": 48
+      },
+      "revId": "a8ae3162430a41d305ec21303a514b8f9be922ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc2857b_cac79b14",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 110767,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:24:51Z",
+      "side": 1,
+      "message": "and without MayBlock()/WithBaseSyncPrimitives()?",
+      "range": {
+        "startLine": 110767,
+        "startChar": 63,
+        "endLine": 110767,
+        "endChar": 64
+      },
+      "revId": "a8ae3162430a41d305ec21303a514b8f9be922ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd909733_cf7c2cbb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 110773,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:24:51Z",
+      "side": 1,
+      "message": "posted is repeated twice",
+      "range": {
+        "startLine": 110773,
+        "startChar": 30,
+        "endLine": 110773,
+        "endChar": 70
+      },
+      "revId": "a8ae3162430a41d305ec21303a514b8f9be922ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

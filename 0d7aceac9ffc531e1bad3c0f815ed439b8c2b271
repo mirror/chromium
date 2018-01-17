@@ -330,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "ea8db198_ef92ea95",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 110721,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:24:51Z",
+      "side": 1,
+      "message": "You can ignore my previous comment if you decide not to change only TaskLatencyMicroseconds histograms in this CL.",
+      "parentUuid": "0b0dee27_b33671b5",
+      "range": {
+        "startLine": 110719,
+        "startChar": 2,
+        "endLine": 110721,
+        "endChar": 65
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d806bd5d_47a8a974",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -447,6 +471,30 @@
       "side": 1,
       "message": "Why? I removed the empty case there but other than that these are still relevant. And as mentioned I think it\u0027s easier to add them all at once for histograms.xml (avoids having a world where we have Renderer.* and RendererFooPool.*; now Renderer is always followed by a \".\").",
       "parentUuid": "9b522abe_6a47ad8c",
+      "range": {
+        "startLine": 110808,
+        "startChar": 2,
+        "endLine": 110840,
+        "endChar": 74
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e30a825_8f3fa6a4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 110840,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:24:51Z",
+      "side": 1,
+      "message": "You can ignore my previous comment if you decide not to change only TaskLatencyMicroseconds histograms in this CL.",
+      "parentUuid": "b811d085_7d92c041",
       "range": {
         "startLine": 110808,
         "startChar": 2,
