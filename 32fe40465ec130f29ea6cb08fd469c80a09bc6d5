@@ -352,6 +352,24 @@
       "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae5042fe_356c4a41",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-17T08:11:33Z",
+      "side": 1,
+      "message": "Sorry. My idea was that we could land starting_rect\u0027s simplification + your suggestion about breaking out if (consumed) prior to landing this larger CL.",
+      "parentUuid": "192e5c60_e5bd027e",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
