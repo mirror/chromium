@@ -38719,6 +38719,7 @@ Called by update_net_trust_anchors.py.-->
   <int value="13" label="ForeignFetchMismatchedOrigin"/>
   <int value="14" label="RedirectedResponseForNotFollowRequest"/>
   <int value="15" label="DataPipeCreationFailed (insufficient resources)"/>
+  <int value="16" label="ResponseTypeCORS"/>
 </enum>
 
 <enum name="ServiceWorkerSite">
