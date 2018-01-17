@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "063c5f59_aeba09ed",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T23:54:16Z",
+      "side": 1,
+      "message": "!majorChange",
+      "range": {
+        "startLine": 668,
+        "startChar": 37,
+        "endLine": 668,
+        "endChar": 48
+      },
+      "revId": "3e3d8d0f582779bfb0a5660320418a6852c2a855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b876d74a_ab28a499",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1790,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T23:54:16Z",
+      "side": 1,
+      "message": "Call this when document has changed in DOMModel.",
+      "revId": "3e3d8d0f582779bfb0a5660320418a6852c2a855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
