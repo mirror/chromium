@@ -16,6 +16,24 @@
       "revId": "3680913317138c03d855452d3251f71e8cf2a2d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79581921_412205d7",
+        "filename": "tools/perf/contrib/oop_raster/oop_raster.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-17T00:38:47Z",
+      "side": 1,
+      "message": "enne@: feel free to just add \"# pylint: disable\u003dprotected-access\" to suppress pylint",
+      "parentUuid": "8e89b4c3_0d392279",
+      "revId": "3680913317138c03d855452d3251f71e8cf2a2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
