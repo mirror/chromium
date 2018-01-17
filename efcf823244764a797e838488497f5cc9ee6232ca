@@ -22,6 +22,30 @@
       "revId": "efcf823244764a797e838488497f5cc9ee6232ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab698a0_6dbe0c18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-17T21:36:41Z",
+      "side": 1,
+      "message": "Yes, I do. Done.",
+      "parentUuid": "7859aa87_d583badc",
+      "range": {
+        "startLine": 67,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 31
+      },
+      "revId": "efcf823244764a797e838488497f5cc9ee6232ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
