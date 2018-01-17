@@ -7,6 +7,7 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "chrome/browser/android/vr_shell/gvr_keyboard_loader.h"
 #include "chrome/browser/vr/keyboard_delegate.h"
 #include "chrome/browser/vr/keyboard_ui_interface.h"
 #include "third_party/gvr-android-keyboard/src/libraries/headers/vr/gvr/capi/include/gvr_keyboard.h"
@@ -30,6 +31,7 @@ class GvrKeyboardDelegate : public vr::KeyboardDelegate {
   typedef base::RepeatingCallback<void(EventType)> OnEventCallback;
 
   // vr::KeyboardDelegate implementation.
+  void RenderingEnabled(bool enabled) override;
   void OnBeginFrame() override;
   void ShowKeyboard() override;
   void HideKeyboard() override;
@@ -47,7 +49,8 @@ class GvrKeyboardDelegate : public vr::KeyboardDelegate {
 
  private:
   GvrKeyboardDelegate();
-  void Init(gvr_keyboard_context* keyboard_context);
+  void CreateKeyboard();
+  void DestroyKeyboard();
   void OnGvrKeyboardEvent(EventType);
   vr::TextInputInfo GetTextInfo();
 

@@ -23,6 +23,12 @@ void Keyboard::SetKeyboardDelegate(KeyboardDelegate* keyboard_delegate) {
   UpdateDelegateVisibility();
 }
 
+void Keyboard::RenderingEnabled(bool enabled) {
+  if (!delegate_)
+    return;
+  delegate_->RenderingEnabled(enabled);
+}
+
 void Keyboard::HitTest(const HitTestRequest& request,
                        HitTestResult* result) const {
   if (!delegate_)

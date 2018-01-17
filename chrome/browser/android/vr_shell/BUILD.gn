@@ -22,6 +22,7 @@ static_library("vr_android") {
     "gl_browser_interface.h",
     "gvr_keyboard_delegate.cc",
     "gvr_keyboard_delegate.h",
+    "gvr_keyboard_loader.h",
     "gvr_keyboard_shim.cc",
     "gvr_util.cc",
     "gvr_util.h",

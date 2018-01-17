@@ -19,6 +19,7 @@ class Keyboard : public UiElement {
   ~Keyboard() override;
 
   void SetKeyboardDelegate(KeyboardDelegate* keyboard_delegate);
+  void RenderingEnabled(bool enabled);
   void HitTest(const HitTestRequest& request,
                HitTestResult* result) const final;
   void NotifyClientFloatAnimated(float value,
