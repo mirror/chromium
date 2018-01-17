@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "13285d25_8d01726a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-17T16:59:17Z",
+      "side": 1,
+      "message": "Should annotate this method and the one below with your IntDef annotations (@FilteringResult here)",
+      "range": {
+        "startLine": 466,
+        "startChar": 45,
+        "endLine": 466,
+        "endChar": 48
+      },
+      "revId": "e81527ea8741da88760a90a0bd9699e8f9b448dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52394068_a2da02c9",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 17
