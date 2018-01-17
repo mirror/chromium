@@ -203,6 +203,10 @@ component("bluetooth") {
 
   defines = [ "DEVICE_BLUETOOTH_IMPLEMENTATION" ]
 
+  if (is_linux && !use_dbus) {
+    defines += [ "LINUX_WITHOUT_DBUS" ]
+  }
+
   all_dependent_configs = [ ":bluetooth_config" ]
 
   deps = [
