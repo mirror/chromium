@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "a41e1810_3197aa49",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-17T22:15:08Z",
+      "side": 1,
+      "message": "Your goal is correct -- time nearest the thing you\u0027re measuring. This goal doesn\u0027t require \"and represent in seconds\".\n\n\nThe code you wrote is essentially the start/stop I mentioned. The intermediate values don\u0027t need to be represented in seconds (and don\u0027t need to pay the accuracy loss for it).\n\n    auto start_time \u003d start_timer();\n    do_some_stuff();\n    auto elapsed_time \u003d stop_timer(start_time);\n\nAdditionally, since there was already a clear first call to initialize, you could move the actual init code out. IE rather than current_time_in_seconds() getting the frequency on its first run (and requiring a static), you could just have a clear init.\n\n    auto frequency \u003d init_timers();\n\n    auto start_time \u003d start_timer();\n    do_some_stuff();\n    auto elapsed_time \u003d stop_timer(start_time, frequency);\n\nDoing this separates concerns, eliminates statics, makes each piece more clear...\nAnd if you wanted to go wild you could even create typedefs for the frequency / start_time so utilize type safety in the stop_timer(). Or encapsulate it.",
+      "parentUuid": "bb44ff82_5e2b5e16",
+      "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f7a38d2_10560d8e",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 23
