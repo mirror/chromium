@@ -1049,11 +1049,13 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 
 - (void)settingsWillBeDismissed {
   DCHECK(!_settingsHasBeenDismissed);
-  _settingsHasBeenDismissed = YES;
-  [self.signinInteractionCoordinator cancel];
-  [_signinPromoViewMediator signinPromoViewRemoved];
-  _signinPromoViewMediator = nil;
-  [self stopBrowserStateServiceObservers];
+  if (!_settingsHasBeenDismissed) {
+    _settingsHasBeenDismissed = YES;
+    [self.signinInteractionCoordinator cancel];
+    [_signinPromoViewMediator signinPromoViewRemoved];
+    _signinPromoViewMediator = nil;
+    [self stopBrowserStateServiceObservers];
+  }
 }
 
 #pragma mark SyncObserverModelBridge
