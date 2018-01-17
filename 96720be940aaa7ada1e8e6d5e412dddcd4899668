@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "32e2c2f2_c425279f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-17T02:12:18Z",
+      "side": 1,
+      "message": "That\u0027s a good catch. Now that I see it again, the condition can be just if (!isAlive()) {... } - I don\u0027t think we have any situation where CVC is being destroyed but it is gaining focus. Put it other way, if it is on the way to the destruction, we just don\u0027t do anything but hide popup.",
+      "parentUuid": "d98b7703_30c84589",
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e8084c7_ce526e04",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
         "patchSetId": 4
