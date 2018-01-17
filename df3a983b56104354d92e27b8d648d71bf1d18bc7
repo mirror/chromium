@@ -850,6 +850,30 @@
     },
     {
       "key": {
+        "uuid": "08e8b8b6_8a050a6f",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-17T20:52:40Z",
+      "side": 1,
+      "message": "Correct me if I\u0027m wrong, but don\u0027t you just need to call MDTextButtons implementation and then add in the height of the subtitle_?",
+      "parentUuid": "338af3e9_fb982d00",
+      "range": {
+        "startLine": 114,
+        "startChar": 49,
+        "endLine": 114,
+        "endChar": 72
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "440522d0_ae0b9130",
         "filename": "chrome/browser/ui/views/sync/dice_signin_button.h",
         "patchSetId": 18
