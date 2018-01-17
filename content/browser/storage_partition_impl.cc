@@ -434,6 +434,7 @@ void StoragePartitionImpl::DataDeletionHelper::ClearQuotaManagedDataOnIOThread(
     const StoragePartition::OriginMatcherFunction& origin_matcher,
     const base::Closure& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  LOG(ERROR) << "deleting quota stuff";
 
   StoragePartitionImpl::QuotaManagedDataDeletionHelper* helper =
       new StoragePartitionImpl::QuotaManagedDataDeletionHelper(
@@ -971,6 +972,7 @@ void StoragePartitionImpl::DataDeletionHelper::ClearDataOnUIThread(
       remove_mask & REMOVE_DATA_MASK_FILE_SYSTEMS ||
       remove_mask & REMOVE_DATA_MASK_SERVICE_WORKERS ||
       remove_mask & REMOVE_DATA_MASK_CACHE_STORAGE) {
+    LOG(ERROR) << "removing storage";
     IncrementTaskCountOnUI();
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,

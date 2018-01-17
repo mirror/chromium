@@ -390,7 +390,7 @@ void CacheStorageManager::DeleteOriginData(
     const GURL& origin,
     const storage::QuotaClient::DeletionCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
+  LOG(ERROR) << "CacheStorageManager::DeleteOriginData";
   // Create the CacheStorage for the origin if it hasn't been loaded yet.
   FindOrCreateCacheStorage(origin);
 
@@ -416,6 +416,7 @@ void CacheStorageManager::DeleteOriginDidClose(
     const storage::QuotaClient::DeletionCallback& callback,
     std::unique_ptr<CacheStorage> cache_storage,
     int64_t origin_size) {
+  LOG(ERROR) << "CacheStorageManager::DeleteOriginDidClose"; // << this is sometimes not reached.
   // TODO(jkarlin): Deleting the storage leaves any unfinished operations
   // hanging, resulting in unresolved promises. Fix this by returning early from
   // CacheStorage operations posted after GetSizeThenCloseAllCaches is called.

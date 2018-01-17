@@ -382,6 +382,7 @@ void BrowsingDataRemoverImpl::RemoveImpl(
         StoragePartition::REMOVE_DATA_MASK_SERVICE_WORKERS;
   }
   if (remove_mask & DATA_TYPE_CACHE_STORAGE) {
+    LOG(ERROR) << "removing cache storage";
     storage_partition_remove_mask |=
         StoragePartition::REMOVE_DATA_MASK_CACHE_STORAGE;
   }

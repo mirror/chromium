@@ -560,6 +560,7 @@ class QuotaManager::OriginDataDeleter : public QuotaTask {
 
  protected:
   void Run() override {
+    LOG(ERROR) << "Quota mask: " << quota_client_mask_;
     error_count_ = 0;
     remaining_clients_ = manager()->clients_.size();
     for (QuotaClientList::iterator iter = manager()->clients_.begin();
@@ -603,7 +604,7 @@ class QuotaManager::OriginDataDeleter : public QuotaTask {
  private:
   void DidDeleteOriginData(blink::mojom::QuotaStatusCode status) {
     DCHECK_GT(remaining_clients_, 0);
-
+    LOG(ERROR) << "remaining quota clients: " << remaining_clients_-1;
     if (status != blink::mojom::QuotaStatusCode::kOk)
       ++error_count_;
 

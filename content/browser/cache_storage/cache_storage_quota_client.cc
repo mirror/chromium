@@ -72,7 +72,7 @@ void CacheStorageQuotaClient::DeleteOriginData(
     blink::mojom::StorageType type,
     const DeletionCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
+  LOG(ERROR) << "CacheStorageQuotaClient::DeleteOriginData";
   if (!cache_manager_) {
     callback.Run(blink::mojom::QuotaStatusCode::kErrorAbort);
     return;
