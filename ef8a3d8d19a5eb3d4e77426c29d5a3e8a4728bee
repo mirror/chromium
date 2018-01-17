@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "ed5091fb_92918f5b",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1195064
+      },
+      "writtenOn": "2018-01-17T20:46:56Z",
+      "side": 1,
+      "message": "My reading of 8.4.2.1 comes back to that it allows you to write a copy constructor \u003ddefault without const, if you should choose to do, even tho the compiler would not have done so. But once you do, it will take that form, not revert to what the compiler would have done implicitly.\n\nIf you change the \u003ddefault to \u003ddelete, it seems that the unit test added does not fail to compile, so it is not actually using this constructor here.\n\nvmpstr@ pointed out that these constructors are only inherited if trivially-copy-and-move-constructible. But that this specialization is only used when not-trivially-destructible. So these constructors written here are only used if trivially-copy-and-move-constructible-and-not-destructible. However such a type is not possible to create at this time, because of bugs in compiler libraries where is_trivially_copy_constructible ALSO checks trivial destructor, so this case is not possible atm. See the notes in http://en.cppreference.com/w/cpp/types/is_copy_constructible",
+      "parentUuid": "c9fdc94e_1ce75489",
+      "revId": "ef8a3d8d19a5eb3d4e77426c29d5a3e8a4728bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebc2f50b_802104ff",
         "filename": "base/optional_unittest.cc",
         "patchSetId": 2
