@@ -118,6 +118,30 @@
       "revId": "a7aa586dd39557c1d9b5919b229746b4996e8b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "142155b5_315f9c4b",
+        "filename": "chromeos/login/auth/cryptohome_authenticator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-17T06:57:34Z",
+      "side": 1,
+      "message": "Talked with hidehiko@ in person. Decided to do the following:\n\n1. Keep the log statements for the invalid proto cases (no extension, no value) in BaseReplyToMountError.\n2. Keep the error logging in the callers. This necessitates adding three calls where they weren\u0027t before (for MountEx). There was already a log statement here at line 207 so in this case it isn\u0027t necessary.\n3. Delete the log of the error code in the third branch of BaseReplyToMountError.\n\nLongterm I think this is the best approach because I think we should get rid of this error mapping anyway. We should have one error space. If/when we eventually do that, we won\u0027t have to make any significant changes to logging, as they will be handled at the callsites.",
+      "parentUuid": "7fa497af_04961531",
+      "range": {
+        "startLine": 199,
+        "startChar": 51,
+        "endLine": 199,
+        "endChar": 72
+      },
+      "revId": "a7aa586dd39557c1d9b5919b229746b4996e8b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
