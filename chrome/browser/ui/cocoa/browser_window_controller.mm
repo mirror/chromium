@@ -251,13 +251,8 @@ bool IsTabDetachingInFullscreenEnabled() {
 @implementation BrowserWindowController
 
 + (BrowserWindowController*)browserWindowControllerForWindow:(NSWindow*)window {
-  while (window) {
-    id controller = [window windowController];
-    if ([controller isKindOfClass:[BrowserWindowController class]])
-      return (BrowserWindowController*)controller;
-    window = [window parentWindow];
-  }
-  return nil;
+  return base::mac::ObjCCast<BrowserWindowController>(
+      [TabWindowController tabWindowControllerForWindow:window]);
 }
 
 + (BrowserWindowController*)browserWindowControllerForView:(NSView*)view {
@@ -776,7 +771,7 @@ bool IsTabDetachingInFullscreenEnabled() {
 }
 
 - (void)activate {
-  [BrowserWindowUtils activateWindowForController:self];
+  [BrowserWindowUtils activateWindowForController:[self nsWindowController]];
 }
 
 // Determine whether we should let a window zoom/unzoom to the given |newFrame|.
@@ -1288,9 +1283,8 @@ bool IsTabDetachingInFullscreenEnabled() {
       CreateNewStripWithContents(contentses, browserRect, false);
 
   // Get the new controller by asking the new window for its delegate.
-  BrowserWindowController* controller =
-      reinterpret_cast<BrowserWindowController*>(
-          [newBrowser->window()->GetNativeWindow() delegate]);
+  BrowserWindowController* controller = [BrowserWindowController
+      browserWindowControllerForWindow:newBrowser->window()->GetNativeWindow()];
   DCHECK(controller && [controller isKindOfClass:[TabWindowController class]]);
 
   // Ensure that the window will appear on top of the source window in
