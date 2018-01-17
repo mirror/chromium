@@ -93,6 +93,7 @@ class TestDataDeviceDelegate : public DataDeviceDelegate {
   bool CanAcceptDataEventsForSurface(Surface* surface) override {
     return can_accept_data_events_for_surface_;
   }
+  uint32_t GetClientSerial() override { return 1000; }
 
  private:
   std::vector<DataEvent> events_;

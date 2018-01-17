@@ -59,6 +59,9 @@ class DataDeviceDelegate {
   // device. E.g. the surface is owned by the same client as the data device.
   virtual bool CanAcceptDataEventsForSurface(Surface* surface) = 0;
 
+  // Returns the most recent serial of the client.
+  virtual uint32_t GetClientSerial() = 0;
+
  protected:
   virtual ~DataDeviceDelegate() {}
 };
