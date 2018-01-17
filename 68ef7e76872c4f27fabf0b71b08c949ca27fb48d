@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7cf29fbc_46c8eb5c",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_selector.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-17T22:48:14Z",
+      "side": 1,
+      "message": "It looks like this should be:\n.then((timezones) \u003d\u003e { this.setTimeZoneList_(timezones); })\n\nIf that doesn\u0027t work, nevermind. Maybe use bind() instead in .finally() for consistancy (unless that generates a warning in which case I guess it\u0027s OK as-is).",
+      "parentUuid": "3ae98e6a_88138bb8",
+      "revId": "68ef7e76872c4f27fabf0b71b08c949ca27fb48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c35c656b_44cc537d",
         "filename": "chrome/browser/resources/settings/date_time_page/timezone_subpage.html",
         "patchSetId": 7
