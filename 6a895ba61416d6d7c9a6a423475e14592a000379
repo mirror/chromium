@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adaedb71_d22650e5",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-17T12:12:29Z",
+      "side": 1,
+      "message": "nit: I think that you can leave this if condition as it was, i.e. if (get_mtp_storage_info_callback_.is_null())",
+      "revId": "6a895ba61416d6d7c9a6a423475e14592a000379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "312497e7_85a12082",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-17T12:12:29Z",
+      "side": 1,
+      "message": "nit: better structurally to use a variable for the arg and then only do one invocation of the callback?\n\nconst auto storage_info \u003d it !\u003d fake_storage_info_map.end() ? \u0026it-\u003esecond : nullptr;\nstd::move(callback).Run(storage_info);",
+      "revId": "6a895ba61416d6d7c9a6a423475e14592a000379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc33677e_9378d638",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-17T12:12:29Z",
+      "side": 1,
+      "message": "same comment re: structure as in the other place with this pattern",
+      "revId": "6a895ba61416d6d7c9a6a423475e14592a000379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
