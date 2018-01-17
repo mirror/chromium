@@ -1841,6 +1841,7 @@ enum WebFeature {
   kColorInputTypeChooserByTrustedClick = 2332,
   kColorInputTypeChooserByUntrustedClick = 2333,
   kCSSTypedOMStylePropertyMap = 2334,
+  kRTCPeerConnectionWithActiveCsp = 2335,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
