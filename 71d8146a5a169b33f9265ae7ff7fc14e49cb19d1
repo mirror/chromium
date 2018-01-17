@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54b9fa90_3fe740ff",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-17T14:20:42Z",
+      "side": 1,
+      "message": "Hmm that\u0027s true, but I haven\u0027t tried Windows nor Android. Should \nI enable them anyway?",
+      "parentUuid": "6110d1ae_39e0a2bf",
+      "revId": "71d8146a5a169b33f9265ae7ff7fc14e49cb19d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0f3ce0c_489b0602",
         "filename": "gpu/command_buffer/service/feature_info.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-17T01:25:42Z",
       "side": 1,
       "message": "Do you need to add GL_RGB10_A2 to the internal formats validators?",
+      "revId": "71d8146a5a169b33f9265ae7ff7fc14e49cb19d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78d6e07_09a8a783",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-17T14:20:42Z",
+      "side": 1,
+      "message": "Assuming you mean gpu/.../gles2_cmd_validation_implementation_autogen.h,\nit already knows about GL_RGB10_A2 [1] -- not sure why it\u0027s there since\nGL_RGB10_A2(_UI) were added as part of Open GL ES 3.0; \n\nNote that this patch needs to add GL_RGB10_A2 explicitly to gl_bindings.h \n(with the same value, 0x8059) to make it available to command buffer \nclients (that seem to observe GLES 2.0).\n\n[1] https://cs.chromium.org/search/?q\u003dgpu/+GL_RGB10_A2+gles2_cmd_validation_implementation_autogen.h\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "e0f3ce0c_489b0602",
       "revId": "71d8146a5a169b33f9265ae7ff7fc14e49cb19d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
