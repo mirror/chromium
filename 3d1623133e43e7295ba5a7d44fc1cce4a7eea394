@@ -22,6 +22,30 @@
       "revId": "3d1623133e43e7295ba5a7d44fc1cce4a7eea394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e0a486_6577a9c7",
+        "filename": "components/variations/variations_seed_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-17T02:28:22Z",
+      "side": 1,
+      "message": "Done – documented both here and in the header.",
+      "parentUuid": "3c60a9e1_513b7196",
+      "range": {
+        "startLine": 283,
+        "startChar": 38,
+        "endLine": 283,
+        "endChar": 0
+      },
+      "revId": "3d1623133e43e7295ba5a7d44fc1cce4a7eea394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
