@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cc6acf6_12f051c0",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaFormatBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-17T15:43:51Z",
+      "side": 1,
+      "message": "this seems like the caller\u0027s decision.  probably safe to omit.",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "e71b1269f22b8fe107ac7976955ce8e3461b8210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be68c4e_98058ccb",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaFormatBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-17T15:43:51Z",
+      "side": 1,
+      "message": "please move the public methods above the private ones.",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 10
+      },
+      "revId": "e71b1269f22b8fe107ac7976955ce8e3461b8210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da588dcb_2e134aa5",
+        "filename": "media/base/android/java/src/test/org/chromium/media/MediaFormatBuilderTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-17T15:43:51Z",
+      "side": 1,
+      "message": "there is an implicit call to super() anyway.",
+      "range": {
+        "startLine": 54,
+        "startChar": 27,
+        "endLine": 54,
+        "endChar": 43
+      },
+      "revId": "e71b1269f22b8fe107ac7976955ce8e3461b8210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
