@@ -445,6 +445,14 @@ def write_conditions(entry_id, is_exception, exception_id, entry,
       assert exception_count == 0
     else:
       raise ValueError('unknown key: ' + key + ' in entry ' + str(entry))
+  if ((os_type == '' or os_type == 'win' or os_type == 'macosx') and
+      (gl_vendor != '' or gl_renderer != '' or gl_version_string != '' or
+       gl_extensions != '' or gl_type != '' or gl_version != None) and
+      not is_exception):
+    raise Exception(
+        ("Entry %d: Context based entries disallowed on Win or MacOSX" %
+         entry_id))
+
   # write out the entry
   write_os_type(os_type, data_file)
   write_version(os_version, 'os_version', data_file)
