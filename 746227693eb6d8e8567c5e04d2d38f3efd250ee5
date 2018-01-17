@@ -16,6 +16,24 @@
       "revId": "746227693eb6d8e8567c5e04d2d38f3efd250ee5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042d513e_186fa317",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 2057,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2018-01-17T02:30:29Z",
+      "side": 0,
+      "message": "yes, definitely not getting rid of that yet!  Done.",
+      "parentUuid": "28d825b8_42997e51",
+      "revId": "746227693eb6d8e8567c5e04d2d38f3efd250ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
