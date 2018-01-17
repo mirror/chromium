@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a105c704_4be936c8",
+        "filename": "third_party/WebKit/Source/core/css/AtRuleCSSStyleDeclaration.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-17T03:34:45Z",
+      "side": 1,
+      "message": "I started this CL at the end of December :p Done",
+      "parentUuid": "5cec4bf5_a67151a6",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "57ca2f7e690e80a4c3531f25ffc16a7f81b09b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a036ccc_fe4baf87",
         "filename": "third_party/WebKit/Source/core/css/AtRuleCSSStyleDeclaration.h",
         "patchSetId": 14
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "ffa2be9d_a20e43ee",
+        "filename": "third_party/WebKit/Source/core/css/AtRuleCSSStyleDeclaration.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-17T03:34:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a036ccc_fe4baf87",
+      "revId": "57ca2f7e690e80a4c3531f25ffc16a7f81b09b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49ceef1f_0112b48e",
         "filename": "third_party/WebKit/Source/core/css/AtRuleCSSStyleDeclaration.h",
         "patchSetId": 14
@@ -56,6 +98,24 @@
       "revId": "57ca2f7e690e80a4c3531f25ffc16a7f81b09b96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df6d174_0f5a1d6f",
+        "filename": "third_party/WebKit/Source/core/css/AtRuleCSSStyleDeclaration.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-17T03:34:45Z",
+      "side": 1,
+      "message": "The lowerCamelCase ones are exposed to V8 via CSSStyleDeclaration.idl.",
+      "parentUuid": "49ceef1f_0112b48e",
+      "revId": "57ca2f7e690e80a4c3531f25ffc16a7f81b09b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
