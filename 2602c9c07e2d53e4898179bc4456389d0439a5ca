@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "115aa6d8_ca9a45c9",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-17T01:58:37Z",
+      "side": 1,
+      "message": "would it make sense to fail if a profile with |guid| does not exist?\n(I\u0027d imagine that id address has guid set, the intention is to update existing profile rather then create a new one)?",
+      "revId": "2602c9c07e2d53e4898179bc4456389d0439a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56cabe70_6dac4dbc",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-17T01:58:37Z",
+      "side": 1,
+      "message": "can you add api tests for this change?",
+      "revId": "2602c9c07e2d53e4898179bc4456389d0439a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6590a30_a81ba210",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-17T01:58:37Z",
+      "side": 1,
+      "message": "guid being valid does not necessary imply that the profile is an existing one - at least not by looking at this method only\n(it will happily proceed if a valid, non existing GUID is passed to it),",
+      "revId": "2602c9c07e2d53e4898179bc4456389d0439a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
