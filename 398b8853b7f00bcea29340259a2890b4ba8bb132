@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a03b3829_02fee059",
+        "filename": "components/signin/DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-17T20:56:29Z",
+      "side": 1,
+      "message": "is there core/browser/DEPS as well? can we move this there?",
+      "revId": "398b8853b7f00bcea29340259a2890b4ba8bb132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
