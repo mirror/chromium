@@ -191,6 +191,24 @@
     },
     {
       "key": {
+        "uuid": "e888f64d_47bf3cdd",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T19:40:11Z",
+      "side": 1,
+      "message": "It seems unreasonable to require each scroll to take at least 50ms and that won\u0027t scale. Whether or not web driver support for this is currently planned, WPT will eventually have to grapple with how to deal with this since if we were to move all our scrolling layout tests to use WebDriver in this form testing would slow to a crawl. e.g. This test takes ~5 *seconds* to run. Multiply that by the number of tests that will want to scroll.\n\nOne solution would be to write WPT with a \"kScrollCoolDown\" constant that browsers can tweak. If we can turn of fling generation we could ratchet that value down.",
+      "parentUuid": "c9c58d06_b4ce1d6e",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b1a2e9a_ed55161d",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
         "patchSetId": 48
