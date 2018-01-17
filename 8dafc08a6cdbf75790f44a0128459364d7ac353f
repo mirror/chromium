@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57231548_0b86c956",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4010,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-01-17T00:45:24Z",
+      "side": 1,
+      "message": "I just realized crrev.com/c/803376 aims to remove all uses of this, and its description mentions PlzNavigate is always enabled on tests now. If that\u0027s the case I\u0027ll remove this line (and will remove it from all other SSLUITestCommitted tests), still looking into this since that CL is not landed yet.",
+      "revId": "8dafc08a6cdbf75790f44a0128459364d7ac353f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
