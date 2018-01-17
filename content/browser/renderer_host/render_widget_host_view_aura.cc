@@ -57,6 +57,7 @@
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/overscroll_configuration.h"
 #include "content/public/browser/render_view_host.h"
+#include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
 #include "gpu/ipc/common/gpu_messages.h"
 #include "media/base/video_frame.h"
@@ -409,6 +410,7 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(
       legacy_render_widget_host_HWND_(nullptr),
       legacy_window_destroyed_(false),
       virtual_keyboard_requested_(false),
+      keyboard_lock_host_(this),
 #endif
       has_snapped_to_boundary_(false),
       is_guest_view_hack_(is_guest_view_hack),
@@ -1210,6 +1212,26 @@ void RenderWidgetHostViewAura::UnlockMouse() {
   event_handler_->UnlockMouse();
 }
 
+void RenderWidgetHostViewAura::ReserveKeys(
+    const std::vector<std::string>& codes,
+    base::OnceCallback<void(bool)> done) {
+  keyboard_lock_host_.ReserveKeys(codes, std::move(done));
+
+  // TODO(joedow): Find cleaner solution for determining fullscreen state.
+  if (host_->is_focused()) {
+    if (auto* render_view_host = RenderViewHost::From(host_)) {
+      WebContents* wc = WebContents::FromRenderViewHost(render_view_host);
+      if (wc && wc->IsFullscreenForCurrentTab()) {
+        keyboard_lock_host_.Activate();
+      }
+    }
+  }
+}
+
+void RenderWidgetHostViewAura::ClearReservedKeys() {
+  keyboard_lock_host_.ClearReservedKeys();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // RenderWidgetHostViewAura, ui::TextInputClient implementation:
 void RenderWidgetHostViewAura::SetCompositionText(
@@ -1777,11 +1799,21 @@ void RenderWidgetHostViewAura::OnWindowFocused(aura::Window* gained_focus,
         host_->GetRootBrowserAccessibilityManager();
     if (manager)
       manager->OnWindowFocused();
+
+    // TODO(joedow): Find cleaner solution for determining fullscreen state.
+    if (auto* render_view_host = RenderViewHost::From(host_)) {
+      WebContents* wc = WebContents::FromRenderViewHost(render_view_host);
+      if (wc && wc->IsFullscreenForCurrentTab()) {
+        keyboard_lock_host_.Activate();
+      }
+    }
   } else if (window_ == lost_focus) {
     host_->SetActive(false);
     host_->LostFocus();
 
     DetachFromInputMethod();
+
+    keyboard_lock_host_.Deactivate();
 
     // TODO(wjmaclean): Do we need to let TouchSelectionControllerClientAura
     // handle this, just in case it stomps on a new highlight in another view
