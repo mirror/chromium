@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed130a7d_f51ee9f0",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2287,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T00:01:22Z",
+      "side": 1,
+      "message": "I\u0027m curious who\u0027s calling this.",
+      "revId": "27323760fff66b2f52b7b2a2ab4403c1a83fbdc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9147d2f_133403cd",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 19
+      },
+      "lineNbr": 2385,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T00:01:22Z",
+      "side": 1,
+      "message": "We try to avoid \"true by default\" parameters. Let\u0027s call this noDisplayUpdates and reverse the value?",
+      "range": {
+        "startLine": 2385,
+        "startChar": 72,
+        "endLine": 2385,
+        "endChar": 87
+      },
+      "revId": "27323760fff66b2f52b7b2a2ab4403c1a83fbdc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
