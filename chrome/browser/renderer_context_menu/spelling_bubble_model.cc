@@ -50,10 +50,6 @@ void SpellingBubbleModel::Cancel() {
   SetPref(false);
 }
 
-base::string16 SpellingBubbleModel::GetLinkText() const {
-  return l10n_util::GetStringUTF16(IDS_LEARN_MORE);
-}
-
 GURL SpellingBubbleModel::GetLinkURL() const {
   return GURL(chrome::kPrivacyLearnMoreURL);
 }
