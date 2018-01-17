@@ -4289,6 +4289,7 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/media/remote/RemoteMediaPlayerBridge.java",
       "../android/java/src/org/chromium/chrome/browser/media/router/ChromeMediaRouter.java",
       "../android/java/src/org/chromium/chrome/browser/media/router/ChromeMediaRouterDialogController.java",
+      "../android/java/src/org/chromium/chrome/browser/media/router_caf/CafMediaRouter.java",
       "../android/java/src/org/chromium/chrome/browser/metrics/LaunchMetrics.java",
       "../android/java/src/org/chromium/chrome/browser/metrics/PageLoadMetrics.java",
       "../android/java/src/org/chromium/chrome/browser/metrics/UmaSessionStats.java",

@@ -30,6 +30,7 @@ import org.chromium.chrome.browser.tabmodel.document.DocumentTabModelSelector;
 import org.chromium.chrome.browser.tabmodel.document.StorageDelegate;
 import org.chromium.chrome.browser.tabmodel.document.TabDelegate;
 import org.chromium.content.app.ContentApplication;
+import android.os.SystemClock;
 
 /**
  * Basic application functionality that should be shared among all browser applications that use

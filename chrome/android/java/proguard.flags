@@ -26,3 +26,5 @@
 -keepclassmembers class android.support.design.internal.BottomNavigationMenuView {
     boolean mShiftingMode;
 }
+
+-keep class org.chromium.chrome.browser.media.router.cast.CastOptionsProvider

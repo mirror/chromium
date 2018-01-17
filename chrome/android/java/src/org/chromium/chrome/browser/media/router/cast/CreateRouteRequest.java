@@ -6,14 +6,11 @@ package org.chromium.chrome.browser.media.router.cast;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.v7.media.MediaRouter;
 
 import com.google.android.gms.cast.Cast;
 import com.google.android.gms.cast.LaunchOptions;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
+import com.google.android.gms.cast.framework.CastContext;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
@@ -29,10 +26,7 @@ import javax.annotation.Nullable;
  * Since there're numerous asynchronous calls involved in getting the application to launch
  * the class is implemented as a state machine.
  */
-public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
-                                           GoogleApiClient.OnConnectionFailedListener,
-                                           ResultCallback<Cast.ApplicationConnectionResult>,
-                                           ChromeCastSessionManager.CastSessionLaunchRequest {
+public class CreateRouteRequest implements ChromeCastSessionManager.CastSessionLaunchRequest {
     private static final String TAG = "MediaRouter";
 
     private static final int STATE_IDLE = 0;
@@ -53,7 +47,6 @@ public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
     private final ChromeCastSessionManager.CastSessionManagerListener mSessionListener;
     private final RequestedCastSessionType mSessionType;
 
-    private GoogleApiClient mApiClient;
     private int mState = STATE_IDLE;
 
     // Used to identify whether the request should launch a CastSessionImpl or a RemotingCastSession
@@ -140,131 +133,22 @@ public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
     public void start(Cast.Listener castListener) {
         if (mState != STATE_IDLE) throwInvalidState();
 
-        mApiClient = createApiClient(castListener);
-        mApiClient.connect();
-        mState = STATE_CONNECTING_TO_API;
-    }
+        CastUtils.getCastContext().setReceiverApplicationId(mSource.getApplicationId());
 
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    // GoogleApiClient.* implementations.
-
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        if (mState != STATE_CONNECTING_TO_API && mState != STATE_API_CONNECTION_SUSPENDED) {
-            throwInvalidState();
+        MediaRouter mediaRouter = ChromeMediaRouter.getAndroidMediaRouter();
+        for (MediaRouter.RouteInfo routeInfo : mediaRouter.getRoutes()) {
+            if (routeInfo.getId().equals(mSink.getId())) {
+                // Unselect and then select so that CAF will get notified of the selection.
+                mediaRouter.unselect(0);
+                routeInfo.select();
+                break;
+            }
         }
-
-        if (mState == STATE_API_CONNECTION_SUSPENDED) return;
-
-        try {
-            launchApplication(mApiClient, mSource.getApplicationId(), true)
-                    .setResultCallback(this);
-            mState = STATE_LAUNCHING_APPLICATION;
-        } catch (Exception e) {
-            Log.e(TAG, "Launch application failed: %s", mSource.getApplicationId(), e);
-            reportError();
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int cause) {
-        mState = STATE_API_CONNECTION_SUSPENDED;
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult result) {
-        if (mState != STATE_CONNECTING_TO_API) throwInvalidState();
-
-        Log.e(TAG, "GoogleApiClient connection failed: %d, %b", result.getErrorCode(),
-                result.hasResolution());
-        reportError();
-    }
-
-    /**
-     * ResultCallback<Cast.ApplicationConnectionResult> implementation.
-     */
-    @Override
-    public void onResult(Cast.ApplicationConnectionResult result) {
-        if (mState != STATE_LAUNCHING_APPLICATION
-                && mState != STATE_API_CONNECTION_SUSPENDED) {
-            throwInvalidState();
-        }
-
-        Status status = result.getStatus();
-        if (!status.isSuccess()) {
-            Log.e(TAG, "Launch application failed with status: %s, %d, %s",
-                    mSource.getApplicationId(), status.getStatusCode(), status.getStatusMessage());
-            reportError();
-            return;
-        }
-
-        mState = STATE_LAUNCH_SUCCEEDED;
-        reportSuccess(result);
-    }
-
-    private GoogleApiClient createApiClient(Cast.Listener listener) {
-        Cast.CastOptions.Builder apiOptionsBuilder =
-                new Cast.CastOptions.Builder(mSink.getDevice(), listener)
-                         // TODO(avayvod): hide this behind the flag or remove
-                         .setVerboseLoggingEnabled(true);
-
-        return new GoogleApiClient.Builder(ContextUtils.getApplicationContext())
-                .addApi(Cast.API, apiOptionsBuilder.build())
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-    }
-
-    private PendingResult<Cast.ApplicationConnectionResult> launchApplication(
-            GoogleApiClient apiClient,
-            String appId,
-            boolean relaunchIfRunning) {
-        LaunchOptions.Builder builder = new LaunchOptions.Builder();
-        return Cast.CastApi.launchApplication(apiClient, appId,
-                builder.setRelaunchIfRunning(relaunchIfRunning)
-                        .build());
     }
 
     // TODO(crbug.com/635567): Fix this properly.
     @SuppressLint("DefaultLocale")
     private void throwInvalidState() {
         throw new RuntimeException(String.format("Invalid state: %d", mState));
-    }
-
-    private void reportSuccess(Cast.ApplicationConnectionResult result) {
-        if (mState != STATE_LAUNCH_SUCCEEDED) throwInvalidState();
-
-        CastSession session = null;
-
-        switch (mSessionType) {
-            case CAST:
-                session = new CastSessionImpl(mApiClient, result.getSessionId(),
-                        result.getApplicationMetadata(), result.getApplicationStatus(),
-                        mSink.getDevice(), mOrigin, mTabId, mIsIncognito, mSource, mMessageHandler);
-                break;
-            case REMOTE:
-                session = new RemotingCastSession(mApiClient, result.getSessionId(),
-                        result.getApplicationMetadata(), result.getApplicationStatus(),
-                        mSink.getDevice(), mOrigin, mTabId, mIsIncognito, mSource);
-                break;
-        }
-
-        ChromeCastSessionManager.get().onSessionStarted(session);
-
-        terminate();
-    }
-
-    private void reportError() {
-        if (mState == STATE_TERMINATED) throwInvalidState();
-
-        ChromeCastSessionManager.get().onSessionStartFailed();
-
-        terminate();
-    }
-
-    private void terminate() {
-        mApiClient.unregisterConnectionCallbacks(this);
-        mApiClient.unregisterConnectionFailedListener(this);
-        mState = STATE_TERMINATED;
     }
 }

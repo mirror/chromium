@@ -597,24 +597,6 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/media/router/MediaRouteDialogManager.java",
   "java/src/org/chromium/chrome/browser/media/router/MediaRouteManager.java",
   "java/src/org/chromium/chrome/browser/media/router/MediaRouteProvider.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/BaseMediaRouteProvider.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/CastMediaRouteProvider.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/CastMediaSource.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/CastMessageHandler.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/CastRequestIdGenerator.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/CastSession.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/CastSessionImpl.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/CastSessionInfo.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/CastSessionUtil.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/ClientRecord.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/CreateRouteRequest.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/DiscoveryCallback.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/MediaSink.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingCastSession.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
-  "java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
   "java/src/org/chromium/chrome/browser/media/ui/MediaButtonReceiver.java",
   "java/src/org/chromium/chrome/browser/media/ui/MediaImageCallback.java",
   "java/src/org/chromium/chrome/browser/media/ui/MediaImageManager.java",
@@ -2013,4 +1995,66 @@ chrome_junit_test_java_sources = [
 if (enable_offline_pages_harness) {
   chrome_java_sources += [ "java/src/org/chromium/chrome/browser/offlinepages/evaluation/OfflinePageEvaluationBridge.java" ]
   chrome_test_java_sources += [ "javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageSavePageLaterEvaluationTest.java" ]
+}
+
+declare_args() {
+  enable_caf = false
+}
+
+if (enable_caf) {
+  chrome_java_sources += [
+    "java/src/org/chromium/chrome/browser/media/router/caf/CastMediaRouteProvider.java",
+    "java/src/org/chromium/chrome/browser/media/router/caf/CastMediaSource.java",
+    "java/src/org/chromium/chrome/browser/media/router/caf/CastMessageHandler.java",
+    "java/src/org/chromium/chrome/browser/media/router/caf/CastRequestIdGenerator.java",
+    "java/src/org/chromium/chrome/browser/media/router/caf/CastSession.java",
+    "java/src/org/chromium/chrome/browser/media/router/caf/CastSessionImpl.java",
+    "java/src/org/chromium/chrome/browser/media/router/caf/CastSessionInfo.java",
+    "java/src/org/chromium/chrome/browser/media/router/caf/ChromeCastSessionManager.java",
+    "java/src/org/chromium/chrome/browser/media/router/caf/ClientRecord.java",
+    "java/src/org/chromium/chrome/browser/media/router/caf/CreateRouteRequest.java",
+    "java/src/org/chromium/chrome/browser/media/router/caf/DiscoveryCallback.java",
+    "java/src/org/chromium/chrome/browser/media/router/caf/MediaSink.java",
+    "java/src/org/chromium/chrome/browser/media/router/caf/MediaSource.java",
+    "java/src/org/chromium/chrome/browser/media/router/caf/remoting/RemotingMediaRouteProvider.java",
+    "java/src/org/chromium/chrome/browser/media/router/caf/remoting/RemotingMediaSource.java",
+  ]
+} else {
+  chrome_java_sources += [
+    "java/src/org/chromium/chrome/browser/media/router_caf/CafMediaRouter.java",
+    "java/src/org/chromium/chrome/browser/media/router_caf/MediaRouteManager.java",
+    "java/src/org/chromium/chrome/browser/media/router_caf/MediaRouteProvider.java",
+    "java/src/org/chromium/chrome/browser/media/router_caf/MediaRoute.java",
+    "java/src/org/chromium/chrome/browser/media/router_caf/DiscoveryCallback.java",
+    "java/src/org/chromium/chrome/browser/media/router_caf/DiscoveryDelegate.java",
+    "java/src/org/chromium/chrome/browser/media/router_caf/cast/CastUtils.java",
+    "java/src/org/chromium/chrome/browser/media/router_caf/cast/CastSessionController.java",
+    "java/src/org/chromium/chrome/browser/media/router_caf/cast/MediaSink.java",
+    "java/src/org/chromium/chrome/browser/media/router_caf/cast/MediaSource.java",
+    "java/src/org/chromium/chrome/browser/media/router_caf/cast/CastMediaSource.java",
+    "java/src/org/chromium/chrome/browser/media/router_caf/cast/CastMediaRouteProvider.java",
+    "java/src/org/chromium/chrome/browser/media/router_caf/cast/ClientRecord.java",
+    "java/src/org/chromium/chrome/browser/media/router_caf/cast/CastRequestIdGenerator.java",
+    "java/src/org/chromium/chrome/browser/media/router_caf/cast/CastMessageHandler.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/BaseMediaRouteProvider.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/CastMediaRouteProvider.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/CastMediaSource.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/CastMessageHandler.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/CastRequestIdGenerator.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/CastOptionsProvider.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/CastSession.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/CastSessionImpl.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/CastSessionInfo.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/CastSessionUtil.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/ClientRecord.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/CreateRouteRequest.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/DiscoveryCallback.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/MediaSink.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/CastUtils.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingCastSession.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
+    "java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
+  ]
 }

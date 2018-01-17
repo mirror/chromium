@@ -164,7 +164,7 @@ def _ProcessResources(config, tmp_paths, repo):
     for res_type in os.listdir(res_path):
       res_type_path = os.path.join(res_path, res_type)
 
-      if res_type.startswith('drawable'):
+      if res_type.startswith('drawable') and res_type_path.find('cast') == -1:
         shutil.rmtree(res_type_path)
         continue
 

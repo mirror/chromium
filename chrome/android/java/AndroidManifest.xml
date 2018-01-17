@@ -159,6 +159,11 @@ by a child template that "extends" this file.
         <meta-data android:name="android.content.APP_RESTRICTIONS"
             android:resource="@xml/app_restrictions"/>
 
+        <meta-data
+            android:name=
+            "com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
+            android:value="org.chromium.chrome.browser.media.router.cast.CastOptionsProvider"/>
+
         <!-- Note: All activities directly or indirectly derived from ChromeActivity
              must specify android:hardwareAccelerated="false".
 

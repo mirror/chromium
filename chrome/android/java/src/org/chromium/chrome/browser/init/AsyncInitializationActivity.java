@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.WindowManager;
+import com.google.android.gms.cast.framework.CastContext;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.StrictModeContext;
@@ -232,6 +233,14 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     @Override
     @SuppressLint("MissingSuperCall")  // Called in onCreateInternal.
     protected final void onCreate(Bundle savedInstanceState) {
+        android.util.Log.i("zqzhang", "beforeInit=" + SystemClock.elapsedRealtime());
+        try {
+            CastContext.getSharedInstance(getApplicationContext());
+        } catch (Throwable e) {
+            android.util.Log.i("zqzhang", "failed to init CastContext");
+        }
+        android.util.Log.i("zqzhang", "afterInit=" + SystemClock.elapsedRealtime());
+
         TraceEvent.begin("AsyncInitializationActivity.onCreate()");
         onCreateInternal(savedInstanceState);
         TraceEvent.end("AsyncInitializationActivity.onCreate()");
