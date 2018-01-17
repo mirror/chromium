@@ -16,6 +16,8 @@
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 
+using device::mojom::SensorCreationError;
+
 namespace content {
 
 SensorProviderProxyImpl::SensorProviderProxyImpl(
@@ -40,8 +42,13 @@ void SensorProviderProxyImpl::GetSensor(
   ServiceManagerConnection* connection =
       ServiceManagerConnection::GetForProcess();
 
-  if (!connection || !CheckPermission(type)) {
-    std::move(callback).Run(nullptr);
+  if (!connection) {
+    std::move(callback).Run(nullptr, SensorCreationError::NOT_READABLE_ERROR);
+    return;
+  }
+
+  if (!CheckPermission(type)) {
+    std::move(callback).Run(nullptr, SensorCreationError::NOT_ALLOWED_ERROR);
     return;
   }
 
