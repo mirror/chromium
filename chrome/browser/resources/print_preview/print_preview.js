@@ -383,6 +383,10 @@ cr.define('print_preview', function() {
           this.previewArea_,
           print_preview.PreviewArea.EventType.SETTINGS_INVALID,
           this.onSettingsInvalid_.bind(this));
+      this.tracker.add(
+          this.previewArea_,
+          print_preview.PreviewArea.EventType.GCP_ERROR_LEARN_MORE_CLICK,
+          this.onGcpErrorLearnMoreClick_.bind(this));
 
       this.tracker.add(
           this.destinationStore_,
@@ -436,6 +440,11 @@ cr.define('print_preview', function() {
           this.destinationSearch_,
           print_preview.DestinationListItem.EventType.REGISTER_PROMO_CLICKED,
           this.onCloudPrintRegisterPromoClick_.bind(this));
+      this.tracker.add(
+          this.destinationSearch_,
+          print_preview.DestinationListItem.EventType
+              .GCP_ERROR_LEARN_MORE_CLICK,
+          this.onGcpErrorLearnMoreClick_.bind(this));
 
       this.tracker.add(
           this.advancedOptionsSettings_,
@@ -1059,6 +1068,26 @@ cr.define('print_preview', function() {
     onAdvancedOptionsButtonActivated_: function() {
       this.advancedSettings_.showForDestination(
           assert(this.destinationStore_.selectedDestination));
+    },
+
+    /**
+     * Called when the preview area or destination search sends a
+     * GCP_ERROR_LEARN_MORE_CLICK event. Calls native layer method to open a new
+     * tab with the help page.
+     * @private
+     */
+    onGcpErrorLearnMoreClick_: function() {
+      let gcpHelpUrl = 'https://support.google.com/';
+      if (cr.isCros)
+        gcpHelpUrl += 'chromebox?p=cloudprint_error_troubleshoot';
+      else if (cr.isMac)
+        gcpHelpUrl += 'cloudprint?p=cloudprint_error_offline_mac';
+      else if (cr.isWin)
+        gcpHelpUrl += 'cloudprint?p=cloudprint_error_offline_win';
+      else  // other Linux platform. No link yet, redirect to Windows for now.
+        gcpHelpUrl += 'cloudprint?p=cloudprint_error_offline_win';
+
+      this.nativeLayer_.forceOpenNewTab(gcpHelpUrl);
     },
 
     /**
