@@ -52,6 +52,24 @@
       "revId": "6e48de1385b1773f48ba2ffa2aa4597c0523eb1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff0173a9_92002e5a",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-17T21:36:20Z",
+      "side": 0,
+      "message": "Thanks. A device that is fully open must have unstable lid angle ([0,20] or [340,360]) which will not be used to leave tablet mode [1], so I think it is safe to only consider the angle to enter tablet mode.\n\n[1] https://cs.chromium.org/chromium/src/ash/wm/tablet_mode/tablet_mode_controller.cc?sq\u003dpackage:chromium\u0026l\u003d365",
+      "parentUuid": "a443da88_22105db9",
+      "revId": "6e48de1385b1773f48ba2ffa2aa4597c0523eb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
