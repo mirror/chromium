@@ -2221,6 +2221,9 @@
                     "enable_features": [
                         "KeepPrefetchedContentSuggestions",
                         "OfflinePagesPrefetching"
+                    ],
+                    "disable_features": [
+                        "OfflinePagesLimitlessPrefetching"
                     ]
                 }
             ]
