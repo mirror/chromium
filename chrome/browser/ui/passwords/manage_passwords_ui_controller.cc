@@ -238,7 +238,8 @@ void ManagePasswordsUIController::OnLoginsChanged(
 
 void ManagePasswordsUIController::UpdateIconAndBubbleState(
     ManagePasswordsIconView* icon) {
-  if (bubble_status_ == SHOULD_POP_UP) {
+  if (bubble_status_ == SHOULD_POP_UP ||
+      bubble_status_ == SHOULD_POP_UP_AFTER_REAUTH) {
     DCHECK(!dialog_controller_);
     // This will detach any existing bubble so OnBubbleHidden() isn't called.
     weak_ptr_factory_.InvalidateWeakPtrs();
@@ -645,7 +646,7 @@ void ManagePasswordsUIController::ReopenBubbleAfterAuth(
     return;
   if (auth_is_successful)
     are_passwords_revealed_when_next_bubble_is_opened_ = true;
-  bubble_status_ = SHOULD_POP_UP;
+  bubble_status_ = SHOULD_POP_UP_AFTER_REAUTH;
   UpdateBubbleAndIconVisibility();
 }
 

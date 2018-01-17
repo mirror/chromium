@@ -176,6 +176,8 @@ class ManagePasswordsUIController
     // The bubble is to be popped up in the next call to
     // UpdateBubbleAndIconVisibility().
     SHOULD_POP_UP,
+    // The bubble is to be reopened after re-authentication.
+    SHOULD_POP_UP_AFTER_REAUTH,
     SHOWN,
     // Same as SHOWN but the icon is to be updated when the bubble is closed.
     SHOWN_PENDING_ICON_UPDATE,
