@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b83ae42e_f44acb70",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-breakpoints/debugger-set-breakpoint.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T22:55:54Z",
+      "side": 1,
+      "message": "breakpoints-ui-in-source-frame.js",
+      "revId": "7ea53924a130395398f5e03dea7e8ff1a2dc0369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd9220a_e65fd6aa",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-breakpoints/debugger-set-breakpoint.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T22:55:54Z",
+      "side": 1,
+      "message": "Test the pause for disabling as well.",
+      "revId": "7ea53924a130395398f5e03dea7e8ff1a2dc0369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681507ca_661fedd0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-breakpoints/debugger-set-breakpoint.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T22:55:54Z",
+      "side": 1,
+      "message": "Let\u0027s add a separate test which actually stops on conditional breakpoint.",
+      "revId": "7ea53924a130395398f5e03dea7e8ff1a2dc0369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8e277c_8b580119",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-breakpoints/debugger-set-breakpoint.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T22:55:54Z",
+      "side": 1,
+      "message": "Change a condition.",
+      "revId": "7ea53924a130395398f5e03dea7e8ff1a2dc0369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c159cab8_f86b98c2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-breakpoints/debugger-set-breakpoint.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T22:55:54Z",
+      "side": 1,
+      "message": "Let\u0027s not dump this.",
+      "revId": "7ea53924a130395398f5e03dea7e8ff1a2dc0369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
