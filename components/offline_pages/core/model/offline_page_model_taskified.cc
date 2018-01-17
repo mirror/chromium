@@ -19,6 +19,7 @@
 #include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/model/add_page_task.h"
 #include "components/offline_pages/core/model/clear_legacy_temporary_pages_task.h"
+#include "components/offline_pages/core/model/create_archive_task.h"
 #include "components/offline_pages/core/model/delete_page_task.h"
 #include "components/offline_pages/core/model/get_pages_task.h"
 #include "components/offline_pages/core/model/mark_page_accessed_task.h"
@@ -125,9 +126,8 @@ OfflinePageModelTaskified::OfflinePageModelTaskified(
     : store_(std::move(store)),
       archive_manager_(std::move(archive_manager)),
       policy_controller_(new ClientPolicyController()),
-      clock_(std::move(clock)),
       task_queue_(this),
-      skip_clearing_original_url_for_testing_(false),
+      clock_(std::move(clock)),
       weak_ptr_factory_(this) {
   CreateArchivesDirectoryIfNeeded();
   PostClearLegacyTemporaryPagesTask();
@@ -155,16 +155,15 @@ void OfflinePageModelTaskified::SavePage(
     const SavePageCallback& callback) {
   // Skip saving the page that is not intended to be saved, like local file
   // page.
+  OfflinePageItem item;
   if (!OfflinePageModel::CanSaveURL(save_page_params.url)) {
-    InformSavePageDone(callback, SavePageResult::SKIPPED,
-                       save_page_params.client_id, kInvalidOfflineId);
+    InformSavePageDone(callback, SavePageResult::SKIPPED, item);
     return;
   }
 
   // The web contents is not available if archiver is not created and passed.
   if (!archiver.get()) {
-    InformSavePageDone(callback, SavePageResult::CONTENT_UNAVAILABLE,
-                       save_page_params.client_id, kInvalidOfflineId);
+    InformSavePageDone(callback, SavePageResult::CONTENT_UNAVAILABLE, item);
     return;
   }
 
@@ -183,8 +182,7 @@ void OfflinePageModelTaskified::SavePage(
       GetInternalArchiveDirectory(save_page_params.client_id.name_space),
       create_archive_params,
       base::Bind(&OfflinePageModelTaskified::OnCreateArchiveDone,
-                 weak_ptr_factory_.GetWeakPtr(), save_page_params, offline_id,
-                 GetCurrentTime(), callback));
+                 weak_ptr_factory_.GetWeakPtr(), callback, item));
   pending_archivers_.push_back(std::move(archiver));
 }
 
@@ -333,38 +331,37 @@ OfflineEventLogger* OfflinePageModelTaskified::GetLogger() {
   return &offline_event_logger_;
 }
 
+// TODO(romax): see if this method can be moved into anonymous namespace after
+// migrating UMAs.
 void OfflinePageModelTaskified::InformSavePageDone(
     const SavePageCallback& callback,
     SavePageResult result,
-    const ClientId& client_id,
-    int64_t offline_id) {
-  UMA_HISTOGRAM_ENUMERATION("OfflinePages.SavePageCount",
-                            model_utils::ToNamespaceEnum(client_id.name_space),
-                            OfflinePagesNamespaceEnumeration::RESULT_COUNT);
+    const OfflinePageItem& page) {
+  UMA_HISTOGRAM_ENUMERATION(
+      "OfflinePages.SavePageCount",
+      model_utils::ToNamespaceEnum(page.client_id.name_space),
+      OfflinePagesNamespaceEnumeration::RESULT_COUNT);
   base::UmaHistogramEnumeration(
-      model_utils::AddHistogramSuffix(client_id.name_space,
+      model_utils::AddHistogramSuffix(page.client_id.name_space,
                                       "OfflinePages.SavePageResult"),
       result, SavePageResult::RESULT_COUNT);
 
   if (result == SavePageResult::ARCHIVE_CREATION_FAILED)
     CreateArchivesDirectoryIfNeeded();
   if (!callback.is_null())
-    callback.Run(result, offline_id);
+    callback.Run(result, page.offline_id);
 }
 
 void OfflinePageModelTaskified::OnCreateArchiveDone(
-    const SavePageParams& save_page_params,
-    int64_t offline_id,
-    const base::Time& start_time,
     const SavePageCallback& callback,
+    OfflinePageItem proposed_page,
     OfflinePageArchiver* archiver,
     ArchiverResult archiver_result,
     const GURL& saved_url,
     const base::FilePath& file_path,
     const base::string16& title,
     int64_t file_size,
-    const std::string& file_hash) {
-  // Remove the |archiver| from the pending list once it completes creation.
+    const std::string& digest) {
   pending_archivers_.erase(
       std::find_if(pending_archivers_.begin(), pending_archivers_.end(),
                    [archiver](const std::unique_ptr<OfflinePageArchiver>& a) {
@@ -373,34 +370,22 @@ void OfflinePageModelTaskified::OnCreateArchiveDone(
 
   if (archiver_result != ArchiverResult::SUCCESSFULLY_CREATED) {
     SavePageResult result = ArchiverResultToSavePageResult(archiver_result);
-    InformSavePageDone(callback, result, save_page_params.client_id,
-                       offline_id);
+    InformSavePageDone(callback, result, proposed_page);
     return;
   }
-  if (save_page_params.url != saved_url) {
+  if (proposed_page.url != saved_url) {
     DVLOG(1) << "Saved URL does not match requested URL.";
     InformSavePageDone(callback, SavePageResult::ARCHIVE_CREATION_FAILED,
-                       save_page_params.client_id, offline_id);
+                       proposed_page);
     return;
   }
-
-  OfflinePageItem offline_page(saved_url, offline_id,
-                               save_page_params.client_id, file_path, file_size,
-                               start_time);
-  offline_page.title = title;
-  offline_page.digest = file_hash;
-  offline_page.request_origin = save_page_params.request_origin;
-  // Don't record the original URL if it is identical to the final URL. This is
-  // because some websites might route the redirect finally back to itself upon
-  // the completion of certain action, i.e., authentication, in the middle.
-  if (skip_clearing_original_url_for_testing_ ||
-      save_page_params.original_url != offline_page.url) {
-    offline_page.original_url = save_page_params.original_url;
-  }
-
-  AddPage(offline_page,
+  proposed_page.file_path = file_path;
+  proposed_page.file_size = file_size;
+  proposed_page.title = title;
+  proposed_page.digest = digest;
+  AddPage(proposed_page,
           base::Bind(&OfflinePageModelTaskified::OnAddPageForSavePageDone,
-                     weak_ptr_factory_.GetWeakPtr(), callback, offline_page));
+                     weak_ptr_factory_.GetWeakPtr(), callback, proposed_page));
 }
 
 void OfflinePageModelTaskified::OnAddPageForSavePageDone(
@@ -410,20 +395,12 @@ void OfflinePageModelTaskified::OnAddPageForSavePageDone(
     int64_t offline_id) {
   SavePageResult save_page_result =
       AddPageResultToSavePageResult(add_page_result);
-  InformSavePageDone(callback, save_page_result, page_attempted.client_id,
-                     offline_id);
+  InformSavePageDone(callback, save_page_result, page_attempted);
   if (save_page_result == SavePageResult::SUCCESS) {
     ReportPageHistogramAfterSuccessfulSaving(page_attempted, GetCurrentTime());
-    // TODO(romax): Just keep the same with logic in OPMImpl (which was wrong).
-    // This should be fixed once we have the new strategy for clearing pages.
-    if (policy_controller_->GetPolicy(page_attempted.client_id.name_space)
-            .pages_allowed_per_url != kUnlimitedPages) {
-      RemovePagesMatchingUrlAndNamespace(page_attempted);
-      PostClearCachedPagesTask(false /* is_initializing */);
-    }
-  } else {
-    PostClearCachedPagesTask(false /* is_initializing */);
+    RemovePagesMatchingUrlAndNamespace(page_attempted);
   }
+  PostClearCachedPagesTask(false /* is_initializing */);
 }
 
 void OfflinePageModelTaskified::OnAddPageDone(const OfflinePageItem& page,

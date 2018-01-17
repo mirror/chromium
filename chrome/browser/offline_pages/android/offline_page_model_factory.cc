@@ -19,8 +19,8 @@
 #include "chrome/common/chrome_constants.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/offline_pages/core/archive_manager.h"
-#include "components/offline_pages/core/model/offline_page_model_taskified.h"
 #include "components/offline_pages/core/offline_page_metadata_store_sql.h"
+#include "components/offline_pages/core/offline_page_model_impl.h"
 
 namespace offline_pages {
 
@@ -37,7 +37,7 @@ OfflinePageModelFactory* OfflinePageModelFactory::GetInstance() {
 // static
 OfflinePageModel* OfflinePageModelFactory::GetForBrowserContext(
     content::BrowserContext* context) {
-  return static_cast<OfflinePageModelTaskified*>(
+  return static_cast<OfflinePageModelImpl*>(
       GetInstance()->GetServiceForBrowserContext(context, true));
 }
 
@@ -49,7 +49,7 @@ KeyedService* OfflinePageModelFactory::BuildServiceInstanceFor(
 
   base::FilePath store_path =
       profile->GetPath().Append(chrome::kOfflinePageMetadataDirname);
-  std::unique_ptr<OfflinePageMetadataStoreSQL> metadata_store(
+  std::unique_ptr<OfflinePageMetadataStore> metadata_store(
       new OfflinePageMetadataStoreSQL(background_task_runner, store_path));
 
   base::FilePath persistent_archives_dir =
@@ -66,9 +66,9 @@ KeyedService* OfflinePageModelFactory::BuildServiceInstanceFor(
       DownloadPrefs::GetDefaultDownloadDirectory(), background_task_runner));
   auto clock = base::MakeUnique<base::DefaultClock>();
 
-  OfflinePageModelTaskified* model = new OfflinePageModelTaskified(
+  OfflinePageModelImpl* model = new OfflinePageModelImpl(
       std::move(metadata_store), std::move(archive_manager),
-      background_task_runner, std::move(clock));
+      background_task_runner);
 
   CctOriginObserver::AttachToOfflinePageModel(model);
 

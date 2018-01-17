@@ -32,8 +32,8 @@
 #include "chrome/test/base/testing_profile.h"
 #include "chrome/test/base/testing_profile_manager.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
-#include "components/offline_pages/core/model/offline_page_model_taskified.h"
 #include "components/offline_pages/core/offline_page_metadata_store_sql.h"
+#include "components/offline_pages/core/offline_page_model_impl.h"
 #include "components/offline_pages/core/request_header/offline_page_navigation_ui_data.h"
 #include "components/previews/core/previews_decider.h"
 #include "components/previews/core/previews_experiments.h"
@@ -428,8 +428,7 @@ class OfflinePageRequestJobTest : public testing::Test {
                                    bool is_offline_page_set_in_navigation_data);
 
   content::TestBrowserThreadBundle thread_bundle_;
-  std::unique_ptr<base::SimpleTestClock> clock_;
-  base::SimpleTestClock* clock_ptr_;
+  base::SimpleTestClock clock_;
   TestingProfileManager profile_manager_;
   TestingProfile* profile_;
   std::unique_ptr<content::WebContents> web_contents_;
@@ -462,8 +461,6 @@ class OfflinePageRequestJobTest : public testing::Test {
 
 OfflinePageRequestJobTest::OfflinePageRequestJobTest()
     : thread_bundle_(content::TestBrowserThreadBundle::REAL_IO_THREAD),
-      clock_(new base::SimpleTestClock),
-      clock_ptr_(clock_.get()),
       profile_manager_(TestingBrowserProcess::GetGlobal()),
       bytes_read_(0),
       is_offline_page_set_in_navigation_data_(false),
@@ -487,19 +484,19 @@ void OfflinePageRequestJobTest::SetUp() {
       profile(), BuildTestOfflinePageModel);
   RunUntilIdle();
 
-  OfflinePageModelTaskified* model = static_cast<OfflinePageModelTaskified*>(
+  OfflinePageModelImpl* model = static_cast<OfflinePageModelImpl*>(
       OfflinePageModelFactory::GetForBrowserContext(profile()));
 
   // Hook up a test clock such that we can control the time when the offline
   // page is created.
-  clock_ptr_->SetNow(base::Time::Now());
-  model->SetClockForTesting(std::move(clock_));
+  clock_.SetNow(base::Time::Now());
+  model->set_testing_clock(&clock_);
 
   // Skip the logic to clear the original URL if it is same as final URL.
   // This is needed in order to test that offline page request handler can
   // omit the redirect under this circumstance, for compatibility with the
   // metadata already written to the store.
-  model->SetSkipClearingOriginalUrlForTesting();
+  model->set_skip_clearing_original_url_for_testing();
 
   // All offline pages being created below will point to real archive files
   // residing in test data directory.
@@ -525,7 +522,7 @@ void OfflinePageRequestJobTest::SetUp() {
                                   kTestDigest2));
 
   // Make sure that the creation time of 2nd offline file is later.
-  clock_ptr_->Advance(base::TimeDelta::FromMinutes(10));
+  clock_.Advance(base::TimeDelta::FromMinutes(10));
 
   SavePage(kTestUrl1, kTestClientId2, GURL(), std::move(archiver2));
 
@@ -619,7 +616,7 @@ void OfflinePageRequestJobTest::SetUp() {
 void OfflinePageRequestJobTest::TearDown() {
   OfflinePageModel* model =
       OfflinePageModelFactory::GetForBrowserContext(profile());
-  static_cast<OfflinePageModelTaskified*>(model)->SetClockForTesting(nullptr);
+  static_cast<OfflinePageModelImpl*>(model)->set_testing_clock(nullptr);
 }
 
 void OfflinePageRequestJobTest::SimulateHasNetworkConnectivity(bool online) {
