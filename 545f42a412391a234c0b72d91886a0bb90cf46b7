@@ -22,6 +22,30 @@
       "revId": "545f42a412391a234c0b72d91886a0bb90cf46b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c381434a_f7532548",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 8517,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2018-01-17T21:34:30Z",
+      "side": 1,
+      "message": "We had the article, but I\u0027m still waiting for the p link:\nHere is the crbug:\ncrbug.com/803190",
+      "parentUuid": "135afc30_e0275f94",
+      "range": {
+        "startLine": 8517,
+        "startChar": 364,
+        "endLine": 8517,
+        "endChar": 383
+      },
+      "revId": "545f42a412391a234c0b72d91886a0bb90cf46b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
