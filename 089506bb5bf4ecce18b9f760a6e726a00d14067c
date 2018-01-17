@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4467f929_7b2c1d23",
+        "filename": "extensions/browser/content_hash_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-17T01:13:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4f0cace_ccefcc81",
+      "revId": "089506bb5bf4ecce18b9f760a6e726a00d14067c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "814efa20_6bfecde9",
         "filename": "extensions/browser/content_hash_fetcher.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "089506bb5bf4ecce18b9f760a6e726a00d14067c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0860238b_5c3c5633",
+        "filename": "extensions/browser/content_hash_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-17T01:13:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "814efa20_6bfecde9",
+      "revId": "089506bb5bf4ecce18b9f760a6e726a00d14067c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "04815d4a_837a2055",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-17T01:13:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c54a31d_40ff8945",
+      "revId": "089506bb5bf4ecce18b9f760a6e726a00d14067c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0298ce06_f2c9fa4a",
         "filename": "extensions/browser/content_verifier/content_hash.h",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-21T18:26:18Z",
       "side": 1,
       "message": "Can this be private, since we always go through the factory methods?",
+      "revId": "089506bb5bf4ecce18b9f760a6e726a00d14067c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd0474a_9b5989c6",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-17T01:13:33Z",
+      "side": 1,
+      "message": "The reason is make_unique, would you prefer base::WrapUnique(new T) + private?",
+      "parentUuid": "0298ce06_f2c9fa4a",
       "revId": "089506bb5bf4ecce18b9f760a6e726a00d14067c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
