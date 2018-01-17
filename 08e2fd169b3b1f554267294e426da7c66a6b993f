@@ -22,6 +22,30 @@
       "revId": "08e2fd169b3b1f554267294e426da7c66a6b993f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "582f0828_6ef69f82",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-17T21:52:01Z",
+      "side": 1,
+      "message": "Yeah, I\u0027d like to change the CLI, examining all invocations, which may or may not be a lot, but that definitely will be another day. :)\n\nI\u0027ve been trying to clarify the terminologies in the codebase. Eventually,\n* suffix: the \"-expected\" part\n* extension: \".txt\", and very importantly always with the leading dot, which follows the convention of Python\u0027s os.path.splitext\n\nPerhaps there is a better name for \"suffix\"?",
+      "parentUuid": "d09c41ac_58eb2d09",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 32
+      },
+      "revId": "08e2fd169b3b1f554267294e426da7c66a6b993f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
