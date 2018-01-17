@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e4e37c9_a1a219d4",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T17:37:12Z",
+      "side": 1,
+      "message": "I\u0027d like to understand why this isn\u0027t const more. 8.4.2.1 says:\n\n\"A function that is explicitly defaulted shall ... have the same declared function type (except for possibly differing ref-qualifiers and except that in the case of a copy constructor or copy assignment operator, the parameter type may be “reference to non-const T”, where T is the name of the member function’s class) as if it had been implicitly declared\"\n\nWhen I read that I think it says that you /may/ drop the const in a copy constructor. But in that case a const ref would not bind to it (nor to the rvalue reference). So this would exclude copying from a const Optional lvalue with this method.\n\nIs that the intent? Or am I understanding this wrong?",
+      "revId": "ef8a3d8d19a5eb3d4e77426c29d5a3e8a4728bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc2f50b_802104ff",
+        "filename": "base/optional_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T17:37:12Z",
+      "side": 1,
+      "message": "Does this still work if first is const?",
+      "revId": "ef8a3d8d19a5eb3d4e77426c29d5a3e8a4728bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
