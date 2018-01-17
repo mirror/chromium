@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1a38a2c_8a67dd41",
+        "filename": "ui/gfx/canvas_skia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T11:40:51Z",
+      "side": 0,
+      "message": "that DCHECK reminded me that ElideRectangleText actually no longer uses CreateInstanceDeprecated() \\o/. In fact, the last remaining caller of CreateInstanceDeprecated is DrawFadedString() below, which I need to do some CL necromancy for..",
+      "revId": "4bd9c8e6e51dfe55296d4c30ea965fc6c3c7f7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
