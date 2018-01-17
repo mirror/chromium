@@ -46,6 +46,30 @@
       "revId": "08e2fd169b3b1f554267294e426da7c66a6b993f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "667b4391_73ce8be4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-17T22:58:52Z",
+      "side": 1,
+      "message": "Makes sense - I can\u0027t think of a better name besides \u0027the baseline suffix\u0027 for the \u0027-expected\u0027 part.",
+      "parentUuid": "582f0828_6ef69f82",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 32
+      },
+      "revId": "08e2fd169b3b1f554267294e426da7c66a6b993f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
