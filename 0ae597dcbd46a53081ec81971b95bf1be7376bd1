@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d0cef23_6ceccb94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T01:47:28Z",
+      "side": 1,
+      "message": "Can you clarify what this means?  From the title of the CL, it sounds like Singleton _should_ now be using the same logic?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 8
+      },
+      "revId": "0ae597dcbd46a53081ec81971b95bf1be7376bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "865f1a6f_8dd0a50b",
+        "filename": "base/lazy_instance_internal.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T01:47:28Z",
+      "side": 1,
+      "message": "nit: Include some mention of the fact that this will block, in the name?",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "0ae597dcbd46a53081ec81971b95bf1be7376bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8647e9_98149988",
+        "filename": "base/lazy_instance_internal.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T01:47:28Z",
+      "side": 1,
+      "message": "The current implementation will have other threads that are blocked waiting for someone to construct the object return null, rather than calling |creator_func| themself, which seems a little subtle - WDYT?",
+      "range": {
+        "startLine": 38,
+        "startChar": 60,
+        "endLine": 41,
+        "endChar": 17
+      },
+      "revId": "0ae597dcbd46a53081ec81971b95bf1be7376bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2627b8_babbe0b2",
+        "filename": "base/memory/singleton.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T01:47:28Z",
+      "side": 1,
+      "message": "nit: Sorry, I can\u0027t grok [the original wording of] this comment. :-/",
+      "range": {
+        "startLine": 100,
+        "startChar": 14,
+        "endLine": 101,
+        "endChar": 38
+      },
+      "revId": "0ae597dcbd46a53081ec81971b95bf1be7376bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "580621ea_03f1c1aa",
+        "filename": "base/memory/singleton.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T01:47:28Z",
+      "side": 1,
+      "message": "nit: This risks slowing down shutdown, since every Get() of the StaticMemorySingleton following it becoming |dead_| will now require re-entering New(), and therefore taking the (spin) lock on the LazyPointer.  Can we avoid that?",
+      "range": {
+        "startLine": 105,
+        "startChar": 13,
+        "endLine": 105,
+        "endChar": 20
+      },
+      "revId": "0ae597dcbd46a53081ec81971b95bf1be7376bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
