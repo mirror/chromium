@@ -17,7 +17,7 @@ const base::Feature kWebRtcDualStreamMode{"WebRTC-DualStreamMode",
                                           base::FEATURE_DISABLED_BY_DEFAULT};
 
 bool IsFeatureEnabled(std::string feature_name) {
-  if (feature_name == "WebRtcDualStreamMode")
+  if (feature_name == kDualStreamModeFeatureName)
     return base::FeatureList::IsEnabled(kWebRtcDualStreamMode);
   return false;
 }
