@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cff1a37_adb75267",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-17T11:16:05Z",
+      "side": 1,
+      "message": "Let\u0027s call this thread_time to match base::ThreadTicks (here and elsewhere).",
+      "range": {
+        "startLine": 274,
+        "startChar": 55,
+        "endLine": 274,
+        "endChar": 63
+      },
+      "revId": "2bf2a972b72192e9be44e63ab060ef3b0e1f2d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbdf7c86_c40180f1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-17T11:16:05Z",
+      "side": 1,
+      "message": "Should we cache this as a member? It doesn\u0027t look hugely complicated but we\u0027re still on a very hot path here.",
+      "range": {
+        "startLine": 836,
+        "startChar": 41,
+        "endLine": 836,
+        "endChar": 48
+      },
+      "revId": "2bf2a972b72192e9be44e63ab060ef3b0e1f2d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb5ed8d_3c91f89e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-17T11:16:05Z",
+      "side": 1,
+      "message": "Maybe add a note what this is used for? Also, SetRandomSeedForTesting?",
+      "range": {
+        "startLine": 247,
+        "startChar": 7,
+        "endLine": 247,
+        "endChar": 20
+      },
+      "revId": "2bf2a972b72192e9be44e63ab060ef3b0e1f2d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609800eb_4552a4c0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 70761,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-17T11:16:05Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s necessary to do this: thread time won\u0027t advance unless we\u0027re actually performing computation and thus doesn\u0027t have the hibernation issues.",
+      "range": {
+        "startLine": 70761,
+        "startChar": 53,
+        "endLine": 70761,
+        "endChar": 55
+      },
+      "revId": "2bf2a972b72192e9be44e63ab060ef3b0e1f2d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
