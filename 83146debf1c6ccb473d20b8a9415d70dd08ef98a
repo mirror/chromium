@@ -22,6 +22,30 @@
       "revId": "83146debf1c6ccb473d20b8a9415d70dd08ef98a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51eec6b_8276d13f",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_browsing_mode_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-17T18:12:31Z",
+      "side": 0,
+      "message": "MeasureMemory() already waits for 10 seconds. This is the same thing we do for the WebVR tests https://cs.chromium.org/chromium/src/tools/perf/contrib/vr_benchmarks/webvr_sample_pages.py?q\u003dwebvr_sample\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d21",
+      "parentUuid": "3da6b1a7_1ac2a2f0",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "83146debf1c6ccb473d20b8a9415d70dd08ef98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
