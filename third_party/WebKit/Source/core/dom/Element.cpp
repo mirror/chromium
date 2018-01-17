@@ -2503,9 +2503,9 @@ ShadowRoot& Element::CreateShadowRootInternal() {
   return EnsureShadow().AddShadowRoot(*this, ShadowRootType::V0);
 }
 
-ShadowRoot& Element::CreateUserAgentShadowRootV1() {
+ShadowRoot& Element::CreateUserAgentShadowRoot() {
   DCHECK(!GetShadowRoot());
-  return EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgentV1);
+  return EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgent);
 }
 
 ShadowRoot& Element::AttachShadowRootInternal(ShadowRootType type,
@@ -2514,6 +2514,7 @@ ShadowRoot& Element::AttachShadowRootInternal(ShadowRootType type,
   DCHECK(AreAuthorShadowsAllowed());
   DCHECK(type == ShadowRootType::kOpen || type == ShadowRootType::kClosed)
       << type;
+  // TODO(kochi): Is this true now?
   DCHECK(!AlwaysCreateUserAgentShadowRoot());
 
   GetDocument().SetShadowCascadeOrder(ShadowCascadeOrder::kShadowCascadeV1);
@@ -2563,13 +2564,13 @@ ShadowRoot* Element::UserAgentShadowRoot() const {
   return nullptr;
 }
 
-ShadowRoot& Element::EnsureUserAgentShadowRootV1() {
+ShadowRoot& Element::EnsureUserAgentShadowRoot() {
   if (ShadowRoot* shadow_root = UserAgentShadowRoot()) {
-    DCHECK(shadow_root->GetType() == ShadowRootType::kUserAgentV1);
+    DCHECK(shadow_root->GetType() == ShadowRootType::kUserAgent);
     return *shadow_root;
   }
   ShadowRoot& shadow_root =
-      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgentV1);
+      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgent);
   DidAddUserAgentShadowRoot(shadow_root);
   return shadow_root;
 }
