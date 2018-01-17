@@ -54,6 +54,13 @@ BLINK_PLATFORM_EXPORT base::Optional<network::mojom::CORSError> CheckAccess(
     network::mojom::FetchCredentialsMode,
     const WebSecurityOrigin&);
 
+// Checks if redirect is allowed.
+BLINK_PLATFORM_EXPORT bool CheckAllowedRedirect(
+    network::mojom::FetchRequestMode fetch_request_mode,
+    const WebURL&,
+    const WebSecurityOrigin&,
+    bool cors_flag);
+
 // Given a redirected-to URL, check if the location is allowed
 // according to CORS. That is:
 // - the URL has a CORS supported scheme and

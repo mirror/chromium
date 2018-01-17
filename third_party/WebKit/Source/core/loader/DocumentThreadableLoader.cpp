@@ -232,7 +232,13 @@ bool DocumentThreadableLoader::RedirectReceivedOutOfBlinkCORS(
   // TODO(toyoshim) replace this delegation with an implementation that does not
   // perform CORS checks but relies on CORSURLLoader for CORS
   // (https://crbug.com/736308).
-  return RedirectReceivedBlinkCORS(resource, new_request, redirect_response);
+  if (!actual_request_.IsNull() ||
+      redirect_mode_ != WebURLRequest::kFetchRedirectModeError) {
+    return RedirectReceivedBlinkCORS(resource, new_request, redirect_response);
+  }
+
+  // FIXME: Implement client side handling.
+  return true;
 }
 
 void DocumentThreadableLoader::MakeCrossOriginAccessRequestOutOfBlinkCORS(
@@ -672,7 +678,9 @@ bool DocumentThreadableLoader::RedirectReceivedBlinkCORS(
 
   // Allow same origin requests to continue after allowing clients to audit the
   // redirect.
-  if (IsAllowedRedirect(new_request.GetFetchRequestMode(), new_url)) {
+  if (WebCORS::CheckAllowedRedirect(new_request.GetFetchRequestMode(), new_url,
+                                    WebSecurityOrigin(GetSecurityOrigin()),
+                                    cors_flag_)) {
     client_->DidReceiveRedirectTo(new_url);
     if (client_->IsDocumentThreadableLoaderClient()) {
       return static_cast<DocumentThreadableLoaderClient*>(client_)
@@ -1164,15 +1172,17 @@ void DocumentThreadableLoader::DispatchDidFail(const ResourceError& error) {
         error.CORSErrorStatus()->related_response_headers
             ? error.CORSErrorStatus()->related_response_headers->response_code()
             : 0;
-    GetExecutionContext()->AddConsoleMessage(ConsoleMessage::Create(
-        kJSMessageSource, kErrorMessageLevel,
-        "Failed to load " + error.FailingURL() + ": " +
-            WebCORS::GetErrorString(
-                error.CORSErrorStatus()->cors_error, KURL(error.FailingURL()),
-                WebURL(), response_code, WebHTTPHeaderMap(HTTPHeaderMap()),
-                WebSecurityOrigin(GetSecurityOrigin()), request_context_)
-                .Utf8()
-                .data()));
+    String error_message = WebCORS::GetErrorString(
+        error.CORSErrorStatus()->cors_error, KURL(error.FailingURL()), WebURL(),
+        response_code, WebHTTPHeaderMap(HTTPHeaderMap()),
+        WebSecurityOrigin(GetSecurityOrigin()), request_context_);
+
+    if (error_message) {
+      GetExecutionContext()->AddConsoleMessage(
+          ConsoleMessage::Create(kJSMessageSource, kErrorMessageLevel,
+                                 "Failed to load " + error.FailingURL() + ": " +
+                                     error_message.Utf8().data()));
+    }
   }
   ThreadableLoaderClient* client = client_;
   Clear();
@@ -1281,7 +1291,9 @@ void DocumentThreadableLoader::LoadRequestSync(
   // that was requested. Also comparing the request and response URLs as strings
   // will fail if the requestURL still has its credentials.
   if (request_url != response.Url() &&
-      !IsAllowedRedirect(request.GetFetchRequestMode(), response.Url())) {
+      !WebCORS::CheckAllowedRedirect(
+          request.GetFetchRequestMode(), response.Url(),
+          WebSecurityOrigin(GetSecurityOrigin()), cors_flag_)) {
     client_ = nullptr;
     client->DidFailRedirectCheck();
     return;
@@ -1346,15 +1358,6 @@ void DocumentThreadableLoader::LoadRequest(
     LoadRequestAsync(request, resource_loader_options);
   else
     LoadRequestSync(request, resource_loader_options);
-}
-
-bool DocumentThreadableLoader::IsAllowedRedirect(
-    network::mojom::FetchRequestMode fetch_request_mode,
-    const KURL& url) const {
-  if (fetch_request_mode == network::mojom::FetchRequestMode::kNoCORS)
-    return true;
-
-  return !cors_flag_ && GetSecurityOrigin()->CanRequest(url);
 }
 
 const SecurityOrigin* DocumentThreadableLoader::GetSecurityOrigin() const {

@@ -278,6 +278,16 @@ base::Optional<CORSError> HandleRedirect(
   return base::nullopt;
 }
 
+bool CheckAllowedRedirect(network::mojom::FetchRequestMode fetch_request_mode,
+                          const WebURL& web_redirect_url,
+                          const WebSecurityOrigin& origin,
+                          bool cors_flag) {
+  if (fetch_request_mode == network::mojom::FetchRequestMode::kNoCORS)
+    return true;
+
+  return !cors_flag && origin.CanRequest(web_redirect_url);
+}
+
 base::Optional<CORSError> CheckRedirectLocation(const WebURL& web_request_url) {
   // Block non HTTP(S) schemes as specified in the step 4 in
   // https://fetch.spec.whatwg.org/#http-redirect-fetch. Chromium also allows
@@ -509,6 +519,10 @@ WebString GetErrorString(const CORSError error,
           "disallowed for cross-origin requests.",
           redirect_denied.Utf8().data(),
           redirect_url.GetString().Utf8().data());
+
+    // We do not provide detailed error information for following errors.
+    case CORSError::kRedirectDisallowedByMode:
+      return WebString();
   }
   NOTREACHED();
   return WebString();

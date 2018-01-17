@@ -200,7 +200,6 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   // ResourceFetcher doesn't perform some part of the CORS logic since this
   // class performs it by itself.
   void LoadRequest(ResourceRequest&, ResourceLoaderOptions);
-  bool IsAllowedRedirect(network::mojom::FetchRequestMode, const KURL&) const;
 
   const SecurityOrigin* GetSecurityOrigin() const;
 

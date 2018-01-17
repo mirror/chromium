@@ -90,6 +90,7 @@ class CONTENT_EXPORT CORSURLLoader : public mojom::URLLoader,
 
   // Corresponds to the Fetch spec, https://fetch.spec.whatwg.org/.
   network::mojom::FetchRequestMode fetch_request_mode_;
+  int fetch_redirect_mode_;
   network::mojom::FetchCredentialsMode fetch_credentials_mode_;
   bool fetch_cors_flag_;
 

@@ -60,6 +60,7 @@ CORSURLLoader::CORSURLLoader(
           resource_request.request_initiator.value_or(url::Origin())),
       last_response_url_(resource_request.url),
       fetch_request_mode_(resource_request.fetch_request_mode),
+      fetch_redirect_mode_(resource_request.fetch_redirect_mode),
       fetch_credentials_mode_(resource_request.fetch_credentials_mode),
       fetch_cors_flag_(CalculateCORSFlag(resource_request)) {
   DCHECK(network_loader_factory_);
@@ -156,6 +157,33 @@ void CORSURLLoader::OnReceiveRedirect(
   DCHECK(network_loader_);
   DCHECK(forwarding_client_);
   DCHECK(!is_waiting_follow_redirect_call_);
+
+  base::Optional<CORSError> cors_error;
+  switch (fetch_redirect_mode_) {
+    case 0:  // kFollow
+      if (!WebCORS::CheckAllowedRedirect(fetch_request_mode_,
+                                         redirect_info.new_url,
+                                         security_origin_, cors_flag_)) {
+        cors_error = CORSError::kRedirectDisallowed;
+      }
+      // FIXME: Implement other checks.
+      // - limit check
+      // - inspector probe?
+      // - check redirect location
+      // - check access
+      // - ...
+      break;
+    case 1:  // kError
+      cors_error = CORSError::kRedirectDisallowed;
+      break;
+    case 2:  // kManual
+      break;
+  }
+  if (cors_error) {
+    HandleComplete(network::URLLoaderCompletionStatus(
+        network::CORSErrorStatus(cors_error)));
+    return;
+  }
 
   // TODO(toyoshim): Following code expects OnReceivedRedirect is invoked
   // asynchronously, and |last_response_url_| and other methods should not be
