@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dfcb60a_da7b747d",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-17T20:02:05Z",
+      "side": 1,
+      "message": "I guess we could even just pass SetSelectionOptions() here since the option is false by default? I think the clearest thing to do would be to make FrameSelection::SetSelection() stop setting SetShouldCloseTyping(true) and SetShouldClearTypingStyle(true) by default.",
+      "revId": "6e5e5da0ff7f6fdb6a1b6826477d3ac0043e94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
