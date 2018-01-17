@@ -83844,6 +83844,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="SoftwareReporter.OnDemandUpdateRequired" enum="Boolean">
+  <owner>ftirelo@chromium.org</owner>
+  <summary>
+    Whether an on-demand update of the Software Reporter component was needed
+    for a user-initiated cleanup.
+  </summary>
+</histogram>
+
+<histogram name="SoftwareReporter.OnDemandUpdateSucceeded" enum="Boolean">
+  <owner>ftirelo@chromium.org</owner>
+  <summary>
+    Whether an on-demand update of the Software Reporter component succeeded,
+    when needed for a user-initiated cleanup.
+  </summary>
+</histogram>
+
 <histogram name="SoftwareReporter.PostCleanupSettingsReset" units="counts">
   <owner>ftirelo@chromium.org</owner>
   <summary>
@@ -83899,6 +83915,21 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Usage of the Software Removal Tool (SRT) Prompt.</summary>
 </histogram>
 
+<histogram name="SoftwareReporter.ReporterSequencedResult"
+    enum="SoftwareReporterSequencedResult">
+  <owner>ftirelo@chromium.org</owner>
+  <summary>Indicates the result of a reporter sequence once it ends.</summary>
+</histogram>
+
+<histogram name="SoftwareReporter.ReporterSequenceType"
+    enum="SoftwareReporterSequenceType">
+  <owner>ftirelo@chromium.org</owner>
+  <summary>
+    Indicates the type of a reporter sequence run on the user system. Logged
+    when the sequence is scheduled to start.
+  </summary>
+</histogram>
+
 <histogram name="SoftwareReporter.RunningTime" units="ms">
   <owner>alito@chromium.org</owner>
   <summary>
@@ -83922,6 +83953,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Error encountered when reading the software reporter tool's start and end
     times from the registry.
+  </summary>
+</histogram>
+
+<histogram name="SoftwareReporter.ScannerLogsAcceptance" enum="Boolean">
+  <owner>ftirelo@chromium.org</owner>
+  <summary>
+    Whether the user accepted to upload scanner logs from Chrome Cleanup Tool.
+    This is logged when the user starts a scan for the Settings page and is only
+    logged for user-initiated cleanups.
   </summary>
 </histogram>
 
@@ -110994,6 +111034,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="SoftwareReporter.RunningTimeAccordingToChrome"/>
   <affected-histogram name="SoftwareReporter.RunningTimeRegistryError"/>
   <affected-histogram name="SoftwareReporter.Step"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="SoftwareReporterInvocationType" separator="_">
+  <suffix name="Periodic" label="Periodic run of the reporter."/>
+  <suffix name="UserInitiated" label="User-initiated run of the reporter."/>
+  <affected-histogram name="SoftwareReporter.ReporterSequencedResult"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="SpdyCwnd" separator="_">
