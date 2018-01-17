@@ -76,7 +76,7 @@ class StyleFetchedImageSet final : public StyleImage,
       const ImageResourceObserver&,
       const Document&,
       const ComputedStyle&,
-      const LayoutSize& container_size) const override;
+      const FloatSize& target_size) const override;
   float ImageScaleFactor() const override { return image_scale_factor_; }
   bool KnownToBeOpaque(const Document&, const ComputedStyle&) const override;
   ImageResourceContent* CachedImage() const override;
