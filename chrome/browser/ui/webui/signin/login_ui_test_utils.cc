@@ -158,15 +158,15 @@ class SigninViewControllerTestUtil {
         "if (document.getElementById('confirmButton') == null) {"
         "  window.domAutomationController.send('NotFound');"
         "} else {"
-        "  window.domAutomationController.send('Ok');"
+        "  if (document.readyState === 'complete') {"
+        "    window.domAutomationController.send('Ok');"
+        "  }"
         "}";
     EXPECT_TRUE(content::ExecuteScriptAndExtractString(
         dialog_web_contents, find_button_js, &message));
     if (message != "Ok")
       return false;
 
-    // This cannot be a synchronous call, because it closes the window as a side
-    // effect, which may cause the javascript execution to never finish.
     content::ExecuteScriptAsync(
         dialog_web_contents,
         "document.getElementById('confirmButton').click();");
