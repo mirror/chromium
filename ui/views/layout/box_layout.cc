@@ -5,6 +5,8 @@
 #include "ui/views/layout/box_layout.h"
 
 #include <algorithm>
+#include <fstream>
+#include <numeric>
 
 #include "ui/gfx/geometry/rect.h"
 #include "ui/views/view.h"
@@ -13,6 +15,11 @@
 namespace views {
 
 namespace {
+
+gfx::Insets GetMarginsForView(const View* v) {
+  gfx::Insets* margins = v ? v->GetProperty(kMarginsKey) : nullptr;
+  return margins ? *margins : gfx::Insets();
+}
 
 // Returns the maximum of the given insets along the given |axis|.
 // NOTE: |axis| is different from |orientation_|; it specifies the actual
@@ -38,9 +45,13 @@ BoxLayout::ViewWrapper::ViewWrapper() : view_(nullptr), layout_(nullptr) {}
 
 BoxLayout::ViewWrapper::ViewWrapper(const BoxLayout* layout, View* view)
     : view_(view), layout_(layout) {
-  gfx::Insets* margins = view_ ? view_->GetProperty(kMarginsKey) : nullptr;
-  if (margins)
-    margins_ = *margins;
+  margins_ = GetMarginsForView(view);
+
+  // Since we are aligning to content view edges, remove the cross axis margin
+  // when laying out.
+  sizing_margins_ = layout_->orientation_ == Orientation::kHorizontal
+                        ? gfx::Insets(0, margins_.left(), 0, margins_.right())
+                        : gfx::Insets(margins_.top(), 0, margins_.bottom(), 0);
 }
 
 BoxLayout::ViewWrapper::~ViewWrapper() {}
@@ -58,30 +69,35 @@ int BoxLayout::ViewWrapper::GetHeightForWidth(int width) const {
   // If the orientation_ is kVertical, the cross-axis is the actual view width.
   // This is because the cross-axis margins are always handled by the layout.
   if (layout_->orientation_ == Orientation::kHorizontal) {
-    return view_->GetHeightForWidth(std::max(0, width - margins_.width())) +
-           margins_.height();
+    return view_->GetHeightForWidth(
+               std::max(0, width - sizing_margins_.width())) +
+           sizing_margins_.height();
   }
-  return view_->GetHeightForWidth(width) + margins_.height();
+  return view_->GetHeightForWidth(width) + sizing_margins_.height();
 }
 
 gfx::Size BoxLayout::ViewWrapper::GetPreferredSize() const {
   gfx::Size preferred_size = view_->GetPreferredSize();
   if (!layout_->collapse_margins_spacing_)
-    preferred_size.Enlarge(margins_.width(), margins_.height());
+    preferred_size.Enlarge(sizing_margins_.width(), sizing_margins_.height());
   return preferred_size;
 }
 
 void BoxLayout::ViewWrapper::SetBoundsRect(const gfx::Rect& bounds) {
   gfx::Rect new_bounds = bounds;
+
   if (!layout_->collapse_margins_spacing_) {
     if (layout_->orientation_ == Orientation::kHorizontal) {
       new_bounds.set_x(bounds.x() + margins_.left());
-      new_bounds.set_width(std::max(0, bounds.width() - margins_.width()));
+      new_bounds.set_width(
+          std::max(0, bounds.width() - sizing_margins_.width()));
     } else {
       new_bounds.set_y(bounds.y() + margins_.top());
-      new_bounds.set_height(std::max(0, bounds.height() - margins_.height()));
+      new_bounds.set_height(
+          std::max(0, bounds.height() - sizing_margins_.height()));
     }
   }
+
   view_->SetBoundsRect(new_bounds);
 }
 
@@ -124,129 +140,209 @@ void BoxLayout::SetDefaultFlex(int default_flex) {
   default_flex_ = default_flex;
 }
 
+void BoxLayout::ConstrainToCrossAxisSize(int child_area_cross_axis_size,
+                                         std::vector<gfx::Rect>* child_bounds) {
+  for (gfx::Rect& child : *child_bounds) {
+    SetCrossAxisSize(std::min(child_area_cross_axis_size, CrossAxisSize(child)),
+                     &child);
+  }
+}
+
+void BoxLayout::ConstrainToMainAxisSize(int child_area_main_axis_size,
+                                        std::vector<gfx::Rect>* child_bounds) {
+  for (gfx::Rect& child : *child_bounds) {
+    SetMainAxisSize(
+        std::min(child_area_main_axis_size - MainAxisPosition(child),
+                 MainAxisSize(child)),
+        &child);
+  }
+}
+
 void BoxLayout::Layout(View* host) {
   DCHECK_EQ(host_, host);
   gfx::Rect child_area(host->GetContentsBounds());
 
-  AdjustMainAxisForMargin(&child_area);
-  gfx::Insets max_cross_axis_margin;
-  if (!collapse_margins_spacing_) {
-    AdjustCrossAxisForInsets(&child_area);
-    max_cross_axis_margin = CrossAxisMaxViewMargin();
-  }
   if (child_area.IsEmpty())
     return;
 
+  std::vector<View*> children;
+  for (int i = 0; i < host->child_count(); ++i)
+    children.push_back(host->child_at(i));
+
+  if (!std::any_of(children.begin(), children.end(),
+                   [](View* v) { return v->visible(); })) {
+    return;
+  }
+
+  AdjustMainAxisForMargin(&child_area);
+  if (!collapse_margins_spacing_) {
+    AdjustCrossAxisForInsets(&child_area);
+  }
+
+  std::vector<gfx::Rect> child_bounds = CalculateChildPreferredSizes();
+
+  int flex_sum = std::accumulate(
+      children.begin(), children.end(), 0,
+      [this](int sum, auto child) { return sum + GetFlexForView(child); });
+
   int total_main_axis_size = 0;
-  int num_visible = 0;
-  int flex_sum = 0;
-  // Calculate the total size of children in the main axis.
+  int main_free_space = 0;
+  int children_center_line =
+      cross_axis_alignment_ == CROSS_AXIS_ALIGNMENT_CENTER
+          ? CalculateIdealCenterLineForChildren()
+          : 0;
+  gfx::Insets max_cross_axis_margin = CrossAxisMaxViewMargin();
+
+  // Heights are dependent on widths, so the width must always be calculated
+  // before the height. All calculations are done relative to the child area.
+  if (orientation_ == kHorizontal) {
+    // Calculate the total width of all children and horizontal paddings along
+    // the main axis, and then use the remaining space to apply flex, completing
+    // our width calculations.
+    total_main_axis_size = GetTotalMainAxisSize(child_bounds);
+    main_free_space = MainAxisSize(child_area) - total_main_axis_size;
+    ApplyFlex(main_free_space, flex_sum, &child_bounds);
+    CalculateMainAxisPositions(total_main_axis_size, &child_bounds);
+
+    // Clip views along the main axis first, as this will influence height.
+    ConstrainToMainAxisSize(MainAxisSize(child_area), &child_bounds);
+
+    // Calculate heights.
+    if (cross_axis_alignment_ == CROSS_AXIS_ALIGNMENT_STRETCH) {
+      ApplyStretch(child_area, &child_bounds);
+    } else {
+      UpdateHeightsForWidth(&child_bounds);
+    }
+    CalculateCrossAxisPositions(CrossAxisSize(child_area),
+                                max_cross_axis_margin, children_center_line,
+                                &child_bounds);
+  } else {
+    // Calculate widths.
+    if (cross_axis_alignment_ == CROSS_AXIS_ALIGNMENT_STRETCH)
+      ApplyStretch(child_area, &child_bounds);
+
+    // Clip views along the cross axis first, as this will influence height.
+    CalculateCrossAxisPositions(CrossAxisSize(child_area),
+                                max_cross_axis_margin, children_center_line,
+                                &child_bounds);
+    ConstrainToCrossAxisSize(CrossAxisSize(child_area), &child_bounds);
+    UpdateHeightsForWidth(&child_bounds);
+
+    // Calculate heights.
+    total_main_axis_size = GetTotalMainAxisSize(child_bounds);
+    main_free_space = MainAxisSize(child_area) - total_main_axis_size;
+    ApplyFlex(main_free_space, flex_sum, &child_bounds);
+    CalculateMainAxisPositions(total_main_axis_size, &child_bounds);
+  }
+
+  int main_axis_offset =
+      GetMainAxisOffset(flex_sum, total_main_axis_size, main_free_space);
   for (int i = 0; i < host->child_count(); ++i) {
-    const ViewWrapper child(this, host->child_at(i));
+    ViewWrapper child(this, host_->child_at(i));
+    gfx::Rect bounds;
+    SetMainAxisPosition(MainAxisPosition(child_bounds[i]) +
+                            MainAxisPosition(child_area) + main_axis_offset,
+                        &bounds);
+    SetMainAxisSize(MainAxisSize(child_bounds[i]), &bounds);
+    SetCrossAxisPosition(
+        CrossAxisPosition(child_bounds[i]) + CrossAxisPosition(child_area),
+        &bounds);
+    SetCrossAxisSize(CrossAxisSize(child_bounds[i]), &bounds);
+
+    // Clip to the host so that clipping ignores margins.
+    bounds.Intersect(host->bounds());
+    child.SetBoundsRect(bounds.IsEmpty() ? gfx::Rect() : bounds);
+  }
+}
+
+std::vector<gfx::Rect> BoxLayout::CalculateChildPreferredSizes() const {
+  std::vector<gfx::Rect> preferred_sizes;
+  for (int i = 0; i < host_->child_count(); ++i) {
+    ViewWrapper v(this, host_->child_at(i));
+    preferred_sizes.push_back(
+        gfx::Rect(v.visible() ? v.GetPreferredSize() : gfx::Size()));
+  }
+  return preferred_sizes;
+}
+
+void BoxLayout::ApplyStretch(const gfx::Rect& child_area,
+                             std::vector<gfx::Rect>* child_bounds) {
+  gfx::Rect cross_axis_area(child_area);
+  cross_axis_area.Inset(CrossAxisMaxViewMargin());
+
+  for (auto& b : *child_bounds)
+    SetCrossAxisSize(CrossAxisSize(cross_axis_area), &b);
+}
+
+void BoxLayout::CalculateMainAxisPositions(
+    int total_main_axis_size,
+    std::vector<gfx::Rect>* child_bounds) {
+  int main_position = 0;
+  for (int i = 0; i < host_->child_count(); ++i) {
+    ViewWrapper child(this, host_->child_at(i));
+    SetMainAxisPosition(main_position, &child_bounds->at(i));
+    if (MainAxisSize(child_bounds->at(i)) > 0 ||
+        GetFlexForView(child.view()) > 0)
+      main_position += MainAxisSize(child_bounds->at(i)) +
+                       MainAxisMarginBetweenViews(
+                           child, ViewWrapper(this, NextVisibleView(i)));
+  }
+}
+
+int BoxLayout::GetMainAxisOffset(int flex_sum,
+                                 int total_main_axis_size,
+                                 int main_free_space) {
+  int offset = 0;
+
+  if (flex_sum)
+    return offset;
+
+  switch (main_axis_alignment_) {
+    case MAIN_AXIS_ALIGNMENT_START:
+      break;
+    case MAIN_AXIS_ALIGNMENT_CENTER:
+      offset = main_free_space / 2;
+      break;
+    case MAIN_AXIS_ALIGNMENT_END:
+      offset = main_free_space;
+      break;
+    default:
+      NOTREACHED();
+  }
+
+  return std::max(0, offset);
+}
+
+int BoxLayout::GetTotalMainAxisSize(
+    const std::vector<gfx::Rect>& child_bounds) const {
+  int total_main_axis_size = -between_child_spacing_;
+  for (int i = 0; i < host_->child_count(); ++i) {
+    const ViewWrapper child(this, host_->child_at(i));
     if (!child.visible())
       continue;
+
     int flex = GetFlexForView(child.view());
-    int child_main_axis_size = MainAxisSizeForView(child, child_area.width());
+    int child_main_axis_size = MainAxisSize(child_bounds[i]);
     if (child_main_axis_size == 0 && flex == 0)
       continue;
+
     total_main_axis_size += child_main_axis_size +
                             MainAxisMarginBetweenViews(
                                 child, ViewWrapper(this, NextVisibleView(i)));
-    ++num_visible;
-    flex_sum += flex;
   }
+  return total_main_axis_size;
+}
 
-  if (!num_visible)
+void BoxLayout::ApplyFlex(int main_free_space,
+                          int flex_sum,
+                          std::vector<gfx::Rect>* child_bounds) const {
+  if (flex_sum == 0)
     return;
 
-  total_main_axis_size -= between_child_spacing_;
-  // Free space can be negative indicating that the views want to overflow.
-  int main_free_space = MainAxisSize(child_area) - total_main_axis_size;
-  {
-    int position = MainAxisPosition(child_area);
-    int size = MainAxisSize(child_area);
-    if (!flex_sum) {
-      switch (main_axis_alignment_) {
-        case MAIN_AXIS_ALIGNMENT_START:
-          break;
-        case MAIN_AXIS_ALIGNMENT_CENTER:
-          position += main_free_space / 2;
-          size = total_main_axis_size;
-          break;
-        case MAIN_AXIS_ALIGNMENT_END:
-          position += main_free_space;
-          size = total_main_axis_size;
-          break;
-        default:
-          NOTREACHED();
-          break;
-      }
-    }
-    gfx::Rect new_child_area(child_area);
-    SetMainAxisPosition(position, &new_child_area);
-    SetMainAxisSize(size, &new_child_area);
-    child_area.Intersect(new_child_area);
-  }
-
-  int main_position = MainAxisPosition(child_area);
-  int total_padding = 0;
   int current_flex = 0;
-  for (int i = 0; i < host->child_count(); ++i) {
-    ViewWrapper child(this, host->child_at(i));
-    if (!child.visible())
-      continue;
-
-    // TODO(bruthig): Fix this. The main axis should be calculated before
-    // the cross axis size because child Views may calculate their cross axis
-    // size based on their main axis size. See https://crbug.com/682266.
-
-    // Calculate cross axis size.
-    gfx::Rect bounds(child_area);
-    gfx::Rect min_child_area(child_area);
-    gfx::Insets child_margins;
-    if (collapse_margins_spacing_) {
-      child_margins = MaxAxisInsets(
-          orientation_ == kVertical ? HORIZONTAL_AXIS : VERTICAL_AXIS,
-          child.margins(), inside_border_insets_, child.margins(),
-          inside_border_insets_);
-    } else {
-      child_margins = child.margins();
-    }
-
-    if (cross_axis_alignment_ == CROSS_AXIS_ALIGNMENT_STRETCH ||
-        cross_axis_alignment_ == CROSS_AXIS_ALIGNMENT_CENTER) {
-      InsetCrossAxis(&min_child_area, CrossAxisLeadingInset(child_margins),
-                     CrossAxisTrailingInset(child_margins));
-    }
-
-    SetMainAxisPosition(main_position, &bounds);
-    if (cross_axis_alignment_ != CROSS_AXIS_ALIGNMENT_STRETCH) {
-      int cross_axis_margin_size = CrossAxisMarginSizeForView(child);
-      int view_cross_axis_size =
-          CrossAxisSizeForView(child) - cross_axis_margin_size;
-      int free_space = CrossAxisSize(bounds) - view_cross_axis_size;
-      int position = CrossAxisPosition(bounds);
-      if (cross_axis_alignment_ == CROSS_AXIS_ALIGNMENT_CENTER) {
-        if (view_cross_axis_size > CrossAxisSize(min_child_area))
-          view_cross_axis_size = CrossAxisSize(min_child_area);
-        position += free_space / 2;
-        position = std::max(position, CrossAxisLeadingEdge(min_child_area));
-      } else if (cross_axis_alignment_ == CROSS_AXIS_ALIGNMENT_END) {
-        position += free_space - CrossAxisTrailingInset(max_cross_axis_margin);
-        if (!collapse_margins_spacing_)
-          InsetCrossAxis(&min_child_area,
-                         CrossAxisLeadingInset(child.margins()),
-                         CrossAxisTrailingInset(max_cross_axis_margin));
-      } else {
-        position += CrossAxisLeadingInset(max_cross_axis_margin);
-        if (!collapse_margins_spacing_)
-          InsetCrossAxis(&min_child_area,
-                         CrossAxisLeadingInset(max_cross_axis_margin),
-                         CrossAxisTrailingInset(child.margins()));
-      }
-      SetCrossAxisPosition(position, &bounds);
-      SetCrossAxisSize(view_cross_axis_size, &bounds);
-    }
+  int total_padding = 0;
+  for (int i = 0; i < host_->child_count(); i++) {
+    ViewWrapper child(this, host_->child_at(i));
 
     // Calculate flex padding.
     int current_padding = 0;
@@ -261,82 +357,127 @@ void BoxLayout::Layout(View* host) {
       total_padding += current_padding;
     }
 
-    // Set main axis size.
-    // TODO(bruthig): Use the allocated width to determine the cross axis size.
-    // See https://crbug.com/682266.
-    int child_main_axis_size = MainAxisSizeForView(child, child_area.width());
-    SetMainAxisSize(child_main_axis_size + current_padding, &bounds);
-    if (MainAxisSize(bounds) > 0 || GetFlexForView(child.view()) > 0)
-      main_position += MainAxisSize(bounds) +
-                       MainAxisMarginBetweenViews(
-                           child, ViewWrapper(this, NextVisibleView(i)));
-
-    // Clamp child view bounds to |child_area|.
-    bounds.Intersect(min_child_area);
-    child.SetBoundsRect(bounds);
+    SetMainAxisSize(MainAxisSize(child_bounds->at(i)) + current_padding,
+                    &child_bounds->at(i));
   }
 
-  // Flex views should have grown/shrunk to consume all free space.
-  if (flex_sum)
-    DCHECK_EQ(total_padding, main_free_space);
+  DCHECK_EQ(total_padding, main_free_space);
+}
+
+void BoxLayout::UpdateHeightsForWidth(
+    std::vector<gfx::Rect>* child_bounds) const {
+  for (int i = 0; i < host_->child_count(); i++) {
+    ViewWrapper child(this, host_->child_at(i));
+    child_bounds->at(i).set_height(
+        child.GetHeightForWidth(child_bounds->at(i).width()));
+  }
+}
+
+int BoxLayout::CalculateIdealCenterLineForChildren() const {
+  int max = 0;
+  for (int i = 0; i < host_->child_count(); ++i) {
+    View* child = host_->child_at(i);
+    if (!child->visible())
+      continue;
+
+    int center = CrossAxisSize(gfx::Rect(child->GetPreferredSize())) / 2 +
+                 CrossAxisLeadingInset(GetMarginsForView(child));
+    max = std::max(max, center);
+  }
+  return max;
+}
+
+void BoxLayout::CalculateCrossAxisPositions(
+    int child_area_cross_axis_size,
+    const gfx::Insets& max_cross_axis_margin,
+    int children_center_line,
+    std::vector<gfx::Rect>* child_bounds) {
+  for (int i = 0; i < host_->child_count(); i++) {
+    ViewWrapper child(this, host_->child_at(i));
+    gfx::Rect bounds = child_bounds->at(i);
+    int view_cross_axis_size = CrossAxisSize(bounds);
+    int free_space = child_area_cross_axis_size - view_cross_axis_size;
+    int position = 0;
+    switch (cross_axis_alignment_) {
+      case CROSS_AXIS_ALIGNMENT_STRETCH:
+      case CROSS_AXIS_ALIGNMENT_START:
+        position = CrossAxisLeadingInset(max_cross_axis_margin);
+        break;
+      case CROSS_AXIS_ALIGNMENT_CENTER:
+        position = std::max(free_space / 2,
+                            children_center_line - CrossAxisSize(bounds) / 2);
+        break;
+      case CROSS_AXIS_ALIGNMENT_END:
+        position = free_space - CrossAxisTrailingInset(max_cross_axis_margin);
+        break;
+      default:
+        NOTREACHED();
+    }
+
+    SetCrossAxisPosition(position, &child_bounds->at(i));
+  }
 }
 
 gfx::Size BoxLayout::GetPreferredSize(const View* host) const {
   DCHECK_EQ(host_, host);
   // Calculate the child views' preferred width.
   int width = 0;
-  if (orientation_ == kVertical) {
-    // Calculating the child views' overall preferred width is a little involved
-    // because of the way the margins interact with |cross_axis_alignment_|.
-    int leading = 0;
-    int trailing = 0;
-    gfx::Rect child_view_area;
-    for (int i = 0; i < host_->child_count(); ++i) {
-      const ViewWrapper child(this, host_->child_at(i));
-      if (!child.visible())
-        continue;
-
-      // We need to bypass the ViewWrapper GetPreferredSize() to get the actual
-      // raw view size because the margins along the cross axis are handled
-      // below.
-      gfx::Size child_size = child.view()->GetPreferredSize();
-      gfx::Insets child_margins;
-      if (collapse_margins_spacing_) {
-        child_margins = MaxAxisInsets(HORIZONTAL_AXIS, child.margins(),
-                                      inside_border_insets_, child.margins(),
-                                      inside_border_insets_);
-      } else {
-        child_margins = child.margins();
-      }
-
-      // The value of |cross_axis_alignment_| will determine how the view's
-      // margins interact with each other or the |inside_border_insets_|.
-      if (cross_axis_alignment_ == CROSS_AXIS_ALIGNMENT_START) {
-        leading = std::max(leading, CrossAxisLeadingInset(child_margins));
-        width = std::max(
-            width, child_size.width() + CrossAxisTrailingInset(child_margins));
-      } else if (cross_axis_alignment_ == CROSS_AXIS_ALIGNMENT_END) {
-        trailing = std::max(trailing, CrossAxisTrailingInset(child_margins));
-        width = std::max(
-            width, child_size.width() + CrossAxisLeadingInset(child_margins));
-      } else {
-        // We don't have a rectangle which can be used to calculate a common
-        // center-point, so a single known point (0) along the horizontal axis
-        // is used. This is OK because we're only interested in the overall
-        // width and not the position.
-        gfx::Rect child_bounds =
-            gfx::Rect(-(child_size.width() / 2), 0, child_size.width(),
-                      child_size.height());
-        child_bounds.Inset(-child.margins().left(), 0, -child.margins().right(),
-                           0);
-        child_view_area.Union(child_bounds);
-        width = std::max(width, child_view_area.width());
-      }
-    }
-    width = std::max(width + leading + trailing, minimum_cross_axis_size_);
-  }
+  if (orientation_ == kVertical)
+    width = GetCrossAxisPreferredSize();
 
   return GetPreferredSizeForChildWidth(host, width);
+}
+
+int BoxLayout::GetCrossAxisPreferredSize() const {
+  auto max_value = [this](auto value_fn) {
+    int max = 0;
+    for (int i = 0; i < host_->child_count(); ++i) {
+      View* child = host_->child_at(i);
+      if (child->visible())
+        max = std::max(max, value_fn(child));
+    }
+
+    return max;
+  };
+  gfx::Insets max_cross_axis_margins = CrossAxisMaxViewMargin();
+
+  int cross_axis_size = 0;
+  switch (cross_axis_alignment_) {
+    case CROSS_AXIS_ALIGNMENT_STRETCH:
+      cross_axis_size += CrossAxisLeadingInset(max_cross_axis_margins);
+      cross_axis_size += max_value([this](View* v) {
+        return CrossAxisSize(gfx::Rect(v->GetPreferredSize()));
+      });
+      cross_axis_size += CrossAxisTrailingInset(max_cross_axis_margins);
+      break;
+    case CROSS_AXIS_ALIGNMENT_START:
+      cross_axis_size += max_value([this](View* v) {
+        return CrossAxisLeadingInset(GetMarginsForView(v));
+      });
+      cross_axis_size += max_value([this](View* v) {
+        return CrossAxisSize(gfx::Rect(v->GetPreferredSize())) +
+               CrossAxisTrailingInset(GetMarginsForView(v));
+      });
+      break;
+    case CROSS_AXIS_ALIGNMENT_CENTER:
+      cross_axis_size += CalculateIdealCenterLineForChildren();
+      cross_axis_size += max_value([this](View* v) {
+        return (CrossAxisSize(gfx::Rect(v->GetPreferredSize())) + 1) / 2 +
+               CrossAxisTrailingInset(GetMarginsForView(v));
+      });
+      break;
+    case CROSS_AXIS_ALIGNMENT_END:
+      cross_axis_size += max_value([this](View* v) {
+        return CrossAxisLeadingInset(GetMarginsForView(v)) +
+               CrossAxisSize(gfx::Rect(v->GetPreferredSize()));
+      });
+      cross_axis_size += max_value([this](View* v) {
+        return CrossAxisTrailingInset(GetMarginsForView(v));
+      });
+    default:
+      NOTREACHED();
+  }
+  return std::max(minimum_cross_axis_size_, cross_axis_size);
 }
 
 int BoxLayout::GetPreferredHeightForWidth(const View* host, int width) const {
@@ -424,10 +565,6 @@ int BoxLayout::MainAxisTrailingInset(const gfx::Insets& insets) const {
   return orientation_ == kHorizontal ? insets.right() : insets.bottom();
 }
 
-int BoxLayout::CrossAxisLeadingEdge(const gfx::Rect& rect) const {
-  return orientation_ == kVertical ? rect.x() : rect.y();
-}
-
 int BoxLayout::CrossAxisLeadingInset(const gfx::Insets& insets) const {
   return orientation_ == kVertical ? insets.left() : insets.top();
 }
@@ -487,107 +624,28 @@ void BoxLayout::AdjustCrossAxisForInsets(gfx::Rect* rect) const {
                                 inside_border_insets_.bottom(), 0));
 }
 
-int BoxLayout::CrossAxisSizeForView(const ViewWrapper& view) const {
-  // TODO(bruthig): For horizontal case use the available width and not the
-  // preferred width. See https://crbug.com/682266.
-  return orientation_ == kVertical
-             ? view.GetPreferredSize().width()
-             : view.GetHeightForWidth(view.GetPreferredSize().width());
-}
-
-int BoxLayout::CrossAxisMarginSizeForView(const ViewWrapper& view) const {
-  return collapse_margins_spacing_
-             ? 0
-             : (orientation_ == kVertical ? view.margins().width()
-                                          : view.margins().height());
-}
-
-int BoxLayout::CrossAxisLeadingMarginForView(const ViewWrapper& view) const {
-  return collapse_margins_spacing_ ? 0 : CrossAxisLeadingInset(view.margins());
-}
-
-void BoxLayout::InsetCrossAxis(gfx::Rect* rect,
-                               int leading,
-                               int trailing) const {
-  if (orientation_ == kVertical)
-    rect->Inset(leading, 0, trailing, 0);
-  else
-    rect->Inset(0, leading, 0, trailing);
-}
-
 gfx::Size BoxLayout::GetPreferredSizeForChildWidth(const View* host,
                                                    int child_area_width) const {
   DCHECK_EQ(host, host_);
   gfx::Rect child_area_bounds;
 
+  std::vector<gfx::Rect> child_bounds = CalculateChildPreferredSizes();
+
   if (orientation_ == kHorizontal) {
-    // Horizontal layouts ignore |child_area_width|, meaning they mimic the
-    // default behavior of GridLayout::GetPreferredHeightForWidth().
-    // TODO(estade|bruthig): Fix this See // https://crbug.com/682266.
-    int position = 0;
-    gfx::Insets max_margins = CrossAxisMaxViewMargin();
-    for (int i = 0; i < host_->child_count(); ++i) {
-      const ViewWrapper child(this, host_->child_at(i));
-      if (!child.visible())
-        continue;
-
-      gfx::Size size(child.view()->GetPreferredSize());
-      if (size.IsEmpty())
-        continue;
-
-      gfx::Rect child_bounds = gfx::Rect(
-          position, 0,
-          size.width() +
-              (!collapse_margins_spacing_ ? child.margins().width() : 0),
-          size.height());
-      gfx::Insets child_margins;
-      if (collapse_margins_spacing_)
-        child_margins =
-            MaxAxisInsets(VERTICAL_AXIS, child.margins(), inside_border_insets_,
-                          child.margins(), inside_border_insets_);
-      else
-        child_margins = child.margins();
-
-      if (cross_axis_alignment_ == CROSS_AXIS_ALIGNMENT_START) {
-        child_bounds.Inset(0, -CrossAxisLeadingInset(max_margins), 0,
-                           -child_margins.bottom());
-        child_bounds.set_origin(gfx::Point(position, 0));
-      } else if (cross_axis_alignment_ == CROSS_AXIS_ALIGNMENT_END) {
-        child_bounds.Inset(0, -child_margins.top(), 0,
-                           -CrossAxisTrailingInset(max_margins));
-        child_bounds.set_origin(gfx::Point(position, 0));
-      } else {
-        child_bounds.set_origin(
-            gfx::Point(position, -(child_bounds.height() / 2)));
-        child_bounds.Inset(0, -child_margins.top(), 0, -child_margins.bottom());
-      }
-
-      child_area_bounds.Union(child_bounds);
-      position += child_bounds.width() +
-                  MainAxisMarginBetweenViews(
-                      child, ViewWrapper(this, NextVisibleView(i)));
-    }
-    child_area_bounds.set_height(
-        std::max(child_area_bounds.height(), minimum_cross_axis_size_));
+    int total_main_axis_size = GetTotalMainAxisSize(child_bounds);
+    child_area_bounds.set_width(total_main_axis_size);
+    child_area_bounds.set_height(GetCrossAxisPreferredSize());
   } else {
-    int height = 0;
-    for (int i = 0; i < host_->child_count(); ++i) {
-      const ViewWrapper child(this, host_->child_at(i));
-      if (!child.visible())
-        continue;
+    if (cross_axis_alignment_ == CROSS_AXIS_ALIGNMENT_STRETCH) {
+      for (auto& b : child_bounds)
+        b.set_width(child_area_width);
 
-      const ViewWrapper next(this, NextVisibleView(i));
-      // Use the child area width for getting the height if the child is
-      // supposed to stretch. Use its preferred size otherwise.
-      int extra_height = MainAxisSizeForView(child, child_area_width);
-      // Only add |between_child_spacing_| if this is not the only child.
-      if (next.view() && extra_height > 0)
-        height += MainAxisMarginBetweenViews(child, next);
-      height += extra_height;
+      UpdateHeightsForWidth(&child_bounds);
     }
+    int total_main_axis_size = GetTotalMainAxisSize(child_bounds);
 
     child_area_bounds.set_width(child_area_width);
-    child_area_bounds.set_height(height);
+    child_area_bounds.set_height(total_main_axis_size);
   }
 
   gfx::Size non_child_size = NonChildSize(host_);
