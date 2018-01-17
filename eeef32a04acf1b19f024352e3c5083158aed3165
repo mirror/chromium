@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5da1041_d1ae1fe0",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-17T03:42:55Z",
+      "side": 1,
+      "message": "base::IDMap seems good for this use case.",
+      "range": {
+        "startLine": 316,
+        "startChar": 1,
+        "endLine": 316,
+        "endChar": 11
+      },
+      "revId": "eeef32a04acf1b19f024352e3c5083158aed3165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d279b7_307c8026",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-17T03:42:55Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 320,
+        "startChar": 2,
+        "endLine": 320,
+        "endChar": 38
+      },
+      "revId": "eeef32a04acf1b19f024352e3c5083158aed3165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
