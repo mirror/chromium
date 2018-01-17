@@ -70,6 +70,30 @@
       "revId": "83146debf1c6ccb473d20b8a9415d70dd08ef98a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4c75c1_db1e0b19",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_browsing_mode_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-17T18:17:50Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "e59c1f57_1fc3aa9a",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "83146debf1c6ccb473d20b8a9415d70dd08ef98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
