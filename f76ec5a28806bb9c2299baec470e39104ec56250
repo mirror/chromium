@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7840bfb1_da5c158d",
+        "filename": "content/renderer/loader/shared_memory_data_consumer_handle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-17T06:57:03Z",
+      "side": 1,
+      "message": "[optional] Maybe merging with the previous line is good.\n\ncontext_-\u003ePush(std::make_unique\u003cDelegateThreadSafeReceivedData\u003e(std::move(data)));",
+      "revId": "f76ec5a28806bb9c2299baec470e39104ec56250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "715f3588_2add7521",
+        "filename": "content/renderer/loader/shared_memory_data_consumer_handle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-17T06:57:03Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "f76ec5a28806bb9c2299baec470e39104ec56250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20f0284_69ecab77",
+        "filename": "content/renderer/loader/shared_memory_data_consumer_handle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-17T06:57:03Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "f76ec5a28806bb9c2299baec470e39104ec56250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
