@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cf7b985_a3ed156e",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T20:26:37Z",
+      "side": 1,
+      "message": "Unloaded extension paths doesn\u0027t exist here anymore... I wonder if this CHECK(!path.empty()) should just go in ExtensionRegistrar, before we call into the delegate?",
+      "range": {
+        "startLine": 662,
+        "startChar": 42,
+        "endLine": 662,
+        "endChar": 67
+      },
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65969408_3443aefb",
+        "filename": "chrome/browser/extensions/extension_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T20:26:37Z",
+      "side": 1,
+      "message": "Since we\u0027re updating this method, let\u0027s change this bool to an enum.",
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27873623_cb5a5aa1",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T20:26:37Z",
+      "side": 1,
+      "message": "no extensions:: prefix",
+      "range": {
+        "startLine": 31,
+        "startChar": 32,
+        "endLine": 31,
+        "endChar": 42
+      },
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb6d3a2_61673a3a",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T20:26:37Z",
+      "side": 1,
+      "message": "nittiest of nits: s/,/;",
+      "range": {
+        "startLine": 71,
+        "startChar": 32,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f76d7ea_0a4b29f3",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T20:26:37Z",
+      "side": 1,
+      "message": "maybe \"active\" or \"enabled\" extension, instead of current?",
+      "range": {
+        "startLine": 290,
+        "startChar": 19,
+        "endLine": 290,
+        "endChar": 26
+      },
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c0a863_17636347",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T20:26:37Z",
+      "side": 1,
+      "message": "since we\u0027re here, let\u0027s just make this:\nbool has_orphaned_dev_tools \u003d base::ContainsKey(orphaned_dev_tools, extension-\u003eid());",
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4bf468_1d217f10",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T20:26:37Z",
+      "side": 1,
+      "message": "Can this be made private?",
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d8ec2f6_a1a5e5ed",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T20:26:37Z",
+      "side": 1,
+      "message": "s/registry/registry set?  (There\u0027s only one registry)",
+      "range": {
+        "startLine": 142,
+        "startChar": 22,
+        "endLine": 142,
+        "endChar": 30
+      },
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c323b6_dbaeebfc",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T20:26:37Z",
+      "side": 1,
+      "message": "can we add a bit more detail about the \"maybe\"? :)",
+      "range": {
+        "startLine": 143,
+        "startChar": 9,
+        "endLine": 143,
+        "endChar": 24
+      },
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b28927_7b31ba8f",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T20:26:37Z",
+      "side": 1,
+      "message": "Impl methods are a bit annoying (though admittedly sometimes necessary because names are Hard).  Maybe here, though, something like AddExtensionToRegistry[Set]?",
+      "range": {
+        "startLine": 144,
+        "startChar": 19,
+        "endLine": 144,
+        "endChar": 23
+      },
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
