@@ -22,6 +22,15 @@ struct ResourceRequest;
 namespace content {
 struct ResourceResponse;
 
+// The name of the "Accept" header.
+extern const char kAcceptHeader[];
+
+// Accept header used for frame requests.
+extern const char kFrameAcceptHeader[];
+
+// The default Accept header value to use if none were specified.
+extern const char kDefaultAcceptHeader[];
+
 // Helper utilities shared between network service and ResourceDispatcherHost
 // code paths.
 
@@ -35,8 +44,6 @@ scoped_refptr<network::HttpRawRequestResponseInfo> BuildRawRequestResponseInfo(
     const net::URLRequest& request,
     const net::HttpRawRequestHeaders& raw_request_headers,
     const net::HttpResponseHeaders* raw_response_headers);
-
-void AttachAcceptHeader(ResourceType type, net::URLRequest* request);
 
 int BuildLoadFlagsForRequest(const network::ResourceRequest& request_data);
 
