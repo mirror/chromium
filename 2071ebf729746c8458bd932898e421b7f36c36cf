@@ -22,6 +22,30 @@
       "revId": "2071ebf729746c8458bd932898e421b7f36c36cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b83469_d96f8df6",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-17T00:00:25Z",
+      "side": 1,
+      "message": "SG. The expectation is that in the future we will disable the gles2 interface when this is set.\n\nI think we\u0027ll revisit this too (maybe splitting into a different function) because the WEBGL1 vs WEBGL2 part doesn\u0027t really make sense for the raster interface, but that\u0027s not blocking now.",
+      "parentUuid": "bd82c338_56d4d61f",
+      "range": {
+        "startLine": 1137,
+        "startChar": 2,
+        "endLine": 1137,
+        "endChar": 78
+      },
+      "revId": "2071ebf729746c8458bd932898e421b7f36c36cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
