@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eef66208_c117859f",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 9740,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-17T17:06:27Z",
+      "side": 1,
+      "message": "Why this change?",
+      "range": {
+        "startLine": 9740,
+        "startChar": 29,
+        "endLine": 9740,
+        "endChar": 48
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71419b8e_60ccd284",
+        "filename": "net/http/http_proxy_client_socket_pool.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-17T17:06:27Z",
+      "side": 1,
+      "message": "So SSL over a non-SSL proxy will always use the wrong connection timeout?  Does this affect any other case?",
+      "range": {
+        "startLine": 239,
+        "startChar": 30,
+        "endLine": 239,
+        "endChar": 41
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a86862_4d13fe73",
+        "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-17T17:06:27Z",
+      "side": 1,
+      "message": "Have you thought about checking the timeout we actually use for HTTP vs HTTPS proxies?",
+      "range": {
+        "startLine": 761,
+        "startChar": 7,
+        "endLine": 761,
+        "endChar": 36
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dacbcf8_2881ebc4",
+        "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-17T17:06:27Z",
+      "side": 1,
+      "message": "This should probably be \"const int kMultiplier\"",
+      "range": {
+        "startLine": 762,
+        "startChar": 6,
+        "endLine": 762,
+        "endChar": 17
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e212f0_c0175e1f",
+        "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-17T17:06:27Z",
+      "side": 1,
+      "message": "These should also be consts / use const naming scheme.",
+      "range": {
+        "startLine": 764,
+        "startChar": 18,
+        "endLine": 764,
+        "endChar": 30
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7897fb39_2381878c",
+        "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-17T17:06:27Z",
+      "side": 1,
+      "message": "Move this comment to above setting expected_connection_timeout?  At least I assume this isn\u0027t multiplier times some rtt of one second that I\u0027m missing?",
+      "range": {
+        "startLine": 770,
+        "startChar": 24,
+        "endLine": 770,
+        "endChar": 34
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9cc584e_c9784588",
+        "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-17T17:06:27Z",
+      "side": 1,
+      "message": "This can be a DCHECK, right?  max_timeout is a constant.",
+      "range": {
+        "startLine": 777,
+        "startChar": 3,
+        "endLine": 777,
+        "endChar": 0
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503c8283_9bb53426",
+        "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-17T17:06:27Z",
+      "side": 1,
+      "message": "Again, I don\u0027t think we want logic in tests if we don\u0027t need it, and max_timeout is a constant.",
+      "range": {
+        "startLine": 786,
+        "startChar": 3,
+        "endLine": 786,
+        "endChar": 0
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96411716_63f5ae1d",
+        "filename": "net/nqe/network_quality_estimator_test_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-17T17:06:27Z",
+      "side": 1,
+      "message": "This naming scheme shouldn\u0027t be used when calling a more complicated method that isn\u0027t inlined.",
+      "range": {
+        "startLine": 125,
+        "startChar": 7,
+        "endLine": 125,
+        "endChar": 35
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06961f56_de021505",
+        "filename": "net/nqe/network_quality_estimator_test_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-17T17:06:27Z",
+      "side": 1,
+      "message": "This seems unexpected.  Why is it needed?",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 34
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
