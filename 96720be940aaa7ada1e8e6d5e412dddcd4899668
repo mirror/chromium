@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "d98b7703_30c84589",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-17T00:39:53Z",
+      "side": 1,
+      "message": "\u003e Used \u0026\u0026 because I want this to be run in a very limited case (CVC being destroyed \u0026\u0026 losing focus). In such case member variables don\u0027t need updating as they are going away soon too.\n\u003e \n\u003e mPreserveSelectionOnNextLossOfFocus\n\u003e mJoystickScrollEnabled\n\u003e \n\u003e And at that point mWebContents as CVC knows of is already null - many methods need not running either, including those based on WebContentsUserData such as ImeAdapter/SelectionPopupController. They will soon be destroyed/gc\u0027ed.\n\u003e \n\u003e restoreSelectionPopupsIfNecessary()\n\u003e cancelRequestToScroll...\n\u003e nativeSetFocus()\n\u003e \n\u003e That leaves only hidePopupsAndXXXX(), which is done in here. Maybe these needs not running either - but there was a test about popup that fails if it is not hidden upon destruction.\n\u003e \n\u003e \n\u003e Without this if stmt, I need to put isAlive() here and there inside this method, which didn\u0027t look good.\n\nThe problem is, now this can continue to the rest of the method even if isAlive returns false. It\u0027s unsafe to call getImeAdapter or getSelectionPopupController in that case.",
+      "parentUuid": "f3a2ecb1_e3808a84",
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e8084c7_ce526e04",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
         "patchSetId": 4
