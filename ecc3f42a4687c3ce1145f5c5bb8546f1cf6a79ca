@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4232c617_6cdf854b",
+        "filename": "components/suggestions/suggestions_service_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T08:53:19Z",
+      "side": 1,
+      "message": "Optional: Let\u0027s use foo instead of default: foo_gaia, foo@bar.com, foo_refresh_token",
+      "range": {
+        "startLine": 47,
+        "startChar": 24,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "ecc3f42a4687c3ce1145f5c5bb8546f1cf6a79ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb349d5_d4858d90",
+        "filename": "services/identity/public/cpp/identity_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T08:53:19Z",
+      "side": 1,
+      "message": "Nit: This method is only supposed to be used by the IdentityManagerTestEnvironment and is not really supposed directly by clients. Let\u0027s make it private and make IdentityTestEnvironment a fried of the IdentityManager.",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 45
+      },
+      "revId": "ecc3f42a4687c3ce1145f5c5bb8546f1cf6a79ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
