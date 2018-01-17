@@ -137,9 +137,11 @@ class BrowserActionInteractiveTest : public ExtensionApiTest {
     content::WindowedNotificationObserver frame_observer(
         content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME,
         content::NotificationService::AllSources());
+    ExtensionTestMessageListener listener("ready", false);
     // Show first popup in first window and expect it to have loaded.
     ASSERT_TRUE(RunExtensionSubtest("browser_action/open_popup",
                                     "open_popup_succeeds.html")) << message_;
+    EXPECT_TRUE(listener.WaitUntilSatisfied());
     frame_observer.Wait();
     EnsurePopupActive();
   }
