@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "214e1fb8_c19239e8",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_time_zone_pref_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-17T21:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9ef054_e978a1d3",
+      "revId": "68ef7e76872c4f27fabf0b71b08c949ca27fb48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "721cecdf_25227310",
         "filename": "chrome/browser/resources/settings/date_time_page/timezone_selector.js",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-16T20:42:09Z",
       "side": 1,
       "message": "nit: .then(() \u003d\u003e { this.setTimeZoneList_(); })",
+      "revId": "68ef7e76872c4f27fabf0b71b08c949ca27fb48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae98e6a_88138bb8",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_selector.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-17T21:45:16Z",
+      "side": 1,
+      "message": "I tried this but it doesn\u0027t work.",
+      "parentUuid": "721cecdf_25227310",
       "revId": "68ef7e76872c4f27fabf0b71b08c949ca27fb48d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "68ef7e76872c4f27fabf0b71b08c949ca27fb48d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfca45bb_095b6c46",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_subpage.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-17T21:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c35c656b_44cc537d",
+      "revId": "68ef7e76872c4f27fabf0b71b08c949ca27fb48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
