@@ -22,6 +22,30 @@
       "revId": "e66c12822ea1c6961230cb09ecb5765091c13e60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4723bfa_ce5cddca",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-17T23:48:33Z",
+      "side": 1,
+      "message": "Good point; made into cleaner search via std::find_if. \n\nI can sort the views based on bounds, but I\u0027m unsure as to what\u0027s reasonable here. Left to right? How often do we get more than one of these views?",
+      "parentUuid": "d8fa13b7_7ab76f39",
+      "range": {
+        "startLine": 656,
+        "startChar": 6,
+        "endLine": 664,
+        "endChar": 12
+      },
+      "revId": "e66c12822ea1c6961230cb09ecb5765091c13e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
