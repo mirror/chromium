@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<script src="../media-file.js"></script>
+<html class="reftest-wait">
+<script src="/common/reftest-wait.js"></script>
+<link rel="match" href="track-cue-rendering-position-auto-rtl-ref.html">
 <script>
-var mediaFile = findMediaFile('video', '../content/test');
-
 function addTrackWithRtlCueData(video, cueData) {
   var track = video.addTextTrack('subtitles');
   var cue = new VTTCue(0, 10, '\u05d0\u05d1\u05d2');
@@ -20,23 +20,27 @@ video::cue {
 }
 </style>
 <video>
+  <source src="/media/white.webm" type="video/webm">
+  <source src="/media/white.mp4" type="video/mp4">
   <script>
   var video = document.currentScript.parentNode;
   addTrackWithRtlCueData(video, { align: 'start', size: 50, line: 0 });
-  video.src = mediaFile;
   </script>
 </video>
 <video>
+  <source src="/media/white.webm" type="video/webm">
+  <source src="/media/white.mp4" type="video/mp4">
   <script>
   var video = document.currentScript.parentNode;
   addTrackWithRtlCueData(video, { align: 'center', size: 50, line: 0 });
-  video.src = mediaFile;
   </script>
 </video>
-<video>
+<video autoplay onplaying="this.onplaying = null; this.pause(); takeScreenshot();">
+  <source src="/media/white.webm" type="video/webm">
+  <source src="/media/white.mp4" type="video/mp4">
   <script>
   var video = document.currentScript.parentNode;
   addTrackWithRtlCueData(video, { align: 'end', size: 50, line: 0 });
-  video.src = mediaFile;
   </script>
 </video>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+<script src="/common/reftest-wait.js"></script>
+<style>
+.container {
+  position: relative;
+  display: inline-block;
+  width: 320px;
+  height: 240px;
+}
+.cue {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+.cue.start {
+  text-align: start;
+}
+.cue.middle {
+  text-align: center;
+}
+.cue.end {
+  text-align: end;
+}
+.cue > span {
+  font-family: sans-serif;
+  background: green;
+  color: green;
+  font-size: 50px;
+  padding: 2px;
+}
+</style>
+<div class="container">
+  <video>
+    <source src="/media/white.webm" type="video/webm">
+    <source src="/media/white.mp4" type="video/mp4">
+  </video>
+  <div class="cue start"><span>XXX</span></div>
+</div>
+<div class="container">
+  <video>
+    <source src="/media/white.webm" type="video/webm">
+    <source src="/media/white.mp4" type="video/mp4">
+  </video>
+  <div class="cue middle"><span>XXX</span></div>
+</div>
+<div class="container">
+  <video autoplay onplaying="this.onplaying = null; this.pause(); takeScreenshot();">
+    <source src="/media/white.webm" type="video/webm">
+    <source src="/media/white.mp4" type="video/mp4">
+  </video>
+  <div class="cue end"><span>XXX</span></div>
+</div>
+</html>
