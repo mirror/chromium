@@ -57,6 +57,11 @@ void AshWindowTreeHostMus::PrepareForShutdown() {
   std::unique_ptr<ui::NullEventTargeter> null_event_targeter =
       std::make_unique<ui::NullEventTargeter>();
   window()->SetEventTargeter(std::move(null_event_targeter));
+
+  // Mus will destroy the platform display/window and its accelerated widget;
+  // prevent the compositor from using the asynchronously destroyed surface.
+  compositor()->SetVisible(false);
+  compositor()->ReleaseAcceleratedWidget();
 }
 
 void AshWindowTreeHostMus::RegisterMirroringHost(
