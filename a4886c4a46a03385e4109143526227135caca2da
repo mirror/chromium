@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6ceddde4_3867c2b1",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2018-01-17T23:28:42Z",
+      "side": 1,
+      "message": "i don\u0027t really get what\u0027s going on here, but can\u0027t we just read the file and re-export it with Python\u0027s JSON module?\n\nimport json\n\nwith json_file as open(file):\n  minified \u003d json.dumps(json_file.read(), separators\u003d(\u0027,\u0027,\u0027:\u0027))",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a091038b_d3fb02bc",
         "filename": "tools/grit/grit/format/minifier.py",
         "patchSetId": 4
@@ -76,6 +99,52 @@
     },
     {
       "key": {
+        "uuid": "471c5637_a3db4615",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2018-01-17T23:28:42Z",
+      "side": 1,
+      "message": "https://github.com/ben-eb/cssnano\nhttps://github.com/css/csso",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 13
+      },
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fab9f95_ee0e5fb3",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2018-01-17T23:28:42Z",
+      "side": 1,
+      "message": "https://github.com/svg/svgo",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 18
+      },
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c1b7193_e0204022",
         "filename": "tools/grit/grit/format/minifier.py",
         "patchSetId": 4
@@ -87,6 +156,29 @@
       "writtenOn": "2018-01-15T13:24:15Z",
       "side": 1,
       "message": "Is there any danger of any of these regex\u0027s matching within an attribute value? I admit it seems unlikely, but if it ever does happen it could cause some very strange bugs.",
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ccf645_803bfd08",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2018-01-17T23:28:42Z",
+      "side": 1,
+      "message": "don\u0027t want to handle .html files?\n\nhttps://github.com/kangax/html-minifier",
+      "range": {
+        "startLine": 144,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 17
+      },
       "revId": "a4886c4a46a03385e4109143526227135caca2da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
