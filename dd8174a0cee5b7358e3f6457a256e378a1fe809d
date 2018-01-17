@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af4d7a4d_84d885bb",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-17T03:58:01Z",
+      "side": 1,
+      "message": "BTW, kPreventSpellChecking is useless it will be removed by [1][2].\n\n[1] http://crrev.com/c/869533: Get rid of unused member should_prevent_spell_checking_ from TypingCommand\n[2] http://crrev.com/c/crrev.com/c/869534: Get rid of unused enum field TypingCommand::Option::kPreventSpellChecking",
+      "range": {
+        "startLine": 710,
+        "startChar": 42,
+        "endLine": 710,
+        "endChar": 64
+      },
+      "revId": "dd8174a0cee5b7358e3f6457a256e378a1fe809d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f472058e_32c15903",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-17T03:58:01Z",
+      "side": 1,
+      "message": "Could you make DeleteSelection() as file local function to avoid including\nTypingCommand.h?\n\nSince DeleteSelection() needs only Document and it doesn\u0027t use composition,\nwe don\u0027t need to make it as member function of IMC.",
+      "revId": "dd8174a0cee5b7358e3f6457a256e378a1fe809d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
