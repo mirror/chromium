@@ -34,6 +34,24 @@
       "revId": "17f837c4ef645b74e2ccb14f231dbb3bbbdbd397",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40b4439_b1a7af98",
+        "filename": "ash/wm/window_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-17T21:04:25Z",
+      "side": 1,
+      "message": "Oh I meant not having |window_state|, |bounds| as they are used only once.",
+      "parentUuid": "45ef4ed3_2c0b7227",
+      "revId": "17f837c4ef645b74e2ccb14f231dbb3bbbdbd397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
