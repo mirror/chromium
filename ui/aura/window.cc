@@ -269,6 +269,7 @@ gfx::Rect Window::GetBoundsInScreen() const {
 }
 
 void Window::SetTransform(const gfx::Transform& transform) {
+  LOG(ERROR) << __FUNCTION__ << " " << transform.ToString();
   WindowOcclusionTracker::ScopedPauseOcclusionTracking pause_occlusion_tracking;
   for (WindowObserver& observer : observers_)
     observer.OnWindowTargetTransformChanging(this, transform);
@@ -299,6 +300,7 @@ std::unique_ptr<ui::EventTargeter> Window::SetEventTargeter(
 }
 
 void Window::SetBounds(const gfx::Rect& new_bounds) {
+  LOG(ERROR) << __FUNCTION__ << " " << GetName() << " " << id() << " " << new_bounds.ToString();
   if (parent_ && parent_->layout_manager())
     parent_->layout_manager()->SetChildBounds(this, new_bounds);
   else {
@@ -310,6 +312,7 @@ void Window::SetBounds(const gfx::Rect& new_bounds) {
       final_bounds.set_height(std::max(min_size.height(),
                                        final_bounds.height()));
     }
+    LOG(ERROR) << __FUNCTION__ << " " << final_bounds.ToString();
     SetBoundsInternal(final_bounds);
   }
 }
