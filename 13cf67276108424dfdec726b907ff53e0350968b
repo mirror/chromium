@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "dbddd4ec_ac67f080",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-17T11:11:14Z",
+      "side": 1,
+      "message": "s/during/when",
+      "range": {
+        "startLine": 346,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 75
+      },
+      "revId": "13cf67276108424dfdec726b907ff53e0350968b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35cff04b_d4917209",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-17T11:11:14Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me how this fence affects anything. Please add a comment to clarify.",
+      "range": {
+        "startLine": 970,
+        "startChar": 0,
+        "endLine": 970,
+        "endChar": 77
+      },
+      "revId": "13cf67276108424dfdec726b907ff53e0350968b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d988b2_d33afc69",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-17T11:11:14Z",
+      "side": 1,
+      "message": "Why 301 ms not 300?",
+      "range": {
+        "startLine": 989,
+        "startChar": 72,
+        "endLine": 989,
+        "endChar": 75
+      },
+      "revId": "13cf67276108424dfdec726b907ff53e0350968b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4f6539d_23b28310",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/work_queue.h",
         "patchSetId": 1
