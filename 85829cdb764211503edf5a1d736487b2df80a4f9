@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5eec985_a3800b48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-17T22:59:57Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be cleaner to invert this to isVrBrowsingEnabled()?  Then the only \"not\" is the initializeNative() parameter that happens to be inverted.",
+      "revId": "85829cdb764211503edf5a1d736487b2df80a4f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
