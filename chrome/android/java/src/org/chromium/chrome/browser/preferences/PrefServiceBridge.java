@@ -366,6 +366,13 @@ public final class PrefServiceBridge {
     }
 
     /**
+     * @return true if websites are allowed to read from the clipboard.
+     */
+    public boolean isClipboardEnabled() {
+        return isContentSettingEnabled(ContentSettingsType.CONTENT_SETTINGS_TYPE_CLIPBOARD_READ);
+    }
+
+    /**
      * @return true if websites are allowed to play sound.
      */
     public boolean isSoundEnabled() {
@@ -727,6 +734,10 @@ public final class PrefServiceBridge {
 
     public void setPasswordEchoEnabled(boolean enabled) {
         nativeSetPasswordEchoEnabled(enabled);
+    }
+
+    public void setClipboardEnabled(boolean allow) {
+        setContentSettingEnabled(ContentSettingsType.CONTENT_SETTINGS_TYPE_CLIPBOARD_READ, allow);
     }
 
     public void setSoundEnabled(boolean allow) {
