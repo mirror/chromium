@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7809b49_56ee1837",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-17T01:49:04Z",
+      "side": 1,
+      "message": "I spent some time to design and produce the crbug.com/799213, item 1. Seems the x !\u003d 0 can fix it. But it makes disable_line_wrapping \u003d true does not work, it will wrap every single letter, such as below, if it is expected.\nb\nb\nb\nb\n...\nK\nS\nV\na\na\n...\n\n\nHere is my setup: Two views, one Label and one StyledLabel. Label will consume 95% of the width and only left a small width for StyledLabel.\n \nclass KeyboardShortcutView : public views::View {\n}\n\n  KeyboardShortcutView::KeyboardShortcutView() {\n    styled_label_ \u003d new views::StyledLabel(base::ASCIIToUTF16(\"bbbbbbbbbbbbbbbbbbbbb KSVaaaaaaaaaaaaaaaaaaaaaaaaaa\"), nullptr);\n    views::StyledLabel::RangeStyleInfo style_info;\n    style_info.disable_line_wrapping \u003d true;\n    style_info.custom_font \u003d styled_label_-\u003eGetDefaultFontList().Derive(\n              16, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::BOLD);\n\n    style_info.override_color \u003d SK_ColorBLUE;\n    styled_label_-\u003eAddStyleRange(gfx::Range(0, 21), style_info);\n    style_info.override_color \u003d SK_ColorRED;\n    styled_label_-\u003eAddStyleRange(gfx::Range(22, 50), style_info);\n\n\n    label_ \u003d new views::Label(base::ASCIIToUTF16(\"testaaaaaaaa\"));\n    label_-\u003eSetElideBehavior(gfx::NO_ELIDE);\n    AddChildView(label_);\n    AddChildView(styled_label_);\n  }\n\n\nvoid KeyboardShortcutView::Layout() {\n  gfx::Rect bounds(GetLocalBounds());\n  gfx::Rect bounds1(bounds);\n  gfx::Rect bounds2(bounds);\n  bounds2.set_x(0);\n  bounds2.set_y(0);\n  bounds2.set_width(0.95*bounds.width());\n  bounds1.set_width(0.05*bounds.width());\n  bounds1.set_x(bounds2.width() + 1);\n  bounds1.set_y(0);\n  label_-\u003eSetBoundsRect(bounds2);\n  styled_label_-\u003eSetBoundsRect(bounds1);\n}",
+      "revId": "c21365960fd9034bc74b94bd70aad967fa0ce6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
