@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b6c786c1_3367a632",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-17T20:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f571686d_aa83a3f9",
+      "revId": "bc38a2247c85d91e3984ac2c72de67f1a390f37c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23793387_dc383aaf",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 34
@@ -57,6 +75,30 @@
       "revId": "bc38a2247c85d91e3984ac2c72de67f1a390f37c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d9b032_90e21588",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-17T20:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23793387_dc383aaf",
+      "range": {
+        "startLine": 105,
+        "startChar": 17,
+        "endLine": 105,
+        "endChar": 19
+      },
+      "revId": "bc38a2247c85d91e3984ac2c72de67f1a390f37c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
