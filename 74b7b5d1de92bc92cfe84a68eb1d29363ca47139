@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "431daaf0_601c80c4",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-17T15:29:19Z",
+      "side": 1,
+      "message": "If you say I can do that, I\u0027ll do that :-)\nWon\u0027t \"default-src\" directives also count as being \"active for connections\"?\nIt won\u0027t ignore directives with \u0027*\u0027 in them, but we can get to that when we start preparing for enforcement of these directives.",
+      "parentUuid": "f648e292_12f83493",
+      "revId": "74b7b5d1de92bc92cfe84a68eb1d29363ca47139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ccc46ec_7a01965b",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-17T15:14:56Z",
       "side": 1,
       "message": "Are all these DCHECKs meant to be part of this patch?",
+      "revId": "74b7b5d1de92bc92cfe84a68eb1d29363ca47139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ab0d74_d3014ba9",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-17T15:29:19Z",
+      "side": 1,
+      "message": "No, that\u0027s a merge error. I don\u0027t know which CL those were supposed to be in :-(",
+      "parentUuid": "5ccc46ec_7a01965b",
       "revId": "74b7b5d1de92bc92cfe84a68eb1d29363ca47139",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
