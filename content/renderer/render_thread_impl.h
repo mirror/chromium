@@ -147,7 +147,6 @@ class NotificationDispatcher;
 class P2PSocketDispatcher;
 class PeerConnectionDependencyFactory;
 class PeerConnectionTracker;
-class QuotaDispatcher;
 class RenderThreadObserver;
 class RendererBlinkPlatformImpl;
 class ResourceDispatcher;
@@ -346,10 +345,6 @@ class CONTENT_EXPORT RenderThreadImpl
 
   MidiMessageFilter* midi_message_filter() {
     return midi_message_filter_.get();
-  }
-
-  QuotaDispatcher* quota_dispatcher() const {
-    return quota_dispatcher_.get();
   }
 
   ResourceDispatcher* resource_dispatcher() const {
@@ -651,7 +646,6 @@ class CONTENT_EXPORT RenderThreadImpl
   std::unique_ptr<ResourceDispatcher> resource_dispatcher_;
   std::unique_ptr<CacheStorageDispatcher> main_thread_cache_storage_dispatcher_;
   std::unique_ptr<FileSystemDispatcher> file_system_dispatcher_;
-  std::unique_ptr<QuotaDispatcher> quota_dispatcher_;
   std::unique_ptr<URLLoaderThrottleProvider> url_loader_throttle_provider_;
 
   // Used on the renderer and IPC threads.
