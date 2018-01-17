@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+typedef (WebGLRenderingContext or WebGL2RenderingContext) XRWebGLRenderingContext;
+
 // https://immersive-web.github.io/webxr/spec/latest/#xrdevice-interface
 [
     SecureContext,
@@ -11,4 +13,6 @@
 
   [CallWith=ScriptState] Promise supportsSession([PermissiveDictionaryConversion] optional XRSessionCreationOptions options);
   [CallWith=ScriptState] Promise requestSession([PermissiveDictionaryConversion] optional XRSessionCreationOptions options);
+
+  [CallWith=ScriptState] Promise ensureContextCompatibility(XRWebGLRenderingContext context);
 };

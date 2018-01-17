@@ -6,6 +6,7 @@
 #define XRDevice_h
 
 #include "bindings/core/v8/ScriptPromise.h"
+#include "bindings/modules/v8/webgl_rendering_context_or_webgl2_rendering_context.h"
 #include "core/dom/events/EventTarget.h"
 #include "device/vr/vr_service.mojom-blink.h"
 #include "modules/xr/XRSessionCreationOptions.h"
@@ -36,6 +37,10 @@ class XRDevice final : public EventTargetWithInlineData,
   ScriptPromise supportsSession(ScriptState*,
                                 const XRSessionCreationOptions&) const;
   ScriptPromise requestSession(ScriptState*, const XRSessionCreationOptions&);
+
+  ScriptPromise ensureContextCompatibility(
+      ScriptState*,
+      const WebGLRenderingContextOrWebGL2RenderingContext&) const;
 
   // EventTarget overrides.
   ExecutionContext* GetExecutionContext() const override;
