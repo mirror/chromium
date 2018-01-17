@@ -882,6 +882,20 @@
       },
     },
   },
+  'chromedriver_py_tests': {
+    'remove_from': [
+      # chromium.chromiumos
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
+      # chromium.clang
+      'ToTLinuxASan',
+      'ToTLinuxUBSanVptr',
+      # chromium.memory
+      'Linux ASan LSan Tests (1)',
+      'Linux Chromium OS ASan LSan Tests (1)',
+    ],
+  },
   'chromedriver_unittests': {
     'remove_from': [
       # chromium.chromiumos
