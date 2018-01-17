@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fcdb56f_a0ed60f5",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2018-01-17T13:12:50Z",
+      "side": 1,
+      "message": "No need for the if, here (and below, when resetting it). I don\u0027t think it improves readability. WDYT?",
+      "range": {
+        "startLine": 51,
+        "startChar": 13,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "85eaa6ae6c4399a67626f00970eeaa477ac0b74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87bcee45_43228bc8",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2018-01-17T13:12:50Z",
+      "side": 1,
+      "message": "I think this comment is a bit misleading. It would be better to say that if rotation has changed, then we always need to scheduleInvalidate() regardless of the current visibility (hence the short circuit also has to be avoided).",
+      "range": {
+        "startLine": 586,
+        "startChar": 11,
+        "endLine": 586,
+        "endChar": 95
+      },
+      "revId": "85eaa6ae6c4399a67626f00970eeaa477ac0b74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
