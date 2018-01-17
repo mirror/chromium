@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3d9421f3_f7971a48",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T05:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4981c1f0_691ab7ce",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acc26a2a_025c8f08",
         "filename": "chrome/browser/printing/pwg_raster_converter.cc",
         "patchSetId": 22
@@ -65,6 +83,54 @@
     },
     {
       "key": {
+        "uuid": "8ddd6569_2a5b0c91",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T05:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b52188a_67d2ade4",
+      "range": {
+        "startLine": 266,
+        "startChar": 8,
+        "endLine": 266,
+        "endChar": 26
+      },
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a71e677e_55ba2593",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T05:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acc26a2a_025c8f08",
+      "range": {
+        "startLine": 266,
+        "startChar": 52,
+        "endLine": 266,
+        "endChar": 55
+      },
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71f40693_579e9b89",
         "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
         "patchSetId": 22
@@ -79,6 +145,24 @@
       "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f210c30_0c2e9796",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T05:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71f40693_579e9b89",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "2996e645_9c507fbd",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T05:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af0db3b2_24b45bb0",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c431100a_fd920efc",
         "filename": "components/printing/common/print_messages.h",
         "patchSetId": 22
@@ -110,6 +212,24 @@
       "writtenOn": "2018-01-12T02:02:05Z",
       "side": 1,
       "message": "gfx::Size has int values, whereas |dpi| was previously a double. Is this an issue?",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582f54a7_26c42812",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T05:43:35Z",
+      "side": 1,
+      "message": "This structure is always filled in here (there are multiple paths - scripted print, update print settings, and get default settings - but all ultimately create PrintSettings that are used to fill in the params:)\nhttps://cs.chromium.org/chromium/src/components/printing/browser/print_manager_utils.cc?l\u003d56\nThe dpi parameter is read in from PrintSettings, which has an integer DPI value. So I am not sure what benefit there was to storing it as a double here.",
+      "parentUuid": "c431100a_fd920efc",
       "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "a6620be3_ce5478dd",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T05:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f81d069f_2733efe0",
+      "range": {
+        "startLine": 1508,
+        "startChar": 8,
+        "endLine": 1508,
+        "endChar": 10
+      },
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ad12fa8_27248d50",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 22
@@ -153,6 +297,24 @@
       "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c6bd0a_676cac40",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1626,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T05:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ad12fa8_27248d50",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "d5d3a4e0_1082516a",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1629,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T05:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c8e426d_f376dbb5",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b3fd60a_1dd7246d",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 22
@@ -187,6 +367,24 @@
       "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50958ebd_4eef0987",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1655,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T05:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b3fd60a_1dd7246d",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "04dcbcea_7fbc746b",
+        "filename": "components/printing/test/mock_printer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T05:43:35Z",
+      "side": 1,
+      "message": "No, we always pass square DPI so this is irrelevant. Changed to std::max.",
+      "parentUuid": "9590600a_a902f2f9",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f401c824_2351c9c9",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 22
@@ -221,6 +437,24 @@
       "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d51daff_c2db2914",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 4405,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T05:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f401c824_2351c9c9",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -241,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "140fbece_f1a5d61b",
+        "filename": "printing/print_settings.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T05:43:35Z",
+      "side": 1,
+      "message": "Flipped this back to max. I thought we had to use min, but it turns out that I had forgotten the page size passed to PdfToEmfConverter is in square, not device, units. Adjusting accordingly in pdfium_engine means max works.",
+      "parentUuid": "b2a8764f_620298bc",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c72ca249_8ffe9f59",
         "filename": "printing/print_settings.h",
         "patchSetId": 22
@@ -255,6 +507,24 @@
       "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f77843_f2605b2b",
+        "filename": "printing/print_settings.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T05:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c72ca249_8ffe9f59",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
