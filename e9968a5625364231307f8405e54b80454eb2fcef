@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75c33b28_89a3023c",
+        "filename": "components/policy/core/common/preg_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-17T10:56:14Z",
+      "side": 1,
+      "message": "Write this to a std::vector and test size(), so you don\u0027t have to count key_name_components manually.",
+      "range": {
+        "startLine": 230,
+        "startChar": 42,
+        "endLine": 230,
+        "endChar": 65
+      },
+      "revId": "e9968a5625364231307f8405e54b80454eb2fcef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "485aa8df_d3203d56",
+        "filename": "components/policy/core/common/preg_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-17T10:56:14Z",
+      "side": 1,
+      "message": "Pretty sure StringPiece16 isn\u0027t available in Chrome OS yet. Ignore code search, it\u0027s lying (the libchrome ebuild actually points to an older revision, not ToT). See crbug.com/724678.",
+      "range": {
+        "startLine": 230,
+        "startChar": 19,
+        "endLine": 230,
+        "endChar": 32
+      },
+      "revId": "e9968a5625364231307f8405e54b80454eb2fcef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
