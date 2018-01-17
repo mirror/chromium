@@ -16,6 +16,24 @@
       "revId": "d205876439da0de638069c5a522c628bdd5978f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50526641_013fd222",
+        "filename": "chrome/browser/chromeos/hats/hats_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-17T07:00:24Z",
+      "side": 1,
+      "message": "A utility function would have the same problem, because new code could still access the pref directly.\nI believe docs is our only way, but other suggestions are welcome.\n\nA completely different design would be to introduce a separate pref, called something like \"user-selected-locale\", that is modified indirectly by the user through settings. Settings will be the only place that uses this pref and they would take care of keeping this pref and the \"intl.app_locale\" pref in sync.\nI initially discarded this solution because it would potentially create broken states if for example we have a partial sync and only one of the two prefs gets changed.\nLet me know what you think of this solution, but do keep in mind that it will require a big change to this CL.",
+      "parentUuid": "997dbdb3_4e8200be",
+      "revId": "d205876439da0de638069c5a522c628bdd5978f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
