@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3632be8_8875d3c8",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1848,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T00:57:54Z",
+      "side": 1,
+      "message": "I feel like it might be premature to start moving views browser dependencies into the release build on Mac until we can actually show a views browser -- otherwise it\u0027s extra bloat that we can\u0027t test, and it will be there for a number of releases. Maybe we need some other opinions on the \"badness\" of this (it\u0027s pretty high on my badness scale..). We still need a way to make progress on this though.\n\nMaybe the trick is a new compile-time flag. runtime_mac_views_browser or something. which implies mac_views_browser *and* Cocoa.\n\nThat comes with its own level of badness, but I think it is the lesser of the two. Assuming we can pull it off.",
+      "revId": "0ddb7600dd1107ef9b3d743dfb9dadaed9548054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c63012_2d2aabba",
+        "filename": "chrome/browser/ui/cocoa/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T00:57:54Z",
+      "side": 1,
+      "message": "What\u0027s the change that necessitated this? I think it\u0027s more likely that we need more c/b/ui/cocoa dependencies in c/b/ui/views  (which I think is already allowed?). But the code under cocoa should still be the stuff we want to scrap -- it shouldn\u0027t be picking up new views dependencies.",
+      "revId": "0ddb7600dd1107ef9b3d743dfb9dadaed9548054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ec34e6_be4d23ac",
+        "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T00:57:54Z",
+      "side": 1,
+      "message": "I don\u0027t think we should have both ShowPilotDialogsWithViewsToolkit() and  views_mode_controller::ArePilotDialogsViews() -- can we remove one?",
+      "revId": "0ddb7600dd1107ef9b3d743dfb9dadaed9548054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070b082b_7c588058",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/chrome_web_contents_view_delegate_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T00:57:54Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "0ddb7600dd1107ef9b3d743dfb9dadaed9548054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a51fc5e_7a602d18",
+        "filename": "chrome/browser/ui/views_mode_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T00:57:54Z",
+      "side": 1,
+      "message": "note MAC_VIEWS_BROWSER needs to move out of ui_features.gni into gfx_features.gni (doesn\u0027t exist yet). I don\u0027t think there\u0027s a nice way to avoid this :/",
+      "revId": "0ddb7600dd1107ef9b3d743dfb9dadaed9548054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2f62fd_22af3c2a",
+        "filename": "chrome/browser/ui/views_mode_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T00:57:54Z",
+      "side": 1,
+      "message": "then this #if can be\n\nconstexpr bool kForceViews \u003d BUILDFLAG(MAC_VIEWS_BROWSER);\n\nor we can just use BUILDFLAG(MAC_VIEWS_BROWSER) in the conditions below -- whichever you prefer.",
+      "revId": "0ddb7600dd1107ef9b3d743dfb9dadaed9548054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2109ff_931d66f4",
+        "filename": "chrome/browser/ui/views_mode_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T00:57:54Z",
+      "side": 1,
+      "message": "I think it should be an error to ever use this header on non-mac. This will force us to be diligent about how files are updated to use these flags. Which is a good thing -- we eventually want to tear this out, so dependencies in odd places will make that scary/churny.\n\nBut also any file that isn\u0027t *already* mac-specific, but wants to use these, should be a red-flag. The dependency is probably creeping in to the wrong place anyway.\n\nI think the best way to do that is to add a _mac suffix. And perhaps even add\n\n#if !defined(OS_MACOSX)\n#error \"This header shouldn\u0027t be used outside of Mac\".\n#endif\n\nor just guard the visibility of the contents of the file (i.e. still allow an #include but don\u0027t expose any symbols -- this way it\u0027s not necessary to #ifdef around the #include)",
+      "revId": "0ddb7600dd1107ef9b3d743dfb9dadaed9548054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e618f2bc_f8a996d3",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T00:57:54Z",
+      "side": 1,
+      "message": "I think this needs to be in ui/gfx/features.h (new file -- features::kLeftToRightUrls should move there too). gfx has a dependency on this feature, and gfx does not depend on ui/base",
+      "revId": "0ddb7600dd1107ef9b3d743dfb9dadaed9548054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
