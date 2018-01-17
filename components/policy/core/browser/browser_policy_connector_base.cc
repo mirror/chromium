@@ -26,7 +26,7 @@ ConfigurationPolicyProvider* g_testing_provider = nullptr;
 
 BrowserPolicyConnectorBase::BrowserPolicyConnectorBase(
     const HandlerListFactory& handler_list_factory)
-    : is_initialized_(false), platform_policy_provider_(nullptr) {
+    : is_initialized_(false) {
   // GetPolicyService() must be ready after the constructor is done.
   // The connector is created very early during startup, when the browser
   // threads aren't running yet; initialize components that need local_state,
@@ -51,27 +51,14 @@ BrowserPolicyConnectorBase::~BrowserPolicyConnectorBase() {
   }
 }
 
-void BrowserPolicyConnectorBase::InitPolicyProviders() {
-  DCHECK(!is_initialized());
-
-  if (g_testing_provider)
-    g_testing_provider->Init(GetSchemaRegistry());
-
-  for (const auto& provider : policy_providers_)
-    provider->Init(GetSchemaRegistry());
-
-  is_initialized_ = true;
-}
-
 void BrowserPolicyConnectorBase::Shutdown() {
   is_initialized_ = false;
   if (g_testing_provider)
     g_testing_provider->Shutdown();
-  for (const auto& provider : policy_providers_)
-    provider->Shutdown();
-  // Drop g_testing_provider so that tests executed with --single_process can
-  // call SetPolicyProviderForTesting() again. It is still owned by the test.
-  g_testing_provider = nullptr;
+  if (policy_providers_) {
+    for (const auto& provider : *policy_providers_)
+      provider->Shutdown();
+  }
   g_created_policy_service = false;
 }
 
@@ -86,24 +73,11 @@ CombinedSchemaRegistry* BrowserPolicyConnectorBase::GetSchemaRegistry() {
 PolicyService* BrowserPolicyConnectorBase::GetPolicyService() {
   if (!policy_service_) {
     g_created_policy_service = true;
-    std::vector<ConfigurationPolicyProvider*> providers;
-    if (g_testing_provider) {
-      providers.push_back(g_testing_provider);
-    } else {
-      providers.reserve(policy_providers_.size());
-      for (const auto& policy : policy_providers_) {
-        providers.push_back(policy.get());
-      }
-    }
-    policy_service_.reset(new PolicyServiceImpl(providers));
+    policy_service_ = std::make_unique<PolicyServiceImpl>();
+    if (policy_providers_)
+      policy_service_->SetProviders(GetProviders());
   }
   return policy_service_.get();
-}
-
-ConfigurationPolicyProvider* BrowserPolicyConnectorBase::GetPlatformProvider() {
-  if (g_testing_provider)
-    return g_testing_provider;
-  return platform_policy_provider_;
 }
 
 const ConfigurationPolicyHandlerList*
@@ -121,16 +95,41 @@ void BrowserPolicyConnectorBase::SetPolicyProviderForTesting(
   g_testing_provider = provider;
 }
 
-void BrowserPolicyConnectorBase::AddPolicyProvider(
-    std::unique_ptr<ConfigurationPolicyProvider> provider) {
-  policy_providers_.push_back(std::move(provider));
+// static
+ConfigurationPolicyProvider*
+BrowserPolicyConnectorBase::GetPolicyProviderForTesting() {
+  return g_testing_provider;
 }
 
-void BrowserPolicyConnectorBase::SetPlatformPolicyProvider(
-    std::unique_ptr<ConfigurationPolicyProvider> provider) {
-  CHECK(!platform_policy_provider_);
-  platform_policy_provider_ = provider.get();
-  AddPolicyProvider(std::move(provider));
+void BrowserPolicyConnectorBase::SetPolicyProviders(
+    std::vector<std::unique_ptr<ConfigurationPolicyProvider>> providers) {
+  // SetPolicyProviders() should only called once.
+  DCHECK(!is_initialized_);
+  policy_providers_ = std::move(providers);
+
+  if (g_testing_provider)
+    g_testing_provider->Init(GetSchemaRegistry());
+
+  for (const auto& provider : *policy_providers_)
+    provider->Init(GetSchemaRegistry());
+
+  is_initialized_ = true;
+
+  if (policy_service_)
+    policy_service_->SetProviders(GetProviders());
+}
+
+std::vector<ConfigurationPolicyProvider*>
+BrowserPolicyConnectorBase::GetProviders() {
+  std::vector<ConfigurationPolicyProvider*> providers;
+  if (g_testing_provider) {
+    providers.push_back(g_testing_provider);
+    return providers;
+  }
+  providers.reserve(policy_providers_->size());
+  for (const auto& policy : *policy_providers_)
+    providers.push_back(policy.get());
+  return providers;
 }
 
 }  // namespace policy

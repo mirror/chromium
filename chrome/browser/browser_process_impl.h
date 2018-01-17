@@ -69,9 +69,14 @@ class PolicyService;
 class BrowserProcessImpl : public BrowserProcess,
                            public KeepAliveStateObserver {
  public:
-  // |local_state_task_runner| must be a shutdown-blocking task runner.
-  explicit BrowserProcessImpl(
-      base::SequencedTaskRunner* local_state_task_runner);
+  BrowserProcessImpl(
+      std::unique_ptr<metrics_services_manager::MetricsServicesManager>
+          metrics_services_manager,
+      std::unique_ptr<policy::ChromeBrowserPolicyConnector>
+          browser_policy_connector,
+      std::unique_ptr<PrefService> local_state,
+      scoped_refptr<base::SequencedTaskRunner> local_state_task_runner,
+      std::unique_ptr<prefs::InProcessPrefServiceFactory> pref_service_factory);
   ~BrowserProcessImpl() override;
 
   // Called before the browser threads are created.
@@ -173,7 +178,6 @@ class BrowserProcessImpl : public BrowserProcess,
 
   void CreateWatchdogThread();
   void CreateProfileManager();
-  void CreateLocalState();
   void CreateViewedPageTracker();
   void CreateIconManager();
   void CreateIntranetRedirectDetector();

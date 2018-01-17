@@ -58,9 +58,11 @@ class BrowserPolicyConnectorChromeOS
 
   ~BrowserPolicyConnectorChromeOS() override;
 
+  // ChromeBrowserPolicyConnector:
   void Init(
       PrefService* local_state,
       scoped_refptr<net::URLRequestContextGetter> request_context) override;
+  void OnPreCreateThreads() override;
 
   // Shutdown() is called from BrowserProcessImpl::StartTearDown() but |this|
   // observes some objects that get destroyed earlier. PreShutdown() is called
@@ -177,6 +179,11 @@ class BrowserPolicyConnectorChromeOS
 
   chromeos::AffiliationIDSet GetDeviceAffiliationIDs() const;
 
+ protected:
+  void BuildPolicyProviders(
+      std::vector<std::unique_ptr<ConfigurationPolicyProvider>>* providers)
+      override;
+
  private:
   // Set the timezone as soon as the policies are available.
   void SetTimezoneIfPolicyAvailable();
@@ -222,6 +229,10 @@ class BrowserPolicyConnectorChromeOS
 
   std::unique_ptr<DeviceNetworkConfigurationUpdater>
       device_network_configuration_updater_;
+
+  // The ConfigurationPolicyProvider created are initially added here, and
+  // then pushed to the super class in BuildPolicyProviders().
+  std::vector<std::unique_ptr<ConfigurationPolicyProvider>> providers_;
 
   base::WeakPtrFactory<BrowserPolicyConnectorChromeOS> weak_ptr_factory_;
 
