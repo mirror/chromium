@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "615e142b_b572f116",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:34:06Z",
+      "side": 1,
+      "message": "Why would it need to be static if it was in the test body? A LazyInstance is usually static/global, but it should work the same way when it\u0027s not. It would need to be leaky if you don\u0027t want the AtExitManager to access it after it became out of scope.",
+      "parentUuid": "77fe63b4_a4885374",
+      "range": {
+        "startLine": 275,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 30
+      },
+      "revId": "75bbbbde4915d8106d2cc40e55ffaa97bed4dfe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4ef2c35_e870537a",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 6
