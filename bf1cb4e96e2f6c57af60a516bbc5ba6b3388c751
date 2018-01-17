@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "447a433e_c0943e50",
+        "filename": "ui/gl/gl_surface_presentation_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2018-01-17T20:51:19Z",
+      "side": 1,
+      "message": "telemetry_perf_unittests failed. See [1].\nthe crash happens here. I think it is impossible to crash here, unless\nwe call SwapBuffers before calling GLSurface::Initialize() or after calling\nGLSurface::Destroy(). Or there is any other reason can cause crash at this line?\n\n[1] https://chromium-swarm.appspot.com/task?id\u003d3b1e1f95bafb1810\u0026refresh\u003d10\u0026show_raw\u003d1",
+      "revId": "bf1cb4e96e2f6c57af60a516bbc5ba6b3388c751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
