@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ae6ecf9_57d3f8b1",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-17T22:43:12Z",
+      "side": 1,
+      "message": "Cool, this change actually improves the behavior on two of these test cases!\n\n(isComposing should definitely be true; insertCompositionText is arguably more correct here too)",
+      "revId": "4cc50afb931bd92f8bd1c4ac577a2824a0105c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
