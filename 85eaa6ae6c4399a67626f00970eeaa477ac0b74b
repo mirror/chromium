@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c275176f_2688945b",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1226095
+      },
+      "writtenOn": "2018-01-17T15:27:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fcdb56f_a0ed60f5",
+      "range": {
+        "startLine": 51,
+        "startChar": 13,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "85eaa6ae6c4399a67626f00970eeaa477ac0b74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87bcee45_43228bc8",
         "filename": "android_webview/java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "85eaa6ae6c4399a67626f00970eeaa477ac0b74b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8313c99_6acf7ec1",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1226095
+      },
+      "writtenOn": "2018-01-17T15:27:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87bcee45_43228bc8",
+      "range": {
+        "startLine": 586,
+        "startChar": 11,
+        "endLine": 586,
+        "endChar": 95
+      },
+      "revId": "85eaa6ae6c4399a67626f00970eeaa477ac0b74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
