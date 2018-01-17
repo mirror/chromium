@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14fe7267_51bc54e1",
+        "filename": "net/proxy/proxy_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-17T22:19:12Z",
+      "side": 1,
+      "message": "Delete this line (as you are addressing it)",
+      "revId": "d5a6fde2ce4d28ec0f7a9aa75105736e0143fbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
