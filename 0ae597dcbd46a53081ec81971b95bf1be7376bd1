@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13a1d149_3d884b44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T12:58:48Z",
+      "side": 1,
+      "message": "Oops s/doesn\u0027t/didn\u0027t/! It definitely does with this CL!",
+      "parentUuid": "8d0cef23_6ceccb94",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 8
+      },
+      "revId": "0ae597dcbd46a53081ec81971b95bf1be7376bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "865f1a6f_8dd0a50b",
         "filename": "base/lazy_instance_internal.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "0ae597dcbd46a53081ec81971b95bf1be7376bd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1844a99a_24748680",
+        "filename": "base/lazy_instance_internal.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T12:58:48Z",
+      "side": 1,
+      "message": "Only meant to be called by GetOrCreateLazyPointer() so I wouldn\u0027t bother much. Mentioned this in the comment. I prefer keeping the old name.",
+      "parentUuid": "865f1a6f_8dd0a50b",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "0ae597dcbd46a53081ec81971b95bf1be7376bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0ee6f65c_338112dc",
+        "filename": "base/lazy_instance_internal.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T12:58:48Z",
+      "side": 1,
+      "message": "+fdoray also mentioned this @ https://chromium-review.googlesource.com/c/chromium/src/+/868013/2/base/lazy_instance.h#165\n\nIt doesn\u0027t matter in practice but now that you both mentioned it I\u0027ll tweak the comment.",
+      "parentUuid": "7a8647e9_98149988",
+      "range": {
+        "startLine": 38,
+        "startChar": 60,
+        "endLine": 41,
+        "endChar": 17
+      },
+      "revId": "0ae597dcbd46a53081ec81971b95bf1be7376bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f2627b8_babbe0b2",
         "filename": "base/memory/singleton.h",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e1d121ec_57a12d89",
+        "filename": "base/memory/singleton.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T12:58:48Z",
+      "side": 1,
+      "message": "Me neither \u003dS! Tweaked to:\n\n// WARNING: User has to support a New() which returns null.",
+      "parentUuid": "6f2627b8_babbe0b2",
+      "range": {
+        "startLine": 100,
+        "startChar": 14,
+        "endLine": 101,
+        "endChar": 38
+      },
+      "revId": "0ae597dcbd46a53081ec81971b95bf1be7376bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "580621ea_03f1c1aa",
         "filename": "base/memory/singleton.h",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "0ae597dcbd46a53081ec81971b95bf1be7376bd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "158aca7e_38f0d6e8",
+        "filename": "base/memory/singleton.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T12:58:48Z",
+      "side": 1,
+      "message": "Unfortunately , this is no different than before this CL :(. This CL only aims to merge the two impls to avoid doing improvements in one which don\u0027t benefit the other.\n\nYou\u0027re welcome to improve this if you wish but I don\u0027t intend to.",
+      "parentUuid": "580621ea_03f1c1aa",
+      "range": {
+        "startLine": 105,
+        "startChar": 13,
+        "endLine": 105,
+        "endChar": 20
+      },
+      "revId": "0ae597dcbd46a53081ec81971b95bf1be7376bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

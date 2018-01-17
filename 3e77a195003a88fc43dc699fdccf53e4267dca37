@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e11d7654_1a66c25c",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T12:58:48Z",
+      "side": 1,
+      "message": "Since wez@ also mentioned this @ https://chromium-review.googlesource.com/c/chromium/src/+/868013/3/base/lazy_instance_internal.h#41, I tweaked the comment.",
+      "parentUuid": "1ece48aa_3614905e",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 3
+      },
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ee650a9_a0dc1343",
         "filename": "base/lazy_instance.h",
         "patchSetId": 2
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Done. Not sure I like including _internal.h file from other files but I couldn\u0027t think of a better layout",
       "parentUuid": "603b350e_1084ec44",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d0e33a1_8dc04717",
+        "filename": "base/memory/singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T12:58:48Z",
+      "side": 1,
+      "message": "Renamed to lazy_instance_helpers.h, better?",
+      "parentUuid": "6a7d605e_55d034c9",
       "range": {
         "startLine": 25,
         "startChar": 0,
