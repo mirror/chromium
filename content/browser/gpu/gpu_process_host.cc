@@ -815,8 +815,7 @@ void GpuProcessHost::OnChannelEstablished(
   auto* gpu_data_manager = GpuDataManagerImpl::GetInstance();
   // Currently if any of the GPU features are blacklisted, we don't establish a
   // GPU channel.
-  if (channel_handle.is_valid() &&
-      !gpu_data_manager->GpuAccessAllowed(nullptr)) {
+  if (channel_handle && !gpu_data_manager->GpuAccessAllowed(nullptr)) {
     gpu_service_ptr_->CloseChannel(client_id);
     callback.Run(mojo::ScopedMessagePipeHandle(), gpu::GPUInfo(),
                  gpu::GpuFeatureInfo(),

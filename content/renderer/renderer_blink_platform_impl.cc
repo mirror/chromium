@@ -642,7 +642,7 @@ bool RendererBlinkPlatformImpl::SandboxSupport::LoadFont(CTFontRef src_font,
     return false;
   }
 
-  if (font_data_size == 0 || !font_data.is_valid() || *font_id == 0) {
+  if (font_data_size == 0 || !font_data || *font_id == 0) {
     LOG(ERROR) << "Bad response from RenderProcessHostMsg_LoadFont() for "
                << font_name;
     *out = NULL;
