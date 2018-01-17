@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "900e9fd6_8a8697a8",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-17T21:49:38Z",
+      "side": 1,
+      "message": "DCHECK(sampling_started_ || profiling_inactive_.IsSignaled()) to handle both the sampling_started_ and !sampling_started_ cases.\n\nThis check creates the risk of unintentionally signaling the event in DCHECK-enabled builds if the WaitableEvent were ever changed to AUTOMATIC signaling, per the documentation of IsSignaled().\n\nCan you add a reset_policy() accessor on WaitableEvent and DCHECK(profiling_inactive_.reset_policy() \u003d\u003d WaitableEvent::ResetPolicy::MANUAL) immediately prior to this DCHECK? Please also add a comment along the lines of \"The IsSignaled() DCHECK requires that the WaitableEvent be manually reset, to avoid signaling the event in IsSignaled() itself.\"",
+      "range": {
+        "startLine": 824,
+        "startChar": 0,
+        "endLine": 824,
+        "endChar": 29
+      },
+      "revId": "bd3826f70a43dda79c6ec4120fbf29c5a30c8c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991b4068_59f5d3fb",
+        "filename": "base/profiler/stack_sampling_profiler.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-17T21:49:38Z",
+      "side": 1,
+      "message": "\"Indicates if sampling was started at least once\" would be a somewhat clearer description.",
+      "range": {
+        "startLine": 304,
+        "startChar": 5,
+        "endLine": 305,
+        "endChar": 34
+      },
+      "revId": "bd3826f70a43dda79c6ec4120fbf29c5a30c8c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
