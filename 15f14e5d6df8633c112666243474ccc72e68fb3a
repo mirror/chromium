@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ba883fe_3341e9e7",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-17T21:29:45Z",
+      "side": 1,
+      "message": "Alternatively, we could move this logic down to QuicChromiumClientStream. Your call.",
+      "range": {
+        "startLine": 233,
+        "startChar": 46,
+        "endLine": 233,
+        "endChar": 0
+      },
+      "revId": "15f14e5d6df8633c112666243474ccc72e68fb3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
