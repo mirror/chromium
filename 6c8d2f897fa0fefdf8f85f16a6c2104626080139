@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "781af0f7_cd19a83a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-17T12:12:24Z",
+      "side": 1,
+      "message": "s/swapped with immediate /swapped with an immediate",
+      "range": {
+        "startLine": 974,
+        "startChar": 0,
+        "endLine": 974,
+        "endChar": 79
+      },
+      "revId": "6c8d2f897fa0fefdf8f85f16a6c2104626080139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be7d102_83643473",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-17T12:12:24Z",
+      "side": 1,
+      "message": "Add a comment mentioning this task will not be blocked and should run at time 301",
+      "range": {
+        "startLine": 988,
+        "startChar": 10,
+        "endLine": 988,
+        "endChar": 18
+      },
+      "revId": "6c8d2f897fa0fefdf8f85f16a6c2104626080139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac4d89ae_f052f6e6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-17T12:12:24Z",
+      "side": 1,
+      "message": "Force reload of immediate...",
+      "range": {
+        "startLine": 991,
+        "startChar": 11,
+        "endLine": 991,
+        "endChar": 20
+      },
+      "revId": "6c8d2f897fa0fefdf8f85f16a6c2104626080139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "822b5fc7_971a8650",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-17T12:12:24Z",
+      "side": 1,
+      "message": "as expected...",
+      "range": {
+        "startLine": 1001,
+        "startChar": 48,
+        "endLine": 1001,
+        "endChar": 50
+      },
+      "revId": "6c8d2f897fa0fefdf8f85f16a6c2104626080139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
