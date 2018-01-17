@@ -2,6 +2,292 @@
   "comments": [
     {
       "key": {
+        "uuid": "99ddcc6f_25467d72",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 1,
+      "message": "nit: Unused?",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda9ebd9_76c6f7ac",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 1,
+      "message": "nit: Unused?",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37caa94b_e5d51b8c",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 1,
+      "message": "nit: Unused?",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c3e134_53e62f75",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 1,
+      "message": "Having an OR here is a good indication that this should be split into two error messages. This will also help us better debug problems if we start seeing renderer kills due to this line here. In that case this can be then inlined.\n\nAlso consider introducing purely functional helper functions:\n\nbool HasValidEffectiveDomain(origin)\nbool IsRelyingPartyID(origin, rpid)\n\nAnd calling ReceivedBadMessage in AuthenticatorImpl::MakeCredential to make it more visible that this kills the renderer.",
+      "range": {
+        "startLine": 34,
+        "startChar": 46,
+        "endLine": 34,
+        "endChar": 48
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223e80e2_5a281e82",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 1,
+      "message": "nit: s///",
+      "range": {
+        "startLine": 36,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 15
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eeae6af_32746d57",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 1,
+      "message": "Note that this section is mostly informative, so e.g. the protocol requirement for `https:` is not an authoritative requirement in the spec. We should only enforce the normative parts, i.e. use content::IsOriginSecure here.",
+      "range": {
+        "startLine": 39,
+        "startChar": 3,
+        "endLine": 39,
+        "endChar": 59
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd9d769_2e7a07cb",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 1,
+      "message": "nit: Strictly speaking, this does not check the relying party ID, but rather whether the effective domain is a valid domain. I\u0027d suggest either moving this into a separate function, or renaming this function to be more generically named.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 3
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc26d6f_a815c2db",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 1,
+      "message": "The renderer is dead. No need to worry about executing the callback here (unless Mojo complains?).",
+      "range": {
+        "startLine": 136,
+        "startChar": 65,
+        "endLine": 136,
+        "endChar": 79
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f01924_d64828ab",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 1,
+      "message": "I\u0027d rather we didn\u0027t store a duplicate of this in a member, as it creates a risk of becoming out of date, and thus a security issue.",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48898fc4_85cc387b",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 1,
+      "message": "nit: OriginRelyingPartyIdPair",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 19
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af46aa46_cf2dbedd",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 1,
+      "message": "nit: kValidRelyingPartyTestCases",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d95497_3b824eee",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 1,
+      "message": "style: Note that this is results in global GURL constructor calls at dynamic initialization, which is banned. You can fix this and actually save some characters by defining OriginRelyingPartyIdPair to be a pair of const char*\u0027s, and these test cases as string literals:\n\nconstexpr OriginRelyingPartyIdPair kValidRelyingPartyIds[] \u003d {\n{ \"http:...\", \"...\" },\n{ \"http:...\", \"...\" },\n...\n};",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 9
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a1c9c7c_75816add",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 1,
+      "message": "nit: nit: kInvalidRelyingPartyTestCases",
+      "range": {
+        "startLine": 89,
+        "startChar": 24,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23bf15fe_83e41fe2",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 1,
+      "message": "Let\u0027s move this to the back and indicate that this is not actually the desired behavior.",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96049a47_16d57d21",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 10

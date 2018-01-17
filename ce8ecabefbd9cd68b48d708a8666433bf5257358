@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0c07ac4_a98f6378",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:04:38Z",
+      "side": 0,
+      "message": "nit: Still needed for DCHECK.",
+      "revId": "ce8ecabefbd9cd68b48d708a8666433bf5257358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
