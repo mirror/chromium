@@ -15,6 +15,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/lock.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "media/midi/midi_export.h"
 #include "media/midi/midi_port_info.h"
 #include "media/midi/midi_service.mojom.h"
@@ -88,6 +89,9 @@ class MIDI_EXPORT MidiManager {
   virtual ~MidiManager();
 
   static MidiManager* Create(MidiService* service);
+#if defined(OS_WIN) || defined(OS_ANDROID)
+  static MidiManager* CreateAlternative(MidiService* service);
+#endif
 
   // Shuts down this manager. This function is split from the destructor
   // because it calls a virtual function.
