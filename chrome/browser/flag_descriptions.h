@@ -1522,6 +1522,9 @@ extern const char kAshDisableV1AppBackButtonDescription[];
 extern const char kAshEnableUnifiedDesktopName[];
 extern const char kAshEnableUnifiedDesktopDescription[];
 
+extern const char kAshNewTouchSupportForScreenMagnificationName[];
+extern const char kAshNewTouchSupportForScreenMagnificationDescription[];
+
 extern const char kBulkPrintersName[];
 extern const char kBulkPrintersDescription[];
 
