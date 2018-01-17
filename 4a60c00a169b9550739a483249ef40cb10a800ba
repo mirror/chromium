@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "204717db_cd2222ac",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-17T01:41:36Z",
+      "side": 1,
+      "message": "I think the way to fix it is to inject policy providers: [1] so that the else branch here [2] is exercised, which will eventually marks initialization complete by the test providers here: [3].\n\nTests passed after my new patch setup.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/policy/profile_policy_connector_factory.h?sq\u003dpackage:chromium\u0026l\u003d68\n[2] https://cs.chromium.org/chromium/src/chrome/browser/policy/profile_policy_connector_factory.cc?sq\u003dpackage:chromium\u0026l\u003d156\n[3] https://cs.chromium.org/chromium/src/components/policy/core/common/policy_service_impl.cc?sq\u003dpackage:chromium\u0026l\u003d84",
+      "parentUuid": "7bed69a4_5a676d21",
+      "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be0732d1_83170048",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 6
@@ -156,6 +174,24 @@
       "side": 1,
       "message": "I would just remove lines 611 to 620. The two tests are testing different things -- e.g. one is testing calling AccessibilityManager::SetLargeCursor() directly, the other is testing changing the pref for large cursor. While the internal implementation of SetLargeCursor() just changes the pref, that\u0027s an implementation detail.",
       "parentUuid": "bf07cfb3_71f6f7aa",
+      "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36570b43_d3e62f09",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-17T01:41:36Z",
+      "side": 1,
+      "message": "ok, makes sense. Restored.",
+      "parentUuid": "10f0cdc3_895fdd61",
       "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
