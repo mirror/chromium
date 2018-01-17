@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b00f4ccc_8290d2f8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-17T22:13:52Z",
+      "side": 1,
+      "message": "Thanks for adding these tests! Apologies though, I don\u0027t feel qualified to review them. Please get someone who knows Clank to review the test changes.",
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
