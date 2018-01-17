@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a4f3476_02e5fd77",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1813,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-17T02:21:41Z",
+      "side": 1,
+      "message": "nit: The part of the sentence after the comma is a little terse. Perhaps something like \"and set a preference indicating that the Flash setting has changed for a difference website\"",
+      "revId": "8d6152b5f30992573fb6a96cb0bed5a3803b17b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd90e2f2_8e0b512d",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-17T02:21:41Z",
+      "side": 1,
+      "message": "Does DCHECK_EQ not work here?",
+      "revId": "8d6152b5f30992573fb6a96cb0bed5a3803b17b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
