@@ -53,6 +53,29 @@
     },
     {
       "key": {
+        "uuid": "815b1091_19303ce4",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-17T17:30:17Z",
+      "side": 1,
+      "message": "nit: other",
+      "range": {
+        "startLine": 51,
+        "startChar": 42,
+        "endLine": 51,
+        "endChar": 43
+      },
+      "revId": "2ddf718105b108b246ee58cbe197e9473a7f600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57f1d65f_87a8e701",
         "filename": "cc/resources/resource_pool.h",
         "patchSetId": 2
