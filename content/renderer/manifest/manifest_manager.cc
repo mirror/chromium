@@ -106,6 +106,16 @@ void ManifestManager::FetchManifest() {
     return;
   }
 
+  const blink::WebSecurityOrigin& security_origin =
+      render_frame()->GetWebFrame()->GetDocument().GetSecurityOrigin();
+
+  // Do not fetch the manifest if we are on a sandboxed origin.
+  if (security_origin.IsUnique()) {
+    ManifestUmaUtil::FetchFailed(ManifestUmaUtil::FETCH_FROM_UNIQUE_ORIGIN);
+    ResolveCallbacks(ResolveStateFailure);
+    return;
+  }
+
   fetcher_.reset(new ManifestFetcher(manifest_url_));
   fetcher_->Start(
       render_frame()->GetWebFrame(),

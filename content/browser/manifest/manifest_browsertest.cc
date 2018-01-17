@@ -659,4 +659,37 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, NoUseCredentialsNoCookies) {
   EXPECT_TRUE(base::EqualsASCII(manifest().name.string(), "no cookies"));
 }
 
+// This tests that fetching a Manifest from a sandboxed origin requires CORS
+// headers on the manifest, even when the manifest is same-origin
+// pre-sandboxing.
+IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, SandboxedOriginRequiresCORS) {
+  GURL test_url = embedded_test_server()->GetURL("/manifest/sandboxed.html");
+  std::vector<GURL> expected_manifest_urls;
+
+  ASSERT_TRUE(NavigateToURL(shell(), test_url));
+  std::string manifest_link =
+      embedded_test_server()->GetURL("/manifest/dummy-manifest.json").spec();
+  ASSERT_TRUE(ExecuteScript(shell(), "setManifestTo('" + manifest_link + "')"));
+
+  // Same-origin manifest will not be fetched from a sandboxed origin,
+  // regardless of CORS headers.
+  GetManifestAndWait();
+  EXPECT_TRUE(manifest().IsEmpty());
+  EXPECT_FALSE(manifest_url().is_empty());
+  EXPECT_EQ(0, GetConsoleErrorCount());
+  expected_manifest_urls.push_back(manifest_url());
+  EXPECT_EQ(expected_manifest_urls, reported_manifest_urls());
+
+  manifest_link =
+      embedded_test_server()->GetURL("/manifest/manifest-cors.json").spec();
+  ASSERT_TRUE(ExecuteScript(shell(), "setManifestTo('" + manifest_link + "')"));
+
+  GetManifestAndWait();
+  EXPECT_TRUE(manifest().IsEmpty());
+  EXPECT_FALSE(manifest_url().is_empty());
+  EXPECT_EQ(0, GetConsoleErrorCount());
+  expected_manifest_urls.push_back(manifest_url());
+  EXPECT_EQ(expected_manifest_urls, reported_manifest_urls());
+}
+
 } // namespace content
