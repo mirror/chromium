@@ -49,8 +49,12 @@ class Seat : public aura::client::FocusChangeObserver,
   // Returns current set of modifier flags.
   int modifier_flags() const { return modifier_flags_; }
 
-  // Sets clipboard data from |source|.
-  void SetSelection(DataSource* source);
+  // Sets clipboard data from |source|. |serial| is the unique number comes
+  // from input events which triggers the drag and drop operation.
+  // |client_serial| is the most recent serial of the client.
+  void SetSelection(DataSource* source,
+                    uint32_t serial,
+                    uint32_t client_serial);
 
   // Overridden from aura::client::FocusChangeObserver:
   void OnWindowFocused(aura::Window* gained_focus,
@@ -74,6 +78,9 @@ class Seat : public aura::client::FocusChangeObserver,
   base::ObserverList<SeatObserver> observers_;
   base::flat_set<ui::DomCode> pressed_keys_;
   int modifier_flags_ = 0;
+
+  // The previous serial passed to this Seat object.
+  uint32_t previous_serial_ = 0;
 
   // Data source being used as a clipboard content.
   std::unique_ptr<ScopedDataSource> selection_source_;
