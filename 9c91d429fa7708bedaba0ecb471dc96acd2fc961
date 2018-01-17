@@ -22,6 +22,30 @@
       "revId": "9c91d429fa7708bedaba0ecb471dc96acd2fc961",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054cf951_6de1d15c",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3519,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2018-01-17T18:40:54Z",
+      "side": 0,
+      "message": "The team decided in https://crbug.com/432236 (long before I was around) that we don\u0027t want the flags entry hanging around forever, and so far I\u0027ve been staying consistent with that by only adding it when there\u0027s an active experiment going on. I\u0027m not 100% sure that this state of things makes sense. But I\u0027d rather have the discussion about changing how we handle the flag separately from the current experiment cleanup, and it\u0027ll be easy enough to add back later if that\u0027s what we decide.",
+      "parentUuid": "043e42f9_2e5a1d49",
+      "range": {
+        "startLine": 3515,
+        "startChar": 1,
+        "endLine": 3519,
+        "endChar": 30
+      },
+      "revId": "9c91d429fa7708bedaba0ecb471dc96acd2fc961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
