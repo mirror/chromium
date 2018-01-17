@@ -70,7 +70,6 @@ QuicSentPacketManager::QuicSentPacketManager(
       loss_algorithm_(&general_loss_algorithm_),
       general_loss_algorithm_(loss_type),
       n_connection_simulation_(false),
-      least_packet_awaited_by_peer_(1),
       first_rto_transmission_(0),
       consecutive_rto_count_(0),
       consecutive_tlp_count_(0),
@@ -206,7 +205,6 @@ void QuicSentPacketManager::OnIncomingAck(const QuicAckFrame& ack_frame,
                                           QuicTime ack_receive_time) {
   DCHECK_LE(LargestAcked(ack_frame), unacked_packets_.largest_sent_packet());
   QuicByteCount prior_in_flight = unacked_packets_.bytes_in_flight();
-  UpdatePacketInformationReceivedByPeer(ack_frame);
   bool rtt_updated = MaybeUpdateRTT(ack_frame, ack_receive_time);
   DCHECK_GE(LargestAcked(ack_frame), unacked_packets_.largest_observed());
   unacked_packets_.IncreaseLargestObserved(LargestAcked(ack_frame));
@@ -251,15 +249,6 @@ void QuicSentPacketManager::OnIncomingAck(const QuicAckFrame& ack_frame,
     debug_delegate_->OnIncomingAck(ack_frame, ack_receive_time,
                                    unacked_packets_.largest_observed(),
                                    rtt_updated, GetLeastUnacked());
-  }
-}
-
-void QuicSentPacketManager::UpdatePacketInformationReceivedByPeer(
-    const QuicAckFrame& ack_frame) {
-  if (ack_frame.packets.Empty()) {
-    least_packet_awaited_by_peer_ = LargestAcked(ack_frame) + 1;
-  } else {
-    least_packet_awaited_by_peer_ = ack_frame.packets.Min();
   }
 }
 
