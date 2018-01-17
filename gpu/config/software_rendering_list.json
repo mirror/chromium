@@ -1386,6 +1386,9 @@
       "comment": "Corresponds to GPU driver bugs #19, #214",
       "description": "MSAA and depth texture buggy on Adreno 3xx, also disable WebGL2",
       "cr_bugs": [449116, 698197],
+      "os": {
+        "type": "android"
+      },
       "gl_renderer": "Adreno \\(TM\\) 3.*",
       "features": [
         "accelerated_webgl2"
