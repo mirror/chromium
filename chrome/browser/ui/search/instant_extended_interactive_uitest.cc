@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include <sstream>
+#include <string>
 
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
@@ -10,13 +11,17 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/search.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_window.h"
+#include "chrome/browser/ui/location_bar/location_bar.h"
+#include "chrome/browser/ui/search/instant_test_base.h"
 #include "chrome/browser/ui/search/instant_test_utils.h"
-#include "chrome/browser/ui/search/instant_uitest_base.h"
+#include "chrome/browser/ui/search/search_tab_helper.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/omnibox/browser/omnibox_edit_model.h"
+#include "components/omnibox/browser/omnibox_view.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/web_contents.h"
@@ -26,7 +31,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 class InstantExtendedTest : public InProcessBrowserTest,
-                            public InstantUITestBase {
+                            public InstantTestBase {
  public:
   InstantExtendedTest()
       : on_most_visited_change_calls_(0),
@@ -41,6 +46,44 @@ class InstantExtendedTest : public InProcessBrowserTest,
     GURL base_url = https_test_server().GetURL("/instant_extended.html?");
     GURL ntp_url = https_test_server().GetURL("/instant_extended_ntp.html?");
     InstantTestBase::Init(base_url, ntp_url, false);
+  }
+
+  OmniboxView* omnibox() {
+    return browser()->window()->GetLocationBar()->GetOmniboxView();
+  }
+
+  void FocusOmnibox() {
+    // If the omnibox already has focus, just notify SearchTabHelper.
+    if (omnibox()->model()->has_focus()) {
+      content::WebContents* active_tab =
+          browser()->tab_strip_model()->GetActiveWebContents();
+      SearchTabHelper::FromWebContents(active_tab)
+          ->OmniboxFocusChanged(OMNIBOX_FOCUS_VISIBLE,
+                                OMNIBOX_FOCUS_CHANGE_EXPLICIT);
+    } else {
+      browser()->window()->GetLocationBar()->FocusLocation(false);
+    }
+  }
+
+  void SetOmniboxText(const std::string& text) {
+    FocusOmnibox();
+    omnibox()->SetUserText(base::UTF8ToUTF16(text));
+  }
+
+  void PressEnterAndWaitForNavigation() {
+    content::WindowedNotificationObserver nav_observer(
+        content::NOTIFICATION_NAV_ENTRY_COMMITTED,
+        content::NotificationService::AllSources());
+    browser()->window()->GetLocationBar()->AcceptInput();
+    nav_observer.Wait();
+  }
+
+  void PressEnterAndWaitForFrameLoad() {
+    content::WindowedNotificationObserver nav_observer(
+        content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME,
+        content::NotificationService::AllSources());
+    browser()->window()->GetLocationBar()->AcceptInput();
+    nav_observer.Wait();
   }
 
   bool UpdateSearchState(content::WebContents* contents) WARN_UNUSED_RESULT {
