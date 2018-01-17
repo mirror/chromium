@@ -22,6 +22,30 @@
       "revId": "1052144e5374f30363d53abee01b17d550bf792c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a947da_0df65a0a",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-17T21:08:05Z",
+      "side": 1,
+      "message": "It looks like I should just be using the existing |LatencyInfo::trace_id|. Changed this to do that. Thank you!",
+      "parentUuid": "b87c7746_e8b7f6be",
+      "range": {
+        "startLine": 744,
+        "startChar": 6,
+        "endLine": 744,
+        "endChar": 26
+      },
+      "revId": "1052144e5374f30363d53abee01b17d550bf792c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
