@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9eb78a2_d233dca7",
+        "filename": "chrome/browser/net/load_timing_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-17T17:43:44Z",
+      "side": 1,
+      "message": "Maybe do a non-SSL test, too?  Looks exactly the same, except ssl_start should be -1, and use TYPE_HTTP to start the server.\n\nAnd a proxy test (admittedly, not too exciting, but at least we\u0027ll be exercising that path in blink).  See https://cs.chromium.org/chromium/src/chrome/browser/net/network_context_configuration_browsertest.cc?q\u003dnetworkcontextconfi\u0026sq\u003dpackage:chromium\u0026l\u003d170 for setting up a proxy (We only care about the kProfile case).  Once a (non-SSL) test server is set up as the proxy, just requests a random HTTP URL, and include the standard set of timing checks.\n\nAlso, maybe an FTP test?  Not too exciting, but I\u0027d like the no-times case tested.  Could use about:blank or a chrome URL instead, to exercise a path we care about more.\n\nThe preconnect / socket reuse cases seem a bit less interesting, and more flake prone with real requests, so can skip those.",
+      "range": {
+        "startLine": 125,
+        "startChar": 46,
+        "endLine": 125,
+        "endChar": 60
+      },
+      "revId": "c961f6d1141226ff75cbe8b69e9e0dc21dbc83a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
