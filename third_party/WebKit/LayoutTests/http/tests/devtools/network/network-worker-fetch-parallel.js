@@ -25,6 +25,8 @@
       .then((result) => {
         TestRunner.addResult('Parallel fetch in worker result: ' + result);
         var requests = NetworkTestRunner.networkRequests();
+        return Promise.all(requests.map(r => NetworkTestRunner.waitForFinishedLoading(r)));
+      }).then((requests) => {
         requests.forEach((request) => {
           TestRunner.addResult(request.url());
           TestRunner.addResult('resource.type: ' + request.resourceType());

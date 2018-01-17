@@ -13,6 +13,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
 #include "content/browser/loader/downloaded_temp_file_impl.h"
 #include "content/browser/loader/resource_controller.h"
@@ -40,12 +41,111 @@ constexpr size_t kMinAllocationSize = 2 * net::kMaxBytesToSniff;
 
 constexpr size_t kMaxChunkSize = 32 * 1024;
 
+// Small resource typically issues two Read call: one for the content itself
+// and another for getting zero response to detect EOF.
+// Inline these two into a message parameter to avoid allocating a Mojo data
+// pipe for small resources.
+const int kNumLeadingChunk = 2;
+const int kInlinedLeadingChunkSize = 2048;
+
 void NotReached(mojom::URLLoaderRequest mojo_request,
                 mojom::URLLoaderClientPtr url_loader_client) {
   NOTREACHED();
 }
 
 }  // namespace
+
+// The instance hooks the buffer allocation of MojoAsyncResourceHandler, and
+// determine if we should use a data pipe or should inline the data into a
+// message parameter.
+class MojoAsyncResourceHandler::InliningHelper {
+ public:
+  InliningHelper() {}
+  ~InliningHelper() {}
+
+  void OnResponseReceived(const ResourceResponse& response,
+                          uint32_t url_loader_options) {
+    InliningStatus status = IsInliningApplicable(response, url_loader_options);
+    UMA_HISTOGRAM_ENUMERATION(
+        "Net.ResourceLoader.InliningStatus2", static_cast<int>(status),
+        static_cast<int>(InliningStatus::INLINING_STATUS_COUNT));
+    inlining_applicable_ = status == InliningStatus::APPLICABLE;
+  }
+
+  // Returns true if InliningHelper allocates the buffer for inlining.
+  bool PrepareInlineBufferIfApplicable(scoped_refptr<net::IOBuffer>* buf,
+                                       int* buf_size) {
+    ++num_allocation_;
+
+    // If the server sends the resource in multiple small chunks,
+    // |num_allocation_| may exceed |kNumLeadingChunk|. Disable inlining and
+    // fall back to the regular resource loading path in that case.
+    if (!inlining_applicable_ || num_allocation_ > kNumLeadingChunk) {
+      return false;
+    }
+
+    leading_chunk_buffer_ = new net::IOBuffer(kInlinedLeadingChunkSize);
+    *buf = leading_chunk_buffer_;
+    *buf_size = kInlinedLeadingChunkSize;
+    return true;
+  }
+
+  // Returns true if the received data is sent to the consumer.
+  bool SendInlinedDataIfApplicable(int bytes_read,
+                                   mojom::URLLoaderClientPtr& client) {
+    if (!leading_chunk_buffer_)
+      return false;
+
+    std::vector<uint8_t> data(leading_chunk_buffer_->data(),
+                              leading_chunk_buffer_->data() + bytes_read);
+    leading_chunk_buffer_ = nullptr;
+
+    client->OnReceiveInlinedDataChunk(data);
+    return true;
+  }
+
+ private:
+  enum class InliningStatus : int {
+    APPLICABLE = 0,
+    EARLY_ALLOCATION = 1,
+    UNKNOWN_CONTENT_LENGTH = 2,
+    LARGE_CONTENT = 3,
+    HAS_TRANSFER_ENCODING = 4,
+    HAS_CONTENT_ENCODING = 5,
+    DISABLED_BY_LOADER_OPTIONS = 6,
+    INLINING_STATUS_COUNT,
+  };
+
+  InliningStatus IsInliningApplicable(const ResourceResponse& response,
+                                      uint32_t url_loader_options) {
+    if (!(url_loader_options & mojom::kURLLoadOptionResponseBodyInlining))
+      return InliningStatus::DISABLED_BY_LOADER_OPTIONS;
+    // Disable if the leading chunk is already arrived.
+    if (num_allocation_)
+      return InliningStatus::EARLY_ALLOCATION;
+
+    // Disable if the content is known to be large.
+    if (response.head.content_length > kInlinedLeadingChunkSize)
+      return InliningStatus::LARGE_CONTENT;
+
+    // Disable if the length of the content is unknown.
+    if (response.head.content_length < 0)
+      return InliningStatus::UNKNOWN_CONTENT_LENGTH;
+
+    if (response.head.headers) {
+      if (response.head.headers->HasHeader("Transfer-Encoding"))
+        return InliningStatus::HAS_TRANSFER_ENCODING;
+      if (response.head.headers->HasHeader("Content-Encoding"))
+        return InliningStatus::HAS_CONTENT_ENCODING;
+    }
+
+    return InliningStatus::APPLICABLE;
+  }
+
+  int num_allocation_ = 0;
+  bool inlining_applicable_ = false;
+  scoped_refptr<net::IOBuffer> leading_chunk_buffer_;
+};
 
 // This class is for sharing the ownership of a ScopedDataPipeProducerHandle
 // between WriterIOBuffer and MojoAsyncResourceHandler.
@@ -105,6 +205,7 @@ MojoAsyncResourceHandler::MojoAsyncResourceHandler(
       url_loader_options_(url_loader_options),
       handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       url_loader_client_(std::move(url_loader_client)),
+      inlining_helper_(new InliningHelper),
       weak_factory_(this) {
   DCHECK(IsResourceTypeFrame(resource_type) ||
          !(url_loader_options_ & mojom::kURLLoadOptionSendSSLInfoWithResponse));
@@ -212,6 +313,7 @@ void MojoAsyncResourceHandler::OnResponseStarted(
     return;
   }
 
+  inlining_helper_->OnResponseReceived(*response, url_loader_options_);
   controller->Resume();
 }
 
@@ -241,6 +343,13 @@ void MojoAsyncResourceHandler::OnWillRead(
 
   if (!CheckForSufficientResource()) {
     controller->CancelWithError(net::ERR_INSUFFICIENT_RESOURCES);
+    return;
+  }
+
+  // Return early if InliningHelper allocated the buffer, so that we should
+  // inline the data into a message parameter without allocating a data pipe.
+  if (inlining_helper_->PrepareInlineBufferIfApplicable(buf, buf_size)) {
+    controller->Resume();
     return;
   }
 
@@ -311,7 +420,6 @@ void MojoAsyncResourceHandler::OnReadCompleted(
     std::unique_ptr<ResourceController> controller) {
   DCHECK(!has_controller());
   DCHECK_GE(bytes_read, 0);
-  DCHECK(buffer_);
 
   if (bytes_read == 0) {
     // Note that |buffer_| is not cleared here, which will cause a DCHECK on
@@ -325,6 +433,14 @@ void MojoAsyncResourceHandler::OnReadCompleted(
     auto transfer_size_diff = CalculateRecentlyReceivedBytes();
     if (transfer_size_diff > 0)
       url_loader_client_->OnTransferSizeUpdated(transfer_size_diff);
+  }
+
+  // Return early if InliningHelper handled the received data.
+  if (inlining_helper_->SendInlinedDataIfApplicable(bytes_read,
+                                                    url_loader_client_)) {
+    total_written_bytes_ += bytes_read;
+    controller->Resume();
+    return;
   }
 
   if (response_body_consumer_handle_.is_valid()) {

@@ -439,6 +439,16 @@ class MojoAsyncResourceHandlerTest : public MojoAsyncResourceHandlerTestBase,
       : MojoAsyncResourceHandlerTestBase(nullptr, mojom::kURLLoadOptionNone) {}
 };
 
+class MojoAsyncResourceHandlerResponseBodyInliningTest
+    : public MojoAsyncResourceHandlerTestBase,
+      public ::testing::Test {
+ protected:
+  MojoAsyncResourceHandlerResponseBodyInliningTest()
+      : MojoAsyncResourceHandlerTestBase(
+            nullptr,
+            mojom::kURLLoadOptionResponseBodyInlining) {}
+};
+
 class MojoAsyncResourceHandlerDeferOnResponseStartedTest
     : public MojoAsyncResourceHandlerTestBase,
       public ::testing::Test {
@@ -585,6 +595,53 @@ TEST_F(MojoAsyncResourceHandlerTest, OnWillReadAndOnReadCompleted) {
     contents.append(buffer, read_size);
   }
   EXPECT_EQ("AB", contents);
+}
+
+TEST_F(MojoAsyncResourceHandlerResponseBodyInliningTest,
+       OnWillReadAndOnReadCompleted) {
+  ASSERT_TRUE(CallOnWillStart());
+
+  scoped_refptr<ResourceResponse> response = new ResourceResponse();
+  // Smaller than kInlinedLeadingChunkSize.
+  const std::string data("abcdefgh");
+  response->head.content_length = data.size();
+  ASSERT_EQ(MockResourceLoader::Status::IDLE,
+            mock_loader_->OnResponseStarted(response));
+
+  ASSERT_EQ(MockResourceLoader::Status::IDLE, mock_loader_->OnWillRead());
+  ASSERT_EQ(MockResourceLoader::Status::IDLE,
+            mock_loader_->OnReadCompleted(data));
+
+  url_loader_client_.RunUntilResponseBodyArrived();
+  ASSERT_TRUE(url_loader_client_.has_received_inlined_data_chunk());
+  EXPECT_EQ(data.c_str(), url_loader_client_.inlined_data_chunk());
+}
+
+TEST_F(MojoAsyncResourceHandlerResponseBodyInliningTest, InlinedChunkLengths) {
+  ASSERT_TRUE(CallOnWillStart());
+
+  scoped_refptr<ResourceResponse> response = new ResourceResponse();
+  // Smaller than kInlinedLeadingChunkSize.
+  const std::string data("abcdefgh");
+  response->head.content_length = data.size();
+  ASSERT_EQ(MockResourceLoader::Status::IDLE,
+            mock_loader_->OnResponseStarted(response));
+
+  ASSERT_EQ(MockResourceLoader::Status::IDLE, mock_loader_->OnWillRead());
+  ASSERT_EQ(MockResourceLoader::Status::IDLE,
+            mock_loader_->OnReadCompleted(data));
+  net::URLRequestStatus status(net::URLRequestStatus::SUCCESS, net::OK);
+  ASSERT_EQ(MockResourceLoader::Status::IDLE,
+            mock_loader_->OnResponseCompleted(status));
+  url_loader_client_.RunUntilComplete();
+
+  EXPECT_TRUE(url_loader_client_.has_received_completion());
+  EXPECT_EQ(request_->GetTotalReceivedBytes(),
+            url_loader_client_.completion_status().encoded_data_length);
+  EXPECT_EQ(request_->GetRawBodyBytes(),
+            url_loader_client_.completion_status().encoded_body_length);
+  EXPECT_EQ(static_cast<int64_t>(data.size()),
+            url_loader_client_.completion_status().decoded_body_length);
 }
 
 TEST_F(MojoAsyncResourceHandlerTest,

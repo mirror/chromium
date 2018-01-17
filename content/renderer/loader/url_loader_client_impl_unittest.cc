@@ -111,6 +111,22 @@ TEST_F(URLLoaderClientImplTest, ResponseBody) {
   EXPECT_EQ("hello", request_peer_context_.data);
 }
 
+TEST_F(URLLoaderClientImplTest, ResponseBodyInlined) {
+  ResourceResponseHead response_head;
+
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+
+  EXPECT_FALSE(request_peer_context_.received_response);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(request_peer_context_.received_response);
+
+  std::vector<uint8_t> body = {'h', 'e', 'l', 'l', 'o'};
+  url_loader_client_->OnReceiveInlinedDataChunk(body);
+
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ("hello", request_peer_context_.data);
+}
+
 TEST_F(URLLoaderClientImplTest, OnReceiveRedirect) {
   ResourceResponseHead response_head;
   net::RedirectInfo redirect_info;
@@ -179,6 +195,30 @@ TEST_F(URLLoaderClientImplTest, OnCompleteWithoutResponseBody) {
   EXPECT_FALSE(request_peer_context_.complete);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(request_peer_context_.received_response);
+  EXPECT_TRUE(request_peer_context_.complete);
+}
+
+TEST_F(URLLoaderClientImplTest, OnCompleteWithInlinedResponseBody) {
+  ResourceResponseHead response_head;
+  network::URLLoaderCompletionStatus status;
+
+  std::vector<uint8_t> body = {'h', 'e', 'l', 'l', 'o'};
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveInlinedDataChunk(body);
+
+  EXPECT_FALSE(request_peer_context_.received_response);
+  EXPECT_EQ("", request_peer_context_.data);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(request_peer_context_.received_response);
+  EXPECT_EQ("hello", request_peer_context_.data);
+
+  url_loader_client_->OnComplete(status);
+
+  EXPECT_FALSE(request_peer_context_.complete);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(request_peer_context_.received_response);
+  EXPECT_EQ("hello", request_peer_context_.data);
   EXPECT_TRUE(request_peer_context_.complete);
 }
 
@@ -284,6 +324,30 @@ TEST_F(URLLoaderClientImplTest, CancelOnReceiveData) {
   url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
   url_loader_client_->OnStartLoadingResponseBody(
       std::move(data_pipe.consumer_handle));
+  url_loader_client_->OnComplete(status);
+
+  EXPECT_FALSE(request_peer_context_.received_response);
+  EXPECT_EQ("", request_peer_context_.data);
+  EXPECT_FALSE(request_peer_context_.complete);
+  EXPECT_FALSE(request_peer_context_.cancelled);
+
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(request_peer_context_.received_response);
+  EXPECT_EQ("hello", request_peer_context_.data);
+  EXPECT_FALSE(request_peer_context_.complete);
+  EXPECT_TRUE(request_peer_context_.cancelled);
+}
+
+TEST_F(URLLoaderClientImplTest, CancelOnReceiveInlinedData) {
+  request_peer_context_.cancel_on_receive_data = true;
+
+  ResourceResponseHead response_head;
+  network::URLLoaderCompletionStatus status;
+
+  std::vector<uint8_t> body = {'h', 'e', 'l', 'l', 'o'};
+
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveInlinedDataChunk(body);
   url_loader_client_->OnComplete(status);
 
   EXPECT_FALSE(request_peer_context_.received_response);

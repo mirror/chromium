@@ -16,6 +16,13 @@ NetworkTestRunner.waitForRequestResponse = function(request) {
       updateRequest => updateRequest === request && request.responseReceivedTime !== -1);
 };
 
+NetworkTestRunner.waitForFinishedLoading = function(request) {
+  if (request.finished)
+    return Promise.resolve(request);
+
+  return TestRunner.waitForEvent(SDK.NetworkRequest.Events.FinishedLoading, request);
+};
+
 NetworkTestRunner.waitForNetworkLogViewNodeForRequest = function(request) {
   var networkLogView = UI.panels.network._networkLogView;
   var node = networkLogView.nodeForRequest(request);

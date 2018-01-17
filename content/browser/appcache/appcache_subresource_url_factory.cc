@@ -243,6 +243,10 @@ class SubresourceLoader : public mojom::URLLoader,
     remote_client_->OnReceiveCachedMetadata(data);
   }
 
+  void OnReceiveInlinedDataChunk(const std::vector<uint8_t>& data) override {
+    remote_client_->OnReceiveInlinedDataChunk(data);
+  }
+
   void OnTransferSizeUpdated(int32_t transfer_size_diff) override {
     remote_client_->OnTransferSizeUpdated(transfer_size_diff);
   }

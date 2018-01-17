@@ -268,6 +268,7 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
                          const ResourceResponseHead& response_head) override;
   void OnDataDownloaded(int64_t data_length, int64_t encoded_length) override;
   void OnReceiveCachedMetadata(const std::vector<uint8_t>& data) override;
+  void OnReceiveInlinedDataChunk(const std::vector<uint8_t>& data) override;
   void OnTransferSizeUpdated(int32_t transfer_size_diff) override;
   void OnUploadProgress(int64_t current_position,
                         int64_t total_size,
@@ -1209,6 +1210,11 @@ void SimpleURLLoaderImpl::OnDataDownloaded(int64_t data_length,
 }
 
 void SimpleURLLoaderImpl::OnReceiveCachedMetadata(
+    const std::vector<uint8_t>& data) {
+  NOTREACHED();
+}
+
+void SimpleURLLoaderImpl::OnReceiveInlinedDataChunk(
     const std::vector<uint8_t>& data) {
   NOTREACHED();
 }

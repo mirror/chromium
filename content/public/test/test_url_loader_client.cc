@@ -67,6 +67,19 @@ void TestURLLoaderClient::OnReceiveCachedMetadata(
     quit_closure_for_on_receive_cached_metadata_.Run();
 }
 
+void TestURLLoaderClient::OnReceiveInlinedDataChunk(
+    const std::vector<uint8_t>& data) {
+  EXPECT_TRUE(has_received_response_);
+  EXPECT_FALSE(has_received_inlined_data_chunk_);
+  EXPECT_FALSE(response_body_.is_valid());
+  EXPECT_FALSE(has_received_completion_);
+  has_received_inlined_data_chunk_ = true;
+  inlined_data_chunk_ =
+      std::string(reinterpret_cast<const char*>(data.data()), data.size());
+  if (quit_closure_for_on_start_loading_response_body_)
+    quit_closure_for_on_start_loading_response_body_.Run();
+}
+
 void TestURLLoaderClient::OnTransferSizeUpdated(int32_t transfer_size_diff) {
   EXPECT_TRUE(has_received_response_);
   EXPECT_FALSE(has_received_completion_);
@@ -166,7 +179,7 @@ void TestURLLoaderClient::RunUntilCachedMetadataReceived() {
 }
 
 void TestURLLoaderClient::RunUntilResponseBodyArrived() {
-  if (response_body_.is_valid())
+  if (response_body_.is_valid() || has_received_inlined_data_chunk_)
     return;
   base::RunLoop run_loop;
   quit_closure_for_on_start_loading_response_body_ = run_loop.QuitClosure();

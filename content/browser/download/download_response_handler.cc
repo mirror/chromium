@@ -167,6 +167,11 @@ void DownloadResponseHandler::OnUploadProgress(
 void DownloadResponseHandler::OnReceiveCachedMetadata(
     const std::vector<uint8_t>& data) {}
 
+void DownloadResponseHandler::OnReceiveInlinedDataChunk(
+    const std::vector<uint8_t>& data) {
+  NOTREACHED();
+}
+
 void DownloadResponseHandler::OnTransferSizeUpdated(
     int32_t transfer_size_diff) {}
 

@@ -53,6 +53,7 @@ class CONTENT_EXPORT CORSURLLoader : public mojom::URLLoader,
                         int64_t total_size,
                         base::OnceCallback<void()> callback) override;
   void OnReceiveCachedMetadata(const std::vector<uint8_t>& data) override;
+  void OnReceiveInlinedDataChunk(const std::vector<uint8_t>& data) override;
   void OnTransferSizeUpdated(int32_t transfer_size_diff) override;
   void OnStartLoadingResponseBody(
       mojo::ScopedDataPipeConsumerHandle body) override;

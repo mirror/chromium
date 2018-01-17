@@ -539,6 +539,10 @@ class ServiceWorkerContextClient::NavigationPreloadRequest final
 
   void OnReceiveCachedMetadata(const std::vector<uint8_t>& data) override {}
 
+  void OnReceiveInlinedDataChunk(const std::vector<uint8_t>& data) override {
+    NOTREACHED();
+  }
+
   void OnTransferSizeUpdated(int32_t transfer_size_diff) override {
   }
 

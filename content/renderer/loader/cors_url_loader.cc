@@ -192,6 +192,14 @@ void CORSURLLoader::OnReceiveCachedMetadata(const std::vector<uint8_t>& data) {
   forwarding_client_->OnReceiveCachedMetadata(data);
 }
 
+void CORSURLLoader::OnReceiveInlinedDataChunk(
+    const std::vector<uint8_t>& data) {
+  DCHECK(network_loader_);
+  DCHECK(forwarding_client_);
+  DCHECK(!is_waiting_follow_redirect_call_);
+  forwarding_client_->OnReceiveInlinedDataChunk(data);
+}
+
 void CORSURLLoader::OnTransferSizeUpdated(int32_t transfer_size_diff) {
   DCHECK(network_loader_);
   DCHECK(forwarding_client_);

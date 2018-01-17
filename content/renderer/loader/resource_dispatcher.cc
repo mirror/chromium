@@ -435,7 +435,7 @@ int ResourceDispatcher::StartAsync(
   std::unique_ptr<URLLoaderClientImpl> client(
       new URLLoaderClientImpl(request_id, this, loading_task_runner));
 
-  uint32_t options = mojom::kURLLoadOptionNone;
+  uint32_t options = mojom::kURLLoadOptionResponseBodyInlining;
   // TODO(jam): use this flag for ResourceDispatcherHost code path once
   // MojoLoading is the only IPC code path.
   if (base::FeatureList::IsEnabled(features::kNetworkService) &&
