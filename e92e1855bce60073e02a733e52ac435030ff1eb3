@@ -62,6 +62,98 @@
       "revId": "e92e1855bce60073e02a733e52ac435030ff1eb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3cf543_5f24e450",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-17T16:11:17Z",
+      "side": 1,
+      "message": "optional nit:\n\nseems worth storing some of these in local vars so you don\u0027t have to call GetBubble so much. Maybe:\n\nif (!view || !view-\u003evisible() || !view-\u003eGetBubble())\n  return false;\nWidget* widget \u003d view-\u003eGetBubble()-\u003eWidget();\nreturn widget \u0026\u0026 widget-\u003eIsVisible() \u0026\u0026 widget-\u003eIsActive();",
+      "range": {
+        "startLine": 915,
+        "startChar": 36,
+        "endLine": 918,
+        "endChar": 39
+      },
+      "revId": "e92e1855bce60073e02a733e52ac435030ff1eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a085db1c_57345b18",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-17T16:11:17Z",
+      "side": 1,
+      "message": "nit: missing a closing bar",
+      "range": {
+        "startLine": 323,
+        "startChar": 10,
+        "endLine": 323,
+        "endChar": 15
+      },
+      "revId": "e92e1855bce60073e02a733e52ac435030ff1eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe64a16_5246a22f",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-17T16:11:17Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 324,
+        "startChar": 10,
+        "endLine": 324,
+        "endChar": 16
+      },
+      "revId": "e92e1855bce60073e02a733e52ac435030ff1eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4f3d07_e262f4d2",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-17T16:11:17Z",
+      "side": 1,
+      "message": "probably should just DCHECK",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 7
+      },
+      "revId": "e92e1855bce60073e02a733e52ac435030ff1eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
