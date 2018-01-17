@@ -34,9 +34,18 @@ class NetworkServiceURLLoaderFactory : public mojom::URLLoaderFactory {
   void Clone(mojom::URLLoaderFactoryRequest request) override;
 
  private:
+  enum class SchedulerClientStatus {
+    kNotYetAttached,
+    kNotAttached,
+    kAttached,
+  };
+
   // Not owned.
   NetworkContext* context_;
   uint32_t process_id_;
+  SchedulerClientStatus scheduler_client_status_ =
+      SchedulerClientStatus::kNotYetAttached;
+  int32_t scheduler_client_id_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkServiceURLLoaderFactory);
 };
