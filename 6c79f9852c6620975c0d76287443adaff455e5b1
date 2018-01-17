@@ -22,6 +22,52 @@
       "revId": "6c79f9852c6620975c0d76287443adaff455e5b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210fb19d_b662a572",
+        "filename": "chromeos/login/auth/cryptohome_authenticator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-17T18:54:45Z",
+      "side": 1,
+      "message": "nit: LOG(WARNING) -\u003e LOGIN_LOG(ERROR)\n\nCode in this file already use LOGIN_LOG, which would be put in device log and could be viewed separately in chrome://device-log or in device_event_log section in feedback report. ERROR would make it show up in main chrome log as well.",
+      "range": {
+        "startLine": 148,
+        "startChar": 4,
+        "endLine": 148,
+        "endChar": 16
+      },
+      "revId": "6c79f9852c6620975c0d76287443adaff455e5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf5d904_29f0dfe5",
+        "filename": "chromeos/login/auth/extended_authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-17T18:54:45Z",
+      "side": 1,
+      "message": "nit: Think this is an ERROR.",
+      "range": {
+        "startLine": 283,
+        "startChar": 6,
+        "endLine": 283,
+        "endChar": 13
+      },
+      "revId": "6c79f9852c6620975c0d76287443adaff455e5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
