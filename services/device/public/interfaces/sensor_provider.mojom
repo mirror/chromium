@@ -39,6 +39,12 @@ struct SensorInitParams {
   const uint64 kReadBufferSizeForTests = 48;
 };
 
+enum SensorCreationError {
+  NO_ERRORS,
+  NOT_READABLE_ERROR, // Sensor is not available on the platform.
+  NOT_ALLOWED_ERROR,  // The required permissions are not granted.
+};
+
 interface SensorProvider {
   // Gets the sensor interface by the given type.
   //
@@ -46,5 +52,8 @@ interface SensorProvider {
   //
   // |init_params| on success will contain the SensorInitParams describing the
   //               sensor, contains null on failure.
-  GetSensor(SensorType type) => (SensorInitParams? init_params);
+  // |error| on success contains NO_ERRORS, otherwise contains the
+  //         SensorCreationError describing the failure reason.
+  GetSensor(SensorType type) => (SensorInitParams? init_params,
+                                 SensorCreationError error);
 };
