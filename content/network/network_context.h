@@ -20,6 +20,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/strong_binding_set.h"
 #include "services/network/cookie_manager.h"
+#include "services/network/public/interfaces/tcp_socket.mojom.h"
 
 namespace net {
 class CertVerifier;
@@ -96,6 +97,15 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
       base::OnceClosure completion_callback) override;
   void SetNetworkConditions(const std::string& profile_id,
                             mojom::NetworkConditionsPtr conditions) override;
+  void CreateTCPServerSocket(const net::IPEndPoint& local_addr,
+                             network::mojom::TCPServerSocketRequest socket,
+                             CreateTCPServerSocketCallback callback) override;
+  void CreateTCPConnectedSocket(
+      const base::Optional<net::IPEndPoint>& local_addr,
+      const net::IPEndPoint& remote_addr,
+      network::mojom::TCPConnectedSocketRequest socket,
+      CreateTCPConnectedSocketCallback callback) override;
+
   void AddHSTSForTesting(const std::string& host,
                          base::Time expiry,
                          bool include_subdomains,
