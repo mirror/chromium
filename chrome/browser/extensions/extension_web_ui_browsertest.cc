@@ -46,13 +46,10 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebUIBrowserTest,
 
   // Uninstall the extension.
   ExtensionService* service =
-      extensions::ExtensionSystem::Get(browser()->profile())
-          ->extension_service();
-  extensions::ExtensionRegistry* registry =
-      extensions::ExtensionRegistry::Get(browser()->profile());
-  extensions::TestExtensionRegistryObserver registry_observer(registry);
-  service->UnloadExtension(extension->id(),
-                           extensions::UnloadedExtensionReason::UNINSTALL);
+      ExtensionSystem::Get(browser()->profile())->extension_service();
+  ExtensionRegistry* registry = ExtensionRegistry::Get(browser()->profile());
+  TestExtensionRegistryObserver registry_observer(registry);
+  service->UnloadExtension(extension->id(), UnloadedExtensionReason::UNINSTALL);
   registry_observer.WaitForExtensionUnloaded();
 
   // Check that the opened chrome://history/ page contains the default chrome
