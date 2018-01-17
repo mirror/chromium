@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6ead5be_50ab0ba0",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-17T21:36:34Z",
+      "side": 1,
+      "message": "queried_forms.reserve(form_structures_.size()); ?",
+      "revId": "89db316419cc5c47d45479ace782c9cab674c7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5d4e96_b5ea5b35",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-17T21:36:34Z",
+      "side": 1,
+      "message": "if you don\u0027t need this iterator outside of the loop, you can just move the auto to it\u0027s first use inside the loop.",
+      "revId": "89db316419cc5c47d45479ace782c9cab674c7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc84c8c_f5a0400f",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-17T21:36:34Z",
+      "side": 1,
+      "message": "there are string-\u003enumber conversion helpers in\n\n#include \"base/strings/string_number_conversions.h\"",
+      "revId": "89db316419cc5c47d45479ace782c9cab674c7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f48da59_ffb89a81",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-17T21:36:34Z",
+      "side": 1,
+      "message": "s/const auto\u0026/FormSignature/",
+      "revId": "89db316419cc5c47d45479ace782c9cab674c7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97558e78_c86bca9a",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-17T21:36:34Z",
+      "side": 1,
+      "message": "I think this code is the same as:\n\n  auto\u0026 cache_entry \u003d form_structures_[form_signature];\n  if (cache_entry !\u003d nullptr)\n    form_structure-\u003eUpdateFromCache(*cache_entry, true);\n  cache_entry \u003d std::move(form_structure);\n  // reuse cache_entry below",
+      "revId": "89db316419cc5c47d45479ace782c9cab674c7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a349d9bb_e53fb7c4",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-17T21:36:34Z",
+      "side": 1,
+      "message": "add a typedef/using alias: FormStructureMap?",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 139,
+        "endChar": 63
+      },
+      "revId": "89db316419cc5c47d45479ace782c9cab674c7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
