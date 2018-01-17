@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "dc805d87_020b5ab1",
+        "filename": "android_webview/browser/browser_view_renderer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T15:19:21Z",
+      "side": 1,
+      "message": "Right, the terminology is confusing there. Please remove the comment, the member name is descriptive enough.",
+      "parentUuid": "f4a68faf_ae151a94",
+      "range": {
+        "startLine": 366,
+        "startChar": 33,
+        "endLine": 366,
+        "endChar": 51
+      },
+      "revId": "01076065d2fc920f263ee179a59df844507ad63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf64ecf2_2eda4ef9",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollableArea.cpp",
         "patchSetId": 9
@@ -155,6 +179,30 @@
       "side": 1,
       "message": "boliu@, thank you for explanation.\n\nIn summary, the issue I am facing is:\nWhen enabling --use-zoom-for-dsf, some tests in AndroidScrollIntegrationTest (e.g., testTouchScrollCanBeAlteredByUi) fail because scrollX|Y return float values (i.e., not integer values). For example, the --use-zoom-for-dsf disabled one returns 38,80 but the enabled one returns 38.4754, 80.3793.\n\nThere are three places that intentionally convert those float values of scroll delta (e.g., 38.4754, 80.3793) to integer values (e.g., 38, 80) when --use-zoom-for-dsf is disabled:\nR1. ScrollTree::PullDeltaForMainThread()\nR2. ScrollTree::CollectScrollDeltas()\nR3. ScrollableArea::ScrollOffsetChanged()\n\nHowever, when --use-zoom-for-dsf is enabled, in R1 ~ R3, the scroll delta is already integer in physical pixel scale (e.g., 38.4754 * DSF \u003d 101, 80.3793 * DSF \u003d 211). LocalDOMWindow::scrollX|Y finally divides them by DSF.\n\nI tried to remove those three conversions (R1 ~ R3) to make it behave as the same regardless of --use-zoom-for-dsf. However, as bokan@ mentioned, if we cannot get rid of the scroll offset truncation (R3), then I think we have two options:\n\n1. Add conversion from float to integer at the end of LocalDOMWindow::scrollX|Y\n2. Modify AndroidScrollIntegrationTest to allow small rounding error (for the --use-zoom-for-dsf enabled one).\n\nWhich option would be correct? Are there other options?",
       "parentUuid": "e92577ed_70795d44",
+      "range": {
+        "startLine": 291,
+        "startChar": 2,
+        "endLine": 291,
+        "endChar": 42
+      },
+      "revId": "01076065d2fc920f263ee179a59df844507ad63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba8b2fa_bad67fb1",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T15:19:21Z",
+      "side": 1,
+      "message": "I think I\u0027ve finally wrapped my head around this. If I understand correctly, the current behavior is lossy. i.e. if a WebView app, running on a 2x DSF screen, sets the y scroll offset in physical pixels to 3, window.scrollY should really return 3/2\u003d1.5. Today it will return 1. (Though the offset will be correct on screen since the .5 is kept in CC)\n\nSo the problem boils down to the fact that Blink now gets scroll offsets in physical pixels. This means it now gets the fractional (fractional because Blink returns values in CSS pixels) part of the scroll offset that was previously truncated out when committing from the compositor.\n\nThis will affect more than just WebView and would be exposed to content on the web. e.g. if you compare Windows on a high DPI laptop (you can also use --force-device-scale-factor\u003d2 on a low-DPI machine) with the flag on and off, you\u0027ll see that scrollY returns floating point values when the flag is on but truncates when it\u0027s off. This isn\u0027t as much of an issue on desktops since browser zoom is common and already results in fractional scroll values - pages have to expect it. We\u0027ll have to be careful with Android since many pages might assume integer values (pinch-zoom will cause fractionals but a page can disable zooming). We\u0027ll need an intent-to-ship to Blink-dev when we\u0027re ready to ship since this will have a developer-visible effect.\n\nThe new patch that leaves Blink as-is lgtm but I\u0027m concerned about compatibility with existing apps. I couldn\u0027t guess how badly or how many apps this would affect. IMHO, we should give it a try and if we find many breakages we could add a WebView quirk setting that truncates out the DSF portion of a scroll offset (but this will affect many APIs: Element.getBoundingClientRect, Element.scrollLeft, MouseEvent.pageX, etc.) It\u0027d be best if our web and WebView behaviors matched so we should avoid adding a quirk unless necessary.\n\nBo, Jaebaek: does that roughly match your conclusion?",
+      "parentUuid": "89056771_7b3849a3",
       "range": {
         "startLine": 291,
         "startChar": 2,

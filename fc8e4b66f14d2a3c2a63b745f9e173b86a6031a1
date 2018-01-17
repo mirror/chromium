@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0a0bcfd_1cd973bd",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AndroidScrollIntegrationTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T15:19:21Z",
+      "side": 1,
+      "message": "Instead of rounding, change the call site to pass in floats (and truncate them if the use-zoom-for-dsf flag is off). You\u0027ll want to do a floating-point comparison here that has some epsilon of allowed error.",
+      "range": {
+        "startLine": 265,
+        "startChar": 19,
+        "endLine": 265,
+        "endChar": 58
+      },
+      "revId": "fc8e4b66f14d2a3c2a63b745f9e173b86a6031a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
