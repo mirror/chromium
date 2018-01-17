@@ -164,6 +164,30 @@
       "revId": "1ae97d37f454c0785402224dea0ac3c9daa58bfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ee02350_245083fe",
+        "filename": "ios/web/web_state/js/page_script_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-17T21:12:51Z",
+      "side": 1,
+      "message": "Ah, I see. Bundle has been removed and now it is replaced directly in the placeholder script. :)",
+      "parentUuid": "85c7ba93_712e8b6c",
+      "range": {
+        "startLine": 104,
+        "startChar": 38,
+        "endLine": 104,
+        "endChar": 64
+      },
+      "revId": "1ae97d37f454c0785402224dea0ac3c9daa58bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
