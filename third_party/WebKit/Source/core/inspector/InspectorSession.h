@@ -10,6 +10,7 @@
 #include "core/inspector/protocol/Forward.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
 #include "v8/include/v8-inspector-protocol.h"
@@ -28,7 +29,7 @@ class CORE_EXPORT InspectorSession
   class Client {
    public:
     virtual void SendProtocolMessage(int session_id,
-                                     int call_id,
+                                     WTF::Optional<int> call_id,
                                      const String& response,
                                      const String& state) = 0;
     virtual ~Client() = default;

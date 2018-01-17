@@ -6,6 +6,7 @@
 
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
+#include "base/strings/utf_string_conversions.h"
 #include "content/browser/devtools/devtools_manager.h"
 #include "content/browser/devtools/protocol/protocol.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
@@ -195,23 +196,14 @@ void DevToolsSession::flushProtocolNotifications() {
 }
 
 void DevToolsSession::DispatchProtocolMessage(
-    blink::mojom::DevToolsMessageChunkPtr chunk) {
-  if (chunk->is_first && !response_message_buffer_.empty()) {
-    ReceivedBadMessage();
-    return;
-  }
-
-  response_message_buffer_ += std::move(chunk->data);
-
-  if (!chunk->is_last)
-    return;
-
-  if (!chunk->post_state.empty())
-    state_cookie_ = std::move(chunk->post_state);
-  waiting_for_response_messages_.erase(chunk->call_id);
-  std::string message;
-  message.swap(response_message_buffer_);
-  client_->DispatchProtocolMessage(agent_host_, message);
+    const base::String16& message,
+    base::Optional<int> call_id,
+    const base::Optional<std::string> state) {
+  if (state.has_value())
+    state_cookie_ = state.value();
+  if (call_id.has_value())
+    waiting_for_response_messages_.erase(call_id.value());
+  client_->DispatchProtocolMessage(agent_host_, base::UTF16ToUTF8(message));
   // |this| may be deleted at this point.
 }
 

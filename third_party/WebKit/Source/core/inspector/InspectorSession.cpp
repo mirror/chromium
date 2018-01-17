@@ -195,7 +195,7 @@ void InspectorSession::flushProtocolNotifications() {
   for (size_t i = 0; i < agents_.size(); i++)
     agents_[i]->FlushPendingProtocolNotifications();
   for (size_t i = 0; i < notification_queue_.size(); ++i) {
-    client_->SendProtocolMessage(session_id_, 0,
+    client_->SendProtocolMessage(session_id_, WTF::nullopt,
                                  notification_queue_[i]->Serialize(), String());
   }
   notification_queue_.clear();

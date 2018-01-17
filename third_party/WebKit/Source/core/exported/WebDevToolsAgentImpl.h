@@ -136,7 +136,7 @@ class CORE_EXPORT WebDevToolsAgentImpl final
 
   // InspectorSession::Client implementation.
   void SendProtocolMessage(int session_id,
-                           int call_id,
+                           WTF::Optional<int> call_id,
                            const String& response,
                            const String& state) override;
 

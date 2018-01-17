@@ -121,12 +121,12 @@ void WorkerInspectorController::FlushProtocolNotifications() {
 }
 
 void WorkerInspectorController::SendProtocolMessage(int session_id,
-                                                    int call_id,
+                                                    WTF::Optional<int> call_id,
                                                     const String& response,
                                                     const String& state) {
   // Make tests more predictable by flushing all sessions before sending
   // protocol response in any of them.
-  if (LayoutTestSupport::IsRunningLayoutTest() && call_id)
+  if (LayoutTestSupport::IsRunningLayoutTest() && call_id.has_value())
     FlushProtocolNotifications();
   // Worker messages are wrapped, no need to handle callId or state.
   thread_->GetWorkerReportingProxy().PostMessageToPageInspector(session_id,

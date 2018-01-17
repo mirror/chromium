@@ -102,10 +102,6 @@ bool IsMainFrame(WebLocalFrameImpl* frame) {
   return frame->ViewImpl() && !frame->Parent();
 }
 
-// TODO(dgozman): somehow get this from a mojo config.
-// See kMaximumMojoMessageSize in services/service_manager/embedder/main.cc.
-const size_t kMaxDevToolsMessageChunkSize = 128 * 1024 * 1024 / 8;
-
 bool ShouldInterruptForMethod(const String& method) {
   // Keep in sync with DevToolsSession::ShouldSendOnIO.
   // TODO(dgozman): find a way to share this.
@@ -663,16 +659,16 @@ void WebDevToolsAgentImpl::InspectElementAt(
 }
 
 void WebDevToolsAgentImpl::SendProtocolMessage(int session_id,
-                                               int call_id,
+                                               WTF::Optional<int> call_id,
                                                const String& response,
                                                const String& state) {
   DCHECK(Attached());
   // Make tests more predictable by flushing all sessions before sending
   // protocol response in any of them.
-  if (LayoutTestSupport::IsRunningLayoutTest() && call_id)
+  if (LayoutTestSupport::IsRunningLayoutTest() && call_id.has_value())
     FlushProtocolNotifications();
 
-  if (worker_client_ && worker_client_->SendProtocolMessage(session_id, call_id,
+  if (worker_client_ && worker_client_->SendProtocolMessage(session_id, call_id.has_value() ? call_id.value() : 0,
                                                             response, state)) {
     return;
   }
@@ -681,21 +677,7 @@ void WebDevToolsAgentImpl::SendProtocolMessage(int session_id,
   if (it == hosts_.end())
     return;
 
-  bool single_chunk = response.length() < kMaxDevToolsMessageChunkSize;
-  for (size_t pos = 0; pos < response.length();
-       pos += kMaxDevToolsMessageChunkSize) {
-    mojom::blink::DevToolsMessageChunkPtr chunk =
-        mojom::blink::DevToolsMessageChunk::New();
-    chunk->is_first = pos == 0;
-    chunk->is_last = pos + kMaxDevToolsMessageChunkSize >= response.length();
-    chunk->call_id = chunk->is_last ? call_id : 0;
-    chunk->post_state =
-        chunk->is_last && !state.IsNull() ? state : g_empty_string;
-    chunk->data = single_chunk
-                      ? response
-                      : response.Substring(pos, kMaxDevToolsMessageChunkSize);
-    it->value->DispatchProtocolMessage(std::move(chunk));
-  }
+  it->value->DispatchProtocolMessage(response, call_id, state);
 }
 
 void WebDevToolsAgentImpl::PageLayoutInvalidated(bool resized) {
