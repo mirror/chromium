@@ -3495,4 +3495,9 @@ crbug.com/799814 [ Android ] fast/beacon/beacon-basic.html [ Pass Failure ]
 crbug.com/800359 [ Win7 ] external/wpt/mimesniff/mime-types/parsing.any.html [ Pass Timeout ]
 crbug.com/800359 [ Win7 ] external/wpt/mimesniff/mime-types/parsing.any.worker.html [ Pass Timeout ]
 
+# Sheriff failures 2018-01-17
+# This test has a Linux-specific version in platform/linux, but the
+# chromium.linux bots appear to be running and failing the main test.
+crbug.com/803092 [ Linux ] external/wpt/keyboard-lock/navigator-keyboardLock-two-parallel-requests.https.html [ Pass Failure ]
+
 crbug.com/799929 external/wpt/performance-timeline/po-takeRecords.html [ Failure ]
