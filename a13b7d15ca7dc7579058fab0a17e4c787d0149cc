@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0d3fff8_f5f1621d",
+        "filename": "components/flags_ui/flags_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-17T16:13:47Z",
+      "side": 1,
+      "message": "Nit: Add a comment above this loop explaining why we do it this way and not with a second std::find() call.",
+      "range": {
+        "startLine": 56,
+        "startChar": 21,
+        "endLine": 56,
+        "endChar": 29
+      },
+      "revId": "a13b7d15ca7dc7579058fab0a17e4c787d0149cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
