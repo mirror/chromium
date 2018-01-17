@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a032ddf_87ac86e9",
+        "filename": "chrome/browser/metrics/chrome_browser_main_extra_parts_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "We should eventually do this on all platforms, right? Maybe we should have a TODO and bug to indicate that?",
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37a96b19_50fafbc2",
         "filename": "chrome/browser/vr/service/vr_device_manager.cc",
         "patchSetId": 1
@@ -46,6 +63,231 @@
       "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d5c1eab_64587a10",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "For now, we want to avoid executing runtime code by default.\n\nSince it\u0027s not obvious here which of these two calls will execute runtime code, should we move this check inside OpenVRDeviceProvider?",
+      "parentUuid": "37a96b19_50fafbc2",
+      "range": {
+        "startLine": 164,
+        "startChar": 2,
+        "endLine": 164,
+        "endChar": 54
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64f78d7_50d3a314",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "RuntimeAvailability",
+      "range": {
+        "startLine": 15,
+        "startChar": 33,
+        "endLine": 15,
+        "endChar": 43
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2f60d4_8903f529",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "runtime",
+      "range": {
+        "startLine": 16,
+        "startChar": 17,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22945d0_408166fb",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "XrRuntimeAvailable (see below)",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 16
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa8031e_e4f6ed32",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "How will this work When libovr is enabled? The logic for reporting none will just be more complicated? Do we even want to report NONE?",
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f908f9f_6a8ca192",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "Should we do something more like the existing VRRuntimeVersion?",
+      "range": {
+        "startLine": 19,
+        "startChar": 32,
+        "endLine": 19,
+        "endChar": 49
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981bf708_f16365d8",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "XR seems reasonable here.",
+      "range": {
+        "startLine": 19,
+        "startChar": 29,
+        "endLine": 19,
+        "endChar": 31
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ee5ca9_e8bc10c7",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "I think we\u0027ve been calling these \"Runtime\" elsewhere. Does that make sense here?",
+      "range": {
+        "startLine": 19,
+        "startChar": 32,
+        "endLine": 19,
+        "endChar": 40
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275b2993_b0fb177a",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "We call these Viewer in other metrics. Perhaps because there are other ways to view VR content (cardboard, orientation sensor). Viewer is also specific to visual, which may not always be the case for XR. Hardware in the actual metric name might be a good compromise. We should probably use consistent names, at least within this function.",
+      "range": {
+        "startLine": 23,
+        "startChar": 33,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a260fe_72536076",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "Presence and Available are used within this function. We should probably be consistent.\nWe should also consider how this would apply to smartphone VR - would those not be reported here unless active at the time or would they always be reported? We should name appropriately (e.g., maybe \"connected\" in the former case).",
+      "range": {
+        "startLine": 24,
+        "startChar": 50,
+        "endLine": 24,
+        "endChar": 58
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -128,6 +370,46 @@
       "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a7c4d5f_1c563ede",
+        "filename": "device/vr/vr_device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "Would we be able to detect the specific device type? If so, maybe we should have separate values like VrViewerType? If not, that\u0027s probably fine and we can always add that later and rename this OPENVR_UNKNOWN.",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 8
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4762a0d1_6291fe73",
+        "filename": "device/vr/vr_device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "Nit: It probably makes more sense to swap the order of the two enums.",
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
