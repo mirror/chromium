@@ -60,6 +60,10 @@ class ASH_EXPORT ScreenOrientationController
   ScreenOrientationController();
   ~ScreenOrientationController() override;
 
+  blink::WebScreenOrientationLockType natural_orientation() const {
+    return natural_orientation_;
+  };
+
   // Add/Remove observers.
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
