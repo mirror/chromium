@@ -300,10 +300,17 @@ GpuVideoAcceleratorFactoriesImpl::VideoFrameOutputFormat(size_t bit_depth) {
     // use those, albeit at a reduced bit depth of 8 bits per component.
     // TODO(mcasas): continue working on this, avoiding dropping information as
     // long as the hardware may support it https://crbug.com/798485.
-    if (!rendering_color_space_.IsHDR() && capabilities.texture_rg)
-      return media::GpuVideoAcceleratorFactories::OutputFormat::I420;
-    else
+    if (rendering_color_space_.IsHDR())
       return media::GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED;
+
+    if (capabilities.image_xr30) {
+      DVLOG(1) << "OutputFormat::XR30";
+      return media::GpuVideoAcceleratorFactories::OutputFormat::XR30;
+    } else if (capabilities.texture_rg) {
+      DVLOG(1) << "OutputFormat::I420";
+      return media::GpuVideoAcceleratorFactories::OutputFormat::I420;
+    }
+    return media::GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED;
   }
   if (capabilities.image_ycbcr_420v &&
       !capabilities.image_ycbcr_420v_disabled_for_video_frames) {
