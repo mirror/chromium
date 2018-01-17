@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0938abab_fb511782",
+        "filename": "gin/public/isolate_holder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-17T06:26:24Z",
+      "side": 1,
+      "message": "Sounds better, but I\u0027d keep |kNormal| because we can create Isolate without any snapshot files.",
+      "parentUuid": "b9e49e62_ea981265",
+      "revId": "9c71d9070c594cab1319b982ff614fa136c16362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cab91d42_ddcca125",
         "filename": "gin/v8_initializer.h",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e66baaa5_dd6ed690",
+        "filename": "gin/v8_initializer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-17T06:26:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cab91d42_ddcca125",
+      "revId": "9c71d9070c594cab1319b982ff614fa136c16362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03e9cf3c_32d3e849",
         "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
         "patchSetId": 11
@@ -50,6 +86,24 @@
       "revId": "9c71d9070c594cab1319b982ff614fa136c16362",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7d2b93_a8c5370c",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-17T06:26:24Z",
+      "side": 1,
+      "message": "done. We may also rename V8ContextSnapshotMode::kTakeSnapshot and similar names, but I\u0027ll do it in another CL.",
+      "parentUuid": "03e9cf3c_32d3e849",
+      "revId": "9c71d9070c594cab1319b982ff614fa136c16362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
