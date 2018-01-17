@@ -590,6 +590,30 @@
     },
     {
       "key": {
+        "uuid": "491e345a_1c1bc0b2",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T19:35:26Z",
+      "side": 1,
+      "message": "No, the desire is only for the arrow to be clicked. Based on the discussion with UX and PM the ink ripple effect should only be on the arrow button. My current implementation does exactly this as the arrow is a ImageButton.",
+      "parentUuid": "03c1b71f_977bf102",
+      "range": {
+        "startLine": 67,
+        "startChar": 15,
+        "endLine": 67,
+        "endChar": 21
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7cf130e_38d64a5d",
         "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
         "patchSetId": 18
@@ -790,6 +814,30 @@
       "side": 1,
       "message": "I would expect you to override CalculatePreferredSize() and ensure the height is big enough for you label. Is there a reason not to do that?",
       "parentUuid": "742391ba_ac8dda7a",
+      "range": {
+        "startLine": 114,
+        "startChar": 49,
+        "endLine": 114,
+        "endChar": 72
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338af3e9_fb982d00",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-17T19:35:26Z",
+      "side": 1,
+      "message": "I\u0027ve tried that all day today to get to work, however I think this is tricky due to the way the MDTextButton is implemented. Basically, it sets the border in UpdatePadding (here https://cs.chromium.org/chromium/src/ui/views/controls/button/md_text_button.cc?rcl\u003d71bd29c62aca412a5a2ea7bb56a78ba71a2a03f3\u0026l\u003d220) and this resets somehow the preferred size. I\u0027ll debug it further tomorrow, but I am not convinced I\u0027ll make this work without making further changes to the MDTextButton.",
+      "parentUuid": "31f96a77_1f0d4926",
       "range": {
         "startLine": 114,
         "startChar": 49,
