@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4f6539d_23b28310",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/work_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-17T11:04:23Z",
+      "side": 1,
+      "message": "Instead of requiring the caller to do this, could we assert that there\u0027s no need to update WorkQueueSets (i.e., no new work became eligible to run)?",
+      "range": {
+        "startLine": 115,
+        "startChar": 41,
+        "endLine": 115,
+        "endChar": 54
+      },
+      "revId": "13cf67276108424dfdec726b907ff53e0350968b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
