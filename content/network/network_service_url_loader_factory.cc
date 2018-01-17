@@ -8,6 +8,7 @@
 #include "content/network/network_context.h"
 #include "content/network/network_service_impl.h"
 #include "content/network/url_loader.h"
+#include "net/url_request/url_request_context.h"
 #include "services/network/public/cpp/resource_request.h"
 
 namespace content {
@@ -19,7 +20,12 @@ NetworkServiceURLLoaderFactory::NetworkServiceURLLoaderFactory(
   ignore_result(process_id_);
 }
 
-NetworkServiceURLLoaderFactory::~NetworkServiceURLLoaderFactory() = default;
+NetworkServiceURLLoaderFactory::~NetworkServiceURLLoaderFactory() {
+  if (scheduler_client_status_ == SchedulerClientStatus::kAttached) {
+    context_->resource_scheduler()->OnClientDeleted(process_id_,
+                                                    scheduler_client_id_);
+  }
+}
 
 void NetworkServiceURLLoaderFactory::CreateLoaderAndStart(
     mojom::URLLoaderRequest request,
@@ -29,6 +35,31 @@ void NetworkServiceURLLoaderFactory::CreateLoaderAndStart(
     const network::ResourceRequest& url_request,
     mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
+  // A NetworkServiceURLLoaderFactory is attached with at most one frame.
+  switch (scheduler_client_status_) {
+    case SchedulerClientStatus::kNotYetAttached:
+      if (url_request.render_frame_id > 0) {
+        scheduler_client_status_ = SchedulerClientStatus::kAttached;
+        scheduler_client_id_ = url_request.render_frame_id;
+        context_->resource_scheduler()->OnClientCreated(
+            process_id_, scheduler_client_id_,
+            context_->url_request_context()->network_quality_estimator());
+        // TODO(yhirano): Remove this once RendererSideResourceScheduler is
+        // shipped.
+        context_->resource_scheduler()->DeprecatedOnNavigate(
+            process_id_, scheduler_client_id_);
+      } else {
+        scheduler_client_status_ = SchedulerClientStatus::kNotAttached;
+      }
+      break;
+    case SchedulerClientStatus::kNotAttached:
+      DCHECK_EQ(0, url_request.render_frame_id);
+      break;
+    case SchedulerClientStatus::kAttached:
+      DCHECK_EQ(scheduler_client_id_, url_request.render_frame_id);
+      break;
+  }
+
   bool report_raw_headers = false;
   if (url_request.report_raw_headers) {
     const NetworkServiceImpl* service = context_->network_service();
