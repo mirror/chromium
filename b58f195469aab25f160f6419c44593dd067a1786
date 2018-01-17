@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "141a4031_32e073b3",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastIntents.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-17T18:18:20Z",
+      "side": 1,
+      "message": "Yeah, I understand that the name ACTION_STOP_ACTIVITY specifically indicates that it\u0027s stopping an activity, but what that action and ACTION_STOP_WEB_CONTENT_INTERNAL are really doing is sending a local broadcast that tells the listening CastWebContents(Fragment|Activity) that it\u0027s done displaying those web contents.\n\nI don\u0027t want to block this CL on it, though. Can you please add a TODO for me to look into combining ACTION_STOP_WEB_CONTENT_INTERNAL and ACTION_STOP_ACTIVITY?",
+      "parentUuid": "d92a94fd_1fcd9b54",
+      "range": {
+        "startLine": 28,
+        "startChar": 31,
+        "endLine": 28,
+        "endChar": 63
+      },
+      "revId": "b58f195469aab25f160f6419c44593dd067a1786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a505ffe3_a2f38c67",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsComponent.java",
         "patchSetId": 6
