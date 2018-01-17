@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "abcb4a20_eeaf38b2",
+        "filename": "chrome/android/java/res/drawable-xxxhdpi/ic_clipboard_grey600_24dp.png",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T01:48:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a417b32f_9692d7c4",
+      "revId": "8bad4b790b99595fab7f2415cc823b1ce59a18eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99c9725d_f2b73d28",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-17T00:56:02Z",
       "side": 1,
       "message": "Can you use these methods instead of introducing a new getter/setter? Or can a similar generic nativeGetContentBoolean and nativeSetContentBoolean method be added for site settings?",
+      "range": {
+        "startLine": 1068,
+        "startChar": 3,
+        "endLine": 1069,
+        "endChar": 72
+      },
+      "revId": "8bad4b790b99595fab7f2415cc823b1ce59a18eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf5128c_dbd4c7f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T01:48:34Z",
+      "side": 1,
+      "message": "None of the other content setting preferences do this, so I\u0027m concerned that would break in some mysterious way.\n\nHowever, it does seem like it should be possible to switch all of the preferences to use isContentSettingEnabled() and nativeIsContentSettingEnabled(). But that change would be out of scope for this cl. Would you like me to open a tracking issue for that?",
+      "parentUuid": "99c9725d_f2b73d28",
       "range": {
         "startLine": 1068,
         "startChar": 3,
