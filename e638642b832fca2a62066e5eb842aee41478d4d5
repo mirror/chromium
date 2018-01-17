@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "417ff472_c09d5c5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchRankerLoggerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2018-01-17T19:26:41Z",
+      "side": 1,
+      "message": "Eclipse tells me that destroy is never being called on this class, so I think the only flow through the code right now is from ContextualSearchPanelMetrics.writeRankerLoggerOutcomesAndReset.  Added a TODO to call destroy, but that will only happen when the CSManager is destroyed since they share the same lifetime, which is quite long.  \n\nI\u0027d like to keep the histogram writing here since addressing the TODO will give us multiple paths here.\n\nNow that we assert mHasInferenceOccurred and since we check that there are features to log, I think that this will only be executed when there are actual outcomes to be logged.  That assumes that when the asserts fire we\u0027ll see that, which I\u0027m not completely convinced of (debug builds only, but some do run on the waterfall).\n\nI think adding more uma-logging is a good idea.  We already write to UMA in ContextualSearchPanelMetrics.writeRankerLoggerOutcomesAndReset (where we call ContextualSearchUma.logRankerInference).  But I\u0027ll add some log statements in the predictor so we can rule out issues between this Java code and the UKM writing.",
+      "parentUuid": "32ed6063_428996ff",
+      "range": {
+        "startLine": 189,
+        "startChar": 36,
+        "endLine": 189,
+        "endChar": 63
+      },
+      "revId": "e638642b832fca2a62066e5eb842aee41478d4d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1244da6_d7c5476a",
         "filename": "components/assist_ranker/predictor_config_definitions.cc",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "e638642b832fca2a62066e5eb842aee41478d4d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f87520_9572eb36",
+        "filename": "components/assist_ranker/predictor_config_definitions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2018-01-17T19:26:41Z",
+      "side": 1,
+      "message": "Sorry that I keep forgetting to update ukm.xml.  I think I\u0027ve got it now!",
+      "parentUuid": "887d4773_8c4454b0",
+      "range": {
+        "startLine": 47,
+        "startChar": 31,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "e638642b832fca2a62066e5eb842aee41478d4d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
