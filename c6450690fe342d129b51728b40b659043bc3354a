@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4510d23_35518b56",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/script-tests/server/garbage-collection-ran-during-error.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T01:21:34Z",
+      "side": 1,
+      "message": "return runGarbageCollection();\n})",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "c6450690fe342d129b51728b40b659043bc3354a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1175d082_ef8dc56f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/script-tests/server/garbage-collection-ran-during-success.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T01:21:34Z",
+      "side": 1,
+      "message": "return runGarbageCollection();\n})",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 6
+      },
+      "revId": "c6450690fe342d129b51728b40b659043bc3354a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c682db9_e4d6c893",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/script-tests/server/invalid-service-name.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-17T01:21:34Z",
+      "side": 1,
+      "message": "Use double-quoted strings to avoid having to escape single-quoted strings inside, or vice versa.",
+      "range": {
+        "startLine": 4,
+        "startChar": 4,
+        "endLine": 4,
+        "endChar": 5
+      },
+      "revId": "c6450690fe342d129b51728b40b659043bc3354a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
