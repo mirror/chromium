@@ -236,7 +236,8 @@ class CONTENT_EXPORT RenderFrameImpl
       const FrameReplicationState& replicated_state,
       CompositorDependencies* compositor_deps,
       const mojom::CreateFrameWidgetParams& params,
-      const FrameOwnerProperties& frame_owner_properties);
+      const FrameOwnerProperties& frame_owner_properties,
+      bool has_committed_real_load);
 
   // Returns the RenderFrameImpl for the given routing ID.
   static RenderFrameImpl* FromRoutingID(int routing_id);
@@ -647,6 +648,8 @@ class CONTENT_EXPORT RenderFrameImpl
                              bool content_initiated) override;
   void DidUpdateCurrentHistoryItem() override;
   void DidChangeThemeColor() override;
+  void ForwardResourceTimingToParent(
+      const blink::WebResourceTimingInfo& info) override;
   void DispatchLoad() override;
   blink::WebEffectiveConnectionType GetEffectiveConnectionType() override;
   void SetEffectiveConnectionTypeForTesting(
