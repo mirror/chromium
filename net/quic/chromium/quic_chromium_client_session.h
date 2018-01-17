@@ -27,7 +27,7 @@
 #include "net/base/net_export.h"
 #include "net/cert/ct_verify_result.h"
 #include "net/log/net_log_with_source.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "net/quic/chromium/quic_chromium_client_stream.h"
 #include "net/quic/chromium/quic_chromium_packet_reader.h"
 #include "net/quic/chromium/quic_chromium_packet_writer.h"

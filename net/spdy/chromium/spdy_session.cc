@@ -40,7 +40,7 @@
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_source_type.h"
 #include "net/log/net_log_with_source.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "net/quic/chromium/quic_http_utils.h"
 #include "net/socket/socket.h"
 #include "net/socket/ssl_client_socket.h"
