@@ -50,7 +50,7 @@ class IPCChannelBootstrapper : public content::ConnectionFilter {
     if (interface_name != IPC::mojom::ChannelBootstrap::Name_)
       return;
 
-    DCHECK(bootstrap_handle_.is_valid());
+    DCHECK(bootstrap_handle_);
     mojo::FuseMessagePipes(std::move(*interface_pipe),
                            std::move(bootstrap_handle_));
   }

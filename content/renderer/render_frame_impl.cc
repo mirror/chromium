@@ -1468,7 +1468,7 @@ void RenderFrameImpl::GetInterface(
 
   for (auto& observer : observers_) {
     observer.OnInterfaceRequestForFrame(interface_name, &interface_pipe);
-    if (!interface_pipe.is_valid())
+    if (!interface_pipe)
       return;
   }
 }
