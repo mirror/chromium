@@ -244,6 +244,24 @@
       "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68713cc6_f90b1b2c",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-17T02:50:41Z",
+      "side": 1,
+      "message": "That makes sense. Thanks!",
+      "parentUuid": "ec018e92_eeb79c6a",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

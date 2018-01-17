@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "ba66598e_038f3f32",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-17T02:50:41Z",
+      "side": 1,
+      "message": "if (!IsLowEnergyAvailable()) {\n  // macOS APIs for this method are only available when BLE is available.\n  ui_task_runner_-\u003ePostTask(FROM_HERE, error_callback);\n}\n\nAlso add a comment in BluetoothAdapter::SetPowered() explaining this is supported only on macOS \u003e\u003d10.10",
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e409df8a_35466ab9",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-17T02:50:41Z",
+      "side": 1,
+      "message": "No need to post a task here since we know the callback will only be called on the next cycle.",
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf723cf_414d932a",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-17T02:50:41Z",
+      "side": 1,
+      "message": "Hmm we already dispatch an event in PollAdapter so I don\u0027t think we need one here as well.",
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "375d814d_b4bdd078",
         "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
         "patchSetId": 6
@@ -42,6 +93,30 @@
     },
     {
       "key": {
+        "uuid": "a2fbca85_40c3b346",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-17T02:50:41Z",
+      "side": 1,
+      "message": "Yup. We usually do that when enabling a new test on macOS.",
+      "parentUuid": "892a3197_3e2959a3",
+      "range": {
+        "startLine": 696,
+        "startChar": 0,
+        "endLine": 696,
+        "endChar": 37
+      },
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d51605b0_840f9b8c",
         "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
         "patchSetId": 6
@@ -53,6 +128,30 @@
       "writtenOn": "2018-01-16T16:46:54Z",
       "side": 1,
       "message": "The newly introduced tests fail on all platforms except macOS. Should I just enable them on macOS? Also would it be possible to not rely on a queue internally? I checked the implementations on other platforms and both BlueZ and Android don\u0027t do it. Is there precedent in Chrome for handling APIs that are not blocking but also don\u0027t support callbacks (i.e. similarly to IOBluetoothPreferenceSetControllerPowerState?",
+      "range": {
+        "startLine": 716,
+        "startChar": 0,
+        "endLine": 717,
+        "endChar": 24
+      },
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6104f0_bf4a1bb8",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-17T02:50:41Z",
+      "side": 1,
+      "message": "\u003e Also would it be possible to not rely on a queue internally? I checked the implementations on other platforms and both BlueZ and Android don\u0027t do it. Is there precedent in Chrome for handling APIs that are not blocking but also don\u0027t support callbacks (i.e. similarly to IOBluetoothPreferenceSetControllerPowerState?\n\nThe other option would be to disallow multiple calls to the function and only save one callback. That\u0027s what we do for most of our implementation on Android and macOS; neither of those platforms have callback based APIs. See ReadRemoteCharacteristic[1] and DidUpdateValue[2] for an example: we save the ReadRemoteCharacteristic callback and then run it when we get the DidUpdateValue event. Very similar to what we are doing here with SetPowered and StateChanged.\n\nThe fact that Android doesn\u0027t have a queue or saves the callback is a problem with the API\u0027s implementation. It means that we run the callback before the adapter actually changes state. This should be fixed at some point.\n\n\u003e The newly introduced tests fail on all platforms except macOS. Should I just enable them on macOS?\n\nYup. Usually when we add a test that works on some platforms we have a comment explaining what work needs to be done to enable it or why it will never be enabled in other platforms. In this case, the tests are only relevant on Android and macOS because they don\u0027t have callback based APIs.\n\nSo for now let\u0027s just enable it on macOS with a comment that Android should be changed to wait for the adapter to change state and that the test doesn\u0027t apply to the other two platforms. Additionally, could you open a bug about Android and link to it in the comment?\n\n[1] https://cs.chromium.org/chromium/src/device/bluetooth/bluetooth_remote_gatt_characteristic_mac.mm?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d251\n[2] https://cs.chromium.org/chromium/src/device/bluetooth/bluetooth_remote_gatt_characteristic_mac.mm?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d251",
+      "parentUuid": "d51605b0_840f9b8c",
       "range": {
         "startLine": 716,
         "startChar": 0,
