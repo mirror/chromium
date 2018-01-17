@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbe50cf1_6c384ab7",
+        "filename": "chrome/browser/download/download_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2062,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T21:51:52Z",
+      "side": 1,
+      "message": "nit: I don\u0027t know that we have strict style around string literals, but I\u0027d suggest that we try to properly indent these with the \"left side\" being equal to the beginning of the literal, e.g.:\n\nR\"(chrome.developerPrivate.getExtensionsInfo(function(info) {\n     domAutomationController.send(!!info \u0026\u0026 !chrome.runtime.lastError);\n   });)\",\n\nIMO this makes the JS easier to read.",
+      "range": {
+        "startLine": 2060,
+        "startChar": 9,
+        "endLine": 2062,
+        "endChar": 10
+      },
+      "revId": "cce3efa58437a281239aee4550d9545a7ee495be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
