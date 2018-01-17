@@ -18,6 +18,9 @@
 namespace base {
 namespace internal {
 
+TaskSchedulerImpl::TaskSchedulerImpl(StringPiece name)
+    : TaskSchedulerImpl(name, std::make_unique<TaskTrackerImpl>(name)) {}
+
 TaskSchedulerImpl::TaskSchedulerImpl(
     StringPiece name,
     std::unique_ptr<TaskTrackerImpl> task_tracker)

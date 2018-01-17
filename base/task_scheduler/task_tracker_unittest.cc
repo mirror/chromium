@@ -901,7 +901,7 @@ TEST_F(TaskSchedulerTaskTrackerTest, RunNextTaskReturnsSequenceToReschedule) {
 TEST_F(TaskSchedulerTaskTrackerTest,
        WillScheduleBackgroundSequenceWithMaxBackgroundSequences) {
   constexpr int kMaxNumDispatchedBackgroundSequences = 2;
-  TaskTracker tracker(kMaxNumDispatchedBackgroundSequences);
+  TaskTracker tracker(StringPiece(), kMaxNumDispatchedBackgroundSequences);
 
   // Simulate posting |kMaxNumDispatchedBackgroundSequences| background tasks
   // and scheduling the associated sequences. This should succeed.
@@ -980,7 +980,7 @@ void SetBool(bool* arg) {
 TEST_F(TaskSchedulerTaskTrackerTest,
        RunNextBackgroundTaskWithEarlierPendingBackgroundTask) {
   constexpr int kMaxNumDispatchedBackgroundSequences = 1;
-  TaskTracker tracker(kMaxNumDispatchedBackgroundSequences);
+  TaskTracker tracker(StringPiece(), kMaxNumDispatchedBackgroundSequences);
   testing::StrictMock<MockCanScheduleSequenceObserver> never_notified_observer;
 
   // Simulate posting a background task and scheduling the associated sequence.
