@@ -58,6 +58,7 @@
 #include "core/html/forms/HTMLInputElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html_names.h"
+#include "core/input_type_names.h"
 #include "core/layout/AdjustForAbsoluteZoom.h"
 #include "core/layout/LayoutBoxModelObject.h"
 #include "core/layout/LayoutObject.h"
@@ -530,6 +531,8 @@ AttributeTriggers* HTMLElement::TriggersForAttributeName(
        nullptr},
       {aria_valuetextAttr, WebFeature::kARIAValueTextAttribute, kNoEvent,
        nullptr},
+      {autocapitalizeAttr, WebFeature::kAutocapitalizeAttribute, kNoEvent,
+       nullptr},
   };
 
   using AttributeToTriggerIndexMap = HashMap<QualifiedName, int>;
@@ -792,6 +795,38 @@ void HTMLElement::setContentEditable(const String& enabled,
                                       "The value provided ('" + enabled +
                                           "') is not one of 'true', 'false', "
                                           "'plaintext-only', or 'inherit'.");
+}
+
+String HTMLElement::autocapitalize() const {
+  DEFINE_STATIC_LOCAL(const AtomicString, off, ("off"));
+  DEFINE_STATIC_LOCAL(const AtomicString, none, ("none"));
+  DEFINE_STATIC_LOCAL(const AtomicString, characters, ("characters"));
+  DEFINE_STATIC_LOCAL(const AtomicString, words, ("words"));
+  DEFINE_STATIC_LOCAL(const AtomicString, sentences, ("sentences"));
+
+  if (auto* input = ToHTMLInputElementOrNull(*this)) {
+    const AtomicString& input_type = input->type();
+    if (input_type != InputTypeNames::text &&
+        input_type != InputTypeNames::search) {
+      // Autocapitalize is only supported for these two input types.
+      return none;
+    }
+  }
+
+  const AtomicString& value = FastGetAttribute(autocapitalizeAttr);
+  if (DeprecatedEqualIgnoringCase(value, none) ||
+      DeprecatedEqualIgnoringCase(value, off))
+    return none;
+  if (DeprecatedEqualIgnoringCase(value, characters))
+    return characters;
+  if (DeprecatedEqualIgnoringCase(value, words))
+    return words;
+  // "sentences", "on", empty string, or an invalid value
+  return sentences;
+}
+
+void HTMLElement::setAutocapitalize(const AtomicString& value) {
+  setAttribute(autocapitalizeAttr, value);
 }
 
 bool HTMLElement::isContentEditableForBinding() const {
