@@ -104,6 +104,24 @@
       "revId": "e4e923abda11f58ddd66744671b064b3fdd00a11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c09fcbc3_ed96fcfe",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1147763
+      },
+      "writtenOn": "2018-01-17T22:32:14Z",
+      "side": 1,
+      "message": "I moved this back here, as a few MainTheadWorkletGlobalScope tests crashed having the MainThreadDebugger::ContextWillBeDestroyed called.",
+      "parentUuid": "4c591ffb_3510adf5",
+      "revId": "e4e923abda11f58ddd66744671b064b3fdd00a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
