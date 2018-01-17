@@ -22,6 +22,30 @@
       "revId": "a7f1b88580aaeec988cbc097a452341bca31f067",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9803605f_b6f4aa44",
+        "filename": "third_party/WebKit/Source/core/dom/NodeTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-17T06:35:10Z",
+      "side": 1,
+      "message": "Thanks for the suggestion.\nDid the rename part in this CL (though I renamed to \"InitializeUserAgentShadowTree\").\nCould you work on adding author shadow version?",
+      "parentUuid": "0d267630_70059142",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 31
+      },
+      "revId": "a7f1b88580aaeec988cbc097a452341bca31f067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
