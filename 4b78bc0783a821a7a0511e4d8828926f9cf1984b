@@ -1,0 +1,510 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e77e240f_1b5c9388",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure we need to worry about dropped packets on the loopback interface, but it\u0027s totally within the protocol for some of these to be dropped.  I could imagine writing tests around this, but probably it\u0027s reasonable to put a comment in here that you\u0027re assuming loopback doesn\u0027t drop packets for small numbers of packets.",
+      "range": {
+        "startLine": 730,
+        "startChar": 12,
+        "endLine": 730,
+        "endChar": 26
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9299984c_0afa935f",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 36
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "What uses this?",
+      "range": {
+        "startLine": 1715,
+        "startChar": 16,
+        "endLine": 1715,
+        "endChar": 36
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca30e2b_80860436",
+        "filename": "services/BUILD.gn",
+        "patchSetId": 36
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "Oops.  Good catch; thanks.",
+      "range": {
+        "startLine": 22,
+        "startChar": 16,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc6d0a6_6fbbfafa",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 36
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "So this is the nitty-est of nits, and I\u0027ll dump it into the \"suggestion\", but the implementation silently caps size at int32 max, so the interface contract is misleading.  I basically can\u0027t imagine that this will ever be relevant because I can\u0027t imagine a situation in which a size of \u003e\u003d std::numeric_limits\u003cint32_t\u003e::max() is ever reasonable, but maybe consider switching this over to an int32 and indicating that it must be positive to make the interface contract you\u0027re exposing explicit?  \n\nBut up to you; as I say, if this ever matters someone\u0027s using this interface in a really interesting way.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 19
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46af55c0_df349ef2",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 36
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "I think this method is illegal if you\u0027ve previously called connect?  It\u0027s probably worth specifying either way.",
+      "range": {
+        "startLine": 110,
+        "startChar": 5,
+        "endLine": 110,
+        "endChar": 12
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944e5c35_0071f886",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "\"Default\" implies that the user can change it, which I don\u0027t see?",
+      "range": {
+        "startLine": 27,
+        "startChar": 15,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a5a56c_68e90cdb",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "My personal preference would be to name this variable something else, since it really means \"Is bound or connected\", but up to you.",
+      "range": {
+        "startLine": 133,
+        "startChar": 4,
+        "endLine": 133,
+        "endChar": 17
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249f96d3_060f9b54",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "The interface file just says that this has to be called after Open, not Connect/Bind, so that looks like an interface/implementation conflict.  Presuming I\u0027m right, willing to correct one of them?\n\n(Same comment below.)",
+      "range": {
+        "startLine": 163,
+        "startChar": 22,
+        "endLine": 163,
+        "endChar": 35
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2052a483_71beef1c",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "Given that something can\u0027t be connected without first being opened, I think in all cases that !is_opened_ is true, !is_connected_ will also be true, so this test is redundant?\n\n(Same comment below.)",
+      "range": {
+        "startLine": 163,
+        "startChar": 7,
+        "endLine": 163,
+        "endChar": 17
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e855a353_bd7bb276",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "Are you sure this usage is ok?  Could you give me a sense as to why?  Naively looking at the mojom structure definition, it looks to me as if the data will be copied when the message is sent, but not copied here (which is sorta the point of base::span\u003c\u003e as I read it) and the original data will be freed when the C++ call that implements the Mojom method completes.  So it looks like this\u0027ll be pointing at freed memory immediate after the return below.  What am I missing?",
+      "range": {
+        "startLine": 248,
+        "startChar": 18,
+        "endLine": 248,
+        "endChar": 19
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0d92bf_76223889",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "Won\u0027t this result in sending back an address to the consumer in all cases, not just the non-connected one?  recvfrom_address_ may not have been initialized, but I think wrapping it in a make_optional() will still result in serialization/deserialization, which I think you wanted to avoid?",
+      "range": {
+        "startLine": 280,
+        "startChar": 23,
+        "endLine": 280,
+        "endChar": 36
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a7a199_aad09fb5",
+        "filename": "services/network/udp_socket.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "I\u0027ll remark in passing that IMO a better overall pattern for our codebase (i.e. not your problem in this CL :-}) would be for UDPSocketWin and UDPSocketPosix to inherit from a common ABC, and then that ABC could be used here to create the fake/mock for testing.  But as I say, not your problem, just me itching for perfection :-}.",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea67a621_b3e33e98",
+        "filename": "services/network/udp_socket_factory.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "Suggested alternative implementation for your consideration: Keep the bindings in the UDPSocketFactory so that the connection error handling is localized, not having to cross class boundaries.  I *think* I\u0027d prefer that a little bit, but I\u0027m not sure without seeing it, and I *am* sure I wouldn\u0027t prefer it enough to push hard for it :-}.  So feel free to use the suggestion or not as you are inclined.",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a0645a_de417750",
+        "filename": "services/network/udp_socket_factory.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "I presume none of our anticipated consumers need to create a whole lot of these?  (Basically, I just want to make sure you\u0027ve evaluated whether linear search is reasonable for this use case or if you should use a more complex data structure--I don\u0027t have reason to believe we\u0027re likely to have enough UDPSockets for this to be a problem).",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3ea7b2_65ebbbbf",
+        "filename": "services/network/udp_socket_test_util.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "nit: I think it aids readability if the .cc file definitions are in the same order as the .h file declarations, unless there\u0027s a strong reason against.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 21
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dcbfb40_cd214d73",
+        "filename": "services/network/udp_socket_test_util.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "nit, suggestion: I think this would be slightly easier to read if this variable had a different name from the enclosing variable.  (Applies elsewhere in this file where this pattern is found.)",
+      "range": {
+        "startLine": 73,
+        "startChar": 59,
+        "endLine": 73,
+        "endChar": 65
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0fa5944_50ebbd18",
+        "filename": "services/network/udp_socket_test_util.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "Suggestion, totally up to you and your preference: Make this class hold non-static methods and be initialized with a UDPSocketPtr*.",
+      "range": {
+        "startLine": 29,
+        "startChar": 29,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a991d8_ac39504d",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "nit, suggestion: Return 0 instead to signal that it\u0027s a count?  (Not that this confusion isn\u0027t pervasive in the network stack :-}.)",
+      "range": {
+        "startLine": 141,
+        "startChar": 11,
+        "endLine": 141,
+        "endChar": 14
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263e612f_12886976",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "Why is there uncertainty about the return value?",
+      "range": {
+        "startLine": 204,
+        "startChar": 19,
+        "endLine": 204,
+        "endChar": 43
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7c7996_006fddf8",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "\"important\"?  I\u0027m not sure what this comment is trying to say.  \"idempotent\"?  (Though they probably aren\u0027t as a general rule.)",
+      "range": {
+        "startLine": 208,
+        "startChar": 3,
+        "endLine": 208,
+        "endChar": 12
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4900d83c_021026ae",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "I\u0027m a little uncomfortable with this test.  In an ideal world, tests test the behavior described in the header comments and don\u0027t go beyond that, so that the tests keep working even if the implementation changes.  This is sometimes referred to as testing functionality instead of testing behavior--I do think there are times when testing behavior is a good idea, but in general I think it\u0027s worth avoiding.\n\nWe don\u0027t have any documented limit in the header file after which we\u0027ll start getting ERR_INSUFFICIENT_RESOURCES, so it feels weird to pick a random value that it\u0027s not clear where it comes from and test that we get OK to that point, and ERR_INSUFFIENT_RESOURCES after it.  I think a better test would be to confirm that we don\u0027t hit insufficient resources for some reasonable small value.  If it\u0027s important to confirm that we eventually return it, just keep sending until we hit it.  \n\nIf you really do want to do a behavior test (basically to make sure someone looks at the issue if anything changes), would you be willing to expose kDefaultMaxPendingSendRequests with a comment that it\u0027s for testing, and use that value here?",
+      "range": {
+        "startLine": 267,
+        "startChar": 3,
+        "endLine": 267,
+        "endChar": 29
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601e8943_a5cfff74",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T19:09:30Z",
+      "side": 1,
+      "message": "Suggestion: I think this line (here and in the zero byte case) are the reasons for the friend test decls in UDPSocket?  If so, maybe consider making a method on UDPSocketTest that replaces the wrapped socket, and making UDPSocketTest the friend?  I think that minimizes the exposure and makes it well defined (by the API from individual tests to the test base class).",
+      "range": {
+        "startLine": 275,
+        "startChar": 7,
+        "endLine": 275,
+        "endChar": 22
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
