@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "275e5e94_1a0927ec",
+        "filename": "content/public/child/dwrite_font_proxy_init_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-17T19:27:37Z",
+      "side": 1,
+      "message": "nit: please add a comment about what the parameter is used for.",
+      "revId": "c79be826e3d891a5f3c80032cec736084e42432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
