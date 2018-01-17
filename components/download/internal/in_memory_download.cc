@@ -79,6 +79,12 @@ std::unique_ptr<storage::BlobDataHandle> InMemoryDownload::ResultAsBlob() {
   return std::make_unique<storage::BlobDataHandle>(*blob_data_handle_);
 }
 
+// Returns the estimate of dynamically allocated memory in bytes.
+size_t InMemoryDownload::EstimateMemoryUsage() const {
+  // TODO(xingliu): Implement this when destroy |url_fetcher| correctly.
+  return 0u;
+}
+
 void InMemoryDownload::OnURLFetchDownloadProgress(
     const net::URLFetcher* source,
     int64_t current,
@@ -91,6 +97,7 @@ void InMemoryDownload::OnURLFetchDownloadProgress(
 }
 
 void InMemoryDownload::OnURLFetchComplete(const net::URLFetcher* source) {
+  response_headers_ = source->GetResponseHeaders();
   switch (source->GetStatus().status()) {
     case net::URLRequestStatus::Status::SUCCESS:
       if (HandleResponseCode(source->GetResponseCode())) {
@@ -150,6 +157,7 @@ void InMemoryDownload::OnSaveBlobDone(
   state_ =
       (status == storage::BlobStatus::DONE) ? State::COMPLETE : State::FAILED;
   blob_data_handle_ = std::move(blob_handle);
+  completion_time_ = base::Time::Now();
 
   NotifyDelegateDownloadComplete();
 }
