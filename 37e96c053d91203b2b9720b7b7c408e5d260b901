@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "4dae03d7_c86afc9a",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-17T06:14:44Z",
+      "side": 1,
+      "message": "Fetching on user gesture helps with transient failures, in which case the status is unknown. I think if the status is known (either success or permanent failure) then there\u0027s no need.",
+      "parentUuid": "98e0a3fd_4cfc4f93",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14aab048_2a534ed2",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
         "patchSetId": 10
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "If we use sink ids only, observers won\u0027t be notified when IP address, or other fields change (not sure if it is important...).",
       "parentUuid": "14aab048_2a534ed2",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dccbf46e_d87e942e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-17T06:14:44Z",
+      "side": 1,
+      "message": "DMSSImpl does not handle sink updates. The current_sinks_.insert call is no-op if a sink with the same ID already exists. It might be better to change current_sinks_ to a map or vector to support updates. OK to do in separate patch.",
+      "parentUuid": "6e419cc2_3122a7b2",
       "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
