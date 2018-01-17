@@ -217,11 +217,17 @@ void FrameCaptionButtonContainerView::SetButtonSize(const gfx::Size& size) {
   close_button_->SetPreferredSize(size);
 }
 
+void FrameCaptionButtonContainerView::ChildPreferredSizeChanged(View* child) {
+  PreferredSizeChanged();
+}
+
 void FrameCaptionButtonContainerView::Layout() {
   views::View::Layout();
-  if (tablet_mode_animation_->is_animating()) {
+
+  // This ensures that the first frame of the animation to show the size button
+  // pushes the minimize button into the center.
+  if (tablet_mode_animation_->is_animating())
     AnimationProgressed(tablet_mode_animation_.get());
-  }
 }
 
 const char* FrameCaptionButtonContainerView::GetClassName() const {
