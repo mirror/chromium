@@ -491,6 +491,7 @@ _VALID_OS_MACROS = (
     # Please keep sorted.
     'OS_AIX',
     'OS_ANDROID',
+    'OS_ASMJS',
     'OS_BSD',
     'OS_CAT',       # For testing.
     'OS_CHROMEOS',
@@ -2557,7 +2558,8 @@ def _CheckBuildConfigMacrosWithoutInclude(input_api, output_api):
   extension_re = input_api.re.compile(r'\.[a-z]+$')
   errors = []
   for f in input_api.AffectedFiles():
-    if not f.LocalPath().endswith(('.h', '.c', '.cc', '.cpp', '.m', '.mm')):
+    if (not f.LocalPath().endswith(('.h', '.c', '.cc', '.cpp', '.m', '.mm'))
+        or f.LocalPath() == 'build/build_config.h'):
       continue
     found_line_number = None
     found_macro = None
