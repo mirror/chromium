@@ -16,6 +16,24 @@
       "revId": "50a618ea689873cf9c88f20c86d378e769751006",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3475c10_b83747b9",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-17T19:25:03Z",
+      "side": 1,
+      "message": "Sounds good, I\u0027ve updated it to clear out when we change the selected error.",
+      "parentUuid": "0063fb7d_1237a6db",
+      "revId": "50a618ea689873cf9c88f20c86d378e769751006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

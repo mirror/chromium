@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59effac9_49a5a8c7",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-17T19:25:03Z",
+      "side": 1,
+      "message": "Not used, but the JS style guide doesn\u0027t mention anything about unused params.",
+      "range": {
+        "startLine": 195,
+        "startChar": 38,
+        "endLine": 195,
+        "endChar": 46
+      },
+      "revId": "64dea4a52c25b7b9aeefdccd8c1c6a37fc49bd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
