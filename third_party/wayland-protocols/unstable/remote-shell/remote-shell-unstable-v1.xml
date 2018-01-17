@@ -641,13 +641,13 @@
     <event name="bounds_changed" since="10">
       <description summary="The compositor requested to change the bounds">
 	The compositor requested to change its
-	bounds. "bounds_chnage_reason" specifies the cause of the
+	bounds. "bounds_change_reason" specifies the cause of the
 	bounds change. The client may apply the different move/resize
 	strategy depending on the reason.
 
 	"display_id_hi", "display_id_lo" specifies in which workspace
 	the surface should live in.
-	
+
 	The client responds with set_window_geometry request, with the
 	bounds it is resized to (this may be different from the bounds
 	requested).
