@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05b8220f_e237a015",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-iframe-with-outside-focusable-element.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-17T11:42:40Z",
+      "side": 1,
+      "message": "nit: a ?\n\nI think we use letters in the other tests? (Really doesn\u0027t matter).",
+      "range": {
+        "startLine": 6,
+        "startChar": 12,
+        "endLine": 6,
+        "endChar": 13
+      },
+      "revId": "b038e65769208533cc5c7ec4f6561f7619b7d2d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547b1f12_8ff232e5",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-iframe-with-outside-focusable-element.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-17T11:42:40Z",
+      "side": 1,
+      "message": "nit: Start the test after going to a known place.",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 52
+      },
+      "revId": "b038e65769208533cc5c7ec4f6561f7619b7d2d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
