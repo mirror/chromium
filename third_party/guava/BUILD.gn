@@ -5,13 +5,11 @@
 import("//build/config/android/rules.gni")
 
 java_prebuilt("guava_java") {
-  # Since our build tooling depends on this target, we need it to not be
-  # "testonly = true", but production code must not depend on this as it
-  # results in size regressions. Thus, do not use this outside of tests and
-  # build tooling.
   supports_android = true
   jar_path = "lib/guava.jar"
 
   # Avoids dependency cycle.
   no_build_hooks = true
+
+  proguard_configs = [ "//third_party/guava/proguard.flags" ]
 }

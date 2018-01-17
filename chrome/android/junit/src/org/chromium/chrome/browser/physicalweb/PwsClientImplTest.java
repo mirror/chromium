@@ -13,10 +13,11 @@ import static org.mockito.Mockito.when;
 import android.content.res.Resources;
 import android.text.TextUtils;
 
+import com.google.common.base.Splitter;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.annotation.Implementation;
@@ -28,6 +29,7 @@ import org.chromium.base.LocaleUtils;
 import org.chromium.chrome.R;
 import org.chromium.testing.local.LocalRobolectricTestRunner;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -69,7 +71,7 @@ public class PwsClientImplTest {
         when(AcceptLanguageShadowResources.sResources.getText(R.string.accept_languages))
                 .thenReturn(ACCEPT_LANGUAGES);
         String defaultLocaleString = LocaleUtils.getDefaultLocaleString();
-        String[] languageTags = defaultLocaleString.split(",");
+        List<String> languageTags = Splitter.on(",").splitToList(defaultLocaleString);
 
         // Ensure Accept-Language contains the full language tag.
         String acceptLanguage = mPwsClientImpl.updateAcceptLanguage();

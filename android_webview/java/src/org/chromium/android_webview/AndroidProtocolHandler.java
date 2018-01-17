@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.util.Log;
 import android.util.TypedValue;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -125,7 +127,7 @@ public class AndroidProtocolHandler {
             return null;
         }
         // Drop the file extension.
-        assetName = assetName.split("\\.")[0];
+        assetName = Splitter.on(".").splitToList(assetName).get(0);
         try {
             int fieldId = getFieldId(assetType, assetName);
             int valueType = getValueType(fieldId);

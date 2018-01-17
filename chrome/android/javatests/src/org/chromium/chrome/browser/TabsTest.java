@@ -19,6 +19,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
+import com.google.common.base.Splitter;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -83,6 +85,7 @@ import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.ui.test.util.UiRestriction;
 
 import java.io.File;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -474,10 +477,10 @@ public class TabsTest {
         // ceil the width.
         int expectedWidth = (int) Math.ceil(metrics.widthPixels / metrics.density);
 
-        String[] nums = innerText.split(",");
-        Assert.assertTrue(nums.length == 2);
-        int innerWidth = Integer.parseInt(nums[0]);
-        int innerHeight = Integer.parseInt(nums[1]);
+        List<String> nums = Splitter.on(",").splitToList(innerText);
+        Assert.assertTrue(nums.size() == 2);
+        int innerWidth = Integer.parseInt(nums.get(0));
+        int innerHeight = Integer.parseInt(nums.get(1));
 
         Assert.assertEquals(expectedWidth, innerWidth);
 

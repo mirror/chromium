@@ -13,6 +13,8 @@ import static org.junit.Assert.assertFalse;
 
 import android.support.test.filters.SmallTest;
 
+import com.google.common.base.Splitter;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -29,7 +31,6 @@ import org.chromium.chrome.test.util.browser.Features.DisableFeatures;
 import org.chromium.chrome.test.util.browser.Features.EnableFeatures;
 import org.chromium.ui.base.DeviceFormFactor;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -131,6 +132,6 @@ public class FeaturesAnnotationsTest {
 
     private static List<String> getArgsList(boolean enabled) {
         String switchName = enabled ? "enable-features" : "disable-features";
-        return Arrays.asList(CommandLine.getInstance().getSwitchValue(switchName).split(","));
+        return Splitter.on(",").splitToList(CommandLine.getInstance().getSwitchValue(switchName));
     }
 }
