@@ -252,7 +252,7 @@ void RenderFrameHostManager::CommitPendingIfNecessary(
     // speculative RenderFrameHost replaces the current one in the commit call
     // below.
     CommitPending();
-    frame_tree_node_->ResetNavigationRequest(false, true);
+    frame_tree_node_->ResetNavigationRequest(false, true, nullptr);
   } else if (render_frame_host == render_frame_host_.get()) {
     // A same-process navigation committed while a simultaneous cross-process
     // navigation is still ongoing.
@@ -266,7 +266,7 @@ void RenderFrameHostManager::CommitPendingIfNecessary(
     // doing any shenanigans to prevent user from navigating.  See
     // https://code.google.com/p/chromium/issues/detail?id=75195
     if (was_caused_by_user_gesture) {
-      frame_tree_node_->ResetNavigationRequest(false, true);
+      frame_tree_node_->ResetNavigationRequest(false, true, nullptr);
       CleanUpNavigation();
     }
   } else {
@@ -374,7 +374,7 @@ void RenderFrameHostManager::SwapOutOldFrame(
 
   // Reset any NavigationHandle in the RenderFrameHost. This will prevent any
   // ongoing navigation from attempting to transfer.
-  old_render_frame_host->SetNavigationHandle(nullptr);
+  old_render_frame_host->SetNavigationRequest(nullptr);
 
   // Tell the old RenderFrameHost to swap out and be replaced by the proxy.
   old_render_frame_host->SwapOut(proxy, true);
@@ -505,10 +505,10 @@ RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
       // navigation was started from BeginNavigation. If the navigation was
       // started through the NavigationController, the NavigationController has
       // already updated its state properly, and doesn't need to be notified.
-      if (speculative_render_frame_host_->navigation_handle() &&
+      if (speculative_render_frame_host_->GetNavigationHandle() &&
           request.from_begin_navigation()) {
         frame_tree_node_->navigator()->DiscardPendingEntryIfNeeded(
-            speculative_render_frame_host_->navigation_handle()
+            speculative_render_frame_host_->GetNavigationHandle()
                 ->pending_nav_entry_id());
       }
       DiscardUnusedFrame(UnsetSpeculativeRenderFrameHost());
@@ -638,9 +638,9 @@ void RenderFrameHostManager::CleanUpNavigation() {
     // If the speculative RenderFrameHost is trying to commit a navigation,
     // inform the NavigationController that the load of the corresponding
     // NavigationEntry stopped.
-    if (speculative_render_frame_host_->navigation_handle()) {
+    if (speculative_render_frame_host_->GetNavigationHandle()) {
       frame_tree_node_->navigator()->DiscardPendingEntryIfNeeded(
-          speculative_render_frame_host_->navigation_handle()
+          speculative_render_frame_host_->GetNavigationHandle()
               ->pending_nav_entry_id());
     }
     bool was_loading = speculative_render_frame_host_->is_loading();
@@ -782,7 +782,7 @@ void RenderFrameHostManager::CancelPendingIfNecessary(
           ->navigation_handle()
           ->set_net_error_code(net::ERR_ABORTED);
     }
-    frame_tree_node_->ResetNavigationRequest(false, true);
+    frame_tree_node_->ResetNavigationRequest(false, true, nullptr);
   }
 }
 

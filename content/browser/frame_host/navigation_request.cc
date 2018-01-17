@@ -580,9 +580,9 @@ void NavigationRequest::CreateNavigationHandle() {
   }
 }
 
-void NavigationRequest::TransferNavigationHandleOwnership(
-    RenderFrameHostImpl* render_frame_host) {
-  render_frame_host->SetNavigationHandle(std::move(navigation_handle_));
+std::unique_ptr<NavigationHandleImpl>
+NavigationRequest::TakeNavigationHandle() {
+  return std::move(navigation_handle_);
 }
 
 void NavigationRequest::OnRequestRedirected(
@@ -630,7 +630,7 @@ void NavigationRequest::OnRequestRedirected(
     // TODO(arthursonzogni): Consider switching to net::ERR_UNSAFE_REDIRECT
     // when PlzNavigate is launched.
     navigation_handle_->set_net_error_code(net::ERR_ABORTED);
-    frame_tree_node_->ResetNavigationRequest(false, true);
+    frame_tree_node_->ResetNavigationRequest(false, true, nullptr);
     return;
   }
 
@@ -644,7 +644,7 @@ void NavigationRequest::OnRequestRedirected(
     DVLOG(1) << "Denied unauthorized redirect for "
              << redirect_info.new_url.possibly_invalid_spec();
     navigation_handle_->set_net_error_code(net::ERR_ABORTED);
-    frame_tree_node_->ResetNavigationRequest(false, true);
+    frame_tree_node_->ResetNavigationRequest(false, true, nullptr);
     return;
   }
 
@@ -803,7 +803,7 @@ void NavigationRequest::OnResponseStarted(
     if (!frame_tree_node_->navigator()->GetDelegate()->ShouldTransferNavigation(
             frame_tree_node_->IsMainFrame())) {
       navigation_handle_->set_net_error_code(net::ERR_ABORTED);
-      frame_tree_node_->ResetNavigationRequest(false, true);
+      frame_tree_node_->ResetNavigationRequest(false, true, nullptr);
       return;
     }
   }
@@ -856,7 +856,7 @@ void NavigationRequest::OnResponseStarted(
   if (is_download && (response->head.headers.get() &&
                       (response->head.headers->response_code() / 100 != 2))) {
     navigation_handle_->set_net_error_code(net::ERR_INVALID_RESPONSE);
-    frame_tree_node_->ResetNavigationRequest(false, true);
+    frame_tree_node_->ResetNavigationRequest(false, true, nullptr);
     return;
   }
 
@@ -906,7 +906,7 @@ void NavigationRequest::OnRequestFailedInternal(
 
   // If the request was canceled by the user do not show an error page.
   if (net_error == net::ERR_ABORTED) {
-    frame_tree_node_->ResetNavigationRequest(false, true);
+    frame_tree_node_->ResetNavigationRequest(false, true, nullptr);
     return;
   }
 
@@ -1143,7 +1143,7 @@ void NavigationRequest::OnFailureChecksComplete(
 
   // TODO(crbug.com/774663): We may want to take result.action() into account..
   if (net::ERR_ABORTED == net_error_) {
-    frame_tree_node_->ResetNavigationRequest(false, true);
+    frame_tree_node_->ResetNavigationRequest(false, true, nullptr);
     return;
   }
 
@@ -1242,12 +1242,12 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
 void NavigationRequest::CommitErrorPage(
     RenderFrameHostImpl* render_frame_host,
     const base::Optional<std::string>& error_page_content) {
-  TransferNavigationHandleOwnership(render_frame_host);
-  render_frame_host->navigation_handle()->ReadyToCommitNavigation(
-      render_frame_host);
+  navigation_handle_->ReadyToCommitNavigation(render_frame_host);
   render_frame_host->FailedNavigation(common_params_, request_params_,
                                       has_stale_copy_in_cache_, net_error_,
                                       error_page_content);
+
+  frame_tree_node_->ResetNavigationRequest(true, true, render_frame_host);
 }
 
 void NavigationRequest::CommitNavigation() {
@@ -1263,14 +1263,12 @@ void NavigationRequest::CommitNavigation() {
          render_frame_host ==
              frame_tree_node_->render_manager()->speculative_frame_host());
 
-  TransferNavigationHandleOwnership(render_frame_host);
-
   render_frame_host->CommitNavigation(
       response_.get(), std::move(url_loader_client_endpoints_),
       std::move(body_), common_params_, request_params_, is_view_source_,
       std::move(subresource_loader_params_), devtools_navigation_token_);
 
-  frame_tree_node_->ResetNavigationRequest(true, true);
+  frame_tree_node_->ResetNavigationRequest(true, true, render_frame_host);
 }
 
 NavigationRequest::ContentSecurityPolicyCheckResult

@@ -281,6 +281,11 @@ class CONTENT_EXPORT FrameTreeNode {
 
   NavigationRequest* navigation_request() { return navigation_request_.get(); }
 
+  // Transfers the ownership of the NavigationRequest to |render_frame_host|.
+  // From ReadyToCommit to DidCommit, the NavigationRequest is owned by the RFH.
+  void TransferNavigationRequestOwnership(
+      RenderFrameHostImpl* render_frame_host);
+
   // PlzNavigate
   // Takes ownership of |navigation_request| and makes it the current
   // NavigationRequest of this frame. This corresponds to the start of a new
@@ -296,7 +301,9 @@ class CONTENT_EXPORT FrameTreeNode {
   // If |keep_state| is false and the request is renderer-initiated and
   // |inform_renderer| is true, an IPC will be sent to the renderer process to
   // inform it that the navigation it requested was cancelled.
-  void ResetNavigationRequest(bool keep_state, bool inform_renderer);
+  void ResetNavigationRequest(bool keep_state,
+                              bool inform_renderer,
+                              RenderFrameHostImpl* rfh);
 
   // Returns true if this node is in a state where the loading progress is being
   // tracked.
