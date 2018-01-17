@@ -18,7 +18,7 @@ NetToMojoPendingBuffer::NetToMojoPendingBuffer(
     : handle_(std::move(handle)), buffer_(buffer) {}
 
 NetToMojoPendingBuffer::~NetToMojoPendingBuffer() {
-  if (handle_.is_valid())
+  if (handle_)
     handle_->EndWriteData(0);
 }
 

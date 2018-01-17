@@ -53,7 +53,7 @@ void ChromeService::OnBindInterface(
     const std::string& name,
     mojo::ScopedMessagePipeHandle handle) {
   content::OverrideOnBindInterface(remote_info, name, &handle);
-  if (!handle.is_valid())
+  if (!handle)
     return;
 
   if (!registry_.TryBindInterface(name, &handle))

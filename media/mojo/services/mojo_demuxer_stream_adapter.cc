@@ -73,7 +73,7 @@ void MojoDemuxerStreamAdapter::OnStreamReady(
     const base::Optional<VideoDecoderConfig>& video_config) {
   DVLOG(1) << __func__;
   DCHECK_EQ(UNKNOWN, type_);
-  DCHECK(consumer_handle.is_valid());
+  DCHECK(consumer_handle);
 
   type_ = type;
 

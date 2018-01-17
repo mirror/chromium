@@ -145,7 +145,7 @@ class FileURLDirectoryLoader
     }
 
     mojo::DataPipe pipe(kDefaultFileUrlPipeSize);
-    if (!pipe.consumer_handle.is_valid()) {
+    if (!pipe.consumer_handle) {
       client->OnComplete(network::URLLoaderCompletionStatus(net::ERR_FAILED));
       return;
     }
@@ -426,7 +426,7 @@ class FileURLLoader : public mojom::URLLoader {
     }
 
     mojo::DataPipe pipe(kDefaultFileUrlPipeSize);
-    if (!pipe.consumer_handle.is_valid()) {
+    if (!pipe.consumer_handle) {
       client->OnComplete(network::URLLoaderCompletionStatus(net::ERR_FAILED));
       if (observer)
         observer->OnDoneReading();

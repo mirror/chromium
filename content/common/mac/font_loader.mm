@@ -76,7 +76,7 @@ std::unique_ptr<FontLoader::ResultInternal> LoadFontOnFileThread(
 
   int32_t font_file_size_32 = static_cast<int32_t>(font_file_size_64);
   result->font_data = mojo::SharedBufferHandle::Create(font_file_size_32);
-  if (!result->font_data.is_valid()) {
+  if (!result->font_data) {
     DLOG(ERROR) << "Failed to create shmem area for " << font_name;
     return nullptr;
   }

@@ -66,7 +66,7 @@ bool StructTraits<gfx::mojom::SharedBufferSkBitmapDataView, SkBitmap>::Read(
     SkBitmap* out) {
   mojo::ScopedSharedBufferHandle shared_buffer_handle =
       data.TakeSharedBufferHandle();
-  if (!shared_buffer_handle.is_valid())
+  if (!shared_buffer_handle)
     return false;
 
   mojo::ScopedSharedBufferMapping mapping =

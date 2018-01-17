@@ -255,8 +255,8 @@ void FetchRespondWithObserver::OnResponseFulfilled(const ScriptValue& value) {
       OnResponseRejected(ServiceWorkerResponseError::kDataPipeCreationFailed);
       return;
     }
-    DCHECK(producer.is_valid());
-    DCHECK(consumer.is_valid());
+    DCHECK(producer);
+    DCHECK(consumer);
 
     std::unique_ptr<WebServiceWorkerStreamHandle> body_stream_handle =
         std::make_unique<WebServiceWorkerStreamHandle>(std::move(consumer));

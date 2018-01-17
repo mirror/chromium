@@ -39,7 +39,7 @@ Message CreateRawMessage(size_t size) {
   ScopedMessageHandle handle;
   MojoResult rv = CreateMessage(&handle);
   DCHECK_EQ(MOJO_RESULT_OK, rv);
-  DCHECK(handle.is_valid());
+  DCHECK(handle);
 
   DCHECK(base::IsValueInRangeForNumericType<uint32_t>(size));
   void* buffer;

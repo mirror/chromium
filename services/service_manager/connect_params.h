@@ -55,7 +55,7 @@ class ConnectParams {
     return interface_name_;
   }
   bool HasInterfaceRequestInfo() const {
-    return !interface_name_.empty() && interface_pipe_.is_valid();
+    return !interface_name_.empty() && interface_pipe_;
   }
   mojo::ScopedMessagePipeHandle TakeInterfaceRequestPipe() {
     return std::move(interface_pipe_);

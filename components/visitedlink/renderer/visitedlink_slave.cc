@@ -29,7 +29,7 @@ VisitedLinkSlave::GetBindCallback() {
 // mapped into the process.
 void VisitedLinkSlave::UpdateVisitedLinks(
     mojo::ScopedSharedBufferHandle table) {
-  DCHECK(table.is_valid()) << "Bad table handle";
+  DCHECK(table) << "Bad table handle";
   // Since this function may be called again to change the table, we may need
   // to free old objects.
   FreeTable();

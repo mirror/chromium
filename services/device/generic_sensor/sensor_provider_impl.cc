@@ -63,7 +63,7 @@ void SensorProviderImpl::GetSensor(mojom::SensorType type,
     return;
   }
   auto cloned_handle = provider_->CloneSharedBufferHandle();
-  if (!cloned_handle.is_valid()) {
+  if (!cloned_handle) {
     std::move(callback).Run(nullptr);
     return;
   }

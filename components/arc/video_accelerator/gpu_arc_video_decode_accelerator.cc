@@ -56,7 +56,7 @@ constexpr size_t kMaxConcurrentClients = 8;
 constexpr size_t kMaxProtectedInputBuffers = 8;
 
 base::ScopedFD UnwrapFdFromMojoHandle(mojo::ScopedHandle handle) {
-  if (!handle.is_valid()) {
+  if (!handle) {
     VLOGF(1) << "Handle is invalid.";
     return base::ScopedFD();
   }

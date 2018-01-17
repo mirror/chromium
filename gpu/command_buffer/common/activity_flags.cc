@@ -27,7 +27,7 @@ GpuProcessActivityFlags::GpuProcessActivityFlags(
     mojo::ScopedSharedBufferHandle handle) {
   // In cases where we are running without a GpuProcessHost, we may not
   // have a valid handle. In this case, just return.
-  if (!handle.is_valid())
+  if (!handle)
     return;
 
   Initialize(std::move(handle));
