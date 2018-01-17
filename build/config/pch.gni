@@ -8,5 +8,6 @@ declare_args() {
   # Precompiled header file support is by default available,
   # but for distributed build system uses (like goma) or when
   # doing official builds.
-  enable_precompiled_headers = !is_official_build && !use_goma
+  # TODO(crbug/803158): re-enable when the issue is fixed.
+  enable_precompiled_headers = false && !is_official_build && !use_goma
 }
