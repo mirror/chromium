@@ -42,9 +42,7 @@ TEST_F(UiPixelTest, MAYBE(DrawVrBrowsingMode)) {
          UiInputManager::ButtonState::UP, 1.0f, kIdentity, kIdentity,
          kPixelDaydreamProjMatrix);
 
-  // Read pixels into SkBitmap.
-  auto bitmap = SaveCurrentFrameBufferToSkBitmap();
-  EXPECT_TRUE(bitmap);
+  CaptureAndSaveFrameBufferToGoldDir();
 }
 
 }  // namespace vr
