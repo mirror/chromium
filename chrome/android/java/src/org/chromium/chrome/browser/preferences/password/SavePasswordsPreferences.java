@@ -6,6 +6,9 @@ package org.chromium.chrome.browser.preferences.password;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -14,11 +17,13 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.SearchView;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
@@ -36,6 +41,8 @@ import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.chrome.browser.preferences.TextMessagePreference;
 import org.chromium.ui.text.SpanApplier;
 import org.chromium.ui.widget.Toast;
+
+import java.util.Locale;
 
 /**
  * The "Save passwords" screen in Settings, which allows the user to enable or disable password
@@ -78,6 +85,7 @@ public class SavePasswordsPreferences
     // True if the user triggered the password export flow and this fragment is waiting for the
     // result of the user's reauthentication.
     private boolean mExportRequested;
+    private String mSearchQuery;
     private Preference mLinkPref;
     private ChromeSwitchPreference mSavePasswordsSwitch;
     private ChromeBaseCheckBoxPreference mAutoSignInSwitch;
@@ -89,10 +97,7 @@ public class SavePasswordsPreferences
         getActivity().setTitle(R.string.prefs_saved_passwords);
         setPreferenceScreen(getPreferenceManager().createPreferenceScreen(getActivity()));
         PasswordManagerHandlerProvider.getInstance().addObserver(this);
-        if (ChromeFeatureList.isEnabled(EXPORT_PASSWORDS)
-                && ReauthenticationManager.isReauthenticationApiAvailable()) {
-            setHasOptionsMenu(true);
-        }
+        setHasOptionsMenu(providesPasswordExport() || providesPasswordSearch());
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(SAVED_STATE_EXPORT_REQUESTED)) {
             mExportRequested =
@@ -104,7 +109,13 @@ public class SavePasswordsPreferences
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.save_password_preferences_action_bar_menu, menu);
+        menu.findItem(R.id.export_passwords).setVisible(providesPasswordExport());
         menu.findItem(R.id.export_passwords).setEnabled(false);
+        MenuItem searchItem = menu.findItem(R.id.menu_id_search);
+        searchItem.setVisible(providesPasswordSearch());
+        if (providesPasswordSearch()) {
+            setUpSearchAction(searchItem);
+        }
     }
 
     @Override
@@ -153,6 +164,17 @@ public class SavePasswordsPreferences
         // TODO(crbug.com/788701): Start the export.
     }
 
+    private boolean filterPasswords(java.lang.String query) {
+        mSearchQuery = query;
+        mNoPasswords = false;
+        mNoPasswordExceptions = false;
+        getPreferenceScreen().removeAll();
+        PasswordManagerHandlerProvider.getInstance()
+                .getPasswordManagerHandler()
+                .updatePasswordLists();
+        return false; // Query has not been handled yet. Triggers SearchView default action.
+    }
+
     /**
      * Empty screen message when no passwords or exceptions are stored.
      */
@@ -171,6 +193,7 @@ public class SavePasswordsPreferences
     }
 
     void rebuildPasswordLists() {
+        mSearchQuery = null;
         mNoPasswords = false;
         mNoPasswordExceptions = false;
         getPreferenceScreen().removeAll();
@@ -215,7 +238,9 @@ public class SavePasswordsPreferences
             return;
         }
 
-        displayManageAccountLink();
+        if (mSearchQuery == null) {
+            displayManageAccountLink();
+        }
 
         PreferenceCategory profileCategory = new PreferenceCategory(getActivity());
         profileCategory.setKey(PREF_KEY_CATEGORY_SAVED_PASSWORDS);
@@ -226,10 +251,13 @@ public class SavePasswordsPreferences
             SavedPasswordEntry saved = PasswordManagerHandlerProvider.getInstance()
                                                .getPasswordManagerHandler()
                                                .getSavedPasswordEntry(i);
-            PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(getActivity());
             String url = saved.getUrl();
             String name = saved.getUserName();
             String password = saved.getPassword();
+            if (shouldBeFiltered(url, name)) {
+                continue; // The current password won't show with the active filter, try the next.
+            }
+            PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(getActivity());
             screen.setTitle(url);
             screen.setOnPreferenceClickListener(this);
             screen.setSummary(name);
@@ -240,6 +268,18 @@ public class SavePasswordsPreferences
             args.putInt(PASSWORD_LIST_ID, i);
             profileCategory.addPreference(screen);
         }
+        mNoPasswords = profileCategory.getPreferenceCount() == 0;
+        if (mNoPasswords) {
+            displayManageAccountLink(); // Maybe the password is just not on the device.
+            displayEmptyScreenMessage();
+        }
+    }
+
+    private boolean shouldBeFiltered(final String url, final String name) {
+        if (mSearchQuery == null) return false;
+        return !url.toLowerCase(Locale.ENGLISH).contains(mSearchQuery.toLowerCase(Locale.ENGLISH))
+                && !name.toLowerCase(Locale.getDefault())
+                            .contains(mSearchQuery.toLowerCase(Locale.getDefault()));
     }
 
     @Override
@@ -318,6 +358,48 @@ public class SavePasswordsPreferences
         return true;
     }
 
+    private static Drawable convertToPlainWhite(Drawable icon) {
+        float[] white_matrix = {
+                1, 1, 1, 0, 0, // R = 1*R + 1*G + 1*B
+                1, 1, 1, 0, 0, // G = 1*R + 1*G + 1*B
+                1, 1, 1, 0, 0, // B = 1*R + 1*G + 1*B
+                0, 0, 0, 1, 0, // A = A
+        };
+        icon.setColorFilter(new ColorMatrixColorFilter(new ColorMatrix(white_matrix)));
+        return icon;
+    }
+
+    private void setUpSearchAction(MenuItem searchItem) {
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_FLAG_NO_FULLSCREEN);
+        searchItem.setIcon(convertToPlainWhite(searchItem.getIcon()));
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                filterPasswords(""); // Hide other menu elements.
+                return true; // Continue expanding.
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                rebuildPasswordLists(); // Bring back all preferences and passwords.
+                return true; // Continue collapsing.
+            }
+        });
+        searchView.setOnSearchClickListener(view -> filterPasswords(""));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true; // Continue with default action - nothing.
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                return filterPasswords(query);
+            }
+        });
+    }
+
     private void createSavePasswordsSwitch() {
         mSavePasswordsSwitch = new ChromeSwitchPreference(getActivity(), null);
         mSavePasswordsSwitch.setKey(PREF_SAVE_PASSWORDS_SWITCH);
@@ -389,5 +471,14 @@ public class SavePasswordsPreferences
             }
             getPreferenceScreen().addPreference(mLinkPref);
         }
+    }
+
+    private boolean providesPasswordExport() {
+        return ChromeFeatureList.isEnabled(EXPORT_PASSWORDS)
+                && ReauthenticationManager.isReauthenticationApiAvailable();
+    }
+
+    private boolean providesPasswordSearch() {
+        return ChromeFeatureList.isEnabled(ChromeFeatureList.PASSWORD_SEARCH);
     }
 }
