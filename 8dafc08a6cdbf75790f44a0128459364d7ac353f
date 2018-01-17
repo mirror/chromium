@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d2ddc533_f44a458f",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4006,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T18:04:45Z",
+      "side": 1,
+      "message": "Oops, turns out we already have tests very similar to these, they\u0027re just disabled for committed interstitials right now. Can you use those instead? They\u0027re TestInterstitialJavaScriptProceeds and TestInterstitialJavaScriptGoesBack. To enable those for committed interstitials, you should be able to just change IN_PROC_BROWSER_TEST_F(SSLUITestBase... to IN_PROC_BROWSER_TEST_P(SSLUITest... and then use the certificateErrorPageController instead of domAutomationController when committed interstitials are enabled.\n\n(The _P parameterizes them so they run once with and once without committed interstitials enabled.)\n\nCould you also look at fixing the TODO at https://cs.chromium.org/chromium/src/chrome/browser/ssl/ssl_browsertest.cc?q\u003dSSLUITestCommitted\u0026sq\u003dpackage:chromium\u0026l\u003d993 so that we send the command by injecting JS there, instead of called CommandReceived directly?",
+      "revId": "8dafc08a6cdbf75790f44a0128459364d7ac353f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57231548_0b86c956",
         "filename": "chrome/browser/ssl/ssl_browsertest.cc",
         "patchSetId": 1
@@ -13,6 +30,24 @@
       "writtenOn": "2018-01-17T00:45:24Z",
       "side": 1,
       "message": "I just realized crrev.com/c/803376 aims to remove all uses of this, and its description mentions PlzNavigate is always enabled on tests now. If that\u0027s the case I\u0027ll remove this line (and will remove it from all other SSLUITestCommitted tests), still looking into this since that CL is not landed yet.",
+      "revId": "8dafc08a6cdbf75790f44a0128459364d7ac353f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b835f1e6_81ce7320",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4010,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T18:04:45Z",
+      "side": 1,
+      "message": "Yeah, I think you can assume PlzNavigate is on by default now, so you can remove this.",
+      "parentUuid": "57231548_0b86c956",
       "revId": "8dafc08a6cdbf75790f44a0128459364d7ac353f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
