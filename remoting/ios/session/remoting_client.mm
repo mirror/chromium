@@ -327,6 +327,11 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
   // Not supported for iOS yet.
   _sessionDetails.state = SessionFailed;
   _sessionDetails.error = SessionErrorThirdPartyAuthNotSupported;
+  _runtime->network_task_runner()->PostTask(
+      FROM_HERE, base::BindBlockArc(^{
+        _session->RejectFetchingThirdPartyToken(
+            remoting::protocol::ErrorCode::AUTHENTICATION_FAILED);
+      }));
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kHostSessionStatusChanged
                     object:self
