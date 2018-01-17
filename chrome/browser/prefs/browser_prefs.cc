@@ -706,6 +706,9 @@ void MigrateObsoleteBrowserPrefs(Profile* profile, PrefService* local_state) {
   local_state->ClearPref(kStabilityLaunchedActivityCounts);
   local_state->ClearPref(kStabilityCrashedActivityCounts);
 #endif  // defined(OS_ANDROID)
+
+  // Added 1/2018.
+  local_state->ClearPref(prefs::kShowFirstRunBubbleOption);
 }
 
 // This method should be periodically pruned of year+ old migrations.
