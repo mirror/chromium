@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "b23e6d36_b715a837",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_system.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-17T15:37:58Z",
+      "side": 1,
+      "message": "STDERR_FILENO might be a bit more redable",
+      "range": {
+        "startLine": 118,
+        "startChar": 10,
+        "endLine": 118,
+        "endChar": 11
+      },
+      "revId": "b072360ac7043814546a849e76df1acecfee1b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fba16f0_b99e96a4",
         "filename": "third_party/android_crazy_linker/src/src/crazy_linker_system.cpp",
         "patchSetId": 2
@@ -89,6 +112,29 @@
         "startChar": 1,
         "endLine": 120,
         "endChar": 11
+      },
+      "revId": "b072360ac7043814546a849e76df1acecfee1b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8866c3bd_3fb5a85e",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_system.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-17T15:37:58Z",
+      "side": 1,
+      "message": "FYI: While both I and libstdc++ happily agree with this comment, I learned, with lot of surprise, that that\u0027s not the behavior of libcxx.\n\nMore context in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d763213#c25\nbut if you look at https://github.com/llvm-mirror/libcxx/blob/bc4474e3baad95ed84582e8a9af7c50ae439458d/src/new.cpp#L82 they seem to happily  return  nullptr when building with -fno-exceptions ^__^ \n(anyhow doesn\u0027t make a difference for us in chrome because of the aforementioned shim)",
+      "range": {
+        "startLine": 126,
+        "startChar": 43,
+        "endLine": 126,
+        "endChar": 70
       },
       "revId": "b072360ac7043814546a849e76df1acecfee1b88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
