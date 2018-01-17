@@ -49,6 +49,15 @@ class SynchronousCompositorBrowserFilter : public BrowserMessageFilter {
       int routing_id,
       scoped_refptr<SynchronousCompositor::FrameFuture> frame_future);
 
+  // Called on the IO thread from the SynchronousCompositorControlHost.
+  void ReturnFrame(int routing_id,
+                   uint32_t layer_tree_frame_sink_id,
+                   base::Optional<viz::CompositorFrame> frame);
+  void SynchronizeStateResponse(
+      int routing_id,
+      const content::SyncCompositorCommonRendererParams& params);
+  void RemoteClosed(int routing_id);
+
  private:
   ~SynchronousCompositorBrowserFilter() override;
 
@@ -58,6 +67,7 @@ class SynchronousCompositorBrowserFilter : public BrowserMessageFilter {
   void SignalAllFutures();
 
   RenderProcessHost* const render_process_host_;
+  const bool use_mojo_;
 
   // For synchronizing renderer state after a vsync.
   ui::WindowAndroid* window_android_in_vsync_ = nullptr;
@@ -68,13 +78,21 @@ class SynchronousCompositorBrowserFilter : public BrowserMessageFilter {
   // |future_map_|.
   std::map<int, SynchronousCompositorHost*> hosts_;
 
-  base::Lock future_map_lock_;  // Protects fields below.
+  // Protects |future_map_| and |filter_ready_|.
+  base::Lock future_map_lock_;
   bool filter_ready_ = false;
   using FrameFutureQueue =
       base::circular_deque<scoped_refptr<SynchronousCompositor::FrameFuture>>;
   // This object is per renderer process, so routing_id is unique.
   using FrameFutureMap = std::map<int, FrameFutureQueue>;
   FrameFutureMap future_map_;
+
+  // Protects the |pending_sync_count_| and can be waited on
+  // with |sync_condition_|.
+  base::Lock sync_lock_;
+  base::ConditionVariable sync_condition_;
+  unsigned pending_sync_count_ = 0;
+  std::map<int, SyncCompositorCommonRendererParams> pending_sync_params_;
 
   DISALLOW_COPY_AND_ASSIGN(SynchronousCompositorBrowserFilter);
 };
