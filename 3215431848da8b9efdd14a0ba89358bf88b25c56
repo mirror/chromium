@@ -94,6 +94,30 @@
       "revId": "3215431848da8b9efdd14a0ba89358bf88b25c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f5ccd5_3e985757",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-01-17T19:31:06Z",
+      "side": 1,
+      "message": "This works, but I think using a single scope here, e.g. \"EventAsyncTargeting\", would be nicer. That way, all these slices be shown under the same track in trace viewer. There is no collision risk since IDs within this scope are incremented everytime. Your decision :)",
+      "parentUuid": "dd71fe32_a9293602",
+      "range": {
+        "startLine": 35,
+        "startChar": 62,
+        "endLine": 35,
+        "endChar": 65
+      },
+      "revId": "3215431848da8b9efdd14a0ba89358bf88b25c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
