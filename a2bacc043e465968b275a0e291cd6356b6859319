@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "629f1573_9a6aa194",
+        "filename": "chrome/android/java/res/xml/single_website_preferences.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "Based on https://chromium-review.googlesource.com/c/chromium/src/+/750200#message-9f31c5a496f95bc01dc1cd5d3d513a8c81065d46\n\nthis is after MIDI, but before Zoom (not present).",
+      "parentUuid": "f7100a50_648ab623",
+      "range": {
+        "startLine": 67,
+        "startChar": 45,
+        "endLine": 67,
+        "endChar": 69
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc956cef_dd85e60b",
         "filename": "chrome/android/java/res/xml/site_settings_preferences.xml",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-17T11:23:33Z",
       "side": 1,
       "message": "At the top of this block there\u0027s a bug reference. Comment 7 of that bug points to a doc. There\u0027s two questions that need to be addressed and the owners of the doc can probably help you find the answers to those questions:\n\n1) Is a separate top-level category warranted for this permissions? Not all permissions should appear in this list (MIDI for example).\n2) If the answer to 1) is yes, then the owners of the doc I mentioned need to update the doc to show where in the list it should appear. Then this file potentially needs to be updated to reflect that decision.",
+      "range": {
+        "startLine": 68,
+        "startChar": 9,
+        "endLine": 68,
+        "endChar": 18
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91e6e01_55c60ef9",
+        "filename": "chrome/android/java/res/xml/site_settings_preferences.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "Based on comments in:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/750200#message-9f31c5a496f95bc01dc1cd5d3d513a8c81065d46\n\nI\u0027ve been trying to place it between MIDI and Zoom, but that\u0027s been challenging when neither are present. Typically, it ends up being after Sound (which isn\u0027t listed in that doc :-( ) and before Storage and USB.\n\nWe\u0027re reaching out to find out if there is a better order for us to be using.",
+      "parentUuid": "fc956cef_dd85e60b",
       "range": {
         "startLine": 68,
         "startChar": 9,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "db2e9b9d_84cb3f2b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/ContentSettingsResources.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d965e4a7_54de7dab",
+      "range": {
+        "startLine": 164,
+        "startChar": 25,
+        "endLine": 164,
+        "endChar": 44
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c60c5979_6d6998ec",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/ContentSettingsResources.java",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d170cf_fb4eafef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/ContentSettingsResources.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c60c5979_6d6998ec",
+      "range": {
+        "startLine": 339,
+        "startChar": 5,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6e919041_35208eac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16606301_c9a7a133",
+      "range": {
+        "startLine": 243,
+        "startChar": 29,
+        "endLine": 243,
+        "endChar": 47
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad646b8f_45cc3d9c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76de702_ae8ac777",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad646b8f_45cc3d9c",
+      "range": {
+        "startLine": 85,
+        "startChar": 31,
+        "endLine": 85,
+        "endChar": 56
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "09c8da48_0dc4923e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53499f61_8522f0e7",
+      "range": {
+        "startLine": 354,
+        "startChar": 19,
+        "endLine": 354,
+        "endChar": 44
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5b16ede_7b317ceb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
         "patchSetId": 4
@@ -183,6 +351,30 @@
       "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77709f7c_294d727a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5b16ede_7b317ceb",
+      "range": {
+        "startLine": 744,
+        "startChar": 17,
+        "endLine": 744,
+        "endChar": 42
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "edf672bf_8e7d4b6d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c1e2a1e_2a36001e",
+      "range": {
+        "startLine": 805,
+        "startChar": 19,
+        "endLine": 805,
+        "endChar": 44
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f9278f4_c6189eb3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
         "patchSetId": 4
@@ -229,6 +445,30 @@
       "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428f6a64_9e5db6d5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f9278f4_c6189eb3",
+      "range": {
+        "startLine": 880,
+        "startChar": 14,
+        "endLine": 880,
+        "endChar": 36
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "6daf9f42_80904077",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsCategory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e97f0d4b_d4a0b698",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 143,
+        "endChar": 9
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c152882_415d573c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsCategory.java",
         "patchSetId": 4
@@ -275,6 +539,30 @@
       "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae490ed0_4f885da4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsCategory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c152882_415d573c",
+      "range": {
+        "startLine": 200,
+        "startChar": 9,
+        "endLine": 200,
+        "endChar": 0
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "212d72b7_ec6a32dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsCategory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1a0c0f4_587e313c",
+      "range": {
+        "startLine": 261,
+        "startChar": 19,
+        "endLine": 261,
+        "endChar": 35
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b932bfbe_9d1787e3",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 4
@@ -312,6 +624,30 @@
       "writtenOn": "2018-01-17T11:23:33Z",
       "side": 1,
       "message": "One of these messages needs to have a \u0027(recommended)\u0027 suffix.",
+      "range": {
+        "startLine": 894,
+        "startChar": 8,
+        "endLine": 894,
+        "endChar": 15
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71b6f94e_665140e0",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "The recommended/default setting for CLIPBOARD_READ is ASK, so it wasn\u0027t clear which one should be (recommended) here. Do we have a precedent for choosing one over the other in that case?",
+      "parentUuid": "b932bfbe_9d1787e3",
       "range": {
         "startLine": 894,
         "startChar": 8,
@@ -338,6 +674,24 @@
       "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4eb0a1_f687f32c",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-17T23:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9301c773_6b0a34c1",
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
