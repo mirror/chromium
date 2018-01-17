@@ -456,6 +456,29 @@ TEST(OptionalTest, ConstructorForwardInitListAndArguments) {
   }
 }
 
+TEST(OptionalTest, ForwardConstructor) {
+  {
+    Optional<double> a(1);
+    EXPECT_TRUE(a.has_value());
+    EXPECT_EQ(1.0, a.value());
+  }
+
+  // Test that default type of 'U' is value_type.
+  {
+    struct TestData {
+      int a;
+      double b;
+      bool c;
+    };
+
+    Optional<TestData> a({1, 2.0, true});
+    EXPECT_TRUE(a.has_value());
+    EXPECT_EQ(1, a->a);
+    EXPECT_EQ(2.0, a->b);
+    EXPECT_TRUE(a->c);
+  }
+}
+
 TEST(OptionalTest, NulloptConstructor) {
   constexpr Optional<int> a(base::nullopt);
   EXPECT_FALSE(a);

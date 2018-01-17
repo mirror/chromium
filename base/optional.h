@@ -347,6 +347,10 @@ struct IsConvertibleFromOptional
               std::is_convertible<Optional<U>&&, T>::value ||
               std::is_convertible<const Optional<U>&&, T>::value> {};
 
+// Forward compatibility for C++20.
+template <typename T>
+using RemoveCvRefT = std::remove_cv_t<std::remove_reference_t<T>>;
+
 }  // namespace internal
 
 // base::Optional is a Chromium version of the C++17 optional class:
@@ -419,12 +423,6 @@ class Optional
   explicit Optional(Optional<U>&& other)
       : internal::OptionalBase<T>(std::move(other)) {}
 
-  constexpr Optional(const T& value)
-      : internal::OptionalBase<T>(in_place, value) {}
-
-  constexpr Optional(T&& value)
-      : internal::OptionalBase<T>(in_place, std::move(value)) {}
-
   template <class... Args>
   constexpr explicit Optional(in_place_t, Args&&... args)
       : internal::OptionalBase<T>(in_place, std::forward<Args>(args)...) {}
@@ -439,6 +437,30 @@ class Optional
                               std::initializer_list<U> il,
                               Args&&... args)
       : internal::OptionalBase<T>(in_place, il, std::forward<Args>(args)...) {}
+
+  // Forward value constructor. Similar to converting constructors,
+  // conditionally explicit.
+  template <
+      typename U = value_type,
+      std::enable_if_t<
+          std::is_constructible<T, U&&>::value &&
+              !std::is_same<internal::RemoveCvRefT<U>, in_place_t>::value &&
+              !std::is_same<internal::RemoveCvRefT<U>, Optional<T>>::value &&
+              std::is_convertible<U&&, T>::value,
+          bool> = false>
+  constexpr Optional(U&& value)
+      : internal::OptionalBase<T>(in_place, std::forward<U>(value)) {}
+
+  template <
+      typename U = value_type,
+      std::enable_if_t<
+          std::is_constructible<T, U&&>::value &&
+              !std::is_same<internal::RemoveCvRefT<U>, in_place_t>::value &&
+              !std::is_same<internal::RemoveCvRefT<U>, Optional<T>>::value &&
+              !std::is_convertible<U&&, T>::value,
+          bool> = false>
+  constexpr explicit Optional(U&& value)
+      : internal::OptionalBase<T>(in_place, std::forward<U>(value)) {}
 
   ~Optional() = default;
 
