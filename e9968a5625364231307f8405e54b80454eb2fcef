@@ -45,6 +45,54 @@
       "revId": "e9968a5625364231307f8405e54b80454eb2fcef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1ff91b_81878686",
+        "filename": "components/policy/core/common/preg_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-17T13:57:57Z",
+      "side": 1,
+      "message": "Looks like StringPiece16 should be available if I\u0027m not mistaken:\nhttps://chromium.googlesource.com/chromium/src/+/ebdcb576bb346af95b8ad219f6250daf63122f98/base/strings/string_split.h\nand\nhttps://chromium.googlesource.com/chromium/src/+/ebdcb576bb346af95b8ad219f6250daf63122f98/base/strings/string_piece.h\nhave it and it\u0027s even used in platform2/arc/obb-mounter/volume.cc",
+      "parentUuid": "485aa8df_d3203d56",
+      "range": {
+        "startLine": 230,
+        "startChar": 19,
+        "endLine": 230,
+        "endChar": 32
+      },
+      "revId": "e9968a5625364231307f8405e54b80454eb2fcef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59d4bf8_6bd8246e",
+        "filename": "components/policy/core/common/preg_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-17T13:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75c33b28_89a3023c",
+      "range": {
+        "startLine": 230,
+        "startChar": 42,
+        "endLine": 230,
+        "endChar": 65
+      },
+      "revId": "e9968a5625364231307f8405e54b80454eb2fcef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
