@@ -235,6 +235,30 @@
       "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f0d25aa_c16bc69b",
+        "filename": "gin/v8_initializer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-17T03:57:52Z",
+      "side": 1,
+      "message": "Yes, it must be done. Filed https://crbug.com/802962",
+      "parentUuid": "8cd2ed9f_b5ccebd4",
+      "range": {
+        "startLine": 308,
+        "startChar": 20,
+        "endLine": 308,
+        "endChar": 41
+      },
+      "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
