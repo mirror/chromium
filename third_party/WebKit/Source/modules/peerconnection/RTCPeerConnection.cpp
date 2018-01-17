@@ -58,6 +58,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/UseCounter.h"
+#include "core/frame/csp/ContentSecurityPolicy.h"
 #include "modules/crypto/CryptoResultImpl.h"
 #include "modules/mediastream/MediaConstraintsImpl.h"
 #include "modules/mediastream/MediaStream.h"
@@ -456,6 +457,15 @@ RTCPeerConnection* RTCPeerConnection::Create(
     const RTCConfiguration& rtc_configuration,
     const Dictionary& media_constraints,
     ExceptionState& exception_state) {
+  // Count number of PeerConnections that could potentially be impacted by CSP
+  if (context) {
+    auto& security_context = context->GetSecurityContext();
+    auto content_security_policy = security_context.GetContentSecurityPolicy();
+    if (content_security_policy && content_security_policy->IsActive()) {
+      UseCounter::Count(context, WebFeature::kRTCPeerConnectionWithActiveCsp);
+    }
+  }
+
   if (media_constraints.IsObject()) {
     UseCounter::Count(context,
                       WebFeature::kRTCPeerConnectionConstructorConstraints);
@@ -1148,6 +1158,7 @@ void RTCPeerConnection::addStream(ScriptState* script_state,
   local_streams_.push_back(stream);
   stream->RegisterObserver(this);
   for (auto& track : stream->getTracks()) {
+    DCHECK(track);
     DCHECK(track->Component());
     tracks_.insert(track->Component(), track);
   }
@@ -1326,6 +1337,7 @@ RTCRtpSender* RTCPeerConnection::addTrack(MediaStreamTrack* track,
   DCHECK(rtp_senders_.find(id) == rtp_senders_.end());
   RTCRtpSender* rtp_sender =
       new RTCRtpSender(this, std::move(web_rtp_sender), track);
+  DCHECK(track);
   tracks_.insert(track->Component(), track);
   rtp_senders_.insert(id, rtp_sender);
   return rtp_sender;
@@ -1403,6 +1415,7 @@ RTCDataChannel* RTCPeerConnection::createDataChannel(
 
 MediaStreamTrack* RTCPeerConnection::GetTrack(
     const WebMediaStreamTrack& web_track) const {
+  DCHECK(tracks_.at(static_cast<MediaStreamComponent*>(web_track)));
   return tracks_.at(static_cast<MediaStreamComponent*>(web_track));
 }
 
@@ -1524,6 +1537,7 @@ void RTCPeerConnection::DidAddRemoteTrack(
         if (!audio_track) {
           audio_track =
               MediaStreamTrack::Create(GetExecutionContext(), audio_web_track);
+          DCHECK(audio_track);
           tracks_.insert(audio_track->Component(), audio_track);
         }
         audio_tracks.push_back(audio_track);
@@ -1538,6 +1552,7 @@ void RTCPeerConnection::DidAddRemoteTrack(
         if (!video_track) {
           video_track =
               MediaStreamTrack::Create(GetExecutionContext(), video_web_track);
+          DCHECK(video_track);
           tracks_.insert(video_track->Component(), video_track);
         }
         video_tracks.push_back(video_track);
