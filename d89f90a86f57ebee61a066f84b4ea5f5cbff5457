@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8fa11c6_f37e0fdd",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-17T21:26:53Z",
+      "side": 1,
+      "message": "I think you can just use:\n\n  ui::Coalesce(event, blink_event-\u003eget());",
+      "revId": "d89f90a86f57ebee61a066f84b4ea5f5cbff5457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda57398_7ea0e0cc",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2393,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-17T21:26:53Z",
+      "side": 1,
+      "message": "Validate before waiting that no event has been dispatched.",
+      "revId": "d89f90a86f57ebee61a066f84b4ea5f5cbff5457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f364dd7_ddeb6868",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2398,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-17T21:26:53Z",
+      "side": 1,
+      "message": "const auto\u0026 gesture_event \u003d ...",
+      "revId": "d89f90a86f57ebee61a066f84b4ea5f5cbff5457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7415073_8d6fe6c0",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2400,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-17T21:26:53Z",
+      "side": 1,
+      "message": "Use absolute values here, e.g.\n  EXPECT_EQ(20,  // wheel_event1.delta_x + wheel_event2.delta_x\n            gesture_event.data.scroll_update.delta_x);",
+      "revId": "d89f90a86f57ebee61a066f84b4ea5f5cbff5457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
