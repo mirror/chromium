@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18f759ae_819ab0b2",
+        "filename": "services/resource_coordinator/public/cpp/tracing/default_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2018-01-17T22:48:50Z",
+      "side": 1,
+      "message": "In the Register method above, we allow the user to choose whether they support explicit clock sync, but here, we have a NOTREACHED() assertion that they don\u0027t support it. \n\nIt\u0027s totally possible that they passed true there, but then forgot to implement this method, in which case this log probably isn\u0027t the best message. Maybe:\n\n\"If this method is getting called, the agent said that it supports explicit clock sync but still needs to override DefaultAgent::RequestClockSyncMarker()\" \n\nor something like that",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 68
+      },
+      "revId": "6ec300f92bcc071d10cb9f5df0613778507e9cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
