@@ -53,6 +53,7 @@ from __future__ import print_function
 import sys
 
 import argparse
+import datetime
 import json
 import os
 import subprocess
@@ -107,6 +108,9 @@ GTEST_TARGET_NAMES = None
 
 # The default name of the html coverage report for a directory.
 DIRECTORY_COVERAGE_HTML_REPORT_NAME = os.extsep.join(['report', 'html'])
+
+# Is the script running in verbose mode, determined by argument flags.
+IS_VERBOSE_MODE = False
 
 
 class _CoverageSummary(object):
@@ -357,6 +361,11 @@ def _GenerateLineByLineFileCoverageInHtml(binary_paths, profdata_file_path,
   # [[-object BIN]] [SOURCES]
   # NOTE: For object files, the first one is specified as a positional argument,
   # and the rest are specified as keyword argument.
+  if IS_VERBOSE_MODE:
+    print('[Debug] Generating per file line by line coverage reports using '
+          '"llvm-cov show" command')
+    show_command_start_time = datetime.datetime.now()
+
   subprocess_cmd = [
       LLVM_COV_PATH, 'show', '-format=html',
       '-output-dir={}'.format(OUTPUT_DIR),
@@ -365,8 +374,13 @@ def _GenerateLineByLineFileCoverageInHtml(binary_paths, profdata_file_path,
   subprocess_cmd.extend(
       ['-object=' + binary_path for binary_path in binary_paths[1:]])
   subprocess_cmd.extend(filters)
-
   subprocess.check_call(subprocess_cmd)
+
+  if IS_VERBOSE_MODE:
+    time_diff_in_seconds = (
+        datetime.datetime.now() - show_command_start_time).total_seconds()
+    print('[Debug] "llvm-cov show" command took %f seconds' %
+          time_diff_in_seconds)
 
 
 def _GeneratePerDirectoryCoverageInHtml(binary_paths, profdata_file_path,
@@ -377,6 +391,10 @@ def _GeneratePerDirectoryCoverageInHtml(binary_paths, profdata_file_path,
 
   per_directory_coverage_summary = defaultdict(
       lambda: _CoverageSummary(0, 0, 0, 0, 0, 0))
+
+  if IS_VERBOSE_MODE:
+    print('[Debug] Calculating and writing per-directory coverage reports')
+    directory_coverage_start_time = datetime.datetime.now()
 
   # Calculate per directory code coverage summaries.
   for file_path in per_file_coverage_summary:
@@ -392,6 +410,12 @@ def _GeneratePerDirectoryCoverageInHtml(binary_paths, profdata_file_path,
   for dir_path in per_directory_coverage_summary:
     _GenerateCoverageInHtmlForDirectory(
         dir_path, per_directory_coverage_summary, per_file_coverage_summary)
+
+  if IS_VERBOSE_MODE:
+    time_diff_in_seconds = (datetime.datetime.now() -
+                            directory_coverage_start_time).total_seconds()
+    print('[Debug] Calculate and write per-directory coverage reports took %f '
+          'seconds' % time_diff_in_seconds)
 
 
 def _GenerateCoverageInHtmlForDirectory(
@@ -496,7 +520,9 @@ def _BuildTargets(targets, jobs_count):
     build_args = _ParseArgsGnFile()
     return 'use_goma' in build_args and build_args['use_goma'] == 'true'
 
-  print('Building %s' % str(targets))
+  print('\nBuilding %s' % str(targets))
+  if IS_VERBOSE_MODE:
+    build_start_time = datetime.datetime.now()
 
   if jobs_count is None and _IsGomaConfigured():
     jobs_count = DEFAULT_GOMA_JOBS
@@ -507,6 +533,11 @@ def _BuildTargets(targets, jobs_count):
 
   subprocess_cmd.extend(targets)
   subprocess.check_call(subprocess_cmd)
+
+  if IS_VERBOSE_MODE:
+    time_diff_in_seconds = (
+        datetime.datetime.now() - build_start_time).total_seconds()
+    print('[Debug] Build test targets took %f seconds' % time_diff_in_seconds)
 
 
 def _GetProfileRawDataPathsByExecutingCommands(targets, commands):
@@ -524,9 +555,18 @@ def _GetProfileRawDataPathsByExecutingCommands(targets, commands):
     if file_or_dir.endswith(PROFRAW_FILE_EXTENSION):
       os.remove(os.path.join(OUTPUT_DIR, file_or_dir))
 
+  if IS_VERBOSE_MODE:
+    print('[Debug] Executing the commands')
+    run_commands_start_time = datetime.datetime.now()
+
   # Run all test targets to generate profraw data files.
   for target, command in zip(targets, commands):
     _ExecuteCommand(target, command)
+
+  if IS_VERBOSE_MODE:
+    time_diff_in_seconds = (
+        datetime.datetime.now() - run_commands_start_time).total_seconds()
+    print('[Debug] Execute the commands took %f seconds' % time_diff_in_seconds)
 
   profraw_file_paths = []
   for file_or_dir in os.listdir(OUTPUT_DIR):
@@ -593,9 +633,12 @@ def _CreateCoverageProfileDataFromProfRawData(profraw_file_paths):
   Raises:
     CalledProcessError: An error occurred merging profraw data files.
   """
-  print('Creating the profile data file')
+  print('\nCreating the coverage profile data file')
 
   profdata_file_path = os.path.join(OUTPUT_DIR, PROFDATA_FILE_NAME)
+  if IS_VERBOSE_MODE:
+    print('[Debug] Merging profraw files to create profdata file')
+    merge_profdata_start_time = datetime.datetime.now()
 
   try:
     subprocess_cmd = [
@@ -607,6 +650,12 @@ def _CreateCoverageProfileDataFromProfRawData(profraw_file_paths):
     print('Failed to merge profraw files to create profdata file')
     raise error
 
+  if IS_VERBOSE_MODE:
+    time_diff_in_seconds = (
+        datetime.datetime.now() - merge_profdata_start_time).total_seconds()
+    print('[Debug] Merge profraw files took %f seconds' % time_diff_in_seconds)
+
+  print('Code coverage profile data is created as: %s' % profdata_file_path)
   return profdata_file_path
 
 
@@ -616,6 +665,11 @@ def _GeneratePerFileCoverageSummary(binary_paths, profdata_file_path, filters):
   # [[-object BIN]] [SOURCES].
   # NOTE: For object files, the first one is specified as a positional argument,
   # and the rest are specified as keyword argument.
+  if IS_VERBOSE_MODE:
+    print('[Debug] Generating per-file code coverage summary using "llvm-cov '
+          'export -summary-only" command')
+    coverage_summary_start_time = datetime.datetime.now()
+
   subprocess_cmd = [
       LLVM_COV_PATH, 'export', '-summary-only',
       '-instr-profile=' + profdata_file_path, binary_paths[0]
@@ -651,6 +705,12 @@ def _GeneratePerFileCoverageSummary(binary_paths, profdata_file_path, filters):
         functions_covered=summary['functions']['covered'],
         lines_total=summary['lines']['count'],
         lines_covered=summary['lines']['covered'])
+
+  if IS_VERBOSE_MODE:
+    time_diff_in_seconds = (
+        datetime.datetime.now() - coverage_summary_start_time).total_seconds()
+    print('[Debug] Generate per-file code coverage summary took %f seconds' %
+          time_diff_in_seconds)
 
   return per_file_coverage_summary
 
@@ -782,6 +842,12 @@ def _ParseCommandArguments():
       '\'ninja -h\' for more details.')
 
   arg_parser.add_argument(
+      '-v',
+      '--verbose',
+      action='store_true',
+      help='Prints additional output for diagnostics.')
+
+  arg_parser.add_argument(
       'targets', nargs='+', help='The names of the test targets to run.')
 
   args = arg_parser.parse_args()
@@ -802,6 +868,8 @@ def Main():
   BUILD_DIR = args.build_dir
   global OUTPUT_DIR
   OUTPUT_DIR = args.output_dir
+  global IS_VERBOSE_MODE
+  IS_VERBOSE_MODE = args.verbose
 
   assert len(args.targets) == len(args.command), ('Number of targets must be '
                                                   'equal to the number of test '
@@ -823,7 +891,7 @@ def Main():
       args.targets, args.command, args.jobs)
   binary_paths = [_GetBinaryPath(command) for command in args.command]
 
-  print('Generating code coverage report in html (this can take a while '
+  print('\nGenerating code coverage report in html (this can take a while '
         'depending on size of target!)')
   _GenerateLineByLineFileCoverageInHtml(binary_paths, profdata_file_path,
                                         absolute_filter_paths)
@@ -836,7 +904,6 @@ def Main():
 
   html_index_file_path = 'file://' + os.path.abspath(
       os.path.join(OUTPUT_DIR, 'index.html'))
-  print('\nCode coverage profile data is created as: %s' % profdata_file_path)
   print('Index file for html report is generated as: %s' % html_index_file_path)
 
 
