@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "170fa157_0729e281",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-17T16:07:37Z",
+      "side": 1,
+      "message": "why is this check needed? to protect against clients using serials they have not received? I think that\u0027s either something we should allow or reject early at the protocol level with an error.",
+      "range": {
+        "startLine": 10,
+        "startChar": 35,
+        "endLine": 10,
+        "endChar": 68
+      },
+      "revId": "a64d94ef95d4dace945ef9b16442db70ec46a8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b36f63_81998719",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-17T16:07:37Z",
+      "side": 1,
+      "message": "hm, this seems like a hack. delegate functions that can generate serials that are needed for validation later should return the serial (E.g. the ConfigureCallback in shell surface). what are the delegate functions that can generate a serial that we want to track using this?",
+      "revId": "a64d94ef95d4dace945ef9b16442db70ec46a8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38792393_6bbaff66",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-17T16:07:37Z",
+      "side": 1,
+      "message": "I think this log is inappropriate as serial being old is a perfectly valid situation that the client can\u0027t protect against. maybe add a trace event if this is something that is useful to track for debugging.",
+      "revId": "a64d94ef95d4dace945ef9b16442db70ec46a8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf511b6_1336e6ab",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-17T16:07:37Z",
+      "side": 1,
+      "message": "nit: {} are not needed here",
+      "range": {
+        "startLine": 72,
+        "startChar": 16,
+        "endLine": 72,
+        "endChar": 17
+      },
+      "revId": "a64d94ef95d4dace945ef9b16442db70ec46a8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e03cfa_15984e75",
+        "filename": "components/exo/seat.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-17T16:07:37Z",
+      "side": 1,
+      "message": "hm, previously, we did not make the assumption that serials are global like the Seat instance. Looks like that is changing changing now? Maybe that\u0027s fine and necessary but we should probably document this here and in DataDevice interface.",
+      "range": {
+        "startLine": 56,
+        "startChar": 29,
+        "endLine": 56,
+        "endChar": 35
+      },
+      "revId": "a64d94ef95d4dace945ef9b16442db70ec46a8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13863d5_80a1cd13",
+        "filename": "components/exo/seat.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-17T16:07:37Z",
+      "side": 1,
+      "message": "this seems inappropriate. client serial is an implementation detail of the delegates and should ideally not leak into the exo code here. can we avoid this somehow?",
+      "range": {
+        "startLine": 57,
+        "startChar": 29,
+        "endLine": 57,
+        "endChar": 42
+      },
+      "revId": "a64d94ef95d4dace945ef9b16442db70ec46a8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696888f1_1a10dc09",
+        "filename": "components/exo/seat.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-17T16:07:37Z",
+      "side": 1,
+      "message": "selection_source_serial_? also, can you explain in the comment that this is the serial of the input event that caused selection source to be set?",
+      "range": {
+        "startLine": 83,
+        "startChar": 11,
+        "endLine": 83,
+        "endChar": 27
+      },
+      "revId": "a64d94ef95d4dace945ef9b16442db70ec46a8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
