@@ -169,6 +169,8 @@ class ComputedStyleUtils {
   static CSSValue* ValueForPageBreakInside(EBreakInside);
   static CSSValue* ValueForWebkitColumnBreakInside(EBreakInside);
   static bool WidthOrHeightShouldReturnUsedValue(const LayoutObject*);
+  static CSSValue* ScrollCustomizationFlagsToCSSValue(
+      ScrollCustomization::ScrollDirection);
 };
 
 }  // namespace blink
