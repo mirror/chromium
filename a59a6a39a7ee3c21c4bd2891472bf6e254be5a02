@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2ac84bc_64720121",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3003,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T00:42:19Z",
+      "side": 1,
+      "message": "Maybe we should DCHECK(!REF::RootLayerScrollingEnabled); so that we remember to remove this when RLS is shipped? Or a TODO linked to the RLS bug?",
+      "range": {
+        "startLine": 3003,
+        "startChar": 4,
+        "endLine": 3003,
+        "endChar": 74
+      },
+      "revId": "a59a6a39a7ee3c21c4bd2891472bf6e254be5a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
