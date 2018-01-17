@@ -621,22 +621,6 @@ TEST_F(MojoAsyncResourceHandlerTest,
   EXPECT_EQ(MockResourceLoader::Status::IDLE, mock_loader_->status());
 }
 
-TEST_F(MojoAsyncResourceHandlerTest,
-       IOBufferFromOnWillReadShouldRemainValidEvenIfHandlerIsGone) {
-  ASSERT_TRUE(CallOnWillStartAndOnResponseStarted());
-  ASSERT_EQ(MockResourceLoader::Status::IDLE, mock_loader_->OnWillRead());
-  // The io_buffer size that the mime sniffer requires implicitly.
-  ASSERT_GE(mock_loader_->io_buffer_size(),
-            kSizeMimeSnifferRequiresForFirstOnWillRead);
-
-  handler_ = nullptr;
-  url_loader_client_.Unbind();
-  base::RunLoop().RunUntilIdle();
-
-  // Hopefully ASAN checks this operation's validity.
-  mock_loader_->io_buffer()->data()[0] = 'A';
-}
-
 TEST_F(MojoAsyncResourceHandlerTest, OnResponseCompleted) {
   ASSERT_TRUE(CallOnWillStartAndOnResponseStarted());
 

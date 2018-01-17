@@ -47,24 +47,6 @@ void NotReached(mojom::URLLoaderRequest mojo_request,
 
 }  // namespace
 
-// This class is for sharing the ownership of a ScopedDataPipeProducerHandle
-// between WriterIOBuffer and MojoAsyncResourceHandler.
-class MojoAsyncResourceHandler::SharedWriter final
-    : public base::RefCountedThreadSafe<SharedWriter> {
- public:
-  explicit SharedWriter(mojo::ScopedDataPipeProducerHandle writer)
-      : writer_(std::move(writer)) {}
-  mojo::DataPipeProducerHandle writer() { return writer_.get(); }
-
- private:
-  friend class base::RefCountedThreadSafe<SharedWriter>;
-  ~SharedWriter() {}
-
-  const mojo::ScopedDataPipeProducerHandle writer_;
-
-  DISALLOW_COPY_AND_ASSIGN(SharedWriter);
-};
-
 // This class is a IOBuffer subclass for data gotten from a
 // ScopedDataPipeProducerHandle.
 class MojoAsyncResourceHandler::WriterIOBuffer final
@@ -76,18 +58,14 @@ class MojoAsyncResourceHandler::WriterIOBuffer final
   // hold:
   //  1. |data| is not invalidated via EndWriteDataRaw.
   //  2. |this| instance is alive.
-  WriterIOBuffer(scoped_refptr<SharedWriter> writer, void* data, size_t size)
-      : net::IOBufferWithSize(static_cast<char*>(data), size),
-        writer_(std::move(writer)) {}
+  WriterIOBuffer(void* data, size_t size)
+      : net::IOBufferWithSize(static_cast<char*>(data), size) {}
 
  private:
   ~WriterIOBuffer() override {
     // Avoid deleting |data_| in the IOBuffer destructor.
     data_ = nullptr;
   }
-
-  // This member is for keeping the writer alive.
-  scoped_refptr<SharedWriter> writer_;
 
   DISALLOW_COPY_AND_ASSIGN(WriterIOBuffer);
 };
@@ -147,7 +125,7 @@ void MojoAsyncResourceHandler::OnRequestRedirected(
   // Unlike OnResponseStarted, OnRequestRedirected will NOT be preceded by
   // OnWillRead.
   DCHECK(!has_controller());
-  DCHECK(!shared_writer_);
+  DCHECK(!writer_->is_valid());
 
   request()->LogBlockedBy("MojoAsyncResourceHandler");
   HoldController(std::move(controller));
@@ -245,7 +223,7 @@ void MojoAsyncResourceHandler::OnWillRead(
   }
 
   bool first_call = false;
-  if (!shared_writer_) {
+  if (!writer_->is_valid()) {
     first_call = true;
     MojoCreateDataPipeOptions options;
     options.struct_size = sizeof(MojoCreateDataPipeOptions);
@@ -264,8 +242,8 @@ void MojoAsyncResourceHandler::OnWillRead(
     DCHECK(consumer.is_valid());
 
     response_body_consumer_handle_ = std::move(consumer);
-    shared_writer_ = new SharedWriter(std::move(producer));
-    handle_watcher_.Watch(shared_writer_->writer(), MOJO_HANDLE_SIGNAL_WRITABLE,
+    writer_ = std::move(producer);
+    handle_watcher_.Watch(writer_.get(), MOJO_HANDLE_SIGNAL_WRITABLE,
                           base::Bind(&MojoAsyncResourceHandler::OnWritable,
                                      base::Unretained(this)));
     handle_watcher_.ArmOrNotify();
@@ -419,8 +397,8 @@ void MojoAsyncResourceHandler::SetAllocationSizeForTesting(size_t size) {
 
 MojoResult MojoAsyncResourceHandler::BeginWrite(void** data,
                                                 uint32_t* available) {
-  MojoResult result = shared_writer_->writer().BeginWriteData(
-      data, available, MOJO_WRITE_DATA_FLAG_NONE);
+  MojoResult result =
+      writer_->BeginWriteData(data, available, MOJO_WRITE_DATA_FLAG_NONE);
   if (result == MOJO_RESULT_OK)
     *available = std::min(*available, static_cast<uint32_t>(kMaxChunkSize));
   else if (result == MOJO_RESULT_SHOULD_WAIT)
@@ -429,7 +407,7 @@ MojoResult MojoAsyncResourceHandler::BeginWrite(void** data,
 }
 
 MojoResult MojoAsyncResourceHandler::EndWrite(uint32_t written) {
-  MojoResult result = shared_writer_->writer().EndWriteData(written);
+  MojoResult result = writer_->EndWriteData(written);
   if (result == MOJO_RESULT_OK) {
     total_written_bytes_ += written;
     handle_watcher_.ArmOrNotify();
@@ -453,7 +431,7 @@ void MojoAsyncResourceHandler::OnResponseCompleted(
     upload_progress_tracker_ = nullptr;
   }
 
-  shared_writer_ = nullptr;
+  writer_.reset();
   buffer_ = nullptr;
   handle_watcher_.Cancel();
 
@@ -527,7 +505,7 @@ bool MojoAsyncResourceHandler::AllocateWriterIOBuffer(
   if (result != MOJO_RESULT_OK)
     return false;
   DCHECK_GT(available, 0u);
-  *buf = new WriterIOBuffer(shared_writer_, data, available);
+  *buf = new WriterIOBuffer(static_cast<char*>(data), size_t(available));
   return true;
 }
 

@@ -98,14 +98,12 @@ class CONTENT_EXPORT MojoAsyncResourceHandler : public ResourceHandler,
   virtual net::IOBufferWithSize* GetResponseMetadata(net::URLRequest* request);
 
  private:
-  class SharedWriter;
   class WriterIOBuffer;
-
-  // This funcion copies data stored in |buffer_| to |shared_writer_| and
-  // resets |buffer_| to a WriterIOBuffer when all bytes are copied. Returns
+  // This function copies data stored in |buffer_| to the |datapipe| and
+  // resets |buffer_| to a IOBuffer when all bytes are copied. Returns
   // true when done successfully.
   bool CopyReadDataToDataPipe(bool* defer);
-  // Allocates a WriterIOBuffer and set it to |*buf|. Returns true when done
+  // Allocates a IOBufferWithSize and set it to |*buf|. Returns true when done
   // successfully.
   bool AllocateWriterIOBuffer(scoped_refptr<net::IOBufferWithSize>* buf,
                               bool* defer);
@@ -159,12 +157,13 @@ class CONTENT_EXPORT MojoAsyncResourceHandler : public ResourceHandler,
   scoped_refptr<net::IOBufferWithSize> buffer_;
   size_t buffer_offset_ = 0;
   size_t buffer_bytes_read_ = 0;
-  scoped_refptr<SharedWriter> shared_writer_;
   mojo::ScopedDataPipeConsumerHandle response_body_consumer_handle_;
 
   std::unique_ptr<UploadProgressTracker> upload_progress_tracker_;
 
+  mojo::ScopedDataPipeProducerHandle writer_;
   base::WeakPtrFactory<MojoAsyncResourceHandler> weak_factory_;
+
   DISALLOW_COPY_AND_ASSIGN(MojoAsyncResourceHandler);
 };
 
