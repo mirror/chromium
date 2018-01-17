@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e169d417_e1ccd2c3",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-17T22:58:26Z",
+      "side": 1,
+      "message": "Yes. I was trying to avoid knowing to much about the internals here but my code doesn\u0027t work when the delegate gets swapped back.",
+      "parentUuid": "3301bc9f_4be0ed06",
+      "range": {
+        "startLine": 363,
+        "startChar": 27,
+        "endLine": 363,
+        "endChar": 49
+      },
+      "revId": "40ad696044e890e606577de9152e144cfa96bf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c77ac231_f3aa9fbb",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_drag_controller.mm",
         "patchSetId": 10
@@ -39,6 +63,24 @@
       "revId": "40ad696044e890e606577de9152e144cfa96bf64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d4ec360_66f635b9",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_drag_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-17T22:58:26Z",
+      "side": 1,
+      "message": "Ack - not sure why that happened.",
+      "parentUuid": "c77ac231_f3aa9fbb",
+      "revId": "40ad696044e890e606577de9152e144cfa96bf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
