@@ -22,6 +22,30 @@
       "revId": "47d6d4330ee2cfceffe3aa42894ec6aaba47cb0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad4aa99_0e3ffdca",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2018-01-17T15:26:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "208a9be7_5cc82fdc",
+      "range": {
+        "startLine": 194,
+        "startChar": 16,
+        "endLine": 194,
+        "endChar": 27
+      },
+      "revId": "47d6d4330ee2cfceffe3aa42894ec6aaba47cb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
