@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4da9c8fd_18b1d330",
+        "filename": "content/browser/net/accept_header_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-17T18:09:51Z",
+      "side": 1,
+      "message": "I\u0027ll do this in a followup to reuse the try runs :)",
+      "parentUuid": "078221f9_a5501e1b",
+      "revId": "daa2833942c8aed7a26efe1aeefe60de783ca976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5592e51a_3468ba37",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-17T17:44:00Z",
       "side": 1,
       "message": "Is this just temporary?\n\nI\u0027m assuming it corresponds 1:1 to the resource_type field given by the URLRequest for a CreateLoaderAndStart call. It seems odd to have to network service plumb data from a client and back to the same client if it has no net effect on service behavior.",
+      "revId": "daa2833942c8aed7a26efe1aeefe60de783ca976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82175581_368831a2",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-17T18:09:51Z",
+      "side": 1,
+      "message": "\u003e Is this just temporary?\n\nNo, at least for a while until there\u0027s more context in teh NetworkServiceClient pipe. Currently it\u0027s global but it\u0027ll probably be per frame later.\n\n\u003e \n\u003e I\u0027m assuming it corresponds 1:1 to the resource_type field given by the URLRequest for a CreateLoaderAndStart call.\n\nCorrect\n\n\u003e It seems odd to have to network service plumb data from a client and back to the same client if it has no net effect on service behavior.\n\nNetworkServiceClient is one global interface from network process to browser process. The resource_type came from the renderer for subresources.",
+      "parentUuid": "5592e51a_3468ba37",
       "revId": "daa2833942c8aed7a26efe1aeefe60de783ca976",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
