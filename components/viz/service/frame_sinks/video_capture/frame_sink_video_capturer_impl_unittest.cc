@@ -109,7 +109,7 @@ class MockConsumer : public mojom::FrameSinkVideoConsumer {
       const gfx::Rect& update_rect,
       const gfx::Rect& content_rect,
       mojom::FrameSinkVideoConsumerFrameCallbacksPtr callbacks) final {
-    ASSERT_TRUE(buffer.is_valid());
+    ASSERT_TRUE(buffer);
     const auto required_bytes_to_hold_planes =
         static_cast<uint32_t>(info->coded_size.GetArea() * 3 / 2);
     ASSERT_LE(required_bytes_to_hold_planes, buffer_size);
