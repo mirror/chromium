@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2026b0de_e15878c7",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 9260,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-17T13:40:11Z",
+      "side": 1,
+      "message": "We decided to reuse the Android strin IDS_MANAGE_PASSWORDS_TEXT \"View and manage saved passwords at...\"",
+      "range": {
+        "startLine": 9258,
+        "startChar": 6,
+        "endLine": 9260,
+        "endChar": 16
+      },
+      "revId": "2b53fb16567180da20417857ce0d735bca8da780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
