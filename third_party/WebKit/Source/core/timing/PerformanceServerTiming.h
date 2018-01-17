@@ -21,15 +21,9 @@ class CORE_EXPORT PerformanceServerTiming final : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  enum class ShouldAllowTimingDetails {
-    Yes,
-    No,
-  };
-
   PerformanceServerTiming(const String& name,
                           double duration,
-                          const String& description,
-                          ShouldAllowTimingDetails);
+                          const String& description);
   ~PerformanceServerTiming();
 
   String name() const;
@@ -37,8 +31,7 @@ class CORE_EXPORT PerformanceServerTiming final : public ScriptWrappable {
   String description() const;
 
   static PerformanceServerTimingVector ParseServerTiming(
-      const ResourceTimingInfo&,
-      ShouldAllowTimingDetails);
+      const ResourceTimingInfo&);
 
   ScriptValue toJSONForBinding(ScriptState*) const;
 
@@ -46,7 +39,6 @@ class CORE_EXPORT PerformanceServerTiming final : public ScriptWrappable {
   const String name_;
   double duration_;
   const String description_;
-  ShouldAllowTimingDetails shouldAllowTimingDetails_;
 };
 
 }  // namespace blink

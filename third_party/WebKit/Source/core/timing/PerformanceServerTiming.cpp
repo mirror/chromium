@@ -10,15 +10,10 @@
 
 namespace blink {
 
-PerformanceServerTiming::PerformanceServerTiming(
-    const String& name,
-    double duration,
-    const String& description,
-    ShouldAllowTimingDetails shouldAllowTimingDetails)
-    : name_(name),
-      duration_(duration),
-      description_(description),
-      shouldAllowTimingDetails_(shouldAllowTimingDetails) {}
+PerformanceServerTiming::PerformanceServerTiming(const String& name,
+                                                 double duration,
+                                                 const String& description)
+    : name_(name), duration_(duration), description_(description) {}
 
 PerformanceServerTiming::~PerformanceServerTiming() = default;
 
@@ -27,14 +22,11 @@ String PerformanceServerTiming::name() const {
 }
 
 double PerformanceServerTiming::duration() const {
-  return shouldAllowTimingDetails_ == ShouldAllowTimingDetails::Yes ? duration_
-                                                                    : 0.0;
+  return duration_;
 }
 
 String PerformanceServerTiming::description() const {
-  return shouldAllowTimingDetails_ == ShouldAllowTimingDetails::Yes
-             ? description_
-             : "";
+  return description_;
 }
 
 ScriptValue PerformanceServerTiming::toJSONForBinding(
@@ -47,8 +39,7 @@ ScriptValue PerformanceServerTiming::toJSONForBinding(
 }
 
 PerformanceServerTimingVector PerformanceServerTiming::ParseServerTiming(
-    const ResourceTimingInfo& info,
-    ShouldAllowTimingDetails shouldAllowTimingDetails) {
+    const ResourceTimingInfo& info) {
   PerformanceServerTimingVector entries;
   if (RuntimeEnabledFeatures::ServerTimingEnabled()) {
     const ResourceResponse& response = info.FinalResponse();
@@ -56,8 +47,7 @@ PerformanceServerTimingVector PerformanceServerTiming::ParseServerTiming(
         response.HttpHeaderField(HTTPNames::Server_Timing));
     for (const auto& header : *headers) {
       entries.push_back(new PerformanceServerTiming(
-          header->Name(), header->Duration(), header->Description(),
-          shouldAllowTimingDetails));
+          header->Name(), header->Duration(), header->Description()));
     }
   }
   return entries;

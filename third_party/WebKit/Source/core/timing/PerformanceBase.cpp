@@ -334,13 +334,12 @@ void PerformanceBase::AddResourceTiming(const ResourceTimingInfo& info) {
                              info.OriginalTimingAllowOrigin(), context);
   double start_time = info.InitialTime();
 
-  PerformanceServerTimingVector serverTiming =
-      PerformanceServerTiming::ParseServerTiming(
-          info, allow_timing_details
-                    ? PerformanceServerTiming::ShouldAllowTimingDetails::Yes
-                    : PerformanceServerTiming::ShouldAllowTimingDetails::No);
-  if (serverTiming.size()) {
-    UseCounter::Count(context, WebFeature::kPerformanceServerTiming);
+  PerformanceServerTimingVector serverTiming;
+  if (allow_timing_details) {
+    serverTiming = PerformanceServerTiming::ParseServerTiming(info);
+    if (serverTiming.size()) {
+      UseCounter::Count(context, WebFeature::kPerformanceServerTiming);
+    }
   }
 
   if (info.RedirectChain().IsEmpty()) {
