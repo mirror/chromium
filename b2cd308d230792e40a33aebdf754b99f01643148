@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19df1e74_0cf59540",
+        "filename": "content/public/common/shared_url_loader_factory.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-17T01:27:52Z",
+      "side": 1,
+      "message": "nit: why is this in a separate struct instead of passing below, in case we keep adding more options? if so, did you consider default parameters instead (for easier typing at callsites)?",
+      "revId": "b2cd308d230792e40a33aebdf754b99f01643148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
