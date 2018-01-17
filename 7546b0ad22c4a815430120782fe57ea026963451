@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee8a44ef_d7a5f31b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-17T16:14:06Z",
+      "side": 1,
+      "message": "Can you file a bug for this and link it with Bug: \u003c#\u003e",
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b5184b_60cd3be0",
+        "filename": "chrome/browser/component_updater/subresource_filter_component_installer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-17T16:14:06Z",
+      "side": 1,
+      "message": "For tests, let\u0027s try to have two separate task runners too.",
+      "range": {
+        "startLine": 47,
+        "startChar": 43,
+        "endLine": 47,
+        "endChar": 54
+      },
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80f350c_ad7279b6",
+        "filename": "chrome/browser/component_updater/subresource_filter_component_installer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-17T16:14:06Z",
+      "side": 1,
+      "message": "Does this need to be updated?",
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e81c8c9_bcbdef06",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_test_harness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-17T16:14:06Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 39
+      },
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad96364_483ae625",
+        "filename": "components/subresource_filter/core/browser/ruleset_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-17T16:14:06Z",
+      "side": 1,
+      "message": "Would you verify that there is a test which exercises this bail-out codepath? If there isn\u0027t one, would you write one?",
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf1f415_304ccd40",
+        "filename": "components/subresource_filter/core/browser/ruleset_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-17T16:14:06Z",
+      "side": 1,
+      "message": "nit: prefer base::MakeRefCounted",
+      "range": {
+        "startLine": 148,
+        "startChar": 32,
+        "endLine": 148,
+        "endChar": 62
+      },
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b597c1_66f6f10f",
+        "filename": "components/subresource_filter/core/browser/ruleset_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-17T16:14:06Z",
+      "side": 1,
+      "message": "Why does this one also need to change?",
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da96c117_c6041682",
+        "filename": "components/subresource_filter/core/browser/ruleset_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-17T16:14:06Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18577ed0_ab44f827",
+        "filename": "components/subresource_filter/core/browser/ruleset_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-17T16:14:06Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
