@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a04587ed_1afd42d9",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T18:23:04Z",
+      "side": 1,
+      "message": "Done. Talked offline. The main reason that I did this is our embedder (in this case, ppapi/api/ppb_tcp_socket.idl) exposes socket Bind() as an API. If we get rid of this intermediate interface, we will need to change embedder\u0027s code to cache any Bind() before Connect()/Listen().",
+      "parentUuid": "9ab948e8_ab17db46",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b290fcb_f04f77b1",
         "filename": "services/network/public/interfaces/tcp_socket.mojom",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f3c1f7_6d8c7a29",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T18:23:04Z",
+      "side": 1,
+      "message": "Ack. No longer relevant. I have removed this intermediate interface.",
+      "parentUuid": "3b290fcb_f04f77b1",
+      "range": {
+        "startLine": 23,
+        "startChar": 32,
+        "endLine": 23,
+        "endChar": 33
+      },
+      "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d16d09b3_672cbe26",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T18:23:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dc2f761_73816337",
+      "range": {
+        "startLine": 31,
+        "startChar": 24,
+        "endLine": 31,
+        "endChar": 29
+      },
+      "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f6f7c84_7d453153",
         "filename": "services/network/public/interfaces/tcp_socket.mojom",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce9f561_d8b26eff",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T18:23:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f6f7c84_7d453153",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 34
+      },
+      "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "264b5c1b_d9360bef",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T18:23:04Z",
+      "side": 1,
+      "message": "Ack. I removed this interface. |result| is documented on the top-level interface (NetworkContext).",
+      "parentUuid": "5a2d12d5_40a8b612",
+      "range": {
+        "startLine": 36,
+        "startChar": 21,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4fd731e_e3ef01d3",
         "filename": "services/network/public/interfaces/tcp_socket.mojom",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "fe6474e6_98fd8747",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T18:23:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4fd731e_e3ef01d3",
+      "range": {
+        "startLine": 51,
+        "startChar": 23,
+        "endLine": 51,
+        "endChar": 27
+      },
+      "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4a1f8c_06d7916f",
         "filename": "services/network/public/interfaces/tcp_socket.mojom",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d827a82f_6a088ff3",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T18:23:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4a1f8c_06d7916f",
+      "range": {
+        "startLine": 53,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
