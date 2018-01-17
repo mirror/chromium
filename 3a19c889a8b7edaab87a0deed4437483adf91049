@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "58adab77_edb805a6",
+        "filename": "content/common/associated_interface_provider_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-17T15:48:36Z",
+      "side": 1,
+      "message": "how can this be null?",
+      "revId": "3a19c889a8b7edaab87a0deed4437483adf91049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3e8f49_c45e067d",
+        "filename": "content/shell/test_runner/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-17T15:48:36Z",
+      "side": 1,
+      "message": "Jochen: it seems this code was careful not to have content/renderer includes, so I want to get your thoughts on this. Is this a legacy of when we used to support running in Mandoline? If so, is this fine with you?",
+      "revId": "3a19c889a8b7edaab87a0deed4437483adf91049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "888c3d51_f88e8f82",
         "filename": "third_party/WebKit/Source/modules/screen_orientation/ScreenOrientationControllerImpl.h",
         "patchSetId": 7
