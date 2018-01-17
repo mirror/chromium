@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96049a47_16d57d21",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:24:03Z",
+      "side": 1,
+      "message": "nit: s//Check/ to indicate that it will throw an exception and return false on error, instead of crashing.",
+      "range": {
+        "startLine": 153,
+        "startChar": 5,
+        "endLine": 153,
+        "endChar": 11
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6db788_f0a90940",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:24:03Z",
+      "side": 1,
+      "message": "nit: Either remove comment entirely, or just reference which step of the spec this implements.",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 25
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d053ae_88ce24d5",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:24:03Z",
+      "side": 1,
+      "message": "nit: Any chance this could be formatted more nicely? E.g. by preparing the error string in a named local variable first, or by wrapping the string literals differently?",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 69
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626dad49_f494e339",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:24:03Z",
+      "side": 1,
+      "message": "Do we actually need this check? `about:` converted to an origin in isolation (with no inherited origin from the document responsible for navigating it) should be considered unique, and `file:` should not be considered secure.\n\nGiven that the spec does not prescribe these steps explicitly, I\u0027d make this SECURITY_DCHECKS.",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 47
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe89713a_1e88e775",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:24:03Z",
+      "side": 1,
+      "message": "nit: and is",
+      "range": {
+        "startLine": 172,
+        "startChar": 72,
+        "endLine": 172,
+        "endChar": 75
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238cfd43_0c90d3d0",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:24:03Z",
+      "side": 1,
+      "message": "nit: Same URL as above.",
+      "range": {
+        "startLine": 181,
+        "startChar": 5,
+        "endLine": 181,
+        "endChar": 68
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53141f4a_917e4d87",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:24:03Z",
+      "side": 1,
+      "message": "Can you please add a TODO to simplify this and avoid constructing an OriginAccessEntry only for being able to call HostIsIPAddress() on it?",
+      "range": {
+        "startLine": 183,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 69
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e117abe3_cd5b6186",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T12:24:03Z",
+      "side": 1,
+      "message": "I think that currently passing in rp.id \u003d \"\" will skip this check as welll as the \"rp.id \u003d effectiveDomain\" branch. Let\u0027s make this IsNull.",
+      "range": {
+        "startLine": 194,
+        "startChar": 24,
+        "endLine": 194,
+        "endChar": 31
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
