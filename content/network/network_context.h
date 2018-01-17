@@ -9,6 +9,7 @@
 
 #include <memory>
 #include <set>
+#include <string>
 
 #include "base/callback.h"
 #include "base/macros.h"
@@ -20,12 +21,17 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/strong_binding_set.h"
 #include "services/network/cookie_manager.h"
+#include "services/network/public/interfaces/udp_socket.mojom.h"
 
 namespace net {
 class CertVerifier;
 class URLRequestContext;
 class HttpServerPropertiesManager;
 }
+
+namespace network {
+class UDPSocketFactory;
+};  // namespace network
 
 namespace content {
 class NetworkServiceImpl;
@@ -96,6 +102,8 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
       base::OnceClosure completion_callback) override;
   void SetNetworkConditions(const std::string& profile_id,
                             mojom::NetworkConditionsPtr conditions) override;
+  void CreateUDPSocket(network::mojom::UDPSocketRequest request,
+                       network::mojom::UDPSocketReceiverPtr receiver) override;
   void AddHSTSForTesting(const std::string& host,
                          base::Time expiry,
                          bool include_subdomains,
@@ -107,7 +115,6 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
 
   // Disables use of QUIC by the NetworkContext.
   void DisableQuic();
-
 
   // Applies the values in |network_context_params| to |builder|, and builds
   // the URLRequestContext.
@@ -151,6 +158,8 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   mojo::Binding<mojom::NetworkContext> binding_;
 
   std::unique_ptr<network::CookieManager> cookie_manager_;
+
+  std::unique_ptr<network::UDPSocketFactory> udp_socket_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkContext);
 };
