@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a1b27433_0866707a",
+        "filename": "base/fuchsia/fuchsia_logging.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T20:40:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c5338f2d_902b45dc",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "d90951b3aea3f95bb6e8fcba7b1045dc37739533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50b2518c_a4257a37",
         "filename": "base/fuchsia/fuchsia_logging.h",
         "patchSetId": 6
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Sorry, I\u0027m not sure what you mean. I think this follows e.g. https://cs.chromium.org/chromium/src/base/logging.h?l\u003d804 ?",
       "parentUuid": "50b2518c_a4257a37",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 50
+      },
+      "revId": "d90951b3aea3f95bb6e8fcba7b1045dc37739533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48fc1b40_5046f9e1",
+        "filename": "base/fuchsia/fuchsia_logging.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T20:40:19Z",
+      "side": 1,
+      "message": "Sorry, my comment was supposed to just be on DLOG_IF :)",
+      "parentUuid": "4afdd76c_1d990693",
       "range": {
         "startLine": 50,
         "startChar": 0,
