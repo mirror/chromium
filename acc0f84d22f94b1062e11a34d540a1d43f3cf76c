@@ -52,6 +52,24 @@
       "revId": "acc0f84d22f94b1062e11a34d540a1d43f3cf76c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8ee03f_375edcab",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-17T23:48:13Z",
+      "side": 1,
+      "message": "We will calculate correct visual rect using MapRectFromChunkToLayer which will consider the filter expansion. See the previous CL https://chromium-review.googlesource.com/c/chromium/src/+/868954.",
+      "parentUuid": "850200f5_64c7506e",
+      "revId": "acc0f84d22f94b1062e11a34d540a1d43f3cf76c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
