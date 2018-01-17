@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9301c773_6b0a34c1",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-17T04:29:22Z",
+      "side": 1,
+      "message": "This would usually be toggled between ASK and BLOCK since there is a prompt (see examples like location below).",
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
