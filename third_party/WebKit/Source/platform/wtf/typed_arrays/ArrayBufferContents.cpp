@@ -28,14 +28,38 @@
 #include "build/build_config.h"
 
 #include <string.h>
+#include <unordered_map>
 #if defined(OS_LINUX)
 #include "sandbox/linux/services/resource_limits.h"  // nogncheck
 #endif
 #include "base/allocator/partition_allocator/partition_alloc.h"
+#include "base/lazy_instance.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/allocator/Partitions.h"
 
 namespace WTF {
+
+namespace {
+
+typedef std::unique_ptr<base::PartitionAllocatorGeneric> AllocatorPtr;
+typedef std::unordered_map<void*, AllocatorPtr> PartitionMap;
+
+static base::LazyInstance<PartitionMap>::Leaky partition_map =
+    LAZY_INSTANCE_INITIALIZER;
+
+base::PartitionRootGeneric* FindOrCreatePartition(void* partition_key) {
+  auto map = partition_map.Pointer();
+  auto it = map->find(partition_key);
+  if (it == map->end()) {
+    it = map->emplace(partition_key,
+                      AllocatorPtr(new base::PartitionAllocatorGeneric))
+             .first;
+    it->second->init();
+  }
+  return it->second->root();
+}
+
+}  // namespace
 
 void ArrayBufferContents::DefaultAdjustAmountOfExternalAllocatedMemoryFunction(
     int64_t diff) {
@@ -108,11 +132,13 @@ void ArrayBufferContents::CopyTo(ArrayBufferContents& other) {
   other.holder_->CopyMemoryFrom(*holder_);
 }
 
-void* ArrayBufferContents::AllocateMemoryWithFlags(size_t size,
-                                                   InitializationPolicy policy,
-                                                   int flags) {
+void* ArrayBufferContents::AllocateMemoryWithFlags(
+    base::PartitionRootGeneric* partition_root,
+    size_t size,
+    InitializationPolicy policy,
+    int flags) {
   void* data = PartitionAllocGenericFlags(
-      Partitions::ArrayBufferPartition(), flags, size,
+      partition_root, flags, size,
       WTF_HEAP_PROFILER_TYPE_NAME(ArrayBufferContents));
   if (policy == kZeroInitialize && data)
     memset(data, '\0', size);
@@ -121,7 +147,15 @@ void* ArrayBufferContents::AllocateMemoryWithFlags(size_t size,
 
 void* ArrayBufferContents::AllocateMemoryOrNull(size_t size,
                                                 InitializationPolicy policy) {
-  return AllocateMemoryWithFlags(size, policy, base::PartitionAllocReturnNull);
+  return AllocateMemoryWithFlags(Partitions::ArrayBufferPartition(), size,
+                                 policy, base::PartitionAllocReturnNull);
+}
+
+void* ArrayBufferContents::AllocateMemoryOrNull(void* partition_key,
+                                                size_t size,
+                                                InitializationPolicy policy) {
+  return AllocateMemoryWithFlags(FindOrCreatePartition(partition_key), size,
+                                 policy, base::PartitionAllocReturnNull);
 }
 
 // This method is used by V8's WebAssembly implementation to reserve a large
@@ -153,6 +187,15 @@ void* ArrayBufferContents::ReserveMemory(size_t size) {
 
 void ArrayBufferContents::FreeMemory(void* data) {
   Partitions::ArrayBufferPartition()->Free(data);
+}
+
+void ArrayBufferContents::FreeMemoryInKeyedPartition(void* data, void* key) {
+  DCHECK(data);
+  DCHECK(key);
+  base::PartitionRootGeneric* partition_root =
+      reinterpret_cast<base::PartitionRootGeneric*>(key);
+  partition_root->Free(data);
+  // TODO(bbudge) Purge memory if partition becomes empty?
 }
 
 void ArrayBufferContents::ReleaseReservedMemory(void* data, size_t size) {

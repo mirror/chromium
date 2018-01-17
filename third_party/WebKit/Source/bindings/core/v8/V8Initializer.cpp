@@ -541,22 +541,51 @@ static void InitializeV8Common(v8::Isolate* isolate) {
 
 namespace {
 
+// Segregate array buffers by SecurityOrigin. Use a pointer to a SecurityOrigin
+// as an opaque key to tell ArrayBufferContents which partition to use.
+void* GetPartitionKey() {
+  v8::Isolate* isolate = v8::Isolate::GetCurrent();
+  blink::LocalDOMWindow* window = CurrentDOMWindow(isolate);
+  // If there is no Context (in tests), use the isolate as the key.
+  if (!window)
+    return reinterpret_cast<void*>(isolate);
+
+  return reinterpret_cast<void*>(const_cast<SecurityOrigin*>(
+      window->GetFrame()->GetSecurityContext()->GetSecurityOrigin()));
+}
+
 class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
   // Allocate() methods return null to signal allocation failure to V8, which
   // should respond by throwing a RangeError, per
   // http://www.ecma-international.org/ecma-262/6.0/#sec-createbytedatablock.
   void* Allocate(size_t size) override {
-    return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kZeroInitialize);
+    void* key = GetPartitionKey();
+    // Allocate extra space so we can associate a key with each allocation.
+    size_t alloc_size = sizeof(void*) + size;
+    void* base_ptr = WTF::ArrayBufferContents::AllocateMemoryOrNull(
+        key, alloc_size, WTF::ArrayBufferContents::kZeroInitialize);
+    // Store the key right before the returned data pointer.
+    void** base_key_ptr = reinterpret_cast<void**>(base_ptr);
+    *base_key_ptr = key;
+    return reinterpret_cast<void*>(base_key_ptr + 1);
   }
 
   void* AllocateUninitialized(size_t size) override {
-    return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kDontInitialize);
+    void* key = GetPartitionKey();
+    // Allocate extra space so we can associate a key with each allocation.
+    size_t alloc_size = sizeof(void*) + size;
+    void* base_ptr = WTF::ArrayBufferContents::AllocateMemoryOrNull(
+        key, alloc_size, WTF::ArrayBufferContents::kDontInitialize);
+    // Store the key right before the returned data pointer.
+    void** base_key_ptr = reinterpret_cast<void**>(base_ptr);
+    *base_key_ptr = key;
+    return reinterpret_cast<void*>(base_key_ptr + 1);
   }
 
   void Free(void* data, size_t size) override {
-    WTF::ArrayBufferContents::FreeMemory(data);
+    // Get the key, which precedes the data.
+    void** base_key_ptr = reinterpret_cast<void**>(data) - 1;
+    WTF::ArrayBufferContents::FreeMemoryInKeyedPartition(data, *base_key_ptr);
   }
 
   void* Reserve(size_t length) override {
