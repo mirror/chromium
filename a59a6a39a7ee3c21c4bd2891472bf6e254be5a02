@@ -22,6 +22,30 @@
       "revId": "a59a6a39a7ee3c21c4bd2891472bf6e254be5a02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785b2620_ed89090a",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3003,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-17T17:32:51Z",
+      "side": 1,
+      "message": "\u003e Maybe we should DCHECK(!REF::RootLayerScrollingEnabled); so that we remember to remove this when RLS is shipped? Or a TODO linked to the RLS bug?\n\nAdded DCHECK.  (Though we would not have forgotten to remove it, because the first thing we will do after RLS ships is remove LocalFrameView::VerticalScrollbar along with the rest of its ScrollableArea methods.)",
+      "parentUuid": "b2ac84bc_64720121",
+      "range": {
+        "startLine": 3003,
+        "startChar": 4,
+        "endLine": 3003,
+        "endChar": 74
+      },
+      "revId": "a59a6a39a7ee3c21c4bd2891472bf6e254be5a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
