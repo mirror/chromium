@@ -14,6 +14,7 @@
 #include "base/values.h"
 #include "chrome/browser/search/one_google_bar/one_google_bar_data.h"
 #include "chrome/common/chrome_content_client.h"
+#include "chrome/common/url_constants.h"
 #include "components/google/core/browser/google_url_tracker.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/variations/net/variations_http_headers.h"
@@ -225,6 +226,9 @@ void OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::Start() {
   url_fetcher_ = net::URLFetcher::Create(0, url, net::URLFetcher::GET, this,
                                          traffic_annotation);
   url_fetcher_->SetRequestContext(request_context_);
+
+  url_fetcher_->SetInitiator(
+      url::Origin::Create(GURL(chrome::kChromeSearchLocalNtpUrl)));
 
   url_fetcher_->SetLoadFlags(net::LOAD_DO_NOT_SEND_AUTH_DATA);
   url_fetcher_->SetExtraRequestHeaders(GetExtraRequestHeaders(url));

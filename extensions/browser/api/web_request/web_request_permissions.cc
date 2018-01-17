@@ -121,6 +121,14 @@ bool WebRequestPermissions::HideRequest(
   if (request.is_pac_request)
     return true;
 
+  if (request.initiator.has_value()) {
+    const url::Origin& initiator = *request.initiator;
+    if (initiator.scheme() == "chrome-search" &&
+        initiator.host() == "local-ntp") {
+      return true;
+    }
+  }
+
   // Requests from the browser and webui get special protection for
   // clients*.google.com URLs.
   bool is_request_from_browser =
