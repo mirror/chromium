@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0043e8c4_094d1162",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2412,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-17T00:38:34Z",
+      "side": 1,
+      "message": "There should be quite a few other strings we can remove as well  - all the ones in the promo dialog, the opt out snackbar string, and the promo menu header string.",
+      "revId": "67bf3a6aba07ec3f3a067807e18e207c1f5080a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4f3a1b4_ebbd4b28",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/appmenu/ChromeHomeAppMenuTest.java",
         "patchSetId": 2
