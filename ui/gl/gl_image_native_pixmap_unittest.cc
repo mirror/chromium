@@ -104,7 +104,8 @@ using GLImageTestTypes = testing::Types<
     GLImageNativePixmapTestDelegate<gfx::BufferFormat::RGBX_8888>,
     GLImageNativePixmapTestDelegate<gfx::BufferFormat::RGBA_8888>,
     GLImageNativePixmapTestDelegate<gfx::BufferFormat::BGRX_8888>,
-    GLImageNativePixmapTestDelegate<gfx::BufferFormat::BGRA_8888>>;
+    GLImageNativePixmapTestDelegate<gfx::BufferFormat::BGRA_8888>,
+    GLImageNativePixmapTestDelegate<gfx::BufferFormat::BGRX_1010102>>;
 
 INSTANTIATE_TYPED_TEST_CASE_P(GLImageNativePixmap,
                               GLImageTest,

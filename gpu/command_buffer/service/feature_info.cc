@@ -25,6 +25,8 @@
 
 #if !defined(OS_MACOSX)
 #include "ui/gl/gl_fence_egl.h"
+#else
+#include "base/mac/mac_util.h"
 #endif
 
 namespace gpu {
@@ -1071,6 +1073,18 @@ void FeatureInfo::InitializeFeatures() {
     AddExtensionString("GL_CHROMIUM_ycbcr_422_image");
     feature_flags_.chromium_image_ycbcr_422 = true;
   }
+
+#if defined(OS_MACOSX)
+  // Mac can create GLImages out of XR30 IOSurfaces only after High Sierra.
+  feature_flags_.chromium_image_xr30 = base::mac::IsAtLeastOS10_13();
+#elif defined(OS_CHROMEOS) || defined(OS_LINUX)
+  // XR30 support was introduced in GLES 3.0/ OpenGL 4.2, before that it was
+  // signalled via a specific extension.
+  feature_flags_.chromium_image_xr30 =
+      gl_version_info_->is_es3 || gl_version_info_->IsAtLeastGL(4, 2) ||
+      gl::HasExtension(extensions, "GL_EXT_texture_type_2_10_10_10_REV");
+
+#endif
 
   // TODO(gman): Add support for these extensions.
   //     GL_OES_depth32
