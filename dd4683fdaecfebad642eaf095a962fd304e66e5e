@@ -16,6 +16,24 @@
       "revId": "dd4683fdaecfebad642eaf095a962fd304e66e5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b85248e_1d77f498",
+        "filename": "content/test/gpu/run_unittests.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-17T23:55:53Z",
+      "side": 1,
+      "message": "Right. After more testing I don\u0027t think this has an effect on the bots. It mainly affects local developers. From talking with iannucci@ it sounds like all of the Swarming bots are going to start running tests with vpython rather than python during the LUCI conversion, which will unify and make hermetic the python installation used for testing. Then we could change all the shebang lines to use vpython and developers would get the same results as the bots.",
+      "parentUuid": "d9b30e2a_141202a7",
+      "revId": "dd4683fdaecfebad642eaf095a962fd304e66e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
