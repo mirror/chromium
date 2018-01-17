@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e873982_a2acf13a",
+        "filename": "chrome/browser/notifications/mock_itoastnotification.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-17T16:23:41Z",
+      "side": 1,
+      "message": "Heh, this makes the ComPtr conversions work?",
+      "revId": "ed99d067f7ea1a6a52b032de8ca5177238bad05c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d5c6a5_880d08bb",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-17T16:23:41Z",
+      "side": 1,
+      "message": "nit: consider aborting early to drop an entire level of nesting\n\n  if (FAILED(hr))\n    continue;",
+      "revId": "ed99d067f7ea1a6a52b032de8ca5177238bad05c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f31ced_bc6a5395",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 4050,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-17T16:23:41Z",
+      "side": 1,
+      "message": "Is this because we now use ComPtr\u003c\u003e.As()?",
+      "revId": "ed99d067f7ea1a6a52b032de8ca5177238bad05c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
