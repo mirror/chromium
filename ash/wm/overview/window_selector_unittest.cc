@@ -12,6 +12,7 @@
 #include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/display/screen_orientation_controller_test_api.h"
 #include "ash/drag_drop/drag_drop_controller.h"
+#include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/screen_util.h"
@@ -36,6 +37,7 @@
 #include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
 #include "ash/wm/workspace/workspace_window_resizer.h"
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
@@ -1921,6 +1923,24 @@ TEST_F(WindowSelectorTest, OverviewWhileDragging) {
   resizer->Drag(location, 0);
   ToggleOverview();
   resizer->RevertDrag();
+}
+
+TEST_F(WindowSelectorTest, OverviewNoWindowsIndicator) {
+  // Verify that entering overview mode without windows with the old ui is not
+  // possible.
+  ToggleOverview();
+  EXPECT_FALSE(window_selector());
+
+  // Verify that by entering overview mode without windows, the no items
+  // indicator appears.
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAshEnableNewOverviewUi);
+  ToggleOverview();
+  ASSERT_TRUE(window_selector());
+  EXPECT_EQ(0u, GetWindowItemsForRoot(0).size());
+  EXPECT_TRUE(window_selector()
+                  ->grid_list_for_testing()[0]
+                  ->IsNoItemsIndicatorLabelVisibleForTesting());
 }
 
 class SplitViewWindowSelectorTest : public WindowSelectorTest {
