@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e89b4c3_0d392279",
+        "filename": "tools/perf/contrib/oop_raster/oop_raster.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-17T00:36:22Z",
+      "side": 1,
+      "message": "Ned, do you have a better suggestion for what to do here? These base classes are protected, so I can\u0027t import them into my contrib benchmark directly.  However, if I make them public, then the benchmark discoverer finds them, which leads to them being treated as \"runnable\" benchmarks which is wrong in a number of cases.\n\nI\u0027m really not happy copying and pasting, but am not sure what your preference is here for how to handle this.",
+      "revId": "3680913317138c03d855452d3251f71e8cf2a2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
