@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "3c43e8ff_306b722b",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T16:47:06Z",
+      "side": 1,
+      "message": "Given we should minimize usage of ScopedAllowances as much as possible (those that require friend\u0027ing in //base that is -- which do so for that very reason). Then we should do this and have a DCHECK path in the situations where we know the event is signaled. That will be much more future proof (and readable) than assuming we never call it in a situation where it actually waits on a thread where it shouldn\u0027t. How you do that (member or param) is up to you.",
+      "parentUuid": "1cae2923_0fd547bd",
+      "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23e649ea_a83e0428",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 18
