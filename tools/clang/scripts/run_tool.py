@@ -262,7 +262,7 @@ def main():
       nargs='*',
       help='optional paths to filter what files the tool is run on')
   parser.add_argument(
-      '--tool-args', nargs='*',
+      '--tool-args', nargs='?', action='append',
       help='optional arguments passed to the tool')
   parser.add_argument(
       '--tool-path', nargs='?',
