@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ce09059_4c8511fe",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-17T09:04:39Z",
+      "side": 1,
+      "message": "Adding this optional caused a handful of debug build errors.\n\nAnd I think it might potentially invoke undefined behavior as well.\nbase::Optional is implemented using a union:\nhttps://cs.chromium.org/chromium/src/base/optional.h?l\u003d60\u0026rcl\u003db99adb696169248fd1de68af707d88fca2004c23\n\nC++ rules are that you can only safely read the last union member that was written. So if we write the 1st union member, we shouldn\u0027t read the second union member. Normally, this is no big deal. We all know that we don\u0027t plan to actually read/write the char member.\n\nBut base::Pickle doesn\u0027t know that.\n\nIt has no idea how to reconstruct a union.\n\nSo I think we need to go back to using the viz::LocalSurfaceId::is_valid()",
+      "range": {
+        "startLine": 307,
+        "startChar": 26,
+        "endLine": 307,
+        "endChar": 34
+      },
+      "revId": "e6561a6c44756aa2d7534135c372582179419d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
