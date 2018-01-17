@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d890fe21_f15bed91",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-17T18:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba66598e_038f3f32",
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e409df8a_35466ab9",
         "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38151595_61fa3030",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-17T18:13:19Z",
+      "side": 1,
+      "message": "This was needed for tests where this wasn\u0027t true, callbacks were executed immediately. Moved the task posting in the Mock Preferences class now.",
+      "parentUuid": "e409df8a_35466ab9",
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "73971d9a_1e3ac895",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-17T18:13:19Z",
+      "side": 1,
+      "message": "Yeah, this was only needed for tests to change the observer.powered_changed_count(). I made it part of the mock SetControllerPowerState now.",
+      "parentUuid": "8cf723cf_414d932a",
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "375d814d_b4bdd078",
         "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb46fe2_d4cd99e7",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-17T18:13:19Z",
+      "side": 1,
+      "message": "Leftover from previous patchset, removed now.",
+      "parentUuid": "375d814d_b4bdd078",
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "076793db_d424b303",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-17T18:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2fbca85_40c3b346",
+      "range": {
+        "startLine": 696,
+        "startChar": 0,
+        "endLine": 696,
+        "endChar": 37
+      },
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d51605b0_840f9b8c",
         "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
         "patchSetId": 6
@@ -164,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "fcd9c987_d97343b2",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-17T18:13:19Z",
+      "side": 1,
+      "message": "Done: https://crbug.com/803105",
+      "parentUuid": "1a6104f0_bf4a1bb8",
+      "range": {
+        "startLine": 716,
+        "startChar": 0,
+        "endLine": 717,
+        "endChar": 24
+      },
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5edf3a02_9608d99a",
         "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
         "patchSetId": 6
@@ -178,6 +298,24 @@
       "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22952b1_2fcfe8de",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-17T18:13:19Z",
+      "side": 1,
+      "message": "Well, the destructor of the underlying adapter does get called, since we are dropping the ref count to 0. Changed the comment, hopefully it\u0027s clearer now.",
+      "parentUuid": "5edf3a02_9608d99a",
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
