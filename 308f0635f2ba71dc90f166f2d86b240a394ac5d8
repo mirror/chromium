@@ -22,6 +22,30 @@
       "revId": "308f0635f2ba71dc90f166f2d86b240a394ac5d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292bfd77_f6c83964",
+        "filename": "third_party/openh264/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2018-01-17T21:54:23Z",
+      "side": 1,
+      "message": "I\u0027m building with the following settings by the way:\n\nis_component_build\u003dtrue\ndcheck_always_on\u003dtrue\nis_debug\u003dfalse\nis_chrome_branded\u003dtrue\n\n\nSetting is_chrome_branded to false \"fixes\" the issue, but that\u0027s not really what I want to do :)",
+      "parentUuid": "1ead09c7_95c8f398",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 12
+      },
+      "revId": "308f0635f2ba71dc90f166f2d86b240a394ac5d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
