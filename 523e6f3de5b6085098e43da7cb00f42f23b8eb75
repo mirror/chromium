@@ -22,6 +22,30 @@
       "revId": "523e6f3de5b6085098e43da7cb00f42f23b8eb75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b910311_305e511b",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-17T08:26:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a439ed66_c71f587d",
+      "range": {
+        "startLine": 905,
+        "startChar": 20,
+        "endLine": 905,
+        "endChar": 46
+      },
+      "revId": "523e6f3de5b6085098e43da7cb00f42f23b8eb75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
