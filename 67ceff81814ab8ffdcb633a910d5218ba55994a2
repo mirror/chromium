@@ -70,6 +70,24 @@
       "revId": "67ceff81814ab8ffdcb633a910d5218ba55994a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "118eb168_b544c442",
+        "filename": "base/message_loop/message_pump_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T22:17:42Z",
+      "side": 1,
+      "message": "I got too lazy to look it up in the standard, but here\u0027s what http://en.cppreference.com/w/cpp/language/initialization has to say:\n\n\u003e Ordered dynamic initialization, which applies to all other non-local variables: within a single translation unit, initialization of these variables is always sequenced in exact order their definitions appear in the source code. Initialization of static variables in different translation units is indeterminately sequenced. Initialization of thread-local variables in different translation units is unsequenced.\n\nGiven that kMessageLoopExclusiveRunLoopMode is not defined until later, it\u0027s not actually clear to me that this is safe.",
+      "parentUuid": "1f2669b5_82929379",
+      "revId": "67ceff81814ab8ffdcb633a910d5218ba55994a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
