@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.compositor.bottombar.contextualsearch;
 
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.PanelState;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
+import org.chromium.chrome.browser.contextualsearch.AssistRankerPrediction;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchHeuristics;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchIPH;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchRankerLogger;
@@ -327,11 +328,11 @@ public class ContextualSearchPanelMetrics {
 
     /**
      * Writes all the outcome features to the Ranker Logger and resets the logger.
-     * @param rankerLogger The {@link ContextualSearchRankerLogger} currently being used to measure
-     *                     or suppress the UI by Ranker.
      */
     public void writeRankerLoggerOutcomesAndReset() {
-        if (mRankerLogger != null && mWasActivatedByTap) {
+        if (mRankerLogger != null && mWasActivatedByTap
+                && mRankerLogger.getPredictionForTapSuppression()
+                        != AssistRankerPrediction.UNDETERMINED) {
             // Tell Ranker about the primary outcome.
             mRankerLogger.logOutcome(ContextualSearchRankerLogger.Feature.OUTCOME_WAS_PANEL_OPENED,
                     mWasSearchContentViewSeen);
