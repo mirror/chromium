@@ -582,6 +582,27 @@ void PasswordManager::CreatePendingLoginManagers(
   // Record whether or not this top-level URL has at least one password field.
   client_->AnnotateNavigationEntry(!forms.empty());
 
+  // Only report SSL error status for cases where there are potentially forms to
+  // fill or save from.
+  if (!forms.empty()) {
+    metrics_util::CertificateError cert_error =
+        metrics_util::CertificateError::NONE;
+    const net::CertStatus cert_status = client_->GetMainFrameCertStatus();
+    // The order of the if statements matters. In particular, if both invalid
+    // authority and date are encoutered, the UMA should report the invalid
+    // authority.
+    if (cert_status & net::CERT_STATUS_AUTHORITY_INVALID)
+      cert_error = metrics_util::CertificateError::AUTHORITY_INVALID;
+    else if (cert_status & net::CERT_STATUS_DATE_INVALID)
+      cert_error = metrics_util::CertificateError::DATE_INVALID;
+    else if (net::IsCertStatusError(cert_status))
+      cert_error = metrics_util::CertificateError::OTHER;
+
+    UMA_HISTOGRAM_ENUMERATION(
+        "PasswordManager.CertificateErrorsWhileSeeingForms", cert_error,
+        metrics_util::CertificateError::COUNT);
+  }
+
   if (!client_->IsFillingEnabledForCurrentPage())
     return;
 
