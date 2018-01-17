@@ -5,6 +5,8 @@
 #ifndef TOOLS_GN_EXAMPLE_HELLO_STATIC_H_
 #define TOOLS_GN_EXAMPLE_HELLO_STATIC_H_
 
-const char* GetStaticText();
+#include "str.h"
+
+str GetStaticText();
 
 #endif  // TOOLS_GN_EXAMPLE_HELLO_STATIC_H_
