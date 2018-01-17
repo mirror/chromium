@@ -89,7 +89,8 @@ class CONTENT_EXPORT AppCacheRequestHandler
   bool MaybeCreateLoaderForResponse(
       const ResourceResponseHead& response,
       mojom::URLLoaderPtr* loader,
-      mojom::URLLoaderClientRequest* client_request) override;
+      mojom::URLLoaderClientRequest* client_request,
+      ThrottlingURLLoader* url_loader) override;
   base::Optional<SubresourceLoaderParams> MaybeCreateSubresourceLoaderParams()
       override;
 

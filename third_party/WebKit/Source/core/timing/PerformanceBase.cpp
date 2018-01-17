@@ -365,6 +365,9 @@ void PerformanceBase::AddResourceTiming(const ResourceTimingInfo& info) {
 
   ResourceLoadTiming* last_redirect_timing =
       redirect_chain.back().GetResourceLoadTiming();
+      // TODO: Hack for the bug in OriginSignedResponseHandler redirection.
+  if (!last_redirect_timing)
+    return;
   CHECK(last_redirect_timing);
   double last_redirect_end_time = last_redirect_timing->ReceiveHeadersEnd();
 
