@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include "content/public/browser/download_url_parameters.h"
 #include "content/public/browser/web_contents_user_data.h"
 
 namespace content {
@@ -26,6 +27,9 @@ class DevToolsDownloadManagerHelper
     // All downloads are accepted.
     ALLOW,
 
+    // Enable stream-based download.
+    STREAM,
+
     // Use default download behavior if available, otherwise deny.
     DEFAULT
   };
@@ -38,6 +42,9 @@ class DevToolsDownloadManagerHelper
   void SetDownloadBehavior(DownloadBehavior behavior);
   std::string GetDownloadPath();
   void SetDownloadPath(const std::string& path);
+  void SetCallback(
+      const content::DownloadUrlParameters::OnStartedCallback& callback);
+  const content::DownloadUrlParameters::OnStartedCallback& GetCallback();
 
  private:
   explicit DevToolsDownloadManagerHelper(content::WebContents* web_contents);
@@ -45,6 +52,7 @@ class DevToolsDownloadManagerHelper
 
   DownloadBehavior download_behavior_;
   std::string download_path_;
+  content::DownloadUrlParameters::OnStartedCallback callback_;
 };
 
 }  // namespace protocol

@@ -27,6 +27,7 @@
 #include "build/build_config.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/browsing_data/browsing_data_remover_impl.h"
+#include "content/browser/devtools/protocol/devtools_download_manager.h"
 #include "content/browser/download/download_manager_impl.h"
 #include "content/browser/indexed_db/indexed_db_context_impl.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
@@ -565,6 +566,9 @@ BrowserContext::~BrowserContext() {
 
   if (GetUserData(kDownloadManagerKeyName))
     GetDownloadManager(this)->Shutdown();
+
+  if (protocol::DevToolsDownloadManager::FromBrowserContext(this))
+    protocol::DevToolsDownloadManager::FromBrowserContext(this)->Shutdown();
 }
 
 void BrowserContext::ShutdownStoragePartitions() {

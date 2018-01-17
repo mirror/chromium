@@ -47,18 +47,28 @@ void IOHandler::Read(
     std::unique_ptr<ReadCallback> callback) {
   static const size_t kDefaultChunkSize = 10 * 1024 * 1024;
   static const char kBlobPrefix[] = "blob:";
+  static const char kDownloadPrefix[] = "download:";
 
   scoped_refptr<DevToolsIOContext::ROStream> stream =
       io_context_->GetByHandle(handle);
-  if (!stream && process_host_ &&
-      StartsWith(handle, kBlobPrefix, base::CompareCase::SENSITIVE)) {
+
+  bool is_download =
+      StartsWith(handle, kDownloadPrefix, base::CompareCase::SENSITIVE);
+  if (!stream && process_host_) {
     BrowserContext* browser_context = process_host_->GetBrowserContext();
-    ChromeBlobStorageContext* blob_context =
-        ChromeBlobStorageContext::GetFor(browser_context);
-    StoragePartition* storage_partition = process_host_->GetStoragePartition();
-    std::string uuid = handle.substr(strlen(kBlobPrefix));
-    stream =
-        io_context_->OpenBlob(blob_context, storage_partition, handle, uuid);
+    if (StartsWith(handle, kBlobPrefix, base::CompareCase::SENSITIVE)) {
+      ChromeBlobStorageContext* blob_context =
+          ChromeBlobStorageContext::GetFor(browser_context);
+      StoragePartition* storage_partition =
+          process_host_->GetStoragePartition();
+      std::string uuid = handle.substr(strlen(kBlobPrefix));
+      stream =
+          io_context_->OpenBlob(blob_context, storage_partition, handle, uuid);
+    } else if (is_download) {
+      is_download = true;
+      std::string uuid = handle.substr(strlen(kDownloadPrefix));
+      stream = io_context_->OpenDownload(browser_context, handle, uuid);
+    }
   }
 
   if (!stream) {
@@ -84,8 +94,9 @@ void IOHandler::ReadComplete(std::unique_ptr<ReadCallback> callback,
 }
 
 Response IOHandler::Close(const std::string& handle) {
-  return io_context_->Close(handle) ? Response::OK()
-      : Response::InvalidParams("Invalid stream handle");
+  return io_context_->Close(handle)
+             ? Response::OK()
+             : Response::InvalidParams("Invalid stream handle");
 }
 
 }  // namespace protocol
