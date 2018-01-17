@@ -22,6 +22,30 @@
       "revId": "2a5ffb8594f48f39cae00900ac53a7ebeeb11ba8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade55b1b_3a76467e",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-17T02:21:05Z",
+      "side": 1,
+      "message": "I remember this logic was copied from cast implementation (https://cs.chromium.org/chromium/src/media/cast/sender/vp8_encoder.cc?rcl\u003db791330b5fe60e167695c35d74070124badc612e\u0026l\u003d242).\nI think the rational of using the previous frame duration as a prediction is that the increasing frame duration will also increase the encoding time as well as the frame size and eventually reduce the frame rate until it comes to a balance (the maximum processor resource or network bandwidth are used). But using a fixed duration may cause the processor resource or network bandwidth to be wasted.",
+      "parentUuid": "7bff4fc8_ae78f5c0",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 64
+      },
+      "revId": "2a5ffb8594f48f39cae00900ac53a7ebeeb11ba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
