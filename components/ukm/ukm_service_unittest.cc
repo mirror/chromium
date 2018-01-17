@@ -167,7 +167,9 @@ TEST_F(UkmServiceTest, EnableDisableSchedule) {
   UkmService service(&prefs_, &client_);
   EXPECT_FALSE(task_runner_->HasPendingTask());
   service.Initialize();
-  EXPECT_FALSE(task_runner_->HasPendingTask());
+  EXPECT_TRUE(task_runner_->HasPendingTask());
+  // Allow initialization to complete.
+  task_runner_->RunUntilIdle();
   service.EnableRecording();
   service.EnableReporting();
   EXPECT_TRUE(task_runner_->HasPendingTask());
