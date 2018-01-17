@@ -209,6 +209,24 @@
     },
     {
       "key": {
+        "uuid": "7d751f27_9bbd0af9",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-17T20:04:21Z",
+      "side": 1,
+      "message": "Given the discussion here I will file a new bug regardless of whether or not we are adding the feature. It sure is a different issue thant 799973 which is about fling callbacks.",
+      "parentUuid": "e888f64d_47bf3cdd",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b1a2e9a_ed55161d",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
         "patchSetId": 48
@@ -280,6 +298,30 @@
     },
     {
       "key": {
+        "uuid": "25b18d8c_6aef4ebc",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-17T20:04:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e2170bf_74589aa2",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 76
+      },
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9d1ed_4f050bb6",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
         "patchSetId": 48
@@ -309,6 +351,24 @@
       "side": 1,
       "message": "You mean during the onload event, right? My understanding is that a non-async tests are for cases where the test can complete in the load handler, like this. async_test is for tests that need to do something after load (e.g. requestAnimationFrame, event listeners, etc). It should be fairly straightforward to convert to non-async so I\u0027d suggest trying that but if you\u0027re still having issues and it\u0027s drawing too much time this is fine too.",
       "parentUuid": "80d9d1ed_4f050bb6",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b739e9e3_839e57b1",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-17T20:04:21Z",
+      "side": 1,
+      "message": "You are correct, but, if we call setupElements() in onload and use test() as opposed to async_test() there is still no guarantee that the setupElements() method gets called before the tests. Async test here makes it possible so I can make sure\n 1- We do have a body,\n 2- Tests run after set up.",
+      "parentUuid": "54e0717e_980f7ca4",
       "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
