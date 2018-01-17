@@ -22,6 +22,30 @@
       "revId": "fde1777c59d625f972fe666ff279a63954fced05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c97e8e5_11b00f08",
+        "filename": "base/fuchsia/fuchsia_logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-17T20:49:25Z",
+      "side": 1,
+      "message": "Done\n\n(Not a big fan of the _IF varieties tbh, but I guess we should keep them for consistency.)",
+      "parentUuid": "aee0ff0f_f9a8c8fd",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 50
+      },
+      "revId": "fde1777c59d625f972fe666ff279a63954fced05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
