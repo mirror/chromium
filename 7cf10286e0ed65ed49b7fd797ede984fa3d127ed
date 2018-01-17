@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "93a3390f_7a289d56",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-17T12:46:37Z",
+      "side": 1,
+      "message": "Thanks, I will try that. As I noted in the design doc: Maybe it would be better to leave pending navigations and only apply deletions to commited entries that are not the last_commited_entry.  I will look into that as well.",
+      "parentUuid": "3b0d4939_91b55f7b",
+      "revId": "7cf10286e0ed65ed49b7fd797ede984fa3d127ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32e0d046_358ac7c2",
         "filename": "content/public/browser/navigation_details.h",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-17T06:10:43Z",
       "side": 1,
       "message": "How do you convey which index?",
+      "revId": "7cf10286e0ed65ed49b7fd797ede984fa3d127ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c771f2_479c639c",
+        "filename": "content/public/browser/navigation_details.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-17T12:46:37Z",
+      "side": 1,
+      "message": "I\u0027m repurposing the count variable in PrunedDetails as the index. I will update the name and comment.",
+      "parentUuid": "32e0d046_358ac7c2",
       "revId": "7cf10286e0ed65ed49b7fd797ede984fa3d127ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
