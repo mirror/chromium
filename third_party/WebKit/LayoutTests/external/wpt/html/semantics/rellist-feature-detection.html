@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<title>Test relList attribute</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+function test_rellist(element) {
+  let tag = element.tagName;
+  // Test that setting rel is also setting relList, for both
+  // valid and invalid values.
+  element.rel = 'whatever';
+  assert_true(element.relList.contains('whatever'), 'setting rel ' + tag);
+  element.rel = 'prefetch';
+  assert_true(element.relList.contains('prefetch'), 'setting rel ' + tag);
+  // Test that add() works.
+  element.relList.add('preloadwhatever');
+  assert_equals(element.rel, 'prefetch preloadwhatever', 'add ' + tag);
+  assert_true(element.relList.contains('preloadwhatever'), 'add ' + tag);
+  // Test that remove() works.
+  element.relList.remove('preloadwhatever');
+  assert_equals(element.rel, 'prefetch', 'remove ' + tag);
+  assert_false(element.relList.contains('preloadwhatever'), 'remove ' + tag);
+  // Test that toggle() works.
+  element.relList.toggle('prefetch', false);
+  assert_equals(element.rel, '', 'toggle ' + tag);
+  element.relList.toggle('prefetch', true);
+  assert_equals(element.rel, 'prefetch', 'toggle ' + tag);
+  // Test that replace() works.
+  element.relList.replace('prefetch', 'first');
+  assert_equals(element.rel, 'first', 'replace ' + tag);
+  // Test that indexed item getter works.
+  element.relList.add('second');
+  assert_equals(element.relList.length, 2, 'length ' + tag);
+  assert_equals(element.relList[0], 'first', 'first item ' + tag);
+  assert_equals(element.relList[1], 'second', 'second item ' + tag);
+  // Test that relList is  [SameObject].
+  let savedRelList = element.relList;
+  element.rel = 'something';
+  assert_equals(element.relList, savedRelList, 'SameObject ' + tag);
+
+  // Test that supports() is returning true for valid values
+  // and false for invalid ones.
+  assert_false(element.relList.supports('author'), 'author ' + tag);
+  assert_false(element.relList.supports('bookmark'), 'bookmark ' + tag);
+  assert_false(element.relList.supports('external'), 'external ' + tag);
+  assert_false(element.relList.supports('help'), 'help ' + tag);
+  assert_false(element.relList.supports('license'), 'license ' + tag);
+  assert_false(element.relList.supports('nofollow'), 'nofollow ' + tag);
+  assert_false(element.relList.supports('pingback'), 'pingback ' + tag);
+  assert_false(element.relList.supports('prev'), 'prev ' + tag);
+  assert_false(element.relList.supports('search'), 'search ' + tag);
+  assert_false(element.relList.supports('tag'), 'tag ' + tag);
+
+  if (tag === 'A' || tag === 'AREA') {
+    assert_false(element.relList.supports('modulepreload'), 'modulepreload ' + tag);
+    assert_false(element.relList.supports('preload'), 'preload ' + tag);
+    assert_false(element.relList.supports('preconnect'), 'preconnect ' + tag);
+    assert_false(element.relList.supports('dns-prefetch'), 'dns-prefetch ' + tag);
+    assert_false(element.relList.supports('stylesheet'), 'stylesheet ' + tag);
+    assert_false(element.relList.supports('import'), 'import ' + tag);
+    assert_false(element.relList.supports('icon'), 'icon ' + tag);
+    assert_false(element.relList.supports('alternate'), 'alternate ' + tag);
+    assert_false(element.relList.supports('prefetch'), 'prefetch ' + tag);
+    assert_false(element.relList.supports('prerender'), 'prerender ' + tag);
+    assert_false(element.relList.supports('next'), 'next ' + tag);
+    assert_false(element.relList.supports('manifest'), 'manifest ' + tag);
+    assert_false(element.relList.supports('apple-touch-icon'), 'apple-touch-icon ' + tag);
+    assert_false(element.relList.supports('apple-touch-icon-precomposed'), 'apple-touch-icon-precomposed ' + tag);
+    assert_false(element.relList.supports('canonical'), 'canonical ' + tag);
+    assert_true(element.relList.supports('noreferrer'), 'noreferrer ' + tag);
+    assert_true(element.relList.supports('noopener'), 'noopener ' + tag);
+  } else  if (tag === 'LINK') {
+    assert_false(element.relList.supports('noopener'), 'noopener ' + tag);
+    assert_false(element.relList.supports('noreferrer'), 'noreferrer ' + tag);
+    assert_true(element.relList.supports('modulepreload'), 'modulepreload ' + tag);
+    assert_true(element.relList.supports('preload'), 'preload ' + tag);
+    assert_true(element.relList.supports('preconnect'), 'preconnect ' + tag);
+    assert_true(element.relList.supports('dns-prefetch'), 'dns-prefetch ' + tag);
+    assert_true(element.relList.supports('stylesheet'), 'stylesheet ' + tag);
+    assert_true(element.relList.supports('import'), 'import ' + tag);
+    assert_true(element.relList.supports('icon'), 'icon ' + tag);
+    assert_true(element.relList.supports('alternate'), 'alternate ' + tag);
+    assert_true(element.relList.supports('prefetch'), 'prefetch ' + tag);
+    assert_true(element.relList.supports('prerender'), 'prerender ' + tag);
+    assert_true(element.relList.supports('next'), 'next ' + tag);
+    assert_true(element.relList.supports('manifest'), 'manifest ' + tag);
+    assert_true(element.relList.supports('apple-touch-icon'), 'apple-touch-icon ' + tag);
+    assert_true(element.relList.supports('apple-touch-icon-precomposed'), 'apple-touch-icon-precomposed ' + tag);
+    assert_true(element.relList.supports('canonical'), 'canonical ' + tag);
+  }
+}
+test(function() {
+  test_rellist(document.createElement('A'));
+  test_rellist(document.createElement('AREA'));
+  test_rellist(document.createElement('LINK'));
+}, "Make sure that relList based feature detection is working");
+</script>
