@@ -54,12 +54,13 @@ window.onload = function()
         return;
     testRunner.dumpAsText();
     testRunner.waitUntilDone();
+    testRunner.setShouldStayOnPageAfterHandlingBeforeUnload(true);
 
     window.addEventListener('beforeunload', function (e) {
         if (!dropReceived)
             log('Drop not received');
         beforeUnloadReceived = true;
-        e.preventDefault();
+        e.returnValue = "beforeunload";
         testRunner.notifyDone();
     });
 
