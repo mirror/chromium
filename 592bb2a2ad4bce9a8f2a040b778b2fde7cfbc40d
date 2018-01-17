@@ -1,0 +1,215 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a15ede13_7b8e9c54",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T23:30:26Z",
+      "side": 1,
+      "message": "I think this should also !time_on_page_start_.is_null() since 0 is less than Now.",
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16a15b0_383bb380",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T23:30:26Z",
+      "side": 1,
+      "message": "As discussed, I think I\u0027d remove this one until we figure out the new name and enum. If we had the name, we could use the OTHER (0) enum value.\nStartAction, StartCause, InitiationAction, ...",
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e109f059_36b40882",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T23:30:26Z",
+      "side": 1,
+      "message": "This probably isn\u0027t necessary. If you want to keep it, it could be as simple as:\n// Entering fullscreen from any previous state.",
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c31f65_6cb868ca",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T23:30:26Z",
+      "side": 1,
+      "message": "This might be misleading. It\u0027s possible the transition was from 2D fullscreen to VR fullscreen. It\u0027s more that fullscreen was used. DidRenderFullscreen?",
+      "range": {
+        "startLine": 361,
+        "startChar": 12,
+        "endLine": 361,
+        "endChar": 19
+      },
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da85228_02c066f2",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T23:30:26Z",
+      "side": 1,
+      "message": "It\u0027s not clear how we get the ID from the handle. It appears we saved the source ID, but the relationship with the handle (or how it would be changed) is unclear.",
+      "range": {
+        "startLine": 447,
+        "startChar": 29,
+        "endLine": 447,
+        "endChar": 44
+      },
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eba8ef9_c83364a4",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T23:30:26Z",
+      "side": 1,
+      "message": "nits: UKM, ID",
+      "range": {
+        "startLine": 447,
+        "startChar": 14,
+        "endLine": 447,
+        "endChar": 28
+      },
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f099e8e_30dc15f4",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T23:30:26Z",
+      "side": 1,
+      "message": "ISTM this comment applies to everything inside the if block. (UKMs are still counts.) If so, it should probably be above the if statement.",
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c465b76_ff2472d5",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T23:30:26Z",
+      "side": 1,
+      "message": "This would be a different enum value for the same metric as line 347.",
+      "range": {
+        "startLine": 476,
+        "startChar": 12,
+        "endLine": 476,
+        "endChar": 27
+      },
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645605ae_2dbd228d",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2487,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T23:30:26Z",
+      "side": 1,
+      "message": "How about something like this?\nRecords properties of page use in XR, including VR browsing and WebXR presentation.",
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b55b6cf_c6b1aa02",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2492,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T23:30:26Z",
+      "side": 1,
+      "message": "As noted earlier, this is not necessarily true. How about this?\nIndicates some element of the page was rendered fullscreen.",
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42c0888_9954145b",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2495,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T23:30:26Z",
+      "side": 1,
+      "message": "These two will be replaced.",
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

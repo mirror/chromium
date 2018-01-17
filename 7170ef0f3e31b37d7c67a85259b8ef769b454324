@@ -154,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "532ead9c_03ab94ac",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2355,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-17T23:30:26Z",
+      "side": 1,
+      "message": "We had offline discussions that led to the current solution, including \"XR.PageSession\" so much of this is obsolete.\n\n\"Page actions\" was referring to events/actions related to a page. \"PageSession\" is what we settled on.",
+      "parentUuid": "dffbdf96_086f836c",
+      "range": {
+        "startLine": 2355,
+        "startChar": 13,
+        "endLine": 2355,
+        "endChar": 24
+      },
+      "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d46cff98_dcf8896d",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 3
