@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3bcb890a_95e18d49",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-17T23:27:49Z",
+      "side": 1,
+      "message": "I made the data member private, but then exposed the constructor. I chose not to pass the policy_decider into CreateForWebState because I don\u0027t want BVC to need to create the policy_decider. Instead, CreateForWebState can create a policy_decider and pass into the public constructor.",
+      "parentUuid": "4578b1db_eacc34ad",
+      "range": {
+        "startLine": 46,
+        "startChar": 35,
+        "endLine": 46,
+        "endChar": 50
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd197320_4f526396",
         "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
         "patchSetId": 24
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-12T16:28:35Z",
       "side": 1,
       "message": "Consider moving this class to ios/chrome/test/fakes",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 43
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8401eba8_d8ab7c9c",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-17T23:27:49Z",
+      "side": 1,
+      "message": "This is only used in this file and I don\u0027t foresee this being needed elsewhere. Let\u0027s keep it here until it we see a need to move it.",
+      "parentUuid": "cd197320_4f526396",
       "range": {
         "startLine": 21,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4b6c618f_5ec28023",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-17T23:27:49Z",
+      "side": 1,
+      "message": "I like the idea that we should test state rather than interactions. See if my updates resonate with you.",
+      "parentUuid": "53d05ee3_1a8c7ab8",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f53dcb3_cc1bf088",
         "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
         "patchSetId": 24
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-12T16:28:35Z",
       "side": 1,
       "message": "Consider moving this class to ios/chrome/test/fakes",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 46
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19dc7e96_a1500eb5",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-17T23:27:49Z",
+      "side": 1,
+      "message": "This is only used in this file. I think it would be better to keep this here as there is no need for other files to access this currently.",
+      "parentUuid": "4f53dcb3_cc1bf088",
       "range": {
         "startLine": 54,
         "startChar": 11,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "598addad_aab597b1",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-17T23:27:49Z",
+      "side": 1,
+      "message": "Removed this and changed tests to only test the public API.",
+      "parentUuid": "cb8698cf_bbcc3054",
+      "range": {
+        "startLine": 51,
+        "startChar": 11,
+        "endLine": 51,
+        "endChar": 33
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd098f55_677e5e09",
         "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator_unittest.mm",
         "patchSetId": 24
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-12T16:28:35Z",
       "side": 1,
       "message": "From Unit testing best practices: \"Test code using real APIs - don’t define back doors only for tests.\"\n\nhttp://go/unit-test-practices#public-apis\n\nThis specific method is implementation detail of coordinator. Tests which rely on implementation details often fail during legitimate refactoring, so they can not catch regressions. \n\nIf I understand correctly, you want to mock tapping on UI elements, which is something that EG tests can do better. EG tests are definitely out of scope for this CL, so how about we just don\u0027t test tapping on labels?",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641ab490_7daddd0e",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator_unittest.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-17T23:27:49Z",
+      "side": 1,
+      "message": "Agreed. I removed testing tapping on the alerts. Correspondingly, I removed this back door for testing.",
+      "parentUuid": "fd098f55_677e5e09",
       "range": {
         "startLine": 34,
         "startChar": 8,
