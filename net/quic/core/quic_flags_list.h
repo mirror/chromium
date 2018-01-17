@@ -163,3 +163,9 @@ QUIC_FLAG(bool,
 // If true, QuicStreamSendBuffer keeps track of the slice which next write
 // should get data from if writing new data.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_write_index, false)
+
+// If true, when WINDOW_UPDATE is received, add stream to session's write
+// blocked list and let session unblock it later.
+QUIC_FLAG(bool,
+          FLAGS_quic_reloadable_flag_quic_streams_unblocked_by_session,
+          false)

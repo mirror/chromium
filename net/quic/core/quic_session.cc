@@ -58,7 +58,9 @@ QuicSession::QuicSession(QuicConnection* connection,
       goaway_received_(false),
       can_use_slices_(GetQuicReloadableFlag(quic_use_mem_slices)),
       allow_multiple_acks_for_data_(
-          GetQuicReloadableFlag(quic_allow_multiple_acks_for_data2)) {
+          GetQuicReloadableFlag(quic_allow_multiple_acks_for_data2)),
+      session_unblocks_stream_(
+          GetQuicReloadableFlag(quic_streams_unblocked_by_session)) {
   if (allow_multiple_acks_for_data_) {
     QUIC_FLAG_COUNT(quic_reloadable_flag_quic_allow_multiple_acks_for_data2);
   }
