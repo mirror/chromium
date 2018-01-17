@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "043e42f9_2e5a1d49",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3519,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-17T00:34:10Z",
+      "side": 0,
+      "message": "Hmm, why was this flag only available on Android, given that the Feature controls code behavior on other platforms as well?  It seems like it might be better to leave the flag in place, but open it up for all platforms.  That said, I\u0027ll defer to your judgement, as you have more familiarity with this feature than I do \u003d)",
+      "range": {
+        "startLine": 3515,
+        "startChar": 1,
+        "endLine": 3519,
+        "endChar": 30
+      },
+      "revId": "9c91d429fa7708bedaba0ecb471dc96acd2fc961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
