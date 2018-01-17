@@ -2388,6 +2388,10 @@ void HandleRemoteSurfaceBoundsChangedCallback(
     reason = ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_DRAG_RESIZE;
   } else if (bounds_change & ash::WindowResizer::kBoundsChange_Repositions) {
     reason = ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_DRAG_MOVE;
+  } else if (current_state_type == ash::mojom::WindowStateType::LEFT_SNAPPED) {
+    reason = ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_SNAP_TO_LEFT;
+  } else if (current_state_type == ash::mojom::WindowStateType::RIGHT_SNAPPED) {
+    reason = ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_SNAP_TO_RIGHT;
   }
   zcr_remote_surface_v1_send_bounds_changed(
       resource, static_cast<uint32_t>(display_id >> 32),
