@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33ccdea2_04de25a3",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2018-01-17T16:40:56Z",
+      "side": 1,
+      "message": "Nit: I think this should be \"SequenceResult\" (no d). Unless you had a reason to choose \"Sequenced\" instead?",
+      "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30189fda_eac180ce",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2018-01-17T16:40:56Z",
+      "side": 1,
+      "message": "\"SequenceResult\" (no d) here too",
+      "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bfd5b14_17023f1d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2018-01-17T16:40:56Z",
+      "side": 1,
+      "message": "Nit: the numbers aren\u0027t needed, enums automatically start at 0 and go up by 1 unless overridden.",
+      "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e724062_89a7a80a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 39801,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2018-01-17T16:40:56Z",
+      "side": 1,
+      "message": "Nit: SequenceResult here too",
+      "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957a246f_cf81c173",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 83919,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2018-01-17T16:40:56Z",
+      "side": 1,
+      "message": "Nit: SequenceResult here too (2 places)",
+      "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f52183_a996858a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 111042,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2018-01-17T16:40:56Z",
+      "side": 1,
+      "message": "Nit: SequenceResult here too",
+      "revId": "2a12f10ea558a83a656219844a0a4429886a8c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
