@@ -47,6 +47,8 @@ static const SessionCommand::id_type kCommandLastActiveTime = 21;
 // OBSOLETE Superseded by kCommandSetWindowWorkspace2.
 // static const SessionCommand::id_type kCommandSetWindowWorkspace = 22;
 static const SessionCommand::id_type kCommandSetWindowWorkspace2 = 23;
+static const SessionCommand::id_type kCommandTabNavigationPathPrunedAtIndex =
+    24;
 
 namespace {
 
@@ -92,6 +94,8 @@ using SelectedTabInIndexPayload = IDAndIndexPayload;
 using WindowTypePayload = IDAndIndexPayload;
 
 using TabNavigationPathPrunedFromFrontPayload = IDAndIndexPayload;
+
+using TabNavigationPathPrunedAtIndexPayload = IDAndIndexPayload;
 
 struct PinnedStatePayload {
   SessionID::id_type tab_id;
@@ -400,6 +404,18 @@ bool CreateTabsAndWindows(
         else
           windows->erase(payload.id);
 
+        break;
+      }
+
+      case kCommandTabNavigationPathPrunedAtIndex: {
+        TabNavigationPathPrunedAtIndexPayload payload;
+        if (!command->GetPayload(&payload, sizeof(payload))) {
+          DVLOG(1) << "Failed reading command " << command->id();
+          return true;
+        }
+        SessionTab* tab = GetTab(payload.id, tabs);
+        tab->navigations.erase(
+            FindClosestNavigationWithIndex(&(tab->navigations), payload.index));
         break;
       }
 
@@ -756,6 +772,18 @@ std::unique_ptr<SessionCommand> CreateSetWindowWorkspaceCommand(
   pickle.WriteString(workspace);
   std::unique_ptr<SessionCommand> command =
       base::MakeUnique<SessionCommand>(kCommandSetWindowWorkspace2, pickle);
+  return command;
+}
+
+std::unique_ptr<SessionCommand> CreateTabNavigationPathPrunedAtIndexCommand(
+    const SessionID& tab_id,
+    int index) {
+  TabNavigationPathPrunedAtIndexPayload payload = {0};
+  payload.id = tab_id.id();
+  payload.index = index;
+  std::unique_ptr<SessionCommand> command = base::MakeUnique<SessionCommand>(
+      kCommandTabNavigationPathPrunedAtIndex, sizeof(payload));
+  memcpy(command->contents(), &payload, sizeof(payload));
   return command;
 }
 
