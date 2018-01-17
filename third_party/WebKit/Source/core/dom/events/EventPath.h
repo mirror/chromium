@@ -64,7 +64,6 @@ class CORE_EXPORT EventPath final
   const NodeEventContext& operator[](size_t index) const {
     return node_event_contexts_[index];
   }
-  NodeEventContext& at(size_t index) { return node_event_contexts_[index]; }
   NodeEventContext& Last() { return node_event_contexts_[size() - 1]; }
 
   WindowEventContext& GetWindowEventContext() {
@@ -100,10 +99,6 @@ class CORE_EXPORT EventPath final
   void CalculateAdjustedTargets();
   void CalculateTreeOrderAndSetNearestAncestorClosedTree();
 
-  bool ShouldStopEventPath(EventTarget& current_target,
-                           EventTarget& current_related_target,
-                           const Node& target);
-
   void Shrink(size_t new_size) {
     DCHECK(!window_event_context_);
     node_event_contexts_.Shrink(new_size);
@@ -111,7 +106,7 @@ class CORE_EXPORT EventPath final
 
   void RetargetRelatedTarget(const Node& related_target_node);
 
-  void ShrinkForRelatedTarget(const Node& target);
+  void ShrinkForRelatedTarget();
 
   void AdjustTouchList(const TouchList*,
                        HeapVector<Member<TouchList>> adjusted_touch_list,
