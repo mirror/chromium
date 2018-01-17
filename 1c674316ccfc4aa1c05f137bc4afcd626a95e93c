@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5be623d7_8f6ba82d",
+        "filename": "base/time/time.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-17T09:42:21Z",
+      "side": 1,
+      "message": "Makes sense. Let\u0027s do that once we agree on the approach here.",
+      "parentUuid": "f991f155_38e0a11e",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 30
+      },
+      "revId": "1c674316ccfc4aa1c05f137bc4afcd626a95e93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e332cc6_70d4896c",
         "filename": "base/time/time.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-17T02:10:52Z",
       "side": 1,
       "message": "Based on the APIs below, it looks like this should be OverrideClock, since it is specific to override use-case?\n\nAlso, where is Clock defined?",
+      "range": {
+        "startLine": 89,
+        "startChar": 6,
+        "endLine": 89,
+        "endChar": 11
+      },
+      "revId": "1c674316ccfc4aa1c05f137bc4afcd626a95e93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d64e62a_d4a4581d",
+        "filename": "base/time/time.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-17T09:42:21Z",
+      "side": 1,
+      "message": "I\u0027m reusing Clock/TickClock from clock.h/tick_clock.h here.",
+      "parentUuid": "4e332cc6_70d4896c",
       "range": {
         "startLine": 89,
         "startChar": 6,
