@@ -16,6 +16,24 @@
       "revId": "821266f57fbd96598d2b29ce43e1ec2a899198a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f719b3f1_78d60392",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4429,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-17T23:15:27Z",
+      "side": 1,
+      "message": "I change the test and DisplayManager::OnNativeDisplaysChanged() to simulate the way display configurator sets software mirroring. The test will fail without my change.",
+      "parentUuid": "460bffb7_18d90e1e",
+      "revId": "821266f57fbd96598d2b29ce43e1ec2a899198a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
