@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d09c41ac_58eb2d09",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-17T21:46:31Z",
+      "side": 1,
+      "message": "Thanks for clarifying this. Also, I bet nobody would object to making this consistent by changing the CLI :-)\n\nAs a side note, having both \"suffix\" and \"extension\" is slightly confusing since they sound like synonyms.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 32
+      },
+      "revId": "08e2fd169b3b1f554267294e426da7c66a6b993f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
