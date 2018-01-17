@@ -769,9 +769,16 @@ public class AwAutofillTest {
             dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_B);
             // Check if NotifyVirtualValueChanged() called one more time and value is 'cb', this
             // means javascript change didn't trigger the NotifyVirtualValueChanged().
-            waitForCallbackAndVerifyTypes(cnt,
-                    new Integer[] {
-                            AUTOFILL_VIEW_EXITED, AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1) {
+                waitForCallbackAndVerifyTypes(cnt,
+                        new Integer[] {AUTOFILL_VIEW_EXITED, AUTOFILL_VIEW_ENTERED,
+                                AUTOFILL_VALUE_CHANGED});
+            } else {
+                // onTextFieldDidScroll adds AUTOFILL_VIEW_ENTERED.
+                waitForCallbackAndVerifyTypes(cnt,
+                        new Integer[] {AUTOFILL_VIEW_ENTERED, AUTOFILL_VIEW_EXITED,
+                                AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
+            }
             values = getChangedValues();
             assertEquals(2, values.size());
             assertEquals("a", values.get(0).second.getTextValue());
