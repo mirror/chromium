@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e29c7513_2613a6e8",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2018-01-17T09:17:32Z",
+      "side": 1,
+      "message": "optional: I personally prefer to add a check like \"id \u003c\u003d 0 || ...\" here instead of CancelWatchAvailabilityInternal(), because this API knows non-positive IDs are invalid.",
+      "revId": "da8da759e4dc7c823925c190bb5066aeecb8ca71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a479ba27_f27a0578",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2018-01-17T09:17:32Z",
+      "side": 1,
+      "message": "optional: To be precise, HashMap doesn\u0027t accept key \u003d 0 AND key \u003d -1.",
+      "range": {
+        "startLine": 301,
+        "startChar": 55,
+        "endLine": 301,
+        "endChar": 62
+      },
+      "revId": "da8da759e4dc7c823925c190bb5066aeecb8ca71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
