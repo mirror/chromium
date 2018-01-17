@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca5c2161_ef1361bc",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2043,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T23:15:32Z",
+      "side": 1,
+      "message": "This is basically an optimization, since Blink will reset the focused frame to the main frame anyway in FocusController::SetFocused, as part of processing the IPC from SetPageFocus (line 2050).",
+      "range": {
+        "startLine": 2043,
+        "startChar": 27,
+        "endLine": 2043,
+        "endChar": 56
+      },
+      "revId": "37a47e76ca37a5a85d4d414799ce21f117c6c0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a04fd8_f70cd18b",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2045,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T23:15:32Z",
+      "side": 1,
+      "message": "We only need to tell the renderer when a RemoteFrame is focused.  If we\u0027ve got A(B_focused,C), and C navigates to B, it\u0027s not necessary to tell B since its FocusController already knows the first subframe\u0027s LocalFrame has focus.\n\nThis might still send extra IPCs in rare cases (e.g., A(A_focused,B,C) and C navigates to B - B\u0027s process should already know about the A_focused RemoteFrame being the focused frame), but I think that\u0027s ok.",
+      "range": {
+        "startLine": 2044,
+        "startChar": 10,
+        "endLine": 2045,
+        "endChar": 51
+      },
+      "revId": "37a47e76ca37a5a85d4d414799ce21f117c6c0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
