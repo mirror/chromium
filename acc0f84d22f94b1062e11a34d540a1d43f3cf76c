@@ -16,6 +16,24 @@
       "revId": "acc0f84d22f94b1062e11a34d540a1d43f3cf76c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069d9216_e1b54a4f",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-17T23:33:21Z",
+      "side": 1,
+      "message": "I think your method would need much code than this. The above change works without needing blink to deal with visual rects of paired cc display items. They are updated automatically with the existing visual rect logic of drawing display items. For empty filters, we already must create a no-op drawing display item to ensure a non-empty chunk with the property state containing the filter.",
+      "parentUuid": "ca29d0e4_73a3da30",
+      "revId": "acc0f84d22f94b1062e11a34d540a1d43f3cf76c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
