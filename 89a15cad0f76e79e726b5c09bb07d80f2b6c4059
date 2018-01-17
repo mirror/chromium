@@ -45,6 +45,40 @@
       "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff261b98_be979757",
+        "filename": "device/vr/vr_device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T20:36:48Z",
+      "side": 1,
+      "message": "Please follow best practices for commenting.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms\n\n(The current comment is not strong enough.)\n\nditto below",
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69111d44_1ed65408",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 94966,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T20:36:48Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#state-when-it-is-recorded\n\nditto below.\n\nAlso, \"installed\" and \"available\" is a combination.  Can you confirm that \"installed but not available\" doesn\u0027t indeed get emitted (if that\u0027s the intention)?",
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
