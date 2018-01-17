@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "154d65c3_f8c56b9c",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-17T22:25:18Z",
+      "side": 1,
+      "message": "thet -\u003e that",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 86,
+        "endChar": 20
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b8bf5b_d711bf2e",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-17T22:25:18Z",
+      "side": 1,
+      "message": "I think you want a screenshot here that shows what that looks like and a mention of the difference between light and heavy dumps somewhere?",
+      "range": {
+        "startLine": 89,
+        "startChar": 13,
+        "endLine": 89,
+        "endChar": 0
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad3b0f2b_440eb8e4",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-17T22:25:18Z",
+      "side": 1,
+      "message": "Maybe out of scope of this particular cl, but I think the difficult part of interpreting a memory infra dump is understanding what different numbers mean and correspond to (e.g. edge accounting, what UI provider means, etc.) We should have more documentation about that.",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 6
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f09e6b8_5f2a848a",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-17T22:25:18Z",
+      "side": 1,
+      "message": "It may be worth mentioning somewhere that you can just select two snapshots to view their diff though.",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 10
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4932958_fde5ef1c",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-17T22:25:18Z",
+      "side": 1,
+      "message": "Suggestion: Click on a dark-purple M circle, each one of these corresponds to a heavy dump.",
+      "range": {
+        "startLine": 112,
+        "startChar": 10,
+        "endLine": 112,
+        "endChar": 11
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fec62e8_e3310763",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-17T22:25:18Z",
+      "side": 1,
+      "message": "I would add \"On Android, this does not register allocations made by Android framework code\"",
+      "range": {
+        "startLine": 138,
+        "startChar": 14,
+        "endLine": 138,
+        "endChar": 19
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd30a060_5e6b657e",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-17T22:25:18Z",
+      "side": 1,
+      "message": "how?",
+      "range": {
+        "startLine": 141,
+        "startChar": 38,
+        "endLine": 141,
+        "endChar": 39
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d74c623_14ed448a",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-17T22:25:18Z",
+      "side": 1,
+      "message": "Same as memory-infra, I think we need more instructions on how to interpret the output (e.g. threads, bottom-up vs top-down, etc)",
+      "range": {
+        "startLine": 153,
+        "startChar": 12,
+        "endLine": 153,
+        "endChar": 20
+      },
+      "revId": "8e4ebe82a0d260e333ed7aeb3ec0c941ba8a4718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
