@@ -446,9 +446,11 @@ void SwReporterOnDemandFetcher::OnEvent(Events event, const std::string& id) {
     return;
 
   if (event == Events::COMPONENT_NOT_UPDATED) {
+    UMA_HISTOGRAM_BOOLEAN("SoftwareReporter.OnDemandUpdateSucceeded", false);
     std::move(on_error_callback_).Run();
     cus_->RemoveObserver(this);
   } else if (event == Events::COMPONENT_UPDATED) {
+    UMA_HISTOGRAM_BOOLEAN("SoftwareReporter.OnDemandUpdateSucceeded", true);
     cus_->RemoveObserver(this);
   }
 }
