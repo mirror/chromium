@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "22b51f20_6b93ea3c",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-17T03:00:42Z",
+      "side": 1,
+      "message": "Since this is going to third_party/zlib we can probably not follow google3 behavior.",
+      "parentUuid": "d60c8196_d0ff9d3d",
+      "range": {
+        "startLine": 55,
+        "startChar": 46,
+        "endLine": 55,
+        "endChar": 57
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf4f67c7_16696141",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "2275c3cb_07fac7fe",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-17T03:00:42Z",
+      "side": 1,
+      "message": "Hrmmm I suppose.\n\nI tried it out and the difference was completely tiny. Like 10s of nanoseconds. But it is still adding to the error. It costs us very little to not add that.\n\nhttps://msdn.microsoft.com/en-us/library/windows/desktop/dn553408(v\u003dvs.85).aspx\nCtrl+F for \"I need to convert the QPC output to milliseconds. How can I avoid loss of precision with converting to double or float?\"\n\nI guess I\u0027m okay leaving it but it just feels like there is no benefit to leaving it and there are (tiny) drawbacks.",
+      "parentUuid": "097be70b_c1d5a7c1",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6daeac4_09dfd69b",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "I\u0027d prefer to keep it, was using it to delimit the parts of this test harness that call/use third_party/zlib things.\n\neg., zlib has a compress routine, compress(), so I called mine z_compress() just so they were different (for code search etc).",
       "parentUuid": "d6daeac4_09dfd69b",
+      "range": {
+        "startLine": 118,
+        "startChar": 14,
+        "endLine": 118,
+        "endChar": 16
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df062ded_0a6c4dda",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-17T03:00:42Z",
+      "side": 1,
+      "message": "I agree with the benefit of differentiation for code search. But maybe something more descriptive than \"z_\"?\n\nThe z_ prefix makes it looks like one of zlib\u0027s external structs.",
+      "parentUuid": "5908be62_1a5ed6bf",
       "range": {
         "startLine": 118,
         "startChar": 14,
@@ -284,6 +356,30 @@
     },
     {
       "key": {
+        "uuid": "7ebecb41_3ab2c643",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-17T03:00:42Z",
+      "side": 1,
+      "message": "You\u0027re right, I was looking at zlib.h from freetype\u0027s gzip.\nI searched in code search and didn\u0027t realized it had ranked something other than third_party/zlib higher. :/\n\nThanks!",
+      "parentUuid": "e561e982_8ee3e029",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 1
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eca1a72_bd94d670",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -331,6 +427,30 @@
     },
     {
       "key": {
+        "uuid": "5ae7dab2_ea2a2132",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-17T03:00:42Z",
+      "side": 1,
+      "message": "Hrmm, interesting.\nLooking at zlib/examples/gun.c and gzappend.c (in the upstream repo since we don\u0027t have examples/ here), they clearly initialize zalloc, zfree, and opaque prior to the *Init calls, like you said. next_in is set after.\n\nBut looking at upstream deflateInit*(), it sets opaque to 0 if zalloc is 0. Same with inflateInit*(). So I don\u0027t think you need to initialize opaque if you aren\u0027t providing your own alloc. I believe the purpose of opaque is to have an identifier to link calls to alloc and free. If you don\u0027t provide your own alloc / free, you don\u0027t need to link those calls.\n\nSimilarly, deflateInit*() and inflateInit*() don\u0027t access next_in.\n\nI think following the docs is okay here.\n\nBut since the upstream examples/ don\u0027t initialize next_in, I guess I\u0027m okay ignoring the docs here. The risk is that zlib wants to eventually depend on next_in. But they should fix their examples if that is the case.",
+      "parentUuid": "46c167de_381045ab",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 37
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f947b305_09258690",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -366,6 +486,30 @@
       "side": 1,
       "message": "\u003e Same here. next_in and avail_in should be initialized before the call to inflateInit2 [1]. \n\nThey are intiialized ... to 0, right? \n\n\u003e An example is here [2].\n\nSame problems with that code as above, opaque not set, etc, would be easier to do it right with a memset.",
       "parentUuid": "f947b305_09258690",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 199,
+        "endChar": 0
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fdc6575_c1c57cb3",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-17T03:00:42Z",
+      "side": 1,
+      "message": "Like above, it turns out the inflateInit*() functions don\u0027t actually depend on next_in despite saying they should be initialized first. Initializing to 0 is not what I meant and I suspect not what the docs meant. But it is fine for the same reasons as above.",
+      "parentUuid": "53a6b07b_e004fa77",
       "range": {
         "startLine": 190,
         "startChar": 2,
@@ -472,6 +616,30 @@
       "side": 1,
       "message": "In a local poll, only about half the respondents knew this was 10MB.  I rewrote it in terms of a kMegaByte constant to help such folks.",
       "parentUuid": "442831c4_65b9f708",
+      "range": {
+        "startLine": 255,
+        "startChar": 23,
+        "endLine": 255,
+        "endChar": 31
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "266d40fe_6adf2c71",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-17T03:00:42Z",
+      "side": 1,
+      "message": "Yeah but I still don\u0027t quite get the point of the 10MB.\n\nA few lines below, there are nested for loops. For each run we loop over each block. And for each block we loop over each repeat.\n\nSo for example, if the data is 4MB long, (10MB+4MB)/(4MB+1byte) \u003d 14MB/4MBish \u003d 3.5, int round down to 3.\n\n\nIf we have 2 blocks, we compress block 1 three times. Then we compress block 2 three times.\n\n\n\nIf instead the data was 9MB long, (10MB+9MB)/(9MB+1byte) \u003d 19MB/9MBish \u003d ~2.1, int round down to 2. So then we compress each block only twice.\n\n\nI don\u0027t understand the reason for the \"repeats\".",
+      "parentUuid": "109da985_248d2d1b",
       "range": {
         "startLine": 255,
         "startChar": 23,
