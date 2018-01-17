@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6025f1e_f1fb5f10",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-17T22:52:02Z",
+      "side": 1,
+      "message": "Would \n  readOnly: true,\nmake sense for this property?\n\n(and similar for related changes in this CL). Optional.",
+      "revId": "61cde87bbfca2e0349207e219123cdd850a8ff3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
