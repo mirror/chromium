@@ -12,6 +12,7 @@
 
 namespace gpu {
 
+#if !defined(CAST_SYS_INFO)
 CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
   DCHECK(gpu_info);
 
@@ -37,6 +38,7 @@ CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
 
   return gpu_info->basic_info_state;
 }
+#endif  // !CAST_SYS_INFO
 
 CollectInfoResult CollectDriverInfoGL(GPUInfo* gpu_info) {
   DCHECK(gpu_info);
