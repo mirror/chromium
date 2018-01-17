@@ -566,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "03c1b71f_977bf102",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-17T19:24:39Z",
+      "side": 1,
+      "message": "Shouldn\u0027t tapping/clicking on the arrow also make the button click? For example, if you click and hold, shouldn\u0027t the button itself look pressed?",
+      "parentUuid": "6e74a866_a88e8ce1",
+      "range": {
+        "startLine": 67,
+        "startChar": 15,
+        "endLine": 67,
+        "endChar": 21
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7cf130e_38d64a5d",
         "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
         "patchSetId": 18
@@ -742,6 +766,30 @@
       "side": 1,
       "message": "This works in my case as the MD button size is always at least 28 pixels - see comment at https://cs.chromium.org/chromium/src/ui/views/controls/button/md_text_button.cc?rcl\u003deedb5c3144bf2c346bf239f79430db4d4d97a096\u0026l\u003d209\n\nI have spent at least 3 hours seeing if I can make this work differently, but the problem is that no matter what I do in my class, the MDButton::UpdatePadding always breaks my sizing. I guess this means 2 things:\n1. Keep the code as is now because it works and basically rely on the fact that the MDButton has a height of 28 pixels and thus label() and subtitle fit one below the other.\n2. Add a subtitle to the MDTextButton and change the MDTextButton to accept a title and a subtitle. Then subclass it here.\n3. Change DiceSigninButton to subclass LabeLButton and copy all the logic related to colors from MDTextButton.\n\nI think I prefer myself Option 1 now for the following reasons:\n* allows me to move forward and add the promos on all bubbles\n* has the same look and feel and the rest of the MD buttons (this is part of spec)\n* avoid code duplication\n\nIn parallel, I could start moving forward with either Option 2 or 3, but I would need guidance on which one you think is the best approach as my knowledge of views is fairly limited at this point.",
       "parentUuid": "b547ec87_143687cb",
+      "range": {
+        "startLine": 114,
+        "startChar": 49,
+        "endLine": 114,
+        "endChar": 72
+      },
+      "revId": "df3a983b56104354d92e27b8d648d71bf1d18bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f96a77_1f0d4926",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-17T19:24:39Z",
+      "side": 1,
+      "message": "I would expect you to override CalculatePreferredSize() and ensure the height is big enough for you label. Is there a reason not to do that?",
+      "parentUuid": "742391ba_ac8dda7a",
       "range": {
         "startLine": 114,
         "startChar": 49,
