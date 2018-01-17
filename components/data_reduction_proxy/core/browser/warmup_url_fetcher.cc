@@ -96,6 +96,7 @@ void WarmupURLFetcher::FetchWarmupURLNow() {
   GetWarmupURLWithQueryParam(&warmup_url_with_query_params);
 
   fetcher_.reset();
+  timeout_timer_.Stop();
   is_fetch_in_flight_ = true;
 
   fetcher_ =
@@ -114,6 +115,8 @@ void WarmupURLFetcher::FetchWarmupURLNow() {
   static const int kMaxRetries = 5;
   fetcher_->SetAutomaticallyRetryOn5xx(false);
   fetcher_->SetAutomaticallyRetryOnNetworkChanges(kMaxRetries);
+  timeout_timer_.Start(FROM_HERE, GetFetchTimeout(), this,
+                       &WarmupURLFetcher::OnFetchTimeout);
   fetcher_->Start();
 }
 
@@ -135,6 +138,8 @@ void WarmupURLFetcher::GetWarmupURLWithQueryParam(
 void WarmupURLFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
   DCHECK_EQ(source, fetcher_.get());
   DCHECK(is_fetch_in_flight_);
+
+  timeout_timer_.Stop();
 
   UMA_HISTOGRAM_BOOLEAN(
       "DataReductionProxy.WarmupURL.FetchSuccessful",
@@ -189,6 +194,58 @@ void WarmupURLFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
 
 bool WarmupURLFetcher::IsFetchInFlight() const {
   return is_fetch_in_flight_;
+}
+
+base::TimeDelta WarmupURLFetcher::GetFetchTimeout() const {
+  // The timeout value should always be between kMinTimeout and kDefaultTimeout
+  // (both inclusive).
+  constexpr base::TimeDelta kDefaultTimeout = base::TimeDelta::FromSeconds(60);
+  constexpr base::TimeDelta kMinTimeout = base::TimeDelta::FromSeconds(10);
+  constexpr size_t kHttpRttMultiplier = 20;
+
+  const net::NetworkQualityEstimator* network_quality_estimator =
+      url_request_context_getter_->GetURLRequestContext()
+          ->network_quality_estimator();
+
+  base::Optional<base::TimeDelta> http_rtt_estimate =
+      network_quality_estimator->GetHttpRTT();
+  if (!http_rtt_estimate)
+    return kDefaultTimeout;
+
+  base::TimeDelta timeout = kHttpRttMultiplier * http_rtt_estimate.value();
+  if (timeout > kDefaultTimeout)
+    return kDefaultTimeout;
+
+  if (timeout < kMinTimeout)
+    return kMinTimeout;
+
+  return timeout;
+}
+
+void WarmupURLFetcher::OnFetchTimeout() {
+  DCHECK(is_fetch_in_flight_);
+  DCHECK(fetcher_);
+
+  const net::ProxyServer& proxy_server = fetcher_->ProxyServerUsed();
+
+  // Stop the |fetcher_| since there is no need to continue the fetch.
+  fetcher_.reset();
+
+  UMA_HISTOGRAM_BOOLEAN("DataReductionProxy.WarmupURL.FetchSuccessful", false);
+
+  base::UmaHistogramSparse("DataReductionProxy.WarmupURL.NetError",
+                           net::ERR_ABORTED);
+
+  if (!GetFieldTrialParamByFeatureAsBool(
+          features::kDataReductionProxyRobustConnection,
+          "warmup_fetch_callback_enabled", false)) {
+    // Running the callback is not enabled.
+    is_fetch_in_flight_ = false;
+    return;
+  }
+
+  callback_.Run(proxy_server, FetchResult::kTimedOut);
+  is_fetch_in_flight_ = false;
 }
 
 }  // namespace data_reduction_proxy
