@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "091aa28b_9b6bac3a",
+        "filename": "BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2018-01-17T02:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75020f9b_1d5671d5",
+      "revId": "e4438f231b6f255ec93a978c8119fff86b33adea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "120db27e_013d50ee",
         "filename": "testing/scripts/run_performance_tests.py",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-17T02:46:30Z",
       "side": 1,
       "message": "Just curious -- why are we splitting this file?",
+      "revId": "e4438f231b6f255ec93a978c8119fff86b33adea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e17a8d_13d19507",
+        "filename": "testing/scripts/run_performance_tests.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2018-01-17T02:55:20Z",
+      "side": 1,
+      "message": "benchmark_sharding_map is manually updated and used to generate chromium.perf.fyi.json based on our existing benchmark sharding algorithm.  When we move towards per story sharding this file will be obsolete.  \n\nSince I am not auto-generating my buildbot json at this point, I don\u0027t want to have to update perf_data_generator (https://cs.chromium.org/chromium/src/tools/perf/core/perf_data_generator.py) to generate this new json until we have landed on the right format :)",
+      "parentUuid": "120db27e_013d50ee",
       "revId": "e4438f231b6f255ec93a978c8119fff86b33adea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
