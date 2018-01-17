@@ -25,6 +25,14 @@ class AppListModelBuilder {
                       const char* item_type);
   virtual ~AppListModelBuilder();
 
+  // ChromeAppListItem instances get the proper model updater from
+  // AppListSyncableService, to transmit model updates to Ash.
+  // However, they may not have access to AppListSyncableService in tests
+  // (e.g. model builders are built out of a syncable service). For those
+  // cases we pass the model updater to the item when it's created and
+  // ready to be inserted into the model.
+  static void OverrideItemModelUpdaterForTest(bool yes);
+
   // Initialize to use app-list sync and sets |service_| to |service|.
   // |service| is the owner of this instance.
   void Initialize(app_list::AppListSyncableService* service,

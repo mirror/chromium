@@ -6,6 +6,8 @@
 
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/app_list_service.h"
+#include "chrome/browser/ui/app_list/app_list_syncable_service_factory.h"
+#include "chrome/browser/ui/app_list/chrome_app_list_model_updater.h"
 #include "extensions/browser/app_sorting.h"
 #include "extensions/browser/extension_system.h"
 #include "ui/gfx/color_utils.h"
@@ -32,9 +34,7 @@ gfx::ImageSkia ChromeAppListItem::CreateDisabledIcon(
 
 ChromeAppListItem::ChromeAppListItem(Profile* profile,
                                      const std::string& app_id)
-    : app_list::AppListItem(app_id),
-      profile_(profile)  {
-}
+    : app_list::AppListItem(app_id), profile_(profile) {}
 
 ChromeAppListItem::~ChromeAppListItem() {
 }
@@ -57,6 +57,19 @@ AppListControllerDelegate* ChromeAppListItem::GetController() {
   return g_controller_for_test != nullptr
              ? g_controller_for_test
              : AppListService::Get()->GetControllerDelegate();
+}
+
+AppListModelUpdater* ChromeAppListItem::GetModelUpdater() const {
+  if (model_updater_for_test_)
+    return model_updater_for_test_;
+
+  app_list::AppListSyncableService* service =
+      app_list::AppListSyncableServiceFactory::GetForProfile(profile_);
+  if (!service)
+    return nullptr;
+
+  AppListModelUpdater* model_updater = service->GetModelUpdater();
+  return model_updater;
 }
 
 void ChromeAppListItem::UpdateFromSync(
@@ -84,6 +97,11 @@ void ChromeAppListItem::SetDefaultPositionIfApplicable() {
   DCHECK(launch_ordinal.IsValid());
   set_position(syncer::StringOrdinal(page_ordinal.ToInternalValue() +
                                      launch_ordinal.ToInternalValue()));
+}
+
+void ChromeAppListItem::OverrideModelUpdaterForTest(
+    AppListModelUpdater* model_updater) {
+  model_updater_for_test_ = model_updater;
 }
 
 bool ChromeAppListItem::CompareForTest(

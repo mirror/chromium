@@ -304,13 +304,14 @@ AppListSyncableService::AppListSyncableService(
   oem_folder_name_ =
       l10n_util::GetStringUTF8(IDS_APP_LIST_OEM_DEFAULT_FOLDER_NAME);
 
-  if (IsExtensionServiceReady()) {
-    BuildModel();
-  } else {
-    extension_system_->ready().Post(
-        FROM_HERE, base::Bind(&AppListSyncableService::BuildModel,
-                              weak_ptr_factory_.GetWeakPtr()));
-  }
+  // Make sure AppListSyncableService is initiated before building models.
+  // While creating ChromeAppListItems in BuildModel, changes are expected to
+  // take place in Ash AppListModel via the model updater. Only after
+  // AppListSyncableService is constructed can ChromeAppListItem get the model
+  // updater via AppListSyncableService.
+  extension_system_->ready().Post(
+      FROM_HERE, base::Bind(&AppListSyncableService::BuildModel,
+                            weak_ptr_factory_.GetWeakPtr()));
 }
 
 AppListSyncableService::~AppListSyncableService() {
