@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97db9a84_5094dcbc",
+        "filename": "content/renderer/loader/resource_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-01-17T07:01:37Z",
+      "side": 0,
+      "message": "This fix was wrong: DeleteSoon must be called.",
+      "revId": "874a966938f2288ea7be714cb7274950962d0141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
