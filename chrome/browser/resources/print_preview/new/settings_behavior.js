@@ -6,6 +6,7 @@ cr.exportPath('print_preview_new');
 /**
  * @typedef {{
  *   value: *,
+ *   unavailableValue: *,
  *   valid: boolean,
  *   available: boolean,
  * }}
