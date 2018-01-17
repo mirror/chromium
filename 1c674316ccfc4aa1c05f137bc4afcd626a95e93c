@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f991f155_38e0a11e",
+        "filename": "base/time/time.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T02:10:52Z",
+      "side": 1,
+      "message": "LazyInstance makes use of Time::Now() internally (if two or more threads hit Get() at the same time) so this creates a cyclical dependency.\n\nIf you can require that SetClock() is called while the app is single-threaded then you can make this a bare pointer, though, which avoids that problem.",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 30
+      },
+      "revId": "1c674316ccfc4aa1c05f137bc4afcd626a95e93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e332cc6_70d4896c",
+        "filename": "base/time/time.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T02:10:52Z",
+      "side": 1,
+      "message": "Based on the APIs below, it looks like this should be OverrideClock, since it is specific to override use-case?\n\nAlso, where is Clock defined?",
+      "range": {
+        "startLine": 89,
+        "startChar": 6,
+        "endLine": 89,
+        "endChar": 11
+      },
+      "revId": "1c674316ccfc4aa1c05f137bc4afcd626a95e93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264a3364_7c224baa",
+        "filename": "base/time/time.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T02:10:52Z",
+      "side": 1,
+      "message": "This kind of API makes it easy for a calling test to forget to clear the override; could we instead provide a ScopedTime[Ticks]Clock?",
+      "range": {
+        "startLine": 541,
+        "startChar": 0,
+        "endLine": 545,
+        "endChar": 80
+      },
+      "revId": "1c674316ccfc4aa1c05f137bc4afcd626a95e93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
