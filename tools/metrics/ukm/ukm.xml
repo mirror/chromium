@@ -2481,4 +2481,36 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event name="XR.PageSession" singular="True">
+  <owner>offenwanger@chromium.org</owner>
+  <summary>
+    Logs transitions into XR presentation and VR browsing, as well as time spent
+    on a url.
+  </summary>
+  <metric name="EnteredFullscreen">
+    <summary>
+      Indicates that the user entered fullscreen on some media element while on
+      this page.
+    </summary>
+  </metric>
+  <metric name="EnteredXR">
+    <summary>
+      Indicates that the user entered XR on this page.
+    </summary>
+  </metric>
+  <metric name="NavigatedToPage">
+    <summary>
+      Indicates that the user navigated to this page in XR, using XR navigation
+      methods.
+    </summary>
+  </metric>
+  <metric name="TimeOnPage">
+    <summary>
+      The aproximate amount of time the user spends on a page in seconds. Times
+      are reported accurately when low, for example, under a minute, and get
+      rounded to minutes and then hours as they get larger.
+    </summary>
+  </metric>
+</event>
+
 </ukm-configuration>

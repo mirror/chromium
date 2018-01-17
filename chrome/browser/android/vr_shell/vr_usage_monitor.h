@@ -65,6 +65,7 @@ class VrMetricsHelper : public content::WebContentsObserver {
       const MediaPlayerInfo& media_info,
       const MediaPlayerId&,
       WebContentsObserver::MediaStoppedReason reason) override;
+  void DidStartNavigation(content::NavigationHandle* handle) override;
   void DidFinishNavigation(content::NavigationHandle* handle) override;
   void DidToggleFullscreenModeForTab(bool entered_fullscreen,
                                      bool will_cause_resize) override;
@@ -78,6 +79,8 @@ class VrMetricsHelper : public content::WebContentsObserver {
   std::unique_ptr<SessionTimer> session_timer_;
 
   vr::Mode mode_ = vr::Mode::kNoVr;
+
+  base::Time time_on_page_start_;
 
   // state that gets translated into vr_mode:
   bool is_fullscreen_ = false;
