@@ -34,6 +34,24 @@
       "revId": "acc0f84d22f94b1062e11a34d540a1d43f3cf76c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850200f5_64c7506e",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-17T23:43:20Z",
+      "side": 1,
+      "message": "Problem is the expansion is always needed regardless whether there is painted content or not. For example, we can have a filter that paste a 100x100 image, while the enclosing content is 1x1. In this case, the union of the visual rects will be 1x1 despite the filter\u0027s actual output is 100x100.\n\n\u003cdiv style\u003d\"filter:url(something_paste_an_image); width:100px; height:100px;\"\u003e\n  \u003cdiv style\u003d\"width:1px; height:1px; background:green;\"\u003e\u003c/div\u003e\n\u003c/div\u003e",
+      "parentUuid": "069d9216_e1b54a4f",
+      "revId": "acc0f84d22f94b1062e11a34d540a1d43f3cf76c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
