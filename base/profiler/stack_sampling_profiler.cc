@@ -815,8 +815,17 @@ void StackSamplingProfiler::Start() {
     return;
 
   // Wait for profiling to be "inactive", then reset it for the upcoming run.
+  //
+  // Waiting on this event enables us to ensure that the previous profiling
+  // occurring on the profiler thread has stopped before either starting
+  // profiling afresh from the same profiler, or destroying the profiler. We
+  // can't use task posting for this coordination because the thread owning the
+  // profiler may not have a message loop.
+  DCHECK(!sampling_started_);
+  base::ScopedAllowBaseSyncPrimitivesOutsideBlockingScope allow_sync_primitives;
   profiling_inactive_.Wait();
   profiling_inactive_.Reset();
+  sampling_started_ = true;
 
   DCHECK_EQ(NULL_PROFILER_ID, profiler_id_);
   profiler_id_ = SamplingThread::GetInstance()->Add(
