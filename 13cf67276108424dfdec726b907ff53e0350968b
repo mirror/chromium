@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7fbe806_3c92ebf1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-17T11:29:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbddd4ec_ac67f080",
+      "range": {
+        "startLine": 346,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 75
+      },
+      "revId": "13cf67276108424dfdec726b907ff53e0350968b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35cff04b_d4917209",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "13cf67276108424dfdec726b907ff53e0350968b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27037996_10cba7c1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-17T11:29:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35cff04b_d4917209",
+      "range": {
+        "startLine": 970,
+        "startChar": 0,
+        "endLine": 970,
+        "endChar": 77
+      },
+      "revId": "13cf67276108424dfdec726b907ff53e0350968b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "da47b817_e2804846",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-17T11:29:00Z",
+      "side": 1,
+      "message": "Original time is 1ms, therefore after advancing time by 300ms we get an additional millisecond. See the other tests for example.",
+      "parentUuid": "c2d988b2_d33afc69",
+      "range": {
+        "startLine": 989,
+        "startChar": 72,
+        "endLine": 989,
+        "endChar": 75
+      },
+      "revId": "13cf67276108424dfdec726b907ff53e0350968b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4f6539d_23b28310",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/work_queue.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "13cf67276108424dfdec726b907ff53e0350968b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881e37ee_5f9008aa",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/work_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-17T11:29:00Z",
+      "side": 1,
+      "message": "These two are slightly different. I will add an assert that there is no new work that became eligible to run (i.e. we\u0027re not removing an existing fence) -- we already do it at the call site but we could move it here.\n\nBut there is a second part to it -- that some work may have become uneligible to run due to a new fence. But a notification should not be triggered due to the fact that we\u0027re in the middle of TakeIncomingImmediateQueue, caller of which insures that we have properly notified WorkQueueSets.",
+      "parentUuid": "e4f6539d_23b28310",
+      "range": {
+        "startLine": 115,
+        "startChar": 41,
+        "endLine": 115,
+        "endChar": 54
+      },
+      "revId": "13cf67276108424dfdec726b907ff53e0350968b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
