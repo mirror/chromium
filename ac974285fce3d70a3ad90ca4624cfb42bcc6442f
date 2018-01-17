@@ -70,6 +70,24 @@
       "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06040357_d6b8f19b",
+        "filename": "content/browser/service_manager/service_manager_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-17T15:24:28Z",
+      "side": 1,
+      "message": "Yep that SGTM. It is indeed more complicated than passing a TaskRunner to ServiceManagerContext, but for reasons stated above I just don\u0027t think the latter is tenable. Thanks!",
+      "parentUuid": "363c3a64_43371043",
+      "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
