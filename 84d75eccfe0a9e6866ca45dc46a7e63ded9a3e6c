@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "29fe2427_70763810",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-17T14:34:00Z",
+      "side": 1,
+      "message": "lgtm",
+      "parentUuid": "5fa74601_a1aab346",
+      "revId": "84d75eccfe0a9e6866ca45dc46a7e63ded9a3e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eed19bdc_d258473e",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-17T14:34:00Z",
+      "side": 1,
+      "message": "nit: @private is not really required since this is the implementation file already",
+      "range": {
+        "startLine": 82,
+        "startChar": 1,
+        "endLine": 82,
+        "endChar": 9
+      },
+      "revId": "84d75eccfe0a9e6866ca45dc46a7e63ded9a3e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d6ba8c_e0b63efc",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller_unittest.mm",
         "patchSetId": 2
