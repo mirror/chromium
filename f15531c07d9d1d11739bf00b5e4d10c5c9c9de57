@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02b1547b_e1e35a08",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-17T15:09:00Z",
+      "side": 1,
+      "message": "nit: There is also the is_download bit, which I\u0027d expect to be true in that case, right?",
+      "revId": "f15531c07d9d1d11739bf00b5e4d10c5c9c9de57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54737ed5_6fdab5d9",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-17T15:09:00Z",
+      "side": 1,
+      "message": "What about: URLs are allowed to do that? IIRC, we rewrite all about: URLs into chrome: ones, which aren\u0027t allowed to be navigated to by regular web renderers.",
+      "range": {
+        "startLine": 739,
+        "startChar": 40,
+        "endLine": 739,
+        "endChar": 45
+      },
+      "revId": "f15531c07d9d1d11739bf00b5e4d10c5c9c9de57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90edb3f3_9851d3c1",
+        "filename": "content/browser/loader/mime_sniffing_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-17T15:09:00Z",
+      "side": 1,
+      "message": "nit: Technically, you can get cross-origin filesystem or blob URL, if the other origin tells you one and I think it is allowed to navigate to, so it is a bit strange to see excluding these URLs from being cross-origin.\nIt is existing code, so I don\u0027t expect to see any changes here, just pondering why this is written this way.",
+      "revId": "f15531c07d9d1d11739bf00b5e4d10c5c9c9de57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
