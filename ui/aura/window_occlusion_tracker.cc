@@ -8,7 +8,6 @@
 #include "base/stl_util.h"
 #include "third_party/skia/include/core/SkRect.h"
 #include "third_party/skia/include/core/SkRegion.h"
-#include "ui/aura/window.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
 #include "ui/gfx/transform.h"
 
@@ -132,7 +131,7 @@ void WindowOcclusionTracker::MaybeRecomputeOcclusion() {
   }
 }
 
-void WindowOcclusionTracker::RecomputeOcclusionImpl(
+bool WindowOcclusionTracker::RecomputeOcclusionImpl(
     Window* window,
     const gfx::Transform& parent_transform_relative_to_root,
     const SkIRect* clipped_bounds,
@@ -140,13 +139,13 @@ void WindowOcclusionTracker::RecomputeOcclusionImpl(
   DCHECK(window);
 
   if (WindowIsAnimated(window)) {
-    SetWindowAndDescendantsAreOccluded(window, false);
-    return;
+    SetWindowAndDescendantsOcclusion(window, Window::OcclusionState::VISIBLE);
+    return true;
   }
 
   if (!window->IsVisible()) {
-    SetWindowAndDescendantsAreOccluded(window, true);
-    return;
+    SetWindowAndDescendantsOcclusion(window, Window::OcclusionState::OCCLUDED);
+    return false;
   }
 
   // Compute window bounds.
@@ -154,10 +153,10 @@ void WindowOcclusionTracker::RecomputeOcclusionImpl(
       GetWindowTransformRelativeToRoot(window,
                                        parent_transform_relative_to_root);
   if (!transform_relative_to_root.Preserves2dAxisAlignment()) {
-    // For simplicity, windows that are not axis-aligned are considered
-    // unoccluded and do not occlude other windows.
-    SetWindowAndDescendantsAreOccluded(window, false);
-    return;
+    // For simplicity, windows that are not axis-aligned are considered visible
+    // and do not occlude other windows.
+    SetWindowAndDescendantsOcclusion(window, Window::OcclusionState::VISIBLE);
+    return true;
   }
   const SkIRect window_bounds = GetWindowBoundsInRootWindow(
       window, transform_relative_to_root, clipped_bounds);
@@ -165,19 +164,26 @@ void WindowOcclusionTracker::RecomputeOcclusionImpl(
   // Compute children occlusion states.
   const SkIRect* clipped_bounds_for_children =
       window->layer()->GetMasksToBounds() ? &window_bounds : clipped_bounds;
+  bool has_visible_child = false;
   for (auto* child : base::Reversed(window->children())) {
-    RecomputeOcclusionImpl(child, transform_relative_to_root,
-                           clipped_bounds_for_children, occluded_region);
+    has_visible_child |=
+        RecomputeOcclusionImpl(child, transform_relative_to_root,
+                               clipped_bounds_for_children, occluded_region);
   }
 
   // Compute window occlusion state.
   if (occluded_region->contains(window_bounds)) {
-    SetOccluded(window, true);
-  } else {
-    SetOccluded(window, false);
-    if (VisibleWindowIsOpaque(window))
-      occluded_region->op(window_bounds, SkRegion::kUnion_Op);
+    SetOcclusion(window,
+                 has_visible_child
+                     ? Window::OcclusionState::OCCLUDED_WITH_VISIBLE_CHILD
+                     : Window::OcclusionState::OCCLUDED);
+    return has_visible_child;
   }
+
+  SetOcclusion(window, Window::OcclusionState::VISIBLE);
+  if (VisibleWindowIsOpaque(window))
+    occluded_region->op(window_bounds, SkRegion::kUnion_Op);
+  return true;
 }
 
 void WindowOcclusionTracker::CleanupAnimatedWindows() {
@@ -211,17 +217,21 @@ bool WindowOcclusionTracker::MaybeObserveAnimatedWindow(Window* window) {
   return false;
 }
 
-void WindowOcclusionTracker::SetWindowAndDescendantsAreOccluded(
+void WindowOcclusionTracker::SetWindowAndDescendantsOcclusion(
     Window* window,
-    bool is_occluded) {
-  SetOccluded(window, is_occluded);
+    Window::OcclusionState occlusion_state) {
+  if (!window->IsVisible())
+    occlusion_state = Window::OcclusionState::OCCLUDED;
+  SetOcclusion(window, occlusion_state);
   for (Window* child_window : window->children())
-    SetWindowAndDescendantsAreOccluded(child_window, is_occluded);
+    SetWindowAndDescendantsOcclusion(child_window, occlusion_state);
 }
 
-void WindowOcclusionTracker::SetOccluded(Window* window, bool occluded) {
+void WindowOcclusionTracker::SetOcclusion(
+    Window* window,
+    Window::OcclusionState occlusion_state) {
   if (WindowIsTracked(window))
-    window->SetOccluded(occluded);
+    window->SetOcclusionState(occlusion_state);
 }
 
 bool WindowOcclusionTracker::WindowIsTracked(Window* window) const {
