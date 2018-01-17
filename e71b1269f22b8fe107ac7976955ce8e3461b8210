@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90656a81_c1759857",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaFormatBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-17T17:37:24Z",
+      "side": 1,
+      "message": "From what I gathered from the MediaCodec documentation, there are never more than 3 codec-specific data buffers (see the table in the url), but I guess it\u0027s no worse to silently accept a csd-(n\u003e2) key, which is a no-op for all known codecs, than for it to silently do nothing with those keys.",
+      "parentUuid": "1cc6acf6_12f051c0",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "e71b1269f22b8fe107ac7976955ce8e3461b8210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0be68c4e_98058ccb",
         "filename": "media/base/android/java/src/org/chromium/media/MediaFormatBuilder.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d67c9524_1c4c19e6",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaFormatBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-17T17:37:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0be68c4e_98058ccb",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 10
+      },
+      "revId": "e71b1269f22b8fe107ac7976955ce8e3461b8210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da588dcb_2e134aa5",
         "filename": "media/base/android/java/src/test/org/chromium/media/MediaFormatBuilderTest.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "e71b1269f22b8fe107ac7976955ce8e3461b8210",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de20132_d3a72c33",
+        "filename": "media/base/android/java/src/test/org/chromium/media/MediaFormatBuilderTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-17T17:37:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da588dcb_2e134aa5",
+      "range": {
+        "startLine": 54,
+        "startChar": 27,
+        "endLine": 54,
+        "endChar": 43
+      },
+      "revId": "e71b1269f22b8fe107ac7976955ce8e3461b8210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
