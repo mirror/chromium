@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8dce8250_1096ccd4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-17T01:21:39Z",
+      "side": 1,
+      "message": "+1 to a follow up CL. Changing the API would require a few CLs.",
+      "parentUuid": "e0247522_0bfc9b60",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0b2f04d_855a1906",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
         "patchSetId": 19
@@ -90,6 +108,30 @@
       "side": 1,
       "message": "I suppose the big issue on 32-bit is increased address space fragmentation? If we observe a problem there, I\u0027d be OK doing this on 64-bit only. But it\u0027d be nice to give it a try on 32-bit and see what happens.",
       "parentUuid": "d0b2f04d_855a1906",
+      "range": {
+        "startLine": 561,
+        "startChar": 0,
+        "endLine": 561,
+        "endChar": 76
+      },
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "046fd5fe_0766efac",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-17T01:21:39Z",
+      "side": 1,
+      "message": "OK, I won\u0027t restrict it for now.",
+      "parentUuid": "069af4a7_fce76520",
       "range": {
         "startLine": 561,
         "startChar": 0,
@@ -298,6 +340,24 @@
     },
     {
       "key": {
+        "uuid": "21037b14_ebd05469",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-17T01:21:39Z",
+      "side": 1,
+      "message": "You and Brad Nelson both suggested a solution for eliminating this expensive map - I can allocate an extra pointer\u0027s worth of memory and store something there to determine which partition to use when Free\u0027ing.",
+      "parentUuid": "a540c109_29ac400a",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "816a98fc_1ae31c9c",
         "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
         "patchSetId": 19
@@ -309,6 +369,24 @@
       "writtenOn": "2018-01-12T22:14:24Z",
       "side": 1,
       "message": "Is this the best type of lock to use, here? I have a bug open to get rid of it, if I can come up with something as good. It\u0027d be nice, but is not necessary, to reduce the # of SpinLock call sites.",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b9a24a_c0c24a15",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-17T01:21:39Z",
+      "side": 1,
+      "message": "I thought SpinLock was preferable when the blocking time is short. I can definitely use a Lock instead.",
+      "parentUuid": "816a98fc_1ae31c9c",
       "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
