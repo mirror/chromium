@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30637c54_35b827af",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T17:02:19Z",
+      "side": 1,
+      "message": "We can do this initialization at the declaration",
+      "revId": "e42484f00bac191b796d4a4e5a2739e64fc2036f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b894604b_7d270f1c",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T17:02:19Z",
+      "side": 1,
+      "message": "Should this be private?",
+      "revId": "e42484f00bac191b796d4a4e5a2739e64fc2036f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7b6082_d22f40aa",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T17:02:19Z",
+      "side": 1,
+      "message": "Can we put this with |children_| and give it a comment?",
+      "revId": "e42484f00bac191b796d4a4e5a2739e64fc2036f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9445f937_5b0dbda2",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T17:02:19Z",
+      "side": 1,
+      "message": "nit: ResourceIds",
+      "revId": "e42484f00bac191b796d4a4e5a2739e64fc2036f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
