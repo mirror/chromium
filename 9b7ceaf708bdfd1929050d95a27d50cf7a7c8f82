@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "72d90a79_f9721125",
+        "filename": "ios/chrome/app/deferred_initialization_runner.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2018-01-17T02:56:40Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "d2a42052_dc3259d6",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 64
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "795f0fc1_bc5133f4",
         "filename": "ios/chrome/app/main_controller.mm",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0587d8cc_31396dd8",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2058,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2018-01-17T02:56:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "795f0fc1_bc5133f4",
+      "range": {
+        "startLine": 2058,
+        "startChar": 11,
+        "endLine": 2058,
+        "endChar": 40
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07dc00da_ee2cddae",
         "filename": "ios/chrome/app/main_controller.mm",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9837c79_42d74c2e",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2063,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2018-01-17T02:56:40Z",
+      "side": 1,
+      "message": "I think it was an error to not include this path in a previous CL, as it is a change of behavior over the existing code. I think there can be some bugs introduced if this is not called as sub-view controllers expect to be given a chance to do final tasks when being dismissed fully.\n\nI can find out more if you\u0027d like (e.g. play with what happens when this is not called to give a more definitive answer).",
+      "parentUuid": "07dc00da_ee2cddae",
+      "range": {
+        "startLine": 2063,
+        "startChar": 48,
+        "endLine": 2063,
+        "endChar": 71
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "1b507373_58b3ac54",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2018-01-17T02:56:40Z",
+      "side": 1,
+      "message": "You\u0027re right, I think in the existing implementation, the MainController would ensure another SettingsNavigation controller wouldn\u0027t be shown if one was already present.\n\nI can replace this quite easily by checking the shared instance, but I wonder what the \u0027clean\u0027 architecture is here. If we didn\u0027t have a shared instance I don\u0027t think we\u0027d use it just for this purpose.\n\nWould we write this as is, and allow the presentViewController to silently fail (which is what will happen if a view controller is already being presented?).\n\nWould we force dismiss any presented view controller, on the basis that \u0027the user just asked to see this UI, we\u0027ll assume that they don\u0027t care much for the currently presented view controller whatever it is (and if so, should we check the presented view controller type to make sure it\u0027s not already a presented SettingsNavigationController?).\n\nMy long-term vote would be for this latter behavior, but to keep things simple and the behavior identical, I\u0027ll use the shared instance for now!",
+      "parentUuid": "cb097308_73401ec6",
+      "range": {
+        "startLine": 230,
+        "startChar": 26,
+        "endLine": 238,
+        "endChar": 57
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0e0ff92_1068b48e",
         "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
         "patchSetId": 8
@@ -137,6 +233,30 @@
       "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "830c5578_108a9aa4",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2018-01-17T02:56:40Z",
+      "side": 1,
+      "message": "Yeah this is me trying to be cautious and probably overly so.\n\nWe need to keep \u0027settingsWillBeDismissed\u0027 as it does important cleanup in a number of view controllers, and there is some sensitivity as to timing (i.e. making sure the call happens at the right time.)\n\nFor manual calls to dismiss settings, e.g. through a Done button tap, we have a place to manually call settingsWillBeDismissed (and this is how everything works in the current codebase).\n\nHowever now that Settings is introducing the idea of its presentation and dismissal being through the view controller hierarchy rather than some set of custom protocols laid on top, we needed a mechanism that would trigger the \u0027settingsWillBeDismissed\u0027 clean up flow still. To do this, there\u0027s a call in viewWillDisappear: checking if the view controller is being dismissed, and if so, calling \u0027settingsWillBeDismissed\u0027.\n\nI didn\u0027t have the confidence to remove the manual call/s though as that may change timing slightly of the original behavior; therefore in some cases this will get called twice - once manually and once by the viewWillDisappear call - so I needed to make sure that this method could be called from any number of places.\n\nIn hindsight I could rely on the viewWillDisappear: mechanism for every case, and if there are timing related issues they would be bugs we could fix. I will make this change and remove the manual calls and put the DCHECK back in. \n\nThanks!",
+      "parentUuid": "a0e0ff92_1068b48e",
+      "range": {
+        "startLine": 1051,
+        "startChar": 2,
+        "endLine": 1051,
+        "endChar": 35
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "ef1a4dbb_5f8ad20f",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2018-01-17T02:56:40Z",
+      "side": 1,
+      "message": "None of those classes have their own delegate which could provide a browserState, and I still don\u0027t see why we would break out browserState from the delegate, do you feel that we should break out the dispatcher too, I see these objects as things that should be treated equally, I\u0027m not sure why one is in the delegate and not the other.\n\nBut it\u0027s a minor change, I have changed the method to take an explicit browserState as well as the delegate object. Let me know what you think!",
+      "parentUuid": "c5cf122f_70191026",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 55
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7ec0a21_06b659e0",
         "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
         "patchSetId": 8
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "5edfbf4a_d42e6834",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2018-01-17T02:56:40Z",
+      "side": 1,
+      "message": "Yes! I think so.",
+      "parentUuid": "a7ec0a21_06b659e0",
+      "range": {
+        "startLine": 332,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 71
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0848ba51_948ae4e5",
         "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
         "patchSetId": 8
@@ -197,6 +365,30 @@
       "writtenOn": "2018-01-05T06:24:09Z",
       "side": 1,
       "message": "This is unnecessary since the weak pointer automatically zeros when the last strong reference releases.",
+      "range": {
+        "startLine": 341,
+        "startChar": 4,
+        "endLine": 343,
+        "endChar": 5
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff226989_8a9ff7f8",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2018-01-17T02:56:40Z",
+      "side": 1,
+      "message": "I believe it\u0027s necessary to keep some of the existing DCHECKs working as they currently are.\n\nFor example, I believe MainController\u0027s DCHECKs previously expected to be able to nil out the shared controller and test for that immediately. This gives similar behavior to the existing codebase.\n\nI can remove it, but we will also need to remove other DCHECKs that would no longer be valid I believe.\n\nWhat do you think?",
+      "parentUuid": "0848ba51_948ae4e5",
       "range": {
         "startLine": 341,
         "startChar": 4,
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "1af0f336_e3d829a4",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2018-01-17T02:56:40Z",
+      "side": 1,
+      "message": "Oh yes, nice spot, thanks!",
+      "parentUuid": "79d7afbc_0cc478f6",
+      "range": {
+        "startLine": 372,
+        "startChar": 4,
+        "endLine": 375,
+        "endChar": 80
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76d5875c_b500c8c8",
         "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller_delegate.h",
         "patchSetId": 8
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "0efebe3c_ac99a109",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2018-01-17T02:56:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76d5875c_b500c8c8",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 9
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1228b4f_e684a250",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 8
@@ -266,6 +506,30 @@
       "writtenOn": "2018-01-05T06:24:09Z",
       "side": 1,
       "message": "This file did not create or have anything to do with settings previously. This file should not need to be modified for this CL.",
+      "range": {
+        "startLine": 213,
+        "startChar": 34,
+        "endLine": 213,
+        "endChar": 70
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5d0eb9_3b18037c",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2018-01-17T02:56:40Z",
+      "side": 1,
+      "message": "It\u0027s true that this file didn\u0027t have anything to do with settings previously, but local presentation of the Settings view controller dictates that certain information (browser state and a dispatcher, essentially) need to be provided to any code that wants to show the Settings menu.\n\nIn the current codebase it\u0027s all in the central MainController.\n\nIn this CL, most of the time Settings is being presented on top of a BrowserViewController and gets its dispatcher and browserState from there. However Settings can also be presented by the tools menu on top of the stack view UI, and the stack view and BVC are disjoint worlds.\n\nWith the magic wormhole of Dispatcher-\u003eMainController cut off, the Stack VC is the lowest place in the hierarchy that can provide these objects, and can do so neatly through the tools menu configuration object.\n\nIs there another way you think this could be done? Thanks!",
+      "parentUuid": "b1228b4f_e684a250",
       "range": {
         "startLine": 213,
         "startChar": 34,
