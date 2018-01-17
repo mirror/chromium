@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "eda73836_cd4936ce",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-17T08:58:20Z",
+      "side": 1,
+      "message": "You won\u0027t need to pass in v8::Isolate since you can get it by ToIsolate(frame).",
+      "revId": "e4e923abda11f58ddd66744671b064b3fdd00a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b645920_92334e57",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-17T08:58:20Z",
+      "side": 1,
+      "message": "You could move line 27 - 30 to MainThreadWorkletGlobalScope as well.",
+      "revId": "e4e923abda11f58ddd66744671b064b3fdd00a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e7da38e_e2eb1774",
         "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
         "patchSetId": 3
