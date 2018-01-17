@@ -366,6 +366,13 @@ public final class PrefServiceBridge {
     }
 
     /**
+     * @return true if websites are allowed to read from the clipboard.
+     */
+    public boolean isClipboardEnabled() {
+        return nativeGetClipboardEnabled();
+    }
+
+    /**
      * @return true if websites are allowed to play sound.
      */
     public boolean isSoundEnabled() {
@@ -729,6 +736,10 @@ public final class PrefServiceBridge {
         nativeSetPasswordEchoEnabled(enabled);
     }
 
+    public void setClipboardEnabled(boolean allow) {
+        nativeSetClipboardEnabled(allow);
+    }
+
     public void setSoundEnabled(boolean allow) {
         nativeSetSoundEnabled(allow);
     }
@@ -1063,6 +1074,7 @@ public final class PrefServiceBridge {
     private native boolean nativeGetBackgroundSyncEnabled();
     private native boolean nativeGetBlockThirdPartyCookiesEnabled();
     private native boolean nativeGetBlockThirdPartyCookiesManaged();
+    private native boolean nativeGetClipboardEnabled();
     private native boolean nativeGetRememberPasswordsEnabled();
     private native boolean nativeGetPasswordManagerAutoSigninEnabled();
     private native boolean nativeGetRememberPasswordsManaged();
@@ -1108,6 +1120,7 @@ public final class PrefServiceBridge {
     private native void nativeSetAllowCookiesEnabled(boolean allow);
     private native void nativeSetBackgroundSyncEnabled(boolean allow);
     private native void nativeSetBlockThirdPartyCookiesEnabled(boolean enabled);
+    private native void nativeSetClipboardEnabled(boolean allow);
     private native void nativeSetDoNotTrackEnabled(boolean enabled);
     private native void nativeSetRememberPasswordsEnabled(boolean allow);
     private native void nativeSetPasswordManagerAutoSigninEnabled(boolean enabled);

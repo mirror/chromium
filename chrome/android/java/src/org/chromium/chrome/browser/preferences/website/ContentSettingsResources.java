@@ -161,6 +161,13 @@ public class ContentSettingsResources {
                             ContentSetting.ALLOW, ContentSetting.BLOCK,
                             R.string.website_settings_category_sound_allowed,
                             R.string.website_settings_category_sound_blocked));
+            localMap.put(ContentSettingsType.CONTENT_SETTINGS_TYPE_CLIPBOARD_READ,
+                    new ResourceItem(R.drawable.ic_content_paste_grey600_24dp,
+                            R.string.clipboard_permission_title,
+                            R.string.clipboard_permission_title, ContentSetting.ALLOW,
+                            ContentSetting.BLOCK,
+                            R.string.website_settings_category_clipboard_allowed,
+                            R.string.website_settings_category_clipboard_blocked));
             sResourceInfo = localMap;
         }
         return sResourceInfo;
@@ -323,6 +330,13 @@ public class ContentSettingsResources {
         return R.string.website_settings_category_ads_blocked_list;
     }
 
+    /**
+     * Returns the blocked summary for the clipboard permission which should be used for display in
+     * the site settings list only.
+     */
+    public static int getClipboardBlockedListSummary() {
+        return R.string.website_settings_category_clipboard_blocked_list;
+    }
     /**
      * Returns the blocked summary for the sound permission which should be used for display in the
      * site settings list only.

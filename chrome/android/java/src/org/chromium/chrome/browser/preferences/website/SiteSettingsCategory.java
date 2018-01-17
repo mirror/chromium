@@ -39,6 +39,7 @@ public class SiteSettingsCategory {
     public static final String CATEGORY_AUTOPLAY = "autoplay";
     public static final String CATEGORY_BACKGROUND_SYNC = "background_sync";
     public static final String CATEGORY_CAMERA = "camera";
+    public static final String CATEGORY_CLIPBOARD = "clipboard";
     public static final String CATEGORY_COOKIES = "cookies";
     public static final String CATEGORY_DEVICE_LOCATION = "device_location";
     public static final String CATEGORY_JAVASCRIPT = "javascript";
@@ -136,6 +137,10 @@ public class SiteSettingsCategory {
             return new SiteSettingsCategory(
                     CATEGORY_SOUND, "", ContentSettingsType.CONTENT_SETTINGS_TYPE_SOUND);
         }
+        if (CATEGORY_CLIPBOARD.equals(category)) {
+            return new SiteSettingsCategory(CATEGORY_CLIPBOARD, "",
+                    ContentSettingsType.CONTENT_SETTINGS_TYPE_CLIPBOARD_READ);
+        }
         if (CATEGORY_USE_STORAGE.equals(category)) {
             return new SiteSettingsCategory(CATEGORY_USE_STORAGE, "", -1);
         }
@@ -190,6 +195,9 @@ public class SiteSettingsCategory {
         if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_SOUND) {
             return fromString(CATEGORY_SOUND);
         }
+        if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_CLIPBOARD_READ) {
+            return fromString(CATEGORY_CLIPBOARD);
+        }
         if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_USB_CHOOSER_DATA) {
             return fromString(CATEGORY_USB);
         }
@@ -233,18 +241,25 @@ public class SiteSettingsCategory {
     }
 
     /**
-     * Returns whether this category is the Cookies category.
-     */
-    public boolean showCookiesSites() {
-        return mContentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_COOKIES;
-    }
-
-    /**
      * Returns whether this category is the Camera category.
      */
     public boolean showCameraSites() {
         return mContentSettingsType
                 == ContentSettingsType.CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA;
+    }
+
+    /**
+     * Returns whether this category is the Clipboard category.
+     */
+    public boolean showClipboardSites() {
+        return mContentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_CLIPBOARD_READ;
+    }
+
+    /**
+     * Returns whether this category is the Cookies category.
+     */
+    public boolean showCookiesSites() {
+        return mContentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_COOKIES;
     }
 
     /**
