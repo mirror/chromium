@@ -227,6 +227,24 @@
     },
     {
       "key": {
+        "uuid": "a1768fea_d12de61a",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-17T20:06:39Z",
+      "side": 1,
+      "message": "I agree with Navid that we shouldn\u0027t add a flag here. We should come up with some way of preventing fling that works in all browsers.\n\nBad idea: what about relying on the fact that key presses stop fling?\nWe could just hit the Ctrl key directly after the finger lifts?\nDoes that work in all browsers?",
+      "parentUuid": "e888f64d_47bf3cdd",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b1a2e9a_ed55161d",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
         "patchSetId": 48
