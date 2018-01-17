@@ -30,6 +30,7 @@
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseWheelEvent.h"
+#include "third_party/WebKit/public/platform/WebPointerEvent.h"
 #include "third_party/WebKit/public/platform/WebTouchEvent.h"
 #include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
@@ -54,6 +55,7 @@ using blink::WebKeyboardEvent;
 using blink::WebMouseEvent;
 using blink::WebMouseWheelEvent;
 using blink::WebOverscrollBehavior;
+using blink::WebPointerEvent;
 using blink::WebTouchEvent;
 using blink::WebTouchPoint;
 using ui::DidOverscrollParams;
@@ -142,6 +144,25 @@ void LogPassiveEventListenersUma(WebInputEventResult result,
           GetEventLatencyMicros(event_timestamp, now), 1, 10000000, 50);
     }
   }
+}
+
+blink::WebCoalescedInputEvent GetCoalescedWebPointerEventForTouch(
+    const WebPointerEvent& pointer_event,
+    std::vector<const WebInputEvent*> coalesced_events) {
+  std::vector<WebPointerEvent> related_pointer_events;
+  for (const WebInputEvent* event : coalesced_events) {
+    DCHECK(WebInputEvent::IsTouchEventType(event->GetType()));
+    const WebTouchEvent& touch_event =
+        static_cast<const WebTouchEvent&>(*event);
+    for (unsigned i = 0; i < touch_event.touches_length; ++i) {
+      if (touch_event.touches[i].id == pointer_event.id &&
+          touch_event.touches[i].state != WebTouchPoint::kStateStationary) {
+        related_pointer_events.push_back(
+            WebPointerEvent(touch_event, touch_event.touches[i]));
+      }
+    }
+  }
+  return blink::WebCoalescedInputEvent(pointer_event, related_pointer_events);
 }
 
 }  // namespace
@@ -309,8 +330,37 @@ void RenderWidgetInputHandler::HandleInputEvent(
       !suppress_next_char_events_) {
     suppress_next_char_events_ = false;
     if (processed == WebInputEventResult::kNotHandled &&
-        widget_->GetWebWidget())
-      processed = widget_->GetWebWidget()->HandleInputEvent(coalesced_event);
+        widget_->GetWebWidget()) {
+      if (WebInputEvent::IsTouchEventType(input_event.GetType())) {
+        if (input_event.GetType() == WebInputEvent::kTouchScrollStarted) {
+          WebPointerEvent pointer_event =
+              WebPointerEvent::CreatePointerCausesUaActionEvent(
+                  blink::WebPointerProperties::PointerType::kUnknown,
+                  input_event.TimeStampSeconds());
+          processed = widget_->GetWebWidget()->HandleInputEvent(
+              blink::WebCoalescedInputEvent(pointer_event));
+        } else {
+          const WebTouchEvent touch_event =
+              static_cast<const WebTouchEvent&>(input_event);
+          for (unsigned i = 0; i < touch_event.touches_length; ++i) {
+            const WebTouchPoint& touch_point = touch_event.touches[i];
+            if (touch_point.state != blink::WebTouchPoint::kStateStationary) {
+              const WebPointerEvent& pointer_event =
+                  WebPointerEvent(touch_event, touch_point);
+              const blink::WebCoalescedInputEvent& coalesced_pointer_event =
+                  GetCoalescedWebPointerEventForTouch(
+                      pointer_event,
+                      coalesced_event.GetCoalescedEventsPointers());
+              widget_->GetWebWidget()->HandleInputEvent(
+                  coalesced_pointer_event);
+            }
+          }
+          processed = widget_->GetWebWidget()->DispatchBufferedTouchEvents();
+        }
+      } else {
+        processed = widget_->GetWebWidget()->HandleInputEvent(coalesced_event);
+      }
+    }
   }
 
   // TODO(dtapuska): Use the input_event.timeStampSeconds as the start
