@@ -211,6 +211,30 @@
       "revId": "2bf2a972b72192e9be44e63ab060ef3b0e1f2d86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edaab0da_04eb05c0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 70761,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-17T12:02:18Z",
+      "side": 1,
+      "message": "Nope, _wall_ time. We have a common logic which discards all tasks longer than 30 seconds of wall time. Then we proceed to record specific histograms, including thread time ones.\n\nWill do.",
+      "parentUuid": "fd66243d_cc255fc4",
+      "range": {
+        "startLine": 70761,
+        "startChar": 53,
+        "endLine": 70761,
+        "endChar": 55
+      },
+      "revId": "2bf2a972b72192e9be44e63ab060ef3b0e1f2d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
