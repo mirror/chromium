@@ -21,6 +21,7 @@
 #import "device/bluetooth/test/mock_bluetooth_cbperipheral_mac.h"
 #import "device/bluetooth/test/mock_bluetooth_cbservice_mac.h"
 #import "device/bluetooth/test/mock_bluetooth_central_manager_mac.h"
+#import "device/bluetooth/test/mock_bluetooth_preferences_mac.h"
 #import "device/bluetooth/test/test_bluetooth_adapter_observer.h"
 #import "third_party/ocmock/OCMock/OCMock.h"
 
@@ -137,6 +138,8 @@ void BluetoothTestMac::InitWithFakeAdapter() {
     mock_central_manager_->get().bluetoothTestMac = this;
     [mock_central_manager_->get() setState:CBCentralManagerStatePoweredOn];
     adapter_mac_->SetCentralManagerForTesting((id)mock_central_manager_->get());
+    adapter_mac_->SetPreferencesForTesting(
+        std::make_unique<MockBluetoothPreferencesMac>(adapter_mac_));
   }
 }
 

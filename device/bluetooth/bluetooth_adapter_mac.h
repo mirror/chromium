@@ -9,6 +9,7 @@
 
 #include <memory>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "base/containers/hash_tables.h"
@@ -17,6 +18,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
+#include "base/optional.h"
 #include "device/bluetooth/bluetooth_adapter.h"
 #include "device/bluetooth/bluetooth_discovery_manager_mac.h"
 #include "device/bluetooth/bluetooth_export.h"
@@ -39,12 +41,14 @@ class SequencedTaskRunner;
 
 namespace device {
 
+class BluetoothPreferencesMac;
+
 // The 10.13 SDK deprecates the CBCentralManagerState enum, but marks the
 // replacement enum with limited availability, making it unusable. API methods
 // now return the new enum, so to compare enum values the new enum must be cast.
 // Wrap this in a function to obtain the state via a call to [manager state] to
 // avoid code that would use the replacement enum and trigger warnings.
-CBCentralManagerState GetCBManagerState(CBCentralManager* manager);
+CBCentralManagerState GetCBManagerState(const CBCentralManager* manager);
 
 class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
     : public BluetoothAdapter,
@@ -139,6 +143,9 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   // Returns the CBCentralManager instance.
   CBCentralManager* GetCentralManager();
 
+  void SetPreferencesForTesting(
+      std::unique_ptr<BluetoothPreferencesMac> preferences);
+
   // The length of time that must elapse since the last Inquiry response (on
   // Classic devices) or call to BluetoothLowEnergyDevice::Update() (on Low
   // Energy) before a discovered device is considered to be no longer available.
@@ -147,6 +154,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   friend class BluetoothTestMac;
   friend class BluetoothAdapterMacTest;
   friend class BluetoothLowEnergyCentralManagerBridge;
+  friend class MockBluetoothPreferencesMac;
 
   BluetoothAdapterMac();
   ~BluetoothAdapterMac() override;
@@ -176,6 +184,10 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   // Registers that a new |device| has replied to an Inquiry, is paired, or has
   // connected to the local host.
   void ClassicDeviceAdded(IOBluetoothDevice* device);
+
+  // Checks if the low engercy central manager is powered on. Returns false if
+  // BLE is not available.
+  bool IsLowEnergyPowered() const;
 
   // BluetoothLowEnergyDiscoveryManagerMac::Observer override:
   void LowEnergyDeviceUpdated(CBPeripheral* peripheral,
@@ -207,6 +219,9 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   bool classic_powered_;
   int num_discovery_sessions_;
 
+  base::Optional<std::tuple<bool, base::Closure, ErrorCallback>>
+      pending_powered_callback_;
+
   // Cached name. Updated in GetName if should_update_name_ is true.
   //
   // For performance reasons, cache the adapter's name. It's not uncommon for
@@ -226,6 +241,8 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   // Discovery manager for Bluetooth Low Energy.
   std::unique_ptr<BluetoothLowEnergyDiscoveryManagerMac>
       low_energy_discovery_manager_;
+
+  std::unique_ptr<BluetoothPreferencesMac> preferences_;
 
   // Underlying CoreBluetooth CBCentralManager and its delegate.
   base::scoped_nsobject<CBCentralManager> low_energy_central_manager_;
