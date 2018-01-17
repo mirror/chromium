@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "656962c3_0ebdac28",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T00:46:09Z",
+      "side": 1,
+      "message": "backticks in titles interacts poorly with gitiles. See https://github.com/google/gitiles/issues/114",
+      "parentUuid": "1b4f017c_c58efc7e",
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd228c77_8d3fe52f",
         "filename": "docs/security/mojo.md",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ad2529_373ac50b",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T00:46:09Z",
+      "side": 1,
+      "message": "Done. I feel like this reads somewhat confusingly no matter how I express it...",
+      "parentUuid": "dd228c77_8d3fe52f",
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "43c34e70_dd842835",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T00:46:09Z",
+      "side": 1,
+      "message": "Done.\n\nThough I really did mean i.e. (to me, the sentence still makes sense if I read it \u0027that is\u0027)",
+      "parentUuid": "e5f2f5b9_e9aa3875",
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "859d37e6_a7b581ee",
         "filename": "docs/security/mojo.md",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df40008a_cfbfef90",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T00:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "859d37e6_a7b581ee",
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +182,48 @@
     },
     {
       "key": {
+        "uuid": "b93e593a_1047cd87",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T00:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e25740af_b8d4c245",
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cbb9654_de5697c5",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T00:46:09Z",
+      "side": 1,
+      "message": "Yes. I\u0027d be open to suggestions for improving this wording.",
+      "parentUuid": "1b35a034_b4c2716a",
+      "range": {
+        "startLine": 361,
+        "startChar": 20,
+        "endLine": 362,
+        "endChar": 57
+      },
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "742c9cb7_f986ca8b",
         "filename": "docs/security/mojo.md",
         "patchSetId": 2
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "34bce3c8_496a617d",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T00:46:09Z",
+      "side": 1,
+      "message": "I\u0027ve revised the wording a bit.",
+      "parentUuid": "742c9cb7_f986ca8b",
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a26bd76_35c7af3a",
         "filename": "docs/security/mojo.md",
         "patchSetId": 2
@@ -138,6 +270,24 @@
       "writtenOn": "2018-01-16T15:55:45Z",
       "side": 1,
       "message": "Aww, but I like emoji!",
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d433a7a_94eef96f",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T00:46:09Z",
+      "side": 1,
+      "message": "Oh oops, it looked like trailing whitespace because my terminal wasn\u0027t set up correctly. This is important, so I\u0027ll revert.",
+      "parentUuid": "3a26bd76_35c7af3a",
       "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
