@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc819043_a1f49524",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-17T09:11:08Z",
+      "side": 1,
+      "message": "constrains",
+      "revId": "1e3f19176ef0be155b9cf78fec598e6cdc21da76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3486d526_dcbcd3a9",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-17T09:11:08Z",
+      "side": 1,
+      "message": "the same thread that created it",
+      "revId": "1e3f19176ef0be155b9cf78fec598e6cdc21da76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f1c07a6_ac31f710",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-17T09:11:08Z",
+      "side": 1,
+      "message": "its",
+      "revId": "1e3f19176ef0be155b9cf78fec598e6cdc21da76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337e40b2_ce85e9b6",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-17T09:11:08Z",
+      "side": 1,
+      "message": "already been destroyed",
+      "revId": "1e3f19176ef0be155b9cf78fec598e6cdc21da76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c0037c_2947b511",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-17T09:11:08Z",
+      "side": 1,
+      "message": "since the WebCallbacks are stored separately outside the callback",
+      "revId": "1e3f19176ef0be155b9cf78fec598e6cdc21da76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
