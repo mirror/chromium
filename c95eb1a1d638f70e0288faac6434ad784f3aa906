@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "79ce8ed0_6707b063",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/the-link-element/rellist-feature-detection.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-17T09:05:15Z",
+      "side": 1,
+      "message": "Unified a, area and link element test.",
+      "parentUuid": "5f927e8d_c38e8a4b",
+      "range": {
+        "startLine": 2,
+        "startChar": 7,
+        "endLine": 2,
+        "endChar": 24
+      },
+      "revId": "c95eb1a1d638f70e0288faac6434ad784f3aa906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3a61d43_12b7d4c6",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/the-link-element/rellist-feature-detection.html",
         "patchSetId": 2
@@ -63,6 +87,24 @@
       "revId": "c95eb1a1d638f70e0288faac6434ad784f3aa906",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27bcecd1_896169c0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/the-link-element/rellist-feature-detection.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-17T09:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3a61d43_12b7d4c6",
+      "revId": "c95eb1a1d638f70e0288faac6434ad784f3aa906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
