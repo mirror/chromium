@@ -242,6 +242,10 @@ class BASE_EXPORT RunLoop {
       Delegate::ShouldQuitWhenIdleCallback
           overriding_should_quit_when_idle_callback);
 
+  // Whether this thread has a delegate registered. Typically used for flushing
+  // tasks from the current thread.
+  static bool HasDelegateForCurrentThreadForTesting();
+
   // Quits the active RunLoop (when idle) -- there must be one. These were
   // introduced as prefered temporary replacements to the long deprecated
   // MessageLoop::Quit(WhenIdle) methods. Callers should properly plumb a

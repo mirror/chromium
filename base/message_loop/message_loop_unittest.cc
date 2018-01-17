@@ -20,6 +20,7 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/test/test_simple_task_runner.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/sequence_local_storage_slot.h"
@@ -253,6 +254,26 @@ void PostNTasks(int posts_remaining) {
   }
 }
 
+class MessageLoopTest : public ::testing::Test {
+ public:
+  MessageLoopTest() = default;
+  ~MessageLoopTest() override = default;
+
+  void SetUp() override {
+    TaskScheduler::CreateAndStartWithDefaultParams("MessageLoopTest");
+  }
+
+  void TearDown() override {
+    base::TaskScheduler::GetInstance()->FlushForTesting();
+    base::TaskScheduler::GetInstance()->Shutdown();
+    base::TaskScheduler::GetInstance()->JoinForTesting();
+    base::TaskScheduler::SetInstance(nullptr);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MessageLoopTest);
+};
+
 #if defined(OS_ANDROID)
 void DoNotRun() {
   ASSERT_TRUE(false);
@@ -291,23 +312,23 @@ void RunTest_AbortDontRunMoreTasks(bool delayed, bool init_java_first) {
       android::JavaHandlerThreadHelpers::IsExceptionTestException(exception));
 }
 
-TEST(MessageLoopTest, JavaExceptionAbort) {
+TEST_F(MessageLoopTest, JavaExceptionAbort) {
   constexpr bool delayed = false;
   constexpr bool init_java_first = false;
   RunTest_AbortDontRunMoreTasks(delayed, init_java_first);
 }
-TEST(MessageLoopTest, DelayedJavaExceptionAbort) {
+TEST_F(MessageLoopTest, DelayedJavaExceptionAbort) {
   constexpr bool delayed = true;
   constexpr bool init_java_first = false;
   RunTest_AbortDontRunMoreTasks(delayed, init_java_first);
 }
-TEST(MessageLoopTest, JavaExceptionAbortInitJavaFirst) {
+TEST_F(MessageLoopTest, JavaExceptionAbortInitJavaFirst) {
   constexpr bool delayed = false;
   constexpr bool init_java_first = true;
   RunTest_AbortDontRunMoreTasks(delayed, init_java_first);
 }
 
-TEST(MessageLoopTest, RunTasksWhileShuttingDownJavaThread) {
+TEST_F(MessageLoopTest, RunTasksWhileShuttingDownJavaThread) {
   const int kNumPosts = 6;
   DummyTaskObserver observer(kNumPosts, 1);
 
@@ -708,6 +729,17 @@ class MessageLoopTypedTest
  public:
   MessageLoopTypedTest() = default;
   ~MessageLoopTypedTest() = default;
+
+  void SetUp() override {
+    TaskScheduler::CreateAndStartWithDefaultParams("MessageLoopTypedTest");
+  }
+
+  void TearDown() override {
+    base::TaskScheduler::GetInstance()->FlushForTesting();
+    base::TaskScheduler::GetInstance()->Shutdown();
+    base::TaskScheduler::GetInstance()->JoinForTesting();
+    base::TaskScheduler::SetInstance(nullptr);
+  }
 
   static std::string ParamInfoToString(
       ::testing::TestParamInfo<MessageLoop::Type> param_info) {
@@ -1659,24 +1691,24 @@ INSTANTIATE_TEST_CASE_P(,
                         MessageLoopTypedTest::ParamInfoToString);
 
 #if defined(OS_WIN)
-TEST(MessageLoopTest, PostDelayedTask_SharedTimer_SubPump) {
+TEST_F(MessageLoopTest, PostDelayedTask_SharedTimer_SubPump) {
   RunTest_PostDelayedTask_SharedTimer_SubPump();
 }
 
 // This test occasionally hangs. See http://crbug.com/44567.
-TEST(MessageLoopTest, DISABLED_RecursiveDenial2) {
+TEST_F(MessageLoopTest, DISABLED_RecursiveDenial2) {
   RunTest_RecursiveDenial2(MessageLoop::TYPE_DEFAULT);
   RunTest_RecursiveDenial2(MessageLoop::TYPE_UI);
   RunTest_RecursiveDenial2(MessageLoop::TYPE_IO);
 }
 
-TEST(MessageLoopTest, RecursiveSupport2) {
+TEST_F(MessageLoopTest, RecursiveSupport2) {
   // This test requires a UI loop.
   RunTest_RecursiveSupport2(MessageLoop::TYPE_UI);
 }
 #endif  // defined(OS_WIN)
 
-TEST(MessageLoopTest, TaskObserver) {
+TEST_F(MessageLoopTest, TaskObserver) {
   const int kNumPosts = 6;
   DummyTaskObserver observer(kNumPosts);
 
@@ -1692,15 +1724,15 @@ TEST(MessageLoopTest, TaskObserver) {
 }
 
 #if defined(OS_WIN)
-TEST(MessageLoopTest, IOHandler) {
+TEST_F(MessageLoopTest, IOHandler) {
   RunTest_IOHandler();
 }
 
-TEST(MessageLoopTest, WaitForIO) {
+TEST_F(MessageLoopTest, WaitForIO) {
   RunTest_WaitForIO();
 }
 
-TEST(MessageLoopTest, HighResolutionTimer) {
+TEST_F(MessageLoopTest, HighResolutionTimer) {
   MessageLoop message_loop;
   Time::EnableHighResolutionTimer(true);
 
@@ -1792,7 +1824,7 @@ class MLDestructionObserver : public MessageLoop::DestructionObserver {
 
 }  // namespace
 
-TEST(MessageLoopTest, DestructionObserverTest) {
+TEST_F(MessageLoopTest, DestructionObserverTest) {
   // Verify that the destruction observer gets called at the very end (after
   // all the pending tasks have been destroyed).
   MessageLoop* loop = new MessageLoop;
@@ -1819,7 +1851,7 @@ TEST(MessageLoopTest, DestructionObserverTest) {
 
 // Verify that MessageLoop sets ThreadMainTaskRunner::current() and it
 // posts tasks on that message loop.
-TEST(MessageLoopTest, ThreadMainTaskRunner) {
+TEST_F(MessageLoopTest, ThreadMainTaskRunner) {
   MessageLoop loop;
 
   scoped_refptr<Foo> foo(new Foo());
@@ -1838,7 +1870,7 @@ TEST(MessageLoopTest, ThreadMainTaskRunner) {
   EXPECT_EQ(foo->result(), "a");
 }
 
-TEST(MessageLoopTest, IsType) {
+TEST_F(MessageLoopTest, IsType) {
   MessageLoop loop(MessageLoop::TYPE_UI);
   EXPECT_TRUE(loop.IsType(MessageLoop::TYPE_UI));
   EXPECT_FALSE(loop.IsType(MessageLoop::TYPE_IO));
@@ -1913,7 +1945,7 @@ LRESULT CALLBACK TestWndProcThunk(HWND hwnd, UINT message,
   return 0;
 }
 
-TEST(MessageLoopTest, AlwaysHaveUserMessageWhenNesting) {
+TEST_F(MessageLoopTest, AlwaysHaveUserMessageWhenNesting) {
   MessageLoop loop(MessageLoop::TYPE_UI);
   HINSTANCE instance = CURRENT_MODULE();
   WNDCLASSEX wc = {0};
@@ -1936,7 +1968,7 @@ TEST(MessageLoopTest, AlwaysHaveUserMessageWhenNesting) {
 }
 #endif  // defined(OS_WIN)
 
-TEST(MessageLoopTest, SetTaskRunner) {
+TEST_F(MessageLoopTest, SetTaskRunner) {
   MessageLoop loop;
   scoped_refptr<SingleThreadTaskRunner> new_runner(new TestSimpleTaskRunner());
 
@@ -1945,7 +1977,7 @@ TEST(MessageLoopTest, SetTaskRunner) {
   EXPECT_EQ(new_runner, ThreadTaskRunnerHandle::Get());
 }
 
-TEST(MessageLoopTest, OriginalRunnerWorks) {
+TEST_F(MessageLoopTest, OriginalRunnerWorks) {
   MessageLoop loop;
   scoped_refptr<SingleThreadTaskRunner> new_runner(new TestSimpleTaskRunner());
   scoped_refptr<SingleThreadTaskRunner> original_runner(loop.task_runner());
@@ -1957,7 +1989,7 @@ TEST(MessageLoopTest, OriginalRunnerWorks) {
   EXPECT_EQ(1, foo->test_count());
 }
 
-TEST(MessageLoopTest, DeleteUnboundLoop) {
+TEST_F(MessageLoopTest, DeleteUnboundLoop) {
   // It should be possible to delete an unbound message loop on a thread which
   // already has another active loop. This happens when thread creation fails.
   MessageLoop loop;
@@ -1968,7 +2000,7 @@ TEST(MessageLoopTest, DeleteUnboundLoop) {
   EXPECT_EQ(loop.task_runner(), ThreadTaskRunnerHandle::Get());
 }
 
-TEST(MessageLoopTest, ThreadName) {
+TEST_F(MessageLoopTest, ThreadName) {
   {
     std::string kThreadName("foo");
     MessageLoop loop;
@@ -1986,7 +2018,7 @@ TEST(MessageLoopTest, ThreadName) {
 
 // Verify that tasks posted to and code running in the scope of the same
 // MessageLoop access the same SequenceLocalStorage values.
-TEST(MessageLoopTest, SequenceLocalStorageSetGet) {
+TEST_F(MessageLoopTest, SequenceLocalStorageSetGet) {
   MessageLoop loop;
 
   SequenceLocalStorageSlot<int> slot;
@@ -2008,7 +2040,7 @@ TEST(MessageLoopTest, SequenceLocalStorageSetGet) {
 
 // Verify that tasks posted to and code running in different MessageLoops access
 // different SequenceLocalStorage values.
-TEST(MessageLoopTest, SequenceLocalStorageDifferentMessageLoops) {
+TEST_F(MessageLoopTest, SequenceLocalStorageDifferentMessageLoops) {
   SequenceLocalStorageSlot<int> slot;
 
   {

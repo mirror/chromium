@@ -14,14 +14,16 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/message_loop/incoming_task_queue.h"
 #include "base/message_loop/message_loop_task_runner.h"
 #include "base/message_loop/message_pump.h"
 #include "base/message_loop/timer_slack.h"
 #include "base/observer_list.h"
 #include "base/pending_task.h"
 #include "base/run_loop.h"
+#include "base/sequence_token.h"
 #include "base/synchronization/lock.h"
+#include "base/task_scheduler/scheduler_incoming_task_queue.h"
+#include "base/task_scheduler/task.h"
 #include "base/threading/sequence_local_storage_map.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -40,6 +42,10 @@
 namespace base {
 
 class ThreadTaskRunnerHandle;
+
+namespace internal {
+class SchedulerIncomingTaskQueue;
+}  // namespace internal
 
 // A MessageLoop is used to process events for a particular thread.  There is
 // at most one MessageLoop instance per thread.
@@ -273,8 +279,8 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   // level.
   bool IsIdleForTesting();
 
-  // Runs the specified PendingTask.
-  void RunTask(PendingTask* pending_task);
+  // Runs the specified SchedulerIncomingTaskQueueTask.
+  void RunTask(internal::SchedulerIncomingTaskQueueTask* pending_task);
 
   // Disallow task observers. After this is called, calling
   // Add/RemoveTaskObserver() on this MessageLoop will crash.
@@ -300,6 +306,7 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
 
  private:
   friend class internal::IncomingTaskQueue;
+  friend class internal::SchedulerIncomingTaskQueue;
   friend class ScheduleWorkTest;
   friend class Thread;
   friend struct PendingTask;
@@ -335,7 +342,8 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
 
   // Calls RunTask or queues the pending_task on the deferred task list if it
   // cannot be run right now.  Returns true if the task was run.
-  bool DeferOrRunPendingTask(PendingTask pending_task);
+  bool DeferOrRunPendingTask(
+      internal::SchedulerIncomingTaskQueueTask pending_task);
 
   // Delete tasks that haven't run yet without running them.  Used in the
   // destructor to make sure all the task's destructors get called.
@@ -386,10 +394,10 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   // thoroughly.
   const PendingTask* current_pending_task_ = nullptr;
 
-  scoped_refptr<internal::IncomingTaskQueue> incoming_task_queue_;
+  scoped_refptr<internal::SchedulerIncomingTaskQueue> incoming_task_queue_;
 
   // A task runner which we haven't bound to a thread yet.
-  scoped_refptr<internal::MessageLoopTaskRunner> unbound_task_runner_;
+  scoped_refptr<SingleThreadTaskRunner> unbound_task_runner_;
 
   // The task runner associated with this message loop.
   scoped_refptr<SingleThreadTaskRunner> task_runner_;
@@ -409,6 +417,11 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   // Instantiated in BindToCurrentThread().
   std::unique_ptr<internal::ScopedSetSequenceLocalStorageMapForCurrentThread>
       scoped_set_sequence_local_storage_map_for_current_thread_;
+
+  const SequenceToken token_ = SequenceToken::Create();
+
+  std::unique_ptr<ScopedSetSequenceTokenForCurrentThread>
+      scoped_set_sequence_token_for_current_thread_;
 
   DISALLOW_COPY_AND_ASSIGN(MessageLoop);
 };
