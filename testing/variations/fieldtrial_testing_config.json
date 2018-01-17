@@ -2796,6 +2796,26 @@
             ]
         }
     ],
+    "RendererSchedulerWakeUpThrottling": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "ios",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "RendererSchedulerWakeUpThrottling",
+                    "params": {
+                        "wake_up_duration_ms": "5"
+                    }
+                }
+            ]
+        }
+    ],
     "RendererSideResourceScheduler": [
         {
             "platforms": [
