@@ -1320,6 +1320,8 @@ bool ChromeContentRendererClient::WillSendRequest(
       type = SearchBox::FAVICON;
     else if (gurl.host_piece() == chrome::kChromeUIThumbnailHost)
       type = SearchBox::THUMB;
+    else if (gurl.host_piece() == chrome::kChromeUIThumbnailHost2)
+      type = SearchBox::THUMB2;
 
     if (type != SearchBox::NONE)
       return search_box->GenerateImageURLFromTransientURL(url, type, new_url);

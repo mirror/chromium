@@ -28,11 +28,7 @@ class SearchBox : public content::RenderFrameObserver,
                   public content::RenderFrameObserverTracker<SearchBox>,
                   public chrome::mojom::EmbeddedSearchClient {
  public:
-  enum ImageSourceType {
-    NONE = -1,
-    FAVICON,
-    THUMB
-  };
+  enum ImageSourceType { NONE = -1, FAVICON, THUMB, THUMB2 };
 
   // Helper class for GenerateImageURLFromTransientURL() to adapt SearchBox's
   // instance, thereby allow mocking for unit tests.

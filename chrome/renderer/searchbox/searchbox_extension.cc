@@ -100,10 +100,11 @@ std::string GenerateThumbnailURL(int render_view_id,
                             most_visited_item_id);
 }
 
-std::string GenerateThumb2URL(const GURL& page_url,
+std::string GenerateThumb2URL(int render_view_id,
+                              InstantRestrictedID most_visited_item_id,
                               const GURL& fallback_thumb_url) {
-  return base::StringPrintf("chrome-search://thumb2/%s?fb=%s",
-                            page_url.spec().c_str(),
+  return base::StringPrintf("chrome-search://thumb2/%d/%d?fb=%s",
+                            render_view_id, most_visited_item_id,
                             fallback_thumb_url.spec().c_str());
 }
 
@@ -159,7 +160,7 @@ v8::Local<v8::Object> GenerateMostVisitedItemData(
   // Otherwise, we just pass on the generated one.
   std::string thumbnail_url =
       mv_item.thumbnail.is_valid()
-          ? GenerateThumb2URL(mv_item.url, mv_item.thumbnail)
+          ? GenerateThumb2URL(render_view_id, restricted_id, mv_item.thumbnail)
           : GenerateThumbnailURL(render_view_id, restricted_id);
 
   gin::DataObjectBuilder builder(isolate);

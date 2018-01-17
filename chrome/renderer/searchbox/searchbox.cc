@@ -55,9 +55,12 @@ const char* GetIconTypeUrlHost(SearchBox::ImageSourceType type) {
       return "favicon";
     case SearchBox::THUMB:
       return "thumb";
-    default:
-      NOTREACHED();
+    case SearchBox::THUMB2:
+      return "thumb2";
+    case SearchBox::NONE:
+      break;
   }
+  NOTREACHED();
   return nullptr;
 }
 
@@ -71,14 +74,13 @@ int GetImagePathStartOfPageURL(SearchBox::ImageSourceType type,
       chrome::ParsedFaviconPath parsed;
       return chrome::ParseFaviconPath(path, &parsed) ? parsed.path_index : -1;
     }
-    case SearchBox::THUMB: {
+    case SearchBox::THUMB:
+    case SearchBox::THUMB2:
       return 0;
-    }
-    default: {
-      NOTREACHED();
+    case SearchBox::NONE:
       break;
-    }
   }
+  NOTREACHED();
   return -1;
 }
 
@@ -196,10 +198,12 @@ bool TranslateIconRestrictedUrl(const GURL& transient_url,
   }
 
   std::string item_url = helper.GetURLStringFromRestrictedID(rid);
-  *url = GURL(base::StringPrintf("chrome-search://%s/%s%s",
-                                 GetIconTypeUrlHost(type),
-                                 params.c_str(),
-                                 item_url.c_str()));
+  std::string query;
+  if (transient_url.has_query())
+    query = "?" + transient_url.query();
+  *url = GURL(base::StringPrintf("chrome-search://%s/%s%s%s",
+                                 GetIconTypeUrlHost(type), params.c_str(),
+                                 item_url.c_str(), query.c_str()));
   return true;
 }
 
