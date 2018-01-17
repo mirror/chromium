@@ -16,6 +16,24 @@
       "revId": "d6a599e9c01f5b642d57f2727a0e6ab3d2532183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd8398dc_1c4f7e65",
+        "filename": "third_party/zlib/arm.c",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T01:52:53Z",
+      "side": 1,
+      "message": "IIUC there aren\u0027t any optional features in ARMv8 AArch64 [yet], and Fuchsia doesn\u0027t support AArch32 at all.",
+      "parentUuid": "e55f06e4_ce6fad02",
+      "revId": "d6a599e9c01f5b642d57f2727a0e6ab3d2532183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
