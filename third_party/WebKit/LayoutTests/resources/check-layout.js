@@ -210,7 +210,6 @@ window.checkLayout = function(selectorList, outputContainer)
     }
     var nodes = document.querySelectorAll(selectorList);
     nodes = Array.prototype.slice.call(nodes);
-    nodes.reverse();
     var checkedLayout = false;
     Array.prototype.forEach.call(nodes, function(node) {
         var failures = [];
