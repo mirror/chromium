@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1e8a319_3300563e",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4006,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-01-17T23:22:17Z",
+      "side": 1,
+      "message": "Totally missed those other tests, moved this logic there now, (and solved that TODO) thanks!",
+      "parentUuid": "d2ddc533_f44a458f",
+      "revId": "8dafc08a6cdbf75790f44a0128459364d7ac353f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57231548_0b86c956",
         "filename": "chrome/browser/ssl/ssl_browsertest.cc",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "8dafc08a6cdbf75790f44a0128459364d7ac353f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f4c447_e78009e3",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4010,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-01-17T23:22:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b835f1e6_81ce7320",
+      "revId": "8dafc08a6cdbf75790f44a0128459364d7ac353f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
