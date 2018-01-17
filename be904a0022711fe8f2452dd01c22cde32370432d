@@ -16,6 +16,24 @@
       "revId": "be904a0022711fe8f2452dd01c22cde32370432d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ac111e_30eeadde",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-17T15:12:37Z",
+      "side": 1,
+      "message": "I didn\u0027t want to invent a wheel once again, and copied this behavior from the DesktopWindowTreeHostX11. In the future, we are going to share as much logic between ozone/x11 and non-ozone/x11 as possible.",
+      "parentUuid": "03e028c1_d8472e79",
+      "revId": "be904a0022711fe8f2452dd01c22cde32370432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
