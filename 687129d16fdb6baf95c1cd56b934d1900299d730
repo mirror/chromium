@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffadce2a_c156a242",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T22:05:52Z",
+      "side": 1,
+      "message": "This would make a static destructor that will run so this seems like a problematic suggestion, and *if* we want static constexpr things at all (do we?) then the way to do it is to add a constexpr on this constructor and use this class.",
+      "revId": "687129d16fdb6baf95c1cd56b934d1900299d730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8726f22_e8f5ca11",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T22:05:52Z",
+      "side": 1,
+      "message": "put a base:: on it for the comment",
+      "revId": "1832dcbd423f32508b1ccc24df097b3dd2873870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd2e96b_87623d95",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T22:05:52Z",
+      "side": 1,
+      "message": "copypasta guard",
+      "revId": "1832dcbd423f32508b1ccc24df097b3dd2873870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
