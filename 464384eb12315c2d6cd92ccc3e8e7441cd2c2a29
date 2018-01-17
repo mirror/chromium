@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "816ae91a_16dc3ad9",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-17T03:38:54Z",
+      "side": 1,
+      "message": "If this is caused by scroll change, could you at least add a check for the SDK version and not wait for ENTERED on P and above?",
+      "range": {
+        "startLine": 773,
+        "startChar": 35,
+        "endLine": 773,
+        "endChar": 56
+      },
+      "revId": "464384eb12315c2d6cd92ccc3e8e7441cd2c2a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
