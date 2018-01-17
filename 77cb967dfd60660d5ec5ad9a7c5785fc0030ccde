@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe4b496e_c39619ea",
+        "filename": "tools/gn/example/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1130404
+      },
+      "writtenOn": "2018-01-17T18:44:45Z",
+      "side": 1,
+      "message": "because hello_static.h #includes str.h, I believe this should be public_deps, not deps; alternatively, //str:str could specify :str_config via all_dependent_configs instead of public_configs.",
+      "revId": "77cb967dfd60660d5ec5ad9a7c5785fc0030ccde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff73b54_93c3b6fe",
+        "filename": "tools/gn/example/hello.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130404
+      },
+      "writtenOn": "2018-01-17T18:44:45Z",
+      "side": 1,
+      "message": "`gn check` doesn\u0027t complain about the missing \"str.h\" dependency here; I think this is because GN considers this an \"unknown file\"? However, ninja will (correctly) fail to compile, because of the missing dependency.",
+      "revId": "77cb967dfd60660d5ec5ad9a7c5785fc0030ccde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4058ca_342b34e2",
+        "filename": "tools/gn/example/str/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1130404
+      },
+      "writtenOn": "2018-01-17T18:44:45Z",
+      "side": 1,
+      "message": "public_configs, or all_dependent_configs?",
+      "revId": "77cb967dfd60660d5ec5ad9a7c5785fc0030ccde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
