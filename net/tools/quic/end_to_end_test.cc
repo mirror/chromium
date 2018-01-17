@@ -1853,24 +1853,24 @@ TEST_P(EndToEndTest, RequestWithNoBodyWillNeverSendStreamFrameWithFIN) {
 // called exactly once on destruction.
 class TestAckListener : public QuicAckListenerInterface {
  public:
-  explicit TestAckListener(int num_packets) : num_notifications_(num_packets) {}
+  explicit TestAckListener(int bytes_to_ack) : bytes_to_ack_(bytes_to_ack) {}
 
-  void OnPacketAcked(int /*acked_bytes*/,
+  void OnPacketAcked(int acked_bytes,
                      QuicTime::Delta /*delta_largest_observed*/) override {
-    ASSERT_LT(0, num_notifications_);
-    num_notifications_--;
+    ASSERT_LE(acked_bytes, bytes_to_ack_);
+    bytes_to_ack_ -= acked_bytes;
   }
 
   void OnPacketRetransmitted(int /*retransmitted_bytes*/) override {}
 
-  bool has_been_notified() const { return num_notifications_ == 0; }
+  bool has_been_notified() const { return bytes_to_ack_ == 0; }
 
  protected:
   // Object is ref counted.
-  ~TestAckListener() override { EXPECT_EQ(0, num_notifications_); }
+  ~TestAckListener() override { EXPECT_EQ(0, bytes_to_ack_); }
 
  private:
-  int num_notifications_;
+  int bytes_to_ack_;
 };
 
 class TestResponseListener : public QuicSpdyClientBase::ResponseListener {
@@ -1910,14 +1910,14 @@ TEST_P(EndToEndTest, AckNotifierWithPacketLossAndBlockedSocket) {
 
   client_->SendMessage(headers, "", /*fin=*/false);
 
-  // The TestAckListener will cause a failure if not notified.
-  QuicReferenceCountedPointer<TestAckListener> ack_listener(
-      new TestAckListener(2));
-
   // Test the AckNotifier's ability to track multiple packets by making the
   // request body exceed the size of a single packet.
   string request_string =
       "a request body bigger than one packet" + string(kMaxPacketSize, '.');
+
+  // The TestAckListener will cause a failure if not notified.
+  QuicReferenceCountedPointer<TestAckListener> ack_listener(
+      new TestAckListener(request_string.length()));
 
   // Send the request, and register the delegate for ACKs.
   client_->SendData(request_string, true, ack_listener);
