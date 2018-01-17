@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d6f37428_7e1105d2",
+        "filename": "chrome/browser/signin/dice_tab_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-17T11:00:38Z",
+      "side": 1,
+      "message": "Good catch. Indeed, we can remove this method, and  should_start_sync_after_web_signin_ is now always true and can be removed as well.",
+      "parentUuid": "1d0046be_af177bce",
+      "range": {
+        "startLine": 38,
+        "startChar": 20,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "12476f182f04dacc581fa1643c1d4f84ab2f4a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0376ddf4_3e856a58",
         "filename": "chrome/browser/signin/signin_promo.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "12476f182f04dacc581fa1643c1d4f84ab2f4a71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3ef217_75cea5ac",
+        "filename": "chrome/browser/signin/signin_promo.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-17T11:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0376ddf4_3e856a58",
+      "range": {
+        "startLine": 277,
+        "startChar": 54,
+        "endLine": 277,
+        "endChar": 60
+      },
+      "revId": "12476f182f04dacc581fa1643c1d4f84ab2f4a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
