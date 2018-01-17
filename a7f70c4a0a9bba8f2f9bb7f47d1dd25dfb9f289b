@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "57f68ffb_12e48404",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-17T19:26:02Z",
+      "side": 1,
+      "message": "You can implement annotations before or after mojofication. From the comment it sounds like you plan until mojofication is complete and then extend mojo interfaces to pass annotations. In that case you may want to mark 656607 as blocked on 800212. But alternatively you can extend existing IPC messages. Whoever works on mojofication will need to move those parameters to mojo interfaces.\n656607 looks like the right bug to link here.",
+      "parentUuid": "81ac666d_6558ed05",
+      "range": {
+        "startLine": 326,
+        "startChar": 29,
+        "endLine": 326,
+        "endChar": 62
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb1de96c_502a1a4c",
         "filename": "content/browser/renderer_host/p2p/socket_host.h",
         "patchSetId": 5
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "NetworkTrafficAnnotationTag has a const member, and cannot be left uninitialized.\nHere we have a constructor without any arguments, that leaves it uninitialized, so, I could not use it.\nWe are currently using Mutable for all cases that follow this pattern, I will update the comment.",
       "parentUuid": "543780dd_eb360b9b",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 43
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3598b886_4e47f6a5",
+        "filename": "content/browser/renderer_host/p2p/socket_host_tcp.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-17T19:26:02Z",
+      "side": 1,
+      "message": "base::Optional\u003cnet::NetworkTrafficAnnotationTag\u003e seems like the right solution for this. Or alternatively we could remove the default SendBuffer() constructor and use base::Optional for write_buffer_",
+      "parentUuid": "6c2b7a81_9d7a53fa",
       "range": {
         "startLine": 70,
         "startChar": 9,
