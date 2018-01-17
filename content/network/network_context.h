@@ -29,6 +29,7 @@ class HttpServerPropertiesManager;
 
 namespace content {
 class NetworkServiceImpl;
+class ResourceScheduler;
 class URLLoader;
 class URLRequestContextBuilderMojo;
 
@@ -75,6 +76,8 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   net::URLRequestContext* url_request_context() { return url_request_context_; }
 
   NetworkServiceImpl* network_service() { return network_service_; }
+
+  ResourceScheduler* resource_scheduler() { return resource_scheduler_.get(); }
 
   // These are called by individual url loaders as they are being created and
   // destroyed.
@@ -136,6 +139,8 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
 
   net::URLRequestContext* url_request_context_ = nullptr;
 
+  std::unique_ptr<ResourceScheduler> resource_scheduler_;
+
   // Put it below |url_request_context_| so that it outlives all the
   // NetworkServiceURLLoaderFactory instances.
   mojo::StrongBindingSet<mojom::URLLoaderFactory> loader_factory_bindings_;
@@ -151,6 +156,9 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   mojo::Binding<mojom::NetworkContext> binding_;
 
   std::unique_ptr<network::CookieManager> cookie_manager_;
+
+  // TODO(yhirano): Consult with switches::kDisableResourceScheduler.
+  constexpr static bool enable_resource_scheduler_ = true;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkContext);
 };
