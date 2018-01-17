@@ -52,6 +52,24 @@
       "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939b7783_7d80f812",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-17T22:31:52Z",
+      "side": 1,
+      "message": "Estade@,\n\nYour comment is true for chrome (where harmony will be the default behavior) but not for CrOS.\nIn CrOS we want the default to be kDefaultPlaceholderTextColor.\n\nMSW@,\nI just checked with sgabriel@ and all of the effects of harmony mentioned above were only intended for Chrome, not CrOS. \n\nSo this change will bring the CrOS UI back into alignment with the spec without changing Chrome.",
+      "parentUuid": "9f720fab_fc7db5e7",
+      "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
