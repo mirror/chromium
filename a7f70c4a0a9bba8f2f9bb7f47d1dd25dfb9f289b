@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "81ac666d_6558ed05",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-17T08:35:21Z",
+      "side": 1,
+      "message": "I add 656607 bug everywhere that I have to follow up to complete the annotations. I added it here as a reminder to continue this tunneling after this CL lands. Do you suggest that I change the comment? Or add both bugs?",
+      "parentUuid": "30742dd3_4674b0e5",
+      "range": {
+        "startLine": 326,
+        "startChar": 29,
+        "endLine": 326,
+        "endChar": 62
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb1de96c_502a1a4c",
         "filename": "content/browser/renderer_host/p2p/socket_host.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe6149c_ddfe3ff7",
+        "filename": "content/browser/renderer_host/p2p/socket_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-17T08:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb1de96c_502a1a4c",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f81904cc_8c27caf1",
+        "filename": "content/browser/renderer_host/p2p/socket_host_tcp.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-17T08:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d623c8f_c7af5e95",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 51
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "543780dd_eb360b9b",
         "filename": "content/browser/renderer_host/p2p/socket_host_tcp.h",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-11T19:03:20Z",
       "side": 1,
       "message": "Does this need to be \"Mutable\"? Comments for this struct say \"Do not use this unless net-serialization is required.\" and this field is never mutated.",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 43
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2b7a81_9d7a53fa",
+        "filename": "content/browser/renderer_host/p2p/socket_host_tcp.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-17T08:35:21Z",
+      "side": 1,
+      "message": "NetworkTrafficAnnotationTag has a const member, and cannot be left uninitialized.\nHere we have a constructor without any arguments, that leaves it uninitialized, so, I could not use it.\nWe are currently using Mutable for all cases that follow this pattern, I will update the comment.",
+      "parentUuid": "543780dd_eb360b9b",
       "range": {
         "startLine": 70,
         "startChar": 9,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a98d6248_08b7ece6",
+        "filename": "content/browser/renderer_host/p2p/socket_host_udp.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-17T08:35:21Z",
+      "side": 1,
+      "message": "We would do it in a next CL. I have not updated DatagramServerSocket yet to receive it. Added a comment.",
+      "parentUuid": "2fe39018_3b0eb050",
+      "range": {
+        "startLine": 352,
+        "startChar": 24,
+        "endLine": 352,
+        "endChar": 31
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f857b3b7_17210e49",
         "filename": "content/browser/renderer_host/p2p/socket_host_udp.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d64a5f_447fbc53",
+        "filename": "content/browser/renderer_host/p2p/socket_host_udp.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-17T08:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f857b3b7_17210e49",
+      "range": {
+        "startLine": 378,
+        "startChar": 5,
+        "endLine": 378,
+        "endChar": 63
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
