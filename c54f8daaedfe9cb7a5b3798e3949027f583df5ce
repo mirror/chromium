@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "cf363cd8_ca231a8a",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-17T23:22:02Z",
+      "side": 1,
+      "message": "We don\u0027t need text;  we\u0027ll need either GURL or another indication of scheme.  Eg. file URLs don\u0027t get an offset, and we\u0027d bail early.",
+      "parentUuid": "d70a5918_9e835f97",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ade0005_b3d0c07e",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 2
@@ -105,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "9776539c_b1ab8398",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-17T23:22:02Z",
+      "side": 1,
+      "message": "That\u0027s the concern I was trying to cover with the union of bounds.  RTL could move bits of the domain move around, relative to each other.  But, with FORCE_LTR (or better, AS_URL), the host and path can\u0027t polute each other, AFAIK.  Therefore, if we find the rightmost edge of any part of the host, we\u0027re guaranteed to have found the point we want, right?",
+      "parentUuid": "d7b9f899_042f787e",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10f33dac_b22be11b",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 2
@@ -116,6 +152,24 @@
       "writtenOn": "2018-01-17T19:59:25Z",
       "side": 1,
       "message": "What\u0027s this for?",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af700b7d_4415dc61",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-17T23:22:02Z",
+      "side": 1,
+      "message": "This is left over from the off-by-one debugging, which I found (and you also suggested) was cursor-related.  Sorry, WIP. :)",
+      "parentUuid": "10f33dac_b22be11b",
       "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -225,6 +279,24 @@
     },
     {
       "key": {
+        "uuid": "102d4121_dd96b8ca",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-17T23:22:02Z",
+      "side": 1,
+      "message": "Sanity check:  FADE_HEAD is not a thing.  I believe you mentioned it previously could have been.  Based on how this works before this change, it\u0027s really \"FADE_OVERFLOW\" right?  Ie. fade text that spills out of the display rect, on either end.  It just so happens that normally, un-offset text doesn\u0027t overflow on the head end.",
+      "parentUuid": "540c64af_230cd915",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f7f1462_840976b2",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 2
@@ -259,6 +331,24 @@
     },
     {
       "key": {
+        "uuid": "1b626ee7_22eee8e4",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-17T23:22:02Z",
+      "side": 1,
+      "message": "This keeps the fades centered when the difference between field and content width is odd - I was matching line 945.",
+      "parentUuid": "f1928f6d_9098599d",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08907680_f6217b34",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 2
@@ -270,6 +360,24 @@
       "writtenOn": "2018-01-17T19:59:25Z",
       "side": 1,
       "message": "Is it not possible to use ALIGN_TO_HEAD plus fade eliding?",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c785a6_6616447b",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-17T23:22:02Z",
+      "side": 1,
+      "message": "It is, but the GetCurrentHorizontalAlignment() that drives this switch resolves to left/center/right.",
+      "parentUuid": "08907680_f6217b34",
       "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
