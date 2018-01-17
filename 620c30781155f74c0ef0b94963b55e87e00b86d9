@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b75fc80_4285e478",
+        "filename": "content/shell/test_runner/mock_screen_orientation_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-17T06:01:33Z",
+      "side": 1,
+      "message": "Maybe MockScreenOrientationImpl? I\u0027ll change it in next CL, to make this CL focus on the file moving only.",
+      "parentUuid": "a8a4877c_c02d31fa",
+      "range": {
+        "startLine": 26,
+        "startChar": 46,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "620c30781155f74c0ef0b94963b55e87e00b86d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02d6b608_8e232dd2",
         "filename": "third_party/WebKit/Source/modules/screen_orientation/ScreenOrientationControllerImpl.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "620c30781155f74c0ef0b94963b55e87e00b86d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1089d18_5e14e33f",
+        "filename": "third_party/WebKit/Source/modules/screen_orientation/ScreenOrientationControllerImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-17T06:01:33Z",
+      "side": 1,
+      "message": "I remember it is not recommended to use \"service\" word in mojo client. So I change it to \"SetScreenOrientationAssociatedPtrForTests\".\nDone.",
+      "parentUuid": "02d6b608_8e232dd2",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 35
+      },
+      "revId": "620c30781155f74c0ef0b94963b55e87e00b86d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
