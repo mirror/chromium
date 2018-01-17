@@ -317,13 +317,24 @@ void OfflineInternalsUIMessageHandler::HandleGeneratePageBundle(
   for (auto& page_url : page_urls) {
     // Creates a dummy prefetch URL with a bogus ID, and using the URL as the
     // page title.
-    prefetch_urls.push_back(offline_pages::PrefetchURL(
-        "dummy id", GURL(page_url), base::UTF8ToUTF16(page_url)));
+    GURL url(page_url);
+    if (url.is_valid()) {
+      prefetch_urls.push_back(offline_pages::PrefetchURL(
+          "offline-internals", url, base::UTF8ToUTF16(page_url)));
+    }
   }
 
   prefetch_service_->GetPrefetchDispatcher()->AddCandidatePrefetchURLs(
       offline_pages::kSuggestedArticlesNamespace, prefetch_urls);
-  std::string message("Added candidate URLs.\n");
+  std::string message =
+      base::StringPrintf("Added %u candidate URLs.", prefetch_urls.size());
+  if (prefetch_urls.size() < page_urls.size()) {
+    size_t invalid_urls = page_urls.size() - prefetch_urls.size();
+    message.append(
+        base::StringPrintf(" Ignored %u invalid URLs.", invalid_urls));
+  }
+  message.append("\n");
+
   // Construct a JSON array containing all the URLs. To guard against malicious
   // URLs that might contain special characters, we create a ListValue and then
   // serialize it into JSON, instead of doing direct string manipulation.
