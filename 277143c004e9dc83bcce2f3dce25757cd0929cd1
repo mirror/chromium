@@ -16,6 +16,24 @@
       "revId": "277143c004e9dc83bcce2f3dce25757cd0929cd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7151f75c_8433c553",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-17T15:09:18Z",
+      "side": 1,
+      "message": "Yes, but it is easier to share the configuration like that. It should probably be a property directly on the ViewController.",
+      "parentUuid": "e90cd1c3_c8f76268",
+      "revId": "277143c004e9dc83bcce2f3dce25757cd0929cd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
