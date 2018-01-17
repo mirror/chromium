@@ -68,6 +68,7 @@ class MEDIA_EXPORT PipelineImpl : public Pipeline {
   // |media_task_runner|.
   PipelineImpl(
       const scoped_refptr<base::SingleThreadTaskRunner>& media_task_runner,
+      const scoped_refptr<base::SingleThreadTaskRunner>& main_task_runner,
       MediaLog* media_log);
   ~PipelineImpl() override;
 
