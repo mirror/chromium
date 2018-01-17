@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "824f1a7d_eb70216d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-17T23:57:03Z",
+      "side": 1,
+      "message": "Yes, thanks - updated!\n\nYes, it improves the accessibility, but not with tooltips - screenreaders know how to read the Views label text so tooltips are no longer needed :) (though they\u0027ll be added automatically by views::Label if the text is too long, so that case is also fine).",
+      "parentUuid": "e19d44db_9ba8a18d",
+      "revId": "e0f0552c2d240a1135e75f31c24b10b9268fa54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9abb2f50_a2879115",
         "filename": "chrome/browser/ui/views/page_info/chosen_object_view.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "e0f0552c2d240a1135e75f31c24b10b9268fa54c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20cb9ac_ece91fd6",
+        "filename": "chrome/browser/ui/views/page_info/chosen_object_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-17T23:57:03Z",
+      "side": 1,
+      "message": "Yup, will do - need Trent to look at the Mac bits anyway :D",
+      "parentUuid": "9abb2f50_a2879115",
+      "revId": "e0f0552c2d240a1135e75f31c24b10b9268fa54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
