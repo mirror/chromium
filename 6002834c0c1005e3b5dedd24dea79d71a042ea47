@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1146caf4_b0d73f18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-17T21:21:24Z",
+      "side": 1,
+      "message": "Can we test that this is true for kit kat?",
+      "range": {
+        "startLine": 265,
+        "startChar": 39,
+        "endLine": 265,
+        "endChar": 48
+      },
+      "revId": "6002834c0c1005e3b5dedd24dea79d71a042ea47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da07247_12e23b76",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-17T21:21:24Z",
+      "side": 1,
+      "message": "Always kill if we\u0027re relaunching now?",
+      "range": {
+        "startLine": 280,
+        "startChar": 11,
+        "endLine": 280,
+        "endChar": 70
+      },
+      "revId": "6002834c0c1005e3b5dedd24dea79d71a042ea47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
