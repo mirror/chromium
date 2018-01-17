@@ -4,6 +4,7 @@
 
 #include "chrome/browser/page_load_metrics/observers/service_worker_page_load_metrics_observer.h"
 
+#include "base/strings/string_split.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/page_load_metrics/observers/from_gws_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
@@ -72,6 +73,27 @@ const char kHistogramServiceWorkerLoadInbox[] =
     "PageLoad.Clients.ServiceWorker.DocumentTiming.NavigationToLoadEventFired."
     "inbox";
 
+const char kHistogramServiceWorkerParseStartDocs[] =
+    "PageLoad.Clients.ServiceWorker.ParseTiming.NavigationToParseStart.docs";
+const char kHistogramServiceWorkerFirstContentfulPaintDocs[] =
+    "PageLoad.Clients.ServiceWorker.PaintTiming."
+    "NavigationToFirstContentfulPaint.docs";
+const char kHistogramServiceWorkerParseStartToFirstContentfulPaintDocs[] =
+    "PageLoad.Clients.ServiceWorker.PaintTiming."
+    "ParseStartToFirstContentfulPaint.docs";
+const char kHistogramServiceWorkerFirstMeaningfulPaintDocs[] =
+    "PageLoad.Clients.ServiceWorker.Experimental.PaintTiming."
+    "NavigationToFirstMeaningfulPaint.docs";
+const char kHistogramServiceWorkerParseStartToFirstMeaningfulPaintDocs[] =
+    "PageLoad.Clients.ServiceWorker.Experimental.PaintTiming."
+    "ParseStartToFirstMeaningfulPaint.docs";
+const char kHistogramServiceWorkerDomContentLoadedDocs[] =
+    "PageLoad.Clients.ServiceWorker.DocumentTiming."
+    "NavigationToDOMContentLoadedEventFired.docs";
+const char kHistogramServiceWorkerLoadDocs[] =
+    "PageLoad.Clients.ServiceWorker.DocumentTiming.NavigationToLoadEventFired."
+    "docs";
+
 const char kHistogramServiceWorkerParseStartSearch[] =
     "PageLoad.Clients.ServiceWorker.ParseTiming.NavigationToParseStart.search";
 const char kHistogramServiceWorkerFirstContentfulPaintSearch[] =
@@ -133,6 +155,29 @@ bool IsInboxSite(const GURL& url) {
 
 bool IsForwardBackLoad(ui::PageTransition transition) {
   return transition & ui::PAGE_TRANSITION_FORWARD_BACK;
+}
+
+// Determines whether the URL is a canonical Google Docs document open URL. This
+// is done on a best effort basis rather than attempting an exact match.
+// Examples:
+//   https://docs.google.com/document/d/1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/edit
+//   -> true
+//   https://docs.google.com/spreadsheets/d/1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/edit
+//   -> false
+//   https://docs.google.com/ -> false
+//   https://docs.google.com/document/ -> false
+bool IsGoogleDocsOpenUrl(const GURL& url) {
+  if (!url.SchemeIs(url::kHttpsScheme) ||
+      url.host_piece() != "docs.google.com") {
+    return false;
+  }
+
+  // Expect patterns of the form '/document/d/{docId}/{action}'.
+  std::vector<base::StringPiece> path_components = base::SplitStringPiece(
+      url.path_piece(), "/", base::WhitespaceHandling::KEEP_WHITESPACE,
+      base::SplitResult::SPLIT_WANT_ALL);
+  return 5 == path_components.size() && path_components[1] == "document" &&
+         path_components[2] == "d";
 }
 
 }  // namespace
@@ -214,6 +259,14 @@ void ServiceWorkerPageLoadMetricsObserver::OnFirstContentfulPaintInPage(
         internal::kHistogramServiceWorkerParseStartToFirstContentfulPaintSearch,
         timing.paint_timing->first_contentful_paint.value() -
             timing.parse_timing->parse_start.value());
+  } else if (IsGoogleDocsOpenUrl(info.url)) {
+    PAGE_LOAD_HISTOGRAM(
+        internal::kHistogramServiceWorkerFirstContentfulPaintDocs,
+        timing.paint_timing->first_contentful_paint.value());
+    PAGE_LOAD_HISTOGRAM(
+        internal::kHistogramServiceWorkerParseStartToFirstContentfulPaintDocs,
+        timing.paint_timing->first_contentful_paint.value() -
+            timing.parse_timing->parse_start.value());
   }
 }
 
@@ -253,6 +306,14 @@ void ServiceWorkerPageLoadMetricsObserver::
         internal::kHistogramServiceWorkerParseStartToFirstMeaningfulPaintInbox,
         timing.paint_timing->first_meaningful_paint.value() -
             timing.parse_timing->parse_start.value());
+  } else if (IsGoogleDocsOpenUrl(info.url)) {
+    PAGE_LOAD_HISTOGRAM(
+        internal::kHistogramServiceWorkerFirstMeaningfulPaintDocs,
+        timing.paint_timing->first_meaningful_paint.value());
+    PAGE_LOAD_HISTOGRAM(
+        internal::kHistogramServiceWorkerParseStartToFirstMeaningfulPaintDocs,
+        timing.paint_timing->first_meaningful_paint.value() -
+            timing.parse_timing->parse_start.value());
   } else if (page_load_metrics::IsGoogleSearchResultUrl(info.url)) {
     PAGE_LOAD_HISTOGRAM(
         internal::kHistogramServiceWorkerFirstMeaningfulPaintSearch,
@@ -286,6 +347,10 @@ void ServiceWorkerPageLoadMetricsObserver::OnDomContentLoadedEventStart(
     PAGE_LOAD_HISTOGRAM(
         internal::kHistogramServiceWorkerDomContentLoadedInbox,
         timing.document_timing->dom_content_loaded_event_start.value());
+  } else if (IsGoogleDocsOpenUrl(info.url)) {
+    PAGE_LOAD_HISTOGRAM(
+        internal::kHistogramServiceWorkerDomContentLoadedDocs,
+        timing.document_timing->dom_content_loaded_event_start.value());
   } else if (page_load_metrics::IsGoogleSearchResultUrl(info.url)) {
     PAGE_LOAD_HISTOGRAM(
         internal::kHistogramServiceWorkerDomContentLoadedSearch,
@@ -311,6 +376,9 @@ void ServiceWorkerPageLoadMetricsObserver::OnLoadEventStart(
   if (IsInboxSite(info.url)) {
     PAGE_LOAD_HISTOGRAM(internal::kHistogramServiceWorkerLoadInbox,
                         timing.document_timing->load_event_start.value());
+  } else if (IsGoogleDocsOpenUrl(info.url)) {
+    PAGE_LOAD_HISTOGRAM(internal::kHistogramServiceWorkerLoadDocs,
+                        timing.document_timing->load_event_start.value());
   } else if (page_load_metrics::IsGoogleSearchResultUrl(info.url)) {
     PAGE_LOAD_HISTOGRAM(internal::kHistogramServiceWorkerLoadSearch,
                         timing.document_timing->load_event_start.value());
@@ -329,6 +397,9 @@ void ServiceWorkerPageLoadMetricsObserver::OnParseStart(
 
     if (IsInboxSite(info.url)) {
       PAGE_LOAD_HISTOGRAM(internal::kHistogramServiceWorkerParseStartInbox,
+                          timing.parse_timing->parse_start.value());
+    } else if (IsGoogleDocsOpenUrl(info.url)) {
+      PAGE_LOAD_HISTOGRAM(internal::kHistogramServiceWorkerParseStartDocs,
                           timing.parse_timing->parse_start.value());
     } else if (page_load_metrics::IsGoogleSearchResultUrl(info.url)) {
       PAGE_LOAD_HISTOGRAM(internal::kHistogramServiceWorkerParseStartSearch,
