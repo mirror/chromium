@@ -16,6 +16,24 @@
       "revId": "b1ba523fd168326a2319fcc5a3a24447a6fd8e99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a757767d_5b77c0e8",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-17T22:29:22Z",
+      "side": 1,
+      "message": "I would:\n- add it to about:flags (separate CL same milestone)\n- expose its value on chrome://i-i (Same CL as the flags CL)\n- check it as the first eligibility reason (this CL)\n- make it prevent server previews as well (this CL)\n\nI wasn\u0027t sure what context the meeting had, but I\u0027d need to be convinced around keeping server and client previews as different holdbacks. Right now we have a feature for each preview type including server previews, so I think adding this orthogonally to all previews would be best.\n\nWDYT?",
+      "parentUuid": "b0778e86_47b3ebdc",
+      "revId": "b1ba523fd168326a2319fcc5a3a24447a6fd8e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
