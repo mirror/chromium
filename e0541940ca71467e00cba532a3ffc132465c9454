@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5a1d0b6_f46e8dd5",
+        "filename": "third_party/WebKit/LayoutTests/fast/scrolling/scroll-into-view-ignores-invisible-selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-17T00:34:08Z",
+      "side": 1,
+      "message": "Change this to check instead that the scroll position didn\u0027t change at all (i.e. store the position before calling focus() and check that window.scrollY still matches it.",
+      "range": {
+        "startLine": 22,
+        "startChar": 1,
+        "endLine": 22,
+        "endChar": 37
+      },
+      "revId": "e0541940ca71467e00cba532a3ffc132465c9454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
