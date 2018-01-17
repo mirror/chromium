@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df06764a_278248b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-17T21:17:05Z",
+      "side": 1,
+      "message": "Another thought I have is that we can make the replacement of presenters more straight forward. We can probably extract the concept of registering presenters to a new sub class, something like PresenterList that has a list of presenters and a default presenter.\n\nThat way, we don\u0027t need another ModalDialogManager for VR where we need to transfer all pending dialogs while switching manager. We only need to handle the current showing dialog when switching the PresenterList within this manager class.",
+      "parentUuid": "9ba5c84c_57b17d0f",
+      "range": {
+        "startLine": 97,
+        "startChar": 24,
+        "endLine": 97,
+        "endChar": 35
+      },
+      "revId": "4da2ca5cd737b5d2e91f54fbed21a4bd5ae5c9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71b9a303_8a20ef43",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
         "patchSetId": 2
