@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfb9e766_b736f232",
+        "filename": "ui/gfx/text_elider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T05:05:56Z",
+      "side": 1,
+      "message": "I ran gfx_unittsets on 10.10 and 10.11 VMs and they both passed. So hopefully the whackamole is over \\o/",
+      "revId": "8f6f3b98c8a38991810736e482c17db483243e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
