@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9c23d64_23c8e195",
+        "filename": "net/socket/datagram_client_socket.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-17T23:20:57Z",
+      "side": 1,
+      "message": "This is a fairly generic name, but I can\u0027t think of anything more specific :/",
+      "range": {
+        "startLine": 49,
+        "startChar": 38,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "98eb1dea1508d0f0340ffa128ee1a47d4bf4ec7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daef8ebc_1fd5e0a3",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-17T23:20:57Z",
+      "side": 1,
+      "message": "nit: I\u0027d just remove the else here.",
+      "range": {
+        "startLine": 780,
+        "startChar": 10,
+        "endLine": 780,
+        "endChar": 0
+      },
+      "revId": "98eb1dea1508d0f0340ffa128ee1a47d4bf4ec7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a167e7d_71cc7aaf",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-17T23:20:57Z",
+      "side": 1,
+      "message": "nit: Consider:\n\nif (bytes_transferred \u003c 0) {\n  result \u003d MapSystemError(errno);\n} else if (bytes_transferred \u003d\u003d buf_len) {\n  result \u003d ERR_MSG_TOO_BIG;\n} else {\n  result \u003d bytes_transferred;\n  if (address)\n    *address \u003d *remote_address_.get();\n}\n\nTo avoid a level of nesting.",
+      "range": {
+        "startLine": 804,
+        "startChar": 3,
+        "endLine": 804,
+        "endChar": 0
+      },
+      "revId": "98eb1dea1508d0f0340ffa128ee1a47d4bf4ec7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
