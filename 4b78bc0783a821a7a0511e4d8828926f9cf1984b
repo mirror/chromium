@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "56516b3b_ffac44f7",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 36
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T21:14:52Z",
+      "side": 1,
+      "message": "Whoops, sorry, somehow missed that inclusion.",
+      "parentUuid": "244c8841_b7f0312a",
+      "range": {
+        "startLine": 1715,
+        "startChar": 16,
+        "endLine": 1715,
+        "endChar": 36
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dca30e2b_80860436",
         "filename": "services/BUILD.gn",
         "patchSetId": 36
@@ -460,6 +484,30 @@
       "side": 1,
       "message": "The mojom callback hasn\u0027t been invoked, so the original data isn\u0027t freed.\nI will double check and get back to you on this.",
       "parentUuid": "e855a353_bd7bb276",
+      "range": {
+        "startLine": 248,
+        "startChar": 18,
+        "endLine": 248,
+        "endChar": 19
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e72af56_0dd37faf",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-17T21:14:52Z",
+      "side": 1,
+      "message": "Ah, right!  No, that makes sense; I think it likely that this isn\u0027t a problem.",
+      "parentUuid": "eca046f6_ddfb5587",
       "range": {
         "startLine": 248,
         "startChar": 18,
