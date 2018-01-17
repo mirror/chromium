@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "135afc30_e0275f94",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 8517,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-17T20:13:46Z",
+      "side": 1,
+      "message": "nit: I guess we don\u0027t have one yet? Can you open a bug for yourse;f to add the link here once you have it.",
+      "range": {
+        "startLine": 8517,
+        "startChar": 364,
+        "endLine": 8517,
+        "endChar": 383
+      },
+      "revId": "545f42a412391a234c0b72d91886a0bb90cf46b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
