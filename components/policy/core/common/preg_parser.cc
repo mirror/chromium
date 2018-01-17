@@ -57,6 +57,10 @@ const int64_t kMaxPRegFileSize = 1024 * 1024 * 16;
 static_assert(kMaxPRegFileSize <= std::numeric_limits<ptrdiff_t>::max(),
               "Max PReg file size too large.");
 
+// Maximum number of components in registry key names. This corresponds to the
+// maximum nesting level of RegistryDict trees.
+const int64_t kMaxKeyNameComponents = 1024;
+
 // Constants for PReg file delimiters.
 const base::char16 kDelimBracketOpen = L'[';
 const base::char16 kDelimBracketClose = L']';
@@ -221,11 +225,21 @@ void HandleRecord(const base::string16& key_name,
   // Locate/create the dictionary to place the value in.
   std::vector<base::string16> path;
 
-  for (const base::string16& entry :
-       base::SplitString(key_name, kRegistryPathSeparator,
-                         base::KEEP_WHITESPACE, base::SPLIT_WANT_NONEMPTY)) {
+  size_t key_name_components = 0;
+
+  for (const base::StringPiece16& entry : base::SplitStringPiece(
+           key_name, kRegistryPathSeparator, base::KEEP_WHITESPACE,
+           base::SPLIT_WANT_NONEMPTY)) {
     if (entry.empty())
       continue;
+
+    ++key_name_components;
+    if (key_name_components > kMaxKeyNameComponents) {
+      LOG(ERROR) << "Encountered a key which has more than "
+                 << kMaxKeyNameComponents << " components.";
+      return;
+    }
+
     const std::string name = base::UTF16ToUTF8(entry);
     RegistryDict* subdict = dict->GetKey(name);
     if (!subdict) {
