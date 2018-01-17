@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "6f19d54e_70c7ca7c",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2488,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-17T22:05:53Z",
+      "side": 1,
+      "message": "Nit: URL",
+      "range": {
+        "startLine": 2488,
+        "startChar": 9,
+        "endLine": 2488,
+        "endChar": 12
+      },
+      "revId": "9e9d589bd565b678873ed2a005bbfd46e49e092d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a82cfd1_b23ee72b",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 4
@@ -93,6 +116,30 @@
       "revId": "9e9d589bd565b678873ed2a005bbfd46e49e092d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdd64392_5cae5058",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2492,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-17T22:05:53Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "3a82cfd1_b23ee72b",
+      "range": {
+        "startLine": 2492,
+        "startChar": 49,
+        "endLine": 2492,
+        "endChar": 71
+      },
+      "revId": "9e9d589bd565b678873ed2a005bbfd46e49e092d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
