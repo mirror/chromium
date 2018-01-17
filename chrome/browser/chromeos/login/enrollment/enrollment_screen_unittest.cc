@@ -15,6 +15,7 @@
 #include "chrome/browser/chromeos/login/screens/mock_base_screen_delegate.h"
 #include "chrome/browser/chromeos/policy/device_cloud_policy_manager_chromeos.h"
 #include "chrome/browser/chromeos/policy/enrollment_config.h"
+#include "chrome/browser/chromeos/policy/enrollment_status_chromeos.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -114,6 +115,11 @@ class ZeroTouchEnrollmentScreenUnitTest : public EnrollmentScreenUnitTest {
                 policy::EnrollmentStatus::ForStatus(
                     policy::EnrollmentStatus::REGISTRATION_FAILED));
           }));
+      // Define behavior of ClearAuth to only run the callback it is given.
+      EXPECT_CALL(*mock, ClearAuth(_))
+          .Times(AnyNumber())
+          .WillRepeatedly(Invoke(
+              [](const base::RepeatingClosure& callback) { callback.Run(); }));
     }
     return mock;
   }
@@ -133,6 +139,25 @@ class ZeroTouchEnrollmentScreenUnitTest : public EnrollmentScreenUnitTest {
     // Configure the browser to use Hands-Off Enrollment.
     base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
         switches::kEnterpriseEnableZeroTouchEnrollment, "hands-off");
+  }
+
+  void DoTest_FinishesEnrollmentFlow() {
+    // Define behavior of EnterpriseEnrollmentHelperMock to successfully enroll.
+    EnterpriseEnrollmentHelper::SetupEnrollmentHelperMock(
+        &ZeroTouchEnrollmentScreenUnitTest::MockEnrollmentHelperCreator<true>);
+
+    SetUpEnrollmentScreen();
+
+    // Set up expectation for BaseScreenDelegate::OnExit to be called
+    // with BaseScreenDelegate::ENTERPRISE_ENROLLMENT_COMPLETED
+    // This is how we check that the code finishes and cleanly exits
+    // the enterprise enrollment flow.
+    EXPECT_CALL(*GetBaseScreenDelegate(),
+                OnExit(_, ScreenExitCode::ENTERPRISE_ENROLLMENT_COMPLETED, _))
+        .Times(1);
+
+    // Start zero-touch enrollment.
+    enrollment_screen_->Show();
   }
 
  private:
@@ -206,22 +231,86 @@ TEST_F(ZeroTouchEnrollmentScreenUnitTest, DoesNotRetryAfterSuccess) {
 }
 
 TEST_F(ZeroTouchEnrollmentScreenUnitTest, FinishesEnrollmentFlow) {
-  // Define behavior of EnterpriseEnrollmentHelperMock to successfully enroll.
+  DoTest_FinishesEnrollmentFlow();
+}
+
+// We base this off ZeroTouchEnrollmenScreenUnitTests for two reasons:
+//   1. We want to check that some same tests pass in both classes
+//   2. We want to leverage Zero-Touch Hands Off to test for proper completions
+class AutomaticReenrollmentScreenUnitTest
+    : public ZeroTouchEnrollmentScreenUnitTest {
+ public:
+  AutomaticReenrollmentScreenUnitTest() = default;
+
+  // Closure passed to EnterpriseEnrollmentHelper::SetupEnrollmentHelperMock
+  // which creates the EnterpriseEnrollmentHelperMock object that will
+  // eventually be tied to the EnrollmentScreen. It also sets up the
+  // appropriate expectations for testing with the Google Mock framework.
+  // The template parameter should_enroll indicates whether or not
+  // the EnterpriseEnrollmentHelper should be mocked to successfully enroll.
+  template <bool should_enroll>
+  static EnterpriseEnrollmentHelper* MockEnrollmentHelperCreator(
+      EnterpriseEnrollmentHelper::EnrollmentStatusConsumer* status_consumer,
+      const policy::EnrollmentConfig& enrollment_config,
+      const std::string& enrolling_user_domain) {
+    EnterpriseEnrollmentHelperMock* mock =
+        new EnterpriseEnrollmentHelperMock(status_consumer);
+    if (should_enroll) {
+      // Define behavior of EnrollUsingAttestation to successfully enroll.
+      EXPECT_CALL(*mock, EnrollUsingAttestation())
+          .Times(AnyNumber())
+          .WillRepeatedly(Invoke([mock]() {
+            static_cast<EnrollmentScreen*>(mock->status_consumer())
+                ->ShowEnrollmentStatusOnSuccess();
+          }));
+    } else {
+      // Define behavior of EnrollUsingAttestation to fail to enroll.
+      EXPECT_CALL(*mock, EnrollUsingAttestation())
+          .Times(AnyNumber())
+          .WillRepeatedly(Invoke([mock]() {
+            mock->status_consumer()->OnEnrollmentError(
+                policy::EnrollmentStatus::ForRegistrationError(
+                    policy::DeviceManagementStatus::
+                        DM_STATUS_SERVICE_DEVICE_NOT_FOUND));
+          }));
+    }
+    // Define behavior of ClearAuth to only run the callback it is given.
+    EXPECT_CALL(*mock, ClearAuth(_))
+        .Times(AnyNumber())
+        .WillRepeatedly(Invoke(
+            [](const base::RepeatingClosure& callback) { callback.Run(); }));
+    return mock;
+  }
+
+  void SetUpEnrollmentScreen() override {
+    enrollment_config_.mode =
+        policy::EnrollmentConfig::MODE_ATTESTATION_SERVER_FORCED;
+    enrollment_config_.auth_mechanism =
+        policy::EnrollmentConfig::AUTH_MECHANISM_BEST_AVAILABLE;
+    EnrollmentScreenUnitTest::SetUpEnrollmentScreen();
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(AutomaticReenrollmentScreenUnitTest);
+};
+
+TEST_F(AutomaticReenrollmentScreenUnitTest, Fallback) {
+  // Define behavior of EnterpriseEnrollmentHelperMock to fail attestation-based
+  // enrollment.
   EnterpriseEnrollmentHelper::SetupEnrollmentHelperMock(
-      &ZeroTouchEnrollmentScreenUnitTest::MockEnrollmentHelperCreator<true>);
+      &AutomaticReenrollmentScreenUnitTest::MockEnrollmentHelperCreator<false>);
 
   SetUpEnrollmentScreen();
 
-  // Set up expectation for BaseScreenDelegate::OnExit to be called
-  // with BaseScreenDelegate::ENTERPRISE_ENROLLMENT_COMPLETED
-  // This is how we check that the code finishes and cleanly exits
-  // the enterprise enrollment flow.
-  EXPECT_CALL(*GetBaseScreenDelegate(),
-              OnExit(_, ScreenExitCode::ENTERPRISE_ENROLLMENT_COMPLETED, _))
-      .Times(1);
+  // Once we fallback we show a sign in screen for manual enrollment.
+  EXPECT_CALL(*GetMockScreenView(), ShowSigninScreen()).Times(1);
 
-  // Start zero-touch enrollment.
+  // Start enrollment.
   enrollment_screen_->Show();
+}
+
+TEST_F(AutomaticReenrollmentScreenUnitTest, FinishesEnrollmentFlow) {
+  DoTest_FinishesEnrollmentFlow();
 }
 
 class MultiLicenseEnrollmentScreenUnitTest : public EnrollmentScreenUnitTest {
