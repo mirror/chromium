@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83a3cd28_99382b6f",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-17T15:53:17Z",
+      "side": 1,
+      "message": "Spelling error \"shown\". Also, I usually see screen reader as 2 words.",
+      "revId": "e92e1855bce60073e02a733e52ac435030ff1eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
