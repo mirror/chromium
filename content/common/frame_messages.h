@@ -31,6 +31,7 @@
 #include "content/common/frame_replication_state.h"
 #include "content/common/navigation_gesture.h"
 #include "content/common/navigation_params.h"
+#include "content/common/resource_timing_info.h"
 #include "content/common/savable_subframe.h"
 #include "content/public/common/common_param_traits.h"
 #include "content/public/common/console_message_level.h"
@@ -222,6 +223,50 @@ IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::PageImportanceSignals)
   IPC_STRUCT_TRAITS_MEMBER(had_form_interaction)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(content::ResourceLoadTiming)
+  IPC_STRUCT_TRAITS_MEMBER(request_time)
+  IPC_STRUCT_TRAITS_MEMBER(proxy_start)
+  IPC_STRUCT_TRAITS_MEMBER(proxy_end)
+  IPC_STRUCT_TRAITS_MEMBER(dns_start)
+  IPC_STRUCT_TRAITS_MEMBER(dns_end)
+  IPC_STRUCT_TRAITS_MEMBER(connect_start)
+  IPC_STRUCT_TRAITS_MEMBER(connect_end)
+  IPC_STRUCT_TRAITS_MEMBER(worker_start)
+  IPC_STRUCT_TRAITS_MEMBER(worker_ready)
+  IPC_STRUCT_TRAITS_MEMBER(send_start)
+  IPC_STRUCT_TRAITS_MEMBER(send_end)
+  IPC_STRUCT_TRAITS_MEMBER(receive_headers_end)
+  IPC_STRUCT_TRAITS_MEMBER(ssl_start)
+  IPC_STRUCT_TRAITS_MEMBER(ssl_end)
+  IPC_STRUCT_TRAITS_MEMBER(push_start)
+  IPC_STRUCT_TRAITS_MEMBER(push_end)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(content::ResourceTimingInfo)
+  IPC_STRUCT_TRAITS_MEMBER(name)
+  IPC_STRUCT_TRAITS_MEMBER(start_time)
+  IPC_STRUCT_TRAITS_MEMBER(initiator_type)
+  IPC_STRUCT_TRAITS_MEMBER(alpn_negotiated_protocol)
+  IPC_STRUCT_TRAITS_MEMBER(connection_info)
+  IPC_STRUCT_TRAITS_MEMBER(timing)
+  IPC_STRUCT_TRAITS_MEMBER(last_redirect_end_time)
+  IPC_STRUCT_TRAITS_MEMBER(finish_time)
+  IPC_STRUCT_TRAITS_MEMBER(transfer_size)
+  IPC_STRUCT_TRAITS_MEMBER(encoded_body_size)
+  IPC_STRUCT_TRAITS_MEMBER(decoded_body_size)
+  IPC_STRUCT_TRAITS_MEMBER(did_reuse_connection)
+  IPC_STRUCT_TRAITS_MEMBER(allow_timing_details)
+  IPC_STRUCT_TRAITS_MEMBER(allow_redirect_details)
+  IPC_STRUCT_TRAITS_MEMBER(allow_negative_values)
+  IPC_STRUCT_TRAITS_MEMBER(server_timing)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(content::ServerTimingInfo)
+  IPC_STRUCT_TRAITS_MEMBER(name)
+  IPC_STRUCT_TRAITS_MEMBER(duration)
+  IPC_STRUCT_TRAITS_MEMBER(description)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_BEGIN(FrameHostMsg_DidFailProvisionalLoadWithError_Params)
@@ -832,7 +877,17 @@ IPC_MESSAGE_ROUTED1(FrameMsg_TextSurroundingSelectionRequest,
 // Change the accessibility mode in the renderer process.
 IPC_MESSAGE_ROUTED1(FrameMsg_SetAccessibilityMode, ui::AXMode)
 
-// Dispatch a load event in the iframe element containing this frame.
+// Sent to a proxy to notify it that a resource timing info for this frame has
+// been generated and all further ones should be suppressed.
+IPC_MESSAGE_ROUTED0(FrameMsg_DidAddResourceTimingToParent)
+
+// Sent to a proxy to record the resource timing info for this frame in the
+// parent frame.
+IPC_MESSAGE_ROUTED1(FrameMsg_ForwardResourceTimingToParent,
+                    content::ResourceTimingInfo)
+
+// Sent to a proxy to dispatch a load event in the iframe element containing
+// this frame.
 IPC_MESSAGE_ROUTED0(FrameMsg_DispatchLoad)
 
 // Sent to a subframe to control whether to collapse its the frame owner element
@@ -1532,6 +1587,20 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_ToggleFullscreen, bool /* enter_fullscreen */)
 IPC_MESSAGE_ROUTED2(FrameHostMsg_SuddenTerminationDisablerChanged,
                     bool /* present */,
                     blink::WebSuddenTerminationDisablerType /* disabler_type */)
+
+// Notifies the browser that the resource timing info was added to the
+// performance entries of a local parent frame.
+// TODO(dcheng): It would be nice to use a uniform path and simply always
+// disaptch to the browser for resource timing info. Unfortunately, the load
+// event is dispatched synchronously in most cases still: JS that listens to the
+// load event and expects performance entries to be present will break if we do
+// that. Maybe once the load event is async...
+IPC_MESSAGE_ROUTED0(FrameHostMsg_DidAddResourceTimingToParent)
+
+// Requests that the resource timing info be added to the performance entries of
+// a remote parent frame.
+IPC_MESSAGE_ROUTED1(FrameHostMsg_ForwardResourceTimingToParent,
+                    content::ResourceTimingInfo)
 
 // Dispatch a load event for this frame in the iframe element of an
 // out-of-process parent frame.

@@ -20,6 +20,8 @@
 #include "core/layout/LayoutView.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
+#include "core/timing/DOMWindowPerformance.h"
+#include "core/timing/Performance.h"
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/geometry/FloatQuad.h"
@@ -264,7 +266,23 @@ void WebRemoteFrameImpl::SetReplicatedInsecureRequestPolicy(
   GetFrame()->GetSecurityContext()->SetInsecureRequestPolicy(policy);
 }
 
-void WebRemoteFrameImpl::DispatchLoadEventOnFrameOwner() {
+void WebRemoteFrameImpl::DidAddResourceTimingToParent() {
+  frame_->DidSendResourceTimingToParent();
+}
+
+void WebRemoteFrameImpl::ForwardResourceTimingToParent(
+    const WebResourceTimingInfo& info) {
+  DCHECK(Parent()->IsWebLocalFrame());
+  WebLocalFrameImpl* parent_frame =
+      ToWebLocalFrameImpl(Parent()->ToWebLocalFrame());
+  HTMLFrameOwnerElement* owner_element =
+      ToHTMLFrameOwnerElement(frame_->Owner());
+  DOMWindowPerformance::performance(*parent_frame->GetFrame()->DomWindow())
+      ->AddResourceTiming(info, owner_element->localName());
+  frame_->DidSendResourceTimingToParent();
+}
+
+void WebRemoteFrameImpl::DispatchLoadEventForFrameOwner() {
   DCHECK(GetFrame()->Owner()->IsLocal());
   GetFrame()->Owner()->DispatchLoad();
 }

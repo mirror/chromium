@@ -127,6 +127,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void DidStartLoading(LoadStartType) override;
   void DidStopLoading() override;
   void ProgressEstimateChanged(double progress_estimate) override;
+  void DidAddResourceTimingToParent() override;
+  void ForwardResourceTimingToParent(const WebResourceTimingInfo&) override;
   void DownloadURL(const ResourceRequest&,
                    const String& suggested_name) override;
   void LoadErrorPage(int reason) override;
