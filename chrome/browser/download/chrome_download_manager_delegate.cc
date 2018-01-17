@@ -260,6 +260,7 @@ void OnAcquireFileAccessPermissionDone(
 
 ChromeDownloadManagerDelegate::ChromeDownloadManagerDelegate(Profile* profile)
     : profile_(profile),
+      location_dialog_bridge_(new DownloadLocationDialogBridge),
       next_download_id_(content::DownloadItem::kInvalidId),
       download_prefs_(new DownloadPrefs(profile)),
       disk_access_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
@@ -770,6 +771,17 @@ void ChromeDownloadManagerDelegate::RequestConfirmation(
       callback.Run(DownloadConfirmationResult::CANCELED, base::FilePath());
       return;
 
+    case DownloadConfirmationReason::PREFERENCE:
+      if (download->GetWebContents()) {
+        location_dialog_bridge_->ShowDialog(download->GetWebContents(),
+                                            suggested_path, callback);
+      } else {
+        // For now, if there are no WebContents, continue anyways.
+        callback.Run(DownloadConfirmationResult::CONTINUE_WITHOUT_CONFIRMATION,
+                     suggested_path);
+      }
+      return;
+
     case DownloadConfirmationReason::NAME_TOO_LONG:
     case DownloadConfirmationReason::TARGET_NO_SPACE:
     // These are errors. But rather than cancel the download we are going to
@@ -781,7 +793,6 @@ void ChromeDownloadManagerDelegate::RequestConfirmation(
     // prompt and try the same location.
 
     case DownloadConfirmationReason::SAVE_AS:
-    case DownloadConfirmationReason::PREFERENCE:
       callback.Run(DownloadConfirmationResult::CONTINUE_WITHOUT_CONFIRMATION,
                    suggested_path);
       return;
