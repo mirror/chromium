@@ -16,6 +16,24 @@
       "revId": "c21365960fd9034bc74b94bd70aad967fa0ce6b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564d1cbd_a8d4f468",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T03:31:45Z",
+      "side": 1,
+      "message": "\u003e I spent some time to design and produce the crbug.com/799213, item 1. Seems the x !\u003d 0 can fix it. But it makes disable_line_wrapping \u003d true does not work, it will wrap every single letter, such as below, if it is expected.\n\u003e b\n\u003e b\n\u003e b\n\u003e b\n\u003e ...\n\u003e K\n\u003e S\n\u003e V\n\u003e a\n\u003e a\n\u003e ...\n\nI think this is expected behaviour -- disable_line_wrapping \u003d true was never designed to prevent line-wrapping in constrained-width scenarios. It was designed to be used by StyledLabel::RangeStyleInfo::CreateForLink(): Since links have things like focus rectangles and focus on tab traversal, splitting a link at the end of a line and wrapping it on to a new one could do some unexpected stuff. But most mocks we get these days have us moving away from that anyway -- nearly every caller of CreateForLink() follows it up by setting `disable_line_wrapping \u003d false`\n\nthe behaviour above is consistent with the comments in RectangleText::WrapWord() (text_elider.cc). For something different, I think we\u0027d need a codepath that passed gfx::IGNORE_LONG_WORDS to gfx::ElideRectangleText rather than gfx::WRAP_LONG_WORDS.",
+      "parentUuid": "b7809b49_56ee1837",
+      "revId": "c21365960fd9034bc74b94bd70aad967fa0ce6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
