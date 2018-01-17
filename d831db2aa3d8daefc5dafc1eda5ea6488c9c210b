@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b7efbf1_469c4a04",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-17T15:06:55Z",
+      "side": 1,
+      "message": "Our npot texture check is probably failing on desktop GL. we should fix that. the important part is that it works on Chrome OS devices where we use this. I think it\u0027s best to keep the DCHECK for now and file a bug about fixing detection of npot texture on desktop.",
+      "revId": "d831db2aa3d8daefc5dafc1eda5ea6488c9c210b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a6ae32_354dfe22",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-17T15:06:55Z",
+      "side": 1,
+      "message": "this is expected. --use-gpu-in-tests will produce different results compared to sw mesa for some tests. the only thing we care about when using that switch is that GLRendererPixelTest.DISABLED_TrilinearFiltering passes (or the result is something that reflect working mipmaps). We should try to uprev sw mesa to a more recent version where GenerateMipmap works but I\u0027m afraid that\u0027s a huge effort.",
+      "revId": "d831db2aa3d8daefc5dafc1eda5ea6488c9c210b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40b6236_3dd69d7a",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-17T15:06:55Z",
+      "side": 1,
+      "message": "nit: keep this DCHECK and explain in the todo that we need to fix detection on some devices",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 50
+      },
+      "revId": "d831db2aa3d8daefc5dafc1eda5ea6488c9c210b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
