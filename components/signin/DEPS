@@ -1,6 +1,7 @@
 include_rules = [
   "+components/content_settings",
   "+components/google/core",
+  "+components/image_fetcher/core",
   "+components/keyed_service/core",
   "+components/os_crypt",
   "+components/pref_registry",
@@ -13,4 +14,5 @@ include_rules = [
   "+net",
   "+sql",
   "+third_party/re2",
+  "+ui/gfx",
 ]
