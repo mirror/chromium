@@ -198,8 +198,7 @@ class WhitelistLoadObserver {
 class SupervisedUserWhitelistInstallerTest : public testing::Test {
  public:
   SupervisedUserWhitelistInstallerTest()
-      : testing_profile_manager_(TestingBrowserProcess::GetGlobal()),
-        user_data_dir_override_(chrome::DIR_USER_DATA) {}
+      : testing_profile_manager_(TestingBrowserProcess::GetGlobal()) {}
 
   ~SupervisedUserWhitelistInstallerTest() override {}
 
@@ -297,7 +296,6 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
 
   content::TestBrowserThreadBundle thread_bundle_;
   TestingProfileManager testing_profile_manager_;
-  base::ScopedPathOverride user_data_dir_override_;
   data_decoder::TestingJsonParser::ScopedFactoryOverride json_parser_override_;
   TestingPrefServiceSimple local_state_;
   content::TestServiceManagerContext service_manager_context_;
