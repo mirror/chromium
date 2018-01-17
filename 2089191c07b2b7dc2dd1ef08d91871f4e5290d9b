@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f42213b_6a1aac4c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-17T10:37:23Z",
+      "side": 1,
+      "message": "Actually with the change I now made to how the DCHECK works it\u0027s now possible to have it start signed out on all platforms. I decided to do that for consistency with how the existing fakes work (that tests are already written against) and also to avoid kind of weird inconsistency between CrOS/non-CrOS.",
+      "parentUuid": "1fbbc752_cab5affd",
+      "range": {
+        "startLine": 22,
+        "startChar": 21,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "2089191c07b2b7dc2dd1ef08d91871f4e5290d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c56ceed2_7fe38171",
         "filename": "components/suggestions/suggestions_service_impl_unittest.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-12T13:38:15Z",
       "side": 1,
       "message": "Maybe:\ns/AutomaticallyGrantAccessTokenRequests/SetAutomaticallyIssueAccessTokens",
+      "range": {
+        "startLine": 143,
+        "startChar": 36,
+        "endLine": 143,
+        "endChar": 41
+      },
+      "revId": "2089191c07b2b7dc2dd1ef08d91871f4e5290d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7531ce75_d9871f08",
+        "filename": "components/suggestions/suggestions_service_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-17T10:37:23Z",
+      "side": 1,
+      "message": "Done (changed to SetAutomaticIssueOfAccessTokens for grammar reasons)",
+      "parentUuid": "c56ceed2_7fe38171",
       "range": {
         "startLine": 143,
         "startChar": 36,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "658baa18_e7eba153",
+        "filename": "services/identity/public/cpp/identity_test_environment.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-17T10:37:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d6dd5ae_dc9a35f6",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 45
+      },
+      "revId": "2089191c07b2b7dc2dd1ef08d91871f4e5290d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4586896e_7311a14a",
         "filename": "services/identity/public/cpp/identity_test_environment.cc",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-12T13:38:15Z",
       "side": 1,
       "message": "Should WaitForAccessTokenRequest be called here?",
+      "range": {
+        "startLine": 118,
+        "startChar": 10,
+        "endLine": 118,
+        "endChar": 32
+      },
+      "revId": "2089191c07b2b7dc2dd1ef08d91871f4e5290d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4670f255_a3735350",
+        "filename": "services/identity/public/cpp/identity_test_environment.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-17T10:37:23Z",
+      "side": 1,
+      "message": "Done: As discussed offline, renamed this method to WaitForAccessTokenRequestAndRespondWithError().",
+      "parentUuid": "4586896e_7311a14a",
       "range": {
         "startLine": 118,
         "startChar": 10,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2dc7e360_16241929",
+        "filename": "services/identity/public/cpp/identity_test_environment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-17T10:37:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "684bdfc4_02d4ff6e",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "2089191c07b2b7dc2dd1ef08d91871f4e5290d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0924fc9_64971749",
         "filename": "services/identity/public/cpp/identity_test_environment.h",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-12T13:38:15Z",
       "side": 1,
       "message": "It really looks like this is no longer a diagnostic observer as we are starting to use it for different purposes (at least in tests). While I think that may be acceptable in tests, if we plan to use it for other purposes in production code, we may want to rename it to something else?",
+      "range": {
+        "startLine": 44,
+        "startChar": 29,
+        "endLine": 44,
+        "endChar": 30
+      },
+      "revId": "2089191c07b2b7dc2dd1ef08d91871f4e5290d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60db9980_bf6d4cc5",
+        "filename": "services/identity/public/cpp/identity_test_environment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-17T10:37:23Z",
+      "side": 1,
+      "message": "I have no plans to use it in production code. As we discussed offline, I think that keeping this name is OK -- as you point out, it\u0027s good to keep it separate from the main observer as these methods are \"special\" and shouldn\u0027t really be broadly used, and given that, I can\u0027t really think of a better name.",
+      "parentUuid": "b0924fc9_64971749",
       "range": {
         "startLine": 44,
         "startChar": 29,

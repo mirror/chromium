@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "daa98bb9_43fc1ec4",
+        "filename": "components/suggestions/suggestions_service_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-17T10:37:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4232c617_6cdf854b",
+      "range": {
+        "startLine": 47,
+        "startChar": 24,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "ecc3f42a4687c3ce1145f5c5bb8546f1cf6a79ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cb349d5_d4858d90",
         "filename": "services/identity/public/cpp/identity_manager.h",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-17T08:53:19Z",
       "side": 1,
       "message": "Nit: This method is only supposed to be used by the IdentityManagerTestEnvironment and is not really supposed directly by clients. Let\u0027s make it private and make IdentityTestEnvironment a fried of the IdentityManager.",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 45
+      },
+      "revId": "ecc3f42a4687c3ce1145f5c5bb8546f1cf6a79ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a3ea39_942e8f65",
+        "filename": "services/identity/public/cpp/identity_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-17T10:37:23Z",
+      "side": 1,
+      "message": "This is a great idea. However, as discussed offline, this will need to be used by clients just to ease the transition to using IdentityManager; in particular, to allow the separation of production code to use IdentityManager and test code to use IdentityTestEnvironment into different CLs. I\u0027ll strengthen the comment here to indicate that client usage of this method should be only a temporary state.",
+      "parentUuid": "2cb349d5_d4858d90",
       "range": {
         "startLine": 91,
         "startChar": 7,
