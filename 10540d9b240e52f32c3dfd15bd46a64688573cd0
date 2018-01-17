@@ -22,6 +22,30 @@
       "revId": "10540d9b240e52f32c3dfd15bd46a64688573cd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54a0bba_81b1a140",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1256179
+      },
+      "writtenOn": "2018-01-17T05:53:42Z",
+      "side": 1,
+      "message": "Done. Thanks for the explanation!",
+      "parentUuid": "286c66d2_430bd262",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 28
+      },
+      "revId": "10540d9b240e52f32c3dfd15bd46a64688573cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
