@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e1d9f_fb45569f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuViewPager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-17T21:57:03Z",
+      "side": 1,
+      "message": "Shouldn\u0027t need TabularContextMenuViewPager.this as there is no setClipBounds in this class.\n\nActually, we are already calling clipRect in onDraw with the same values.  Is that not being called during animation?  Are the values wrong there?  It would be good to understand why that wasn\u0027t sufficient.",
+      "range": {
+        "startLine": 139,
+        "startChar": 16,
+        "endLine": 139,
+        "endChar": 48
+      },
+      "revId": "3e7473b803b5543d406c42b6a196185e30624778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
