@@ -1,0 +1,32 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef CHROME_BROWSER_UI_SEARCH_NEW_TAB_PAGE_NAVIGATION_THROTTLE_H_
+#define CHROME_BROWSER_UI_SEARCH_NEW_TAB_PAGE_NAVIGATION_THROTTLE_H_
+
+#include "content/public/browser/navigation_throttle.h"
+
+namespace content {
+class NavigationHandle;
+}  // namespace content
+
+// A NavigationThrottle that opens the local new tab page when there is any
+// issue opening the new tab page.
+class NewTabPageNavigationThrottle : public content::NavigationThrottle {
+ public:
+  // Returns a NavigationThrottle when:
+  // - we are navigating to the new tab page, and
+  // - the main frame is pointed at the new tab URL.
+  static std::unique_ptr<content::NavigationThrottle> MaybeCreateThrottleFor(
+      content::NavigationHandle* handle);
+
+  explicit NewTabPageNavigationThrottle(content::NavigationHandle* handle);
+  ~NewTabPageNavigationThrottle() override;
+
+  // content::NavigationThrottle:
+  ThrottleCheckResult WillProcessResponse() override;
+  const char* GetNameForLogging() override;
+};
+
+#endif  // CHROME_BROWSER_UI_SEARCH_NEW_TAB_PAGE_NAVIGATION_THROTTLE_H_
