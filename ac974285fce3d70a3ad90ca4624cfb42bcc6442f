@@ -34,6 +34,24 @@
       "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dfbbd6c_d2637077",
+        "filename": "content/browser/service_manager/service_manager_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-17T00:34:15Z",
+      "side": 1,
+      "message": "Sorry this is being dragged out so much, but I strongly disagree that this is not significant. The issue with just creating AudioThreadImpl first is not technical, but a matter of principle. We shouldn\u0027t have to initialize part of some random subsystem before we can bring up the service manager. It is already true that we do in some capacity, but we want to reduce, not increase, the extent to which it\u0027s true. I don\u0027t think we should allow *any* such new dependencies to be introduced for any reason.\n\nI\u0027d like us to find another way to solve this.\n\nOne option could be to allow EmbeddedServiceInfo to use an async factory function so that service creation can take an arbitrarily long time. Then you could have appropriate plumbing such that the \"audio thread\" doesn\u0027t need to be known at registration time and can be acquired as needed without changing ServiceManagerContext\u0027s own inputs. Does that sound like a reasonable direction?",
+      "parentUuid": "5d1d3c46_c4ae9400",
+      "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
