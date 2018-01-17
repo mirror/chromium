@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4716387_f15a6e2e",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-17T05:49:19Z",
+      "side": 1,
+      "message": "Ah, ok, thanks for the update. Should we make a bug to track this or did you have one already?",
+      "parentUuid": "431c1dde_637ca7b9",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 33
+      },
+      "revId": "a73a3edb70c7b4c3e69dae8d2a5347f264fa8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85b35c6b_90efcc5b",
         "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
         "patchSetId": 27
@@ -39,6 +63,24 @@
       "revId": "a73a3edb70c7b4c3e69dae8d2a5347f264fa8dff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a2f969_f37d757c",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-17T05:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85b35c6b_90efcc5b",
+      "revId": "a73a3edb70c7b4c3e69dae8d2a5347f264fa8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "a73a3edb70c7b4c3e69dae8d2a5347f264fa8dff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57010f85_1d3af935",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-17T05:49:19Z",
+      "side": 1,
+      "message": "Oops - thanks for picking this up. I had to update the Mac/Cocoa code to retrieve their NSTextView text colours to do this which is a bit messy, but I think it\u0027s OK because the Mac code should be deleted when Harmony goes out (it\u0027s more important to keep the Views code clean).",
+      "parentUuid": "f41b1088_a397b503",
+      "range": {
+        "startLine": 192,
+        "startChar": 64,
+        "endLine": 192,
+        "endChar": 74
+      },
+      "revId": "a73a3edb70c7b4c3e69dae8d2a5347f264fa8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
