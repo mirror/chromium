@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "adec6ed6_2bc2a590",
+        "filename": "chromecast/browser/cast_extension_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "DCHECK(browser_context_);\nDCHECK(delegate_);",
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "093c23d4_ebd1f46d",
         "filename": "chromecast/browser/cast_extension_host.h",
         "patchSetId": 2
@@ -127,6 +144,98 @@
     },
     {
       "key": {
+        "uuid": "2bee1666_d29b9add",
+        "filename": "chromecast/browser/cast_extension_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "// extensions::ExtensionHost implementation:",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f31fc95_6fc6c45b",
+        "filename": "chromecast/browser/cast_extension_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "// content::NotificationObserver implementation:",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 35
+      },
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5ece18d_c8585485",
+        "filename": "chromecast/browser/cast_extension_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 51,
+        "startChar": 27,
+        "endLine": 51,
+        "endChar": 43
+      },
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4241c88_ed131012",
+        "filename": "chromecast/browser/cast_extension_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 52,
+        "startChar": 25,
+        "endLine": 52,
+        "endChar": 34
+      },
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4f53ba8_1964dad7",
         "filename": "chromecast/browser/cast_extension_host.h",
         "patchSetId": 2
@@ -158,6 +267,247 @@
       "revId": "47167517366af659e50463a23b9665f84c7b700a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b4ec06_5f00a0ff",
+        "filename": "chromecast/browser/cast_web_contents_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "nit: Prefer to keep CastWebView::Delegate* as the first parameter.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 30
+      },
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0e310de_65c66f23",
+        "filename": "chromecast/browser/cast_web_view_default.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "// CastWebView implementation:",
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f9263e5_0bda24a7",
+        "filename": "chromecast/browser/cast_web_view_extension.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "std::make_unique\u003cCastExtensionHost\u003e",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c89f0a94_07e9ec8c",
+        "filename": "chromecast/browser/cast_web_view_extension.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "Delete comments and condense methods into one block, with the following comment on top:\n\n// CastWebView implementation:",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 56
+      },
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b38edc4d_f8eac14b",
+        "filename": "chromecast/browser/cast_web_view_extension.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 64,
+        "startChar": 44,
+        "endLine": 64,
+        "endChar": 51
+      },
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "faeecf20_5635bdb6",
+        "filename": "chromecast/browser/cast_web_view_extension.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 66,
+        "startChar": 37,
+        "endLine": 66,
+        "endChar": 52
+      },
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ca8dd63_d86101ae",
+        "filename": "chromecast/browser/cast_web_view_extension.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "Used?",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 58
+      },
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9192b70e_290f722d",
+        "filename": "chromecast/browser/url_request_context_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "DCHECK(browser_context_);",
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "102cf8e0_7c3c3fa8",
+        "filename": "chromecast/browser/url_request_context_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 107,
+        "startChar": 27,
+        "endLine": 107,
+        "endChar": 43
+      },
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6598c719_f67c128f",
+        "filename": "chromecast/browser/url_request_context_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 108,
+        "startChar": 7,
+        "endLine": 108,
+        "endChar": 20
+      },
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9a74079_7ab1cd86",
+        "filename": "chromecast/browser/url_request_context_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-01-17T02:05:12Z",
+      "side": 1,
+      "message": "#include \"base/memory/linked_ptr.h\"?",
+      "range": {
+        "startLine": 244,
+        "startChar": 6,
+        "endLine": 244,
+        "endChar": 16
+      },
+      "revId": "47167517366af659e50463a23b9665f84c7b700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
