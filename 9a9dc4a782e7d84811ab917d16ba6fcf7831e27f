@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dc63541_7adc8359",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-17T23:32:50Z",
+      "side": 1,
+      "message": "Could we move the logic to select the appropriate URL for the platform in the C++, and just add the URL in loadTimeData, similar to [1]? This way we will be able to use the same URL from the new UI too, without any extra work.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/webui/print_preview/print_preview_ui.cc?l\u003d241-243",
+      "revId": "9a9dc4a782e7d84811ab917d16ba6fcf7831e27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
