@@ -6,15 +6,21 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <memory>
 
+#include <memory>
+#include <string>
+
+#include "base/files/file.h"
 #include "base/files/file_path.h"
+#include "base/files/file_util.h"
+#include "base/files/scoped_temp_dir.h"
 #include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/shared_memory.h"
 #include "base/unguessable_token.h"
 #include "ipc/ipc_channel_handle.h"
 #include "ipc/ipc_message.h"
+#include "ipc/ipc_platform_file.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace IPC {
@@ -60,6 +66,131 @@ TEST(IPCMessageUtilsTest, NestedMessages) {
   ASSERT_FALSE(ParamTraits<Message>::Read(&outer_msg, &iter, &dummy));
   ASSERT_FALSE(ParamTraits<int>::Read(&nested_msg, &nested_iter,
                                       &result_content));
+}
+
+// Serialize and deserialize an invalid base::File.
+TEST(IPCMessageUtilsTest, PlatformFileInvalid) {
+  for (bool take_ownership : {false, true}) {
+    base::File file;
+    EXPECT_FALSE(file.IsValid());
+
+    IPC::Message message;
+    if (take_ownership) {
+      ParamTraits<PlatformFileForTransit>::Write(
+          &message, TakePlatformFileForTransit(std::move(file)));
+    } else {
+      ParamTraits<PlatformFileForTransit>::Write(
+          &message, DuplicatePlatformFileForTransit(file));
+    }
+
+    base::PickleIterator iter(message);
+    PlatformFileForTransit file_for_transit;
+    ASSERT_TRUE(ParamTraits<PlatformFileForTransit>::Read(&message, &iter,
+                                                          &file_for_transit));
+    EXPECT_FALSE(file_for_transit.IsValid());
+
+    base::File destination_file =
+        PlatformFileForTransitToFile(file_for_transit);
+    EXPECT_FALSE(destination_file.IsValid());
+
+    // The entire message should have been consumed.
+    EXPECT_FALSE(iter.SkipBytes(1));
+  }
+}
+
+// Serialize and deserialize a base::File and read from it.
+TEST(IPCMessageUtilsTest, PlatformFile) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  base::FilePath path = temp_dir.GetPath().AppendASCII("foo.txt");
+
+  const std::string kFileContents = "foo";
+  ASSERT_EQ(
+      static_cast<int>(kFileContents.length()),
+      base::WriteFile(path, kFileContents.c_str(), kFileContents.length()));
+
+  for (bool take_ownership : {false, true}) {
+    base::File file(path, base::File::FLAG_OPEN | base::File::FLAG_READ);
+    EXPECT_FALSE(file.async());
+
+    IPC::Message message;
+    if (take_ownership) {
+      ParamTraits<PlatformFileForTransit>::Write(
+          &message, TakePlatformFileForTransit(std::move(file)));
+    } else {
+      ParamTraits<PlatformFileForTransit>::Write(
+          &message, DuplicatePlatformFileForTransit(file));
+      EXPECT_TRUE(file.IsValid());
+      file.Close();
+    }
+
+    base::PickleIterator iter(message);
+    PlatformFileForTransit file_for_transit;
+    ASSERT_TRUE(ParamTraits<PlatformFileForTransit>::Read(&message, &iter,
+                                                          &file_for_transit));
+    ASSERT_TRUE(file_for_transit.IsValid());
+    EXPECT_FALSE(file_for_transit.IsAsync());
+
+    base::File destination_file =
+        PlatformFileForTransitToFile(file_for_transit);
+    ASSERT_TRUE(destination_file.IsValid());
+    EXPECT_FALSE(destination_file.async());
+
+    char read_data[50] = "\0";
+    // Using arraysize(read_data) - 1 ensures the array is null-terminated.
+    EXPECT_EQ(
+        static_cast<int>(kFileContents.length()),
+        destination_file.ReadAtCurrentPos(read_data, arraysize(read_data) - 1));
+    EXPECT_EQ(kFileContents, read_data);
+
+    // The entire message should have been consumed.
+    EXPECT_FALSE(iter.SkipBytes(1));
+  }
+}
+
+// Serialize and de-serialize a file opened for asynchronous I/O, making sure
+// the async flag is preserved.
+TEST(IPCMessageUtilsTest, PlatformFileAsync) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  base::FilePath path = temp_dir.GetPath().AppendASCII("foo.txt");
+
+  const std::string kFileContents = "foo";
+  ASSERT_EQ(
+      static_cast<int>(kFileContents.length()),
+      base::WriteFile(path, kFileContents.c_str(), kFileContents.length()));
+
+  for (bool take_ownership : {false, true}) {
+    base::File file(path, base::File::FLAG_OPEN | base::File::FLAG_READ |
+                              base::File::FLAG_ASYNC);
+    EXPECT_TRUE(file.async());
+
+    IPC::Message message;
+    if (take_ownership) {
+      ParamTraits<PlatformFileForTransit>::Write(
+          &message, TakePlatformFileForTransit(std::move(file)));
+    } else {
+      ParamTraits<PlatformFileForTransit>::Write(
+          &message, DuplicatePlatformFileForTransit(file));
+      EXPECT_TRUE(file.IsValid());
+      file.Close();
+    }
+
+    base::PickleIterator iter(message);
+    PlatformFileForTransit file_for_transit;
+    ASSERT_TRUE(ParamTraits<PlatformFileForTransit>::Read(&message, &iter,
+                                                          &file_for_transit));
+    ASSERT_TRUE(file_for_transit.IsValid());
+    EXPECT_TRUE(file_for_transit.IsAsync());
+
+    base::File destination_file =
+        PlatformFileForTransitToFile(file_for_transit);
+    ASSERT_TRUE(destination_file.IsValid());
+    EXPECT_TRUE(destination_file.async());
+
+    // The entire message should have been consumed.
+    EXPECT_FALSE(iter.SkipBytes(1));
+  }
 }
 
 // Tests that detection of various bad parameters is working correctly.
