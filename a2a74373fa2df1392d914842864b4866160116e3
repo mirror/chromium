@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c56b1e3b_8f0414a4",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-17T01:24:08Z",
+      "side": 1,
+      "message": "This needs to be 0.048f, otherwise there will be warnings about double-to-float truncation on some build variants. It\u0027s not clear why the warning is not showing up consistently, but it is causing problems.",
+      "revId": "a2a74373fa2df1392d914842864b4866160116e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
