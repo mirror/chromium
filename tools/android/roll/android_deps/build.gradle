@@ -11,11 +11,33 @@ repositories {
     }
 }
 
+// configurations.all {
+//   resolutionStrategy {
+//     eachDependency { DependencyResolveDetails details ->
+//       if (details.requested.group == 'com.google.dagger') {
+//         details.useVersion "2.14.1"
+//       } else if (details.requested.group == 'com.android.support') {
+//         details.useVersion "2.14.1"
+//       }
+//     }
+//   }
+// }
+
+
 dependencies {
     // Note about the configuration names: they are defined in buildSrc/ChromiumPlugin
 
-    // Insert here dependencies that will be added to the APKs.
-    // For example: `compile 'com.google.dagger:dagger:2.13'`
+    compile "com.android.support:support-annotations:27.0.0"
+
+    def daggerVersion = '2.13'
+    compile "com.google.dagger:dagger:${daggerVersion}"
+    compile "com.google.dagger:dagger-android:${daggerVersion}"
+    compile "javax.inject:javax.inject:1"
+    // Uncomment the line below if needed. Not sure what requires it currently.
+    // chromiumCompile 'com.google.dagger:dagger-android-support:2.13'
+
+    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+    annotationProcessor "com.google.dagger:dagger-android-processor:${daggerVersion}"
 }
 
 task setUpRepository(type: BuildConfigGenerator) {
