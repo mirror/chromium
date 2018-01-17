@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1dc2502b_ba967912",
+        "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T03:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f6c64e3_005d6b91",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3dfd6a79b4b07b5c92ed8301be97f1d6232bbd1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfd3517c_f29d3a2e",
         "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "3dfd6a79b4b07b5c92ed8301be97f1d6232bbd1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9cb2a91_6a3ca390",
+        "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T03:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfd3517c_f29d3a2e",
+      "revId": "3dfd6a79b4b07b5c92ed8301be97f1d6232bbd1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "1f782cc5_b15e665f",
+        "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T03:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6ba7d82_91d18705",
+      "range": {
+        "startLine": 258,
+        "startChar": 20,
+        "endLine": 258,
+        "endChar": 21
+      },
+      "revId": "3dfd6a79b4b07b5c92ed8301be97f1d6232bbd1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caf0102a_b6eaa19b",
         "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
         "patchSetId": 7
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "4c048621_d30960de",
+        "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T03:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caf0102a_b6eaa19b",
+      "revId": "3dfd6a79b4b07b5c92ed8301be97f1d6232bbd1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f1f90e2_a6454d86",
         "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
         "patchSetId": 7
@@ -93,6 +177,30 @@
       "writtenOn": "2018-01-16T20:36:07Z",
       "side": 1,
       "message": "At lines 358-359 we check for |available| first, before accessing |value|. Is this not necessary here?",
+      "range": {
+        "startLine": 325,
+        "startChar": 19,
+        "endLine": 325,
+        "endChar": 51
+      },
+      "revId": "3dfd6a79b4b07b5c92ed8301be97f1d6232bbd1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d5604e_3e252b17",
+        "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-17T03:24:58Z",
+      "side": 1,
+      "message": "Thought about this and I think we need to always check if the setting is available and use a fallback if not (same as in existing UI). This is because the fallback value isn\u0027t always the same as the default value and defaults are overwritten by the sticky settings, so we need this tracked separately.",
+      "parentUuid": "6f1f90e2_a6454d86",
       "range": {
         "startLine": 325,
         "startChar": 19,
