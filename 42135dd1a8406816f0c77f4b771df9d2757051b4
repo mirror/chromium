@@ -256,6 +256,30 @@
       "revId": "42135dd1a8406816f0c77f4b771df9d2757051b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93528ad2_d3e341f4",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-17T00:14:10Z",
+      "side": 1,
+      "message": "IsResizing is used for configure events so it needs to reflect the correct state. If I remember correctly |resizer_| is always set for normal xdg shell resize so this should be fine, right?",
+      "parentUuid": "e8dadae3_8a23c20d",
+      "range": {
+        "startLine": 1135,
+        "startChar": 6,
+        "endLine": 1135,
+        "endChar": 14
+      },
+      "revId": "42135dd1a8406816f0c77f4b771df9d2757051b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
