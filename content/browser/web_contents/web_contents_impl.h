@@ -225,8 +225,6 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
     return screen_orientation_provider_.get();
   }
 
-  bool should_normally_be_visible() { return should_normally_be_visible_; }
-
   // Broadcasts the mode change to all frames.
   void SetAccessibilityMode(ui::AXMode mode);
 
@@ -360,8 +358,6 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void WasHidden() override;
   Visibility GetVisibility() const override;
   bool IsVisible() const override;
-  void WasOccluded() override;
-  void WasUnOccluded() override;
   bool NeedToFireBeforeUnload() override;
   void DispatchBeforeUnload() override;
   void AttachToOuterWebContentsFrame(
@@ -868,8 +864,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
     return media_web_contents_observer_.get();
   }
 
-  // Update the web contents visibility.
-  void UpdateWebContentsVisibility(bool visible);
+  // Invoked when the visibility of the WebContents' view changes.
+  void OnVisibilityChanged(Visibility visibility);
 
   // Called by FindRequestManager when find replies come in from a renderer
   // process.
@@ -1052,8 +1048,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   // all the unique RenderWidgetHostViews.
   std::set<RenderWidgetHostView*> GetRenderWidgetHostViewsInTree();
 
-  // Calls WasUnOccluded() on all RenderWidgetHostViews in the frame tree.
-  void DoWasUnOccluded();
+  // Calls WasOccluded() on all RenderWidgetHostViews in the frame tree.
+  void WasOccluded();
 
   // Called with the result of a DownloadImage() request.
   void OnDidDownloadImage(const ImageDownloadCallback& callback,
@@ -1450,17 +1446,13 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   // be told it is hidden.
   int capturer_count_;
 
-  // Tracks whether RWHV should be visible once capturer_count_ becomes zero.
-  bool should_normally_be_visible_;
+  // The visibility of the WebContents. Initialized from
+  // |CreateParams::initially_hidden|. Updated when OnVisibilityChanged() is
+  // called.
+  Visibility visibility_ = Visibility::HIDDEN;
 
-  // Tracks whether RWHV should be occluded once |capturer_count_| becomes zero.
-  bool should_normally_be_occluded_;
-
-  // Tracks whether this WebContents was ever set to be visible. Used to
-  // facilitate WebContents being loaded in the background by setting
-  // |should_normally_be_visible_|. Ensures WasShown() will trigger when first
-  // becoming visible to the user, and prevents premature unloading.
-  bool did_first_set_visible_;
+  // Tracks whether this WebContents was ever set to be visible.
+  bool did_first_set_visible_ = false;
 
   // See getter above.
   bool is_being_destroyed_;
