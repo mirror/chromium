@@ -2115,6 +2115,8 @@ void RenderProcessHostImpl::IncrementKeepAliveRefCount() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!is_keep_alive_ref_count_disabled_);
   ++keep_alive_ref_count_;
+  if (keep_alive_ref_count_ - 1 == 0)
+    GetRendererInterface()->SetWorkerKeepAlive(true);
 }
 
 void RenderProcessHostImpl::DecrementKeepAliveRefCount() {
@@ -2122,8 +2124,10 @@ void RenderProcessHostImpl::DecrementKeepAliveRefCount() {
   DCHECK(!is_keep_alive_ref_count_disabled_);
   DCHECK_GT(keep_alive_ref_count_, 0U);
   --keep_alive_ref_count_;
-  if (keep_alive_ref_count_ == 0)
+  if (keep_alive_ref_count_ == 0) {
     Cleanup();
+    GetRendererInterface()->SetWorkerKeepAlive(false);
+  }
 }
 
 void RenderProcessHostImpl::DisableKeepAliveRefCount() {

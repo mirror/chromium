@@ -359,18 +359,22 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
                             renderer_scheduler_impl,
                             &renderer_scheduler_impl->tracing_controller_,
                             BackgroundStateToString),
+      renderer_worker_keep_alive(false,
+                                 "RendererScheduler.WorkerKeepAlive",
+                                 renderer_scheduler_impl,
+                                 &renderer_scheduler_impl->tracing_controller_,
+                                 BackgroundStateToString),  // TODO: fixme
       stopping_when_backgrounded_enabled(
           false,
           "RendererScheduler.StoppingWhenBackgroundedEnabled",
           renderer_scheduler_impl,
           &renderer_scheduler_impl->tracing_controller_,
           YesNoStateToString),
-      stopped_when_backgrounded(
-          false,
-          "RendererScheduler.StoppedWhenBackgrounded",
-          renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
-          YesNoStateToString),
+      stopped_when_backgrounded(false,
+                                "RendererScheduler.StoppedWhenBackgrounded",
+                                renderer_scheduler_impl,
+                                &renderer_scheduler_impl->tracing_controller_,
+                                YesNoStateToString),
       was_shutdown(false,
                    "RendererScheduler.WasShutdown",
                    renderer_scheduler_impl,
@@ -382,12 +386,11 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
           renderer_scheduler_impl,
           &renderer_scheduler_impl->tracing_controller_,
           TimeDeltaToMilliseconds),
-      timer_task_estimated_cost(
-          base::TimeDelta(),
-          "RendererScheduler.TimerTaskEstimatedCostMs",
-          renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
-          TimeDeltaToMilliseconds),
+      timer_task_estimated_cost(base::TimeDelta(),
+                                "RendererScheduler.TimerTaskEstimatedCostMs",
+                                renderer_scheduler_impl,
+                                &renderer_scheduler_impl->tracing_controller_,
+                                TimeDeltaToMilliseconds),
       loading_tasks_seem_expensive(
           false,
           "RendererScheduler.LoadingTasksSeemExpensive",
@@ -907,6 +910,15 @@ void RendererSchedulerImpl::SetRendererBackgrounded(bool backgrounded) {
   }
 }
 
+void RendererSchedulerImpl::SetWorkerKeepAlive(bool keep_alive) {
+  // If this happens early enough then maybe no need for explicit
+  // call to unfreeze renderer -- just call UpdatePolicy() here?
+  if (main_thread_only().renderer_worker_keep_alive == keep_alive)
+    return;
+  main_thread_only().renderer_worker_keep_alive = keep_alive;
+  UpdatePolicy();
+}
+
 #if defined(OS_ANDROID)
 void RendererSchedulerImpl::PauseTimersForAndroidWebView() {
   main_thread_only().pause_timers_for_webview = true;
@@ -1344,7 +1356,8 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
       main_thread_only().stopped_when_backgrounded;
   bool newly_stopped = false;
   if (main_thread_only().renderer_backgrounded &&
-      main_thread_only().stopping_when_backgrounded_enabled) {
+      main_thread_only().stopping_when_backgrounded_enabled &&
+      !main_thread_only().renderer_worker_keep_alive) {
     base::TimeTicks stop_at = main_thread_only().background_status_changed_at +
                               delay_for_background_tab_stopping_;
 
@@ -2017,6 +2030,8 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
       main_thread_only().have_reported_blocking_intervention_since_navigation);
   state->SetBoolean("renderer_backgrounded",
                     main_thread_only().renderer_backgrounded);
+  state->SetBoolean("renderer_worker_keep_alive",
+                    main_thread_only().renderer_worker_keep_alive);
   state->SetBoolean("stopped_when_backgrounded",
                     main_thread_only().stopped_when_backgrounded);
   state->SetDouble("now", (optional_now - base::TimeTicks()).InMillisecondsF());
