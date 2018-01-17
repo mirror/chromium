@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e84fea09_23f49b19",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-17T18:48:43Z",
+      "side": 1,
+      "message": "Hi Mike, apparently Gab wants me to expose a virtual void BrowserThreadsStarted() signal on BrowserMainParts() without forwarding the Thread member (to make the call less suspiciously specific to the IO thread).\n\nThat means I need to convert back to BrowserThread::PostTask(BrowserThread::IO, ...) from thread-\u003etask-runner()-\u003ePostTask(...)\n\nAre you okay with this?",
+      "parentUuid": "2ed2b758_b48ac3cb",
+      "range": {
+        "startLine": 1227,
+        "startChar": 4,
+        "endLine": 1227,
+        "endChar": 27
+      },
+      "revId": "b8b32552b298c2bd80cfa9ae89bda48bed07f6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "169ac5b7_e0d607b7",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 15
