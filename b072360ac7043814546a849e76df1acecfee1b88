@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f67e2bf_168f5534",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_system.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-17T15:00:09Z",
+      "side": 1,
+      "message": "just checking, which malloc are we calling here?\nNote that on android we \"-Wl,-wrap,malloc\" and other symbols for both security and heap profiling purposes [1,2]. Is this not going to bypass that?\nI guess it depends if this is defined within the chrome.so or not.\n\n[1] https://cs.chromium.org/chromium/src/base/allocator/README.md\n[2] https://cs.chromium.org/chromium/src/base/allocator/BUILD.gn?type\u003dcs\u0026q\u003dwrap.*malloc\u0026sq\u003dpackage:chromium\u0026l\u003d263",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 22
+      },
+      "revId": "b072360ac7043814546a849e76df1acecfee1b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fba16f0_b99e96a4",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_system.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-17T15:00:09Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we just call base::OnNoMemory() + __builtin_unreachable() like we do in allocator_shim.cc in the new_mode logic?\nI can\u0027t tell if this is bypassing the logic in EnableTerminationOnOutOfMemory() (in that case deserves at least a comment there) or is scoped to this translation unit only.",
+      "range": {
+        "startLine": 114,
+        "startChar": 1,
+        "endLine": 120,
+        "endChar": 11
+      },
+      "revId": "b072360ac7043814546a849e76df1acecfee1b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
