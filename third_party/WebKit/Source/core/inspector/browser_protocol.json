@@ -6857,6 +6857,42 @@
                         "moderate",
                         "critical"
                     ]
+                },
+                {
+                    "id": "SamplingNativeHeapProfileNode",
+                    "description": "Heap profile sample.",
+                    "type": "object",
+                    "properties": [
+                        {
+                            "name": "size",
+                            "type": "number"
+                        },
+                        {
+                            "name": "count",
+                            "type": "number"
+                        },
+                        {
+                            "name": "stack",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "SamplingNativeHeapProfile",
+                    "description": "Array of heap profile samples.",
+                    "type": "object",
+                    "properties": [
+                        {
+                            "name": "samples",
+                            "type": "array",
+                            "items": {
+                                "$ref": "SamplingNativeHeapProfileNode"
+                            }
+                        }
+                    ]
                 }
             ],
             "commands": [
@@ -6899,6 +6935,34 @@
                             "name": "level",
                             "description": "Memory pressure level of the notification.",
                             "$ref": "PressureLevel"
+                        }
+                    ]
+                },
+                {
+                    "name": "startSamplingNativeHeapProfile",
+                    "parameters": [
+                        {
+                            "name": "samplingInterval",
+                            "description": "Average number of bytes between samples.",
+                            "optional": true,
+                            "type": "integer"
+                        },
+                        {
+                            "name": "suppressRandomness",
+                            "optional": true,
+                            "type": "boolean"
+                        }
+                    ]
+                },
+                {
+                    "name": "stopSamplingNativeHeapProfile"
+                },
+                {
+                    "name": "getSamplingNativeHeapProfile",
+                    "returns": [
+                        {
+                            "name": "profile",
+                            "$ref": "SamplingNativeHeapProfile"
                         }
                     ]
                 }
