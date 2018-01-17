@@ -6,6 +6,7 @@ module content.mojom;
 
 import "mojo/common/file_path.mojom";
 import "mojo/common/time.mojom";
+import "net/interfaces/ip_endpoint.mojom";
 import "proxy_config.mojom";
 import "resource_type.mojom";
 import "url_loader.mojom";
@@ -14,6 +15,7 @@ import "url/mojo/url.mojom";
 import "services/network/public/interfaces/cookie_manager.mojom";
 import "services/network/public/interfaces/network_change_manager.mojom";
 import "services/network/public/interfaces/restricted_cookie_manager.mojom";
+import "services/network/public/interfaces/udp_socket.mojom";
 import "services/proxy_resolver/public/interfaces/proxy_resolver.mojom";
 
 [Native]
@@ -152,6 +154,12 @@ interface NetworkContext {
   // Passing null NetworkConditions disables the throttling.
   // TODO(caseq): get rid of header, make profile_id part of ResourceRequest.
   SetNetworkConditions(string profile_id, NetworkConditions? conditions);
+
+  // Creates a UDP socket. Caller can supply a |receiver| interface pointer
+  // to listen for incoming datagrams. A null |receiver| is acceptable if caller
+  // is not interested in incoming data.
+  CreateUDPSocket(network.mojom.UDPSocket& request,
+                  network.mojom.UDPSocketReceiver receiver);
 
   [Sync]
   // Adds explicitly-specified data as if it was processed from an
