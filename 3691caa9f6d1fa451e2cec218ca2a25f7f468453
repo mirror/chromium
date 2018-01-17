@@ -16,6 +16,24 @@
       "revId": "3691caa9f6d1fa451e2cec218ca2a25f7f468453",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0c20f1_5b97ce03",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-17T02:34:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73c735c0_9aa2a7cb",
+      "revId": "3691caa9f6d1fa451e2cec218ca2a25f7f468453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
