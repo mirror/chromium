@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e1ea309_199566c6",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/drop-handler-should-not-stop-navigate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-01-17T07:41:21Z",
+      "side": 1,
+      "message": "nit: Maybe use a nonsensical string (like foo) so future readers won\u0027t have to be confused and look it up.",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "769a3b945dba340dce5a0f9fe1625f84bad86839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879ab90e_d680775e",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/drop-handler-should-not-stop-navigate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-01-17T07:41:21Z",
+      "side": 1,
+      "message": "nit: add comment or bug url so future readers know why this exists.",
+      "range": {
+        "startLine": 38,
+        "startChar": 15,
+        "endLine": 38,
+        "endChar": 59
+      },
+      "revId": "769a3b945dba340dce5a0f9fe1625f84bad86839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
