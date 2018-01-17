@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ea89c4b_699466bf",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1813,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-17T05:37:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a4f3476_02e5fd77",
+      "revId": "8d6152b5f30992573fb6a96cb0bed5a3803b17b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd90e2f2_8e0b512d",
         "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "8d6152b5f30992573fb6a96cb0bed5a3803b17b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa129dc6_50cd3703",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-17T05:37:45Z",
+      "side": 1,
+      "message": "It does, I just absent-mindedly didn\u0027t use it :O Thanks!",
+      "parentUuid": "fd90e2f2_8e0b512d",
+      "revId": "8d6152b5f30992573fb6a96cb0bed5a3803b17b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

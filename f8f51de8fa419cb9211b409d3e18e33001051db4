@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "42144401_4c9bbf79",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-17T05:37:45Z",
+      "side": 1,
+      "message": "Good idea, done",
+      "parentUuid": "b02643b0_720e2f1e",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78961321_6f65f548",
         "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
         "patchSetId": 6
