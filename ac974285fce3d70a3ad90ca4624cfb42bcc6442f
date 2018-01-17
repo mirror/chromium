@@ -52,6 +52,24 @@
       "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363c3a64_43371043",
+        "filename": "content/browser/service_manager/service_manager_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-17T01:18:25Z",
+      "side": 1,
+      "message": "Yes, that sounds reasonable. I also agree that a dependency on something with a name as specific as \"AudioThreadImpl\" is bad. I think it would be okay if it was just a base::TaskRunner though. I was just too lazy to refactor AudioManager to accept one instead of AudioThreadImpl, but it can be done. Would that be more acceptable or already break the principle?\n\nProviding EmbeddedServiceInfo an async factory function from which it can obtain the target task runner lazily is an interesting proposal. The interesting thing to think about would be what happens if that async factory function gets called before the corresponding thread (in our case the \"audio thread\") has been created. I guess we would then have to store the callback somewhere and make sure to invoke it as soon as the thread has been created. This feels more complicated than the approach of passing a base::TaskRunner to ServiceManagerContext on construction, but I think it can work. If that sounds good to you, I could try and sketch this out in code so we can see how it would look like. What do you think?",
+      "parentUuid": "1dfbbd6c_d2637077",
+      "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
