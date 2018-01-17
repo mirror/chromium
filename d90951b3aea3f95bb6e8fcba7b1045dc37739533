@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "661df8f4_4381ec70",
+        "filename": "base/fuchsia/fuchsia_logging.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T19:54:51Z",
+      "side": 1,
+      "message": "Given that the most common use-case we have for ZX_CHECK is to check that a status was ZX_OK, perhaps it\u0027d be helpful to have ZX_CHECK_STATUS(status, expected) or ZX_CHECK_OK(status)?",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "d90951b3aea3f95bb6e8fcba7b1045dc37739533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50b2518c_a4257a37",
         "filename": "base/fuchsia/fuchsia_logging.h",
         "patchSetId": 6
