@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27793579_d0f79e65",
+        "filename": "chrome/browser/chromeos/login/easy_unlock/easy_unlock_create_keys_operation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-17T19:04:52Z",
+      "side": 1,
+      "message": "Not necessary since it is already included in header ?",
+      "revId": "d60210a307187be2eed5aa53ca9f692000c971a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc096f72_c38a75fb",
+        "filename": "chrome/browser/chromeos/login/easy_unlock/easy_unlock_create_keys_operation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-17T19:04:52Z",
+      "side": 1,
+      "message": "#include \"chromeos/dbus/cryptohome_client.h\" ?",
+      "range": {
+        "startLine": 349,
+        "startChar": 28,
+        "endLine": 349,
+        "endChar": 47
+      },
+      "revId": "d60210a307187be2eed5aa53ca9f692000c971a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41234df_8f639f3e",
+        "filename": "chrome/browser/chromeos/login/easy_unlock/easy_unlock_create_keys_operation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-17T19:04:52Z",
+      "side": 1,
+      "message": "#include \"base/optional.h\" ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 26,
+        "endLine": 49,
+        "endChar": 34
+      },
+      "revId": "d60210a307187be2eed5aa53ca9f692000c971a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa92fe2_8a3bb55d",
+        "filename": "chrome/browser/chromeos/login/easy_unlock/easy_unlock_remove_keys_operation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-17T19:04:52Z",
+      "side": 1,
+      "message": "include cryptohome_client.h",
+      "range": {
+        "startLine": 57,
+        "startChar": 28,
+        "endLine": 57,
+        "endChar": 47
+      },
+      "revId": "d60210a307187be2eed5aa53ca9f692000c971a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5163a42e_ce6e4d9e",
+        "filename": "chrome/browser/chromeos/login/easy_unlock/easy_unlock_remove_keys_operation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-17T19:04:52Z",
+      "side": 1,
+      "message": "#include \"base/optional.h\"",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 34
+      },
+      "revId": "d60210a307187be2eed5aa53ca9f692000c971a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
