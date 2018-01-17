@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "8d58c113_5b6c7083",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "My point was that YieldCurrentThread *is* Sleep() under Windows - so if Sleep gives a priority-boosting hint then it\u0027s not doing what you intend.  However, it sounds from what Bruce says that Sleep(0) is special-cased not to flag the thread as important when it is due to wake?",
+      "parentUuid": "047917bb_9ee69446",
+      "range": {
+        "startLine": 213,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 49
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c90fed21_2d405f92",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 8
@@ -393,6 +417,30 @@
       "side": 1,
       "message": "Hmm, ok, but action_timeout() still feels weird for this... I\u0027d rather not if we don\u0027t find this to be flaky on other platforms.",
       "parentUuid": "1cba9888_d806c0d2",
+      "range": {
+        "startLine": 321,
+        "startChar": 12,
+        "endLine": 321,
+        "endChar": 43
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cbae66c_fd14d72a",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T22:37:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a2d5b960_ec6766e1",
       "range": {
         "startLine": 321,
         "startChar": 12,
