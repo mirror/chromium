@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "387000fe_c7a1b386",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchRankerLoggerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-17T21:35:24Z",
+      "side": 1,
+      "message": "Ok, if you are confident this is never called.\n\nIf we want to confirm this, we could add a histogram here, but it seems overkill, given the extra histograms you just added.",
+      "parentUuid": "417ff472_c09d5c5d",
+      "range": {
+        "startLine": 189,
+        "startChar": 36,
+        "endLine": 189,
+        "endChar": 63
+      },
+      "revId": "e638642b832fca2a62066e5eb842aee41478d4d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1244da6_d7c5476a",
         "filename": "components/assist_ranker/predictor_config_definitions.cc",
         "patchSetId": 1
