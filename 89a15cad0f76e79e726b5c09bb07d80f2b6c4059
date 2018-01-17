@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d939dd8_a3f8de09",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-17T22:32:57Z",
+      "side": 1,
+      "message": "The presence of the headset is certainly independent from the feature being on.\n\nThis loads the runtime dll to check for hardware presence, and we were planning to run the runtime in a sandboxed process, so until we are sandboxed, this should be behind a flag so only users who opt-in will potentially run this third-party dll in the browser process.",
+      "parentUuid": "37a96b19_50fafbc2",
+      "range": {
+        "startLine": 164,
+        "startChar": 2,
+        "endLine": 164,
+        "endChar": 54
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29021f40_758d0dec",
         "filename": "device/vr/openvr/openvr_device_provider.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "27bcd085_d3871632",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-17T22:32:57Z",
+      "side": 1,
+      "message": "Should have been VR_IsHmdPresent.",
+      "parentUuid": "29021f40_758d0dec",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff261b98_be979757",
         "filename": "device/vr/vr_device.h",
         "patchSetId": 1
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "b30de8b3_5ce24297",
+        "filename": "device/vr/vr_device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-17T22:32:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff261b98_be979757",
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69111d44_1ed65408",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -79,6 +145,24 @@
       "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17432543_776317ff",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 94966,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-17T22:32:57Z",
+      "side": 1,
+      "message": "Changing to just installed, and renaming histograms to account for that.",
+      "parentUuid": "69111d44_1ed65408",
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
