@@ -2211,6 +2211,10 @@ void RenderFrameImpl::OnJavaScriptExecuteRequestForTests(
       WebScriptSource(WebString::FromUTF16(jscript)));
 
   HandleJavascriptExecutionResult(jscript, id, notify_result, result);
+
+  // TODO(mustaq): Some tests wrongly rely on the scope of |gesture| here.  This
+  // is a problem for UserActivationV2.  https://crbug.com/803193
+  WebUserGestureIndicator::ConsumeUserGesture(frame_);
 }
 
 void RenderFrameImpl::OnJavaScriptExecuteRequestInIsolatedWorld(
