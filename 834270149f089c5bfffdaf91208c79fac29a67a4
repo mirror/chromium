@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a25e164_424da4e9",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-17T07:59:38Z",
+      "side": 1,
+      "message": "oops, these are DEPS violations. Maybe I can\u0027t use EmbeddedTestServer/URLLoader in this test?",
+      "revId": "834270149f089c5bfffdaf91208c79fac29a67a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
