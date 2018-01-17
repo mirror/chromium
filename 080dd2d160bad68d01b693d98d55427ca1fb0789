@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b56512c1_8dfd2ccf",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-17T02:26:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7ca1322f_798bde9a",
+      "revId": "080dd2d160bad68d01b693d98d55427ca1fb0789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b07737e_be0885af",
         "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "080dd2d160bad68d01b693d98d55427ca1fb0789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e607480b_9a8b5369",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-17T02:26:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8b07737e_be0885af",
+      "revId": "080dd2d160bad68d01b693d98d55427ca1fb0789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
