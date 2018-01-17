@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38a09a3d_4bbe4df2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2018-01-17T16:37:52Z",
+      "side": 1,
+      "message": "nit: I think this line should be \u003c\u003d 80.  It\u0027s 103.",
+      "range": {
+        "startLine": 7,
+        "startChar": 53,
+        "endLine": 7,
+        "endChar": 55
+      },
+      "revId": "c742d23d0313f7ae6433bfa2b92c7157b91e2142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
