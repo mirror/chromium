@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5639e4ec_25c0f199",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-17T09:25:19Z",
+      "side": 0,
+      "message": "FYI: After this patch, the last usage of VS::IsDirecitonal() is\nSelectionController::SetNonDirectionalSelectionIfNeeded()",
+      "range": {
+        "startLine": 162,
+        "startChar": 6,
+        "endLine": 162,
+        "endChar": 39
+      },
+      "revId": "0f67a1c22bc586dddfea922c223769b3f2f5d486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
