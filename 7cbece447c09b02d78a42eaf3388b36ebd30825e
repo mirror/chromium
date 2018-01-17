@@ -22,6 +22,30 @@
       "revId": "7cbece447c09b02d78a42eaf3388b36ebd30825e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e75777_36657f91",
+        "filename": "chrome/renderer/extensions/cast_streaming_native_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1115851
+      },
+      "writtenOn": "2018-01-17T23:37:00Z",
+      "side": 1,
+      "message": "I\u0027m going to leave this as-is, as the two isolates must be identical and there are callers above that use this variable already.",
+      "parentUuid": "0345d5dd_971ee6ce",
+      "range": {
+        "startLine": 896,
+        "startChar": 49,
+        "endLine": 896,
+        "endChar": 56
+      },
+      "revId": "7cbece447c09b02d78a42eaf3388b36ebd30825e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
