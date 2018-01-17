@@ -288,6 +288,229 @@
     },
     {
       "key": {
+        "uuid": "a84c4683_f3b56325",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-iframe.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:33:59Z",
+      "side": 1,
+      "message": "-create-from-nested-frame.html?",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13dc4d61_7d7a3fbb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-iframe.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:33:59Z",
+      "side": 1,
+      "message": "nit: Move these into the single test that needs them.",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa2c4533_35e8e1f1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-iframe.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:33:59Z",
+      "side": 1,
+      "message": "They cannot reach the browser as there is no mojom::Authenticator factory set up. These would need to fail in CredentialsContainer?",
+      "range": {
+        "startLine": 22,
+        "startChar": 7,
+        "endLine": 22,
+        "endChar": 59
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c90ee7_feb4741a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-iframe.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:33:59Z",
+      "side": 1,
+      "message": "nit: .then (wrap before the period)",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 11
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b51202_3d100e14",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-iframe.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:33:59Z",
+      "side": 1,
+      "message": "nit: Please remove extra whitespace in this file.",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef751c2_16b58448",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-iframe.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:33:59Z",
+      "side": 1,
+      "message": "nit: Actually, let\u0027s get rid of the *_SCRIPT constants, and introduce a helper method EncloseInScriptTag(str) to do this. And replace references to CREATE_CREDENTIALS_SCRIPT with EncloseInScriptTag(CREATE_CREDENTIALS).",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 29
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4350a4_8be15924",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-iframe.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:33:59Z",
+      "side": 1,
+      "message": "phrasing nit: navigator.credentials should be undefined in documents generated from `data:` URLs.",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 79
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057fadd7_105f684b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-origins.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:33:59Z",
+      "side": 1,
+      "message": "nit: VALID_ORIGIN_RPID_PAIRS",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436893ea_5cfba89d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-origins.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:33:59Z",
+      "side": 1,
+      "message": "nit: Extra whitespaces in document.",
+      "range": {
+        "startLine": 117,
+        "startChar": 45,
+        "endLine": 117,
+        "endChar": 48
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79446972_5c316cd8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-origins.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:33:59Z",
+      "side": 1,
+      "message": "nit: INVALID_ORIGIN_RPID_PAIRS",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 130,
+        "endChar": 19
+      },
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6ae566_76d45d93",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/iframe-helper.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-17T13:33:59Z",
+      "side": 1,
+      "message": "How about calling this nested-mock-authenticator-client.html?",
+      "revId": "0d64cf4f91bf8639a0537b8eaa99c551f914cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96049a47_16d57d21",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 10
