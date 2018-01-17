@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "378f561a_7a0d227b",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-17T17:03:43Z",
+      "side": 1,
+      "message": "Sneaky fix in a supposed test-only CL!",
+      "range": {
+        "startLine": 1148,
+        "startChar": 77,
+        "endLine": 1148,
+        "endChar": 0
+      },
+      "revId": "425f0285e30caef1a9834fab7d0710bd8681d1d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
