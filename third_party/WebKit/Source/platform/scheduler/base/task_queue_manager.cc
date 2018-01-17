@@ -9,6 +9,7 @@
 #include <set>
 
 #include "base/bind.h"
+#include "base/debug/crash_logging.h"
 #include "base/time/default_tick_clock.h"
 #include "base/time/tick_clock.h"
 #include "base/trace_event/trace_event.h"
@@ -86,6 +87,15 @@ TaskQueueManager::~TaskQueueManager() {
 
   controller_->RemoveNestingObserver(this);
 }
+
+// TODO(scheduler-dev): Provide different names for different threads.
+TaskQueueManager::MainThreadOnly::MainThreadOnly()
+    : file_name_crash_key(base::debug::AllocateCrashKeyString(
+          "blink_scheduler_file_name",
+          base::debug::CrashKeySize::Size256)),
+      function_name_crash_key(base::debug::AllocateCrashKeyString(
+          "blink_scheduler_function_name",
+          base::debug::CrashKeySize::Size256)) {}
 
 std::unique_ptr<TaskQueueManager> TaskQueueManager::TakeOverCurrentThread() {
   return std::unique_ptr<TaskQueueManager>(
@@ -506,6 +516,11 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
 
   NotifyWillProcessTaskObservers(pending_task, queue, time_before_task,
                                  &task_start_time);
+
+  base::debug::SetCrashKeyString(main_thread_only().file_name_crash_key,
+                                 pending_task.posted_from.file_name());
+  base::debug::SetCrashKeyString(main_thread_only().function_name_crash_key,
+                                 pending_task.posted_from.function_name());
 
   {
     TRACE_EVENT1("renderer.scheduler", "TaskQueueManager::RunTask", "queue",
