@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a1fb6b2_7bc42a71",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T18:03:02Z",
+      "side": 1,
+      "message": "Out of curiosity, is there value in forwarding the event to the parent five seconds later?  Wouldn\u0027t the user have forgotten about their click/keypress by then anyway?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 69
+      },
+      "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26aa42e_e01e4547",
+        "filename": "content/browser/renderer_host/input/one_shot_timeout_monitor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T18:03:02Z",
+      "side": 1,
+      "message": "OneShotTimeoutMonitor?  (To match what you used in TimedOut())?  Similarly for the line below.",
+      "range": {
+        "startLine": 27,
+        "startChar": 45,
+        "endLine": 27,
+        "endChar": 59
+      },
+      "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f02220_7f419bf4",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T18:03:02Z",
+      "side": 1,
+      "message": "nit: {} not necessary",
+      "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f1f1e12_4845db7d",
+        "filename": "content/browser/renderer_host/render_widget_targeter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T18:03:02Z",
+      "side": 1,
+      "message": "Maybe update this comment to explain what the two new params are?",
+      "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8991e562_f73d6ea3",
+        "filename": "content/common/content_constants_internal.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T18:03:02Z",
+      "side": 1,
+      "message": "nit: append \"Ms\" to the name, similarly to the other delay-related constants above, and maybe move this one to be closer to them (to line 21)?",
+      "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1325532_5e454190",
+        "filename": "content/common/content_constants_internal.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-17T18:03:02Z",
+      "side": 1,
+      "message": "How will this interact with the hung renderer dialog for OOPIFs?  I know that dialog is broken for OOPIFs as-is (though I\u0027m not entirely sure what its actual behavior is), based on https://crbug.com/798551, but I don\u0027t know if eventually we want an OOPIF that doesn\u0027t ack an input event within kHungRendererDelayMs to pop up up the hung renderer dialog for the whole tab and interfere with this?  For now, I\u0027m mostly curious if we want to ensure kAsyncHitTestTimeout \u003c kHungRendererDelayMs, which seems to be true for desktop platforms, where the kHungRendererDelayMs is 30s, but on Android it\u0027s also 5s (see line 12 above).",
+      "range": {
+        "startLine": 32,
+        "startChar": 14,
+        "endLine": 32,
+        "endChar": 34
+      },
+      "revId": "bcf96985c161935cef6974677e491a32e74d0a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
