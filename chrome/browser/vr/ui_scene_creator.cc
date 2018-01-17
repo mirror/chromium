@@ -251,6 +251,7 @@ std::unique_ptr<Rect> CreateOmniboxSpacer(Model* model) {
   auto spacer = Create<Rect>(kNone, kPhaseForeground);
   spacer->SetType(kTypeOmniboxSuggestionSpacer);
   spacer->SetSize(kOmniboxWidthDMM, kSuggestionVerticalPaddingDMM);
+  spacer->set_focusable(false);
   spacer->AddBinding(std::make_unique<Binding<bool>>(
       VR_BIND_LAMBDA([](Model* m) { return !m->omnibox_suggestions.empty(); },
                      base::Unretained(model)),
@@ -1542,6 +1543,22 @@ void UiSceneCreator::CreateOmnibox() {
               e->RequestFocus();
             } else {
               e->RequestUnfocus();
+            }
+          },
+          base::Unretained(omnibox_text_field.get()),
+          base::Unretained(model_))));
+  omnibox_text_field->AddBinding(std::make_unique<Binding<bool>>(
+      VR_BIND_LAMBDA(
+          [](Model* m) {
+            return m->omnibox_editing_enabled() &&
+                   m->active_modal_prompt_type !=
+                       kModalPromptTypeExitVRForVoiceSearchRecordAudioOsPermission;
+          },
+          base::Unretained(model_)),
+      VR_BIND_LAMBDA(
+          [](TextInput* e, Model* m, const bool& v) {
+            if (v) {
+              e->RequestFocus();
             }
           },
           base::Unretained(omnibox_text_field.get()),
