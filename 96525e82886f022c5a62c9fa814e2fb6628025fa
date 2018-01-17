@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba82a5b7_60978f5c",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "remove trailing space, here and below",
+      "range": {
+        "startLine": 1,
+        "startChar": 30,
+        "endLine": 1,
+        "endChar": 31
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c21dcfb_6aeede29",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "nit: gitiles already styles headers in a certain way. Styling it further is not needed.\n\nBesides, it makes this file inconsistent with all other .md files in this dir",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 6
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37073505_69477c45",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "nit: most of words in this file are emphasized (italic) which means nothing is emphasized. Also these _ and * only make text harder to read. Please use emphasis only on text that needs it.\n\nalso, inconsistent with all other .md files in this dir",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 1
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8fca53_c5a9f214",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "nit: consider using singular noun when giving a definition:\n\n  A Chromium CQ builder set is ...\n\nthe next sentence uses a singular",
+      "range": {
+        "startLine": 27,
+        "startChar": 66,
+        "endLine": 29,
+        "endChar": 60
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95dceb29_2a7630d9",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "use relative link, just `tour_of_luci_ui.md`\n\nsame below, for all md links",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 91
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5243e895_1db5569b",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "this renders to\n  https://chromium.googlesource.com/chromium/src/+/refs/changes/09/849709/8/docs/ci.chromium.org\n\nuse https://ci.chromium.org",
+      "range": {
+        "startLine": 66,
+        "startChar": 19,
+        "endLine": 66,
+        "endChar": 34
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc4bfa1_a0f1e16b",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "same here, no need to emphasize",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 3
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27eaab88_2989e943",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "i believe you are the only one who calls builds \"build results\", while everyone else call them \"builds\". \"Build result page\" is incorrect to me because that page works while build is scheduled or running (i.e. before there is a result). Please use \"LUCI build pages\".",
+      "range": {
+        "startLine": 76,
+        "startChar": 3,
+        "endLine": 76,
+        "endChar": 27
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81364de7_0c238eef",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "10, see https://docs.google.com/document/d/121dSdjBu4jjxC9vq5SGeEoaPlmmGWHl-LECXBjHfmQ4/edit#heading\u003dh.mnahszce3y1m",
+      "range": {
+        "startLine": 80,
+        "startChar": 20,
+        "endLine": 80,
+        "endChar": 24
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f218ed_09e82957",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "Builds",
+      "range": {
+        "startLine": 89,
+        "startChar": 1,
+        "endLine": 89,
+        "endChar": 14
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a693ee76_c237f7c0",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "ci.chromium.org is not a part URL path.\n\neither \n\n  a different URL: `ci.chromium.org/p/chromium/builders/…`\n\nor\n\n  URL path that starts with `/p/chromium/builders/…`",
+      "range": {
+        "startLine": 89,
+        "startChar": 39,
+        "endLine": 90,
+        "endChar": 51
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4570a7a0_a49313d6",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "builds",
+      "range": {
+        "startLine": 99,
+        "startChar": 16,
+        "endLine": 99,
+        "endChar": 29
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46cedd4_6fd56061",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "does not apply to Chromium. All Chromium builders have build numbers enabled. They wouldn\u0027t work without numbers.",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45dabea5_30b9e70a",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "what do you mean by artifact?\n\none thing I know that is a part of preparation is machine allocation",
+      "range": {
+        "startLine": 126,
+        "startChar": 29,
+        "endLine": 126,
+        "endChar": 38
+      },
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5813ea14_280c4d6a",
+        "filename": "docs/luci_migration_faq.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-17T01:18:00Z",
+      "side": 1,
+      "message": "remove one blank line",
+      "revId": "96525e82886f022c5a62c9fa814e2fb6628025fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
