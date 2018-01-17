@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd0d1f58_4393d8ea",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-17T22:30:05Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "3820565e_8666f3ac",
+      "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d321caf_0a14befb",
         "filename": "chrome/browser/extensions/startup_helper.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "36da5a7e_3d9224d7",
+        "filename": "chrome/browser/extensions/startup_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-17T22:30:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d321caf_0a14befb",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 67
+      },
+      "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f075927e_1de2b8ac",
         "filename": "extensions/browser/image_sanitizer.cc",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-17T21:05:38Z",
       "side": 1,
       "message": "Document how this limit relates to the expected size of images, such as icons.",
+      "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c3e57f_f4a316ca",
+        "filename": "extensions/browser/image_sanitizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-17T22:30:05Z",
+      "side": 1,
+      "message": "I added something, but I don\u0027t feel it is that good. Let me know if you have any suggestions.",
+      "parentUuid": "f075927e_1de2b8ac",
       "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "ce2797b8_d810bcd8",
+        "filename": "extensions/browser/image_sanitizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-17T22:30:05Z",
+      "side": 1,
+      "message": "I can\u0027t use make_unique here because the ImageSanitizer\u0027s constructor is private.",
+      "parentUuid": "d7ff3799_fd9029cd",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "325dde07_da5d1f5b",
         "filename": "extensions/browser/image_sanitizer.cc",
         "patchSetId": 4
@@ -96,6 +180,24 @@
       "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33566b96_e21133da",
+        "filename": "extensions/browser/image_sanitizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-17T22:30:05Z",
+      "side": 1,
+      "message": "Good catch! Fixed.",
+      "parentUuid": "325dde07_da5d1f5b",
+      "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +221,30 @@
       "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76490f93_b8333617",
+        "filename": "extensions/browser/image_sanitizer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-17T22:30:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c4e283_d0cabc5e",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 53
+      },
+      "revId": "d199155d387b900e891294bc70e82fcb4c2f556e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
