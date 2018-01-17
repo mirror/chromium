@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "52e7dad4_e5ebd816",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetBeforeNativeTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-17T00:07:47Z",
+      "side": 1,
+      "message": "We could potentially look at changing AsyncInitializationActivity#shouldDelayBrowserStartup to check a command line that we could set on tests to defer startup to do this sort of checks.",
+      "parentUuid": "ee10db93_640b8b18",
+      "range": {
+        "startLine": 66,
+        "startChar": 74,
+        "endLine": 66,
+        "endChar": 96
+      },
+      "revId": "15f3398d9b50ec96f7e61ef06f9f8ca3d11c8f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d9207c5_947c327c",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetBeforeNativeTest.java",
         "patchSetId": 1
