@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "285af64d_1f24f40e",
+        "filename": "chrome/common/extensions/command.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T19:54:37Z",
+      "side": 1,
+      "message": "Yes, in StringToAccelerator (static) and Parse (before command_name_ is set).",
+      "parentUuid": "0393e310_e3151eb1",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "64d001699dcc88ed25e93ac3878477b37b65d90b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2440d96_88872a01",
         "filename": "chrome/common/extensions/command.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "64d001699dcc88ed25e93ac3878477b37b65d90b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32974cd9_8c91fa56",
+        "filename": "chrome/common/extensions/command.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T19:54:37Z",
+      "side": 1,
+      "message": "Hmm... I don\u0027t think they can.  These are all set from the (non-static) Parse() method.  Though investigating this did point to a subtle bug, where I wasn\u0027t setting type_ in that case.  I\u0027ve fixed that and updated the unittests.",
+      "parentUuid": "d2440d96_88872a01",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 6
+      },
+      "revId": "64d001699dcc88ed25e93ac3878477b37b65d90b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
