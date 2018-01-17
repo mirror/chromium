@@ -4,6 +4,8 @@
 
 #include "components/reading_list/core/reading_list_model.h"
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/test/simple_test_clock.h"
 #include "components/reading_list/core/reading_list_model_impl.h"

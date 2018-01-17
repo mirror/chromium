@@ -9,6 +9,8 @@
 #include <memory>
 #include <string>
 
+#include <memory>
+
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/callback.h"

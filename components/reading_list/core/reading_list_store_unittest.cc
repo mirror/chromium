@@ -5,6 +5,7 @@
 #include "components/reading_list/core/reading_list_store.h"
 
 #include <map>
+#include <memory>
 #include <set>
 
 #include "base/bind.h"

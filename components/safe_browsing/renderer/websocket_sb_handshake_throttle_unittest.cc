@@ -4,6 +4,7 @@
 
 #include "components/safe_browsing/renderer/websocket_sb_handshake_throttle.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/callback.h"
