@@ -116,6 +116,24 @@
       "revId": "a2d4803a5698086a0f685c8a4f49b4f557bf57e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0dd4fc7c_5c6d4061",
+        "filename": "chromecast/graphics/cast_window_manager_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1261231
+      },
+      "writtenOn": "2018-01-17T20:16:37Z",
+      "side": 1,
+      "message": "Oops, I forgot that the unique_ptr here is for the base class, but the value is set to a subclass.  make_unique ends up not working here.",
+      "parentUuid": "16778022_f2bb0cb7",
+      "revId": "a2d4803a5698086a0f685c8a4f49b4f557bf57e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
