@@ -171,7 +171,7 @@ class PageInfoUI {
       const GURL& url);
 
   // Returns the color to use for the permission decision reason strings.
-  static SkColor GetPermissionDecisionTextColor();
+  static SkColor GetSecondaryTextColor();
 
   // Returns the icon resource ID for the given permission |type| and |setting|.
   static int GetPermissionIconID(ContentSettingsType type,

@@ -379,7 +379,7 @@ base::string16 PageInfoUI::PermissionDecisionReasonToUIString(
 }
 
 // static
-SkColor PageInfoUI::GetPermissionDecisionTextColor() {
+SkColor PageInfoUI::GetSecondaryTextColor() {
   return SK_ColorGRAY;
 }
 
