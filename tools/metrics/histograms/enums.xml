@@ -37991,6 +37991,7 @@ Called by update_net_trust_anchors.py.-->
   <int value="2" label="Can be checked for inclusion"/>
   <int value="3" label="Queue is full"/>
   <int value="4" label="No DNS lookup performed"/>
+  <int value="5" label="Discarded to protect privacy"/>
 </enum>
 
 <enum name="SCTOrigin">
