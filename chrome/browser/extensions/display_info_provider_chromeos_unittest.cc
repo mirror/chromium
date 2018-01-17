@@ -1626,6 +1626,64 @@ TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationSuccess) {
   EXPECT_TRUE(success);
 }
 
+TEST_F(DisplayInfoProviderChromeosTest, GetDisplayZoomFactor) {
+  UpdateDisplay("1200x600,600x1000*2");
+  display::DisplayIdList display_id_list =
+      display_manager()->GetCurrentDisplayIdList();
+
+  float zoom_factor_1 = 1.23f;
+  float zoom_factor_2 = 2.34f;
+  display_manager()->UpdateZoomFactor(display_id_list[0], zoom_factor_1);
+  display_manager()->UpdateZoomFactor(display_id_list[1], zoom_factor_2);
+
+  DisplayUnitInfoList displays = GetAllDisplaysInfo();
+
+  for (const auto& display : displays) {
+    if (display.id == base::Int64ToString(display_id_list[0]))
+      EXPECT_EQ(display.display_zoom_factor, zoom_factor_1);
+    if (display.id == base::Int64ToString(display_id_list[1]))
+      EXPECT_EQ(display.display_zoom_factor, zoom_factor_2);
+  }
+}
+
+TEST_F(DisplayInfoProviderChromeosTest, SetDisplayZoomFactor) {
+  UpdateDisplay("1200x600,600x1000*2");
+  display::DisplayIdList display_id_list =
+      display_manager()->GetCurrentDisplayIdList();
+
+  float zoom_factor_1 = 1.23f;
+  float zoom_factor_2 = 2.34f;
+  display_manager()->UpdateZoomFactor(display_id_list[0], zoom_factor_2);
+  display_manager()->UpdateZoomFactor(display_id_list[1], zoom_factor_1);
+
+  EXPECT_EQ(display_manager()->GetZoomFactorForDisplay(display_id_list[0]),
+            zoom_factor_2);
+  EXPECT_EQ(display_manager()->GetZoomFactorForDisplay(display_id_list[1]),
+            zoom_factor_1);
+
+  api::system_display::DisplayProperties info;
+  info.display_zoom_factor.reset(new double(zoom_factor_1));
+
+  bool success = false;
+  std::string error;
+  CallSetDisplayUnitInfo(base::Int64ToString(display_id_list[0]), info,
+                         &success, &error);
+
+  EXPECT_EQ(display_manager()->GetZoomFactorForDisplay(display_id_list[0]),
+            zoom_factor_1);
+  EXPECT_EQ(display_manager()->GetZoomFactorForDisplay(display_id_list[1]),
+            zoom_factor_1);
+
+  info.display_zoom_factor.reset(new double(zoom_factor_2));
+  CallSetDisplayUnitInfo(base::Int64ToString(display_id_list[1]), info,
+                         &success, &error);
+
+  EXPECT_EQ(display_manager()->GetZoomFactorForDisplay(display_id_list[0]),
+            zoom_factor_1);
+  EXPECT_EQ(display_manager()->GetZoomFactorForDisplay(display_id_list[1]),
+            zoom_factor_2);
+}
+
 class DisplayInfoProviderChromeosTouchviewTest
     : public DisplayInfoProviderChromeosTest {
  public:
