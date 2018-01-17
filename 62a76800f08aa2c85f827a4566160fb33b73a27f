@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "5905bc9f_59558b76",
+        "filename": "cc/layers/surface_layer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-17T03:58:40Z",
+      "side": 1,
+      "message": "added comparison.",
+      "parentUuid": "05744490_1a1039e1",
+      "range": {
+        "startLine": 71,
+        "startChar": 43,
+        "endLine": 71,
+        "endChar": 62
+      },
+      "revId": "62a76800f08aa2c85f827a4566160fb33b73a27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4369a7de_b5087749",
         "filename": "cc/layers/surface_layer.h",
         "patchSetId": 10
@@ -191,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "495a0ef3_4f072311",
+        "filename": "cc/layers/surface_layer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-17T03:58:40Z",
+      "side": 1,
+      "message": "once bitten, twice shy.",
+      "parentUuid": "9c0cd3cf_d5c6a055",
+      "range": {
+        "startLine": 26,
+        "startChar": 27,
+        "endLine": 26,
+        "endChar": 70
+      },
+      "revId": "62a76800f08aa2c85f827a4566160fb33b73a27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "570cc65e_347d6383",
         "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
         "patchSetId": 10
@@ -214,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "486f825b_c6aff0c2",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-17T03:58:40Z",
+      "side": 1,
+      "message": "Since this is not production code then I\u0027m fine with that. I think that is indeed more readable. Done!",
+      "parentUuid": "570cc65e_347d6383",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 47
+      },
+      "revId": "62a76800f08aa2c85f827a4566160fb33b73a27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9ef8f96_a379b15c",
         "filename": "services/viz/public/interfaces/compositing/frame_deadline.mojom",
         "patchSetId": 10
@@ -225,6 +297,30 @@
       "writtenOn": "2018-01-17T01:34:23Z",
       "side": 1,
       "message": "Why don\u0027t we just use uint32? Are you thinking of expanding this?",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "62a76800f08aa2c85f827a4566160fb33b73a27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a4b152_21db733a",
+        "filename": "services/viz/public/interfaces/compositing/frame_deadline.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-17T03:58:40Z",
+      "side": 1,
+      "message": "Ohh mojo doesn\u0027t support optional primitive types so I had to introduce this to make mojo happy.",
+      "parentUuid": "c9ef8f96_a379b15c",
       "range": {
         "startLine": 7,
         "startChar": 7,
