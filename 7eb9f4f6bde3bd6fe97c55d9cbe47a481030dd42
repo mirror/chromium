@@ -152,6 +152,24 @@
       "revId": "7eb9f4f6bde3bd6fe97c55d9cbe47a481030dd42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c9910a_76e52657",
+        "filename": "ui/views/controls/button/label_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-17T21:54:07Z",
+      "side": 1,
+      "message": "Yes, sorry. I read one and hit reply on the other.\n\nAs I thought about this some more, when the image is taller than the line height, there isn\u0027t going to be enough slack above the first line or below the last line to allow for decent alignment. If the text is wrapped, and the image is taller than the a single line of text, the preferred height will need to be taller.",
+      "parentUuid": "f6e8add1_7282d2bd",
+      "revId": "7eb9f4f6bde3bd6fe97c55d9cbe47a481030dd42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
