@@ -70,6 +70,24 @@
       "revId": "b7792e23d3ec9ee8cdbf800ed094f00bdab32060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028e3a3a_b181c40e",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-17T03:26:30Z",
+      "side": 1,
+      "message": "I\u0027ve changed ManifestParser to continue using the JSON parser from base so we continue to get error locations and the same error messages.",
+      "parentUuid": "b7dd9856_357c9413",
+      "revId": "b7792e23d3ec9ee8cdbf800ed094f00bdab32060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
