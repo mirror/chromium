@@ -32,6 +32,8 @@ class CC_EXPORT DisplayResourceProvider : public ResourceProvider {
   void SendPromotionHints(
       const OverlayCandidateList::PromotionHintInfoMap& promotion_hints);
 
+  void DeletePromotionHint(ResourceMap::iterator it, DeleteStyle style);
+
   // Indicates if this resource is backed by an Android SurfaceTexture, and thus
   // can't really be promoted to an overlay.
   bool IsBackedBySurfaceTexture(viz::ResourceId id);
@@ -263,6 +265,16 @@ class CC_EXPORT DisplayResourceProvider : public ResourceProvider {
   base::flat_map<viz::ResourceId, sk_sp<SkImage>> resource_sk_image_;
   viz::ResourceId next_id_;
   viz::SharedBitmapManager* shared_bitmap_manager_;
+  // Keep track of whether deleted resources should be batched up or returned
+  // immediately.
+  bool batch_return_resources_ = false;
+  // Maps from a child id to the set of resources to be returned to it.
+  base::small_map<std::map<int, ResourceIdArray>> batched_returning_resources_;
+  int next_child_;
+#if defined(OS_ANDROID)
+  // Set of resource Ids that would like to be notified about promotion hints.
+  viz::ResourceIdSet wants_promotion_hints_set_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(DisplayResourceProvider);
 };

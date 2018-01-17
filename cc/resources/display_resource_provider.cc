@@ -47,7 +47,8 @@ DisplayResourceProvider::DisplayResourceProvider(
     viz::SharedBitmapManager* shared_bitmap_manager)
     : ResourceProvider(compositor_context_provider),
       next_id_(kDisplayInitialResourceId),
-      shared_bitmap_manager_(shared_bitmap_manager) {}
+      shared_bitmap_manager_(shared_bitmap_manager),
+      next_child_(1) {}
 
 DisplayResourceProvider::~DisplayResourceProvider() {
   while (!children_.empty())
@@ -89,6 +90,15 @@ void DisplayResourceProvider::SendPromotionHints(
     }
     UnlockForRead(id);
   }
+}
+
+void DisplayResourceProvider::DeletePromotionHint(ResourceMap::iterator it,
+                                                  DeleteStyle style) {
+  viz::internal::Resource* resource = &it->second;
+  // If this resource was interested in promotion hints, then remove it from
+  // the set of resources that we'll notify.
+  if (resource->wants_promotion_hint)
+    wants_promotion_hints_set_.erase(it->first);
 }
 
 bool DisplayResourceProvider::IsBackedBySurfaceTexture(viz::ResourceId id) {
@@ -293,6 +303,9 @@ void DisplayResourceProvider::DeleteAndReturnUnusedResourcesToChild(
 
     child_info->child_to_parent_map.erase(child_id);
     resource.imported_count = 0;
+#if defined(OS_ANDROID)
+    DeletePromotionHint(it, style);
+#endif
     DeleteResourceInternal(it, style);
   }
 
@@ -555,7 +568,10 @@ void DisplayResourceProvider::UnlockForRead(viz::ResourceId id) {
   if (resource->marked_for_deletion && !resource->lock_for_read_count) {
     if (!resource->child_id) {
       // The resource belongs to this ResourceProvider, so it can be destroyed.
-      DeleteResourceInternal(it, NORMAL);
+#if defined(OS_ANDROID)
+        DeletePromotionHint(it, NORMAL));
+#endif
+        DeleteResourceInternal(it, NORMAL);
     } else {
       if (batch_return_resources_) {
         batched_returning_resources_[resource->child_id].push_back(id);
