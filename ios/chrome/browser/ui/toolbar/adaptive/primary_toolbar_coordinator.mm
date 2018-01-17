@@ -86,7 +86,9 @@
   ToolbarStyle style = isIncognito ? INCOGNITO : NORMAL;
   ToolbarButtonFactory* buttonFactory =
       [[ToolbarButtonFactory alloc] initWithStyle:style];
-  buttonFactory.dispatcher = self.dispatcher;
+  buttonFactory.dispatcher =
+
+      self.dispatcher;
   buttonFactory.visibilityConfiguration =
       [[ToolbarButtonVisibilityConfiguration alloc] initWithType:PRIMARY];
 
@@ -95,6 +97,13 @@
   self.toolbarViewController.dispatcher = self.dispatcher;
   self.toolbarViewController.locationBarView =
       self.locationBarCoordinator.locationBarView;
+}
+
+- (void)stop {
+  self.started = NO;
+  self.toolbarViewController = nil;
+  [self.omniboxPopupCoordinator stop];
+  [self.locationBarCoordinator stop];
 }
 
 #pragma mark - Property Accessors
