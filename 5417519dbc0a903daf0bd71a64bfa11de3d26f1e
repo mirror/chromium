@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "971cb1cd_850f0b0f",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-17T20:48:04Z",
+      "side": 1,
+      "message": "GL_RGB10_A2_EXT is only an \"internal format\", not a \"format\" in GL speak, so it shouldn\u0027t be added there.\n\nFor reference, those refer to arguments to (e.g.) glTexImage2D, where GL_RGB10_A2_EXT would be accepted in the 3rd argument (\"internalformat\") but not the 7th (\"format\") - one would use GL_RGBA there (already accepted), with GL_UNSIGNED_INT_2_10_10_10_REV as the 8th argument (\"type\").",
+      "revId": "5417519dbc0a903daf0bd71a64bfa11de3d26f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf61c4b8_70cc4a82",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-17T20:48:04Z",
+      "side": 1,
+      "message": "Also, it shouldn\u0027t be added here, because the internal format is sized (\"RGB10_A2\" as opposed to \"RGBA\" which would be unsigned, but is already there.)",
+      "revId": "5417519dbc0a903daf0bd71a64bfa11de3d26f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
