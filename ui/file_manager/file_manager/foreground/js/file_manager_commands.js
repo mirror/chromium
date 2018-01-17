@@ -870,8 +870,14 @@ CommandHandler.COMMANDS_['paste'] = /** @type {Command} */ ({
             fileManager.directoryModel.getCurrentDirEntry());
 
     // Hide this command if only one folder is selected.
-    event.command.setHidden(!!CommandUtil.getOnlyOneSelectedDirectory(
-        fileManager.getSelection()));
+    const shouldHide =
+        !!CommandUtil.getOnlyOneSelectedDirectory(fileManager.getSelection());
+    event.command.setHidden(shouldHide);
+    // The command forms an independent section by itself in the gear menu.
+    // We need to hide the separator when the command is hidden, because we
+    // don't show "paste into folder" there and the section becomes empty.
+    fileManager.document.getElementById('gear-menu-paste-separator').hidden =
+        shouldHide;
   }
 });
 
