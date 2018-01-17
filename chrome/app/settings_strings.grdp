@@ -3059,6 +3059,9 @@
     <message name="IDS_SETTINGS_EDIT_PERSON" desc="Title of the edit person subpage. This is a subpage to edit the name and icon of a Chrome Profile.">
       Edit person
     </message>
+    <message name="IDS_SETTINGS_PROFILE_NAME_AND_PICTURE" desc="Label of the link that takes you to the page to edit your name and picture for your chrome profile.">
+      Chrome name and picture
+    </message>
     <message name="IDS_SETTINGS_PROFILE_SHORTCUT_TOGGLE_LABEL" desc="Label of the toggle that creates or removes a desktop shortcut for the profile.">
       Show desktop shortcut
     </message>

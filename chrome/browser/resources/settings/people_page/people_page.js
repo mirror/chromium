@@ -26,6 +26,14 @@ Polymer({
     },
 
     /**
+     * @private {boolean}
+     */
+    diceEnabled_: {
+      type: Object,
+      value: loadTimeData.getBoolean('diceEnabled'),
+    },
+
+    /**
      * The current sync status, supplied by SyncBrowserProxy.
      * @type {?settings.SyncStatus}
      */
@@ -262,7 +270,7 @@ Polymer({
 
   // <if expr="not chromeos">
   /** @private */
-  onProfileNameTap_: function() {
+  onProfileTap_: function() {
     settings.navigateTo(settings.routes.MANAGE_PROFILE);
   },
   // </if>
