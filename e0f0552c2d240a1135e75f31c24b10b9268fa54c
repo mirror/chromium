@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e19d44db_9ba8a18d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-17T23:49:05Z",
+      "side": 1,
+      "message": "Does this need to be updated now? \n\nAlso does this CL actually improve the accessibility? (Do the tooltips work as expected?)",
+      "revId": "e0f0552c2d240a1135e75f31c24b10b9268fa54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9abb2f50_a2879115",
         "filename": "chrome/browser/ui/views/page_info/chosen_object_view.cc",
         "patchSetId": 9
