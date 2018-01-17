@@ -69,6 +69,30 @@
       "revId": "eeef32a04acf1b19f024352e3c5083158aed3165",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "407a9066_7ada2c02",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-17T07:31:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0d279b7_307c8026",
+      "range": {
+        "startLine": 320,
+        "startChar": 2,
+        "endLine": 320,
+        "endChar": 38
+      },
+      "revId": "eeef32a04acf1b19f024352e3c5083158aed3165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

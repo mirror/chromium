@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f348611_8ca77818",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-17T07:31:10Z",
+      "side": 1,
+      "message": "Clear all WebXXXCallbacks, and also cancel those pending callbacks bound at line60 and line71.",
+      "range": {
+        "startLine": 269,
+        "startChar": 2,
+        "endLine": 269,
+        "endChar": 32
+      },
+      "revId": "5a93f86b3ff766729153d00ce26c4a100bdbeb8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
