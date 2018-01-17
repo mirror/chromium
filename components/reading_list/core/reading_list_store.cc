@@ -4,6 +4,7 @@
 
 #include "components/reading_list/core/reading_list_store.h"
 
+#include <memory>
 #include <set>
 #include <utility>
 

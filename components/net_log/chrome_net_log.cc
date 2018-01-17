@@ -4,10 +4,10 @@
 
 #include "components/net_log/chrome_net_log.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/command_line.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
 #include "base/values.h"
@@ -62,7 +62,7 @@ std::unique_ptr<base::Value> ChromeNetLog::GetConstants(
 
   // Add a dictionary with the version of the client and its command line
   // arguments.
-  auto dict = base::MakeUnique<base::DictionaryValue>();
+  auto dict = std::make_unique<base::DictionaryValue>();
 
   // We have everything we need to send the right values.
   dict->SetString("name", version_info::GetProductName());

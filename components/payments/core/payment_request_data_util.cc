@@ -4,6 +4,8 @@
 
 #include "components/payments/core/payment_request_data_util.h"
 
+#include <memory>
+
 #include "base/stl_util.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"

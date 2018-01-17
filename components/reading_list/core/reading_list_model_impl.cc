@@ -4,6 +4,8 @@
 
 #include "components/reading_list/core/reading_list_model_impl.h"
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/strings/string_util.h"

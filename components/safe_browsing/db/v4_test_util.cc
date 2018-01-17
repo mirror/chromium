@@ -7,6 +7,8 @@
 #include <string>
 #include <utility>
 
+#include <memory>
+
 #include "components/safe_browsing/db/util.h"
 #include "crypto/sha2.h"
 

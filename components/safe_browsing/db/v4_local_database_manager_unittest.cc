@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
+
 #include "components/safe_browsing/db/v4_local_database_manager.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"

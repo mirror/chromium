@@ -4,6 +4,7 @@
 
 #include "components/previews/core/previews_amp_converter.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/feature_list.h"
@@ -112,14 +113,14 @@ PreviewsAMPConverter::PreviewsAMPConverter() {
            scheme_amp != url::kHttpScheme);
 
     std::unique_ptr<re2::RE2> matching_path_pattern_re2(
-        base::MakeUnique<re2::RE2>(matching_path_pattern_str, options));
+        std::make_unique<re2::RE2>(matching_path_pattern_str, options));
     if (host.empty() || !matching_path_pattern_re2->ok() ||
         (scheme_amp != "" && scheme_amp != url::kHttpScheme &&
          scheme_amp != url::kHttpsScheme)) {
       continue;
     }
     amp_converter_.insert(std::make_pair(
-        host, base::MakeUnique<AMPConverterEntry>(
+        host, std::make_unique<AMPConverterEntry>(
                   matching_scheme, std::move(matching_path_pattern_re2),
                   host_amp, scheme_amp, prefix, suffix, suffix_html)));
   }

@@ -4,6 +4,8 @@
 
 #include "components/safe_browsing/browser/browser_url_loader_throttle.h"
 
+#include <memory>
+
 #include "base/logging.h"
 #include "base/trace_event/trace_event.h"
 #include "components/safe_browsing/browser/safe_browsing_url_checker_impl.h"
