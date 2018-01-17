@@ -140,6 +140,30 @@
       "revId": "1ae97d37f454c0785402224dea0ac3c9daa58bfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c7ba93_712e8b6c",
+        "filename": "ios/web/web_state/js/page_script_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-17T19:59:12Z",
+      "side": 1,
+      "message": "$(WINDOW_ID) is replaced for window_id.js script:\nhttps://cs.chromium.org/chromium/src/ios/web/web_state/js/crw_js_window_id_manager.mm?type\u003dcs\u0026q\u003dstringByReplacingOccurrencesOfString:@%22%5C$%5C(WINDOW_ID%5C)%22\u0026sq\u003dpackage:chromium\u0026l\u003d51\n\nI was concerned about assuming that all_frames_late_web_bundle has $(PLUGIN_NOT_SUPPORTED_TEXT).",
+      "parentUuid": "231cba7a_fbab3d50",
+      "range": {
+        "startLine": 104,
+        "startChar": 38,
+        "endLine": 104,
+        "endChar": 64
+      },
+      "revId": "1ae97d37f454c0785402224dea0ac3c9daa58bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
