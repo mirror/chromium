@@ -34,6 +34,24 @@
       "revId": "a1a2e181bad6474405e242a4d23d17b68af801be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f427ffc_ebcc1536",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-17T19:10:07Z",
+      "side": 1,
+      "message": "Oh, those are automatically generated, so we use the slowest benchmark timing there.",
+      "parentUuid": "636406da_04935070",
+      "revId": "a1a2e181bad6474405e242a4d23d17b68af801be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
