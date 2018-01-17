@@ -10,6 +10,8 @@
 #include "ios/chrome/browser/ui/commands/start_voice_search_command.h"
 #import "ios/chrome/browser/ui/keyboard/UIKeyCommand+Chrome.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
+#include "ios/chrome/browser/ui/settings/settings_navigation_controller.h"
+#import "ios/chrome/browser/ui/settings/settings_navigation_controller_delegate.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 
@@ -25,6 +27,8 @@ keyCommandsForConsumer:(id<KeyCommandsPlumbing>)consumer
             dispatcher:
                 (id<ApplicationCommands, BrowserCommands, OmniboxFocuser>)
                     dispatcher
+      settingsDelegate:(id<SettingsNavigationControllerDelegate,
+                           SettingsBrowserStateProvider>)settingsDelegate
            editingText:(BOOL)editingText {
   __weak id<KeyCommandsPlumbing> weakConsumer = consumer;
   __weak UIViewController* weakBaseViewController = baseViewController;
@@ -218,14 +222,26 @@ keyCommandsForConsumer:(id<KeyCommandsPlumbing>)consumer
                            modifierFlags:UIKeyModifierCommand
                                    title:nil
                                   action:newTab],
-    [UIKeyCommand cr_keyCommandWithInput:@","
-                           modifierFlags:UIKeyModifierCommand
-                                   title:nil
-                                  action:^{
-                                    [weakDispatcher
-                                        showSettingsFromViewController:
-                                            weakBaseViewController];
-                                  }],
+    [UIKeyCommand
+        cr_keyCommandWithInput:@","
+                 modifierFlags:UIKeyModifierCommand
+                         title:nil
+                        action:^{
+                          if (!SettingsNavigationController
+                                   .sharedSettingsNavigationController) {
+                            SettingsNavigationController*
+                                settingsNavigationController = [SettingsNavigationController
+                                    newSettingsMainControllerWithBrowserState:
+                                        settingsDelegate.browserStateForSettings
+                                                                     delegate:
+                                                                         settingsDelegate];
+                            [weakBaseViewController
+                                presentViewController:
+                                    settingsNavigationController
+                                             animated:YES
+                                           completion:nil];
+                          }
+                        }]
   ]];
 
   // List the commands that don't appear in the HUD and only appear when there

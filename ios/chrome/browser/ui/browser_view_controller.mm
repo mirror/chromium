@@ -56,8 +56,10 @@
 #include "components/strings/grit/components_strings.h"
 #include "components/toolbar/toolbar_model_impl.h"
 #include "ios/chrome/app/tests_hook.h"
+#include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#include "ios/chrome/browser/browser_state/chrome_browser_state_manager.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/chrome_url_util.h"
 #import "ios/chrome/browser/download/pass_kit_tab_helper.h"
@@ -178,6 +180,7 @@
 #import "ios/chrome/browser/ui/reading_list/reading_list_menu_notifier.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/sad_tab/sad_tab_legacy_coordinator.h"
+#import "ios/chrome/browser/ui/settings/settings_navigation_controller_delegate.h"
 #import "ios/chrome/browser/ui/settings/sync_utils/sync_util.h"
 #import "ios/chrome/browser/ui/side_swipe/side_swipe_controller.h"
 #import "ios/chrome/browser/ui/signin_interaction/public/signin_presenter.h"
@@ -424,6 +427,8 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     PreloadControllerDelegate,
                                     QRScannerPresenting,
                                     RepostFormTabHelperDelegate,
+                                    SettingsBrowserStateProvider,
+                                    SettingsNavigationControllerDelegate,
                                     SideSwipeControllerDelegate,
                                     SigninPresenter,
                                     SKStoreProductViewControllerDelegate,
@@ -1530,6 +1535,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       keyCommandsForConsumer:self
           baseViewController:self
                   dispatcher:self.dispatcher
+            settingsDelegate:self
                  editingText:![self isFirstResponder]];
 }
 
@@ -4355,6 +4361,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
     [self.incognitoTabTipBubblePresenter setTriggerFollowUpAction:NO];
   }
 
+  configuration.settingsDelegate = self;
+
   return configuration;
 }
 
@@ -4376,6 +4384,23 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (BOOL)isTabLoadingForToolsMenuCoordinator:(ToolsMenuCoordinator*)coordinator {
   return ([_model currentTab] && !IsIPadIdiom()) ? _toolbarModelIOS->IsLoading()
                                                  : NO;
+}
+
+#pragma mark - SettingsNavigationControllerDelegate
+
+- (id<ApplicationCommands, BrowserCommands>)dispatcherForSettings {
+  return self.dispatcher;
+}
+
+#pragma mark - SettingsBrowserStateProvider
+
+- (ios::ChromeBrowserState*)browserStateForSettings {
+  ios::ChromeBrowserStateManager* manager =
+      GetApplicationContext()->GetChromeBrowserStateManager();
+  ios::ChromeBrowserState* chromeBrowserState =
+      manager->GetLastUsedBrowserState();
+
+  return chromeBrowserState;
 }
 
 #pragma mark - BrowserCommands
