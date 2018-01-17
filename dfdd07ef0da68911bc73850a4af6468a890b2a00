@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c901e4b_2e1af87c",
+        "filename": "content/browser/media/media_devices_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-17T13:44:02Z",
+      "side": 1,
+      "message": "Since these functions are now shared in a .h, we should add comments explaining what they do.\nFor this function, a possible documentation is:\n\n// Returns a translated version of |device_info| suitable for use in a\n// renderer process.\n// The |device_id| field is hashed using |device_id_salt| and \n// |security_origin|.\n// The |group_id| field is hashed using |group_id_salt| and \n// |security_origin|.\n// The |label| field is removed if |has_permission| is false.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 15
+      },
+      "revId": "dfdd07ef0da68911bc73850a4af6468a890b2a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad7824a_c8923b37",
+        "filename": "content/browser/media/media_devices_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-17T13:44:02Z",
+      "side": 1,
+      "message": "|input| is not a very good name because it might give the wrong idea that it refers to input devices only.\nRename |input| to |device_infos| or some other name.\n\nAs for the documentation, here\u0027s my suggestion:\n// Returns a translated version of |device_infos|, with each element\n// translated using TranslateMediaDeviceInfo().\n\nFeel free to improve my documentation suggestions.",
+      "range": {
+        "startLine": 46,
+        "startChar": 32,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "dfdd07ef0da68911bc73850a4af6468a890b2a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb98d56_84e7147e",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-17T13:44:02Z",
+      "side": 1,
+      "message": "Rephrase the documentation as follows:\n\n// Performs a possibly cached device enumeration for the requested device\n// types and reports the results to |callback|. The results are translated\n// for use by the renderer process and frame identified with \n// |render_process_id| and |render_frame_id|, based on the frame origin\u0027s \n// permissions, an internal media-device salt, and the given\n// |group_id_salt_base|.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 3
+      },
+      "revId": "dfdd07ef0da68911bc73850a4af6468a890b2a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f00a09a3_c89f52dc",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-17T13:44:02Z",
+      "side": 1,
+      "message": "Add the following comment for this block of functions:\n// Helpers to handle enumeration results for a renderer process.",
+      "range": {
+        "startLine": 162,
+        "startChar": 1,
+        "endLine": 162,
+        "endChar": 2
+      },
+      "revId": "dfdd07ef0da68911bc73850a4af6468a890b2a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
