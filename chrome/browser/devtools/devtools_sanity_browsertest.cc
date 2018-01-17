@@ -2088,3 +2088,36 @@ IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestRawHeadersWithRedirectAndHSTS) {
                       redirect_url.spec().c_str());
   CloseDevToolsWindow();
 }
+
+// Tests that OpenInNewTab filters URLs.
+IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestOpenInNewTabFilter) {
+  OpenDevToolsWindow(kDebuggerTestPage, false);
+  DevToolsUIBindings::Delegate* bindings_delegate_ =
+      static_cast<DevToolsUIBindings::Delegate*>(window_);
+  std::string test_url =
+      spawned_test_server()->GetURL(kDebuggerTestPage).spec();
+
+  // Pairs include a URL string and boolean whether it should be allowed.
+  std::vector<std::pair<const std::string, bool>> tests = {
+      {test_url, true},
+      {"data:,foo", true},
+      {"about://gpu", false},
+      {"chrome://crash", false},
+      {"chrome://inspect", false},
+  };
+
+  TabStripModel* tabs = browser()->tab_strip_model();
+  int i = 0;
+  for (const std::pair<const std::string, bool> pair : tests) {
+    bindings_delegate_->OpenInNewTab(pair.first);
+    i++;
+
+    std::string opened_url = tabs->GetWebContentsAt(i)->GetVisibleURL().spec();
+    if (pair.second) {
+      ASSERT_EQ(opened_url, pair.first) << pair.first << " should be allowed";
+    } else {
+      ASSERT_EQ(opened_url, "about:blank")
+          << pair.first << " should be blocked";
+    }
+  }
+}
