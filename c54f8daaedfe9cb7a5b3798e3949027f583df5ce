@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "f6ff7e48_1774a0e4",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T19:59:25Z",
+      "side": 1,
+      "message": "nit: these probably deserve clearer names or comments.",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70a5918_9e835f97",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T19:59:25Z",
+      "side": 1,
+      "message": "Are |gurl| and |text| needed?",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ade0005_b3d0c07e",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T19:59:25Z",
+      "side": 1,
+      "message": "nit: const here and elsewhere",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8188b7b9_3a9e6d97",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 2
@@ -13,6 +64,126 @@
       "writtenOn": "2018-01-12T22:15:16Z",
       "side": 1,
       "message": "Assuming this use looks okay, I\u0027ll rename this method away from ForTesting().",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5a746c_b7bced51",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T19:59:25Z",
+      "side": 1,
+      "message": "Make the existing GetSubstringBounds public, and remove GetSubstringBoundsForTesting.",
+      "parentUuid": "8188b7b9_3a9e6d97",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b9f899_042f787e",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T19:59:25Z",
+      "side": 1,
+      "message": "I wonder about the implications of RTL and bidi URLs here.",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f33dac_b22be11b",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T19:59:25Z",
+      "side": 1,
+      "message": "What\u0027s this for?",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de137f4_8526321f",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T19:59:25Z",
+      "side": 1,
+      "message": "optionally invert the subtraction terms above?",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc977f40_8e2447c1",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T19:59:25Z",
+      "side": 1,
+      "message": "Maybe explain the margin\u0027s meaning/usage here and below?",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b6d771_9731f5a4",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T19:59:25Z",
+      "side": 1,
+      "message": "Why is this needed beyond the existing scope?",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02f6d71_cdccb954",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T19:59:25Z",
+      "side": 1,
+      "message": "Is it possible to test these changes?",
       "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "540c64af_230cd915",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T19:59:25Z",
+      "side": 1,
+      "message": "Acknowledged... do you have a better proposal for the names? We should at least document that both ends are faded for centered and display-offset text (presumably for both FADE_HEAD and FADE_TAIL)",
+      "parentUuid": "c7fd6c90_d4af7f2e",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f7f1462_840976b2",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 2
@@ -47,6 +236,40 @@
       "writtenOn": "2018-01-12T22:14:27Z",
       "side": 1,
       "message": "I could pull this block out to a helper function as it\u0027s doing a reasonably generic task.",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1928f6d_9098599d",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T19:59:25Z",
+      "side": 1,
+      "message": "What\u0027s the rationale behind this +1?",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08907680_f6217b34",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T19:59:25Z",
+      "side": 1,
+      "message": "Is it not possible to use ALIGN_TO_HEAD plus fade eliding?",
       "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -67,6 +290,24 @@
       "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7c323b_460189a5",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T19:59:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6bc433b8_aab289ad",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
