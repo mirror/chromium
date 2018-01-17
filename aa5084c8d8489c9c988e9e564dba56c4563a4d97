@@ -16,6 +16,24 @@
       "revId": "aa5084c8d8489c9c988e9e564dba56c4563a4d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032713f3_964daa18",
+        "filename": "chrome/browser/notifications/mock_itoastnotification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-17T17:13:01Z",
+      "side": 1,
+      "message": "Yeah, Create() uses WindowsCreateString internally and this is much shorter and readable.",
+      "parentUuid": "b38d7941_f66a5a0b",
+      "revId": "aa5084c8d8489c9c988e9e564dba56c4563a4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
