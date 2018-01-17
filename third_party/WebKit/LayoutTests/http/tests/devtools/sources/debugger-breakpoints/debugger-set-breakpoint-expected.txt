@@ -1,0 +1,42 @@
+Tests setting breakpoint.
+
+Running: setBreakpoint
+Set breakpoint
+Dump breakpoints
+breakpoint at 9
+Dumping breakpoint storage
+  a.js:9 enabled: true condition: 
+Disable breakpoint
+Dump breakpoints
+breakpoint at 9 disabled
+Dumping breakpoint storage
+  a.js:9 enabled: false condition: 
+Delete breakpoint
+Dump breakpoints
+Dumping breakpoint storage
+
+Running: setDisabledBreakpoint
+Set disabled breakpoint
+Dump breakpoints
+breakpoint at 9 disabled
+Dumping breakpoint storage
+  a.js:9 enabled: false condition: 
+Enable breakpoint
+Dump breakpoints
+breakpoint at 9
+Dumping breakpoint storage
+  a.js:9 enabled: true condition: 
+Delete breakpoint
+Dump breakpoints
+Dumping breakpoint storage
+
+Running: setConditionalBreakpoint
+Set conditional breakpoint
+Dump breakpoints
+breakpoint at 9 conditional
+Dumping breakpoint storage
+  a.js:9 enabled: true condition: condition
+breakpoint at 9
+Dumping breakpoint storage
+  a.js:9 enabled: true condition: 
+
