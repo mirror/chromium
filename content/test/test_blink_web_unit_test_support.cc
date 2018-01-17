@@ -202,10 +202,6 @@ TestBlinkWebUnitTestSupport::~TestBlinkWebUnitTestSupport() {
   base::FeatureList::ClearInstanceForTesting();
 }
 
-blink::WebBlobRegistry* TestBlinkWebUnitTestSupport::GetBlobRegistry() {
-  return &blob_registry_;
-}
-
 blink::WebClipboard* TestBlinkWebUnitTestSupport::Clipboard() {
   // Mock out clipboard calls so that tests don't mess
   // with each other's copies/pastes when running in parallel.
