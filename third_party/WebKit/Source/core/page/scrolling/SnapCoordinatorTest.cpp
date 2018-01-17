@@ -430,6 +430,43 @@ TEST_P(SnapCoordinatorTest, NegativeMarginStartAlignmentCalculation) {
   EXPECT_EQ_AREA(expected_area, actual_container.at(0));
 }
 
+TEST_P(SnapCoordinatorTest, StartAlignmentCalculationWithBorder) {
+  SetUpSingleSnapArea();
+  Element* area_element = GetDocument().getElementById("area");
+  area_element->setAttribute(styleAttr, "scroll-snap-align: start;");
+  Element* scroller_element = GetDocument().getElementById("scroller");
+  scroller_element->setAttribute(styleAttr, "border: 10px solid;");
+  GetDocument().UpdateStyleAndLayout();
+  SnapCoordinator* snap_coordinator = GetDocument().GetSnapCoordinator();
+  Optional<SnapContainerData> data =
+      snap_coordinator->GetSnapContainerData(*scroller_element->GetLayoutBox());
+  EXPECT_TRUE(data.has_value());
+  SnapContainerData actual_container = data.value();
+
+  ScrollableArea* scrollable_area =
+      scroller_element->GetLayoutBox()->GetScrollableArea();
+  FloatPoint max_position = ScrollOffsetToPosition(
+      scrollable_area->MaximumScrollOffset(), scrollable_area->ScrollOrigin());
+
+  // (#area.left - #area.scroll-margin) - (#scroller.scroll-padding)
+  double snap_position_x = (200 - 8) - 10;
+  // (#area.top - #area.scroll-margin) - (#scroller.scroll-padding)
+  double snap_position_y = (200 - 8) - 10;
+
+  bool must_snap = false;
+
+  SnapContainerData expected_container(
+      ScrollSnapType(false, SnapAxis::kBoth, SnapStrictness::kMandatory),
+      gfx::ScrollOffset(max_position.X(), max_position.Y()));
+  SnapAreaData expected_area(
+      SnapAxis::kBoth, gfx::ScrollOffset(snap_position_x, snap_position_y),
+      must_snap);
+  expected_container.AddSnapAreaData(expected_area);
+
+  EXPECT_EQ_CONTAINER(expected_container, actual_container);
+  EXPECT_EQ_AREA(expected_area, actual_container.at(0));
+}
+
 TEST_P(SnapCoordinatorTest, CenterAlignmentCalculation) {
   SetUpSingleSnapArea();
   Element* area_element = GetDocument().getElementById("area");
