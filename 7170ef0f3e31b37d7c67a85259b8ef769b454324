@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "bb63d18d_11216487",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-17T16:29:00Z",
+      "side": 1,
+      "message": "could note this will return in seconds",
+      "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a567c8c3_680f302a",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-17T16:29:00Z",
+      "side": 1,
+      "message": "note - from an outsider, this separate tracking of mode and mode_ seems confusing/ error-prone. Different naming?",
+      "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b01c0ff_d4da344f",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-17T16:29:00Z",
+      "side": 1,
+      "message": "can you mention here why this needs to be used versus using webcontents for the source",
+      "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50557bbe_03830127",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 3
@@ -25,6 +76,47 @@
     },
     {
       "key": {
+        "uuid": "dffbdf96_086f836c",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2355,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-17T16:29:00Z",
+      "side": 1,
+      "message": "-Agreed, please coordinate on the right naming VR/XR etc.\n\n-Not sure .Document is neccessary. Metrics can be associated across sessions, yes. There is a session_id in the main UKM record.\n\nWhen you say page actions - are you referring to user actions (ala UMA user actions?)",
+      "parentUuid": "50557bbe_03830127",
+      "range": {
+        "startLine": 2355,
+        "startChar": 13,
+        "endLine": 2355,
+        "endChar": 24
+      },
+      "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46cff98_dcf8896d",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2357,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-17T16:29:00Z",
+      "side": 1,
+      "message": "for these 3 metrics you could mention that these just report 1.",
+      "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "511dc38b_5356a432",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 3
@@ -36,6 +128,30 @@
       "writtenOn": "2018-01-12T22:02:14Z",
       "side": 1,
       "message": "approximate",
+      "range": {
+        "startLine": 2374,
+        "startChar": 10,
+        "endLine": 2374,
+        "endChar": 20
+      },
+      "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ddbdbe2_49399e00",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2374,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-17T16:29:00Z",
+      "side": 1,
+      "message": "I\u0027d mention how it is approximate - at least the general idea of the rounding scheme. Users shouldn\u0027t need to refer to the code to interpret the data",
+      "parentUuid": "511dc38b_5356a432",
       "range": {
         "startLine": 2374,
         "startChar": 10,

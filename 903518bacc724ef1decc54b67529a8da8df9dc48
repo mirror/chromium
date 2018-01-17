@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "31cfef55_c7ebb62e",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2357,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-17T16:29:00Z",
+      "side": 1,
+      "message": "There are other UKMs you could use for that (ex. Pageload) which is singular to look at what sources are seen.\n\nHow was NevigatedToPage planned on being used? Was it more meant as a baseline?",
+      "parentUuid": "6b6d990e_421c0980",
+      "range": {
+        "startLine": 2357,
+        "startChar": 16,
+        "endLine": 2357,
+        "endChar": 31
+      },
+      "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "752f2154_4a11bdfb",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 1
@@ -298,6 +322,30 @@
       "side": 1,
       "message": "I believe once per source means once per source id \u0026 session.  Meaning that if you go to youtube twice it will be measured twice because there are different source ids.\n\nrkaplow@, please confirm.",
       "parentUuid": "f0e98a78_fa3e5fdc",
+      "range": {
+        "startLine": 2362,
+        "startChar": 16,
+        "endLine": 2362,
+        "endChar": 33
+      },
+      "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5260f5_ef6b1f71",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-17T16:29:00Z",
+      "side": 1,
+      "message": "That\u0027s correct. There can be multiple sources with the same URL. The source is associated with a particular navigation. And with singular\u003dtrue the metrics will get merged to be associated with the same source (i.e. not multiple entries on the same source)",
+      "parentUuid": "37344635_65cb0aa4",
       "range": {
         "startLine": 2362,
         "startChar": 16,
