@@ -22,6 +22,30 @@
       "revId": "2398da5a4ed049386b54560a67fcd4019cbfe279",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a058757_0c084346",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-17T02:15:30Z",
+      "side": 1,
+      "message": "I meant \"the vpython tool\". Revised. Thanks.",
+      "parentUuid": "cd45506e_11c32853",
+      "range": {
+        "startLine": 9,
+        "startChar": 31,
+        "endLine": 9,
+        "endChar": 49
+      },
+      "revId": "2398da5a4ed049386b54560a67fcd4019cbfe279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
