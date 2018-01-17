@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ce2d463_c3fa4fc1",
+        "filename": "ash/public/cpp/ash_switches.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-17T00:43:41Z",
+      "side": 1,
+      "message": "Will change depending on the --power-button-mode flag.",
+      "parentUuid": "a7ef99d4_87d59d0a",
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcbde0f8_d132a4c1",
         "filename": "ash/resources/vector_icons/BUILD.gn",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "516239c6_65b1a28c",
+        "filename": "ash/resources/vector_icons/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-17T00:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcbde0f8_d132a4c1",
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb598057_096138a5",
         "filename": "ash/system/power/power_button_screenshot_controller.cc",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-16T22:18:39Z",
       "side": 1,
       "message": "is it expected that both convertible_controller_ and tablet_controller_ can be null, or that both of them can be non-null? if not, please add a DCHECK to verify that exactly one of them is set.",
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a27ad69_d6049c37",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-17T00:43:41Z",
+      "side": 1,
+      "message": "Since we will create ScreenshotController only if we can receive accelerometer data, which means either tablet_controller_ or convertible_controller_ should be not null here. But if |force_clamshell_power_button_| is set. Both of them will be null here.\nBut if we will change it to not depending on the accelerometer data but the new flag, we may will have different situation. Let\u0027s try in the new cl.",
+      "parentUuid": "eb598057_096138a5",
       "revId": "40dc3550921a77025b8e9a25036885062237bd22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "34b2595a_b84490bd",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-17T00:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a318cf8_fa31d339",
+      "range": {
+        "startLine": 413,
+        "startChar": 31,
+        "endLine": 413,
+        "endChar": 38
+      },
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73af7fd0_b2cc55fd",
         "filename": "ash/system/power/power_button_test_base.h",
         "patchSetId": 7
@@ -87,6 +165,24 @@
       "writtenOn": "2018-01-16T22:18:39Z",
       "side": 1,
       "message": "how are you planning to set these? will kAshEnableTabletMode get passed on convertible devices but not anywhere else? if so, that feels surprising to me. i\u0027d prefer that this code instead use a new flag to tell it to use convertible-style power button behavior. maybe we should even just have a --power-button-mode\u003d string flag that takes values like \"tablet\", \"convertible\", \"clamshell\", etc. otherwise, i worry that it\u0027ll get confusing if we have multiple flags with overlapping semantics.",
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc34ee9c_0bc7abb4",
+        "filename": "ash/system/power/power_button_test_base.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-17T00:43:41Z",
+      "side": 1,
+      "message": "I didn\u0027t change the setting of flag kAshEnableTabletMode in this cl (seems that it will be set if we have \"touchview\" in the /etc/ui_use_flags.txt file of the device). We are using this flag and whether we can receive the accelerometer data to decide which controller (convertible or clamshell) to use for the power button currently. Seems that it still have some problems? And we are going to fix it crbug.com/798646? \n\nI do agree it will be clear if we can have a --power-button-mode flag as you mentioned above. Then we can just create the power button controller according to the new flag. No need to check the accelerometer data and it will have no overlapping semantics.\n\nDo you mean to add this flag in PowerButtonController when we decide which controller should be created for the device? For the value of this flag. Do you mean to remove the currently dependency of accelerometer data and touchview switch, go to check the chromeos::PowerManagerClient::GetSwitchStates (includes LidState and TabletMode status) instead? (what you mentioned in crbug.com/798646). Can we get the device type through this way?  If we can I think we may don\u0027t need to add the switch kIsTabletOrDetachable in ash_switches.h currently (which is added to tell us that we should have tablet style power button controller).",
+      "parentUuid": "73af7fd0_b2cc55fd",
       "revId": "40dc3550921a77025b8e9a25036885062237bd22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "622de196_75509b41",
+        "filename": "ash/system/power/power_button_test_base.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-17T00:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ec317aa_33c2f1a8",
+      "range": {
+        "startLine": 150,
+        "startChar": 49,
+        "endLine": 150,
+        "endChar": 56
+      },
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed7cee4b_a7e4def2",
         "filename": "ash/system/power/tablet_power_button_controller.cc",
         "patchSetId": 7
@@ -127,6 +247,24 @@
       "writtenOn": "2018-01-16T22:18:39Z",
       "side": 1,
       "message": "a lot of this code is duplicated from ConvertiblePowerButtonController, right? that seems unfortunate. i wonder if it\u0027d be possible to move these checks into a helper class that can be shared by both controllers.",
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236244c9_e91a362c",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-17T00:43:41Z",
+      "side": 1,
+      "message": "Will try to split this large cl. Then will try this in the cl of power button part.",
+      "parentUuid": "ed7cee4b_a7e4def2",
       "revId": "40dc3550921a77025b8e9a25036885062237bd22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -147,6 +285,24 @@
       "revId": "40dc3550921a77025b8e9a25036885062237bd22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f0e64d3_1a286331",
+        "filename": "ash/system/power/tablet_power_button_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-17T00:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e39206e4_e2d87fe4",
+      "revId": "40dc3550921a77025b8e9a25036885062237bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
