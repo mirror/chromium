@@ -38,6 +38,16 @@ class ComputedAccessibleNode : public ScriptWrappable {
   const AtomicString role() const;
   const String name() const;
 
+  int32_t colCount() const;
+  int32_t colIndex() const;
+  int32_t colSpan() const;
+  int32_t level() const;
+  int32_t posInSet() const;
+  int32_t rowCount() const;
+  int32_t rowIndex() const;
+  int32_t rowSpan() const;
+  int32_t setSize() const;
+
  private:
   explicit ComputedAccessibleNode(Element*);
 

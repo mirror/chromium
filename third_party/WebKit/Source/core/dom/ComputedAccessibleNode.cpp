@@ -9,6 +9,7 @@
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/DOMException.h"
 #include "platform/bindings/ScriptState.h"
+#include "public/platform/AOMEnums.h"
 #include "public/platform/Platform.h"
 #include "third_party/WebKit/Source/bindings/core/v8/ScriptPromiseResolver.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
@@ -53,6 +54,51 @@ const String ComputedAccessibleNode::name() const {
 
 const AtomicString ComputedAccessibleNode::role() const {
   return AtomicString(tree_->GetRoleFromId(cache_->GetAXID(element_)).c_str());
+}
+
+int32_t ComputedAccessibleNode::colCount() const {
+  return tree_->GetIntAttributeForId(cache_->GetAXID(element_),
+                                     AOMIntAttribute::AOM_ATTR_COLUMN_COUNT);
+}
+
+int32_t ComputedAccessibleNode::colIndex() const {
+  return tree_->GetIntAttributeForId(cache_->GetAXID(element_),
+                                     AOMIntAttribute::AOM_ATTR_COLUMN_INDEX);
+}
+
+int32_t ComputedAccessibleNode::colSpan() const {
+  return tree_->GetIntAttributeForId(cache_->GetAXID(element_),
+                                     AOMIntAttribute::AOM_ATTR_COLUMN_SPAN);
+}
+
+int32_t ComputedAccessibleNode::level() const {
+  return tree_->GetIntAttributeForId(
+      cache_->GetAXID(element_), AOMIntAttribute::AOM_ATTR_HIERARCHICAL_LEVEL);
+}
+
+int32_t ComputedAccessibleNode::posInSet() const {
+  return tree_->GetIntAttributeForId(cache_->GetAXID(element_),
+                                     AOMIntAttribute::AOM_ATTR_POS_IN_SET);
+}
+
+int32_t ComputedAccessibleNode::rowCount() const {
+  return tree_->GetIntAttributeForId(cache_->GetAXID(element_),
+                                     AOMIntAttribute::AOM_ATTR_ROW_COUNT);
+}
+
+int32_t ComputedAccessibleNode::rowIndex() const {
+  return tree_->GetIntAttributeForId(cache_->GetAXID(element_),
+                                     AOMIntAttribute::AOM_ATTR_ROW_INDEX);
+}
+
+int32_t ComputedAccessibleNode::rowSpan() const {
+  return tree_->GetIntAttributeForId(cache_->GetAXID(element_),
+                                     AOMIntAttribute::AOM_ATTR_ROW_SPAN);
+}
+
+int32_t ComputedAccessibleNode::setSize() const {
+  return tree_->GetIntAttributeForId(cache_->GetAXID(element_),
+                                     AOMIntAttribute::AOM_ATTR_SET_SIZE);
 }
 
 void ComputedAccessibleNode::OnSnapshotResponse(
