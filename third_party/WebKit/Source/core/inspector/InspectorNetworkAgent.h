@@ -170,10 +170,6 @@ class CORE_EXPORT InspectorNetworkAgent final
   void FrameScheduledClientNavigation(LocalFrame*);
   void FrameClearedScheduledClientNavigation(LocalFrame*);
 
-  std::unique_ptr<protocol::Network::Initiator> BuildInitiatorObject(
-      Document*,
-      const FetchInitiatorInfo&);
-
   void DidCreateWebSocket(Document*,
                           unsigned long identifier,
                           const KURL& request_url,
@@ -248,6 +244,7 @@ class CORE_EXPORT InspectorNetworkAgent final
                             String* content,
                             bool* base64_encoded);
   bool CacheDisabled();
+  String NavigationInitiatorInfo(LocalFrame*);
 
  private:
   void Enable(int total_buffer_size,
@@ -273,6 +270,11 @@ class CORE_EXPORT InspectorNetworkAgent final
   void GetResponseBodyBlob(const String& request_id,
                            std::unique_ptr<GetResponseBodyCallback>);
   void ClearPendingRequestData();
+
+  static std::unique_ptr<protocol::Network::Initiator> BuildInitiatorObject(
+      Document*,
+      const FetchInitiatorInfo&);
+  static bool IsNavigation(DocumentLoader*, unsigned long identifier);
 
   // This is null while inspecting workers.
   Member<InspectedFrames> inspected_frames_;
