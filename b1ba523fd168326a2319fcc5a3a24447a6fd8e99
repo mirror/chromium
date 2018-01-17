@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c77977e8_655c1e44",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-17T22:46:52Z",
+      "side": 1,
+      "message": "The flags and i-i in follow-up sound good.\n\nwrt, comprehensive flag, I did wonder about wanting to compare between client-only and server-only when looking/if looking at flywheel doing some https. But we can add another one later if that is needed.",
+      "parentUuid": "a757767d_5b77c0e8",
+      "revId": "b1ba523fd168326a2319fcc5a3a24447a6fd8e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5eb38026_f7f5397f",
         "filename": "components/previews/core/previews_experiments.cc",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2018-01-17T22:34:04Z",
       "side": 1,
       "message": "It\u0027s possible that we might add a preview but forget to add this check.\n\nWould it be more reliable to check for AreClientPreviewsAllowed() in  IsPreviewsTypeEnabled() method in previews_service.cc?",
+      "range": {
+        "startLine": 175,
+        "startChar": 5,
+        "endLine": 175,
+        "endChar": 30
+      },
+      "revId": "b1ba523fd168326a2319fcc5a3a24447a6fd8e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "301ab661_9aee76fe",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-17T22:46:52Z",
+      "side": 1,
+      "message": "Or maybe in PreviewsIOData::ShouldAllowPreviewAtECT() (and DataReductionProxyConfig::ShouldAcceptServerPreview() if we go with comprehensive flag)",
+      "parentUuid": "5eb38026_f7f5397f",
       "range": {
         "startLine": 175,
         "startChar": 5,
