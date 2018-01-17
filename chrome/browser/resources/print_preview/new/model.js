@@ -41,6 +41,7 @@ Polymer({
      *   rasterize: !print_preview_new.Setting,
      *   vendorItems: !print_preview_new.Setting,
      *   otherOptions: !print_preview_new.Setting,
+     *   ranges: !print_preview_new.Setting,
      * }}
      */
     settings: {
@@ -49,26 +50,31 @@ Polymer({
       value: {
         pages: {
           value: [1],
+          unavailableValue: [],
           valid: true,
           available: true,
         },
         copies: {
           value: '1',
+          unavailableValue: '1',
           valid: true,
           available: true,
         },
         collate: {
           value: true,
+          unavailableValue: false,
           valid: true,
           available: true,
         },
         layout: {
           value: false, /* portrait */
+          unavailableValue: false,
           valid: true,
           available: true,
         },
         color: {
           value: true, /* color */
+          unavailableValue: false,
           valid: true,
           available: true,
         },
@@ -77,56 +83,67 @@ Polymer({
             width_microns: 215900,
             height_microns: 279400,
           },
+          unavailableValue: {},
           valid: true,
           available: true,
         },
         margins: {
-          value: 0,
+          value: print_preview.ticket_items.MarginsTypeValue.DEFAULT,
+          unavailableValue: print_preview.ticket_items.MarginsTypeValue.DEFAULT,
           valid: true,
           available: true,
         },
         dpi: {
           value: {},
+          unavailableValue: {},
           valid: true,
           available: true,
         },
         fitToPage: {
           value: false,
+          unavailableValue: false,
           valid: true,
           available: true,
         },
         scaling: {
           value: '100',
+          unavailableValue: '100',
           valid: true,
           available: true,
         },
         duplex: {
           value: true,
+          unavailableValue: false,
           valid: true,
           available: true,
         },
         cssBackground: {
           value: false,
+          unavailableValue: false,
           valid: true,
           available: true,
         },
         selectionOnly: {
           value: false,
+          unavailableValue: false,
           valid: true,
           available: true,
         },
         headerFooter: {
           value: true,
+          unavailableValue: false,
           valid: true,
           available: true,
         },
         rasterize: {
           value: false,
+          unavailableValue: false,
           valid: true,
           available: true,
         },
         vendorItems: {
           value: {},
+          unavailableValue: {},
           valid: true,
           available: true,
         },
@@ -134,6 +151,15 @@ Polymer({
         // expose the availability of the other options settings section.
         otherOptions: {
           value: null,
+          unavailableValue: null,
+          valid: true,
+          available: true,
+        },
+        // This does not represent a real settings value, but is used to
+        // propagate the correctly formatted ranges for print tickets.
+        ranges: {
+          value: [],
+          unavailableValue: [],
           valid: true,
           available: true,
         },
