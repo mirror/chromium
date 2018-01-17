@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "d0047972_725aeebb",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-17T23:53:09Z",
+      "side": 1,
+      "message": "nit: consider 1\u0027000\u0027000",
+      "range": {
+        "startLine": 227,
+        "startChar": 26,
+        "endLine": 227,
+        "endChar": 33
+      },
+      "revId": "0b4bfaae61d02a7cf2592d3487b53ed654e9862a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1f30af_b83d4bbb",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-17T23:53:09Z",
+      "side": 1,
+      "message": "nit: consider 100\u0027000\u0027000",
+      "range": {
+        "startLine": 231,
+        "startChar": 25,
+        "endLine": 231,
+        "endChar": 34
+      },
+      "revId": "0b4bfaae61d02a7cf2592d3487b53ed654e9862a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da2bbee3_05f379bb",
         "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
         "patchSetId": 2
