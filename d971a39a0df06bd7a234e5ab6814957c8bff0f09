@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "107f2220_61a13e5b",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-17T05:15:35Z",
+      "side": 1,
+      "message": "overriding default implementation in BubbleDialogDelegateView",
+      "revId": "d971a39a0df06bd7a234e5ab6814957c8bff0f09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
