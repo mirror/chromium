@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c69b6ea_a7e42531",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-17T20:38:28Z",
+      "side": 1,
+      "message": "nit: it\u0027d probably be a bit better to add a WeakPtrFactory here and use it for these callbacks. base::Unretained is fine if you own the thing that the callback is being passed through and know that it\u0027ll be gone before the d\u0027tor runs, but that\u0027s not the case with PowerManagerClient.",
+      "revId": "a435958edf8c3a5b6ddaa8179237ef0245afa418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfb04ef_dcda6918",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-17T20:38:28Z",
+      "side": 1,
+      "message": "nit: please use base::TimeDelta for both of these and rename to screen_dim_delay_ and screen_off_delay_. the protobuf only converts to ms for serialization; it\u0027s always better to use base::TimeDelta in code.",
+      "revId": "a435958edf8c3a5b6ddaa8179237ef0245afa418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f73ae37_85574b05",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-17T20:38:28Z",
+      "side": 1,
+      "message": "nit: mind making this take base::TimeDelta too?",
+      "revId": "a435958edf8c3a5b6ddaa8179237ef0245afa418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
