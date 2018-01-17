@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6110d1ae_39e0a2bf",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-17T01:25:42Z",
+      "side": 1,
+      "message": "Does this need to be limited to Linux/Chrome OS? All platforms could handle this via SHM GMBs.",
+      "revId": "71d8146a5a169b33f9265ae7ff7fc14e49cb19d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f3ce0c_489b0602",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-17T01:25:42Z",
+      "side": 1,
+      "message": "Do you need to add GL_RGB10_A2 to the internal formats validators?",
+      "revId": "71d8146a5a169b33f9265ae7ff7fc14e49cb19d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
