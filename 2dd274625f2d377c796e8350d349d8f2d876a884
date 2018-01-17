@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "424bef39_4960e25b",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-17T17:05:32Z",
+      "side": 0,
+      "message": "Ah, it\u0027s nice we get rid of this!",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 6
+      },
+      "revId": "2dd274625f2d377c796e8350d349d8f2d876a884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
