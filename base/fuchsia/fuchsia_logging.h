@@ -47,14 +47,16 @@ class BASE_EXPORT ZxLogMessage : public logging::LogMessage {
   LAZY_STREAM(ZX_LOG_STREAM(FATAL, zx_err), !(condition)) \
       << "Check failed: " #condition << ". "
 
+#define ZX_CHECK_OK(zx_err) ZX_CHECK((zx_err) == ZX_OK, zx_err)
+
 #define ZX_DLOG(severity, zx_err) \
   LAZY_STREAM(ZX_LOG_STREAM(severity, zx_err), DLOG_IS_ON(severity))
 #define ZX_DLOG_IF(severity, condition, zx_err) \
   LAZY_STREAM(ZX_LOG_STREAM(severity, zx_err),  \
               DLOG_IS_ON(severity) && (condition))
 
-#define ZX_DCHECK(condition, zx_err)                                        \
-  LAZY_STREAM(ZX_LOG_STREAM(FATAL, zx_err), DCHECK_IS_ON() && !(condition)) \
+#define ZX_DCHECK(condition, zx_err)                                         \
+  LAZY_STREAM(ZX_LOG_STREAM(DCHECK, zx_err), DCHECK_IS_ON() && !(condition)) \
       << "Check failed: " #condition << ". "
 
 #endif  // BASE_FUCHSIA_FUCHSIA_LOGGING_H_
