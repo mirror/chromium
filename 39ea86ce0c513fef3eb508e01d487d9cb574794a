@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1b11110_1d3d3d6c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-17T20:07:41Z",
+      "side": 1,
+      "message": "iterate using index?",
+      "revId": "39ea86ce0c513fef3eb508e01d487d9cb574794a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
