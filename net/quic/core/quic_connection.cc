@@ -269,8 +269,6 @@ QuicConnection::QuicConnection(
       packets_between_mtu_probes_(kPacketsBetweenMtuProbesBase),
       next_mtu_probe_at_(kPacketsBetweenMtuProbesBase),
       largest_received_packet_size_(0),
-      goaway_sent_(false),
-      goaway_received_(false),
       write_error_occurred_(false),
       no_stop_waiting_frames_(false),
       consecutive_num_packets_with_no_retransmittable_frames_(0),
@@ -956,7 +954,6 @@ bool QuicConnection::OnGoAwayFrame(const QuicGoAwayFrame& frame) {
                   << " and error: " << QuicErrorCodeToString(frame.error_code)
                   << " and reason: " << frame.reason_phrase;
 
-  goaway_received_ = true;
   visitor_->OnGoAway(frame);
   visitor_->PostProcessAfterData();
   should_last_packet_instigate_acks_ = true;
@@ -1411,8 +1408,7 @@ bool QuicConnection::ProcessValidatedPacket(const QuicPacketHeader& header) {
     if (self_address_.port() != last_packet_destination_address_.port() ||
         self_address_.host().Normalized() !=
             last_packet_destination_address_.host().Normalized()) {
-      if (!GetQuicReloadableFlag(quic_allow_address_change_for_udp_proxy) ||
-          !visitor_->AllowSelfAddressChange()) {
+      if (!visitor_->AllowSelfAddressChange()) {
         CloseConnection(
             QUIC_ERROR_MIGRATING_ADDRESS,
             "Self address migration is not supported at the server.",
@@ -2168,11 +2164,6 @@ void QuicConnection::CancelAllAlarms() {
 void QuicConnection::SendGoAway(QuicErrorCode error,
                                 QuicStreamId last_good_stream_id,
                                 const string& reason) {
-  if (goaway_sent_) {
-    return;
-  }
-  goaway_sent_ = true;
-
   QUIC_DLOG(INFO) << ENDPOINT << "Going away with error "
                   << QuicErrorCodeToString(error) << " (" << error << ")";
 
