@@ -16,6 +16,24 @@
       "revId": "a1a2e181bad6474405e242a4d23d17b68af801be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636406da_04935070",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-17T19:07:28Z",
+      "side": 1,
+      "message": "Should these not match smoothness.gpu_rasterization.top_25_smooth and thread_times.key_mobile_smooth from the waterfall?",
+      "parentUuid": "434d9065_64649379",
+      "revId": "a1a2e181bad6474405e242a4d23d17b68af801be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
