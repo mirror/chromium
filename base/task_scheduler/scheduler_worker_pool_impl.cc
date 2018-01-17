@@ -166,7 +166,7 @@ SchedulerWorkerPoolImpl::SchedulerWorkerPoolImpl(
                                  WaitableEvent::InitialState::NOT_SIGNALED),
       // Mimics the UMA_HISTOGRAM_LONG_TIMES macro.
       detach_duration_histogram_(Histogram::FactoryTimeGet(
-          kDetachDurationHistogramPrefix + name_ + kPoolNameSuffix,
+          kDetachDurationHistogramPrefix + name_ + "." + kPoolNameSuffix,
           TimeDelta::FromMilliseconds(1),
           TimeDelta::FromHours(1),
           50,
@@ -175,7 +175,7 @@ SchedulerWorkerPoolImpl::SchedulerWorkerPoolImpl(
       // than 1000 tasks before detaching, there is no need to know the exact
       // number of tasks that ran.
       num_tasks_before_detach_histogram_(Histogram::FactoryGet(
-          kNumTasksBeforeDetachHistogramPrefix + name_ + kPoolNameSuffix,
+          kNumTasksBeforeDetachHistogramPrefix + name_ + "." + kPoolNameSuffix,
           1,
           1000,
           50,
@@ -185,11 +185,13 @@ SchedulerWorkerPoolImpl::SchedulerWorkerPoolImpl(
       // When it runs more than 100 tasks, there is no need to know the exact
       // number of tasks that ran.
       num_tasks_between_waits_histogram_(Histogram::FactoryGet(
-          kNumTasksBetweenWaitsHistogramPrefix + name_ + kPoolNameSuffix,
+          kNumTasksBetweenWaitsHistogramPrefix + name_ + "." + kPoolNameSuffix,
           1,
           100,
           50,
-          HistogramBase::kUmaTargetedHistogramFlag)) {}
+          HistogramBase::kUmaTargetedHistogramFlag)) {
+  DCHECK(!name_.empty());
+}
 
 void SchedulerWorkerPoolImpl::Start(
     const SchedulerWorkerPoolParams& params,
