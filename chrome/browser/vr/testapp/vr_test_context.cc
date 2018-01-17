@@ -492,7 +492,7 @@ void VrTestContext::OnExitVrPromptResult(vr::ExitVrPromptChoice choice,
 void VrTestContext::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {}
 
 void VrTestContext::StartAutocomplete(const base::string16& string) {
-  auto result = base::MakeUnique<OmniboxSuggestions>();
+  auto result = std::make_unique<OmniboxSuggestions>();
   for (int i = 0; i < 4; i++) {
     if (i == 0) {
       result->suggestions.emplace_back(OmniboxSuggestion(
