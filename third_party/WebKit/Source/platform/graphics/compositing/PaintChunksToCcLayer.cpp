@@ -24,12 +24,13 @@ void AppendDisplayItemToCcDisplayItemList(const DisplayItem& display_item,
                                           const IntRect& visual_rect_in_layer) {
   DCHECK(display_item.IsDrawing());
 
+  list.StartPaint();
+
   sk_sp<const PaintRecord> record =
       static_cast<const DrawingDisplayItem&>(display_item).GetPaintRecord();
-  if (!record)
-    return;
-  list.StartPaint();
-  list.push<cc::DrawRecordOp>(std::move(record));
+  if (record)
+    list.push<cc::DrawRecordOp>(std::move(record));
+
   list.EndPaintOfUnpaired(visual_rect_in_layer);
 }
 
