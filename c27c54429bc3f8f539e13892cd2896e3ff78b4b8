@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfae8e90_134c73ad",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-17T17:53:06Z",
+      "side": 0,
+      "message": "So, is the intention to assume that bluetooth should always be available? I beleive this may be false if the bletooth device has not yet initialized or has crashed? In that case, the toggle won\u0027t do anything, which is not ideal.",
+      "revId": "c27c54429bc3f8f539e13892cd2896e3ff78b4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aca2815b_ab1a6a55",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-17T17:53:06Z",
+      "side": 1,
+      "message": "Don\u0027t use a Polymer property for local state, just use an object property (see bluetoothAdapterStateChangedListener_ for an example)",
+      "revId": "9942ec82598556f1a159f908a94a9383de649d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b4c89f_3eac40db",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-17T17:53:06Z",
+      "side": 1,
+      "message": "Instead make the timeout length an object property (like bluetoothAdapterStateChangedListener_) and override that in the test. Then the logic will be the same in the test as in production. You will need to make sure the test uses a promise or timeout to handle the asynchronous behavior.",
+      "revId": "9942ec82598556f1a159f908a94a9383de649d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04aa226d_066798bf",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-17T17:53:06Z",
+      "side": 1,
+      "message": "If we are going to ignore \u0027available\u0027 elsewhere, we should ignore it here also.",
+      "revId": "9942ec82598556f1a159f908a94a9383de649d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30701a53_df9d7ebd",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-17T17:53:06Z",
+      "side": 1,
+      "message": "\u003d\u003d false (it should always be true or false, \u003d\u003d\u003d implies tri-state)",
+      "revId": "9942ec82598556f1a159f908a94a9383de649d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d79ad49_e4085ba9",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-17T17:53:06Z",
+      "side": 1,
+      "message": "This is the kind of thing that seems fragile. It\u0027s probably always OK, but it\u0027s hard to be certain. See my overall comment however.",
+      "revId": "9942ec82598556f1a159f908a94a9383de649d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e588fde_edc39f98",
+        "filename": "chrome/test/data/webui/settings/bluetooth_page_tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-17T17:53:06Z",
+      "side": 1,
+      "message": "If we are doing debouncing in the UI we should test that. See my other comment about setting the delay to 0 for testing instead of changing the logic. Then we should test the following:\n* Clicking the toggle calls the correct bluetoothPrivateApi_ method (i.e. updates bluetoothApi_.adapterState_) \n* The fake bluetooth api should call onAdapterStateChanged which should set the local state but should not immediately change the toggle button state \n* After a setTimeout(0) and Polymer.dom.flush() the toggle button state should then change.\n\nWe should test toggling the state -\u003e on -\u003e off -\u003e on to ensure the debouncing continues to work.",
+      "revId": "9942ec82598556f1a159f908a94a9383de649d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
