@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9d8b76d_5a6ebf5a",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T13:54:27Z",
+      "side": 1,
+      "message": "Can you add a recommendation in here w.r.t to LazyInstance? LazyInstance for globals / thread-safe access, NoDestructor for locals w/ mutually exclusive access? Ideally we\u0027d use NoDestructor for everything that doesn\u0027t require synchronization. I\u0027d be good for globals once we have -Wglobal-constructors in place.",
+      "revId": "258bd35820bac496e2d73f2aaba083617fcdb274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59608df8_9c9b5355",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T13:54:27Z",
+      "side": 1,
+      "message": "Not if T is trivially constructible from |args|. I agree that\u0027s hard to tell without -Wglobal-constructors in place.\n\nPerhaps replace this with \"as that may generate a static initializer\"?",
+      "range": {
+        "startLine": 31,
+        "startChar": 22,
+        "endLine": 31,
+        "endChar": 70
+      },
+      "revId": "258bd35820bac496e2d73f2aaba083617fcdb274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5f140b_3b8a5be4",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T13:54:27Z",
+      "side": 1,
+      "message": "Make this constexpr, i.e.:\n\n  // constexpr if T is constexpr constructible from |args|.\n  template \u003ctypename... Args\u003e\n  explicit constexpr NoDestructor(Args\u0026\u0026... args)\n      : storage_(std::forward\u003cArgs\u003e(args)...) {}",
+      "revId": "258bd35820bac496e2d73f2aaba083617fcdb274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea7024e_e7664640",
+        "filename": "base/no_destructor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T13:54:27Z",
+      "side": 1,
+      "message": "Why are these brackets needed?",
+      "range": {
+        "startLine": 62,
+        "startChar": 15,
+        "endLine": 62,
+        "endChar": 16
+      },
+      "revId": "258bd35820bac496e2d73f2aaba083617fcdb274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
