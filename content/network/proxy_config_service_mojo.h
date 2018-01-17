@@ -12,8 +12,8 @@
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/common/proxy_config.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
-#include "net/proxy/proxy_config.h"
-#include "net/proxy/proxy_config_service.h"
+#include "net/proxy_resolution/proxy_config.h"
+#include "net/proxy_resolution/proxy_config_service.h"
 
 namespace net {
 class ProxyConfig;

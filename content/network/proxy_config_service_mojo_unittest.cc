@@ -7,8 +7,8 @@
 #include "base/macros.h"
 #include "base/test/scoped_task_environment.h"
 #include "content/public/common/proxy_config.mojom.h"
-#include "net/proxy/proxy_config.h"
-#include "net/proxy/proxy_config_service.h"
+#include "net/proxy_resolution/proxy_config.h"
+#include "net/proxy_resolution/proxy_config_service.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
