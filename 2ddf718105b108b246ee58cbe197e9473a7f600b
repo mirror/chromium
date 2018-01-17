@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bad4b392_6c5826a9",
+        "filename": "cc/raster/one_copy_raster_buffer_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-17T02:02:22Z",
+      "side": 1,
+      "message": "It\u0027s a bit unfortunate to make another pass over resources here... An alternative would be to maybe pass |resources| to GetSyncTokenForResources along with a viz::ResourceId (*resource_getter)(ResourcePool::InUsePoolResource*), but that\u0027s not as pretty.",
+      "revId": "2ddf718105b108b246ee58cbe197e9473a7f600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3880aa3d_94de3a07",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-17T02:02:22Z",
+      "side": 1,
+      "message": "nit: braces or\n\nPoolResource* resource \u003d ResuseResource(...);\nif (!resource)\n  resource \u003d CreateResource(...);\nreturn InUsePoolResource(resource, ...);",
+      "revId": "2ddf718105b108b246ee58cbe197e9473a7f600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406736bf_e0879294",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-17T02:02:22Z",
+      "side": 1,
+      "message": "circular_deque::erase returns an iterator to the next element, so I think this loop can use the more common iterator version. Ie,\n\nfor (auto it \u003d busy_resources_.begin(); it !\u003d busy_resources_.end();) {\n  ...\n    it \u003d busy_resources_.erase(it);\n  ...\n    ++it;\n}\n?",
+      "revId": "2ddf718105b108b246ee58cbe197e9473a7f600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f1d65f_87a8e701",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-17T02:02:22Z",
+      "side": 1,
+      "message": "nit: If this is always an incremented id, then maybe just set it in the ctor from a global AtomicSequenceNumber instead of passing it",
+      "range": {
+        "startLine": 177,
+        "startChar": 17,
+        "endLine": 177,
+        "endChar": 34
+      },
+      "revId": "2ddf718105b108b246ee58cbe197e9473a7f600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba64f32_bb2d001a",
+        "filename": "cc/tiles/tile_draw_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-17T02:02:22Z",
+      "side": 1,
+      "message": "nit: rename this too please",
+      "range": {
+        "startLine": 52,
+        "startChar": 18,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "2ddf718105b108b246ee58cbe197e9473a7f600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "661e3985_fdca0739",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-17T02:02:22Z",
+      "side": 1,
+      "message": "this is only used to check is_opaque on the tile, but it makes it seem like it might access the resource before it was actually set. It might be worth changing the parameter to something like \"has_alpha\" or \"is_opaque\" for clarity",
+      "range": {
+        "startLine": 1294,
+        "startChar": 57,
+        "endLine": 1294,
+        "endChar": 61
+      },
+      "revId": "2ddf718105b108b246ee58cbe197e9473a7f600b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
