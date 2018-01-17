@@ -38,8 +38,8 @@ std::unique_ptr<base::DictionaryValue> GetPrerenderInfo(Profile* profile) {
     value = prerender_manager->CopyAsValue();
   } else {
     value.reset(new base::DictionaryValue());
-    value->SetBoolean("enabled", false);
-    value->SetBoolean("omnibox_enabled", false);
+    value->SetKey("enabled", base::Value(false));
+    value->SetKey("omnibox_enabled", base::Value(false));
   }
   return value;
 }

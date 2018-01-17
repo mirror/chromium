@@ -19,8 +19,8 @@ TEST(JsonSchemaCompilerAdditionalPropertiesTest,
     list_value->AppendInteger(4);
     std::unique_ptr<base::DictionaryValue> type_value(
         new base::DictionaryValue());
-    type_value->SetString("string", "value");
-    type_value->SetInteger("other", 9);
+    type_value->SetKey("string", base::Value("value"));
+    type_value->SetKey("other", base::Value(9));
     type_value->Set("another", std::move(list_value));
     std::unique_ptr<AdditionalPropertiesType> type(
         new AdditionalPropertiesType());
@@ -30,7 +30,7 @@ TEST(JsonSchemaCompilerAdditionalPropertiesTest,
   {
     std::unique_ptr<base::DictionaryValue> type_value(
         new base::DictionaryValue());
-    type_value->SetInteger("string", 3);
+    type_value->SetKey("string", base::Value(3));
     std::unique_ptr<AdditionalPropertiesType> type(
         new AdditionalPropertiesType());
     EXPECT_FALSE(AdditionalPropertiesType::Populate(*type_value, type.get()));
@@ -41,8 +41,8 @@ TEST(JsonSchemaCompilerAdditionalPropertiesTest,
     AdditionalPropertiesParamsCreate) {
   std::unique_ptr<base::DictionaryValue> param_object_value(
       new base::DictionaryValue());
-  param_object_value->SetString("str", "a");
-  param_object_value->SetInteger("num", 1);
+  param_object_value->SetKey("str", base::Value("a"));
+  param_object_value->SetKey("num", base::Value(1));
   std::unique_ptr<base::ListValue> params_value(new base::ListValue());
   params_value->Append(param_object_value->CreateDeepCopy());
   std::unique_ptr<AdditionalProperties::Params> params(
@@ -61,8 +61,8 @@ TEST(JsonSchemaCompilerAdditionalPropertiesTest,
   base::ListValue expected;
   {
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-    dict->SetInteger("integer", 5);
-    dict->SetString("key", "value");
+    dict->SetKey("integer", base::Value(5));
+    dict->SetKey("key", base::Value("value"));
     expected.Append(std::move(dict));
   }
 

@@ -66,7 +66,7 @@ void PredictorsHandler::RequestAutocompleteActionPredictorDb(
     const base::ListValue* args) {
   const bool enabled = (autocomplete_action_predictor_ != NULL);
   base::DictionaryValue dict;
-  dict.SetBoolean("enabled", enabled);
+  dict.SetKey("enabled", base::Value(enabled));
   if (enabled) {
     auto db = std::make_unique<base::ListValue>();
     for (AutocompleteActionPredictor::DBCacheMap::const_iterator it =
@@ -74,12 +74,13 @@ void PredictorsHandler::RequestAutocompleteActionPredictorDb(
          it != autocomplete_action_predictor_->db_cache_.end();
          ++it) {
       std::unique_ptr<base::DictionaryValue> entry(new base::DictionaryValue());
-      entry->SetString("user_text", it->first.user_text);
-      entry->SetString("url", it->first.url.spec());
-      entry->SetInteger("hit_count", it->second.number_of_hits);
-      entry->SetInteger("miss_count", it->second.number_of_misses);
-      entry->SetDouble("confidence",
-          autocomplete_action_predictor_->CalculateConfidenceForDbEntry(it));
+      entry->SetKey("user_text", base::Value(it->first.user_text));
+      entry->SetKey("url", base::Value(it->first.url.spec()));
+      entry->SetKey("hit_count", base::Value(it->second.number_of_hits));
+      entry->SetKey("miss_count", base::Value(it->second.number_of_misses));
+      entry->SetKey("confidence",
+                    base::Value(autocomplete_action_predictor_
+                                    ->CalculateConfidenceForDbEntry(it)));
       db->Append(std::move(entry));
     }
     dict.Set("db", std::move(db));
@@ -93,7 +94,7 @@ void PredictorsHandler::RequestResourcePrefetchPredictorDb(
     const base::ListValue* args) {
   const bool enabled = (loading_predictor_ != nullptr);
   base::DictionaryValue dict;
-  dict.SetBoolean("enabled", enabled);
+  dict.SetKey("enabled", base::Value(enabled));
 
   if (enabled) {
     auto* resource_prefetch_predictor =
@@ -134,26 +135,31 @@ void PredictorsHandler::AddPrefetchDataMapToListValue(
     base::ListValue* db) const {
   for (const auto& p : data_map) {
     auto main = std::make_unique<base::DictionaryValue>();
-    main->SetString("main_frame_url", p.first);
+    main->SetKey("main_frame_url", base::Value(p.first));
     auto resources = std::make_unique<base::ListValue>();
     for (const predictors::ResourceData& r : p.second.resources()) {
       auto resource = std::make_unique<base::DictionaryValue>();
-      resource->SetString("resource_url", r.resource_url());
-      resource->SetString("resource_type",
-                          ConvertResourceType(r.resource_type()));
-      resource->SetInteger("number_of_hits", r.number_of_hits());
-      resource->SetInteger("number_of_misses", r.number_of_misses());
-      resource->SetInteger("consecutive_misses", r.consecutive_misses());
-      resource->SetDouble("position", r.average_position());
-      resource->SetDouble(
-          "score", ResourcePrefetchPredictorTables::ComputeResourceScore(r));
-      resource->SetBoolean("before_first_contentful_paint",
-                           r.before_first_contentful_paint());
+      resource->SetKey("resource_url", base::Value(r.resource_url()));
+      resource->SetKey("resource_type",
+                       base::Value(ConvertResourceType(r.resource_type())));
+      resource->SetKey("number_of_hits",
+                       base::Value(static_cast<int>(r.number_of_hits())));
+      resource->SetKey("number_of_misses",
+                       base::Value(static_cast<int>(r.number_of_misses())));
+      resource->SetKey("consecutive_misses",
+                       base::Value(static_cast<int>(r.consecutive_misses())));
+      resource->SetKey("position", base::Value(r.average_position()));
+      resource->SetKey(
+          "score",
+          base::Value(static_cast<double>(
+              ResourcePrefetchPredictorTables::ComputeResourceScore(r))));
+      resource->SetKey("before_first_contentful_paint",
+                       base::Value(r.before_first_contentful_paint()));
       auto* resource_prefetch_predictor =
           loading_predictor_->resource_prefetch_predictor();
-      resource->SetBoolean(
+      resource->SetKey(
           "is_prefetchable",
-          resource_prefetch_predictor->IsResourcePrefetchable(r));
+          base::Value(resource_prefetch_predictor->IsResourcePrefetchable(r)));
       resources->Append(std::move(resource));
     }
     main->Set("resources", std::move(resources));
@@ -166,19 +172,25 @@ void PredictorsHandler::AddOriginDataMapToListValue(
     base::ListValue* db) const {
   for (const auto& p : data_map) {
     auto main = std::make_unique<base::DictionaryValue>();
-    main->SetString("main_frame_host", p.first);
+    main->SetKey("main_frame_host", base::Value(p.first));
     auto origins = std::make_unique<base::ListValue>();
     for (const predictors::OriginStat& o : p.second.origins()) {
       auto origin = std::make_unique<base::DictionaryValue>();
-      origin->SetString("origin", o.origin());
-      origin->SetInteger("number_of_hits", o.number_of_hits());
-      origin->SetInteger("number_of_misses", o.number_of_misses());
-      origin->SetInteger("consecutive_misses", o.consecutive_misses());
-      origin->SetDouble("position", o.average_position());
-      origin->SetBoolean("always_access_network", o.always_access_network());
-      origin->SetBoolean("accessed_network", o.accessed_network());
-      origin->SetDouble("score",
-                        ResourcePrefetchPredictorTables::ComputeOriginScore(o));
+      origin->SetKey("origin", base::Value(o.origin()));
+      origin->SetKey("number_of_hits",
+                     base::Value(static_cast<int>(o.number_of_hits())));
+      origin->SetKey("number_of_misses",
+                     base::Value(static_cast<int>(o.number_of_misses())));
+      origin->SetKey("consecutive_misses",
+                     base::Value(static_cast<int>(o.consecutive_misses())));
+      origin->SetKey("position", base::Value(o.average_position()));
+      origin->SetKey("always_access_network",
+                     base::Value(o.always_access_network()));
+      origin->SetKey("accessed_network", base::Value(o.accessed_network()));
+      origin->SetKey(
+          "score",
+          base::Value(static_cast<double>(
+              ResourcePrefetchPredictorTables::ComputeOriginScore(o))));
       origins->Append(std::move(origin));
     }
     main->Set("origins", std::move(origins));

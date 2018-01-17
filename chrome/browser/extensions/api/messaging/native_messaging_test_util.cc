@@ -31,10 +31,10 @@ void WriteTestNativeHostManifest(const base::FilePath& target_dir,
                                  const base::FilePath& host_path,
                                  bool user_level) {
   std::unique_ptr<base::DictionaryValue> manifest(new base::DictionaryValue());
-  manifest->SetString("name", host_name);
-  manifest->SetString("description", "Native Messaging Echo Test");
-  manifest->SetString("type", "stdio");
-  manifest->SetString("path", host_path.AsUTF8Unsafe());
+  manifest->SetKey("name", base::Value(host_name));
+  manifest->SetKey("description", base::Value("Native Messaging Echo Test"));
+  manifest->SetKey("type", base::Value("stdio"));
+  manifest->SetKey("path", base::Value(host_path.AsUTF8Unsafe()));
 
   std::unique_ptr<base::ListValue> origins(new base::ListValue());
   origins->AppendString(base::StringPrintf(

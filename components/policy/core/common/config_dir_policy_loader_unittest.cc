@@ -220,11 +220,11 @@ TEST_F(ConfigDirPolicyLoaderTest, ReadPrefsMergePrefs) {
   // filesystem may return files in arbitrary order, there is no way to be sure,
   // but this is better than nothing.
   base::DictionaryValue test_dict_bar;
-  test_dict_bar.SetString("HomepageLocation", "http://bar.com");
+  test_dict_bar.SetKey("HomepageLocation", base::Value("http://bar.com"));
   for (unsigned int i = 1; i <= 4; ++i)
     harness_.WriteConfigFile(test_dict_bar, base::UintToString(i));
   base::DictionaryValue test_dict_foo;
-  test_dict_foo.SetString("HomepageLocation", "http://foo.com");
+  test_dict_foo.SetKey("HomepageLocation", base::Value("http://foo.com"));
   harness_.WriteConfigFile(test_dict_foo, "9");
   for (unsigned int i = 5; i <= 8; ++i)
     harness_.WriteConfigFile(test_dict_bar, base::UintToString(i));

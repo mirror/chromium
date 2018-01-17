@@ -60,11 +60,12 @@ std::unique_ptr<base::DictionaryValue> GetDictionaryValueForResponseEnquiry(
         response_enquiry) {
   std::unique_ptr<base::DictionaryValue> dict_value(
       new base::DictionaryValue());
-  dict_value->SetString("manifestURL", response_enquiry.manifest_url);
-  dict_value->SetString("groupId",
-                        base::Int64ToString(response_enquiry.group_id));
-  dict_value->SetString("responseId",
-                        base::Int64ToString(response_enquiry.response_id));
+  dict_value->SetKey("manifestURL", base::Value(response_enquiry.manifest_url));
+  dict_value->SetKey(
+      "groupId", base::Value(base::Int64ToString(response_enquiry.group_id)));
+  dict_value->SetKey(
+      "responseId",
+      base::Value(base::Int64ToString(response_enquiry.response_id)));
   return dict_value;
 }
 
@@ -72,16 +73,19 @@ std::unique_ptr<base::DictionaryValue> GetDictionaryValueForAppCacheInfo(
     const content::AppCacheInfo& appcache_info) {
   std::unique_ptr<base::DictionaryValue> dict_value(
       new base::DictionaryValue());
-  dict_value->SetString("manifestURL", appcache_info.manifest_url.spec());
-  dict_value->SetDouble("creationTime", appcache_info.creation_time.ToJsTime());
-  dict_value->SetDouble("lastUpdateTime",
-                        appcache_info.last_update_time.ToJsTime());
-  dict_value->SetDouble("lastAccessTime",
-                        appcache_info.last_access_time.ToJsTime());
-  dict_value->SetString(
-      "size",
-      base::UTF16ToUTF8(base::FormatBytesUnlocalized(appcache_info.size)));
-  dict_value->SetString("groupId", base::Int64ToString(appcache_info.group_id));
+  dict_value->SetKey("manifestURL",
+                     base::Value(appcache_info.manifest_url.spec()));
+  dict_value->SetKey("creationTime",
+                     base::Value(appcache_info.creation_time.ToJsTime()));
+  dict_value->SetKey("lastUpdateTime",
+                     base::Value(appcache_info.last_update_time.ToJsTime()));
+  dict_value->SetKey("lastAccessTime",
+                     base::Value(appcache_info.last_access_time.ToJsTime()));
+  dict_value->SetKey("size",
+                     base::Value(base::UTF16ToUTF8(
+                         base::FormatBytesUnlocalized(appcache_info.size))));
+  dict_value->SetKey("groupId",
+                     base::Value(base::Int64ToString(appcache_info.group_id)));
 
   return dict_value;
 }
@@ -99,7 +103,7 @@ std::unique_ptr<base::ListValue> GetListValueFromAppCacheInfoCollection(
   std::unique_ptr<base::ListValue> list(new base::ListValue());
   for (const auto& key_value : appcache_collection->infos_by_origin) {
     base::DictionaryValue* dict = new base::DictionaryValue;
-    dict->SetString("originURL", key_value.first.spec());
+    dict->SetKey("originURL", base::Value(key_value.first.spec()));
     dict->Set("manifests", GetListValueForAppCacheInfoVector(key_value.second));
     list->Append(std::unique_ptr<base::Value>(dict));
   }
@@ -110,17 +114,17 @@ std::unique_ptr<base::DictionaryValue>
 GetDictionaryValueForAppCacheResourceInfo(
     const AppCacheResourceInfo& resource_info) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
-  dict->SetString("url", resource_info.url.spec());
-  dict->SetString(
-      "size",
-      base::UTF16ToUTF8(base::FormatBytesUnlocalized(resource_info.size)));
-  dict->SetString("responseId", base::Int64ToString(resource_info.response_id));
-  dict->SetBoolean("isExplicit", resource_info.is_explicit);
-  dict->SetBoolean("isManifest", resource_info.is_manifest);
-  dict->SetBoolean("isMaster", resource_info.is_master);
-  dict->SetBoolean("isFallback", resource_info.is_fallback);
-  dict->SetBoolean("isIntercept", resource_info.is_intercept);
-  dict->SetBoolean("isForeign", resource_info.is_foreign);
+  dict->SetKey("url", base::Value(resource_info.url.spec()));
+  dict->SetKey("size", base::Value(base::UTF16ToUTF8(
+                           base::FormatBytesUnlocalized(resource_info.size))));
+  dict->SetKey("responseId",
+               base::Value(base::Int64ToString(resource_info.response_id)));
+  dict->SetKey("isExplicit", base::Value(resource_info.is_explicit));
+  dict->SetKey("isManifest", base::Value(resource_info.is_manifest));
+  dict->SetKey("isMaster", base::Value(resource_info.is_master));
+  dict->SetKey("isFallback", base::Value(resource_info.is_fallback));
+  dict->SetKey("isIntercept", base::Value(resource_info.is_intercept));
+  dict->SetKey("isForeign", base::Value(resource_info.is_foreign));
 
   return dict;
 }

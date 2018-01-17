@@ -92,10 +92,10 @@ void SetBoundsProperties(const gfx::Rect& bounds,
   std::unique_ptr<base::DictionaryValue> bounds_properties(
       new base::DictionaryValue());
 
-  bounds_properties->SetInteger("left", bounds.x());
-  bounds_properties->SetInteger("top", bounds.y());
-  bounds_properties->SetInteger("width", bounds.width());
-  bounds_properties->SetInteger("height", bounds.height());
+  bounds_properties->SetKey("left", base::Value(bounds.x()));
+  bounds_properties->SetKey("top", base::Value(bounds.y()));
+  bounds_properties->SetKey("width", base::Value(bounds.width()));
+  bounds_properties->SetKey("height", base::Value(bounds.height()));
 
   SetConstraintProperty("minWidth", min_size.width(), bounds_properties.get());
   SetConstraintProperty(
@@ -747,26 +747,31 @@ void AppWindow::RestoreAlwaysOnTop() {
 void AppWindow::GetSerializedState(base::DictionaryValue* properties) const {
   DCHECK(properties);
 
-  properties->SetBoolean("fullscreen",
-                         native_app_window_->IsFullscreenOrPending());
-  properties->SetBoolean("minimized", native_app_window_->IsMinimized());
-  properties->SetBoolean("maximized", native_app_window_->IsMaximized());
-  properties->SetBoolean("alwaysOnTop", IsAlwaysOnTop());
-  properties->SetBoolean("hasFrameColor", native_app_window_->HasFrameColor());
-  properties->SetBoolean(
-      "alphaEnabled",
-      requested_alpha_enabled_ && native_app_window_->CanHaveAlphaEnabled());
+  properties->SetKey("fullscreen",
+                     base::Value(native_app_window_->IsFullscreenOrPending()));
+  properties->SetKey("minimized",
+                     base::Value(native_app_window_->IsMinimized()));
+  properties->SetKey("maximized",
+                     base::Value(native_app_window_->IsMaximized()));
+  properties->SetKey("alwaysOnTop", base::Value(IsAlwaysOnTop()));
+  properties->SetKey("hasFrameColor",
+                     base::Value(native_app_window_->HasFrameColor()));
+  properties->SetKey("alphaEnabled",
+                     base::Value(requested_alpha_enabled_ &&
+                                 native_app_window_->CanHaveAlphaEnabled()));
 
   // These properties are undocumented and are to enable testing. Alpha is
   // removed to
   // make the values easier to check.
   SkColor transparent_white = ~SK_ColorBLACK;
-  properties->SetInteger(
+  properties->SetKey(
       "activeFrameColor",
-      native_app_window_->ActiveFrameColor() & transparent_white);
-  properties->SetInteger(
+      base::Value(static_cast<int>(native_app_window_->ActiveFrameColor() &
+                                   transparent_white)));
+  properties->SetKey(
       "inactiveFrameColor",
-      native_app_window_->InactiveFrameColor() & transparent_white);
+      base::Value(static_cast<int>(native_app_window_->InactiveFrameColor() &
+                                   transparent_white)));
 
   gfx::Rect content_bounds = GetClientBounds();
   gfx::Size content_min_size = native_app_window_->GetContentMinimumSize();

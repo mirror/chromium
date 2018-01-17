@@ -89,7 +89,7 @@ std::unique_ptr<base::Value> NetLogFtpCtrlResponseCallback(
   lines->AppendStrings(response->lines);
 
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("status_code", response->status_code);
+  dict->SetKey("status_code", base::Value(response->status_code));
   dict->Set("lines", std::move(lines));
   return std::move(dict);
 }

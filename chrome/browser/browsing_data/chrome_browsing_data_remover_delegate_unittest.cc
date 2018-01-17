@@ -1402,7 +1402,7 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemoveExternalProtocolData) {
   TestingProfile* profile = GetProfile();
   // Add external protocol data on profile.
   base::DictionaryValue prefs;
-  prefs.SetBoolean("tel", true);
+  prefs.SetKey("tel", base::Value(true));
   profile->GetPrefs()->Set(prefs::kExcludedSchemes, prefs);
 
   EXPECT_FALSE(
@@ -2009,7 +2009,8 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemoveSelectedClientHints) {
   auto expiration_times_dictionary = std::make_unique<base::DictionaryValue>();
   expiration_times_dictionary->SetList("client_hints",
                                        std::move(expiration_times_list));
-  expiration_times_dictionary->SetDouble("expiration_time", expiration_time);
+  expiration_times_dictionary->SetKey("expiration_time",
+                                      base::Value(expiration_time));
 
   host_content_settings_map->SetWebsiteSettingDefaultScope(
       kOrigin1, GURL(), CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
@@ -2068,7 +2069,8 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemoveAllClientHints) {
   auto expiration_times_dictionary = std::make_unique<base::DictionaryValue>();
   expiration_times_dictionary->SetList("client_hints",
                                        std::move(expiration_times_list));
-  expiration_times_dictionary->SetDouble("expiration_time", expiration_time);
+  expiration_times_dictionary->SetKey("expiration_time",
+                                      base::Value(expiration_time));
 
   host_content_settings_map->SetWebsiteSettingDefaultScope(
       kOrigin1, GURL(), CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),

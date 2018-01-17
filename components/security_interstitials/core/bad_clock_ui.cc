@@ -45,14 +45,16 @@ void BadClockUI::PopulateStringsForHTML(base::DictionaryValue* load_time_data) {
 
   // Clock-specific strings.
   PopulateClockStrings(load_time_data);
-  load_time_data->SetString("finalParagraph", std::string());  // Placeholder.
+  load_time_data->SetKey("finalParagraph",
+                         base::Value(std::string()));  // Placeholder.
 }
 
 void BadClockUI::PopulateClockStrings(base::DictionaryValue* load_time_data) {
-  load_time_data->SetBoolean("bad_clock", true);
-  load_time_data->SetBoolean("overridable", false);
-  load_time_data->SetBoolean("hide_primary_button",
-                             !controller_->CanLaunchDateAndTimeSettings());
+  load_time_data->SetKey("bad_clock", base::Value(true));
+  load_time_data->SetKey("overridable", base::Value(false));
+  load_time_data->SetKey(
+      "hide_primary_button",
+      base::Value(!controller_->CanLaunchDateAndTimeSettings()));
   int heading_string = 0;
   switch (clock_state_) {
     case ssl_errors::CLOCK_STATE_FUTURE:
@@ -64,22 +66,23 @@ void BadClockUI::PopulateClockStrings(base::DictionaryValue* load_time_data) {
     default:
       NOTREACHED();
   }
-  load_time_data->SetString("tabTitle",
-                            l10n_util::GetStringUTF16(IDS_CLOCK_ERROR_TITLE));
-  load_time_data->SetString("heading",
-                            l10n_util::GetStringUTF16(heading_string));
-  load_time_data->SetString(
+  load_time_data->SetKey(
+      "tabTitle",
+      base::Value(l10n_util::GetStringUTF16(IDS_CLOCK_ERROR_TITLE)));
+  load_time_data->SetKey(
+      "heading", base::Value(l10n_util::GetStringUTF16(heading_string)));
+  load_time_data->SetKey(
       "primaryParagraph",
-      l10n_util::GetStringFUTF16(
+      base::Value(l10n_util::GetStringFUTF16(
           IDS_CLOCK_ERROR_PRIMARY_PARAGRAPH,
           common_string_util::GetFormattedHostName(request_url_),
-          base::TimeFormatFriendlyDateAndTime(time_triggered_)));
-  load_time_data->SetString(
-      "primaryButtonText",
-      l10n_util::GetStringUTF16(IDS_CLOCK_ERROR_UPDATE_DATE_AND_TIME));
-  load_time_data->SetString(
+          base::TimeFormatFriendlyDateAndTime(time_triggered_))));
+  load_time_data->SetKey("primaryButtonText",
+                         base::Value(l10n_util::GetStringUTF16(
+                             IDS_CLOCK_ERROR_UPDATE_DATE_AND_TIME)));
+  load_time_data->SetKey(
       "explanationParagraph",
-      l10n_util::GetStringUTF16(IDS_CLOCK_ERROR_EXPLANATION));
+      base::Value(l10n_util::GetStringUTF16(IDS_CLOCK_ERROR_EXPLANATION)));
 }
 
 void BadClockUI::HandleCommand(SecurityInterstitialCommand command) {

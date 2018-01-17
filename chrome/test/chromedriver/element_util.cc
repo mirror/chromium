@@ -83,10 +83,10 @@ bool ParseFromValue(base::Value* value, WebRect* rect) {
 
 std::unique_ptr<base::DictionaryValue> CreateValueFrom(const WebRect& rect) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("left", rect.X());
-  dict->SetInteger("top", rect.Y());
-  dict->SetInteger("width", rect.Width());
-  dict->SetInteger("height", rect.Height());
+  dict->SetKey("left", base::Value(rect.X()));
+  dict->SetKey("top", base::Value(rect.Y()));
+  dict->SetKey("width", base::Value(rect.Width()));
+  dict->SetKey("height", base::Value(rect.Height()));
   return dict;
 }
 
@@ -225,8 +225,8 @@ std::unique_ptr<base::DictionaryValue> CreateElement(
 
 std::unique_ptr<base::DictionaryValue> CreateValueFrom(const WebPoint& point) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("x", point.x);
-  dict->SetInteger("y", point.y);
+  dict->SetKey("x", base::Value(point.x));
+  dict->SetKey("y", base::Value(point.y));
   return dict;
 }
 

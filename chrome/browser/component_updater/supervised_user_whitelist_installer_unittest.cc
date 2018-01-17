@@ -234,7 +234,7 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
     large_icon_path_ = whitelist_version_directory_.AppendASCII(kLargeIconFile);
 
     auto crx_dict = std::make_unique<base::DictionaryValue>();
-    crx_dict->SetString("name", kName);
+    crx_dict->SetKey("name", base::Value(kName));
     std::unique_ptr<base::ListValue> clients =
         std::make_unique<base::ListValue>();
     clients->AppendString(kClientId);
@@ -267,14 +267,14 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
     base::DictionaryValue manifest;
 
     auto whitelist_dict = std::make_unique<base::DictionaryValue>();
-    whitelist_dict->SetString("sites", kWhitelistFile);
+    whitelist_dict->SetKey("sites", base::Value(kWhitelistFile));
     manifest.Set("whitelisted_content", std::move(whitelist_dict));
 
     auto icons_dict = std::make_unique<base::DictionaryValue>();
-    icons_dict->SetString("128", kLargeIconFile);
+    icons_dict->SetKey("128", base::Value(kLargeIconFile));
     manifest.Set("icons", std::move(icons_dict));
 
-    manifest.SetString("version", kVersion);
+    manifest.SetKey("version", base::Value(kVersion));
 
     ASSERT_TRUE(JSONFileValueSerializer(manifest_file).Serialize(manifest));
   }

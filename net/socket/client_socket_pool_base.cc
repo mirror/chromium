@@ -652,14 +652,16 @@ std::unique_ptr<base::DictionaryValue>
 ClientSocketPoolBaseHelper::GetInfoAsValue(const std::string& name,
                                            const std::string& type) const {
   auto dict = std::make_unique<base::DictionaryValue>();
-  dict->SetString("name", name);
-  dict->SetString("type", type);
-  dict->SetInteger("handed_out_socket_count", handed_out_socket_count_);
-  dict->SetInteger("connecting_socket_count", connecting_socket_count_);
-  dict->SetInteger("idle_socket_count", idle_socket_count_);
-  dict->SetInteger("max_socket_count", max_sockets_);
-  dict->SetInteger("max_sockets_per_group", max_sockets_per_group_);
-  dict->SetInteger("pool_generation_number", pool_generation_number_);
+  dict->SetKey("name", base::Value(name));
+  dict->SetKey("type", base::Value(type));
+  dict->SetKey("handed_out_socket_count",
+               base::Value(handed_out_socket_count_));
+  dict->SetKey("connecting_socket_count",
+               base::Value(connecting_socket_count_));
+  dict->SetKey("idle_socket_count", base::Value(idle_socket_count_));
+  dict->SetKey("max_socket_count", base::Value(max_sockets_));
+  dict->SetKey("max_sockets_per_group", base::Value(max_sockets_per_group_));
+  dict->SetKey("pool_generation_number", base::Value(pool_generation_number_));
 
   if (group_map_.empty())
     return dict;
@@ -670,15 +672,17 @@ ClientSocketPoolBaseHelper::GetInfoAsValue(const std::string& name,
     const Group* group = it->second;
     auto group_dict = std::make_unique<base::DictionaryValue>();
 
-    group_dict->SetInteger("pending_request_count",
-                           group->pending_request_count());
+    group_dict->SetKey(
+        "pending_request_count",
+        base::Value(static_cast<int>(group->pending_request_count())));
     if (group->has_pending_requests()) {
-      group_dict->SetString(
+      group_dict->SetKey(
           "top_pending_priority",
-          RequestPriorityToString(group->TopPendingPriority()));
+          base::Value(RequestPriorityToString(group->TopPendingPriority())));
     }
 
-    group_dict->SetInteger("active_socket_count", group->active_socket_count());
+    group_dict->SetKey("active_socket_count",
+                       base::Value(group->active_socket_count()));
 
     auto idle_socket_list = std::make_unique<base::ListValue>();
     std::list<IdleSocket>::const_iterator idle_socket;
@@ -697,10 +701,11 @@ ClientSocketPoolBaseHelper::GetInfoAsValue(const std::string& name,
     }
     group_dict->Set("connect_jobs", std::move(connect_jobs_list));
 
-    group_dict->SetBoolean("is_stalled", group->CanUseAdditionalSocketSlot(
-                                             max_sockets_per_group_));
-    group_dict->SetBoolean("backup_job_timer_is_running",
-                           group->BackupJobTimerIsRunning());
+    group_dict->SetKey(
+        "is_stalled",
+        base::Value(group->CanUseAdditionalSocketSlot(max_sockets_per_group_)));
+    group_dict->SetKey("backup_job_timer_is_running",
+                       base::Value(group->BackupJobTimerIsRunning()));
 
     all_groups_dict->SetWithoutPathExpansion(it->first, std::move(group_dict));
   }

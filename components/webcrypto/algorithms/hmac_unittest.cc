@@ -229,8 +229,8 @@ TEST_F(WebCryptoHmacTest, ImportKeyEmptyUsage) {
 TEST_F(WebCryptoHmacTest, ImportKeyJwkKeyOpsSignVerify) {
   blink::WebCryptoKey key;
   base::DictionaryValue dict;
-  dict.SetString("kty", "oct");
-  dict.SetString("k", "GADWrMRHwQfoNaXU5fZvTg");
+  dict.SetKey("kty", base::Value("oct"));
+  dict.SetKey("k", base::Value("GADWrMRHwQfoNaXU5fZvTg"));
   base::ListValue* key_ops =
       dict.SetList("key_ops", base::MakeUnique<base::ListValue>());
 
@@ -259,10 +259,10 @@ TEST_F(WebCryptoHmacTest, ImportKeyJwkKeyOpsSignVerify) {
 TEST_F(WebCryptoHmacTest, ImportKeyJwkUseInconsisteWithKeyOps) {
   blink::WebCryptoKey key;
   base::DictionaryValue dict;
-  dict.SetString("kty", "oct");
-  dict.SetString("k", "GADWrMRHwQfoNaXU5fZvTg");
-  dict.SetString("alg", "HS256");
-  dict.SetString("use", "sig");
+  dict.SetKey("kty", base::Value("oct"));
+  dict.SetKey("k", base::Value("GADWrMRHwQfoNaXU5fZvTg"));
+  dict.SetKey("alg", base::Value("HS256"));
+  dict.SetKey("use", base::Value("sig"));
 
   auto key_ops = base::MakeUnique<base::ListValue>();
   key_ops->AppendString("sign");
@@ -283,10 +283,10 @@ TEST_F(WebCryptoHmacTest, ImportKeyJwkUseInconsisteWithKeyOps) {
 TEST_F(WebCryptoHmacTest, ImportKeyJwkUseSig) {
   blink::WebCryptoKey key;
   base::DictionaryValue dict;
-  dict.SetString("kty", "oct");
-  dict.SetString("k", "GADWrMRHwQfoNaXU5fZvTg");
+  dict.SetKey("kty", base::Value("oct"));
+  dict.SetKey("k", base::Value("GADWrMRHwQfoNaXU5fZvTg"));
 
-  dict.SetString("use", "sig");
+  dict.SetKey("use", base::Value("sig"));
   EXPECT_EQ(
       Status::Success(),
       ImportKeyJwkFromDict(
@@ -311,8 +311,10 @@ TEST_F(WebCryptoHmacTest, ImportJwkInputConsistency) {
       CreateHmacImportAlgorithmNoLength(blink::kWebCryptoAlgorithmIdSha256);
   blink::WebCryptoKeyUsageMask usages = blink::kWebCryptoKeyUsageVerify;
   base::DictionaryValue dict;
-  dict.SetString("kty", "oct");
-  dict.SetString("k", "l3nZEgZCeX8XRwJdWyK3rGB8qwjhdY8vOkbIvh4lxTuMao9Y_--hdg");
+  dict.SetKey("kty", base::Value("oct"));
+  dict.SetKey(
+      "k",
+      base::Value("l3nZEgZCeX8XRwJdWyK3rGB8qwjhdY8vOkbIvh4lxTuMao9Y_--hdg"));
   std::vector<uint8_t> json_vec = MakeJsonVector(dict);
   EXPECT_EQ(Status::Success(),
             ImportKey(blink::kWebCryptoKeyFormatJwk, CryptoData(json_vec),
@@ -331,11 +333,13 @@ TEST_F(WebCryptoHmacTest, ImportJwkInputConsistency) {
 
   // Pass: All input values are consistent with the JWK values.
   dict.Clear();
-  dict.SetString("kty", "oct");
-  dict.SetString("alg", "HS256");
-  dict.SetString("use", "sig");
-  dict.SetBoolean("ext", false);
-  dict.SetString("k", "l3nZEgZCeX8XRwJdWyK3rGB8qwjhdY8vOkbIvh4lxTuMao9Y_--hdg");
+  dict.SetKey("kty", base::Value("oct"));
+  dict.SetKey("alg", base::Value("HS256"));
+  dict.SetKey("use", base::Value("sig"));
+  dict.SetKey("ext", base::Value(false));
+  dict.SetKey(
+      "k",
+      base::Value("l3nZEgZCeX8XRwJdWyK3rGB8qwjhdY8vOkbIvh4lxTuMao9Y_--hdg"));
   json_vec = MakeJsonVector(dict);
   EXPECT_EQ(Status::Success(),
             ImportKey(blink::kWebCryptoKeyFormatJwk, CryptoData(json_vec),
@@ -353,21 +357,23 @@ TEST_F(WebCryptoHmacTest, ImportJwkInputConsistency) {
             ImportKey(blink::kWebCryptoKeyFormatJwk, CryptoData(json_vec),
                       algorithm, false, usages, &key));
   EXPECT_FALSE(key.Extractable());
-  dict.SetBoolean("ext", true);
+  dict.SetKey("ext", base::Value(true));
   EXPECT_EQ(Status::Success(),
             ImportKeyJwkFromDict(dict, algorithm, true, usages, &key));
   EXPECT_TRUE(key.Extractable());
   EXPECT_EQ(Status::Success(),
             ImportKeyJwkFromDict(dict, algorithm, false, usages, &key));
   EXPECT_FALSE(key.Extractable());
-  dict.SetBoolean("ext", true);  // restore previous value
+  dict.SetKey("ext", base::Value(true));  // restore previous value
 
   // Fail: Input algorithm (AES-CBC) is inconsistent with JWK value
   // (HMAC SHA256).
   dict.Clear();
-  dict.SetString("kty", "oct");
-  dict.SetString("alg", "HS256");
-  dict.SetString("k", "l3nZEgZCeX8XRwJdWyK3rGB8qwjhdY8vOkbIvh4lxTuMao9Y_--hdg");
+  dict.SetKey("kty", base::Value("oct"));
+  dict.SetKey("alg", base::Value("HS256"));
+  dict.SetKey(
+      "k",
+      base::Value("l3nZEgZCeX8XRwJdWyK3rGB8qwjhdY8vOkbIvh4lxTuMao9Y_--hdg"));
   EXPECT_EQ(Status::ErrorJwkAlgorithmInconsistent(),
             ImportKeyJwkFromDict(
                 dict, CreateAlgorithm(blink::kWebCryptoAlgorithmIdAesCbc),
@@ -394,7 +400,7 @@ TEST_F(WebCryptoHmacTest, ImportJwkInputConsistency) {
                                      blink::kWebCryptoAlgorithmIdSha256),
                                  extractable, usages, &key));
   EXPECT_EQ(blink::kWebCryptoAlgorithmIdHmac, algorithm.Id());
-  dict.SetString("alg", "HS256");
+  dict.SetKey("alg", base::Value("HS256"));
 
   // Fail: Input usages (encrypt) is not a subset of the JWK value
   // (sign|verify). Moreover "encrypt" is not a valid usage for HMAC.
@@ -433,11 +439,13 @@ TEST_F(WebCryptoHmacTest, ImportJwkHappy) {
   // Uses the first SHA256 test vector from the HMAC sample set above.
 
   base::DictionaryValue dict;
-  dict.SetString("kty", "oct");
-  dict.SetString("alg", "HS256");
-  dict.SetString("use", "sig");
-  dict.SetBoolean("ext", false);
-  dict.SetString("k", "l3nZEgZCeX8XRwJdWyK3rGB8qwjhdY8vOkbIvh4lxTuMao9Y_--hdg");
+  dict.SetKey("kty", base::Value("oct"));
+  dict.SetKey("alg", base::Value("HS256"));
+  dict.SetKey("use", base::Value("sig"));
+  dict.SetKey("ext", base::Value(false));
+  dict.SetKey(
+      "k",
+      base::Value("l3nZEgZCeX8XRwJdWyK3rGB8qwjhdY8vOkbIvh4lxTuMao9Y_--hdg"));
 
   ASSERT_EQ(Status::Success(),
             ImportKeyJwkFromDict(dict, algorithm, extractable, usages, &key));
@@ -594,8 +602,8 @@ TEST_F(WebCryptoHmacTest, ImportRawKeyTruncation) {
 // The same test as above, but using the JWK format.
 TEST_F(WebCryptoHmacTest, ImportJwkKeyTruncation) {
   base::DictionaryValue dict;
-  dict.SetString("kty", "oct");
-  dict.SetString("k", "sf8");  // 0xB1FF
+  dict.SetKey("kty", base::Value("oct"));
+  dict.SetKey("k", base::Value("sf8"));  // 0xB1FF
 
   blink::WebCryptoKey key;
   EXPECT_EQ(Status::Success(),

@@ -145,10 +145,11 @@ TEST_F(ExternalPolicyLoaderTest, InvalidEntriesIgnored) {
   expected_extensions.insert("cccccccccccccccccccccccccccccccc");
 
   // Add invalid entries.
-  forced_extensions.SetString("invalid", "http://www.example.com/crx");
-  forced_extensions.SetString("dddddddddddddddddddddddddddddddd",
-                              std::string());
-  forced_extensions.SetString("invalid", "bad");
+  forced_extensions.SetKey("invalid",
+                           base::Value("http://www.example.com/crx"));
+  forced_extensions.SetKey("dddddddddddddddddddddddddddddddd",
+                           base::Value(std::string()));
+  forced_extensions.SetKey("invalid", base::Value("bad"));
 
   MockExternalPolicyProviderVisitor mv;
   mv.Visit(forced_extensions, expected_extensions);

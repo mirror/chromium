@@ -44,7 +44,7 @@ base::ListValue* AddSection(base::ListValue* parent_list,
                             const std::string& title) {
   auto section = std::make_unique<base::DictionaryValue>();
 
-  section->SetString("title", title);
+  section->SetKey("title", base::Value(title));
   base::ListValue* section_contents =
       section->SetList("data", std::make_unique<base::ListValue>());
   parent_list->Append(std::move(section));
@@ -56,9 +56,9 @@ void AddSectionEntry(base::ListValue* section_list,
                      const std::string& field_status,
                      const std::string& field_time = "") {
   std::unique_ptr<base::DictionaryValue> entry(new base::DictionaryValue());
-  entry->SetString("label", field_name);
-  entry->SetString("status", field_status);
-  entry->SetString("time", field_time);
+  entry->SetKey("label", base::Value(field_name));
+  entry->SetKey("status", base::Value(field_status));
+  entry->SetKey("time", base::Value(field_time));
   section_list->Append(std::move(entry));
 }
 
@@ -67,9 +67,9 @@ void AddCookieEntry(base::ListValue* accounts_list,
                      const std::string& field_gaia_id,
                      const std::string& field_valid) {
   std::unique_ptr<base::DictionaryValue> entry(new base::DictionaryValue());
-  entry->SetString("email", field_email);
-  entry->SetString("gaia_id", field_gaia_id);
-  entry->SetString("valid", field_valid);
+  entry->SetKey("email", base::Value(field_email));
+  entry->SetKey("gaia_id", base::Value(field_gaia_id));
+  entry->SetKey("valid", base::Value(field_valid));
   accounts_list->Append(std::move(entry));
 }
 
@@ -459,7 +459,7 @@ std::unique_ptr<base::DictionaryValue>
 AboutSigninInternals::TokenInfo::ToValue() const {
   std::unique_ptr<base::DictionaryValue> token_info(
       new base::DictionaryValue());
-  token_info->SetString("service", consumer_id);
+  token_info->SetKey("service", base::Value(consumer_id));
 
   std::string scopes_str;
   for (OAuth2TokenService::ScopeSet::const_iterator it = scopes.begin();
@@ -467,11 +467,11 @@ AboutSigninInternals::TokenInfo::ToValue() const {
        ++it) {
     scopes_str += *it + "<br/>";
   }
-  token_info->SetString("scopes", scopes_str);
-  token_info->SetString("request_time", GetTimeStr(request_time));
+  token_info->SetKey("scopes", base::Value(scopes_str));
+  token_info->SetKey("request_time", base::Value(GetTimeStr(request_time)));
 
   if (removed_) {
-    token_info->SetString("status", "Token was revoked.");
+    token_info->SetKey("status", base::Value("Token was revoked."));
   } else if (!receive_time.is_null()) {
     if (error == GoogleServiceAuthError::AuthErrorNone()) {
       bool token_expired = expiration_time < base::Time::Now();
@@ -488,14 +488,14 @@ AboutSigninInternals::TokenInfo::ToValue() const {
                           expiration_time_string.c_str());
       if (token_expired)
         base::StringAppendF(&status_str, "</p>");
-      token_info->SetString("status", status_str);
+      token_info->SetKey("status", base::Value(status_str));
     } else {
-      token_info->SetString(
-          "status",
-          base::StringPrintf("Failure: %s", error.ToString().c_str()));
+      token_info->SetKey(
+          "status", base::Value(base::StringPrintf("Failure: %s",
+                                                   error.ToString().c_str())));
     }
   } else {
-    token_info->SetString("status", "Waiting for response");
+    token_info->SetKey("status", base::Value("Waiting for response"));
   }
 
   return token_info;
@@ -638,17 +638,19 @@ AboutSigninInternals::SigninStatus::ToValue(
 
   if (accounts_in_token_service.size() == 0) {
     auto no_token_entry = std::make_unique<base::DictionaryValue>();
-    no_token_entry->SetString("accountId", "No token in Token Service.");
+    no_token_entry->SetKey("accountId",
+                           base::Value("No token in Token Service."));
     account_info->Append(std::move(no_token_entry));
   }
 
   for (const std::string& account_id : accounts_in_token_service) {
     auto entry = std::make_unique<base::DictionaryValue>();
-    entry->SetString("accountId", account_id);
-    entry->SetBoolean("hasRefreshToken",
-                      token_service->RefreshTokenIsAvailable(account_id));
-    entry->SetBoolean("hasAuthError",
-                      token_service->RefreshTokenHasError(account_id));
+    entry->SetKey("accountId", base::Value(account_id));
+    entry->SetKey(
+        "hasRefreshToken",
+        base::Value(token_service->RefreshTokenIsAvailable(account_id)));
+    entry->SetKey("hasAuthError",
+                  base::Value(token_service->RefreshTokenHasError(account_id)));
     account_info->Append(std::move(entry));
   }
 
@@ -657,7 +659,8 @@ AboutSigninInternals::SigninStatus::ToValue(
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
   if (signin::IsDiceEnabledForProfile(signin_client->GetPrefs())) {
     auto dice_info = std::make_unique<base::DictionaryValue>();
-    dice_info->SetBoolean("isSignedIn", signin_manager->IsAuthenticated());
+    dice_info->SetKey("isSignedIn",
+                      base::Value(signin_manager->IsAuthenticated()));
     signin_status->Set("dice", std::move(dice_info));
   }
 #endif

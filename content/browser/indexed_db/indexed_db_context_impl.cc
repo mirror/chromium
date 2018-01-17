@@ -176,9 +176,11 @@ base::ListValue* IndexedDBContextImpl::GetAllOriginsDetails() {
   for (const auto& origin : origins) {
     std::unique_ptr<base::DictionaryValue> info(
         std::make_unique<base::DictionaryValue>());
-    info->SetString("url", origin.Serialize());
-    info->SetString("size", ui::FormatBytes(GetOriginDiskUsage(origin)));
-    info->SetDouble("last_modified", GetOriginLastModified(origin).ToJsTime());
+    info->SetKey("url", base::Value(origin.Serialize()));
+    info->SetKey("size",
+                 base::Value(ui::FormatBytes(GetOriginDiskUsage(origin))));
+    info->SetKey("last_modified",
+                 base::Value(GetOriginLastModified(origin).ToJsTime()));
     if (!is_incognito()) {
       std::unique_ptr<base::ListValue> paths(
           std::make_unique<base::ListValue>());
@@ -186,7 +188,8 @@ base::ListValue* IndexedDBContextImpl::GetAllOriginsDetails() {
         paths->AppendString(path.value());
       info->Set("paths", std::move(paths));
     }
-    info->SetDouble("connection_count", GetConnectionCount(origin));
+    info->SetKey("connection_count",
+                 base::Value(static_cast<double>(GetConnectionCount(origin))));
 
     // This ends up being O(n^2) since we iterate over all open databases
     // to extract just those in the origin, and we're iterating over all
@@ -207,10 +210,16 @@ base::ListValue* IndexedDBContextImpl::GetAllOriginsDetails() {
         std::unique_ptr<base::DictionaryValue> db_info(
             std::make_unique<base::DictionaryValue>());
 
-        db_info->SetString("name", db->name());
-        db_info->SetDouble("connection_count", db->ConnectionCount());
-        db_info->SetDouble("active_open_delete", db->ActiveOpenDeleteCount());
-        db_info->SetDouble("pending_open_delete", db->PendingOpenDeleteCount());
+        db_info->SetKey("name", base::Value(db->name()));
+        db_info->SetKey(
+            "connection_count",
+            base::Value(static_cast<double>(db->ConnectionCount())));
+        db_info->SetKey(
+            "active_open_delete",
+            base::Value(static_cast<double>(db->ActiveOpenDeleteCount())));
+        db_info->SetKey(
+            "pending_open_delete",
+            base::Value(static_cast<double>(db->PendingOpenDeleteCount())));
 
         std::unique_ptr<base::ListValue> transaction_list(
             std::make_unique<base::ListValue>());
@@ -222,40 +231,47 @@ base::ListValue* IndexedDBContextImpl::GetAllOriginsDetails() {
 
           const char* const kModes[] =
               { "readonly", "readwrite", "versionchange" };
-          transaction_info->SetString("mode", kModes[transaction->mode()]);
+          transaction_info->SetKey("mode",
+                                   base::Value(kModes[transaction->mode()]));
           switch (transaction->state()) {
             case IndexedDBTransaction::CREATED:
-              transaction_info->SetString("status", "blocked");
+              transaction_info->SetKey("status", base::Value("blocked"));
               break;
             case IndexedDBTransaction::STARTED:
               if (transaction->diagnostics().tasks_scheduled > 0)
-                transaction_info->SetString("status", "running");
+                transaction_info->SetKey("status", base::Value("running"));
               else
-                transaction_info->SetString("status", "started");
+                transaction_info->SetKey("status", base::Value("started"));
               break;
             case IndexedDBTransaction::COMMITTING:
-              transaction_info->SetString("status", "committing");
+              transaction_info->SetKey("status", base::Value("committing"));
               break;
             case IndexedDBTransaction::FINISHED:
-              transaction_info->SetString("status", "finished");
+              transaction_info->SetKey("status", base::Value("finished"));
               break;
           }
 
-          transaction_info->SetDouble(
-              "pid", transaction->connection()->child_process_id());
-          transaction_info->SetDouble("tid", transaction->id());
-          transaction_info->SetDouble(
-              "age",
-              (base::Time::Now() - transaction->diagnostics().creation_time)
-                  .InMillisecondsF());
-          transaction_info->SetDouble(
-              "runtime",
-              (base::Time::Now() - transaction->diagnostics().start_time)
-                  .InMillisecondsF());
-          transaction_info->SetDouble(
-              "tasks_scheduled", transaction->diagnostics().tasks_scheduled);
-          transaction_info->SetDouble(
-              "tasks_completed", transaction->diagnostics().tasks_completed);
+          transaction_info->SetKey(
+              "pid", base::Value(static_cast<double>(
+                         transaction->connection()->child_process_id())));
+          transaction_info->SetKey(
+              "tid", base::Value(static_cast<double>(transaction->id())));
+          transaction_info->SetKey(
+              "age", base::Value((base::Time::Now() -
+                                  transaction->diagnostics().creation_time)
+                                     .InMillisecondsF()));
+          transaction_info->SetKey(
+              "runtime", base::Value((base::Time::Now() -
+                                      transaction->diagnostics().start_time)
+                                         .InMillisecondsF()));
+          transaction_info->SetKey(
+              "tasks_scheduled",
+              base::Value(static_cast<double>(
+                  transaction->diagnostics().tasks_scheduled)));
+          transaction_info->SetKey(
+              "tasks_completed",
+              base::Value(static_cast<double>(
+                  transaction->diagnostics().tasks_completed)));
 
           std::unique_ptr<base::ListValue> scope(
               std::make_unique<base::ListValue>());

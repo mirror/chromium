@@ -1028,7 +1028,7 @@ class LayerDebugInfo : public base::trace_event::ConvertableToTraceFormat {
   ~LayerDebugInfo() override {}
   void AppendAsTraceFormat(std::string* out) const override {
     base::DictionaryValue dictionary;
-    dictionary.SetString("layer_name", name_);
+    dictionary.SetKey("layer_name", base::Value(name_));
     std::string tmp;
     base::JSONWriter::Write(dictionary, &tmp);
     out->append(tmp);

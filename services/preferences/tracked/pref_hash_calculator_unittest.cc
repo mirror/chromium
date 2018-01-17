@@ -18,13 +18,13 @@ TEST(PrefHashCalculatorTest, TestCurrentAlgorithm) {
   base::Value string_value_1("string value 1");
   base::Value string_value_2("string value 2");
   base::DictionaryValue dictionary_value_1;
-  dictionary_value_1.SetInteger("int value", 1);
+  dictionary_value_1.SetKey("int value", base::Value(1));
   dictionary_value_1.Set("nested empty map",
                          std::make_unique<base::DictionaryValue>());
   base::DictionaryValue dictionary_value_1_equivalent;
-  dictionary_value_1_equivalent.SetInteger("int value", 1);
+  dictionary_value_1_equivalent.SetKey("int value", base::Value(1));
   base::DictionaryValue dictionary_value_2;
-  dictionary_value_2.SetInteger("int value", 2);
+  dictionary_value_2.SetKey("int value", base::Value(2));
 
   PrefHashCalculator calc1("seed1", "deviceid", "legacydeviceid");
   PrefHashCalculator calc1_dup("seed1", "deviceid", "legacydeviceid");
@@ -99,10 +99,10 @@ TEST(PrefHashCalculatorTest, CatchHashChanges) {
   // A dictionary with an empty dictionary, an empty list, and nested empty
   // dictionaries/lists in it.
   auto dict_value = std::make_unique<base::DictionaryValue>();
-  dict_value->SetString("a", "foo");
+  dict_value->SetKey("a", base::Value("foo"));
   dict_value->Set("d", std::make_unique<base::ListValue>());
   dict_value->Set("b", std::make_unique<base::DictionaryValue>());
-  dict_value->SetString("c", "baz");
+  dict_value->SetKey("c", base::Value("baz"));
   dict_value->Set("e", std::move(nested_empty_dict));
   dict_value->Set("f", std::move(nested_empty_list));
 

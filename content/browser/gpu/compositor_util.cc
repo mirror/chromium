@@ -335,13 +335,14 @@ std::unique_ptr<base::ListValue> GetProblems() {
 
   if (gpu_access_blocked) {
     auto problem = std::make_unique<base::DictionaryValue>();
-    problem->SetString("description",
-        "GPU process was unable to boot: " + gpu_access_blocked_reason);
+    problem->SetKey("description",
+                    base::Value("GPU process was unable to boot: " +
+                                gpu_access_blocked_reason));
     problem->Set("crBugs", std::make_unique<base::ListValue>());
     auto disabled_features = std::make_unique<base::ListValue>();
     disabled_features->AppendString("all");
     problem->Set("affectedGpuSettings", std::move(disabled_features));
-    problem->SetString("tag", "disabledFeatures");
+    problem->SetKey("tag", base::Value("disabledFeatures"));
     problem_list->Insert(0, std::move(problem));
   }
 
@@ -350,12 +351,13 @@ std::unique_ptr<base::ListValue> GetProblems() {
     const GpuFeatureData gpu_feature_data = GetGpuFeatureData(i, &eof);
     if (gpu_feature_data.disabled) {
       auto problem = std::make_unique<base::DictionaryValue>();
-      problem->SetString("description", gpu_feature_data.disabled_description);
+      problem->SetKey("description",
+                      base::Value(gpu_feature_data.disabled_description));
       problem->Set("crBugs", std::make_unique<base::ListValue>());
       auto disabled_features = std::make_unique<base::ListValue>();
       disabled_features->AppendString(gpu_feature_data.name);
       problem->Set("affectedGpuSettings", std::move(disabled_features));
-      problem->SetString("tag", "disabledFeatures");
+      problem->SetKey("tag", base::Value("disabledFeatures"));
       problem_list->Append(std::move(problem));
     }
   }

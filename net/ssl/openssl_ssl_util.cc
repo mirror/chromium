@@ -127,16 +127,17 @@ std::unique_ptr<base::Value> NetLogOpenSSLErrorCallback(
     const OpenSSLErrorInfo& error_info,
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetInteger("net_error", net_error);
-  dict->SetInteger("ssl_error", ssl_error);
+  dict->SetKey("net_error", base::Value(net_error));
+  dict->SetKey("ssl_error", base::Value(ssl_error));
   if (error_info.error_code != 0) {
-    dict->SetInteger("error_lib", ERR_GET_LIB(error_info.error_code));
-    dict->SetInteger("error_reason", ERR_GET_REASON(error_info.error_code));
+    dict->SetKey("error_lib", base::Value(ERR_GET_LIB(error_info.error_code)));
+    dict->SetKey("error_reason",
+                 base::Value(ERR_GET_REASON(error_info.error_code)));
   }
   if (error_info.file != NULL)
-    dict->SetString("file", error_info.file);
+    dict->SetKey("file", base::Value(error_info.file));
   if (error_info.line != 0)
-    dict->SetInteger("line", error_info.line);
+    dict->SetKey("line", base::Value(error_info.line));
   return std::move(dict);
 }
 

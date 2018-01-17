@@ -51,8 +51,8 @@ TEST_F(PrefHashStoreImplTest, ComputeMac) {
 
 TEST_F(PrefHashStoreImplTest, ComputeSplitMacs) {
   base::DictionaryValue dict;
-  dict.SetString("a", "string1");
-  dict.SetString("b", "string2");
+  dict.SetKey("a", base::Value("string1"));
+  dict.SetKey("b", base::Value("string2"));
   PrefHashStoreImpl pref_hash_store(std::string(32, 0), "device_id", true);
 
   std::unique_ptr<base::DictionaryValue> computed_macs =
@@ -96,10 +96,10 @@ TEST_F(PrefHashStoreImplTest, AtomicHashStoreAndCheck) {
     EXPECT_EQ(ValueState::CHANGED, transaction->CheckValue("path1", &string_2));
 
     base::DictionaryValue dict;
-    dict.SetString("a", "foo");
-    dict.SetString("d", "bad");
-    dict.SetString("b", "bar");
-    dict.SetString("c", "baz");
+    dict.SetKey("a", base::Value("foo"));
+    dict.SetKey("d", base::Value("bad"));
+    dict.SetKey("b", base::Value("bar"));
+    dict.SetKey("c", base::Value("baz"));
 
     transaction->StoreHash("path1", &dict);
     EXPECT_EQ(ValueState::UNCHANGED, transaction->CheckValue("path1", &dict));
@@ -311,14 +311,14 @@ TEST_F(PrefHashStoreImplTest, SuperMACDisabled) {
 
 TEST_F(PrefHashStoreImplTest, SplitHashStoreAndCheck) {
   base::DictionaryValue dict;
-  dict.SetString("a", "to be replaced");
-  dict.SetString("b", "same");
-  dict.SetString("o", "old");
+  dict.SetKey("a", base::Value("to be replaced"));
+  dict.SetKey("b", base::Value("same"));
+  dict.SetKey("o", base::Value("old"));
 
   base::DictionaryValue modified_dict;
-  modified_dict.SetString("a", "replaced");
-  modified_dict.SetString("b", "same");
-  modified_dict.SetString("c", "new");
+  modified_dict.SetKey("a", base::Value("replaced"));
+  modified_dict.SetKey("b", base::Value("same"));
+  modified_dict.SetKey("c", base::Value("new"));
 
   base::DictionaryValue empty_dict;
 
@@ -428,7 +428,7 @@ TEST_F(PrefHashStoreImplTest, EmptyAndNULLSplitDict) {
 
     // Store hashes for a random dict to be overwritten below.
     base::DictionaryValue initial_dict;
-    initial_dict.SetString("a", "foo");
+    initial_dict.SetKey("a", base::Value("foo"));
     transaction->StoreSplitHash("path1", &initial_dict);
 
     // Verify stored empty dictionary matches NULL and empty dictionary back.
@@ -461,8 +461,8 @@ TEST_F(PrefHashStoreImplTest, EmptyAndNULLSplitDict) {
         pref_hash_store2.BeginTransaction(GetHashStoreContents()));
 
     base::DictionaryValue tested_dict;
-    tested_dict.SetString("a", "foo");
-    tested_dict.SetString("b", "bar");
+    tested_dict.SetKey("a", base::Value("foo"));
+    tested_dict.SetKey("b", base::Value("bar"));
     EXPECT_EQ(
         ValueState::TRUSTED_UNKNOWN_VALUE,
         transaction->CheckSplitValue("new_path", &tested_dict, &invalid_keys));
@@ -480,10 +480,10 @@ TEST_F(PrefHashStoreImplTest, TrustedUnknownSplitValueFromExistingAtomic) {
   base::Value string("string1");
 
   base::DictionaryValue dict;
-  dict.SetString("a", "foo");
-  dict.SetString("d", "bad");
-  dict.SetString("b", "bar");
-  dict.SetString("c", "baz");
+  dict.SetKey("a", base::Value("foo"));
+  dict.SetKey("d", base::Value("bad"));
+  dict.SetKey("b", base::Value("bar"));
+  dict.SetKey("c", base::Value("baz"));
 
   {
     PrefHashStoreImpl pref_hash_store(std::string(32, 0), "device_id", true);

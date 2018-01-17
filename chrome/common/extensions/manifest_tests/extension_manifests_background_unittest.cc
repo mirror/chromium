@@ -51,7 +51,7 @@ TEST_F(ExtensionManifestBackgroundTest, BackgroundScripts) {
       std::string("/") + kGeneratedBackgroundPageFilename,
       BackgroundInfo::GetBackgroundURL(extension.get()).path());
 
-  manifest->SetString("background_page", "monkey.html");
+  manifest->SetKey("background_page", base::Value("monkey.html"));
   LoadAndExpectError(ManifestData(manifest.get(), ""),
                      errors::kInvalidBackgroundCombination);
 }

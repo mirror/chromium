@@ -54,14 +54,17 @@ rtc::IPAddress NetIPAddressToRtcIPAddress(const net::IPAddress& ip_address) {
 std::string SerializeP2PCandidate(const cricket::Candidate& candidate) {
   // TODO(sergeyu): Use SDP to format candidates?
   base::DictionaryValue value;
-  value.SetString("ip", candidate.address().ipaddr().ToString());
-  value.SetInteger("port", candidate.address().port());
-  value.SetString("type", candidate.type());
-  value.SetString("protocol", candidate.protocol());
-  value.SetString("username", candidate.username());
-  value.SetString("password", candidate.password());
-  value.SetDouble("preference", candidate.preference());
-  value.SetInteger("generation", candidate.generation());
+  value.SetKey("ip", base::Value(candidate.address().ipaddr().ToString()));
+  value.SetKey("port",
+               base::Value(static_cast<int>(candidate.address().port())));
+  value.SetKey("type", base::Value(candidate.type()));
+  value.SetKey("protocol", base::Value(candidate.protocol()));
+  value.SetKey("username", base::Value(candidate.username()));
+  value.SetKey("password", base::Value(candidate.password()));
+  value.SetKey("preference",
+               base::Value(static_cast<double>(candidate.preference())));
+  value.SetKey("generation",
+               base::Value(static_cast<int>(candidate.generation())));
 
   std::string result;
   base::JSONWriter::Write(value, &result);

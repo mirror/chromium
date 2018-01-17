@@ -394,13 +394,13 @@ std::unique_ptr<base::Value> MidiManagerAlsa::MidiPort::Value() const {
       type = "output";
       break;
   }
-  value->SetString("type", type);
+  value->SetKey("type", base::Value(type));
   SetStringIfNonEmpty(value.get(), "path", path_);
   SetStringIfNonEmpty(value.get(), "clientName", client_name_);
   SetStringIfNonEmpty(value.get(), "portName", port_name_);
-  value->SetInteger("clientId", client_id_);
-  value->SetInteger("portId", port_id_);
-  value->SetInteger("midiDevice", midi_device_);
+  value->SetKey("clientId", base::Value(client_id_));
+  value->SetKey("portId", base::Value(port_id_));
+  value->SetKey("midiDevice", base::Value(midi_device_));
 
   // Flatten id fields.
   SetStringIfNonEmpty(value.get(), "bus", id_.bus());

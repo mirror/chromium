@@ -78,14 +78,14 @@ struct LanguageDetectionResult {
 std::unique_ptr<base::DictionaryValue> DetectedLanguage::ToDictionary() const {
   std::unique_ptr<base::DictionaryValue> dict_value(
       new base::DictionaryValue());
-  dict_value->SetString("language", language.c_str());
-  dict_value->SetInteger("percentage", percentage);
+  dict_value->SetKey("language", base::Value(language.c_str()));
+  dict_value->SetKey("percentage", base::Value(percentage));
   return dict_value;
 }
 
 v8::Local<v8::Value> LanguageDetectionResult::ToValue(ScriptContext* context) {
   base::DictionaryValue dict_value;
-  dict_value.SetBoolean("isReliable", is_reliable);
+  dict_value.SetKey("isReliable", base::Value(is_reliable));
   std::unique_ptr<base::ListValue> languages_list(new base::ListValue());
   for (const auto& language : languages)
     languages_list->Append(language->ToDictionary());

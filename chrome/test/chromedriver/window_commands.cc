@@ -103,16 +103,16 @@ struct Cookie {
 std::unique_ptr<base::DictionaryValue> CreateDictionaryFrom(
     const Cookie& cookie) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("name", cookie.name);
-  dict->SetString("value", cookie.value);
+  dict->SetKey("name", base::Value(cookie.name));
+  dict->SetKey("value", base::Value(cookie.value));
   if (!cookie.domain.empty())
-    dict->SetString("domain", cookie.domain);
+    dict->SetKey("domain", base::Value(cookie.domain));
   if (!cookie.path.empty())
-    dict->SetString("path", cookie.path);
+    dict->SetKey("path", base::Value(cookie.path));
   if (!cookie.session)
-    dict->SetDouble("expiry", cookie.expiry);
-  dict->SetBoolean("httpOnly", cookie.http_only);
-  dict->SetBoolean("secure", cookie.secure);
+    dict->SetKey("expiry", base::Value(cookie.expiry));
+  dict->SetKey("httpOnly", base::Value(cookie.http_only));
+  dict->SetKey("secure", base::Value(cookie.secure));
   return dict;
 }
 
@@ -810,10 +810,10 @@ Status ProcessInputActionSequence(Session* session,
   base::DictionaryValue tmp_source;
   if (!found) {
     // create input source
-    tmp_source.SetString("id", id);
-    tmp_source.SetString("type", type);
+    tmp_source.SetKey("id", base::Value(id));
+    tmp_source.SetKey("type", base::Value(type));
     if (type == "pointer") {
-      tmp_source.SetString("pointerType", pointer_type);
+      tmp_source.SetKey("pointerType", base::Value(pointer_type));
     }
 
     session->active_input_sources->Append(
@@ -828,20 +828,20 @@ Status ProcessInputActionSequence(Session* session,
       bool meta = false;
 
       tmp_state.SetList("pressed", std::move(pressed));
-      tmp_state.SetBoolean("alt", alt);
-      tmp_state.SetBoolean("shift", shift);
-      tmp_state.SetBoolean("ctrl", ctrl);
-      tmp_state.SetBoolean("meta", meta);
+      tmp_state.SetKey("alt", base::Value(alt));
+      tmp_state.SetKey("shift", base::Value(shift));
+      tmp_state.SetKey("ctrl", base::Value(ctrl));
+      tmp_state.SetKey("meta", base::Value(meta));
     } else if (type == "pointer") {
       std::unique_ptr<base::ListValue> pressed(new base::ListValue);
       int x = 0;
       int y = 0;
 
       tmp_state.SetList("pressed", std::move(pressed));
-      tmp_state.SetString("subtype", pointer_type);
+      tmp_state.SetKey("subtype", base::Value(pointer_type));
 
-      tmp_state.SetInteger("x", x);
-      tmp_state.SetInteger("y", y);
+      tmp_state.SetKey("x", base::Value(x));
+      tmp_state.SetKey("y", base::Value(y));
     }
     session->input_state_table->SetDictionary(
         id, base::MakeUnique<base::DictionaryValue>(std::move(tmp_state)));
@@ -868,16 +868,16 @@ Status ProcessInputActionSequence(Session* session,
         return Status(kInvalidArgument,
                       "type of action must be the  string 'pause'");
 
-      action->SetString("id", id);
-      action->SetString("type", "none");
-      action->SetString("subtype", subtype);
+      action->SetKey("id", base::Value(id));
+      action->SetKey("type", base::Value("none"));
+      action->SetKey("subtype", base::Value(subtype));
 
       int duration;
       if (action_item->GetInteger("duration", &duration)) {
         if (duration < 0)
           return Status(kInvalidArgument,
                         "duration must be a non-negative int");
-        action->SetInteger("duration", duration);
+        action->SetKey("duration", base::Value(duration));
       }
     } else if (type == "key") {
       // process key action
@@ -888,9 +888,9 @@ Status ProcessInputActionSequence(Session* session,
             kInvalidArgument,
             "type of action must be the string 'keyUp', 'keyDown' or 'pause'");
 
-      action->SetString("id", id);
-      action->SetString("type", "key");
-      action->SetString("subtype", subtype);
+      action->SetKey("id", base::Value(id));
+      action->SetKey("type", base::Value("key"));
+      action->SetKey("subtype", base::Value(subtype));
 
       if (subtype == "pause") {
         int duration;
@@ -898,7 +898,7 @@ Status ProcessInputActionSequence(Session* session,
           if (duration < 0)
             return Status(kInvalidArgument,
                           "duration must be a non-negative int");
-          action->SetInteger("duration", duration);
+          action->SetKey("duration", base::Value(duration));
         }
       }
       std::string key;
@@ -907,7 +907,7 @@ Status ProcessInputActionSequence(Session* session,
         return Status(kInvalidArgument,
                       "'value' must be a single unicode point");
       }
-      action->SetString("value", key);
+      action->SetKey("value", base::Value(key));
     } else if (type == "pointer") {
       std::string subtype;
       if (!action_item->GetString("type", &subtype) ||
@@ -918,9 +918,9 @@ Status ProcessInputActionSequence(Session* session,
                       "type of action must be the string 'pointerUp', "
                       "'pointerDown', 'pointerMove' or 'pause'");
 
-      action->SetString("id", id);
-      action->SetString("type", "pointer");
-      action->SetString("subtype", subtype);
+      action->SetKey("id", base::Value(id));
+      action->SetKey("type", base::Value("pointer"));
+      action->SetKey("subtype", base::Value(subtype));
 
       if (subtype == "pause") {
         int duration;
@@ -928,17 +928,17 @@ Status ProcessInputActionSequence(Session* session,
           if (duration < 0)
             return Status(kInvalidArgument,
                           "duration must be a non-negative int");
-          action->SetInteger("duration", duration);
+          action->SetKey("duration", base::Value(duration));
         }
       }
 
-      action->SetString("pointerType", pointer_type);
+      action->SetKey("pointerType", base::Value(pointer_type));
       if (subtype == "pointerUp" || subtype == "pointerDown") {
         int button;
         if (!action_item->GetInteger("button", &button) || button < 0)
           return Status(kInvalidArgument,
                         "'button' must be a non-negative int");
-        action->SetInteger("button", button);
+        action->SetKey("button", base::Value(button));
         if (subtype == "pointerDown") {
           int x;
           if (!action_item->GetInteger("x", &x))
@@ -947,8 +947,8 @@ Status ProcessInputActionSequence(Session* session,
           if (!action_item->GetInteger("y", &y))
             return Status(kInvalidArgument, "'y' must be an integer");
 
-          action->SetInteger("x", x);
-          action->SetInteger("y", y);
+          action->SetKey("x", base::Value(x));
+          action->SetKey("y", base::Value(y));
         }
       } else {
         // pointerMove
@@ -963,7 +963,7 @@ Status ProcessInputActionSequence(Session* session,
         if (origin != "viewport" && origin != "pointer")
           return Status(kInvalidArgument, "'origin' must be a string");
 
-        action->SetString("origin", origin);
+        action->SetKey("origin", base::Value(origin));
 
         int x;
         if (!action_item->GetInteger("x", &x))
@@ -972,8 +972,8 @@ Status ProcessInputActionSequence(Session* session,
         if (!action_item->GetInteger("y", &y))
           return Status(kInvalidArgument, "'y' must be an integer");
 
-        action->SetInteger("x", x);
-        action->SetInteger("y", y);
+        action->SetKey("x", base::Value(x));
+        action->SetKey("y", base::Value(y));
       }
     }
     ret->Append(std::move(action));

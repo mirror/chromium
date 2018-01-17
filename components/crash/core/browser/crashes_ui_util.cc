@@ -69,18 +69,20 @@ void UploadListToValue(UploadList* upload_list, base::ListValue* out_value) {
 
   for (const auto& info : crashes) {
     std::unique_ptr<base::DictionaryValue> crash(new base::DictionaryValue());
-    crash->SetString("id", info.upload_id);
+    crash->SetKey("id", base::Value(info.upload_id));
     if (info.state == UploadList::UploadInfo::State::Uploaded) {
-      crash->SetString("upload_time",
-                       base::TimeFormatFriendlyDateAndTime(info.upload_time));
+      crash->SetKey(
+          "upload_time",
+          base::Value(base::TimeFormatFriendlyDateAndTime(info.upload_time)));
     }
     if (!info.capture_time.is_null()) {
-      crash->SetString("capture_time",
-                       base::TimeFormatFriendlyDateAndTime(info.capture_time));
+      crash->SetKey(
+          "capture_time",
+          base::Value(base::TimeFormatFriendlyDateAndTime(info.capture_time)));
     }
-    crash->SetString("local_id", info.local_id);
-    crash->SetString("state", UploadInfoStateAsString(info.state));
-    crash->SetString("file_size", info.file_size);
+    crash->SetKey("local_id", base::Value(info.local_id));
+    crash->SetKey("state", base::Value(UploadInfoStateAsString(info.state)));
+    crash->SetKey("file_size", base::Value(info.file_size));
     out_value->Append(std::move(crash));
   }
 }

@@ -204,9 +204,9 @@ ExtensionFunction::ResponseAction AppWindowCreateFunction::Run() {
 
           std::unique_ptr<base::DictionaryValue> result(
               new base::DictionaryValue);
-          result->SetInteger("frameId", frame_id);
+          result->SetKey("frameId", base::Value(frame_id));
           existing_window->GetSerializedState(result.get());
-          result->SetBoolean("existingWindow", true);
+          result->SetKey("existingWindow", base::Value(true));
           return RespondNow(OneArgument(std::move(result)));
         }
       }
@@ -416,8 +416,8 @@ ExtensionFunction::ResponseAction AppWindowCreateFunction::Run() {
     frame_id = created_frame->GetRoutingID();
 
   std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue);
-  result->SetInteger("frameId", frame_id);
-  result->SetString("id", app_window->window_key());
+  result->SetKey("frameId", base::Value(frame_id));
+  result->SetKey("id", base::Value(app_window->window_key()));
   app_window->GetSerializedState(result.get());
   ResponseValue result_arg = OneArgument(std::move(result));
 

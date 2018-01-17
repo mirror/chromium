@@ -331,8 +331,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionOverrideTest, ShouldCleanUpDuplicateEntries) {
   auto list = base::MakeUnique<base::ListValue>();
   for (size_t i = 0; i < 3; ++i) {
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-    dict->SetString("entry", "http://www.google.com/");
-    dict->SetBoolean("active", true);
+    dict->SetKey("entry", base::Value("http://www.google.com/"));
+    dict->SetKey("active", base::Value(true));
     list->Append(std::move(dict));
   }
 

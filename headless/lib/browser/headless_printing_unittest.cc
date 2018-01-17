@@ -18,7 +18,7 @@ TEST(ParsePrintSettingsTest, Landscape) {
   EXPECT_FALSE(settings.landscape);
 
   auto params = std::make_unique<base::DictionaryValue>();
-  params->SetBoolean("landscape", true);
+  params->SetKey("landscape", base::Value(true));
   std::unique_ptr<base::DictionaryValue> response =
       ParsePrintSettings(0, params.get(), &settings);
   EXPECT_TRUE(settings.landscape);
@@ -30,7 +30,7 @@ TEST(ParsePrintSettingsTest, HeaderFooter) {
   EXPECT_FALSE(settings.display_header_footer);
 
   auto params = std::make_unique<base::DictionaryValue>();
-  params->SetBoolean("displayHeaderFooter", true);
+  params->SetKey("displayHeaderFooter", base::Value(true));
   std::unique_ptr<base::DictionaryValue> response =
       ParsePrintSettings(0, params.get(), &settings);
   EXPECT_TRUE(settings.display_header_footer);
@@ -42,7 +42,7 @@ TEST(ParsePrintSettingsTest, PrintBackground) {
   EXPECT_FALSE(settings.should_print_backgrounds);
 
   auto params = std::make_unique<base::DictionaryValue>();
-  params->SetBoolean("printBackground", true);
+  params->SetKey("printBackground", base::Value(true));
   std::unique_ptr<base::DictionaryValue> response =
       ParsePrintSettings(0, params.get(), &settings);
   EXPECT_TRUE(settings.should_print_backgrounds);
@@ -54,17 +54,17 @@ TEST(ParsePrintSettingsTest, Scale) {
   EXPECT_DOUBLE_EQ(1, settings.scale);
 
   auto params = std::make_unique<base::DictionaryValue>();
-  params->SetDouble("scale", 0.5);
+  params->SetKey("scale", base::Value(0.5));
   std::unique_ptr<base::DictionaryValue> response =
       ParsePrintSettings(0, params.get(), &settings);
   EXPECT_DOUBLE_EQ(0.5, settings.scale);
   EXPECT_EQ(nullptr, response);
 
-  params->SetDouble("scale", -1);
+  params->SetKey("scale", base::Value(static_cast<double>(-1)));
   response = ParsePrintSettings(0, params.get(), &settings);
   EXPECT_NE(nullptr, response);
 
-  params->SetDouble("scale", 10);
+  params->SetKey("scale", base::Value(static_cast<double>(10)));
   response = ParsePrintSettings(0, params.get(), &settings);
   EXPECT_NE(nullptr, response);
 }
@@ -74,8 +74,8 @@ TEST(ParsePrintSettingsTest, PageRanges) {
   EXPECT_EQ("", settings.page_ranges);
 
   auto params = std::make_unique<base::DictionaryValue>();
-  params->SetString("pageRanges", "abcd");
-  params->SetBoolean("ignoreInvalidPageRanges", true);
+  params->SetKey("pageRanges", base::Value("abcd"));
+  params->SetKey("ignoreInvalidPageRanges", base::Value(true));
   std::unique_ptr<base::DictionaryValue> response =
       ParsePrintSettings(0, params.get(), &settings);
   // Pass pageRanges text to settings directly and return no error, even if
@@ -98,8 +98,8 @@ TEST(ParsePrintSettingsTest, Paper) {
             settings.paper_size_in_points.height());
   EXPECT_EQ(nullptr, response);
 
-  params->SetDouble("paperWidth", 1);
-  params->SetDouble("paperHeight", 2);
+  params->SetKey("paperWidth", base::Value(static_cast<double>(1)));
+  params->SetKey("paperHeight", base::Value(static_cast<double>(2)));
   response = ParsePrintSettings(0, params.get(), &settings);
   EXPECT_EQ(1 * printing::kPointsPerInch,
             settings.paper_size_in_points.width());
@@ -107,13 +107,13 @@ TEST(ParsePrintSettingsTest, Paper) {
             settings.paper_size_in_points.height());
   EXPECT_EQ(nullptr, response);
 
-  params->SetDouble("paperWidth", -1);
-  params->SetDouble("paperHeight", 2);
+  params->SetKey("paperWidth", base::Value(static_cast<double>(-1)));
+  params->SetKey("paperHeight", base::Value(static_cast<double>(2)));
   response = ParsePrintSettings(0, params.get(), &settings);
   EXPECT_NE(nullptr, response);
 
-  params->SetDouble("paperWidth", 1);
-  params->SetDouble("paperHeight", -2);
+  params->SetKey("paperWidth", base::Value(static_cast<double>(1)));
+  params->SetKey("paperHeight", base::Value(static_cast<double>(-2)));
   response = ParsePrintSettings(0, params.get(), &settings);
   EXPECT_NE(nullptr, response);
 }
@@ -132,10 +132,10 @@ TEST(ParsePrintSettingsTest, Margin) {
   EXPECT_DOUBLE_EQ(default_margin, settings.margins_in_points.right);
   EXPECT_EQ(nullptr, response);
 
-  params->SetDouble("marginTop", 1);
-  params->SetDouble("marginBottom", 2);
-  params->SetDouble("marginLeft", 3);
-  params->SetDouble("marginRight", 4);
+  params->SetKey("marginTop", base::Value(static_cast<double>(1)));
+  params->SetKey("marginBottom", base::Value(static_cast<double>(2)));
+  params->SetKey("marginLeft", base::Value(static_cast<double>(3)));
+  params->SetKey("marginRight", base::Value(static_cast<double>(4)));
   response = ParsePrintSettings(0, params.get(), &settings);
   EXPECT_DOUBLE_EQ(1 * printing::kPointsPerInch,
                    settings.margins_in_points.top);
@@ -147,7 +147,7 @@ TEST(ParsePrintSettingsTest, Margin) {
                    settings.margins_in_points.right);
   EXPECT_EQ(nullptr, response);
 
-  params->SetDouble("marginTop", -1);
+  params->SetKey("marginTop", base::Value(static_cast<double>(-1)));
   response = ParsePrintSettings(0, params.get(), &settings);
   EXPECT_NE(nullptr, response);
 }

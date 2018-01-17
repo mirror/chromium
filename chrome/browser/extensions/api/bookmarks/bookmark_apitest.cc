@@ -39,11 +39,11 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, MAYBE_Bookmarks) {
 
   base::ListValue list;
   std::unique_ptr<base::DictionaryValue> node(new base::DictionaryValue());
-  node->SetString("name", "Managed Bookmark");
-  node->SetString("url", "http://www.chromium.org");
+  node->SetKey("name", base::Value("Managed Bookmark"));
+  node->SetKey("url", base::Value("http://www.chromium.org"));
   list.Append(std::move(node));
   node.reset(new base::DictionaryValue());
-  node->SetString("name", "Managed Folder");
+  node->SetKey("name", base::Value("Managed Folder"));
   node->Set("children", base::MakeUnique<base::ListValue>());
   list.Append(std::move(node));
   profile->GetPrefs()->Set(bookmarks::prefs::kManagedBookmarks, list);

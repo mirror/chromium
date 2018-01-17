@@ -98,11 +98,11 @@ bool DeviceInfo::Equals(const DeviceInfo& other) const {
 
 std::unique_ptr<base::DictionaryValue> DeviceInfo::ToValue() {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
-  value->SetString("name", client_name_);
-  value->SetString("id", public_id_);
-  value->SetString("os", GetOSString());
-  value->SetString("type", GetDeviceTypeString());
-  value->SetString("chromeVersion", chrome_version_);
+  value->SetKey("name", base::Value(client_name_));
+  value->SetKey("id", base::Value(public_id_));
+  value->SetKey("os", base::Value(GetOSString()));
+  value->SetKey("type", base::Value(GetDeviceTypeString()));
+  value->SetKey("chromeVersion", base::Value(chrome_version_));
   return value;
 }
 

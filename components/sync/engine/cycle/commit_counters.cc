@@ -18,10 +18,10 @@ CommitCounters::~CommitCounters() {}
 
 std::unique_ptr<base::DictionaryValue> CommitCounters::ToValue() const {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
-  value->SetInteger("numCommitsAttempted", num_commits_attempted);
-  value->SetInteger("numCommitsSuccess", num_commits_success);
-  value->SetInteger("numCommitsConflict", num_commits_conflict);
-  value->SetInteger("numCommitsError", num_commits_error);
+  value->SetKey("numCommitsAttempted", base::Value(num_commits_attempted));
+  value->SetKey("numCommitsSuccess", base::Value(num_commits_success));
+  value->SetKey("numCommitsConflict", base::Value(num_commits_conflict));
+  value->SetKey("numCommitsError", base::Value(num_commits_error));
   return value;
 }
 

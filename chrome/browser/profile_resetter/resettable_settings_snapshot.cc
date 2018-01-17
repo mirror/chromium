@@ -42,8 +42,8 @@ void AddPair(base::ListValue* list,
              const base::string16& key,
              const StringType& value) {
   std::unique_ptr<base::DictionaryValue> results(new base::DictionaryValue());
-  results->SetString("key", key);
-  results->SetString("value", value);
+  results->SetKey("key", base::Value(key));
+  results->SetKey("value", base::Value(value));
   list->Append(std::move(results));
 }
 

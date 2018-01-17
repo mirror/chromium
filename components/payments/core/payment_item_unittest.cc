@@ -18,10 +18,10 @@ TEST(PaymentRequestTest, PaymentItemFromDictionaryValueSuccess) {
   expected.amount->value = "2,242,093.00";
 
   base::DictionaryValue item_dict;
-  item_dict.SetString("label", "Payment Total");
+  item_dict.SetKey("label", base::Value("Payment Total"));
   auto amount_dict = std::make_unique<base::DictionaryValue>();
-  amount_dict->SetString("currency", "NZD");
-  amount_dict->SetString("value", "2,242,093.00");
+  amount_dict->SetKey("currency", base::Value("NZD"));
+  amount_dict->SetKey("value", base::Value("2,242,093.00"));
   item_dict.Set("amount", std::move(amount_dict));
 
   PaymentItem actual;
@@ -37,15 +37,15 @@ TEST(PaymentRequestTest, PaymentItemFromDictionaryValueFailure) {
   base::DictionaryValue item_dict;
   EXPECT_FALSE(actual.FromDictionaryValue(item_dict));
 
-  item_dict.SetString("label", "Payment Total");
+  item_dict.SetKey("label", base::Value("Payment Total"));
   EXPECT_FALSE(actual.FromDictionaryValue(item_dict));
 
   // Even with both present, the label must be a string.
   auto amount_dict = std::make_unique<base::DictionaryValue>();
-  amount_dict->SetString("currency", "NZD");
-  amount_dict->SetString("value", "2,242,093.00");
+  amount_dict->SetKey("currency", base::Value("NZD"));
+  amount_dict->SetKey("value", base::Value("2,242,093.00"));
   item_dict.Set("amount", std::move(amount_dict));
-  item_dict.SetInteger("label", 42);
+  item_dict.SetKey("label", base::Value(42));
   EXPECT_FALSE(actual.FromDictionaryValue(item_dict));
 }
 
@@ -82,14 +82,14 @@ TEST(PaymentRequestTest, PaymentItemEquality) {
 TEST(PaymentRequestTest, EmptyPaymentItemDictionary) {
   base::DictionaryValue expected_value;
 
-  expected_value.SetString("label", "");
+  expected_value.SetKey("label", base::Value(""));
   std::unique_ptr<base::DictionaryValue> amount_dict =
       std::make_unique<base::DictionaryValue>();
-  amount_dict->SetString("currency", "");
-  amount_dict->SetString("value", "");
-  amount_dict->SetString("currencySystem", "urn:iso:std:iso:4217");
+  amount_dict->SetKey("currency", base::Value(""));
+  amount_dict->SetKey("value", base::Value(""));
+  amount_dict->SetKey("currencySystem", base::Value("urn:iso:std:iso:4217"));
   expected_value.SetDictionary("amount", std::move(amount_dict));
-  expected_value.SetBoolean("pending", false);
+  expected_value.SetKey("pending", base::Value(false));
 
   PaymentItem payment_item;
   EXPECT_TRUE(expected_value.Equals(payment_item.ToDictionaryValue().get()));
@@ -99,14 +99,14 @@ TEST(PaymentRequestTest, EmptyPaymentItemDictionary) {
 TEST(PaymentRequestTest, PopulatedPaymentItemDictionary) {
   base::DictionaryValue expected_value;
 
-  expected_value.SetString("label", "Payment Total");
+  expected_value.SetKey("label", base::Value("Payment Total"));
   std::unique_ptr<base::DictionaryValue> amount_dict =
       std::make_unique<base::DictionaryValue>();
-  amount_dict->SetString("currency", "NZD");
-  amount_dict->SetString("value", "2,242,093.00");
-  amount_dict->SetString("currencySystem", "urn:iso:std:iso:4217");
+  amount_dict->SetKey("currency", base::Value("NZD"));
+  amount_dict->SetKey("value", base::Value("2,242,093.00"));
+  amount_dict->SetKey("currencySystem", base::Value("urn:iso:std:iso:4217"));
   expected_value.SetDictionary("amount", std::move(amount_dict));
-  expected_value.SetBoolean("pending", true);
+  expected_value.SetKey("pending", base::Value(true));
 
   PaymentItem payment_item;
   payment_item.label = "Payment Total";

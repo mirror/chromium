@@ -83,7 +83,7 @@ class MessageBundleTest : public testing::Test {
         CreateMessageTree("n 5", "nevermind", false, dict.get());
         break;
       case NAME_NOT_A_TREE:
-        dict->SetString("n4", "whatever");
+        dict->SetKey("n4", base::Value("whatever"));
         break;
       case EMPTY_NAME_TREE:
         dict->Set("n4", std::make_unique<base::DictionaryValue>());
@@ -92,7 +92,7 @@ class MessageBundleTest : public testing::Test {
         dict->Remove("n1.message", NULL);
         break;
       case PLACEHOLDER_NOT_A_TREE:
-        dict->SetString("n1.placeholders", "whatever");
+        dict->SetPath({"n1", "placeholders"}, base::Value("whatever"));
         break;
       case EMPTY_PLACEHOLDER_TREE:
         dict->Set("n1.placeholders", std::make_unique<base::DictionaryValue>());
@@ -181,7 +181,7 @@ TEST_F(MessageBundleTest, InitAppDictConsultedFirst) {
 
   base::DictionaryValue* app_dict = catalogs_[0].get();
   // Flip placeholders in message of n1 tree.
-  app_dict->SetString("n1.message", "message1 $b$ $a$");
+  app_dict->SetPath({"n1", "message"}, base::Value("message1 $b$ $a$"));
   // Remove one message from app dict.
   app_dict->Remove("n2", NULL);
   // Replace n3 with N3.

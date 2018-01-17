@@ -17,10 +17,10 @@ namespace {
 
 std::unique_ptr<base::DictionaryValue> CreateTestTypeValue() {
   auto value = std::make_unique<base::DictionaryValue>();
-  value->SetDouble("number", 1.1);
-  value->SetInteger("integer", 4);
-  value->SetString("string", "bling");
-  value->SetBoolean("boolean", true);
+  value->SetKey("number", base::Value(1.1));
+  value->SetKey("integer", base::Value(4));
+  value->SetKey("string", base::Value("bling"));
+  value->SetKey("boolean", base::Value(true));
   return value;
 }
 
@@ -29,8 +29,8 @@ std::unique_ptr<base::DictionaryValue> CreateTestTypeValue() {
 TEST(JsonSchemaCompilerCrossrefTest, CrossrefTypePopulateAndToValue) {
   base::DictionaryValue crossref_orig;
   crossref_orig.Set("testType", CreateTestTypeValue());
-  crossref_orig.SetString("testEnumRequired", "one");
-  crossref_orig.SetString("testEnumOptional", "two");
+  crossref_orig.SetKey("testEnumRequired", base::Value("one"));
+  crossref_orig.SetKey("testEnumOptional", base::Value("two"));
 
   // Test Populate of the value --> compiled type.
   crossref::CrossrefType crossref_type;
@@ -89,7 +89,7 @@ TEST(JsonSchemaCompilerCrossrefTest, TestTypeInObjectParamsCreate) {
     auto params_value = std::make_unique<base::ListValue>();
     auto param_object_value = std::make_unique<base::DictionaryValue>();
     param_object_value->Set("testType", CreateTestTypeValue());
-    param_object_value->SetBoolean("boolean", true);
+    param_object_value->SetKey("boolean", base::Value(true));
     params_value->Append(std::move(param_object_value));
     std::unique_ptr<crossref::TestTypeInObject::Params> params(
         crossref::TestTypeInObject::Params::Create(*params_value));
@@ -102,7 +102,7 @@ TEST(JsonSchemaCompilerCrossrefTest, TestTypeInObjectParamsCreate) {
   {
     auto params_value = std::make_unique<base::ListValue>();
     auto param_object_value = std::make_unique<base::DictionaryValue>();
-    param_object_value->SetBoolean("boolean", true);
+    param_object_value->SetKey("boolean", base::Value(true));
     params_value->Append(std::move(param_object_value));
     std::unique_ptr<crossref::TestTypeInObject::Params> params(
         crossref::TestTypeInObject::Params::Create(*params_value));
@@ -113,8 +113,8 @@ TEST(JsonSchemaCompilerCrossrefTest, TestTypeInObjectParamsCreate) {
   {
     auto params_value = std::make_unique<base::ListValue>();
     auto param_object_value = std::make_unique<base::DictionaryValue>();
-    param_object_value->SetString("testType", "invalid");
-    param_object_value->SetBoolean("boolean", true);
+    param_object_value->SetKey("testType", base::Value("invalid"));
+    param_object_value->SetKey("boolean", base::Value(true));
     params_value->Append(std::move(param_object_value));
     std::unique_ptr<crossref::TestTypeInObject::Params> params(
         crossref::TestTypeInObject::Params::Create(*params_value));

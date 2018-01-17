@@ -521,10 +521,10 @@ DataReductionProxyCompressionStats::HistoricNetworkStatsInfoToValue() {
 
   auto dict = std::make_unique<base::DictionaryValue>();
   // Use strings to avoid overflow. base::Value only supports 32-bit integers.
-  dict->SetString("historic_received_content_length",
-                  base::Int64ToString(total_received));
-  dict->SetString("historic_original_content_length",
-                  base::Int64ToString(total_original));
+  dict->SetKey("historic_received_content_length",
+               base::Value(base::Int64ToString(total_received)));
+  dict->SetKey("historic_original_content_length",
+               base::Value(base::Int64ToString(total_original)));
   return std::move(dict);
 }
 
@@ -534,10 +534,10 @@ DataReductionProxyCompressionStats::SessionNetworkStatsInfoToValue() const {
 
   auto dict = std::make_unique<base::DictionaryValue>();
   // Use strings to avoid overflow. base::Value only supports 32-bit integers.
-  dict->SetString("session_received_content_length",
-                  base::Int64ToString(session_total_received_));
-  dict->SetString("session_original_content_length",
-                  base::Int64ToString(session_total_original_));
+  dict->SetKey("session_received_content_length",
+               base::Value(base::Int64ToString(session_total_received_)));
+  dict->SetKey("session_original_content_length",
+               base::Value(base::Int64ToString(session_total_original_)));
   return std::move(dict);
 }
 

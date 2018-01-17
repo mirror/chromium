@@ -66,8 +66,8 @@ std::unique_ptr<base::Value> NetLogStartCallback(
     uint16_t qtype,
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("hostname", *hostname);
-  dict->SetInteger("query_type", qtype);
+  dict->SetKey("hostname", base::Value(*hostname));
+  dict->SetKey("query_type", base::Value(static_cast<int>(qtype)));
   return std::move(dict);
 }
 
@@ -127,8 +127,10 @@ class DnsAttempt {
     DCHECK(GetResponse()->IsValid());
 
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-    dict->SetInteger("rcode", GetResponse()->rcode());
-    dict->SetInteger("answer_count", GetResponse()->answer_count());
+    dict->SetKey("rcode",
+                 base::Value(static_cast<int>(GetResponse()->rcode())));
+    dict->SetKey("answer_count",
+                 base::Value(static_cast<int>(GetResponse()->answer_count())));
     GetSocketNetLog().source().AddToEventParameters(dict.get());
     return std::move(dict);
   }

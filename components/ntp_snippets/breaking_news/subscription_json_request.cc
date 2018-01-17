@@ -134,10 +134,10 @@ std::string SubscriptionJsonRequest::Builder::BuildHeaders() const {
 
 std::string SubscriptionJsonRequest::Builder::BuildBody() const {
   base::DictionaryValue request;
-  request.SetString("token", token_);
+  request.SetKey("token", base::Value(token_));
 
-  request.SetString("locale", locale_);
-  request.SetString("country_code", country_code_);
+  request.SetKey("locale", base::Value(locale_));
+  request.SetKey("country_code", base::Value(country_code_));
 
   std::string request_json;
   bool success = base::JSONWriter::Write(request, &request_json);

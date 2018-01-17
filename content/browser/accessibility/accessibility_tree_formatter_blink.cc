@@ -134,32 +134,32 @@ void AccessibilityTreeFormatterBlink::AddProperties(
     const BrowserAccessibility& node,
     base::DictionaryValue* dict) {
   int id = node.GetId();
-  dict->SetInteger("id", id);
+  dict->SetKey("id", base::Value(id));
 
-  dict->SetString("internalRole", ui::ToString(node.GetData().role));
+  dict->SetKey("internalRole", base::Value(ui::ToString(node.GetData().role)));
 
   gfx::Rect bounds = gfx::ToEnclosingRect(node.GetData().location);
-  dict->SetInteger("boundsX", bounds.x());
-  dict->SetInteger("boundsY", bounds.y());
-  dict->SetInteger("boundsWidth", bounds.width());
-  dict->SetInteger("boundsHeight", bounds.height());
+  dict->SetKey("boundsX", base::Value(bounds.x()));
+  dict->SetKey("boundsY", base::Value(bounds.y()));
+  dict->SetKey("boundsWidth", base::Value(bounds.width()));
+  dict->SetKey("boundsHeight", base::Value(bounds.height()));
 
   bool offscreen = false;
   gfx::Rect page_bounds = node.GetPageBoundsRect(&offscreen);
-  dict->SetInteger("pageBoundsX", page_bounds.x());
-  dict->SetInteger("pageBoundsY", page_bounds.y());
-  dict->SetInteger("pageBoundsWidth", page_bounds.width());
-  dict->SetInteger("pageBoundsHeight", page_bounds.height());
+  dict->SetKey("pageBoundsX", base::Value(page_bounds.x()));
+  dict->SetKey("pageBoundsY", base::Value(page_bounds.y()));
+  dict->SetKey("pageBoundsWidth", base::Value(page_bounds.width()));
+  dict->SetKey("pageBoundsHeight", base::Value(page_bounds.height()));
 
-  dict->SetBoolean("transform",
-                   node.GetData().transform &&
-                   !node.GetData().transform->IsIdentity());
+  dict->SetKey("transform",
+               base::Value(node.GetData().transform &&
+                           !node.GetData().transform->IsIdentity()));
 
   gfx::Rect unclipped_bounds = node.GetPageBoundsRect(&offscreen, false);
-  dict->SetInteger("unclippedBoundsX", unclipped_bounds.x());
-  dict->SetInteger("unclippedBoundsY", unclipped_bounds.y());
-  dict->SetInteger("unclippedBoundsWidth", unclipped_bounds.width());
-  dict->SetInteger("unclippedBoundsHeight", unclipped_bounds.height());
+  dict->SetKey("unclippedBoundsX", base::Value(unclipped_bounds.x()));
+  dict->SetKey("unclippedBoundsY", base::Value(unclipped_bounds.y()));
+  dict->SetKey("unclippedBoundsWidth", base::Value(unclipped_bounds.width()));
+  dict->SetKey("unclippedBoundsHeight", base::Value(unclipped_bounds.height()));
 
   for (int state_index = ui::AX_STATE_NONE;
        state_index <= ui::AX_STATE_LAST;
@@ -233,12 +233,13 @@ void AccessibilityTreeFormatterBlink::AddProperties(
   int anchor_id = node.manager()->GetTreeData().sel_anchor_object_id;
   if (id == anchor_id) {
     int anchor_offset = node.manager()->GetTreeData().sel_anchor_offset;
-    dict->SetInteger("TreeData.textSelStartOffset", anchor_offset);
+    dict->SetPath({"TreeData", "textSelStartOffset"},
+                  base::Value(anchor_offset));
   }
   int focus_id = node.manager()->GetTreeData().sel_focus_object_id;
   if (id == focus_id) {
     int focus_offset = node.manager()->GetTreeData().sel_focus_offset;
-    dict->SetInteger("TreeData.textSelEndOffset", focus_offset);
+    dict->SetPath({"TreeData", "textSelEndOffset"}, base::Value(focus_offset));
   }
 
   std::vector<std::string> actions_strings;
@@ -249,7 +250,8 @@ void AccessibilityTreeFormatterBlink::AddProperties(
       actions_strings.push_back(ui::ToString(action));
   }
   if (!actions_strings.empty())
-    dict->SetString("actions", base::JoinString(actions_strings, ","));
+    dict->SetKey("actions",
+                 base::Value(base::JoinString(actions_strings, ",")));
 }
 
 base::string16 AccessibilityTreeFormatterBlink::ProcessTreeForOutput(

@@ -38,8 +38,8 @@ TEST(JsonSchemaCompilerFunctionsOnTypesTest, StorageAreaGetParamsCreate) {
   {
     std::unique_ptr<base::DictionaryValue> keys_object_value(
         new base::DictionaryValue());
-    keys_object_value->SetInteger("integer", 5);
-    keys_object_value->SetString("string", "string");
+    keys_object_value->SetKey("integer", base::Value(5));
+    keys_object_value->SetKey("string", base::Value("string"));
     std::unique_ptr<base::ListValue> params_value(new base::ListValue());
     params_value->Append(keys_object_value->CreateDeepCopy());
     std::unique_ptr<StorageArea::Get::Params> params(
@@ -53,8 +53,8 @@ TEST(JsonSchemaCompilerFunctionsOnTypesTest, StorageAreaGetParamsCreate) {
 
 TEST(JsonSchemaCompilerFunctionsOnTypesTest, StorageAreaGetResultCreate) {
   StorageArea::Get::Results::Items items;
-  items.additional_properties.SetDouble("asdf", 0.1);
-  items.additional_properties.SetString("sdfg", "zxcv");
+  items.additional_properties.SetKey("asdf", base::Value(0.1));
+  items.additional_properties.SetKey("sdfg", base::Value("zxcv"));
   std::unique_ptr<base::ListValue> results =
       StorageArea::Get::Results::Create(items);
   base::DictionaryValue* item_result = NULL;
@@ -65,7 +65,7 @@ TEST(JsonSchemaCompilerFunctionsOnTypesTest, StorageAreaGetResultCreate) {
 TEST(JsonSchemaCompilerFunctionsOnTypesTest, ChromeSettingGetParamsCreate) {
   std::unique_ptr<base::DictionaryValue> details_value(
       new base::DictionaryValue());
-  details_value->SetBoolean("incognito", true);
+  details_value->SetKey("incognito", base::Value(true));
   std::unique_ptr<base::ListValue> params_value(new base::ListValue());
   params_value->Append(std::move(details_value));
   std::unique_ptr<ChromeSetting::Get::Params> params(

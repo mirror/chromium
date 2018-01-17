@@ -31,7 +31,7 @@ TEST(FrameTracker, GetContextIdForFrame) {
   ASSERT_EQ(100, context_id);
 
   base::DictionaryValue nav_params;
-  nav_params.SetString("frame.parentId", "1");
+  nav_params.SetPath({"frame", "parentId"}, base::Value("1"));
   ASSERT_EQ(kOk,
             tracker.OnEvent(&client, "Page.frameNavigated", nav_params).code());
   ASSERT_TRUE(tracker.GetContextIdForFrame("f", &context_id).IsOk());
@@ -52,8 +52,8 @@ TEST(FrameTracker, AuxData) {
   const char context[] = "{\"id\":100,\"auxData\":{}}";
   base::DictionaryValue params;
   params.Set("context", base::JSONReader::Read(context));
-  params.SetString("context.auxData.frameId", "f");
-  params.SetBoolean("context.auxData.isDefault", true);
+  params.SetPath({"context", "auxData", "frameId"}, base::Value("f"));
+  params.SetPath({"context", "auxData", "isDefault"}, base::Value(true));
   ASSERT_EQ(kOk,
             tracker.OnEvent(&client, "Runtime.executionContextCreated", params)
                 .code());
@@ -78,7 +78,7 @@ TEST(FrameTracker, CanUpdateFrameContextId) {
   ASSERT_TRUE(tracker.GetContextIdForFrame("f", &context_id).IsOk());
   ASSERT_EQ(1, context_id);
 
-  params.SetInteger("context.id", 2);
+  params.SetPath({"context", "id"}, base::Value(2));
   ASSERT_EQ(kOk,
             tracker.OnEvent(&client, "Runtime.executionContextCreated", params)
                 .code());
@@ -100,8 +100,8 @@ TEST(FrameTracker, DontTrackContentScriptContexts) {
   ASSERT_TRUE(tracker.GetContextIdForFrame("f", &context_id).IsOk());
   ASSERT_EQ(1, context_id);
 
-  params.SetInteger("context.id", 2);
-  params.SetString("context.type", "Extension");
+  params.SetPath({"context", "id"}, base::Value(2));
+  params.SetPath({"context", "type"}, base::Value("Extension"));
   ASSERT_EQ(kOk,
             tracker.OnEvent(&client, "Runtime.executionContextCreated", params)
                 .code());

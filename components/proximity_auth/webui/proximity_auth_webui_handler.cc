@@ -576,13 +576,16 @@ ProximityAuthWebUIHandler::ExternalDeviceInfoToDictionary(
   if (last_remote_status_update_) {
     std::unique_ptr<base::DictionaryValue> status_dictionary(
         new base::DictionaryValue());
-    status_dictionary->SetInteger("userPresent",
-                                  last_remote_status_update_->user_presence);
-    status_dictionary->SetInteger(
+    status_dictionary->SetKey("userPresent",
+                              base::Value(static_cast<int>(
+                                  last_remote_status_update_->user_presence)));
+    status_dictionary->SetKey(
         "secureScreenLock",
-        last_remote_status_update_->secure_screen_lock_state);
-    status_dictionary->SetInteger(
-        "trustAgent", last_remote_status_update_->trust_agent_state);
+        base::Value(static_cast<int>(
+            last_remote_status_update_->secure_screen_lock_state)));
+    status_dictionary->SetKey(
+        "trustAgent", base::Value(static_cast<int>(
+                          last_remote_status_update_->trust_agent_state)));
     dictionary->Set(kExternalDeviceRemoteState, std::move(status_dictionary));
   }
 

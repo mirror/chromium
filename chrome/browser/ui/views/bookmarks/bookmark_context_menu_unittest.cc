@@ -382,8 +382,8 @@ TEST_F(BookmarkContextMenuTest, ShowManagedBookmarks) {
 
   // Now set the managed bookmarks policy.
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
-  dict->SetString("name", "Google");
-  dict->SetString("url", "http://google.com");
+  dict->SetKey("name", base::Value("Google"));
+  dict->SetKey("url", base::Value("http://google.com"));
   base::ListValue list;
   list.Append(std::move(dict));
   EXPECT_TRUE(managed->managed_node()->empty());

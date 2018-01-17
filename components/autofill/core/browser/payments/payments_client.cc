@@ -84,8 +84,8 @@ GURL GetRequestUrl(const std::string& path) {
 base::DictionaryValue BuildCustomerContextDictionary(
     int64_t external_customer_id) {
   base::DictionaryValue customer_context;
-  customer_context.SetString("external_customer_id",
-                             std::to_string(external_customer_id));
+  customer_context.SetKey("external_customer_id",
+                          base::Value(std::to_string(external_customer_id)));
   return customer_context;
 }
 
@@ -98,11 +98,12 @@ base::DictionaryValue BuildRiskDictionary(
   risk_data.SetString("message_type", "RISK_ADVISORY_DATA");
   risk_data.SetString("encoding_type", "BASE_64_URL");
 #else
-  risk_data.SetString("message_type", "BROWSER_NATIVE_FINGERPRINTING");
-  risk_data.SetString("encoding_type", "BASE_64");
+  risk_data.SetKey("message_type",
+                   base::Value("BROWSER_NATIVE_FINGERPRINTING"));
+  risk_data.SetKey("encoding_type", base::Value("BASE_64"));
 #endif
 
-  risk_data.SetString("value", encoded_risk_data);
+  risk_data.SetKey("value", base::Value(encoded_risk_data));
 
   return risk_data;
 }
@@ -162,7 +163,7 @@ std::unique_ptr<base::DictionaryValue> BuildAddressDictionary(
   // Use GetRawInfo to get a country code instead of the country name:
   const base::string16 country_code = profile.GetRawInfo(ADDRESS_HOME_COUNTRY);
   if (!country_code.empty())
-    postal_address->SetString("country_name_code", country_code);
+    postal_address->SetKey("country_name_code", base::Value(country_code));
 
   std::unique_ptr<base::DictionaryValue> address(new base::DictionaryValue());
   address->Set("postal_address", std::move(postal_address));
@@ -210,12 +211,14 @@ class UnmaskCardRequest : public PaymentsRequest {
 
   std::string GetRequestContent() override {
     base::DictionaryValue request_dict;
-    request_dict.SetString("encrypted_cvc", "__param:s7e_13_cvc");
-    request_dict.SetString("credit_card_id", request_details_.card.server_id());
+    request_dict.SetKey("encrypted_cvc", base::Value("__param:s7e_13_cvc"));
+    request_dict.SetKey("credit_card_id",
+                        base::Value(request_details_.card.server_id()));
     request_dict.SetKey("risk_data_encoded",
                         BuildRiskDictionary(request_details_.risk_data));
     std::unique_ptr<base::DictionaryValue> context(new base::DictionaryValue());
-    context->SetInteger("billable_service", kUnmaskCardBillableServiceNumber);
+    context->SetKey("billable_service",
+                    base::Value(kUnmaskCardBillableServiceNumber));
     if (IsAutofillSendBillingCustomerNumberExperimentEnabled() &&
         request_details_.billing_customer_number != 0) {
       context->SetKey("customer_context",
@@ -226,9 +229,9 @@ class UnmaskCardRequest : public PaymentsRequest {
 
     int value = 0;
     if (base::StringToInt(request_details_.user_response.exp_month, &value))
-      request_dict.SetInteger("expiration_month", value);
+      request_dict.SetKey("expiration_month", base::Value(value));
     if (base::StringToInt(request_details_.user_response.exp_year, &value))
-      request_dict.SetInteger("expiration_year", value);
+      request_dict.SetKey("expiration_year", base::Value(value));
 
     std::string json_request;
     base::JSONWriter::Write(request_dict, &json_request);
@@ -283,7 +286,7 @@ class GetUploadDetailsRequest : public PaymentsRequest {
   std::string GetRequestContent() override {
     base::DictionaryValue request_dict;
     std::unique_ptr<base::DictionaryValue> context(new base::DictionaryValue());
-    context->SetString("language_code", app_locale_);
+    context->SetKey("language_code", base::Value(app_locale_));
     request_dict.Set("context", std::move(context));
 
     std::unique_ptr<base::ListValue> addresses(new base::ListValue());
@@ -303,11 +306,11 @@ class GetUploadDetailsRequest : public PaymentsRequest {
     // Payments what was found, and Payments will decide if the provided data is
     // enough to offer upload save.
     if (IsAutofillUpstreamSendDetectedValuesExperimentEnabled())
-      request_dict.SetInteger("detected_values", detected_values_);
+      request_dict.SetKey("detected_values", base::Value(detected_values_));
 
     if (IsAutofillUpstreamSendPanFirstSixExperimentEnabled() &&
         !pan_first_six_.empty())
-      request_dict.SetString("pan_first6", pan_first_six_);
+      request_dict.SetKey("pan_first6", base::Value(pan_first_six_));
 
     SetActiveExperiments(active_experiments_, &request_dict);
 
@@ -359,16 +362,17 @@ class UploadCardRequest : public PaymentsRequest {
 
   std::string GetRequestContent() override {
     base::DictionaryValue request_dict;
-    request_dict.SetString("encrypted_pan", "__param:s7e_1_pan");
+    request_dict.SetKey("encrypted_pan", base::Value("__param:s7e_1_pan"));
     if (!request_details_.cvc.empty())
-      request_dict.SetString("encrypted_cvc", "__param:s7e_13_cvc");
+      request_dict.SetKey("encrypted_cvc", base::Value("__param:s7e_13_cvc"));
     request_dict.SetKey("risk_data_encoded",
                         BuildRiskDictionary(request_details_.risk_data));
 
     const std::string& app_locale = request_details_.app_locale;
     std::unique_ptr<base::DictionaryValue> context(new base::DictionaryValue());
-    context->SetString("language_code", app_locale);
-    context->SetInteger("billable_service", kUploadCardBillableServiceNumber);
+    context->SetKey("language_code", base::Value(app_locale));
+    context->SetKey("billable_service",
+                    base::Value(kUploadCardBillableServiceNumber));
     if (IsAutofillSendBillingCustomerNumberExperimentEnabled() &&
         request_details_.billing_customer_number != 0) {
       context->SetKey("customer_context",
@@ -386,7 +390,8 @@ class UploadCardRequest : public PaymentsRequest {
     }
     request_dict.Set("address", std::move(addresses));
 
-    request_dict.SetString("context_token", request_details_.context_token);
+    request_dict.SetKey("context_token",
+                        base::Value(request_details_.context_token));
 
     int value = 0;
     const base::string16 exp_month = request_details_.card.GetInfo(
@@ -394,9 +399,9 @@ class UploadCardRequest : public PaymentsRequest {
     const base::string16 exp_year = request_details_.card.GetInfo(
         AutofillType(CREDIT_CARD_EXP_4_DIGIT_YEAR), app_locale);
     if (base::StringToInt(exp_month, &value))
-      request_dict.SetInteger("expiration_month", value);
+      request_dict.SetKey("expiration_month", base::Value(value));
     if (base::StringToInt(exp_year, &value))
-      request_dict.SetInteger("expiration_year", value);
+      request_dict.SetKey("expiration_year", base::Value(value));
 
     SetActiveExperiments(request_details_.active_experiments, &request_dict);
 

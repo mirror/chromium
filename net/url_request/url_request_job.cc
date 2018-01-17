@@ -41,7 +41,7 @@ std::unique_ptr<base::Value> SourceStreamSetCallback(
     NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::DictionaryValue> event_params(
       new base::DictionaryValue());
-  event_params->SetString("filters", source_stream->Description());
+  event_params->SetKey("filters", base::Value(source_stream->Description()));
   return std::move(event_params);
 }
 

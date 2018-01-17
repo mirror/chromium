@@ -15,8 +15,9 @@ StatusCounters::~StatusCounters() {}
 
 std::unique_ptr<base::DictionaryValue> StatusCounters::ToValue() const {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
-  value->SetInteger("numEntries", num_entries);
-  value->SetInteger("numEntriesAndTombstones", num_entries_and_tombstones);
+  value->SetKey("numEntries", base::Value(static_cast<int>(num_entries)));
+  value->SetKey("numEntriesAndTombstones",
+                base::Value(static_cast<int>(num_entries_and_tombstones)));
   return value;
 }
 

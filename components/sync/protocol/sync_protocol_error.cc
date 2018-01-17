@@ -58,10 +58,10 @@ SyncProtocolError::~SyncProtocolError() {}
 
 std::unique_ptr<base::DictionaryValue> SyncProtocolError::ToValue() const {
   auto value = std::make_unique<base::DictionaryValue>();
-  value->SetString("ErrorType", GetSyncErrorTypeString(error_type));
-  value->SetString("ErrorDescription", error_description);
-  value->SetString("url", url);
-  value->SetString("action", GetClientActionString(action));
+  value->SetKey("ErrorType", base::Value(GetSyncErrorTypeString(error_type)));
+  value->SetKey("ErrorDescription", base::Value(error_description));
+  value->SetKey("url", base::Value(url));
+  value->SetKey("action", base::Value(GetClientActionString(action)));
   return value;
 }
 

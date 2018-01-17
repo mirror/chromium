@@ -65,18 +65,19 @@ std::unique_ptr<base::Value> ChromeNetLog::GetConstants(
   auto dict = base::MakeUnique<base::DictionaryValue>();
 
   // We have everything we need to send the right values.
-  dict->SetString("name", version_info::GetProductName());
-  dict->SetString("version", version_info::GetVersionNumber());
-  dict->SetString("cl", version_info::GetLastChange());
-  dict->SetString("version_mod", channel_string);
-  dict->SetString("official",
-                  version_info::IsOfficialBuild() ? "official" : "unofficial");
+  dict->SetKey("name", base::Value(version_info::GetProductName()));
+  dict->SetKey("version", base::Value(version_info::GetVersionNumber()));
+  dict->SetKey("cl", base::Value(version_info::GetLastChange()));
+  dict->SetKey("version_mod", base::Value(channel_string));
+  dict->SetKey(
+      "official",
+      base::Value(version_info::IsOfficialBuild() ? "official" : "unofficial"));
   std::string os_type = base::StringPrintf(
       "%s: %s (%s)", base::SysInfo::OperatingSystemName().c_str(),
       base::SysInfo::OperatingSystemVersion().c_str(),
       base::SysInfo::OperatingSystemArchitecture().c_str());
-  dict->SetString("os_type", os_type);
-  dict->SetString("command_line", command_line_string);
+  dict->SetKey("os_type", base::Value(os_type));
+  dict->SetKey("command_line", base::Value(command_line_string));
 
   constants_dict->Set("clientInfo", std::move(dict));
 

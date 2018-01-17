@@ -98,11 +98,11 @@ scoped_refptr<Extension> CreateExtension(bool component, bool persistent) {
   ExtensionBuilder builder;
   std::unique_ptr<base::DictionaryValue> manifest =
       std::make_unique<base::DictionaryValue>();
-  manifest->SetString("name", "foo");
-  manifest->SetString("version", "1.0.0");
-  manifest->SetInteger("manifest_version", 2);
-  manifest->SetString("background.page", "background.html");
-  manifest->SetBoolean("background.persistent", persistent);
+  manifest->SetKey("name", base::Value("foo"));
+  manifest->SetKey("version", base::Value("1.0.0"));
+  manifest->SetKey("manifest_version", base::Value(2));
+  manifest->SetPath({"background", "page"}, base::Value("background.html"));
+  manifest->SetPath({"background", "persistent"}, base::Value(persistent));
   builder.SetManifest(std::move(manifest));
   if (component)
     builder.SetLocation(Manifest::Location::COMPONENT);

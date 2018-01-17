@@ -25,16 +25,17 @@ namespace {
 // dictionary to a good state
 void RestoreJwkRsaDictionary(base::DictionaryValue* dict) {
   dict->Clear();
-  dict->SetString("kty", "RSA");
-  dict->SetString("alg", "RS256");
-  dict->SetString("use", "sig");
-  dict->SetBoolean("ext", false);
-  dict->SetString(
-      "n",
-      "qLOyhK-OtQs4cDSoYPFGxJGfMYdjzWxVmMiuSBGh4KvEx-CwgtaTpef87Wdc9GaFEncsDLxk"
-      "p0LGxjD1M8jMcvYq6DPEC_JYQumEu3i9v5fAEH1VvbZi9cTg-rmEXLUUjvc5LdOq_5OuHmtm"
-      "e7PUJHYW1PW6ENTP0ibeiNOfFvs");
-  dict->SetString("e", "AQAB");
+  dict->SetKey("kty", base::Value("RSA"));
+  dict->SetKey("alg", base::Value("RS256"));
+  dict->SetKey("use", base::Value("sig"));
+  dict->SetKey("ext", base::Value(false));
+  dict->SetKey("n",
+               base::Value("qLOyhK-OtQs4cDSoYPFGxJGfMYdjzWxVmMiuSBGh4KvEx-"
+                           "CwgtaTpef87Wdc9GaFEncsDLxk"
+                           "p0LGxjD1M8jMcvYq6DPEC_JYQumEu3i9v5fAEH1VvbZi9cTg-"
+                           "rmEXLUUjvc5LdOq_5OuHmtm"
+                           "e7PUJHYW1PW6ENTP0ibeiNOfFvs"));
+  dict->SetKey("e", base::Value("AQAB"));
 }
 
 class WebCryptoRsaSsaTest : public WebCryptoTestBase {};
@@ -288,7 +289,7 @@ TEST_F(WebCryptoRsaSsaTest, ImportJwkExistingModulusAndInvalid) {
   ASSERT_TRUE(key2_props->GetDictionary("jwk", &key2_jwk));
   std::string modulus;
   key1_jwk->GetString("n", &modulus);
-  key2_jwk->SetString("n", modulus);
+  key2_jwk->SetKey("n", base::Value(modulus));
 
   // This should fail, as the n,e,d parameters are not consistent. It MUST NOT
   // somehow return the key created earlier.
@@ -717,7 +718,7 @@ TEST_F(WebCryptoRsaSsaTest, ImportRsaSsaPublicKeyBadUsage_JWK) {
   base::DictionaryValue dict;
   RestoreJwkRsaDictionary(&dict);
   dict.Remove("use", nullptr);
-  dict.SetString("alg", "RS256");
+  dict.SetKey("alg", base::Value("RS256"));
 
   for (size_t i = 0; i < arraysize(bad_usages); ++i) {
     SCOPED_TRACE(i);

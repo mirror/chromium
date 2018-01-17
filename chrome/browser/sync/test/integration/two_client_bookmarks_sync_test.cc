@@ -2054,8 +2054,8 @@ IN_PROC_BROWSER_TEST_F(TwoClientBookmarksSyncTest, ManagedBookmarks) {
   // Set the ManagedBookmarks policy for the first Profile,
   // which will add one new managed bookmark.
   std::unique_ptr<base::DictionaryValue> bookmark(new base::DictionaryValue());
-  bookmark->SetString("name", "Managed bookmark");
-  bookmark->SetString("url", "youtube.com");
+  bookmark->SetKey("name", base::Value("Managed bookmark"));
+  bookmark->SetKey("url", base::Value("youtube.com"));
   std::unique_ptr<base::ListValue> list(new base::ListValue());
   list->Append(std::move(bookmark));
   policy::PolicyMap policy;

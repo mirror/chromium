@@ -164,15 +164,17 @@ std::unique_ptr<base::DictionaryValue> GetTranslatedStrings(bool is_google) {
 std::string GetConfigData(bool is_google, const GURL& google_base_url) {
   base::DictionaryValue config_data;
   config_data.Set("translatedStrings", GetTranslatedStrings(is_google));
-  config_data.SetBoolean("isGooglePage", is_google);
-  config_data.SetString("googleBaseUrl", google_base_url.spec());
-  config_data.SetBoolean(
+  config_data.SetKey("isGooglePage", base::Value(is_google));
+  config_data.SetKey("googleBaseUrl", base::Value(google_base_url.spec()));
+  config_data.SetKey(
       "isAccessibleBrowser",
-      content::BrowserAccessibilityState::GetInstance()->IsAccessibleBrowser());
+      base::Value(content::BrowserAccessibilityState::GetInstance()
+                      ->IsAccessibleBrowser()));
 
   bool is_voice_search_enabled =
       base::FeatureList::IsEnabled(features::kVoiceSearchOnLocalNtp);
-  config_data.SetBoolean("isVoiceSearchEnabled", is_voice_search_enabled);
+  config_data.SetKey("isVoiceSearchEnabled",
+                     base::Value(is_voice_search_enabled));
 
   // Serialize the dictionary.
   std::string js_text;
@@ -205,12 +207,12 @@ std::string GetLocalNtpPath() {
 std::unique_ptr<base::DictionaryValue> ConvertOGBDataToDict(
     const OneGoogleBarData& og) {
   auto result = base::MakeUnique<base::DictionaryValue>();
-  result->SetString("barHtml", og.bar_html);
-  result->SetString("inHeadScript", og.in_head_script);
-  result->SetString("inHeadStyle", og.in_head_style);
-  result->SetString("afterBarScript", og.after_bar_script);
-  result->SetString("endOfBodyHtml", og.end_of_body_html);
-  result->SetString("endOfBodyScript", og.end_of_body_script);
+  result->SetKey("barHtml", base::Value(og.bar_html));
+  result->SetKey("inHeadScript", base::Value(og.in_head_script));
+  result->SetKey("inHeadStyle", base::Value(og.in_head_style));
+  result->SetKey("afterBarScript", base::Value(og.after_bar_script));
+  result->SetKey("endOfBodyHtml", base::Value(og.end_of_body_html));
+  result->SetKey("endOfBodyScript", base::Value(og.end_of_body_script));
   return result;
 }
 
@@ -237,15 +239,15 @@ std::string LogoTypeToString(search_provider_logos::LogoType type) {
 std::unique_ptr<base::DictionaryValue> ConvertLogoMetadataToDict(
     const LogoMetadata& meta) {
   auto result = base::MakeUnique<base::DictionaryValue>();
-  result->SetString("type", LogoTypeToString(meta.type));
-  result->SetString("onClickUrl", meta.on_click_url.spec());
-  result->SetString("altText", meta.alt_text);
-  result->SetString("mimeType", meta.mime_type);
-  result->SetString("animatedUrl", meta.animated_url.spec());
-  result->SetInteger("iframeWidthPx", meta.iframe_width_px);
-  result->SetInteger("iframeHeightPx", meta.iframe_height_px);
-  result->SetString("logUrl", meta.log_url.spec());
-  result->SetString("ctaLogUrl", meta.cta_log_url.spec());
+  result->SetKey("type", base::Value(LogoTypeToString(meta.type)));
+  result->SetKey("onClickUrl", base::Value(meta.on_click_url.spec()));
+  result->SetKey("altText", base::Value(meta.alt_text));
+  result->SetKey("mimeType", base::Value(meta.mime_type));
+  result->SetKey("animatedUrl", base::Value(meta.animated_url.spec()));
+  result->SetKey("iframeWidthPx", base::Value(meta.iframe_width_px));
+  result->SetKey("iframeHeightPx", base::Value(meta.iframe_height_px));
+  result->SetKey("logUrl", base::Value(meta.log_url.spec()));
+  result->SetKey("ctaLogUrl", base::Value(meta.cta_log_url.spec()));
 
   GURL full_page_url = meta.full_page_url;
   if (base::GetFieldTrialParamByFeatureAsBool(
@@ -258,7 +260,7 @@ std::unique_ptr<base::DictionaryValue> ConvertLogoMetadataToDict(
     // workaround, until the server doesn't redirect these requests by default.
     full_page_url = net::AppendQueryParameter(full_page_url, "gws_rd", "cr");
   }
-  result->SetString("fullPageUrl", full_page_url.spec());
+  result->SetKey("fullPageUrl", base::Value(full_page_url.spec()));
 
   // If support for interactive Doodles is disabled, treat them as simple
   // Doodles instead and use the full page URL as the target URL.
@@ -266,9 +268,10 @@ std::unique_ptr<base::DictionaryValue> ConvertLogoMetadataToDict(
       !base::GetFieldTrialParamByFeatureAsBool(features::kDoodlesOnLocalNtp,
                                                "local_ntp_interactive_doodles",
                                                /*default_value=*/true)) {
-    result->SetString(
-        "type", LogoTypeToString(search_provider_logos::LogoType::SIMPLE));
-    result->SetString("onClickUrl", meta.full_page_url.spec());
+    result->SetKey(
+        "type",
+        base::Value(LogoTypeToString(search_provider_logos::LogoType::SIMPLE)));
+    result->SetKey("onClickUrl", base::Value(meta.full_page_url.spec()));
   }
 
   return result;
@@ -391,18 +394,19 @@ class LocalNtpSource::DesktopLogoObserver {
                        const base::Optional<EncodedLogo>& logo) {
     scoped_refptr<base::RefCountedString> response;
     auto ddl = base::MakeUnique<base::DictionaryValue>();
-    ddl->SetInteger("v", version_started_);
+    ddl->SetKey("v", base::Value(version_started_));
     if (type == LogoCallbackReason::DETERMINED) {
-      ddl->SetBoolean("usable", true);
+      ddl->SetKey("usable", base::Value(true));
       if (logo.has_value()) {
-        ddl->SetString("image", ConvertLogoImageToBase64(logo.value()));
+        ddl->SetKey("image",
+                    base::Value(ConvertLogoImageToBase64(logo.value())));
         ddl->Set("metadata", ConvertLogoMetadataToDict(logo->metadata));
       } else {
         ddl->SetKey("image", base::Value());
         ddl->SetKey("metadata", base::Value());
       }
     } else {
-      ddl->SetBoolean("usable", false);
+      ddl->SetKey("usable", base::Value(false));
     }
 
     std::string js;

@@ -17,10 +17,10 @@ namespace {
 // list.
 std::unique_ptr<DictionaryValue> GenerateDict() {
   auto root = std::make_unique<DictionaryValue>();
-  root->SetDouble("Double", 3.141);
-  root->SetBoolean("Bool", true);
-  root->SetInteger("Int", 42);
-  root->SetString("String", "Foo");
+  root->SetKey("Double", base::Value(3.141));
+  root->SetKey("Bool", base::Value(true));
+  root->SetKey("Int", base::Value(42));
+  root->SetKey("String", base::Value("Foo"));
 
   auto list = std::make_unique<ListValue>();
   list->Set(0, std::make_unique<Value>(2.718));

@@ -51,7 +51,7 @@ std::string BuildResponse(bool is_porn) {
   std::unique_ptr<base::DictionaryValue> classification_dict(
       new base::DictionaryValue);
   if (is_porn)
-    classification_dict->SetBoolean("pornography", is_porn);
+    classification_dict->SetKey("pornography", base::Value(is_porn));
   auto classifications_list = base::MakeUnique<base::ListValue>();
   classifications_list->Append(std::move(classification_dict));
   dict.SetWithoutPathExpansion("classifications",

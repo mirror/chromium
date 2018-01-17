@@ -39,26 +39,28 @@ void SuperfishErrorUI::PopulateStringsForHTML(
   common_string_util::PopulateSSLDebuggingStrings(ssl_info(), time_triggered(),
                                                   load_time_data);
 
-  load_time_data->SetString("type", "SSL");
-  load_time_data->SetString("errorCode", net::ErrorToString(cert_error()));
-  load_time_data->SetBoolean("overridable", false);
-  load_time_data->SetBoolean("bad_clock", false);
-  load_time_data->SetBoolean("hide_primary_button", true);
-  load_time_data->SetString("tabTitle",
-                            l10n_util::GetStringUTF16(IDS_SSL_V2_TITLE));
-  load_time_data->SetString(
-      "heading", l10n_util::GetStringUTF16(IDS_SSL_SUPERFISH_HEADING));
-  load_time_data->SetString(
-      "primaryParagraph",
-      l10n_util::GetStringUTF16(IDS_SSL_SUPERFISH_PRIMARY_PARAGRAPH));
+  load_time_data->SetKey("type", base::Value("SSL"));
+  load_time_data->SetKey("errorCode",
+                         base::Value(net::ErrorToString(cert_error())));
+  load_time_data->SetKey("overridable", base::Value(false));
+  load_time_data->SetKey("bad_clock", base::Value(false));
+  load_time_data->SetKey("hide_primary_button", base::Value(true));
+  load_time_data->SetKey(
+      "tabTitle", base::Value(l10n_util::GetStringUTF16(IDS_SSL_V2_TITLE)));
+  load_time_data->SetKey(
+      "heading",
+      base::Value(l10n_util::GetStringUTF16(IDS_SSL_SUPERFISH_HEADING)));
+  load_time_data->SetKey("primaryParagraph",
+                         base::Value(l10n_util::GetStringUTF16(
+                             IDS_SSL_SUPERFISH_PRIMARY_PARAGRAPH)));
 
   // Fill in empty values for normal SSL error strings that aren't used on this
   // interstitial.
-  load_time_data->SetString("explanationParagraph", std::string());
-  load_time_data->SetString("primaryButtonText", std::string());
-  load_time_data->SetString("finalParagraph", std::string());
-  load_time_data->SetString("openDetails", base::string16());
-  load_time_data->SetString("closeDetails", base::string16());
+  load_time_data->SetKey("explanationParagraph", base::Value(std::string()));
+  load_time_data->SetKey("primaryButtonText", base::Value(std::string()));
+  load_time_data->SetKey("finalParagraph", base::Value(std::string()));
+  load_time_data->SetKey("openDetails", base::Value(base::string16()));
+  load_time_data->SetKey("closeDetails", base::Value(base::string16()));
 }
 
 void SuperfishErrorUI::HandleCommand(SecurityInterstitialCommand command) {

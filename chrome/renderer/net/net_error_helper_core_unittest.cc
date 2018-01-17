@@ -57,12 +57,12 @@ struct NavigationCorrection {
 
   std::unique_ptr<base::DictionaryValue> ToValue() const {
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-    dict->SetString("correctionType", correction_type);
-    dict->SetString("urlCorrection", url_correction);
-    dict->SetString("clickType", click_type);
-    dict->SetString("clickData", click_data);
-    dict->SetBoolean("isPorn", is_porn);
-    dict->SetBoolean("isSoftPorn", is_soft_porn);
+    dict->SetKey("correctionType", base::Value(correction_type));
+    dict->SetKey("urlCorrection", base::Value(url_correction));
+    dict->SetKey("clickType", base::Value(click_type));
+    dict->SetKey("clickData", base::Value(click_data));
+    dict->SetKey("isPorn", base::Value(is_porn));
+    dict->SetKey("isSoftPorn", base::Value(is_soft_porn));
     return dict;
   }
 };
@@ -87,8 +87,10 @@ std::string SuggestionsToResponse(const NavigationCorrection* corrections,
 
   base::DictionaryValue response;
   response.Set("result.UrlCorrections", std::move(url_corrections));
-  response.SetString("result.eventId", kNavigationCorrectionEventId);
-  response.SetString("result.fingerprint", kNavigationCorrectionFingerprint);
+  response.SetPath({"result", "eventId"},
+                   base::Value(kNavigationCorrectionEventId));
+  response.SetPath({"result", "fingerprint"},
+                   base::Value(kNavigationCorrectionFingerprint));
 
   std::string json;
   base::JSONWriter::Write(response, &json);

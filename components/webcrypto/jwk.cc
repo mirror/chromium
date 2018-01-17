@@ -352,10 +352,10 @@ JwkWriter::JwkWriter(const std::string& algorithm,
                      blink::WebCryptoKeyUsageMask usages,
                      const std::string& kty) {
   if (!algorithm.empty())
-    dict_.SetString("alg", algorithm);
+    dict_.SetKey("alg", base::Value(algorithm));
   dict_.Set("key_ops", CreateJwkKeyOpsFromWebCryptoUsages(usages));
-  dict_.SetBoolean("ext", extractable);
-  dict_.SetString("kty", kty);
+  dict_.SetKey("ext", base::Value(extractable));
+  dict_.SetKey("kty", base::Value(kty));
 }
 
 void JwkWriter::SetString(const std::string& member_name,

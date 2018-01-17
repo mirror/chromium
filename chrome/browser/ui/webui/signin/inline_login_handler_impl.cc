@@ -414,13 +414,13 @@ void InlineLoginHandlerImpl::DidFinishNavigation(
 
 // static
 void InlineLoginHandlerImpl::SetExtraInitParams(base::DictionaryValue& params) {
-  params.SetString("service", "chromiumsync");
+  params.SetKey("service", base::Value("chromiumsync"));
 
   // If this was called from the user manager to reauthenticate the profile,
   // make sure the webui is aware.
   Profile* profile = Profile::FromWebUI(web_ui());
   if (IsSystemProfile(profile))
-    params.SetBoolean("dontResizeNonEmbeddedPages", true);
+    params.SetKey("dontResizeNonEmbeddedPages", base::Value(true));
 
   content::WebContents* contents = web_ui()->GetWebContents();
   const GURL& current_url = contents->GetURL();
@@ -433,10 +433,11 @@ void InlineLoginHandlerImpl::SetExtraInitParams(base::DictionaryValue& params) {
   // Use new embedded flow if in constrained window.
   if (is_constrained == "1") {
     const GURL& url = GaiaUrls::GetInstance()->embedded_signin_url();
-    params.SetBoolean("isNewGaiaFlow", true);
-    params.SetString("clientId",
-                     GaiaUrls::GetInstance()->oauth2_chrome_client_id());
-    params.SetString("gaiaPath", url.path().substr(1));
+    params.SetKey("isNewGaiaFlow", base::Value(true));
+    params.SetKey(
+        "clientId",
+        base::Value(GaiaUrls::GetInstance()->oauth2_chrome_client_id()));
+    params.SetKey("gaiaPath", base::Value(url.path().substr(1)));
 
     std::string flow;
     switch (reason) {
@@ -454,7 +455,7 @@ void InlineLoginHandlerImpl::SetExtraInitParams(base::DictionaryValue& params) {
         flow = "signin";
         break;
     }
-    params.SetString("flow", flow);
+    params.SetKey("flow", base::Value(flow));
   }
 
   content::WebContentsObserver::Observe(contents);

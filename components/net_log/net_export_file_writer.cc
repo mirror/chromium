@@ -242,7 +242,7 @@ std::unique_ptr<base::DictionaryValue> NetExportFileWriter::GetState() const {
 
   auto dict = base::MakeUnique<base::DictionaryValue>();
 
-  dict->SetString("file", log_path_.LossyDisplayName());
+  dict->SetKey("file", base::Value(log_path_.LossyDisplayName()));
 
   base::StringPiece state_string;
   switch (state_) {
@@ -265,11 +265,12 @@ std::unique_ptr<base::DictionaryValue> NetExportFileWriter::GetState() const {
       state_string = "STOPPING_LOG";
       break;
   }
-  dict->SetString("state", state_string);
+  dict->SetKey("state", base::Value(state_string));
 
-  dict->SetBoolean("logExists", log_exists_);
-  dict->SetBoolean("logCaptureModeKnown", log_capture_mode_known_);
-  dict->SetString("captureMode", CaptureModeToString(log_capture_mode_));
+  dict->SetKey("logExists", base::Value(log_exists_));
+  dict->SetKey("logCaptureModeKnown", base::Value(log_capture_mode_known_));
+  dict->SetKey("captureMode",
+               base::Value(CaptureModeToString(log_capture_mode_)));
 
   return dict;
 }

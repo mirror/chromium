@@ -91,10 +91,10 @@ void NTPTilesInternalsMessageHandler::HandleRegisterForEvents(
     const base::ListValue* args) {
   if (!client_->SupportsNTPTiles()) {
     base::DictionaryValue disabled;
-    disabled.SetBoolean("topSites", false);
-    disabled.SetBoolean("suggestionsService", false);
-    disabled.SetBoolean("popular", false);
-    disabled.SetBoolean("whitelist", false);
+    disabled.SetKey("topSites", base::Value(false));
+    disabled.SetKey("suggestionsService", base::Value(false));
+    disabled.SetKey("popular", base::Value(false));
+    disabled.SetKey("whitelist", base::Value(false));
     client_->CallJavascriptFunction(
         "chrome.ntp_tiles_internals.receiveSourceInfo", disabled);
     SendTiles(NTPTilesVector(), FaviconResultMap());
@@ -200,40 +200,47 @@ void NTPTilesInternalsMessageHandler::SendSourceInfo() {
   PrefService* prefs = client_->GetPrefs();
   base::DictionaryValue value;
 
-  value.SetBoolean("topSites",
-                   most_visited_sites_->DoesSourceExist(TileSource::TOP_SITES));
-  value.SetBoolean("whitelist",
-                   most_visited_sites_->DoesSourceExist(TileSource::WHITELIST));
+  value.SetKey(
+      "topSites",
+      base::Value(most_visited_sites_->DoesSourceExist(TileSource::TOP_SITES)));
+  value.SetKey(
+      "whitelist",
+      base::Value(most_visited_sites_->DoesSourceExist(TileSource::WHITELIST)));
 
   if (most_visited_sites_->DoesSourceExist(TileSource::SUGGESTIONS_SERVICE)) {
-    value.SetString("suggestionsService.status", suggestions_status_);
+    value.SetPath({"suggestionsService", "status"},
+                  base::Value(suggestions_status_));
   } else {
-    value.SetBoolean("suggestionsService", false);
+    value.SetKey("suggestionsService", base::Value(false));
   }
 
   if (most_visited_sites_->DoesSourceExist(TileSource::POPULAR)) {
     auto* popular_sites = most_visited_sites_->popular_sites();
-    value.SetString("popular.url", popular_sites->GetURLToFetch().spec());
-    value.SetString("popular.directory", popular_sites->GetDirectoryToFetch());
-    value.SetString("popular.country", popular_sites->GetCountryToFetch());
-    value.SetString("popular.version", popular_sites->GetVersionToFetch());
+    value.SetPath({"popular", "url"},
+                  base::Value(popular_sites->GetURLToFetch().spec()));
+    value.SetPath({"popular", "directory"},
+                  base::Value(popular_sites->GetDirectoryToFetch()));
+    value.SetPath({"popular", "country"},
+                  base::Value(popular_sites->GetCountryToFetch()));
+    value.SetPath({"popular", "version"},
+                  base::Value(popular_sites->GetVersionToFetch()));
 
-    value.SetString(
-        "popular.overrideURL",
-        prefs->GetString(ntp_tiles::prefs::kPopularSitesOverrideURL));
-    value.SetString(
-        "popular.overrideDirectory",
-        prefs->GetString(ntp_tiles::prefs::kPopularSitesOverrideDirectory));
-    value.SetString(
-        "popular.overrideCountry",
-        prefs->GetString(ntp_tiles::prefs::kPopularSitesOverrideCountry));
-    value.SetString(
-        "popular.overrideVersion",
-        prefs->GetString(ntp_tiles::prefs::kPopularSitesOverrideVersion));
+    value.SetPath({"popular", "overrideURL"},
+                  base::Value(prefs->GetString(
+                      ntp_tiles::prefs::kPopularSitesOverrideURL)));
+    value.SetPath({"popular", "overrideDirectory"},
+                  base::Value(prefs->GetString(
+                      ntp_tiles::prefs::kPopularSitesOverrideDirectory)));
+    value.SetPath({"popular", "overrideCountry"},
+                  base::Value(prefs->GetString(
+                      ntp_tiles::prefs::kPopularSitesOverrideCountry)));
+    value.SetPath({"popular", "overrideVersion"},
+                  base::Value(prefs->GetString(
+                      ntp_tiles::prefs::kPopularSitesOverrideVersion)));
 
-    value.SetString("popular.json", popular_sites_json_);
+    value.SetPath({"popular", "json"}, base::Value(popular_sites_json_));
   } else {
-    value.SetBoolean("popular", false);
+    value.SetKey("popular", base::Value(false));
   }
 
   client_->CallJavascriptFunction(
@@ -246,11 +253,11 @@ void NTPTilesInternalsMessageHandler::SendTiles(
   auto sites_list = base::MakeUnique<base::ListValue>();
   for (const NTPTile& tile : tiles) {
     auto entry = base::MakeUnique<base::DictionaryValue>();
-    entry->SetString("title", tile.title);
-    entry->SetString("url", tile.url.spec());
-    entry->SetInteger("source", static_cast<int>(tile.source));
-    entry->SetString("whitelistIconPath",
-                     tile.whitelist_icon_path.LossyDisplayName());
+    entry->SetKey("title", base::Value(tile.title));
+    entry->SetKey("url", base::Value(tile.url.spec()));
+    entry->SetKey("source", base::Value(static_cast<int>(tile.source)));
+    entry->SetKey("whitelistIconPath",
+                  base::Value(tile.whitelist_icon_path.LossyDisplayName()));
 
     auto icon_list = base::MakeUnique<base::ListValue>();
     for (const auto& entry : kIconTypesAndNames) {
@@ -260,11 +267,12 @@ void NTPTilesInternalsMessageHandler::SendTiles(
       if (it != result_map.end()) {
         const favicon_base::FaviconRawBitmapResult& result = it->second;
         auto icon = base::MakeUnique<base::DictionaryValue>();
-        icon->SetString("url", result.icon_url.spec());
-        icon->SetString("type", entry.type_name);
-        icon->SetBoolean("onDemand", !result.fetched_because_of_page_visit);
-        icon->SetInteger("width", result.pixel_size.width());
-        icon->SetInteger("height", result.pixel_size.height());
+        icon->SetKey("url", base::Value(result.icon_url.spec()));
+        icon->SetKey("type", base::Value(entry.type_name));
+        icon->SetKey("onDemand",
+                     base::Value(!result.fetched_because_of_page_visit));
+        icon->SetKey("width", base::Value(result.pixel_size.width()));
+        icon->SetKey("height", base::Value(result.pixel_size.height()));
         icon_list->Append(std::move(icon));
       }
     }

@@ -116,7 +116,7 @@ TEST(JsonSchemaCompilerChoicesTest, PopulateChoiceType) {
     strings_value->AppendString(strings[i]);
 
   base::DictionaryValue value;
-  value.SetInteger("integers", 4);
+  value.SetKey("integers", base::Value(4));
   value.Set("strings", std::move(strings_value));
 
   ChoiceType out;
@@ -137,7 +137,7 @@ TEST(JsonSchemaCompilerChoicesTest, ChoiceTypeToValue) {
   strings_value->AppendString("strings");
 
   base::DictionaryValue value;
-  value.SetInteger("integers", 5);
+  value.SetKey("integers", base::Value(5));
   value.Set("strings", std::move(strings_value));
 
   ChoiceType out;

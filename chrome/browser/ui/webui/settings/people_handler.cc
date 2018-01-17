@@ -737,12 +737,12 @@ PeopleHandler::GetSyncStatusDictionary() {
   if (profile_->IsGuestSession()) {
     // Cannot display signin status when running in guest mode on chromeos
     // because there is no SigninManager.
-    sync_status->SetBoolean("signinAllowed", false);
+    sync_status->SetKey("signinAllowed", base::Value(false));
     return sync_status;
   }
 
-  sync_status->SetBoolean("supervisedUser", profile_->IsSupervised());
-  sync_status->SetBoolean("childUser", profile_->IsChild());
+  sync_status->SetKey("supervisedUser", base::Value(profile_->IsSupervised()));
+  sync_status->SetKey("childUser", base::Value(profile_->IsChild()));
 
   SigninManagerBase* signin = SigninManagerFactory::GetForProfile(profile_);
   DCHECK(signin);
@@ -754,19 +754,20 @@ PeopleHandler::GetSyncStatusDictionary() {
     // If there is no one logged in or if the profile name is empty then the
     // domain name is empty. This happens in browser tests.
     if (!username.empty())
-      sync_status->SetString("domain", gaia::ExtractDomainName(username));
+      sync_status->SetKey("domain",
+                          base::Value(gaia::ExtractDomainName(username)));
   }
 #endif
 
   ProfileSyncService* service =
       ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile_);
-  sync_status->SetBoolean("signinAllowed", signin->IsSigninAllowed());
-  sync_status->SetBoolean("syncSystemEnabled", (service != nullptr));
-  sync_status->SetBoolean("setupCompleted",
-                          service && service->IsFirstSetupComplete());
-  sync_status->SetBoolean(
-      "setupInProgress",
-      service && !service->IsManaged() && service->IsFirstSetupInProgress());
+  sync_status->SetKey("signinAllowed", base::Value(signin->IsSigninAllowed()));
+  sync_status->SetKey("syncSystemEnabled", base::Value((service != nullptr)));
+  sync_status->SetKey("setupCompleted",
+                      base::Value(service && service->IsFirstSetupComplete()));
+  sync_status->SetKey("setupInProgress",
+                      base::Value(service && !service->IsManaged() &&
+                                  service->IsFirstSetupInProgress()));
 
   base::string16 status_label;
   base::string16 link_label;
@@ -776,16 +777,18 @@ PeopleHandler::GetSyncStatusDictionary() {
                                     sync_ui_util::PLAIN_TEXT, &status_label,
                                     &link_label, &action_type) ==
       sync_ui_util::SYNC_ERROR;
-  sync_status->SetString("statusText", status_label);
-  sync_status->SetBoolean("hasError", status_has_error);
-  sync_status->SetString("statusAction", GetSyncErrorAction(action_type));
+  sync_status->SetKey("statusText", base::Value(status_label));
+  sync_status->SetKey("hasError", base::Value(status_has_error));
+  sync_status->SetKey("statusAction",
+                      base::Value(GetSyncErrorAction(action_type)));
 
-  sync_status->SetBoolean("managed", service && service->IsManaged());
-  sync_status->SetBoolean("signedIn", signin->IsAuthenticated());
-  sync_status->SetString("signedInUsername",
-                         signin_ui_util::GetAuthenticatedUsername(signin));
-  sync_status->SetBoolean("hasUnrecoverableError",
-                          service && service->HasUnrecoverableError());
+  sync_status->SetKey("managed", base::Value(service && service->IsManaged()));
+  sync_status->SetKey("signedIn", base::Value(signin->IsAuthenticated()));
+  sync_status->SetKey(
+      "signedInUsername",
+      base::Value(signin_ui_util::GetAuthenticatedUsername(signin)));
+  sync_status->SetKey("hasUnrecoverableError",
+                      base::Value(service && service->HasUnrecoverableError()));
 
   return sync_status;
 }
@@ -840,58 +843,64 @@ void PeopleHandler::PushSyncPrefs() {
   }
   PrefService* pref_service = profile_->GetPrefs();
   syncer::SyncPrefs sync_prefs(pref_service);
-  args.SetBoolean("syncAllDataTypes", sync_prefs.HasKeepEverythingSynced());
-  args.SetBoolean(
-      "paymentsIntegrationEnabled",
-      pref_service->GetBoolean(autofill::prefs::kAutofillWalletImportEnabled));
-  args.SetBoolean("encryptAllData", service->IsEncryptEverythingEnabled());
-  args.SetBoolean("encryptAllDataAllowed",
-                  service->IsEncryptEverythingAllowed());
+  args.SetKey("syncAllDataTypes",
+              base::Value(sync_prefs.HasKeepEverythingSynced()));
+  args.SetKey("paymentsIntegrationEnabled",
+              base::Value(pref_service->GetBoolean(
+                  autofill::prefs::kAutofillWalletImportEnabled)));
+  args.SetKey("encryptAllData",
+              base::Value(service->IsEncryptEverythingEnabled()));
+  args.SetKey("encryptAllDataAllowed",
+              base::Value(service->IsEncryptEverythingAllowed()));
 
   // We call IsPassphraseRequired() here, instead of calling
   // IsPassphraseRequiredForDecryption(), because we want to show the passphrase
   // UI even if no encrypted data types are enabled.
-  args.SetBoolean("passphraseRequired", service->IsPassphraseRequired());
+  args.SetKey("passphraseRequired",
+              base::Value(service->IsPassphraseRequired()));
 
   // To distinguish between PassphraseType::FROZEN_IMPLICIT_PASSPHRASE and
   // PassphraseType::CUSTOM_PASSPHRASE
   // we only set passphraseTypeIsCustom for PassphraseType::CUSTOM_PASSPHRASE.
-  args.SetBoolean("passphraseTypeIsCustom",
-                  service->GetPassphraseType() ==
-                      syncer::PassphraseType::CUSTOM_PASSPHRASE);
+  args.SetKey("passphraseTypeIsCustom",
+              base::Value(service->GetPassphraseType() ==
+                          syncer::PassphraseType::CUSTOM_PASSPHRASE));
   base::Time passphrase_time = service->GetExplicitPassphraseTime();
   syncer::PassphraseType passphrase_type = service->GetPassphraseType();
   if (!passphrase_time.is_null()) {
     base::string16 passphrase_time_str =
         base::TimeFormatShortDate(passphrase_time);
-    args.SetString("enterPassphraseBody",
-                   GetStringFUTF16(IDS_SYNC_ENTER_PASSPHRASE_BODY_WITH_DATE,
-                                   passphrase_time_str));
-    args.SetString(
-        "enterGooglePassphraseBody",
-        GetStringFUTF16(IDS_SYNC_ENTER_GOOGLE_PASSPHRASE_BODY_WITH_DATE,
-                        passphrase_time_str));
+    args.SetKey(
+        "enterPassphraseBody",
+        base::Value(GetStringFUTF16(IDS_SYNC_ENTER_PASSPHRASE_BODY_WITH_DATE,
+                                    passphrase_time_str)));
+    args.SetKey("enterGooglePassphraseBody",
+                base::Value(GetStringFUTF16(
+                    IDS_SYNC_ENTER_GOOGLE_PASSPHRASE_BODY_WITH_DATE,
+                    passphrase_time_str)));
     switch (passphrase_type) {
       case syncer::PassphraseType::FROZEN_IMPLICIT_PASSPHRASE:
-        args.SetString(
-            "fullEncryptionBody",
-            GetStringFUTF16(IDS_SYNC_FULL_ENCRYPTION_BODY_GOOGLE_WITH_DATE,
-                            passphrase_time_str));
+        args.SetKey("fullEncryptionBody",
+                    base::Value(GetStringFUTF16(
+                        IDS_SYNC_FULL_ENCRYPTION_BODY_GOOGLE_WITH_DATE,
+                        passphrase_time_str)));
         break;
       case syncer::PassphraseType::CUSTOM_PASSPHRASE:
-        args.SetString(
-            "fullEncryptionBody",
-            GetStringFUTF16(IDS_SYNC_FULL_ENCRYPTION_BODY_CUSTOM_WITH_DATE,
-                            passphrase_time_str));
+        args.SetKey("fullEncryptionBody",
+                    base::Value(GetStringFUTF16(
+                        IDS_SYNC_FULL_ENCRYPTION_BODY_CUSTOM_WITH_DATE,
+                        passphrase_time_str)));
         break;
       default:
-        args.SetString("fullEncryptionBody",
-                       GetStringUTF16(IDS_SYNC_FULL_ENCRYPTION_BODY_CUSTOM));
+        args.SetKey(
+            "fullEncryptionBody",
+            base::Value(GetStringUTF16(IDS_SYNC_FULL_ENCRYPTION_BODY_CUSTOM)));
         break;
     }
   } else if (passphrase_type == syncer::PassphraseType::CUSTOM_PASSPHRASE) {
-    args.SetString("fullEncryptionBody",
-                   GetStringUTF16(IDS_SYNC_FULL_ENCRYPTION_BODY_CUSTOM));
+    args.SetKey(
+        "fullEncryptionBody",
+        base::Value(GetStringUTF16(IDS_SYNC_FULL_ENCRYPTION_BODY_CUSTOM)));
   }
 
   FireWebUIListener("sync-prefs-changed", args);

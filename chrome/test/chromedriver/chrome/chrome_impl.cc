@@ -149,7 +149,7 @@ Status ChromeImpl::SetAcceptInsecureCerts() {
     return status;
 
   base::DictionaryValue params;
-  params.SetBoolean("ignore", true);
+  params.SetKey("ignore", base::Value(true));
   // We ignore the status returned by this command - If it is an error, the
   // target likely doesn't yet support the command. In that case, we'll fall
   // back to --ignore-certificate-errors.

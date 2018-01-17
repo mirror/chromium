@@ -745,24 +745,28 @@ void NetInternalsMessageHandler::IOThreadImpl::OnHSTSQuery(
       bool found_static = transport_security_state->GetStaticDomainState(
           domain, &static_sts_state, &static_pkp_state);
       if (found_static) {
-        result->SetInteger("static_upgrade_mode",
-                           static_cast<int>(static_sts_state.upgrade_mode));
-        result->SetBoolean("static_sts_include_subdomains",
-                           static_sts_state.include_subdomains);
-        result->SetDouble("static_sts_observed",
-                          static_sts_state.last_observed.ToDoubleT());
-        result->SetDouble("static_sts_expiry",
-                          static_sts_state.expiry.ToDoubleT());
-        result->SetBoolean("static_pkp_include_subdomains",
-                           static_pkp_state.include_subdomains);
-        result->SetDouble("static_pkp_observed",
-                          static_pkp_state.last_observed.ToDoubleT());
-        result->SetDouble("static_pkp_expiry",
-                          static_pkp_state.expiry.ToDoubleT());
-        result->SetString("static_spki_hashes",
-                          HashesToBase64String(static_pkp_state.spki_hashes));
-        result->SetString("static_sts_domain", static_sts_state.domain);
-        result->SetString("static_pkp_domain", static_pkp_state.domain);
+        result->SetKey(
+            "static_upgrade_mode",
+            base::Value(static_cast<int>(static_sts_state.upgrade_mode)));
+        result->SetKey("static_sts_include_subdomains",
+                       base::Value(static_sts_state.include_subdomains));
+        result->SetKey("static_sts_observed",
+                       base::Value(static_sts_state.last_observed.ToDoubleT()));
+        result->SetKey("static_sts_expiry",
+                       base::Value(static_sts_state.expiry.ToDoubleT()));
+        result->SetKey("static_pkp_include_subdomains",
+                       base::Value(static_pkp_state.include_subdomains));
+        result->SetKey("static_pkp_observed",
+                       base::Value(static_pkp_state.last_observed.ToDoubleT()));
+        result->SetKey("static_pkp_expiry",
+                       base::Value(static_pkp_state.expiry.ToDoubleT()));
+        result->SetKey(
+            "static_spki_hashes",
+            base::Value(HashesToBase64String(static_pkp_state.spki_hashes)));
+        result->SetKey("static_sts_domain",
+                       base::Value(static_sts_state.domain));
+        result->SetKey("static_pkp_domain",
+                       base::Value(static_pkp_state.domain));
       }
 
       net::TransportSecurityState::STSState dynamic_sts_state;
@@ -773,36 +777,42 @@ void NetInternalsMessageHandler::IOThreadImpl::OnHSTSQuery(
       bool found_pkp_dynamic = transport_security_state->GetDynamicPKPState(
           domain, &dynamic_pkp_state);
       if (found_sts_dynamic) {
-        result->SetInteger("dynamic_upgrade_mode",
-                           static_cast<int>(dynamic_sts_state.upgrade_mode));
-        result->SetBoolean("dynamic_sts_include_subdomains",
-                           dynamic_sts_state.include_subdomains);
-        result->SetDouble("dynamic_sts_observed",
-                          dynamic_sts_state.last_observed.ToDoubleT());
-        result->SetDouble("dynamic_sts_expiry",
-                          dynamic_sts_state.expiry.ToDoubleT());
-        result->SetString("dynamic_sts_domain", dynamic_sts_state.domain);
+        result->SetKey(
+            "dynamic_upgrade_mode",
+            base::Value(static_cast<int>(dynamic_sts_state.upgrade_mode)));
+        result->SetKey("dynamic_sts_include_subdomains",
+                       base::Value(dynamic_sts_state.include_subdomains));
+        result->SetKey(
+            "dynamic_sts_observed",
+            base::Value(dynamic_sts_state.last_observed.ToDoubleT()));
+        result->SetKey("dynamic_sts_expiry",
+                       base::Value(dynamic_sts_state.expiry.ToDoubleT()));
+        result->SetKey("dynamic_sts_domain",
+                       base::Value(dynamic_sts_state.domain));
       }
 
       if (found_pkp_dynamic) {
-        result->SetBoolean("dynamic_pkp_include_subdomains",
-                           dynamic_pkp_state.include_subdomains);
-        result->SetDouble("dynamic_pkp_observed",
-                          dynamic_pkp_state.last_observed.ToDoubleT());
-        result->SetDouble("dynamic_pkp_expiry",
-                          dynamic_pkp_state.expiry.ToDoubleT());
-        result->SetString("dynamic_spki_hashes",
-                          HashesToBase64String(dynamic_pkp_state.spki_hashes));
-        result->SetString("dynamic_pkp_domain", dynamic_pkp_state.domain);
+        result->SetKey("dynamic_pkp_include_subdomains",
+                       base::Value(dynamic_pkp_state.include_subdomains));
+        result->SetKey(
+            "dynamic_pkp_observed",
+            base::Value(dynamic_pkp_state.last_observed.ToDoubleT()));
+        result->SetKey("dynamic_pkp_expiry",
+                       base::Value(dynamic_pkp_state.expiry.ToDoubleT()));
+        result->SetKey(
+            "dynamic_spki_hashes",
+            base::Value(HashesToBase64String(dynamic_pkp_state.spki_hashes)));
+        result->SetKey("dynamic_pkp_domain",
+                       base::Value(dynamic_pkp_state.domain));
       }
 
-      result->SetBoolean(
-          "result", found_static || found_sts_dynamic || found_pkp_dynamic);
+      result->SetKey("result", base::Value(found_static || found_sts_dynamic ||
+                                           found_pkp_dynamic));
     } else {
-      result->SetString("error", "no TransportSecurityState active");
+      result->SetKey("error", base::Value("no TransportSecurityState active"));
     }
   } else {
-    result->SetString("error", "non-ASCII domain name");
+    result->SetKey("error", base::Value("non-ASCII domain name"));
   }
 
   SendJavascriptCommand("receivedHSTSResult", std::move(result));
@@ -865,23 +875,24 @@ void NetInternalsMessageHandler::IOThreadImpl::OnExpectCTQuery(
 
       // TODO(estark): query static Expect-CT state as well.
       if (found) {
-        result->SetString("dynamic_expect_ct_domain", domain);
-        result->SetDouble("dynamic_expect_ct_observed",
-                          dynamic_expect_ct_state.last_observed.ToDoubleT());
-        result->SetDouble("dynamic_expect_ct_expiry",
-                          dynamic_expect_ct_state.expiry.ToDoubleT());
-        result->SetBoolean("dynamic_expect_ct_enforce",
-                           dynamic_expect_ct_state.enforce);
-        result->SetString("dynamic_expect_ct_report_uri",
-                          dynamic_expect_ct_state.report_uri.spec());
+        result->SetKey("dynamic_expect_ct_domain", base::Value(domain));
+        result->SetKey(
+            "dynamic_expect_ct_observed",
+            base::Value(dynamic_expect_ct_state.last_observed.ToDoubleT()));
+        result->SetKey("dynamic_expect_ct_expiry",
+                       base::Value(dynamic_expect_ct_state.expiry.ToDoubleT()));
+        result->SetKey("dynamic_expect_ct_enforce",
+                       base::Value(dynamic_expect_ct_state.enforce));
+        result->SetKey("dynamic_expect_ct_report_uri",
+                       base::Value(dynamic_expect_ct_state.report_uri.spec()));
       }
 
-      result->SetBoolean("result", found);
+      result->SetKey("result", base::Value(found));
     } else {
-      result->SetString("error", "no Expect-CT state active");
+      result->SetKey("error", base::Value("no Expect-CT state active"));
     }
   } else {
-    result->SetString("error", "non-ASCII domain name");
+    result->SetKey("error", base::Value("non-ASCII domain name"));
   }
 
   SendJavascriptCommand("receivedExpectCTResult", std::move(result));

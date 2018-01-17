@@ -224,11 +224,11 @@ std::unique_ptr<base::DictionaryValue> ProxyConfig::ToValue() const {
 
   // Output the automatic settings.
   if (auto_detect_)
-    dict->SetBoolean("auto_detect", auto_detect_);
+    dict->SetKey("auto_detect", base::Value(auto_detect_));
   if (has_pac_url()) {
-    dict->SetString("pac_url", pac_url_.possibly_invalid_spec());
+    dict->SetKey("pac_url", base::Value(pac_url_.possibly_invalid_spec()));
     if (pac_mandatory_)
-      dict->SetBoolean("pac_mandatory", pac_mandatory_);
+      dict->SetKey("pac_mandatory", base::Value(pac_mandatory_));
   }
 
   // Output the manual settings.
@@ -258,7 +258,7 @@ std::unique_ptr<base::DictionaryValue> ProxyConfig::ToValue() const {
     const ProxyBypassRules& bypass = proxy_rules_.bypass_rules;
     if (!bypass.rules().empty()) {
       if (proxy_rules_.reverse_bypass)
-        dict->SetBoolean("reverse_bypass", true);
+        dict->SetKey("reverse_bypass", base::Value(true));
 
       auto list = std::make_unique<base::ListValue>();
 
@@ -273,7 +273,7 @@ std::unique_ptr<base::DictionaryValue> ProxyConfig::ToValue() const {
   }
 
   // Output the source.
-  dict->SetString("source", ProxyConfigSourceToString(source_));
+  dict->SetKey("source", base::Value(ProxyConfigSourceToString(source_)));
 
   return dict;
 }

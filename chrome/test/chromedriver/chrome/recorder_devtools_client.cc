@@ -19,6 +19,6 @@ Status RecorderDevToolsClient::SendCommandAndGetResult(
   // always return { "result": true }. Currently only used when testing
   // "canEmulateNetworkConditions".
   (*result).reset(new base::DictionaryValue);
-  (*result)->SetBoolean("result", true);
+  (*result)->SetKey("result", base::Value(true));
   return Status(kOk);
 }

@@ -60,28 +60,31 @@ void SetupNavigationTracing() {
   }
 
   base::DictionaryValue dict;
-  dict.SetString("mode", "REACTIVE_TRACING_MODE");
+  dict.SetKey("mode", base::Value("REACTIVE_TRACING_MODE"));
 
   std::unique_ptr<base::ListValue> rules_list(new base::ListValue());
   {
     std::unique_ptr<base::DictionaryValue> rules_dict(
         new base::DictionaryValue());
-    rules_dict->SetString("rule", "TRACE_ON_NAVIGATION_UNTIL_TRIGGER_OR_FULL");
-    rules_dict->SetString("trigger_name", kNavigationTracingConfig);
-    rules_dict->SetBoolean("stop_tracing_on_repeated_reactive", true);
-    rules_dict->SetString("category", "BENCHMARK_DEEP");
+    rules_dict->SetKey(
+        "rule", base::Value("TRACE_ON_NAVIGATION_UNTIL_TRIGGER_OR_FULL"));
+    rules_dict->SetKey("trigger_name", base::Value(kNavigationTracingConfig));
+    rules_dict->SetKey("stop_tracing_on_repeated_reactive", base::Value(true));
+    rules_dict->SetKey("category", base::Value("BENCHMARK_DEEP"));
     rules_list->Append(std::move(rules_dict));
   }
   {
     std::unique_ptr<base::DictionaryValue> rules_dict(
         new base::DictionaryValue());
-    rules_dict->SetString("rule",
-        "MONITOR_AND_DUMP_WHEN_SPECIFIC_HISTOGRAM_AND_VALUE");
-    rules_dict->SetString("category", "BENCHMARK_MEMORY_HEAVY");
-    rules_dict->SetString("histogram_name", "V8.GCLowMemoryNotification");
-    rules_dict->SetInteger("trigger_delay", 5);
-    rules_dict->SetInteger("histogram_lower_value", 0);
-    rules_dict->SetInteger("histogram_upper_value", 10000);
+    rules_dict->SetKey(
+        "rule",
+        base::Value("MONITOR_AND_DUMP_WHEN_SPECIFIC_HISTOGRAM_AND_VALUE"));
+    rules_dict->SetKey("category", base::Value("BENCHMARK_MEMORY_HEAVY"));
+    rules_dict->SetKey("histogram_name",
+                       base::Value("V8.GCLowMemoryNotification"));
+    rules_dict->SetKey("trigger_delay", base::Value(5));
+    rules_dict->SetKey("histogram_lower_value", base::Value(0));
+    rules_dict->SetKey("histogram_upper_value", base::Value(10000));
     rules_list->Append(std::move(rules_dict));
   }
   dict.Set("configs", std::move(rules_list));

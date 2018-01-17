@@ -349,7 +349,7 @@ TEST_F(V8ValueConverterImplTest, ObjectExceptions) {
   EXPECT_EQ("bar", GetString(converted.get(), "bar"));
 
   // Converting to v8 value should not trigger the setter.
-  converted->SetString("foo", "foo");
+  converted->SetKey("foo", base::Value("foo"));
   v8::Local<v8::Object> copy =
       converter.ToV8Value(converted.get(), context).As<v8::Object>();
   EXPECT_FALSE(copy.IsEmpty());
@@ -501,7 +501,7 @@ TEST_F(V8ValueConverterImplTest, ObjectPrototypeSetter) {
 
   // Repeat the same exercise with a dictionary without the key.
   base::DictionaryValue missing_key_dict;
-  missing_key_dict.SetString("otherkey", "hello");
+  missing_key_dict.SetKey("otherkey", base::Value("hello"));
   v8::Local<v8::Object> converted2 =
       converter.ToV8Value(&missing_key_dict, context).As<v8::Object>();
   EXPECT_FALSE(converted2.IsEmpty());

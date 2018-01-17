@@ -263,7 +263,7 @@ std::unique_ptr<base::Value> NetLogServiceWorkerStatusCallback(
     ServiceWorkerStatusCode status,
     net::NetLogCaptureMode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
-  dict->SetString("status", ServiceWorkerStatusToString(status));
+  dict->SetKey("status", base::Value(ServiceWorkerStatusToString(status)));
   return std::move(dict);
 }
 
@@ -272,10 +272,12 @@ std::unique_ptr<base::Value> NetLogFetchEventCallback(
     ServiceWorkerFetchDispatcher::FetchEventResult result,
     net::NetLogCaptureMode) {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
-  dict->SetString("status", ServiceWorkerStatusToString(status));
-  dict->SetBoolean(
+  dict->SetKey("status", base::Value(ServiceWorkerStatusToString(status)));
+  dict->SetKey(
       "has_response",
-      result == ServiceWorkerFetchDispatcher::FetchEventResult::kGotResponse);
+      base::Value(
+          result ==
+          ServiceWorkerFetchDispatcher::FetchEventResult::kGotResponse));
   return std::move(dict);
 }
 

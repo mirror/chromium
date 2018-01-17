@@ -319,10 +319,10 @@ TEST_F(SimpleFeatureTest, Context) {
   feature.set_max_manifest_version(25);
 
   base::DictionaryValue manifest;
-  manifest.SetString("name", "test");
-  manifest.SetString("version", "1");
-  manifest.SetInteger("manifest_version", 21);
-  manifest.SetString("app.launch.local_path", "foo.html");
+  manifest.SetKey("name", base::Value("test"));
+  manifest.SetKey("version", base::Value("1"));
+  manifest.SetKey("manifest_version", base::Value(21));
+  manifest.SetPath({"app", "launch", "local_path"}, base::Value("foo.html"));
 
   std::string error;
   scoped_refptr<const Extension> extension(Extension::Create(
@@ -425,10 +425,10 @@ TEST_F(SimpleFeatureTest, Context) {
 
 TEST_F(SimpleFeatureTest, SessionType) {
   base::DictionaryValue manifest;
-  manifest.SetString("name", "test");
-  manifest.SetString("version", "1");
-  manifest.SetInteger("manifest_version", 2);
-  manifest.SetString("app.launch.local_path", "foo.html");
+  manifest.SetKey("name", base::Value("test"));
+  manifest.SetKey("version", base::Value("1"));
+  manifest.SetKey("manifest_version", base::Value(2));
+  manifest.SetPath({"app", "launch", "local_path"}, base::Value("foo.html"));
 
   std::string error;
   scoped_refptr<const Extension> extension(

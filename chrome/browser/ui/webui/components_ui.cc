@@ -182,10 +182,12 @@ std::unique_ptr<base::ListValue> ComponentsUI::LoadComponents() {
     if (cus->GetComponentDetails(component_ids[j], &item)) {
       std::unique_ptr<base::DictionaryValue> component_entry(
           new base::DictionaryValue());
-      component_entry->SetString("id", component_ids[j]);
-      component_entry->SetString("name", item.component.name);
-      component_entry->SetString("version", item.component.version.GetString());
-      component_entry->SetString("status", ServiceStatusToString(item.state));
+      component_entry->SetKey("id", base::Value(component_ids[j]));
+      component_entry->SetKey("name", base::Value(item.component.name));
+      component_entry->SetKey("version",
+                              base::Value(item.component.version.GetString()));
+      component_entry->SetKey("status",
+                              base::Value(ServiceStatusToString(item.state)));
       component_list->Append(std::move(component_entry));
     }
   }
@@ -256,15 +258,16 @@ base::string16 ComponentsUI::ServiceStatusToString(
 
 void ComponentsUI::OnEvent(Events event, const std::string& id) {
   base::DictionaryValue parameters;
-  parameters.SetString("event", ComponentEventToString(event));
+  parameters.SetKey("event", base::Value(ComponentEventToString(event)));
   if (!id.empty()) {
     if (event == Events::COMPONENT_UPDATED) {
       auto* component_updater = g_browser_process->component_updater();
       update_client::CrxUpdateItem item;
       if (component_updater->GetComponentDetails(id, &item))
-        parameters.SetString("version", item.component.version.GetString());
+        parameters.SetKey("version",
+                          base::Value(item.component.version.GetString()));
     }
-    parameters.SetString("id", id);
+    parameters.SetKey("id", base::Value(id));
   }
   web_ui()->CallJavascriptFunctionUnsafe("onComponentEvent", parameters);
 }

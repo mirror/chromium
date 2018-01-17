@@ -310,7 +310,7 @@ TEST_F(CoordinatorTest, StopAndFlushWithMetadata) {
 
   auto* agent = AddArrayAgent();
   agent->data_.push_back("event");
-  agent->metadata_.SetString("key", "value");
+  agent->metadata_.SetKey("key", base::Value("value"));
 
   StartTracing("config", true, true);
   if (!quit_closure_.is_null())

@@ -33,8 +33,8 @@ TEST_F(SyncJsControllerTest, Events) {
   SyncJsController sync_js_controller;
 
   base::DictionaryValue details_dict1, details_dict2;
-  details_dict1.SetString("foo", "bar");
-  details_dict2.SetInteger("baz", 5);
+  details_dict1.SetKey("foo", base::Value("bar"));
+  details_dict2.SetKey("baz", base::Value(5));
   JsEventDetails details1(&details_dict1), details2(&details_dict2);
 
   StrictMock<MockJsEventHandler> event_handler1, event_handler2;

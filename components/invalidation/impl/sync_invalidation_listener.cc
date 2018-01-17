@@ -383,11 +383,12 @@ std::unique_ptr<base::DictionaryValue>
 SyncInvalidationListener::CollectDebugData() const {
   std::unique_ptr<base::DictionaryValue> return_value(
       new base::DictionaryValue());
-  return_value->SetString(
-      "SyncInvalidationListener.PushClientState",
-      std::string(InvalidatorStateToString(push_client_state_)));
-  return_value->SetString("SyncInvalidationListener.TiclState",
-                          std::string(InvalidatorStateToString(ticl_state_)));
+  return_value->SetPath(
+      {"SyncInvalidationListener", "PushClientState"},
+      base::Value(std::string(InvalidatorStateToString(push_client_state_))));
+  return_value->SetPath(
+      {"SyncInvalidationListener", "TiclState"},
+      base::Value(std::string(InvalidatorStateToString(ticl_state_))));
   std::unique_ptr<base::DictionaryValue> unacked_map(
       new base::DictionaryValue());
   for (UnackedInvalidationsMap::const_iterator it =

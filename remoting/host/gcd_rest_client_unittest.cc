@@ -30,7 +30,7 @@ class GcdRestClientTest : public testing::Test {
   std::unique_ptr<base::DictionaryValue> MakePatchDetails(int id) {
     std::unique_ptr<base::DictionaryValue> patch_details(
         new base::DictionaryValue);
-    patch_details->SetInteger("id", id);
+    patch_details->SetKey("id", base::Value(id));
     return patch_details;
   }
 

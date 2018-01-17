@@ -273,7 +273,7 @@ Status ChromeDesktopImpl::SetWindowRect(const std::string& target_id,
   // fully exit fullscreen
   if (window.state != "normal") {
     auto bounds = base::MakeUnique<base::DictionaryValue>();
-    bounds->SetString("windowState", "normal");
+    bounds->SetKey("windowState", base::Value("normal"));
     status = SetWindowBounds(window.id, std::move(bounds));
     if (status.IsError())
       return status;
@@ -283,16 +283,16 @@ Status ChromeDesktopImpl::SetWindowRect(const std::string& target_id,
   int x = 0;
   int y = 0;
   if (params.GetInteger("x", &x) && params.GetInteger("y", &y)) {
-    bounds->SetInteger("left", x);
-    bounds->SetInteger("top", y);
+    bounds->SetKey("left", base::Value(x));
+    bounds->SetKey("top", base::Value(y));
   }
   // window size
   int width = 0;
   int height = 0;
   if (params.GetInteger("width", &width) &&
       params.GetInteger("height", &height)) {
-    bounds->SetInteger("width", width);
-    bounds->SetInteger("height", height);
+    bounds->SetKey("width", base::Value(width));
+    bounds->SetKey("height", base::Value(height));
   }
 
   return SetWindowBounds(window.id, std::move(bounds));
@@ -309,15 +309,15 @@ Status ChromeDesktopImpl::SetWindowPosition(const std::string& target_id,
   if (window.state != "normal") {
     // restore window to normal first to allow position change.
     auto bounds = base::MakeUnique<base::DictionaryValue>();
-    bounds->SetString("windowState", "normal");
+    bounds->SetKey("windowState", base::Value("normal"));
     status = SetWindowBounds(window.id, std::move(bounds));
     if (status.IsError())
       return status;
   }
 
   auto bounds = base::MakeUnique<base::DictionaryValue>();
-  bounds->SetInteger("left", x);
-  bounds->SetInteger("top", y);
+  bounds->SetKey("left", base::Value(x));
+  bounds->SetKey("top", base::Value(y));
   return SetWindowBounds(window.id, std::move(bounds));
 }
 
@@ -332,15 +332,15 @@ Status ChromeDesktopImpl::SetWindowSize(const std::string& target_id,
   if (window.state != "normal") {
     // restore window to normal first to allow size change.
     auto bounds = base::MakeUnique<base::DictionaryValue>();
-    bounds->SetString("windowState", "normal");
+    bounds->SetKey("windowState", base::Value("normal"));
     status = SetWindowBounds(window.id, std::move(bounds));
     if (status.IsError())
       return status;
   }
 
   auto bounds = base::MakeUnique<base::DictionaryValue>();
-  bounds->SetInteger("width", width);
-  bounds->SetInteger("height", height);
+  bounds->SetKey("width", base::Value(width));
+  bounds->SetKey("height", base::Value(height));
   return SetWindowBounds(window.id, std::move(bounds));
 }
 
@@ -357,14 +357,14 @@ Status ChromeDesktopImpl::MaximizeWindow(const std::string& target_id) {
     // always restore window to normal first, since chrome ui doesn't allow
     // maximizing a minimized or fullscreen window.
     auto bounds = base::MakeUnique<base::DictionaryValue>();
-    bounds->SetString("windowState", "normal");
+    bounds->SetKey("windowState", base::Value("normal"));
     status = SetWindowBounds(window.id, std::move(bounds));
     if (status.IsError())
       return status;
   }
 
   auto bounds = base::MakeUnique<base::DictionaryValue>();
-  bounds->SetString("windowState", "maximized");
+  bounds->SetKey("windowState", base::Value("maximized"));
   return SetWindowBounds(window.id, std::move(bounds));
 }
 
@@ -379,14 +379,14 @@ Status ChromeDesktopImpl::FullScreenWindow(const std::string& target_id) {
 
   if (window.state != "normal") {
     auto bounds = base::MakeUnique<base::DictionaryValue>();
-    bounds->SetString("windowState", "normal");
+    bounds->SetKey("windowState", base::Value("normal"));
     status = SetWindowBounds(window.id, std::move(bounds));
     if (status.IsError())
       return status;
   }
 
   auto bounds = base::MakeUnique<base::DictionaryValue>();
-  bounds->SetString("windowState", "fullscreen");
+  bounds->SetKey("windowState", base::Value("fullscreen"));
   return SetWindowBounds(window.id, std::move(bounds));
 }
 
@@ -429,7 +429,7 @@ Status ChromeDesktopImpl::GetWindow(const std::string& target_id,
     return status;
 
   base::DictionaryValue params;
-  params.SetString("targetId", target_id);
+  params.SetKey("targetId", base::Value(target_id));
   std::unique_ptr<base::DictionaryValue> result;
   status = devtools_websocket_client_->SendCommandAndGetResult(
       "Browser.getWindowForTarget", params, &result);
@@ -445,7 +445,7 @@ Status ChromeDesktopImpl::GetWindowBounds(int window_id, Window* window) {
     return status;
 
   base::DictionaryValue params;
-  params.SetInteger("windowId", window_id);
+  params.SetKey("windowId", base::Value(window_id));
   std::unique_ptr<base::DictionaryValue> result;
   status = devtools_websocket_client_->SendCommandAndGetResult(
       "Browser.getWindowBounds", params, &result);
@@ -463,7 +463,7 @@ Status ChromeDesktopImpl::SetWindowBounds(
     return status;
 
   base::DictionaryValue params;
-  params.SetInteger("windowId", window_id);
+  params.SetKey("windowId", base::Value(window_id));
   params.Set("bounds", bounds->CreateDeepCopy());
   status = devtools_websocket_client_->SendCommand("Browser.setWindowBounds",
                                                    params);

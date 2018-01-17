@@ -68,18 +68,18 @@ bool ConvertEcKeyToJwk(EVP_PKEY* pkey,
     return false;
   }
 
-  public_key_jwk->SetString("kty", "EC");
-  public_key_jwk->SetString("crv", curve_name);
+  public_key_jwk->SetKey("kty", base::Value("EC"));
+  public_key_jwk->SetKey("crv", base::Value(curve_name));
 
   std::string x_b64;
   base::Base64UrlEncode(x_bytes, base::Base64UrlEncodePolicy::OMIT_PADDING,
                         &x_b64);
-  public_key_jwk->SetString("x", x_b64);
+  public_key_jwk->SetKey("x", base::Value(x_b64));
 
   std::string y_b64;
   base::Base64UrlEncode(y_bytes, base::Base64UrlEncodePolicy::OMIT_PADDING,
                         &y_b64);
-  public_key_jwk->SetString("y", y_b64);
+  public_key_jwk->SetKey("y", base::Value(y_b64));
 
   return true;
 }

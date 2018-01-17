@@ -30,7 +30,7 @@ std::unique_ptr<base::Value> NetLogExtensionIdCallback(
     const std::string& extension_id,
     net::NetLogCaptureMode capture_mode) {
   auto params = std::make_unique<base::DictionaryValue>();
-  params->SetString("extension_id", extension_id);
+  params->SetKey("extension_id", base::Value(extension_id));
   return params;
 }
 

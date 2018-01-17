@@ -39,9 +39,9 @@ Status AutomationExtension::GetWindowPosition(int* x, int* y) {
 
 Status AutomationExtension::SetWindowPosition(int x, int y) {
   base::DictionaryValue update_info;
-  update_info.SetInteger("left", x);
-  update_info.SetInteger("top", y);
-  update_info.SetString("state", "normal");
+  update_info.SetKey("left", base::Value(x));
+  update_info.SetKey("top", base::Value(y));
+  update_info.SetKey("state", base::Value("normal"));
   return UpdateWindow(update_info);
 }
 
@@ -52,21 +52,21 @@ Status AutomationExtension::GetWindowSize(int* width, int* height) {
 
 Status AutomationExtension::SetWindowSize(int width, int height) {
   base::DictionaryValue update_info;
-  update_info.SetInteger("width", width);
-  update_info.SetInteger("height", height);
-  update_info.SetString("state", "normal");
+  update_info.SetKey("width", base::Value(width));
+  update_info.SetKey("height", base::Value(height));
+  update_info.SetKey("state", base::Value("normal"));
   return UpdateWindow(update_info);
 }
 
 Status AutomationExtension::MaximizeWindow() {
   base::DictionaryValue update_info;
-  update_info.SetString("state", "maximized");
+  update_info.SetKey("state", base::Value("maximized"));
   return UpdateWindow(update_info);
 }
 
 Status AutomationExtension::FullScreenWindow() {
   base::DictionaryValue update_info;
-  update_info.SetString("state", "fullscreen");
+  update_info.SetKey("state", base::Value("fullscreen"));
   return UpdateWindow(update_info);
 }
 

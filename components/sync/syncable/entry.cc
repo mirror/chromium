@@ -46,13 +46,13 @@ Directory* Entry::dir() const {
 std::unique_ptr<base::DictionaryValue> Entry::ToValue(
     Cryptographer* cryptographer) const {
   auto entry_info = std::make_unique<base::DictionaryValue>();
-  entry_info->SetBoolean("good", good());
+  entry_info->SetKey("good", base::Value(good()));
   if (good()) {
     entry_info->Set("kernel", kernel_->ToValue(cryptographer));
     entry_info->Set("modelType", ModelTypeToValue(GetModelType()));
-    entry_info->SetBoolean("existsOnClientBecauseNameIsNonEmpty",
-                           ExistsOnClientBecauseNameIsNonEmpty());
-    entry_info->SetBoolean("isRoot", IsRoot());
+    entry_info->SetKey("existsOnClientBecauseNameIsNonEmpty",
+                       base::Value(ExistsOnClientBecauseNameIsNonEmpty()));
+    entry_info->SetKey("isRoot", base::Value(IsRoot()));
   }
   return entry_info;
 }

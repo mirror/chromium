@@ -101,9 +101,9 @@ void SyncFileSystemInternalsHandler::OnLogRecorded(
     const sync_file_system::TaskLogger::TaskLog& task_log) {
   base::DictionaryValue dict;
   int64_t duration = (task_log.end_time - task_log.start_time).InMilliseconds();
-  dict.SetInteger("duration", duration);
-  dict.SetString("task_description", task_log.task_description);
-  dict.SetString("result_description", task_log.result_description);
+  dict.SetKey("duration", base::Value(static_cast<int>(duration)));
+  dict.SetKey("task_description", base::Value(task_log.task_description));
+  dict.SetKey("result_description", base::Value(task_log.result_description));
 
   std::unique_ptr<base::ListValue> details(new base::ListValue);
   details->AppendStrings(task_log.details);
@@ -154,10 +154,11 @@ void SyncFileSystemInternalsHandler::GetLog(
       continue;
 
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
-    dict->SetInteger("id", log_entry->id);
-    dict->SetString("time",
-        google_apis::util::FormatTimeAsStringLocaltime(log_entry->when));
-    dict->SetString("logEvent", log_entry->what);
+    dict->SetKey("id", base::Value(log_entry->id));
+    dict->SetKey("time",
+                 base::Value(google_apis::util::FormatTimeAsStringLocaltime(
+                     log_entry->when)));
+    dict->SetKey("logEvent", base::Value(log_entry->what));
     list.Append(std::move(dict));
     last_log_id_sent = log_entry->id;
   }

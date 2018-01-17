@@ -249,13 +249,17 @@ void AppLauncherLoginHandler::GetLocalizedValues(
       l10n_util::GetStringFUTF16(IDS_SYNC_PROMO_NTP_BUBBLE_MESSAGE,
           l10n_util::GetStringUTF16(IDS_SHORT_PRODUCT_NAME));
 
-  values->SetString("login_status_message", message);
-  values->SetString("login_status_url",
-      hide_sync ? std::string() : chrome::kSyncLearnMoreURL);
-  values->SetString("login_status_advanced",
-      hide_sync ? base::string16() :
-      l10n_util::GetStringUTF16(IDS_SYNC_PROMO_NTP_BUBBLE_ADVANCED));
-  values->SetString("login_status_dismiss",
-      hide_sync ? base::string16() :
-      l10n_util::GetStringUTF16(IDS_SYNC_PROMO_NTP_BUBBLE_OK));
+  values->SetKey("login_status_message", base::Value(message));
+  values->SetKey(
+      "login_status_url",
+      base::Value(hide_sync ? std::string() : chrome::kSyncLearnMoreURL));
+  values->SetKey(
+      "login_status_advanced",
+      base::Value(hide_sync ? base::string16()
+                            : l10n_util::GetStringUTF16(
+                                  IDS_SYNC_PROMO_NTP_BUBBLE_ADVANCED)));
+  values->SetKey("login_status_dismiss",
+                 base::Value(hide_sync ? base::string16()
+                                       : l10n_util::GetStringUTF16(
+                                             IDS_SYNC_PROMO_NTP_BUBBLE_OK)));
 }

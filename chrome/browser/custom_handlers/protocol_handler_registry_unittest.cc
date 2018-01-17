@@ -116,8 +116,8 @@ std::unique_ptr<base::DictionaryValue> GetProtocolHandlerValue(
     const std::string& protocol,
     const std::string& url) {
   auto value = base::MakeUnique<base::DictionaryValue>();
-  value->SetString("protocol", protocol);
-  value->SetString("url", url);
+  value->SetKey("protocol", base::Value(protocol));
+  value->SetKey("url", base::Value(url));
   return value;
 }
 
@@ -127,7 +127,7 @@ std::unique_ptr<base::DictionaryValue> GetProtocolHandlerValueWithDefault(
     bool is_default) {
   std::unique_ptr<base::DictionaryValue> value =
       GetProtocolHandlerValue(protocol, url);
-  value->SetBoolean("default", is_default);
+  value->SetKey("default", base::Value(is_default));
   return value;
 }
 

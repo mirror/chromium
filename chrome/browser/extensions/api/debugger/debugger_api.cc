@@ -227,8 +227,8 @@ void ExtensionDevToolsClientHost::SendMessageToBackend(
   base::DictionaryValue protocol_request;
   int request_id = ++last_request_id_;
   pending_requests_[request_id] = function;
-  protocol_request.SetInteger("id", request_id);
-  protocol_request.SetString("method", method);
+  protocol_request.SetKey("id", base::Value(request_id));
+  protocol_request.SetKey("method", base::Value(method));
   if (command_params) {
     protocol_request.Set(
         "params", command_params->additional_properties.CreateDeepCopy());

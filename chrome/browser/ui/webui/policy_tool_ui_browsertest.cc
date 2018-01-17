@@ -250,10 +250,11 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, ImportingSession) {
   base::ScopedAllowBlockingForTesting allow_blocking;
   base::DictionaryValue test_policies;
   // Add a known chrome policy.
-  test_policies.SetString("chromePolicies.AllowDinosaurEasterEgg.value",
-                          "true");
+  test_policies.SetPath({"chromePolicies", "AllowDinosaurEasterEgg", "value"},
+                        base::Value("true"));
   // Add an unknown chrome policy.
-  test_policies.SetString("chromePolicies.UnknownPolicy.value", "test");
+  test_policies.SetPath({"chromePolicies", "UnknownPolicy", "value"},
+                        base::Value("test"));
 
   std::string json;
   base::JSONWriter::WriteWithOptions(
@@ -366,7 +367,8 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, DefaultSession) {
 
   // Create a session file and load it.
   base::DictionaryValue expected;
-  expected.SetString("chromePolicies.SessionName.value", "session");
+  expected.SetPath({"chromePolicies", "SessionName", "value"},
+                   base::Value("session"));
   std::string file_contents;
   base::JSONWriter::Write(expected, &file_contents);
 

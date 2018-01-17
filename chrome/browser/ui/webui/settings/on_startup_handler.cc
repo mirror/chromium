@@ -71,12 +71,12 @@ std::unique_ptr<base::Value> OnStartupHandler::GetNtpExtension() {
   }
 
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
-  dict->SetString("id", ntp_extension->id());
-  dict->SetString("name", ntp_extension->name());
-  dict->SetBoolean("canBeDisabled",
-                   !extensions::ExtensionSystem::Get(profile_)
-                        ->management_policy()
-                        ->MustRemainEnabled(ntp_extension, nullptr));
+  dict->SetKey("id", base::Value(ntp_extension->id()));
+  dict->SetKey("name", base::Value(ntp_extension->name()));
+  dict->SetKey("canBeDisabled",
+               base::Value(!extensions::ExtensionSystem::Get(profile_)
+                                ->management_policy()
+                                ->MustRemainEnabled(ntp_extension, nullptr)));
   return dict;
 }
 

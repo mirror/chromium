@@ -376,10 +376,11 @@ void TiclInvalidationService::StartInvalidator(
           ParseNotifierOptions(*base::CommandLine::ForCurrentProcess());
       options.request_context_getter = request_context_;
       options.auth_mechanism = "X-OAUTH2";
-      network_channel_options_.SetString("Options.HostPort",
-                                         options.xmpp_host_port.ToString());
-      network_channel_options_.SetString("Options.AuthMechanism",
-                                         options.auth_mechanism);
+      network_channel_options_.SetPath(
+          {"Options", "HostPort"},
+          base::Value(options.xmpp_host_port.ToString()));
+      network_channel_options_.SetPath({"Options", "AuthMechanism"},
+                                       base::Value(options.auth_mechanism));
       DCHECK_EQ(notifier::NOTIFICATION_SERVER, options.notification_method);
       network_channel_creator =
           syncer::NonBlockingInvalidator::MakePushClientChannelCreator(options);

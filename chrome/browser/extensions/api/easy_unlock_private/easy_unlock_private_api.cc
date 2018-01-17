@@ -158,202 +158,190 @@ ExtensionFunction::ResponseAction EasyUnlockPrivateGetStringsFunction::Run() {
 #endif  // defined(OS_CHROMEOS)
 
   // Common strings.
-  strings->SetString(
-      "learnMoreLinkTitle",
-      l10n_util::GetStringUTF16(IDS_EASY_UNLOCK_LEARN_MORE_LINK_TITLE));
-  strings->SetString("deviceType", device_type);
+  strings->SetKey("learnMoreLinkTitle",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_LEARN_MORE_LINK_TITLE)));
+  strings->SetKey("deviceType", base::Value(device_type));
 
   // Setup notification strings.
-  strings->SetString(
-      "setupNotificationTitle",
-      l10n_util::GetStringUTF16(IDS_EASY_UNLOCK_SETUP_NOTIFICATION_TITLE));
-  strings->SetString(
+  strings->SetKey("setupNotificationTitle",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_NOTIFICATION_TITLE)));
+  strings->SetKey(
       "setupNotificationMessage",
-      l10n_util::GetStringFUTF16(IDS_EASY_UNLOCK_SETUP_NOTIFICATION_MESSAGE,
-                                 device_type));
-  strings->SetString(
-      "setupNotificationButtonTitle",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_NOTIFICATION_BUTTON_TITLE));
+      base::Value(l10n_util::GetStringFUTF16(
+          IDS_EASY_UNLOCK_SETUP_NOTIFICATION_MESSAGE, device_type)));
+  strings->SetKey("setupNotificationButtonTitle",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_NOTIFICATION_BUTTON_TITLE)));
 
   // Chromebook added to Easy Unlock notification strings.
-  strings->SetString(
-      "chromebookAddedNotificationTitle",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_CHROMEBOOK_ADDED_NOTIFICATION_TITLE));
-  strings->SetString(
+  strings->SetKey("chromebookAddedNotificationTitle",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_CHROMEBOOK_ADDED_NOTIFICATION_TITLE)));
+  strings->SetKey(
       "chromebookAddedNotificationMessage",
-      l10n_util::GetStringFUTF16(
-          IDS_EASY_UNLOCK_CHROMEBOOK_ADDED_NOTIFICATION_MESSAGE,
-          device_type));
-  strings->SetString(
+      base::Value(l10n_util::GetStringFUTF16(
+          IDS_EASY_UNLOCK_CHROMEBOOK_ADDED_NOTIFICATION_MESSAGE, device_type)));
+  strings->SetKey(
       "chromebookAddedNotificationAboutButton",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_CHROMEBOOK_ADDED_NOTIFICATION_ABOUT_BUTTON));
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_CHROMEBOOK_ADDED_NOTIFICATION_ABOUT_BUTTON)));
 
   // Shared "Learn more" button for the pairing changed and pairing change
   // applied notification.
-  strings->SetString(
-      "phoneChangedNotificationLearnMoreButton",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_NOTIFICATION_LEARN_MORE_BUTTON));
+  strings->SetKey("phoneChangedNotificationLearnMoreButton",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_NOTIFICATION_LEARN_MORE_BUTTON)));
 
   // Pairing changed notification strings.
-  strings->SetString(
-      "phoneChangedNotificationTitle",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_PAIRING_CHANGED_NOTIFICATION_TITLE));
-  strings->SetString(
+  strings->SetKey("phoneChangedNotificationTitle",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_PAIRING_CHANGED_NOTIFICATION_TITLE)));
+  strings->SetKey(
       "phoneChangedNotificationMessage",
-      l10n_util::GetStringFUTF16(
-          IDS_EASY_UNLOCK_PAIRING_CHANGED_NOTIFICATION_MESSAGE,
-          device_type));
-  strings->SetString(
+      base::Value(l10n_util::GetStringFUTF16(
+          IDS_EASY_UNLOCK_PAIRING_CHANGED_NOTIFICATION_MESSAGE, device_type)));
+  strings->SetKey(
       "phoneChangedNotificationUpdateButton",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_PAIRING_CHANGED_NOTIFICATION_UPDATE_BUTTON));
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_PAIRING_CHANGED_NOTIFICATION_UPDATE_BUTTON)));
 
   // Phone change applied notification strings.
-  strings->SetString(
+  strings->SetKey(
       "phoneChangeAppliedNotificationTitle",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_PAIRING_CHANGE_APPLIED_NOTIFICATION_TITLE));
-  strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_PAIRING_CHANGE_APPLIED_NOTIFICATION_TITLE)));
+  strings->SetKey(
       "phoneChangeAppliedNotificationMessage",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_PAIRING_CHANGE_APPLIED_NOTIFICATION_MESSAGE));
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_PAIRING_CHANGE_APPLIED_NOTIFICATION_MESSAGE)));
 
   // Setup dialog strings.
   // Step 1: Intro.
-  strings->SetString(
-      "setupIntroHeaderTitle",
-      l10n_util::GetStringFUTF16(IDS_EASY_UNLOCK_SETUP_INTRO_HEADER_TITLE,
-                                 device_type));
-  strings->SetString(
-      "setupIntroHeaderText",
-      l10n_util::GetStringUTF16(IDS_EASY_UNLOCK_SETUP_INTRO_HEADER_TEXT));
-  strings->SetString(
-      "setupIntroFindPhoneButtonLabel",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_INTRO_FIND_PHONE_BUTTON_LABEL));
-  strings->SetString(
-      "setupIntroFindingPhoneButtonLabel",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_INTRO_FINDING_PHONE_BUTTON_LABEL));
-  strings->SetString(
+  strings->SetKey("setupIntroHeaderTitle",
+                  base::Value(l10n_util::GetStringFUTF16(
+                      IDS_EASY_UNLOCK_SETUP_INTRO_HEADER_TITLE, device_type)));
+  strings->SetKey("setupIntroHeaderText",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_INTRO_HEADER_TEXT)));
+  strings->SetKey("setupIntroFindPhoneButtonLabel",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_INTRO_FIND_PHONE_BUTTON_LABEL)));
+  strings->SetKey("setupIntroFindingPhoneButtonLabel",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_INTRO_FINDING_PHONE_BUTTON_LABEL)));
+  strings->SetKey(
       "setupIntroRetryFindPhoneButtonLabel",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_INTRO_RETRY_FIND_PHONE_BUTTON_LABEL));
-  strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_SETUP_INTRO_RETRY_FIND_PHONE_BUTTON_LABEL)));
+  strings->SetKey(
       "setupIntroCloseFindPhoneButtonLabel",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_INTRO_CLOSE_FIND_PHONE_BUTTON_LABEL));
-  strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_SETUP_INTRO_CLOSE_FIND_PHONE_BUTTON_LABEL)));
+  strings->SetKey(
       "setupIntroHowIsThisSecureLinkText",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_INTRO_HOW_IS_THIS_SECURE_LINK_TEXT));
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_SETUP_INTRO_HOW_IS_THIS_SECURE_LINK_TEXT)));
   // Step 1.5: Phone found but is not secured with lock screen
-  strings->SetString("setupSecurePhoneHeaderTitle",
-                     l10n_util::GetStringUTF16(
-                         IDS_EASY_UNLOCK_SETUP_SECURE_PHONE_HEADER_TITLE));
-  strings->SetString(
+  strings->SetKey("setupSecurePhoneHeaderTitle",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_SECURE_PHONE_HEADER_TITLE)));
+  strings->SetKey(
       "setupSecurePhoneHeaderText",
-      l10n_util::GetStringFUTF16(IDS_EASY_UNLOCK_SETUP_SECURE_PHONE_HEADER_TEXT,
-                                 device_type));
-  strings->SetString("setupSecurePhoneButtonLabel",
-                     l10n_util::GetStringUTF16(
-                         IDS_EASY_UNLOCK_SETUP_SECURE_PHONE_BUTTON_LABEL));
-  strings->SetString("setupSecurePhoneLinkText",
-                     l10n_util::GetStringUTF16(
-                         IDS_EASY_UNLOCK_SETUP_SECURE_PHONE_LINK_TEXT));
+      base::Value(l10n_util::GetStringFUTF16(
+          IDS_EASY_UNLOCK_SETUP_SECURE_PHONE_HEADER_TEXT, device_type)));
+  strings->SetKey("setupSecurePhoneButtonLabel",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_SECURE_PHONE_BUTTON_LABEL)));
+  strings->SetKey("setupSecurePhoneLinkText",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_SECURE_PHONE_LINK_TEXT)));
   // Step 2: Found a viable phone.
-  strings->SetString(
+  strings->SetKey(
       "setupFoundPhoneHeaderTitle",
-      l10n_util::GetStringFUTF16(
-          IDS_EASY_UNLOCK_SETUP_FOUND_PHONE_HEADER_TITLE, device_type));
-  strings->SetString(
+      base::Value(l10n_util::GetStringFUTF16(
+          IDS_EASY_UNLOCK_SETUP_FOUND_PHONE_HEADER_TITLE, device_type)));
+  strings->SetKey(
       "setupFoundPhoneHeaderText",
-      l10n_util::GetStringFUTF16(
-          IDS_EASY_UNLOCK_SETUP_FOUND_PHONE_HEADER_TEXT, device_type));
-  strings->SetString(
+      base::Value(l10n_util::GetStringFUTF16(
+          IDS_EASY_UNLOCK_SETUP_FOUND_PHONE_HEADER_TEXT, device_type)));
+  strings->SetKey(
       "setupFoundPhoneUseThisPhoneButtonLabel",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_FOUND_PHONE_USE_THIS_PHONE_BUTTON_LABEL));
-  strings->SetString("setupFoundPhoneDeviceFormattedButtonLabel",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_FOUND_PHONE_DEVICE_FORMATTED_BUTTON_LABEL));
-  strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_SETUP_FOUND_PHONE_USE_THIS_PHONE_BUTTON_LABEL)));
+  strings->SetKey(
+      "setupFoundPhoneDeviceFormattedButtonLabel",
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_SETUP_FOUND_PHONE_DEVICE_FORMATTED_BUTTON_LABEL)));
+  strings->SetKey(
       "setupFoundPhoneSwitchPhoneLinkLabel",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_FOUND_PHONE_SWITCH_PHONE_LINK_LABEL));
-  strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_SETUP_FOUND_PHONE_SWITCH_PHONE_LINK_LABEL)));
+  strings->SetKey(
       "setupPairingPhoneFailedButtonLabel",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_PAIRING_PHONE_FAILED_BUTTON_LABEL));
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_SETUP_PAIRING_PHONE_FAILED_BUTTON_LABEL)));
   // Step 2.5: Recommend user to set up Android Smart Lock
-  strings->SetString(
-      "setupAndroidSmartLockHeaderTitle",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_ANDROID_SMART_LOCK_HEADER_TITLE));
-  strings->SetString(
+  strings->SetKey("setupAndroidSmartLockHeaderTitle",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_ANDROID_SMART_LOCK_HEADER_TITLE)));
+  strings->SetKey(
       "setupAndroidSmartLockHeaderText",
-      l10n_util::GetStringFUTF16(
-          IDS_EASY_UNLOCK_SETUP_ANDROID_SMART_LOCK_HEADER_TEXT, device_type));
-  strings->SetString(
+      base::Value(l10n_util::GetStringFUTF16(
+          IDS_EASY_UNLOCK_SETUP_ANDROID_SMART_LOCK_HEADER_TEXT, device_type)));
+  strings->SetKey(
       "setupAndroidSmartLockDoneButtonText",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_ANDROID_SMART_LOCK_DONE_BUTTON_LABEL));
-  strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_SETUP_ANDROID_SMART_LOCK_DONE_BUTTON_LABEL)));
+  strings->SetKey(
       "setupAndroidSmartLockAboutLinkText",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_ANDROID_SMART_LOCK_ABOUT_LINK_TEXT));
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_SETUP_ANDROID_SMART_LOCK_ABOUT_LINK_TEXT)));
   // Step 3: Setup completed successfully.
-  strings->SetString(
-      "setupCompleteHeaderTitle",
-      l10n_util::GetStringUTF16(IDS_EASY_UNLOCK_SETUP_COMPLETE_HEADER_TITLE));
-  strings->SetString(
+  strings->SetKey("setupCompleteHeaderTitle",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_COMPLETE_HEADER_TITLE)));
+  strings->SetKey(
       "setupCompleteHeaderText",
-      l10n_util::GetStringFUTF16(IDS_EASY_UNLOCK_SETUP_COMPLETE_HEADER_TEXT,
-                                 device_type));
-  strings->SetString(
-      "setupCompleteTryItOutButtonLabel",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_COMPLETE_TRY_IT_OUT_BUTTON_LABEL));
-  strings->SetString(
-      "setupCompleteSettingsLinkText",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_COMPLETE_SETTINGS_LINK_TEXT));
+      base::Value(l10n_util::GetStringFUTF16(
+          IDS_EASY_UNLOCK_SETUP_COMPLETE_HEADER_TEXT, device_type)));
+  strings->SetKey("setupCompleteTryItOutButtonLabel",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_COMPLETE_TRY_IT_OUT_BUTTON_LABEL)));
+  strings->SetKey("setupCompleteSettingsLinkText",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_COMPLETE_SETTINGS_LINK_TEXT)));
   // Step 4: Post lockscreen confirmation.
-  strings->SetString("setupPostLockDismissButtonLabel",
-                     l10n_util::GetStringUTF16(
-                         IDS_EASY_UNLOCK_SETUP_POST_LOCK_DISMISS_BUTTON_LABEL));
+  strings->SetKey("setupPostLockDismissButtonLabel",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_POST_LOCK_DISMISS_BUTTON_LABEL)));
 
   // Error strings.
-  strings->SetString(
+  strings->SetKey(
       "setupErrorBluetoothUnavailable",
-      l10n_util::GetStringFUTF16(
-          IDS_EASY_UNLOCK_SETUP_ERROR_BLUETOOTH_UNAVAILBLE, device_type));
-  strings->SetString(
-      "setupErrorOffline",
-      l10n_util::GetStringFUTF16(
-          IDS_EASY_UNLOCK_SETUP_ERROR_OFFLINE, device_type));
-  strings->SetString(
+      base::Value(l10n_util::GetStringFUTF16(
+          IDS_EASY_UNLOCK_SETUP_ERROR_BLUETOOTH_UNAVAILBLE, device_type)));
+  strings->SetKey("setupErrorOffline",
+                  base::Value(l10n_util::GetStringFUTF16(
+                      IDS_EASY_UNLOCK_SETUP_ERROR_OFFLINE, device_type)));
+  strings->SetKey(
       "setupErrorRemoteSoftwareOutOfDate",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_ERROR_REMOTE_SOFTWARE_OUT_OF_DATE));
-  strings->SetString(
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_SETUP_ERROR_REMOTE_SOFTWARE_OUT_OF_DATE)));
+  strings->SetKey(
       "setupErrorRemoteSoftwareOutOfDateGeneric",
-      l10n_util::GetStringUTF16(
-          IDS_EASY_UNLOCK_SETUP_ERROR_REMOTE_SOFTWARE_OUT_OF_DATE_GENERIC));
-  strings->SetString(
-      "setupErrorFindingPhone",
-      l10n_util::GetStringUTF16(IDS_EASY_UNLOCK_SETUP_ERROR_FINDING_PHONE));
-  strings->SetString("setupErrorSyncPhoneState",
-                     l10n_util::GetStringUTF16(
-                         IDS_EASY_UNLOCK_SETUP_ERROR_SYNC_PHONE_STATE_FAILED));
-  strings->SetString("setupErrorConnectingToPhone",
-                     l10n_util::GetStringUTF16(
-                         IDS_EASY_UNLOCK_SETUP_ERROR_CONNECTING_TO_PHONE));
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_EASY_UNLOCK_SETUP_ERROR_REMOTE_SOFTWARE_OUT_OF_DATE_GENERIC)));
+  strings->SetKey("setupErrorFindingPhone",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_ERROR_FINDING_PHONE)));
+  strings->SetKey("setupErrorSyncPhoneState",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_ERROR_SYNC_PHONE_STATE_FAILED)));
+  strings->SetKey("setupErrorConnectingToPhone",
+                  base::Value(l10n_util::GetStringUTF16(
+                      IDS_EASY_UNLOCK_SETUP_ERROR_CONNECTING_TO_PHONE)));
 
   return RespondNow(OneArgument(std::move(strings)));
 }
@@ -626,11 +614,11 @@ EasyUnlockPrivateGetPermitAccessFunction::GetPermitAccessForExperiment() {
       easy_unlock_service->proximity_auth_client();
   std::unique_ptr<base::DictionaryValue> permit_access(
       new base::DictionaryValue());
-  permit_access->SetString("permitId",
-                           "permit://google.com/" + client->GetAccountId());
-  permit_access->SetString("id", b64_public_key);
-  permit_access->SetString("type", "access");
-  permit_access->SetString("data", b64_private_key);
+  permit_access->SetKey(
+      "permitId", base::Value("permit://google.com/" + client->GetAccountId()));
+  permit_access->SetKey("id", base::Value(b64_public_key));
+  permit_access->SetKey("type", base::Value("access"));
+  permit_access->SetKey("data", base::Value(b64_private_key));
 
   PA_LOG(INFO) << "Returning permit access for "
                << "chrome.easyUnlockPrivate.getPermitAccess:\n"
@@ -792,17 +780,18 @@ void EasyUnlockPrivateGetRemoteDevicesFunction::OnPSKDerivedForDevice(
   // Fill in the JSON dictionary containing a single unlock key's data.
   std::unique_ptr<base::DictionaryValue> device_dictionary(
       new base::DictionaryValue());
-  device_dictionary->SetString("name", device.friendly_device_name());
-  device_dictionary->SetString("bluetoothAddress", device.bluetooth_address());
-  device_dictionary->SetString("psk", b64_psk);
+  device_dictionary->SetKey("name", base::Value(device.friendly_device_name()));
+  device_dictionary->SetKey("bluetoothAddress",
+                            base::Value(device.bluetooth_address()));
+  device_dictionary->SetKey("psk", base::Value(b64_psk));
 
   // Fill in the permit license for the unlock key.
   std::unique_ptr<base::DictionaryValue> permit_license(
       new base::DictionaryValue());
-  permit_license->SetString("permitId", permit_id_);
-  permit_license->SetString("id", b64_public_key);
-  permit_license->SetString("type", "license");
-  permit_license->SetString("data", b64_public_key);
+  permit_license->SetKey("permitId", base::Value(permit_id_));
+  permit_license->SetKey("id", base::Value(b64_public_key));
+  permit_license->SetKey("type", base::Value("license"));
+  permit_license->SetKey("data", base::Value(b64_public_key));
   device_dictionary->Set("permitRecord", std::move(permit_license));
 
   remote_devices_->Append(std::move(device_dictionary));

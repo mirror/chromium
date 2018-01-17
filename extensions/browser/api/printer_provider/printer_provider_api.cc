@@ -71,21 +71,21 @@ void UpdatePrinterWithExtensionInfo(base::DictionaryValue* printer,
                                     const Extension* extension) {
   std::string internal_printer_id;
   CHECK(printer->GetString("id", &internal_printer_id));
-  printer->SetString("id",
-                     GeneratePrinterId(extension->id(), internal_printer_id));
-  printer->SetString("extensionId", extension->id());
-  printer->SetString("extensionName", extension->name());
+  printer->SetKey("id", base::Value(GeneratePrinterId(extension->id(),
+                                                      internal_printer_id)));
+  printer->SetKey("extensionId", base::Value(extension->id()));
+  printer->SetKey("extensionName", base::Value(extension->name()));
 
   base::string16 printer_name;
   if (printer->GetString("name", &printer_name) &&
       base::i18n::AdjustStringForLocaleDirection(&printer_name)) {
-    printer->SetString("name", printer_name);
+    printer->SetKey("name", base::Value(printer_name));
   }
 
   base::string16 printer_description;
   if (printer->GetString("description", &printer_description) &&
       base::i18n::AdjustStringForLocaleDirection(&printer_description)) {
-    printer->SetString("description", printer_description);
+    printer->SetKey("description", base::Value(printer_description));
   }
 }
 

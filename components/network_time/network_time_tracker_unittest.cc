@@ -400,8 +400,8 @@ TEST_F(NetworkTimeTrackerTest, DeserializeOldFormat) {
   saved_prefs->GetDouble("local", &local);
   saved_prefs->GetDouble("network", &network);
   base::DictionaryValue prefs;
-  prefs.SetDouble("local", local);
-  prefs.SetDouble("network", network);
+  prefs.SetKey("local", base::Value(local));
+  prefs.SetKey("network", base::Value(network));
   pref_service_.Set(prefs::kNetworkTimeMapping, prefs);
   Reset();
   EXPECT_EQ(NetworkTimeTracker::NETWORK_TIME_NO_SYNC_ATTEMPT,

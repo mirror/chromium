@@ -142,8 +142,8 @@ class PreferenceValidationDelegateValues
       case Value::Type::DICTIONARY: {
         std::unique_ptr<base::DictionaryValue> value(
             new base::DictionaryValue());
-        value->SetInteger("twenty-two", 22);
-        value->SetInteger("forty-seven", 47);
+        value->SetKey("twenty-two", base::Value(22));
+        value->SetKey("forty-seven", base::Value(47));
         return std::move(value);
       }
       case Value::Type::LIST: {

@@ -26,8 +26,8 @@ TEST(JsonSchemaCompilerObjectsTest, ObjectParamParamsCreate) {
     strings->AppendString("two");
     auto info_value = std::make_unique<base::DictionaryValue>();
     info_value->Set("strings", std::move(strings));
-    info_value->SetInteger("integer", 5);
-    info_value->SetBoolean("boolean", true);
+    info_value->SetKey("integer", base::Value(5));
+    info_value->SetKey("boolean", base::Value(true));
 
     auto params_value = std::make_unique<base::ListValue>();
     params_value->Append(std::move(info_value));
@@ -46,7 +46,7 @@ TEST(JsonSchemaCompilerObjectsTest, ObjectParamParamsCreate) {
     strings->AppendString("two");
     auto info_value = std::make_unique<base::DictionaryValue>();
     info_value->Set("strings", std::move(strings));
-    info_value->SetInteger("integer", 5);
+    info_value->SetKey("integer", base::Value(5));
 
     auto params_value = std::make_unique<base::ListValue>();
     params_value->Append(std::move(info_value));
@@ -63,7 +63,7 @@ TEST(JsonSchemaCompilerObjectsTest, ReturnsObjectResultCreate) {
       ReturnsObject::Results::Create(info);
 
   base::DictionaryValue expected;
-  expected.SetString("state", "foo");
+  expected.SetKey("state", base::Value("foo"));
   base::DictionaryValue* result = NULL;
   ASSERT_TRUE(results->GetDictionary(0, &result));
   ASSERT_TRUE(result->Equals(&expected));
@@ -75,7 +75,7 @@ TEST(JsonSchemaCompilerObjectsTest, OnObjectFiredCreate) {
   std::unique_ptr<base::ListValue> results(OnObjectFired::Create(object));
 
   base::DictionaryValue expected;
-  expected.SetString("state", "bar");
+  expected.SetKey("state", base::Value("bar"));
   base::DictionaryValue* result = NULL;
   ASSERT_TRUE(results->GetDictionary(0, &result));
   ASSERT_TRUE(result->Equals(&expected));
@@ -101,7 +101,7 @@ TEST(JsonSchemaCompilerMovableObjectsTest, MovableObjectsTest) {
   MovableParent parent;
   parent.pods = std::move(pods);
   parent.strs.push_back("pstr");
-  parent.blob.additional_properties.SetString("key", "val");
+  parent.blob.additional_properties.SetKey("key", base::Value("val"));
   parent.choice.as_string.reset(new std::string("string"));
 
   MovableParent parent2(std::move(parent));

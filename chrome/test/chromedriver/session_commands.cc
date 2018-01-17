@@ -113,46 +113,53 @@ std::unique_ptr<base::DictionaryValue> CreateCapabilities(
     Session* session,
     const Capabilities& capabilities) {
   std::unique_ptr<base::DictionaryValue> caps(new base::DictionaryValue());
-  caps->SetString("browserName", "chrome");
-  caps->SetString("version",
-                  session->chrome->GetBrowserInfo()->browser_version);
-  caps->SetString("chrome.chromedriverVersion", kChromeDriverVersion);
-  caps->SetString("platform", session->chrome->GetOperatingSystemName());
-  caps->SetString("pageLoadStrategy", session->chrome->page_load_strategy());
-  caps->SetBoolean("javascriptEnabled", true);
-  caps->SetBoolean("takesScreenshot", true);
-  caps->SetBoolean("takesHeapSnapshot", true);
-  caps->SetBoolean("handlesAlerts", true);
-  caps->SetBoolean("databaseEnabled", false);
-  caps->SetBoolean("locationContextEnabled", true);
-  caps->SetBoolean("mobileEmulationEnabled",
-                   session->chrome->IsMobileEmulationEnabled());
-  caps->SetBoolean("applicationCacheEnabled", false);
-  caps->SetBoolean("browserConnectionEnabled", false);
-  caps->SetBoolean("cssSelectorsEnabled", true);
-  caps->SetBoolean("webStorageEnabled", true);
-  caps->SetBoolean("rotatable", false);
-  caps->SetBoolean("acceptSslCerts", capabilities.accept_insecure_certs);
-  caps->SetBoolean("acceptInsecureCerts", capabilities.accept_insecure_certs);
-  caps->SetBoolean("nativeEvents", true);
-  caps->SetBoolean("hasTouchScreen", session->chrome->HasTouchScreen());
-  caps->SetString("unexpectedAlertBehaviour",
-                  session->unexpected_alert_behaviour);
+  caps->SetKey("browserName", base::Value("chrome"));
+  caps->SetKey("version",
+               base::Value(session->chrome->GetBrowserInfo()->browser_version));
+  caps->SetPath({"chrome", "chromedriverVersion"},
+                base::Value(kChromeDriverVersion));
+  caps->SetKey("platform",
+               base::Value(session->chrome->GetOperatingSystemName()));
+  caps->SetKey("pageLoadStrategy",
+               base::Value(session->chrome->page_load_strategy()));
+  caps->SetKey("javascriptEnabled", base::Value(true));
+  caps->SetKey("takesScreenshot", base::Value(true));
+  caps->SetKey("takesHeapSnapshot", base::Value(true));
+  caps->SetKey("handlesAlerts", base::Value(true));
+  caps->SetKey("databaseEnabled", base::Value(false));
+  caps->SetKey("locationContextEnabled", base::Value(true));
+  caps->SetKey("mobileEmulationEnabled",
+               base::Value(session->chrome->IsMobileEmulationEnabled()));
+  caps->SetKey("applicationCacheEnabled", base::Value(false));
+  caps->SetKey("browserConnectionEnabled", base::Value(false));
+  caps->SetKey("cssSelectorsEnabled", base::Value(true));
+  caps->SetKey("webStorageEnabled", base::Value(true));
+  caps->SetKey("rotatable", base::Value(false));
+  caps->SetKey("acceptSslCerts",
+               base::Value(capabilities.accept_insecure_certs));
+  caps->SetKey("acceptInsecureCerts",
+               base::Value(capabilities.accept_insecure_certs));
+  caps->SetKey("nativeEvents", base::Value(true));
+  caps->SetKey("hasTouchScreen",
+               base::Value(session->chrome->HasTouchScreen()));
+  caps->SetKey("unexpectedAlertBehaviour",
+               base::Value(session->unexpected_alert_behaviour));
 
   // add setWindowRect based on whether we are desktop/android/remote
   if (capabilities.IsAndroid() || capabilities.IsRemoteBrowser()) {
-    caps->SetBoolean("setWindowRect", false);
+    caps->SetKey("setWindowRect", base::Value(false));
   } else {
-    caps->SetBoolean("setWindowRect", true);
+    caps->SetKey("setWindowRect", base::Value(true));
   }
 
   ChromeDesktopImpl* desktop = NULL;
   Status status = session->chrome->GetAsDesktop(&desktop);
   if (status.IsOk()) {
-    caps->SetString("chrome.userDataDir",
-                    desktop->command().GetSwitchValueNative("user-data-dir"));
-    caps->SetBoolean("networkConnectionEnabled",
-                     desktop->IsNetworkConnectionEnabled());
+    caps->SetPath(
+        {"chrome", "userDataDir"},
+        base::Value(desktop->command().GetSwitchValueNative("user-data-dir")));
+    caps->SetKey("networkConnectionEnabled",
+                 base::Value(desktop->IsNetworkConnectionEnabled()));
   }
 
   return caps;
@@ -292,7 +299,7 @@ Status InitSessionHelper(const InitSessionParams& bound_params,
   if (w3c_capability) {
     base::DictionaryValue body;
     body.SetDictionary("capabilities", std::move(session->capabilities));
-    body.SetString("sessionId", session->id);
+    body.SetKey("sessionId", base::Value(session->id));
     value->reset(body.DeepCopy());
   } else {
     value->reset(session->capabilities->DeepCopy());
@@ -578,9 +585,15 @@ Status ExecuteGetTimeouts(Session* session,
                           const base::DictionaryValue& params,
                           std::unique_ptr<base::Value>* value) {
   base::DictionaryValue timeouts;
-  timeouts.SetInteger("script", session->script_timeout.InMilliseconds());
-  timeouts.SetInteger("pageLoad", session->page_load_timeout.InMilliseconds());
-  timeouts.SetInteger("implicit", session->implicit_wait.InMilliseconds());
+  timeouts.SetKey(
+      "script",
+      base::Value(static_cast<int>(session->script_timeout.InMilliseconds())));
+  timeouts.SetKey("pageLoad",
+                  base::Value(static_cast<int>(
+                      session->page_load_timeout.InMilliseconds())));
+  timeouts.SetKey(
+      "implicit",
+      base::Value(static_cast<int>(session->implicit_wait.InMilliseconds())));
 
   value->reset(timeouts.DeepCopy());
   return Status(kOk);
@@ -637,12 +650,15 @@ Status ExecuteGetLocation(Session* session,
                   "Location must be set before it can be retrieved");
   }
   base::DictionaryValue location;
-  location.SetDouble("latitude", session->overridden_geoposition->latitude);
-  location.SetDouble("longitude", session->overridden_geoposition->longitude);
-  location.SetDouble("accuracy", session->overridden_geoposition->accuracy);
+  location.SetKey("latitude",
+                  base::Value(session->overridden_geoposition->latitude));
+  location.SetKey("longitude",
+                  base::Value(session->overridden_geoposition->longitude));
+  location.SetKey("accuracy",
+                  base::Value(session->overridden_geoposition->accuracy));
   // Set a dummy altitude to make WebDriver clients happy.
   // https://code.google.com/p/chromedriver/issues/detail?id=281
-  location.SetDouble("altitude", 0);
+  location.SetKey("altitude", base::Value(static_cast<double>(0)));
   value->reset(location.DeepCopy());
   return Status(kOk);
 }
@@ -672,16 +688,19 @@ Status ExecuteGetNetworkConditions(Session* session,
                   "network conditions must be set before it can be retrieved");
   }
   base::DictionaryValue conditions;
-  conditions.SetBoolean("offline",
-                        session->overridden_network_conditions->offline);
-  conditions.SetInteger("latency",
-                        session->overridden_network_conditions->latency);
-  conditions.SetInteger(
+  conditions.SetKey(
+      "offline", base::Value(session->overridden_network_conditions->offline));
+  conditions.SetKey("latency",
+                    base::Value(static_cast<int>(
+                        session->overridden_network_conditions->latency)));
+  conditions.SetKey(
       "download_throughput",
-      session->overridden_network_conditions->download_throughput);
-  conditions.SetInteger(
+      base::Value(static_cast<int>(
+          session->overridden_network_conditions->download_throughput)));
+  conditions.SetKey(
       "upload_throughput",
-      session->overridden_network_conditions->upload_throughput);
+      base::Value(static_cast<int>(
+          session->overridden_network_conditions->upload_throughput)));
   value->reset(conditions.DeepCopy());
   return Status(kOk);
 }
@@ -789,10 +808,10 @@ Status ExecuteGetWindowRect(Session* session,
     return status;
 
   base::DictionaryValue rect;
-  rect.SetInteger("x", x);
-  rect.SetInteger("y", y);
-  rect.SetInteger("width", width);
-  rect.SetInteger("height", height);
+  rect.SetKey("x", base::Value(x));
+  rect.SetKey("y", base::Value(y));
+  rect.SetKey("width", base::Value(width));
+  rect.SetKey("height", base::Value(height));
   value->reset(rect.DeepCopy());
   return Status(kOk);
 }
@@ -822,8 +841,8 @@ Status ExecuteGetWindowPosition(Session* session,
     return status;
 
   base::DictionaryValue position;
-  position.SetInteger("x", x);
-  position.SetInteger("y", y);
+  position.SetKey("x", base::Value(x));
+  position.SetKey("y", base::Value(y));
   value->reset(position.DeepCopy());
   return Status(kOk);
 }
@@ -879,8 +898,8 @@ Status ExecuteGetWindowSize(Session* session,
     return status;
 
   base::DictionaryValue size;
-  size.SetInteger("width", width);
-  size.SetInteger("height", height);
+  size.SetKey("width", base::Value(width));
+  size.SetKey("height", base::Value(height));
   value->reset(size.DeepCopy());
   return Status(kOk);
 }
@@ -903,13 +922,13 @@ Status ExecuteSetWindowRect(Session* session,
 
   // only set position if both x and y are given
   if (params.GetDouble("x", &x) && params.GetDouble("y", &y)) {
-    rect_params.SetInteger("x", static_cast<int>(x));
-    rect_params.SetInteger("y", static_cast<int>(y));
+    rect_params.SetKey("x", base::Value(static_cast<int>(x)));
+    rect_params.SetKey("y", base::Value(static_cast<int>(y)));
   }  // only set size if both height and width are given
   if (params.GetDouble("width", &width) &&
       params.GetDouble("height", &height)) {
-    rect_params.SetInteger("width", static_cast<int>(width));
-    rect_params.SetInteger("height", static_cast<int>(height));
+    rect_params.SetKey("width", base::Value(static_cast<int>(width)));
+    rect_params.SetKey("height", base::Value(static_cast<int>(height)));
   }
   status = desktop->SetWindowRect(session->window, rect_params);
   if (status.IsError())
@@ -1097,7 +1116,7 @@ Status ExecuteGetScreenOrientation(Session* session,
     return status;
 
   base::DictionaryValue orientation_value;
-  orientation_value.SetString("orientation", screen_orientation);
+  orientation_value.SetKey("orientation", base::Value(screen_orientation));
   value->reset(orientation_value.DeepCopy());
   return Status(kOk);
 }

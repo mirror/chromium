@@ -480,8 +480,8 @@ void It2MeNativeMessagingHostTest::VerifyPolicyErrorResponse() {
 void It2MeNativeMessagingHostTest::TestBadRequest(const base::Value& message,
                                                   bool expect_error_response) {
   base::DictionaryValue good_message;
-  good_message.SetString("type", "hello");
-  good_message.SetInteger("id", 1);
+  good_message.SetKey("type", base::Value("hello"));
+  good_message.SetKey("id", base::Value(1));
 
   WriteMessageToInputPipe(good_message);
   WriteMessageToInputPipe(message);
@@ -559,13 +559,15 @@ void It2MeNativeMessagingHostTest::ExitPolicyRunLoop() {
 
 void It2MeNativeMessagingHostTest::SendConnectMessage(int id) {
   base::DictionaryValue connect_message;
-  connect_message.SetInteger("id", id);
-  connect_message.SetString("type", "connect");
-  connect_message.SetString("xmppServerAddress", "talk.google.com:5222");
-  connect_message.SetBoolean("xmppServerUseTls", true);
-  connect_message.SetString("directoryBotJid", kTestBotJid);
-  connect_message.SetString("userName", kTestClientUsername);
-  connect_message.SetString("authServiceWithToken", "oauth2:sometoken");
+  connect_message.SetKey("id", base::Value(id));
+  connect_message.SetKey("type", base::Value("connect"));
+  connect_message.SetKey("xmppServerAddress",
+                         base::Value("talk.google.com:5222"));
+  connect_message.SetKey("xmppServerUseTls", base::Value(true));
+  connect_message.SetKey("directoryBotJid", base::Value(kTestBotJid));
+  connect_message.SetKey("userName", base::Value(kTestClientUsername));
+  connect_message.SetKey("authServiceWithToken",
+                         base::Value("oauth2:sometoken"));
   connect_message.Set(
       "iceConfig",
       base::JSONReader::Read("{ \"iceServers\": [ { \"urls\": [ \"stun:" +
@@ -576,8 +578,8 @@ void It2MeNativeMessagingHostTest::SendConnectMessage(int id) {
 
 void It2MeNativeMessagingHostTest::SendDisconnectMessage(int id) {
   base::DictionaryValue disconnect_message;
-  disconnect_message.SetInteger("id", id);
-  disconnect_message.SetString("type", "disconnect");
+  disconnect_message.SetKey("id", base::Value(id));
+  disconnect_message.SetKey("type", base::Value("disconnect"));
   WriteMessageToInputPipe(disconnect_message);
 }
 
@@ -594,8 +596,8 @@ void It2MeNativeMessagingHostTest::TestConnect() {
 TEST_F(It2MeNativeMessagingHostTest, Hello) {
   int next_id = 0;
   base::DictionaryValue message;
-  message.SetInteger("id", ++next_id);
-  message.SetString("type", "hello");
+  message.SetKey("id", base::Value(++next_id));
+  message.SetKey("type", base::Value("hello"));
   WriteMessageToInputPipe(message);
 
   VerifyHelloResponse(next_id);
@@ -604,9 +606,9 @@ TEST_F(It2MeNativeMessagingHostTest, Hello) {
 // Verify that response ID matches request ID.
 TEST_F(It2MeNativeMessagingHostTest, Id) {
   base::DictionaryValue message;
-  message.SetString("type", "hello");
+  message.SetKey("type", base::Value("hello"));
   WriteMessageToInputPipe(message);
-  message.SetString("id", "42");
+  message.SetKey("id", base::Value("42"));
   WriteMessageToInputPipe(message);
 
   std::unique_ptr<base::DictionaryValue> response = ReadMessageFromOutputPipe();
@@ -645,7 +647,7 @@ TEST_F(It2MeNativeMessagingHostTest, MissingType) {
 // Verify rejection if type is unrecognized.
 TEST_F(It2MeNativeMessagingHostTest, InvalidType) {
   base::DictionaryValue message;
-  message.SetString("type", "xxx");
+  message.SetKey("type", base::Value("xxx"));
   TestBadRequest(message, true);
 }
 

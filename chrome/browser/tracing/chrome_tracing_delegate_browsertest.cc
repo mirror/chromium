@@ -47,15 +47,16 @@ class ChromeTracingDelegateBrowserTest : public InProcessBrowserTest {
 
     base::DictionaryValue dict;
 
-    dict.SetString("mode", "PREEMPTIVE_TRACING_MODE");
-    dict.SetString("category", "BENCHMARK");
+    dict.SetKey("mode", base::Value("PREEMPTIVE_TRACING_MODE"));
+    dict.SetKey("category", base::Value("BENCHMARK"));
 
     std::unique_ptr<base::ListValue> rules_list(new base::ListValue());
     {
       std::unique_ptr<base::DictionaryValue> rules_dict(
           new base::DictionaryValue());
-      rules_dict->SetString("rule", "MONITOR_AND_DUMP_WHEN_TRIGGER_NAMED");
-      rules_dict->SetString("trigger_name", "test");
+      rules_dict->SetKey("rule",
+                         base::Value("MONITOR_AND_DUMP_WHEN_TRIGGER_NAMED"));
+      rules_dict->SetKey("trigger_name", base::Value("test"));
       rules_list->Append(std::move(rules_dict));
     }
     dict.Set("configs", std::move(rules_list));

@@ -39,11 +39,11 @@ TEST(WebRequestEventDetailsTest, WhitelistedCopyForPublicSession) {
     orig->dict_.SetString(safe_attr, safe_attr);
   }
 
-  orig->dict_.SetString("url", "http://www.foo.bar/baz");
+  orig->dict_.SetKey("url", base::Value("http://www.foo.bar/baz"));
 
   // Add some extra dict_ values that should be filtered out.
-  orig->dict_.SetString("requestBody", "request body value");
-  orig->dict_.SetString("requestHeaders", "request headers value");
+  orig->dict_.SetKey("requestBody", base::Value("request body value"));
+  orig->dict_.SetKey("requestHeaders", base::Value("request headers value"));
 
   // Get a filtered copy then check that filtering really works.
   std::unique_ptr<WebRequestEventDetails> copy =

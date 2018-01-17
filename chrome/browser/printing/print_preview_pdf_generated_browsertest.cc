@@ -169,32 +169,34 @@ class PrintPreviewObserver : public WebContentsObserver {
     base::DictionaryValue script_argument;
 
     if (state_ == kWaitingToSendSaveAsPdf) {
-      script_argument.SetBoolean("selectSaveAsPdfDestination", true);
+      script_argument.SetKey("selectSaveAsPdfDestination", base::Value(true));
       state_ = settings_->source_is_pdf ?
                kWaitingToSendPageNumbers : kWaitingToSendLayoutSettings;
       failed_setting_ = "Save as PDF";
     } else if (state_ == kWaitingToSendLayoutSettings) {
-      script_argument.SetBoolean("layoutSettings.portrait",
-                                 settings_->is_portrait);
+      script_argument.SetPath({"layoutSettings", "portrait"},
+                              base::Value(settings_->is_portrait));
       state_ = kWaitingToSendPageNumbers;
       failed_setting_ = "Layout Settings";
     } else if (state_ == kWaitingToSendPageNumbers) {
-      script_argument.SetString("pageRange", settings_->page_numbers);
+      script_argument.SetKey("pageRange", base::Value(settings_->page_numbers));
       state_ = settings_->source_is_pdf ?
                kWaitingForFinalMessage : kWaitingToSendHeadersAndFooters;
       failed_setting_ = "Page Range";
     } else if (state_ == kWaitingToSendHeadersAndFooters) {
-      script_argument.SetBoolean("headersAndFooters",
-                                 settings_->headers_and_footers);
+      script_argument.SetKey("headersAndFooters",
+                             base::Value(settings_->headers_and_footers));
       state_ = kWaitingToSendBackgroundColorsAndImages;
       failed_setting_ = "Headers and Footers";
     } else if (state_ == kWaitingToSendBackgroundColorsAndImages) {
-      script_argument.SetBoolean("backgroundColorsAndImages",
-                                 settings_->background_colors_and_images);
+      script_argument.SetKey(
+          "backgroundColorsAndImages",
+          base::Value(settings_->background_colors_and_images));
       state_ = kWaitingToSendMargins;
       failed_setting_ = "Background Colors and Images";
     } else if (state_ == kWaitingToSendMargins) {
-      script_argument.SetInteger("margins", settings_->margins);
+      script_argument.SetKey("margins",
+                             base::Value(static_cast<int>(settings_->margins)));
       state_ = kWaitingForFinalMessage;
       failed_setting_ = "Margins";
     } else if (state_ == kWaitingForFinalMessage) {

@@ -185,8 +185,8 @@ std::string WebstoreInlineInstaller::GetJsonPostData() {
 
   if (!redirect_chain->empty()) {
     base::DictionaryValue dictionary;
-    dictionary.SetString("id", id());
-    dictionary.SetString("referrer", requestor_url_.spec());
+    dictionary.SetKey("id", base::Value(id()));
+    dictionary.SetKey("referrer", base::Value(requestor_url_.spec()));
     dictionary.Set("redirect_chain", std::move(redirect_chain));
 
     std::string json;

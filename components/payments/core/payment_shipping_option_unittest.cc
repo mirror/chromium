@@ -22,13 +22,13 @@ TEST(PaymentRequestTest, PaymentShippingOptionFromDictionaryValueSuccess) {
   expected.selected = true;
 
   base::DictionaryValue shipping_option_dict;
-  shipping_option_dict.SetString("id", "123");
-  shipping_option_dict.SetString("label", "Ground Shipping");
+  shipping_option_dict.SetKey("id", base::Value("123"));
+  shipping_option_dict.SetKey("label", base::Value("Ground Shipping"));
   auto amount_dict = std::make_unique<base::DictionaryValue>();
-  amount_dict->SetString("currency", "BRL");
-  amount_dict->SetString("value", "4,000.32");
+  amount_dict->SetKey("currency", base::Value("BRL"));
+  amount_dict->SetKey("value", base::Value("4,000.32"));
   shipping_option_dict.Set("amount", std::move(amount_dict));
-  shipping_option_dict.SetBoolean("selected", true);
+  shipping_option_dict.SetKey("selected", base::Value(true));
 
   PaymentShippingOption actual;
   EXPECT_TRUE(actual.FromDictionaryValue(shipping_option_dict));
@@ -50,23 +50,23 @@ TEST(PaymentRequestTest, PaymentShippingOptionFromDictionaryValueFailure) {
   base::DictionaryValue shipping_option_dict;
 
   // Id, Label, and amount are required.
-  shipping_option_dict.SetString("id", "123");
+  shipping_option_dict.SetKey("id", base::Value("123"));
   EXPECT_FALSE(actual.FromDictionaryValue(shipping_option_dict));
 
-  shipping_option_dict.SetString("label", "Ground Shipping");
+  shipping_option_dict.SetKey("label", base::Value("Ground Shipping"));
   EXPECT_FALSE(actual.FromDictionaryValue(shipping_option_dict));
 
   // Id must be a string.
   auto amount_dict = std::make_unique<base::DictionaryValue>();
-  amount_dict->SetString("currency", "BRL");
-  amount_dict->SetString("value", "4,000.32");
+  amount_dict->SetKey("currency", base::Value("BRL"));
+  amount_dict->SetKey("value", base::Value("4,000.32"));
   shipping_option_dict.Set("amount", std::move(amount_dict));
-  shipping_option_dict.SetInteger("id", 123);
+  shipping_option_dict.SetKey("id", base::Value(123));
   EXPECT_FALSE(actual.FromDictionaryValue(shipping_option_dict));
 
   // Label must be a string.
-  shipping_option_dict.SetString("id", "123");
-  shipping_option_dict.SetInteger("label", 123);
+  shipping_option_dict.SetKey("id", base::Value("123"));
+  shipping_option_dict.SetKey("label", base::Value(123));
   EXPECT_FALSE(actual.FromDictionaryValue(shipping_option_dict));
 }
 

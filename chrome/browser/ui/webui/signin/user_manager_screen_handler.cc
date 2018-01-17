@@ -742,147 +742,189 @@ void UserManagerScreenHandler::RegisterMessages() {
 void UserManagerScreenHandler::GetLocalizedValues(
     base::DictionaryValue* localized_strings) {
   // For Control Bar.
-  localized_strings->SetString("signedIn",
-      l10n_util::GetStringUTF16(IDS_SCREEN_LOCK_ACTIVE_USER));
-  localized_strings->SetString("addUser",
-      l10n_util::GetStringUTF16(IDS_ADD_USER_BUTTON));
-  localized_strings->SetString("cancel", l10n_util::GetStringUTF16(IDS_CANCEL));
-  localized_strings->SetString(
-      "browseAsGuest", l10n_util::GetStringUTF16(IDS_BROWSE_AS_GUEST_BUTTON));
-  localized_strings->SetString("signOutUser",
-      l10n_util::GetStringUTF16(IDS_SCREEN_LOCK_SIGN_OUT));
-  localized_strings->SetString("addSupervisedUser",
-      l10n_util::GetStringUTF16(IDS_CREATE_LEGACY_SUPERVISED_USER_MENU_LABEL));
+  localized_strings->SetKey(
+      "signedIn",
+      base::Value(l10n_util::GetStringUTF16(IDS_SCREEN_LOCK_ACTIVE_USER)));
+  localized_strings->SetKey(
+      "addUser", base::Value(l10n_util::GetStringUTF16(IDS_ADD_USER_BUTTON)));
+  localized_strings->SetKey("cancel",
+                            base::Value(l10n_util::GetStringUTF16(IDS_CANCEL)));
+  localized_strings->SetKey(
+      "browseAsGuest",
+      base::Value(l10n_util::GetStringUTF16(IDS_BROWSE_AS_GUEST_BUTTON)));
+  localized_strings->SetKey(
+      "signOutUser",
+      base::Value(l10n_util::GetStringUTF16(IDS_SCREEN_LOCK_SIGN_OUT)));
+  localized_strings->SetKey("addSupervisedUser",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_CREATE_LEGACY_SUPERVISED_USER_MENU_LABEL)));
 
   // For AccountPickerScreen.
-  localized_strings->SetString("screenType", "login-add-user");
-  localized_strings->SetString("highlightStrength", "normal");
-  localized_strings->SetString("title",
-      l10n_util::GetStringUTF16(IDS_PRODUCT_NAME));
-  localized_strings->SetString("passwordHint",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_EMPTY_PASSWORD_TEXT));
-  localized_strings->SetString("signingIn",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_SIGNING_IN));
-  localized_strings->SetString("podMenuButtonAccessibleName",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_MENU_BUTTON_ACCESSIBLE_NAME));
-  localized_strings->SetString("podMenuRemoveItemAccessibleName",
-      l10n_util::GetStringUTF16(
-          IDS_LOGIN_POD_MENU_REMOVE_ITEM_ACCESSIBLE_NAME));
-  localized_strings->SetString("removeUser",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_USER_REMOVE_WARNING_BUTTON));
-  localized_strings->SetString("passwordFieldAccessibleName",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_PASSWORD_FIELD_ACCESSIBLE_NAME));
+  localized_strings->SetKey("screenType", base::Value("login-add-user"));
+  localized_strings->SetKey("highlightStrength", base::Value("normal"));
+  localized_strings->SetKey(
+      "title", base::Value(l10n_util::GetStringUTF16(IDS_PRODUCT_NAME)));
+  localized_strings->SetKey("passwordHint",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_LOGIN_POD_EMPTY_PASSWORD_TEXT)));
+  localized_strings->SetKey(
+      "signingIn",
+      base::Value(l10n_util::GetStringUTF16(IDS_LOGIN_POD_SIGNING_IN)));
+  localized_strings->SetKey("podMenuButtonAccessibleName",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_LOGIN_POD_MENU_BUTTON_ACCESSIBLE_NAME)));
+  localized_strings->SetKey(
+      "podMenuRemoveItemAccessibleName",
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_LOGIN_POD_MENU_REMOVE_ITEM_ACCESSIBLE_NAME)));
+  localized_strings->SetKey("removeUser",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_LOGIN_POD_USER_REMOVE_WARNING_BUTTON)));
+  localized_strings->SetKey("passwordFieldAccessibleName",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_LOGIN_POD_PASSWORD_FIELD_ACCESSIBLE_NAME)));
 
   // For AccountPickerScreen, the remove user warning overlay.
-  localized_strings->SetString("removeUserWarningButtonTitle",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_USER_REMOVE_WARNING_BUTTON));
-  localized_strings->SetString(
-      "removeUserWarningTextNonSync",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_USER_REMOVE_WARNING_NONSYNC));
-  localized_strings->SetString("removeUserWarningTextHistory",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_USER_REMOVE_WARNING_HISTORY));
-  localized_strings->SetString("removeUserWarningTextPasswords",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_USER_REMOVE_WARNING_PASSWORDS));
-  localized_strings->SetString("removeUserWarningTextBookmarks",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_USER_REMOVE_WARNING_BOOKMARKS));
-  localized_strings->SetString(
-      "removeUserWarningTextAutofill",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_USER_REMOVE_WARNING_AUTOFILL));
-  localized_strings->SetString("removeUserWarningTextCalculating",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_USER_REMOVE_WARNING_CALCULATING));
-  localized_strings->SetString(
-      "removeUserWarningTextSync",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_USER_REMOVE_WARNING_SYNC));
-  localized_strings->SetString("removeLegacySupervisedUserWarningText",
-      l10n_util::GetStringFUTF16(
+  localized_strings->SetKey("removeUserWarningButtonTitle",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_LOGIN_POD_USER_REMOVE_WARNING_BUTTON)));
+  localized_strings->SetKey("removeUserWarningTextNonSync",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_LOGIN_POD_USER_REMOVE_WARNING_NONSYNC)));
+  localized_strings->SetKey("removeUserWarningTextHistory",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_LOGIN_POD_USER_REMOVE_WARNING_HISTORY)));
+  localized_strings->SetKey("removeUserWarningTextPasswords",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_LOGIN_POD_USER_REMOVE_WARNING_PASSWORDS)));
+  localized_strings->SetKey("removeUserWarningTextBookmarks",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_LOGIN_POD_USER_REMOVE_WARNING_BOOKMARKS)));
+  localized_strings->SetKey("removeUserWarningTextAutofill",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_LOGIN_POD_USER_REMOVE_WARNING_AUTOFILL)));
+  localized_strings->SetKey(
+      "removeUserWarningTextCalculating",
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_LOGIN_POD_USER_REMOVE_WARNING_CALCULATING)));
+  localized_strings->SetKey("removeUserWarningTextSync",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_LOGIN_POD_USER_REMOVE_WARNING_SYNC)));
+  localized_strings->SetKey(
+      "removeLegacySupervisedUserWarningText",
+      base::Value(l10n_util::GetStringFUTF16(
           IDS_LOGIN_POD_LEGACY_SUPERVISED_USER_REMOVE_WARNING,
           base::UTF8ToUTF16(
-              chrome::kLegacySupervisedUserManagementDisplayURL)));
-  localized_strings->SetString(
-      "removeNonOwnerUserWarningText",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_NON_OWNER_USER_REMOVE_WARNING));
+              chrome::kLegacySupervisedUserManagementDisplayURL))));
+  localized_strings->SetKey("removeNonOwnerUserWarningText",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_LOGIN_POD_NON_OWNER_USER_REMOVE_WARNING)));
 
   // Strings needed for the User Manager tutorial slides.
-  localized_strings->SetString("tutorialNext",
-      l10n_util::GetStringUTF16(IDS_USER_MANAGER_TUTORIAL_NEXT));
-  localized_strings->SetString("tutorialDone",
-      l10n_util::GetStringUTF16(IDS_USER_MANAGER_TUTORIAL_DONE));
-  localized_strings->SetString("slideWelcomeTitle",
-      l10n_util::GetStringUTF16(IDS_USER_MANAGER_TUTORIAL_SLIDE_INTRO_TITLE));
-  localized_strings->SetString("slideWelcomeText",
-      l10n_util::GetStringUTF16(IDS_USER_MANAGER_TUTORIAL_SLIDE_INTRO_TEXT));
-  localized_strings->SetString("slideYourChromeTitle",
-      l10n_util::GetStringUTF16(
-          IDS_USER_MANAGER_TUTORIAL_SLIDE_YOUR_CHROME_TITLE));
-  localized_strings->SetString("slideYourChromeText", l10n_util::GetStringUTF16(
-      IDS_USER_MANAGER_TUTORIAL_SLIDE_YOUR_CHROME_TEXT));
-  localized_strings->SetString("slideGuestsTitle",
-      l10n_util::GetStringUTF16(IDS_USER_MANAGER_TUTORIAL_SLIDE_GUEST_TITLE));
-  localized_strings->SetString("slideGuestsText",
-      l10n_util::GetStringUTF16(IDS_USER_MANAGER_TUTORIAL_SLIDE_GUEST_TEXT));
-  localized_strings->SetString("slideFriendsTitle",
-      l10n_util::GetStringUTF16(IDS_USER_MANAGER_TUTORIAL_SLIDE_FRIENDS_TITLE));
-  localized_strings->SetString("slideFriendsText",
-      l10n_util::GetStringUTF16(IDS_USER_MANAGER_TUTORIAL_SLIDE_FRIENDS_TEXT));
-  localized_strings->SetString("slideCompleteTitle",
-      l10n_util::GetStringUTF16(IDS_USER_MANAGER_TUTORIAL_SLIDE_OUTRO_TITLE));
-  localized_strings->SetString("slideCompleteText",
-      l10n_util::GetStringUTF16(IDS_USER_MANAGER_TUTORIAL_SLIDE_OUTRO_TEXT));
-  localized_strings->SetString("slideCompleteUserNotFound",
-      l10n_util::GetStringUTF16(
-          IDS_USER_MANAGER_TUTORIAL_SLIDE_OUTRO_USER_NOT_FOUND));
-  localized_strings->SetString("slideCompleteAddUser",
-      l10n_util::GetStringUTF16(
-          IDS_USER_MANAGER_TUTORIAL_SLIDE_OUTRO_ADD_USER));
+  localized_strings->SetKey(
+      "tutorialNext",
+      base::Value(l10n_util::GetStringUTF16(IDS_USER_MANAGER_TUTORIAL_NEXT)));
+  localized_strings->SetKey(
+      "tutorialDone",
+      base::Value(l10n_util::GetStringUTF16(IDS_USER_MANAGER_TUTORIAL_DONE)));
+  localized_strings->SetKey("slideWelcomeTitle",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_USER_MANAGER_TUTORIAL_SLIDE_INTRO_TITLE)));
+  localized_strings->SetKey("slideWelcomeText",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_USER_MANAGER_TUTORIAL_SLIDE_INTRO_TEXT)));
+  localized_strings->SetKey(
+      "slideYourChromeTitle",
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_USER_MANAGER_TUTORIAL_SLIDE_YOUR_CHROME_TITLE)));
+  localized_strings->SetKey(
+      "slideYourChromeText",
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_USER_MANAGER_TUTORIAL_SLIDE_YOUR_CHROME_TEXT)));
+  localized_strings->SetKey("slideGuestsTitle",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_USER_MANAGER_TUTORIAL_SLIDE_GUEST_TITLE)));
+  localized_strings->SetKey("slideGuestsText",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_USER_MANAGER_TUTORIAL_SLIDE_GUEST_TEXT)));
+  localized_strings->SetKey(
+      "slideFriendsTitle", base::Value(l10n_util::GetStringUTF16(
+                               IDS_USER_MANAGER_TUTORIAL_SLIDE_FRIENDS_TITLE)));
+  localized_strings->SetKey("slideFriendsText",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_USER_MANAGER_TUTORIAL_SLIDE_FRIENDS_TEXT)));
+  localized_strings->SetKey("slideCompleteTitle",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_USER_MANAGER_TUTORIAL_SLIDE_OUTRO_TITLE)));
+  localized_strings->SetKey("slideCompleteText",
+                            base::Value(l10n_util::GetStringUTF16(
+                                IDS_USER_MANAGER_TUTORIAL_SLIDE_OUTRO_TEXT)));
+  localized_strings->SetKey(
+      "slideCompleteUserNotFound",
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_USER_MANAGER_TUTORIAL_SLIDE_OUTRO_USER_NOT_FOUND)));
+  localized_strings->SetKey(
+      "slideCompleteAddUser",
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_USER_MANAGER_TUTORIAL_SLIDE_OUTRO_ADD_USER)));
 
   // Strings needed for the user_pod_template public account div, but not ever
   // actually displayed for desktop users.
-  localized_strings->SetString("publicAccountReminder", base::string16());
-  localized_strings->SetString("publicSessionLanguageAndInput",
-                               base::string16());
-  localized_strings->SetString("publicAccountEnter", base::string16());
-  localized_strings->SetString("publicAccountEnterAccessibleName",
-                               base::string16());
-  localized_strings->SetString("publicAccountMonitoringWarning",
-                               base::string16());
-  localized_strings->SetString("publicAccountLearnMore", base::string16());
-  localized_strings->SetString("publicAccountMonitoringInfo", base::string16());
-  localized_strings->SetString("publicAccountMonitoringInfoItem1",
-                               base::string16());
-  localized_strings->SetString("publicAccountMonitoringInfoItem2",
-                               base::string16());
-  localized_strings->SetString("publicAccountMonitoringInfoItem3",
-                               base::string16());
-  localized_strings->SetString("publicAccountMonitoringInfoItem4",
-                               base::string16());
-  localized_strings->SetString("publicSessionSelectLanguage", base::string16());
-  localized_strings->SetString("publicSessionSelectKeyboard", base::string16());
-  localized_strings->SetString("signinBannerText", base::string16());
-  localized_strings->SetString("launchAppButton", base::string16());
-  localized_strings->SetString("multiProfilesRestrictedPolicyTitle",
-                               base::string16());
-  localized_strings->SetString("multiProfilesNotAllowedPolicyMsg",
-                                base::string16());
-  localized_strings->SetString("multiProfilesPrimaryOnlyPolicyMsg",
-                                base::string16());
-  localized_strings->SetString("multiProfilesOwnerPrimaryOnlyMsg",
-                                base::string16());
+  localized_strings->SetKey("publicAccountReminder",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("publicSessionLanguageAndInput",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("publicAccountEnter",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("publicAccountEnterAccessibleName",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("publicAccountMonitoringWarning",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("publicAccountLearnMore",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("publicAccountMonitoringInfo",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("publicAccountMonitoringInfoItem1",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("publicAccountMonitoringInfoItem2",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("publicAccountMonitoringInfoItem3",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("publicAccountMonitoringInfoItem4",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("publicSessionSelectLanguage",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("publicSessionSelectKeyboard",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("signinBannerText", base::Value(base::string16()));
+  localized_strings->SetKey("launchAppButton", base::Value(base::string16()));
+  localized_strings->SetKey("multiProfilesRestrictedPolicyTitle",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("multiProfilesNotAllowedPolicyMsg",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("multiProfilesPrimaryOnlyPolicyMsg",
+                            base::Value(base::string16()));
+  localized_strings->SetKey("multiProfilesOwnerPrimaryOnlyMsg",
+                            base::Value(base::string16()));
 
   // Error message when trying to add a profile while all profiles are locked.
-  localized_strings->SetString("addProfileAllProfilesLockedError",
-      l10n_util::GetStringUTF16(
-          IDS_USER_MANAGER_ADD_PROFILE_PROFILES_LOCKED_ERROR));
+  localized_strings->SetKey(
+      "addProfileAllProfilesLockedError",
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_USER_MANAGER_ADD_PROFILE_PROFILES_LOCKED_ERROR)));
   // Error message when trying to browse as guest while all profiles are locked.
-  localized_strings->SetString("browseAsGuestAllProfilesLockedError",
-      l10n_util::GetStringUTF16(
-          IDS_USER_MANAGER_GO_GUEST_PROFILES_LOCKED_ERROR));
+  localized_strings->SetKey(
+      "browseAsGuestAllProfilesLockedError",
+      base::Value(l10n_util::GetStringUTF16(
+          IDS_USER_MANAGER_GO_GUEST_PROFILES_LOCKED_ERROR)));
 
   base::string16 prompt_message;
   if (signin_util::IsForceSigninEnabled()) {
     prompt_message = l10n_util::GetStringUTF16(IDS_USER_MANAGER_PROMPT_MESSAGE);
   }
 
-  localized_strings->SetString("userManagerPromptMessage", prompt_message);
+  localized_strings->SetKey("userManagerPromptMessage",
+                            base::Value(prompt_message));
 }
 
 void UserManagerScreenHandler::SendUserList() {

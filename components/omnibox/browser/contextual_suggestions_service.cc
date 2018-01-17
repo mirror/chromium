@@ -67,15 +67,15 @@ std::string FormatRequestBodyExperimentalService(
   auto request = std::make_unique<base::DictionaryValue>();
   auto url_list = std::make_unique<base::ListValue>();
   auto url_entry = std::make_unique<base::DictionaryValue>();
-  url_entry->SetString("url", current_url);
+  url_entry->SetKey("url", base::Value(current_url));
   url_list->Append(std::move(url_entry));
   request->Set("urls", std::move(url_list));
   // stream_type = 1 corresponds to zero suggest suggestions.
-  request->SetInteger("stream_type", 1);
+  request->SetKey("stream_type", base::Value(1));
   const int experiment_id =
       OmniboxFieldTrial::GetZeroSuggestRedirectToChromeExperimentId();
   if (experiment_id >= 0)
-    request->SetInteger("experiment_id", experiment_id);
+    request->SetKey("experiment_id", base::Value(experiment_id));
   std::string result;
   base::JSONWriter::Write(*request, &result);
   return result;

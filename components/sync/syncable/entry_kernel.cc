@@ -111,7 +111,7 @@ void SetEncryptableProtoValues(const EntryKernel& kernel,
         cryptographer->CanDecrypt(encrypted) &&
         cryptographer->Decrypt(encrypted, &decrypted)) {
       value = EntitySpecificsToValue(decrypted);
-      value->SetBoolean("encrypted", true);
+      value->SetKey("encrypted", base::Value(true));
     } else {
       value = EntitySpecificsToValue(kernel.ref(field));
     }
@@ -170,7 +170,7 @@ size_t EstimateSharedMemoryUsage(ProtoValuePtr<T> const (&ptrs)[N]) {
 std::unique_ptr<base::DictionaryValue> EntryKernel::ToValue(
     Cryptographer* cryptographer) const {
   auto kernel_info = std::make_unique<base::DictionaryValue>();
-  kernel_info->SetBoolean("isDirty", is_dirty());
+  kernel_info->SetKey("isDirty", base::Value(is_dirty()));
   ModelType dataType = GetServerModelType();
   if (!IsRealDataType(dataType))
     dataType = GetModelType();

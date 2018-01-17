@@ -144,9 +144,10 @@ void FontHandler::FontListHasLoaded(std::string callback_id,
   response.Set("fontList", std::move(list));
 
   GURL extension_url(extension_urls::GetWebstoreItemDetailURLPrefix());
-  response.SetString(
+  response.SetKey(
       "extensionUrl",
-      extension_url.Resolve(kAdvancedFontSettingsExtensionId).spec());
+      base::Value(
+          extension_url.Resolve(kAdvancedFontSettingsExtensionId).spec()));
 
   ResolveJavascriptCallback(base::Value(callback_id), response);
 }

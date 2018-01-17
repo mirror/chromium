@@ -110,10 +110,10 @@ std::unique_ptr<base::Value> AsValue(const SkMatrix& matrix) {
 
 std::unique_ptr<base::Value> AsValue(SkColor color) {
   std::unique_ptr<base::DictionaryValue> val(new base::DictionaryValue());
-  val->SetInteger("a", SkColorGetA(color));
-  val->SetInteger("r", SkColorGetR(color));
-  val->SetInteger("g", SkColorGetG(color));
-  val->SetInteger("b", SkColorGetB(color));
+  val->SetKey("a", base::Value(static_cast<int>(SkColorGetA(color))));
+  val->SetKey("r", base::Value(static_cast<int>(SkColorGetR(color))));
+  val->SetKey("g", base::Value(static_cast<int>(SkColorGetG(color))));
+  val->SetKey("b", base::Value(static_cast<int>(SkColorGetB(color))));
 
   return std::move(val);
 }
@@ -141,7 +141,7 @@ std::unique_ptr<base::Value> AsValue(const SkColorFilter& filter) {
     builder.addFlag(flags & SkColorFilter::kAlphaUnchanged_Flag,
                     "kAlphaUnchanged_Flag");
 
-    val->SetString("flags", builder.str());
+    val->SetKey("flags", base::Value(builder.str()));
   }
 
   SkScalar color_matrix[20];
@@ -176,7 +176,7 @@ std::unique_ptr<base::Value> AsValue(const SkColorFilter& filter) {
 
 std::unique_ptr<base::Value> AsValue(const SkImageFilter& filter) {
   std::unique_ptr<base::DictionaryValue> val(new base::DictionaryValue());
-  val->SetInteger("inputs", filter.countInputs());
+  val->SetKey("inputs", base::Value(filter.countInputs()));
 
   SkColorFilter* color_filter;
   if (filter.asColorFilter(&color_filter)) {
@@ -198,7 +198,7 @@ std::unique_ptr<base::Value> AsValue(const SkPaint& paint) {
     static const char* gStyleStrings[] = { "Fill", "Stroke", "StrokeFill" };
     DCHECK_LT(static_cast<size_t>(paint.getStyle()),
               SK_ARRAY_COUNT(gStyleStrings));
-    val->SetString("Style", gStyleStrings[paint.getStyle()]);
+    val->SetKey("Style", base::Value(gStyleStrings[paint.getStyle()]));
   }
 
   if (paint.getBlendMode() != default_paint.getBlendMode()) {
@@ -218,7 +218,7 @@ std::unique_ptr<base::Value> AsValue(const SkPaint& paint) {
     builder.addFlag(paint.isAutohinted(), "Autohinted");
     builder.addFlag(paint.isVerticalText(), "VerticalText");
 
-    val->SetString("Flags", builder.str());
+    val->SetKey("Flags", base::Value(builder.str()));
   }
 
   if (paint.getFilterQuality() != default_paint.getFilterQuality()) {
@@ -226,18 +226,21 @@ std::unique_ptr<base::Value> AsValue(const SkPaint& paint) {
         "None", "Low", "Medium", "High"};
     DCHECK_LT(static_cast<size_t>(paint.getFilterQuality()),
               SK_ARRAY_COUNT(gFilterQualityStrings));
-    val->SetString("FilterLevel",
-                   gFilterQualityStrings[paint.getFilterQuality()]);
+    val->SetKey("FilterLevel",
+                base::Value(gFilterQualityStrings[paint.getFilterQuality()]));
   }
 
   if (paint.getTextSize() != default_paint.getTextSize())
-    val->SetDouble("TextSize", paint.getTextSize());
+    val->SetKey("TextSize",
+                base::Value(static_cast<double>(paint.getTextSize())));
 
   if (paint.getTextScaleX() != default_paint.getTextScaleX())
-    val->SetDouble("TextScaleX", paint.getTextScaleX());
+    val->SetKey("TextScaleX",
+                base::Value(static_cast<double>(paint.getTextScaleX())));
 
   if (paint.getTextSkewX() != default_paint.getTextSkewX())
-    val->SetDouble("TextSkewX", paint.getTextSkewX());
+    val->SetKey("TextSkewX",
+                base::Value(static_cast<double>(paint.getTextSkewX())));
 
   if (paint.getColorFilter())
     val->Set("ColorFilter", AsValue(*paint.getColorFilter()));
@@ -310,14 +313,14 @@ std::unique_ptr<base::Value> AsValue(const SkPath& path) {
       { "winding", "even-odd", "inverse-winding", "inverse-even-odd" };
   DCHECK_LT(static_cast<size_t>(path.getFillType()),
       SK_ARRAY_COUNT(gFillStrings));
-  val->SetString("fill-type", gFillStrings[path.getFillType()]);
+  val->SetKey("fill-type", base::Value(gFillStrings[path.getFillType()]));
 
   static const char* gConvexityStrings[] = { "Unknown", "Convex", "Concave" };
   DCHECK_LT(static_cast<size_t>(path.getConvexity()),
       SK_ARRAY_COUNT(gConvexityStrings));
-  val->SetString("convexity", gConvexityStrings[path.getConvexity()]);
+  val->SetKey("convexity", base::Value(gConvexityStrings[path.getConvexity()]));
 
-  val->SetBoolean("is-rect", path.isRect(nullptr));
+  val->SetKey("is-rect", base::Value(path.isRect(nullptr)));
   val->Set("bounds", AsValue(path.getBounds()));
 
   static const char* gVerbStrings[] =
@@ -386,7 +389,7 @@ public:
    DCHECK(canvas);
    DCHECK(op_name);
 
-   op_record_->SetString("cmd_string", op_name);
+   op_record_->SetKey("cmd_string", base::Value(op_name));
    op_params_ =
        op_record_->SetList("info", base::MakeUnique<base::ListValue>());
 
@@ -400,7 +403,7 @@ public:
 
   ~AutoOp() {
     base::TimeDelta ticks = base::TimeTicks::Now() - start_ticks_;
-    op_record_->SetDouble("cmd_time", ticks.InMillisecondsF());
+    op_record_->SetKey("cmd_time", base::Value(ticks.InMillisecondsF()));
 
     canvas_->op_records_.Append(std::move(op_record_));
   }

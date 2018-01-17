@@ -80,9 +80,9 @@ TEST_F(DataReductionProxyChromeSettingsTest, MigrateBadlyFormedProxyPref) {
     base::HistogramTester histogram_tester;
     dict_.reset(new base::DictionaryValue());
     if (test.proxy_mode_string)
-      dict_->SetString("mode", test.proxy_mode_string);
+      dict_->SetKey("mode", base::Value(test.proxy_mode_string));
     if (test.proxy_server_string)
-      dict_->SetString("server", test.proxy_server_string);
+      dict_->SetKey("server", base::Value(test.proxy_server_string));
     test_context_->pref_service()->Set(proxy_config::prefs::kProxy,
                                        *dict_.get());
 
@@ -119,7 +119,7 @@ TEST_F(DataReductionProxyChromeSettingsTest, MigrateEmptyProxy) {
 
 TEST_F(DataReductionProxyChromeSettingsTest, MigrateSystemProxy) {
   base::HistogramTester histogram_tester;
-  dict_->SetString("mode", "system");
+  dict_->SetKey("mode", base::Value("system"));
   test_context_->pref_service()->Set(proxy_config::prefs::kProxy, *dict_.get());
   EXPECT_CALL(*config_, ContainsDataReductionProxy(_)).Times(0);
 
@@ -141,8 +141,8 @@ TEST_F(DataReductionProxyChromeSettingsTest, MigrateDataReductionProxy) {
   for (const std::string& test_server : kTestServers) {
     base::HistogramTester histogram_tester;
     dict_.reset(new base::DictionaryValue());
-    dict_->SetString("mode", "fixed_servers");
-    dict_->SetString("server", test_server);
+    dict_->SetKey("mode", base::Value("fixed_servers"));
+    dict_->SetKey("server", base::Value(test_server));
     test_context_->pref_service()->Set(proxy_config::prefs::kProxy,
                                        *dict_.get());
     EXPECT_CALL(*config_, ContainsDataReductionProxy(_))
@@ -172,8 +172,8 @@ TEST_F(DataReductionProxyChromeSettingsTest,
     dict_.reset(new base::DictionaryValue());
     // The proxy pref is set to a Data Reduction Proxy that doesn't match the
     // currently configured DRP, but the pref should still be cleared.
-    dict_->SetString("mode", "fixed_servers");
-    dict_->SetString("server", test_server);
+    dict_->SetKey("mode", base::Value("fixed_servers"));
+    dict_->SetKey("server", base::Value(test_server));
     test_context_->pref_service()->Set(proxy_config::prefs::kProxy,
                                        *dict_.get());
     EXPECT_CALL(*config_, ContainsDataReductionProxy(_))
@@ -266,8 +266,8 @@ TEST_F(DataReductionProxyChromeSettingsTest,
   for (const auto& test : test_cases) {
     base::HistogramTester histogram_tester;
     dict_.reset(new base::DictionaryValue());
-    dict_->SetString("mode", "pac_script");
-    dict_->SetString("pac_url", test.pac_url);
+    dict_->SetKey("mode", base::Value("pac_script"));
+    dict_->SetKey("pac_url", base::Value(test.pac_url));
     test_context_->pref_service()->Set(proxy_config::prefs::kProxy,
                                        *dict_.get());
     EXPECT_CALL(*config_, ContainsDataReductionProxy(_)).Times(0);
@@ -311,8 +311,8 @@ TEST_F(DataReductionProxyChromeSettingsTest, MigrateIgnoreOtherProxy) {
   for (const std::string& test_server : kTestServers) {
     base::HistogramTester histogram_tester;
     dict_.reset(new base::DictionaryValue());
-    dict_->SetString("mode", "fixed_servers");
-    dict_->SetString("server", test_server);
+    dict_->SetKey("mode", base::Value("fixed_servers"));
+    dict_->SetKey("server", base::Value(test_server));
     test_context_->pref_service()->Set(proxy_config::prefs::kProxy,
                                        *dict_.get());
     EXPECT_CALL(*config_, ContainsDataReductionProxy(_))

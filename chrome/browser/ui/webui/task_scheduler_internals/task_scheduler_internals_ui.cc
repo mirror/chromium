@@ -36,13 +36,13 @@ std::unique_ptr<base::Value> SnapshotHistogramToValue(
 
     std::unique_ptr<base::DictionaryValue> bucket =
         std::make_unique<base::DictionaryValue>();
-    bucket->SetInteger("min", min);
+    bucket->SetKey("min", base::Value(min));
     // Note: DictionaryValue does not support 64-bit integer values. The checked
     // cast below is OK in this case because none of the histograms passed to
     // this function should be logging MaxInt32 as a sparse histogram bucket,
     // which is the only case max will exceed 32-bit range.
-    bucket->SetInteger("max", base::checked_cast<int>(max));
-    bucket->SetInteger("count", count);
+    bucket->SetKey("max", base::Value(base::checked_cast<int>(max)));
+    bucket->SetKey("count", base::Value(count));
 
     values->Append(std::move(bucket));
     iterator->Next();
@@ -67,7 +67,7 @@ class TaskSchedulerDataHandler : public content::WebUIMessageHandler {
     base::DictionaryValue data;
 
     base::TaskScheduler* task_scheduler = base::TaskScheduler::GetInstance();
-    data.SetBoolean("instantiated", !!task_scheduler);
+    data.SetKey("instantiated", base::Value(!!task_scheduler));
 
     if (task_scheduler) {
       std::unique_ptr<base::ListValue> histogram_value =
@@ -78,7 +78,7 @@ class TaskSchedulerDataHandler : public content::WebUIMessageHandler {
       for (const base::HistogramBase* const histogram : histograms) {
         std::unique_ptr<base::DictionaryValue> buckets =
             std::make_unique<base::DictionaryValue>();
-        buckets->SetString("name", histogram->histogram_name());
+        buckets->SetKey("name", base::Value(histogram->histogram_name()));
         buckets->Set("buckets", SnapshotHistogramToValue(histogram));
         histogram_value->Append(std::move(buckets));
       }

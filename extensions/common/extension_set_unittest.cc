@@ -31,11 +31,11 @@ scoped_refptr<Extension> CreateTestExtension(const std::string& name,
   path = path.AppendASCII(name);
 
   base::DictionaryValue manifest;
-  manifest.SetString("name", name);
-  manifest.SetString("version", "1");
+  manifest.SetKey("name", base::Value(name));
+  manifest.SetKey("version", base::Value("1"));
 
   if (!launch_url.empty())
-    manifest.SetString("app.launch.web_url", launch_url);
+    manifest.SetPath({"app", "launch", "web_url"}, base::Value(launch_url));
 
   if (!extent.empty()) {
     auto urls = std::make_unique<base::ListValue>();

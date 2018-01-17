@@ -118,7 +118,7 @@ void Me2MeNativeMessagingHost::OnMessage(const std::string& message) {
     return;
   }
 
-  response->SetString("type", type + "Response");
+  response->SetKey("type", base::Value(type + "Response"));
 
   if (type == "hello") {
     ProcessHello(std::move(message_dict), std::move(response));
@@ -176,7 +176,7 @@ void Me2MeNativeMessagingHost::ProcessHello(
     std::unique_ptr<base::DictionaryValue> response) {
   DCHECK(task_runner()->BelongsToCurrentThread());
 
-  response->SetString("version", STRINGIZE(VERSION));
+  response->SetKey("version", base::Value(STRINGIZE(VERSION)));
   std::unique_ptr<base::ListValue> supported_features_list(
       new base::ListValue());
   supported_features_list->AppendStrings(std::vector<std::string>(
@@ -240,7 +240,7 @@ void Me2MeNativeMessagingHost::ProcessGetHostName(
     std::unique_ptr<base::DictionaryValue> response) {
   DCHECK(task_runner()->BelongsToCurrentThread());
 
-  response->SetString("hostname", net::GetHostName());
+  response->SetKey("hostname", base::Value(net::GetHostName()));
   SendMessageToClient(std::move(response));
 }
 
@@ -263,7 +263,7 @@ void Me2MeNativeMessagingHost::ProcessGetPinHash(
     OnError("'pin' not found: " + message_json);
     return;
   }
-  response->SetString("hash", MakeHostPinHash(host_id, pin));
+  response->SetKey("hash", base::Value(MakeHostPinHash(host_id, pin)));
   SendMessageToClient(std::move(response));
 }
 
@@ -273,8 +273,8 @@ void Me2MeNativeMessagingHost::ProcessGenerateKeyPair(
   DCHECK(task_runner()->BelongsToCurrentThread());
 
   scoped_refptr<RsaKeyPair> key_pair = RsaKeyPair::Generate();
-  response->SetString("privateKey", key_pair->ToString());
-  response->SetString("publicKey", key_pair->GetPublicKey());
+  response->SetKey("privateKey", base::Value(key_pair->ToString()));
+  response->SetKey("publicKey", base::Value(key_pair->GetPublicKey()));
   SendMessageToClient(std::move(response));
 }
 
@@ -395,22 +395,22 @@ void Me2MeNativeMessagingHost::ProcessGetDaemonState(
   DaemonController::State state = daemon_controller_->GetState();
   switch (state) {
     case DaemonController::STATE_NOT_IMPLEMENTED:
-      response->SetString("state", "NOT_IMPLEMENTED");
+      response->SetKey("state", base::Value("NOT_IMPLEMENTED"));
       break;
     case DaemonController::STATE_STOPPED:
-      response->SetString("state", "STOPPED");
+      response->SetKey("state", base::Value("STOPPED"));
       break;
     case DaemonController::STATE_STARTING:
-      response->SetString("state", "STARTING");
+      response->SetKey("state", base::Value("STARTING"));
       break;
     case DaemonController::STATE_STARTED:
-      response->SetString("state", "STARTED");
+      response->SetKey("state", base::Value("STARTED"));
       break;
     case DaemonController::STATE_STOPPING:
-      response->SetString("state", "STOPPING");
+      response->SetKey("state", base::Value("STOPPING"));
       break;
     case DaemonController::STATE_UNKNOWN:
-      response->SetString("state", "UNKNOWN");
+      response->SetKey("state", base::Value("UNKNOWN"));
       break;
   }
   SendMessageToClient(std::move(response));
@@ -421,8 +421,8 @@ void Me2MeNativeMessagingHost::ProcessGetHostClientId(
     std::unique_ptr<base::DictionaryValue> response) {
   DCHECK(task_runner()->BelongsToCurrentThread());
 
-  response->SetString("clientId", google_apis::GetOAuth2ClientID(
-      google_apis::CLIENT_REMOTING_HOST));
+  response->SetKey("clientId", base::Value(google_apis::GetOAuth2ClientID(
+                                   google_apis::CLIENT_REMOTING_HOST)));
   SendMessageToClient(std::move(response));
 }
 
@@ -477,9 +477,9 @@ void Me2MeNativeMessagingHost::SendUsageStatsConsentResponse(
     const DaemonController::UsageStatsConsent& consent) {
   DCHECK(task_runner()->BelongsToCurrentThread());
 
-  response->SetBoolean("supported", consent.supported);
-  response->SetBoolean("allowed", consent.allowed);
-  response->SetBoolean("setByPolicy", consent.set_by_policy);
+  response->SetKey("supported", base::Value(consent.supported));
+  response->SetKey("allowed", base::Value(consent.allowed));
+  response->SetKey("setByPolicy", base::Value(consent.set_by_policy));
   SendMessageToClient(std::move(response));
 }
 
@@ -490,13 +490,13 @@ void Me2MeNativeMessagingHost::SendAsyncResult(
 
   switch (result) {
     case DaemonController::RESULT_OK:
-      response->SetString("result", "OK");
+      response->SetKey("result", base::Value("OK"));
       break;
     case DaemonController::RESULT_FAILED:
-      response->SetString("result", "FAILED");
+      response->SetKey("result", base::Value("FAILED"));
       break;
     case DaemonController::RESULT_CANCELLED:
-      response->SetString("result", "CANCELLED");
+      response->SetKey("result", base::Value("CANCELLED"));
       break;
   }
   SendMessageToClient(std::move(response));
@@ -507,7 +507,7 @@ void Me2MeNativeMessagingHost::SendBooleanResult(
     bool result) {
   DCHECK(task_runner()->BelongsToCurrentThread());
 
-  response->SetBoolean("result", result);
+  response->SetKey("result", base::Value(result));
   SendMessageToClient(std::move(response));
 }
 
@@ -518,9 +518,9 @@ void Me2MeNativeMessagingHost::SendCredentialsResponse(
   DCHECK(task_runner()->BelongsToCurrentThread());
 
   if (!user_email.empty()) {
-    response->SetString("userEmail", user_email);
+    response->SetKey("userEmail", base::Value(user_email));
   }
-  response->SetString("refreshToken", refresh_token);
+  response->SetKey("refreshToken", base::Value(refresh_token));
   SendMessageToClient(std::move(response));
 }
 

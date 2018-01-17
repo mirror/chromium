@@ -145,7 +145,7 @@ TEST_F(ChangeRecordTest, ChangeRecordToValue) {
 
     std::unique_ptr<base::DictionaryValue> extra_value(
         new base::DictionaryValue());
-    extra_value->SetString("foo", "bar");
+    extra_value->SetKey("foo", base::Value("bar"));
     std::unique_ptr<TestExtraChangeRecordData> extra(
         new TestExtraChangeRecordData());
     extra->set_dictionary_value(std::move(extra_value));
