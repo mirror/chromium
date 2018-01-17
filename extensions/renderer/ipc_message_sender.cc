@@ -35,12 +35,10 @@ class MainThreadIPCMessageSender : public IPCMessageSender {
 
     switch (thread) {
       case binding::RequestThread::UI:
-        LOG(INFO) << "Sending request";
         frame->Send(
             new ExtensionHostMsg_Request(frame->GetRoutingID(), *params));
         break;
       case binding::RequestThread::IO:
-        LOG(INFO) << "Sending request";
         frame->Send(new ExtensionHostMsg_RequestForIOThread(
             frame->GetRoutingID(), *params));
         break;

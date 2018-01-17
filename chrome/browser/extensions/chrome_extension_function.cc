@@ -47,7 +47,6 @@ const std::string& ChromeUIThreadExtensionFunction::GetError() const {
 }
 
 void ChromeUIThreadExtensionFunction::SendResponse(bool success) {
-  LOG(INFO) << "Send Respond parent call\n\n";
   ResponseValue response;
   if (success) {
     response = ArgumentList(std::move(results_));

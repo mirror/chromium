@@ -414,7 +414,6 @@ ExtensionFunction::ResponseValue ExtensionFunction::BadMessage() {
 
 ExtensionFunction::ResponseAction ExtensionFunction::RespondNow(
     ResponseValue result) {
-  LOG(INFO) << "RESPOND NOW\n\n";
   return ResponseAction(new RespondNowAction(
       std::move(result),
       base::Bind(&ExtensionFunction::SendResponseImpl, this)));
@@ -437,7 +436,6 @@ ExtensionFunction::ResponseAction ExtensionFunction::ValidationFailure(
 }
 
 void ExtensionFunction::Respond(ResponseValue result) {
-  LOG(INFO) << "Responding";
   SendResponseImpl(result->Apply());
 }
 
@@ -464,7 +462,6 @@ bool ExtensionFunction::HasOptionalArgument(size_t index) {
 }
 
 void ExtensionFunction::SendResponseImpl(bool success) {
-  LOG(INFO) << "*************** SendResponseImpl ***********************";
   DCHECK(!response_callback_.is_null());
   DCHECK(!did_respond_) << name_;
   did_respond_ = true;
@@ -504,15 +501,6 @@ UIThreadExtensionFunction::~UIThreadExtensionFunction() {
   // tricky because checking IsShuttingDown has to be called from the UI thread.
   extensions::ExtensionsBrowserClient* browser_client =
       extensions::ExtensionsBrowserClient::Get();
-  if(!browser_client)
-    LOG(INFO) << "\t!browser_client";
-  if(browser_client)
-    LOG(INFO) << "\tbrowser_client->IsShuttingDown(): " <<browser_client->IsShuttingDown() ; 
-  LOG(INFO) << "\tdid_respond(): " <<did_respond() ;
-  LOG(INFO) << "\tignore_all_did_respond_for_testing_do_not_use: " <<ignore_all_did_respond_for_testing_do_not_use ;
-  bool dcheck = !browser_client || browser_client->IsShuttingDown() || did_respond() ||
-         ignore_all_did_respond_for_testing_do_not_use;
-  LOG(INFO) << "dcheck: " << dcheck;
   DCHECK(!browser_client || browser_client->IsShuttingDown() || did_respond() ||
          ignore_all_did_respond_for_testing_do_not_use)
       << name();
