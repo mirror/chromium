@@ -88,6 +88,24 @@
       "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09763b44_ba984ce7",
+        "filename": "content/browser/service_manager/service_manager_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-17T18:52:45Z",
+      "side": 1,
+      "message": "Actually, before I attempt an implementation of this approach in EmbeddedInstanceManager, could you take a look and share your thoughts about https://chromium-review.googlesource.com/c/chromium/src/+/817646? I am not sure that my interpretation of the intended behavior of EmbeddedInstanceManager is correct and want to make sure it is before another attempt at modifying it. If https://chromium-review.googlesource.com/c/chromium/src/+/817646 seems like an improvement to you, I would like to base the changes on that instead of on the current state.",
+      "parentUuid": "06040357_d6b8f19b",
+      "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
