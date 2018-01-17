@@ -232,7 +232,7 @@ class TaskSchedulerTaskTrackerTest
     return num_tasks_executed_;
   }
 
-  TaskTracker tracker_;
+  TaskTracker tracker_ = {"Test"};
   testing::StrictMock<MockCanScheduleSequenceObserver> never_notified_observer_;
 
  private:
@@ -901,7 +901,7 @@ TEST_F(TaskSchedulerTaskTrackerTest, RunNextTaskReturnsSequenceToReschedule) {
 TEST_F(TaskSchedulerTaskTrackerTest,
        WillScheduleBackgroundSequenceWithMaxBackgroundSequences) {
   constexpr int kMaxNumDispatchedBackgroundSequences = 2;
-  TaskTracker tracker(StringPiece(), kMaxNumDispatchedBackgroundSequences);
+  TaskTracker tracker("Test", kMaxNumDispatchedBackgroundSequences);
 
   // Simulate posting |kMaxNumDispatchedBackgroundSequences| background tasks
   // and scheduling the associated sequences. This should succeed.
@@ -980,7 +980,7 @@ void SetBool(bool* arg) {
 TEST_F(TaskSchedulerTaskTrackerTest,
        RunNextBackgroundTaskWithEarlierPendingBackgroundTask) {
   constexpr int kMaxNumDispatchedBackgroundSequences = 1;
-  TaskTracker tracker(StringPiece(), kMaxNumDispatchedBackgroundSequences);
+  TaskTracker tracker("Test", kMaxNumDispatchedBackgroundSequences);
   testing::StrictMock<MockCanScheduleSequenceObserver> never_notified_observer;
 
   // Simulate posting a background task and scheduling the associated sequence.
@@ -1050,7 +1050,7 @@ class WaitAllowedTestThread : public SimpleThread {
 
  private:
   void Run() override {
-    TaskTracker tracker;
+    TaskTracker tracker("Test");
 
     // Waiting is allowed by default. Expect TaskTracker to disallow it before
     // running a task without the WithBaseSyncPrimitives() trait.
@@ -1109,7 +1109,7 @@ TEST(TaskSchedulerTaskTrackerWaitAllowedTest, WaitAllowed) {
 TEST(TaskSchedulerTaskTrackerHistogramTest, TaskLatency) {
   auto statistics_recorder = StatisticsRecorder::CreateTemporaryForTesting();
 
-  TaskTracker tracker;
+  TaskTracker tracker("Test");
   testing::StrictMock<MockCanScheduleSequenceObserver> never_notified_observer;
 
   struct {
@@ -1117,27 +1117,31 @@ TEST(TaskSchedulerTaskTrackerHistogramTest, TaskLatency) {
     const char* const expected_histogram;
   } tests[] = {
       {{TaskPriority::BACKGROUND},
-       "TaskScheduler.TaskLatencyMicroseconds.BackgroundTaskPriority"},
+       "TaskScheduler.TaskLatencyMicroseconds.Test."
+       "BackgroundTaskPriority"},
       {{MayBlock(), TaskPriority::BACKGROUND},
-       "TaskScheduler.TaskLatencyMicroseconds.BackgroundTaskPriority.MayBlock"},
+       "TaskScheduler.TaskLatencyMicroseconds.Test."
+       "BackgroundTaskPriority_MayBlock"},
       {{WithBaseSyncPrimitives(), TaskPriority::BACKGROUND},
-       "TaskScheduler.TaskLatencyMicroseconds.BackgroundTaskPriority.MayBlock"},
+       "TaskScheduler.TaskLatencyMicroseconds.Test."
+       "BackgroundTaskPriority_MayBlock"},
       {{TaskPriority::USER_VISIBLE},
-       "TaskScheduler.TaskLatencyMicroseconds.UserVisibleTaskPriority"},
+       "TaskScheduler.TaskLatencyMicroseconds.Test."
+       "UserVisibleTaskPriority"},
       {{MayBlock(), TaskPriority::USER_VISIBLE},
-       "TaskScheduler.TaskLatencyMicroseconds.UserVisibleTaskPriority."
-       "MayBlock"},
+       "TaskScheduler.TaskLatencyMicroseconds.Test."
+       "UserVisibleTaskPriority_MayBlock"},
       {{WithBaseSyncPrimitives(), TaskPriority::USER_VISIBLE},
-       "TaskScheduler.TaskLatencyMicroseconds.UserVisibleTaskPriority."
-       "MayBlock"},
+       "TaskScheduler.TaskLatencyMicroseconds.Test."
+       "UserVisibleTaskPriority_MayBlock"},
       {{TaskPriority::USER_BLOCKING},
-       "TaskScheduler.TaskLatencyMicroseconds.UserBlockingTaskPriority"},
+       "TaskScheduler.TaskLatencyMicroseconds.Test.UserBlockingTaskPriority"},
       {{MayBlock(), TaskPriority::USER_BLOCKING},
-       "TaskScheduler.TaskLatencyMicroseconds.UserBlockingTaskPriority."
-       "MayBlock"},
+       "TaskScheduler.TaskLatencyMicroseconds.Test."
+       "UserBlockingTaskPriority_MayBlock"},
       {{WithBaseSyncPrimitives(), TaskPriority::USER_BLOCKING},
-       "TaskScheduler.TaskLatencyMicroseconds.UserBlockingTaskPriority."
-       "MayBlock"}};
+       "TaskScheduler.TaskLatencyMicroseconds.Test."
+       "UserBlockingTaskPriority_MayBlock"}};
 
   for (const auto& test : tests) {
     Task task(FROM_HERE, Bind(&DoNothing), test.traits, TimeDelta());
