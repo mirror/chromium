@@ -60,7 +60,8 @@ class MockFetchContext : public FetchContext {
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
       FetchParameters::OriginRestriction,
-      ResourceRequest::RedirectStatus redirect_status) const override {
+      ResourceRequest::RedirectStatus redirect_status,
+      bool* is_ad_resource) const override {
     return ResourceRequestBlockedReason::kNone;
   }
   ResourceRequestBlockedReason CheckCSPForRequest(

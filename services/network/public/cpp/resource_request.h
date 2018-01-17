@@ -216,6 +216,9 @@ struct ResourceRequest {
   // The response should be downloaded and stored in the network cache, but not
   // sent back to the renderer.
   bool download_to_network_cache_only = false;
+
+  // Whether this resource is identified as an advertisement resource.
+  bool is_ad_resource = false;
 };
 
 }  // namespace network

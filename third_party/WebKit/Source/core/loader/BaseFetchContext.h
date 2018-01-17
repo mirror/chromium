@@ -29,14 +29,14 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
  public:
   void AddAdditionalRequestHeaders(ResourceRequest&,
                                    FetchResourceType) override;
-  ResourceRequestBlockedReason CanRequest(
-      Resource::Type,
-      const ResourceRequest&,
-      const KURL&,
-      const ResourceLoaderOptions&,
-      SecurityViolationReportingPolicy,
-      FetchParameters::OriginRestriction,
-      ResourceRequest::RedirectStatus) const override;
+  ResourceRequestBlockedReason CanRequest(Resource::Type,
+                                          const ResourceRequest&,
+                                          const KURL&,
+                                          const ResourceLoaderOptions&,
+                                          SecurityViolationReportingPolicy,
+                                          FetchParameters::OriginRestriction,
+                                          ResourceRequest::RedirectStatus,
+                                          bool* is_ad_resource) const override;
   ResourceRequestBlockedReason CheckCSPForRequest(
       WebURLRequest::RequestContext,
       const KURL&,
@@ -102,7 +102,8 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
       FetchParameters::OriginRestriction,
-      ResourceRequest::RedirectStatus) const;
+      ResourceRequest::RedirectStatus,
+      bool* is_ad_resource) const;
 
   ResourceRequestBlockedReason CheckCSPForRequestInternal(
       WebURLRequest::RequestContext,

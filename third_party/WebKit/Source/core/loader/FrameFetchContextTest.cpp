@@ -207,10 +207,11 @@ class FrameFetchContextSubresourceFilterTest : public FrameFetchContextTest {
     resource_request.SetFetchCredentialsMode(
         network::mojom::FetchCredentialsMode::kOmit);
     ResourceLoaderOptions options;
+    bool is_ad_resource = false;
     return fetch_context->CanRequest(
         Resource::kImage, resource_request, input_url, options,
         reporting_policy, FetchParameters::kUseDefaultOriginRestrictionForType,
-        ResourceRequest::RedirectStatus::kNoRedirect);
+        ResourceRequest::RedirectStatus::kNoRedirect, &is_ad_resource);
   }
 
   int filtered_load_callback_counter_;
