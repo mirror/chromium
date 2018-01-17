@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63482471_e4a07a72",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventPath.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-17T07:10:22Z",
+      "side": 1,
+      "message": "Who fired these events?\nCan\u0027t we fire these events on the shadow host directly?",
+      "revId": "3d0783eddcaf9d152acf9cc0f84bfd278b390fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
