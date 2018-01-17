@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4becaaa_2454f32e",
+        "filename": "base/containers/mru_cache.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-17T09:17:43Z",
+      "side": 1,
+      "message": "I can either use a helper function or predeclare MruCacheBase. I preferred to do it this way.",
+      "revId": "79b8a07b26eae84a4cd2074773b25aac7b496d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
