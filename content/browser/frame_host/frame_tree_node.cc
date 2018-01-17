@@ -453,6 +453,11 @@ bool FrameTreeNode::CommitPendingFramePolicy() {
   return did_change_flags || did_change_container_policy;
 }
 
+void FrameTreeNode::TransferNavigationRequestOwnership(
+    RenderFrameHostImpl* render_frame_host) {
+  render_frame_host->SetNavigationRequest(std::move(navigation_request_));
+}
+
 void FrameTreeNode::CreatedNavigationRequest(
     std::unique_ptr<NavigationRequest> navigation_request) {
   CHECK(IsBrowserSideNavigationEnabled());
@@ -474,7 +479,7 @@ void FrameTreeNode::CreatedNavigationRequest(
       navigation_request_->navigation_handle()->set_net_error_code(
           net::ERR_ABORTED);
     }
-    ResetNavigationRequest(true, true);
+    ResetNavigationRequest(true, true, nullptr);
   }
 
   navigation_request_ = std::move(navigation_request);
@@ -487,7 +492,8 @@ void FrameTreeNode::CreatedNavigationRequest(
 }
 
 void FrameTreeNode::ResetNavigationRequest(bool keep_state,
-                                           bool inform_renderer) {
+                                           bool inform_renderer,
+                                           RenderFrameHostImpl* rfh) {
   CHECK(IsBrowserSideNavigationEnabled());
   if (!navigation_request_)
     return;
@@ -502,10 +508,15 @@ void FrameTreeNode::ResetNavigationRequest(bool keep_state,
 
   NavigationRequest::AssociatedSiteInstanceType site_instance_type =
       navigation_request_->associated_site_instance_type();
-  navigation_request_.reset();
 
-  if (keep_state)
+  if (keep_state) {
+    if (rfh)
+      TransferNavigationRequestOwnership(rfh);
+    else
+      navigation_request_.reset();
     return;
+  }
+  navigation_request_.reset();
 
   // The RenderFrameHostManager should clean up any speculative RenderFrameHost
   // it created for the navigation. Also register that the load stopped.
@@ -595,7 +606,7 @@ bool FrameTreeNode::StopLoading() {
       }
       navigator_->DiscardPendingEntryIfNeeded(expected_pending_nav_entry_id);
     }
-    ResetNavigationRequest(false, true);
+    ResetNavigationRequest(false, true, nullptr);
   }
 
   // TODO(nasko): see if child frames should send IPCs in site-per-process
@@ -631,7 +642,7 @@ void FrameTreeNode::BeforeUnloadCanceled() {
   // as it has not been created yet. It is only created when the
   // BeforeUnloadACK is received.
   if (navigation_request_)
-    ResetNavigationRequest(false, true);
+    ResetNavigationRequest(false, true, nullptr);
 }
 
 void FrameTreeNode::OnSetHasReceivedUserGesture() {
