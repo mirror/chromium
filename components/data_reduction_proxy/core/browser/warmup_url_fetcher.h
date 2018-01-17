@@ -59,11 +59,18 @@ class WarmupURLFetcher : public net::URLFetcherDelegate {
   // delayed.
   virtual base::TimeDelta GetFetchWaitTime() const;
 
+  // Returns the timeout value for fetching the secure proxy URL. Virtualized
+  // for testing.
+  virtual base::TimeDelta GetFetchTimeout() const;
+
  private:
   // Creates and immediately starts a URLFetcher that fetches the warmup URL.
   void FetchWarmupURLNow();
 
   void OnURLFetchComplete(const net::URLFetcher* source) override;
+
+  // Called when the fetch timeouts.
+  void OnFetchTimeout();
 
   // Count of fetch attempts that have been made to the proxy which is being
   // probed.
@@ -71,6 +78,9 @@ class WarmupURLFetcher : public net::URLFetcherDelegate {
 
   // Timer used to delay the fetching of the warmup probe URL.
   base::OneShotTimer fetch_delay_timer_;
+
+  // Timer to enforce timeout for fetching the warmup URL.
+  base::OneShotTimer fetch_timeout_timer_;
 
   scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
 
