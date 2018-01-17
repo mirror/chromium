@@ -277,7 +277,7 @@ SnapAreaData SnapCoordinator::CalculateSnapAreaData(
   // scrollable overflow region can be viewed) coincides with its padding box.
   // https://drafts.csswg.org/css-scroll-snap-1/#scroll-padding
   // So we use the size of the padding box here.
-  LayoutRect container(LayoutPoint(), snap_container.PaddingBoxRect().Size());
+  LayoutRect container(snap_container.PaddingBoxRect());
 
   // We assume that the snap_container is the snap_area's ancestor in layout
   // tree, as the snap_container is found by walking up the layout tree in
