@@ -88,6 +88,24 @@
       "revId": "85fd6414b74c03c39c35e8e99e540c4eef0778bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015d9386_a841928d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-4/styles-invalid-color-values-expected.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-17T01:35:55Z",
+      "side": 1,
+      "message": "After working on a first implementation of this suggestion, I\u0027m not entirely sure that this makes sense. When we calculate for instance HSL values, we still convert those into HEX and RGB, even if those conversions aren\u0027t necessarily preserving the accuracy of the value as intended. However, they do preserve the accuracy in their original form (which is still accessible), and authors can see what the most similar value in other formats would be.\n\nIn order to implement this, we would probably need to indicate if a) the format was originally from RGB, and b) if the format originally had a decimal. I\u0027m not sure if this requires the additional complexity. I can implement it this way if it is thought to be best, but it would seem to add additional complexity and confusion for developers. Given that format changing is already not completely accurate, it would seem okay to allow conversions such as this. Increasing the conversion accuracy for e.g. RGB -\u003e HSL might alleviate some of these concerns.",
+      "parentUuid": "09a62f52_0a0c93ad",
+      "revId": "85fd6414b74c03c39c35e8e99e540c4eef0778bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
