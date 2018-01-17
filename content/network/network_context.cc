@@ -5,6 +5,7 @@
 #include "content/network/network_context.h"
 
 #include <memory>
+#include <utility>
 
 #include "base/command_line.h"
 #include "base/logging.h"
@@ -50,6 +51,7 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "services/network/proxy_config_service_mojo.h"
+#include "services/network/udp_socket_factory.h"
 
 namespace content {
 
@@ -427,6 +429,14 @@ void NetworkContext::SetNetworkConditions(
   }
   ThrottlingController::SetConditions(profile_id,
                                       std::move(network_conditions));
+}
+
+void NetworkContext::CreateUDPSocket(
+    network::mojom::UDPSocketRequest request,
+    network::mojom::UDPSocketReceiverPtr receiver) {
+  if (!udp_socket_factory_)
+    udp_socket_factory_ = std::make_unique<network::UDPSocketFactory>();
+  udp_socket_factory_->CreateUDPSocket(std::move(request), std::move(receiver));
 }
 
 void NetworkContext::AddHSTSForTesting(const std::string& host,
