@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84ed164d_4119a332",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-17T06:03:08Z",
+      "side": 1,
+      "message": "I hope following patch will get rid of this bool parameter. (\u003e\u003c)",
+      "range": {
+        "startLine": 326,
+        "startChar": 4,
+        "endLine": 326,
+        "endChar": 24
+      },
+      "revId": "88cc82eac64b4d534353511284dcc810afa910bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
