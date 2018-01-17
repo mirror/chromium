@@ -1529,7 +1529,6 @@ int BrowserMainLoop::BrowserThreadsStarted() {
       ImageTransportFactory::SetFactory(std::move(transport_factory));
     } else {
       frame_sink_manager_impl_ = std::make_unique<viz::FrameSinkManagerImpl>(
-          viz::SurfaceManager::LifetimeType::REFERENCES,
           switches::GetDeadlineToSynchronizeSurfaces());
 
       surface_utils::ConnectWithLocalFrameSinkManager(
