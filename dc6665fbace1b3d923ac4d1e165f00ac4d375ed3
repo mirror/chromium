@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c077a26_dae06b6b",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-17T23:52:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean by \"using the delegate interface\", but I put some comments. Are fine with it?",
+      "parentUuid": "d41afe2b_841f0fff",
+      "range": {
+        "startLine": 280,
+        "startChar": 13,
+        "endLine": 280,
+        "endChar": 29
+      },
+      "revId": "dc6665fbace1b3d923ac4d1e165f00ac4d375ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fc40850_610d15bf",
         "filename": "content/network/resource_scheduler.h",
         "patchSetId": 15
@@ -68,6 +92,30 @@
       "revId": "dc6665fbace1b3d923ac4d1e165f00ac4d375ed3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f591810_658d7b54",
+        "filename": "content/network/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-17T23:52:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b4ffeee_e55f8036",
+      "range": {
+        "startLine": 82,
+        "startChar": 10,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "dc6665fbace1b3d923ac4d1e165f00ac4d375ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
