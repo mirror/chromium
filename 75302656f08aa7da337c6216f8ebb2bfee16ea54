@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd870261_8622451f",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-17T02:38:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dd93c92_0c1dd75c",
+      "range": {
+        "startLine": 86,
+        "startChar": 46,
+        "endLine": 86,
+        "endChar": 47
+      },
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3978f4d7_dc7f9727",
         "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f75eb4cd_0c80b9d9",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-17T02:38:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3978f4d7_dc7f9727",
+      "range": {
+        "startLine": 89,
+        "startChar": 6,
+        "endLine": 92,
+        "endChar": 46
+      },
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbec4833_8fd5aabc",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_item.cc",
         "patchSetId": 4
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "960dcc5b_223b31bc",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-17T02:38:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbec4833_8fd5aabc",
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a074742_c2714a70",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_item.cc",
         "patchSetId": 4
@@ -79,6 +145,24 @@
       "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e19395_9ebaf0d9",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-17T02:38:37Z",
+      "side": 1,
+      "message": "Removed this ctor.",
+      "parentUuid": "5a074742_c2714a70",
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "eb75ba2b_a6f41f0f",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-17T02:38:37Z",
+      "side": 1,
+      "message": "No other class outside KSV use it so we do not need to export it.\nChange name to ShortcutCategory and added comment.",
+      "parentUuid": "922a8b2b_bb045cc0",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 12
+      },
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fde1d0e6_5ca8a496",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
         "patchSetId": 4
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "0676cfce_125e8c5d",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-17T02:38:37Z",
+      "side": 1,
+      "message": "Changed to LMENU",
+      "parentUuid": "fde1d0e6_5ca8a496",
+      "range": {
+        "startLine": 93,
+        "startChar": 15,
+        "endLine": 93,
+        "endChar": 20
+      },
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2eb28401_23c975d6",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
         "patchSetId": 4
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "1cecdc51_97d6492a",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-17T02:38:37Z",
+      "side": 1,
+      "message": "Flatten the vector by adding some helper structs and make them all constexpr.",
+      "parentUuid": "2eb28401_23c975d6",
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7be76c8_8862e0dc",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
         "patchSetId": 4
@@ -159,6 +309,24 @@
       "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d40e029_cb2c2ae2",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-17T02:38:37Z",
+      "side": 1,
+      "message": "Changed the return type to unique_ptr of KeyboardShortcutItem for future usage: each KeyboardShortcutItem could belong to different category, to avoid have multiple copies of one KeyboardShortcutItem, will return unique_ptr here.\nIn addition, it will be construct from an array to avoid static initializer so do not convert vector to span here.",
+      "parentUuid": "a7be76c8_8862e0dc",
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
