@@ -34,6 +34,24 @@
       "revId": "687129d16fdb6baf95c1cd56b934d1900299d730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa40560_e50739bd",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T23:53:58Z",
+      "side": 1,
+      "message": "Ok thanks. So if you want a constexpr NoDestructor its not adding anything basically. LGTM then.",
+      "parentUuid": "d50ef9fa_68dd04c8",
+      "revId": "687129d16fdb6baf95c1cd56b934d1900299d730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
