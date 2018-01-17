@@ -122,13 +122,18 @@ void ChromotingSession::Disconnect() {
 
   stats_logging_enabled_ = false;
 
-  // User disconnection will not trigger OnConnectionState(Closed, OK).
-  // Remote disconnection will trigger OnConnectionState(...) and later trigger
-  // Disconnect().
-  if (connected_) {
-    logger_->LogSessionStateChange(ChromotingEvent::SessionState::CLOSED,
+  // Do not log session state change if the connection is never started or is
+  // already closed.
+  if (session_state_ != protocol::ConnectionToHost::INITIALIZING &&
+      session_state_ != protocol::ConnectionToHost::FAILED &&
+      session_state_ != protocol::ConnectionToHost::CLOSED) {
+    ChromotingEvent::SessionState session_state_to_log =
+        session_state_ == protocol::ConnectionToHost::CONNECTED
+            ? ChromotingEvent::SessionState::CLOSED
+            : ChromotingEvent::SessionState::CONNECTION_CANCELED;
+    logger_->LogSessionStateChange(session_state_to_log,
                                    ChromotingEvent::ConnectionError::NONE);
-    connected_ = false;
+    session_state_ = protocol::ConnectionToHost::CLOSED;
   }
 
   ReleaseResources();
@@ -160,6 +165,20 @@ void ChromotingSession::HandleOnThirdPartyTokenFetched(
     LOG(WARNING) << "ThirdPartyAuth: Ignored OnThirdPartyTokenFetched()"
                     " without a pending fetch.";
   }
+}
+
+void ChromotingSession::RejectFetchingThirdPartyToken(
+    protocol::ErrorCode reason) {
+  DCHECK(runtime_->network_task_runner()->BelongsToCurrentThread());
+
+  session_state_ = protocol::ConnectionToHost::FAILED;
+  EnableStatsLogging(false);
+
+  logger_->LogSessionStateChange(
+      ClientTelemetryLogger::TranslateState(session_state_),
+      ClientTelemetryLogger::TranslateError(reason));
+
+  ReleaseResources();
 }
 
 void ChromotingSession::ProvideSecret(const std::string& pin,
@@ -317,8 +336,8 @@ void ChromotingSession::OnConnectionState(
 
   // This code assumes no intermediate connection state between CONNECTED and
   // CLOSED/FAILED.
-  connected_ = state == protocol::ConnectionToHost::CONNECTED;
-  EnableStatsLogging(connected_);
+  session_state_ = state;
+  EnableStatsLogging(session_state_ == protocol::ConnectionToHost::CONNECTED);
 
   logger_->LogSessionStateChange(ClientTelemetryLogger::TranslateState(state),
                                  ClientTelemetryLogger::TranslateError(error));
