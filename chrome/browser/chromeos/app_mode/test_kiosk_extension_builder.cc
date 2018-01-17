@@ -23,7 +23,14 @@ TestKioskExtensionBuilder::TestKioskExtensionBuilder(
 TestKioskExtensionBuilder::~TestKioskExtensionBuilder() = default;
 
 void TestKioskExtensionBuilder::AddSecondaryExtension(const std::string& id) {
-  secondary_extensions_.push_back(id);
+  secondary_extensions_.emplace_back(
+      extensions::SecondaryKioskAppInfo(id, false));
+}
+
+void TestKioskExtensionBuilder::AddSecondaryExtensionDisabledOnStartup(
+    const std::string& id) {
+  secondary_extensions_.emplace_back(
+      extensions::SecondaryKioskAppInfo(id, true));
 }
 
 scoped_refptr<const extensions::Extension> TestKioskExtensionBuilder::Build()
@@ -60,8 +67,12 @@ scoped_refptr<const extensions::Extension> TestKioskExtensionBuilder::Build()
   if (!secondary_extensions_.empty()) {
     ListBuilder secondary_extension_list_builder;
     for (const auto& secondary_extension : secondary_extensions_) {
+      DictionaryBuilder secondary_extension_builder;
+      secondary_extension_builder.Set("id", secondary_extension.id);
+      if (secondary_extension.disable_on_startup)
+        secondary_extension_builder.SetBoolean("disable_on_startup", true);
       secondary_extension_list_builder.Append(
-          DictionaryBuilder().Set("id", secondary_extension).Build());
+          secondary_extension_builder.Build());
     }
     manifest_builder.Set("kiosk_secondary_apps",
                          secondary_extension_list_builder.Build());

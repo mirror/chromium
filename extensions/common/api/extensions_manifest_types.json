@@ -216,10 +216,15 @@
             "id": {
               "description": "ID of secondary kiosk app",
               "type": "string"
+            },
+            "disable_on_startup": {
+              "description": "If set, the secondary kiosk app will be disabled when the kiosk app session is launched. The ${ref:management} API can be used to later enable the secondary app.",
+              "type": "boolean",
+              "optional": true
             }
           }
         }
-      }      
+      }
     ]
   }
 ]

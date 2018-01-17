@@ -17,6 +17,7 @@ extern const char kZoomWithoutBubble[];
 extern const char kAllowUsbDevicesPermissionInterfaceClass[];
 extern const char kSigninScreen[];
 extern const char kAllowDeprecatedAudioApi[];
+extern const char kAllowDisableSecondaryKioskAppOnStartup[];
 
 }  // namespace behavior_feature
 
