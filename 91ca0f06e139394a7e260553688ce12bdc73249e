@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "8900a072_34926584",
+        "filename": "components/security_state/core/security_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-17T00:30:30Z",
+      "side": 1,
+      "message": "As a metrics owner, I\u0027m personally ok with any comment that conveys this same intent; but I do think the standard comment is a good choice unless there\u0027s a particular reason to deviate.  Likewise for the other best-practices advice: if it\u0027s easy to follow the best-practices, I would encourage doing so; but I try not to be super picky about the style, as a reviewer.",
+      "parentUuid": "9b9b8a23_eb3d5f11",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e4145b2_a645bfe1",
         "filename": "components/security_state/core/security_state.h",
         "patchSetId": 4
@@ -100,6 +124,30 @@
       "side": 1,
       "message": "Yeah, that\u0027s fair.  I think we\u0027ve used NUM_SECURITY_LEVELS in this sort of case elsewhere, not sure.",
       "parentUuid": "3e4145b2_a645bfe1",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17b9601_37f05c3e",
+        "filename": "components/security_state/core/security_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-17T00:30:30Z",
+      "side": 1,
+      "message": "+1, \"max\" is often used as an alias for the last value in an enum; it\u0027s nice to use \"count\" or \"num\" for counting the number of valid entries in the enum.",
+      "parentUuid": "b17b1910_29c74415",
       "range": {
         "startLine": 75,
         "startChar": 2,
@@ -191,6 +239,52 @@
         "startChar": 24,
         "endLine": 38252,
         "endChar": 32
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43e7db2_f373774f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 78362,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-17T00:30:30Z",
+      "side": 1,
+      "message": "Optional nit: Mebbe explicitly call out that the SECURE bucket can be quickly downgraded, as you did in the CL description?  I found the CL description particularly clear \u003d)",
+      "range": {
+        "startLine": 78356,
+        "startChar": 11,
+        "endLine": 78362,
+        "endChar": 38
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c807a0_f5f9bab4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 78375,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-17T00:30:30Z",
+      "side": 1,
+      "message": "(Ditto)",
+      "range": {
+        "startLine": 78370,
+        "startChar": 0,
+        "endLine": 78375,
+        "endChar": 45
       },
       "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
