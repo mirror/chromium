@@ -10,6 +10,7 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
@@ -121,6 +122,7 @@ public class TabularContextMenuViewPager extends ViewPager {
         mAnimator = ValueAnimator.ofFloat(0f, 1f);
         mAnimator.setDuration(ANIMATION_DURATION_MS);
         mAnimator.setInterpolator(new LinearOutSlowInInterpolator());
+        Rect bounds = new Rect(0, 0, 0, 0);
         mAnimator.addUpdateListener(new AnimatorUpdateListener() {
 
             @Override
@@ -132,6 +134,9 @@ public class TabularContextMenuViewPager extends ViewPager {
                     setTranslationY((1 - animatedValue) * mDifferenceInHeight / 2);
                 }
                 mClipHeight = mOldHeight + (int) (mDifferenceInHeight * animatedValue);
+                bounds.bottom = mClipHeight;
+                bounds.right = mCanvasWidth;
+                TabularContextMenuViewPager.this.setClipBounds(bounds);
                 invalidate();
             }
         });
