@@ -106,6 +106,24 @@
       "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ae229b_4a15ba32",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-17T22:53:23Z",
+      "side": 1,
+      "message": "Estade@,\nYou\u0027re right, I got the distinction incorrect, thanks for clarifying.\n\nUnfortunately the AppList is in the browser process as well, so we can\u0027t even split this by process.\n\n+1 to MSW\u0027s approach. We shouldn\u0027t modify or enforce a new default placeholder text color without an explicit decision from designers IMO.",
+      "parentUuid": "c8df1333_77c68980",
+      "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
