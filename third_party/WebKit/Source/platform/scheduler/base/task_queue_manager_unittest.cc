@@ -961,6 +961,36 @@ TEST_F(TaskQueueManagerTest, DelayedFence_RemovedFenceDoesNotActivate) {
                   base::TimeTicks() + base::TimeDelta::FromMilliseconds(401)));
 }
 
+TEST_F(TaskQueueManagerTest, DelayedFence_TakeIncomingImmediateQueue) {
+  Initialize(2u);
+  test_task_runner_->SetAutoAdvanceNowToPendingTasks(true);
+
+  std::vector<base::TimeTicks> run_times;
+
+  // Fence ensures that the task posted after advancing time is blocked.
+  runners_[0]->InsertFenceAt(Now() + base::TimeDelta::FromMilliseconds(250));
+
+  runners_[0]->PostTask(
+      FROM_HERE, base::BindRepeating(&RecordTimeTask, &run_times, &now_src_));
+  // Force reloading immediate work queue. In real life the same effect can be
+  // achieved with cross-thread posting.
+  runners_[0]->GetTaskQueueImpl()->ReloadImmediateWorkQueueIfEmpty();
+
+  now_src_.Advance(base::TimeDelta::FromMilliseconds(300));
+
+  runners_[0]->PostTask(
+      FROM_HERE, base::BindRepeating(&RecordTimeTask, &run_times, &now_src_));
+  runners_[1]->PostTask(
+      FROM_HERE, base::BindRepeating(&RecordTimeTask, &run_times, &now_src_));
+
+  test_task_runner_->RunUntilIdle();
+
+  EXPECT_THAT(
+      run_times,
+      ElementsAre(base::TimeTicks() + base::TimeDelta::FromMilliseconds(301),
+                  base::TimeTicks() + base::TimeDelta::FromMilliseconds(301)));
+}
+
 namespace {
 
 void ReentrantTestTask(scoped_refptr<base::SingleThreadTaskRunner> runner,
