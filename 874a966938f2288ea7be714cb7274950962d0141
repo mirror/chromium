@@ -34,6 +34,29 @@
       "revId": "874a966938f2288ea7be714cb7274950962d0141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624d9721_179033f0",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1262,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-17T11:00:31Z",
+      "side": 0,
+      "message": "That\u0027s an interesting comment. Given that we move to per-frame task runners and we can reorder (sometimes) tasks between frames, will it cause a problem?",
+      "range": {
+        "startLine": 1262,
+        "startChar": 0,
+        "endLine": 1262,
+        "endChar": 75
+      },
+      "revId": "874a966938f2288ea7be714cb7274950962d0141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
