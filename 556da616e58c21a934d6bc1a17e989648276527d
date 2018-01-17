@@ -192,6 +192,24 @@
     },
     {
       "key": {
+        "uuid": "a4190d03_13b2d9e5",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-17T11:36:19Z",
+      "side": 1,
+      "message": "The benefit of this CL is, actually simplifying the flow of ArcSession.\nYou removed the flow to start a full container directly, which reduces the assumptions we need to think when changing the code.\nAlso, as commentted, it allows us to simplify D-Bus methods in session_manager, IMO, which is another benefit I think.\n\nATM, I couldn\u0027t agree with the current plan to remove NOT_STARTED, but even if we agreed, I\u0027d still request you to split it from this, because it looks conceptually orthogonal to me. Actually this change is easier to review than previous one for me.",
+      "parentUuid": "54e2af02_07c31d5d",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ff67a02_a7a089d2",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 3
