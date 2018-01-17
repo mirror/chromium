@@ -43,6 +43,8 @@ static_library("internal") {
     "file_monitor_impl.h",
     "in_memory_download.cc",
     "in_memory_download.h",
+    "in_memory_download_driver.cc",
+    "in_memory_download_driver.h",
     "log_sink.h",
     "log_source.h",
     "logger_impl.cc",
