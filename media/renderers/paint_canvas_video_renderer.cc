@@ -39,8 +39,6 @@
 #define LIBYUV_I420ALPHA_TO_ARGB libyuv::I420AlphaToARGB
 #define LIBYUV_J420_TO_ARGB libyuv::J420ToARGB
 #define LIBYUV_H420_TO_ARGB libyuv::H420ToARGB
-#define LIBYUV_I010_TO_ARGB libyuv::I010ToARGB
-#define LIBYUV_H010_TO_ARGB libyuv::H010ToARGB
 #elif SK_R32_SHIFT == 0 && SK_G32_SHIFT == 8 && SK_B32_SHIFT == 16 && \
     SK_A32_SHIFT == 24
 #define LIBYUV_I420_TO_ARGB libyuv::I420ToABGR
@@ -49,8 +47,6 @@
 #define LIBYUV_I420ALPHA_TO_ARGB libyuv::I420AlphaToABGR
 #define LIBYUV_J420_TO_ARGB libyuv::J420ToABGR
 #define LIBYUV_H420_TO_ARGB libyuv::H420ToABGR
-#define LIBYUV_I010_TO_ARGB libyuv::I010ToABGR
-#define LIBYUV_H010_TO_ARGB libyuv::H010ToABGR
 #else
 #error Unexpected Skia ARGB_8888 layout!
 #endif
@@ -62,13 +58,6 @@ namespace {
 // This class keeps the last image drawn.
 // We delete the temporary resource if it is not used for 3 seconds.
 const int kTemporaryResourceDeletionDelay = 3;  // Seconds;
-
-bool CheckColorSpace(const VideoFrame* video_frame, ColorSpace color_space) {
-  int result;
-  return video_frame->metadata()->GetInteger(VideoFrameMetadata::COLOR_SPACE,
-                                             &result) &&
-         result == color_space;
-}
 
 class SyncTokenClientImpl : public VideoFrame::SyncTokenClient {
  public:
@@ -158,11 +147,8 @@ sk_sp<SkImage> NewSkImageFromVideoFrameYUVTextures(
       {uv_tex_size.width(), uv_tex_size.height()},
   };
 
-  SkYUVColorSpace color_space = kRec601_SkYUVColorSpace;
-  if (CheckColorSpace(video_frame, media::COLOR_SPACE_JPEG))
-    color_space = kJPEG_SkYUVColorSpace;
-  else if (CheckColorSpace(video_frame, media::COLOR_SPACE_HD_REC709))
-    color_space = kRec709_SkYUVColorSpace;
+  SkYUVColorSpace color_space = kRec709_SkYUVColorSpace;
+  video_frame->ColorSpace().ToSkYUVColorSpace(&color_space);
 
   sk_sp<SkImage> img;
   if (video_frame->format() == PIXEL_FORMAT_NV12) {
@@ -270,12 +256,9 @@ class VideoImageGenerator : public cc::PaintImageGenerator {
     }
 
     if (color_space) {
-      if (CheckColorSpace(frame_.get(), COLOR_SPACE_JPEG))
-        *color_space = kJPEG_SkYUVColorSpace;
-      else if (CheckColorSpace(frame_.get(), COLOR_SPACE_HD_REC709))
+      if (!frame_->ColorSpace().ToSkYUVColorSpace(color_space)) {
         *color_space = kRec709_SkYUVColorSpace;
-      else
-        *color_space = kRec601_SkYUVColorSpace;
+      }
     }
 
     for (int plane = VideoFrame::kYPlane; plane <= VideoFrame::kVPlane;
@@ -482,26 +465,55 @@ void PaintCanvasVideoRenderer::Copy(
 
 namespace {
 
-// libyuv doesn't support all 9-, 10- nor 12-bit pixel formats yet. This
-// function creates a regular 8-bit video frame which we can give to libyuv.
+// libyuv doesn't support 9- and 10-bit video frames yet. This function
+// creates a regular 8-bit video frame which we can give to libyuv.
 scoped_refptr<VideoFrame> DownShiftHighbitVideoFrame(
     const VideoFrame* video_frame) {
   VideoPixelFormat format;
+  int shift = 1;
   switch (video_frame->format()) {
     case PIXEL_FORMAT_YUV420P12:
+      shift = 4;
+      format = PIXEL_FORMAT_I420;
+      break;
+
+    case PIXEL_FORMAT_YUV420P10:
+      shift = 2;
+      format = PIXEL_FORMAT_I420;
+      break;
+
     case PIXEL_FORMAT_YUV420P9:
+      shift = 1;
       format = PIXEL_FORMAT_I420;
       break;
 
     case PIXEL_FORMAT_YUV422P12:
+      shift = 4;
+      format = PIXEL_FORMAT_I422;
+      break;
+
     case PIXEL_FORMAT_YUV422P10:
+      shift = 2;
+      format = PIXEL_FORMAT_I422;
+      break;
+
     case PIXEL_FORMAT_YUV422P9:
+      shift = 1;
       format = PIXEL_FORMAT_I422;
       break;
 
     case PIXEL_FORMAT_YUV444P12:
+      shift = 4;
+      format = PIXEL_FORMAT_I444;
+      break;
+
     case PIXEL_FORMAT_YUV444P10:
+      shift = 2;
+      format = PIXEL_FORMAT_I444;
+      break;
+
     case PIXEL_FORMAT_YUV444P9:
+      shift = 1;
       format = PIXEL_FORMAT_I444;
       break;
 
@@ -509,11 +521,11 @@ scoped_refptr<VideoFrame> DownShiftHighbitVideoFrame(
       NOTREACHED();
       return nullptr;
   }
-  const int shift = video_frame->BitDepth() - 8;
   scoped_refptr<VideoFrame> ret = VideoFrame::CreateFrame(
       format, video_frame->coded_size(), video_frame->visible_rect(),
       video_frame->natural_size(), video_frame->timestamp());
 
+  ret->set_color_space(video_frame->ColorSpace());
   // Copy all metadata.
   // (May be enough to copy color space)
   ret->metadata()->MergeMetadataFrom(video_frame->metadata());
@@ -674,39 +686,45 @@ void PaintCanvasVideoRenderer::ConvertVideoFrameToRGBPixels(
 
   switch (video_frame->format()) {
     case PIXEL_FORMAT_YV12:
-    case PIXEL_FORMAT_I420:
-      if (CheckColorSpace(video_frame, COLOR_SPACE_JPEG)) {
-        LIBYUV_J420_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
-                            video_frame->stride(VideoFrame::kYPlane),
-                            video_frame->visible_data(VideoFrame::kUPlane),
-                            video_frame->stride(VideoFrame::kUPlane),
-                            video_frame->visible_data(VideoFrame::kVPlane),
-                            video_frame->stride(VideoFrame::kVPlane),
-                            static_cast<uint8_t*>(rgb_pixels), row_bytes,
-                            video_frame->visible_rect().width(),
-                            video_frame->visible_rect().height());
-      } else if (CheckColorSpace(video_frame, COLOR_SPACE_HD_REC709)) {
-        LIBYUV_H420_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
-                            video_frame->stride(VideoFrame::kYPlane),
-                            video_frame->visible_data(VideoFrame::kUPlane),
-                            video_frame->stride(VideoFrame::kUPlane),
-                            video_frame->visible_data(VideoFrame::kVPlane),
-                            video_frame->stride(VideoFrame::kVPlane),
-                            static_cast<uint8_t*>(rgb_pixels), row_bytes,
-                            video_frame->visible_rect().width(),
-                            video_frame->visible_rect().height());
-      } else {
-        LIBYUV_I420_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
-                            video_frame->stride(VideoFrame::kYPlane),
-                            video_frame->visible_data(VideoFrame::kUPlane),
-                            video_frame->stride(VideoFrame::kUPlane),
-                            video_frame->visible_data(VideoFrame::kVPlane),
-                            video_frame->stride(VideoFrame::kVPlane),
-                            static_cast<uint8_t*>(rgb_pixels), row_bytes,
-                            video_frame->visible_rect().width(),
-                            video_frame->visible_rect().height());
+    case PIXEL_FORMAT_I420: {
+      SkYUVColorSpace color_space = kRec709_SkYUVColorSpace;
+      video_frame->ColorSpace().ToSkYUVColorSpace(&color_space);
+      switch (color_space) {
+        case kJPEG_SkYUVColorSpace:
+          LIBYUV_J420_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
+                              video_frame->stride(VideoFrame::kYPlane),
+                              video_frame->visible_data(VideoFrame::kUPlane),
+                              video_frame->stride(VideoFrame::kUPlane),
+                              video_frame->visible_data(VideoFrame::kVPlane),
+                              video_frame->stride(VideoFrame::kVPlane),
+                              static_cast<uint8_t*>(rgb_pixels), row_bytes,
+                              video_frame->visible_rect().width(),
+                              video_frame->visible_rect().height());
+          break;
+        case kRec709_SkYUVColorSpace:
+          LIBYUV_H420_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
+                              video_frame->stride(VideoFrame::kYPlane),
+                              video_frame->visible_data(VideoFrame::kUPlane),
+                              video_frame->stride(VideoFrame::kUPlane),
+                              video_frame->visible_data(VideoFrame::kVPlane),
+                              video_frame->stride(VideoFrame::kVPlane),
+                              static_cast<uint8_t*>(rgb_pixels), row_bytes,
+                              video_frame->visible_rect().width(),
+                              video_frame->visible_rect().height());
+          break;
+        case kRec601_SkYUVColorSpace:
+          LIBYUV_I420_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
+                              video_frame->stride(VideoFrame::kYPlane),
+                              video_frame->visible_data(VideoFrame::kUPlane),
+                              video_frame->stride(VideoFrame::kUPlane),
+                              video_frame->visible_data(VideoFrame::kVPlane),
+                              video_frame->stride(VideoFrame::kVPlane),
+                              static_cast<uint8_t*>(rgb_pixels), row_bytes,
+                              video_frame->visible_rect().width(),
+                              video_frame->visible_rect().height());
       }
       break;
+    }
     case PIXEL_FORMAT_I422:
       LIBYUV_I422_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
                           video_frame->stride(VideoFrame::kYPlane),
@@ -747,39 +765,10 @@ void PaintCanvasVideoRenderer::ConvertVideoFrameToRGBPixels(
                           video_frame->visible_rect().height());
       break;
 
-    case PIXEL_FORMAT_YUV420P10:
-      if (CheckColorSpace(video_frame, COLOR_SPACE_HD_REC709)) {
-        LIBYUV_H010_TO_ARGB(reinterpret_cast<const uint16_t*>(
-                                video_frame->visible_data(VideoFrame::kYPlane)),
-                            video_frame->stride(VideoFrame::kYPlane) / 2,
-                            reinterpret_cast<const uint16_t*>(
-                                video_frame->visible_data(VideoFrame::kUPlane)),
-                            video_frame->stride(VideoFrame::kUPlane) / 2,
-                            reinterpret_cast<const uint16_t*>(
-                                video_frame->visible_data(VideoFrame::kVPlane)),
-                            video_frame->stride(VideoFrame::kVPlane) / 2,
-                            static_cast<uint8_t*>(rgb_pixels), row_bytes,
-                            video_frame->visible_rect().width(),
-                            video_frame->visible_rect().height());
-      } else {
-        LIBYUV_I010_TO_ARGB(reinterpret_cast<const uint16_t*>(
-                                video_frame->visible_data(VideoFrame::kYPlane)),
-                            video_frame->stride(VideoFrame::kYPlane) / 2,
-                            reinterpret_cast<const uint16_t*>(
-                                video_frame->visible_data(VideoFrame::kUPlane)),
-                            video_frame->stride(VideoFrame::kUPlane) / 2,
-                            reinterpret_cast<const uint16_t*>(
-                                video_frame->visible_data(VideoFrame::kVPlane)),
-                            video_frame->stride(VideoFrame::kVPlane) / 2,
-                            static_cast<uint8_t*>(rgb_pixels), row_bytes,
-                            video_frame->visible_rect().width(),
-                            video_frame->visible_rect().height());
-      }
-      break;
-
     case PIXEL_FORMAT_YUV420P9:
     case PIXEL_FORMAT_YUV422P9:
     case PIXEL_FORMAT_YUV444P9:
+    case PIXEL_FORMAT_YUV420P10:
     case PIXEL_FORMAT_YUV422P10:
     case PIXEL_FORMAT_YUV444P10:
     case PIXEL_FORMAT_YUV420P12:
