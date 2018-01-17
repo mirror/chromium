@@ -520,6 +520,30 @@
     },
     {
       "key": {
+        "uuid": "37db28ff_024be906",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T22:16:09Z",
+      "side": 1,
+      "message": "Sorry, I emailed Yuzhu. It turns out that |data| points to a range of bytes in the received msg, and will be freed when this method returns. I have added a note here and updated this to be a copy. I tightened the test expectation in TestInsufficientResources so we catch this use-after-free error.",
+      "parentUuid": "3e72af56_0dd37faf",
+      "range": {
+        "startLine": 248,
+        "startChar": 18,
+        "endLine": 248,
+        "endChar": 19
+      },
+      "revId": "4b78bc0783a821a7a0511e4d8828926f9cf1984b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f0d92bf_76223889",
         "filename": "services/network/udp_socket.cc",
         "patchSetId": 36
