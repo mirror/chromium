@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98222ead_77788982",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/ElementsPanel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T23:36:34Z",
+      "side": 1,
+      "message": "You miss |this._stylesWidget.forceUpdate()| here.",
+      "revId": "9dc7dcc89d90d469e8484b1c0b4febed7011b20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53697cf2_e7f3fec2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1726,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T23:36:34Z",
+      "side": 1,
+      "message": "Drop this.",
+      "revId": "9dc7dcc89d90d469e8484b1c0b4febed7011b20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60485baa_7ecfbebd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1756,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T23:36:34Z",
+      "side": 1,
+      "message": "I think this is easier to understand:\n\nif (minorChange)\n  this._lastModelWithMinorChange \u003d model;\nelse\n  model._agent.markUndoableState();",
+      "revId": "9dc7dcc89d90d469e8484b1c0b4febed7011b20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a02524_5967698b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1770,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T23:36:34Z",
+      "side": 1,
+      "message": "You also have to update lastModelWithMinorChange.",
+      "revId": "9dc7dcc89d90d469e8484b1c0b4febed7011b20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6bb93f_4c546327",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1780,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T23:36:34Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "9dc7dcc89d90d469e8484b1c0b4febed7011b20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
