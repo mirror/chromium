@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50f861e5_4b0cab98",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8517,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-17T12:29:43Z",
+      "side": 1,
+      "message": "nit: I think a wording like \"Profiles that are not signed in or that are signed in to disallowed accounts will be inaccessible if this policy is set to true\".\n\nnot nit :) :Also I think it deserves explaining which accounts are disallowed. Describe which policy governs this and how.",
+      "range": {
+        "startLine": 8517,
+        "startChar": 241,
+        "endLine": 8517,
+        "endChar": 284
+      },
+      "revId": "f12d9d04a18393e77cf67b165a0abb00b1721b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
