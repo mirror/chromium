@@ -16,6 +16,24 @@
       "revId": "f6d06c872d6af28e65f56f9b204932b39de60599",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "164f4637_3fa412ef",
+        "filename": "components/search_provider_logos/logo_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-17T11:18:37Z",
+      "side": 1,
+      "message": "Thanks, that\u0027s a good catch! (And extra thanks for the detailed explanation!)\nDone.",
+      "parentUuid": "682c603c_c1df9833",
+      "revId": "f6d06c872d6af28e65f56f9b204932b39de60599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
