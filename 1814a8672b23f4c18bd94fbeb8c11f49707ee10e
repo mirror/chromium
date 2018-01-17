@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38392ea1_68d68c42",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-01-17T14:39:32Z",
+      "side": 1,
+      "message": "We don\u0027t announce those state changes while the user is typing, yes. The intent of this CL is to announce them when the user focuses the omnibox. We\u0027re quite aggressive with suggesting completions (for example, when I type \"g\" I immediately get the \"Press [Tab] to search Google\" suggestion) and I don\u0027t want to interrupt the user verbally with the presence of it. Perhaps we should announce that the Tab took, but that would be a followup CL.",
+      "parentUuid": "fa120eec_f1363b98",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "1814a8672b23f4c18bd94fbeb8c11f49707ee10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bfdcba9_131ef68b",
         "filename": "chrome/browser/ui/cocoa/location_bar/keyword_hint_decoration.mm",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9b45bc50_1b2b76c6",
+        "filename": "chrome/browser/ui/cocoa/location_bar/keyword_hint_decoration.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-01-17T14:39:32Z",
+      "side": 1,
+      "message": "I\u0027m actually not sure. The example text says \"Tab\" in the .grd file, and it is replaced with omnibox_keyword_hint_tab.png, which is just a picture of the \"Tab\" key. In Views builds, we use IDS_APP_TAB_KEY as text there, but as far as I can tell there are no localizations of that string (which is just the text \"Tab\").\n\nSo, short answer: if the Tab key *was* localizable on Mac, IDS_APP_TAB_KEY would be the right thing to use here, but it\u0027s not, because it\u0027s a hardcoded image, so the string \"Tab\" is probably the right call. Once we make the Tab key localizable, we might want to revisit this, but for now I don\u0027t want the code to read like it\u0027s localized when it actually isn\u0027t.",
+      "parentUuid": "2bfdcba9_131ef68b",
+      "range": {
+        "startLine": 80,
+        "startChar": 18,
+        "endLine": 80,
+        "endChar": 42
+      },
+      "revId": "1814a8672b23f4c18bd94fbeb8c11f49707ee10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e31afd80_e678e024",
         "filename": "chrome/browser/ui/cocoa/location_bar/keyword_hint_decoration.mm",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "1814a8672b23f4c18bd94fbeb8c11f49707ee10e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad5f456_f562260b",
+        "filename": "chrome/browser/ui/cocoa/location_bar/keyword_hint_decoration.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-01-17T14:39:32Z",
+      "side": 1,
+      "message": "It\u0027s called in LocationBarViewMac::Layout(), because the hint text will be spliced into the omnibox\u0027s decoration.",
+      "parentUuid": "e31afd80_e678e024",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 1
+      },
+      "revId": "1814a8672b23f4c18bd94fbeb8c11f49707ee10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
