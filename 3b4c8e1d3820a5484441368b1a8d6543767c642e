@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d922e91_3fa835a0",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-17T10:45:46Z",
+      "side": 1,
+      "message": "Isn\u0027t it | ... \u003c [omnibox] \u003e ... | (on two sides of the omnibox)?",
+      "revId": "3b4c8e1d3820a5484441368b1a8d6543767c642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26385cd1_b0cdd2f8",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tab_grid_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-17T10:45:46Z",
+      "side": 1,
+      "message": "nit: \"Implementing the logic\" can be dropped from this comment for brevity.",
+      "revId": "3b4c8e1d3820a5484441368b1a8d6543767c642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb64fde2_d8acaefb",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tab_grid_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-17T10:45:46Z",
+      "side": 1,
+      "message": "Please add a note about the easter egg.",
+      "range": {
+        "startLine": 10,
+        "startChar": 73,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "3b4c8e1d3820a5484441368b1a8d6543767c642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1340c5df_9b489abd",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tab_grid_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-17T10:45:46Z",
+      "side": 1,
+      "message": "nit: perhaps this can be an unsigned int",
+      "revId": "3b4c8e1d3820a5484441368b1a8d6543767c642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4742d746_6c119366",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tab_grid_button.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-17T10:45:46Z",
+      "side": 1,
+      "message": "nit: self.titleLabel.font \u003d ... (here and everywhere)",
+      "revId": "3b4c8e1d3820a5484441368b1a8d6543767c642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
