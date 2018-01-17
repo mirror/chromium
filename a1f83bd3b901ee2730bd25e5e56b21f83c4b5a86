@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "047917bb_9ee69446",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-17T21:58:08Z",
+      "side": 1,
+      "message": "Sleep(0) would also work - I don\u0027t think it would give any problematic hints to the scheduler. But, I also don\u0027t see any advantages to Sleep(0). Sleep(1) would *actually* give up the time slice. It\u0027s okay for the background thread to do that, but if the foreground priority threads do that it would ruin the test.",
+      "parentUuid": "792dd483_3a4f9cf8",
+      "range": {
+        "startLine": 213,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 49
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c90fed21_2d405f92",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 8
