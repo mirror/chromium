@@ -22,6 +22,30 @@
       "revId": "e0541940ca71467e00cba532a3ffc132465c9454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5584d733_b0121f6e",
+        "filename": "third_party/WebKit/LayoutTests/fast/scrolling/scroll-into-view-ignores-invisible-selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-17T01:58:03Z",
+      "side": 1,
+      "message": "setSelectionRange() doesn\u0027t scroll the page. What\u0027s happening is that, inside input.focus(),\nwe scroll \u003cinput\u003e into view, then scroll selection into view (see HTMLInputElement::UpdateFocusAppearanceWithOptions()). In the current implementation, if the selection is not visible, it will scroll (0, 0, 0x0) into view, causing \u003cinput\u003e out of view as the result.\n\nIn this test, I\u0027m checking that focus() reveals \u003cinput\u003e, but doesn\u0027t reset the page to top after that.\n\nI\u0027ve updated the patch description to make the situation clearer.",
+      "parentUuid": "c5a1d0b6_f46e8dd5",
+      "range": {
+        "startLine": 22,
+        "startChar": 1,
+        "endLine": 22,
+        "endChar": 37
+      },
+      "revId": "e0541940ca71467e00cba532a3ffc132465c9454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
