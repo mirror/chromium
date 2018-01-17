@@ -287,6 +287,8 @@ class QUIC_EXPORT_PRIVATE QuicSession : public QuicConnectionVisitorInterface,
     return allow_multiple_acks_for_data_;
   }
 
+  bool session_unblocks_stream() const { return session_unblocks_stream_; }
+
  protected:
   using StaticStreamMap = QuicSmallMap<QuicStreamId, QuicStream*, 2>;
 
@@ -519,6 +521,9 @@ class QUIC_EXPORT_PRIVATE QuicSession : public QuicConnectionVisitorInterface,
   // is not used here.
   // List of streams with pending retransmissions.
   QuicLinkedHashMap<QuicStreamId, bool> streams_with_pending_retransmission_;
+
+  // Latched value of quic_reloadable_flag_quic_streams_unblocked_by_session.
+  const bool session_unblocks_stream_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicSession);
 };
