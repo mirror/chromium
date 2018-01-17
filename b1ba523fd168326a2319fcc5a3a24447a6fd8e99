@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0778e86_47b3ebdc",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-17T22:24:42Z",
+      "side": 1,
+      "message": "One drawback of this approach is that whatever poor soul is in the holdback can\u0027t manually turn on some previews (but I could add about::flags support for the kill switch).",
+      "revId": "b1ba523fd168326a2319fcc5a3a24447a6fd8e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
