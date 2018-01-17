@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "7bed69a4_5a676d21",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-17T00:03:14Z",
+      "side": 1,
+      "message": "Sorry forget to mention that besides setting ConfigurationPolicyPrefStore::IsInitializationComplete to true, also add base::RunLoop().RunUntilIdle() after StartUserSession(GetParam()).",
+      "parentUuid": "bd4bb907_4cbf354f",
+      "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be0732d1_83170048",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 6
