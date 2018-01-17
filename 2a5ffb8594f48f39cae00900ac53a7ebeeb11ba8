@@ -46,6 +46,30 @@
       "revId": "2a5ffb8594f48f39cae00900ac53a7ebeeb11ba8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc34f5f0_833a6beb",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-17T02:38:29Z",
+      "side": 1,
+      "message": "\u003e I remember this logic was copied from cast implementation (https://cs.chromium.org/chromium/src/media/cast/sender/vp8_encoder.cc?rcl\u003db791330b5fe60e167695c35d74070124badc612e\u0026l\u003d242).\n\nI\u0027m not familiar with internals of cast sender. This logic may make sense there, but it doesn\u0027t make sense for chromoting.\n\n\u003e I think the rational of using the previous frame duration as a prediction is that the increasing frame duration will also increase the encoding time as well as the frame size\n\u003e and eventually reduce the frame rate until it comes to a balance (the maximum processor resource or network bandwidth are used).\n\nI don\u0027t really follow this. You are suggesting that we want to use more CPU, more bandwidth and lower frame-rate. How any of this can be desirable?\n\n\u003e But using a fixed duration may cause the processor resource or network bandwidth to be wasted.\n\nThe most important perf metric is latency. It\u0027s acceptable to waste a bit of CPU and a bit of bandwidth to achieve better latency. To get lower latency we want to limit size of each frame. If we pass large frame_duration to the encoder it\u0027s likely that the encoder will give us big frame which will take a lot of time to send to the client, increasing total latency for this frame beyond acceptable values. This will further increase duration for the frame after that, etc.",
+      "parentUuid": "ade55b1b_3a76467e",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 64
+      },
+      "revId": "2a5ffb8594f48f39cae00900ac53a7ebeeb11ba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
