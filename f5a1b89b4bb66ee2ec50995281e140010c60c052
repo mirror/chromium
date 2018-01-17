@@ -88,6 +88,24 @@
       "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8df1333_77c68980",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-17T22:47:10Z",
+      "side": 1,
+      "message": "I\u0027m confused... don\u0027t some textfields use the placeholder feature without setting the color? In those cases, shouldn\u0027t they use kDefaultPlaceholderTextColor (with 0x83 alpha if IsSecondaryUiMaterial?). So, it seems like the desired change is:\n(1) Init placeholder_text_color_ to kDefaultPlaceholderTextColor in the ctor.\n(2) Change the alpha to 0x83 in the ctor if IsSecondaryUiMaterial.\n(3) Continue allowing callers to override placeholder_text_color_.\n(4) Use |placeholder_text_color_| as-is here, without alpha changes.\n\nThat seems like it should allow CrOS UI elements to override the color without being affected by alpha changes, and continue to use the intended default color elsewhere.",
+      "parentUuid": "a73817f8_30301df8",
+      "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
