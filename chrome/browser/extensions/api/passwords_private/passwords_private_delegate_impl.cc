@@ -31,14 +31,54 @@
 #include "chrome/browser/password_manager/password_manager_util_mac.h"
 #endif
 
+namespace {
+
+// The error message returned to the UI when Chrome refuses to start multiple
+// exports.
+const char kExportInProgress[] = "in-progress";
+
+// Map password_manager::ExportProgressStatus to
+// extensions::api::passwords_private::ExportProgressStatus.
+extensions::api::passwords_private::ExportProgressStatus ConvertStatus(
+    password_manager::ExportProgressStatus status) {
+  switch (status) {
+    case password_manager::ExportProgressStatus::NOT_STARTED:
+      return extensions::api::passwords_private::ExportProgressStatus::
+          EXPORT_PROGRESS_STATUS_NOT_STARTED;
+    case password_manager::ExportProgressStatus::IN_PROGRESS:
+      return extensions::api::passwords_private::ExportProgressStatus::
+          EXPORT_PROGRESS_STATUS_IN_PROGRESS;
+    case password_manager::ExportProgressStatus::COMPLETED:
+      return extensions::api::passwords_private::ExportProgressStatus::
+          EXPORT_PROGRESS_STATUS_COMPLETED;
+    case password_manager::ExportProgressStatus::FAILED_CANCELLED:
+      return extensions::api::passwords_private::ExportProgressStatus::
+          EXPORT_PROGRESS_STATUS_FAILED_CANCELLED;
+    case password_manager::ExportProgressStatus::FAILED_WRITE_FAILED:
+      return extensions::api::passwords_private::ExportProgressStatus::
+          EXPORT_PROGRESS_STATUS_FAILED_WRITE_FAILED;
+  }
+
+  NOTREACHED();
+  return extensions::api::passwords_private::ExportProgressStatus::
+      EXPORT_PROGRESS_STATUS_NONE;
+}
+
+}  // namespace
+
 namespace extensions {
 
 PasswordsPrivateDelegateImpl::PasswordsPrivateDelegateImpl(Profile* profile)
     : profile_(profile),
       password_manager_presenter_(
           std::make_unique<PasswordManagerPresenter>(this)),
-      password_manager_porter_(std::make_unique<PasswordManagerPorter>(
-          password_manager_presenter_.get())),
+      password_manager_porter_(
+          PasswordManagerPorter::
+              CreatePasswordManagerPorterWithCredentialProvider(
+                  password_manager_presenter_.get(),
+                  base::BindRepeating(
+                      &PasswordsPrivateDelegateImpl::OnPasswordsExportProgress,
+                      base::Unretained(this)))),
       password_access_authenticator_(
           base::BindRepeating(&PasswordsPrivateDelegateImpl::OsReauthCall,
                               base::Unretained(this))),
@@ -240,6 +280,7 @@ void PasswordsPrivateDelegateImpl::ImportPasswords(
 }
 
 void PasswordsPrivateDelegateImpl::ExportPasswords(
+    base::OnceCallback<void(const std::string&)> callback,
     content::WebContents* web_contents) {
   // Save |web_contents| so that it can be used later when GetNativeWindow() is
   // called. Note: This is safe because the |web_contents| is used before
@@ -251,7 +292,13 @@ void PasswordsPrivateDelegateImpl::ExportPasswords(
   }
 
   password_manager_porter_->set_web_contents(web_contents);
-  password_manager_porter_->Store();
+  bool accepted = password_manager_porter_->Store();
+  std::move(callback).Run(accepted ? std::string() : kExportInProgress);
+}
+
+api::passwords_private::ExportProgressStatus
+PasswordsPrivateDelegateImpl::GetExportProgressStatus() {
+  return ConvertStatus(password_manager_porter_->GetExportProgressStatus());
 }
 
 #if !defined(OS_ANDROID)
@@ -260,6 +307,16 @@ gfx::NativeWindow PasswordsPrivateDelegateImpl::GetNativeWindow() const {
   return web_contents_->GetTopLevelNativeWindow();
 }
 #endif
+
+void PasswordsPrivateDelegateImpl::OnPasswordsExportProgress(
+    password_manager::ExportProgressStatus status,
+    const std::string& folder_name) {
+  PasswordsPrivateEventRouter* router =
+      PasswordsPrivateEventRouterFactory::GetForProfile(profile_);
+  if (router) {
+    router->OnPasswordsExportProgress(ConvertStatus(status), folder_name);
+  }
+}
 
 void PasswordsPrivateDelegateImpl::Shutdown() {
   password_manager_presenter_.reset();
