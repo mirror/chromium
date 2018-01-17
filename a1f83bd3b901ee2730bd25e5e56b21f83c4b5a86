@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "792dd483_3a4f9cf8",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T21:29:42Z",
+      "side": 1,
+      "message": "The way I understand it, it yields this thread\u0027s quantum, putting it back on the ready queue.\n\nIf many foreground threads are doing this they may be yielding to each other without ever giving a slot for a background thread. But a background thread is definitely yielding to foreground threads (without hinting that it intends to).\n\nI\u0027m afraid Sleep would potentially hint the kernel that the thread is important when it wakes up.",
+      "parentUuid": "708e01a1_2272af01",
+      "range": {
+        "startLine": 213,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 49
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c90fed21_2d405f92",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 8
@@ -238,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "2144e8d4_2671f5f5",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T21:29:42Z",
+      "side": 1,
+      "message": "Ah, yes I could do that. Thought for the LazyInstance I\u0027d rather keep it static to test it the way it\u0027s meant to be used. It\u0027s destroyed at the end of the test anyways via the AtExitManager.\n\nWill follow-up on the two statics in a fixture.",
+      "parentUuid": "44fec2ad_edae9a70",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 30
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "998c847f_5119c0d6",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 8
@@ -297,6 +345,30 @@
       "side": 1,
       "message": "action_timeout() and friends are what we override/adjust to account for differences in run-time on different environments, though - we may find that on Fuchsia+QEMU+GCE the timing is rather worse, for example. Speaking hypothetically, that is. ;)",
       "parentUuid": "7ff4348a_6eff460e",
+      "range": {
+        "startLine": 321,
+        "startChar": 12,
+        "endLine": 321,
+        "endChar": 43
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2d5b960_ec6766e1",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T21:29:42Z",
+      "side": 1,
+      "message": "Hmm, ok, but action_timeout() still feels weird for this... I\u0027d rather not if we don\u0027t find this to be flaky on other platforms.",
+      "parentUuid": "1cba9888_d806c0d2",
       "range": {
         "startLine": 321,
         "startChar": 12,
