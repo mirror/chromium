@@ -112,9 +112,30 @@ void AttestationCAClient::OnURLFetchComplete(const net::URLFetcher* source) {
 void AttestationCAClient::FetchURL(const std::string& url,
                                    const std::string& request,
                                    const DataCallback& on_response) {
+  const net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("arc_auth_code_fetcher", R"(
+        semantics {
+          sender: "Attestation CA client"
+          description:
+            "Requests to enroll the device or to get an attestation "
+            "certificate."
+          trigger:
+            "Device enrollment or get an attestation certificate for a "
+            "hardware-protected key."
+          data:
+            "Key type, key name and account id."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: NO
+          setting:
+            "Admin can deprovision the device to disable this feature."
+          policy_exception_justification: "Not implemented."
+        })");
   // The first argument allows the use of TestURLFetcherFactory in tests.
   net::URLFetcher* fetcher =
-      net::URLFetcher::Create(0, GURL(url), net::URLFetcher::POST, this)
+      net::URLFetcher::Create(0, GURL(url), net::URLFetcher::POST,
+                              traffic_annotation)
           .release();
   fetcher->SetRequestContext(g_browser_process->system_request_context());
   fetcher->SetLoadFlags(net::LOAD_DO_NOT_SEND_COOKIES |
