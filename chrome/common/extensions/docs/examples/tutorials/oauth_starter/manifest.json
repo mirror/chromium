@@ -1,0 +1,18 @@
+{
+   "name": "OAuth Tutorial FaceBlock",
+   "version": "1.0",
+   "description": "Uses OAuth to connect to Google's People API and display contacts photos.",
+   "manifest_version": 2,
+   "browser_action": {
+     "default_title": "FaceBlock, faces in blocks."
+   },
+   "permissions": [
+     "identity"
+   ],
+   "background": {
+     "scripts": [
+       "background.js"
+     ],
+     "persistent": false
+   }
+ }
