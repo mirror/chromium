@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1244da6_d7c5476a",
+        "filename": "components/assist_ranker/predictor_config_definitions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2018-01-17T04:43:32Z",
+      "side": 1,
+      "message": "Philippe, I noticed that contextual_search_ranker_logger_impl.cc is still writing these, but they are not in the whitelist.  Maybe CS doesn\u0027t need to write them?",
+      "range": {
+        "startLine": 47,
+        "startChar": 31,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "e638642b832fca2a62066e5eb842aee41478d4d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
