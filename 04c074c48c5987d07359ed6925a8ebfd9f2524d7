@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98c667e0_c84cdede",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-cronet.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-17T20:32:29Z",
+      "side": 1,
+      "message": "Please add a link to the bug to track why this is here.",
+      "revId": "04c074c48c5987d07359ed6925a8ebfd9f2524d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
