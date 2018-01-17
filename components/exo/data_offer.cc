@@ -6,6 +6,7 @@
 
 #include "base/files/file_util.h"
 #include "base/memory/ref_counted_memory.h"
+#include "base/pickle.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "components/exo/data_offer_delegate.h"
@@ -50,6 +51,35 @@ void WriteFileDescriptor(base::ScopedFD fd,
                                  reinterpret_cast<const char*>(memory->front()),
                                  memory->size()))
     DLOG(ERROR) << "Failed to write drop data";
+}
+
+// NOTE: This function relies on the pickle construction logic in
+// src/content/browser/web_contents/web_contents_view_aura.cc.
+bool ReadFileUrlsFromPickle(const base::Pickle& pickle,
+                            std::vector<GURL>* file_urls) {
+  base::PickleIterator iter(pickle);
+  uint32_t num_files = 0;
+  if (!iter.ReadUInt32(&num_files)) {
+    return false;
+  }
+  for (uint32_t i = 0; i < num_files; ++i) {
+    std::string url_string;
+    int64_t size = 0;
+    std::string filesystem_id;
+    if (!iter.ReadString(&url_string) || !iter.ReadInt64(&size) ||
+        !iter.ReadString(&filesystem_id)) {
+      return false;
+    }
+    file_urls->push_back(GURL(url_string));
+  }
+  return true;
+}
+
+ui::Clipboard::FormatType& GetFileSystemFileFormatType() {
+  static const char kFormatString[] = "chromium/x-file-system-files";
+  CR_DEFINE_STATIC_LOCAL(ui::Clipboard::FormatType, format,
+                         (ui::Clipboard::GetFormatType(kFormatString)));
+  return format;
 }
 
 }  // namespace
@@ -102,7 +132,31 @@ void DataOffer::SetSourceActions(
 void DataOffer::SetDropData(FileHelper* file_helper,
                             const ui::OSExchangeData& data) {
   DCHECK_EQ(0u, data_.size());
-  if (data.HasString()) {
+
+  bool found_urls_in_pickle = false;
+  base::Pickle pickle;
+  if (data.GetPickledData(GetFileSystemFileFormatType(), &pickle)) {
+    std::vector<GURL> file_urls;
+    if (ReadFileUrlsFromPickle(pickle, &file_urls)) {
+      base::string16 url_list_string;
+      for (const GURL& file_url : file_urls) {
+        GURL arc_url;
+        if (file_helper->GetUrlFromFileSystemUrl(
+                /* app_id */ "", file_url, &arc_url)) {
+          if (!url_list_string.empty())
+            url_list_string += base::UTF8ToUTF16(kUriListSeparator);
+          url_list_string += base::UTF8ToUTF16(arc_url.spec());
+        }
+      }
+      if (!url_list_string.empty()) {
+        found_urls_in_pickle = true;
+        data_.emplace(
+            file_helper->GetMimeTypeForUriList(),
+            RefCountedString16::TakeString(std::move(url_list_string)));
+      }
+    }
+  }
+  if (!found_urls_in_pickle && data.HasString()) {
     base::string16 string_content;
     if (data.GetString(&string_content)) {
       data_.emplace(std::string(ui::Clipboard::kMimeTypeText),
@@ -112,18 +166,18 @@ void DataOffer::SetDropData(FileHelper* file_helper,
   if (data.HasFile()) {
     std::vector<ui::FileInfo> files;
     if (data.GetFilenames(&files)) {
-      base::string16 url_list;
+      base::string16 url_list_string;
       for (const auto& info : files) {
         GURL url;
         // TODO(hirono): Need to fill the corret app_id.
         if (file_helper->GetUrlFromPath(/* app_id */ "", info.path, &url)) {
-          if (!url_list.empty())
-            url_list += base::UTF8ToUTF16(kUriListSeparator);
-          url_list += base::UTF8ToUTF16(url.spec());
+          if (!url_list_string.empty())
+            url_list_string += base::UTF8ToUTF16(kUriListSeparator);
+          url_list_string += base::UTF8ToUTF16(url.spec());
         }
       }
       data_.emplace(file_helper->GetMimeTypeForUriList(),
-                    RefCountedString16::TakeString(std::move(url_list)));
+                    RefCountedString16::TakeString(std::move(url_list_string)));
     }
   }
   for (const auto& pair : data_) {
