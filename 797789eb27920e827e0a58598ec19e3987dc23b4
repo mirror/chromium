@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87c27a2f_365360d6",
+        "filename": "chrome/browser/vr/model/color_scheme.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-17T15:30:34Z",
+      "side": 1,
+      "message": "nit: is XXX different from TODO?",
+      "range": {
+        "startLine": 135,
+        "startChar": 3,
+        "endLine": 135,
+        "endChar": 6
+      },
+      "revId": "797789eb27920e827e0a58598ec19e3987dc23b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
