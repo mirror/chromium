@@ -647,9 +647,13 @@ void WindowTreeHostManager::OnDisplayMetricsChanged(
       GetDisplayManager()->GetDisplayInfo(display.id());
   DCHECK(!display_info.bounds_in_native().IsEmpty());
   AshWindowTreeHost* ash_host = window_tree_hosts_[display.id()];
+  LOG(ERROR) << __FUNCTION__ << " display_info_bounds=" << display_info.bounds_in_native().ToString()
+             << " rot=" << display.RotationAsDegree() << " bounds=" << display.bounds().ToString();
   ash_host->AsWindowTreeHost()->SetBoundsInPixels(
       display_info.bounds_in_native());
   SetDisplayPropertiesOnHost(ash_host, display);
+
+  ash_host->AsWindowTreeHost()->window()->PrintWindowHierarchy(0);
 }
 
 void WindowTreeHostManager::OnHostResized(aura::WindowTreeHost* host) {

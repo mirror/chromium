@@ -78,6 +78,7 @@ void TestScreen::SetColorSpace(const gfx::ColorSpace& color_space) {
 
 void TestScreen::SetDisplayRotation(display::Display::Rotation rotation) {
   display::Display display(GetPrimaryDisplay());
+  LOG(ERROR) << display.bounds().ToString() << " " << display.rotation();
   gfx::Rect bounds_in_pixel(display.GetSizeInPixel());
   gfx::Rect new_bounds(bounds_in_pixel);
   if (IsRotationPortrait(rotation) != IsRotationPortrait(display.rotation())) {
@@ -110,11 +111,13 @@ void TestScreen::SetWorkAreaInsets(const gfx::Insets& insets) {
 gfx::Transform TestScreen::GetRotationTransform() const {
   gfx::Transform rotate;
   display::Display display(GetPrimaryDisplay());
+  LOG(ERROR) << display.bounds().ToString() << " " << display.rotation();
   switch (display.rotation()) {
     case display::Display::ROTATE_0:
       break;
     case display::Display::ROTATE_90:
       rotate.Translate(display.bounds().height(), 0);
+      //rotate.Translate((display.bounds().width() + display.bounds().height()) / 2, 0);
       rotate.Rotate(90);
       break;
     case display::Display::ROTATE_270:

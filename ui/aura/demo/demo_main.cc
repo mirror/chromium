@@ -13,6 +13,7 @@
 #include "base/power_monitor/power_monitor.h"
 #include "base/power_monitor/power_monitor_device_source.h"
 #include "base/run_loop.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "build/build_config.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "third_party/skia/include/core/SkBlendMode.h"
@@ -25,6 +26,7 @@
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/hit_test.h"
+#include "ui/base/ime/input_method_initializer.h"
 #include "ui/compositor/paint_recorder.h"
 #include "ui/compositor/test/in_process_context_factory.h"
 #include "ui/events/event.h"
@@ -138,15 +140,19 @@ int DemoMain() {
   display::win::SetDefaultDeviceScaleFactor(1.0f);
 #endif
 
+  // Create the message-loop here before creating the root window.
+  base::MessageLoopForUI message_loop;
+  base::TaskScheduler::CreateAndStartWithDefaultParams("demo");
+  ui::InitializeInputMethodForTesting();
+
   // The ContextFactory must exist before any Compositors are created.
   viz::HostFrameSinkManager host_frame_sink_manager;
   viz::FrameSinkManagerImpl frame_sink_manager;
+  host_frame_sink_manager.SetLocalManager(&frame_sink_manager);
+  frame_sink_manager.SetLocalClient(&host_frame_sink_manager);
   auto context_factory = std::make_unique<ui::InProcessContextFactory>(
       &host_frame_sink_manager, &frame_sink_manager);
   context_factory->set_use_test_surface(false);
-
-  // Create the message-loop here before creating the root window.
-  base::MessageLoopForUI message_loop;
 
   base::PowerMonitor power_monitor(
       base::WrapUnique(new base::PowerMonitorDeviceSource));
@@ -154,45 +160,44 @@ int DemoMain() {
   std::unique_ptr<aura::Env> env = aura::Env::CreateInstance();
   env->set_context_factory(context_factory.get());
   env->set_context_factory_private(context_factory.get());
+  const gfx::Size display_size(1024, 600);
+  //const gfx::Size display_size(600, 1024);
   std::unique_ptr<aura::TestScreen> test_screen(
-      aura::TestScreen::Create(gfx::Size()));
+      aura::TestScreen::Create(display_size));
   display::Screen::SetScreenInstance(test_screen.get());
   std::unique_ptr<aura::WindowTreeHost> host(
       test_screen->CreateHostForPrimaryDisplay());
+
+  // Rotate the display. This seems to be similar to what ash does. Though this
+  // doesn't seem relevant to the window stack since it doesn't interact with
+  // it.
+  //test_screen->SetDisplayRotation(display::Display::ROTATE_90);
+
   std::unique_ptr<DemoWindowParentingClient> window_parenting_client(
       new DemoWindowParentingClient(host->window()));
   aura::test::TestFocusClient focus_client;
   aura::client::SetFocusClient(host->window(), &focus_client);
 
-  // Create a hierarchy of test windows.
-  gfx::Rect window1_bounds(100, 100, 400, 400);
   DemoWindowDelegate window_delegate1(SK_ColorBLUE);
   aura::Window window1(&window_delegate1);
   window1.set_id(1);
   window1.Init(ui::LAYER_TEXTURED);
-  window1.SetBounds(window1_bounds);
+  window1.SetBounds(test_screen->GetPrimaryDisplay().bounds());
   window1.Show();
   aura::client::ParentWindowWithContext(&window1, host->window(), gfx::Rect());
 
-  gfx::Rect window2_bounds(200, 200, 350, 350);
-  DemoWindowDelegate window_delegate2(SK_ColorRED);
+  DemoWindowDelegate window_delegate2(SK_ColorGREEN);
   aura::Window window2(&window_delegate2);
   window2.set_id(2);
   window2.Init(ui::LAYER_TEXTURED);
-  window2.SetBounds(window2_bounds);
+  window2.SetBounds(gfx::Rect(0, 0, 100, 100));
   window2.Show();
-  aura::client::ParentWindowWithContext(&window2, host->window(), gfx::Rect());
-
-  gfx::Rect window3_bounds(10, 10, 50, 50);
-  DemoWindowDelegate window_delegate3(SK_ColorGREEN);
-  aura::Window window3(&window_delegate3);
-  window3.set_id(3);
-  window3.Init(ui::LAYER_TEXTURED);
-  window3.SetBounds(window3_bounds);
-  window3.Show();
-  window2.AddChild(&window3);
+  window1.AddChild(&window2);
 
   host->Show();
+
+  host->window()->PrintWindowHierarchy(0);
+
   base::RunLoop().Run();
 
   return 0;
