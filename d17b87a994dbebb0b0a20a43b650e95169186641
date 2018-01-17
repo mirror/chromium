@@ -34,6 +34,24 @@
       "revId": "d17b87a994dbebb0b0a20a43b650e95169186641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918aa787_b3df56a3",
+        "filename": "base/fuchsia/fuchsia_logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-17T21:19:43Z",
+      "side": 1,
+      "message": "Gah, so sad. :(  I take it we can\u0027t just make it a compound statement that puts zx_err into a scoped temporary and then ZX_CHECKs?",
+      "parentUuid": "4d1654de_acf2cfd1",
+      "revId": "d17b87a994dbebb0b0a20a43b650e95169186641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
