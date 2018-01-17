@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc03fdaf_df674ce8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-17T17:51:00Z",
+      "side": 1,
+      "message": "I could swear I updated this description, maybe forgot to press save.",
+      "parentUuid": "b6f8f764_8c839500",
+      "revId": "bac009bfb30ff4521afd9dbc3077b7979b133415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a5ab110_5686b8be",
         "filename": "chrome/browser/notifications/notification_system_observer.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-17T17:04:48Z",
       "side": 1,
       "message": "Have we investigated constructing NotificationSystemObserver explicitly instead of lazily? That seems like it would be safer in general?",
+      "revId": "bac009bfb30ff4521afd9dbc3077b7979b133415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ec65a9_5c5ce0dc",
+        "filename": "chrome/browser/notifications/notification_system_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-17T17:51:00Z",
+      "side": 1,
+      "message": "Technically, it is created explicitly by a lazily-created object. I don\u0027t want to mess around too much with it as it will be deleted soon(tm). The whole idea of this function is to remove notifications from profiles that are being destroyed, but the new/native notification system doesn\u0027t have that restriction (it will explicitly resurrect a browser window as needed even if the last one for that profile has been closed).",
+      "parentUuid": "7a5ab110_5686b8be",
       "revId": "bac009bfb30ff4521afd9dbc3077b7979b133415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
