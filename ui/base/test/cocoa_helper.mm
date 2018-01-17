@@ -31,11 +31,12 @@ void NOINLINE ForceSystemLeaks() {
 
 @implementation CocoaTestHelperWindow
 
-@synthesize pretendIsKeyWindow = pretendIsKeyWindow_;
-@synthesize pretendIsOccluded = pretendIsOccluded_;
-@synthesize pretendFullKeyboardAccessIsEnabled =
-    pretendFullKeyboardAccessIsEnabled_;
+@synthesize isKeyWindow = isKeyWindow_;
+@synthesize isOccluded = isOccluded_;
+@synthesize isOnActiveSpace = isOnActiveSpace_;
+@synthesize fullKeyboardAccessIsEnabled = fullKeyboardAccessIsEnabled_;
 @synthesize useDefaultConstraints = useDefaultConstraints_;
+@synthesize visible = visible_;
 
 - (id)initWithContentRect:(NSRect)contentRect {
   self = [super initWithContentRect:contentRect
@@ -44,6 +45,8 @@ void NOINLINE ForceSystemLeaks() {
                               defer:NO];
   if (self) {
     useDefaultConstraints_ = YES;
+    visible_ = YES;
+    isOnActiveSpace_ = YES;
   }
   return self;
 }
@@ -60,41 +63,44 @@ void NOINLINE ForceSystemLeaks() {
 
 - (void)makePretendKeyWindowAndSetFirstResponder:(NSResponder*)responder {
   EXPECT_TRUE([self makeFirstResponder:responder]);
-  self.pretendIsKeyWindow = YES;
+  self.isKeyWindow = YES;
 }
 
 - (void)clearPretendKeyWindowAndFirstResponder {
-  self.pretendIsKeyWindow = NO;
+  self.isKeyWindow = YES;
   EXPECT_TRUE([self makeFirstResponder:NSApp]);
 }
 
-- (void)setPretendIsOccluded:(BOOL)flag {
-  pretendIsOccluded_ = flag;
+- (void)setIsOccluded:(BOOL)flag {
+  isOccluded_ = flag;
   [[NSNotificationCenter defaultCenter]
       postNotificationName:NSWindowDidChangeOcclusionStateNotification
                     object:self];
 }
 
-- (void)setPretendFullKeyboardAccessIsEnabled:(BOOL)enabled {
-  EXPECT_TRUE([NSWindow
-      instancesRespondToSelector:@selector(_allowsAnyValidResponder)]);
-  pretendFullKeyboardAccessIsEnabled_ = enabled;
-  [self recalculateKeyViewLoop];
+- (void)setIsOnActiveSpace:(BOOL)isOnActiveSpace {
+  isOnActiveSpace_ = isOnActiveSpace;
+  [[NSWorkspace sharedWorkspace].notificationCenter
+      postNotificationName:NSWorkspaceActiveSpaceDidChangeNotification
+                    object:[NSWorkspace sharedWorkspace]];
 }
 
-- (BOOL)isKeyWindow {
-  return pretendIsKeyWindow_;
+- (void)setFullKeyboardAccessIsEnabled:(BOOL)enabled {
+  EXPECT_TRUE([NSWindow
+      instancesRespondToSelector:@selector(_allowsAnyValidResponder)]);
+  fullKeyboardAccessIsEnabled_ = enabled;
+  [self recalculateKeyViewLoop];
 }
 
 // Override of an undocumented AppKit method which controls call to check if
 // full keyboard access is enabled. Its presence is verified in
 // -setPretendFullKeyboardAccessIsEnabled:.
 - (BOOL)_allowsAnyValidResponder {
-  return pretendFullKeyboardAccessIsEnabled_;
+  return fullKeyboardAccessIsEnabled_;
 }
 
 - (NSWindowOcclusionState)occlusionState {
-  return pretendIsOccluded_ ? 0 : NSWindowOcclusionStateVisible;
+  return isOccluded_ ? 0 : NSWindowOcclusionStateVisible;
 }
 
 - (NSArray<NSView*>*)validKeyViews {
