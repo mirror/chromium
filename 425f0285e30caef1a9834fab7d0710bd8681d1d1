@@ -22,6 +22,30 @@
       "revId": "425f0285e30caef1a9834fab7d0710bd8681d1d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ea6fb48_e4f8b2c9",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2018-01-17T17:06:19Z",
+      "side": 1,
+      "message": "\u003e Sneaky fix in a supposed test-only CL!\n\nOh yeah. I was pretty sure I made this change, but maybe I merged wrong before submitting a couple CLs ago, since you touched here at the same time.",
+      "parentUuid": "378f561a_7a0d227b",
+      "range": {
+        "startLine": 1148,
+        "startChar": 77,
+        "endLine": 1148,
+        "endChar": 0
+      },
+      "revId": "425f0285e30caef1a9834fab7d0710bd8681d1d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
