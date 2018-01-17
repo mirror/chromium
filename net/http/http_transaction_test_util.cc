@@ -605,7 +605,6 @@ base::Time MockNetworkLayer::Now() {
 
 //-----------------------------------------------------------------------------
 // helpers
-
 int ReadTransaction(HttpTransaction* trans, std::string* result) {
   int rv;
 

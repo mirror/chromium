@@ -212,7 +212,7 @@ void StaticSocketDataHelper::Reset() {
   read_index_ = 0;
   write_index_ = 0;
 }
-
+#include <cstdio>
 bool StaticSocketDataHelper::VerifyWriteData(const std::string& data) {
   CHECK(!AllWriteDataConsumed());
   // Check that the actual data matches the expectations, skipping over any

@@ -534,6 +534,7 @@ SpdyPriority QuicChromiumClientStream::priority() const {
 }
 
 bool QuicChromiumClientStream::WriteStreamData(QuicStringPiece data, bool fin) {
+
   // Must not be called when data is buffered.
   DCHECK(!HasBufferedData());
   // Writes the data, or buffers it.

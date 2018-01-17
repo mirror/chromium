@@ -188,9 +188,9 @@ HttpStreamFactoryImpl::Job::Job(Delegate* delegate,
       job_type_(job_type),
       using_ssl_(origin_url_.SchemeIs(url::kHttpsScheme) ||
                  origin_url_.SchemeIs(url::kWssScheme)),
-      using_quic_(
-          alternative_protocol == kProtoQUIC ||
-          ShouldForceQuic(session, destination, origin_url, proxy_info)),
+      using_quic_(alternative_protocol == kProtoQUIC ||
+                  (ShouldForceQuic(session, destination, origin_url, proxy_info)
+                  && !(proxy_info.is_quic() && using_ssl_))),
       quic_version_(quic_version),
       expect_spdy_(alternative_protocol == kProtoHTTP2 && !using_quic_),
       using_spdy_(false),
@@ -417,6 +417,8 @@ SpdySessionKey HttpStreamFactoryImpl::Job::GetSpdySessionKey(
 }
 
 bool HttpStreamFactoryImpl::Job::CanUseExistingSpdySession() const {
+  // What should this do in case of QUIC proxy tunnel?????"
+/*if (using_quic_) return false;*/
   DCHECK(!using_quic_);
 
   if (proxy_info_.is_direct() &&
@@ -865,13 +867,16 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
     InitSSLConfig(&server_ssl_config_, /*is_proxy=*/false);
   }
 
-  if (using_quic_) {
-    if (proxy_info_.is_quic() &&
+  if (using_quic_ /*&&
+      !(proxy_info_.is_quic() &&
+            !request_info_.url.SchemeIs(url::kHttpScheme))*/) {
+    /*if (proxy_info_.is_quic() &&
         !request_info_.url.SchemeIs(url::kHttpScheme)) {
       NOTREACHED();
       // TODO(rch): support QUIC proxies for HTTPS urls.
       return ERR_NOT_IMPLEMENTED;
-    }
+    }*/
+
     HostPortPair destination;
     SSLConfig* ssl_config;
     GURL url(request_info_.url);
@@ -939,7 +944,7 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
     }
   }
 
-  if (proxy_info_.is_http() || proxy_info_.is_https())
+  if (proxy_info_.is_http() || proxy_info_.is_https() || proxy_info_.is_quic())
     establishing_tunnel_ = using_ssl_;
 
   HttpServerProperties* http_server_properties =
@@ -1085,7 +1090,8 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionComplete(int result) {
   if (!ssl_started && result < 0 && (expect_spdy_ || using_quic_))
     return result;
 
-  if (using_quic_) {
+  if (using_quic_/* &&
+      !(proxy_info_.is_quic() && !request_info_.url.SchemeIs(url::kHttpScheme))*/) {
     if (result < 0)
       return result;
 
@@ -1168,7 +1174,7 @@ int HttpStreamFactoryImpl::Job::SetSpdyHttpStreamOrBidirectionalStreamImpl(
 }
 
 int HttpStreamFactoryImpl::Job::DoCreateStream() {
-  DCHECK(connection_->socket() || existing_spdy_session_.get() || using_quic_);
+  DCHECK(connection_->socket() || existing_spdy_session_.get() || using_quic_); // why is using_quic_ here if DCHECK(!using_quic_)???
   DCHECK(!using_quic_);
 
   next_state_ = STATE_CREATE_STREAM_COMPLETE;
@@ -1183,7 +1189,7 @@ int HttpStreamFactoryImpl::Job::DoCreateStream() {
   if (!using_spdy_) {
     DCHECK(!expect_spdy_);
     // We may get ftp scheme when fetching ftp resources through proxy.
-    bool using_proxy = (proxy_info_.is_http() || proxy_info_.is_https()) &&
+    bool using_proxy = (proxy_info_.is_http() || proxy_info_.is_https() || proxy_info_.is_quic()) &&
                        (request_info_.url.SchemeIs(url::kHttpScheme) ||
                         request_info_.url.SchemeIs(url::kFtpScheme));
     if (is_websocket_) {
