@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca29d0e4_73a3da30",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-17T23:25:04Z",
+      "side": 1,
+      "message": "Why is this change needed? I think instead we need a helper function on CompositorFilterOperations to determine whether the filter can turn null pixels into non-null, and expand the visual rect of its paired display items accordingly (determined by the difference between the output clip and layer clip).",
+      "revId": "acc0f84d22f94b1062e11a34d540a1d43f3cf76c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
