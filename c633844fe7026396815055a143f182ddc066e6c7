@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9fd2ebf_eaaac02f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-17T19:07:49Z",
+      "side": 1,
+      "message": "nit: I would call this simply \u0027getActiveNotificationIds\u0027",
+      "revId": "c633844fe7026396815055a143f182ddc066e6c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d37583_4f77010d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-17T19:07:49Z",
+      "side": 1,
+      "message": "nit: I know foreach methods are nice, but you can lose two lines if you instead just use a regular for-loop here:\n  for (int i \u003d 0; i \u003c activeNotifications.length; i++) {\n      result[i] \u003d activeNotifications[i].getTag();\n  }\n\nAlternatively, consider populating an array list and then converting it to an array before returning:\n\n  List\u003cString\u003e ids \u003d new ArrayList\u003c\u003e(activeNotifications.length);\n  for (StatusBarNotification notification : activeNotifications) {\n      ids.add(notification.getTag();\n  }\n  return ids.toArray();\n\nIf you want to be even more fancy you could look into using java 8 lambda functions with the new forEach method on iterables, but can\u0027t say I\u0027ve used those myself!",
+      "range": {
+        "startLine": 752,
+        "startChar": 0,
+        "endLine": 752,
+        "endChar": 22
+      },
+      "revId": "c633844fe7026396815055a143f182ddc066e6c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68cd81a9_b199bfce",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-17T19:07:49Z",
+      "side": 1,
+      "message": "nit: move this closer to where it\u0027s used",
+      "revId": "c633844fe7026396815055a143f182ddc066e6c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89668c9_11e8b9ea",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-17T19:07:49Z",
+      "side": 1,
+      "message": "is this check necessary?",
+      "revId": "c633844fe7026396815055a143f182ddc066e6c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
