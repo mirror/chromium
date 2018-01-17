@@ -6,11 +6,13 @@
 #define CONTENT_PUBLIC_CHILD_DWRITE_FONT_PROXY_INIT_WIN_H_
 
 #include "content/common/content_export.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace content {
 
 // Initializes the dwrite font proxy.
-CONTENT_EXPORT void InitializeDWriteFontProxy();
+CONTENT_EXPORT void InitializeDWriteFontProxy(
+    service_manager::Connector* connector = nullptr);
 
 // Uninitialize the dwrite font proxy. This is safe to call even if the proxy
 // has not been initialized. After this, calls to load fonts may fail.
