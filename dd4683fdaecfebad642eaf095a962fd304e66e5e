@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9b30e2a_141202a7",
+        "filename": "content/test/gpu/run_unittests.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-17T09:13:17Z",
+      "side": 1,
+      "message": "How are these tests picked up and run by recipes? If they are doing \"python run_unittests.py\" then this change has no effect, right?",
+      "revId": "dd4683fdaecfebad642eaf095a962fd304e66e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
