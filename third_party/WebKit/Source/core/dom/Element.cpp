@@ -2498,16 +2498,9 @@ ShadowRoot* Element::attachShadow(const ScriptState* script_state,
 ShadowRoot& Element::CreateShadowRootInternal() {
   DCHECK(!ClosedShadowRoot());
   DCHECK(AreAuthorShadowsAllowed());
-  if (AlwaysCreateUserAgentShadowRoot())
-    EnsureLegacyUserAgentShadowRootV0();
+  DCHECK(!AlwaysCreateUserAgentShadowRoot());
   GetDocument().SetShadowCascadeOrder(ShadowCascadeOrder::kShadowCascadeV0);
   return EnsureShadow().AddShadowRoot(*this, ShadowRootType::V0);
-}
-
-ShadowRoot& Element::CreateLegacyUserAgentShadowRootV0() {
-  DCHECK(!GetShadowRoot());
-  return EnsureShadow().AddShadowRoot(*this,
-                                      ShadowRootType::kLegacyUserAgentV0);
 }
 
 ShadowRoot& Element::CreateUserAgentShadowRootV1() {
@@ -2570,24 +2563,12 @@ ShadowRoot* Element::UserAgentShadowRoot() const {
   return nullptr;
 }
 
-ShadowRoot& Element::EnsureLegacyUserAgentShadowRootV0() {
-  if (ShadowRoot* shadow_root = UserAgentShadowRoot()) {
-    DCHECK(shadow_root->GetType() == ShadowRootType::kLegacyUserAgentV0);
-    return *shadow_root;
-  }
-  ShadowRoot& shadow_root =
-      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kLegacyUserAgentV0);
-  DidAddUserAgentShadowRoot(shadow_root);
-  return shadow_root;
-}
-
 ShadowRoot& Element::EnsureUserAgentShadowRootV1() {
   if (ShadowRoot* shadow_root = UserAgentShadowRoot()) {
     DCHECK(shadow_root->GetType() == ShadowRootType::kUserAgentV1);
     return *shadow_root;
   }
-  ShadowRoot& shadow_root =
-      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgentV1);
+  ShadowRoot& shadow_root = CreateUserAgentShadowRootV1();
   DidAddUserAgentShadowRoot(shadow_root);
   return shadow_root;
 }
