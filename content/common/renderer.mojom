@@ -155,6 +155,9 @@ struct CreateFrameParams {
   // Specifies properties for a new RenderWidget that will be attached to the
   // new RenderFrame (if one is needed).
   CreateFrameWidgetParams widget_params;
+
+  // Whether or not the frame has previously committed a real load.
+  bool has_committed_real_load;
 };
 
 struct UpdateScrollbarThemeParams {
