@@ -61,7 +61,7 @@ void MojoDataPipeReader::Read(uint8_t* buffer,
     return;
   }
 
-  if (!consumer_handle_.is_valid()) {
+  if (!consumer_handle_) {
     VLOG(1) << __func__ << ": Data pipe was closed.";
     std::move(done_cb).Run(false);
     return;
@@ -125,7 +125,7 @@ void MojoDataPipeReader::OnPipeError(MojoResult result) {
 }
 
 bool MojoDataPipeReader::IsPipeValid() const {
-  return consumer_handle_.is_valid();
+  return static_cast<bool>(consumer_handle_);
 }
 
 void MojoDataPipeReader::Close() {
@@ -169,7 +169,7 @@ void MojoDataPipeWriter::Write(const uint8_t* buffer,
   DCHECK(buffer);
 
   // Cannot write if the pipe is already closed.
-  if (!producer_handle_.is_valid()) {
+  if (!producer_handle_) {
     DVLOG(1) << __func__
              << ": Failed to write buffer becuase the pipe is already closed";
     std::move(done_cb).Run(false);
@@ -237,7 +237,7 @@ void MojoDataPipeWriter::OnPipeError(MojoResult result) {
 }
 
 bool MojoDataPipeWriter::IsPipeValid() const {
-  return producer_handle_.is_valid();
+  return static_cast<bool>(producer_handle_);
 }
 
 void MojoDataPipeWriter::Close() {
