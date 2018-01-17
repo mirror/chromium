@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a9e8b9f_78105c10",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-17T06:05:38Z",
+      "side": 1,
+      "message": "Nit: remove \"are\"",
+      "revId": "b79608277847c630ccd440ed6293239c5fb5d485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
