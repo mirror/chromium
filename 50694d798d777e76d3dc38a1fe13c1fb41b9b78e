@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f2032c8_d5cdcc1d",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-17T21:56:51Z",
+      "side": 1,
+      "message": "That code was in first implementation but was dropped during the refactoring. I tested several error cases and found that onTermsViewLoaded_ may be called even if server returns 404 error. I restored this check to handle errors.",
+      "range": {
+        "startLine": 471,
+        "startChar": 2,
+        "endLine": 471,
+        "endChar": 30
+      },
+      "revId": "50694d798d777e76d3dc38a1fe13c1fb41b9b78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
