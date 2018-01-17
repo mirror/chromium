@@ -134,6 +134,10 @@
   return nil;
 }
 
+- (id<OmniboxFocuser>)omniboxFocuser {
+  return self.locationBarCoordinator;
+}
+
 - (void)showPrerenderingAnimation {
   // TODO(crbug.com/799438): Implement that.
 }

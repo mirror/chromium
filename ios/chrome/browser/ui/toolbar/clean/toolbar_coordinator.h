@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ios/chrome/browser/ui/location_bar/location_bar_coordinator.h"
 #include "ios/chrome/browser/ui/qr_scanner/requirements/qr_scanner_result_loading.h"
 #import "ios/chrome/browser/ui/toolbar/public/fakebox_focuser.h"
 #import "ios/chrome/browser/ui/toolbar/public/omnibox_focuser.h"
@@ -29,8 +30,7 @@ class WebState;
 }
 
 // Coordinator to run a toolbar -- a UI element housing controls.
-@interface ToolbarCoordinator : NSObject<OmniboxFocuser,
-                                         FakeboxFocuser,
+@interface ToolbarCoordinator : NSObject<FakeboxFocuser,
                                          QRScannerResultLoading,
                                          ToolsMenuPresentationProvider,
                                          VoiceSearchControllerDelegate>
@@ -53,6 +53,8 @@ class WebState;
 @property(nonatomic, strong, readonly) UIViewController* viewController;
 // Button updater for the toolbar.
 @property(nonatomic, strong) ToolbarButtonUpdater* buttonUpdater;
+// The coordinator for the location bar in the toolbar.
+@property(nonatomic, strong) LocationBarCoordinator* locationBarCoordinator;
 
 // Returns the ActivityServicePositioner for this toolbar.
 - (id<ActivityServicePositioner>)activityServicePositioner;
