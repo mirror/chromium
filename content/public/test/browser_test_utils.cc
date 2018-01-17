@@ -2393,6 +2393,8 @@ WebContents* GetEmbedderForGuest(content::WebContents* guest) {
 
 bool IsNetworkServiceRunningInProcess() {
   return base::FeatureList::IsEnabled(features::kNetworkService) &&
+         !base::CommandLine::ForCurrentProcess()->HasSwitch(
+             switches::kForceOutOfProcessNetworkService) &&
          (base::CommandLine::ForCurrentProcess()->HasSwitch(
               switches::kSingleProcess) ||
           base::FeatureList::IsEnabled(features::kNetworkServiceInProcess));

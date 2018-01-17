@@ -232,6 +232,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
       blink::WebSuddenTerminationDisablerType disabler_type) override;
   bool IsFeatureEnabled(blink::FeaturePolicyFeature feature) override;
   void ViewSource() override;
+  void FlushNetworkInterfaceForTesting() override;
+  void FlushFrameNavigationControlForTesting() override;
 
   // IPC::Sender
   bool Send(IPC::Message* msg) override;
@@ -907,6 +909,18 @@ class CONTENT_EXPORT RenderFrameHostImpl
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params);
 
+  // Handle Network Service connection errors. Will re-create broken Network
+  // Service-backed factories and send to |RenderFrame|.
+  void OnNetworkServiceConnectionError();
+
+  // Creates a Network Service-backed factory from appropriate |NetworkContext|.
+  void CreateNetworkServiceDefaultFactory(
+      mojom::URLLoaderFactoryRequest default_factory_request);
+
+  // Sets a Network Service connection error handler to trigger
+  // |OnNetworkServiceConnectionError()|.
+  void ObserveAndReconnectNetworkServiceFactoryWhenNecessary();
+
   // Returns true if the ExecuteJavaScript() API can be used on this host.
   bool CanExecuteJavaScript();
 
@@ -1383,6 +1397,11 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   std::unique_ptr<KeepAliveHandleFactory> keep_alive_handle_factory_;
   base::TimeDelta keep_alive_timeout_;
+
+  // For observing Network Service connection errors only. Will trigger
+  // |OnNetworkServiceConnectionError()| and push updated factories to
+  // |RenderFrame|.
+  mojom::URLLoaderFactoryPtr network_service_connection_error_handler_holder_;
 
   // NOTE: This must be the last member.
   base::WeakPtrFactory<RenderFrameHostImpl> weak_ptr_factory_;
