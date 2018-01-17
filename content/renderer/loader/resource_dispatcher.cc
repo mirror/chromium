@@ -199,7 +199,8 @@ void ResourceDispatcher::OnDownloadedData(int request_id,
 void ResourceDispatcher::OnReceivedRedirect(
     int request_id,
     const net::RedirectInfo& redirect_info,
-    const ResourceResponseHead& response_head) {
+    const ResourceResponseHead& response_head,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   TRACE_EVENT0("loader", "ResourceDispatcher::OnReceivedRedirect");
   PendingRequestInfo* request_info = GetPendingRequestInfo(request_id);
   if (!request_info)
@@ -225,7 +226,7 @@ void ResourceDispatcher::OnReceivedRedirect(
       FollowPendingRedirect(request_info);
     }
   } else {
-    Cancel(request_id);
+    Cancel(request_id, std::move(task_runner));
   }
 }
 
@@ -271,7 +272,9 @@ void ResourceDispatcher::OnRequestComplete(
   peer->OnCompletedRequest(renderer_status);
 }
 
-bool ResourceDispatcher::RemovePendingRequest(int request_id) {
+bool ResourceDispatcher::RemovePendingRequest(
+    int request_id,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   PendingRequestMap::iterator it = pending_requests_.find(request_id);
   if (it == pending_requests_.end())
     return false;
@@ -285,13 +288,15 @@ bool ResourceDispatcher::RemovePendingRequest(int request_id) {
   // Always delete the pending_request asyncly so that cancelling the request
   // doesn't delete the request context info while its response is still being
   // handled.
-  thread_task_runner_->DeleteSoon(FROM_HERE, it->second.release());
+  task_runner->DeleteSoon(FROM_HERE, it->second.release());
   pending_requests_.erase(it);
 
   return true;
 }
 
-void ResourceDispatcher::Cancel(int request_id) {
+void ResourceDispatcher::Cancel(
+    int request_id,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   PendingRequestMap::iterator it = pending_requests_.find(request_id);
   if (it == pending_requests_.end()) {
     DVLOG(1) << "unknown request";
@@ -300,7 +305,7 @@ void ResourceDispatcher::Cancel(int request_id) {
 
   // Cancel the request if it didn't complete, and clean it up so the bridge
   // will receive no more messages.
-  RemovePendingRequest(request_id);
+  RemovePendingRequest(request_id, std::move(task_runner));
 }
 
 void ResourceDispatcher::SetDefersLoading(int request_id, bool value) {
