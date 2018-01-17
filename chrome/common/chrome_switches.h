@@ -291,12 +291,16 @@ extern const char kMakeChromeDefault[];
 #if defined(OS_WIN)
 extern const char kEnableCloudPrintXps[];
 extern const char kEnableProfileShortcutManager[];
+extern const char kForceDesktop[];
+extern const char kForceImmersive[];
 extern const char kHideIcons[];
 extern const char kNoNetworkProfileWarning[];
 extern const char kPrefetchArgumentBrowserBackground[];
 extern const char kPrefetchArgumentWatcher[];
+extern const char kRelaunchShortcut[];
 extern const char kShowIcons[];
 extern const char kUninstall[];
+extern const char kWaitForMutex[];
 extern const char kWatcherProcess[];
 extern const char kWindows10CustomTitlebar[];
 #endif  // defined(OS_WIN)

@@ -1,0 +1,10 @@
+include_rules = [
+  "+base",
+  "+chrome/common",
+  "+chrome/installer",
+  "+chrome/install_static",
+  "+components/metrics",
+  "+google_update",
+  "+third_party/breakpad",
+  "+ui",
+]
