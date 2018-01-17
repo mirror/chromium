@@ -34,6 +34,24 @@
       "revId": "d205876439da0de638069c5a522c628bdd5978f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde115e4_eeda3408",
+        "filename": "chrome/browser/chromeos/hats/hats_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-17T22:51:21Z",
+      "side": 1,
+      "message": "I\u0027m OK with just documenting it. Please update pref_names.h/cc for this pref (and maybe consolidate the two comments, like make one point to the other?)",
+      "parentUuid": "50526641_013fd222",
+      "revId": "d205876439da0de638069c5a522c628bdd5978f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
