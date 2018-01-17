@@ -150,23 +150,31 @@ net::EffectiveConnectionType GetECTThresholdForPreview(
   return net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
 }
 
+bool AreClientPreviewsAllowed() {
+  return base::FeatureList::IsEnabled(features::kAllowClientPreviews);
+}
+
 bool IsOfflinePreviewsEnabled() {
-  return base::FeatureList::IsEnabled(features::kOfflinePreviews);
+  return AreClientPreviewsAllowed() &&
+         base::FeatureList::IsEnabled(features::kOfflinePreviews);
 }
 
 bool IsClientLoFiEnabled() {
-  return base::FeatureList::IsEnabled(features::kClientLoFi) ||
-         base::StartsWith(
-             base::FieldTrialList::FindFullName(kClientLoFiExperimentName),
-             kEnabled, base::CompareCase::SENSITIVE);
+  return AreClientPreviewsAllowed() &&
+         (base::FeatureList::IsEnabled(features::kClientLoFi) ||
+          base::StartsWith(
+              base::FieldTrialList::FindFullName(kClientLoFiExperimentName),
+              kEnabled, base::CompareCase::SENSITIVE));
 }
 
 bool IsAMPRedirectionPreviewEnabled() {
-  return base::FeatureList::IsEnabled(features::kAMPRedirection);
+  return AreClientPreviewsAllowed() &&
+         base::FeatureList::IsEnabled(features::kAMPRedirection);
 }
 
 bool IsNoScriptPreviewsEnabled() {
-  return base::FeatureList::IsEnabled(features::kNoScriptPreviews);
+  return AreClientPreviewsAllowed() &&
+         base::FeatureList::IsEnabled(features::kNoScriptPreviews);
 }
 
 int OfflinePreviewsVersion() {

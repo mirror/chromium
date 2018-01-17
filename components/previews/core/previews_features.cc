@@ -7,6 +7,11 @@
 namespace previews {
 namespace features {
 
+// Kill switch for all client previews. No client previews will
+// be allowed if this feature is disabled.
+const base::Feature kAllowClientPreviews{"AllowClientPreviews",
+                                         base::FEATURE_ENABLED_BY_DEFAULT};
+
 // Enables the Offline previews on android slow connections.
 const base::Feature kOfflinePreviews{"OfflinePreviews",
                                      base::FEATURE_ENABLED_BY_DEFAULT};

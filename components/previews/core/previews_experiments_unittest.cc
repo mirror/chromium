@@ -12,6 +12,8 @@
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/strings/string_util.h"
+#include "base/test/scoped_feature_list.h"
+#include "components/previews/core/previews_features.h"
 #include "components/variations/variations_associated_data.h"
 
 #include "testing/gtest/include/gtest/gtest.h"
@@ -170,6 +172,25 @@ TEST(PreviewsExperimentsTest, TestCommandLineClientLoFi) {
 
   EXPECT_TRUE(params::IsClientLoFiEnabled());
   base::FeatureList::ClearInstanceForTesting();
+}
+
+// Verifies kill switch on client previews.
+TEST(PreviewsExperimentsTest, TestAreClientPreviewsAllowed) {
+  // Verify default.
+  EXPECT_TRUE(params::AreClientPreviewsAllowed());
+
+  // Enable all individual client previews but disable the overall feature.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitWithFeatures(
+      {features::kOfflinePreviews, features::kClientLoFi,
+       features::kNoScriptPreviews,
+       features::kAMPRedirection} /* enabled features */,
+      {features::kAllowClientPreviews} /* disabled features */);
+  EXPECT_FALSE(params::AreClientPreviewsAllowed());
+  EXPECT_FALSE(params::IsOfflinePreviewsEnabled());
+  EXPECT_FALSE(params::IsClientLoFiEnabled());
+  EXPECT_FALSE(params::IsAMPRedirectionPreviewEnabled());
+  EXPECT_FALSE(params::IsNoScriptPreviewsEnabled());
 }
 
 }  // namespace
