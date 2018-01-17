@@ -6715,10 +6715,11 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessMouseWheelBrowserTest,
   EXPECT_EQ(nullptr, router->wheel_target_.target);
 }
 
+// TODO: Flaking test crbug.com/802828
 // Ensure that a cross-process subframe with a touch-handler can receive touch
 // events.
 IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
-                       SubframeTouchEventRouting) {
+                       DISABLED_SubframeTouchEventRouting) {
   GURL main_url(embedded_test_server()->GetURL(
       "/frame_tree/page_with_positioned_nested_frames.html"));
   EXPECT_TRUE(NavigateToURL(shell(), main_url));
