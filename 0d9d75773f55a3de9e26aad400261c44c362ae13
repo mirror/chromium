@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "571bde5b_5f969be5",
+        "filename": "chrome/browser/ui/webui/chromeos/internet_config_dialog.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-17T01:35:21Z",
+      "side": 1,
+      "message": "can you add a comment here? It\u0027s not immediately clear what Psk refers too.",
+      "revId": "0d9d75773f55a3de9e26aad400261c44c362ae13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95069f7_fe6f35c6",
+        "filename": "chrome/browser/ui/webui/chromeos/internet_config_dialog.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-17T01:35:21Z",
+      "side": 1,
+      "message": "optional: The code might be easier to follow if you move this to a separate function.\ne.g.\nbool NetworkRequiresPassword(network_id);  // or whatever name is more suitable\n\nint height \u003d NetworkRequiresPassword() ? kDialogHeightPsk : kDialogHeight;",
+      "range": {
+        "startLine": 79,
+        "startChar": 1,
+        "endLine": 87,
+        "endChar": 3
+      },
+      "revId": "0d9d75773f55a3de9e26aad400261c44c362ae13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd8c68b4_f0b66bd7",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-17T01:35:21Z",
+      "side": 1,
+      "message": "out of curiosity, which input will be preferred when both $(\u0027ssid\u0027) and this element are enabled?",
+      "range": {
+        "startLine": 46,
+        "startChar": 65,
+        "endLine": 46,
+        "endChar": 74
+      },
+      "revId": "0d9d75773f55a3de9e26aad400261c44c362ae13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
