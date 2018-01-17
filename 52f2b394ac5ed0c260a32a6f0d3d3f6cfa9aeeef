@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e61d3774_45899622",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapFactories.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-17T09:39:22Z",
+      "side": 1,
+      "message": "This is a left over from making Supplement understand wrapper tracing. I am still not a fan of it as it just complicates things a lot for making one use case nicer to write.",
+      "range": {
+        "startLine": 267,
+        "startChar": 27,
+        "endLine": 267,
+        "endChar": 40
+      },
+      "revId": "52f2b394ac5ed0c260a32a6f0d3d3f6cfa9aeeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe6d707_8f1fca25",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperBase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-17T09:39:22Z",
+      "side": 1,
+      "message": "Making it abstract forces people to implement it when they add it to the hierarchy. Once the gc plugin is landed it then forces people to dispatch properly.",
+      "range": {
+        "startLine": 21,
+        "startChar": 15,
+        "endLine": 21,
+        "endChar": 28
+      },
+      "revId": "52f2b394ac5ed0c260a32a6f0d3d3f6cfa9aeeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
