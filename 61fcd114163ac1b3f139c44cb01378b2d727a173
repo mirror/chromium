@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6be004e_548a0fcd",
+        "filename": "components/policy/core/browser/browser_policy_connector_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-17T18:30:11Z",
+      "side": 1,
+      "message": "I really would have liked to do away with this, but doing that would have resulted in too many test changes. So, it lives on.",
+      "range": {
+        "startLine": 22,
+        "startChar": 1,
+        "endLine": 23,
+        "endChar": 58
+      },
+      "revId": "61fcd114163ac1b3f139c44cb01378b2d727a173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
