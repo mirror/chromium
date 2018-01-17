@@ -39,6 +39,30 @@
       "revId": "e0963947a67f1b45ceccae3aa502b13f10d38eb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1fa4cc_e3c0f289",
+        "filename": "ui/views/controls/webview/webview.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-17T21:24:50Z",
+      "side": 1,
+      "message": "Scott, I can certainly work to try and just modify SetWebContents() for the nullptr case, but:\n- When I tried this before, it did not pass all tests. I abandoned the CL but you can see it here: https://chromium-review.googlesource.com/c/chromium/src/+/850593 -- can you take a look?\n- I think it fails because SetWebContents(nullptr) occurs more often than the pre-clear before tab switching. Is it sometimes used to show about:blank? \n- We should also consider whether we want to be firing NotifyAccessibilityWebContentsChanged() in the tab switch clear out case. I think we want to wait to do that until we attach the new contents.\n\nIf you look at the change line by line, it\u0027s really the same as what you\u0027re suggesting and what I tried, except all irrelevant lines are removed, and it only happens in the tab switching case.",
+      "parentUuid": "e51a60ce_89e332f1",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 39
+      },
+      "revId": "e0963947a67f1b45ceccae3aa502b13f10d38eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
