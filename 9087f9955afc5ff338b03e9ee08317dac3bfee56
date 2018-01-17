@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af125e72_d1161c60",
+        "filename": "chrome/browser/net/chrome_accept_header_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-17T16:10:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "756fa542_345faa90",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "9087f9955afc5ff338b03e9ee08317dac3bfee56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "542d4fb4_0c70d54a",
         "filename": "chrome/browser/net/chrome_accept_header_browsertest.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-17T15:52:06Z",
       "side": 1,
       "message": "Don\u0027t declare multiple values on one line (I believe it\u0027s no longer prohibited by the style guide, but it\u0027s uncommon).",
+      "range": {
+        "startLine": 25,
+        "startChar": 42,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "9087f9955afc5ff338b03e9ee08317dac3bfee56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0025d351_f1a6f083",
+        "filename": "chrome/browser/net/chrome_accept_header_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-17T16:10:55Z",
+      "side": 1,
+      "message": "I believe the old style guide rule was when the variables didn\u0027t use the default constructor; this usage was always allowed.",
+      "parentUuid": "542d4fb4_0c70d54a",
       "range": {
         "startLine": 25,
         "startChar": 42,
@@ -68,6 +116,30 @@
       "revId": "9087f9955afc5ff338b03e9ee08317dac3bfee56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ec149e_a7eb8679",
+        "filename": "chrome/browser/net/chrome_accept_header_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-17T16:10:55Z",
+      "side": 1,
+      "message": "Done (also in content)",
+      "parentUuid": "49e64fa3_0ff353a1",
+      "range": {
+        "startLine": 45,
+        "startChar": 14,
+        "endLine": 45,
+        "endChar": 15
+      },
+      "revId": "9087f9955afc5ff338b03e9ee08317dac3bfee56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
