@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a417b32f_9692d7c4",
+        "filename": "chrome/android/java/res/drawable-xxxhdpi/ic_clipboard_grey600_24dp.png",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-17T00:56:02Z",
+      "side": 1,
+      "message": "This file seems a bit larger than average. Please run optimize-png-files.sh -o2 if you haven\u0027t already: https://cs.chromium.org/chromium/src/chrome/app/theme/README?type\u003dcs\u0026q\u003doptimize-png\u0026sq\u003dpackage:chromium\u0026l\u003d4\n\nAlso, in go/icons this icon is called \"content paste\", so the PNG name should be something like ic_content_paste_grey600_24dp so that it\u0027s easy for others to find when searching for it in the future.",
+      "revId": "8bad4b790b99595fab7f2415cc823b1ce59a18eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c9725d_f2b73d28",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-17T00:56:02Z",
+      "side": 1,
+      "message": "Can you use these methods instead of introducing a new getter/setter? Or can a similar generic nativeGetContentBoolean and nativeSetContentBoolean method be added for site settings?",
+      "range": {
+        "startLine": 1068,
+        "startChar": 3,
+        "endLine": 1069,
+        "endChar": 72
+      },
+      "revId": "8bad4b790b99595fab7f2415cc823b1ce59a18eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
