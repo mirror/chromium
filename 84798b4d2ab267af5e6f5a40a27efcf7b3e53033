@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e43002b_ed3ef4c3",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-17T01:42:39Z",
+      "side": 0,
+      "message": "I\u0027d prefer having static_assert(kGenericMaxDirectMapped \u003c UNSINGED_INT_MAX - 2 * kSystemPageSize).",
+      "revId": "84798b4d2ab267af5e6f5a40a27efcf7b3e53033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
