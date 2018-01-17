@@ -293,6 +293,7 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitivesOutsideBlockingScope {
       ThreadRestrictionsTest,
       ScopedAllowBaseSyncPrimitivesOutsideBlockingScopeResetsState);
   friend class ::KeyStorageLinux;
+  friend class base::StackSamplingProfiler;
   friend class midi::TaskService;  // https://crbug.com/796830
 
   ScopedAllowBaseSyncPrimitivesOutsideBlockingScope()
