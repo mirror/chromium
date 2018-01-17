@@ -16,6 +16,24 @@
       "revId": "230f944dfe348a9ca724815c9f9a15d4829b36e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f80d74_7283d35f",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-17T15:06:16Z",
+      "side": 1,
+      "message": "This is a more general version of the current Mark method. The name comes from the standard visitor design pattern. It is the method that derived visitors override to \"visit\" the object:\n- the marking visitor implements Visit to mark the object.\n- the heap snapshot visitor will implement Visit to record the object.\n- the verifying visitor will implement Visit object to verify the object.\n\nSubsequent CL will replace MarkAndTraceWrappers(traceable) with Visit(traceable), so the code becomes uniform:\n- Objects call non-virtual visitor.TraceWrappers(object.member) and visitor.TraceWrappers(object.v8ref).\n- visitor.TraceWrappers(x) forwards to virtual visitor.Visit(x).\n\nCustom visitors need to only override Visit methods to implement visiting logic.",
+      "parentUuid": "b592e07f_2c8bf3a6",
+      "revId": "230f944dfe348a9ca724815c9f9a15d4829b36e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
