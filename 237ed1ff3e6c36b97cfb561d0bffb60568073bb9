@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "775234c2_408323dc",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-17T18:43:38Z",
+      "side": 1,
+      "message": "I know it was suggested that we de-dupe the checks at the start of MakeCredential/GetAssertion, but I\u0027m pushing that to a future CL, if we do it at all. (For instance, we also wanted ReceivedBadMessage to be thrown in GetAssertion/MakeCredential and don\u0027t like caller_origin being a member variable, which conflict with putting this into a separate method.)",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 277,
+        "endChar": 3
+      },
+      "revId": "237ed1ff3e6c36b97cfb561d0bffb60568073bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
