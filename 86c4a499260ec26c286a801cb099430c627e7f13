@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "50951f75_47b9ae3f",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-17T02:12:22Z",
+      "side": 1,
+      "message": "hrm, I\u0027m not sure this means the same thing...I\u0027ll break it up into a list and maybe that will make it clearer.",
+      "parentUuid": "5f867ca2_b6a4c6cd",
+      "range": {
+        "startLine": 18,
+        "startChar": 70,
+        "endLine": 18,
+        "endChar": 73
+      },
+      "revId": "86c4a499260ec26c286a801cb099430c627e7f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ff7cb74_6d3c3d1d",
         "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "86c4a499260ec26c286a801cb099430c627e7f13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51d781e_c93b58cc",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-17T02:12:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4ff7cb74_6d3c3d1d",
+      "range": {
+        "startLine": 19,
+        "startChar": 19,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "86c4a499260ec26c286a801cb099430c627e7f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
