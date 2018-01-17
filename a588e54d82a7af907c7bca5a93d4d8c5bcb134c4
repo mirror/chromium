@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8254dbd4_b32a2d79",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-17T22:58:53Z",
+      "side": 1,
+      "message": "nit: insert an empty line after the block",
+      "revId": "a588e54d82a7af907c7bca5a93d4d8c5bcb134c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9eb00a_adeb5f8b",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-17T22:58:53Z",
+      "side": 1,
+      "message": "nit: prefer to use \"float target_opacity\" over bool",
+      "range": {
+        "startLine": 38,
+        "startChar": 17,
+        "endLine": 38,
+        "endChar": 26
+      },
+      "revId": "a588e54d82a7af907c7bca5a93d4d8c5bcb134c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
