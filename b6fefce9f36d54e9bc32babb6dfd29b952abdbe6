@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75b0b8c5_c77a6df9",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-17T18:02:13Z",
+      "side": 1,
+      "message": "There seems to be a built-in way to declare plural and singular strings within the same entry. Can you take a look at this example https://cs.chromium.org/chromium/src/chrome/app/generated_resources.grd?lt;%22\u0026type\u003dcs\u0026q\u003dgenerated_resourc\u0026sq\u003dpackage:chromium\u0026l\u003d1846,1847 ?\n\nHave not used it myself, but worth checking if we can go that route, instead of adding to separate _SINGULAR and _PLURAR strings.",
+      "revId": "b6fefce9f36d54e9bc32babb6dfd29b952abdbe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
