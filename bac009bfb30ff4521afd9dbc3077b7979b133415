@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fc079e09_2d499dfa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-17T17:55:01Z",
+      "side": 1,
+      "message": "I\u0027ve had similar problems many times. The gerrit UI has issues.",
+      "parentUuid": "bc03fdaf_df674ce8",
+      "revId": "bac009bfb30ff4521afd9dbc3077b7979b133415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a5ab110_5686b8be",
         "filename": "chrome/browser/notifications/notification_system_observer.cc",
         "patchSetId": 4
@@ -69,6 +87,24 @@
       "revId": "bac009bfb30ff4521afd9dbc3077b7979b133415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73536fac_39946e11",
+        "filename": "chrome/browser/notifications/notification_system_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-17T17:55:01Z",
+      "side": 1,
+      "message": "Ack. Maybe add a TODO/issue reference?",
+      "parentUuid": "09ec65a9_5c5ce0dc",
+      "revId": "bac009bfb30ff4521afd9dbc3077b7979b133415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
