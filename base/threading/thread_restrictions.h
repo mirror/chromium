@@ -103,6 +103,10 @@ namespace resource_coordinator {
 class TabManagerDelegate;
 }
 
+namespace rtc {
+class ScopedAllowBaseSyncPrimitives;
+}
+
 namespace shell_integration {
 class LaunchXdgUtilityScopedAllowBaseSyncPrimitives;
 }
@@ -270,6 +274,7 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitives {
   friend class net::MultiThreadedCertVerifierScopedAllowBaseSyncPrimitives;
   friend class rlz_lib::FinancialPing;
   friend class shell_integration::LaunchXdgUtilityScopedAllowBaseSyncPrimitives;
+  friend class rtc::ScopedAllowBaseSyncPrimitives;
 
   ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;
   ~ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;

@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/threading/thread_restrictions.h"
 
 namespace rtc {
 
@@ -28,6 +29,15 @@ class Event {
  private:
   base::WaitableEvent event_;
   DISALLOW_IMPLICIT_CONSTRUCTORS(Event);
+};
+
+class ScopedAllowBaseSyncPrimitives {
+ public:
+  ScopedAllowBaseSyncPrimitives() {}
+  ~ScopedAllowBaseSyncPrimitives() {}
+
+ private:
+  base::ScopedAllowBaseSyncPrimitives allow_sync_;
 };
 
 }  // namespace rtc
