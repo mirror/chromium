@@ -444,9 +444,6 @@ LoginDisplayHostWebUI::LoginDisplayHostWebUI(const gfx::Rect& wallpaper_bounds)
   registrar_.Add(this, chrome::NOTIFICATION_LOGIN_USER_CHANGED,
                  content::NotificationService::AllSources());
 
-  DCHECK(default_host() == nullptr);
-  default_host_ = this;
-
   keep_alive_.reset(
       new ScopedKeepAlive(KeepAliveOrigin::LOGIN_DISPLAY_HOST_WEBUI,
                           KeepAliveRestartOption::DISABLED));
@@ -543,7 +540,6 @@ LoginDisplayHostWebUI::~LoginDisplayHostWebUI() {
 
   keep_alive_.reset();
 
-  default_host_ = nullptr;
   // TODO(tengs): This should be refactored. See crbug.com/314934.
   if (user_manager::UserManager::Get()->IsCurrentUserNew()) {
     // DriveOptInController will delete itself when finished.

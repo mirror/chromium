@@ -31,7 +31,6 @@ gfx::NativeWindow LoginDisplayHostViews::GetNativeWindow() const {
 }
 
 OobeUI* LoginDisplayHostViews::GetOobeUI() const {
-  NOTREACHED();
   return nullptr;
 }
 
@@ -45,7 +44,8 @@ void LoginDisplayHostViews::BeforeSessionStart() {
 }
 
 void LoginDisplayHostViews::Finalize(base::OnceClosure completion_callback) {
-  NOTIMPLEMENTED();
+  delete this;
+  std::move(completion_callback).Run();
 }
 
 void LoginDisplayHostViews::SetStatusAreaVisible(bool visible) {
