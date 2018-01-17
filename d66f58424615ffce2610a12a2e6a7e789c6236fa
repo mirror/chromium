@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c86977_8ffa7192",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-17T04:23:28Z",
+      "side": 1,
+      "message": "Thanks! (^_^)b",
+      "range": {
+        "startLine": 456,
+        "startChar": 0,
+        "endLine": 459,
+        "endChar": 34
+      },
+      "revId": "d66f58424615ffce2610a12a2e6a7e789c6236fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
