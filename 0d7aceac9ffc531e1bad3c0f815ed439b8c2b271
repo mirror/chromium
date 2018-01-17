@@ -1,0 +1,239 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74374136_5e39d417",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T16:24:43Z",
+      "side": 1,
+      "message": "The pool name is never empty. It\u0027s the TaskScheduler name (which can be empty) + the pool name suffix (which is never empty) https://chromium-review.googlesource.com/c/chromium/src/+/870116/4/base/task_scheduler/task_scheduler_impl.cc#41\n\nMaybe change only TaskLatencyMicroseconds histograms in this CL?",
+      "range": {
+        "startLine": 169,
+        "startChar": 43,
+        "endLine": 169,
+        "endChar": 77
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb23b6c_a2b8f207",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T16:24:43Z",
+      "side": 1,
+      "message": "TODO(gab): Replace this with\n  base::JoinString(\n      {\"TaskScheduler.TaskLatencyMicroseconds\", name_suffix, task_type_suffix},\n      \".\")\nonce |name_suffix| is never empty.",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 51
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eedf5260_4e46204d",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T16:24:43Z",
+      "side": 1,
+      "message": "TODO(gab): Remove the default value for |name| once all TaskScheduler instances have a name. https://crbug.com/803019",
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5025b41e_8ba2bb31",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T16:24:43Z",
+      "side": 1,
+      "message": "I would provide a name for the ScopedTaskEnvironment TaskTracker, so that we don\u0027t have to special-case for an empty name once we name the browser process TaskScheduler.",
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a56c6fa_44c27258",
+        "filename": "base/task_scheduler/task_tracker_posix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T16:24:43Z",
+      "side": 1,
+      "message": "TODO(gab): Remove the default value for |name| once all TaskScheduler instances have a name. https://crbug.com/803019",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 51
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ecad5a_7652591d",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T16:24:43Z",
+      "side": 1,
+      "message": "\"Test\"\n\nso that we don\u0027t need special-case code just for tests once all production TaskScheduler/TaskTracker instances have a name.",
+      "range": {
+        "startLine": 904,
+        "startChar": 22,
+        "endLine": 904,
+        "endChar": 35
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d811773b_a1946afd",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T16:24:43Z",
+      "side": 1,
+      "message": "\"Test\"\n\nso that we don\u0027t need special-case code just for tests once all production TaskScheduler/TaskTracker instances have a name.",
+      "range": {
+        "startLine": 983,
+        "startChar": 22,
+        "endLine": 983,
+        "endChar": 35
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f9da6c_4fa9453c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 110721,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T16:24:43Z",
+      "side": 1,
+      "message": "Keep this for a separate CL https://chromium-review.googlesource.com/c/chromium/src/+/870116/4/base/task_scheduler/scheduler_worker_pool_impl.cc#169",
+      "range": {
+        "startLine": 110719,
+        "startChar": 2,
+        "endLine": 110721,
+        "endChar": 65
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d806bd5d_47a8a974",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 110764,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T16:24:43Z",
+      "side": 1,
+      "message": "Since the TaskSchedulerTaskPriority suffix is deprecated in the same CL that introduces the .ContentChild and .Renderer suffixes, these histograms are not really affected by this suffix.",
+      "range": {
+        "startLine": 110762,
+        "startChar": 2,
+        "endLine": 110764,
+        "endChar": 77
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee28920_00d6486b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 110788,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T16:24:43Z",
+      "side": 1,
+      "message": "You could add the new \u0027base\u003d\"true\"\u0027 argument to the TaskScheduler.TaskLatencyMicroseconds histogram and to the TaskSchedulerName suffix, since we never record directly to TaskScheduler.TaskLatencyMicroseconds or to TaskScheduler.TaskLatencyMicroseconds.(Name) directly.\n\nE.g.  https://chromium-review.googlesource.com/c/chromium/src/+/674004/43/tools/metrics/histograms/histograms.xml#89982",
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b522abe_6a47ad8c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 110840,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T16:24:43Z",
+      "side": 1,
+      "message": "Keep this for a separate CL https://chromium-review.googlesource.com/c/chromium/src/+/870116/4/base/task_scheduler/scheduler_worker_pool_impl.cc#169",
+      "range": {
+        "startLine": 110808,
+        "startChar": 2,
+        "endLine": 110840,
+        "endChar": 74
+      },
+      "revId": "0d7aceac9ffc531e1bad3c0f815ed439b8c2b271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
