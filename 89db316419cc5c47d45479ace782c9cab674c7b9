@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "74c7c33c_c1a688c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-17T21:37:20Z",
+      "side": 1,
+      "message": "std::map is O(log n)",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "89db316419cc5c47d45479ace782c9cab674c7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6ead5be_50ab0ba0",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 6
