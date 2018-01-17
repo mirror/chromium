@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a444a04f_1d14e05c",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2018-01-17T00:50:34Z",
+      "side": 1,
+      "message": "\"the initialize_timer() thing is entirely superfluous: this code self-initializes, and still satisfies its goal.  Some readers don\u0027t grok that\"\n\nWell, that\u0027s kind of my point. Even if the system frequency is set once when WIN_OS boots, the code might be easier for others to follow if you just call QueryPerformanceFrequency every time. It\u0027s not like you call current_time_in_seconds in the inner-most loops.",
+      "parentUuid": "5d0219c9_ddb166d3",
+      "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f7a38d2_10560d8e",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 23
