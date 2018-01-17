@@ -818,7 +818,13 @@ Element* Editor::FindEventTargetForClipboardEvent(
   if (source == kCommandFromMenuOrKeyBinding && GetFrameSelection().IsHidden())
     return GetFrameSelection().GetDocument().body();
 
-  return FindEventTargetFromSelection();
+  // TODO(kochi): crbug.com/802009 This may not be necessary if the conclusion
+  // of https://github.com/w3c/clipboard-apis/issues/61 about whether clipboard
+  // event's composed mode is true by default.
+  Element* target = FindEventTargetFromSelection();
+  if (target && target->IsInUserAgentShadowRoot())
+    target = target->OwnerShadowHost();
+  return target;
 }
 
 void Editor::ApplyStyle(CSSPropertyValueSet* style,
