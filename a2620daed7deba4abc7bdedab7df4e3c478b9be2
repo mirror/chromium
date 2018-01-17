@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea0a83e3_9000f6b5",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-17T05:34:33Z",
+      "side": 1,
+      "message": "Added is_ticking_player_ in AnimationPlayer so that we only add the player once whilst remove it iff it doesn\u0027t have any ticking ticker.",
+      "parentUuid": "fa476842_545ba658",
+      "revId": "a2620daed7deba4abc7bdedab7df4e3c478b9be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "806deacc_0fcd5097",
         "filename": "cc/animation/animation_id_provider.cc",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a29f83be_3ab07c76",
+        "filename": "cc/animation/animation_id_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-17T05:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "806deacc_0fcd5097",
+      "revId": "a2620daed7deba4abc7bdedab7df4e3c478b9be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc307037_672573f1",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 17
@@ -50,6 +86,24 @@
       "revId": "a2620daed7deba4abc7bdedab7df4e3c478b9be2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e91fbc_a163ec41",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-17T05:34:33Z",
+      "side": 1,
+      "message": "With the old logic we only need to set needs_push_properties in cases that the animation_timeline has been available.\nWith the new logic, we may add/remove tickers from a player and whenever we do it we need to set needs_push_properties. However, by the time we update tickers we may not set any animation_timeline to the player yet.",
+      "parentUuid": "cc307037_672573f1",
+      "revId": "a2620daed7deba4abc7bdedab7df4e3c478b9be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "0163c59a_283a6757",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-17T05:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be0e9b9e_4ac627a3",
+      "range": {
+        "startLine": 160,
+        "startChar": 31,
+        "endLine": 160,
+        "endChar": 57
+      },
+      "revId": "a2620daed7deba4abc7bdedab7df4e3c478b9be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89c88aaa_8dbc79f6",
         "filename": "cc/animation/animation_ticker.cc",
         "patchSetId": 17
@@ -90,6 +168,24 @@
       "revId": "a2620daed7deba4abc7bdedab7df4e3c478b9be2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b29f161d_cf033536",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-17T05:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89c88aaa_8dbc79f6",
+      "revId": "a2620daed7deba4abc7bdedab7df4e3c478b9be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
