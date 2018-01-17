@@ -37,6 +37,15 @@ class CONTENT_EXPORT VideoCaptureHost
 
   ~VideoCaptureHost() override;
 
+  // Class that notifies RenderProcessHost instance about active video capture
+  // stream changes.
+  class RenderProcessHostDelegate {
+   public:
+    virtual ~RenderProcessHostDelegate();
+    virtual void NotifyStreamAdded() = 0;
+    virtual void NotifyStreamRemoved() = 0;
+  };
+
  private:
   friend class VideoCaptureTest;
 
@@ -92,8 +101,13 @@ class CONTENT_EXPORT VideoCaptureHost
   void DeleteVideoCaptureController(VideoCaptureControllerID controller_id,
                                     bool on_error);
 
-  class RenderProcessHostDelegate;
+  void NotifyStreamAdded();
+  void NotifyStreamRemoved();
+  void NotifyAllStreamsRemoved();
+
+  class RenderProcessHostDelegateImpl;
   std::unique_ptr<RenderProcessHostDelegate> render_process_host_delegate_;
+  uint32_t number_of_active_streams_ = 0;
 
   MediaStreamManager* const media_stream_manager_;
 

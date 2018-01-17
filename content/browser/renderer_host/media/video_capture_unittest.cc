@@ -271,6 +271,23 @@ class VideoCaptureTest : public testing::Test,
     base::RunLoop().RunUntilIdle();
   }
 
+  VideoCaptureHost::RenderProcessHostDelegate* GetRenderProcessHostDelegate() {
+    return host_->render_process_host_delegate_.get();
+  }
+
+  void SetRenderProcessHostDelegate(
+      std::unique_ptr<VideoCaptureHost::RenderProcessHostDelegate> delegate) {
+    host_->render_process_host_delegate_.swap(delegate);
+  }
+
+  uint32_t GetActiveStreamCount() { return host_->number_of_active_streams_; }
+
+  void NotifyStreamAdded() { host_->NotifyStreamAdded(); }
+
+  void NotifyStreamRemoved() { host_->NotifyStreamRemoved(); }
+
+  void NotifyAllStreamsRemoved() { host_->NotifyAllStreamsRemoved(); }
+
  private:
   std::unique_ptr<FakeMediaStreamUIProxy> CreateFakeUI() {
     return std::make_unique<FakeMediaStreamUIProxy>(
@@ -349,6 +366,35 @@ TEST_F(VideoCaptureTest, CloseSessionWithoutStopping) {
   EXPECT_CALL(*this, OnStateChanged(mojom::VideoCaptureState::ENDED));
   CloseSession();
   base::RunLoop().RunUntilIdle();
+}
+
+class MockRenderProcessHostDelegate
+    : public VideoCaptureHost::RenderProcessHostDelegate {
+ public:
+  MOCK_METHOD0(NotifyStreamAdded, void());
+  MOCK_METHOD0(NotifyStreamRemoved, void());
+};
+
+TEST_F(VideoCaptureTest, IncrementMatchesDecrementCalls) {
+  SetRenderProcessHostDelegate(
+      std::make_unique<MockRenderProcessHostDelegate>());
+  MockRenderProcessHostDelegate* const mock_delegate =
+      static_cast<MockRenderProcessHostDelegate*>(
+          GetRenderProcessHostDelegate());
+  EXPECT_CALL(*mock_delegate, NotifyStreamAdded()).Times(3);
+  EXPECT_CALL(*mock_delegate, NotifyStreamRemoved()).Times(3);
+
+  EXPECT_EQ(0u, GetActiveStreamCount());
+  NotifyStreamAdded();
+  EXPECT_EQ(1u, GetActiveStreamCount());
+  NotifyStreamAdded();
+  EXPECT_EQ(2u, GetActiveStreamCount());
+  NotifyStreamAdded();
+  EXPECT_EQ(3u, GetActiveStreamCount());
+  NotifyStreamRemoved();
+  EXPECT_EQ(2u, GetActiveStreamCount());
+  NotifyAllStreamsRemoved();
+  EXPECT_EQ(0u, GetActiveStreamCount());
 }
 
 }  // namespace content
