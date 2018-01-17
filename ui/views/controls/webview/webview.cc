@@ -51,6 +51,23 @@ content::WebContents* WebView::GetWebContents() {
   return web_contents();
 }
 
+void WebView::ClearAndPrepareForNewWebContents() {
+  if (!web_contents())
+    return;
+  DetachWebContents();
+  WebContentsObserver::Observe(nullptr);
+  // web_contents() now returns |nullptr| from here onwards.
+  if (GetWidget()) {
+    // Manually clear focus before setting focus behavior to never so that the
+    // focus is not temporarily advanced to an arbitrary place in the UI,
+    // which confuses screen readers.
+    GetWidget()->GetFocusManager()->ClearFocus();
+  }
+  SetFocusBehavior(FocusBehavior::NEVER);
+  if (wc_owner_.get())
+    wc_owner_.reset();
+}
+
 void WebView::SetWebContents(content::WebContents* replacement) {
   if (replacement == web_contents())
     return;
