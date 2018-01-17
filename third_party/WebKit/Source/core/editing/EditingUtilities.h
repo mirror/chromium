@@ -288,9 +288,7 @@ enum WhitespacePositionOption {
 // position. When it is called with |NotConsiderNonCollapsibleWhitespace| and
 // a previous position in a element which has CSS property "white-space:pre",
 // or its variant, |leadingWhitespacePosition()| returns null position.
-// TODO(yosin) We should rename |leadingWhitespacePosition()| to
-// |leadingCollapsibleWhitespacePosition()| as this function really returns.
-Position LeadingWhitespacePosition(
+Position LeadingCollapsibleWhitespacePosition(
     const Position&,
     TextAffinity,
     WhitespacePositionOption = kNotConsiderNonCollapsibleWhitespace);
