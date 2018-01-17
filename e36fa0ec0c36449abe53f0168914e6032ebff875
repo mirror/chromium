@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b91f6dc_d92e0ff4",
+        "filename": "ui/base/test/cocoa_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T23:58:41Z",
+      "side": 1,
+      "message": "you\u0027ll need to update some callers trying to set this and isOccluded?\n\n(if not, maybe we can delete one or more of them :)",
+      "revId": "e36fa0ec0c36449abe53f0168914e6032ebff875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb15c9b8_13e8b189",
+        "filename": "ui/base/test/cocoa_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T23:58:41Z",
+      "side": 1,
+      "message": "is this change NO -\u003e YES intentional?",
+      "revId": "e36fa0ec0c36449abe53f0168914e6032ebff875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52bbcdf_ae045805",
+        "filename": "ui/base/test/cocoa_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-17T23:58:41Z",
+      "side": 1,
+      "message": "(aside: I wonder if we still need this... ui::test::ScopedFakeFullKeyboardAccess just overrides a public API -- [NSApp isFullKeyboardAccessEnabled], but that isn\u0027t used for testing NSViews :/)",
+      "revId": "e36fa0ec0c36449abe53f0168914e6032ebff875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
