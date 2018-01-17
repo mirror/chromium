@@ -705,6 +705,12 @@ void NavigationHandleImpl::WillProcessResponse(
                                "WillProcessResponse");
 
   DCHECK(!render_frame_host_ || render_frame_host_ == render_frame_host);
+  CHECK(!suggested_filename_.has_value() ||
+        !(url_.SchemeIsBlob() || url_.SchemeIsFileSystem() ||
+          url_.SchemeIs(url::kAboutScheme) || url_.SchemeIs(url::kDataScheme)))
+      << "Blob, filesystem, data, and about URLs with a suggested filename "
+         "should always result in a download, so we should never process a "
+         "navigation response here.";
   render_frame_host_ = render_frame_host;
   response_headers_ = response_headers;
   connection_info_ = connection_info;
