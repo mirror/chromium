@@ -70,6 +70,24 @@
       "revId": "d17b87a994dbebb0b0a20a43b650e95169186641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6219720e_51ddbe67",
+        "filename": "base/fuchsia/fuchsia_logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-17T21:30:54Z",
+      "side": 1,
+      "message": "I was thinking of something like that, but I don\u0027t think you can avoid breaking\n\nif (something) \n  ZX_CHECK_OK(...);\n\n(i.e. without {}), which seems très bad.",
+      "parentUuid": "0f2ab6bf_60fd1863",
+      "revId": "d17b87a994dbebb0b0a20a43b650e95169186641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
