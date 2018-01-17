@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6f8f764_8c839500",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-17T17:04:48Z",
+      "side": 1,
+      "message": "Update another what?",
+      "revId": "bac009bfb30ff4521afd9dbc3077b7979b133415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a5ab110_5686b8be",
+        "filename": "chrome/browser/notifications/notification_system_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-17T17:04:48Z",
+      "side": 1,
+      "message": "Have we investigated constructing NotificationSystemObserver explicitly instead of lazily? That seems like it would be safer in general?",
+      "revId": "bac009bfb30ff4521afd9dbc3077b7979b133415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
