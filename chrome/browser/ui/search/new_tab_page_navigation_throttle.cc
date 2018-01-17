@@ -1,0 +1,59 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "chrome/browser/ui/search/new_tab_page_navigation_throttle.h"
+
+#include "base/metrics/histogram_macros.h"
+#include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/search/search.h"
+#include "chrome/common/url_constants.h"
+#include "content/public/browser/navigation_handle.h"
+#include "content/public/browser/web_contents.h"
+#include "net/http/http_status_code.h"
+
+NewTabPageNavigationThrottle::NewTabPageNavigationThrottle(
+    content::NavigationHandle* navigation_handle)
+    : content::NavigationThrottle(navigation_handle) {}
+
+NewTabPageNavigationThrottle::~NewTabPageNavigationThrottle() {}
+
+const char* NewTabPageNavigationThrottle::GetNameForLogging() {
+  return "NewTabPageNavigationThrottle";
+}
+
+// static
+std::unique_ptr<content::NavigationThrottle>
+NewTabPageNavigationThrottle::MaybeCreateThrottleFor(
+    content::NavigationHandle* handle) {
+  Profile* profile = Profile::FromBrowserContext(
+      handle->GetWebContents()->GetBrowserContext());
+  if (handle->GetWebContents()->GetURL() != chrome::kChromeUINewTabURL ||
+      handle->GetURL() != search::GetNewTabPageURL(profile))
+    return nullptr;
+
+  return base::MakeUnique<NewTabPageNavigationThrottle>(handle);
+}
+
+content::NavigationThrottle::ThrottleCheckResult
+NewTabPageNavigationThrottle::WillProcessResponse() {
+  if (navigation_handle()->GetResponseHeaders() == nullptr)
+    return content::NavigationThrottle::PROCEED;
+
+  int response_code =
+      navigation_handle()->GetResponseHeaders()->response_code();
+  if (response_code < 400 && response_code != net::HTTP_NO_CONTENT)
+    return content::NavigationThrottle::PROCEED;
+
+  UMA_HISTOGRAM_ENUMERATION("InstantExtended.CacheableNTPLoad",
+                            search::CACHEABLE_NTP_LOAD_FAILED,
+                            search::CACHEABLE_NTP_LOAD_MAX);
+  navigation_handle()->GetWebContents()->OpenURL(
+      content::OpenURLParams(GURL(chrome::kChromeSearchLocalNtpUrl),
+                             navigation_handle()->GetReferrer(),
+                             navigation_handle()->GetFrameTreeNodeId(),
+                             WindowOpenDisposition::CURRENT_TAB,
+                             navigation_handle()->GetPageTransition(),
+                             false /* is_renderer_initiated */));
+  return content::NavigationThrottle::CANCEL_AND_IGNORE;
+}
