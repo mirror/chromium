@@ -264,6 +264,24 @@
       "revId": "018d878e2c78fda410ce38691c574f749fedade1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c10d44_e42e4ba9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/dom_extension/DOMExtension.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-01-17T08:05:44Z",
+      "side": 1,
+      "message": "Yes, it may return node/the shadow host. Some cases where this can happen is, for example, when there aren\u0027t any elements in the shadow tree (shadow root only, or just a text node). Other cases can be seen on https://chromium-review.googlesource.com/c/chromium/src/+/808446/12/third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html#57",
+      "parentUuid": "60e85819_d043aa02",
+      "revId": "018d878e2c78fda410ce38691c574f749fedade1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
