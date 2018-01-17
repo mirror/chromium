@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5b9c6995_b936af74",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ARIAUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-17T22:31:39Z",
+      "side": 1,
+      "message": "document",
+      "range": {
+        "startLine": 136,
+        "startChar": 49,
+        "endLine": 136,
+        "endChar": 56
+      },
+      "revId": "85f462cdf716d8a37498af4db92d5cb7cedef588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d84272b2_44c6f07a",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/TextPrompt.js",
         "patchSetId": 1
@@ -13,6 +36,29 @@
       "writtenOn": "2018-01-16T05:53:40Z",
       "side": 1,
       "message": "In TextPrompt, the current suggestion was being read, but only if it generated ghostText.",
+      "revId": "85f462cdf716d8a37498af4db92d5cb7cedef588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316da7db_cb2419ed",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/inspectorCommon.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-17T22:31:39Z",
+      "side": 1,
+      "message": "let\u0027s put either inline or inside inspectorView css. (this will inject css in every shadowRoot)",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 402,
+        "endChar": 10
+      },
       "revId": "85f462cdf716d8a37498af4db92d5cb7cedef588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
