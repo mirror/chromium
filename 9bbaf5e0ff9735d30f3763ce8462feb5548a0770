@@ -57,6 +57,30 @@
       "revId": "9bbaf5e0ff9735d30f3763ce8462feb5548a0770",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d7fec1_710463dd",
+        "filename": "tools/clang/blink_gc_plugin/RecordInfo.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-17T12:48:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ceb79f69_40a58a3d",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "9bbaf5e0ff9735d30f3763ce8462feb5548a0770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
