@@ -141,6 +141,24 @@
       "revId": "9af8acb880dbbd2303a49000023a16ae0cffbbcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da45dc0_c54886ae",
+        "filename": "third_party/WebKit/Source/platform/mhtml/MHTMLArchive.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-17T01:25:34Z",
+      "side": 1,
+      "message": "Updated to using delegate. Please review again.",
+      "parentUuid": "3ee47681_bd94b17b",
+      "revId": "9af8acb880dbbd2303a49000023a16ae0cffbbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
