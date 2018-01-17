@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0924a8b1_07521e34",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-17T02:26:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c1097e8_34b47cdc",
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab8cf0f_79e9d3a3",
         "filename": "content/browser/quota_dispatcher_host.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148070b2_246957b9",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-17T02:26:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab8cf0f_79e9d3a3",
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e97db6c0_3fe3bd31",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-17T02:26:18Z",
+      "side": 1,
+      "message": "Do you mean unique? And sure; added both and changed running the callback to mojo::ReportBadMessage().",
+      "parentUuid": "d7291313_1201cd34",
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b103f77f_4bedf456",
         "filename": "third_party/WebKit/Source/modules/quota/DeprecatedStorageQuota.cpp",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-15T08:53:11Z",
       "side": 1,
       "message": "Is this necessary? The only time this will get dropped is if the renderer is going away, in which case, running the callback shouldn\u0027t matter at all.\n\nI\u0027d strongly prefer we avoid use of this.",
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97afb86_09992fa1",
+        "filename": "third_party/WebKit/Source/modules/quota/DeprecatedStorageQuota.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-17T02:26:18Z",
+      "side": 1,
+      "message": "This is to emulate the existing behavior; if you look at the old deleted ~QuotaDispatcher() in https://chromium-review.googlesource.com/c/chromium/src/+/848463, it would go through all the unresolved callbacks and call DidFail:\n\n  base::IDMap\u003cstd::unique_ptr\u003cWebStorageQuotaCallbacks\u003e\u003e::iterator iter(\n      \u0026pending_quota_callbacks_);\n  while (!iter.IsAtEnd()) {\n    iter.GetCurrentValue()-\u003eDidFail(blink::mojom::QuotaStatusCode::kErrorAbort);\n    iter.Advance();\n  }\n\nI can remove it if you want, but I\u0027ll do it in a separate patch because its a behavior change.",
+      "parentUuid": "b103f77f_4bedf456",
       "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3e09ca94_fb1c6365",
+        "filename": "third_party/WebKit/Source/modules/quota/QuotaUtils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-17T02:26:18Z",
+      "side": 1,
+      "message": "Ty, didn\u0027t see this. Done",
+      "parentUuid": "d36cc473_d5382d7c",
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c10b4749_c13d2ec2",
         "filename": "third_party/WebKit/Source/modules/quota/StorageManager.cpp",
         "patchSetId": 9
@@ -98,6 +188,30 @@
       "writtenOn": "2018-01-15T08:53:11Z",
       "side": 1,
       "message": "Ditto about not using the callback wrapper here.",
+      "range": {
+        "startLine": 119,
+        "startChar": 10,
+        "endLine": 119,
+        "endChar": 53
+      },
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b105eb_bf93d7b1",
+        "filename": "third_party/WebKit/Source/modules/quota/StorageManager.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-17T02:26:18Z",
+      "side": 1,
+      "message": "See comment above.",
+      "parentUuid": "c10b4749_c13d2ec2",
       "range": {
         "startLine": 119,
         "startChar": 10,
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "6160e9b9_1981e45b",
+        "filename": "third_party/WebKit/common/quota/quota_dispatcher_host.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-17T02:26:18Z",
+      "side": 1,
+      "message": "Oops, thanks; changed to |requested_size|.",
+      "parentUuid": "ef9e477d_15b0cf43",
+      "range": {
+        "startLine": 30,
+        "startChar": 27,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab9133fa_a5932caa",
         "filename": "third_party/WebKit/common/quota/quota_dispatcher_host.mojom",
         "patchSetId": 9
@@ -153,6 +291,30 @@
       "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e733d14d_33e6e449",
+        "filename": "third_party/WebKit/common/quota/quota_dispatcher_host.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-17T02:26:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab9133fa_a5932caa",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
