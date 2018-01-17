@@ -16,6 +16,29 @@
       "revId": "e0963947a67f1b45ceccae3aa502b13f10d38eb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51a60ce_89e332f1",
+        "filename": "ui/views/controls/webview/webview.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-17T20:43:45Z",
+      "side": 1,
+      "message": "My understanding of the bug is that because SetWebContents(nullptr) may advance focus during a tab switch focus can inadvertently move. If I have that right, then I think the fix should be entirely in BrowserView. Specifically before a tab switch it can move focus (if necessary), change the WebContents, and move focus back.",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 39
+      },
+      "revId": "e0963947a67f1b45ceccae3aa502b13f10d38eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
