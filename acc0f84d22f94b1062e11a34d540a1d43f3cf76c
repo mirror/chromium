@@ -70,6 +70,24 @@
       "revId": "acc0f84d22f94b1062e11a34d540a1d43f3cf76c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29cc8066_11200a4a",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-17T23:59:05Z",
+      "side": 1,
+      "message": "I see. It is a bit counter-intuitive but I\u0027m convinced this will work.\n\nBTW can we add a DCHECK(record || display_item.type \u003d\u003d DrawingFilterDummy)? If not, could you add a comment to list the circumstances where record can be nullptr?",
+      "parentUuid": "ac8ee03f_375edcab",
+      "revId": "acc0f84d22f94b1062e11a34d540a1d43f3cf76c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
