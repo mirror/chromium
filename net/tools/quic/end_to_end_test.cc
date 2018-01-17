@@ -143,7 +143,7 @@ std::vector<TestParams> GetTestParams() {
   // with future versions of QUIC, so don't remove it.
   ParsedQuicVersionVector version_buckets[1];
 
-  for (const ParsedQuicVersion version : all_supported_versions) {
+  for (const ParsedQuicVersion& version : all_supported_versions) {
     // Versions: 35+
     // QUIC_VERSION_35 allows endpoints to independently set stream limit.
     version_buckets[0].push_back(version);
