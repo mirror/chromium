@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0473f5b7_65f53b70",
+        "filename": "chrome/browser/ssl/security_state_tab_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T01:29:23Z",
+      "side": 1,
+      "message": "Filed crbug.com/802921",
+      "parentUuid": "dc7c6331_2b7621d5",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 32
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0daa13e6_7e91f9a9",
         "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501def51_8336867f",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2557,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T01:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0daa13e6_7e91f9a9",
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -86,6 +128,30 @@
       "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d913721a_f2001371",
+        "filename": "components/security_state/core/security_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T01:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8900a072_34926584",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -160,6 +226,30 @@
     },
     {
       "key": {
+        "uuid": "49dd5ab3_5b34dd19",
+        "filename": "components/security_state/core/security_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T01:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d17b9601_37f05c3e",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27483ab1_fc53728e",
         "filename": "components/security_state/core/security_state_ui.cc",
         "patchSetId": 4
@@ -183,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "bb2678e7_858f9385",
+        "filename": "components/security_state/core/security_state_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T01:29:23Z",
+      "side": 1,
+      "message": "ack, see response to Peter\u0027s comment",
+      "parentUuid": "27483ab1_fc53728e",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 8
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79d419b4_8551a2ab",
         "filename": "components/toolbar/toolbar_model_impl.cc",
         "patchSetId": 4
@@ -197,6 +311,24 @@
       "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eeef2f9_e12c71fe",
+        "filename": "components/toolbar/toolbar_model_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T01:29:23Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s required. I always prefer compile-time warnings, especially in cases like this where adding a new state and forgetting to update the switch could be security-sensitive.",
+      "parentUuid": "79d419b4_8551a2ab",
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "4ad40f26_cc389568",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 38249,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T01:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fce14cd_61c5d40d",
+      "range": {
+        "startLine": 38249,
+        "startChar": 24,
+        "endLine": 38249,
+        "endChar": 28
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5167120c_f7e6dff0",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 4
@@ -243,6 +399,30 @@
       "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7011ad1c_b6b6b22a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 38252,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T01:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5167120c_f7e6dff0",
+      "range": {
+        "startLine": 38252,
+        "startChar": 24,
+        "endLine": 38252,
+        "endChar": 32
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -269,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "2662b84f_cb2a2050",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 78362,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T01:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e43e7db2_f373774f",
+      "range": {
+        "startLine": 78356,
+        "startChar": 11,
+        "endLine": 78362,
+        "endChar": 38
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35c807a0_f5f9bab4",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -289,6 +493,30 @@
       "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d68b4b_f0c380c3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 78375,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T01:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35c807a0_f5f9bab4",
+      "range": {
+        "startLine": 78370,
+        "startChar": 0,
+        "endLine": 78375,
+        "endChar": 45
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

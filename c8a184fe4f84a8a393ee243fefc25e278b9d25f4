@@ -22,6 +22,30 @@
       "revId": "c8a184fe4f84a8a393ee243fefc25e278b9d25f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff96e7f_e3585a43",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-17T01:29:23Z",
+      "side": 0,
+      "message": "Yeah, it needed to be part of this CL because this method wasn\u0027t getting called on Android: https://cs.chromium.org/chromium/src/components/web_contents_delegate_android/web_contents_delegate_android.cc?type\u003dcs\u0026q\u003dVisibleSecurityStateChanged\u0026l\u003d136\n\nSo in order to get these metrics on Android, I needed to either update WebContentsDelegateAndroid or change to use the observer method, and the latter seemed nicer to me.\n\nI can\u0027t remember why this didn\u0027t use the observer method originally and I\u0027m sure it was my fault. :) Quite possibly I just forgot that the observer method existed.",
+      "parentUuid": "56ac7ecc_1a7f7d18",
+      "range": {
+        "startLine": 1505,
+        "startChar": 10,
+        "endLine": 1505,
+        "endChar": 37
+      },
+      "revId": "c8a184fe4f84a8a393ee243fefc25e278b9d25f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
