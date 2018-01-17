@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24a26492_4168b122",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-17T16:47:59Z",
+      "side": 1,
+      "message": "Can this get removed?",
+      "range": {
+        "startLine": 333,
+        "startChar": 38,
+        "endLine": 333,
+        "endChar": 72
+      },
+      "revId": "611f23359bf4352ca974265ba3cfcf3e35cd1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
