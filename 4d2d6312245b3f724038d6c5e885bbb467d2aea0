@@ -16,6 +16,24 @@
       "revId": "4d2d6312245b3f724038d6c5e885bbb467d2aea0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e10f882_1555a633",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-17T11:37:13Z",
+      "side": 1,
+      "message": "`+` it is, because I\u0027m too lazy to rewrite this whole function to use StringBuilder!",
+      "parentUuid": "0a4b4746_81553a98",
+      "revId": "4d2d6312245b3f724038d6c5e885bbb467d2aea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
