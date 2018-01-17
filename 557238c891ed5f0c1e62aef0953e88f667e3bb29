@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2dad492_82d63a00",
+        "filename": "chrome/browser/extensions/extension_web_ui_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T18:22:38Z",
+      "side": 1,
+      "message": "As mentioned here [1], no need for extensions:: prefix. :)\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/862183/5/chrome/browser/extensions/extension_web_ui_browsertest.cc#18",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "557238c891ed5f0c1e62aef0953e88f667e3bb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
