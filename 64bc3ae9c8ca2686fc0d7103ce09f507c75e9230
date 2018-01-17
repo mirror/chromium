@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ab8cc00_5bb76a7e",
+        "filename": "chromecast/base/cast_sys_info_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-17T19:44:46Z",
+      "side": 1,
+      "message": "nit, I think this can be in anonymous namespace in the cc file?",
+      "revId": "64bc3ae9c8ca2686fc0d7103ce09f507c75e9230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
