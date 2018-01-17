@@ -187,6 +187,30 @@
       "revId": "2bf2a972b72192e9be44e63ab060ef3b0e1f2d86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd66243d_cc255fc4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 70761,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-17T12:00:05Z",
+      "side": 1,
+      "message": "(s/wall/cpu/ I assume.)\n\nAlright, could you please drop a TODO for that somewhere?",
+      "parentUuid": "d33c3853_31f2d2e9",
+      "range": {
+        "startLine": 70761,
+        "startChar": 53,
+        "endLine": 70761,
+        "endChar": 55
+      },
+      "revId": "2bf2a972b72192e9be44e63ab060ef3b0e1f2d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
