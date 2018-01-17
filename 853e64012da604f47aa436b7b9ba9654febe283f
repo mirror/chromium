@@ -159,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d83279bd_380a4438",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-17T08:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e0c57ce_05813eef",
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbc1d266_d26d95dd",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 2
@@ -209,6 +227,24 @@
       "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb073011_6a2401d6",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2238,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-17T08:56:24Z",
+      "side": 1,
+      "message": "I\u0027ve moved this to where Fady suggested and added a TODO for the conflict resolution. We\u0027ll need to address it before we can land, so I\u0027ll update the patch title with \"DO NOT LAND\".\n\nEric, you are right about what can cause the conflict. Both sides can start a new-size request before realizing the other side also wanted a resize (which is different).\n\nFady and I talked a little about conflict resolution methods. It is something I wanted to show you in my design doc. The issue at hand here is the live lock. If both sides attempt to accept the other side\u0027s suggestion, before reissuing their own suggestion they can live lock. The general solution to live locks is to give one side preference.\n\nFady and I both have ideas of how we can give one side preference. They are effectively the same with only detail differences. So I think we\u0027re in agreement of what to do.",
+      "parentUuid": "68021e23_5f517be4",
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
