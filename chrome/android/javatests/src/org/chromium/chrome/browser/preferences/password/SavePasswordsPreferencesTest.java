@@ -5,12 +5,15 @@
 package org.chromium.chrome.browser.preferences.password;
 
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -18,10 +21,14 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.startsWith;
 
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.filters.SmallTest;
+import android.support.test.rule.ActivityTestRule;
 import android.view.View;
 
 import org.junit.Assert;
@@ -34,6 +41,7 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.PasswordManagerHandler;
 import org.chromium.chrome.browser.SavedPasswordEntry;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
@@ -43,9 +51,11 @@ import org.chromium.chrome.browser.preferences.Preferences;
 import org.chromium.chrome.browser.preferences.PreferencesTest;
 import org.chromium.chrome.browser.test.ChromeBrowserTestRule;
 import org.chromium.chrome.test.util.browser.Features;
+import org.chromium.chrome.test.util.browser.Features.DisableFeatures;
 import org.chromium.chrome.test.util.browser.Features.EnableFeatures;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Tests for the "Save Passwords" settings screen.
@@ -57,6 +67,10 @@ public class SavePasswordsPreferencesTest {
 
     @Rule
     public TestRule mProcessor = new Features.InstrumentationProcessor();
+
+    @Rule
+    final public ActivityTestRule<Preferences> mActivityTestRule =
+            new ActivityTestRule<>(Preferences.class);
 
     private static final class FakePasswordManagerHandler implements PasswordManagerHandler {
         // This class has exactly one observer, set on construction and expected to last at least as
@@ -112,6 +126,21 @@ public class SavePasswordsPreferencesTest {
         }
     }
 
+    private final static SavedPasswordEntry HARRY_POTTER_AT_GRIFFINDOR = new SavedPasswordEntry(
+            "https://griffindor.hogwarts.co.uk", "Harry Potter", "Fortuna Major");
+    private final static SavedPasswordEntry OLIVER_AT_QUIDDITCH_FIELD =
+            new SavedPasswordEntry("https://quidditch.hogwarts.co.uk", "Oliver Wood", "Q4L1f3");
+    private final static SavedPasswordEntry FRED_AT_QUIDDITCH_FIELD =
+            new SavedPasswordEntry("https://quidditch.hogwarts.co.uk", "Fred Weasley", "George");
+    private final static SavedPasswordEntry GEORGE_AT_QUIDDITCH_FIELD =
+            new SavedPasswordEntry("https://quidditch.hogwarts.co.uk", "George Weasley", "Fred");
+    private final static SavedPasswordEntry YOU_KNOW_WHO_AT_HIDEOUT =
+            new SavedPasswordEntry("https://noone-knows.com", "", "I AM LORD VOLDEMORT");
+    private final static SavedPasswordEntry[] HOGWARTS_ENTRIES = {
+            HARRY_POTTER_AT_GRIFFINDOR, OLIVER_AT_QUIDDITCH_FIELD, FRED_AT_QUIDDITCH_FIELD,
+            GEORGE_AT_QUIDDITCH_FIELD, YOU_KNOW_WHO_AT_HIDEOUT,
+    };
+
     // Used to provide fake lists of stored passwords. Tests which need it can use setPasswordSource
     // to instantiate it.
     FakePasswordManagerHandler mHandler;
@@ -121,11 +150,24 @@ public class SavePasswordsPreferencesTest {
      * @param entry An entry to be added to saved passwords. Can be null.
      */
     private void setPasswordSource(SavedPasswordEntry entry) throws Exception {
+        SavedPasswordEntry[] entries = {};
+        if (entry != null) {
+            entries = new SavedPasswordEntry[] {entry};
+        }
+        setPasswordSourceWithMultipleEntries(entries);
+    }
+
+    /**
+     * Helper to set up a fake source of displayed passwords with multiple initial passwords.
+     * @param initialEntries All entries to be added to saved passwords. Can not be null.
+     */
+    private void setPasswordSourceWithMultipleEntries(SavedPasswordEntry[] initialEntries)
+            throws Exception {
         if (mHandler == null) {
             mHandler = new FakePasswordManagerHandler(PasswordManagerHandlerProvider.getInstance());
         }
-        ArrayList<SavedPasswordEntry> entries = new ArrayList<SavedPasswordEntry>();
-        if (entry != null) entries.add(entry);
+        ArrayList<SavedPasswordEntry> entries =
+                new ArrayList<SavedPasswordEntry>(Arrays.asList(initialEntries));
         mHandler.setSavedPasswords(entries);
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
@@ -134,6 +176,24 @@ public class SavePasswordsPreferencesTest {
                         mHandler);
             }
         });
+    }
+
+    /**
+     * Helper to rotate the screen. Landscape -> Portrait or Portrait -> Landscape - depends on
+     * current orientation.
+     */
+    private void rotateScreen() {
+        final int orientation = InstrumentationRegistry.getTargetContext()
+                                        .getResources()
+                                        .getConfiguration()
+                                        .orientation;
+
+        mActivityTestRule.getActivity().setRequestedOrientation(
+                (orientation == Configuration.ORIENTATION_PORTRAIT)
+                        ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                        : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
     }
 
     /**
@@ -460,5 +520,196 @@ public class SavePasswordsPreferencesTest {
         Espresso.onView(withContentDescription(R.string.password_entry_editor_view_stored_password))
                 .perform(click());
         Espresso.onView(withText("test password")).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that the search item is visible if the Feature is enabled.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchIconVisibleWithFeature() throws Exception {
+        setPasswordSource(null); // Initialize empty preferences.
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withId(R.id.menu_id_search)).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that the search item is not visible if the Feature is disabled.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @DisableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchIconGoneWithoutFeature() throws Exception {
+        setPasswordSource(null); // Initialize empty preferences.
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withId(R.id.menu_id_search)).check(doesNotExist());
+    }
+
+    /**
+     * Check that the search actually filters the list.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchFiltersByUserName() throws Exception {
+        setPasswordSourceWithMultipleEntries(HOGWARTS_ENTRIES);
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        // Search for a string matching multiple user names. Case doesn't need to match.
+        Espresso.onView(withId(R.id.menu_id_search)).perform(click());
+        Espresso.onView(withId(R.id.search_src_text)).perform(click(), typeText("weASleY"));
+
+        Espresso.onView(withText(FRED_AT_QUIDDITCH_FIELD.getUserName()))
+                .perform(scrollTo())
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(GEORGE_AT_QUIDDITCH_FIELD.getUserName()))
+                .perform(scrollTo())
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(HARRY_POTTER_AT_GRIFFINDOR.getUserName())).check(doesNotExist());
+        Espresso.onView(withText(OLIVER_AT_QUIDDITCH_FIELD.getUserName())).check(doesNotExist());
+        Espresso.onView(withText(YOU_KNOW_WHO_AT_HIDEOUT.getUrl())).check(doesNotExist());
+    }
+
+    /**
+     * Check that the search actually filters the list.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchFiltersByUrl() throws Exception {
+        setPasswordSourceWithMultipleEntries(HOGWARTS_ENTRIES);
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        // Search for a string that matches multiple URLs. Case doesn't need to match.
+        Espresso.onView(withId(R.id.menu_id_search)).perform(click());
+        Espresso.onView(withId(R.id.search_src_text)).perform(click(), typeText("Hogwarts"));
+
+        Espresso.onView(withText(HARRY_POTTER_AT_GRIFFINDOR.getUserName()))
+                .perform(scrollTo())
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(OLIVER_AT_QUIDDITCH_FIELD.getUserName()))
+                .perform(scrollTo())
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(FRED_AT_QUIDDITCH_FIELD.getUserName()))
+                .perform(scrollTo())
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(GEORGE_AT_QUIDDITCH_FIELD.getUserName()))
+                .perform(scrollTo())
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(YOU_KNOW_WHO_AT_HIDEOUT.getUrl())).check(doesNotExist());
+    }
+
+    /**
+     * Check that the search actually filters the list.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchIconClickedHidesGeneralPrefs() throws Exception {
+        setPasswordSourceWithMultipleEntries(HOGWARTS_ENTRIES);
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title))
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(startsWith("View and manage"))).check(matches(isDisplayed()));
+
+        Espresso.onView(withId(R.id.menu_id_search)).perform(click());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
+        Espresso.onView(withText(startsWith("View and manage"))).check(doesNotExist());
+    }
+
+    /**
+     * Check that the search actually filters the list.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchBarBackButtonBringsBackGeneralPrefs() throws Exception {
+        setPasswordSourceWithMultipleEntries(HOGWARTS_ENTRIES);
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withId(R.id.menu_id_search)).perform(click());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
+        Espresso.onView(withText(startsWith("View and manage"))).check(doesNotExist());
+
+        Espresso.onView(withContentDescription("Collapse")).perform(click());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title))
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(startsWith("View and manage"))).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that the search actually filters the list.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchBarBackKeyBringsBackGeneralPrefs() throws Exception {
+        setPasswordSourceWithMultipleEntries(HOGWARTS_ENTRIES);
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withId(R.id.menu_id_search)).perform(click());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
+        Espresso.onView(withText(startsWith("View and manage"))).check(doesNotExist());
+
+        Espresso.pressBack(); // Close keyboard.
+        Espresso.pressBack(); // Close search view.
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title))
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(startsWith("View and manage"))).check(matches(isDisplayed()));
+    }
+    /**
+     * Check that the search actually filters the list.
+     */
+
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchStateIsKeptOnRotation() throws Exception {
+        setPasswordSourceWithMultipleEntries(HOGWARTS_ENTRIES);
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withId(R.id.menu_id_search)).perform(click());
+        Espresso.onView(withId(R.id.search_src_text)).perform(click(), typeText("Pot"));
+
+        rotateScreen();
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
+        Espresso.onView(withText(HARRY_POTTER_AT_GRIFFINDOR.getUserName()))
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(FRED_AT_QUIDDITCH_FIELD.getUserName())).check(doesNotExist());
+        Espresso.onView(withText(YOU_KNOW_WHO_AT_HIDEOUT.getUrl())).check(doesNotExist());
+
+        rotateScreen();
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
+        Espresso.onView(withText(HARRY_POTTER_AT_GRIFFINDOR.getUserName()))
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(FRED_AT_QUIDDITCH_FIELD.getUserName())).check(doesNotExist());
+        Espresso.onView(withText(YOU_KNOW_WHO_AT_HIDEOUT.getUrl())).check(doesNotExist());
     }
 }
