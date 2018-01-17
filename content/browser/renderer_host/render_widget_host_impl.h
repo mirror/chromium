@@ -809,6 +809,10 @@ class CONTENT_EXPORT RenderWidgetHostImpl
 
   void OnRenderFrameMetadata(const cc::RenderFrameMetadata& metadata);
 
+  bool SurfacePropertiesMismatch(
+      const RenderWidgetSurfaceProperties& first,
+      const RenderWidgetSurfaceProperties& second) const;
+
 #if defined(OS_MACOSX)
   device::mojom::WakeLock* GetWakeLock();
 #endif
