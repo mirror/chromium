@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "e7f480f5_0c447089",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-17T20:09:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dae03d7_c86afc9a",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14aab048_2a534ed2",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
         "patchSetId": 10
@@ -242,6 +260,24 @@
       "side": 1,
       "message": "DMSSImpl does not handle sink updates. The current_sinks_.insert call is no-op if a sink with the same ID already exists. It might be better to change current_sinks_ to a map or vector to support updates. OK to do in separate patch.",
       "parentUuid": "6e419cc2_3122a7b2",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec7da781_c166564c",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-17T20:09:09Z",
+      "side": 1,
+      "message": "Will do it in a separate patch.",
+      "parentUuid": "dccbf46e_d87e942e",
       "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
