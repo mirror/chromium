@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "514a73d3_be7bf463",
+        "filename": "tools/git/move_source_file.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-01-17T11:34:48Z",
+      "side": 1,
+      "message": "the regex looks complicated. could you add some comment? would be good to add examples of lines that the regex does match, and does not.",
+      "revId": "eeb458851b8ed556e3f8545544ff1df9d7c01ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
