@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ecc53b5_1a85bc0d",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-17T08:09:34Z",
+      "side": 1,
+      "message": "Since UA shadow root is UA\u0027s implementation details, we should not\ndispatch event to UA shadow root, we don\u0027t need to have this comment.",
+      "range": {
+        "startLine": 821,
+        "startChar": 2,
+        "endLine": 823,
+        "endChar": 44
+      },
+      "revId": "f226a67d00cb61621370e1834cc58ee055055953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f0793f_a003d23e",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-17T08:09:34Z",
+      "side": 1,
+      "message": "Prefer single-assignment and early-return.\nWe could write:\n\nElement* const target \u003d FindEventTargetFromSelection();\nif (!target)\n  return nullptr;\nif (target-\u003eIsUserAgentShadowRoot())\n  return target-\u003eOwnerShadowHost;\nreturn target;",
+      "range": {
+        "startLine": 824,
+        "startChar": 2,
+        "endLine": 827,
+        "endChar": 15
+      },
+      "revId": "f226a67d00cb61621370e1834cc58ee055055953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
