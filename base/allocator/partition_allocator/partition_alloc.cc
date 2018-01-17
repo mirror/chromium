@@ -34,6 +34,9 @@ static_assert(sizeof(base::PartitionSuperPageExtentEntry) <=
 static_assert(base::kPageMetadataSize * base::kNumPartitionPagesPerSuperPage <=
                   base::kSystemPageSize,
               "page metadata fits in hole");
+static_assert(base::kGenericMaxDirectMapped <
+                  UINT_MAX - 2 * base::kSystemPageSize,
+              "maximum direct mapped allocation");
 // Check that some of our zanier calculations worked out as expected.
 static_assert(base::kGenericSmallestBucket == 8, "generic smallest bucket");
 static_assert(base::kGenericMaxBucketed == 983040, "generic max bucketed");
