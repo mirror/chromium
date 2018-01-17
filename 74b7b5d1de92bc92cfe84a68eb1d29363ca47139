@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f648e292_12f83493",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-17T15:14:56Z",
+      "side": 1,
+      "message": "This is going to pretty substantially overcount, as it will trigger anytime there\u0027s an active policy of any sort. Google properties\u0027 CSPs, for instance, include neither `default-src` nor `connect-src`, but they are \"active\".\n\nI\u0027d suggest that we add something like the following to `CSPDirectiveList`:\n\n```\nbool CSPDirectiveList::IsActiveForConnections() const {\n  return OperativeDirective(ContentSecurityPolicy::DirectiveType::kConnectSrc);\n}\n```\n\nand something like the following to `ContentSecurityPolicy`:\n\n```\nbool ContentSecurityPolicy::IsActiveForConnections() const {\n  for (const auto\u0026 policy : policies_) {\n    if (policy-\u003eIsActiveForConnections())\n      return true;\n  }\n  return false;\n}\n```\n\nand then call that from here, rather than `IsActive()`.",
+      "revId": "74b7b5d1de92bc92cfe84a68eb1d29363ca47139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccc46ec_7a01965b",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-17T15:14:56Z",
+      "side": 1,
+      "message": "Are all these DCHECKs meant to be part of this patch?",
+      "revId": "74b7b5d1de92bc92cfe84a68eb1d29363ca47139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
