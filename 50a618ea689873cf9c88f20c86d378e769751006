@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0063fb7d_1237a6db",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-17T05:25:26Z",
+      "side": 1,
+      "message": "With an array of \u003cextensions-code-section\u003e, it might be okay initially when they all have code\u003dundefined, but it looks like with this setCode_ mechanism as people expand each error, the code-section\u0027s .code gets set but never gets replaced/cleared. \n\nWould there be a performance issue if there\u0027s 100 errors all from a 1000 line file, and I go through expanding them all (so you end up with 100 code pads that all have 1000 lines)?",
+      "revId": "50a618ea689873cf9c88f20c86d378e769751006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
