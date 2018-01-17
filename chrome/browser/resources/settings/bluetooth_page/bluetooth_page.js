@@ -22,6 +22,12 @@ const bluetoothApis = window['bluetoothApis'] || {
   bluetoothPrivateApiForTest: null,
 };
 
+/**
+ * The time in ms to delay updating the toggle button UI.
+ * @type {number}
+ */
+const TOGGLE_DEBOUNCE_MS = 500;
+
 Polymer({
   is: 'settings-bluetooth-page',
 
@@ -43,18 +49,6 @@ Polymer({
     bluetoothToggleState_: {
       type: Boolean,
       observer: 'bluetoothToggleStateChanged_',
-    },
-
-    /**
-     * Set to true before the adapter state is received, when the adapter is
-     * unavailable, and while an adapter state change is requested. This
-     * prevents user changes while a change is in progress or when the adapter
-     * is not available.
-     * @private
-     */
-    bluetoothToggleDisabled_: {
-      type: Boolean,
-      value: true,
     },
 
     /**
@@ -99,6 +93,28 @@ Polymer({
     bluetoothPrivate: {
       type: Object,
       value: chrome.bluetoothPrivate,
+    },
+
+    /**
+     * Whether we should update pref value of
+     * ash.user.bluetooth.adapter_enabled. Default value is true, and this is
+     * set to false when we get bluetooth adapter state changed event to avoid
+     * infinite loop.
+     * @private
+     */
+    shouldSetPref_: {
+      type: Boolean,
+      value: true,
+    },
+
+    /**
+     * Used by tests to update toggle state immediately upon adapter state
+     * change event
+     * @type {boolean}
+     */
+    immediatelyUpdateAdapterState: {
+      type: Boolean,
+      value: false,
     },
   },
 
@@ -166,8 +182,7 @@ Polymer({
    */
   onBluetoothAdapterStateChanged_: function(state) {
     this.adapterState_ = state;
-    this.bluetoothToggleState_ = state.powered;
-    this.bluetoothToggleDisabled_ = !state.available;
+    this.delayUpdateToggleState_();
   },
 
   /** @private */
@@ -199,26 +214,40 @@ Polymer({
 
   /** @private */
   bluetoothToggleStateChanged_: function() {
-    if (!this.adapterState_ || this.bluetoothToggleDisabled_ ||
-        this.bluetoothToggleState_ == this.adapterState_.powered) {
+    if (!this.adapterState_)
+      return;
+
+    if (this.shouldSetPref_ === false) {
+      this.shouldSetPref_ = true;
       return;
     }
-    this.bluetoothToggleDisabled_ = true;
-    this.bluetoothPrivate.setAdapterState(
-        {powered: this.bluetoothToggleState_}, () => {
-          const error = chrome.runtime.lastError;
-          if (error && error != 'Error setting adapter properties: powered') {
-            console.error('Error enabling bluetooth: ' + error.message);
-            return;
-          }
-          this.setPrefValue(
-              'ash.user.bluetooth.adapter_enabled',
-              this.bluetoothToggleState_);
-        });
+
+    this.setPrefValue(
+        'ash.user.bluetooth.adapter_enabled', this.bluetoothToggleState_);
   },
 
   /** @private */
   openSubpage_: function() {
     settings.navigateTo(settings.routes.BLUETOOTH_DEVICES);
+  },
+
+  /** @private */
+  updateToggleState_: function() {
+    if (this.adapterState_ &&
+        this.adapterState_.powered != this.bluetoothToggleState_) {
+      this.shouldSetPref_ = false;
+      this.bluetoothToggleState_ = this.adapterState_.powered;
+    }
+  },
+
+  /** @private */
+  delayUpdateToggleState_: function() {
+    if (this.immediatelyUpdateAdapterState) {
+      this.updateToggleState_();
+      return;
+    }
+    setTimeout(() => {
+      this.updateToggleState_();
+    }, TOGGLE_DEBOUNCE_MS);
   }
 });
