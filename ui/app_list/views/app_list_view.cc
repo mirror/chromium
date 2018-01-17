@@ -303,8 +303,9 @@ void AppListView::Initialize(const InitParams& params) {
   InitChildWidgets();
   AddChildView(overlay_view_);
 
-  if (is_fullscreen_app_list_enabled_)
+  if (is_fullscreen_app_list_enabled_) {
     SetState(app_list_state_);
+  }
 
   delegate_->ViewInitialized();
 
@@ -1261,6 +1262,7 @@ void AppListView::StartAnimationForState(AppListViewState target_state) {
 
   gfx::Rect target_bounds = fullscreen_widget_->GetNativeView()->bounds();
   const int original_state_y = target_bounds.origin().y();
+
   target_bounds.set_y(target_state_y);
 
   int animation_duration;
@@ -1275,6 +1277,14 @@ void AppListView::StartAnimationForState(AppListViewState target_state) {
   } else {
     animation_duration = kAppListAnimationDurationMs;
   }
+
+  const bool should_animate_searchbox_opacity =
+      fullscreen_widget_->GetNativeView()->bounds().y() ==
+      GetDisplayNearestView().work_area().bottom();
+
+  if (should_animate_searchbox_opacity)
+    app_list_main_view_->contents_view()->FadeInOnOpen(
+        base::TimeDelta::FromMilliseconds(animation_duration));
 
   ui::Layer* layer = fullscreen_widget_->GetLayer();
   layer->SetBounds(target_bounds);
