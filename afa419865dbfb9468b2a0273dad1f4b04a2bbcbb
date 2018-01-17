@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2043b44_1b67c5e0",
+        "filename": "chrome/browser/chromeos/login/enrollment/enrollment_screen_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-17T23:22:20Z",
+      "side": 1,
+      "message": "nit: DoTest_FinishesEnrollmentFlow -\u003e TestFinishesEnrollmentFlow\n\nThink TestXXXX is used for such thing,\n\ne.g. TestControlFlowMain\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/wizard_controller_browsertest.cc?rcl\u003d720dceebf92a3c8dca1967917f40184c61ab6f73\u0026l\u003d512",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 36
+      },
+      "revId": "afa419865dbfb9468b2a0273dad1f4b04a2bbcbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
