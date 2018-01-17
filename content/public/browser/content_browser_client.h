@@ -237,6 +237,15 @@ class CONTENT_EXPORT ContentBrowserClient {
   virtual bool DoesSiteRequireDedicatedProcess(BrowserContext* browser_context,
                                                const GURL& effective_site_url);
 
+  // Registers observers for the site isolation pref values.
+  virtual void RegisterSiteIsolationOberserver() {}
+
+  // Gets the value of the site per process setting as defined in the browser.
+  virtual bool GetSitePerProcessSetting();
+
+  // Gets the value of the isolate origins list as defined in the browser.
+  virtual std::string GetIsolateOriginsList();
+
   // Returns true unless the effective URL is part of a site that cannot live in
   // a process restricted to just that site.  This is only called if site
   // isolation is enabled for this URL, and is a bug workaround.

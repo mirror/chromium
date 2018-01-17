@@ -19,6 +19,7 @@
 #include "base/memory/weak_ptr.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_service.h"
+#include "components/prefs/pref_change_registrar.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/common/resource_type.h"
@@ -108,6 +109,9 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
                                const GURL& effective_url) override;
   bool DoesSiteRequireDedicatedProcess(content::BrowserContext* browser_context,
                                        const GURL& effective_site_url) override;
+  void RegisterSiteIsolationOberserver() override;
+  bool GetSitePerProcessSetting() override;
+  std::string GetIsolateOriginsList() override;
   bool ShouldLockToOrigin(content::BrowserContext* browser_context,
                           const GURL& effective_site_url) override;
   bool ShouldBypassDocumentBlocking(
@@ -409,6 +413,9 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   // |worker_interfaces_parameterized_|.
   void InitWebContextInterfaces();
 
+  // Callback for the site isolation PrefChangeRegistrar.
+  void SiteIsolationPrefsChanged(const std::string&);
+
 #if BUILDFLAG(ENABLE_WEBRTC)
   // Copies disable WebRTC encryption switch depending on the channel.
   static void MaybeCopyDisableWebRtcEncryptionSwitch(
@@ -473,6 +480,14 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       service_manager::BinderRegistryWithArgs<content::RenderProcessHost*,
                                               const url::Origin&>>
       worker_interfaces_parameterized_;
+
+  // Guards access to site isolation related prefs.
+  mutable base::Lock site_isolation_prefs_lock_;
+
+  bool site_per_process_pref_value_;
+  std::string isolate_origins_pref_value_;
+
+  PrefChangeRegistrar* site_isolation_pref_registrar_;
 
   base::WeakPtrFactory<ChromeContentBrowserClient> weak_factory_;
 

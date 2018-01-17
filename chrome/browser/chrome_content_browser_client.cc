@@ -831,6 +831,45 @@ ChromeContentBrowserClient::ChromeContentBrowserClient()
                  metrics::CallStackProfileParams::GPU_PROCESS));
 }
 
+void ChromeContentBrowserClient::RegisterSiteIsolationOberserver() {
+  if (g_browser_process) {
+    if (!site_isolation_pref_registrar_) {
+      SiteIsolationPrefsChanged("");
+
+      site_isolation_pref_registrar_ = new PrefChangeRegistrar();
+
+      site_isolation_pref_registrar_->Init(g_browser_process->local_state());
+
+      site_isolation_pref_registrar_->Add(
+          prefs::kSitePerProcess,
+          base::BindRepeating(
+              &ChromeContentBrowserClient::SiteIsolationPrefsChanged,
+              base::Unretained(this)));
+      site_isolation_pref_registrar_->Add(
+          prefs::kIsolateOrigins,
+          base::BindRepeating(
+              &ChromeContentBrowserClient::SiteIsolationPrefsChanged,
+              base::Unretained(this)));
+    }
+  } else {
+    site_per_process_pref_value_ =
+        base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kSitePerProcess);
+    isolate_origins_pref_value_ =
+        base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+            switches::kIsolateOrigins);
+  }
+}
+
+void ChromeContentBrowserClient::SiteIsolationPrefsChanged(const std::string&) {
+  base::AutoLock auto_lock(site_isolation_prefs_lock_);
+
+  site_per_process_pref_value_ =
+      g_browser_process->local_state()->GetBoolean(prefs::kSitePerProcess);
+  isolate_origins_pref_value_ =
+      g_browser_process->local_state()->GetString(prefs::kIsolateOrigins);
+}
+
 ChromeContentBrowserClient::~ChromeContentBrowserClient() {
   for (int i = static_cast<int>(extra_parts_.size()) - 1; i >= 0; --i)
     delete extra_parts_[i];
@@ -1175,6 +1214,16 @@ bool ChromeContentBrowserClient::DoesSiteRequireDedicatedProcess(
   }
 #endif
   return false;
+}
+
+bool ChromeContentBrowserClient::GetSitePerProcessSetting() {
+  base::AutoLock auto_lock(site_isolation_prefs_lock_);
+  return site_per_process_pref_value_;
+}
+
+std::string ChromeContentBrowserClient::GetIsolateOriginsList() {
+  base::AutoLock auto_lock(site_isolation_prefs_lock_);
+  return isolate_origins_pref_value_;
 }
 
 // TODO(creis, nick): https://crbug.com/160576 describes a weakness in our

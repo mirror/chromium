@@ -22,11 +22,31 @@
 
 namespace content {
 
+namespace {
+base::LazyInstance<bool>::Leaky site_per_process_enabled =
+    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<std::string>::Leaky isolate_origins =
+    LAZY_INSTANCE_INITIALIZER;
+
+const std::string& GetIsolateOriginsSwitchValue() {
+  if (!isolate_origins.IsCreated()) {
+    GetContentClient()->browser()->RegisterSiteIsolationOberserver();
+    isolate_origins.Get() =
+        GetContentClient()->browser()->GetIsolateOriginsList();
+  }
+  return isolate_origins.Get();
+}
+
+}  // namespace
+
 // static
 bool SiteIsolationPolicy::UseDedicatedProcessesForAllSites() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-             switches::kSitePerProcess) ||
-         base::FeatureList::IsEnabled(features::kSitePerProcess);
+  if (!site_per_process_enabled.IsCreated()) {
+    GetContentClient()->browser()->RegisterSiteIsolationOberserver();
+    site_per_process_enabled.Get() =
+        GetContentClient()->browser()->GetSitePerProcessSetting();
+  }
+  return site_per_process_enabled.Get();
 }
 
 // static
@@ -55,20 +75,16 @@ bool SiteIsolationPolicy::IsTopDocumentIsolationEnabled() {
 
 // static
 bool SiteIsolationPolicy::AreIsolatedOriginsEnabled() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-             switches::kIsolateOrigins) ||
+  return !GetIsolateOriginsSwitchValue().empty() ||
          base::FeatureList::IsEnabled(features::kIsolateOrigins);
 }
 
 // static
 std::vector<url::Origin>
 SiteIsolationPolicy::GetIsolatedOriginsFromEnvironment() {
-  std::string cmdline_arg =
-      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kIsolateOrigins);
-  if (!cmdline_arg.empty()) {
+  if (!GetIsolateOriginsSwitchValue().empty()) {
     std::vector<url::Origin> cmdline_origins =
-        ParseIsolatedOrigins(cmdline_arg);
+        ParseIsolatedOrigins(GetIsolateOriginsSwitchValue());
     UMA_HISTOGRAM_COUNTS_1000("SiteIsolation.IsolateOrigins.Size",
                               cmdline_origins.size());
     return cmdline_origins;
