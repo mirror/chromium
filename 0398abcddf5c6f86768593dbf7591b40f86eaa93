@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f08d50f4_24067eaf",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-17T15:21:24Z",
+      "side": 1,
+      "message": "Something to keep in mind as you look at initators: we may have already tagged this request as an ad at this point, and SetIsAdResource will override that.",
+      "range": {
+        "startLine": 614,
+        "startChar": 19,
+        "endLine": 614,
+        "endChar": 34
+      },
+      "revId": "0398abcddf5c6f86768593dbf7591b40f86eaa93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a401ba3_21306f89",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-17T15:21:24Z",
+      "side": 1,
+      "message": "It appears there are many places that call CanRequest. Is there a place that we could add a new call, IsAdResource(), such that it\u0027s only called once?",
+      "revId": "0398abcddf5c6f86768593dbf7591b40f86eaa93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
