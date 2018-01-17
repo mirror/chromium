@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f93c639a_f9daccd9",
+        "filename": "win10/delegate_execute/delegate_execute.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-17T07:08:31Z",
+      "side": 1,
+      "message": "As we have discussed in the CL and design doc, we probably need to do register the NotificationActivator object (INotificationActivationCallback) here, and unregister it in PostMessageLoop below. Correct me if I am wrong please.",
+      "range": {
+        "startLine": 44,
+        "startChar": 10,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "a49060602900f25ae789b97df96f82ca516d382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2d45ec_96d0b149",
+        "filename": "win10/delegate_execute/delegate_execute.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-17T07:08:31Z",
+      "side": 1,
+      "message": "This will call InstallDetails::Get(), which calls assert(g_module_details) inside. However, I think g_module_details is still NULL so assertion will fail. How to fix it?",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 56
+      },
+      "revId": "a49060602900f25ae789b97df96f82ca516d382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c07712_28733907",
+        "filename": "win10/delegate_execute/delegate_execute_operation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-17T07:08:31Z",
+      "side": 1,
+      "message": "This operation makes chrome be launched via the IExecuteCommand interface exposed by delegate_execute in this implementation, while the RELAUNCH_CHROME operation below makes Chrome be launched via ShellExecute. \n\nAs the EXE is only going to be invoked by toast activation only, I think we can remove everything related to the RELAUNCH_CHROME operation, right?",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 19
+      },
+      "revId": "a49060602900f25ae789b97df96f82ca516d382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
