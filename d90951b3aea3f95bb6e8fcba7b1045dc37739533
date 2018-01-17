@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5338f2d_902b45dc",
+        "filename": "base/fuchsia/fuchsia_logging.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-17T20:18:36Z",
+      "side": 1,
+      "message": "That sounds reasonable, I think I like ZX_CHECK_OK since that\u0027s the common case.",
+      "parentUuid": "661df8f4_4381ec70",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "d90951b3aea3f95bb6e8fcba7b1045dc37739533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50b2518c_a4257a37",
         "filename": "base/fuchsia/fuchsia_logging.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4afdd76c_1d990693",
+        "filename": "base/fuchsia/fuchsia_logging.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-17T20:18:36Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not sure what you mean. I think this follows e.g. https://cs.chromium.org/chromium/src/base/logging.h?l\u003d804 ?",
+      "parentUuid": "50b2518c_a4257a37",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 50
+      },
+      "revId": "d90951b3aea3f95bb6e8fcba7b1045dc37739533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83e65c1c_0f592d9b",
         "filename": "base/fuchsia/fuchsia_logging.h",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-17T19:51:39Z",
       "side": 1,
       "message": "BTW, we now define LOG_DCHECK, so that callers can treat it as a normal LogSeverity, and inherit whatever value it may have even if it is configurable at run-time (as we do for Albatross).",
+      "range": {
+        "startLine": 57,
+        "startChar": 28,
+        "endLine": 57,
+        "endChar": 33
+      },
+      "revId": "d90951b3aea3f95bb6e8fcba7b1045dc37739533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de113be8_8afe0bad",
+        "filename": "base/fuchsia/fuchsia_logging.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-17T20:18:36Z",
+      "side": 1,
+      "message": "Done (I think?)",
+      "parentUuid": "83e65c1c_0f592d9b",
       "range": {
         "startLine": 57,
         "startChar": 28,
