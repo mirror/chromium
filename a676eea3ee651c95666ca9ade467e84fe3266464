@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce2bc787_f0357f87",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-17T13:57:56Z",
+      "side": 1,
+      "message": "Highlighting that go/uma-metrics suggests:\n(1) to assign explicit numerical values, and\n(2) to put catch-all buckets first (two of them here)",
+      "range": {
+        "startLine": 268,
+        "startChar": 7,
+        "endLine": 268,
+        "endChar": 8
+      },
+      "revId": "a676eea3ee651c95666ca9ade467e84fe3266464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
