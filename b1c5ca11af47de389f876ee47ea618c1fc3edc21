@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f46fb4db_2678bfd3",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T21:24:04Z",
+      "side": 1,
+      "message": "nit: one",
+      "range": {
+        "startLine": 76,
+        "startChar": 39,
+        "endLine": 76,
+        "endChar": 42
+      },
+      "revId": "b1c5ca11af47de389f876ee47ea618c1fc3edc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb75d438_3b05dcd5",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T21:24:04Z",
+      "side": 1,
+      "message": "This seems odd.  Is that how the code currently works?  It might be worth justifying why we don\u0027t clear the cache if the server says \"nope, got nothing for you.\"  (I think there\u0027s a tradeoff between privacy and reliability here, and I would like to make it clear.)",
+      "revId": "b1c5ca11af47de389f876ee47ea618c1fc3edc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a1d1ee_06bbf3d6",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T21:24:04Z",
+      "side": 1,
+      "message": "nit: contains\n\n(stores makes me think about the action of putting something in the store, which is confusing then depending on whether you mean the previous state of the cache or the nearly-updated state of the cache.  In reality, it doesn\u0027t matter, so let\u0027s use a word that\u0027s less confusing.)",
+      "range": {
+        "startLine": 103,
+        "startChar": 51,
+        "endLine": 103,
+        "endChar": 57
+      },
+      "revId": "b1c5ca11af47de389f876ee47ea618c1fc3edc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd93ceb_21f30dee",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T21:24:04Z",
+      "side": 1,
+      "message": "I like your earlier ToRun phrasing better, or something like it, as that more indicates that this is called first, before deciding what to do, rather than \"processing\" something that might\u0027ve already been done.",
+      "range": {
+        "startLine": 152,
+        "startChar": 27,
+        "endLine": 152,
+        "endChar": 34
+      },
+      "revId": "b1c5ca11af47de389f876ee47ea618c1fc3edc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d0a013_47482a60",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T21:24:04Z",
+      "side": 1,
+      "message": "nit: this should be an active verb phrase, given how it\u0027s used.  (running/processing/being_processed/etc)",
+      "range": {
+        "startLine": 162,
+        "startChar": 25,
+        "endLine": 162,
+        "endChar": 34
+      },
+      "revId": "b1c5ca11af47de389f876ee47ea618c1fc3edc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

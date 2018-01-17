@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "6e56dc96_58d41127",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T21:24:04Z",
+      "side": 1,
+      "message": "Can you please file a Hotlist-CodeHealth bug to\n(a) figure out whether we need template url service guards in search provider, zero suggest provider, and friends\nand\n(b) audit uses of template url service so they\u0027re all handled properly (consistently) based on our understanding of when it can be null\n?\n\nthanks.",
+      "parentUuid": "86b43ac6_cd085edf",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52917056_d8bb3524",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 3
@@ -318,6 +336,30 @@
     },
     {
       "key": {
+        "uuid": "1b92289c_103135fa",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T21:24:04Z",
+      "side": 1,
+      "message": "\u003e Note that the current URL is only added once ConvertResultsToAutocompleteMatches is called. \n\nYes, but ConvertResultsToAutocompleteMatches and filled in |matches_| may have already been called (on a previous run of this provider).  Did you mean to use the cached |results_|?\n\n\u003e https://cs.chromium.org/chromium/src/components/omnibox/browser/zero_suggest_provider.cc?q\u003dzero_suggest\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d480\n\u003e \n\u003e See the change made below: ConvertResultsToAutocompleteMatches is added closer to the call to ParseSuggestResult.",
+      "parentUuid": "c14f1a9c_deaab885",
+      "range": {
+        "startLine": 353,
+        "startChar": 4,
+        "endLine": 353,
+        "endChar": 59
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4787d6a9_0b2c4e9f",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 3
@@ -424,6 +466,30 @@
     },
     {
       "key": {
+        "uuid": "5ef4ca8a_57746818",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T21:24:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6bd391d1_9099a5eb",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 28
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50b98b89_f1d92415",
         "filename": "components/omnibox/browser/zero_suggest_provider.h",
         "patchSetId": 3
@@ -468,6 +534,30 @@
       "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1174c585_690d9bfc",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-17T21:24:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ebb47ed4_6b37bedb",
+      "range": {
+        "startLine": 98,
+        "startChar": 5,
+        "endLine": 98,
+        "endChar": 43
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
