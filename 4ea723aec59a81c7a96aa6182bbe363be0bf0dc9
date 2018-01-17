@@ -22,6 +22,30 @@
       "revId": "4ea723aec59a81c7a96aa6182bbe363be0bf0dc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b50572_60f6c8bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuViewPager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-17T02:08:26Z",
+      "side": 0,
+      "message": "Talked offline. This was added in an attempt to keep the height from changing heights before the tab layout has finished switching tabs, but through testing, this was shown to be unnecessary.",
+      "parentUuid": "a7e66760_5ac2c9eb",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 64
+      },
+      "revId": "4ea723aec59a81c7a96aa6182bbe363be0bf0dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
