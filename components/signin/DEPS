@@ -12,4 +12,5 @@ include_rules = [
   "+grit",  # For generated headers
   "+net",
   "+sql",
+  "+third_party/re2",
 ]
