@@ -16,10 +16,6 @@ static_library("cpp") {
     "net_adapters.h",
     "proxy_resolving_client_socket.cc",
     "proxy_resolving_client_socket.h",
-    "resource_request.cc",
-    "resource_request.h",
-    "resource_request_body.cc",
-    "resource_request_body.h",
   ]
 
   public_deps = [
@@ -46,12 +42,18 @@ static_library("typemap_dependencies") {
     "network_param_ipc_traits.h",
     "proxy_config_traits.cc",
     "proxy_config_traits.h",
+    "resource_request.cc",
+    "resource_request.h",
+    "resource_request_body.cc",
+    "resource_request_body.h",
     "resource_response.cc",
     "resource_response.h",
     "resource_response_info.cc",
     "resource_response_info.h",
     "url_loader_completion_status.cc",
     "url_loader_completion_status.h",
+    "url_request_struct_traits.cc",
+    "url_request_struct_traits.h",
   ]
   public_deps = [
     "//url/ipc:url_ipc",

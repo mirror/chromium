@@ -18,6 +18,8 @@ mojom("interfaces") {
     "proxy_config.mojom",
     "request_context_frame_type.mojom",
     "restricted_cookie_manager.mojom",
+    "url_loader.mojom",
+    "url_loader_factory.mojom",
   ]
 
   public_deps = [

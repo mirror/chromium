@@ -19,6 +19,8 @@
 #include "net/nqe/effective_connection_type.h"
 #include "net/ssl/ssl_info.h"
 #include "net/url_request/redirect_info.h"
+#include "services/network/public/cpp/resource_request.h"
+#include "services/network/public/cpp/resource_request_body.h"
 #include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/cpp/resource_response_info.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
@@ -152,6 +154,26 @@ struct ParamTraits<net::LoadTimingInfo> {
   static void Log(const param_type& p, std::string* l);
 };
 
+template <>
+struct ParamTraits<network::DataElement> {
+  typedef network::DataElement param_type;
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+
+template <>
+struct ParamTraits<scoped_refptr<network::ResourceRequestBody>> {
+  typedef scoped_refptr<network::ResourceRequestBody> param_type;
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+
 }  // namespace IPC
 
 #endif  // INTERNAL_SERVICES_NETWORK_PUBLIC_CPP_NETWORK_PARAM_IPC_TRAITS_H_
@@ -175,12 +197,15 @@ IPC_STRUCT_TRAITS_BEGIN(net::HttpRequestHeaders::HeaderKeyValuePair)
   IPC_STRUCT_TRAITS_MEMBER(value)
 IPC_STRUCT_TRAITS_END()
 
+IPC_STRUCT_TRAITS_BEGIN(net::MutableNetworkTrafficAnnotationTag)
+  IPC_STRUCT_TRAITS_MEMBER(unique_id_hash_code)
+IPC_STRUCT_TRAITS_END()
+
 IPC_STRUCT_TRAITS_BEGIN(net::SignedCertificateTimestampAndStatus)
   IPC_STRUCT_TRAITS_MEMBER(sct)
   IPC_STRUCT_TRAITS_MEMBER(status)
 IPC_STRUCT_TRAITS_END()
 
-// Parameters for a ResourceMsg_RequestComplete
 IPC_ENUM_TRAITS_MAX_VALUE(network::mojom::CORSError,
                           network::mojom::CORSError::kLast)
 
@@ -212,6 +237,52 @@ IPC_STRUCT_TRAITS_BEGIN(net::RedirectInfo)
   IPC_STRUCT_TRAITS_MEMBER(new_referrer)
   IPC_STRUCT_TRAITS_MEMBER(new_referrer_policy)
   IPC_STRUCT_TRAITS_MEMBER(referred_token_binding_host)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(network::ResourceRequest)
+  IPC_STRUCT_TRAITS_MEMBER(method)
+  IPC_STRUCT_TRAITS_MEMBER(url)
+  IPC_STRUCT_TRAITS_MEMBER(site_for_cookies)
+  IPC_STRUCT_TRAITS_MEMBER(request_initiator)
+  IPC_STRUCT_TRAITS_MEMBER(referrer)
+  IPC_STRUCT_TRAITS_MEMBER(referrer_policy)
+  IPC_STRUCT_TRAITS_MEMBER(is_prerendering)
+  IPC_STRUCT_TRAITS_MEMBER(headers)
+  IPC_STRUCT_TRAITS_MEMBER(load_flags)
+  IPC_STRUCT_TRAITS_MEMBER(plugin_child_id)
+  IPC_STRUCT_TRAITS_MEMBER(resource_type)
+  IPC_STRUCT_TRAITS_MEMBER(priority)
+  IPC_STRUCT_TRAITS_MEMBER(request_context)
+  IPC_STRUCT_TRAITS_MEMBER(appcache_host_id)
+  IPC_STRUCT_TRAITS_MEMBER(should_reset_appcache)
+  IPC_STRUCT_TRAITS_MEMBER(service_worker_provider_id)
+  IPC_STRUCT_TRAITS_MEMBER(originated_from_service_worker)
+  IPC_STRUCT_TRAITS_MEMBER(service_worker_mode)
+  IPC_STRUCT_TRAITS_MEMBER(fetch_request_mode)
+  IPC_STRUCT_TRAITS_MEMBER(fetch_credentials_mode)
+  IPC_STRUCT_TRAITS_MEMBER(fetch_redirect_mode)
+  IPC_STRUCT_TRAITS_MEMBER(fetch_integrity)
+  IPC_STRUCT_TRAITS_MEMBER(fetch_request_context_type)
+  IPC_STRUCT_TRAITS_MEMBER(fetch_frame_type)
+  IPC_STRUCT_TRAITS_MEMBER(request_body)
+  IPC_STRUCT_TRAITS_MEMBER(download_to_file)
+  IPC_STRUCT_TRAITS_MEMBER(keepalive)
+  IPC_STRUCT_TRAITS_MEMBER(has_user_gesture)
+  IPC_STRUCT_TRAITS_MEMBER(enable_load_timing)
+  IPC_STRUCT_TRAITS_MEMBER(enable_upload_progress)
+  IPC_STRUCT_TRAITS_MEMBER(do_not_prompt_for_login)
+  IPC_STRUCT_TRAITS_MEMBER(render_frame_id)
+  IPC_STRUCT_TRAITS_MEMBER(is_main_frame)
+  IPC_STRUCT_TRAITS_MEMBER(transition_type)
+  IPC_STRUCT_TRAITS_MEMBER(should_replace_current_entry)
+  IPC_STRUCT_TRAITS_MEMBER(transferred_request_child_id)
+  IPC_STRUCT_TRAITS_MEMBER(transferred_request_request_id)
+  IPC_STRUCT_TRAITS_MEMBER(allow_download)
+  IPC_STRUCT_TRAITS_MEMBER(report_raw_headers)
+  IPC_STRUCT_TRAITS_MEMBER(previews_state)
+  IPC_STRUCT_TRAITS_MEMBER(resource_body_stream_url)
+  IPC_STRUCT_TRAITS_MEMBER(initiated_in_secure_context)
+  IPC_STRUCT_TRAITS_MEMBER(download_to_network_cache_only)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(network::ResourceResponseInfo)
