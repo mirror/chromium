@@ -16,6 +16,24 @@
       "revId": "3d0783eddcaf9d152acf9cc0f84bfd278b390fca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10a24f8_a6c6161a",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventPath.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-17T07:42:21Z",
+      "side": 1,
+      "message": "Thanks for the suggestion.\nIt turned out UA only fires clipboard events from Editor.cpp.",
+      "parentUuid": "63482471_e4a07a72",
+      "revId": "3d0783eddcaf9d152acf9cc0f84bfd278b390fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
