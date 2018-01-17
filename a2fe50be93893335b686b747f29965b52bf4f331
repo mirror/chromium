@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a081739_431c9490",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-17T00:18:46Z",
+      "side": 0,
+      "message": "Can we remove the files (both .h and .cc) now?",
+      "revId": "a2fe50be93893335b686b747f29965b52bf4f331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ec6153_9d32f0fd",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-17T00:18:46Z",
+      "side": 0,
+      "message": "Can you keep this check?",
+      "revId": "a2fe50be93893335b686b747f29965b52bf4f331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
