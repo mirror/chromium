@@ -13,6 +13,18 @@
 
 namespace headless {
 
+TEST(ParsePrintSettingsTest, ObeySourceSize) {
+  HeadlessPrintSettings settings;
+  EXPECT_TRUE(settings.obey_source_size);
+
+  auto params = std::make_unique<base::DictionaryValue>();
+  params->SetBoolean("obeySourceSize", false);
+  std::unique_ptr<base::DictionaryValue> response =
+      ParsePrintSettings(0, params.get(), &settings);
+  EXPECT_FALSE(settings.obey_source_size);
+  EXPECT_EQ(nullptr, response);
+}
+
 TEST(ParsePrintSettingsTest, Landscape) {
   HeadlessPrintSettings settings;
   EXPECT_FALSE(settings.landscape);

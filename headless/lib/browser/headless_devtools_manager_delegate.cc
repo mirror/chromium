@@ -273,6 +273,10 @@ std::unique_ptr<base::DictionaryValue> ParsePrintSettings(
   settings->margins_in_points.right =
       margin_right_in_inch * printing::kPointsPerInch;
 
+  if (const base::Value* obey_source_size = params->FindKey("obeySourceSize")) {
+    settings->obey_source_size = obey_source_size->GetBool();
+  }
+
   return nullptr;
 }
 #endif

@@ -4577,6 +4577,8 @@ domain Page
       optional string headerTemplate
       # HTML template for the print footer. Should use the same format as the `headerTemplate`.
       optional string footerTemplate
+      # Whether to obey source size or to scale to paper size. Defaults to false.
+      optional boolean obeySourceSize
     returns
       # Base64-encoded pdf data.
       string data

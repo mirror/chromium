@@ -40,7 +40,8 @@ struct HeadlessPrintManager::FrameDispatchHelper {
 };
 
 HeadlessPrintSettings::HeadlessPrintSettings()
-    : landscape(false),
+    : obey_source_size(true),
+      landscape(false),
       display_header_footer(false),
       should_print_backgrounds(false),
       scale(1),
@@ -204,6 +205,7 @@ HeadlessPrintManager::GetPrintParamsFromSettings(
       base::UTF8ToUTF16(settings.header_template);
   print_params->params.footer_template =
       base::UTF8ToUTF16(settings.footer_template);
+  print_params->params.obey_source_size = settings.obey_source_size;
   return print_params;
 }
 

@@ -10007,6 +10007,12 @@
                             "description": "HTML template for the print footer. Should use the same format as the `headerTemplate`.",
                             "optional": true,
                             "type": "string"
+                        },
+                        {
+                            "name": "obeySourceSize",
+                            "description": "Whether to obey source size or to scale to paper size. Defaults to false.",
+                            "optional": true,
+                            "type": "boolean"
                         }
                     ],
                     "returns": [
