@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d1d7971b_c98855eb",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-17T00:41:15Z",
+      "side": 0,
+      "message": "Oh oops, I wrote and landed the CL to obsolete the internal version before I read your second comment... is that okay? Seems like if it\u0027s obsolete it can stay internal.",
+      "parentUuid": "c892ee30_f634a566",
+      "range": {
+        "startLine": 624,
+        "startChar": 29,
+        "endLine": 624,
+        "endChar": 56
+      },
+      "revId": "2967fae5a770cfc18df4fe5f97edface7ea5bfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ef521d5_6934114f",
         "filename": "chrome/browser/ui/browser_ui_prefs.cc",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "2967fae5a770cfc18df4fe5f97edface7ea5bfc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e63bbe1_7b8f6f41",
+        "filename": "chrome/browser/ui/browser_ui_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-17T00:41:15Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "4ef521d5_6934114f",
+      "range": {
+        "startLine": 38,
+        "startChar": 32,
+        "endLine": 38,
+        "endChar": 64
+      },
+      "revId": "2967fae5a770cfc18df4fe5f97edface7ea5bfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "145e40ae_33133910",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-17T00:41:15Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "d39fda9e_52889da5",
+      "range": {
+        "startLine": 112,
+        "startChar": 57,
+        "endLine": 112,
+        "endChar": 66
+      },
+      "revId": "2967fae5a770cfc18df4fe5f97edface7ea5bfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "046cdf76_5c3d4fb6",
         "filename": "chrome/installer/util/master_preferences_constants.cc",
         "patchSetId": 2
@@ -115,6 +187,30 @@
       "revId": "2967fae5a770cfc18df4fe5f97edface7ea5bfc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9812da_202477e8",
+        "filename": "chrome/installer/util/master_preferences_constants.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-17T00:41:15Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "046cdf76_5c3d4fb6",
+      "range": {
+        "startLine": 15,
+        "startChar": 48,
+        "endLine": 15,
+        "endChar": 73
+      },
+      "revId": "2967fae5a770cfc18df4fe5f97edface7ea5bfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
