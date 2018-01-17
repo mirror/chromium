@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3c288ce_fd8a4179",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-17T08:04:18Z",
+      "side": 1,
+      "message": "This is for the solid color default wallpaper which will be shown when wallpaper decoding fails. This is a copy-paste of the existing code. (It may need to be refactored later.)",
+      "parentUuid": "33a7e64b_da733e54",
+      "revId": "0cca07ada65cc95d013181390c125e5904de046a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2500690_e1a4acfc",
         "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
         "patchSetId": 21
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-16T20:02:44Z",
       "side": 1,
       "message": "According to the document, the callback gets called immediately if the salt is available, so you probably don\u0027t need to check it? (and eliminate GetCanFilesId)\n\nditto for the rest",
+      "revId": "0cca07ada65cc95d013181390c125e5904de046a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f22bf54_70de0af5",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-17T08:04:18Z",
+      "side": 1,
+      "message": "For |SetPolicyWallpaper| the check is necessary, since there used to be a bug (crbug.com/615239). \n\nFor all the other functions, in theory the check should never be hit, but for consistency I think we can keep the check, and add a warning to indicate the check is hit for debugging.",
+      "parentUuid": "e2500690_e1a4acfc",
       "revId": "0cca07ada65cc95d013181390c125e5904de046a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
