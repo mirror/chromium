@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feb9a2d6_7ee3c0e3",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:01:22Z",
+      "side": 1,
+      "message": "Changes to scheduler_single_thread_task_runner_manager* could have been done in a separate CL. This CL is not trivial to review.",
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd4a493_45853dc9",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:01:22Z",
+      "side": 1,
+      "message": "You can assume that the name is not empty https://chromium-review.googlesource.com/c/chromium/src/+/870390/4/base/task_scheduler/task_scheduler_impl.cc#32",
+      "range": {
+        "startLine": 169,
+        "startChar": 44,
+        "endLine": 169,
+        "endChar": 76
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a398f65_8498856f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:01:22Z",
+      "side": 1,
+      "message": "You can assume that the name is not empty https://chromium-review.googlesource.com/c/chromium/src/+/870390/4/base/task_scheduler/task_scheduler_impl.cc#32",
+      "range": {
+        "startLine": 180,
+        "startChar": 15,
+        "endLine": 180,
+        "endChar": 47
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fdef59e_956d424b",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:01:22Z",
+      "side": 1,
+      "message": "You can assume that the name is not empty https://chromium-review.googlesource.com/c/chromium/src/+/870390/4/base/task_scheduler/task_scheduler_impl.cc#32",
+      "range": {
+        "startLine": 191,
+        "startChar": 15,
+        "endLine": 191,
+        "endChar": 47
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdcdbf73_90f95273",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:01:22Z",
+      "side": 1,
+      "message": "This currently contains the TaskScheduler name, but the commit message says that it doesn\u0027t. See related comment https://chromium-review.googlesource.com/c/chromium/src/+/870390/4/base/task_scheduler/task_scheduler_impl.cc#44",
+      "range": {
+        "startLine": 372,
+        "startChar": 52,
+        "endLine": 372,
+        "endChar": 57
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daffce62_6f5f096c",
+        "filename": "base/task_scheduler/task_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:01:22Z",
+      "side": 1,
+      "message": "it must not be empty",
+      "range": {
+        "startLine": 175,
+        "startChar": 21,
+        "endLine": 175,
+        "endChar": 22
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be49a978_4f980f90",
+        "filename": "base/task_scheduler/task_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:01:22Z",
+      "side": 1,
+      "message": "it must not be empty",
+      "range": {
+        "startLine": 187,
+        "startChar": 15,
+        "endLine": 187,
+        "endChar": 16
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c70a99_f586f55f",
+        "filename": "base/task_scheduler/task_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:01:22Z",
+      "side": 1,
+      "message": "Pass a 2 separate arguments, so that the TaskScheduler name can be used for histograms only, while the pool name can be used for histograms *and* thread names?\n\nCurrently, \u0027(TaskScheduler name).(Pool name)\u0027 is used for histograms and thread names https://chromium-review.googlesource.com/c/chromium/src/+/870390/4/base/task_scheduler/scheduler_worker_pool_impl.cc#372",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 73
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6124bdda_bbd69347",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-17T17:01:22Z",
+      "side": 1,
+      "message": "base::JoinString()\nWill do a .reserve() to avoid multiple reallocations",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 51
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
