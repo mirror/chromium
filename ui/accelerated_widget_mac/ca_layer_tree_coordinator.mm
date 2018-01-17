@@ -6,6 +6,10 @@
 
 #import <AVFoundation/AVFoundation.h>
 
+#include "base/command_line.h"
+#include "base/strings/string_number_conversions.h"
+#include "ui/base/ui_base_switches.h"
+
 #include "base/mac/mac_util.h"
 #include "base/trace_event/trace_event.h"
 #include "ui/accelerated_widget_mac/availability_macros.h"
@@ -24,6 +28,12 @@ CALayerTreeCoordinator::CALayerTreeCoordinator(
     [root_ca_layer_ setGeometryFlipped:YES];
     [root_ca_layer_ setOpaque:YES];
   }
+
+  base::CommandLine* cl = base::CommandLine::ForCurrentProcess();
+  std::string string_value =
+      cl->GetSwitchValueASCII(switches::kSkipDisplayCounter);
+  if (string_value != "")
+    base::StringToInt(string_value, &skip_display_counter_);
 }
 
 CALayerTreeCoordinator::~CALayerTreeCoordinator() {}
@@ -43,6 +53,22 @@ CARendererLayerTree* CALayerTreeCoordinator::GetPendingCARendererLayerTree() {
 
 void CALayerTreeCoordinator::CommitPendingTreesToCA(
     const gfx::Rect& pixel_damage_rect) {
+  if (!skip_display_) {
+    if (skip_display_counter_) {
+      skip_display_counter_ -= 1;
+      LOG(ERROR) << "Skipping display in " << skip_display_counter_;
+      if (!skip_display_counter_) {
+        skip_display_ = true;
+        LOG(ERROR) << "Skipping display NOW.";
+      }
+    }
+  }
+
+  if (skip_display_) {
+    pending_ca_renderer_layer_tree_.reset();
+    return;
+  }
+
   // Update the CALayer hierarchy.
   ScopedCAActionDisabler disabler;
   if (pending_ca_renderer_layer_tree_) {
@@ -51,10 +77,13 @@ void CALayerTreeCoordinator::CommitPendingTreesToCA(
         scale_factor_);
     current_ca_renderer_layer_tree_.swap(pending_ca_renderer_layer_tree_);
   } else {
-    TRACE_EVENT0("gpu", "Blank frame: No overlays or CALayers");
-    DLOG(WARNING) << "Blank frame: No overlays or CALayers";
-    [root_ca_layer_ setSublayers:nil];
-    current_ca_renderer_layer_tree_.reset();
+    /*
+        TRACE_EVENT0("gpu", "Blank frame: No overlays or CALayers");
+        DLOG(WARNING) << "Blank frame: No overlays or CALayers";
+        [root_ca_layer_ setSublayers:nil];
+        current_ca_renderer_layer_tree_.reset();
+    */
+    current_ca_renderer_layer_tree_->PretendCommit();
   }
 
   // Reset all state for the next frame.

@@ -168,6 +168,13 @@ void DisplayResourceProvider::DeleteAndReturnUnusedResourcesToChild(
   DCHECK(child_it != children_.end());
   Child* child_info = &child_it->second;
 
+  /*
+    printf("Returning unused %d\n", (int)unused.size());
+    static int counter = 0;
+    counter += 1;
+    DCHECK(counter < 10 || unused.size() != 6);
+  */
+
   if (unused.empty() && !child_info->marked_for_deletion)
     return;
 

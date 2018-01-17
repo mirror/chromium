@@ -1015,6 +1015,11 @@ bool LayerTreeImpl::UpdateDrawProperties(
   if (!needs_update_draw_properties_)
     return true;
 
+  if (host_impl_->skip_update_draw_properties_) {
+    needs_update_draw_properties_ = false;
+    return true;
+  }
+
   // Ensure the scrollbar geometries are up-to-date for hit testing and quads
   // generation. This may cause damage on the scrollbar layers which is why
   // it occurs before we reset |needs_update_draw_properties_|.

@@ -252,6 +252,9 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
     return &current_frame_;
   }
 
+  int skip_renderer_counter_ = 0;
+  bool skip_renderer_ = false;
+
  private:
   bool initialized_ = false;
 #if DCHECK_IS_ON()

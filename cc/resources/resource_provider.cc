@@ -443,6 +443,7 @@ void ResourceProvider::DeleteResource(viz::ResourceId id) {
 void ResourceProvider::DeleteResourceInternal(ResourceMap::iterator it,
                                               DeleteStyle style) {
   TRACE_EVENT0("cc", "ResourceProvider::DeleteResourceInternal");
+
   viz::internal::Resource* resource = &it->second;
   DCHECK(resource->exported_count == 0 || style != NORMAL);
 

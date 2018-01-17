@@ -168,6 +168,7 @@ static const char* const kSwitchNames[] = {
 #if defined(OS_ANDROID)
     switches::kMadviseRandomExecutableCode,
 #endif
+    switches::kSkipDisplayCounter,
 };
 
 enum GPUProcessLifetimeEvent {

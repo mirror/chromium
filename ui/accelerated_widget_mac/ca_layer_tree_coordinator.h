@@ -51,6 +51,9 @@ class ACCELERATED_WIDGET_MAC_EXPORT CALayerTreeCoordinator {
 
   base::scoped_nsobject<CALayer> root_ca_layer_;
 
+  int skip_display_counter_ = 0;
+  bool skip_display_ = false;
+
   // Frame that has been scheduled, but has not had a subsequent commit call
   // made yet.
   std::unique_ptr<CARendererLayerTree> pending_ca_renderer_layer_tree_;

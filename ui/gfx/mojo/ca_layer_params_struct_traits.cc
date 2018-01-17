@@ -13,7 +13,7 @@ namespace mojo {
 mojo::ScopedHandle
 StructTraits<gfx::mojom::CALayerParamsDataView, gfx::CALayerParams>::
     io_surface_mach_port(const gfx::CALayerParams& ca_layer_params) {
-#if defined(OS_MACOSX) && !defined(OS_IOS)
+#if 0 && defined(OS_MACOSX) && !defined(OS_IOS)
   return mojo::WrapMachPort(ca_layer_params.io_surface_mach_port.get());
 #else
   return mojo::ScopedHandle();
@@ -26,7 +26,7 @@ bool StructTraits<gfx::mojom::CALayerParamsDataView, gfx::CALayerParams>::Read(
   out->is_empty = data.is_empty();
   out->ca_context_id = data.ca_context_id();
 
-#if defined(OS_MACOSX) && !defined(OS_IOS)
+#if 0 && defined(OS_MACOSX) && !defined(OS_IOS)
   mach_port_t io_surface_mach_port;
   MojoResult unwrap_result =
       mojo::UnwrapMachPort(data.TakeIoSurfaceMachPort(), &io_surface_mach_port);
