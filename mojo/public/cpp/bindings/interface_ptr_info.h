@@ -42,7 +42,7 @@ class InterfacePtrInfo {
     return *this;
   }
 
-  bool is_valid() const { return handle_.is_valid(); }
+  bool is_valid() const { return static_cast<bool>(handle_); }
 
   ScopedMessagePipeHandle PassHandle() { return std::move(handle_); }
   const ScopedMessagePipeHandle& handle() const { return handle_; }
@@ -54,7 +54,7 @@ class InterfacePtrInfo {
   void set_version(uint32_t version) { version_ = version; }
 
   // Allow InterfacePtrInfo<> to be used in boolean expressions.
-  explicit operator bool() const { return handle_.is_valid(); }
+  explicit operator bool() const { return static_cast<bool>(handle_); }
 
  private:
   ScopedMessagePipeHandle handle_;

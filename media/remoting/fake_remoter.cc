@@ -137,13 +137,13 @@ void FakeRemoter::StartDataStreams(
     mojo::ScopedDataPipeConsumerHandle video_pipe,
     mojom::RemotingDataStreamSenderRequest audio_sender_request,
     mojom::RemotingDataStreamSenderRequest video_sender_request) {
-  if (audio_pipe.is_valid()) {
+  if (audio_pipe) {
     VLOG(2) << "Has audio";
     audio_stream_sender_.reset(new FakeRemotingDataStreamSender(
         std::move(audio_sender_request), std::move(audio_pipe)));
   }
 
-  if (video_pipe.is_valid()) {
+  if (video_pipe) {
     VLOG(2) << "Has video";
     video_stream_sender_.reset(new FakeRemotingDataStreamSender(
         std::move(video_sender_request), std::move(video_pipe)));

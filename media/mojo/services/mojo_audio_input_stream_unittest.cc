@@ -99,8 +99,8 @@ class MockClient : public mojom::AudioInputStreamClient {
   void Initialized(mojo::ScopedSharedBufferHandle shared_buffer,
                    mojo::ScopedHandle socket_handle,
                    bool initially_muted) {
-    ASSERT_TRUE(shared_buffer.is_valid());
-    ASSERT_TRUE(socket_handle.is_valid());
+    ASSERT_TRUE(shared_buffer);
+    ASSERT_TRUE(socket_handle);
 
     base::PlatformFile fd;
     mojo::UnwrapPlatformFile(std::move(socket_handle), &fd);

@@ -375,7 +375,7 @@ class BodyReader {
   // * OnDataRead returns an error.
   // * The BodyReader is deleted.
   void Start(mojo::ScopedDataPipeConsumerHandle body_data_pipe) {
-    DCHECK(!body_data_pipe_.is_valid());
+    DCHECK(!body_data_pipe_);
     body_data_pipe_ = std::move(body_data_pipe);
     handle_watcher_ = std::make_unique<mojo::SimpleWatcher>(
         FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL);

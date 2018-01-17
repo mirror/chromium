@@ -48,7 +48,7 @@ bool FontLoadingTestCase::BeforeSandboxInit() {
   }
 
   font_shmem_ = mojo::SharedBufferHandle::Create(font_data_length_);
-  if (!font_shmem_.is_valid()) {
+  if (!font_shmem_) {
     LOG(ERROR) << "Failed to create shared memory object.";
     return false;
   }
@@ -66,7 +66,7 @@ bool FontLoadingTestCase::BeforeSandboxInit() {
 bool FontLoadingTestCase::SandboxedTest() {
   mojo::ScopedSharedBufferHandle shmem_handle =
       font_shmem_->Clone(mojo::SharedBufferHandle::AccessMode::READ_ONLY);
-  if (!shmem_handle.is_valid()) {
+  if (!shmem_handle) {
     LOG(ERROR) << "ScopedSharedBufferHandle handle duplication failed";
     return false;
   }

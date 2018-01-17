@@ -44,7 +44,7 @@ class MOJO_CPP_BINDINGS_EXPORT InterfacePtrStateBase {
 
   uint32_t version() const { return version_; }
 
-  bool is_bound() const { return handle_.is_valid() || endpoint_client_; }
+  bool is_bound() const { return handle_ || endpoint_client_; }
 
   bool encountered_error() const {
     return endpoint_client_ ? endpoint_client_->encountered_error() : false;

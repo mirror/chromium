@@ -52,7 +52,7 @@ class WaitSet::State : public base::RefCountedThreadSafe<State> {
   }
 
   MojoResult AddHandle(Handle handle, MojoHandleSignals signals) {
-    DCHECK(watcher_handle_.is_valid());
+    DCHECK(watcher_handle_);
 
     scoped_refptr<Context> context = new Context(this, handle);
 
@@ -91,7 +91,7 @@ class WaitSet::State : public base::RefCountedThreadSafe<State> {
   }
 
   MojoResult RemoveHandle(Handle handle) {
-    DCHECK(watcher_handle_.is_valid());
+    DCHECK(watcher_handle_);
 
     scoped_refptr<Context> context;
     {
@@ -132,7 +132,7 @@ class WaitSet::State : public base::RefCountedThreadSafe<State> {
             Handle* ready_handles,
             MojoResult* ready_results,
             MojoHandleSignalsState* signals_states) {
-    DCHECK(watcher_handle_.is_valid());
+    DCHECK(watcher_handle_);
     DCHECK(num_ready_handles);
     DCHECK(ready_handles);
     DCHECK(ready_results);

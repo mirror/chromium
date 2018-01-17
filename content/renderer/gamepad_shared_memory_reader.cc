@@ -48,7 +48,7 @@ void GamepadSharedMemoryReader::Start(
 
   // If we don't get a valid handle from the browser, don't try to Map (we're
   // probably out of memory or file handles).
-  bool valid_handle = renderer_shared_buffer_handle_.is_valid();
+  bool valid_handle = static_cast<bool>(renderer_shared_buffer_handle_);
   UMA_HISTOGRAM_BOOLEAN("Gamepad.ValidSharedMemoryHandle", valid_handle);
   if (!valid_handle)
     return;
@@ -75,7 +75,7 @@ void GamepadSharedMemoryReader::SampleGamepads(device::Gamepads& gamepads) {
   device::Gamepads read_into;
   TRACE_EVENT0("GAMEPAD", "SampleGamepads");
 
-  if (!renderer_shared_buffer_handle_.is_valid())
+  if (!renderer_shared_buffer_handle_)
     return;
 
   // Only try to read this many times before failing to avoid waiting here

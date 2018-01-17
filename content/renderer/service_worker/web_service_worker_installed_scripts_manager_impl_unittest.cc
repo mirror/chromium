@@ -24,8 +24,8 @@ class BrowserSideSender
   blink::mojom::ServiceWorkerInstalledScriptsInfoPtr CreateAndBind(
       const std::vector<GURL>& installed_urls) {
     EXPECT_FALSE(manager_.is_bound());
-    EXPECT_FALSE(body_handle_.is_valid());
-    EXPECT_FALSE(meta_data_handle_.is_valid());
+    EXPECT_FALSE(body_handle_);
+    EXPECT_FALSE(meta_data_handle_);
     auto scripts_info = blink::mojom::ServiceWorkerInstalledScriptsInfo::New();
     scripts_info->installed_urls = installed_urls;
     scripts_info->manager_request = mojo::MakeRequest(&manager_);
@@ -36,8 +36,8 @@ class BrowserSideSender
   void TransferInstalledScript(const GURL& script_url,
                                int64_t body_size,
                                int64_t meta_data_size) {
-    EXPECT_FALSE(body_handle_.is_valid());
-    EXPECT_FALSE(meta_data_handle_.is_valid());
+    EXPECT_FALSE(body_handle_);
+    EXPECT_FALSE(meta_data_handle_);
     auto script_info = blink::mojom::ServiceWorkerScriptInfo::New();
     script_info->script_url = script_url;
     EXPECT_EQ(MOJO_RESULT_OK,

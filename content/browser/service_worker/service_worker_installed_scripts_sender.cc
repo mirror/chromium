@@ -177,7 +177,7 @@ class ServiceWorkerInstalledScriptsSender::Sender {
     // It isn't necessary to handle MojoResult here since BeginWrite() returns
     // an equivalent error.
     DCHECK(!body_pending_write_);
-    DCHECK(body_handle_.is_valid());
+    DCHECK(body_handle_);
     uint32_t num_bytes = 0;
     MojoResult rv = network::NetToMojoPendingBuffer::BeginWrite(
         &body_handle_, &body_pending_write_, &num_bytes);
@@ -195,7 +195,7 @@ class ServiceWorkerInstalledScriptsSender::Sender {
       case MOJO_RESULT_OK:
         // |body_handle_| must have been taken by |body_pending_write_|.
         DCHECK(body_pending_write_);
-        DCHECK(!body_handle_.is_valid());
+        DCHECK(!body_handle_);
         break;
     }
 
@@ -216,7 +216,7 @@ class ServiceWorkerInstalledScriptsSender::Sender {
       return;
     }
     body_handle_ = body_pending_write_->Complete(read_bytes);
-    DCHECK(body_handle_.is_valid());
+    DCHECK(body_handle_);
     body_pending_write_ = nullptr;
     ServiceWorkerMetrics::CountReadResponseResult(
         ServiceWorkerMetrics::READ_OK);
@@ -258,9 +258,7 @@ class ServiceWorkerInstalledScriptsSender::Sender {
 
   bool WasMetadataWritten() const { return !meta_data_sender_; }
 
-  bool WasBodyWritten() const {
-    return !body_handle_.is_valid() && !body_pending_write_;
-  }
+  bool WasBodyWritten() const { return !body_handle_ && !body_pending_write_; }
 
   base::WeakPtr<Sender> AsWeakPtr() { return weak_factory_.GetWeakPtr(); }
 

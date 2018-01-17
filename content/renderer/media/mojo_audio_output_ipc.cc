@@ -197,8 +197,8 @@ void MojoAudioOutputIPC::StreamCreated(
     mojo::ScopedHandle socket) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(delegate_);
-  DCHECK(socket.is_valid());
-  DCHECK(shared_memory.is_valid());
+  DCHECK(socket);
+  DCHECK(shared_memory);
 
   base::PlatformFile socket_handle;
   auto result = mojo::UnwrapPlatformFile(std::move(socket), &socket_handle);

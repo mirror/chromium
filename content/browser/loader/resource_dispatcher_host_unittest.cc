@@ -979,7 +979,7 @@ void CheckSuccessfulRequest(TestURLLoaderClient* client,
   if (!reference_data.empty()) {
     client->RunUntilResponseBodyArrived();
     mojo::ScopedDataPipeConsumerHandle body = client->response_body_release();
-    ASSERT_TRUE(body.is_valid());
+    ASSERT_TRUE(body);
 
     std::string actual;
     EXPECT_TRUE(mojo::common::BlockingCopyToString(std::move(body), &actual));

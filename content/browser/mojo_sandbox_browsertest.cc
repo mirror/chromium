@@ -73,7 +73,7 @@ IN_PROC_BROWSER_TEST_F(MojoSandboxTest, SubprocessSharedBuffer) {
       base::BindOnce(
           [](const base::Closure& quit_closure, bool* got_response,
              mojo::ScopedSharedBufferHandle buffer) {
-            ASSERT_TRUE(buffer.is_valid());
+            ASSERT_TRUE(buffer);
             mojo::ScopedSharedBufferMapping mapping =
                 buffer->Map(kTestMessage.size());
             ASSERT_TRUE(mapping);

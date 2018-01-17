@@ -400,7 +400,7 @@ void ServiceWorkerSubresourceLoader::StartResponse(
   CommitResponseHeaders();
 
   // Handle a stream response body.
-  if (!body_as_stream.is_null() && body_as_stream->stream.is_valid()) {
+  if (!body_as_stream.is_null() && body_as_stream->stream) {
     DCHECK(url_loader_client_.is_bound());
     url_loader_client_->OnStartLoadingResponseBody(
         std::move(body_as_stream->stream));

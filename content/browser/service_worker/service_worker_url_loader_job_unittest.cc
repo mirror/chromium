@@ -819,7 +819,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponseAndCancel) {
       kResponseBody, &written_bytes, MOJO_WRITE_DATA_FLAG_NONE);
   ASSERT_EQ(MOJO_RESULT_OK, mojo_result);
   EXPECT_EQ(sizeof(kResponseBody) - 1, written_bytes);
-  EXPECT_TRUE(data_pipe.producer_handle.is_valid());
+  EXPECT_TRUE(data_pipe.producer_handle);
   EXPECT_FALSE(job_->WasCanceled());
   EXPECT_TRUE(version_->HasWorkInBrowser());
   job_->Cancel();
@@ -835,7 +835,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponseAndCancel) {
   EXPECT_EQ(MOJO_RESULT_OK, mojo_result);
 
   client_.RunUntilComplete();
-  EXPECT_FALSE(data_pipe.consumer_handle.is_valid());
+  EXPECT_FALSE(data_pipe.consumer_handle);
   EXPECT_EQ(net::ERR_ABORTED, client_.completion_status().error_code);
 }
 

@@ -86,7 +86,7 @@ scoped_refptr<VideoFrame> InterprocessFramePool::WrapBuffer(
   mojo::ScopedSharedBufferHandle buffer =
       buffer_pool_->GetHandleForInterProcessTransit(buffer_id,
                                                     false /* read-write */);
-  if (!buffer.is_valid()) {
+  if (!buffer) {
     return nullptr;
   }
 

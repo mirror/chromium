@@ -53,7 +53,7 @@ void GpuClient::OnEstablishGpuChannel(
     const gpu::GPUInfo& gpu_info,
     const gpu::GpuFeatureInfo& gpu_feature_info,
     GpuProcessHost::EstablishChannelStatus status) {
-  DCHECK_EQ(channel_handle.is_valid(),
+  DCHECK_EQ(static_cast<bool>(channel_handle),
             status == GpuProcessHost::EstablishChannelStatus::SUCCESS);
   gpu_channel_requested_ = false;
   EstablishGpuChannelCallback callback = std::move(callback_);
@@ -99,7 +99,7 @@ void GpuClient::EstablishGpuChannel(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   // At most one channel should be requested. So clear previous request first.
   ClearCallback();
-  if (channel_handle_.is_valid()) {
+  if (channel_handle_) {
     // If a channel has been pre-established and cached,
     //   1) if callback is valid, return it right away.
     //   2) if callback is empty, it's PreEstablishGpyChannel() being called
@@ -107,7 +107,7 @@ void GpuClient::EstablishGpuChannel(
     if (callback) {
       callback.Run(render_process_id_, std::move(channel_handle_), gpu_info_,
                    gpu_feature_info_);
-      DCHECK(!channel_handle_.is_valid());
+      DCHECK(!channel_handle_);
     }
     return;
   }

@@ -36,7 +36,7 @@ MojoSharedBufferVideoFrame::CreateDefaultI420(const gfx::Size& dimensions,
   const size_t allocation_size = VideoFrame::AllocationSize(format, coded_size);
   mojo::ScopedSharedBufferHandle handle =
       mojo::SharedBufferHandle::Create(allocation_size);
-  if (!handle.is_valid())
+  if (!handle)
     return nullptr;
 
   // Create and initialize the frame. As this is I420 format, the U and V
@@ -147,7 +147,7 @@ MojoSharedBufferVideoFrame::MojoSharedBufferVideoFrame(
                  timestamp),
       shared_buffer_handle_(std::move(handle)),
       shared_buffer_size_(mapped_size) {
-  DCHECK(shared_buffer_handle_.is_valid());
+  DCHECK(shared_buffer_handle_);
 }
 
 bool MojoSharedBufferVideoFrame::Init(int32_t y_stride,

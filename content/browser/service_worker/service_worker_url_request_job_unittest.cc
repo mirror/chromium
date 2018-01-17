@@ -1071,7 +1071,7 @@ TEST_F(ServiceWorkerURLRequestJobTest, StreamResponseAndCancel) {
     ASSERT_EQ(MOJO_RESULT_OK, result);
     EXPECT_EQ(sizeof(kTestData) - 1, written_bytes);
   }
-  EXPECT_TRUE(data_pipe.producer_handle.is_valid());
+  EXPECT_TRUE(data_pipe.producer_handle);
   request_->Cancel();
   EXPECT_FALSE(HasWork());
 
@@ -1084,7 +1084,7 @@ TEST_F(ServiceWorkerURLRequestJobTest, StreamResponseAndCancel) {
   stream_callback->OnAborted();
 
   base::RunLoop().RunUntilIdle();
-  EXPECT_FALSE(data_pipe.consumer_handle.is_valid());
+  EXPECT_FALSE(data_pipe.consumer_handle);
   EXPECT_EQ(net::ERR_ABORTED, url_request_delegate_.request_status());
 
   EXPECT_EQ(0, times_prepare_to_restart_invoked_);

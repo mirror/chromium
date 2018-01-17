@@ -74,7 +74,7 @@ void MojoBlobReader::NotifyCompletedAndDeleteIfNeeded(int result) {
     notified_completed_ = true;
   }
 
-  bool has_data_pipe = pending_write_ || response_body_stream_.is_valid();
+  bool has_data_pipe = pending_write_ || response_body_stream_;
   if (!has_data_pipe)
     delete this;
 }

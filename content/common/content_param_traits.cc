@@ -122,7 +122,7 @@ bool ParamTraits<scoped_refptr<storage::BlobHandle>>::Read(
   mojo::ScopedMessagePipeHandle handle;
   if (!MojoMessageHelper::ReadMessagePipeFrom(m, iter, &handle))
     return false;
-  DCHECK(handle.is_valid());
+  DCHECK(handle);
   blink::mojom::BlobPtr blob;
   blob.Bind(blink::mojom::BlobPtrInfo(std::move(handle), version));
   *r = base::MakeRefCounted<storage::BlobHandle>(std::move(blob));

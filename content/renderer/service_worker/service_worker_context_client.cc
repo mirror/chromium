@@ -544,7 +544,7 @@ class ServiceWorkerContextClient::NavigationPreloadRequest final
 
   void OnStartLoadingResponseBody(
       mojo::ScopedDataPipeConsumerHandle body) override {
-    DCHECK(!body_.is_valid());
+    DCHECK(!body_);
     body_ = std::move(body);
     MaybeReportResponseToClient();
   }
@@ -581,7 +581,7 @@ class ServiceWorkerContextClient::NavigationPreloadRequest final
     if (response_) {
       // When the response body from the server is empty, OnComplete() is called
       // without OnStartLoadingResponseBody().
-      DCHECK(!body_.is_valid());
+      DCHECK(!body_);
       client->OnNavigationPreloadResponse(fetch_event_id_, std::move(response_),
                                           nullptr);
     }
@@ -593,7 +593,7 @@ class ServiceWorkerContextClient::NavigationPreloadRequest final
 
  private:
   void MaybeReportResponseToClient() {
-    if (!response_ || !body_.is_valid())
+    if (!response_ || !body_)
       return;
     ServiceWorkerContextClient* client =
         ServiceWorkerContextClient::ThreadSpecificInstance();
@@ -1063,7 +1063,7 @@ void ServiceWorkerContextClient::RespondToFetchEventWithResponseStream(
   blink::mojom::ServiceWorkerStreamCallbackPtr callback_ptr;
   body_as_stream->callback_request = mojo::MakeRequest(&callback_ptr);
   body_as_stream->stream = web_body_as_stream->DrainStreamDataPipe();
-  DCHECK(body_as_stream->stream.is_valid());
+  DCHECK(body_as_stream->stream);
 
   web_body_as_stream->SetListener(
       std::make_unique<StreamHandleListener>(std::move(callback_ptr)));

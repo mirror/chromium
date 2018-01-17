@@ -37,7 +37,7 @@ bool VerifyDecodeParams(const gfx::Size& coded_size,
     return false;
   }
 
-  if (!output_handle->is_valid()) {
+  if (!*output_handle) {
     LOG(ERROR) << "invalid output_handle";
     return false;
   }

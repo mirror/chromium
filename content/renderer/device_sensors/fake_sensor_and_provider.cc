@@ -81,7 +81,7 @@ void FakeSensor::SetReading(device::SensorReading reading) {
 }
 
 void FakeSensor::SensorReadingChanged() {
-  if (!shared_buffer_handle_.is_valid())
+  if (!shared_buffer_handle_)
     return;
 
   mojo::ScopedSharedBufferMapping shared_buffer =
