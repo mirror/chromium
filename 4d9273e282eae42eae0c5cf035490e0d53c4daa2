@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aa97596_8226544b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 9666,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-17T16:41:46Z",
+      "side": 0,
+      "message": "were these never recorded? If they ever were they should be marked obsolete instead",
+      "range": {
+        "startLine": 9666,
+        "startChar": 34,
+        "endLine": 9666,
+        "endChar": 54
+      },
+      "revId": "4d9273e282eae42eae0c5cf035490e0d53c4daa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
