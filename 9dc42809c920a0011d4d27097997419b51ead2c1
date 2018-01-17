@@ -22,6 +22,30 @@
       "revId": "9dc42809c920a0011d4d27097997419b51ead2c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9949c575_91642c3d",
+        "filename": "chrome/android/java/res/layout/accept_languages_item.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2018-01-17T06:00:02Z",
+      "side": 1,
+      "message": "Sorry for the confusion, I tried to change it to the search engine options style and shared it with Yana, both of us thought it was too large (even larger than button font). screenshot is here: https://screenshot.googleplex.com/zfXL2D9SD0v\n\nSeems making the list item content consistent with preferences default style((PreferenceTitle and PreferenceSummary)) is a better choice. screenshot: https://screenshot.googleplex.com/MKDv8PxNtEW\n\nAnd the style has been already used in some preferences. Eg. \n1, Site settings page\n2, \"All sites\" page under \"Site settings\"\n...  \n\nWDYT",
+      "parentUuid": "06f8c921_faa30ca2",
+      "range": {
+        "startLine": 30,
+        "startChar": 26,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "9dc42809c920a0011d4d27097997419b51ead2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
