@@ -94,6 +94,7 @@ class MODULES_EXPORT PaintRenderingContext2D : public ScriptWrappable,
   std::unique_ptr<PaintRecorder> paint_recorder_;
   sk_sp<PaintRecord> previous_frame_;
   IntSize container_size_;
+
   const CanvasColorParams& color_params_;
   PaintRenderingContext2DSettings context_settings_;
   bool did_record_draw_commands_in_paint_recorder_;
