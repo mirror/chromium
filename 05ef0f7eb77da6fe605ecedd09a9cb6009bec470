@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16ceef70_1d397637",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3518,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-17T13:58:20Z",
+      "side": 1,
+      "message": "Add to the documentation something like:\n\", unless the load is an inactive MediaStream\".",
+      "revId": "05ef0f7eb77da6fe605ecedd09a9cb6009bec470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c011a437_58684fd0",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3528,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-17T13:58:20Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 3528,
+        "startChar": 7,
+        "endLine": 3528,
+        "endChar": 11
+      },
+      "revId": "05ef0f7eb77da6fe605ecedd09a9cb6009bec470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
