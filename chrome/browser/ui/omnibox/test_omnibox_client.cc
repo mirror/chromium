@@ -4,11 +4,13 @@
 
 #include "chrome/browser/ui/omnibox/test_omnibox_client.h"
 
+#include <memory>
+
 #include "chrome/browser/autocomplete/chrome_autocomplete_provider_client.h"
 
 std::unique_ptr<AutocompleteProviderClient>
 TestOmniboxClient::CreateAutocompleteProviderClient() {
-  return base::MakeUnique<ChromeAutocompleteProviderClient>(&profile_);
+  return std::make_unique<ChromeAutocompleteProviderClient>(&profile_);
 }
 
 const SessionID& TestOmniboxClient::GetSessionID() const {
