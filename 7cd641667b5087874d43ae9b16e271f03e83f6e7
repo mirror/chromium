@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8041d60_322c4222",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-17T22:50:08Z",
+      "side": 1,
+      "message": "This",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "7cd641667b5087874d43ae9b16e271f03e83f6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab573c56_f937c933",
+        "filename": "android_webview/browser/net/aw_network_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-17T22:50:08Z",
+      "side": 1,
+      "message": "Please sort the headers in all the files that (now) include net/base/proxy_server.h.\n\nIn particular, net/base/proxy_server should go before net/proxy_resolution/*.\n\n\"git cl format\" may do the trick. But if that causes too many other spurious changes, you can run //tools/sort-headers.py  (and run it over all the affected files using tools/git/for-all-touched-files.py)",
+      "revId": "7cd641667b5087874d43ae9b16e271f03e83f6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7058020d_2334ff4a",
+        "filename": "net/base/proxy_server.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-17T22:50:08Z",
+      "side": 1,
+      "message": "update header guard",
+      "revId": "7cd641667b5087874d43ae9b16e271f03e83f6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4537c00_b0d27682",
+        "filename": "net/proxy_resolution/proxy_info.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-17T22:50:08Z",
+      "side": 1,
+      "message": "All the header guards in net/proxy_resolution will need to be updated.",
+      "revId": "7cd641667b5087874d43ae9b16e271f03e83f6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5845731d_3ff21e68",
+        "filename": "tools/traffic_annotation/summary/annotations.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-17T22:50:08Z",
+      "side": 1,
+      "message": "Remove this file.\n\nIt is my understanding this file is generated separately (https://chromium.googlesource.com/chromium/src/+/ddccd3f6dba62870a038ecb7d68b28038fcbe5d9/tools/traffic_annotation/summary/README.md).\n\nSo unless this modification was created by running the script, I would remove it from the changelist.  (A stale annotations.xml shouldn\u0027t cause any problems on commit queue AFAIK, and will get updated by a separate process).",
+      "revId": "7cd641667b5087874d43ae9b16e271f03e83f6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
