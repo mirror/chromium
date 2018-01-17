@@ -22,6 +22,30 @@
       "revId": "64dea4a52c25b7b9aeefdccd8c1c6a37fc49bd08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b27d753_94adcb27",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-17T20:09:33Z",
+      "side": 1,
+      "message": "optional:\nWould it be easier/even better performance if you just wrap the code-section with \n\u003ctemplate is\u003d\"dom-if\" if\u003d\"[[isOpened_(index, selectedEntry_)]]\" restamp\u003e\n...\n\u003c/template\u003e\n\nso at any given moment, only one code-section is attached in the DOM? This would also detach the hidden code-sections and clean up for you.\n\nIf you do this though, note that you might have to do this.async() in setCode_ so your querySelector() can find the newly attached code-section.",
+      "parentUuid": "59effac9_49a5a8c7",
+      "range": {
+        "startLine": 195,
+        "startChar": 38,
+        "endLine": 195,
+        "endChar": 46
+      },
+      "revId": "64dea4a52c25b7b9aeefdccd8c1c6a37fc49bd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
