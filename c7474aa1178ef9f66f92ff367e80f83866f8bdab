@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1f30a11_5fe45e73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-17T19:43:40Z",
+      "side": 1,
+      "message": "Can you add a TESTED\u003d line?",
+      "revId": "c7474aa1178ef9f66f92ff367e80f83866f8bdab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
