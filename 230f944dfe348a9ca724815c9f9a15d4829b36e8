@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b592e07f_2c8bf3a6",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-17T14:35:54Z",
+      "side": 1,
+      "message": "What is Visit?\n\nWe already have Trace and Mark, so I\u0027m not sure if we want to introduce yet another concept.",
+      "revId": "230f944dfe348a9ca724815c9f9a15d4829b36e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
