@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c9fdc94e_1ce75489",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-17T19:51:36Z",
+      "side": 1,
+      "message": "\u003e which means \"OptionalStorageBase(OptionalStorageBase\u0026) \u003d default;\" defines explicitly-defined\n\u003e copy constructor that is OptionalStorageBase(const OptionalStorageBase\u0026) or\n\u003e OptionalStorageBase(OptionalStorageBase\u0026) depending on T\u0027s copy constructor signature in this\n\u003e case.\n\nI showed this to jbroman who tried this out in a more reduced case and it didn\u0027t compile. Can you help me understand why it works in the Optional case?\n\nhttps://godbolt.org/#g:!((g:!((g:!((h:codeEditor,i:(j:1,lang:c%2B%2B,source:\u0027struct+S+%7B%0A++++S(S%26)+%3D+default%3B%0A%7D%3B%0A%0Avoid+Foo(const+S%26+s)+%7B%0A++++S+s2(s)%3B%0A%7D\u0027),l:\u00275\u0027,n:\u00270\u0027,o:\u0027C%2B%2B+source+%231\u0027,t:\u00270\u0027)),k:33.333333333333336,l:\u00274\u0027,n:\u00270\u0027,o:\u0027\u0027,s:0,t:\u00270\u0027),(g:!((h:compiler,i:(compiler:clang_trunk,filters:(b:\u00270\u0027,binary:\u00271\u0027,commentOnly:\u00270\u0027,demangle:\u00270\u0027,directives:\u00270\u0027,execute:\u00271\u0027,intel:\u00270\u0027,trim:\u00270\u0027),lang:c%2B%2B,libs:!(),options:\u0027\u0027,source:1),l:\u00275\u0027,n:\u00270\u0027,o:\u0027x86-64+clang+(trunk)+(Editor+%231,+Compiler+%231)+C%2B%2B\u0027,t:\u00270\u0027)),k:33.333333333333336,l:\u00274\u0027,n:\u00270\u0027,o:\u0027\u0027,s:0,t:\u00270\u0027),(g:!((h:output,i:(compiler:1,editor:1),l:\u00275\u0027,n:\u00270\u0027,o:\u0027%231+with+x86-64+clang+(trunk)\u0027,t:\u00270\u0027)),k:33.33333333333333,l:\u00274\u0027,n:\u00270\u0027,o:\u0027\u0027,s:0,t:\u00270\u0027)),l:\u00272\u0027,n:\u00270\u0027,o:\u0027\u0027,t:\u00270\u0027)),version:4\n\nBTW this is section 11.4.2 in the newer n4687 spec.",
+      "parentUuid": "722c8cb4_799733e9",
+      "revId": "ef8a3d8d19a5eb3d4e77426c29d5a3e8a4728bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebc2f50b_802104ff",
         "filename": "base/optional_unittest.cc",
         "patchSetId": 2
