@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef49756e_761c1d23",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2018-01-17T21:42:07Z",
+      "side": 1,
+      "message": "I actually tried that first:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/843454\n\nI realized that QuicSpdySession is in shared code and Http2PriorityDependencies is in Chromium, so that\u0027s why I put Http2PriorityDependencies in QuicChromiumClientSession instead. I suppose Http2PriorityDependencies could be moved into shared code. Feel free to look at quic_spdy_session.h|cc in the abandoned codereview linked above and see if you prefer that implementation.",
+      "parentUuid": "63a69025_18b38ca4",
+      "range": {
+        "startLine": 760,
+        "startChar": 55,
+        "endLine": 760,
+        "endChar": 0
+      },
+      "revId": "079ad54e478f307f2113feed39863a266709887c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bb1606f_36dbba35",
         "filename": "net/quic/core/quic_spdy_session.h",
         "patchSetId": 7
