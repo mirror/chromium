@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be1558bb_23af79a3",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_browser_tests.filter",
+        "patchSetId": 16
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-17T19:01:48Z",
+      "side": 1,
+      "message": "From the patchset comments I\u0027m not sure if this should be enabled now? it doesn\u0027t look like there are any changes to that test in the CL though.",
+      "range": {
+        "startLine": 284,
+        "startChar": 1,
+        "endLine": 284,
+        "endChar": 24
+      },
+      "revId": "39e6d5273fd56e30dcfe82261f06d0e22b38db8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

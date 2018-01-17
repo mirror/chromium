@@ -760,6 +760,24 @@
     },
     {
       "key": {
+        "uuid": "7632f187_88667a0f",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-17T19:01:48Z",
+      "side": 1,
+      "message": "Yeah, that looks right.",
+      "parentUuid": "46959e1d_0a9f05e3",
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb3a0a40_d770150d",
         "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
         "patchSetId": 12
@@ -842,6 +860,30 @@
       "side": 1,
       "message": "Do you mean adding the \"UnsafeCreateOptions options\" as the parameter of X509Certificate::CreateFromPickle()?",
       "parentUuid": "42b5a7e9_33d011d2",
+      "range": {
+        "startLine": 344,
+        "startChar": 29,
+        "endLine": 344,
+        "endChar": 45
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56799a61_801e76d1",
+        "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-17T19:01:48Z",
+      "side": 1,
+      "message": "I guess creating a new X509Certificate::CreateFromPickleUnsafeOptions (similar to the other FooUnsafeOptions methods in there) would be the most consistent way.\n\nAnd add a comment when setting the printable_string_is_utf8 option about it being necessary to round-trip any X509Certificate objects that were parsed with that option in the first place.",
+      "parentUuid": "14182627_c91ea3ee",
       "range": {
         "startLine": 344,
         "startChar": 29,
