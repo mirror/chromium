@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "acfa9bd7_362d1721",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_system.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-17T15:33:24Z",
+      "side": 1,
+      "message": "Looking at the disassembly for libchromium_android_linker.so, it looks like this calls the system\u0027s malloc code, so everything seems good, and this patch doesn\u0027t change this.",
+      "parentUuid": "5f67e2bf_168f5534",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 22
+      },
+      "revId": "b072360ac7043814546a849e76df1acecfee1b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fba16f0_b99e96a4",
         "filename": "third_party/android_crazy_linker/src/src/crazy_linker_system.cpp",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4b855064_ec435479",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_system.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-17T15:33:24Z",
+      "side": 1,
+      "message": "//base is not linked into the crazy linker, so we wouldn\u0027t be able to call base::OnNoMemory().\nI\u0027m not familiar with __builtin_unreachable(), but that might be a good idea.",
+      "parentUuid": "7fba16f0_b99e96a4",
+      "range": {
+        "startLine": 114,
+        "startChar": 1,
+        "endLine": 120,
+        "endChar": 11
+      },
+      "revId": "b072360ac7043814546a849e76df1acecfee1b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0759235b_4ef6bea7",
         "filename": "third_party/android_crazy_linker/src/src/crazy_linker_system.cpp",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-17T15:10:50Z",
       "side": 1,
       "message": "typo Fuschia, but the whole parenthetical remove looks like something you should just cut",
+      "range": {
+        "startLine": 128,
+        "startChar": 25,
+        "endLine": 128,
+        "endChar": 32
+      },
+      "revId": "b072360ac7043814546a849e76df1acecfee1b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b2960e_d21207f1",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_system.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-17T15:33:24Z",
+      "side": 1,
+      "message": "Oh, sorry, will fix.",
+      "parentUuid": "0759235b_4ef6bea7",
       "range": {
         "startLine": 128,
         "startChar": 25,
