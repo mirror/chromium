@@ -130,6 +130,8 @@
 #include "ui/wm/core/ime_util_chromeos.h"
 #endif
 
+#include "base/debug/stack_trace.h"
+
 using gfx::RectToSkIRect;
 using gfx::SkIRectToRect;
 
@@ -922,6 +924,18 @@ void RenderWidgetHostViewAura::UpdateMouseLockRegion() {
 void RenderWidgetHostViewAura::OnLegacyWindowDestroyed() {
   legacy_render_widget_host_HWND_ = nullptr;
   legacy_window_destroyed_ = true;
+}
+
+void RenderWidgetHostViewAura::AddCompositorAnimationObserver(
+    ui::CompositorAnimationObserver* observer) {
+  DCHECK(window_->GetHost()->compositor());
+  window_->GetHost()->compositor()->AddAnimationObserver(observer);
+}
+
+void RenderWidgetHostViewAura::RemoveCompositorAnimationObserver(
+    ui::CompositorAnimationObserver* observer) {
+  DCHECK(window_->GetHost()->compositor());
+  window_->GetHost()->compositor()->RemoveAnimationObserver(observer);
 }
 #endif
 
