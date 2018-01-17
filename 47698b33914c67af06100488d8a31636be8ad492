@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7189c5d4_e32bf7ab",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-17T17:33:51Z",
+      "side": 1,
+      "message": "Sure, we have also noted that using string here is not broken.  And if it ain\u0027t broken ...",
+      "parentUuid": "22b51f20_6b93ea3c",
+      "range": {
+        "startLine": 55,
+        "startChar": 46,
+        "endLine": 55,
+        "endChar": 57
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf4f67c7_16696141",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -191,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "007e341c_d1844d0b",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-17T17:33:51Z",
+      "side": 1,
+      "message": "Agree the error is insignificant (tiny), so I\u0027m ok with leaving it too.\n\nAlso, nano seconds of error needs a h/w clock accurate to the nano second to measure it.  If the underlying clock is only accurate to the micro second, it cannot physically resolve time differences smaller than that.",
+      "parentUuid": "2275c3cb_07fac7fe",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6daeac4_09dfd69b",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -250,6 +298,30 @@
       "side": 1,
       "message": "I agree with the benefit of differentiation for code search. But maybe something more descriptive than \"z_\"?\n\nThe z_ prefix makes it looks like one of zlib\u0027s external structs.",
       "parentUuid": "5908be62_1a5ed6bf",
+      "range": {
+        "startLine": 118,
+        "startChar": 14,
+        "endLine": 118,
+        "endChar": 16
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b695135_e0001770",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-17T17:33:51Z",
+      "side": 1,
+      "message": "Indeed they might be confused with zlib\u0027s external structs, prefixed them all with \"zlib_\" to avoid that.",
+      "parentUuid": "df062ded_0a6c4dda",
       "range": {
         "startLine": 118,
         "startChar": 14,
@@ -380,6 +452,30 @@
     },
     {
       "key": {
+        "uuid": "ce0e5607_2f615b23",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-17T17:33:51Z",
+      "side": 1,
+      "message": "No worries: let\u0027s use third_party/zlib.h as our gold standard.",
+      "parentUuid": "7ebecb41_3ab2c643",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 1
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eca1a72_bd94d670",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -451,6 +547,30 @@
     },
     {
       "key": {
+        "uuid": "8a7053bd_96b9d555",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-17T17:33:51Z",
+      "side": 1,
+      "message": "You point out that the docs in zlib.h differ from what the zlib code actually requires/does.  Agree, seems like a zlib doc bug.\n\nAnyho, en masse chromium developers have thrown up their hands in the air over the vagaries in the zlib.h docs, and just applied memset(\u0026stream, 0, ...) to the stream.  Makes sense to me, avoids all problems best I can tell, and works fine with zlib internals. We should perhaps consider using it in the fuzzers, I\u0027d be happy to review such a change.",
+      "parentUuid": "5ae7dab2_ea2a2132",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 37
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f947b305_09258690",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -510,6 +630,30 @@
       "side": 1,
       "message": "Like above, it turns out the inflateInit*() functions don\u0027t actually depend on next_in despite saying they should be initialized first. Initializing to 0 is not what I meant and I suspect not what the docs meant. But it is fine for the same reasons as above.",
       "parentUuid": "53a6b07b_e004fa77",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 199,
+        "endChar": 0
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81047631_940e61fa",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-17T17:33:51Z",
+      "side": 1,
+      "message": "Docs do not match the code so it\u0027s hard to say what was meant, let\u0027s stick with memset.",
+      "parentUuid": "6fdc6575_c1c57cb3",
       "range": {
         "startLine": 190,
         "startChar": 2,
@@ -640,6 +784,30 @@
       "side": 1,
       "message": "Yeah but I still don\u0027t quite get the point of the 10MB.\n\nA few lines below, there are nested for loops. For each run we loop over each block. And for each block we loop over each repeat.\n\nSo for example, if the data is 4MB long, (10MB+4MB)/(4MB+1byte) \u003d 14MB/4MBish \u003d 3.5, int round down to 3.\n\n\nIf we have 2 blocks, we compress block 1 three times. Then we compress block 2 three times.\n\n\n\nIf instead the data was 9MB long, (10MB+9MB)/(9MB+1byte) \u003d 19MB/9MBish \u003d ~2.1, int round down to 2. So then we compress each block only twice.\n\n\nI don\u0027t understand the reason for the \"repeats\".",
       "parentUuid": "109da985_248d2d1b",
+      "range": {
+        "startLine": 255,
+        "startChar": 23,
+        "endLine": 255,
+        "endChar": 31
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e5393bb_df3920d0",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-17T17:33:51Z",
+      "side": 1,
+      "message": "Reading the code, seems 1) there\u0027s always at least one block and 2) the sum of the block lengths equals the input data length. The loop over b equates to \"compress all the input data\" it seems to me. The loop over repeats says do it again. Amount of data compressed?\n\n   input data length x repeats\n\nLet L be the input data length. Substitute for repeats denoted R and we have:\n\n    L x (R \u003d (10MB + L) / (L + 1))\n\nNow let L be large relative to 10MB.  Thus R -\u003e 1, disabling repetition, so the amount of data compressed is ~L\n\n    10^9 * (10^7 + 10^9) / (10^9 + 1) ~ 10^9\n\nLet L be small relative 10MB, then L x R -\u003e 10MB.\n  \n    100 * (10^7 + 100) / (100 + 1) ~ 10^7\n\nSeems repeats is designed to scale up small L such that L x R is about 10MB.  But for large L, R -\u003e 1, viz., no scaling.",
+      "parentUuid": "266d40fe_6adf2c71",
       "range": {
         "startLine": 255,
         "startChar": 23,
