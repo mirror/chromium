@@ -3510,9 +3510,13 @@ bool HTMLMediaElement::HasPendingActivity() const {
   if (should_delay_load_event_)
     return true;
 
+  const bool isInactiveMediaStream =
+      GetLoadType() == WebMediaPlayer::kLoadTypeMediaStream && GetSrcObject() &&
+      !GetSrcObject()->Active();
+
   // When networkState is kNetworkLoading, progress and stalled events may be
-  // fired.
-  if (network_state_ == kNetworkLoading)
+  // fired, unless when the source is an inactive media stream.
+  if (network_state_ == kNetworkLoading && !isInactiveMediaStream)
     return true;
 
   {
@@ -3521,8 +3525,9 @@ bool HTMLMediaElement::HasPendingActivity() const {
     // (hasPendingActivity() is called during a v8 GC.)
     AutoReset<bool> scope(&official_playback_position_needs_update_, false);
 
-    // When playing or if playback may continue, timeupdate events may be fired.
-    if (CouldPlayIfEnoughData())
+    // When playing or if playback may continue, timeupdate events may be fired,
+    // unless the source is an inactive media stream.
+    if (CouldPlayIfEnoughData() && !isInactiveMediaStream)
       return true;
   }
 
