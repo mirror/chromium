@@ -22,6 +22,7 @@ class PrefValueMap;
 namespace policy {
 
 class ConfigurationPolicyHandlerList;
+class ConfigurationPolicyPrefStoreErrorHandler;
 
 // An implementation of PrefStore that bridges policy settings as read from the
 // PolicyService to preferences. Converts POLICY_DOMAIN_CHROME policies a given
@@ -32,10 +33,12 @@ class POLICY_EXPORT ConfigurationPolicyPrefStore
  public:
   // Does not take ownership of |service| nor |handler_list|, which must outlive
   // the store. Only policies of the given |level| will be mapped.
+  // NOTE: |error_handler| is called from the constructor.
   ConfigurationPolicyPrefStore(
       PolicyService* service,
       const ConfigurationPolicyHandlerList* handler_list,
-      PolicyLevel level);
+      PolicyLevel level,
+      ConfigurationPolicyPrefStoreErrorHandler* error_handler);
 
   // PrefStore methods:
   void AddObserver(PrefStore::Observer* observer) override;
@@ -77,6 +80,8 @@ class POLICY_EXPORT ConfigurationPolicyPrefStore
   std::unique_ptr<PrefValueMap> prefs_;
 
   base::ObserverList<PrefStore::Observer, true> observers_;
+
+  ConfigurationPolicyPrefStoreErrorHandler* error_handler_;
 
   DISALLOW_COPY_AND_ASSIGN(ConfigurationPolicyPrefStore);
 };

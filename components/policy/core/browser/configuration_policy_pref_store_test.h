@@ -11,6 +11,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "components/policy/core/browser/configuration_policy_handler_list.h"
+#include "components/policy/core/browser/test_configuration_policy_pref_store_error_handler.h"
 #include "components/policy/core/common/mock_configuration_policy_provider.h"
 #include "components/policy/core/common/policy_service_impl.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -34,6 +35,7 @@ class ConfigurationPolicyPrefStoreTest : public testing::Test {
   virtual void PopulatePolicyHandlerParameters(
       PolicyHandlerParameters* parameters);
 
+  TestConfigurationPolicyPrefStoreErrorHandler error_handler_;
   PolicyServiceImpl::Providers providers_;
   ConfigurationPolicyHandlerList handler_list_;
   MockConfigurationPolicyProvider provider_;
