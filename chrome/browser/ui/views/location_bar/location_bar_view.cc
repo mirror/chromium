@@ -40,6 +40,7 @@
 #include "chrome/browser/ui/views/autofill/save_card_icon_view.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
+#include "chrome/browser/ui/views/location_bar/bubble_icon_view.h"
 #include "chrome/browser/ui/views/location_bar/content_setting_image_view.h"
 #include "chrome/browser/ui/views/location_bar/find_bar_icon.h"
 #include "chrome/browser/ui/views/location_bar/keyword_hint_view.h"
@@ -650,6 +651,26 @@ void LocationBarView::ResetTabState(WebContents* contents) {
   omnibox_view_->ResetTabState(contents);
 }
 
+bool LocationBarView::ActivateFirstInactiveBubbleForAccessibility() {
+  BubbleIconView* view = nullptr;
+  if (ShouldViewWithBubbleTriggerAccessibilityFocus(
+          manage_passwords_icon_view_)) {
+    view = manage_passwords_icon_view_;
+  }
+  if (ShouldViewWithBubbleTriggerAccessibilityFocus(
+          save_credit_card_icon_view_)) {
+    view = save_credit_card_icon_view_;
+  }
+  if (ShouldViewWithBubbleTriggerAccessibilityFocus(translate_icon_view_)) {
+    view = translate_icon_view_;
+  }
+
+  if (view)
+    view->GetBubble()->GetWidget()->Show();
+
+  return view;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // LocationBarView, public OmniboxEditController implementation:
 
@@ -893,6 +914,15 @@ bool LocationBarView::ShouldAnimateLocationIconTextVisibilityChange() const {
   SecurityLevel level = GetToolbarModel()->GetSecurityLevel(false);
   return level == SecurityLevel::DANGEROUS ||
          level == SecurityLevel::HTTP_SHOW_WARNING;
+}
+
+bool LocationBarView::ShouldViewWithBubbleTriggerAccessibilityFocus(
+    BubbleIconView* view) {
+  if (!view || !view->visible() || !view->GetBubble())
+    return false;
+
+  views::Widget* widget = view->GetBubble()->GetWidget();
+  return widget && widget->IsVisible() && !widget->IsActive();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

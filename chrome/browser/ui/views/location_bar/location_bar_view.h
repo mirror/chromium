@@ -30,6 +30,7 @@
 #include "ui/views/controls/button/button.h"
 #include "ui/views/drag_controller.h"
 
+class BubbleIconView;
 class CommandUpdater;
 class ContentSettingBubbleModelDelegate;
 class FindBarIcon;
@@ -223,6 +224,10 @@ class LocationBarView : public LocationBar,
   // Clears the location bar's state for |contents|.
   void ResetTabState(content::WebContents* contents);
 
+  // Activates the first inactive LocationBarBubbleDelegateView for
+  // accessibility.
+  bool ActivateFirstInactiveBubbleForAccessibility();
+
   // LocationBar:
   void FocusLocation(bool select_all) override;
   void Revert() override;
@@ -314,6 +319,11 @@ class LocationBarView : public LocationBar,
 
   // Returns true if the location icon text should be animated.
   bool ShouldAnimateLocationIconTextVisibilityChange() const;
+
+  // Returns true if all of the following are true:
+  //    - |view| is visible
+  //    - |view| has a visible, inactive bubble widget
+  bool ShouldViewWithBubbleTriggerAccessibilityFocus(BubbleIconView* view);
 
   // LocationBar:
   GURL GetDestinationURL() const override;
