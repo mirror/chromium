@@ -275,7 +275,7 @@ void EventPath::AdjustForRelatedTarget(Node& target,
   if (target.GetDocument() != related_node->GetDocument())
     return;
   RetargetRelatedTarget(*related_node);
-  ShrinkForRelatedTarget(target);
+  ShrinkForRelatedTarget();
 }
 
 void EventPath::RetargetRelatedTarget(const Node& related_target_node) {
@@ -290,22 +290,9 @@ void EventPath::RetargetRelatedTarget(const Node& related_target_node) {
   }
 }
 
-bool EventPath::ShouldStopEventPath(EventTarget& current_target,
-                                    EventTarget& current_related_target,
-                                    const Node& target) {
-  if (&current_target != &current_related_target)
-    return false;
-  if (event_->isTrusted())
-    return true;
-  Node* current_target_node = current_target.ToNode();
-  if (!current_target_node)
-    return false;
-  return current_target_node->GetTreeScope() != target.GetTreeScope();
-}
-
-void EventPath::ShrinkForRelatedTarget(const Node& target) {
+void EventPath::ShrinkForRelatedTarget() {
   for (size_t i = 0; i < size(); ++i) {
-    if (ShouldStopEventPath(*at(i).Target(), *at(i).RelatedTarget(), target)) {
+    if ((*this)[i].Target() == (*this)[i].RelatedTarget()) {
       Shrink(i);
       break;
     }

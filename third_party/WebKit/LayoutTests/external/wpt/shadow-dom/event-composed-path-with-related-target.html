@@ -25,9 +25,8 @@ test(() => {
   let n = createTestTree(test1);
   let log = dispatchEventWithLog(n, n.target, new FocusEvent('my-focus', { bubbles: true, composed: true, relatedTarget: n.target }));
   let path = ['target', 'test1'];
-  assert_event_path_equals(log, [['target', 'target', 'target', path],
-                                 ['test1', 'target', 'target', path]]);
-}, 'Event path for an event with a relatedTarget. Event should be dispatched even when target and relatedTarget are same.');
+  assert_array_equals(log, []);
+}, 'Event path for an event with a relatedTarget. Event should not be dispatched when target and relatedTarget are same.');
 </script>
 
 <div id="test2">
@@ -52,9 +51,8 @@ test(() => {
   let n = createTestTree(test2);
   let log = dispatchEventWithLog(n, n.target, new FocusEvent('my-focus', { bubbles: true, composed: true, relatedTarget: n.target }));
   let path = ['target', 'sr'];
-  assert_event_path_equals(log, [['target', 'target', 'target', path],
-                                 ['sr', 'target', 'target', path]]);
-}, 'Event path for an event with a relatedTarget which is identical to target. Event should be dispatched and should stop at the shadow root.');
+  assert_array_equals(log, []);
+}, 'Event path for an event with a relatedTarget which is identical to target. Event should not be dispatched.');
 </script>
 
 <div id="test3_1">
@@ -137,8 +135,7 @@ test(() => {
   let n = createTestTree(test4);
   let log = dispatchEventWithLog(n, n.host1, new FocusEvent('my-focus', { bubbles: true, composed: true, relatedTarget: n.target }));
   let path = ['host1', 'test4'];
-  assert_event_path_equals(log, [['host1', 'host1', 'host1', path],
-                                 ['test4', 'host1', 'host1', path]]);
+  assert_event_path_equals(log, []);
 }, 'Event path for an event with a relatedTarget. target is a shadow-including ancestor of relatedTarget.');
 </script>
 
