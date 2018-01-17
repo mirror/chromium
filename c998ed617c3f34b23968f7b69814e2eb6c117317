@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4048c77_fa2c333f",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-17T10:40:52Z",
+      "side": 1,
+      "message": "Maybe you can change this to |self.dispatcher| as you are dispatching the OmniboxFocuser protocol? (Here and other places in the file.)",
+      "range": {
+        "startLine": 1329,
+        "startChar": 4,
+        "endLine": 1329,
+        "endChar": 49
+      },
+      "revId": "c998ed617c3f34b23968f7b69814e2eb6c117317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3218e8da_33378a42",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-17T10:40:52Z",
+      "side": 1,
+      "message": "Remove the implementation of the OmniboxFocuser and changes the pragma to FakeboxFocuser",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 29
+      },
+      "revId": "c998ed617c3f34b23968f7b69814e2eb6c117317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "804976a8_2a449520",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-17T10:40:52Z",
+      "side": 1,
+      "message": "Why moving the include and not forward declaring it?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 71
+      },
+      "revId": "c998ed617c3f34b23968f7b69814e2eb6c117317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a67cb6_6b531d97",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-17T10:40:52Z",
+      "side": 1,
+      "message": "Do you really want to expose the LocationBarCoordinator through its class? It seems that you are only using it as OmniboxFocuser.\nOr you can keep this file as OmniboxFocuser and plumb the call through the locationBarCoordinator. We will remove the implementation of the OmniboxFocuser protocol once we cleanup the WebToolbarController.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 76
+      },
+      "revId": "c998ed617c3f34b23968f7b69814e2eb6c117317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe8884d_d8f3680c",
+        "filename": "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-17T10:40:52Z",
+      "side": 1,
+      "message": "I don\u0027t think this file needs to be an OmniboxFocuser.",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 29
+      },
+      "revId": "c998ed617c3f34b23968f7b69814e2eb6c117317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

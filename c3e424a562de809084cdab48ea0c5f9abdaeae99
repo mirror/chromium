@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f40e1154_67843c2a",
+        "filename": "ios/chrome/browser/ui/toolbar/public/primary_toolbar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-17T10:40:52Z",
+      "side": 0,
+      "message": "You removed the OmniboxFocuser from the protocol definition but you didn\u0027t update the files implementing this protocol (PrimaryToolbar and LegacyToolbarCoordinator).",
+      "range": {
+        "startLine": 22,
+        "startChar": 36,
+        "endLine": 22,
+        "endChar": 50
+      },
+      "revId": "c3e424a562de809084cdab48ea0c5f9abdaeae99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
