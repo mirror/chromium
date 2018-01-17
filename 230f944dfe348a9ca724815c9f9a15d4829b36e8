@@ -52,6 +52,24 @@
       "revId": "230f944dfe348a9ca724815c9f9a15d4829b36e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789f7729_04c753ac",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-17T15:45:03Z",
+      "side": 1,
+      "message": "The intention is to keep TraceWrappers as developer-facing API and use Visit internally (that\u0027s why it is declared as protected).\n\nThe word \"trace\" is very ambiguous as it is also used to denote marking. For example: AdvanceTracing, AbortTracing. These methods will go to ScriptWrappableMarkingVisitor after the whole refactoring is done.\n\nThe general ScriptWrappableVisitor interface will have only \"TraceWrappers\" (developer-facing) and \"Visit\" (overridable by derived visitors) methods.\n\nIf I understood you correctly this should be similar to the Oilpan infra.",
+      "parentUuid": "b38b1f13_49992c67",
+      "revId": "230f944dfe348a9ca724815c9f9a15d4829b36e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
