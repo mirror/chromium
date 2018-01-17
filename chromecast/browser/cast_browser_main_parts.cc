@@ -58,7 +58,6 @@
 #include "components/proxy_config/pref_proxy_config_tracker_impl.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/child_process_security_policy.h"
-#include "content/public/browser/gpu_data_manager.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_switches.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
@@ -232,11 +231,6 @@ const DefaultCommandLineSwitch kDefaultSwitches[] = {
 #endif
 #endif
 #endif  // defined(OS_LINUX)
-    // Needed so that our call to GpuDataManager::SetGLStrings doesn't race
-    // against GPU process creation (which is otherwise triggered from
-    // BrowserThreadsStarted).  The GPU process will be created as soon as a
-    // renderer needs it, which always happens after main loop starts.
-    {switches::kDisableGpuEarlyInit, ""},
     // Enable navigator.connection API.
     // TODO(derekjchow): Remove this switch when enabled by default.
     {switches::kEnableNetworkInformationDownlinkMax, ""},
@@ -408,14 +402,6 @@ int CastBrowserMainParts::PreCreateThreads() {
   CHECK(PathService::Get(DIR_CAST_HOME, &home_dir));
   if (!base::CreateDirectory(home_dir))
     return 1;
-
-  // Set GL strings so GPU config code can make correct feature blacklisting/
-  // whitelisting decisions.
-  // Note: SetGLStrings can be called before GpuDataManager::Initialize.
-  std::unique_ptr<CastSysInfo> sys_info = CreateSysInfo();
-  content::GpuDataManager::GetInstance()->SetGLStrings(
-      sys_info->GetGlVendor(), sys_info->GetGlRenderer(),
-      sys_info->GetGlVersion());
 #endif
 
   scoped_refptr<PrefRegistrySimple> pref_registry(new PrefRegistrySimple());

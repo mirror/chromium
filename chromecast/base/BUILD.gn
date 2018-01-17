@@ -166,11 +166,13 @@ cast_source_set("cast_sys_info") {
     "cast_sys_info_dummy.cc",
     "cast_sys_info_dummy.h",
     "cast_sys_info_util.h",
+    "gpu_info_collector_chromecast.cc",
   ]
 
   deps = [
     "//base",
     "//chromecast/public",
+    "//gpu/config",
   ]
 
   if (is_android) {
