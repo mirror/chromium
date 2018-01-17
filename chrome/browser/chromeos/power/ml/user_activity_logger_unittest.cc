@@ -117,6 +117,13 @@ class UserActivityLoggerTest : public testing::Test {
 
   void ReportIdleSleep() { fake_power_manager_client_.SendSuspendDone(); }
 
+  void ReportInactivityDelays(int screen_dim_ms, int screen_off_ms) {
+    power_manager::PowerManagementPolicy::Delays proto;
+    proto.set_screen_dim_ms(screen_dim_ms);
+    proto.set_screen_off_ms(screen_off_ms);
+    fake_power_manager_client_.SetInactivityDelays(proto);
+  }
+
   const scoped_refptr<base::TestMockTimeTaskRunner>& GetTaskRunner() {
     return task_runner_;
   }
@@ -365,6 +372,45 @@ TEST_F(UserActivityLoggerTest, UpdateOpenTabsURLsCalledTimes) {
   ReportIdleEvent({});
   ReportUserActivity(nullptr);
   EXPECT_EQ(2, delegate_.num_update_open_tabs_urls_calls());
+}
+
+TEST_F(UserActivityLoggerTest, DimAndOffDelays) {
+  ReportInactivityDelays(2000 /* screen_dim_ms */, 3000 /* screen_off_ms */);
+  ReportIdleEvent({});
+  ReportUserActivity(nullptr);
+
+  const auto& events = delegate_.events();
+  ASSERT_EQ(1U, events.size());
+
+  const UserActivityEvent::Features& features = events[0].features();
+  EXPECT_EQ(2, features.on_to_dim_sec());
+  EXPECT_EQ(1, features.dim_to_screen_off_sec());
+}
+
+TEST_F(UserActivityLoggerTest, DimDelays) {
+  ReportInactivityDelays(2000 /* screen_dim_ms */, 0 /* screen_off_ms */);
+  ReportIdleEvent({});
+  ReportUserActivity(nullptr);
+
+  const auto& events = delegate_.events();
+  ASSERT_EQ(1U, events.size());
+
+  const UserActivityEvent::Features& features = events[0].features();
+  EXPECT_EQ(2, features.on_to_dim_sec());
+  EXPECT_TRUE(!features.has_dim_to_screen_off_sec());
+}
+
+TEST_F(UserActivityLoggerTest, OffDelays) {
+  ReportInactivityDelays(0 /* screen_dim_ms */, 4000 /* screen_off_ms */);
+  ReportIdleEvent({});
+  ReportUserActivity(nullptr);
+
+  const auto& events = delegate_.events();
+  ASSERT_EQ(1U, events.size());
+
+  const UserActivityEvent::Features& features = events[0].features();
+  EXPECT_EQ(4, features.dim_to_screen_off_sec());
+  EXPECT_TRUE(!features.has_on_to_dim_sec());
 }
 
 }  // namespace ml

@@ -16,6 +16,7 @@
 #include "chrome/browser/chromeos/power/ml/user_activity_event.pb.h"
 #include "chrome/browser/chromeos/power/ml/user_activity_logger_delegate.h"
 #include "chromeos/dbus/power_manager/idle.pb.h"
+#include "chromeos/dbus/power_manager/policy.pb.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "components/session_manager/core/session_manager.h"
 #include "components/session_manager/core/session_manager_observer.h"
@@ -56,6 +57,8 @@ class UserActivityLogger : public ui::UserActivityObserver,
   void ScreenIdleStateChanged(
       const power_manager::ScreenIdleState& proto) override;
   void SuspendDone(const base::TimeDelta& sleep_duration) override;
+  void InactivityDelaysChanged(
+      const power_manager::PowerManagementPolicy::Delays& delays) override;
 
   // viz::mojom::VideoDetectorObserver overrides:
   void OnVideoActivityStarted() override;
@@ -74,6 +77,9 @@ class UserActivityLogger : public ui::UserActivityObserver,
   // Updates lid state and tablet mode from received switch states.
   void OnReceiveSwitchStates(
       base::Optional<chromeos::PowerManagerClient::SwitchStates> switch_states);
+
+  void OnReceiveInactivityDelays(
+      base::Optional<power_manager::PowerManagementPolicy::Delays> delays);
 
   // Extracts features from last known activity data and from device states.
   void ExtractFeatures(const IdleEventNotifier::ActivityData& activity_data);
@@ -135,6 +141,10 @@ class UserActivityLogger : public ui::UserActivityObserver,
 
   // Timer to be triggered when a screen idle event is triggered.
   base::OneShotTimer screen_idle_timer_;
+
+  // Delays to dim and turn off the screen. Zero means disabled.
+  int screen_dim_ms_ = 0;
+  int screen_off_ms_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(UserActivityLogger);
 };
