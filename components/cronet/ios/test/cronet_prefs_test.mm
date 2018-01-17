@@ -78,7 +78,8 @@ class PrefsTest : public CronetTestBase {
   NSURLSession* session_;
 };
 
-TEST_F(PrefsTest, HttpSeverProperties) {
+// TODO(mef): Figure out how to run this test without waiting for 90 seconds.
+TEST_F(PrefsTest, DISABLED_HttpSeverProperties) {
   base::FilePath storage_path;
   bool result = PathService::Get(base::DIR_CACHE, &storage_path);
   ASSERT_TRUE(result);
