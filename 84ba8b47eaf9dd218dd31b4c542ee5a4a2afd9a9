@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3732d063_3689f457",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-17T18:45:25Z",
+      "side": 1,
+      "message": "On Mac/Win this should be fine, but on Android/Linux, Size256 may have to get chunked into two 128-byte value chunks. Using Size64 would be better, since that won\u0027t happen.",
+      "range": {
+        "startLine": 103,
+        "startChar": 37,
+        "endLine": 103,
+        "endChar": 44
+      },
+      "revId": "84ba8b47eaf9dd218dd31b4c542ee5a4a2afd9a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "716e44a4_b013413b",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 2
