@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d9587dea_9a4656b1",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-17T22:03:16Z",
+      "side": 1,
+      "message": "I believe it\u0027s the sourceId that the navigation resolves to.",
+      "parentUuid": "1a20e26f_1d758908",
+      "range": {
+        "startLine": 450,
+        "startChar": 39,
+        "endLine": 450,
+        "endChar": 54
+      },
+      "revId": "9e9d589bd565b678873ed2a005bbfd46e49e092d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a82cfd1_b23ee72b",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f82f2448_8fc0a1c0",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2492,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-17T22:03:16Z",
+      "side": 1,
+      "message": "True, I\u0027ll update the comment.",
+      "parentUuid": "3a82cfd1_b23ee72b",
+      "range": {
+        "startLine": 2492,
+        "startChar": 49,
+        "endLine": 2492,
+        "endChar": 71
+      },
+      "revId": "9e9d589bd565b678873ed2a005bbfd46e49e092d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fa99eef_b0a1c439",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-17T21:42:37Z",
       "side": 1,
       "message": "just navigation, nothing vr/xr-specific?",
+      "range": {
+        "startLine": 2503,
+        "startChar": 60,
+        "endLine": 2504,
+        "endChar": 13
+      },
+      "revId": "9e9d589bd565b678873ed2a005bbfd46e49e092d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea1422b_5b2ae1cb",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2504,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-17T22:03:16Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand the question",
+      "parentUuid": "8fa99eef_b0a1c439",
       "range": {
         "startLine": 2503,
         "startChar": 60,
