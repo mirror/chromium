@@ -878,6 +878,9 @@ void ArcSessionManager::StartBackgroundAndroidManagementCheck() {
   DCHECK_EQ(state_, State::ACTIVE);
   DCHECK(!android_management_checker_);
 
+  for (auto& observer : observer_list_)
+    observer.OnArcOptInBackgroundManagementCheckStarted();
+
   // Skip Android management check for testing.
   // We also skip if Android management check for Kiosk and Public Session mode,
   // because there are no managed human users for them exist.

@@ -12,6 +12,7 @@
 #include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/notifications/notification_display_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/profiles/profiles_state.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
@@ -109,6 +110,15 @@ void ArcProvisionNotificationService::OnArcPlayStoreEnabledChanged(
     bool enabled) {
   // Make sure no notification is shown after ARC gets disabled.
   if (!enabled)
+    HideNotification();
+}
+
+void ArcProvisionNotificationService::
+    OnArcOptInBackgroundManagementCheckStarted() {
+  // Show notification only for Public Session if background check is started.
+  if (profiles::IsPublicSession())
+    ShowNotification();
+  else
     HideNotification();
 }
 

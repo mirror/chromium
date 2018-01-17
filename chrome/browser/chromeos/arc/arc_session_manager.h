@@ -104,6 +104,10 @@ class ArcSessionManager : public ArcSessionRunner::Observer,
     // is represented by "arc.enabled" preference, is updated.
     virtual void OnArcPlayStoreEnabledChanged(bool enabled) {}
 
+    // Called to notify that checking of Android background management status
+    // started during the opt-in flow.
+    virtual void OnArcOptInBackgroundManagementCheckStarted() {}
+
     // Called to notify that checking of Android management status started
     // during the opt-in flow.
     virtual void OnArcOptInManagementCheckStarted() {}
