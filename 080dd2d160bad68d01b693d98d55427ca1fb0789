@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ca1322f_798bde9a",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-17T01:17:16Z",
+      "side": 1,
+      "message": "A ThreadSafeInterfacePtr can be used from multiple threads. Therefore, ThreadSafeForwarder (owned by ThreadSafeInterfacePtr) is not bound to a specific thread. So we cannot use things like |weak_factory_| which is not thread safe.",
+      "revId": "080dd2d160bad68d01b693d98d55427ca1fb0789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b07737e_be0885af",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-17T01:17:16Z",
+      "side": 1,
+      "message": "There is no guarantee on which thread ThreadSafeForwarder will be destroyed because ThreadSafeInterfacePtr is ref-counted and can be used on multiple threads.",
+      "revId": "080dd2d160bad68d01b693d98d55427ca1fb0789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
