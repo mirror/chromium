@@ -17,10 +17,10 @@ class URLRequest;
 namespace network {
 struct HttpRawRequestResponseInfo;
 struct ResourceRequest;
+struct ResourceResponse;
 }
 
 namespace content {
-struct ResourceResponse;
 
 // Helper utilities shared between network service and ResourceDispatcherHost
 // code paths.
@@ -28,7 +28,7 @@ struct ResourceResponse;
 // Whether the response body should be sniffed in order to determine the MIME
 // type of the response.
 bool ShouldSniffContent(net::URLRequest* url_request,
-                        ResourceResponse* response);
+                        network::ResourceResponse* response);
 
 // Fill HttpRawRequestResponseInfo based on raw headers.
 scoped_refptr<network::HttpRawRequestResponseInfo> BuildRawRequestResponseInfo(
