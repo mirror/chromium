@@ -40,7 +40,7 @@ message MITMSoftware {
 // characteristics.
 // TODO(spqchan): Deprecate MITMSoftware and CaptivePortalCert and use
 // DynamicInterstitial in their place.
-// TODO(spqchan): Add additional fields for common name regex, MitM, etc.
+// TODO(spqchan): Add additional fields for common name regex, etc.
 message DynamicInterstitial {
   // Enum class used to represent the interstitial page that would be displayed
   // for a dynamic interstitial.
@@ -76,21 +76,27 @@ message DynamicInterstitial {
     ERR_CERTIFICATE_TRANSPARENCY_REQUIRED = 14;
   };
 
-  // Sha256 hashes of the certificate's public key. If any certificate in the
-  // certificate chain matches any one of the hashes, an interstitial specified
-  // by |interstitial_type| will be displayed.
+  // Sha256 hashes of the certificate's public key. If this field is not
+  // empty, then at least one of certificate in the certificate chain must
+  // match with a hash in order for the dynamic interstitial to be treated as a
+  // match. Otherwise, this field will be ignored.
   repeated string sha256_hash = 1;
+
+  // The MITMSoftware item is used to match potential MITM software
+  // certificates. The certificate must match with this in order to be treated
+  // as a match. If this field is empty, it will be ignored instead.
+  optional MITMSoftware mitm_software = 2;
 
   // If the SSL error's cert status contains |cert_error|, then it can be
   // matched with this dynamic interstitial.
-  optional CertError cert_error = 2;
+  optional CertError cert_error = 3;
 
   // The type of interstitial that should be shown. This value is associated
   // with the DynamicInterstitialPageType enum.
-  optional InterstitialPageType interstitial_type = 3;
+  optional InterstitialPageType interstitial_type = 4;
 
   // The support URL that will be displayed on the interstitial.
-  optional string support_url = 4;
+  optional string support_url = 5;
 }
 
 message SSLErrorAssistantConfig {
