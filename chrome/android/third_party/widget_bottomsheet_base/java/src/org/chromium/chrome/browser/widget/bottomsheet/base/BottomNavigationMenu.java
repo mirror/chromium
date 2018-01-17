@@ -16,7 +16,7 @@
 
 package org.chromium.chrome.browser.widget.bottomsheet.base;
 
-import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 
 import android.content.Context;
 import android.support.annotation.RestrictTo;
@@ -31,7 +31,7 @@ import android.view.SubMenu;
  * @hide
  */
 @SuppressWarnings("RestrictTo")
-@RestrictTo(GROUP_ID)
+@RestrictTo(LIBRARY_GROUP)
 public final class BottomNavigationMenu extends MenuBuilder {
     public static final int MAX_ITEM_COUNT = 5;
 

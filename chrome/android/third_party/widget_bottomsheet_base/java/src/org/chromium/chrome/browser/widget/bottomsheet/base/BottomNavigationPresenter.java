@@ -16,7 +16,7 @@
 
 package org.chromium.chrome.browser.widget.bottomsheet.base;
 
-import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 
 import android.content.Context;
 import android.os.Parcelable;
@@ -34,7 +34,7 @@ import android.view.ViewGroup;
  * @hide
  */
 @SuppressWarnings("RestrictTo")
-@RestrictTo(GROUP_ID)
+@RestrictTo(LIBRARY_GROUP)
 public class BottomNavigationPresenter implements MenuPresenter {
     private MenuBuilder mMenu;
     private BottomNavigationMenuView mMenuView;
