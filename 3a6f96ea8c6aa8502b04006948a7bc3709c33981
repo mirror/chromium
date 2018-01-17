@@ -46,6 +46,30 @@
       "revId": "3a6f96ea8c6aa8502b04006948a7bc3709c33981",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7f0aca1_071cab89",
+        "filename": "ios/build/tools/setup-gn.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-17T10:51:25Z",
+      "side": 1,
+      "message": "I think I should be able to use custom_vars from DEPS. I\u0027ll give it a look.",
+      "parentUuid": "c0a1a091_e2aaa18a",
+      "range": {
+        "startLine": 29,
+        "startChar": 50,
+        "endLine": 29,
+        "endChar": 59
+      },
+      "revId": "3a6f96ea8c6aa8502b04006948a7bc3709c33981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
