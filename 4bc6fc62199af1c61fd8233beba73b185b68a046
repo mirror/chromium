@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8809bd6_829bef8d",
+        "filename": "content/browser/loader/resource_message_filter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-17T04:44:05Z",
+      "side": 1,
+      "message": "Let\u0027s discuss offline. I do not think I understand the problem.",
+      "parentUuid": "1e6e49ac_a536061a",
+      "revId": "4bc6fc62199af1c61fd8233beba73b185b68a046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05f032d1_1cd90830",
         "filename": "content/browser/loader/url_loader_factory_impl.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-17T03:56:22Z",
       "side": 1,
       "message": "I\u0027m not comfortable with this. The static function continues ignoring CORS while the instance method will handle CORS, which is very confusing.",
+      "revId": "4bc6fc62199af1c61fd8233beba73b185b68a046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9fc4833_e9dbb9f4",
+        "filename": "content/browser/loader/url_loader_factory_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-17T04:44:05Z",
+      "side": 1,
+      "message": "How about renaming the static method to CreateNetworkLoaderAndStart?\n\nSince the static method is just called internally, we should not hook both methods, and in order to hook other factories in the same way, I want to hook non-static method as I do in this CL.",
+      "parentUuid": "05f032d1_1cd90830",
       "revId": "4bc6fc62199af1c61fd8233beba73b185b68a046",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
