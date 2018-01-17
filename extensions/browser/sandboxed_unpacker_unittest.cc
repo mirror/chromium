@@ -23,6 +23,7 @@
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_paths.h"
 #include "extensions/common/switches.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/zlib/google/zip.h"
@@ -83,8 +84,9 @@ class SandboxedUnpackerTest : public ExtensionsTest {
     client_ = new MockSandboxedUnpackerClient;
 
     sandboxed_unpacker_ = new SandboxedUnpacker(
-        Manifest::INTERNAL, Extension::NO_FLAGS, extensions_dir_.GetPath(),
-        base::ThreadTaskRunnerHandle::Get(), client_);
+        /*connector=*/nullptr, Manifest::INTERNAL, Extension::NO_FLAGS,
+        extensions_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get(),
+        client_);
   }
 
   void TearDown() override {

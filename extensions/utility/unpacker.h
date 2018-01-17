@@ -69,11 +69,6 @@ class Unpacker {
   // error.
   bool ReadJSONRulesetIfNeeded(const Extension* extension);
 
-  // Write the decoded images to kDecodedImagesFilename.  We do this instead
-  // of sending them over IPC, since they are so large.  Returns true on
-  // success.
-  bool DumpImagesToFile();
-
   // Write the decoded messages to kDecodedMessageCatalogsFilename.  We do this
   // instead of sending them over IPC, since they are so large.  Returns true on
   // success.
@@ -115,11 +110,6 @@ class Unpacker {
   // The parsed version of the Declarative Net Request API ruleset. Null if the
   // extension did not provide one.
   std::unique_ptr<base::ListValue> parsed_json_ruleset_;
-
-  // A list of decoded images and the paths where those images came from.  Paths
-  // are relative to the manifest file.
-  struct InternalData;
-  std::unique_ptr<InternalData> internal_data_;
 
   // Dictionary of relative paths and catalogs per path. Paths are in the form
   // of _locales/locale, without messages.json base part.
