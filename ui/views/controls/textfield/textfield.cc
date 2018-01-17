@@ -292,6 +292,8 @@ Textfield::Textfield()
   GetRenderText()->SetFontList(GetDefaultFontList());
   UpdateBorder();
   SetFocusBehavior(FocusBehavior::ALWAYS);
+  if (ui::MaterialDesignController::IsSecondaryUiMaterial())
+    placeholder_text_color_ = SkColorSetA(GetTextColor(), 0x83);
 
 #if !defined(OS_MACOSX)
   // Do not map accelerators on Mac. E.g. They might not reflect custom
@@ -2036,10 +2038,8 @@ void Textfield::PaintTextAndCursor(gfx::Canvas* canvas) {
         GetPlaceholderText(),
         placeholder_font_list_.has_value() ? placeholder_font_list_.value()
                                            : GetFontList(),
-        ui::MaterialDesignController::IsSecondaryUiMaterial()
-            ? SkColorSetA(GetTextColor(), 0x83)
-            : placeholder_text_color_,
-        render_text->display_rect(), placeholder_text_draw_flags);
+        placeholder_text_color_, render_text->display_rect(),
+        placeholder_text_draw_flags);
   }
 
   render_text->Draw(canvas);
