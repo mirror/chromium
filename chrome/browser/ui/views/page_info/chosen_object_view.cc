@@ -34,20 +34,27 @@ ChosenObjectView::ChosenObjectView(
   views::GridLayout* layout =
       SetLayoutManager(std::make_unique<views::GridLayout>(this));
   const int column_set_id = 0;
+
+  const int related_label_padding =
+      ChromeLayoutProvider::Get()->GetDistanceMetric(
+          views::DISTANCE_RELATED_LABEL_HORIZONTAL);
   views::ColumnSet* column_set = layout->AddColumnSet(column_set_id);
   column_set->AddColumn(views::GridLayout::CENTER, views::GridLayout::CENTER,
                         kFixed, views::GridLayout::FIXED,
                         PageInfoBubbleView::kIconColumnWidth, 0);
-  column_set->AddPaddingColumn(kFixed,
-                               ChromeLayoutProvider::Get()->GetDistanceMetric(
-                                   views::DISTANCE_RELATED_LABEL_HORIZONTAL));
+  column_set->AddPaddingColumn(kFixed, related_label_padding);
   column_set->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER,
                         kStretchy, views::GridLayout::USE_PREF, 0, 0);
+  column_set->AddPaddingColumn(kFixed, related_label_padding);
   column_set->AddColumn(views::GridLayout::TRAILING, views::GridLayout::CENTER,
                         kFixed, views::GridLayout::USE_PREF,
                         PageInfoBubbleView::kIconColumnWidth, 0);
 
-  layout->StartRow(kStretchy, column_set_id);
+  const int list_item_padding = ChromeLayoutProvider::Get()->GetDistanceMetric(
+                                    DISTANCE_CONTROL_LIST_VERTICAL) /
+                                2;
+  layout->StartRowWithPadding(kStretchy, column_set_id, kFixed,
+                              list_item_padding);
   // Create the chosen object icon.
   icon_ = new views::ImageView();
   const gfx::Image& image = PageInfoUI::GetChosenObjectIcon(*info_, false);
@@ -82,6 +89,16 @@ ChosenObjectView::ChosenObjectView(
   delete_button_->SetTooltipText(
       l10n_util::GetStringUTF16(info_->ui_info.delete_tooltip_string_id));
   layout->AddView(delete_button_);
+
+  // Display secondary text underneath the name of the chosen object to describe
+  // what the chosen object actually is.
+  layout->StartRow(kStretchy, column_set_id);
+  views::Label* secondary_label = new views::Label(
+      l10n_util::GetStringUTF16(info_->ui_info.secondary_label_string_id));
+  secondary_label->SetEnabledColor(PageInfoUI::GetSecondaryTextColor());
+  layout->SkipColumns(1);
+  layout->AddView(secondary_label);
+  layout->AddPaddingRow(column_set_id, list_item_padding);
 }
 
 void ChosenObjectView::AddObserver(ChosenObjectViewObserver* observer) {
