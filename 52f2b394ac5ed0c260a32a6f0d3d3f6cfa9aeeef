@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c835099_4560c0d0",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapFactories.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-17T09:49:28Z",
+      "side": 1,
+      "message": "Me neither.\n\nIf we implemented TraceWrappers in the same manner of Oilpan\u0027s Trace(), I think we can solve this kind of problems with USING_GARBAGE_COLLECTED_MIXIN.  In other words, we\u0027re missing \"mix-in\" feature for wrapper-tracing.\n\nI expect that the coming unified GC solve this issue, too.",
+      "parentUuid": "e61d3774_45899622",
+      "range": {
+        "startLine": 267,
+        "startChar": 27,
+        "endLine": 267,
+        "endChar": 40
+      },
+      "revId": "52f2b394ac5ed0c260a32a6f0d3d3f6cfa9aeeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfe6d707_8f1fca25",
         "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperBase.h",
         "patchSetId": 2
