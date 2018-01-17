@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfd69957_50bc2a58",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-17T19:30:43Z",
+      "side": 1,
+      "message": "Does where we have an IPv4 or IPv6 address of 0 matter?  (If not, should perhaps make local_addr optional instead).",
+      "range": {
+        "startLine": 161,
+        "startChar": 5,
+        "endLine": 161,
+        "endChar": 9
+      },
+      "revId": "208b00f9b21576c713280547725872fde87cf1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e019e7dc_72c9f3f9",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-17T19:30:43Z",
+      "side": 1,
+      "message": "You mention local_address being 0, but it\u0027s optional (Unlike the above method).  Think we should be consistent here, unless there\u0027s a reason not to.",
+      "range": {
+        "startLine": 170,
+        "startChar": 40,
+        "endLine": 170,
+        "endChar": 41
+      },
+      "revId": "208b00f9b21576c713280547725872fde87cf1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
