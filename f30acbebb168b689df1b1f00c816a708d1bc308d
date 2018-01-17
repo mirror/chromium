@@ -22,6 +22,30 @@
       "revId": "f30acbebb168b689df1b1f00c816a708d1bc308d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9512189b_11ad11fe",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_system.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-17T11:51:58Z",
+      "side": 0,
+      "message": "Ah note, really, it\u0027s a different fix: one should never retry a close() call when it returns EINTR. On Linux, the file descriptor will always be closed by close(), and the EINTR is used only to indicate that a corresponding flush operation did fail. Looping introduce race-conditions if another thread is trying to open files just at the same time.\n\nOn other platforms, things are even worse (e.g. on MacOS X, the file descriptor may or may not have been closed when EINTR is received, and there is no way to be sure in a multi-threaded program) :-/\n\nI can update the commit message or move that in a different CL if you prefer, let me know your choice :)",
+      "parentUuid": "eec843c9_d1655053",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "f30acbebb168b689df1b1f00c816a708d1bc308d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
