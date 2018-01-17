@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "53ca0699_a9aea048",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-17T23:29:44Z",
+      "side": 1,
+      "message": "Since we\u0027re doing a few appends here, I wonder if std::ostringstream might make things a bit more readable here...\nstd::ostringstream histogram_name_stream;\nhistogram_name_stream \u003c\u003c \"TaskScheduler.TaskLatencyMicroseconds.\";\nif (!name_suffix.empty())\n  histogram_name_stream \u003c\u003c name_suffix \u003c\u003c \".\";\n\nhistogram_name_stream \u003c\u003c task_type_suffix;\n// String at histogram_name_stream.str();",
+      "range": {
+        "startLine": 84,
+        "startChar": 1,
+        "endLine": 89,
+        "endChar": 51
+      },
+      "revId": "a8ae3162430a41d305ec21303a514b8f9be922ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e4159c_9deccb79",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 110686,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-17T23:29:44Z",
+      "side": 1,
+      "message": "Nit: Remove, here and below? ;-)",
+      "range": {
+        "startLine": 110686,
+        "startChar": 45,
+        "endLine": 110686,
+        "endChar": 53
+      },
+      "revId": "a8ae3162430a41d305ec21303a514b8f9be922ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfc2857b_cac79b14",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
