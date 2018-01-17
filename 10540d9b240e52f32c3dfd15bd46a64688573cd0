@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "286c66d2_430bd262",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2018-01-17T04:39:42Z",
+      "side": 1,
+      "message": "Could you move the check above #67 ?\n\nIf a user sets data to the clipboard on app A then clears the clipboard on app B quickly, app A may sent a selection request after app B sent a selection request for clearing. We still want to compare the serial of two selection requests.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 28
+      },
+      "revId": "10540d9b240e52f32c3dfd15bd46a64688573cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
