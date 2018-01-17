@@ -26,6 +26,7 @@
 #include "content/network/network_service_impl.h"
 #include "content/network/network_service_url_loader_factory.h"
 #include "content/network/proxy_config_service_mojo.h"
+#include "content/network/resource_scheduler_client.h"
 #include "content/network/restricted_cookie_manager.h"
 #include "content/network/throttling/network_conditions.h"
 #include "content/network/throttling/throttling_controller.h"
@@ -82,6 +83,8 @@ class WrappedTestingCertVerifier : public net::CertVerifier {
 
 }  // namespace
 
+constexpr bool NetworkContext::enable_resource_scheduler_;
+
 NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
                                mojom::NetworkContextRequest request,
                                mojom::NetworkContextParamsPtr params)
@@ -95,6 +98,8 @@ NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
   network_service_->RegisterNetworkContext(this);
   binding_.set_connection_error_handler(base::BindOnce(
       &NetworkContext::OnConnectionError, base::Unretained(this)));
+  resource_scheduler_ =
+      std::make_unique<ResourceScheduler>(enable_resource_scheduler_);
 }
 
 // TODO(mmenke): Share URLRequestContextBulder configuration between two
@@ -115,6 +120,8 @@ NetworkContext::NetworkContext(
   network_service_->RegisterNetworkContext(this);
   cookie_manager_ = std::make_unique<network::CookieManager>(
       url_request_context_->cookie_store());
+  resource_scheduler_ =
+      std::make_unique<ResourceScheduler>(enable_resource_scheduler_);
 }
 
 NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
@@ -128,6 +135,8 @@ NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
   // May be nullptr in tests.
   if (network_service_)
     network_service_->RegisterNetworkContext(this);
+  resource_scheduler_ =
+      std::make_unique<ResourceScheduler>(enable_resource_scheduler_);
 }
 
 NetworkContext::~NetworkContext() {
@@ -165,10 +174,22 @@ void NetworkContext::DeregisterURLLoader(URLLoader* url_loader) {
 
 void NetworkContext::CreateURLLoaderFactory(
     mojom::URLLoaderFactoryRequest request,
-    uint32_t process_id) {
+    uint32_t process_id,
+    scoped_refptr<ResourceSchedulerClient> resource_scheduler_client) {
   loader_factory_bindings_.AddBinding(
-      std::make_unique<NetworkServiceURLLoaderFactory>(this, process_id),
+      std::make_unique<NetworkServiceURLLoaderFactory>(
+          this, process_id, std::move(resource_scheduler_client)),
       std::move(request));
+}
+
+void NetworkContext::CreateURLLoaderFactory(
+    mojom::URLLoaderFactoryRequest request,
+    uint32_t process_id) {
+  auto resource_scheduler_client =
+      base::MakeRefCounted<ResourceSchedulerClient>(
+          process_id, ++current_resource_scheduler_client_id_, this);
+  CreateURLLoaderFactory(std::move(request), process_id,
+                         std::move(resource_scheduler_client));
 }
 
 void NetworkContext::HandleViewCacheRequest(const GURL& url,
@@ -208,6 +229,8 @@ NetworkContext::NetworkContext(mojom::NetworkContextParamsPtr params)
     : network_service_(nullptr), params_(std::move(params)), binding_(this) {
   url_request_context_owner_ = MakeURLRequestContext(params_.get());
   url_request_context_ = url_request_context_owner_.url_request_context.get();
+  resource_scheduler_ =
+      std::make_unique<ResourceScheduler>(enable_resource_scheduler_);
 }
 
 void NetworkContext::OnConnectionError() {
