@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc7fe45c_34394895",
+        "filename": "chrome/installer/linux/debian/build.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-01-17T01:58:59Z",
+      "side": 1,
+      "message": "Please also make the equivalent change for RPM:\nchrome/installer/linux/rpm/build.sh",
+      "range": {
+        "startLine": 276,
+        "startChar": 2,
+        "endLine": 276,
+        "endChar": 5
+      },
+      "revId": "659fe9233fac07a117649c596471f9de3aa59911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
