@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d1f02c1_638f2bae",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-17T15:33:13Z",
+      "side": 1,
+      "message": "no experimental in the path.",
+      "range": {
+        "startLine": 46,
+        "startChar": 117,
+        "endLine": 46,
+        "endChar": 132
+      },
+      "revId": "6512e105b5fab20f35b52cdbe23624058c8d2e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee6b072_75679bd9",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-17T15:33:13Z",
+      "side": 1,
+      "message": "I would actually clear this out - we don\u0027t want the trace to run too long as it will load too many heap snapshots, causing the UI to explode. Maybe - run for 5 seconds and then stop.",
+      "revId": "6512e105b5fab20f35b52cdbe23624058c8d2e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b1d7fe_e218c698",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-17T15:33:13Z",
+      "side": 1,
+      "message": "we also provide PA and Oilpan allocations for renderers. But we can\u0027t symbolize JS, so the traces are usually less useful.",
+      "revId": "6512e105b5fab20f35b52cdbe23624058c8d2e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
