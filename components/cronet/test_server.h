@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_CRONET_IOS_TEST_TEST_SERVER_H_
-#define COMPONENTS_CRONET_IOS_TEST_TEST_SERVER_H_
+#ifndef COMPONENTS_CRONET_TEST_SERVER_H_
+#define COMPONENTS_CRONET_TEST_SERVER_H_
 
 #include <string>
 
@@ -37,4 +37,4 @@ class TestServer {
 
 }  // namespace cronet
 
-#endif  // COMPONENTS_CRONET_IOS_TEST_TEST_SERVER_H_
+#endif  // COMPONENTS_CRONET_TEST_SERVER_H_
