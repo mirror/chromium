@@ -201,6 +201,9 @@ void SubresourceFilterAgent::DidCommitProvisionalLoad(
 
   filter_for_last_committed_load_ = filter->AsWeakPtr();
   SetSubresourceFilterForCommittedLoad(std::move(filter));
+
+  if (!use_parent_activation && !IsMainFrame())
+    render_frame()->GetWebFrame()->GetDocument().SetIsAdSubframe(true);
 }
 
 void SubresourceFilterAgent::DidFailProvisionalLoad(
