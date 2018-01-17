@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dae77a46_60a9e74f",
+        "filename": "chrome/browser/app_mode/app_mode_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T19:29:49Z",
+      "side": 1,
+      "message": "Seems like we might be able to combine this and the above a bit.  Maybe something like:\n\nnamespace {\n\nbase::Optional\u003cstd::string\u003e GetForcedAppModeApp() {\n  base::CommandLine* command_line \u003d base::CommandLine::ForCurrentProcess();\n  if (!command_line-\u003eHasSwitch(switches::kForceAppMode) ||\n      !command_line-\u003eHasSwitch(switches::kAppId)) {\n    return base::nullopt;\n  }\n  return command_line-\u003eGetSwitchValueASCII(switches::kAppId);\n}\n\n}\n\nbool IsRunningInForcedAppMode() {\n  return GetForcedAppModeApp().has_value() ||\n         base::CommandLine::ForCurrentProcess-\u003e\n             HasSwitch(switches::kForceAndroidAppMode);\n}\n\nbool IsRunningInForcedAppModeForApp(const std::string\u0026 app_id) {\n  base::Optional\u003cstd::string\u003e forced_app_mode_app \u003d\n      GetForcedAppModeApp();\n  return forced_app_mode_app \u0026\u0026 app_id \u003d\u003d *forced_app_mode_app;\n}\n\nIt\u0027s not any fewer lines, but it isolates the logic of querying for the app mode switches.  WDYT?",
+      "revId": "2fa20e1836006915e119a082f641b69265479627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fefbfe3_0761c9bc",
+        "filename": "chrome/browser/app_mode/app_mode_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T19:29:49Z",
+      "side": 1,
+      "message": "Should this be a DCHECK?  When would we want to query about an empty app id?",
+      "revId": "2fa20e1836006915e119a082f641b69265479627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5abd4613_4edcd6bb",
+        "filename": "extensions/browser/api/management/management_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T19:29:49Z",
+      "side": 1,
+      "message": "How ugly is it to implement these restrictions in the features files instead?  It\u0027s more straightforward and resilient, and results in synchronous failure which is kind of nice.  But it\u0027s a lot of new child features...",
+      "revId": "2fa20e1836006915e119a082f641b69265479627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
