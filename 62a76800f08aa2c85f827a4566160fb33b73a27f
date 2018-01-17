@@ -73,6 +73,53 @@
     },
     {
       "key": {
+        "uuid": "9b6aba10_4879567a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-17T01:34:23Z",
+      "side": 1,
+      "message": "Sending deadline per dependency as we discussed offline sounds good, but it definitely can be done in a separate CL.",
+      "parentUuid": "1cbfcde1_ab15ae13",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "62a76800f08aa2c85f827a4566160fb33b73a27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05744490_1a1039e1",
+        "filename": "cc/layers/surface_layer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-17T01:34:23Z",
+      "side": 1,
+      "message": "This will early out if we already have a deadline and want to set it to default (nullopt).",
+      "range": {
+        "startLine": 71,
+        "startChar": 43,
+        "endLine": 71,
+        "endChar": 62
+      },
+      "revId": "62a76800f08aa2c85f827a4566160fb33b73a27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4369a7de_b5087749",
         "filename": "cc/layers/surface_layer.h",
         "patchSetId": 10
@@ -113,6 +160,76 @@
         "startChar": 27,
         "endLine": 26,
         "endChar": 70
+      },
+      "revId": "62a76800f08aa2c85f827a4566160fb33b73a27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0cd3cf_d5c6a055",
+        "filename": "cc/layers/surface_layer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-17T01:34:23Z",
+      "side": 1,
+      "message": "In this case I don\u0027t necessarily agree, but it\u0027s up to you.",
+      "parentUuid": "fe7fb2cf_c960722a",
+      "range": {
+        "startLine": 26,
+        "startChar": 27,
+        "endLine": 26,
+        "endChar": 70
+      },
+      "revId": "62a76800f08aa2c85f827a4566160fb33b73a27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "570cc65e_347d6383",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-17T01:34:23Z",
+      "side": 1,
+      "message": "Default argument would be nicer but again it\u0027s up to you.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 47
+      },
+      "revId": "62a76800f08aa2c85f827a4566160fb33b73a27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ef8f96_a379b15c",
+        "filename": "services/viz/public/interfaces/compositing/frame_deadline.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-17T01:34:23Z",
+      "side": 1,
+      "message": "Why don\u0027t we just use uint32? Are you thinking of expanding this?",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 20
       },
       "revId": "62a76800f08aa2c85f827a4566160fb33b73a27f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
