@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e4fbdf9_e522a8e5",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23251387_a26531da",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f9beed4_802b5524",
         "filename": "ash/magnifier/magnification_controller.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fb7628_d455c591",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Done. Initialize in constructor.",
+      "parentUuid": "6f9beed4_802b5524",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dd7d3b38_1fc2b085",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2592a22_fc9ee741",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a9b3101_18b2f1ee",
         "filename": "ash/magnifier/magnification_controller.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6eeaa7c_e22d5a5d",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a9b3101_18b2f1ee",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "93ba29bc_eca40e74",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9bae1a7_18997efb",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "210a5bf9_59afe093",
         "filename": "ash/magnifier/magnification_controller.cc",
         "patchSetId": 6
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "5da43a2f_2c51c3ac",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "210a5bf9_59afe093",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31a4669e_1f0fbe70",
         "filename": "ash/magnifier/magnification_controller.cc",
         "patchSetId": 6
@@ -115,6 +223,24 @@
       "writtenOn": "2018-01-17T04:15:52Z",
       "side": 1,
       "message": "Do you need a separate counter or can you just check press_event_map_.size()? I can\u0027t remember if it\u0027s possible to have two touch events with the same pointer id, such that touch_points_ would not be the same as press_event_map_.size().",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6fde0a5_3e052a05",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Yes, a separate counter is necessary. This is because events are removed from press_event_map_ if the controller cancels existing touches. There is a state where there are two touches on the screen but nothing is in the map. Added comment to the definition of press_event_map_.",
+      "parentUuid": "31a4669e_1f0fbe70",
       "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "8991b488_523298da",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ca3ef64_fe3bb5db",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88920a7c_eebc6fdf",
         "filename": "ash/magnifier/magnification_controller.cc",
         "patchSetId": 6
@@ -152,6 +296,24 @@
       "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a539ce1_422634b9",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88920a7c_eebc6fdf",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "4955c36b_125b206e",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bfe0f77_cb026e05",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f07deab1_409a34c5",
         "filename": "ash/magnifier/magnification_controller.cc",
         "patchSetId": 6
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "c2266b9e_ae44654a",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f07deab1_409a34c5",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54fe9e4f_aa1127e3",
         "filename": "ash/magnifier/magnification_controller.cc",
         "patchSetId": 6
@@ -200,6 +398,24 @@
       "writtenOn": "2018-01-17T04:15:52Z",
       "side": 1,
       "message": "This function is very long. Is there any way to break it into smaller parts?",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7f7ad1_0a1683d3",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Extracted the part to process gestures into ProcessGestures function.",
+      "parentUuid": "54fe9e4f_aa1127e3",
       "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "07ea54a1_6e2581d3",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba7d7bf0_8488140e",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd8cf598_28f46896",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 6
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "c1f1fcf7_16e62328",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3691,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd8cf598_28f46896",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73ebdaea_06b1e74d",
         "filename": "chromeos/chromeos_switches.h",
         "patchSetId": 6
@@ -254,6 +506,24 @@
       "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a3dfd3_df4c68b0",
+        "filename": "chromeos/chromeos_switches.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-17T11:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73ebdaea_06b1e74d",
+      "revId": "d5463b9c31e06b1d7d06f4002755f013286c16e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
