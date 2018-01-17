@@ -22,6 +22,30 @@
       "revId": "f12d9d04a18393e77cf67b165a0abb00b1721b0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e936860c_2250d85a",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8517,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2018-01-17T16:44:11Z",
+      "side": 1,
+      "message": "I have just chatted with Georges with this.\n\nI\u0027ll keep the things simple here by just saying unsigned profiles will be inaccessible. And ask admin to read the help center article for more information. The link will be appended once I got the p link.",
+      "parentUuid": "50f861e5_4b0cab98",
+      "range": {
+        "startLine": 8517,
+        "startChar": 241,
+        "endLine": 8517,
+        "endChar": 284
+      },
+      "revId": "f12d9d04a18393e77cf67b165a0abb00b1721b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
