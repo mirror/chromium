@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7859aa87_d583badc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-17T21:18:51Z",
+      "side": 1,
+      "message": "do you need to set mLastTab \u003d tab here?\n\nShould this block and the below if block be shared/pulled out to a function to be called (updateCurrentTab or something)?",
+      "range": {
+        "startLine": 67,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 31
+      },
+      "revId": "efcf823244764a797e838488497f5cc9ee6232ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
