@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "47f53c49_7240e6a5",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_event_router.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-17T18:15:13Z",
+      "side": 1,
+      "message": "This pattern is different from how the rest of the file is written. I also could not find another example of it in similar files. I prefer to refactor this file in a separate CL if you\u0027d like.",
+      "parentUuid": "7f9df92f_f9a439f2",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 69
+      },
+      "revId": "2edb0e0da0099a88c1a3b8ba6d2ab5d8a04a1777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "691e9c9b_044132b6",
         "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_event_router.cc",
         "patchSetId": 32
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c888368e_2aa54325",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_event_router.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-17T18:15:13Z",
+      "side": 1,
+      "message": "See comment above",
+      "parentUuid": "691e9c9b_044132b6",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 51
+      },
+      "revId": "2edb0e0da0099a88c1a3b8ba6d2ab5d8a04a1777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3ceb241_ffd805d4",
         "filename": "components/password_manager/core/browser/ui/export_flow.h",
         "patchSetId": 32
@@ -62,6 +110,24 @@
       "revId": "2edb0e0da0099a88c1a3b8ba6d2ab5d8a04a1777",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb59926_e571b1a3",
+        "filename": "components/password_manager/core/browser/ui/export_flow.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-17T18:15:13Z",
+      "side": 1,
+      "message": "I don\u0027t understand what you want to add to this comment. The way I read it, an export being in progress is the only case where we return false. Is \"i.e.\" perhaps a confusing way to state it?",
+      "parentUuid": "a3ceb241_ffd805d4",
+      "revId": "2edb0e0da0099a88c1a3b8ba6d2ab5d8a04a1777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
