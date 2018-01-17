@@ -43,7 +43,7 @@ class StyleInvalidImage final : public StyleImage {
       const ImageResourceObserver&,
       const Document&,
       const ComputedStyle&,
-      const LayoutSize& container_size) const override {
+      const FloatSize& target_size) const override {
     return nullptr;
   }
   bool KnownToBeOpaque(const Document&, const ComputedStyle&) const override {

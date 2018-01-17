@@ -43,15 +43,21 @@ CSSImageGeneratorValue::CSSImageGeneratorValue(ClassType class_type)
 CSSImageGeneratorValue::~CSSImageGeneratorValue() = default;
 
 void CSSImageGeneratorValue::AddClient(const ImageResourceObserver* client,
-                                       const LayoutSize& size) {
+                                       const FloatSize& size) {
   DCHECK(client);
   if (clients_.IsEmpty()) {
     DCHECK(!keep_alive_);
     keep_alive_ = this;
   }
 
-  if (!size.IsEmpty())
-    sizes_.insert(size);
+  if (!size.IsEmpty()) {
+    base::flat_map<FloatSize, unsigned>::iterator size_entry =
+        sizes_.find(size);
+    if (size_entry == sizes_.end())
+      sizes_.insert(std::pair<FloatSize, unsigned>(size, 1));
+    else
+      sizes_[size]++;
+  }
 
   ClientSizeCountMap::iterator it = clients_.find(client);
   if (it == clients_.end()) {
@@ -73,13 +79,18 @@ void CSSImageGeneratorValue::RemoveClient(const ImageResourceObserver* client) {
   ClientSizeCountMap::iterator it = clients_.find(client);
   SECURITY_DCHECK(it != clients_.end());
 
-  LayoutSize removed_image_size;
+  FloatSize removed_image_size;
   SizeAndCount& size_count = it->value;
-  LayoutSize size = size_count.size;
+  FloatSize size = size_count.size;
   if (!size.IsEmpty()) {
-    sizes_.erase(size);
-    if (!sizes_.Contains(size))
-      images_.erase(size);
+    DCHECK(sizes_.find(size) != sizes_.end());
+    DCHECK(images_.find(size) != images_.end());
+    unsigned& count = sizes_[size];
+    count--;
+    if (count == 0) {
+      sizes_.erase(sizes_.find(size));
+      images_.erase(images_.find(size));
+    }
   }
 
   if (!--size_count.count)
@@ -92,11 +103,11 @@ void CSSImageGeneratorValue::RemoveClient(const ImageResourceObserver* client) {
 }
 
 Image* CSSImageGeneratorValue::GetImage(const ImageResourceObserver* client,
-                                        const LayoutSize& size) {
+                                        const FloatSize& size) {
   ClientSizeCountMap::iterator it = clients_.find(client);
   if (it != clients_.end()) {
     SizeAndCount& size_count = it->value;
-    LayoutSize old_size = size_count.size;
+    FloatSize old_size = size_count.size;
     if (old_size != size) {
       RemoveClient(client);
       AddClient(client, size);
@@ -108,35 +119,41 @@ Image* CSSImageGeneratorValue::GetImage(const ImageResourceObserver* client,
     return nullptr;
 
   // Look up the image in our cache.
-  return images_.at(size);
+  DCHECK(sizes_.find(size) != sizes_.end());
+  base::flat_map<FloatSize, scoped_refptr<Image>, FloatSizeCompare>::iterator
+      image_iter = images_.find(size);
+  if (image_iter == images_.end())
+    return nullptr;
+  return image_iter->second.get();
 }
 
-void CSSImageGeneratorValue::PutImage(const LayoutSize& size,
+void CSSImageGeneratorValue::PutImage(const FloatSize& size,
                                       scoped_refptr<Image> image) {
-  images_.insert(size, std::move(image));
+  images_.insert(
+      std::pair<FloatSize, scoped_refptr<Image> >(size, std::move(image)));
 }
 
 scoped_refptr<Image> CSSImageGeneratorValue::GetImage(
     const ImageResourceObserver& client,
     const Document& document,
     const ComputedStyle& style,
-    const LayoutSize& container_size) {
+    const FloatSize& target_size) {
   switch (GetClassType()) {
     case kCrossfadeClass:
       return ToCSSCrossfadeValue(this)->GetImage(client, document, style,
-                                                 container_size);
+                                                 target_size);
     case kLinearGradientClass:
       return ToCSSLinearGradientValue(this)->GetImage(client, document, style,
-                                                      container_size);
+                                                      target_size);
     case kPaintClass:
       return ToCSSPaintValue(this)->GetImage(client, document, style,
-                                             container_size);
+                                             target_size);
     case kRadialGradientClass:
       return ToCSSRadialGradientValue(this)->GetImage(client, document, style,
-                                                      container_size);
+                                                      target_size);
     case kConicGradientClass:
       return ToCSSConicGradientValue(this)->GetImage(client, document, style,
-                                                     container_size);
+                                                     target_size);
     default:
       NOTREACHED();
   }

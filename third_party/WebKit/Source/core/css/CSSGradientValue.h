@@ -96,7 +96,7 @@ class CSSGradientValue : public CSSImageGeneratorValue {
   scoped_refptr<Image> GetImage(const ImageResourceObserver&,
                                 const Document&,
                                 const ComputedStyle&,
-                                const LayoutSize&);
+                                const FloatSize&);
 
   void AddStop(const CSSGradientColorStop& stop) {
     stops_.push_back(stop);
@@ -170,7 +170,7 @@ class CSSLinearGradientValue final : public CSSGradientValue {
 
   // Create the gradient for a given size.
   scoped_refptr<Gradient> CreateGradient(const CSSToLengthConversionData&,
-                                         const LayoutSize&,
+                                         const FloatSize&,
                                          const LayoutObject&);
 
   bool Equals(const CSSLinearGradientValue&) const;
@@ -243,7 +243,7 @@ class CSSRadialGradientValue final : public CSSGradientValue {
 
   // Create the gradient for a given size.
   scoped_refptr<Gradient> CreateGradient(const CSSToLengthConversionData&,
-                                         const LayoutSize&,
+                                         const FloatSize&,
                                          const LayoutObject&);
 
   bool Equals(const CSSRadialGradientValue&) const;
@@ -309,7 +309,7 @@ class CSSConicGradientValue final : public CSSGradientValue {
 
   // Create the gradient for a given size.
   scoped_refptr<Gradient> CreateGradient(const CSSToLengthConversionData&,
-                                         const LayoutSize&,
+                                         const FloatSize&,
                                          const LayoutObject&);
 
   bool Equals(const CSSConicGradientValue&) const;

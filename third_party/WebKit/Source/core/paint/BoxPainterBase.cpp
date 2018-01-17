@@ -545,7 +545,8 @@ void BoxPainterBase::PaintFillLayer(const PaintInfo& paint_info,
                        scrolled_paint_rect);
     image =
         info.image->GetImage(geometry.ImageClient(), geometry.ImageDocument(),
-                             geometry.ImageStyle(), geometry.TileSize());
+                             geometry.ImageStyle(),
+                             FloatSize(geometry.TileSize()));
     interpolation_quality_context.emplace(
         context, geometry.ImageStyle().GetInterpolationQuality());
 

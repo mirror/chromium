@@ -226,7 +226,7 @@ scoped_refptr<Image> CSSCrossfadeValue::GetImage(
     const ImageResourceObserver& client,
     const Document& document,
     const ComputedStyle&,
-    const LayoutSize& size) {
+    const FloatSize& size) {
   if (size.IsEmpty())
     return nullptr;
 
@@ -249,7 +249,7 @@ scoped_refptr<Image> CSSCrossfadeValue::GetImage(
 
   return CrossfadeGeneratedImage::Create(
       from_image_ref, to_image_ref, percentage_value_->GetFloatValue(),
-      FixedSize(document, FloatSize(size)), FloatSize(size));
+      FixedSize(document, size), size);
 }
 
 void CSSCrossfadeValue::CrossfadeChanged(
