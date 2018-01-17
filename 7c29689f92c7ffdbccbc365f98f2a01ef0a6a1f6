@@ -778,6 +778,24 @@
     },
     {
       "key": {
+        "uuid": "1de62ba9_c2f1cd00",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-17T22:13:15Z",
+      "side": 1,
+      "message": "An extra output parameter |cancel_certificate_selection| was added to NetworkServiceClient::OnCertificateRequested() mojom interface.\n\nDone.",
+      "parentUuid": "7632f187_88667a0f",
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb3a0a40_d770150d",
         "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
         "patchSetId": 12
@@ -884,6 +902,30 @@
       "side": 1,
       "message": "I guess creating a new X509Certificate::CreateFromPickleUnsafeOptions (similar to the other FooUnsafeOptions methods in there) would be the most consistent way.\n\nAnd add a comment when setting the printable_string_is_utf8 option about it being necessary to round-trip any X509Certificate objects that were parsed with that option in the first place.",
       "parentUuid": "14182627_c91ea3ee",
+      "range": {
+        "startLine": 344,
+        "startChar": 29,
+        "endLine": 344,
+        "endChar": 45
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34bf42de_e7b25f46",
+        "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-17T22:13:15Z",
+      "side": 1,
+      "message": "Thanks!\n\nI created a separate CL for this in order not to make this CL too big:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/871526\n\nDone.",
+      "parentUuid": "56799a61_801e76d1",
       "range": {
         "startLine": 344,
         "startChar": 29,
