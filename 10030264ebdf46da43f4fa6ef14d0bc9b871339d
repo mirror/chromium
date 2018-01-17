@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f08a70c_9f47ba27",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsComponent.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-17T18:53:18Z",
+      "side": 1,
+      "message": "nit: new logging in this function seems a bit spammy.",
+      "revId": "10030264ebdf46da43f4fa6ef14d0bc9b871339d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
