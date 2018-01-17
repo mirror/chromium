@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a2842871_300a1539",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-17T14:03:44Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "b7e1bdb8_e0ad2c95",
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cddff413_fc83f45a",
         "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
         "patchSetId": 6

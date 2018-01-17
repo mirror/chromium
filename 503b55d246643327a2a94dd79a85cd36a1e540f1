@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63a3ae8d_6f2b190e",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-17T14:03:44Z",
+      "side": 1,
+      "message": "nit: Would simple \"\u003d default\" work?\nDitto for the operator\u003d.",
+      "revId": "503b55d246643327a2a94dd79a85cd36a1e540f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71960ae_506665b7",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-17T14:03:44Z",
+      "side": 1,
+      "message": "Now that this class contains a list of KeyLocation, I\u0027m feeling the name \"KeyId\" isn\u0027t good anymore. This single class can generally correspond to a number of keys on different slots; also it\u0027s working more like a \"descriptor\" than a unique identifier.\n\nI\u0027m inclining towards dropping this class altogether and switching back to passing the data as separate arguments. Or maybe come up with a better naming for it.",
+      "revId": "503b55d246643327a2a94dd79a85cd36a1e540f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb47927_589758ed",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-17T14:03:44Z",
+      "side": 1,
+      "message": "nit: If you decide to keep this class, then marking this as \"final\" won\u0027t harm.",
+      "revId": "503b55d246643327a2a94dd79a85cd36a1e540f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477f5cbe_6867dcce",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-17T14:03:44Z",
+      "side": 1,
+      "message": "nit: Not needed anymore.",
+      "revId": "503b55d246643327a2a94dd79a85cd36a1e540f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec453bc_fc6011c0",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-17T14:03:44Z",
+      "side": 1,
+      "message": "While you\u0027re here, please also fix this outdated comment.",
+      "range": {
+        "startLine": 186,
+        "startChar": 34,
+        "endLine": 187,
+        "endChar": 63
+      },
+      "revId": "503b55d246643327a2a94dd79a85cd36a1e540f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f880d409_8b24ee0e",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-17T14:03:44Z",
+      "side": 1,
+      "message": "nit: Extra dot.",
+      "range": {
+        "startLine": 224,
+        "startChar": 26,
+        "endLine": 224,
+        "endChar": 27
+      },
+      "revId": "503b55d246643327a2a94dd79a85cd36a1e540f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acafe06d_97b2c590",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-17T14:03:44Z",
+      "side": 1,
+      "message": "nit: Perhaps use the \"public_key_spki_der_b64\" naming for consistency with other code.",
+      "revId": "503b55d246643327a2a94dd79a85cd36a1e540f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45557e51_4f85c41c",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-17T14:03:44Z",
+      "side": 1,
+      "message": "nit: Perhaps std::move?",
+      "revId": "503b55d246643327a2a94dd79a85cd36a1e540f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6c2b79_0beaaab9",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-17T14:03:44Z",
+      "side": 1,
+      "message": "nit: s/Callback/CallBack/",
+      "range": {
+        "startLine": 153,
+        "startChar": 27,
+        "endLine": 153,
+        "endChar": 35
+      },
+      "revId": "503b55d246643327a2a94dd79a85cd36a1e540f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d43873_5f6d93fd",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-17T14:03:44Z",
+      "side": 1,
+      "message": "nit: Probably \"GetKeyLocations\" for consistency.",
+      "range": {
+        "startLine": 274,
+        "startChar": 7,
+        "endLine": 274,
+        "endChar": 21
+      },
+      "revId": "503b55d246643327a2a94dd79a85cd36a1e540f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
