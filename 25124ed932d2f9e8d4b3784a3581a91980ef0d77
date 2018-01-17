@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c2feed0_c5712220",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-17T21:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "863b16a3_ed5444df",
+      "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e31f3412_7b334a7c",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
         "patchSetId": 20
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-17T02:36:07Z",
       "side": 1,
       "message": "What happens if this runs on worker threads? Workers don\u0027t have DOMWindow.\n\nYou could use CurrentExecutionContext(isolate). It will work for workers.",
+      "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2754617_8d3f4e36",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-17T21:23:56Z",
+      "side": 1,
+      "message": "I\u0027ll use the ExecutionContext as my key. Done.",
+      "parentUuid": "e31f3412_7b334a7c",
       "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bcb428e7_0b6a8648",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-17T21:23:56Z",
+      "side": 1,
+      "message": "This logic moved to ArrayBufferContents. I added a CHECK there.",
+      "parentUuid": "72c1f420_86f21209",
+      "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86d90fe8_c5942271",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
         "patchSetId": 20
@@ -67,6 +121,24 @@
       "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494ce11e_2794fbee",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-17T21:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86d90fe8_c5942271",
+      "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b59018ff_cfce09e7",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-17T21:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6169d90_d8b60ae6",
+      "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e117a9e7_ec4e6789",
         "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
         "patchSetId": 20
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-17T02:36:07Z",
       "side": 1,
       "message": "Use DEFINE_STATIC_LOCAL in Blink.",
+      "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257aba86_e518676f",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-17T21:23:56Z",
+      "side": 1,
+      "message": "I copied this from Partitions.cpp. Also, this needs to be a global, since I added a second helper function (now in ArrayBufferContents.cpp).",
+      "parentUuid": "e117a9e7_ec4e6789",
       "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b2268e_539b99ea",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-17T21:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6829ed2_3e7643c5",
+      "revId": "25124ed932d2f9e8d4b3784a3581a91980ef0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
