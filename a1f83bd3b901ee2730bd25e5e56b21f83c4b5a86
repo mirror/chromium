@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dcfc6698_196a1a33",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T12:36:04Z",
+      "side": 1,
+      "message": "Oops, leftover from previous WIP impl, removed, thanks",
+      "parentUuid": "827cfcf3_a82410a7",
+      "range": {
+        "startLine": 205,
+        "startChar": 17,
+        "endLine": 205,
+        "endChar": 23
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd88d044_9e014559",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86cb7a2_5aac61e1",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T12:36:04Z",
+      "side": 1,
+      "message": "Yeah, not a fan either but this is consistent with \"SlowConstructor\" in this file above.",
+      "parentUuid": "bd88d044_9e014559",
+      "range": {
+        "startLine": 206,
+        "startChar": 7,
+        "endLine": 206,
+        "endChar": 25
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dabc45f9_e560aa7d",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T12:36:04Z",
+      "side": 1,
+      "message": "Yes, but this is spinning in a background thread. I don\u0027t want to use sleep or any other synchronization primitives because I don\u0027t want to hint the kernel that it\u0027s important to schedule this thread at any point.\n\nThe previous bug was spinning in a foreground thread while a background thread was assigned to construct. Now this is testing that the background thread is scheduled at all to see this bit and complete construction (i.e. foreground threads aren\u0027t stalling it -- which depends on LazyInstance impl when while on instance as desired for this test).",
+      "parentUuid": "0f72b968_3d3e2106",
+      "range": {
+        "startLine": 213,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 49
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c90fed21_2d405f92",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4be77a3d_77756edb",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T12:36:04Z",
+      "side": 1,
+      "message": "No because external callers must be able to set them without getting/constructing the object.",
+      "parentUuid": "c90fed21_2d405f92",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 30
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "998c847f_5119c0d6",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 8
@@ -114,6 +210,30 @@
       "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff4348a_6eff460e",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-17T12:36:04Z",
+      "side": 1,
+      "message": "Meh... I don\u0027t think so: it\u0027s not related to an action. The 5s is merely from local experimentation of timing in regression case.",
+      "parentUuid": "998c847f_5119c0d6",
+      "range": {
+        "startLine": 321,
+        "startChar": 12,
+        "endLine": 321,
+        "endChar": 43
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
