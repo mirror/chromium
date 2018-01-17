@@ -16,6 +16,24 @@
       "revId": "b6fefce9f36d54e9bc32babb6dfd29b952abdbe6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b795c323_a0057f76",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-17T19:57:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75b0b8c5_c77a6df9",
+      "revId": "b6fefce9f36d54e9bc32babb6dfd29b952abdbe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
