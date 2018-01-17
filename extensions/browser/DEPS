@@ -23,7 +23,7 @@ include_rules = [
   "+net",
   # This directory contains build flags and does not pull all of PPAPI in.
   "+ppapi/features",
-  "+services/data_decoder/public/cpp",
+  "+services/data_decoder/public",
   "+services/network/public/cpp",
   "+services/preferences/public/cpp",
   "+services/service_manager/public/cpp",
@@ -56,5 +56,9 @@ specific_include_rules = {
     "+chrome/common/chrome_switches.h",
     "+chrome/test/base/testing_profile.h",
     "+chrome/test/base/ui_test_utils.h",
+
+    # Unit-tests need access to some service implementations to by-pass the
+    # ServiceManager.
+    "+services/data_decoder",
   ],
 }
