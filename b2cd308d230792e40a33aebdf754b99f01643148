@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "33bb295f_d268a67e",
+        "filename": "content/common/throttling_url_loader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-17T12:50:08Z",
+      "side": 1,
+      "message": "Do you plan to use thiw WeakWrapper one even after other production callsites are migrating from it, or should we just remove WeakWrapper implementation after that?  (In the latter case we probably want to use the non-weak wrapper one here?)",
+      "revId": "b2cd308d230792e40a33aebdf754b99f01643148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19df1e74_0cf59540",
         "filename": "content/public/common/shared_url_loader_factory.h",
         "patchSetId": 9
