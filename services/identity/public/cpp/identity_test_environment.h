@@ -32,6 +32,14 @@ class IdentityTestEnvironment : public IdentityManager::DiagnosticsObserver {
   // an access token value of "access_token".
   void SetAutomaticIssueOfAccessTokens(bool grant);
 
+  // Waits for an access token request to occur and issues |token| in response.
+  // NOTE: The implementation currently issues tokens in response to *all*
+  // pending access token requests. If you need finer granularity, contact
+  // blundell@chromium.org
+  void WaitForAccessTokenRequestAndRespondWithToken(
+      const std::string& token,
+      const base::Time& expiration);
+
   // Waits for an access token request to occur and issues |error| in response.
   // NOTE: The implementation currently issues errors in response to *all*
   // pending access token requests. If you need finer granularity, contact
@@ -40,14 +48,14 @@ class IdentityTestEnvironment : public IdentityManager::DiagnosticsObserver {
       const GoogleServiceAuthError& error);
 
  private:
+  // Waits for an access token request to occur.
+  void WaitForAccessTokenRequest();
+
   // IdentityManager::DiagnosticsObserver:
   void OnAccessTokenRequested(
       const std::string& account_id,
       const std::string& consumer_id,
       const OAuth2TokenService::ScopeSet& scopes) override;
-
-  // Runs a nested runloop until an access token request is observed.
-  void WaitForAccessTokenRequest();
 
   std::unique_ptr<IdentityTestEnvironmentInternal> internals_;
   base::OnceClosure on_access_token_requested_callback_;
