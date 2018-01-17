@@ -1003,7 +1003,7 @@ IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, DISABLED_ShowNotification) {
   // Connecting a braille display should enable spoken feedback and show
   // both messages.
   SetBrailleConnected(true);
-  // Spin the run loop to make sure ash see the change.
+  // Spin the message loop to ensure chrome sees the pref change from ash.
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(AccessibilityManager::Get()->IsSpokenFeedbackEnabled());
   notifications = MessageCenter::Get()->GetVisibleNotifications();
