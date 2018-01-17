@@ -365,7 +365,7 @@ class CONTENT_EXPORT ServiceWorkerContextClient
   void OnDidGetClient(int request_id,
                       const blink::mojom::ServiceWorkerClientInfo& client);
   void OnDidGetClients(
-      std::unique_ptr<blink::WebServiceWorkerClientsCallbacks> callbacks,
+      int request_id,
       std::vector<blink::mojom::ServiceWorkerClientInfoPtr> clients);
   void OnOpenWindowResponse(
       int request_id,
@@ -379,10 +379,9 @@ class CONTENT_EXPORT ServiceWorkerContextClient
       const blink::mojom::ServiceWorkerClientInfo& client);
   void OnNavigateClientError(int request_id, const GURL& url);
   void OnDidSkipWaiting(int request_id);
-  void OnDidClaimClients(
-      std::unique_ptr<blink::WebServiceWorkerClientsClaimCallbacks> callbacks,
-      blink::mojom::ServiceWorkerErrorType error,
-      const base::Optional<std::string>& error_msg);
+  void OnDidClaimClients(int request_id,
+                         blink::mojom::ServiceWorkerErrorType error,
+                         const base::Optional<std::string>& error_msg);
   // Called to resolve the FetchEvent.preloadResponse promise.
   void OnNavigationPreloadResponse(
       int fetch_event_id,
