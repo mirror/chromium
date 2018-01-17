@@ -163,6 +163,30 @@
       "revId": "2bf2a972b72192e9be44e63ab060ef3b0e1f2d86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33c3853_31f2d2e9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 70761,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-17T11:52:02Z",
+      "side": 1,
+      "message": "We\u0027re looking at 30 seconds of wall time to match the existing behaviour for other histograms. I will look into long tasks CPU duration separately.",
+      "parentUuid": "609800eb_4552a4c0",
+      "range": {
+        "startLine": 70761,
+        "startChar": 53,
+        "endLine": 70761,
+        "endChar": 55
+      },
+      "revId": "2bf2a972b72192e9be44e63ab060ef3b0e1f2d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
