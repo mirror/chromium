@@ -62,7 +62,7 @@ void ReadDataPipeInternal(mojo::DataPipeConsumerHandle handle,
 }
 
 std::string ReadDataPipe(mojo::ScopedDataPipeConsumerHandle handle) {
-  EXPECT_TRUE(handle.is_valid());
+  EXPECT_TRUE(handle);
   std::string result;
   base::RunLoop loop;
   ReadDataPipeInternal(handle.get(), &result, loop.QuitClosure());
@@ -104,14 +104,14 @@ class ExpectedScriptInfo {
       script_info->headers.erase(header.first);
     }
     EXPECT_EQ(0u, script_info->headers.size());
-    EXPECT_TRUE(script_info->body.is_valid());
+    EXPECT_TRUE(script_info->body);
     std::string body = ReadDataPipe(std::move(script_info->body));
     EXPECT_EQ(body_, body);
     if (meta_data_.size() == 0) {
-      EXPECT_FALSE(script_info->meta_data.is_valid());
+      EXPECT_FALSE(script_info->meta_data);
       EXPECT_EQ(0u, script_info->meta_data_size);
     } else {
-      EXPECT_TRUE(script_info->meta_data.is_valid());
+      EXPECT_TRUE(script_info->meta_data);
       std::string meta_data = ReadDataPipe(std::move(script_info->meta_data));
       EXPECT_EQ(meta_data_, meta_data);
     }

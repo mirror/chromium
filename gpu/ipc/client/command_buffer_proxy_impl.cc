@@ -744,7 +744,7 @@ std::unique_ptr<base::SharedMemory>
 CommandBufferProxyImpl::AllocateAndMapSharedMemory(size_t size) {
   mojo::ScopedSharedBufferHandle handle =
       mojo::SharedBufferHandle::Create(size);
-  if (!handle.is_valid()) {
+  if (!handle) {
     DLOG(ERROR) << "AllocateAndMapSharedMemory: Create failed";
     return nullptr;
   }

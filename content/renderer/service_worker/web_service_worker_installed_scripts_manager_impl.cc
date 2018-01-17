@@ -28,7 +28,7 @@ class Receiver {
         remaining_bytes_(total_bytes) {}
 
   void Start(base::OnceClosure callback) {
-    if (!handle_.is_valid()) {
+    if (!handle_) {
       std::move(callback).Run();
       return;
     }
@@ -80,7 +80,7 @@ class Receiver {
     watcher_.ArmOrNotify();
   }
 
-  bool is_running() const { return handle_.is_valid(); }
+  bool is_running() const { return static_cast<bool>(handle_); }
   bool has_received_all_data() const { return remaining_bytes_ == 0; }
 
   blink::WebVector<BytesChunk> TakeChunks() {

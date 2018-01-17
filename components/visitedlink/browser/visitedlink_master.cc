@@ -281,7 +281,7 @@ bool VisitedLinkMaster::Init() {
   if (!CreateURLTable(DefaultTableSize()))
     return false;
 
-  if (shared_memory_.is_valid())
+  if (shared_memory_)
     listener_->NewTable(shared_memory_.get());
 
 #ifndef NDEBUG
@@ -705,7 +705,7 @@ void VisitedLinkMaster::OnTableLoadComplete(
   DCHECK(load_from_file_result.get());
 
   // Delete the previous table.
-  DCHECK(shared_memory_.is_valid());
+  DCHECK(shared_memory_);
   shared_memory_.reset();
   hash_table_mapping_.reset();
 
@@ -716,7 +716,7 @@ void VisitedLinkMaster::OnTableLoadComplete(
   *file_ = load_from_file_result->file.release();
 
   // Assign the loaded table.
-  DCHECK(load_from_file_result->shared_memory.is_valid());
+  DCHECK(load_from_file_result->shared_memory);
   DCHECK(load_from_file_result->hash_table);
   memcpy(salt_, load_from_file_result->salt, LINK_SALT_LENGTH);
   shared_memory_ = std::move(load_from_file_result->shared_memory);
@@ -881,7 +881,7 @@ bool VisitedLinkMaster::CreateApartURLTable(
   // Create the shared memory object.
   mojo::ScopedSharedBufferHandle shared_buffer =
       mojo::SharedBufferHandle::Create(alloc_size);
-  if (!shared_buffer.is_valid())
+  if (!shared_buffer)
     return false;
   mojo::ScopedSharedBufferMapping hash_table_mapping =
       shared_buffer->Map(alloc_size);
@@ -957,7 +957,7 @@ bool VisitedLinkMaster::ResizeTableIfNecessary() {
 }
 
 void VisitedLinkMaster::ResizeTable(int32_t new_size) {
-  DCHECK(shared_memory_.is_valid() && hash_table_mapping_);
+  DCHECK(shared_memory_ && hash_table_mapping_);
   shared_memory_serial_++;
 
 #ifndef NDEBUG

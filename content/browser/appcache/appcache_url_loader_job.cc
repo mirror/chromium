@@ -255,7 +255,7 @@ void AppCacheURLLoaderJob::OnConnectionError() {
 void AppCacheURLLoaderJob::SendResponseInfo() {
   DCHECK(client_);
   // If this is null it means the response information was sent to the client.
-  if (!data_pipe_.consumer_handle.is_valid())
+  if (!data_pipe_.consumer_handle)
     return;
 
   const net::HttpResponseInfo* http_info = is_range_request()

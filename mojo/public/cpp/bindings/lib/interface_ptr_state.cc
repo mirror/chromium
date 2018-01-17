@@ -49,9 +49,9 @@ void InterfacePtrStateBase::Bind(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   DCHECK(!router_);
   DCHECK(!endpoint_client_);
-  DCHECK(!handle_.is_valid());
+  DCHECK(!handle_);
   DCHECK_EQ(0u, version_);
-  DCHECK(handle.is_valid());
+  DCHECK(handle);
 
   handle_ = std::move(handle);
   version_ = version;
@@ -71,7 +71,7 @@ bool InterfacePtrStateBase::InitializeEndpointClient(
     bool has_sync_methods,
     std::unique_ptr<MessageReceiver> payload_validator) {
   // The object hasn't been bound.
-  if (!handle_.is_valid())
+  if (!handle_)
     return false;
 
   MultiplexRouter::Config config =

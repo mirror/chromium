@@ -287,9 +287,9 @@ void CastRemotingConnector::StartRemotingDataStreams(
     return;
   // Also, if neither audio nor video pipe was provided, or if a request for a
   // RemotingDataStreamSender was not provided for a data pipe, error-out early.
-  if ((!audio_pipe.is_valid() && !video_pipe.is_valid()) ||
-      (audio_pipe.is_valid() && !audio_sender_request.is_pending()) ||
-      (video_pipe.is_valid() && !video_sender_request.is_pending())) {
+  if ((!audio_pipe && !video_pipe) ||
+      (audio_pipe && !audio_sender_request.is_pending()) ||
+      (video_pipe && !video_sender_request.is_pending())) {
     StopRemoting(active_bridge_, RemotingStopReason::DATA_SEND_FAILED);
     return;
   }

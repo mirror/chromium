@@ -46,7 +46,7 @@ MojoWatcher* MojoWatcher::Create(mojo::Handle handle,
 MojoWatcher::~MojoWatcher() = default;
 
 MojoResult MojoWatcher::cancel() {
-  if (!watcher_handle_.is_valid())
+  if (!watcher_handle_)
     return MOJO_RESULT_INVALID_ARGUMENT;
 
   watcher_handle_.reset();
@@ -168,7 +168,7 @@ void MojoWatcher::RunReadyCallback(MojoResult result) {
     // Only dispatch to the callback if this cancellation was implicit due to
     // |m_handle| closure. If it was explicit, |m_watcherHandle| has already
     // been reset.
-    if (watcher_handle_.is_valid()) {
+    if (watcher_handle_) {
       watcher_handle_.reset();
       RunWatchCallback(callback_, this, result);
     }
@@ -176,13 +176,13 @@ void MojoWatcher::RunReadyCallback(MojoResult result) {
   }
 
   // Ignore callbacks if not watching.
-  if (!watcher_handle_.is_valid())
+  if (!watcher_handle_)
     return;
 
   RunWatchCallback(callback_, this, result);
 
   // The user callback may have canceled watching.
-  if (!watcher_handle_.is_valid())
+  if (!watcher_handle_)
     return;
 
   // Rearm the watcher so another notification can fire.

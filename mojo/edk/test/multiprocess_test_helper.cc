@@ -53,7 +53,7 @@ base::LazyInstance<PeerConnection>::Leaky g_child_peer_connection;
 
 template <typename Func>
 int RunClientFunction(Func handler, bool pass_pipe_ownership_to_main) {
-  CHECK(MultiprocessTestHelper::primordial_pipe.is_valid());
+  CHECK(MultiprocessTestHelper::primordial_pipe);
   ScopedMessagePipeHandle pipe =
       std::move(MultiprocessTestHelper::primordial_pipe);
   MessagePipeHandle pipe_handle =

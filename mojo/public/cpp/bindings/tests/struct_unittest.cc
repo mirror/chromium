@@ -142,7 +142,7 @@ TEST_F(StructTest, Clone) {
   // NoDefaultFieldValues contains handles, so Clone() is not available, but
   // NoDefaultFieldValuesPtr should still compile.
   NoDefaultFieldValuesPtr no_default_field_values(NoDefaultFieldValues::New());
-  EXPECT_FALSE(no_default_field_values->f13.is_valid());
+  EXPECT_FALSE(no_default_field_values->f13);
 }
 
 // Serialization test of a struct with no pointer or handle members.

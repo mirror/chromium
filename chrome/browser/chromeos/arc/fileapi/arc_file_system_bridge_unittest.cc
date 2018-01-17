@@ -178,7 +178,7 @@ TEST_F(ArcFileSystemBridgeTest, OpenFileToRead) {
       EncodeToChromeContentProviderUrl(GURL(kTestUrl)).spec(),
       base::Bind(
           [](base::RunLoop* run_loop, mojo::ScopedHandle result) {
-            EXPECT_TRUE(result.is_valid());
+            EXPECT_TRUE(result);
             run_loop->Quit();
           },
           &run_loop));

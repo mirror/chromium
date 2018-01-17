@@ -96,7 +96,7 @@ class SerializationWarningTest : public testing::Test {
 
 TEST_F(SerializationWarningTest, HandleInStruct) {
   Struct2Ptr test_struct(Struct2::New());
-  EXPECT_FALSE(test_struct->hdl.is_valid());
+  EXPECT_FALSE(test_struct->hdl);
 
   TestWarning(std::move(test_struct),
               mojo::internal::VALIDATION_ERROR_UNEXPECTED_INVALID_HANDLE);

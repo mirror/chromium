@@ -63,7 +63,7 @@ class TestSensorClient : public mojom::SensorClient {
   void OnSensorCreated(base::OnceClosure quit_closure,
                        mojom::SensorInitParamsPtr params) {
     ASSERT_TRUE(params);
-    EXPECT_TRUE(params->memory.is_valid());
+    EXPECT_TRUE(params->memory);
     const double expected_default_frequency =
         std::min(30.0, GetSensorMaxAllowedFrequency(type_));
     EXPECT_DOUBLE_EQ(expected_default_frequency,

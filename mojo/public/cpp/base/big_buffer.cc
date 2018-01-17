@@ -28,7 +28,7 @@ BigBufferSharedMemoryRegion& BigBufferSharedMemoryRegion::operator=(
     BigBufferSharedMemoryRegion&& other) = default;
 
 mojo::ScopedSharedBufferHandle BigBufferSharedMemoryRegion::TakeBufferHandle() {
-  DCHECK(buffer_handle_.is_valid());
+  DCHECK(buffer_handle_);
   buffer_mapping_.reset();
   return std::move(buffer_handle_);
 }
@@ -45,7 +45,7 @@ BigBuffer::BigBuffer(BigBuffer&& other) = default;
 BigBuffer::BigBuffer(base::span<const uint8_t> data) {
   if (data.size() > kMaxInlineBytes) {
     auto buffer = mojo::SharedBufferHandle::Create(data.size());
-    if (buffer.is_valid()) {
+    if (buffer) {
       storage_type_ = StorageType::kSharedMemory;
       shared_memory_.emplace(std::move(buffer), data.size());
       std::copy(data.begin(), data.end(),

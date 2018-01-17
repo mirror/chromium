@@ -336,7 +336,7 @@ void ServiceWorkerScriptURLLoader::OnWriteHeadersComplete(net::Error error) {
 }
 
 void ServiceWorkerScriptURLLoader::MaybeStartNetworkConsumerHandleWatcher() {
-  if (!network_consumer_.is_valid()) {
+  if (!network_consumer_) {
     // Wait until the network consumer handle is ready to read.
     // OnStartLoadingResponseBody() will continue the sequence.
     return;
@@ -356,7 +356,7 @@ void ServiceWorkerScriptURLLoader::MaybeStartNetworkConsumerHandleWatcher() {
 }
 
 void ServiceWorkerScriptURLLoader::OnNetworkDataAvailable(MojoResult) {
-  DCHECK(network_consumer_.is_valid());
+  DCHECK(network_consumer_);
   scoped_refptr<network::MojoToNetPendingBuffer> pending_buffer;
   uint32_t bytes_available = 0;
   MojoResult result = network::MojoToNetPendingBuffer::BeginRead(

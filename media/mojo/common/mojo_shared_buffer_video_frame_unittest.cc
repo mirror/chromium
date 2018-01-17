@@ -90,7 +90,7 @@ TEST(MojoSharedBufferVideoFrameTest, CreateFrameAndPassSharedMemory) {
   ASSERT_LT(y_offset, requested_size);
   mojo::ScopedSharedBufferHandle handle =
       mojo::SharedBufferHandle::Create(requested_size);
-  ASSERT_TRUE(handle.is_valid());
+  ASSERT_TRUE(handle);
 
   // Allocate frame.
   scoped_refptr<MojoSharedBufferVideoFrame> frame =
@@ -149,7 +149,7 @@ TEST(MojoSharedBufferVideoFrameTest, TestDestructionCallback) {
   size_t requested_size = VideoFrame::AllocationSize(format, size);
   mojo::ScopedSharedBufferHandle handle =
       mojo::SharedBufferHandle::Create(requested_size);
-  ASSERT_TRUE(handle.is_valid());
+  ASSERT_TRUE(handle);
 
   // Keep track of the original handle. MojoSharedBufferVideoFrame::Create()
   // will get ownership of the memory.

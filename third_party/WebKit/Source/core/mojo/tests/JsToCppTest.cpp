@@ -200,9 +200,9 @@ void CheckCorruptedEchoArgs(const js_to_cpp::blink::EchoArgsPtr& arg) {
     return;
   CheckCorruptedString(arg->name);
   CheckCorruptedStringArray(arg->string_array);
-  if (arg->data_handle.is_valid())
+  if (arg->data_handle)
     CheckCorruptedDataPipe(arg->data_handle.get());
-  if (arg->message_handle.is_valid())
+  if (arg->message_handle)
     CheckCorruptedMessagePipe(arg->message_handle.get());
 }
 

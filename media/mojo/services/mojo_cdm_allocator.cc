@@ -47,7 +47,7 @@ class MojoCdmBuffer : public cdm::Buffer {
       mojo::ScopedSharedBufferHandle buffer,
       size_t capacity,
       const MojoSharedBufferDoneCB& mojo_shared_buffer_done_cb) {
-    DCHECK(buffer.is_valid());
+    DCHECK(buffer);
     DCHECK(!mojo_shared_buffer_done_cb.is_null());
 
     // cdm::Buffer interface limits capacity to uint32.
@@ -63,7 +63,7 @@ class MojoCdmBuffer : public cdm::Buffer {
     mapping_.reset();
 
     // If nobody has claimed the handle, then return it.
-    if (buffer_.is_valid())
+    if (buffer_)
       mojo_shared_buffer_done_cb_.Run(std::move(buffer_), capacity_);
 
     // No need to exist anymore.
@@ -99,7 +99,7 @@ class MojoCdmBuffer : public cdm::Buffer {
 
   ~MojoCdmBuffer() final {
     // Verify that the buffer has been returned so it can be reused.
-    DCHECK(!buffer_.is_valid());
+    DCHECK(!buffer_);
   }
 
   mojo::ScopedSharedBufferHandle buffer_;
@@ -132,7 +132,7 @@ class MojoCdmVideoFrame : public VideoFrameImpl {
     // Take ownership of the mojo::ScopedSharedBufferHandle from |buffer|.
     uint32_t buffer_size = buffer->Size();
     mojo::ScopedSharedBufferHandle handle = buffer->TakeHandle();
-    DCHECK(handle.is_valid());
+    DCHECK(handle);
 
     // Clear FrameBuffer so that MojoCdmVideoFrame no longer has a reference
     // to it (memory will be transferred to MojoSharedBufferVideoFrame).
@@ -179,7 +179,7 @@ cdm::Buffer* MojoCdmAllocator::CreateCdmBuffer(size_t capacity) {
   auto found = available_buffers_.lower_bound(capacity);
   if (found == available_buffers_.end()) {
     buffer = AllocateNewBuffer(&capacity);
-    if (!buffer.is_valid())
+    if (!buffer)
       return nullptr;
   } else {
     capacity = found->first;
@@ -228,7 +228,7 @@ mojo::ScopedSharedBufferHandle MojoCdmAllocator::AllocateNewBuffer(
   requested_capacity += kBufferPadding;
   mojo::ScopedSharedBufferHandle handle =
       mojo::SharedBufferHandle::Create(requested_capacity.ValueOrDie());
-  if (!handle.is_valid())
+  if (!handle)
     return handle;
   *capacity = requested_capacity.ValueOrDie();
   return handle;

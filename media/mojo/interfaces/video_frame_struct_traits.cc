@@ -28,7 +28,7 @@ media::mojom::VideoFrameDataPtr MakeVideoFrameData(
 
     mojo::ScopedSharedBufferHandle dup = mojo_frame->Handle().Clone(
         mojo::SharedBufferHandle::AccessMode::READ_ONLY);
-    DCHECK(dup.is_valid());
+    DCHECK(dup);
 
     return media::mojom::VideoFrameData::NewSharedBufferData(
         media::mojom::SharedBufferVideoFrameData::New(

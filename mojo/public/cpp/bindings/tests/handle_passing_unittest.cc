@@ -80,15 +80,15 @@ class SampleFactoryImpl : public sample::Factory {
                ScopedMessagePipeHandle pipe,
                const DoStuffCallback& callback) override {
     std::string text1;
-    if (pipe.is_valid())
+    if (pipe)
       EXPECT_TRUE(ReadTextMessage(pipe.get(), &text1));
 
     std::string text2;
-    if (request->pipe.is_valid()) {
+    if (request->pipe) {
       EXPECT_TRUE(ReadTextMessage(request->pipe.get(), &text2));
 
       // Ensure that simply accessing request->pipe does not close it.
-      EXPECT_TRUE(request->pipe.is_valid());
+      EXPECT_TRUE(request->pipe);
     }
 
     ScopedMessagePipeHandle pipe0;
@@ -110,7 +110,7 @@ class SampleFactoryImpl : public sample::Factory {
                 const DoStuff2Callback& callback) override {
     // Read the data from the pipe, writing the response (as a string) to
     // DidStuff2().
-    ASSERT_TRUE(pipe.is_valid());
+    ASSERT_TRUE(pipe);
     uint32_t data_size = 0;
 
     MojoHandleSignalsState state;
@@ -167,19 +167,19 @@ void DoStuff(bool* got_response,
              const std::string& text_reply) {
   *got_text_reply = text_reply;
 
-  if (response->pipe.is_valid()) {
+  if (response->pipe) {
     std::string text2;
     EXPECT_TRUE(ReadTextMessage(response->pipe.get(), &text2));
 
     // Ensure that simply accessing response.pipe does not close it.
-    EXPECT_TRUE(response->pipe.is_valid());
+    EXPECT_TRUE(response->pipe);
 
     EXPECT_EQ(std::string(kText2), text2);
 
     // Do some more tests of handle passing:
     ScopedMessagePipeHandle p = std::move(response->pipe);
-    EXPECT_TRUE(p.is_valid());
-    EXPECT_FALSE(response->pipe.is_valid());
+    EXPECT_TRUE(p);
+    EXPECT_FALSE(response->pipe);
   }
 
   *got_response = true;

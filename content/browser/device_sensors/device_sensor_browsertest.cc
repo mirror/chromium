@@ -104,7 +104,7 @@ class FakeSensor : public device::mojom::Sensor {
   void set_reading(device::SensorReading reading) { reading_ = reading; }
 
   void SensorReadingChanged() {
-    if (!shared_buffer_handle_.is_valid())
+    if (!shared_buffer_handle_)
       return;
 
     mojo::ScopedSharedBufferMapping shared_buffer =

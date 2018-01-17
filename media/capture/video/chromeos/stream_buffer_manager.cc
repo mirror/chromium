@@ -460,7 +460,7 @@ void StreamBufferManager::SubmitCaptureResult(uint32_t frame_number) {
   uint32_t buffer_id = partial_result.buffer->buffer_id;
 
   // Wait on release fence before delivering the result buffer to client.
-  if (partial_result.buffer->release_fence.is_valid()) {
+  if (partial_result.buffer->release_fence) {
     const int kSyncWaitTimeoutMs = 1000;
     mojo::edk::ScopedPlatformHandle fence;
     MojoResult result = mojo::edk::PassWrappedPlatformHandle(

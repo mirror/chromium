@@ -24,7 +24,7 @@ void WebServiceWorkerStreamHandle::Completed() {
 
 mojo::ScopedDataPipeConsumerHandle
 WebServiceWorkerStreamHandle::DrainStreamDataPipe() {
-  DCHECK(stream_.is_valid());
+  DCHECK(stream_);
   return std::move(stream_);
 }
 

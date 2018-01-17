@@ -473,7 +473,7 @@ void ChildThreadImpl::Init(const Options& options) {
             options.in_process_service_request_token);
   }
 
-  if (service_request_pipe.is_valid()) {
+  if (service_request_pipe) {
     service_manager_connection_ = ServiceManagerConnection::Create(
         service_manager::mojom::ServiceRequest(std::move(service_request_pipe)),
         GetIOTaskRunner());

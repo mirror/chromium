@@ -73,8 +73,8 @@ void MojoAudioInputIPC::StreamCreated(
     bool initially_muted) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(delegate_);
-  DCHECK(socket.is_valid());
-  DCHECK(shared_memory.is_valid());
+  DCHECK(socket);
+  DCHECK(shared_memory);
   DCHECK(!stream_);
   DCHECK(!stream_client_binding_.is_bound());
   stream_ = std::move(stream);

@@ -238,7 +238,7 @@ void VideoCaptureImpl::OnBufferCreated(int32_t buffer_id,
                                        mojo::ScopedSharedBufferHandle handle) {
   DVLOG(1) << __func__ << " buffer_id: " << buffer_id;
   DCHECK(io_thread_checker_.CalledOnValidThread());
-  DCHECK(handle.is_valid());
+  DCHECK(handle);
 
   base::SharedMemoryHandle memory_handle;
   size_t memory_size = 0;
