@@ -166,6 +166,7 @@ def _ExecuteTool(toolname, tool_args, build_directory, filename):
   args = [toolname, '-p', build_directory, filename]
   if (tool_args):
     args.extend(tool_args)
+  print(args)
   command = subprocess.Popen(
       args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   stdout_text, stderr_text = command.communicate()
@@ -262,7 +263,7 @@ def main():
       nargs='*',
       help='optional paths to filter what files the tool is run on')
   parser.add_argument(
-      '--tool-args', nargs='*',
+      '--tool-args', nargs='*', action='append',
       help='optional arguments passed to the tool')
   parser.add_argument(
       '--tool-path', nargs='?',
