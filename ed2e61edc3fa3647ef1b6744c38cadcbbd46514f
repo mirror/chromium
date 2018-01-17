@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4aa92330_83c39577",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-17T18:49:10Z",
+      "side": 1,
+      "message": "Sure, filed crbug.com/803130",
+      "parentUuid": "01dd51d1_1cb55511",
+      "revId": "ed2e61edc3fa3647ef1b6744c38cadcbbd46514f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1723d8de_2cfe51b1",
         "filename": "base/optional.h",
         "patchSetId": 1

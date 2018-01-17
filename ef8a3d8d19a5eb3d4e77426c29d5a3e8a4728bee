@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "378c0ed8_c279245a",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-17T18:49:10Z",
+      "side": 1,
+      "message": "My understanding is...;\n\ncf) copy constructor: http://en.cppreference.com/w/cpp/language/copy_constructor\n\nWhat we want to do here is just mimic of the implicitly declared copy/move constructors.\n\nIn our regular case, we expect T\u0027s copy ctor has the signature T(const T\u0026) in chromium, then because both\n\n- each direct and virtual base B of T has a copy constructor whose parameters are const B\u0026 or const volatile B\u0026;\n- each non-static data member M of T of class type or array of class type has a copy constructor whose parameters are const M\u0026 or const volatile M\u0026.\n\nare satisfied, the signature of the implicitly declared copy constructor of OptionalStorageBase is OptionalStorageBase(const OptionalStorageBase\u0026).\n\nHowever, if T has the copy constructor with the signature T(T\u0026) (non-const), because the second condition is not satisfied, the copy constructor is OptionalStorageBase(OptionalStorageBase\u0026).\n\n8.4.2.1 says,\n\n\"A function that is explicitly defaulted shall ... have the same declared function type (... except that in the case of copy constructor ..., the parameter type may be \"reference to non-const T\", ...)\"\n\nwhich means \"OptionalStorageBase(OptionalStorageBase\u0026) \u003d default;\" defines explicitly-defined copy constructor that is OptionalStorageBase(const OptionalStorageBase\u0026) or OptionalStorageBase(OptionalStorageBase\u0026) depending on T\u0027s copy constructor signature in this case.\n\nIf we declare as \"OptionalStorageBase(const OptionalStorageBase\u0026 other) \u003d default;\",\nnon-const case cannot be defaulted (i.e. it causes compile error) as;\n\n\"error: the parameter for this experror: the parameter for this explicitly-defaulted copy constructor is const, but a member or base requires it to be non-constlicitly-defaulted copy constructor is const, but a member or base requires it to be non-const\"\n\nbecause of signature mismatch.\ncf) https://stackoverflow.com/questions/10370713/when-are-special-member-functions-of-a-template-class-instantiated\n\n\nActually we have an example.\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/bindings/DOMDataStore.h?q\u003dWTF::Optional%3CDOMWrapperMap%3CScriptWrappable%3E%3E\u0026sq\u003dpackage:chromium\u0026l\u003d183\n\nDOMWrapperMap has the member |map_|, which is of type PersistentValueMapTraits::MapType \u003d v8::GlobalValueMap\u003cKeyType*, v8::Object, PersistentValueMapTraits\u003e. The parent type of GlobalValueMap is PersistentValueMapBase, which declares \n\nhttps://cs.chromium.org/chromium/src/v8/include/v8-util.h?sq\u003dpackage:chromium\u0026l\u003d345\n  PersistentValueMapBase(PersistentValueMapBase\u0026);\n  void operator\u003d(PersistentValueMapBase\u0026);\n\nin private, without definition (older style to prohibit copy).\nSpecifically, this copy ctor does not have \"const\", so DOMWrapperMap also declares non-const copy ctor.\n\nIndeed we could fix v8, but we also use third_party libs, and there is no guarantee about copy ctor signatures. Thus, as we could support that edge cases with small change (just dropping const from copy ctor signature), I prefer supporting it. WDYT?",
+      "parentUuid": "0e4e37c9_a1a219d4",
+      "revId": "ef8a3d8d19a5eb3d4e77426c29d5a3e8a4728bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebc2f50b_802104ff",
         "filename": "base/optional_unittest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-17T17:37:12Z",
       "side": 1,
       "message": "Does this still work if first is const?",
+      "revId": "ef8a3d8d19a5eb3d4e77426c29d5a3e8a4728bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2225dd_67f9ed2b",
+        "filename": "base/optional_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-17T18:49:10Z",
+      "side": 1,
+      "message": "Yes, it does. Added the case.",
+      "parentUuid": "ebc2f50b_802104ff",
       "revId": "ef8a3d8d19a5eb3d4e77426c29d5a3e8a4728bee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
