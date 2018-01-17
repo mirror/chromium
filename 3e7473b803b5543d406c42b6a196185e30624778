@@ -22,6 +22,30 @@
       "revId": "3e7473b803b5543d406c42b6a196185e30624778",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "099d1a07_027f3f7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuViewPager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-17T22:51:21Z",
+      "side": 1,
+      "message": "clipRect will only clip everything minus the bleeding view pager\u0027s elements (i.e. the menu items). \nsetClipBounds clips the menu items such that more is revealed as the canvas expands.",
+      "parentUuid": "c73e1d9f_fb45569f",
+      "range": {
+        "startLine": 139,
+        "startChar": 16,
+        "endLine": 139,
+        "endChar": 48
+      },
+      "revId": "3e7473b803b5543d406c42b6a196185e30624778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
