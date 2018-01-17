@@ -305,6 +305,7 @@ source_set("blink_headers") {
     "platform/WebReferrerPolicy.h",
     "platform/WebRemoteScrollProperties.h",
     "platform/WebRenderingStats.h",
+    "platform/WebResourceTimingInfo.h",
     "platform/WebRuntimeFeatures.h",
     "platform/WebScopedVirtualTimePauser.h",
     "platform/WebScreenInfo.h",

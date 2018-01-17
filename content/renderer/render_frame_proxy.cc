@@ -17,6 +17,7 @@
 #include "content/common/frame_replication_state.h"
 #include "content/common/input_messages.h"
 #include "content/common/page_messages.h"
+#include "content/common/resource_timing_info.h"
 #include "content/common/swapped_out_messages.h"
 #include "content/common/view_messages.h"
 #include "content/public/common/content_switches.h"
@@ -34,6 +35,7 @@
 #include "third_party/WebKit/common/frame_policy.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebRect.h"
+#include "third_party/WebKit/public/platform/WebResourceTimingInfo.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebTriggeringEventInfo.h"
@@ -374,6 +376,7 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_DidSetActiveSandboxFlags,
                         OnDidSetActiveSandboxFlags)
     IPC_MESSAGE_HANDLER(FrameMsg_DispatchLoad, OnDispatchLoad)
+    IPC_MESSAGE_HANDLER(FrameMsg_AddResourceTiming, OnAddResourceTiming)
     IPC_MESSAGE_HANDLER(FrameMsg_Collapse, OnCollapse)
     IPC_MESSAGE_HANDLER(FrameMsg_DidUpdateName, OnDidUpdateName)
     IPC_MESSAGE_HANDLER(FrameMsg_AddContentSecurityPolicies,
@@ -444,7 +447,76 @@ void RenderFrameProxy::OnDidStopLoading() {
 }
 
 void RenderFrameProxy::OnDispatchLoad() {
-  web_frame_->DispatchLoadEventOnFrameOwner();
+  web_frame_->DispatchLoadEventForFrameOwner();
+}
+
+void RenderFrameProxy::OnAddResourceTiming(
+    const ResourceTimingInfo& resource_timing) {
+  // TODO(dcheng): This is sad. Move this to Mojo.
+  blink::WebResourceTimingInfo web_resource_timing;
+  web_resource_timing.name = blink::WebString::FromUTF8(resource_timing.name);
+  web_resource_timing.start_time = resource_timing.start_time;
+
+  web_resource_timing.initiator_type =
+      blink::WebString::FromUTF8(resource_timing.initiator_type);
+  web_resource_timing.alpn_negotiated_protocol =
+      blink::WebString::FromUTF8(resource_timing.alpn_negotiated_protocol);
+  web_resource_timing.connection_info =
+      blink::WebString::FromUTF8(resource_timing.connection_info);
+
+  web_resource_timing.timing.Initialize();
+  web_resource_timing.timing.SetRequestTime(
+      resource_timing.timing.request_time);
+  web_resource_timing.timing.SetProxyStart(resource_timing.timing.proxy_start);
+  web_resource_timing.timing.SetProxyEnd(resource_timing.timing.proxy_end);
+  web_resource_timing.timing.SetDNSStart(resource_timing.timing.dns_start);
+  web_resource_timing.timing.SetDNSEnd(resource_timing.timing.dns_end);
+  web_resource_timing.timing.SetConnectStart(
+      resource_timing.timing.connect_start);
+  web_resource_timing.timing.SetConnectEnd(resource_timing.timing.connect_end);
+  web_resource_timing.timing.SetWorkerStart(
+      resource_timing.timing.worker_start);
+  web_resource_timing.timing.SetWorkerReady(
+      resource_timing.timing.worker_ready);
+  web_resource_timing.timing.SetSendStart(resource_timing.timing.send_start);
+  web_resource_timing.timing.SetSendEnd(resource_timing.timing.send_end);
+  web_resource_timing.timing.SetReceiveHeadersEnd(
+      resource_timing.timing.receive_headers_end);
+  web_resource_timing.timing.SetSSLStart(resource_timing.timing.ssl_start);
+  web_resource_timing.timing.SetSSLEnd(resource_timing.timing.ssl_end);
+  web_resource_timing.timing.SetPushStart(resource_timing.timing.push_start);
+  web_resource_timing.timing.SetPushEnd(resource_timing.timing.push_end);
+  web_resource_timing.last_redirect_end_time =
+      resource_timing.last_redirect_end_time;
+  web_resource_timing.finish_time = resource_timing.finish_time;
+
+  web_resource_timing.transfer_size = resource_timing.transfer_size;
+  web_resource_timing.encoded_body_size = resource_timing.encoded_body_size;
+  web_resource_timing.decoded_body_size = resource_timing.decoded_body_size;
+
+  web_resource_timing.did_reuse_connection =
+      resource_timing.did_reuse_connection;
+
+  web_resource_timing.allow_timing_details =
+      resource_timing.allow_timing_details;
+  web_resource_timing.allow_redirect_details =
+      resource_timing.allow_redirect_details;
+
+  web_resource_timing.allow_negative_values =
+      resource_timing.allow_negative_values;
+
+  blink::WebVector<blink::WebServerTimingInfo> server_timing(
+      resource_timing.server_timing.size());
+  for (size_t i = 0; i < server_timing.size(); ++i) {
+    server_timing[i].name =
+        blink::WebString::FromUTF8(resource_timing.server_timing[i].name);
+    server_timing[i].duration = resource_timing.server_timing[i].duration;
+    server_timing[i].description = blink::WebString::FromUTF8(
+        resource_timing.server_timing[i].description);
+  }
+  web_resource_timing.server_timing.Swap(server_timing);
+
+  web_frame_->AddResourceTimingForFrameOwner(web_resource_timing);
 }
 
 void RenderFrameProxy::OnCollapse(bool collapsed) {

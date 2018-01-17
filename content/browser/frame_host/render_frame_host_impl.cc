@@ -918,6 +918,7 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidBlockFramebust, OnDidBlockFramebust)
     IPC_MESSAGE_HANDLER(FrameHostMsg_AbortNavigation, OnAbortNavigation)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DispatchLoad, OnDispatchLoad)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_AddResourceTiming, OnAddResourceTiming)
     IPC_MESSAGE_HANDLER(FrameHostMsg_TextSurroundingSelectionResponse,
                         OnTextSurroundingSelectionResponse)
     IPC_MESSAGE_HANDLER(AccessibilityHostMsg_Events, OnAccessibilityEvents)
@@ -2388,9 +2389,9 @@ void RenderFrameHostImpl::OnDispatchLoad() {
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDispatchLoad",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
 
-  // Don't forward the load event if this RFH is pending deletion.  This can
+  // Don't forward the load event if this RFH is pending deletion. This can
   // happen in a race where this RenderFrameHost finishes loading just after
-  // the frame navigates away.  See https://crbug.com/626802.
+  // the frame navigates away. See https://crbug.com/626802.
   if (!is_active())
     return;
 
@@ -2405,6 +2406,32 @@ void RenderFrameHostImpl::OnDispatchLoad() {
   }
 
   proxy->Send(new FrameMsg_DispatchLoad(proxy->GetRoutingID()));
+}
+
+void RenderFrameHostImpl::OnAddResourceTiming(
+    const ResourceTimingInfo& resource_timing) {
+  // Don't forward the resource timing if this RFH is pending deletion. This can
+  // happen in a race where this RenderFrameHost finishes loading just after
+  // the frame navigates away. See https://crbug.com/626802.
+  if (!is_active())
+    return;
+
+  if (!allow_next_resource_timing_info_)
+    return;
+  allow_next_resource_timing_info_ = false;
+
+  // Only frames with an out-of-process parent frame should be sending this
+  // message.
+  RenderFrameProxyHost* proxy =
+      frame_tree_node()->render_manager()->GetProxyToParent();
+  if (!proxy) {
+    bad_message::ReceivedBadMessage(GetProcess(),
+                                    bad_message::RFH_NO_PROXY_TO_PARENT);
+    return;
+  }
+
+  proxy->Send(
+      new FrameMsg_AddResourceTiming(proxy->GetRoutingID(), resource_timing));
 }
 
 RenderWidgetHostViewBase* RenderFrameHostImpl::GetViewForAccessibility() {

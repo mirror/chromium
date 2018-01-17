@@ -132,6 +132,7 @@ struct FileChooserParams;
 struct FrameOwnerProperties;
 struct RequestNavigationParams;
 struct ResourceResponse;
+struct ResourceTimingInfo;
 struct SubresourceLoaderParams;
 
 class CONTENT_EXPORT RenderFrameHostImpl
@@ -669,6 +670,12 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return active_sandbox_flags_;
   }
 
+  // Called when the first real load commits to allow the current frame host to
+  // forward the next resource timing info.
+  void AllowNextResourceTimingInfo() {
+    allow_next_resource_timing_info_ = true;
+  }
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -777,6 +784,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnDidBlockFramebust(const GURL& url);
   void OnAbortNavigation();
   void OnDispatchLoad();
+  void OnAddResourceTiming(const ResourceTimingInfo& resource_timing);
   void OnAccessibilityEvents(
       const std::vector<AccessibilityHostMsg_EventParams>& params,
       int reset_token,
@@ -1373,6 +1381,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   std::unique_ptr<KeepAliveHandleFactory> keep_alive_handle_factory_;
   base::TimeDelta keep_alive_timeout_;
+
+  bool allow_next_resource_timing_info_ = false;
 
   // NOTE: This must be the last member.
   base::WeakPtrFactory<RenderFrameHostImpl> weak_ptr_factory_;
