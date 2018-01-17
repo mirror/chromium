@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34c81716_ed99c8fd",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-17T20:17:02Z",
+      "side": 1,
+      "message": "@param name obsolete, and 3rd parameter missing @param. Did this pass JS Compiler? Hopefully it should complain in such cases.",
+      "range": {
+        "startLine": 108,
+        "startChar": 6,
+        "endLine": 108,
+        "endChar": 37
+      },
+      "revId": "53435a73815548140237b712f60059ea6f4fbefa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
