@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f07c199e_8888f103",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T18:12:30Z",
+      "side": 1,
+      "message": "We should prefer function-local NoDestructor for all things. I\u0027ve updated this to note as such.",
+      "parentUuid": "f9d8b76d_5a6ebf5a",
+      "revId": "258bd35820bac496e2d73f2aaba083617fcdb274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59608df8_9c9b5355",
         "filename": "base/no_destructor.h",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-17T13:54:27Z",
       "side": 1,
       "message": "Not if T is trivially constructible from |args|. I agree that\u0027s hard to tell without -Wglobal-constructors in place.\n\nPerhaps replace this with \"as that may generate a static initializer\"?",
+      "range": {
+        "startLine": 31,
+        "startChar": 22,
+        "endLine": 31,
+        "endChar": 70
+      },
+      "revId": "258bd35820bac496e2d73f2aaba083617fcdb274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd5b204_e9e1c7c9",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T18:12:30Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "59608df8_9c9b5355",
       "range": {
         "startLine": 31,
         "startChar": 22,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "1af0c789_989f4161",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T18:12:30Z",
+      "side": 1,
+      "message": "I don\u0027t really see the benefit to making this constexpr at the moment. It\u0027s not safe for use as a member, so it won\u0027t block adding constexpr to other constructors. If it becomes safe to use at global scope due to future compiler or language changes, then we can revisit. I added some explicit language to recommend using the bare type directly if constexpr is desired.",
+      "parentUuid": "cb5f140b_3b8a5be4",
+      "revId": "258bd35820bac496e2d73f2aaba083617fcdb274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ea7024e_e7664640",
         "filename": "base/no_destructor_unittest.cc",
         "patchSetId": 3
@@ -79,6 +139,30 @@
       "revId": "258bd35820bac496e2d73f2aaba083617fcdb274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0303ecc5_47a1301e",
+        "filename": "base/no_destructor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-17T18:12:30Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9ea7024e_e7664640",
+      "range": {
+        "startLine": 62,
+        "startChar": 15,
+        "endLine": 62,
+        "endChar": 16
+      },
+      "revId": "258bd35820bac496e2d73f2aaba083617fcdb274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
