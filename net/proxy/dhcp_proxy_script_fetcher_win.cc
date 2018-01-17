@@ -13,6 +13,7 @@
 #include "base/threading/sequenced_worker_pool.h"
 #include "net/base/net_errors.h"
 #include "net/proxy/dhcp_proxy_script_adapter_fetcher_win.h"
+#include "base/values.h"
 
 #include <winsock2.h>
 #include <iphlpapi.h>
@@ -303,10 +304,11 @@ base::TimeDelta DhcpProxyScriptFetcherWin::ImplGetMaxWait() {
   return base::TimeDelta::FromMilliseconds(kMaxWaitAfterFirstResultMs);
 }
 
-bool DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(
-    std::set<std::string>* adapter_names) {
+bool DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(DhcpAdaptersNamesResult* result) {
   DCHECK(adapter_names);
   adapter_names->clear();
+
+  base::TimeTicks start_time = base::TimeTicks::Now();
 
   // The GetAdaptersAddresses MSDN page recommends using a size of 15000 to
   // avoid reallocation.
@@ -329,13 +331,17 @@ bool DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(
     ++num_tries;
   } while (error == ERROR_BUFFER_OVERFLOW && num_tries <= 3);
 
+  base::TimeTicks end_time = base::TimeTicks::Now();
+
   if (error == ERROR_NO_DATA) {
     // There are no adapters that we care about.
+	  *netlog_params = MakeAdaptersDictionaryForNetLog(start_time, end_time, error, nullptr);
     return true;
   }
 
   if (error != ERROR_SUCCESS) {
     LOG(WARNING) << "Unexpected error retrieving WPAD configuration from DHCP.";
+	*netlog_params = MakeAdaptersDictionaryForNetLog(start_time, end_time, error, nullptr);
     return false;
   }
 
@@ -349,7 +355,8 @@ bool DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(
     DCHECK(adapter->AdapterName);
     adapter_names->insert(adapter->AdapterName);
   }
-
+  
+  *netlog_params = MakeAdaptersDictionaryForNetLog(start_time, end_time, adapters.get());
   return true;
 }
 

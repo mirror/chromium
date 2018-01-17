@@ -21,12 +21,19 @@
 namespace base {
 class SequencedWorkerPool;
 class TaskRunner;
+class Value;
 }
 
 namespace net {
 
 class DhcpProxyScriptAdapterFetcher;
 class URLRequestContext;
+
+class DhcpAdapterNamesResult {
+public:
+	std::set<std::string> adapter_names;
+	std::unique_ptr<base::Value> netlog_params;
+};
 
 // Windows-specific implementation.
 class NET_EXPORT_PRIVATE DhcpProxyScriptFetcherWin
@@ -50,7 +57,7 @@ class NET_EXPORT_PRIVATE DhcpProxyScriptFetcherWin
   // Sets |adapter_names| to contain the name of each network adapter on
   // this machine that has DHCP enabled and is not a loop-back adapter. Returns
   // false on error.
-  static bool GetCandidateAdapterNames(std::set<std::string>* adapter_names);
+  static bool GetCandidateAdapterNames(DhcpAdapterNamesResult* result);
 
  protected:
   int num_pending_fetchers() const;
