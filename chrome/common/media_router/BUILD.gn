@@ -38,5 +38,9 @@ static_library("router") {
 
   if (!is_android) {
     public_deps += [ "mojo:media_router" ]
+    sources += [
+      "providers/cast/cast_media_source.cc",
+      "providers/cast/cast_media_source.h",
+    ]
   }
 }
