@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bff4fc8_ae78f5c0",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-17T01:56:30Z",
+      "side": 1,
+      "message": "The new logic doesn\u0027t look right. Frame duration should depend on how much time is expected to pass until the next frame (i.e. for chromoting it\u0027s unknown). With this change it\u0027s calculated based on the previous frame (i.e. each vpx_codec_encode() gets duration value from the previous frame). I think this will often lead to ever-increasing frame duration and the bloated frames like what you see.",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 64
+      },
+      "revId": "2a5ffb8594f48f39cae00900ac53a7ebeeb11ba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
