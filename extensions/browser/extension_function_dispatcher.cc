@@ -276,6 +276,7 @@ void ExtensionFunctionDispatcher::DispatchOnIOThread(
     base::WeakPtr<IOThreadExtensionMessageFilter> ipc_sender,
     int routing_id,
     const ExtensionHostMsg_Request_Params& params) {
+  LOG(INFO) << "ExtensionFunctionDispatcher::DispatchOnIOThread";
   const Extension* extension =
       extension_info_map->extensions().GetByID(params.extension_id);
 
@@ -353,6 +354,7 @@ void ExtensionFunctionDispatcher::Dispatch(
     const ExtensionHostMsg_Request_Params& params,
     content::RenderFrameHost* render_frame_host,
     int render_process_id) {
+  LOG(INFO) << "DISPATCH=====================================================";
   // Kill the renderer if it's an invalid request.
   const bool is_valid_request =
       (!render_frame_host && IsRequestFromServiceWorker(params)) ||
@@ -412,6 +414,7 @@ void ExtensionFunctionDispatcher::DispatchWithCallbackInternal(
     content::RenderFrameHost* render_frame_host,
     int render_process_id,
     const ExtensionFunction::ResponseCallback& callback) {
+  LOG(INFO) << "ExtensionFunctionDispatcher::DispatchWithCallbackInternal";
   // TODO(yzshen): There is some shared logic between this method and
   // DispatchOnIOThread(). It is nice to deduplicate.
   ProcessMap* process_map = ProcessMap::Get(browser_context_);
@@ -562,6 +565,7 @@ bool ExtensionFunctionDispatcher::CheckPermissions(
     ExtensionFunction* function,
     const ExtensionHostMsg_Request_Params& params,
     const ExtensionFunction::ResponseCallback& callback) {
+  LOG(INFO) << "Checking Permissions for :" << params.name;
   if (!function->HasPermission()) {
     LOG(ERROR) << "Permission denied for " << params.name;
     SendAccessDenied(callback, function->histogram_value());

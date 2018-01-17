@@ -101,12 +101,16 @@ class BrowserActionInteractiveTest : public ExtensionApiTest {
   }
 
   void TearDownOnMainThread() override {
+    LOG(INFO) << "TearDownOnMainThread";
+    //brows
     // Note browser windows are closed in PostRunTestOnMainThread(), which is
     // called after this. But relying on the window close to close the
     // extension host can cause flakes. See http://crbug.com/729476.
     // Waiting here requires individual tests to ensure their popup has closed.
     ExtensionApiTest::TearDownOnMainThread();
+    LOG(INFO) << "\tfinished calling ExtensionApiTest::TearDownOnMainThread(";
     host_watcher_->Wait();
+    LOG(INFO) << "\tfinished host_watcher_->Wait();";
     EXPECT_EQ(host_watcher_->created(), host_watcher_->destroyed());
   }
 
@@ -137,9 +141,11 @@ class BrowserActionInteractiveTest : public ExtensionApiTest {
     content::WindowedNotificationObserver frame_observer(
         content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME,
         content::NotificationService::AllSources());
+    ExtensionTestMessageListener listener("ready", false);
     // Show first popup in first window and expect it to have loaded.
     ASSERT_TRUE(RunExtensionSubtest("browser_action/open_popup",
                                     "open_popup_succeeds.html")) << message_;
+    EXPECT_TRUE(listener.WaitUntilSatisfied());
     frame_observer.Wait();
     EnsurePopupActive();
   }
@@ -407,8 +413,11 @@ IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest,
 
   // Finally, uninstall the extension, which causes the view to be deleted and
   // the popup to go away. This should not crash.
+  LOG(INFO) << "uninstalling";
   UninstallExtension(extension->id());
+  LOG(INFO) << "Finished uninstalling";
   EXPECT_FALSE(browser_action_test_util.HasPopup());
+  LOG(INFO) << "finished checking Has Popup";
 }
 
 // BrowserActionTestUtil::InspectPopup() is not implemented for a Cocoa browser.

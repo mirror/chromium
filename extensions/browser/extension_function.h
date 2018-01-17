@@ -318,7 +318,7 @@ class ExtensionFunction
   // sends a response. Typically, this shouldn't be used, even in testing. It's
   // only for when you want to test functionality that doesn't exercise the
   // Run() aspect of an extension function.
-  void ignore_did_respond_for_testing() { did_respond_ = true; }
+  void ignore_did_respond_for_testing() { LOG(INFO) << "called ignore_did_respond_for_testing()"; did_respond_ = true; }
   // Same as above, but global. Yuck. Do not add any more uses of this.
   static bool ignore_all_did_respond_for_testing_do_not_use;
 

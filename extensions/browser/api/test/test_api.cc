@@ -83,8 +83,10 @@ ExtensionFunction::ResponseAction TestLogFunction::Run() {
 TestSendMessageFunction::TestSendMessageFunction() : waiting_(false) {}
 
 ExtensionFunction::ResponseAction TestSendMessageFunction::Run() {
+  LOG(INFO) << " R U N\n\n";
   std::unique_ptr<PassMessage::Params> params(
       PassMessage::Params::Create(*args_));
+  //LOG(INFO) << "\t for: " << params.name();
   EXTENSION_FUNCTION_VALIDATE(params.get());
   bool listener_will_respond = false;
   std::pair<std::string, bool*> details(params->message,
@@ -96,10 +98,14 @@ ExtensionFunction::ResponseAction TestSendMessageFunction::Run() {
   // If the listener is not intending to respond, or has already responded,
   // finish the function.
   if (!listener_will_respond || response_.get()) {
+    LOG(INFO) << "should call RespondNow";
     if (!response_) {
       response_ = OneArgument(std::make_unique<base::Value>(std::string()));
     }
     return RespondNow(std::move(response_));
+  } else {
+    LOG(INFO) << "!listener_will_respond: " << !listener_will_respond;
+    LOG(INFO) << "response_.get(): " << response_.get();
   }
   // Otherwise, wait for a reply.
   waiting_ = true;

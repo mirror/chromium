@@ -2087,6 +2087,7 @@ void Browser::OnExtensionLoaded(content::BrowserContext* browser_context,
 void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
                                   const extensions::Extension* extension,
                                   extensions::UnloadedExtensionReason reason) {
+  LOG(INFO) << "Browser::OnExtensionUnloaded";
   command_controller_->ExtensionStateChanged();
 
   // Close any tabs from the unloaded extension, unless it's terminated,
@@ -2108,8 +2109,11 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
           (extensions::TabHelper::FromWebContents(web_contents)
                ->extension_app() == extension)) {
         if (tab_strip_model_->count() > 1) {
+          LOG(INFO) << "close as usual";
           tab_strip_model_->CloseWebContentsAt(i, TabStripModel::CLOSE_NONE);
         } else {
+          LOG(INFO) << "num tabs: " << tab_strip_model_->count();
+          LOG(INFO) << "weird close";
           // If there is only 1 tab remaining, do not close it and instead
           // navigate to the default NTP. Note that if there is an installed
           // extension that overrides the NTP page, that extension's content
