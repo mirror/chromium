@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b852e430_7fe20da5",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1246,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2018-01-17T08:16:04Z",
+      "side": 1,
+      "message": "Done.\n\nThe same error is fixed in ruleset_service.h in the comment for background_task_runner_ member.",
+      "parentUuid": "c02ec9a1_2f2273c0",
+      "range": {
+        "startLine": 1246,
+        "startChar": 34,
+        "endLine": 1246,
+        "endChar": 40
+      },
+      "revId": "0c6aebc482628b1ca2809ade559965303b7a07eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "722f9d44_96fcd7b3",
         "filename": "components/subresource_filter/core/browser/ruleset_service.h",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "0c6aebc482628b1ca2809ade559965303b7a07eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76750515_aa5c4fc2",
+        "filename": "components/subresource_filter/core/browser/ruleset_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2018-01-17T08:16:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "722f9d44_96fcd7b3",
+      "revId": "0c6aebc482628b1ca2809ade559965303b7a07eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
