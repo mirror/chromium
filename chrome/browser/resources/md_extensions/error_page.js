@@ -190,11 +190,12 @@ cr.define('extensions', function() {
      * Fetches the source for the selected error and populates the code section.
      * @private
      */
-    onSelectedErrorChanged_: function() {
-      if (this.selectedEntry_ < 0) {
-        this.$['code-section'].code = null;
+    onSelectedErrorChanged_: function(newValue, oldValue) {
+      if (oldValue >= 0)
+        this.setCode_(null, oldValue);
+
+      if (this.selectedEntry_ < 0)
         return;
-      }
 
       const error = this.getSelectedError();
       const args = {
@@ -218,9 +219,8 @@ cr.define('extensions', function() {
               null;
           break;
       }
-      this.delegate.requestFileSource(args).then(code => {
-        this.$['code-section'].code = code;
-      });
+      this.delegate.requestFileSource(args).then(
+          code => this.setCode_(code, this.selectedEntry_));
     },
 
     /**
@@ -296,9 +296,7 @@ cr.define('extensions', function() {
             pathSuffix: getRelativeUrl(frame.url, selectedError),
             lineNumber: frame.lineNumber,
           })
-          .then(code => {
-            this.$['code-section'].code = code;
-          });
+          .then(code => this.setCode_(code, this.selectedEntry_));
     },
 
     /** @private */
@@ -354,6 +352,19 @@ cr.define('extensions', function() {
 
       this.selectedEntry_ =
           this.selectedEntry_ == e.model.index ? -1 : e.model.index;
+    },
+
+    /**
+     * Displays the code it the selected entry's code section.
+     * @param {?chrome.developerPrivate.RequestFileSourceResponse} code
+     * @private
+     */
+    setCode_: function(code, index) {
+      let codeSections =
+          this.$.errorsList.querySelectorAll('extensions-code-section');
+      let section = codeSections[index];
+      if (section)
+        section.code = code;
     },
   });
 
