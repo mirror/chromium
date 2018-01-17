@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25e23152_91382ffd",
+        "filename": "content/renderer/manifest/manifest_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-17T07:50:24Z",
+      "side": 1,
+      "message": "Why `IsNull` and not `IsUnique`? I guess it shouldn\u0027t ever be the case that we have a document with no origin.",
+      "revId": "c94c6bfd91ca4047a502ca44cef08775e149b185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
