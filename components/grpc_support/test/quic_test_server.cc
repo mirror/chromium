@@ -13,6 +13,8 @@
 #include "base/path_service.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread.h"
 #include "net/base/ip_address.h"
 #include "net/base/ip_endpoint.h"
@@ -49,9 +51,9 @@ const char kSimpleStatus[] = "200";
 const char kSimpleHeaderName[] = "hello_header";
 const char kSimpleHeaderValue[] = "hello header value";
 
-base::Thread* g_quic_server_thread = nullptr;
-net::QuicHttpResponseCache* g_quic_response_cache = nullptr;
-net::QuicSimpleServer* g_quic_server = nullptr;
+std::unique_ptr<base::Thread> g_quic_server_thread;
+std::unique_ptr<net::QuicHttpResponseCache> g_quic_response_cache;
+std::unique_ptr<net::QuicSimpleServer> g_quic_server;
 int g_quic_server_port = 0;
 
 void SetupQuicHttpResponseCache() {
@@ -60,7 +62,7 @@ void SetupQuicHttpResponseCache() {
   headers[kStatusHeader] =  kHelloStatus;
   net::SpdyHeaderBlock trailers;
   trailers[kHelloTrailerName] = kHelloTrailerValue;
-  g_quic_response_cache = new net::QuicHttpResponseCache();
+  g_quic_response_cache = std::make_unique<net::QuicHttpResponseCache>();
   g_quic_response_cache->AddResponse(base::StringPrintf("%s", kTestServerHost),
                                       kHelloPath, std::move(headers),
                                       kHelloBodyValue, std::move(trailers));
@@ -80,17 +82,17 @@ void StartQuicServerOnServerThread(const base::FilePath& test_files_root,
   // Set up server certs.
   base::FilePath directory;
   directory = test_files_root;
-  std::unique_ptr<net::ProofSourceChromium> proof_source(
-      new net::ProofSourceChromium());
+  std::unique_ptr<net::ProofSourceChromium> proof_source =
+      std::make_unique<net::ProofSourceChromium>();
   CHECK(proof_source->Initialize(directory.AppendASCII("quic-chain.pem"),
                                  directory.AppendASCII("quic-leaf-cert.key"),
                                  base::FilePath()));
   SetupQuicHttpResponseCache();
 
-  g_quic_server = new net::QuicSimpleServer(
+  g_quic_server = std::make_unique<net::QuicSimpleServer>(
       std::move(proof_source), config,
       net::QuicCryptoServerConfig::ConfigOptions(), net::AllSupportedVersions(),
-      g_quic_response_cache);
+      g_quic_response_cache.get());
 
   // Start listening on an unbound port.
   int rv = g_quic_server->Listen(
@@ -103,17 +105,15 @@ void StartQuicServerOnServerThread(const base::FilePath& test_files_root,
 void ShutdownOnServerThread(base::WaitableEvent* server_stopped_event) {
   DCHECK(g_quic_server_thread->task_runner()->BelongsToCurrentThread());
   g_quic_server->Shutdown();
-  delete g_quic_server;
-  g_quic_server = nullptr;
-  delete g_quic_response_cache;
-  g_quic_response_cache = nullptr;
+  g_quic_server.reset();
+  g_quic_response_cache.reset();
   server_stopped_event->Signal();
 }
 
 bool StartQuicTestServer() {
-  LOG(INFO) << g_quic_server_thread;
+  LOG(INFO) << g_quic_server_thread.get();
   DCHECK(!g_quic_server_thread);
-  g_quic_server_thread = new base::Thread("quic server thread");
+  g_quic_server_thread = std::make_unique<base::Thread>("quic server thread");
   base::Thread::Options thread_options;
   thread_options.message_loop_type = base::MessageLoop::TYPE_IO;
   bool started = g_quic_server_thread->StartWithOptions(thread_options);
@@ -130,6 +130,13 @@ bool StartQuicTestServer() {
   return true;
 }
 
+void DeleteQuicServerThread(std::unique_ptr<base::Thread> quic_server_thread) {
+  // |g_quic_server_thread| is moved here to be deleted on MayBlock thread.
+  DCHECK(!g_quic_server_thread.get());
+  DCHECK(quic_server_thread.get());
+  quic_server_thread.reset();
+}
+
 void ShutdownQuicTestServer() {
   if (!g_quic_server_thread)
     return;
@@ -140,8 +147,14 @@ void ShutdownQuicTestServer() {
   g_quic_server_thread->task_runner()->PostTask(
       FROM_HERE, base::Bind(&ShutdownOnServerThread, &server_stopped_event));
   server_stopped_event.Wait();
-  delete g_quic_server_thread;
-  g_quic_server_thread = nullptr;
+  // ShutdownQuicTestServer() may be called on network thread which doesn't
+  // allow blocking, so post the deletion to task scheduler.
+  /*
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::MayBlock()},
+      base::BindOnce(&DeleteQuicServerThread, std::move(g_quic_server_thread)));
+      */
+  g_quic_server_thread.reset();
 }
 
 int GetQuicTestServerPort() {

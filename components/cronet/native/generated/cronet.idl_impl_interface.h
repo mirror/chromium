@@ -26,6 +26,8 @@ struct Cronet_Buffer {
   virtual void InitWithAlloc(uint64_t size) = 0;
   virtual uint64_t GetSize() = 0;
   virtual RawDataPtr GetData() = 0;
+  virtual uint64_t GetPosition() = 0;
+  virtual void SetPosition(uint64_t position) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Cronet_Buffer);
@@ -78,8 +80,9 @@ struct Cronet_Engine {
   virtual Cronet_EngineContext GetContext() = 0;
 
   virtual void StartWithParams(Cronet_EngineParamsPtr params) = 0;
-  virtual void StartNetLogToFile(CharString fileName, bool logAll) = 0;
+  virtual bool StartNetLogToFile(CharString fileName, bool logAll) = 0;
   virtual void StopNetLog() = 0;
+  virtual void Shutdown() = 0;
   virtual CharString GetVersionString() = 0;
   virtual CharString GetDefaultUserAgent() = 0;
 
