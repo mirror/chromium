@@ -202,14 +202,14 @@ TEST_F(PopupOpenerTabHelperTest, FirstNavigation_NoLogging) {
   histogram_tester()->ExpectTotalCount(kTabUnderVisibleTime, 0);
 }
 
-TEST_F(PopupOpenerTabHelperTest, VisibleNavigation_NoLogging) {
+TEST_F(PopupOpenerTabHelperTest, VisibleNavigation_LogsMetrics) {
   NavigateAndCommitWithoutGesture(GURL("https://first.test/"));
   SimulatePopup();
   web_contents()->WasShown();
   NavigateAndCommitWithoutGesture(GURL("https://example.test/"));
   raw_clock()->Advance(base::TimeDelta::FromMinutes(1));
   DeleteContents();
-  histogram_tester()->ExpectTotalCount(kTabUnderVisibleTime, 0);
+  histogram_tester()->ExpectTotalCount(kTabUnderVisibleTime, 1);
 }
 
 // This is counter intuitive, but we want to log metrics in the dry-run state if
