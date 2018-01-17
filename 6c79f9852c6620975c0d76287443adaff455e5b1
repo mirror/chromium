@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee683104_f01307c3",
+        "filename": "chromeos/cryptohome/cryptohome_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-17T10:01:22Z",
+      "side": 1,
+      "message": "Maybe: \"reply is empty\".\n\nAt least, as this is used not only by MountEx but also by other methods, \"MountEx\" should be removed. Ditto for below.",
+      "range": {
+        "startLine": 22,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 54
+      },
+      "revId": "6c79f9852c6620975c0d76287443adaff455e5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
