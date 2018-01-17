@@ -157,6 +157,24 @@
       "revId": "089506bb5bf4ecce18b9f760a6e726a00d14067c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398852cf_7ce5b740",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-17T18:38:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ffcd74b_cdfbe615",
+      "revId": "089506bb5bf4ecce18b9f760a6e726a00d14067c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
