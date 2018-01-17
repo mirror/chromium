@@ -87,6 +87,24 @@
       "revId": "5c8e07bd04edaf02697094034077c3598fc825ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6203b7d6_6d411f3c",
+        "filename": "extensions/browser/api/system_display/system_display_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-17T00:20:50Z",
+      "side": 1,
+      "message": "I see, thanks for the explanation. In that case, I think it is not useful to add this metric, let\u0027s remove this.",
+      "parentUuid": "793cd0b7_52b39327",
+      "revId": "5c8e07bd04edaf02697094034077c3598fc825ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0938da6_82375607",
+        "filename": "extensions/browser/api/system_display/system_display_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-17T00:20:50Z",
+      "side": 1,
+      "message": "Removed this metrics after discussion with oshima@.",
+      "parentUuid": "d7e77386_a8e78ef2",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 12
+      },
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f4b6f33_62e32f3b",
         "filename": "extensions/browser/api/system_display/system_display_api.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5e297d7b_8d6e5d8f",
+        "filename": "extensions/browser/api/system_display/system_display_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-17T00:20:50Z",
+      "side": 1,
+      "message": "Removed this metrics after discussion with oshima@.",
+      "parentUuid": "9f4b6f33_62e32f3b",
+      "range": {
+        "startLine": 372,
+        "startChar": 2,
+        "endLine": 372,
+        "endChar": 21
+      },
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98b67dee_c8233817",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f12bee_9830eaec",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 9044,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-17T00:20:50Z",
+      "side": 1,
+      "message": "Yes, sure. Done.",
+      "parentUuid": "98b67dee_c8233817",
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "830e6475_8cfd4e9c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15478,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-17T00:20:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49b4c40a_c82b0cab",
+      "range": {
+        "startLine": 15478,
+        "startChar": 35,
+        "endLine": 15478,
+        "endChar": 42
+      },
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ca3a9ef_57fc50ae",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -99,6 +189,24 @@
       "writtenOn": "2018-01-16T21:29:37Z",
       "side": 1,
       "message": "Questions that the above description leaves me:\nCan an API caller request normal mirror mode?\nCan the user enable mixed mirror mode?",
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed90a3e_c098746b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15479,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-17T00:20:50Z",
+      "side": 1,
+      "message": "Both normal and mixed mirror mode is requested through the API setMirrorMode. User can only set normal mirror mode in display settings. But the API also provides functionality to set mixed mirror mode which will be used by kiosk app.\nI think I should not add too much details here, so maybe I just say \"normal or mixed mirror mode is enabled through API call.\"",
+      "parentUuid": "9ca3a9ef_57fc50ae",
       "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "a6575716_fc29a7ea",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 88413,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-17T00:20:50Z",
+      "side": 1,
+      "message": "Removed this metrics after discussion with oshima@.",
+      "parentUuid": "cc2b303b_518e8654",
+      "range": {
+        "startLine": 88413,
+        "startChar": 68,
+        "endLine": 88413,
+        "endChar": 69
+      },
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7e306f2_f2b16b90",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -142,6 +274,24 @@
       "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23b24b8_c3cee2a5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 88414,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-17T00:20:50Z",
+      "side": 1,
+      "message": "Removed this metrics after discussion with oshima@.",
+      "parentUuid": "b7e306f2_f2b16b90",
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
