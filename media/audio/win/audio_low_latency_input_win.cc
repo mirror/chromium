@@ -32,6 +32,15 @@ namespace media {
 
 namespace {
 
+// Errors when initializing the audio client related to the audio format. Split
+// by whether we're using a closest match or not.
+enum FormatRelatedInitError {
+  kUnsupportedFormat,
+  kUnsupportedFormatWithClosestMatch,
+  kInvalidArgument,
+  kInvalidArgumentWithClosestMatch,
+};
+
 bool IsSupportedFormatForConversion(const WAVEFORMATEX& format) {
   if (format.nSamplesPerSec < limits::kMinSampleRate ||
       format.nSamplesPerSec > limits::kMaxSampleRate) {
@@ -746,6 +755,7 @@ HRESULT WASAPIAudioInputStream::InitializeAudioEngine() {
   if (FAILED(hr)) {
     open_result_ = OPEN_RESULT_AUDIO_CLIENT_INIT_FAILED;
     base::UmaHistogramSparse("Media.Audio.Capture.Win.InitError", hr);
+    MaybeReportFormatRelatedInitError(hr);
     return hr;
   }
 
@@ -861,6 +871,22 @@ void WASAPIAudioInputStream::ReportOpenResult(HRESULT hr) const {
         "match",
         open_result_, hr, using_closest_match_ ? "" : "not "));
   }
+}
+
+void WASAPIAudioInputStream::MaybeReportFormatRelatedInitError(
+    HRESULT hr) const {
+  if (hr != AUDCLNT_E_UNSUPPORTED_FORMAT && hr != E_INVALIDARG)
+    return;
+
+  const FormatRelatedInitError format_related_error =
+      hr == AUDCLNT_E_UNSUPPORTED_FORMAT
+          ? using_closest_match_ ? kUnsupportedFormatWithClosestMatch
+                                 : kUnsupportedFormat
+          // Otherwise |hr| == E_INVALIDARG.
+          : using_closest_match_ ? kInvalidArgumentWithClosestMatch
+                                 : kInvalidArgument;
+  base::UmaHistogramCounts100("Media.Audio.Capture.Win.InitError.FormatRelated",
+                              format_related_error);
 }
 
 double WASAPIAudioInputStream::ProvideInput(AudioBus* audio_bus,
