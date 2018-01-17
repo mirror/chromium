@@ -37,6 +37,7 @@ namespace app_file_handler_util {
 void GetMimeTypeForLocalPath(
     content::BrowserContext* context,
     const base::FilePath& local_path,
+    bool trusted_source,
     const base::Callback<void(const std::string&)>& callback);
 
 // Collects MIME types for files passed in the input vector. For non-native
