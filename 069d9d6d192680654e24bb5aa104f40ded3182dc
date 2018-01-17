@@ -139,6 +139,24 @@
       "revId": "069d9d6d192680654e24bb5aa104f40ded3182dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2567dd42_3de98e87",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-17T00:43:34Z",
+      "side": 1,
+      "message": "sure (and just to be clear, base::Time is unlikely to go backwards while the system is suspended, but it *can* go backwards while the system is awake).\n\nmind adding a TODO pointing at a bug to track updating this? i think that mike\u0027s suggestion at https://groups.google.com/a/chromium.org/d/topic/chromium-os-dev/BGJXf7OBT9g/discussion describes a way to get a timestamp that increases monotonically while the system is suspended. unfortunately, i don\u0027t think that //base/time has code for using CLOCK_BOOTTIME yet, and to allow this code to be tested, you probably wouldn\u0027t want to call clock_gettime from within it either. :-(",
+      "parentUuid": "4cdb6d2e_6712c53c",
+      "revId": "069d9d6d192680654e24bb5aa104f40ded3182dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
