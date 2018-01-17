@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "682c603c_c1df9833",
+        "filename": "components/search_provider_logos/logo_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-17T11:03:16Z",
+      "side": 1,
+      "message": "KeyedService are destroyed in two phases.\n\nFirst all services, in reverse dependency order, the ShutDown method is invoked. Then the services are destroyed in a non guaranteed order (it just happen to be the same in current implementation). This mean that a service should not use another KeyedService it depends on after it the ShutDown method call.\n\nHere by the point LogoServiceImpl::SigninObserver unregister itself from GaiaCookieManagerService, the service may already have been destroyed. Instead, the call to RemoveObserver should be done in LogoServiceImpl::ShutDown(), either by adding a method to unregister to the observer or by deleting the destructor.\n\nTL;DR: I recommend adding an explicit \"signin_observer_.reset();\" in \"LogoServiceImpl::ShutDown()\".",
+      "revId": "f6d06c872d6af28e65f56f9b204932b39de60599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
