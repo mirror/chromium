@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "9726ddf0_9a92316f",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2357,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-17T20:17:14Z",
+      "side": 1,
+      "message": "NavigatedToPage is used to indicate what sort of transition the user went through to get to this page, either coming from some other page or app in XR, or from some 2D environment outside XR\n\nI have changed this name to EnteredXR, and will break it out into more precise entry methods in a followup CL, possibly combining it with NavigatedToPage and its breakouts in an enum if that\u0027s not too tricky.",
+      "parentUuid": "31cfef55_c7ebb62e",
+      "range": {
+        "startLine": 2357,
+        "startChar": 16,
+        "endLine": 2357,
+        "endChar": 31
+      },
+      "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "752f2154_4a11bdfb",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 1
@@ -355,6 +379,30 @@
       "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd49c08_6150d518",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-17T20:17:14Z",
+      "side": 1,
+      "message": "Great, thanks for the confirmation.",
+      "parentUuid": "cf5260f5_ef6b1f71",
+      "range": {
+        "startLine": 2362,
+        "startChar": 16,
+        "endLine": 2362,
+        "endChar": 33
+      },
+      "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

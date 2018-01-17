@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "782877a7_1def2e6e",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-17T20:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb63d18d_11216487",
+      "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a567c8c3_680f302a",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "42fa3ae4_505c1edd",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-17T20:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a567c8c3_680f302a",
+      "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b01c0ff_d4da344f",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8342fe18_781bf0bc",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-17T20:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b01c0ff_d4da344f",
+      "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "3aaf32b0_b15febce",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2357,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-17T20:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d46cff98_dcf8896d",
+      "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "511dc38b_5356a432",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 3
@@ -161,6 +233,30 @@
       "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab92f3a3_d834022f",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2374,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-17T20:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ddbdbe2_49399e00",
+      "range": {
+        "startLine": 2374,
+        "startChar": 10,
+        "endLine": 2374,
+        "endChar": 20
+      },
+      "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
