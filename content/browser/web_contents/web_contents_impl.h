@@ -358,6 +358,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void SetLastActiveTime(base::TimeTicks last_active_time) override;
   void WasShown() override;
   void WasHidden() override;
+  Visibility GetVisibility() const override;
   bool IsVisible() const override;
   void WasOccluded() override;
   void WasUnOccluded() override;
