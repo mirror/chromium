@@ -139,6 +139,24 @@
       "revId": "089506bb5bf4ecce18b9f760a6e726a00d14067c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffcd74b_cdfbe615",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-17T18:19:50Z",
+      "side": 1,
+      "message": "ah, gotcha... yeah, I think I would.  I\u0027d rather have a single bare new call than introduce greater likelihood of API misuse.",
+      "parentUuid": "9fd0474a_9b5989c6",
+      "revId": "089506bb5bf4ecce18b9f760a6e726a00d14067c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
