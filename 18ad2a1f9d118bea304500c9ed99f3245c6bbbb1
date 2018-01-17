@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17515174_9afccb35",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-17T00:36:14Z",
+      "side": 1,
+      "message": "Hmm, the only effective difference between this and the 32-bit version is the `- kSystemPageSize`. I\u0027m at a conference and can\u0027t dig into it deeply right now, but do we need that page size allowance for a guard page, or anything else security-relevant? We\u0027d not want to regress that on 64-bit, just for the sake of getting a nice round number. Perhaps we can allow all platforms to direct map a nice round 2 GiB while still maintaining security properties?",
+      "revId": "18ad2a1f9d118bea304500c9ed99f3245c6bbbb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
