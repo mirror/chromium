@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8932bb2c_b5080bbb",
+        "filename": "chromecast/media/cma/backend/filter_group.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-01-17T21:05:35Z",
+      "side": 1,
+      "message": "Please add a comment in the code about why this condition is necessary.",
+      "range": {
+        "startLine": 87,
+        "startChar": 49,
+        "endLine": 87,
+        "endChar": 63
+      },
+      "revId": "a9f4ccfef09cccf424cfd0e8a32786f428e4e25f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97b4dafd_17d9bbf4",
+        "filename": "chromecast/media/cma/backend/filter_group.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-01-17T21:05:35Z",
+      "side": 1,
+      "message": "num_frames (globally)",
+      "range": {
+        "startLine": 81,
+        "startChar": 25,
+        "endLine": 81,
+        "endChar": 35
+      },
+      "revId": "a9f4ccfef09cccf424cfd0e8a32786f428e4e25f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
