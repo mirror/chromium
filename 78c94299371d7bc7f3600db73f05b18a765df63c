@@ -34,6 +34,24 @@
       "revId": "78c94299371d7bc7f3600db73f05b18a765df63c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4ce99d_0915a35e",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 5925,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-17T17:37:18Z",
+      "side": 1,
+      "message": "Yeah, we can do that, and we should also modify CreateRenderWidgetHostViewForRenderManager accordingly.\n\nHowever, it might not be worth it just now. Let\u0027s keep things simple and land as is.",
+      "parentUuid": "fd43f963_0acdf3e0",
+      "revId": "78c94299371d7bc7f3600db73f05b18a765df63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
