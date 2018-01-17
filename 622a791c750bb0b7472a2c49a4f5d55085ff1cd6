@@ -16,6 +16,24 @@
       "revId": "622a791c750bb0b7472a2c49a4f5d55085ff1cd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb0be61_87a154b8",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-17T22:57:04Z",
+      "side": 1,
+      "message": "Done. Nope. You are absolutely right. I misunderstood the mojo API contract as mentioned in the email. \nI have fixed this and added a regression test, which will trigger this use-after-free.",
+      "parentUuid": "3057dd99_c571a9fa",
+      "revId": "622a791c750bb0b7472a2c49a4f5d55085ff1cd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
