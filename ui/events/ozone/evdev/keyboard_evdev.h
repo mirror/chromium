@@ -69,6 +69,7 @@ class EVENTS_OZONE_EVDEV_EXPORT KeyboardEvdev
   void UpdateCapsLockLed();
 
   // EventAutoRepeatHandler::Delegate
+  bool CanDispatchAutoRepeatKey() override;
   void DispatchKey(unsigned int key,
                    bool down,
                    bool repeat,
