@@ -22,6 +22,30 @@
       "revId": "6ec300f92bcc071d10cb9f5df0613778507e9cbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6d5056_7c25d1dc",
+        "filename": "services/resource_coordinator/public/cpp/tracing/default_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-01-18T16:18:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18f759ae_819ab0b2",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 68
+      },
+      "revId": "6ec300f92bcc071d10cb9f5df0613778507e9cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
