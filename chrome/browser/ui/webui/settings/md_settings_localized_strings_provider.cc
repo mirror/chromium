@@ -80,6 +80,19 @@ struct LocalizedString {
   int id;
 };
 
+// Generates a Google Help URL to be shown on the settings page. This function
+// appends additional parameters to |original_url| if necessary.
+base::string16 GetHelpUrl(const std::string& original_url) {
+#if defined(OS_CHROMEOS)
+  // For URLs in CrOS, append a "board type" parameter. Some help pages need to
+  // be adjusted depending on the type of CrOS device accessing the page.
+  return base::ASCIIToUTF16(original_url +
+                            "&b=" + base::SysInfo::GetLsbReleaseBoard());
+#else
+  return base::ASCIIToUTF16(original_url);
+#endif
+}
+
 void AddLocalizedStringsBulk(content::WebUIDataSource* html_source,
                              LocalizedString localized_strings[],
                              size_t num_strings) {
@@ -222,7 +235,7 @@ void AddA11yStrings(content::WebUIDataSource* html_source) {
 
 #if defined(OS_CHROMEOS)
   html_source->AddString("a11yLearnMoreUrl",
-                         chrome::kChromeAccessibilityHelpURL);
+                         GetHelpUrl(chrome::kChromeAccessibilityHelpURL));
 
   html_source->AddBoolean(
       "showExperimentalA11yFeatures",
@@ -344,9 +357,8 @@ void AddAndroidAppStrings(content::WebUIDataSource* html_source) {
                           arraysize(localized_strings));
   html_source->AddString(
       "androidAppsSubtext",
-      l10n_util::GetStringFUTF16(
-          IDS_SETTINGS_ANDROID_APPS_SUBTEXT,
-          base::ASCIIToUTF16(chrome::kAndroidAppsLearnMoreURL)));
+      l10n_util::GetStringFUTF16(IDS_SETTINGS_ANDROID_APPS_SUBTEXT,
+                                 GetHelpUrl(chrome::kAndroidAppsLearnMoreURL)));
 }
 #endif
 
@@ -728,7 +740,7 @@ void AddDeviceStrings(content::WebUIDataSource* html_source) {
   AddLocalizedStringsBulk(html_source, power_strings, arraysize(power_strings));
 
   html_source->AddString("naturalScrollLearnMoreLink",
-                         base::ASCIIToUTF16(chrome::kNaturalScrollHelpURL));
+                         GetHelpUrl(chrome::kNaturalScrollHelpURL));
 }
 #endif
 
@@ -992,7 +1004,7 @@ void AddEasyUnlockStrings(content::WebUIDataSource* html_source) {
           IDS_SETTINGS_EASY_UNLOCK_PROXIMITY_THRESHOLD_LABEL, device_name));
 
   html_source->AddString("easyUnlockLearnMoreURL",
-                         chrome::kEasyUnlockLearnMoreUrl);
+                         GetHelpUrl(chrome::kEasyUnlockLearnMoreUrl));
 }
 
 void AddInternetStrings(content::WebUIDataSource* html_source) {
@@ -1113,13 +1125,11 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
                           chromeos::switches::IsNetworkSettingsConfigEnabled());
   html_source->AddString("networkGoogleNameserversLearnMoreUrl",
                          chrome::kGoogleNameserversLearnMoreURL);
-
-  std::string tether_learn_more_url(chrome::kInstantTetheringLearnMoreURL);
-  tether_learn_more_url += "&b=" + base::SysInfo::GetLsbReleaseBoard();
   html_source->AddString(
       "internetNoNetworksMobileData",
-      l10n_util::GetStringFUTF16(IDS_SETTINGS_INTERNET_NO_NETWORKS_MOBILE_DATA,
-                                 base::ASCIIToUTF16(tether_learn_more_url)));
+      l10n_util::GetStringFUTF16(
+          IDS_SETTINGS_INTERNET_NO_NETWORKS_MOBILE_DATA,
+          GetHelpUrl(chrome::kInstantTetheringLearnMoreURL)));
 }
 #endif
 
@@ -1486,15 +1496,14 @@ void AddPeopleStrings(content::WebUIDataSource* html_source) {
   }
 
   html_source->AddString("syncLearnMoreUrl", chrome::kSyncLearnMoreURL);
-  html_source->AddString("autofillHelpURL", autofill::kHelpURL);
+  html_source->AddString("autofillHelpURL", GetHelpUrl(autofill::kHelpURL));
   html_source->AddString("supervisedUsersUrl",
                          chrome::kLegacySupervisedUserManagementURL);
 
   html_source->AddString(
       "encryptWithSyncPassphraseLabel",
-      l10n_util::GetStringFUTF8(
-          IDS_SETTINGS_ENCRYPT_WITH_SYNC_PASSPHRASE_LABEL,
-          base::ASCIIToUTF16(chrome::kSyncEncryptionHelpURL)));
+      l10n_util::GetStringFUTF8(IDS_SETTINGS_ENCRYPT_WITH_SYNC_PASSPHRASE_LABEL,
+                                GetHelpUrl(chrome::kSyncEncryptionHelpURL)));
 
   std::string sync_dashboard_url =
       google_util::AppendGoogleLocaleParam(
@@ -1634,7 +1643,7 @@ void AddPrintingStrings(content::WebUIDataSource* html_source) {
 
 #if defined(OS_CHROMEOS)
   html_source->AddString("printingCUPSPrintLearnMoreUrl",
-                         chrome::kCupsPrintLearnMoreURL);
+                         GetHelpUrl(chrome::kCupsPrintLearnMoreURL));
 #endif
 }
 
@@ -1687,15 +1696,14 @@ void AddPrivacyStrings(content::WebUIDataSource* html_source,
           *profile->GetPrefs(),
           IDS_SETTINGS_SAFEBROWSING_ENABLE_EXTENDED_REPORTING,
           IDS_SETTINGS_SAFEBROWSING_ENABLE_SCOUT_REPORTING));
-  html_source->AddString("improveBrowsingExperience",
-                         l10n_util::GetStringFUTF16(
-                             IDS_SETTINGS_IMPROVE_BROWSING_EXPERIENCE,
-                             base::ASCIIToUTF16(chrome::kPrivacyLearnMoreURL)));
+  html_source->AddString(
+      "improveBrowsingExperience",
+      l10n_util::GetStringFUTF16(IDS_SETTINGS_IMPROVE_BROWSING_EXPERIENCE,
+                                 GetHelpUrl(chrome::kPrivacyLearnMoreURL)));
   html_source->AddString(
       "doNotTrackDialogMessage",
-      l10n_util::GetStringFUTF16(
-          IDS_SETTINGS_ENABLE_DO_NOT_TRACK_DIALOG_TEXT,
-          base::ASCIIToUTF16(chrome::kDoNotTrackLearnMoreURL)));
+      l10n_util::GetStringFUTF16(IDS_SETTINGS_ENABLE_DO_NOT_TRACK_DIALOG_TEXT,
+                                 GetHelpUrl(chrome::kDoNotTrackLearnMoreURL)));
   html_source->AddString(
       "exceptionsLearnMoreURL",
       base::ASCIIToUTF16(chrome::kContentSettingsExceptionsLearnMoreURL));
