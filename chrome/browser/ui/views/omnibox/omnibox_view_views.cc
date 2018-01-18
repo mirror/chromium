@@ -1160,7 +1160,10 @@ int OmniboxViewViews::OnDrop(const ui::OSExchangeData& data) {
       base::string16 text(
           StripJavascriptSchemas(base::UTF8ToUTF16(url.spec())));
       if (model()->CanPasteAndGo(text)) {
-        model()->PasteAndGo(text);
+        SetUserText(text, true);
+        if (!HasFocus())
+          RequestFocus();
+        SelectAll(false);
         return ui::DragDropTypes::DRAG_COPY;
       }
     }
@@ -1169,8 +1172,12 @@ int OmniboxViewViews::OnDrop(const ui::OSExchangeData& data) {
     if (data.GetString(&text)) {
       base::string16 collapsed_text(
           StripJavascriptSchemas(base::CollapseWhitespace(text, true)));
-      if (model()->CanPasteAndGo(collapsed_text))
-        model()->PasteAndGo(collapsed_text);
+      if (model()->CanPasteAndGo(collapsed_text)) {
+        SetUserText(text, true);
+        if (!HasFocus())
+          RequestFocus();
+        SelectAll(false);
+      }
       return ui::DragDropTypes::DRAG_COPY;
     }
   }
