@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2b04e19d_7ed4ae2c",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-18T03:19:56Z",
+      "side": 1,
+      "message": "Ah, good catch! I never considered this case when writing the spec. I doubt it really matters (since the attribute has no effect in this case, other than its ability to be read out in JavaScript). I suspect iOS Safari, which I was trying to maintain compatibility with, implements this behavior for all form elements, and not just \u003cinput\u003e and \u003ctextarea\u003e.\n\nDo you think this is worth updating the spec over?",
+      "parentUuid": "ece4f75a_8c405e1c",
+      "revId": "ec94d5c1c8ea14d4f8bff43723d9c4298ebdced1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ee7a1a9_2264c86b",
         "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp",
         "patchSetId": 1
