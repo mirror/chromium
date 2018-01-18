@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b24d8b0_0795ba42",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:34:28Z",
+      "side": 1,
+      "message": "Can we make this constructor private? Clients should only be allowed to use CreateForWebState.",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 22
+      },
+      "revId": "e459c0d135da72df32be6794ff69e1535a8a30e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4d0e3b_f2252750",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:34:28Z",
+      "side": 1,
+      "message": "nit: std::make_unique and no need for ptr_util.h incude",
+      "range": {
+        "startLine": 74,
+        "startChar": 14,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "e459c0d135da72df32be6794ff69e1535a8a30e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31369804_58a776da",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator_unittest.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:34:28Z",
+      "side": 1,
+      "message": "Do we really need to use mock here? If the goal of using mock is to inspect |presentedViewController| then we can do that with real view controller, which has |presentedViewController| property: \nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/download/pass_kit_coordinator_unittest.mm?q\u003dpass_kit_co\u0026sq\u003dpackage:chromium\u0026l\u003d79",
+      "range": {
+        "startLine": 40,
+        "startChar": 29,
+        "endLine": 40,
+        "endChar": 50
+      },
+      "revId": "e459c0d135da72df32be6794ff69e1535a8a30e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0e7848_bbfbaf95",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator_unittest.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:34:28Z",
+      "side": 1,
+      "message": "Can we verify the passed URL?",
+      "range": {
+        "startLine": 85,
+        "startChar": 35,
+        "endLine": 85,
+        "endChar": 41
+      },
+      "revId": "e459c0d135da72df32be6794ff69e1535a8a30e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4e45fb_b52c5c62",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator_unittest.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:34:28Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 98,
+        "startChar": 40,
+        "endLine": 98,
+        "endChar": 43
+      },
+      "revId": "e459c0d135da72df32be6794ff69e1535a8a30e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

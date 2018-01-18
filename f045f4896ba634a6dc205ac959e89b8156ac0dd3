@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d3ff3522_0b71fde3",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:34:28Z",
+      "side": 1,
+      "message": "What\u0027s wrong with making BVC to create PolicyDecider? http://go/unit-test-practices#public-apis advocates for not building back doors for testing.",
+      "parentUuid": "3bcb890a_95e18d49",
+      "range": {
+        "startLine": 46,
+        "startChar": 35,
+        "endLine": 46,
+        "endChar": 50
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd197320_4f526396",
         "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
         "patchSetId": 24
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "37bead0b_c3ae5ccf",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:34:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8401eba8_d8ab7c9c",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 43
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53d05ee3_1a8c7ab8",
         "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
         "patchSetId": 24
@@ -140,6 +188,30 @@
       "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0fbdd3_3b56d768",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:34:28Z",
+      "side": 1,
+      "message": "Updates lgtm",
+      "parentUuid": "4b6c618f_5ec28023",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

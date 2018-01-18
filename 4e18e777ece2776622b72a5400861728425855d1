@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "149eb991_2957260d",
+        "filename": "ios/chrome/browser/app_launcher/app_launching.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:34:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "879b7d60_47c8f3c2",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 56
+      },
+      "revId": "4e18e777ece2776622b72a5400861728425855d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e738cb50_fce84046",
         "filename": "ios/chrome/browser/ui/app_launcher/BUILD.gn",
         "patchSetId": 15
