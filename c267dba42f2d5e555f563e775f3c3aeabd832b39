@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "808bd5c4_60cbfc11",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-18T09:45:51Z",
+      "side": 1,
+      "message": "apologies, i meant to leave this if structured exactly as it was before:\n\nif (get_mtp_storage_info_callback_.is_null()) {\n  ...\n} else {\n  ...\n}",
+      "range": {
+        "startLine": 868,
+        "startChar": 7,
+        "endLine": 868,
+        "endChar": 37
+      },
+      "revId": "c267dba42f2d5e555f563e775f3c3aeabd832b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
