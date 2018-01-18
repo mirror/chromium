@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c9a0066_d91aab87",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-18T20:02:35Z",
+      "side": 1,
+      "message": "actually, we have Oilpan hooks. The reason it\u0027s less useful is because the mapping between stack at time of allocation and [reason/cause for allocation] is less clear. \n\n[ohe hey look, it\u0027s another DOMElemnet allocation, made by the common path for parsing and allocation DOMelements]",
+      "revId": "9542f1150ad068f8ddb45cd3190dab2b5971bb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91bf87da_f59fda56",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-18T20:02:35Z",
+      "side": 1,
+      "message": "s/logged/emitted in the heap dump/\n\nwe still track all allocations.",
+      "range": {
+        "startLine": 163,
+        "startChar": 105,
+        "endLine": 163,
+        "endChar": 111
+      },
+      "revId": "9542f1150ad068f8ddb45cd3190dab2b5971bb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d767c473_dde100aa",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-18T20:02:35Z",
+      "side": 1,
+      "message": "On Android, enable debugging via USB.\n\nThen, on the connected desktop, go to chrome://inspect/?tracing#devices and take a trace.",
+      "revId": "9542f1150ad068f8ddb45cd3190dab2b5971bb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207370ab_4264a75b",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-18T20:02:35Z",
+      "side": 1,
+      "message": "I don\u0027t think that \"do work that triggers events/behaviors\" is particularly relevant, since this is snapshot rather than timeline based. Take a snapshot now.\n\nThen do some work, then take another snapshot.",
+      "revId": "9542f1150ad068f8ddb45cd3190dab2b5971bb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
