@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e445c3fe_577832ca",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-18T07:15:59Z",
+      "side": 1,
+      "message": "Nit: not need for {}",
+      "revId": "125fe52c06911d024a4032fc69804f2c7ebce9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2997827b_f40cd25e",
+        "filename": "headless/lib/browser/headless_print_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-18T07:15:59Z",
+      "side": 1,
+      "message": "Since you\u0027re defaulting to false elsewhere (and in the protocol description too), let\u0027s also default to false here.",
+      "revId": "125fe52c06911d024a4032fc69804f2c7ebce9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "145142e0_22cd1b60",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 1
+      },
+      "lineNbr": 4580,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-18T07:15:59Z",
+      "side": 1,
+      "message": "Maybe add: \"provided by web content\"",
+      "range": {
+        "startLine": 4580,
+        "startChar": 24,
+        "endLine": 4580,
+        "endChar": 35
+      },
+      "revId": "125fe52c06911d024a4032fc69804f2c7ebce9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
