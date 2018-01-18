@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a0f4458_b54cd5c0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/remoteobjects/RemoteObjectImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-18T19:32:02Z",
+      "side": 1,
+      "message": "This step replaces the use of CallObjectMethodA (or various similar ones for primitives...) in GinJavaMethodInvocationHelper::InvokeMethod, which doesn\u0027t seem to go through the JNI generator but passes the jmethodID to the JNIEnv directly. That calls base::android::ClearException, which seems to describe the exception (to System.err) and then clear it, i.e.:\n\n} catch (Exception e) {\n  e.printStackTrace();\n  // mark the invocation as failed in the IPC reply\n}\n\nI don\u0027t see an unwind to the looper, unless you\u0027re referring to the exception stack trace.\n\nAs far as I can tell, the Mojo bindings enter Java via Java_WatcherImpl_onHandleReady, which *does* come from the JNI generator, and calls jni_generator::CheckException, which tells Breakpad and then goes to LOG(FATAL) -- and so should kill the whole process.\n\nDigging through the Java bindings, it does not appear that there is anything in between there and the Java implementation that would catch such an exception (aside from those that Mojo itself throws internally, like org.chromium.mojo.bindings.DeserializationException), so an uncaught exception in this method can bring down the application process. At the moment, Method#invoke is the only place that can happen.",
+      "parentUuid": "59c04065_15136613",
+      "revId": "44cc5fc518f634fe03fcfa4a3a570d31cc2e3d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1487ab07_d9adedcc",
         "filename": "content/public/android/junit/src/org/chromium/content/browser/remoteobjects/RemoteObjectImplTest.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-18T18:15:14Z",
       "side": 1,
       "message": "is this necessary?",
+      "revId": "44cc5fc518f634fe03fcfa4a3a570d31cc2e3d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566830f3_80a3aa6d",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/remoteobjects/RemoteObjectImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-18T19:32:02Z",
+      "side": 1,
+      "message": "I guess not (no additional warnings if I remove it). It was cargo-culted from the real definition of @JavascriptInterface.\n\nRemoved.",
+      "parentUuid": "1487ab07_d9adedcc",
       "revId": "44cc5fc518f634fe03fcfa4a3a570d31cc2e3d28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
