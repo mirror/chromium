@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8ce64f65_a1322724",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-18T22:37:30Z",
+      "side": 1,
+      "message": "it\u0027s for checking, I can do it in case when we will want to go this way",
+      "parentUuid": "6ceddde4_3867c2b1",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a091038b_d3fb02bc",
         "filename": "tools/grit/grit/format/minifier.py",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b3fa5108_9683c539",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-18T22:37:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a091038b_d3fb02bc",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "843cfd41_b736fec7",
         "filename": "tools/grit/grit/format/minifier.py",
         "patchSetId": 4
@@ -59,6 +107,24 @@
       "writtenOn": "2018-01-15T13:24:15Z",
       "side": 1,
       "message": "I don\u0027t understand this. The reason the minifier doesn\u0027t remove them inside strings is that they are not comments inside strings.\n\nconsole.log(\u0027/*xxx*/\u0027)\n\nprints, and should print, \n\n/*xxx*/",
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96de0c0c_b52a04b9",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-18T22:37:30Z",
+      "side": 1,
+      "message": "I have seen also strings outside which were not removed.",
+      "parentUuid": "843cfd41_b736fec7",
       "revId": "a4886c4a46a03385e4109143526227135caca2da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "f24be970_be3f3efb",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-18T22:37:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "465ddbf0_9b8d06ce",
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72ee5da0_90fcc24a",
         "filename": "tools/grit/grit/format/minifier.py",
         "patchSetId": 4
@@ -93,6 +177,24 @@
       "writtenOn": "2018-01-15T13:24:15Z",
       "side": 1,
       "message": "Why is this needed? The closure compiler (which __js_minifier wraps) already removes redundant new lines.",
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632faf28_fcafcb79",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-18T22:37:30Z",
+      "side": 1,
+      "message": "I have seen different behavior",
+      "parentUuid": "72ee5da0_90fcc24a",
       "revId": "a4886c4a46a03385e4109143526227135caca2da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "6a18ba07_9ad968fa",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-18T22:37:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "471c5637_a3db4615",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 13
+      },
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fab9f95_ee0e5fb3",
         "filename": "tools/grit/grit/format/minifier.py",
         "patchSetId": 4
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "ce59f8bf_df7afb61",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-18T22:37:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1fab9f95_ee0e5fb3",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 18
+      },
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c1b7193_e0204022",
         "filename": "tools/grit/grit/format/minifier.py",
         "patchSetId": 4
@@ -156,6 +306,24 @@
       "writtenOn": "2018-01-15T13:24:15Z",
       "side": 1,
       "message": "Is there any danger of any of these regex\u0027s matching within an attribute value? I admit it seems unlikely, but if it ever does happen it could cause some very strange bugs.",
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b442fb00_0376bce3",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-18T22:37:30Z",
+      "side": 1,
+      "message": "With regexps there is always danger.",
+      "parentUuid": "6c1b7193_e0204022",
       "revId": "a4886c4a46a03385e4109143526227135caca2da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "850e30f8_8d2ddecc",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-18T22:37:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "51ccf645_803bfd08",
+      "range": {
+        "startLine": 144,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 17
+      },
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af767d0_2a4d780b",
         "filename": "tools/grit/grit/format/minifier.py",
         "patchSetId": 4
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "becc961e_f96610f9",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-18T22:37:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9af767d0_2a4d780b",
+      "range": {
+        "startLine": 148,
+        "startChar": 11,
+        "endLine": 148,
+        "endChar": 20
+      },
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dab071c_3302fe98",
         "filename": "tools/grit/grit/format/minifier.py",
         "patchSetId": 4
@@ -228,6 +444,30 @@
       "revId": "a4886c4a46a03385e4109143526227135caca2da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe8340a_c93ab794",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-18T22:37:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1dab071c_3302fe98",
+      "range": {
+        "startLine": 152,
+        "startChar": 25,
+        "endLine": 152,
+        "endChar": 26
+      },
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
