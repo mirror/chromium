@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "ed0f75b7_705935bc",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-18T02:42:49Z",
+      "side": 1,
+      "message": "Now this makes more sense, although the second inputType should be deleteContentForward, is it?",
+      "range": {
+        "startLine": 348,
+        "startChar": 6,
+        "endLine": 351,
+        "endChar": 78
+      },
+      "revId": "0b79d9b1bcfe4d8a5bb22ebb2756dc1714ce4345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b3544f5_a835a919",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-18T02:42:49Z",
+      "side": 1,
+      "message": "nit: Does chongz\u0027s TODO at L1107 apply here?",
+      "range": {
+        "startLine": 1048,
+        "startChar": 39,
+        "endLine": 1048,
+        "endChar": 61
+      },
+      "revId": "0b79d9b1bcfe4d8a5bb22ebb2756dc1714ce4345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfd6307f_11fcbaf5",
         "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.h",
         "patchSetId": 6
