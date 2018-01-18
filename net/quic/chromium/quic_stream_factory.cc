@@ -723,7 +723,8 @@ QuicStreamFactory::QuicStreamFactory(
     bool headers_include_h2_stream_dependency,
     const QuicTagVector& connection_options,
     const QuicTagVector& client_connection_options,
-    bool enable_token_binding)
+    bool enable_token_binding,
+    bool enable_socket_optimization)
     : require_confirmation_(true),
       net_log_(net_log),
       host_resolver_(host_resolver),
@@ -787,6 +788,7 @@ QuicStreamFactory::QuicStreamFactory(
       num_push_streams_created_(0),
       task_runner_(nullptr),
       ssl_config_service_(ssl_config_service),
+      enable_socket_optimization_(enable_socket_optimization),
       weak_factory_(this) {
   if (ssl_config_service_.get())
     ssl_config_service_->AddObserver(this);
@@ -1312,8 +1314,11 @@ NetworkHandle QuicStreamFactory::FindAlternateNetwork(
 std::unique_ptr<DatagramClientSocket> QuicStreamFactory::CreateSocket(
     NetLog* net_log,
     const NetLogSource& source) {
-  return client_socket_factory_->CreateDatagramClientSocket(
+  auto socket = client_socket_factory_->CreateDatagramClientSocket(
       DatagramSocket::DEFAULT_BIND, RandIntCallback(), net_log, source);
+  if (enable_socket_optimization_)
+    socket->EnableOptimization();
+  return socket;
 }
 
 void QuicStreamFactory::OnSSLConfigChanged() {
