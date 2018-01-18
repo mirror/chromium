@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b76c9605_e2dd85ca",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T23:36:57Z",
+      "side": 1,
+      "message": "DCHECK_EQ(default_host_, this);\ndefault_host_ \u003d nullptr;",
+      "revId": "7326fb874e5d327df90826254b0cf58fafeb862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "839f635b_3b53487a",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T23:36:57Z",
+      "side": 1,
+      "message": "chromeos:: is redundant since the code is in chromeos NS already. Clean up here and other places.",
+      "range": {
+        "startLine": 107,
+        "startChar": 13,
+        "endLine": 107,
+        "endChar": 23
+      },
+      "revId": "7326fb874e5d327df90826254b0cf58fafeb862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba86f875_ecaad6d6",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T23:36:57Z",
+      "side": 1,
+      "message": "ditto, redundant chromeos:: here and other places",
+      "range": {
+        "startLine": 557,
+        "startChar": 7,
+        "endLine": 557,
+        "endChar": 17
+      },
+      "revId": "7326fb874e5d327df90826254b0cf58fafeb862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7299e5d_74a9f62a",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T23:36:57Z",
+      "side": 1,
+      "message": "This can be removed.\n\nWe had this before because SigninScreenHandlerDelegate is set later after login UI is constructed (or even not set in some code paths). But LoginDisplayHost must be created before the handlers.",
+      "revId": "7326fb874e5d327df90826254b0cf58fafeb862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5cbd0a_fd6b6856",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T23:36:57Z",
+      "side": 1,
+      "message": "Remove the \"if\" part since the LoginDisplayHost should always be here.",
+      "revId": "7326fb874e5d327df90826254b0cf58fafeb862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c580ee84_f337f2f8",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T23:36:57Z",
+      "side": 1,
+      "message": "ditto, remove",
+      "revId": "7326fb874e5d327df90826254b0cf58fafeb862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4eb969a_708d104c",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T23:36:57Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "7326fb874e5d327df90826254b0cf58fafeb862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
