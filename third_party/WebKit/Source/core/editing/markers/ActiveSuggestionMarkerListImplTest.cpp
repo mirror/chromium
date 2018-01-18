@@ -15,9 +15,9 @@ class ActiveSuggestionMarkerListImplTest : public EditingTestBase {
       : marker_list_(new ActiveSuggestionMarkerListImpl()) {}
 
   DocumentMarker* CreateMarker(unsigned start_offset, unsigned end_offset) {
-    return new ActiveSuggestionMarker(start_offset, end_offset, Color::kBlack,
-                                      StyleableMarker::Thickness::kThin,
-                                      Color::kBlack);
+    return new ActiveSuggestionMarker(
+        start_offset, end_offset, Color::kTransparent,
+        StyleableMarker::Thickness::kThin, Color::kBlack);
   }
 
   Persistent<ActiveSuggestionMarkerListImpl> marker_list_;

@@ -226,6 +226,7 @@ blink_core_sources("editing") {
     "markers/DocumentMarkerController.h",
     "markers/DocumentMarkerList.cpp",
     "markers/DocumentMarkerList.h",
+    "markers/DocumentMarkerThickness.h",
     "markers/GrammarMarker.cpp",
     "markers/GrammarMarker.h",
     "markers/GrammarMarkerListImpl.cpp",

@@ -13,13 +13,13 @@ ImeTextSpan::ImeTextSpan(Type type,
                          unsigned start_offset,
                          unsigned end_offset,
                          const Color& underline_color,
-                         bool thick,
+                         DocumentMarkerThickness thickness,
                          const Color& background_color,
                          const Color& suggestion_highlight_color,
                          const Vector<String>& suggestions)
     : type_(type),
       underline_color_(underline_color),
-      thick_(thick),
+      thickness_(thickness),
       background_color_(background_color),
       suggestion_highlight_color_(suggestion_highlight_color),
       suggestions_(suggestions) {
@@ -56,16 +56,32 @@ ImeTextSpan::Type ConvertWebTypeToType(WebImeTextSpan::Type type) {
   return ImeTextSpan::Type::kComposition;
 }
 
+DocumentMarkerThickness ConvertWebThicknessToDocumentMarkerThickness(
+    WebImeTextSpan::Thickness thickness) {
+  switch (thickness) {
+    case WebImeTextSpan::Thickness::kNone:
+      return DocumentMarkerThickness::kNone;
+    case WebImeTextSpan::Thickness::kThin:
+      return DocumentMarkerThickness::kThin;
+    case WebImeTextSpan::Thickness::kThick:
+      return DocumentMarkerThickness::kThick;
+  }
+
+  NOTREACHED();
+  return DocumentMarkerThickness::kThin;
+}
+
 }  // namespace
 
 ImeTextSpan::ImeTextSpan(const WebImeTextSpan& ime_text_span)
-    : ImeTextSpan(ConvertWebTypeToType(ime_text_span.type),
-                  ime_text_span.start_offset,
-                  ime_text_span.end_offset,
-                  Color(ime_text_span.underline_color),
-                  ime_text_span.thick,
-                  Color(ime_text_span.background_color),
-                  Color(ime_text_span.suggestion_highlight_color),
-                  ConvertStdVectorOfStdStringsToVectorOfStrings(
-                      ime_text_span.suggestions)) {}
+    : ImeTextSpan(
+          ConvertWebTypeToType(ime_text_span.type),
+          ime_text_span.start_offset,
+          ime_text_span.end_offset,
+          Color(ime_text_span.underline_color),
+          ConvertWebThicknessToDocumentMarkerThickness(ime_text_span.thickness),
+          Color(ime_text_span.background_color),
+          Color(ime_text_span.suggestion_highlight_color),
+          ConvertStdVectorOfStdStringsToVectorOfStrings(
+              ime_text_span.suggestions)) {}
 }  // namespace blink

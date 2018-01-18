@@ -39,7 +39,7 @@ TEST_F(SuggestionMarkerTest, ConstructorAndGetters) {
   EXPECT_FALSE(marker->IsMisspelling());
   EXPECT_EQ(Color::kTransparent, marker->SuggestionHighlightColor());
   EXPECT_EQ(Color::kDarkGray, marker->UnderlineColor());
-  EXPECT_FALSE(marker->IsThick());
+  EXPECT_FALSE(marker->HasThicknessThick());
   EXPECT_EQ(Color::kGray, marker->BackgroundColor());
 
   SuggestionMarker* marker2 = new SuggestionMarker(
@@ -49,7 +49,7 @@ TEST_F(SuggestionMarkerTest, ConstructorAndGetters) {
           .SetHighlightColor(Color::kBlack)
           .SetThickness(StyleableMarker::Thickness::kThick)
           .Build());
-  EXPECT_TRUE(marker2->IsThick());
+  EXPECT_TRUE(marker2->HasThicknessThick());
   EXPECT_TRUE(marker2->IsMisspelling());
   EXPECT_EQ(marker2->SuggestionHighlightColor(), Color::kBlack);
 }
