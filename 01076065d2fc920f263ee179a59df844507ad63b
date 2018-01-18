@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "f27124bd_dc86f273",
+        "filename": "android_webview/browser/browser_view_renderer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-18T07:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc805d87_020b5ab1",
+      "range": {
+        "startLine": 366,
+        "startChar": 33,
+        "endLine": 366,
+        "endChar": 51
+      },
+      "revId": "01076065d2fc920f263ee179a59df844507ad63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf64ecf2_2eda4ef9",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollableArea.cpp",
         "patchSetId": 9
@@ -251,6 +275,30 @@
       "side": 1,
       "message": "\u003e So I guess all these things you are saying are already be happening on windows and linux on high DPI machines?\n\nThat\u0027s correct. I think Android should work the same way but is a bit riskier in terms of compat since the only time you can get fractional scroll offsets today is under pinch-zoom. Pages have historically been pretty broken while zoomed so there isn\u0027t really an expectation of working while zoomed.",
       "parentUuid": "1eca1684_aa9ac30d",
+      "range": {
+        "startLine": 291,
+        "startChar": 2,
+        "endLine": 291,
+        "endChar": 42
+      },
+      "revId": "01076065d2fc920f263ee179a59df844507ad63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681a1883_70628e1a",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-18T07:04:29Z",
+      "side": 1,
+      "message": "I agree. After enabling --use-zoom-for-dsf in Android, I will send an intent-to-ship email to blink-dev with the information we discussed here.",
+      "parentUuid": "91040925_2ec44cad",
       "range": {
         "startLine": 291,
         "startChar": 2,
