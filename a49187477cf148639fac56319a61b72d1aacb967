@@ -85,6 +85,24 @@
       "revId": "a49187477cf148639fac56319a61b72d1aacb967",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c76553_5824d272",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-18T01:07:32Z",
+      "side": 1,
+      "message": "Some tests are creating different model builders with different model updaters. So their items should have different model updaters.\n\nIt seems that this never happens in prod (?) Or maybe we can keep a static map\u003cChromeAppListItem*, AppListModelUpdater*\u003e instead?",
+      "parentUuid": "5fbdb9b9_8e78c213",
+      "revId": "a49187477cf148639fac56319a61b72d1aacb967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
