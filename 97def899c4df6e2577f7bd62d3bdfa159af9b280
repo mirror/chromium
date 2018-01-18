@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce58eecd_ea66ca27",
+        "filename": "content/browser/loader/url_loader_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-18T05:33:14Z",
+      "side": 1,
+      "message": "This deletion changes the behavior a bit. Before this CL, an instance would be kept alive until all connections are lost. With this CL, an instance will be kept alive until the \"master\" connection is lost. Given that the RMF-connectected loader factory lives as long as the renderer process lives, this would not be a problem, I think. Reilly, do you have any concerns?",
+      "revId": "97def899c4df6e2577f7bd62d3bdfa159af9b280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
