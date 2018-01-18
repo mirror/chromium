@@ -118,6 +118,10 @@ MediaSource GetSourceForRouteObserver(const std::vector<MediaSource>& sources) {
   return source_it != sources.end() ? *source_it : MediaSource("");
 }
 
+bool IsSinkForDisplay(const MediaSink& sink, int64_t display_id) {
+  return sink.id().find(std::to_string(display_id)) != std::string::npos;
+}
+
 }  // namespace
 
 // static
@@ -482,6 +486,9 @@ void MediaRouterUI::InitCommon(content::WebContents* initiator) {
   // Get the current list of media routes, so that the WebUI will have routes
   // information at initialization.
   OnRoutesUpdated(router_->GetCurrentRoutes(), std::vector<MediaRoute::Id>());
+  display_observer_ = std::make_unique<WebContentsDisplayObserver>(
+      initiator_,
+      base::BindRepeating(&MediaRouterUI::UpdateSinks, base::Unretained(this)));
 }
 
 void MediaRouterUI::InitForTest(
@@ -848,7 +855,7 @@ void MediaRouterUI::OnResultsUpdated(
             });
 
   if (ui_initialized_)
-    handler_->UpdateSinks(sinks_);
+    UpdateSinks();
 }
 
 void MediaRouterUI::SetIssue(const Issue& issue) {
@@ -1090,6 +1097,20 @@ std::string MediaRouterUI::GetSerializedInitiatorOrigin() const {
 
 IssueManager* MediaRouterUI::GetIssueManager() {
   return router_->GetIssueManager();
+}
+
+std::vector<MediaSinkWithCastModes> MediaRouterUI::GetEnabledSinks(
+    const std::vector<MediaSinkWithCastModes>& sinks) const {
+  std::vector<MediaSinkWithCastModes> enabled_sinks;
+  for (const MediaSinkWithCastModes& sink : sinks) {
+    if (!IsSinkForDisplay(sink.sink, display_observer_->GetDisplayId()))
+      enabled_sinks.push_back(sink);
+  }
+  return enabled_sinks;
+}
+
+void MediaRouterUI::UpdateSinks() {
+  handler_->UpdateSinks(GetEnabledSinks(sinks_));
 }
 
 }  // namespace media_router

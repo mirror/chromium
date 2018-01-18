@@ -22,10 +22,12 @@
 #include "chrome/browser/ui/webui/media_router/media_router_file_dialog.h"
 #include "chrome/browser/ui/webui/media_router/media_sink_with_cast_modes.h"
 #include "chrome/browser/ui/webui/media_router/query_result_manager.h"
+#include "chrome/browser/ui/webui/media_router/web_contents_display_observer.h"
 #include "chrome/common/media_router/issue.h"
 #include "chrome/common/media_router/media_source.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "third_party/icu/source/common/unicode/uversion.h"
+#include "ui/display/display.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -222,6 +224,7 @@ class MediaRouterUI
 
   class UIIssuesObserver;
   class WebContentsFullscreenOnLoadedObserver;
+  class DisplayObserver;
 
   class UIMediaRoutesObserver : public MediaRoutesObserver {
    public:
@@ -384,6 +387,11 @@ class MediaRouterUI
   // Returns the IssueManager associated with |router_|.
   IssueManager* GetIssueManager();
 
+  std::vector<MediaSinkWithCastModes> GetEnabledSinks(
+      const std::vector<MediaSinkWithCastModes>& sinks) const;
+
+  void UpdateSinks();
+
   // Owned by the |web_ui| passed in the ctor, and guaranteed to be deleted
   // only after it has deleted |this|.
   MediaRouterWebUIMessageHandler* handler_ = nullptr;
@@ -454,6 +462,8 @@ class MediaRouterUI
 
   // If set, a cast mode that is required to be shown first.
   base::Optional<MediaCastMode> forced_cast_mode_;
+
+  std::unique_ptr<WebContentsDisplayObserver> display_observer_;
 
   // NOTE: Weak pointers must be invalidated before all other member variables.
   // Therefore |weak_factory_| must be placed at the end.
