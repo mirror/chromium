@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2848fb52_53357fc3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-paint-api/parse-input-arguments-018.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-01-18T04:46:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "304904f2_146fb6cb",
+      "revId": "7a103c38a11f04b4da70ee3e179549795c874120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e0f8e04_c02df5a8",
         "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "7a103c38a11f04b4da70ee3e179549795c874120",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7191578_d8e735e1",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-01-18T04:46:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e0f8e04_c02df5a8",
+      "revId": "7a103c38a11f04b4da70ee3e179549795c874120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
