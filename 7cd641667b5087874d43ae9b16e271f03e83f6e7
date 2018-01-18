@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8bdae492_89aea5fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-18T21:39:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8041d60_322c4222",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "7cd641667b5087874d43ae9b16e271f03e83f6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab573c56_f937c933",
         "filename": "android_webview/browser/net/aw_network_delegate.cc",
         "patchSetId": 7
@@ -90,6 +114,24 @@
       "revId": "7cd641667b5087874d43ae9b16e271f03e83f6e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f51d5e0_ec6e7d57",
+        "filename": "tools/traffic_annotation/summary/annotations.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-18T21:39:10Z",
+      "side": 1,
+      "message": "Reverted, thanks.",
+      "parentUuid": "5845731d_3ff21e68",
+      "revId": "7cd641667b5087874d43ae9b16e271f03e83f6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
