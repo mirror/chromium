@@ -36,7 +36,6 @@ cr.define('extensions', function() {
       inDevMode: {
         type: Boolean,
         value: false,
-        observer: 'onInDevModeChanged_',
       },
 
       devModeControlledByPolicy: Boolean,
@@ -64,13 +63,6 @@ cr.define('extensions', function() {
       role: 'banner',
     },
 
-    /** @override */
-    ready: function() {
-      this.$.devDrawer.addEventListener('transitionend', () => {
-        this.delegate.setProfileInDevMode(this.$['dev-mode'].checked);
-      });
-    },
-
     /**
      * @return {boolean}
      * @private
@@ -79,26 +71,22 @@ cr.define('extensions', function() {
       return this.devModeControlledByPolicy || this.isSupervised;
     },
 
-    /** @private */
-    onDevModeToggleChange_: function() {
-      const drawer = this.$.devDrawer;
-      if (drawer.hidden) {
-        drawer.hidden = false;
-        // Requesting the offsetTop will cause a reflow (to account for hidden).
-        /** @suppress {suspiciousCode} */ drawer.offsetTop;
-      }
-      this.expanded_ = !this.expanded_;
-
+    /**
+     * @param {!CustomEvent} e
+     * @private
+     */
+    onDevModeToggleChange_: function(e) {
+      this.delegate.setProfileInDevMode(/** @type {boolean} */ (e.detail));
       chrome.metricsPrivate.recordUserAction(
-          'Options_ToggleDeveloperMode_' +
-          (this.expanded_ ? 'Enabled' : 'Disabled'));
+          'Options_ToggleDeveloperMode_' + (e.detail ? 'Enabled' : 'Disabled'));
     },
 
-    /** @private */
-    onInDevModeChanged_: function() {
-      // Set the initial state.
-      this.expanded_ = this.inDevMode;
-      this.$.devDrawer.hidden = !this.inDevMode;
+    /**
+     * @private
+     * @return {number}
+     */
+    getTabindex_: function() {
+      return this.inDevMode ? 0 : 1;
     },
 
     /** @private */
