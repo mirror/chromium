@@ -1610,11 +1610,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kPasswordGenerationDescription, kOsAll,
      ENABLE_DISABLE_VALUE_TYPE(autofill::switches::kEnablePasswordGeneration,
                                autofill::switches::kDisablePasswordGeneration)},
-    {"PasswordForceSaving",
-     flag_descriptions::kPasswordForceSavingName,
+    {"PasswordForceSaving", flag_descriptions::kPasswordForceSavingName,
      flag_descriptions::kPasswordForceSavingDescription, kOsAll,
-     FEATURE_VALUE_TYPE(
-         password_manager::features::kPasswordForceSaving)},
+     FEATURE_VALUE_TYPE(password_manager::features::kPasswordForceSaving)},
     {"enable-manual-password-generation",
      flag_descriptions::kManualPasswordGenerationName,
      flag_descriptions::kManualPasswordGenerationDescription, kOsAll,
@@ -3677,6 +3675,13 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableWebAuthenticationAPIDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kWebAuth)},
 #endif  // !defined(OS_ANDROID)
+
+#if defined(OS_CHROMEOS)
+    {"enable-display-zoom-setting",
+     flag_descriptions::kEnableDisplayZoomSettingName,
+     flag_descriptions::kEnableDisplayZoomSettingDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(chromeos::switches::kEnableDisplayZoomSetting)},
+#endif  // defined(OS_CHROMEOS)
 
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
