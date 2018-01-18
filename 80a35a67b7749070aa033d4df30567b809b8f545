@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2ebb8fc_90821c13",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-18T01:45:03Z",
+      "side": 1,
+      "message": "Consider adding a comment here explaining why this is done - it\u0027s very subtle.",
+      "revId": "80a35a67b7749070aa033d4df30567b809b8f545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf135822_c72a46e8",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-18T01:45:03Z",
+      "side": 1,
+      "message": "Comment here also.",
+      "revId": "80a35a67b7749070aa033d4df30567b809b8f545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
