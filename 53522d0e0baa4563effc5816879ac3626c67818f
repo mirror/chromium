@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0717cdb_a35bef92",
+        "filename": "ui/snapshot/snapshot.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T23:16:04Z",
+      "side": 1,
+      "message": "does nullptr work here?",
+      "revId": "53522d0e0baa4563effc5816879ac3626c67818f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa59b18d_2a0abb64",
+        "filename": "ui/snapshot/snapshot_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T23:16:04Z",
+      "side": 1,
+      "message": "Can we just return null here too?",
+      "revId": "53522d0e0baa4563effc5816879ac3626c67818f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
