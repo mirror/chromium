@@ -18,8 +18,8 @@
 #include "ui/aura/window_observer.h"
 #include "ui/base/class_property.h"
 #include "ui/base/ui_base_types.h"
+#include "ui/compositor/content_shadow.h"
 #include "ui/compositor/layer.h"
-#include "ui/wm/core/shadow.h"
 #include "ui/wm/core/window_util.h"
 #include "ui/wm/public/activation_client.h"
 

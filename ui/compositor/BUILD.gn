@@ -29,6 +29,8 @@ jumbo_component("compositor") {
     "compositor_switches.h",
     "compositor_vsync_manager.cc",
     "compositor_vsync_manager.h",
+    "content_shadow.cc",
+    "content_shadow.h",
     "debug_utils.cc",
     "debug_utils.h",
     "dip_util.cc",
