@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b98abdf_4985b06b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T05:36:42Z",
+      "side": 1,
+      "message": "This will not work with mash.",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "452b6d81_e5b0a184",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T05:36:42Z",
+      "side": 1,
+      "message": "This too will not work with mash.",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710b7ce7_2657a02b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T05:36:42Z",
+      "side": 1,
+      "message": "Thank you for the clear commit message!",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05e9c3b_847bdb0b",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T05:36:42Z",
+      "side": 1,
+      "message": "You may want to DCHECK() here that |event| is not any of the ones you are interested in.",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f397ddb7_d65b71df",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T05:36:42Z",
+      "side": 1,
+      "message": "Can you add comments for false and false here (like you do below in line ~872?)",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1622de7d_90e07a54",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T05:36:42Z",
+      "side": 1,
+      "message": "I think this means user will no longer be able to pinch-zoom a web-page. Is that the case? If it is, then is that really what we want to do?",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8106863_b1daee2f",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T05:36:42Z",
+      "side": 1,
+      "message": "Divide",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
