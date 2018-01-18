@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7bcdcc1_6b256e05",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-18T13:30:56Z",
+      "side": 1,
+      "message": "I would prefer if we removed |keep state| entirely and called TransferNavigationRequestOwnership in the case where KeepState is true. If this causing issue with the call to RenderFrameDevToolsAgentHost::OnResetNavigationRequest, this one can be done in TransferNavigationRequestOwnership.",
+      "revId": "15bcd2a775e6528fc3c9da0ad11bfa6c6d69653a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6efc4274_debf5386",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-18T13:30:56Z",
+      "side": 1,
+      "message": "Why are we adding this?",
+      "revId": "15bcd2a775e6528fc3c9da0ad11bfa6c6d69653a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6749777d_522614d8",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-18T13:30:56Z",
+      "side": 1,
+      "message": "this can be replaced by !navigation_request_.",
+      "revId": "15bcd2a775e6528fc3c9da0ad11bfa6c6d69653a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed00583d_7d89cc88",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 3648,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-18T13:30:56Z",
+      "side": 1,
+      "message": "At this point you should have passed the navigation request in this RFH from the frame_tree_node_. So this whole thing should be:\nDCHECK(navigation_request_ \u0026\u0026 navigation_request_-\u003enavigation_handle() \u0026\u0026\nnavigation_request_-\u003enavigation_handle()-\u003eGetNetErrorCode() !\u003d net::OK)",
+      "revId": "15bcd2a775e6528fc3c9da0ad11bfa6c6d69653a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391f5915_bf008dfe",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 4320,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-18T13:30:56Z",
+      "side": 1,
+      "message": "You want to reset navigation_request_ once you\u0027re done with this function, except if you\u0027re having a same-document renderer-initiated navigation commit.",
+      "revId": "15bcd2a775e6528fc3c9da0ad11bfa6c6d69653a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
