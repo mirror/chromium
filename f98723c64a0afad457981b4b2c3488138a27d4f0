@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e098b84_a43034f7",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-18T15:34:26Z",
+      "side": 1,
+      "message": "Nit: const pointer to const",
+      "revId": "f98723c64a0afad457981b4b2c3488138a27d4f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0ce508_04645fc6",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-18T15:34:26Z",
+      "side": 1,
+      "message": "Nit: const pointer to const",
+      "revId": "f98723c64a0afad457981b4b2c3488138a27d4f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491693a5_330623d4",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-18T15:34:26Z",
+      "side": 1,
+      "message": "This just doubled the number of unit tests run. How about we keep ArcPolicyBridgeTest parameter-less but add a parameterized variant? They can inherit from the same base class, plus testing::Test respectively testing::TestWithParam.",
+      "revId": "f98723c64a0afad457981b4b2c3488138a27d4f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
