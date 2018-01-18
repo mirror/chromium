@@ -75,7 +75,7 @@ mojom::ServiceWorkerUpdateViaCache ParseUpdateViaCache(const String& value) {
   if (value == "none")
     return mojom::ServiceWorkerUpdateViaCache::kNone;
   // Default value.
-  return mojom::ServiceWorkerUpdateViaCache::kImports;
+  return mojom::ServiceWorkerUpdateViaCache::kDefault;
 }
 
 class GetRegistrationCallback : public WebServiceWorkerProvider::

@@ -276,7 +276,7 @@ class StubWebServiceWorkerProvider {
   StubWebServiceWorkerProvider()
       : register_call_count_(0),
         get_registration_call_count_(0),
-        update_via_cache_(mojom::ServiceWorkerUpdateViaCache::kImports) {}
+        update_via_cache_(mojom::ServiceWorkerUpdateViaCache::kDefault) {}
 
   // Creates a WebServiceWorkerProvider. This can outlive the
   // StubWebServiceWorkerProvider, but |registerServiceWorker| and
@@ -371,7 +371,7 @@ TEST_F(ServiceWorkerContainerTest,
               stub_provider.RegisterScope());
     EXPECT_EQ(WebURL(KURL(NullURL(), "http://localhost/x/y/worker.js")),
               stub_provider.RegisterScriptURL());
-    EXPECT_EQ(mojom::ServiceWorkerUpdateViaCache::kImports,
+    EXPECT_EQ(mojom::ServiceWorkerUpdateViaCache::kDefault,
               stub_provider.UpdateViaCache());
   }
 }
@@ -392,7 +392,7 @@ TEST_F(ServiceWorkerContainerTest,
     EXPECT_EQ(1ul, stub_provider.GetRegistrationCallCount());
     EXPECT_EQ(WebURL(KURL(NullURL(), "http://localhost/x/index.html")),
               stub_provider.GetRegistrationURL());
-    EXPECT_EQ(mojom::ServiceWorkerUpdateViaCache::kImports,
+    EXPECT_EQ(mojom::ServiceWorkerUpdateViaCache::kDefault,
               stub_provider.UpdateViaCache());
   }
 }
