@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49d0be7f_3bc56040",
+        "filename": "services/network/public/cpp/network_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-18T22:20:11Z",
+      "side": 1,
+      "message": "nit: weird vertical spacing (though this may be a clang-format bug) and missing  // namespace switches",
+      "revId": "173d51e7e70f07823683d2fa47b8595d366aec3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
