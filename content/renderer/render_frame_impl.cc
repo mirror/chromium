@@ -3102,8 +3102,7 @@ void RenderFrameImpl::CommitNavigation(
       FrameMsg_Navigate_Type::IsReload(common_params.navigation_type);
   bool is_history_navigation = request_params.page_state.IsValid();
   auto cache_mode = blink::mojom::FetchCacheMode::kDefault;
-  RenderFrameImpl::PrepareRenderViewForNavigation(common_params.url,
-                                                  request_params);
+  RenderFrameImpl::PrepareRenderViewForNavigation(common_params.url);
 
   GetContentClient()->SetActiveURL(
       common_params.url, frame_->Top()->GetSecurityOrigin().ToString().Utf8());
@@ -3315,8 +3314,7 @@ void RenderFrameImpl::CommitFailedNavigation(
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories) {
   bool is_reload =
       FrameMsg_Navigate_Type::IsReload(common_params.navigation_type);
-  RenderFrameImpl::PrepareRenderViewForNavigation(common_params.url,
-                                                  request_params);
+  RenderFrameImpl::PrepareRenderViewForNavigation(common_params.url);
 
   GetContentClient()->SetActiveURL(
       common_params.url, frame_->Top()->GetSecurityOrigin().ToString().Utf8());
@@ -6590,23 +6588,12 @@ void RenderFrameImpl::InitializeUserMediaClient() {
 #endif
 }
 
-void RenderFrameImpl::PrepareRenderViewForNavigation(
-    const GURL& url,
-    const RequestNavigationParams& request_params) {
+void RenderFrameImpl::PrepareRenderViewForNavigation(const GURL& url) {
   DCHECK(render_view_->webview());
 
   if (is_main_frame_) {
     for (auto& observer : render_view_->observers_)
       observer.Navigate(url);
-  }
-
-  render_view_->history_list_offset_ =
-      request_params.current_history_list_offset;
-  render_view_->history_list_length_ =
-      request_params.current_history_list_length;
-  if (request_params.should_clear_history_list) {
-    CHECK_EQ(-1, render_view_->history_list_offset_);
-    CHECK_EQ(0, render_view_->history_list_length_);
   }
 }
 
