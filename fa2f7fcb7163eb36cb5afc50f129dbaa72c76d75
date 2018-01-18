@@ -16,6 +16,24 @@
       "revId": "fa2f7fcb7163eb36cb5afc50f129dbaa72c76d75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c03a7a33_d02e9820",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNodeOptions.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-01-18T23:13:02Z",
+      "side": 1,
+      "message": "I think processorOptions makes more sense as you proposed, because we call all the constructor optional arguments as \"options\".",
+      "parentUuid": "1a6994d2_9cfa985f",
+      "revId": "fa2f7fcb7163eb36cb5afc50f129dbaa72c76d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
