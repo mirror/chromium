@@ -1911,7 +1911,6 @@ test("browser_tests") {
         "../browser/ui/app_list/app_list_controller_browsertest.cc",
         "../browser/ui/app_list/app_list_service_impl_browsertest.cc",
         "../browser/ui/app_list/search/webstore/webstore_provider_browsertest.cc",
-        "../browser/ui/app_list/speech_recognizer_browsertest.cc",
       ]
     }
     if (enable_service_discovery) {
@@ -4219,7 +4218,6 @@ test("unit_tests") {
       "../browser/ui/app_list/search/mixer_unittest.cc",
       "../browser/ui/app_list/search/omnibox_result_unittest.cc",
       "../browser/ui/app_list/search/suggestions/suggestions_search_provider_unittest.cc",
-      "../browser/ui/app_list/speech_auth_helper_unittest.cc",
       "../browser/ui/app_list/test/fake_app_list_model_updater.cc",
       "../browser/ui/app_list/test/fake_app_list_model_updater.h",
       "../browser/ui/app_list/test/fake_profile.cc",
