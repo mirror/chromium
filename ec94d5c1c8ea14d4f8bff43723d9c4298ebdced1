@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "32c58900_494d4f80",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-18T03:36:54Z",
+      "side": 1,
+      "message": "Yeah, we should update the spec.\n\nThis affects user-visible behavior.  e.g. \u003cform autocapitalize\u003d...\u003e...\u003coutput contenteditable\u003dtrue\u003evalue\u003c/output\u003e...\u003c/form\u003e",
+      "parentUuid": "2b04e19d_7ed4ae2c",
+      "revId": "ec94d5c1c8ea14d4f8bff43723d9c4298ebdced1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ee7a1a9_2264c86b",
         "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp",
         "patchSetId": 1
