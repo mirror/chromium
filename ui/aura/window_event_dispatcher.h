@@ -128,6 +128,12 @@ class AURA_EXPORT WindowEventDispatcher : public ui::EventProcessor,
   void set_skip_ime(bool skip_ime) { skip_ime_ = skip_ime; }
   bool should_skip_ime() const { return skip_ime_; }
 
+  void set_did_dispatch_held_move_event_callback(
+      base::OnceClosure did_dispatch_held_move_event_callback) {
+    did_dispatch_held_move_event_callback_ =
+        std::move(did_dispatch_held_move_event_callback);
+  }
+
  private:
   FRIEND_TEST_ALL_PREFIXES(WindowEventDispatcherTest,
                            KeepTranslatedEventInRoot);
@@ -292,6 +298,8 @@ class AURA_EXPORT WindowEventDispatcher : public ui::EventProcessor,
   std::unique_ptr<WindowTargeter> event_targeter_;
 
   bool skip_ime_;
+
+  base::OnceClosure did_dispatch_held_move_event_callback_;
 
   // Used to schedule reposting an event.
   base::WeakPtrFactory<WindowEventDispatcher> repost_event_factory_;
