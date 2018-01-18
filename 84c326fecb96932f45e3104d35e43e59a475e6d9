@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "06f678b5_e9268253",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-18T06:35:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95251248_dbffa23a",
+      "range": {
+        "startLine": 823,
+        "startChar": 68,
+        "endLine": 823,
+        "endChar": 69
+      },
+      "revId": "84c326fecb96932f45e3104d35e43e59a475e6d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d5cd519_627208ae",
         "filename": "base/synchronization/waitable_event_win.cc",
         "patchSetId": 25
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "On the other hand: if it\u0027s going to be a non-trivial effort to add the property it\u0027s probably better to just add a reset policy constant to the StackSamplingProfiler implementation and refer to that in both the WaitableEvent constructor and the DCHECK.",
       "parentUuid": "c3f97d0a_a80e4e48",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "84c326fecb96932f45e3104d35e43e59a475e6d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d6454bf_9b0cd631",
+        "filename": "base/synchronization/waitable_event_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-18T06:35:03Z",
+      "side": 1,
+      "message": "Done. I\u0027ve added a reset policy constant to StackSamplingProfiler and used it in the DCHECK.",
+      "parentUuid": "a6bf1d56_cafcd08e",
       "range": {
         "startLine": 35,
         "startChar": 6,
