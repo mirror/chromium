@@ -1,0 +1,17 @@
+main frame - didStartProvisionalLoadForFrame
+main frame - didCommitLoadForFrame
+main frame - didReceiveTitle: OriginSignedResponseHandler
+main frame - didFinishDocumentLoadForFrame
+main frame - didHandleOnloadEventsForFrame
+main frame - didFinishLoadForFrame
+frame "test_frame" - didReceiveTitle: 
+frame "test_frame" - didStartProvisionalLoadForFrame
+frame "test_frame" - didCommitLoadForFrame
+frame "test_frame" - didReceiveTitle: 
+frame "test_frame" - didFinishDocumentLoadForFrame
+frame "test_frame" - didHandleOnloadEventsForFrame
+frame "test_frame" - didFinishLoadForFrame
+This is a testharness.js-based test.
+FAIL Location of OriginSignedResponseHandler assert_equals: expected "https://example.com/test.html" but got "http://127.0.0.1:8000/loading/wpk/resources/origin-signed-response-iframe.php"
+Harness: the test ran to completion.
+

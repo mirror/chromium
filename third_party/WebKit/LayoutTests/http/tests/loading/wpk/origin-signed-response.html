@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<title>OriginSignedResponseHandler</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../../resources/get-host-info.js?pipe=sub"></script>
+
+<body>
+<script>
+// Wait until didFinishLoadForFrame of the main frame.
+var main_frame_loaded = new Promise((resolve) => {
+  window.addEventListener("load", (event) => {
+    setTimeout(() => resolve(),0);
+  });
+});
+
+function with_iframe(url, name) {
+  return new Promise(function(resolve) {
+      const frame = document.createElement('iframe');
+      frame.src = url;
+      frame.name = name;
+      frame.onload = function() { resolve(frame); };
+      document.body.appendChild(frame);
+    });
+}
+
+promise_test(function(t) {
+  const url = 'resources/origin-signed-response-iframe.php';
+  return main_frame_loaded
+    .then(() => with_iframe(url, 'test_frame'))
+    .then((frame) => {
+      var channel = new MessageChannel();
+      var promise =
+          new Promise((resolve) => { channel.port1.onmessage = resolve; });
+      frame.contentWindow.postMessage(
+        {port: channel.port2}, '*',[channel.port2]);
+      return promise;
+    })
+    .then((event) => {
+      assert_equals(event.data.location, 'https://example.com/test.html');
+    });
+}, 'Location of OriginSignedResponseHandler');
+</script>
+</body>
+
