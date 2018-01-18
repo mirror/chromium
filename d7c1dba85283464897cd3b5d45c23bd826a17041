@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b0498a2_4d4325c3",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-18T16:41:06Z",
+      "side": 1,
+      "message": "I thought that this can be removed, now that the DCHECK is changed?",
+      "revId": "d7c1dba85283464897cd3b5d45c23bd826a17041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
