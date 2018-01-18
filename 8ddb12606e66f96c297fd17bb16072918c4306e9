@@ -16,6 +16,24 @@
       "revId": "8ddb12606e66f96c297fd17bb16072918c4306e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723836b0_fd0190b8",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-18T17:58:56Z",
+      "side": 1,
+      "message": "Good point, yes, callers of this should now check for nullptr and return nullptr themselves. Done.",
+      "parentUuid": "56055b68_bc290f84",
+      "revId": "8ddb12606e66f96c297fd17bb16072918c4306e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
