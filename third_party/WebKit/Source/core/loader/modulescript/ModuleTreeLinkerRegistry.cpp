@@ -11,13 +11,10 @@
 namespace blink {
 
 void ModuleTreeLinkerRegistry::Trace(blink::Visitor* visitor) {
-  visitor->Trace(active_tree_linkers_);
 }
 
 void ModuleTreeLinkerRegistry::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
-  for (const auto& member : active_tree_linkers_)
-    visitor->TraceWrappers(member);
 }
 
 ModuleTreeLinker* ModuleTreeLinkerRegistry::Fetch(
@@ -27,7 +24,6 @@ ModuleTreeLinker* ModuleTreeLinkerRegistry::Fetch(
   ModuleTreeLinker* fetcher =
       ModuleTreeLinker::Fetch(request, modulator, this, client);
   DCHECK(fetcher->IsFetching());
-  active_tree_linkers_.insert(fetcher);
   return fetcher;
 }
 
@@ -38,17 +34,12 @@ ModuleTreeLinker* ModuleTreeLinkerRegistry::FetchDescendantsForInlineScript(
   ModuleTreeLinker* fetcher = ModuleTreeLinker::FetchDescendantsForInlineScript(
       module_script, modulator, this, client);
   DCHECK(fetcher->IsFetching());
-  active_tree_linkers_.insert(fetcher);
   return fetcher;
 }
 
 void ModuleTreeLinkerRegistry::ReleaseFinishedFetcher(
     ModuleTreeLinker* fetcher) {
   DCHECK(fetcher->HasFinished());
-
-  auto it = active_tree_linkers_.find(fetcher);
-  DCHECK_NE(it, active_tree_linkers_.end());
-  active_tree_linkers_.erase(it);
 }
 
 }  // namespace blink

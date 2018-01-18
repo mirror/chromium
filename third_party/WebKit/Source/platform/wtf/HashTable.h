@@ -653,15 +653,7 @@ template <typename Key,
           typename Traits,
           typename KeyTraits,
           typename Allocator>
-class HashTable final
-    : public ConditionalDestructor<HashTable<Key,
-                                             Value,
-                                             Extractor,
-                                             HashFunctions,
-                                             Traits,
-                                             KeyTraits,
-                                             Allocator>,
-                                   Allocator::kIsGarbageCollected> {
+class HashTable final {
   DISALLOW_NEW();
 
  public:
@@ -692,8 +684,7 @@ class HashTable final
   typedef HashTableAddResult<HashTable, ValueType> AddResult;
 
   HashTable();
-  void Finalize() {
-    DCHECK(!Allocator::kIsGarbageCollected);
+  ~HashTable() {
     if (LIKELY(!table_))
       return;
     EnterAccessForbiddenScope();

@@ -14,7 +14,7 @@ visibility = [ "//third_party/WebKit/*" ]
 declare_args() {
   # Set to true to enable the clang plugin that checks the usage of the  Blink
   # garbage-collection infrastructure during compilation.
-  blink_gc_plugin = true
+  blink_gc_plugin = false
 
   # Set to true to have the clang Blink GC plugin emit class graph (in JSON)
   # with typed pointer edges; for debugging or other (internal) uses.

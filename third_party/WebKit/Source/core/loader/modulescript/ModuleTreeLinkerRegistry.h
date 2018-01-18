@@ -41,8 +41,6 @@ class CORE_EXPORT ModuleTreeLinkerRegistry
 
   friend class ModuleTreeLinker;
   void ReleaseFinishedFetcher(ModuleTreeLinker*);
-
-  HeapHashSet<TraceWrapperMember<ModuleTreeLinker>> active_tree_linkers_;
 };
 
 }  // namespace blink
