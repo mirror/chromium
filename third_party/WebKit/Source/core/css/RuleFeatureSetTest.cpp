@@ -951,4 +951,165 @@ TEST_F(RuleFeatureSetTest, ReplaceSelfInvalidationSet) {
   ExpectNotSelfInvalidationSet(invalidation_lists.descendants);
 }
 
+TEST_F(RuleFeatureSetTest, pseudoMatchesSibling) {
+  EXPECT_EQ(RuleFeatureSet::kSelectorMayMatch,
+            CollectFeatures(":matches(.q, .r) ~ .s .t"));
+
+  InvalidationLists invalidation_lists;
+  CollectInvalidationSetsForClass(invalidation_lists, "q");
+  ExpectNoInvalidation(invalidation_lists.descendants);
+  ExpectSiblingDescendantInvalidation(UINT_MAX, "s", "t",
+                                      invalidation_lists.siblings);
+}
+
+TEST_F(RuleFeatureSetTest, pseudoMatches) {
+  EXPECT_EQ(RuleFeatureSet::kSelectorMayMatch,
+            CollectFeatures(":matches(.w, .x)"));
+
+  InvalidationLists invalidation_lists;
+  CollectInvalidationSetsForClass(invalidation_lists, "w");
+  ExpectSelfInvalidation(invalidation_lists.descendants);
+  ExpectNoInvalidation(invalidation_lists.siblings);
+}
+
+TEST_F(RuleFeatureSetTest, pseudoMatchesIdDescendant) {
+  EXPECT_EQ(RuleFeatureSet::kSelectorMayMatch,
+            CollectFeatures(".a :matches(#b, #c)"));
+
+  InvalidationLists invalidation_lists;
+  CollectInvalidationSetsForClass(invalidation_lists, "a");
+  ExpectIdsInvalidation("b", "c", invalidation_lists.descendants);
+}
+
+TEST_F(RuleFeatureSetTest, pseudoMatchesTagDescendant) {
+  EXPECT_EQ(RuleFeatureSet::kSelectorMayMatch,
+            CollectFeatures(".a :matches(span, div)"));
+
+  InvalidationLists invalidation_lists;
+  CollectInvalidationSetsForClass(invalidation_lists, "a");
+  ExpectTagNamesInvalidation("span", "div", invalidation_lists.descendants);
+}
+
+TEST_F(RuleFeatureSetTest, pseudoMatchesAnySibling) {
+  EXPECT_EQ(RuleFeatureSet::kSelectorMayMatch,
+            CollectFeatures(".v ~ :matches(.w, .x)"));
+
+  InvalidationLists invalidation_lists;
+  CollectInvalidationSetsForClass(invalidation_lists, "v");
+  ExpectNoInvalidation(invalidation_lists.descendants);
+  ExpectClassesInvalidation("w", "x", invalidation_lists.siblings);
+}
+
+TEST_F(RuleFeatureSetTest, pseudoMatchesDescendantSibling) {
+  EXPECT_EQ(RuleFeatureSet::kSelectorMayMatch,
+            CollectFeatures(".u .v ~ :matches(.w, .x)"));
+
+  InvalidationLists invalidation_lists;
+  CollectInvalidationSetsForClass(invalidation_lists, "u");
+  ExpectClassesInvalidation("w", "x", invalidation_lists.descendants);
+  ExpectNoInvalidation(invalidation_lists.siblings);
+}
+
+TEST_F(RuleFeatureSetTest, pseudoMatchesWithComplexSelectors) {
+  // printf(".a :matches(.w+.b, .x>#c)\n");
+  EXPECT_EQ(RuleFeatureSet::kSelectorMayMatch,
+            CollectFeatures(".a :matches(.w+.b, .x>#c)"));
+
+  {
+    InvalidationLists invalidation_lists;
+    CollectInvalidationSetsForClass(invalidation_lists, "a");
+    ExpectClassInvalidation("b", invalidation_lists.descendants);
+    // -------------------------------------------------------
+    // ExpectIdInvalidation("c", invalidation_lists.descendants);
+    // -------------------------------------------------------
+    ExpectNoInvalidation(invalidation_lists.siblings);
+  }
+
+  {
+    InvalidationLists invalidation_lists;
+    CollectInvalidationSetsForClass(invalidation_lists, "w");
+    ExpectNoInvalidation(invalidation_lists.descendants);
+    // -------------------------------------------------------
+    // ExpectSiblingClassInvalidation(1, "b", invalidation_lists.siblings);
+    // -------------------------------------------------------
+  }
+
+  {
+    InvalidationLists invalidation_lists;
+    CollectInvalidationSetsForClass(invalidation_lists, "x");
+    // -------------------------------------------------------
+    // ExpectIdInvalidation("c", invalidation_lists.descendants);
+    // -------------------------------------------------------
+    ExpectNoInvalidation(invalidation_lists.siblings);
+  }
+
+  {
+    InvalidationLists invalidation_lists;
+    CollectInvalidationSetsForClass(invalidation_lists, "b");
+    ExpectSelfInvalidation(invalidation_lists.descendants);
+    ExpectNoInvalidation(invalidation_lists.siblings);
+  }
+
+  {
+    InvalidationLists invalidation_lists;
+    CollectInvalidationSetsForId(invalidation_lists, "c");
+    ExpectSelfInvalidation(invalidation_lists.descendants);
+    ExpectNoInvalidation(invalidation_lists.siblings);
+  }
+}
+
+TEST_F(RuleFeatureSetTest, pseudoMatchesNested) {
+  EXPECT_EQ(RuleFeatureSet::kSelectorMayMatch,
+            CollectFeatures(".a :matches(.w+.b, .e+:matches(.c, #d))"));
+  // Equivalent to .a .w+.b, .a .e+.c, .a .e+#d
+
+  {
+    InvalidationLists invalidation_lists;
+    CollectInvalidationSetsForClass(invalidation_lists, "a");
+    ExpectClassesInvalidation("b", "c", invalidation_lists.descendants);
+    ExpectIdInvalidation("d", invalidation_lists.descendants);
+    ExpectNoInvalidation(invalidation_lists.siblings);
+  }
+
+  {
+    InvalidationLists invalidation_lists;
+    CollectInvalidationSetsForClass(invalidation_lists, "w");
+    ExpectNoInvalidation(invalidation_lists.descendants);
+    // -------------------------------------------------------
+    // ExpectSiblingClassInvalidation(1, "b", invalidation_lists.siblings);
+    // -------------------------------------------------------
+  }
+
+  {
+    InvalidationLists invalidation_lists;
+    CollectInvalidationSetsForClass(invalidation_lists, "b");
+    ExpectSelfInvalidation(invalidation_lists.descendants);
+    ExpectNoInvalidation(invalidation_lists.siblings);
+  }
+
+  {
+    InvalidationLists invalidation_lists;
+    CollectInvalidationSetsForClass(invalidation_lists, "e");
+    ExpectNoInvalidation(invalidation_lists.descendants);
+    // -------------------------------------------------------
+    // ExpectSiblingClassInvalidation(1, "c", invalidation_lists.siblings);
+    // ExpectSiblingIdInvalidation(1, "d", invalidation_lists.siblings);
+    // -------------------------------------------------------
+  }
+
+  {
+    InvalidationLists invalidation_lists;
+    CollectInvalidationSetsForClass(invalidation_lists, "c");
+    ExpectSelfInvalidation(invalidation_lists.descendants);
+    ExpectNoInvalidation(invalidation_lists.siblings);
+  }
+
+  {
+    InvalidationLists invalidation_lists;
+    CollectInvalidationSetsForId(invalidation_lists, "d");
+    ExpectSelfInvalidation(invalidation_lists.descendants);
+    ExpectNoInvalidation(invalidation_lists.siblings);
+  }
+}
+
 }  // namespace blink
