@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "146e57f4_f61b9cc4",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-18T18:43:31Z",
+      "side": 1,
+      "message": "What exactly didn\u0027t work? Did you change this function to return a std::string? Here is the prototype for AddString:\nhttps://cs.chromium.org/chromium/src/content/browser/webui/web_ui_data_source_impl.h?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d34",
+      "parentUuid": "ab2b07ff_61f18533",
+      "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cce28f4f_f0bd130c",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 1
@@ -131,6 +149,24 @@
       "side": 1,
       "message": "IMO, it makes more sense to process the URL in the C++ code. If we don\u0027t think that this is the best location, what do you think about potentially adding a helper function in this file?\n\nhttps://cs.chromium.org/chromium/src/components/google/core/browser/google_util.h\n\nI\u0027m thinking that we could add something like the AppendGoogleLocaleParam() function which is already there. Thoughts?",
       "parentUuid": "c9220158_868fe608",
+      "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05aac342_83e3b27c",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-18T18:43:31Z",
+      "side": 1,
+      "message": "If we implemented this in a JS behavior we would use something like that, but I tend to agree that doing this in C++ is fine.",
+      "parentUuid": "d9a838c9_d7903597",
       "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
