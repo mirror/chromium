@@ -10,18 +10,27 @@ Polymer({
     destination: Object,
 
     /** @private {boolean} */
-    loadingDestination_: Boolean,
+    loadingDestination_: {
+      type: Boolean,
+      value: true,
+    },
+
+    /** @type {boolean} */
+    changeButtonTapped: {
+      type: Boolean,
+      notify: true,
+    },
   },
 
-  /** @override */
-  ready: function() {
-    this.loadingDestination_ = true;
-    // Simulate transition from spinner to destination.
-    setTimeout(this.doneLoading_.bind(this), 5000);
-  },
+  observers: ['onDestinationSet_(destination, destination.id)'],
 
   /** @private */
-  doneLoading_: function() {
-    this.loadingDestination_ = false;
+  onDestinationSet_: function() {
+    if (this.destination && this.destination.id)
+      this.loadingDestination_ = false;
+  },
+
+  onChangeButtonTap_: function() {
+    this.changeButtonTapped = true;
   },
 });
