@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df5f1af4_142a8c19",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-18T16:23:31Z",
+      "side": 1,
+      "message": "this seems banned, by https://chromium-cpp.appspot.com/\n\"\u003cthread\u003e and related headers, including \u003cfuture\u003e, \u003cmutex\u003e, \u003ccondition_variable\u003e\"\n\nI think the same can be achieved via a static local (which in c++11 is guaranteed to be thread safe).\nSomething like\n\nvoid InitOnce() {\n  static bool hook_installed \u003d InstallHook();\n  base::Debug::alias(hook_installed);  // OR CHECK(hook_installed), whatever\n}\n\nbool InstallHook() {\n  .. \n  return true;\n}",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 16
+      },
+      "revId": "d9224f86307aecc6e80aae842545236fbd7cdff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c855bf_7cfb3418",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-18T16:23:31Z",
+      "side": 1,
+      "message": "note: all these functions in the shim will be called from different threads at the same time. You can\u0027t just use a bool. In the other cases the way they do this is via a thread-local-bool.",
+      "range": {
+        "startLine": 151,
+        "startChar": 1,
+        "endLine": 152,
+        "endChar": 18
+      },
+      "revId": "d9224f86307aecc6e80aae842545236fbd7cdff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64e4d95_35371de5",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-18T16:23:31Z",
+      "side": 1,
+      "message": "If you don\u0027t care about sequencing this needs to be an NoBarrier_Load to prevent that the compiler reorders the load (or optimizes that away, although in this case this would be weird).\nAlso that\u0027s the way to keep TSan happy .",
+      "range": {
+        "startLine": 232,
+        "startChar": 21,
+        "endLine": 232,
+        "endChar": 29
+      },
+      "revId": "d9224f86307aecc6e80aae842545236fbd7cdff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "499fbe35_056c3bd3",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-18T16:23:31Z",
+      "side": 1,
+      "message": "I think these are mac only, but you\u0027ll hit them there",
+      "range": {
+        "startLine": 282,
+        "startChar": 2,
+        "endLine": 282,
+        "endChar": 37
+      },
+      "revId": "d9224f86307aecc6e80aae842545236fbd7cdff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
