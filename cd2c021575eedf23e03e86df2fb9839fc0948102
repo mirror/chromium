@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cd8569a4_46bbb32e",
+        "filename": "ios/chrome/browser/application_context_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T17:23:11Z",
+      "side": 1,
+      "message": "Thanks for the link. I was under impression that some memory includes came as transitive includes from included headers (not from relative headers).",
+      "parentUuid": "b73812b2_a8128258",
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71b2fff0_8456b12d",
         "filename": "ios/chrome/browser/providers/chromium_browser_provider.mm",
         "patchSetId": 4
