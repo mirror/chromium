@@ -680,6 +680,11 @@ cr.define('bookmarks', function() {
             Command.ADD_BOOKMARK,
             Command.ADD_FOLDER,
           ];
+        case MenuSource.LIST:
+          return [
+            Command.ADD_BOOKMARK,
+            Command.ADD_FOLDER,
+          ];
         case MenuSource.NONE:
           return [];
       }
@@ -744,6 +749,9 @@ cr.define('bookmarks', function() {
       } else {
         this.openCommandMenuAtPosition(e.detail.x, e.detail.y, e.detail.source);
       }
+      bookmarks.util.recordEnumHistogram(
+          'BookmarkManager.CommandMenuOpened', e.detail.source,
+          MenuSource.NUM_VALUES);
     },
 
     /**
