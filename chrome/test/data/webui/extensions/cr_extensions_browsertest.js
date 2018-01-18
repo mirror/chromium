@@ -130,6 +130,12 @@ TEST_F('CrExtensionsToolbarTest', 'ClickHandlers', function() {
   this.runMochaTest(extension_toolbar_tests.TestNames.ClickHandlers);
 });
 
+GEN('#if defined(OS_CHROMEOS)');
+TEST_F('CrExtensionsToolbarTest', 'KioskMode', function() {
+  this.runMochaTest(extension_toolbar_tests.TestNames.KioskMode);
+});
+GEN('#endif');
+
 ////////////////////////////////////////////////////////////////////////////////
 // Extension Item Tests
 
@@ -696,3 +702,33 @@ var CrExtensionsToggleRowTest = class extends CrExtensionsBrowserTest {
 TEST_F('CrExtensionsToggleRowTest', 'ToggleRowTest', function() {
   mocha.run();
 });
+
+////////////////////////////////////////////////////////////////////////////////
+// kiosk mode tests.
+
+GEN('#if defined(OS_CHROMEOS)');
+
+var CrExtensionsKioskModeTest = class extends CrExtensionsBrowserTest {
+  /** @override */
+  get browsePreload() {
+    return 'chrome://extensions/kiosk_dialog.html';
+  }
+
+  /** @override */
+  get extraLibraries() {
+    return super.extraLibraries.concat([
+      '../settings/test_util.js',
+      'extension_kiosk_mode_test.js',
+    ]);
+  }
+  /** @override */
+  get suiteName() {
+    return extension_kiosk_mode_tests.suiteName;
+  }
+};
+
+TEST_F('CrExtensionsKioskModeTest', 'AddButton', function() {
+  this.runMochaTest(extension_kiosk_mode_tests.TestNames.AddButton);
+});
+
+GEN('#endif');

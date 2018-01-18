@@ -9,6 +9,7 @@ cr.define('extension_toolbar_tests', function() {
     Layout: 'layout',
     ClickHandlers: 'click handlers',
     DevModeToggle: 'dev mode toggle',
+    KioskMode: 'kiosk mode button'
   };
 
   var suiteName = 'ExtensionToolbarTest';
@@ -97,6 +98,20 @@ cr.define('extension_toolbar_tests', function() {
         listener.verify();
       });
     });
+
+    if (cr.isChromeOS) {
+      test(assert(TestNames.KioskMode), function() {
+        const button = toolbar.$$('#kiosk-extensions');
+        expectTrue(button.hidden);
+        toolbar.kioskEnabled = true;
+        expectFalse(button.hidden);
+
+        MockInteractions.tap(button);
+        Polymer.dom.flush();
+        const dialog = document.querySelector('* /deep/ #kiosk-dialog');
+        expectTrue(!!dialog);
+      });
+    }
   });
 
   return {
