@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "579ee702_a9cee607",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T17:39:56Z",
+      "side": 1,
+      "message": "nit: remove since it is unused?",
+      "revId": "f4b6f6d9c1d1dc56b2b41b31bd8c8e2e07d946f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0deacc_b673b888",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T17:39:56Z",
+      "side": 1,
+      "message": "nit: brief document the class\n\ne.g.\n\n// A delegate interface of ChromeAppListModelUpdater to perform\n// additional work on ChromeAppListItem changes.",
+      "revId": "f4b6f6d9c1d1dc56b2b41b31bd8c8e2e07d946f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
