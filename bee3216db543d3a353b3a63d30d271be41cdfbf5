@@ -88,6 +88,30 @@
     },
     {
       "key": {
+        "uuid": "49b9c94f_485e103f",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-18T02:33:34Z",
+      "side": 1,
+      "message": "Wez, I\u0027ve seen several iterations of this and other KSV code and it\u0027s much more readable if this namespace name is short. We do something similar for \"nacl\", \"pdf\", \"ukm\", etc. etc. FWIW I\u0027m happy with this the way it is.",
+      "parentUuid": "04cb9032_09452282",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c2dac5c_af9a7fa6",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
         "patchSetId": 6
