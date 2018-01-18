@@ -52,7 +52,7 @@ class VisitedLinkUpdater {
   void SendVisitedLinkTable(mojo::SharedBufferHandle table) {
     mojo::ScopedSharedBufferHandle client_table =
         table.Clone(mojo::SharedBufferHandle::AccessMode::READ_ONLY);
-    if (client_table.is_valid())
+    if (client_table)
       sink_->UpdateVisitedLinks(std::move(client_table));
   }
 
@@ -138,7 +138,7 @@ VisitedLinkEventListener::~VisitedLinkEventListener() {
 void VisitedLinkEventListener::NewTable(mojo::SharedBufferHandle table) {
   DCHECK(table.is_valid());
   shared_memory_ = table.Clone(mojo::SharedBufferHandle::AccessMode::READ_ONLY);
-  if (!shared_memory_.is_valid())
+  if (!shared_memory_)
     return;
 
   // Send to all RenderProcessHosts.
@@ -201,7 +201,7 @@ void VisitedLinkEventListener::Observe(
         return;
 
       // Happens on browser start up.
-      if (!shared_memory_.is_valid())
+      if (!shared_memory_)
         return;
 
       updaters_[process->GetID()].reset(

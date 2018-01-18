@@ -26,7 +26,7 @@ void HitTestQuery::OnAggregatedHitTestRegionListUpdated(
     uint32_t active_handle_size,
     mojo::ScopedSharedBufferHandle idle_handle,
     uint32_t idle_handle_size) {
-  DCHECK(active_handle.is_valid() && idle_handle.is_valid());
+  DCHECK(active_handle && idle_handle);
   handle_buffer_sizes_[0] = active_handle_size;
   handle_buffers_[0] = active_handle->Map(handle_buffer_sizes_[0] *
                                           sizeof(AggregatedHitTestRegion));

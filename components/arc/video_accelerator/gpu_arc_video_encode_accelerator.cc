@@ -236,7 +236,7 @@ void GpuArcVideoEncodeAccelerator::Flush(FlushCallback callback) {
 base::ScopedFD GpuArcVideoEncodeAccelerator::UnwrapFdFromMojoHandle(
     mojo::ScopedHandle handle) {
   DCHECK(client_);
-  if (!handle.is_valid()) {
+  if (!handle) {
     DLOG(ERROR) << "handle is invalid.";
     client_->NotifyError(Error::kInvalidArgumentError);
     return base::ScopedFD();

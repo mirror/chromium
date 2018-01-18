@@ -385,7 +385,7 @@ TEST_F(StructTraitsTest, EchoMoveOnlyStructWithTraits) {
       base::Bind(&CaptureMessagePipe, &received, loop.QuitClosure()));
   loop.Run();
 
-  ASSERT_TRUE(received.is_valid());
+  ASSERT_TRUE(received);
 
   // Verify that the message pipe handle is correctly passed.
   const char kHello[] = "hello";

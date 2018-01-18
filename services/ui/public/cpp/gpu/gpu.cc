@@ -174,7 +174,7 @@ class Gpu::EstablishRequest
 
     DCHECK(!received_);
     received_ = true;
-    if (channel_handle.is_valid()) {
+    if (channel_handle) {
       gpu_channel_ = base::MakeRefCounted<gpu::GpuChannelHost>(
           client_id, gpu_info, gpu_feature_info, std::move(channel_handle));
     }

@@ -27,7 +27,7 @@ BufferingDataPipeWriter::BufferingDataPipeWriter(
 
 bool BufferingDataPipeWriter::Write(const char* buffer, uint32_t num_bytes) {
   DCHECK(!finished_);
-  if (!handle_.is_valid())
+  if (!handle_)
     return false;
 
   if (buffer_.empty()) {
@@ -63,7 +63,7 @@ void BufferingDataPipeWriter::Finish() {
 
 void BufferingDataPipeWriter::OnWritable(MojoResult,
                                          const mojo::HandleSignalsState&) {
-  if (!handle_.is_valid())
+  if (!handle_)
     return;
   waiting_ = false;
   while (!buffer_.empty()) {

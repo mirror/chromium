@@ -103,7 +103,7 @@ class FileDataPipeProducer::FileSequenceState
     file_ = std::move(file);
     max_bytes_ = max_bytes;
     TransferSomeBytes();
-    if (producer_handle_.is_valid()) {
+    if (producer_handle_) {
       // If we didn't nail it all on the first transaction attempt, setup a
       // watcher and complete the read asynchronously.
       watcher_ = std::make_unique<SimpleWatcher>(

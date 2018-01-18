@@ -139,7 +139,7 @@ void MojoDecoderBufferReader::ReadDecoderBuffer(
   DVLOG(3) << __func__;
   DCHECK(!flush_cb_);
 
-  if (!consumer_handle_.is_valid()) {
+  if (!consumer_handle_) {
     DCHECK(pending_read_cbs_.empty());
     CancelReadCB(std::move(read_cb));
     return;
@@ -321,7 +321,7 @@ mojom::DecoderBufferPtr MojoDecoderBufferWriter::WriteDecoderBuffer(
   DVLOG(3) << __func__;
 
   // DecoderBuffer cannot be written if the pipe is already closed.
-  if (!producer_handle_.is_valid()) {
+  if (!producer_handle_) {
     DVLOG(1)
         << __func__
         << ": Failed to write DecoderBuffer because the pipe is already closed";

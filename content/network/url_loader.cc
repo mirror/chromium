@@ -437,7 +437,7 @@ void URLLoader::OnResponseStarted(net::URLRequest* url_request, int net_error) {
 void URLLoader::ReadMore() {
   // Once the MIME type is sniffed, all data is sent as soon as it is read from
   // the network.
-  DCHECK(consumer_handle_.is_valid() || !pending_write_);
+  DCHECK(consumer_handle_ || !pending_write_);
 
   if (should_pause_reading_body_) {
     paused_reading_body_ = true;
@@ -458,7 +458,7 @@ void URLLoader::ReadMore() {
 
     DCHECK_GT(static_cast<uint32_t>(std::numeric_limits<int>::max()),
               pending_write_buffer_size_);
-    if (consumer_handle_.is_valid()) {
+    if (consumer_handle_) {
       DCHECK_GE(pending_write_buffer_size_,
                 static_cast<uint32_t>(net::kMaxBytesToSniff));
     }
@@ -493,7 +493,7 @@ void URLLoader::DidRead(int num_bytes, bool completed_synchronously) {
   }
 
   bool complete_read = true;
-  if (consumer_handle_.is_valid()) {
+  if (consumer_handle_) {
     const std::string& type_hint = response_->head.mime_type;
     std::string new_type;
     bool made_final_decision = net::SniffMimeType(
@@ -552,7 +552,7 @@ void URLLoader::NotifyCompleted(int error_code) {
     upload_progress_tracker_ = nullptr;
   }
 
-  if (consumer_handle_.is_valid())
+  if (consumer_handle_)
     SendResponseToClient();
 
   network::URLLoaderCompletionStatus status;
@@ -610,7 +610,7 @@ void URLLoader::CloseResponseBodyStreamProducer() {
 }
 
 void URLLoader::DeleteIfNeeded() {
-  bool has_data_pipe = pending_write_.get() || response_body_stream_.is_valid();
+  bool has_data_pipe = pending_write_.get() || response_body_stream_;
   if (!connected_ && !has_data_pipe)
     delete this;
 }

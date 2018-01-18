@@ -91,8 +91,8 @@ void MojoAudioOutputStream::OnStreamCreated(
   mojo::ScopedHandle socket_handle =
       mojo::WrapPlatformFile(foreign_socket->Release());
 
-  DCHECK(buffer_handle.is_valid());
-  DCHECK(socket_handle.is_valid());
+  DCHECK(buffer_handle);
+  DCHECK(socket_handle);
 
   base::ResetAndReturn(&stream_created_callback_)
       .Run(std::move(buffer_handle), std::move(socket_handle));

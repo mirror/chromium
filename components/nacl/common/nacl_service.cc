@@ -53,7 +53,7 @@ service_manager::mojom::ServiceRequest ConnectToServiceManager(
   DCHECK(!service_request_channel_token.empty());
   mojo::ScopedMessagePipeHandle parent_handle =
       invitation->ExtractMessagePipe(service_request_channel_token);
-  DCHECK(parent_handle.is_valid());
+  DCHECK(parent_handle);
   return service_manager::mojom::ServiceRequest(std::move(parent_handle));
 }
 

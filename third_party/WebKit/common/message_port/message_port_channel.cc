@@ -67,7 +67,7 @@ void MessagePortChannel::PostMessage(const uint8_t* encoded_message,
 }
 
 void MessagePortChannel::PostMojoMessage(mojo::Message message) {
-  DCHECK(state_->handle().is_valid());
+  DCHECK(state_->handle());
 
   // NOTE: It is OK to ignore the return value of mojo::WriteMessageNew here.
   // HTML MessagePorts have no way of reporting when the peer is gone.
@@ -95,7 +95,7 @@ bool MessagePortChannel::GetMessage(std::vector<uint8_t>* encoded_message,
 }
 
 bool MessagePortChannel::GetMojoMessage(mojo::Message* message) {
-  DCHECK(state_->handle().is_valid());
+  DCHECK(state_->handle());
   mojo::ScopedMessageHandle message_handle;
   MojoResult rv = mojo::ReadMessageNew(state_->handle().get(), &message_handle,
                                        MOJO_READ_MESSAGE_FLAG_NONE);
@@ -127,12 +127,12 @@ void MessagePortChannel::State::StartWatching(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   base::AutoLock lock(lock_);
   DCHECK(!callback_);
-  DCHECK(handle_.is_valid());
+  DCHECK(handle_);
   DCHECK(task_runner);
   callback_ = callback;
   task_runner_ = task_runner;
 
-  DCHECK(!watcher_handle_.is_valid());
+  DCHECK(!watcher_handle_);
   MojoResult rv = CreateWatcher(&State::CallOnHandleReady, &watcher_handle_);
   DCHECK_EQ(MOJO_RESULT_OK, rv);
 
@@ -164,7 +164,7 @@ void MessagePortChannel::State::StopWatching() {
 
 mojo::ScopedMessagePipeHandle MessagePortChannel::State::TakeHandle() {
   base::AutoLock lock(lock_);
-  DCHECK(!watcher_handle_.is_valid());
+  DCHECK(!watcher_handle_);
   return std::move(handle_);
 }
 
@@ -173,7 +173,7 @@ MessagePortChannel::State::~State() = default;
 void MessagePortChannel::State::ArmWatcher() {
   lock_.AssertAcquired();
 
-  if (!watcher_handle_.is_valid())
+  if (!watcher_handle_)
     return;
 
   uint32_t num_ready_contexts = 1;

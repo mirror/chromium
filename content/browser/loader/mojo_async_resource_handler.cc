@@ -260,8 +260,8 @@ void MojoAsyncResourceHandler::OnWillRead(
       controller->CancelWithError(net::ERR_INSUFFICIENT_RESOURCES);
       return;
     }
-    DCHECK(producer.is_valid());
-    DCHECK(consumer.is_valid());
+    DCHECK(producer);
+    DCHECK(consumer);
 
     response_body_consumer_handle_ = std::move(consumer);
     shared_writer_ = new SharedWriter(std::move(producer));
@@ -327,7 +327,7 @@ void MojoAsyncResourceHandler::OnReadCompleted(
       url_loader_client_->OnTransferSizeUpdated(transfer_size_diff);
   }
 
-  if (response_body_consumer_handle_.is_valid()) {
+  if (response_body_consumer_handle_) {
     // Send the data pipe on the first OnReadCompleted call.
     url_loader_client_->OnStartLoadingResponseBody(
         std::move(response_body_consumer_handle_));

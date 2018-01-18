@@ -122,7 +122,7 @@ void MojoVideoEncodeAcceleratorService::UseOutputBitstreamBuffer(
 
   if (!encoder_)
     return;
-  if (!buffer.is_valid()) {
+  if (!buffer) {
     DLOG(ERROR) << __func__ << " invalid |buffer|.";
     NotifyError(::media::VideoEncodeAccelerator::kInvalidArgumentError);
     return;

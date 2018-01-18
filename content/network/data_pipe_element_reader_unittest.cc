@@ -46,13 +46,13 @@ class PassThroughDataPipeGetter : public network::mojom::DataPipeGetter {
                    ReadCallback* read_callback) {
     DCHECK(!run_loop_);
 
-    if (!write_pipe_.is_valid()) {
+    if (!write_pipe_) {
       run_loop_ = std::make_unique<base::RunLoop>();
       run_loop_->Run();
       run_loop_.reset();
     }
 
-    EXPECT_TRUE(write_pipe_.is_valid());
+    EXPECT_TRUE(write_pipe_);
     EXPECT_TRUE(read_callback_);
 
     *write_pipe = std::move(write_pipe_);
@@ -63,7 +63,7 @@ class PassThroughDataPipeGetter : public network::mojom::DataPipeGetter {
   // network::mojom::DataPipeGetter implementation:
   void Read(mojo::ScopedDataPipeProducerHandle pipe,
             ReadCallback callback) override {
-    EXPECT_FALSE(write_pipe_.is_valid());
+    EXPECT_FALSE(write_pipe_);
     EXPECT_FALSE(read_callback_);
 
     write_pipe_ = std::move(pipe);

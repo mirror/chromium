@@ -29,7 +29,7 @@ PdfCompositorImpl::~PdfCompositorImpl() = default;
 void PdfCompositorImpl::CompositePdf(
     mojo::ScopedSharedBufferHandle sk_handle,
     mojom::PdfCompositor::CompositePdfCallback callback) {
-  DCHECK(sk_handle.is_valid());
+  DCHECK(sk_handle);
 
   std::unique_ptr<base::SharedMemory> shm =
       GetShmFromMojoHandle(std::move(sk_handle));
@@ -63,7 +63,7 @@ void PdfCompositorImpl::CompositePdf(
 
   mojo::ScopedSharedBufferHandle buffer =
       mojo::SharedBufferHandle::Create(wstream.bytesWritten());
-  DCHECK(buffer.is_valid());
+  DCHECK(buffer);
 
   mojo::ScopedSharedBufferMapping mapping = buffer->Map(wstream.bytesWritten());
   DCHECK(mapping);

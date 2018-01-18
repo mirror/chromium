@@ -58,7 +58,7 @@ class TestServiceImpl : public mojom::TestService {
                           CreateSharedBufferCallback callback) override {
     mojo::ScopedSharedBufferHandle buffer =
         mojo::SharedBufferHandle::Create(message.size());
-    CHECK(buffer.is_valid());
+    CHECK(buffer);
 
     mojo::ScopedSharedBufferMapping mapping = buffer->Map(message.size());
     CHECK(mapping);

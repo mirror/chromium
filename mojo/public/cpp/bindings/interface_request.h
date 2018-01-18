@@ -52,7 +52,7 @@ class InterfaceRequest {
   }
 
   // Indicates whether the request currently contains a valid message pipe.
-  bool is_pending() const { return handle_.is_valid(); }
+  bool is_pending() const { return static_cast<bool>(handle_); }
 
   explicit operator bool() const { return handle_; }
 
@@ -69,7 +69,7 @@ class InterfaceRequest {
   }
 
   void ResetWithReason(uint32_t custom_reason, const std::string& description) {
-    if (!handle_.is_valid())
+    if (!handle_)
       return;
 
     Message message =

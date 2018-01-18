@@ -81,7 +81,7 @@ void CreateSerializedMessageObject(uint32_t name,
   ScopedMessageHandle handle;
   MojoResult rv = mojo::CreateMessage(&handle);
   DCHECK_EQ(MOJO_RESULT_OK, rv);
-  DCHECK(handle.is_valid());
+  DCHECK(handle);
 
   void* buffer;
   uint32_t buffer_size;
@@ -160,7 +160,7 @@ ScopedMessageHandle CreateUnserializedMessageObject(
   ScopedMessageHandle handle;
   MojoResult rv = mojo::CreateMessage(&handle);
   DCHECK_EQ(MOJO_RESULT_OK, rv);
-  DCHECK(handle.is_valid());
+  DCHECK(handle);
 
   rv = MojoAttachMessageContext(
       handle->value(), reinterpret_cast<uintptr_t>(context.release()),
@@ -201,7 +201,7 @@ Message::Message(uint32_t name,
 }
 
 Message::Message(ScopedMessageHandle handle) {
-  DCHECK(handle.is_valid());
+  DCHECK(handle);
 
   uintptr_t context_value = 0;
   MojoResult get_context_result = MojoGetMessageContext(
@@ -357,7 +357,7 @@ ScopedMessageHandle Message::TakeMojoMessage() {
 }
 
 void Message::NotifyBadMessage(const std::string& error) {
-  DCHECK(handle_.is_valid());
+  DCHECK(handle_);
   mojo::NotifyBadMessage(handle_.get(), error);
 }
 
@@ -369,7 +369,7 @@ void Message::SerializeAssociatedEndpointHandles(
   DCHECK_GE(version(), 2u);
   DCHECK(header_v2()->payload_interface_ids.is_null());
   DCHECK(payload_buffer_.is_valid());
-  DCHECK(handle_.is_valid());
+  DCHECK(handle_);
 
   size_t size = associated_endpoint_handles_.size();
 
@@ -428,7 +428,7 @@ void Message::SerializeIfNecessary() {
 std::unique_ptr<internal::UnserializedMessageContext>
 Message::TakeUnserializedContext(
     const internal::UnserializedMessageContext::Tag* tag) {
-  DCHECK(handle_.is_valid());
+  DCHECK(handle_);
   uintptr_t context_value = 0;
   MojoResult rv = MojoGetMessageContext(handle_->value(), &context_value,
                                         MOJO_GET_MESSAGE_CONTEXT_FLAG_NONE);

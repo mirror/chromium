@@ -188,7 +188,7 @@ int ServiceWorkerDataPipeReader::SyncComplete() {
 }
 
 ServiceWorkerDataPipeReader::State ServiceWorkerDataPipeReader::state() {
-  if (!stream_.is_valid())
+  if (!stream_)
     return producer_state_;
   return State::kStreaming;
 }

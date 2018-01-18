@@ -88,7 +88,7 @@ ArcPrintService::~ArcPrintService() {
 }
 
 void ArcPrintService::Print(mojo::ScopedHandle pdf_data) {
-  if (!pdf_data.is_valid()) {
+  if (!pdf_data) {
     LOG(ERROR) << "handle is invalid";
     return;
   }
