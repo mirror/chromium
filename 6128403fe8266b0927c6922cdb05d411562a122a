@@ -16,6 +16,24 @@
       "revId": "6128403fe8266b0927c6922cdb05d411562a122a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5bedfd_826c3095",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-18T19:58:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be3f626e_5b1bd580",
+      "revId": "6128403fe8266b0927c6922cdb05d411562a122a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
