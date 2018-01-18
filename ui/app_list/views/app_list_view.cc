@@ -56,6 +56,7 @@
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/views_delegate.h"
 #include "ui/views/widget/widget.h"
+#include "ui/views/widget/widget_observer.h"
 #include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/core/shadow_types.h"
 
@@ -248,7 +249,6 @@ AppListView::AppListView(AppListViewDelegate* delegate)
       model_(delegate->GetModel()),
       search_model_(delegate->GetSearchModel()),
       short_animations_for_testing_(false),
-      is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()),
       is_background_blur_enabled_(features::IsBackgroundBlurEnabled()),
       display_observer_(this),
       animation_observer_(new HideViewAnimationObserver()),
@@ -259,10 +259,8 @@ AppListView::AppListView(AppListViewDelegate* delegate)
   CHECK(delegate);
   delegate_->GetSpeechUI()->AddObserver(this);
 
-  if (is_fullscreen_app_list_enabled_) {
-    display_observer_.Add(display::Screen::GetScreen());
-    delegate_->AddObserver(this);
-  }
+  display_observer_.Add(display::Screen::GetScreen());
+  delegate_->AddObserver(this);
   // Enable arrow key in FocusManager. Arrow left/right and up/down triggers
   // the same focus movement as tab/shift+tab.
   views::FocusManager::set_arrow_key_traversal_enabled(true);
@@ -270,8 +268,7 @@ AppListView::AppListView(AppListViewDelegate* delegate)
 
 AppListView::~AppListView() {
   delegate_->GetSpeechUI()->RemoveObserver(this);
-  if (is_fullscreen_app_list_enabled_)
-    delegate_->RemoveObserver(this);
+  delegate_->RemoveObserver(this);
 
   animation_observer_.reset();
   // Remove child views first to ensure no remaining dependencies on delegate_.
@@ -292,37 +289,20 @@ void AppListView::Initialize(const InitParams& params) {
   is_side_shelf_ = params.is_side_shelf;
   InitContents(params.initial_apps_page);
   AddAccelerator(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
-  set_color(kContentsBackgroundColor);
-  set_parent_window(params.parent);
+  parent_window_ = params.parent;
 
-  if (is_fullscreen_app_list_enabled_)
-    InitializeFullscreen(params.parent, params.parent_container_id);
-  else
-    InitializeBubble();
+  InitializeFullscreen(params.parent, params.parent_container_id);
 
   InitChildWidgets();
   AddChildView(overlay_view_);
 
-  if (is_fullscreen_app_list_enabled_)
-    SetState(app_list_state_);
+  SetState(app_list_state_);
 
   delegate_->ViewInitialized();
 
   UMA_HISTOGRAM_TIMES(kAppListCreationTimeHistogram,
                       base::Time::Now() - start_time);
   RecordFolderMetrics();
-}
-
-void AppListView::SetBubbleArrow(views::BubbleBorder::Arrow arrow) {
-  GetBubbleFrameView()->bubble_border()->set_arrow(arrow);
-  SizeToContents();  // Recalcuates with new border.
-  GetBubbleFrameView()->SchedulePaint();
-}
-
-void AppListView::MaybeSetAnchorPoint(const gfx::Point& anchor_point) {
-  // if the AppListView is a bubble
-  if (!is_fullscreen_app_list_enabled_)
-    SetAnchorRect(gfx::Rect(anchor_point, gfx::Size()));
 }
 
 void AppListView::SetDragAndDropHostOfCurrentAppList(
@@ -339,12 +319,6 @@ void AppListView::Dismiss() {
   delegate_->Dismiss();
   SetState(AppListViewState::CLOSED);
   GetWidget()->Deactivate();
-}
-
-void AppListView::UpdateBounds() {
-  // if the AppListView is a bubble
-  if (!is_fullscreen_app_list_enabled_)
-    SizeToContents();
 }
 
 void AppListView::SetAppListOverlayVisible(bool visible) {
@@ -391,7 +365,7 @@ gfx::Size AppListView::CalculatePreferredSize() const {
 }
 
 void AppListView::OnPaint(gfx::Canvas* canvas) {
-  views::BubbleDialogDelegateView::OnPaint(canvas);
+  views::WidgetDelegateView::OnPaint(canvas);
   if (!next_paint_callback_.is_null()) {
     next_paint_callback_.Run();
     next_paint_callback_.Reset();
@@ -429,21 +403,17 @@ class AppListView::FullscreenWidgetObserver : views::WidgetObserver {
 };
 
 void AppListView::InitContents(int initial_apps_page) {
-  if (is_fullscreen_app_list_enabled_) {
-    // The shield view that colors/blurs the background of the app list and
-    // makes it transparent.
-    app_list_background_shield_ = new views::View;
-    app_list_background_shield_->SetPaintToLayer(ui::LAYER_SOLID_COLOR);
-    app_list_background_shield_->layer()->SetOpacity(
-        is_background_blur_enabled_ ? kAppListOpacityWithBlur
-                                    : kAppListOpacity);
-    SetBackgroundShieldColor();
-    if (is_background_blur_enabled_) {
-      app_list_background_shield_->layer()->SetBackgroundBlur(
-          kAppListBlurRadius);
-    }
-    AddChildView(app_list_background_shield_);
+  // The shield view that colors/blurs the background of the app list and
+  // makes it transparent.
+  app_list_background_shield_ = new views::View;
+  app_list_background_shield_->SetPaintToLayer(ui::LAYER_SOLID_COLOR);
+  app_list_background_shield_->layer()->SetOpacity(
+      is_background_blur_enabled_ ? kAppListOpacityWithBlur : kAppListOpacity);
+  SetBackgroundShieldColor();
+  if (is_background_blur_enabled_) {
+    app_list_background_shield_->layer()->SetBackgroundBlur(kAppListBlurRadius);
   }
+  AddChildView(app_list_background_shield_);
   app_list_main_view_ = new AppListMainView(delegate_, this);
   AddChildView(app_list_main_view_);
   app_list_main_view_->SetPaintToLayer();
@@ -456,9 +426,7 @@ void AppListView::InitContents(int initial_apps_page) {
   search_box_view_->layer()->SetFillsBoundsOpaquely(false);
   search_box_view_->layer()->SetMasksToBounds(true);
 
-  app_list_main_view_->Init(
-      is_fullscreen_app_list_enabled_ ? 0 : initial_apps_page,
-      search_box_view_);
+  app_list_main_view_->Init(0, search_box_view_);
 
   // Speech recognition is available only when the start page exists.
   if (delegate_ && delegate_->IsSpeechRecognitionEnabled()) {
@@ -569,28 +537,7 @@ void AppListView::InitializeFullscreen(gfx::NativeView parent,
       new FullscreenWidgetObserver(this));
 }
 
-void AppListView::InitializeBubble() {
-  set_margins(gfx::Insets());
-  set_close_on_deactivate(false);
-  set_shadow(views::BubbleBorder::NO_ASSETS);
-
-  // This creates the app list widget (Before this, child widgets cannot be
-  // created).
-  views::BubbleDialogDelegateView::CreateBubble(this);
-
-  SetBubbleArrow(views::BubbleBorder::FLOAT);
-  // We can now create the internal widgets.
-
-  const int kOverlayCornerRadius =
-      GetBubbleFrameView()->bubble_border()->GetBorderCornerRadius();
-  overlay_view_ = new AppListOverlayView(kOverlayCornerRadius);
-  overlay_view_->SetBoundsRect(GetContentsBounds());
-}
-
 void AppListView::HandleClickOrTap(ui::LocatedEvent* event) {
-  if (!is_fullscreen_app_list_enabled_)
-    return;
-
   // No-op if app list is on fullscreen all apps state and the event location is
   // within apps grid view's bounds.
   if (app_list_state_ == AppListViewState::FULLSCREEN_ALL_APPS &&
@@ -811,9 +758,6 @@ void AppListView::ConvertAppListStateToFullscreenEquivalent(
 }
 
 void AppListView::RecordStateTransitionForUma(AppListViewState new_state) {
-  if (!is_fullscreen_app_list_enabled_)
-    return;
-
   AppListStateTransitionSource transition =
       GetAppListStateTransitionSource(new_state);
   // kMaxAppListStateTransition denotes a transition we are not interested in
@@ -858,7 +802,7 @@ void AppListView::MaybeCreateAccessibilityEvent(AppListViewState new_state) {
 }
 
 display::Display AppListView::GetDisplayNearestView() const {
-  return display::Screen::GetScreen()->GetDisplayNearestView(parent_window());
+  return display::Screen::GetScreen()->GetDisplayNearestView(parent_window_);
 }
 
 AppsGridView* AppListView::GetAppsGridView() const {
@@ -948,43 +892,11 @@ AppListStateTransitionSource AppListView::GetAppListStateTransitionSource(
   }
 }
 
-void AppListView::OnBeforeBubbleWidgetInit(views::Widget::InitParams* params,
-                                           views::Widget* widget) const {
-  if (!params->native_widget) {
-    views::ViewsDelegate* views_delegate = views::ViewsDelegate::GetInstance();
-    if (views_delegate && !views_delegate->native_widget_factory().is_null()) {
-      params->native_widget =
-          views_delegate->native_widget_factory().Run(*params, widget);
-    }
-  }
-  // Apply a WM-provided shadow (see ui/wm/core/).
-  params->shadow_type = views::Widget::InitParams::SHADOW_TYPE_DROP;
-  params->shadow_elevation = wm::ShadowElevation::LARGE;
-}
-
-int AppListView::GetDialogButtons() const {
-  return ui::DIALOG_BUTTON_NONE;
-}
-
 views::View* AppListView::GetInitiallyFocusedView() {
   return app_list_main_view_->search_box_view()->search_box();
 }
 
-bool AppListView::WidgetHasHitTestMask() const {
-  return GetBubbleFrameView() != nullptr;
-}
-
-void AppListView::GetWidgetHitTestMask(gfx::Path* mask) const {
-  DCHECK(mask);
-  DCHECK(GetBubbleFrameView());
-
-  mask->addRect(gfx::RectToSkRect(GetBubbleFrameView()->GetContentsBounds()));
-}
-
 void AppListView::OnScrollEvent(ui::ScrollEvent* event) {
-  if (!is_fullscreen_app_list_enabled_)
-    return;
-
   if (!HandleScroll(event->y_offset(), event->type()))
     return;
 
@@ -993,9 +905,6 @@ void AppListView::OnScrollEvent(ui::ScrollEvent* event) {
 }
 
 void AppListView::OnMouseEvent(ui::MouseEvent* event) {
-  if (!is_fullscreen_app_list_enabled_)
-    return;
-
   switch (event->type()) {
     case ui::ET_MOUSE_PRESSED:
       event->SetHandled();
@@ -1012,9 +921,6 @@ void AppListView::OnMouseEvent(ui::MouseEvent* event) {
 }
 
 void AppListView::OnGestureEvent(ui::GestureEvent* event) {
-  if (!is_fullscreen_app_list_enabled_)
-    return;
-
   switch (event->type()) {
     case ui::ET_GESTURE_TAP:
       SetIsInDrag(false);
@@ -1062,27 +968,6 @@ void AppListView::OnGestureEvent(ui::GestureEvent* event) {
   }
 }
 
-void AppListView::OnWidgetDestroying(views::Widget* widget) {
-  DCHECK(!is_fullscreen_app_list_enabled_);
-
-  BubbleDialogDelegateView::OnWidgetDestroying(widget);
-  if (delegate_ && widget == GetWidget())
-    delegate_->ViewClosing();
-}
-
-void AppListView::OnWidgetVisibilityChanged(views::Widget* widget,
-                                            bool visible) {
-  DCHECK(!is_fullscreen_app_list_enabled_);
-
-  BubbleDialogDelegateView::OnWidgetVisibilityChanged(widget, visible);
-
-  if (widget != GetWidget())
-    return;
-
-  if (!visible)
-    app_list_main_view_->ResetForShow();
-}
-
 ui::AXRole AppListView::GetAccessibleWindowRole() const {
   // Default role of root view is AX_ROLE_WINDOW which traps ChromeVox focus
   // within the root view. Assign AX_ROLE_GROUP here to allow the focus to move
@@ -1111,9 +996,7 @@ void AppListView::Layout() {
   gfx::Rect centered_bounds = contents_bounds;
   ContentsView* contents_view = app_list_main_view_->contents_view();
   centered_bounds.ClampToCenteredSize(
-      gfx::Size(is_fullscreen_app_list_enabled_
-                    ? contents_view->GetMaximumContentsSize().width()
-                    : contents_view->GetDefaultContentsBounds().width(),
+      gfx::Size(contents_view->GetMaximumContentsSize().width(),
                 contents_bounds.height()));
 
   app_list_main_view_->SetBoundsRect(centered_bounds);
@@ -1128,16 +1011,8 @@ void AppListView::Layout() {
     speech_view_->SetBoundsRect(speech_bounds);
   }
 
-  if (!is_fullscreen_app_list_enabled_)
-    return;
   contents_view->Layout();
   app_list_background_shield_->SetBoundsRect(contents_bounds);
-}
-
-void AppListView::SchedulePaintInRect(const gfx::Rect& rect) {
-  BubbleDialogDelegateView::SchedulePaintInRect(rect);
-  if (GetBubbleFrameView())
-    GetBubbleFrameView()->SchedulePaint();
 }
 
 void AppListView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
@@ -1307,8 +1182,7 @@ void AppListView::StartAnimationForState(AppListViewState target_state) {
 }
 
 void AppListView::StartCloseAnimation(base::TimeDelta animation_duration) {
-  DCHECK(is_fullscreen_app_list_enabled_);
-  if (is_side_shelf_ || !is_fullscreen_app_list_enabled_)
+  if (is_side_shelf_)
     return;
 
   if (app_list_state_ != AppListViewState::CLOSED)
@@ -1369,8 +1243,6 @@ PaginationModel* AppListView::GetAppsPaginationModel() const {
 }
 
 gfx::Rect AppListView::GetAppInfoDialogBounds() const {
-  if (!is_fullscreen_app_list_enabled_)
-    return GetBoundsInScreen();
   gfx::Rect app_info_bounds(GetDisplayNearestView().bounds());
   app_info_bounds.ClampToCenteredSize(
       gfx::Size(kAppInfoDialogWidth, kAppInfoDialogHeight));
@@ -1464,7 +1336,6 @@ void AppListView::OnSpeechRecognitionStateChanged(
   if (will_appear)
     speech_view_->Reset();
 
-  animation_observer_->set_frame(GetBubbleFrameView());
   gfx::Transform speech_transform;
   speech_transform.Translate(0, SkFloatToMScalar(kSpeechUIAppearingPosition));
   if (will_appear)
@@ -1520,9 +1391,6 @@ void AppListView::OnSpeechRecognitionStateChanged(
 
 void AppListView::OnDisplayMetricsChanged(const display::Display& display,
                                           uint32_t changed_metrics) {
-  if (!is_fullscreen_app_list_enabled_)
-    return;
-
   // Set the |fullscreen_widget_| size to fit the new display metrics.
   gfx::Size size = GetDisplayNearestView().size();
   fullscreen_widget_->SetSize(size);
@@ -1557,7 +1425,7 @@ void AppListView::SetBackgroundShieldColor() {
   // There is a chance when AppListView::OnWallpaperColorsChanged is called
   // from AppListViewDelegate, the |app_list_background_shield_| is not
   // initialized.
-  if (!is_fullscreen_app_list_enabled_ || !app_list_background_shield_)
+  if (!app_list_background_shield_)
     return;
 
   std::vector<SkColor> prominent_colors;

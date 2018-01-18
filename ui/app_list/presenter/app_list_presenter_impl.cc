@@ -183,7 +183,6 @@ void AppListPresenterImpl::SetView(AppListView* view) {
   view_ = view;
   views::Widget* widget = view_->GetWidget();
   widget->AddObserver(this);
-  widget->GetNativeView()->GetRootWindow()->AddObserver(this);
   aura::client::GetFocusClient(widget->GetNativeView())->AddObserver(this);
   view_->GetAppsPaginationModel()->AddObserver(this);
   view_->ShowWhenReady();
@@ -197,7 +196,6 @@ void AppListPresenterImpl::ResetView() {
   widget->RemoveObserver(this);
   GetLayer(widget)->GetAnimator()->RemoveObserver(this);
   presenter_delegate_.reset();
-  widget->GetNativeView()->GetRootWindow()->RemoveObserver(this);
   aura::client::GetFocusClient(widget->GetNativeView())->RemoveObserver(this);
 
   view_->GetAppsPaginationModel()->RemoveObserver(this);
@@ -260,17 +258,6 @@ void AppListPresenterImpl::OnWindowFocused(aura::Window* gained_focus,
       Dismiss();
     }
   }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// AppListPresenterImpl,  aura::WindowObserver implementation:
-void AppListPresenterImpl::OnWindowBoundsChanged(
-    aura::Window* root,
-    const gfx::Rect& old_bounds,
-    const gfx::Rect& new_bounds,
-    ui::PropertyChangeReason reason) {
-  if (presenter_delegate_)
-    presenter_delegate_->UpdateBounds();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
