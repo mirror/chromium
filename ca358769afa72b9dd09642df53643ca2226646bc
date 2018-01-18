@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d63f17cd_3bd42867",
+        "filename": "chrome/browser/resources/print_preview/previewarea/preview_area.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T19:46:40Z",
+      "side": 1,
+      "message": "IIUC, this sends an event, which is then caught by print_preview.js, which is then calling nativeLayer to open a new tab.\n\nGiven that previewArea already has a nativeLayer reference, why are we not calling it directly here?\n\nSimilar question for destination_list. That one does not have a nativeLayer reference, but could we add it? Or would that create any problems? IIRC, the design does not mandate that print_preview.js is the only place where nativeLayer is used anyway.",
+      "revId": "ca358769afa72b9dd09642df53643ca2226646bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
