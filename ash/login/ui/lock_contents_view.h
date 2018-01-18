@@ -25,7 +25,6 @@
 
 namespace views {
 class BoxLayout;
-class ScrollView;
 class StyledLabel;
 }  // namespace views
 
@@ -33,8 +32,8 @@ namespace ash {
 
 class LoginAuthUserView;
 class LoginBubble;
-class LoginUserView;
 class NoteActionLaunchButton;
+class ScrollableUsersListView;
 
 namespace mojom {
 enum class TrayActionState;
@@ -60,7 +59,7 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
 
     LoginAuthUserView* primary_auth() const;
     LoginAuthUserView* opt_secondary_auth() const;
-    const std::vector<LoginUserView*>& user_views() const;
+    ScrollableUsersListView* users_list() const;
     views::View* note_action() const;
     LoginBubble* tooltip_bubble() const;
     views::View* dev_channel_info() const;
@@ -219,10 +218,7 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   LoginAuthUserView* primary_auth_ = nullptr;
   LoginAuthUserView* opt_secondary_auth_ = nullptr;
 
-  // All non-auth users; |primary_auth_| and |secondary_auth_| are not contained
-  // in this list.
-  std::vector<LoginUserView*> user_views_;
-  views::ScrollView* scroller_ = nullptr;
+  ScrollableUsersListView* users_list_ = nullptr;
 
   // View that contains the note action button and the dev channel info labels,
   // placed on the top right corner of the screen without affecting layout of
