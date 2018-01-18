@@ -100707,6 +100707,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="XR.RuntimeAvailability" enum="XRRuntimeAvailable">
+  <owner>billorr@chromium.org</owner>
+  <summary>
+    Indicates which VR APIs are installed. Recorded shortly after startup.
+  </summary>
+</histogram>
+
 <histogram name="ZeroSuggest.AllResults">
   <owner>hfung@chromium.org</owner>
   <summary>
