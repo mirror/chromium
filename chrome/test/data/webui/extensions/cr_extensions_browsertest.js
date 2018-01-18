@@ -696,3 +696,58 @@ var CrExtensionsToggleRowTest = class extends CrExtensionsBrowserTest {
 TEST_F('CrExtensionsToggleRowTest', 'ToggleRowTest', function() {
   mocha.run();
 });
+
+////////////////////////////////////////////////////////////////////////////////
+// kiosk mode tests.
+
+GEN('#if defined(OS_CHROMEOS)');
+
+var CrExtensionsKioskModeTest = class extends CrExtensionsBrowserTest {
+  /** @override */
+  get commandLineSwitches() {
+    return [{
+      switchName: 'enable-consumer-kiosk',
+    }];
+  }
+
+  /** @override */
+  get extraLibraries() {
+    return super.extraLibraries.concat([
+      '../settings/test_util.js',
+      'extension_kiosk_mode_test.js',
+    ]);
+  }
+
+  /** @override */
+  get suiteName() {
+    return extension_kiosk_mode_tests.SuiteNames.Basic;
+  }
+
+  /** @override */
+  testGenPreamble() {
+    GEN('  SetDevModeEnabled(true);');
+  }
+};
+
+TEST_F('CrExtensionsKioskModeTest', 'ButtonModal', function() {
+  this.runMochaTest(extension_kiosk_mode_tests.TestNames.ButtonModal);
+});
+
+var CrExtensionsKioskModeTestDialogOnly =
+    class extends CrExtensionsKioskModeTest {
+  /** @override */
+  get browsePreload() {
+    return 'chrome://extensions/kiosk_dialog.html';
+  }
+
+  /** @override */
+  get suiteName() {
+    return extension_kiosk_mode_tests.SuiteNames.DialogOnly;
+  }
+};
+
+TEST_F('CrExtensionsKioskModeTestDialogOnly', 'AddButton', function() {
+  this.runMochaTest(extension_kiosk_mode_tests.TestNames.AddButton);
+});
+
+GEN('#endif');
