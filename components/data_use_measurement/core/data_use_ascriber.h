@@ -110,6 +110,8 @@ class DataUseAscriber {
                                      bool started);
   virtual void OnUrlRequestDestroyed(net::URLRequest* request);
 
+  virtual void SetShouldDisableAscriber(bool disable_ascriber) = 0;
+
  protected:
   base::ObserverList<PageLoadObserver> observers_;
 

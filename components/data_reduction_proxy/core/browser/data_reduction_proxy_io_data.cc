@@ -419,6 +419,7 @@ void DataReductionProxyIOData::SetDataUseAscriber(
   DCHECK(data_use_ascriber);
   data_use_observer_.reset(
       new DataReductionProxyDataUseObserver(this, data_use_ascriber));
+  data_use_ascriber->SetShouldDisableAscriber(!IsEnabled());
 }
 
 void DataReductionProxyIOData::SetPreviewsDecider(
