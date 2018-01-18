@@ -524,7 +524,8 @@ class CONTENT_EXPORT RenderFrameImpl
       mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       base::Optional<URLLoaderFactoryBundle> subresource_loaders,
       mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info,
-      const base::UnguessableToken& devtools_navigation_token) override;
+      const base::UnguessableToken& devtools_navigation_token,
+      bool was_activated) override;
   void CommitFailedNavigation(
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
