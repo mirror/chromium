@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "557ea537_7e18c172",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-18T22:59:51Z",
+      "side": 1,
+      "message": "nit: i don\u0027t think this comment adds anything (I know you copy pasted it from somewhere but it seems utterly redundant)",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 25
+      },
+      "revId": "46b918a326911a7e0b662912c7ff08b09cee0675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17fe57f9_727ec154",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-18T22:59:51Z",
+      "side": 1,
+      "message": "is it normal to use final? I don\u0027t remember seeing this elsewhere and can\u0027t find any other examples.",
+      "range": {
+        "startLine": 44,
+        "startChar": 35,
+        "endLine": 44,
+        "endChar": 40
+      },
+      "revId": "46b918a326911a7e0b662912c7ff08b09cee0675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4c56d72_18ec32b1",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-18T22:59:51Z",
+      "side": 1,
+      "message": "nit: slightly confusing to call this bubble because then you have bubble-\u003eGetBubble(), hence I\u0027d call it icon.",
+      "range": {
+        "startLine": 663,
+        "startChar": 20,
+        "endLine": 663,
+        "endChar": 26
+      },
+      "revId": "46b918a326911a7e0b662912c7ff08b09cee0675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9c7e08_b6c10efd",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-18T22:59:51Z",
+      "side": 1,
+      "message": "nit: why not\n\nwidget-\u003eShow();\nreturn widget;",
+      "range": {
+        "startLine": 669,
+        "startChar": 6,
+        "endLine": 669,
+        "endChar": 22
+      },
+      "revId": "46b918a326911a7e0b662912c7ff08b09cee0675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
