@@ -104,6 +104,24 @@
       "revId": "b7d2ef967bf6bafda914ea966c3a9cd859820e6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d9b679d_030d8627",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1259876
+      },
+      "writtenOn": "2018-01-18T03:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a20851ef_1548908f",
+      "revId": "b7d2ef967bf6bafda914ea966c3a9cd859820e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
