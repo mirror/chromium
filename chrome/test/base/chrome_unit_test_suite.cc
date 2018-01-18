@@ -28,6 +28,7 @@
 #include "ui/base/resource/resource_handle.h"
 #include "ui/base/ui_base_paths.h"
 #include "ui/gl/test/gl_surface_test_support.h"
+#include "chrome/browser/browser_process.h"
 
 #if defined(OS_CHROMEOS)
 #include "ash/public/cpp/config.h"
@@ -65,6 +66,11 @@ class ChromeUnitTestSuiteInitializer : public testing::EmptyTestEventListener {
     content::SetUtilityClientForTesting(utility_content_client_.get());
 
     TestingBrowserProcess::CreateInstance();
+
+    // Force TabManager creation before the first tab is created. In production,
+    // that happens in ChromeBrowserMainParts::PreBrowserStart.
+    g_browser_process->GetTabManager();
+
   }
 
   void OnTestEnd(const testing::TestInfo& test_info) override {
