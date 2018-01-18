@@ -16,6 +16,24 @@
       "revId": "2742488630d37b863f0cbc99becf74cc0f4f6889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63e1d34_fd1a89f8",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-18T01:02:01Z",
+      "side": 1,
+      "message": "\u003e Not sure this is quite what you want, though in practice it shouldn\u0027t matter.\n\u003e \n\u003e The typical use of this for singletons is to force e.g. the Downloads page to open with the non-incognito profile, even when invoked from an incognito window.  But this code would also allow the reverse: an open page in an incognito window could be switched to from a non-incognito window.  I don\u0027t know whether we want to allow that.  Maybe we only want to ask if the target window\u0027s profile type equals the source window\u0027s original profile type?\n\nI suspect that you didn\u0027t type what you meant (and/or I couldn\u0027t grok the intent) since we want to allow incognito -\u003e non-incognito for singletons.\n\n\u003e That said, I don\u0027t think we ever try to invoke as SINGLETON something that can be open in an incognito window, so I don\u0027t know if users could hit this?\n\nI agree that it\u0027s probably not possible, but it wasn\u0027t difficult to make it see only one direction.\n\nbtw, there\u0027s another problem, which is also practically impossible: If a tab exists as both types, if we happen to find the other type first, we\u0027ll happily switch to it. This is still possible with the new behavior to look in the active window first, since there can be other non-active windows of the same type.",
+      "parentUuid": "ee80eb00_94908f80",
+      "revId": "2742488630d37b863f0cbc99becf74cc0f4f6889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
