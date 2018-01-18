@@ -60,8 +60,8 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // Constructs a pool without workers.
   //
   // |histogram_label| is used to label the pool's histograms ("TaskScheduler."
-  // + histogram_name + "." + |histogram_label| + extra suffixes), it must not
-  // be empty. |pool_label| is used to label the pool's threads, it must not be
+  // + histogram_name + "." + |histogram_label| + extra suffixes) and cannot be
+  // empty. |pool_label| is used to label the pool's threads and cannot be
   // empty. |priority_hint| is the preferred thread priority; the actual thread
   // priority depends on shutdown state and platform capabilities.
   // |task_tracker| keeps track of tasks. |delayed_task_manager| handles tasks
