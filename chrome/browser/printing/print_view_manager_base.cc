@@ -402,6 +402,7 @@ void PrintViewManagerBase::RenderFrameDeleted(
 
   printing_rfh_ = nullptr;
 
+  weak_ptr_factory_.InvalidateWeakPtrs();
   PrintManager::PrintingRenderFrameDeleted();
   ReleasePrinterQuery();
 
