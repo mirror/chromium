@@ -16,6 +16,24 @@
       "revId": "9c44bf917fa10d6fdc768c29c9e07a11516e3c9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f057cf44_2ebd8d7d",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-18T20:33:07Z",
+      "side": 1,
+      "message": "Removed. Now passing IDs directly, instead of the RFH pointer.",
+      "parentUuid": "8197637e_2566f0a6",
+      "revId": "9c44bf917fa10d6fdc768c29c9e07a11516e3c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
