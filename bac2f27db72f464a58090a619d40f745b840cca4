@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8943dce9_b0d609bf",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-18T11:57:05Z",
+      "side": 1,
+      "message": "only set this when there\u0027s actually an active request (the use of the enum will make it much easier). Otherwise it\u0027s very brittle.",
+      "range": {
+        "startLine": 1363,
+        "startChar": 37,
+        "endLine": 1363,
+        "endChar": 41
+      },
+      "revId": "bac2f27db72f464a58090a619d40f745b840cca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd85ac2_f501d72b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-18T11:57:05Z",
+      "side": 1,
+      "message": "I wonder if this is the right place. I first thought about doing this at the caller side of ClearCachedSuggestions() where we know more about the actual reason that lead to clearing the  caches.\nIt\u0027s something we probably always want to do, except for one case: The user deleting history and we don\u0027t want to fetch for a certain period of time. Is that handled in ClearHistoryDependentState()\n\nIf we can make sure that this is not causing unpredicted side-effects, I\u0027m fine with doing it on a lower layer, but why not do this as part of NukeAllSuggestions? Or is the reason to do it here precisely because we don\u0027t want to do it as part of ClearHistoryDependentState()?\n\nIn any case, please document this clearly.",
+      "range": {
+        "startLine": 1363,
+        "startChar": 42,
+        "endLine": 1363,
+        "endChar": 0
+      },
+      "revId": "bac2f27db72f464a58090a619d40f745b840cca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "145e0ba7_2a84b206",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-18T11:57:05Z",
+      "side": 1,
+      "message": "why do we not trigger this anymore?\nThe suggestions have been cleared, so why not signal that?",
+      "range": {
+        "startLine": 1365,
+        "startChar": 58,
+        "endLine": 1365,
+        "endChar": 0
+      },
+      "revId": "bac2f27db72f464a58090a619d40f745b840cca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc582355_ed8dcdd0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-18T11:57:05Z",
+      "side": 1,
+      "message": "instead of two bools, an enum would be more appropriate.\nLike:\nenum class FetchRequestStatus {NONE, IN_PROGRESS, IN_PROGRESS_NEEDS_REFETCH};",
+      "range": {
+        "startLine": 454,
+        "startChar": 26,
+        "endLine": 454,
+        "endChar": 0
+      },
+      "revId": "bac2f27db72f464a58090a619d40f745b840cca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
