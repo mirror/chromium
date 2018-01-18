@@ -9,8 +9,9 @@
 
 #include "base/callback.h"
 #include "content/common/content_export.h"
+#include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
-#include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
+#include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom.h"
 
 class GURL;
 
@@ -43,7 +44,7 @@ class CONTENT_EXPORT AssociatedResourceFetcher {
   static AssociatedResourceFetcher* Create(const GURL& url);
 
   virtual void SetServiceWorkerMode(
-      blink::WebURLRequest::ServiceWorkerMode service_worker_mode) = 0;
+      network::mojom::ServiceWorkerMode service_worker_mode) = 0;
   virtual void SetCacheMode(blink::mojom::FetchCacheMode mode) = 0;
 
   // Associate the corresponding WebURLLoaderOptions to the loader. Must be

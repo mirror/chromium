@@ -120,7 +120,7 @@ BLINK_PLATFORM_EXPORT bool IsCORSEnabledRequestMode(
 // service-worker mode.
 BLINK_PLATFORM_EXPORT bool IsNoCORSAllowedContext(
     WebURLRequest::RequestContext,
-    WebURLRequest::ServiceWorkerMode);
+    network::mojom::ServiceWorkerMode);
 
 // TODO(hintzed): The following three methods delegate to SchemeRegistry and
 // FetchUtils respectively to expose them for outofblink-CORS in CORSURLLoader.

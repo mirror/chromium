@@ -158,6 +158,7 @@
 #include "net/http/http_request_headers.h"
 #include "net/http/http_util.h"
 #include "ppapi/features/features.h"
+#include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -6727,7 +6728,7 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
       mojom::BeginNavigationParams::New(
           GetWebURLRequestHeadersAsString(info.url_request), load_flags,
           info.url_request.GetServiceWorkerMode() !=
-              blink::WebURLRequest::ServiceWorkerMode::kAll,
+              network::mojom::ServiceWorkerMode::kAll,
           GetRequestContextTypeForWebURLRequest(info.url_request),
           GetMixedContentContextTypeForWebURLRequest(info.url_request),
           is_form_submission, searchable_form_url, searchable_form_encoding,

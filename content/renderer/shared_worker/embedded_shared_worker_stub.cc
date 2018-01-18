@@ -27,6 +27,7 @@
 #include "content/renderer/service_worker/service_worker_provider_context.h"
 #include "content/renderer/service_worker/worker_fetch_context_impl.h"
 #include "ipc/ipc_message_macros.h"
+#include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
 #include "third_party/WebKit/common/service_worker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/InterfaceProvider.h"
@@ -98,9 +99,8 @@ class WebServiceWorkerNetworkProviderForSharedWorker
             blink::WebURLRequest::kRequestContextSharedWorker &&
         !provider_->IsControlledByServiceWorker() &&
         request.GetServiceWorkerMode() !=
-            blink::WebURLRequest::ServiceWorkerMode::kNone) {
-      request.SetServiceWorkerMode(
-          blink::WebURLRequest::ServiceWorkerMode::kNone);
+            network::mojom::ServiceWorkerMode::kNone) {
+      request.SetServiceWorkerMode(network::mojom::ServiceWorkerMode::kNone);
     }
   }
 

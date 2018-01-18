@@ -79,7 +79,8 @@
 #include "public/platform/WebMixedContentContextType.h"
 #include "public/platform/WebURLLoaderClient.h"
 #include "public/platform/WebURLRequest.h"
-#include "services/network/public/interfaces/request_context_frame_type.mojom-shared.h"
+#include "services/network/public/interfaces/fetch_api.mojom-blink.h"
+#include "services/network/public/interfaces/request_context_frame_type.mojom-blink.h"
 
 namespace blink {
 
@@ -759,7 +760,7 @@ void InspectorNetworkAgent::WillSendRequest(
     request.SetShouldResetAppCache(true);
   }
   if (state_->booleanProperty(NetworkAgentState::kBypassServiceWorker, false))
-    request.SetServiceWorkerMode(WebURLRequest::ServiceWorkerMode::kNone);
+    request.SetServiceWorkerMode(network::mojom::ServiceWorkerMode::kNone);
 
   InspectorPageAgent::ResourceType type =
       InspectorPageAgent::ToResourceType(resource_type);

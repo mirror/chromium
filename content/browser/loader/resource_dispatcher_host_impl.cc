@@ -113,6 +113,7 @@
 #include "services/network/public/cpp/resource_request.h"
 #include "services/network/public/cpp/resource_request_body.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
+#include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "storage/browser/blob/blob_data_handle.h"
 #include "storage/browser/blob/blob_storage_context.h"
@@ -1225,14 +1226,13 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
   } else {
     // Initialize the service worker handler for the request. We don't use
     // ServiceWorker for synchronous loads to avoid renderer deadlocks.
-    const ServiceWorkerMode service_worker_mode =
-        is_sync_load
-            ? ServiceWorkerMode::NONE
-            : static_cast<ServiceWorkerMode>(request_data.service_worker_mode);
+    const network::mojom::ServiceWorkerMode service_worker_mode =
+        is_sync_load ? network::mojom::ServiceWorkerMode::kNone
+                     : request_data.service_worker_mode;
     ServiceWorkerRequestHandler::InitializeHandler(
         new_request.get(), requester_info->service_worker_context(),
         blob_context, child_id, request_data.service_worker_provider_id,
-        service_worker_mode != ServiceWorkerMode::ALL,
+        service_worker_mode != network::mojom::ServiceWorkerMode::kAll,
         request_data.fetch_request_mode, request_data.fetch_credentials_mode,
         request_data.fetch_redirect_mode, request_data.fetch_integrity,
         request_data.keepalive,

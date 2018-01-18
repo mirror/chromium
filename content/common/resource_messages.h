@@ -69,8 +69,8 @@ IPC_ENUM_TRAITS_MAX_VALUE(network::mojom::FetchRedirectMode,
 IPC_ENUM_TRAITS_MAX_VALUE(network::mojom::FetchCredentialsMode,
                           network::mojom::FetchCredentialsMode::kLast)
 
-IPC_ENUM_TRAITS_MAX_VALUE(content::ServiceWorkerMode,
-                          content::ServiceWorkerMode::LAST)
+IPC_ENUM_TRAITS_MAX_VALUE(network::mojom::ServiceWorkerMode,
+                          network::mojom::ServiceWorkerMode::kLast)
 
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebMixedContentContextType,
                           blink::WebMixedContentContextType::kLast)
