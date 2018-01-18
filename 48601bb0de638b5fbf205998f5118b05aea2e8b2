@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4af9645_045039d5",
+        "filename": "third_party/WebKit/Source/core/exported/WebInputMethodControllerImpl.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-18T03:53:01Z",
+      "side": 1,
+      "message": "Obtaining plain text offsets requires clean layout, so please add these lines at the beginning of this method:\n\n  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets\n  // needs to be audited.  See http://crbug.com/590369 for more details.\n  GetFrame()-\u003eGetDocument()-\u003eUpdateStyleAndLayoutIgnorePendingStylesheets();",
+      "revId": "48601bb0de638b5fbf205998f5118b05aea2e8b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862aeeed_9a538ee7",
+        "filename": "third_party/WebKit/Source/core/exported/WebInputMethodControllerImpl.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-18T03:53:01Z",
+      "side": 1,
+      "message": "It might be better to move the implementation detail to InputMethodController, where more tools for converting EphemeralRange to offsets are available, like InputMethodController::PlainTextRangeForEphemeralRange.",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 75
+      },
+      "revId": "48601bb0de638b5fbf205998f5118b05aea2e8b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82a6c00_dd49e47a",
+        "filename": "third_party/WebKit/public/web/WebInputMethodController.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-18T03:53:01Z",
+      "side": 1,
+      "message": "What\u0027s the definition of \"editing word\"?",
+      "range": {
+        "startLine": 76,
+        "startChar": 19,
+        "endLine": 76,
+        "endChar": 40
+      },
+      "revId": "48601bb0de638b5fbf205998f5118b05aea2e8b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23d8c52_23fb9c00",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-18T03:53:01Z",
+      "side": 1,
+      "message": "It\u0027s fine to add a parameter here to disable smart replace. We might want an enum class parameter instead of bool for better clarity.",
+      "range": {
+        "startLine": 554,
+        "startChar": 32,
+        "endLine": 554,
+        "endChar": 57
+      },
+      "revId": "48601bb0de638b5fbf205998f5118b05aea2e8b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
