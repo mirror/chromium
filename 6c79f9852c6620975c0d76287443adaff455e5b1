@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b3a78783_6a71403a",
+        "filename": "chromeos/cryptohome/cryptohome_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-18T05:03:14Z",
+      "side": 1,
+      "message": "My apologies, I just blindly reverted the change without really thinking about it.\n\nHowever this made me realize that actually I\u0027m introducing a bug here, RenameCryptohome used OnBaseReplyCallback which doesn\u0027t have the second clause (it won\u0027t have an embedded MountReply.)\n\nThis should be fixed now.",
+      "parentUuid": "ee683104_f01307c3",
+      "range": {
+        "startLine": 22,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 54
+      },
+      "revId": "6c79f9852c6620975c0d76287443adaff455e5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "210fb19d_b662a572",
         "filename": "chromeos/login/auth/cryptohome_authenticator.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1f5ff484_44f332bc",
+        "filename": "chromeos/login/auth/cryptohome_authenticator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-18T05:03:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "210fb19d_b662a572",
+      "range": {
+        "startLine": 148,
+        "startChar": 4,
+        "endLine": 148,
+        "endChar": 16
+      },
+      "revId": "6c79f9852c6620975c0d76287443adaff455e5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbf5d904_29f0dfe5",
         "filename": "chromeos/login/auth/extended_authenticator_impl.cc",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "6c79f9852c6620975c0d76287443adaff455e5b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832b78ba_5d5e0221",
+        "filename": "chromeos/login/auth/extended_authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-18T05:03:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbf5d904_29f0dfe5",
+      "range": {
+        "startLine": 283,
+        "startChar": 6,
+        "endLine": 283,
+        "endChar": 13
+      },
+      "revId": "6c79f9852c6620975c0d76287443adaff455e5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
