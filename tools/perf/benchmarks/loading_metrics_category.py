@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+from telemetry.timeline import chrome_trace_config
+
 # Set the required tracing categories specified by page_cycler_v2
 def AugmentOptionsForLoadingMetrics(tbm_options):
   cat_filter = tbm_options.config.chrome_trace_config.category_filter
@@ -23,4 +25,18 @@ def AugmentOptionsForLoadingMetrics(tbm_options):
   cat_filter.AddIncludedCategory('toplevel')
 
   tbm_options.AddTimelineBasedMetric('loadingMetric')
+
+  cat_filter.AddIncludedCategory('v8')
+  cat_filter.AddIncludedCategory('v8')
+  cat_filter.AddDisabledByDefault('disabled-by-default-v8.gc')
+  cat_filter.AddDisabledByDefault('disabled-by-default-memory-infra')
+
+  tbm_options.AddTimelineBasedMetric('loadingMetric')
+  tbm_options.AddTimelineBasedMetric('memoryMetric')
+  tbm_options.AddTimelineBasedMetric('gcMetric')
+
+  # Setting an empty memory dump config disables periodic dumps.
+  tbm_options.config.chrome_trace_config.SetMemoryDumpConfig(
+        chrome_trace_config.MemoryDumpConfig())
+
   return tbm_options
