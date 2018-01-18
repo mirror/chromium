@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "46044f42_b3819cc0",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-18T22:43:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91bf87da_f59fda56",
+      "range": {
+        "startLine": 163,
+        "startChar": 105,
+        "endLine": 163,
+        "endChar": 111
+      },
+      "revId": "9542f1150ad068f8ddb45cd3190dab2b5971bb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d767c473_dde100aa",
         "filename": "docs/memory/tools.md",
         "patchSetId": 1
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "8b27c767_b13e90e0",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-18T22:43:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d767c473_dde100aa",
+      "revId": "9542f1150ad068f8ddb45cd3190dab2b5971bb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "207370ab_4264a75b",
         "filename": "docs/memory/tools.md",
         "patchSetId": 1
@@ -70,6 +112,24 @@
       "writtenOn": "2018-01-18T20:02:35Z",
       "side": 1,
       "message": "I don\u0027t think that \"do work that triggers events/behaviors\" is particularly relevant, since this is snapshot rather than timeline based. Take a snapshot now.\n\nThen do some work, then take another snapshot.",
+      "revId": "9542f1150ad068f8ddb45cd3190dab2b5971bb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87472c76_c02d9570",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-18T22:43:48Z",
+      "side": 1,
+      "message": "Reworded. Note that this section is about memory-infra tracing in general and not just heap dumps.",
+      "parentUuid": "207370ab_4264a75b",
       "revId": "9542f1150ad068f8ddb45cd3190dab2b5971bb63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
