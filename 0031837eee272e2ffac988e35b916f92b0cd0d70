@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "90a14f0c_510313d5",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditingCommandsUtilities.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-18T19:08:23Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "0031837eee272e2ffac988e35b916f92b0cd0d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c554784_35975467",
         "filename": "third_party/WebKit/Source/core/editing/commands/EditingCommandsUtilities.cpp",
         "patchSetId": 4
@@ -19,6 +36,64 @@
         "endLine": 363,
         "endChar": 58
       },
+      "revId": "0031837eee272e2ffac988e35b916f92b0cd0d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae9d913_d91f17ba",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditingCommandsUtilities.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-18T19:08:23Z",
+      "side": 1,
+      "message": "Yes, please.",
+      "parentUuid": "3c554784_35975467",
+      "range": {
+        "startLine": 362,
+        "startChar": 0,
+        "endLine": 363,
+        "endChar": 58
+      },
+      "revId": "0031837eee272e2ffac988e35b916f92b0cd0d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed7a33f_5ad8dd0a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditingCommandsUtilities.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-18T19:08:23Z",
+      "side": 1,
+      "message": "We should use double copyright header for code moving.\n\nCould you copy the copyright header of EditingUtilities.h here, and then add the Chromium copyright header?\n\nExample: VisibleUnitsWord.cpp is refactored out from VisibleUnits.cpp, and hence has double header.",
+      "revId": "0031837eee272e2ffac988e35b916f92b0cd0d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884dba05_054e0327",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditingCommandsUtilitiesTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-18T19:08:23Z",
+      "side": 1,
+      "message": "Ditto.",
       "revId": "0031837eee272e2ffac988e35b916f92b0cd0d70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
