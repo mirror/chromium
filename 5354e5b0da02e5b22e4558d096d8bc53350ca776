@@ -16,6 +16,24 @@
       "revId": "5354e5b0da02e5b22e4558d096d8bc53350ca776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f032c79e_58bc3ddd",
+        "filename": "chrome/browser/extensions/api/extension_action/browser_action_interactive_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T16:01:32Z",
+      "side": 1,
+      "message": "Looks like the CL landed before this was addressed.  Mind adding it in a followup?",
+      "parentUuid": "8010d1f7_32005241",
+      "revId": "5354e5b0da02e5b22e4558d096d8bc53350ca776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
