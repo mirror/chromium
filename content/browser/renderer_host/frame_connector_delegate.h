@@ -181,6 +181,9 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   // creating a window in the ui server so that this can render to the screen.
   virtual void EmbedRendererWindowTreeClientInParent(
       ui::mojom::WindowTreeClientPtr window_tree_client) {}
+
+  // Tells the delegate FrameSinkId has been changed.
+  virtual void OnSetFrameSinkId() {}
 #endif
 
   // Called by RenderWidgetHostViewChildFrame when the child frame has resized
