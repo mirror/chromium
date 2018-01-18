@@ -22,6 +22,30 @@
       "revId": "840e4c91eb838f3d5674f4807c8be52af4db314e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79240236_88af3485",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2018-01-18T17:48:51Z",
+      "side": 1,
+      "message": "According to the style guide[1], foo.cc can rely on foo.h\u0027s includes.\nThis file\u0027s related header(chrome_cleaner_controller_impl_win.h) already includes \u003cmemory\u003e header.\n\n[1] https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes",
+      "parentUuid": "bf767dab_2b609990",
+      "range": {
+        "startLine": 212,
+        "startChar": 13,
+        "endLine": 212,
+        "endChar": 24
+      },
+      "revId": "840e4c91eb838f3d5674f4807c8be52af4db314e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
