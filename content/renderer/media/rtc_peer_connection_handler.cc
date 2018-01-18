@@ -1035,6 +1035,15 @@ class RTCPeerConnectionHandler::WebRtcSetRemoteDescriptionObserverImpl
 
       // Update stream states (which tracks belong to which streams).
       for (auto& stream_state : GetStreamStates(states, removed_receivers)) {
+        CHECK(!stream_state.stream_ref->adapter().web_stream().IsNull());
+        CHECK(stream_state.stream_ref->adapter().webrtc_stream());
+        std::for_each(
+            stream_state.track_refs.begin(), stream_state.track_refs.end(),
+            [](std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef>&
+                   track_ref) {
+              CHECK(!track_ref->web_track().IsNull());
+              CHECK(track_ref->webrtc_track());
+            });
         stream_state.stream_ref->adapter().SetTracks(
             std::move(stream_state.track_refs));
       }
@@ -1116,17 +1125,26 @@ class RTCPeerConnectionHandler::WebRtcSetRemoteDescriptionObserverImpl
     // associated with multiple tracks (multiple receivers).
     for (auto& receiver_state : states.receiver_states) {
       for (auto& stream_ref : receiver_state.stream_refs) {
+        CHECK(!stream_ref->adapter().web_stream().IsNull());
+        CHECK(stream_ref->adapter().webrtc_stream());
         auto* stream_state =
             GetOrAddStreamStateForStream(*stream_ref, &stream_states);
-        stream_state->track_refs.push_back(receiver_state.track_ref->Copy());
+        auto track_ref = receiver_state.track_ref->Copy();
+        CHECK(!track_ref->web_track().IsNull());
+        CHECK(track_ref->webrtc_track());
+        stream_state->track_refs.push_back(std::move(track_ref));
       }
     }
     // The track of removed receivers do not belong to any stream. Make sure we
     // have a stream state for any streams belonging to receivers about to be
     // removed in case it was the last receiver referencing that stream.
-    for (auto* removed_receiver : removed_receivers)
-      for (auto& stream_ref : removed_receiver->StreamAdapterRefs())
+    for (auto* removed_receiver : removed_receivers) {
+      for (auto& stream_ref : removed_receiver->StreamAdapterRefs()) {
+        CHECK(!stream_ref->adapter().web_stream().IsNull());
+        CHECK(stream_ref->adapter().webrtc_stream());
         GetOrAddStreamStateForStream(*stream_ref, &stream_states);
+      }
+    }
     return stream_states;
   }
 
