@@ -131,6 +131,29 @@
     },
     {
       "key": {
+        "uuid": "444361f0_8748bddf",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-18T19:23:16Z",
+      "side": 1,
+      "message": "Isn\u0027t it also done in Activity?\n\nI think you can just remove it here.",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 91
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14e5e064_a1c5e5b4",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsFragment.java",
         "patchSetId": 3
@@ -166,6 +189,30 @@
       "side": 1,
       "message": "super.getContext().createPackageContext() is created by the host activity\u0027s base context, which will pass the main thread of the activity to this context.",
       "parentUuid": "14e5e064_a1c5e5b4",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 87
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10b067b6_7ba360e3",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-18T19:23:16Z",
+      "side": 1,
+      "message": "Could you point me to source of this information? I wasn\u0027t able to find any.\n\nAlso adding logging seems to indicate the same.\n01-18 20:20:27.878  2350  2350 I cr_CastWebContentFrg: getContext: ContextUtils.getApplicationContext().getMainLooper().getThread() \u003d Thread[main,5,main]\n01-18 20:20:27.878  2350  2350 I cr_CastWebContentFrg: getContext: mPackageContext.getMainLooper().getThread() \u003d Thread[main,5,main]",
+      "parentUuid": "bab67a5a_e6d7e7f5",
       "range": {
         "startLine": 76,
         "startChar": 0,
