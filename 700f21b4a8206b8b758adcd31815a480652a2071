@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3a93105_b8cf8607",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-18T16:00:44Z",
+      "side": 1,
+      "message": "I think this is done only to satisfy the DCHECK? AVOID_CLOSING_CONNECTIONS is not really filterable, could we change the DCHECK instead?\n\nDCHECK(((remove_mask \u0026 ~DATA_TYPE_AVOID_CLOSING_CONNECTIONS \u0026 ~FILTERABLE_DATA_TYPES) \u003d\u003d 0) ||\n         filter_builder.IsEmptyBlacklist());",
+      "revId": "700f21b4a8206b8b758adcd31815a480652a2071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6634571e_3cc60457",
+        "filename": "content/browser/browsing_data/browsing_data_remover_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-18T16:00:44Z",
+      "side": 1,
+      "message": "A DCHECK in a test seems weird. Should this be ASSERT_TRUE instead? I\u0027m not quite sure about the difference between ASSERT and CHECK but I have mostly seen ASSERTs in tests",
+      "revId": "700f21b4a8206b8b758adcd31815a480652a2071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
