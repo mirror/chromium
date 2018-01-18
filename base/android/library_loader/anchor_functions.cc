@@ -4,13 +4,19 @@
 
 #include "base/android/library_loader/anchor_functions.h"
 
-#include "base/android/library_loader/anchor_functions_flags.h"
 #include "base/logging.h"
 #include "build/build_config.h"
 
-// asm() macros below don't compile on x86, and haven't been validated outside
-// ARM.
-#if defined(ARCH_CPU_ARMEL)
+#if BUILDFLAG(SUPPORTS_CODE_ORDERING)
+
+#if defined(ARCH_CPU_ARM_FAMILY)
+#define DATA_PREFIX ".word"
+#elif defined(ARCH_CPU_X86_FAMILY)
+#define DATA_PREFIX ".long"
+#else
+#error "Don't know which data prefix to use"
+#endif
+
 // These functions are here to, respectively:
 // 1. Check that functions are ordered
 // 2. Delimit the start of .text
@@ -33,13 +39,13 @@
 extern "C" {
 
 void dummy_function_to_check_ordering() {
-  asm(".word 0xe19c683d");
-  asm(".word 0xb3d2b56");
+  asm(DATA_PREFIX " 0xe19c683d");
+  asm(DATA_PREFIX " 0xb3d2b56");
 }
 
 void dummy_function_to_anchor_text() {
-  asm(".word 0xe1f8940b");
-  asm(".word 0xd5190cda");
+  asm(DATA_PREFIX " 0xe1f8940b");
+  asm(DATA_PREFIX " 0xd5190cda");
 }
 
 #if BUILDFLAG(USE_LLD)
@@ -54,8 +60,8 @@ void dummy_function_to_anchor_text() {
 __attribute__((section("sentinel_section_after_text")))
 #endif
 void dummy_function_at_the_end_of_text() {
-  asm(".word 0x133b9613");
-  asm(".word 0xdcd8c46a");
+  asm(DATA_PREFIX " 0x133b9613");
+  asm(DATA_PREFIX " 0xdcd8c46a");
 }
 
 }  // extern "C"
@@ -68,20 +74,18 @@ const size_t kStartOfText =
 const size_t kEndOfText =
     reinterpret_cast<size_t>(dummy_function_at_the_end_of_text);
 
-void CheckOrderingSanity() {
+bool IsOrderingSane() {
+  size_t dummy = reinterpret_cast<size_t>(&dummy_function_to_check_ordering);
+  size_t here = reinterpret_cast<size_t>(&dummy_function_to_check_ordering);
   // The linker usually keeps the input file ordering for symbols.
   // dummy_function_to_anchor_text() should then be after
   // dummy_function_to_check_ordering() without ordering.
   // This check is thus intended to catch the lack of ordering.
-  CHECK_LT(kStartOfText,
-           reinterpret_cast<size_t>(&dummy_function_to_check_ordering));
-  CHECK_LT(kStartOfText, kEndOfText);
-  CHECK_LT(kStartOfText,
-           reinterpret_cast<size_t>(&dummy_function_to_check_ordering));
-  CHECK_LT(kStartOfText, reinterpret_cast<size_t>(&CheckOrderingSanity));
-  CHECK_GT(kEndOfText, reinterpret_cast<size_t>(&CheckOrderingSanity));
+  return kStartOfText < dummy && kStartOfText < kEndOfText &&
+         dummy < kEndOfText && kStartOfText < here && here < kEndOfText;
 }
 
 }  // namespace android
 }  // namespace base
-#endif  // defined(ARCH_CPU_ARMEL)
+
+#endif  // BUILDFLAG(SUPPORTS_CODE_ORDERING)
