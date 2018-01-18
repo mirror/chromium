@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb31f9dd_cb8277dd",
+        "filename": "base/win/win_util_internal.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-18T21:04:58Z",
+      "side": 1,
+      "message": "no (c) (see style guide).",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "4b0ec66eea0abc427569a2b7e90b0807c9723e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb1d94a_7ec181e2",
+        "filename": "base/win/win_util_internal.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-18T21:04:58Z",
+      "side": 1,
+      "message": "I\u0027m confused by the name internal. Generally internal means an implementation detail of the module/directory and not something generally used. That doesn\u0027t seem to be the case with this header. Is there a better name you can use? Maybe win_util_full or win_util_all? Maybe a better option would be to move NONCLIENTMETRICS_XP and GetNonClientMetrics into its own header. That way this header could be win_client_metrics.h and it\u0027s more clear why it\u0027s included.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 37
+      },
+      "revId": "4b0ec66eea0abc427569a2b7e90b0807c9723e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
