@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31d069f1_8c6ec9da",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T09:57:21Z",
+      "side": 1,
+      "message": "But NoDestructor isn\u0027t thread-safe. So LazyInstance is still necessary when you need thread-safe one-time-initialization, right?",
+      "revId": "0188b5f717dbeeaf874e1f33ce0ead8fe36bfafe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
