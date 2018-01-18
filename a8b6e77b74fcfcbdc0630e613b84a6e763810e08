@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba159e5a_6ea5dcdb",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-18T16:28:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed915fa7_792252f6",
+      "revId": "a8b6e77b74fcfcbdc0630e613b84a6e763810e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "270a1213_f745a1f1",
         "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
         "patchSetId": 28
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5eac65cf_683d44ac",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-18T16:28:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "270a1213_f745a1f1",
+      "revId": "a8b6e77b74fcfcbdc0630e613b84a6e763810e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12840a74_f36bd637",
         "filename": "third_party/WebKit/public/platform/WebPointerProperties.h",
         "patchSetId": 28
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-18T00:32:58Z",
       "side": 1,
       "message": "How come we don\u0027t just pass a WebFloatPoint here?",
+      "revId": "a8b6e77b74fcfcbdc0630e613b84a6e763810e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99b63cf_3ab63214",
+        "filename": "third_party/WebKit/public/platform/WebPointerProperties.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-18T16:28:47Z",
+      "side": 1,
+      "message": "I think it\u0027s because we had a truncation here for WebMouseEvent before. And the truncation is removed in M64. \nA stupid question: Why passing a WebFloatPoint is better? We can have a separate CL to change it someday.",
+      "parentUuid": "12840a74_f36bd637",
       "revId": "a8b6e77b74fcfcbdc0630e613b84a6e763810e08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
