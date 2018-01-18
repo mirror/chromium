@@ -5,6 +5,7 @@
 #include <linux/input.h>
 #include <wayland-server.h>
 
+#include "base/timer/timer.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/events/event.h"
@@ -23,6 +24,31 @@ using ::testing::SaveArg;
 using ::testing::_;
 
 namespace ui {
+
+class KeyDownWaiter {
+ public:
+  explicit KeyDownWaiter(int delay) : delay_(delay) {}
+  ~KeyDownWaiter() = default;
+
+  void Wait() {
+    printf("KeyDownWaiter::Wait\n");
+    check_timer_.Start(FROM_HERE, base::TimeDelta::FromMilliseconds(delay_),
+                       base::BindRepeating(&KeyDownWaiter::OnTimerCheck,
+                                           base::Unretained(this)));
+    run_loop_.reset(new base::RunLoop);
+    run_loop_->Run();
+    check_timer_.Stop();
+  }
+
+ private:
+  void OnTimerCheck() { run_loop_->Quit(); }
+
+  int delay_;
+  std::unique_ptr<base::RunLoop> run_loop_;
+  base::RepeatingTimer check_timer_;
+
+  DISALLOW_COPY_AND_ASSIGN(KeyDownWaiter);
+};
 
 class WaylandKeyboardTest : public WaylandTest {
  public:
@@ -228,6 +254,23 @@ TEST_P(WaylandKeyboardTest, ControlShiftModifiers) {
   EXPECT_EQ(ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN, key_event3->flags());
   EXPECT_EQ(ui::VKEY_A, key_event3->key_code());
   EXPECT_EQ(ET_KEY_PRESSED, key_event3->type());
+}
+
+TEST_P(WaylandKeyboardTest, AutoRepeat) {
+  struct wl_array empty;
+  wl_array_init(&empty);
+  wl_keyboard_send_enter(keyboard->resource(), 1, surface->resource(), &empty);
+  wl_array_release(&empty);
+
+  wl_keyboard_send_key(keyboard->resource(), 2, 0, 30 /* a */,
+                       WL_KEYBOARD_KEY_STATE_PRESSED);
+
+  std::unique_ptr<Event> event;
+  EXPECT_CALL(delegate, DispatchEvent(_)).WillRepeatedly(CloneEvent(&event));
+
+  Sync();
+
+  KeyDownWaiter(500).Wait();
 }
 
 INSTANTIATE_TEST_CASE_P(XdgVersionV5Test,

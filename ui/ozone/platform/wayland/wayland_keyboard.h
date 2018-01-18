@@ -5,6 +5,8 @@
 #ifndef UI_OZONE_PLATFORM_WAYLAND_WAYLAND_KEYBOARD_H_
 #define UI_OZONE_PLATFORM_WAYLAND_WAYLAND_KEYBOARD_H_
 
+#include "base/time/time.h"
+#include "ui/events/event_auto_repeat_handler.h"
 #include "ui/events/event_modifiers.h"
 #include "ui/events/ozone/evdev/event_dispatch_callback.h"
 #include "ui/ozone/platform/wayland/wayland_object.h"
@@ -13,7 +15,7 @@ namespace ui {
 
 class WaylandConnection;
 
-class WaylandKeyboard {
+class WaylandKeyboard : public EventAutoRepeatHandler::Delegate {
  public:
   WaylandKeyboard(wl_keyboard* keyboard, const EventDispatchCallback& callback);
   virtual ~WaylandKeyboard();
@@ -60,10 +62,21 @@ class WaylandKeyboard {
 
   void UpdateModifier(int modifier_flag, bool down);
 
+  // EventAutoRepeatHandler::Delegate
+  bool CanDispatchAutoRepeatKey() override;
+  void DispatchKey(unsigned int key,
+                   bool down,
+                   bool repeat,
+                   base::TimeTicks timestamp,
+                   int device_id) override;
+
   WaylandConnection* connection_ = nullptr;
   wl::Object<wl_keyboard> obj_;
   EventDispatchCallback callback_;
   EventModifiers event_modifiers_;
+
+  // Key repeat handler.
+  EventAutoRepeatHandler auto_repeat_handler_;
 };
 
 }  // namespace ui

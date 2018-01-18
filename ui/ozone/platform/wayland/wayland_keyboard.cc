@@ -7,6 +7,8 @@
 #include <sys/mman.h>
 #include <wayland-client.h>
 
+#include "base/bind.h"
+#include "base/callback.h"
 #include "base/files/scoped_file.h"
 #include "ui/base/ui_features.h"
 #include "ui/events/event.h"
@@ -32,7 +34,9 @@ const int kXkbKeycodeOffset = 8;
 
 WaylandKeyboard::WaylandKeyboard(wl_keyboard* keyboard,
                                  const EventDispatchCallback& callback)
-    : obj_(keyboard), callback_(callback) {
+    : obj_(keyboard),
+      callback_(callback),
+      auto_repeat_handler_(this, ThrottleStrategy::DeferToClient) {
   static const wl_keyboard_listener listener = {
       &WaylandKeyboard::Keymap,    &WaylandKeyboard::Enter,
       &WaylandKeyboard::Leave,     &WaylandKeyboard::Key,
@@ -46,8 +50,6 @@ WaylandKeyboard::WaylandKeyboard(wl_keyboard* keyboard,
 #endif
 
   wl_keyboard_add_listener(obj_.get(), &listener, this);
-
-  // TODO(tonikitoo): Default auto-repeat to ON here?
 }
 
 WaylandKeyboard::~WaylandKeyboard() {}
@@ -86,6 +88,18 @@ void WaylandKeyboard::Leave(void* data,
                             uint32_t serial,
                             wl_surface* surface) {
   WaylandWindow::FromSurface(surface)->set_keyboard_focus(false);
+
+  WaylandKeyboard* keyboard = static_cast<WaylandKeyboard*>(data);
+  DCHECK(keyboard);
+
+  // Reset all modifiers once focus is lost. Otherwise, the modifiers may be
+  // left with old flags, which are no longer valid.
+  keyboard->event_modifiers_.ResetKeyboardModifiers();
+
+  // Upon window focus lose, reset the key repeat timers.
+  int device_id = keyboard->obj_.id();
+  keyboard->auto_repeat_handler_.UpdateKeyRepeat(
+      KEY_RESERVED, false /*down*/, true /*suppress_auto_repeat*/, device_id);
 }
 
 void WaylandKeyboard::Key(void* data,
@@ -95,32 +109,19 @@ void WaylandKeyboard::Key(void* data,
                           uint32_t key,
                           uint32_t state) {
   WaylandKeyboard* keyboard = static_cast<WaylandKeyboard*>(data);
+  DCHECK(keyboard);
+
   keyboard->connection_->set_serial(serial);
 
-  DomCode dom_code =
-      KeycodeConverter::NativeKeycodeToDomCode(key + kXkbKeycodeOffset);
-  if (dom_code == ui::DomCode::NONE)
-    return;
-
-  uint8_t flags = keyboard->event_modifiers_.GetModifierFlags();
-  DomKey dom_key;
-  KeyboardCode key_code;
-  if (!KeyboardLayoutEngineManager::GetKeyboardLayoutEngine()->Lookup(
-          dom_code, flags, &dom_key, &key_code))
-    return;
-
   bool down = state == WL_KEYBOARD_KEY_STATE_PRESSED;
+  int device_id = keyboard->obj_.id();
 
-  // TODO(tonikitoo,msisov): only the two lines below if not handling repeat.
-  int flag = ModifierDomKeyToEventFlag(dom_key);
-  keyboard->UpdateModifier(flag, down);
+  keyboard->auto_repeat_handler_.UpdateKeyRepeat(
+      key, down, false /*suppress_auto_repeat*/, device_id);
 
-  ui::KeyEvent event(
-      down ? ET_KEY_PRESSED : ET_KEY_RELEASED, key_code, dom_code,
-      keyboard->event_modifiers_.GetModifierFlags(), dom_key,
-      base::TimeTicks() + base::TimeDelta::FromMilliseconds(time));
-  event.set_source_device_id(keyboard->obj_.id());
-  keyboard->callback_.Run(&event);
+  keyboard->DispatchKey(
+      key, down, false /*repeat*/,
+      base::TimeTicks() + base::TimeDelta::FromMilliseconds(time), device_id);
 }
 
 void WaylandKeyboard::Modifiers(void* data,
@@ -141,8 +142,49 @@ void WaylandKeyboard::RepeatInfo(void* data,
                                  wl_keyboard* obj,
                                  int32_t rate,
                                  int32_t delay) {
-  // TODO(tonikitoo): Implement proper repeat handling.
-  NOTIMPLEMENTED();
+  WaylandKeyboard* keyboard = static_cast<WaylandKeyboard*>(data);
+  DCHECK(keyboard);
+
+  keyboard->auto_repeat_handler_.SetAutoRepeatRate(
+      base::TimeDelta::FromMilliseconds(delay),
+      base::TimeDelta::FromMilliseconds(rate));
+}
+
+bool WaylandKeyboard::CanDispatchAutoRepeatKey() {
+  // wl_display_sync gives a chance for any key "up" events to arrive.
+  // With a well behaved wayland compositor this should ensure we never
+  // get spurious repeats.
+  wl_display_sync(connection_->display());
+  return auto_repeat_handler_.is_running();
+}
+
+void WaylandKeyboard::DispatchKey(uint32_t key,
+                                  bool down,
+                                  bool repeat,
+                                  base::TimeTicks timestamp,
+                                  int device_id) {
+  DomCode dom_code =
+      KeycodeConverter::NativeKeycodeToDomCode(key + kXkbKeycodeOffset);
+  if (dom_code == ui::DomCode::NONE)
+    return;
+
+  uint8_t flags = event_modifiers_.GetModifierFlags();
+  DomKey dom_key;
+  KeyboardCode key_code;
+  if (!KeyboardLayoutEngineManager::GetKeyboardLayoutEngine()->Lookup(
+          dom_code, flags, &dom_key, &key_code))
+    return;
+
+  if (!repeat) {
+    int flag = ModifierDomKeyToEventFlag(dom_key);
+    UpdateModifier(flag, down);
+  }
+
+  ui::KeyEvent event(down ? ET_KEY_PRESSED : ET_KEY_RELEASED, key_code,
+                     dom_code, event_modifiers_.GetModifierFlags(), dom_key,
+                     timestamp);
+  event.set_source_device_id(device_id);
+  callback_.Run(&event);
 }
 
 void WaylandKeyboard::UpdateModifier(int modifier_flag, bool down) {
