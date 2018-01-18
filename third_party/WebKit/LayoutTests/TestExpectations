@@ -3517,3 +3517,7 @@ crbug.com/803449 http/tests/devtools/sources/debugger-breakpoints/breakpoints-ui
 
 # This test has been flaky for some time on Win 7 (dgb)
 crbug.com/800078 [ Win7 ] http/tests/devtools/console/console-link-to-snippet.js [ Pass Failure ]
+
+# Small image differences from improved blur optimization
+crbug.com/646062 animations/svg/animated-filter-svg-element.html [ Pass Failure ]
+crbug.com/646062 [ Android Mac Linux ] virtual/threaded/animations/svg/animated-filter-svg-element.html [ Pass Failure ]
