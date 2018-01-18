@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27d5a12f_a923869f",
+        "filename": "content/browser/media/capture/frame_sink_video_capture_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-18T22:40:30Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e2bcce3d_85b13003",
+      "range": {
+        "startLine": 227,
+        "startChar": 31,
+        "endLine": 227,
+        "endChar": 34
+      },
+      "revId": "e0274d4cf7d599eb937af0c0302d354c7834564b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95e3bfbe_76c040f3",
         "filename": "content/browser/media/capture/frame_sink_video_capture_device.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "1177597e_19bb37c0",
+        "filename": "content/browser/media/capture/frame_sink_video_capture_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-18T22:40:30Z",
+      "side": 1,
+      "message": "It might be called if the capturer (in the VIZ process) realizes the frame sink is gone before (or at the same time as) the caller of OnTargetChanged() (in the browser process). So, it\u0027s not necessarily a NOTREACHED().\n\nFWIW, I may end up removing this OnTargetLost() notification at some point. Earlier in the design process, I thought it was going to be needed.",
+      "parentUuid": "95e3bfbe_76c040f3",
+      "revId": "e0274d4cf7d599eb937af0c0302d354c7834564b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b26a9416_07d15b7a",
         "filename": "content/browser/media/capture/frame_sink_video_capture_device.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2018-01-18T20:27:03Z",
       "side": 1,
       "message": "Is |receiver_needs_start_notification_| always true here? IIUC, OnCapturerCreated() is only called once after connecting to a new capturer (Ln 140). It seems that |receiver_needs_start_notification_| is not needed.",
+      "range": {
+        "startLine": 365,
+        "startChar": 6,
+        "endLine": 365,
+        "endChar": 40
+      },
+      "revId": "e0274d4cf7d599eb937af0c0302d354c7834564b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbaef62f_1aedf064",
+        "filename": "content/browser/media/capture/frame_sink_video_capture_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-18T22:40:30Z",
+      "side": 1,
+      "message": "Done. I got ahead of myself: In a future CL, I\u0027ll be adding functionality to re-create the capturer to auto-recover from VIZ process crashes.",
+      "parentUuid": "b26a9416_07d15b7a",
       "range": {
         "startLine": 365,
         "startChar": 6,
