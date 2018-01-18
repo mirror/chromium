@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "542d5dff_7cd9ab1a",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2018-01-18T10:00:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3cba90c_b12758d3",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d35f15a_ba3069ce",
         "filename": "content/browser/service_worker/service_worker_database.h",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-18T08:19:15Z",
       "side": 1,
       "message": "Consider putting this next to |last_update_check| as they are related (but if you had a reason to put it here, it\u0027s fine here too)",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3e50dd_2bc8e82c",
+        "filename": "content/browser/service_worker/service_worker_database.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2018-01-18T10:00:21Z",
+      "side": 1,
+      "message": "I put it here because the first four attributes are set by script input.",
+      "parentUuid": "2d35f15a_ba3069ce",
       "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9ba50ec1_50867d19",
+        "filename": "content/browser/service_worker/service_worker_database.proto",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2018-01-18T10:00:21Z",
+      "side": 1,
+      "message": "Removing DEFAULT and leaving it as IMPORTS.",
+      "parentUuid": "8df5a77c_31a73ed9",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42836db1_ff867f33",
         "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac233065_6b8ddc3b",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2018-01-18T10:00:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42836db1_ff867f33",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "14ef76cb_7e841f09",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2018-01-18T10:00:21Z",
+      "side": 1,
+      "message": "My guess is that this guarantees the registration object is reused and not copied. This is still useful here to make sure that updating update_via_cache alters the value rather than creating a new registration object. I\u0027ll add this to the comment.",
+      "parentUuid": "a10333c2_78d8e8ff",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff737914_6eb002b0",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
         "patchSetId": 11
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-18T08:19:15Z",
       "side": 1,
       "message": "It\u0027s not really clear why update_via_cache is being set here and the other properties aren\u0027t. I think it needs a comment. I guess |updaet_via_cache| is the only mutable property other than the .installing/.waiting./active, which are set specifically in the SetInstalling/Waiting/Active functions?\n\nI\u0027m also wondering why we have this updaet_via_cache code in AttachForServiceWorkerClient but don\u0027t see similar code for when we attach for service worker global scope? (I can investigate but just flagging it as somethnig that might be comment worthy)",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b82ce4_f3993d3b",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2018-01-18T10:00:21Z",
+      "side": 1,
+      "message": "Exactly. |update_via_cache| is the only mutable property when registering.\n\nRegarding service worker global scope, I have no idea. Maybe I\u0027m missing some cases that are not covered by tests. I\u0027ll investigate.",
+      "parentUuid": "ff737914_6eb002b0",
       "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "22c2d79f_a8f7c9d7",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/RegistrationOptions.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2018-01-18T10:00:21Z",
+      "side": 1,
+      "message": "It is not possible to distinguish a default value and a set value here, reverting the kDefault implementation.",
+      "parentUuid": "f23341cd_48020f73",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc99f7bd_98859cf9",
         "filename": "third_party/WebKit/common/service_worker/service_worker_registration.mojom",
         "patchSetId": 11
@@ -135,6 +261,24 @@
       "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06f43dc_4e6d3a02",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_registration.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2018-01-18T10:00:21Z",
+      "side": 1,
+      "message": "Removing kDefault.",
+      "parentUuid": "fc99f7bd_98859cf9",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
