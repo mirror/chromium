@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7cd8be6b_d365904b",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-18T06:12:05Z",
+      "side": 1,
+      "message": "No. We should not rename this.\nReverted.",
+      "parentUuid": "a37effd2_95c9aa8e",
+      "revId": "fc60da7554a19739b7e3052de2932e3c39c21f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed5fe8c0_bb5e9294",
         "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "fc60da7554a19739b7e3052de2932e3c39c21f11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728cc524_e624a9af",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-18T06:12:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ed5fe8c0_bb5e9294",
+      "revId": "fc60da7554a19739b7e3052de2932e3c39c21f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
