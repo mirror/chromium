@@ -22,6 +22,30 @@
       "revId": "90908ed0cd3c47c2b2f4467daf5fd40ac777b1f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28308cfb_362102dc",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2018-01-18T19:37:14Z",
+      "side": 0,
+      "message": "On my list ;)",
+      "parentUuid": "cc632eac_c6a2fd86",
+      "range": {
+        "startLine": 47,
+        "startChar": 111,
+        "endLine": 47,
+        "endChar": 139
+      },
+      "revId": "90908ed0cd3c47c2b2f4467daf5fd40ac777b1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
