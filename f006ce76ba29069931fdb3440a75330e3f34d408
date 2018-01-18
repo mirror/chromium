@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ed5cda9_0defb3ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/snackbar/SnackbarView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-18T18:17:18Z",
+      "side": 0,
+      "message": "I just tested on ToT in custom tabs and snackbars are showing up white there... I think that\u0027s probably OK, but we may want to check w/ UX. I think this replacement is fine for now. I\u0027ll comment on the bug I filed for separating the snackbar visual refresh from Chrome Home.",
+      "range": {
+        "startLine": 243,
+        "startChar": 20,
+        "endLine": 243,
+        "endChar": 58
+      },
+      "revId": "f006ce76ba29069931fdb3440a75330e3f34d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

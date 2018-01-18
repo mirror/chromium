@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d779d4f0_c9a859a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-18T18:17:18Z",
+      "side": 1,
+      "message": "I suggest something like CHROME_MODERN_UI, ChromeModernUi, and isChromeModernUiEnabled() to differentiate between other types of modern Chrome (e.g. the build type we used to have).\n\nOr CHROME_MODERN_DESIGN, ChromeModernDesign, etc.",
+      "range": {
+        "startLine": 181,
+        "startChar": 31,
+        "endLine": 181,
+        "endChar": 62
+      },
+      "revId": "674159d41693bae6cb6eba6ba6922a4be081a1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1920708_72c17704",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1326,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-18T18:17:18Z",
+      "side": 1,
+      "message": "It looks like getColorStateList doesn\u0027t actually use isChromeHomeEnabled, so we should be able to remove this.",
+      "range": {
+        "startLine": 1326,
+        "startChar": 20,
+        "endLine": 1326,
+        "endChar": 60
+      },
+      "revId": "674159d41693bae6cb6eba6ba6922a4be081a1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2ce066_154ed974",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1550,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-18T18:17:18Z",
+      "side": 1,
+      "message": "LocationBarLayout is the base for SearchActivityLocationBarLayout, so I think we\u0027ll have to use some additional signal to know whether the modern UI is in use.",
+      "range": {
+        "startLine": 1550,
+        "startChar": 50,
+        "endLine": 1550,
+        "endChar": 90
+      },
+      "revId": "674159d41693bae6cb6eba6ba6922a4be081a1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b76ac4_89d0aef9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-18T18:17:18Z",
+      "side": 1,
+      "message": "Same comment here... it might not actually matter for the search activity since mUseDarkColors is probably never true.",
+      "range": {
+        "startLine": 405,
+        "startChar": 30,
+        "endLine": 405,
+        "endChar": 51
+      },
+      "revId": "674159d41693bae6cb6eba6ba6922a4be081a1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7caadedd_de99e2b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-18T18:17:18Z",
+      "side": 1,
+      "message": "This probably isn\u0027t for modern; it\u0027s positioning a download home IPH bubble relative to the app menu button position.",
+      "range": {
+        "startLine": 631,
+        "startChar": 51,
+        "endLine": 631,
+        "endChar": 72
+      },
+      "revId": "674159d41693bae6cb6eba6ba6922a4be081a1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656b2ced_602d638b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-18T18:17:18Z",
+      "side": 1,
+      "message": "This isn\u0027t going to technically be correct, because ToolbarModelImpl is also used by custom tabs and web apks. In my toolbar modernization patch I have something in place to handle the modern checks/primary color things in this file, so it\u0027s OK to skip it in this patch.\n\nI\u0027ll upload my in-progress toolbar modernization soon.",
+      "range": {
+        "startLine": 202,
+        "startChar": 12,
+        "endLine": 202,
+        "endChar": 52
+      },
+      "revId": "674159d41693bae6cb6eba6ba6922a4be081a1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
