@@ -16,6 +16,24 @@
       "revId": "9abc8c17a5a8eb8fe19eaba3e80449d693714e1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19d0682_06fc99a3",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_content_browsertests.filter",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1174429
+      },
+      "writtenOn": "2018-01-18T17:29:06Z",
+      "side": 1,
+      "message": "You meant: \"make the test early exit if the network service is **enabled**\", right?\n\nYes I can, but it means we will forget that this test fails with the NetworkService. Do you plan to keep it like this or making a new tests that will replace it at some point?\n\nIn BrowserSideNavigationBaseBrowserTest.CancelRequestAfterReadyToCommit (which is similar), I wanted to remove the early exit and add a filter. I guess you want to keep it in its current state.",
+      "parentUuid": "32e01991_c5b0f3d7",
+      "revId": "9abc8c17a5a8eb8fe19eaba3e80449d693714e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
