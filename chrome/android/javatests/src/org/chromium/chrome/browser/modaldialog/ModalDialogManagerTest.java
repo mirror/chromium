@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.modaldialog;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -18,6 +19,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 
 import android.support.test.espresso.Espresso;
+import android.support.test.filters.MediumTest;
 import android.support.test.filters.SmallTest;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,7 @@ import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
+import org.chromium.chrome.browser.tabmodel.TabModelUtils;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
 import org.chromium.ui.test.util.UiRestriction;
@@ -47,7 +50,7 @@ public class ModalDialogManagerTest {
     @Rule
     public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
 
-    private static final int MAX_DIALOGS = 3;
+    private static final int MAX_DIALOGS = 4;
     private ChromeTabbedActivity mActivity;
     private ModalDialogManager mManager;
     private ModalDialogView[] mModalDialogViews;
@@ -251,7 +254,7 @@ public class ModalDialogManagerTest {
     }
 
     @Test
-    @SmallTest
+    @MediumTest
     @Restriction(UiRestriction.RESTRICTION_TYPE_PHONE)
     public void testDismiss_ToggleOverview() throws Exception {
         // Initially there are no dialogs in the pending list. Browser controls are not restricted.
@@ -259,22 +262,61 @@ public class ModalDialogManagerTest {
         checkBrowserControls(false);
         checkCurrentPresenter(null);
 
-        // Add two dialogs available for showing.
+        // Add a tab modal and an app modal dialogs available for showing.
         showDialog(0, ModalDialogManager.TAB_MODAL);
-        showDialog(1, ModalDialogManager.TAB_MODAL);
+        showDialog(1, ModalDialogManager.APP_MODAL);
         checkPendingSize(1);
         onView(withId(R.id.tab_modal_dialog_container))
-                .check(matches(
-                        allOf(hasDescendant(withText("0")), not(hasDescendant(withText("1"))))));
+                .check(matches(hasDescendant(withText("0"))));
         checkBrowserControls(true);
         checkCurrentPresenter(ModalDialogManager.TAB_MODAL);
 
-        // Dialogs should all be dismissed on entering tab switcher.
+        // Tab modal dialogs should be suspended on entering tab switcher. App modal dialog should
+        // be showing.
         onView(withId(R.id.tab_switcher_button)).perform(click());
+        showDialog(2, ModalDialogManager.TAB_MODAL);
+        checkPendingSize(2);
+        onView(withId(R.id.tab_modal_dialog_container)).check(doesNotExist());
+        onView(withText("1")).check(matches(isDisplayed()));
+        checkCurrentPresenter(ModalDialogManager.APP_MODAL);
+
+        // Close the app modal dialog and toggle overview button.
+        // The first tab modal dialog should be showing again.
+        pressBack();
+        onView(withId(R.id.tab_switcher_button)).perform(click());
+        checkPendingSize(1);
+        onView(withId(R.id.tab_modal_dialog_container))
+                .check(matches(
+                        allOf(hasDescendant(withText("0")), not(hasDescendant(withText("2"))))));
+        checkBrowserControls(true);
+        checkCurrentPresenter(ModalDialogManager.TAB_MODAL);
+
+        // Toggle overview button. No dialog should be showing.
+        onView(withId(R.id.tab_switcher_button)).perform(click());
+        checkPendingSize(2);
+        checkBrowserControls(false);
+        checkCurrentPresenter(null);
+
+        // Close tab.
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> TabModelUtils.closeCurrentTab(mActivity.getCurrentTabModel()));
+        checkPendingSize(0);
+        checkBrowserControls(false);
+        checkCurrentPresenter(null);
+
+        // Open new tab and show a tab modal dialog. Make sure the dialog is showing.
+        mActivityTestRule.loadUrlInNewTab("about:blank");
+        showDialog(3, ModalDialogManager.TAB_MODAL);
         checkPendingSize(0);
         onView(withId(R.id.tab_modal_dialog_container))
-                .check(matches(allOf(
-                        not(hasDescendant(withText("0"))), not(hasDescendant(withText("1"))))));
+                .check(matches(hasDescendant(withText("3"))));
+        checkBrowserControls(true);
+        checkCurrentPresenter(ModalDialogManager.TAB_MODAL);
+
+        // Close dialog by pressing ok.
+        onView(withText(R.string.ok)).perform(click());
+        checkPendingSize(0);
+        onView(withText("3")).check(doesNotExist());
         checkBrowserControls(false);
         checkCurrentPresenter(null);
     }
