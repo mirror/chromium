@@ -78,7 +78,7 @@
 #include "chrome/browser/ui/cocoa/keystone_infobar_delegate.h"
 #endif
 
-#if defined(OS_MACOSX) && !BUILDFLAG(MAC_VIEWS_BROWSER)
+#if defined(OS_MACOSX)  // && !BUILDFLAG(MAC_VIEWS_BROWSER)
 #include "chrome/browser/ui/startup/session_crashed_infobar_delegate.h"
 #endif
 
@@ -776,7 +776,7 @@ void StartupBrowserCreatorImpl::AddInfoBarsIfNecessary(
 
   if (HasPendingUncleanExit(browser->profile()) &&
       !SessionCrashedBubble::Show(browser)) {
-#if defined(OS_MACOSX) && !BUILDFLAG(MAC_VIEWS_BROWSER)
+#if defined(OS_MACOSX)  // && !BUILDFLAG(MAC_VIEWS_BROWSER)
     SessionCrashedInfoBarDelegate::Create(browser);
 #endif
   }
@@ -793,7 +793,8 @@ void StartupBrowserCreatorImpl::AddInfoBarsIfNecessary(
   // info bars.
   if (is_process_startup == chrome::startup::IS_PROCESS_STARTUP &&
       !command_line_.HasSwitch(switches::kTestType) &&
-      !command_line_.HasSwitch(switches::kEnableAutomation)) {
+      !command_line_.HasSwitch(switches::kEnableAutomation) &&
+      false /* XXX */) {
     chrome::ShowBadFlagsPrompt(browser);
     InfoBarService* infobar_service = InfoBarService::FromWebContents(
         browser->tab_strip_model()->GetActiveWebContents());

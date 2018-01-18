@@ -47,10 +47,10 @@ MediaGalleryPrefInfo MakePrefInfoForTesting(MediaGalleryPrefId pref_id) {
   return gallery;
 }
 
-class MediaGalleriesDialogTest : public testing::Test {
+class MediaGalleriesDialogCocoaTest : public testing::Test {
  public:
-  MediaGalleriesDialogTest() {}
-  ~MediaGalleriesDialogTest() override {}
+  MediaGalleriesDialogCocoaTest() {}
+  ~MediaGalleriesDialogCocoaTest() override {}
 
   void SetUp() override {
     std::vector<base::string16> headers;
@@ -84,12 +84,12 @@ class MediaGalleriesDialogTest : public testing::Test {
 
   std::unique_ptr<MediaGalleriesDialogCocoa> dialog_;
 
-  DISALLOW_COPY_AND_ASSIGN(MediaGalleriesDialogTest);
+  DISALLOW_COPY_AND_ASSIGN(MediaGalleriesDialogCocoaTest);
 };
 
 // Tests that checkboxes are initialized according to the contents of
 // permissions().
-TEST_F(MediaGalleriesDialogTest, InitializeCheckboxes) {
+TEST_F(MediaGalleriesDialogCocoaTest, InitializeCheckboxes) {
   MediaGalleriesDialogController::Entries attached_permissions;
   attached_permissions.push_back(
       MediaGalleriesDialogController::Entry(MakePrefInfoForTesting(1), true));
@@ -114,7 +114,7 @@ TEST_F(MediaGalleriesDialogTest, InitializeCheckboxes) {
 }
 
 // Tests that toggling checkboxes updates the controller.
-TEST_F(MediaGalleriesDialogTest, ToggleCheckboxes) {
+TEST_F(MediaGalleriesDialogCocoaTest, ToggleCheckboxes) {
   MediaGalleriesDialogController::Entries attached_permissions;
   attached_permissions.push_back(
       MediaGalleriesDialogController::Entry(MakePrefInfoForTesting(1), true));
@@ -138,7 +138,7 @@ TEST_F(MediaGalleriesDialogTest, ToggleCheckboxes) {
 
 // Tests that UpdateGalleries will add a new checkbox, but only if it refers to
 // a gallery that the dialog hasn't seen before.
-TEST_F(MediaGalleriesDialogTest, UpdateAdds) {
+TEST_F(MediaGalleriesDialogCocoaTest, UpdateAdds) {
   MediaGalleriesDialogController::Entries attached_permissions;
   EXPECT_CALL(*controller(), GetSectionEntries(0)).
       WillRepeatedly(ReturnPointee(&attached_permissions));
@@ -179,7 +179,7 @@ TEST_F(MediaGalleriesDialogTest, UpdateAdds) {
   EXPECT_EQ(new_container_height, old_container_height);
 }
 
-TEST_F(MediaGalleriesDialogTest, ForgetDeletes) {
+TEST_F(MediaGalleriesDialogCocoaTest, ForgetDeletes) {
   MediaGalleriesDialogController::Entries attached_permissions;
   EXPECT_CALL(*controller(), GetSectionEntries(0)).
       WillRepeatedly(ReturnPointee(&attached_permissions));
