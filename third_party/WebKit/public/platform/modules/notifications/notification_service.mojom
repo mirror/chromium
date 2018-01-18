@@ -18,5 +18,7 @@ interface NotificationService {
 
   // Shows a notification that is not associated with a service worker.
   // TODO(crbug.com/595685): Pass the notification resources through too.
-  DisplayNonPersistentNotification(NotificationData notification_data);
+  DisplayNonPersistentNotification(
+        NotificationData notification_data,
+        NotificationResources notification_resources);
 };
