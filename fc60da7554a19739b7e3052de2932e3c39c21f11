@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a37effd2_95c9aa8e",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-18T05:48:02Z",
+      "side": 1,
+      "message": "Is this an intentional change?",
+      "revId": "fc60da7554a19739b7e3052de2932e3c39c21f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5fe8c0_bb5e9294",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-18T05:48:02Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "fc60da7554a19739b7e3052de2932e3c39c21f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
