@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f95b5a5_e2df3f99",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-18T14:52:46Z",
+      "side": 1,
+      "message": "should we make this a std::unique_ptr and simply reset it here?",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 39
+      },
+      "revId": "0a689be9be3eda46aa6f5a4fe895fdea86b0a185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
