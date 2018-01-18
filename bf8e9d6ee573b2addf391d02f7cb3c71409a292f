@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b9973aa_f6130281",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1957,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-18T22:35:39Z",
+      "side": 1,
+      "message": "not sure if easily doable.. but a neat trick (which may also help resolve symbol conflicts) might be to avoid moving in any Cocoa secondary UI that has an equivalent views UI under SecondaryUiMd already. So, e.g., zoom_bubble_controller.mm, extension install dialog, passwords, etc., etc. -- they should all be \"hardcoded\" to SecondaryUiMd.",
+      "revId": "bf8e9d6ee573b2addf391d02f7cb3c71409a292f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
