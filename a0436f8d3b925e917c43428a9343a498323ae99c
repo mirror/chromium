@@ -22,6 +22,30 @@
       "revId": "a0436f8d3b925e917c43428a9343a498323ae99c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243eb052_157cd1db",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-18T00:12:06Z",
+      "side": 1,
+      "message": "I don\u0027t think so, for two reasons: \n\n1. I\u0027m changing our implementation of autocapitalize so it can be used with contenteditable elements as well (so if we did this, it would have to go on HTMLElement).\n\n2. I think that would be confusing and sort of out-of-scope for the HTMLElement class, since that class is already handing the IDL behavior, which has some differences in behavior from the InputMethodController flags (e.g. in https://chromium-review.googlesource.com/c/chromium/src/+/872012, I\u0027m making the IDL attribute able to take on \"characters\", \"words\", or \"sentences\" for url/email/password input fields to match the spec, but IMC should never enable the autocapitalize flags for these).",
+      "parentUuid": "45f08a73_e3e8a954",
+      "range": {
+        "startLine": 320,
+        "startChar": 4,
+        "endLine": 320,
+        "endChar": 30
+      },
+      "revId": "a0436f8d3b925e917c43428a9343a498323ae99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
