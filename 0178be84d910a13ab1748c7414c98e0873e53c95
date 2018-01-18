@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3cba90c_b12758d3",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-18T08:19:15Z",
+      "side": 1,
+      "message": "ShouldBypassCacheDueToUpdateViaCache()\n\n(not thrilled about the name, but can\u0027t think of a better one)",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d35f15a_ba3069ce",
+        "filename": "content/browser/service_worker/service_worker_database.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-18T08:19:15Z",
+      "side": 1,
+      "message": "Consider putting this next to |last_update_check| as they are related (but if you had a reason to put it here, it\u0027s fine here too)",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df5a77c_31a73ed9",
+        "filename": "content/browser/service_worker/service_worker_database.proto",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-18T08:19:15Z",
+      "side": 1,
+      "message": "how about default \u003d DEFAULT?",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42836db1_ff867f33",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-18T08:19:15Z",
+      "side": 1,
+      "message": "EXPECT?",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a10333c2_78d8e8ff",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-18T08:19:15Z",
+      "side": 1,
+      "message": "It\u0027s not really clear to me why test is doing all these things with references. (The test this is based on isn\u0027t really explaining it well.) If you understand it better, can you add some explanatory comments? Otherwise I\u0027d like to simplify this test if possible.",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff737914_6eb002b0",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-18T08:19:15Z",
+      "side": 1,
+      "message": "It\u0027s not really clear why update_via_cache is being set here and the other properties aren\u0027t. I think it needs a comment. I guess |updaet_via_cache| is the only mutable property other than the .installing/.waiting./active, which are set specifically in the SetInstalling/Waiting/Active functions?\n\nI\u0027m also wondering why we have this updaet_via_cache code in AttachForServiceWorkerClient but don\u0027t see similar code for when we attach for service worker global scope? (I can investigate but just flagging it as somethnig that might be comment worthy)",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23341cd_48020f73",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/RegistrationOptions.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-18T08:19:15Z",
+      "side": 1,
+      "message": "Uh-oh this should be \"imports\" as I think if it isn\u0027t we have a web-exposed behavior that\u0027s different from the spec. Does that break the whole kDefault thing? Oops :(",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc99f7bd_98859cf9",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_registration.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-18T08:19:15Z",
+      "side": 1,
+      "message": "We could have a comment like\n\n// kDefault is a sentinel value to mean updateViaCache was not set. It is not web-exposed.",
+      "revId": "0178be84d910a13ab1748c7414c98e0873e53c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
