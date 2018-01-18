@@ -52,6 +52,24 @@
       "revId": "d205876439da0de638069c5a522c628bdd5978f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf33681_98c831d7",
+        "filename": "chrome/browser/chromeos/hats/hats_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-18T02:44:33Z",
+      "side": 1,
+      "message": "Hey James,\nlet me implement the alternative design (extra pref) in a separate CL first. I want to see them both in order to understand the risks/benefits of both.",
+      "parentUuid": "bde115e4_eeda3408",
+      "revId": "d205876439da0de638069c5a522c628bdd5978f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
