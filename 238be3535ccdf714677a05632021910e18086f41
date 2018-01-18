@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6762965c_e510a595",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-18T18:34:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca0ee0de_1a22cbec",
+      "revId": "238be3535ccdf714677a05632021910e18086f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97f6176f_83955b14",
         "filename": "extensions/browser/updater/update_service.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "238be3535ccdf714677a05632021910e18086f41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba99c0ff_10c2eb0e",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-18T18:34:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "97f6176f_83955b14",
+      "revId": "238be3535ccdf714677a05632021910e18086f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -86,6 +122,24 @@
       "revId": "238be3535ccdf714677a05632021910e18086f41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb85c1d1_4755eceb",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-18T18:34:04Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion.",
+      "parentUuid": "d54c909b_10de7c53",
+      "revId": "238be3535ccdf714677a05632021910e18086f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
