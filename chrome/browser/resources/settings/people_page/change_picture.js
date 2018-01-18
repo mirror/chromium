@@ -81,6 +81,9 @@ Polymer({
   /** @private {?CrPictureListElement} */
   pictureList_: null,
 
+  /** @private {boolean} */
+  oldImagePending_: false,
+
   /** @override */
   ready: function() {
     this.browserProxy_ = settings.ChangePictureBrowserProxyImpl.getInstance();
@@ -144,6 +147,7 @@ Polymer({
    * @private
    */
   receiveOldImage_: function(imageInfo) {
+    oldImagePending_ = false;
     this.pictureList_.setOldImageUrl(imageInfo.url, imageInfo.index);
   },
 
@@ -216,6 +220,7 @@ Polymer({
    * @private
    */
   onPhotoTaken_: function(event) {
+    oldImagePending_ = true;
     this.browserProxy_.photoTaken(event.detail.photoDataUrl);
     this.pictureList_.setOldImageUrl(event.detail.photoDataUrl);
     this.pictureList_.setFocus();
@@ -235,6 +240,9 @@ Polymer({
 
   /** @private */
   onDiscardImage_: function() {
+    // Prevent old image from being discarded if new old image is pending.
+    if (oldImagePending_)
+      return;
     this.pictureList_.setOldImageUrl(CrPicture.kDefaultImageUrl);
     // Revert to profile image as we don't know what last used default image is.
     this.browserProxy_.selectProfileImage();
