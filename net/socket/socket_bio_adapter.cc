@@ -18,7 +18,34 @@
 #include "net/socket/socket.h"
 #include "net/socket/stream_socket.h"
 #include "net/ssl/openssl_ssl_util.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/boringssl/src/include/openssl/bio.h"
+
+namespace {
+
+net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("socket_bio_adapter", R"(
+      semantics {
+        sender: "Socket Bio Adapter"
+        description:
+          "SocketBIOAdapter is used only internal to //net code as an internal "
+          "detail to implement a Socket class, and not being called directly "
+          "outside of this abstraction. All the data flowing through "
+          "SocketBIOAdapters is already annotated by a corresponding "
+          "Read/Write on the implementing Socket interface."
+        trigger: "..."
+        data: "..."
+        destination: OTHER
+        destination_other:
+          "Any destination the implementig socket is connected to."
+      }
+      policy {
+        cookies_allowed: NO
+        setting: "This feature cannot be disabled."
+        policy_exception_justification: "Essential for navigation."
+      })");
+
+}  // namespace
 
 namespace net {
 
@@ -247,8 +274,8 @@ void SocketBIOAdapter::SocketWrite() {
   while (write_error_ == OK && write_buffer_used_ > 0) {
     int write_size =
         std::min(write_buffer_used_, write_buffer_->RemainingCapacity());
-    int result =
-        socket_->Write(write_buffer_.get(), write_size, write_callback_);
+    int result = socket_->Write(write_buffer_.get(), write_size,
+                                write_callback_, kTrafficAnnotation);
     if (result == ERR_IO_PENDING) {
       write_error_ = ERR_IO_PENDING;
       return;
