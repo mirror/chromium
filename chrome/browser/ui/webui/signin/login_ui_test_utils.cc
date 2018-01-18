@@ -127,13 +127,19 @@ class SigninViewControllerTestUtil {
         signin_view_controller->GetModalDialogWebContentsForTesting();
     DCHECK_NE(dialog_web_contents, nullptr);
     std::string message;
-    std::string js =
-        "if (document.getElementById('confirmButton') == null) {"
-        "  window.domAutomationController.send('NotFound');"
-        "} else {"
-        "  document.getElementById('confirmButton').click();"
-        "  window.domAutomationController.send('Ok');"
-        "}";
+    std::string js = R"(
+        if (document.readyState != 'complete') {
+          window.domAutomationController.send('NotComplete');
+        } else {
+          if (document.getElementById('confirmButton') == null) {
+            window.domAutomationController.send('NotFound');
+          } else {
+            document.getElementById('confirmButton').click();
+            window.domAutomationController.send('Ok');
+          }
+        }
+        )";
+
     EXPECT_TRUE(content::ExecuteScriptAndExtractString(dialog_web_contents, js,
                                                        &message));
     return message == "Ok";
