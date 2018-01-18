@@ -16,6 +16,47 @@
       "revId": "b64506871b5d07b62c0dc4fa578f44a09a496678",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d6a38b_b2dae6ab",
+        "filename": "content/browser/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-18T16:11:29Z",
+      "side": 1,
+      "message": "I think the code here is fine.  I agree that we can use \"count unique users per bucket\".\n\nI wondered whether using something like |base::TimeDelta::FromHours(24) - base::TimeDelta::FromMinutes(random number from 10-30)| might be desirable:\n\n1) less chance that we\u0027ll straddle the 24h UMA reporting period, by reporting at 24+1sec.  This scenario seems unlikely and not worth worrying about\n\n2) less chance of multiple similar callbacks firing up around the same time.  The task is very short, so it also doesn\u0027t seem worrisome from performance/contention perspective.",
+      "parentUuid": "3e65e141_284e9bf3",
+      "revId": "b64506871b5d07b62c0dc4fa578f44a09a496678",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0173f35_2e757038",
+        "filename": "content/browser/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-18T16:11:29Z",
+      "side": 1,
+      "message": "I\u0027ve wondered if this could be hidden inside an anonymous namespace, but I think this is fine as-is / it is not that important to respin the CL and/or have to merge back across M66/M65 boundary.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 56
+      },
+      "revId": "b64506871b5d07b62c0dc4fa578f44a09a496678",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
