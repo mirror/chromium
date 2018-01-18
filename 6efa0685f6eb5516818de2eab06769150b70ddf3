@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be1db9b3_36a7520f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-18T21:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c3faddb_609e94aa",
+      "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9b5db1f_d78f0aea",
         "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
         "patchSetId": 24
@@ -33,6 +51,24 @@
       "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4969a6_a8d95dd4",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-18T21:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9b5db1f_d78f0aea",
+      "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "14beaf2e_b0640461",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-18T21:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "565e452c_446dabfa",
+      "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c72adf74_21be835f",
         "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
         "patchSetId": 24
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-18T01:06:45Z",
       "side": 1,
       "message": "Maybe we want to have a logic to make sure that ArrayBuffers in the main frame go to a dedicated partition. You can work on it in a follow-up CL.",
+      "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564c777e_4bd81566",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-18T21:12:23Z",
+      "side": 1,
+      "message": "Good idea. I added a TODO.",
+      "parentUuid": "c72adf74_21be835f",
       "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2579105d_675880b7",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-18T21:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4818fca1_5440eba9",
+      "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfb5f9b0_43097f1a",
         "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
         "patchSetId": 24
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-18T01:06:45Z",
       "side": 1,
       "message": "Is this method still used?",
+      "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0813114f_0a061848",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-18T21:12:23Z",
+      "side": 1,
+      "message": "One call site remains, in ArrayBufferContents::CreateDataHandle.",
+      "parentUuid": "dfb5f9b0_43097f1a",
       "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
