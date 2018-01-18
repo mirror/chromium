@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "ed6fcd5e_20a2d876",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-18T18:44:35Z",
+      "side": 1,
+      "message": "This seems correct to have here. Just makes me wonder why things worked without it before. Does the move of the *.mojom suddenly make this required, or is this a preparation for a future change?",
+      "revId": "1fc158715ebb637985f092c74c37cc78dfd64ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d82189db_3cec3481",
         "filename": "media/capture/mojo/BUILD.gn",
         "patchSetId": 1
