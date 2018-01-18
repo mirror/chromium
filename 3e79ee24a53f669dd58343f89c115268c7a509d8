@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c524567_06be6918",
+        "filename": "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-18T17:04:45Z",
+      "side": 1,
+      "message": "What about some name like \"providers_for_init_\", to show that it\u0027s only a stopgap buffer?",
+      "range": {
+        "startLine": 235,
+        "startChar": 60,
+        "endLine": 235,
+        "endChar": 70
+      },
+      "revId": "3e79ee24a53f669dd58343f89c115268c7a509d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6aa1b5_d0818ec4",
+        "filename": "components/policy/core/common/policy_service_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-18T17:04:45Z",
+      "side": 1,
+      "message": "I think it\u0027s better to fill it with false here, as there\u0027re no providers passed at this point. Even though you protected against this in IsInitializationComplete(), it\u0027s a bit dangerous as someone may miss this detail when adding new code.\n\nSo I\u0027d suggest move this assignment with true\u0027s into SetProviders(), while here start with an assignment with false\u0027s. Does that sound reasonable?",
+      "revId": "3e79ee24a53f669dd58343f89c115268c7a509d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
