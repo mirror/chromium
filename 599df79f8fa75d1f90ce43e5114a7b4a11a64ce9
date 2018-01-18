@@ -22,6 +22,30 @@
       "revId": "599df79f8fa75d1f90ce43e5114a7b4a11a64ce9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caabdeb3_0e0d247d",
+        "filename": "base/task_scheduler/task_scheduler_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T11:20:50Z",
+      "side": 0,
+      "message": "No, it\u0027s because I can\u0027t pass |name| into it as-is. By making it two constructors I can forward |name| from the one-param constructor to the two-param constructor\u0027s TaskTracker :)",
+      "parentUuid": "2df7c120_bc9f4ddf",
+      "range": {
+        "startLine": 57,
+        "startChar": 29,
+        "endLine": 58,
+        "endChar": 68
+      },
+      "revId": "599df79f8fa75d1f90ce43e5114a7b4a11a64ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

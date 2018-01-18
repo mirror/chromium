@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11794d57_1cb0b089",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T11:20:50Z",
+      "side": 1,
+      "message": "Ah! Good catch, thought I\u0027d surveyed the resulting names in chrome://histograms but guess I only looked at TaskLatencyMs..!",
+      "parentUuid": "38d87c5f_e617ba6a",
+      "range": {
+        "startLine": 169,
+        "startChar": 43,
+        "endLine": 169,
+        "endChar": 48
+      },
+      "revId": "a8ae3162430a41d305ec21303a514b8f9be922ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53ca0699_a9aea048",
         "filename": "base/task_scheduler/task_tracker.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "a8ae3162430a41d305ec21303a514b8f9be922ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c495ce9_29c3cf2e",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T11:20:50Z",
+      "side": 1,
+      "message": "I\u0027ll make it use Join() anyways in my follow-up CL where |name_suffix| is never empty : https://chromium-review.googlesource.com/c/chromium/src/+/870390/4",
+      "parentUuid": "53ca0699_a9aea048",
+      "range": {
+        "startLine": 84,
+        "startChar": 1,
+        "endLine": 89,
+        "endChar": 51
+      },
+      "revId": "a8ae3162430a41d305ec21303a514b8f9be922ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f42b2816_7caa4eda",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 110686,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T11:20:50Z",
+      "side": 1,
+      "message": "Sure :)",
+      "parentUuid": "68e4159c_9deccb79",
+      "range": {
+        "startLine": 110686,
+        "startChar": 45,
+        "endLine": 110686,
+        "endChar": 53
+      },
+      "revId": "a8ae3162430a41d305ec21303a514b8f9be922ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfc2857b_cac79b14",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "74001c77_a46a3f36",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 110767,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T11:20:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfc2857b_cac79b14",
+      "range": {
+        "startLine": 110767,
+        "startChar": 63,
+        "endLine": 110767,
+        "endChar": 64
+      },
+      "revId": "a8ae3162430a41d305ec21303a514b8f9be922ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd909733_cf7c2cbb",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "a8ae3162430a41d305ec21303a514b8f9be922ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02701e76_8618e26a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 110773,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T11:20:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd909733_cf7c2cbb",
+      "range": {
+        "startLine": 110773,
+        "startChar": 30,
+        "endLine": 110773,
+        "endChar": 70
+      },
+      "revId": "a8ae3162430a41d305ec21303a514b8f9be922ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
