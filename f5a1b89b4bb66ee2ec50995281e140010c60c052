@@ -178,6 +178,24 @@
       "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c545b0_5966ba39",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-18T17:25:15Z",
+      "side": 1,
+      "message": "Edited the comment.\nI understand this seems hacky and I know that Harmony is supposed to be the default behavior for Chrome UI in the future(not Chrome OS UI).\n\nIf Harmony is going to be enabled in M65, I\u0027d prefer to get this fix in as it will prevent harmony from breaking CrOS UI in various places. I don\u0027t have any experience with NativeTheme, is it easy enough to do before the M65 branch later tonight?\n\nIf we don\u0027t have to worry about harmony being enabled in M65, this patch can obviously wait.",
+      "parentUuid": "039f071f_eef68e59",
+      "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
