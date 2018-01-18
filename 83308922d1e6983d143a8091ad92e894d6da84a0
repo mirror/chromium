@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fbd6da3_3eb865ba",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-18T03:45:25Z",
+      "side": 1,
+      "message": "It seems taking shadow host from event target should be done in\nFindEventTargetFrom() which is called by FindEventTargetFromSelection()",
+      "range": {
+        "startLine": 824,
+        "startChar": 20,
+        "endLine": 824,
+        "endChar": 48
+      },
+      "revId": "83308922d1e6983d143a8091ad92e894d6da84a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
