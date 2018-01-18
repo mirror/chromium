@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c45d259_474c1c98",
+        "filename": "chrome/browser/supervised_user/experimental/safe_search_url_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-18T17:42:17Z",
+      "side": 1,
+      "message": "If it\u0027s used in only one place, it\u0027s IMO also fine to just inline the constant.",
+      "range": {
+        "startLine": 152,
+        "startChar": 14,
+        "endLine": 152,
+        "endChar": 41
+      },
+      "revId": "5118ae45ebe3e60abaf310e3a03b561094ed1f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
