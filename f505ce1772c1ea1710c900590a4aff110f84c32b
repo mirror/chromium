@@ -16,6 +16,24 @@
       "revId": "f505ce1772c1ea1710c900590a4aff110f84c32b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08fda0f_ef096a0f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-composed-path-with-related-target.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-18T11:08:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c6fc4ce_34d58415",
+      "revId": "f505ce1772c1ea1710c900590a4aff110f84c32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
