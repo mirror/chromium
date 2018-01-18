@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fa7aeb88_86ccb81e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-18T20:36:14Z",
+      "side": 1,
+      "message": "nit: remove client side",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "b1ba523fd168326a2319fcc5a3a24447a6fd8e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0778e86_47b3ebdc",
         "filename": "components/previews/core/previews_experiments.cc",
         "patchSetId": 1
