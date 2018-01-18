@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a860f3d0_e02d0482",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-01-18T15:32:27Z",
+      "side": 1,
+      "message": "nit:\nsorted_items \u003d items.sorted()\n\nTo avoid side-effects.",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 7
+      },
+      "revId": "72b87aeb2bdaa85d30d1fdf1c24edd9de15f281e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48a9def_c94da3c2",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-01-18T15:32:27Z",
+      "side": 1,
+      "message": "nit: filenames",
+      "range": {
+        "startLine": 235,
+        "startChar": 6,
+        "endLine": 235,
+        "endChar": 15
+      },
+      "revId": "72b87aeb2bdaa85d30d1fdf1c24edd9de15f281e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40478ef_2a30e31c",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-01-18T15:32:27Z",
+      "side": 1,
+      "message": "nit:\nself._filenames.sort(key\u003dself._Timestamp)\n?",
+      "range": {
+        "startLine": 246,
+        "startChar": 4,
+        "endLine": 246,
+        "endChar": 22
+      },
+      "revId": "72b87aeb2bdaa85d30d1fdf1c24edd9de15f281e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
