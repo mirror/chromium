@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "eaad0a81_4fcaa18d",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-18T18:44:21Z",
+      "side": 1,
+      "message": "My initial review also assumed you would make other changes I suggested.\nSince those aren\u0027t happening, I need to start considering the threshold of whether or not this will be accepted upstream.\n\nIf you do not intend to upstream this, things become much more simple. In that case, it probably shouldn\u0027t live in third_party/zlib. But as long as it lives in third_party/zlib it becomes the burden of the OWNERS. I accept that you will be moving on and upstreaming will become our responsibility. That is why we have to be extra cautious with the burden we take on.\n\n\nWhen looking at loading file contents, you need to consider whether the file itself is a text file or data. It would make sense to load a text file into a string. That isn\u0027t what we are doing here.\n\n\nHow about this: I\u0027m okay accepting this and if I can patch it later with some of the changes I suggested. That will let you land this and we\u0027ll all be making forward progress.",
+      "parentUuid": "420292e7_0d91b45c",
+      "range": {
+        "startLine": 55,
+        "startChar": 46,
+        "endLine": 55,
+        "endChar": 57
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf4f67c7_16696141",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
