@@ -3695,6 +3695,15 @@ IntPoint LocalFrameView::AbsoluteToRootFrame(
   return ConvertToRootFrame(point_in_frame);
 }
 
+LayoutRect LocalFrameView::AbsoluteToRootFrame(
+    const LayoutRect& layout_rect) const {
+  LayoutPoint point_in_frame(layout_rect.Location());
+  // With RLS turned on, this will be a no-op.
+  point_in_frame -= LayoutSize(ScrollOffsetInt());
+  LayoutRect rect_in_root_frame(point_in_frame, layout_rect.Size());
+  return rect_in_root_frame;
+}
+
 IntRect LocalFrameView::RootFrameToDocument(const IntRect& rect_in_root_frame) {
   IntPoint offset =
       FlooredIntPoint(RootFrameToDocument(rect_in_root_frame.Location()));
