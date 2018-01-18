@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd69eef6_bc0553fa",
+        "filename": "content/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-18T07:45:04Z",
+      "side": 1,
+      "message": "Instead of adding this here, should it just be added to //media/capture\u0027s public_deps: https://cs.chromium.org/chromium/src/media/capture/BUILD.gn?rcl\u003d5d6642b04a6a000c30331ae92232df7cc8e8d476\u0026l\u003d12",
+      "range": {
+        "startLine": 103,
+        "startChar": 5,
+        "endLine": 103,
+        "endChar": 41
+      },
+      "revId": "1fc158715ebb637985f092c74c37cc78dfd64ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17fc6206_87059f96",
+        "filename": "content/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1705,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-18T07:45:04Z",
+      "side": 1,
+      "message": "Accidental paste?",
+      "range": {
+        "startLine": 1705,
+        "startChar": 51,
+        "endLine": 1705,
+        "endChar": 69
+      },
+      "revId": "1fc158715ebb637985f092c74c37cc78dfd64ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d82189db_3cec3481",
+        "filename": "media/capture/mojo/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-18T07:45:04Z",
+      "side": 1,
+      "message": "Not sure if it\u0027s better, but have you considered merging this in with mojom(\"capture_types\") and calling the whole thing mojom(\"video_capture\")?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "1fc158715ebb637985f092c74c37cc78dfd64ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
