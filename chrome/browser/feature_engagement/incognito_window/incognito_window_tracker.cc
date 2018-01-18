@@ -51,6 +51,7 @@ void IncognitoWindowTracker::OnIncognitoWindowOpened() {
 }
 
 void IncognitoWindowTracker::OnBrowsingDataCleared() {
+  DCHECK(GetAppMenuButton());
   const auto severity = GetAppMenuButton()->severity();
   if (severity == AppMenuIconController::Severity::NONE && ShouldShowPromo())
     ShowPromo();
