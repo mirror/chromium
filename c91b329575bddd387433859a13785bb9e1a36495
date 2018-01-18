@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc5b16e8_cdd977d4",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-18T08:31:12Z",
+      "side": 1,
+      "message": "Why do we need RunUntilIdle() here though for |worker1| RunUntilIdle isn\u0027t called? Do we need it for both?",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 35
+      },
+      "revId": "c91b329575bddd387433859a13785bb9e1a36495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
