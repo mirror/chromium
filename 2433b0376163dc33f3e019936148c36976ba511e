@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "079ef92f_258cb51b",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-18T22:51:52Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "bf1b3de7_5f042ace",
+      "revId": "2433b0376163dc33f3e019936148c36976ba511e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c4c4f87_d2044e4e",
         "filename": "third_party/WebKit/public/platform/AOMEnums.h",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "I don\u0027t think that\u0027s a good idea. These APIs are meant to be separate.",
       "parentUuid": "2c4c4f87_d2044e4e",
+      "revId": "2433b0376163dc33f3e019936148c36976ba511e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f274cd92_a492e579",
+        "filename": "third_party/WebKit/public/platform/AOMEnums.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-18T22:51:52Z",
+      "side": 1,
+      "message": "I\u0027m happy to refactor into a shared enum (since there are already so many enums), but just not sure where the best place to put it. I dont even think AOMEnums, or whatever it ends up collapsing to, should be in platform?",
+      "parentUuid": "016f4028_29371269",
       "revId": "2433b0376163dc33f3e019936148c36976ba511e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
