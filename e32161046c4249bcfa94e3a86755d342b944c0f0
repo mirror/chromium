@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb9be5a0_6e01bc62",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/autocapitalization/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-18T03:12:22Z",
+      "side": 1,
+      "message": "Ah...so what\u0027s the correct way to update the OWNERS file in the web-platform-tests repo?",
+      "parentUuid": "32c866da_60aecd6b",
+      "revId": "e32161046c4249bcfa94e3a86755d342b944c0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f90fd471_7a8ee7e3",
         "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/element-instance-property-listing-expected.txt",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "e32161046c4249bcfa94e3a86755d342b944c0f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f90201d0_8530c2a1",
+        "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/element-instance-property-listing-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-18T03:12:22Z",
+      "side": 1,
+      "message": "Oops, I think this belongs in https://chromium-review.googlesource.com/c/chromium/src/+/871976 (where tests are failing)",
+      "parentUuid": "f90fd471_7a8ee7e3",
+      "revId": "e32161046c4249bcfa94e3a86755d342b944c0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
