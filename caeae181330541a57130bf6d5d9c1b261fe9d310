@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b5d6386_403c327f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-18T22:32:33Z",
+      "side": 1,
+      "message": "Right this is not particularly useful for tab modal dialogs, but I think it is for VR future use. Let\u0027s leave that out for now and add until we need it then.",
+      "parentUuid": "94706a63_2088ca65",
+      "range": {
+        "startLine": 91,
+        "startChar": 28,
+        "endLine": 91,
+        "endChar": 37
+      },
+      "revId": "caeae181330541a57130bf6d5d9c1b261fe9d310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cc21499_4d063315",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "469b6ae0_16e53682",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-18T22:32:33Z",
+      "side": 1,
+      "message": "Yes that\u0027s exactly why we track the current type here. Added java doc at mCurrentType\u0027s definition.",
+      "parentUuid": "8cc21499_4d063315",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 20
+      },
+      "revId": "caeae181330541a57130bf6d5d9c1b261fe9d310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c1caf00_ec6f0fa3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-18T19:28:08Z",
       "side": 1,
       "message": "If you suspend your tab modal dialogs, could this end up triggering an app modal one?",
+      "range": {
+        "startLine": 223,
+        "startChar": 19,
+        "endLine": 223,
+        "endChar": 30
+      },
+      "revId": "caeae181330541a57130bf6d5d9c1b261fe9d310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a446df6b_923dedf7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-18T22:32:33Z",
+      "side": 1,
+      "message": "Yes this could trigger the next dialog that its type is not suspended.\n\nThere are three cases:\n1) a dialog of this suspended type is currently showing:\n   We need to put it back to the queue and show the next available dialog. This is handled during dismissDialog().\n\n2) a dialog of a different type is showing:\n   The current dialog should keep showing, so no action needs to be done.\n\n3) no dialog is showing:\n   It implies that either no dialog is in the queue, or all the dialogs in the queue are suspended, so no action needs to be done.",
+      "parentUuid": "5c1caf00_ec6f0fa3",
       "range": {
         "startLine": 223,
         "startChar": 19,
