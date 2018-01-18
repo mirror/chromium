@@ -22,6 +22,30 @@
       "revId": "d92e5989c47c10bae22f40a35180cd3460f05b59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b2397e_022176f0",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-18T21:40:27Z",
+      "side": 1,
+      "message": "You\u0027re right. As per further discussion, we decided to not go through with disabling the keyboard in WebVR mode due to the missed frames.",
+      "parentUuid": "76ab4b90_9e3ccdec",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "d92e5989c47c10bae22f40a35180cd3460f05b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
