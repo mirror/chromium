@@ -34,6 +34,24 @@
       "revId": "9abc8c17a5a8eb8fe19eaba3e80449d693714e1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3470ec5_673dab50",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_content_browsertests.filter",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-18T23:59:24Z",
+      "side": 1,
+      "message": "Ah, I assumed this was testing old-path-only code. Is that not the case?",
+      "parentUuid": "f19d0682_06fc99a3",
+      "revId": "9abc8c17a5a8eb8fe19eaba3e80449d693714e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
