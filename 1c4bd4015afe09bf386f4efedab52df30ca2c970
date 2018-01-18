@@ -120,6 +120,24 @@
     },
     {
       "key": {
+        "uuid": "20114ca2_014ae824",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-18T20:22:55Z",
+      "side": 1,
+      "message": "Oh, right, all of the GetStringF varients expect string16 as input args. This is fine then.",
+      "parentUuid": "0b05dc44_ecf1542e",
+      "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cce28f4f_f0bd130c",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 1
