@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cef1c5df_606d85dd",
+        "filename": "ash/frame/caption_buttons/frame_back_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-18T22:07:56Z",
+      "side": 1,
+      "message": "no this is owned by the resource bundle",
+      "parentUuid": "b3ed0860_84a2ebde",
+      "revId": "2da18ec469f15170ae62c7a3f6ddeacd262c7a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ee76dc0_e38229c4",
         "filename": "ash/frame/caption_buttons/frame_caption_button.h",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-18T22:00:56Z",
       "side": 1,
       "message": "nit: Could you please add when to remove this, possible a bug #?",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "2da18ec469f15170ae62c7a3f6ddeacd262c7a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb48aef3_af615892",
+        "filename": "ash/frame/caption_buttons/frame_caption_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-18T22:07:56Z",
+      "side": 1,
+      "message": "This will be revered in the same bug (bug won\u0027t be closed until we get the svg).",
+      "parentUuid": "6ee76dc0_e38229c4",
       "range": {
         "startLine": 46,
         "startChar": 19,
