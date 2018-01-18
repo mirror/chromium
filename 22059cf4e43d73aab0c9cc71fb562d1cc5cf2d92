@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19d7661b_b0822294",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-18T03:09:19Z",
+      "side": 1,
+      "message": "it feels weird to include a foo_testing.h in the release build. I think we\u0027d normally put \n\n  @interface StatusBubbleWindow : NSWindow\n  @end\n\nin the header (status_bubble_mac.h), and declare a TestingAPI category in status_bubble_mac_testing.h  (or, more commonly, in status_bubble_mac.h as well..).  But having the main @interface in a testing.h suggests to me that it shouldn\u0027t be linked into the build unless it\u0027s being used for tests.\n\nBut also this use doesn\u0027t really map to existing stuff we\u0027re doing. I guess what you have is OK too.\n\n(Or maybe we should go all-in and make status_bubble_window.h / status_bubble_window.mm)",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683823ef_5ba2f974",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-18T03:09:19Z",
+      "side": 1,
+      "message": "I think this should \n\n // Appropriate comment.\n DCHECK(!statusBubbleParentWindow_);\n\nstatusBubbleParentWindow_ isn\u0027t retained, so there\u0027s no good guarantee it hasn\u0027t been dealloced. I think that guarantee instead comes from ~StatusBubbleMac() calling Detach before releasing its ref in its scoped_nsobject\u003cStatusBubbleWindow\u003e, so statusBubbleParentWindow_ should always be null when this dealloc is called.",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efffea5c_8416ecc5",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-18T03:09:19Z",
+      "side": 1,
+      "message": "wowww so much magic.. \n\nI wonder if we should just switch the status bubble over to MacViews 👊 . Or if suddenly all this magic will also be needed :/\n\nThere is already some voodoo to cater for child windows in  BridgedNativeWidget::OnVisibilityChanged() see comment \"Cocoa\u0027s childWindow management breaks down when child windows are hidden\" (basically hidden windows are never allowed to have, or to be, children, but relationships are always restored when things change visibility).",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da1ba96f_171bd083",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac_testing.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-18T03:09:19Z",
+      "side": 1,
+      "message": "I think this should just #import AppKit.h ?\n\n(the unittest.mm should include both headers)",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4a97e8_0d618f4c",
+        "filename": "ui/base/test/cocoa_helper.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-18T03:09:19Z",
+      "side": 1,
+      "message": "nit: comments for these (consistent with the rest. also I think the style guide doesn\u0027t give much leniency)",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d811c91_eef4cabe",
+        "filename": "ui/base/test/cocoa_helper.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-18T03:09:19Z",
+      "side": 1,
+      "message": "nit: order to match .h",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8674c10b_442322ee",
+        "filename": "ui/base/test/cocoa_helper.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-18T03:09:19Z",
+      "side": 1,
+      "message": "comment for this? E.g.\n\n // Ensure AppKit observers for visible changes are notified when a test does foo ...\n // Without this something something happens.",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f13157_7d848f8c",
+        "filename": "ui/base/test/cocoa_helper.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-18T03:09:19Z",
+      "side": 1,
+      "message": "keep this with isVisible? etc.",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
