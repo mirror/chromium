@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e605ea1_c3f2ea4c",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 42
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T22:31:41Z",
+      "side": 1,
+      "message": "In order to allow a null |receiver|, we need to use \"UDPSocketReceiver?\" (with a question mark) to indicate that it could be null.",
+      "revId": "92a03377b7e98dd0fea649d8bff30e88c55c9898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef88a03_36888094",
+        "filename": "services/network/public/interfaces/BUILD.gn",
+        "patchSetId": 42
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T22:31:41Z",
+      "side": 1,
+      "message": "Please see my comments in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d803125",
+      "revId": "92a03377b7e98dd0fea649d8bff30e88c55c9898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2beb8d83_d3ec024f",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T22:31:41Z",
+      "side": 1,
+      "message": "Does it make sense to use base::saturated_cast?",
+      "revId": "92a03377b7e98dd0fea649d8bff30e88c55c9898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d80814_d366c90a",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T22:31:41Z",
+      "side": 1,
+      "message": "nit: the recommended way is to *not* have \".get()\" in null check. It should still work.",
+      "revId": "92a03377b7e98dd0fea649d8bff30e88c55c9898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1489b38_5345a92f",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T22:31:41Z",
+      "side": 1,
+      "message": "optional: looking at this expression makes me feel that maybe it is more natural to define \"is_connected_\" and \"is_bound_\" instead.",
+      "revId": "92a03377b7e98dd0fea649d8bff30e88c55c9898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09fd22ae_399a8e00",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T22:31:41Z",
+      "side": 1,
+      "message": "The style guide for passing ref-counted type: if the method may add-ref, then pass scoped_refptr\u003cFoo\u003e by value; otherwise, pass raw Foo* pointer. See:\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#object-ownership-and-calling-conventions",
+      "revId": "92a03377b7e98dd0fea649d8bff30e88c55c9898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dafbb806_4677a1ab",
+        "filename": "services/network/udp_socket_factory_unittest.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T22:31:41Z",
+      "side": 1,
+      "message": "There is no guaranteed that the loop stays busy while we are notifying the other side of pipe disconnection. (Although it probably works with the current impl.) We generally recommend people to move away from RunUntilIdle.\n\nMaybe you could expose some testing observer from UDPSocketFactory?",
+      "revId": "92a03377b7e98dd0fea649d8bff30e88c55c9898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244932cc_371db6a5",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T22:31:41Z",
+      "side": 1,
+      "message": "Ditto. Please avoid RunUntilIdle()",
+      "revId": "92a03377b7e98dd0fea649d8bff30e88c55c9898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
