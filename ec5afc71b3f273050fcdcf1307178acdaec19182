@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6db2e25f_00339f41",
+        "filename": "chrome/browser/extensions/updater/chrome_update_client_config.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T16:00:10Z",
+      "side": 1,
+      "message": "let\u0027s also init this to nullptr.  It\u0027d be good to either have all members default-initialized if any are.",
+      "revId": "ec5afc71b3f273050fcdcf1307178acdaec19182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
