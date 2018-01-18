@@ -346,4 +346,15 @@ void LegacyNavigationManagerImpl::AddPushStateItemIfNecessary(
                                transition:transition];
 }
 
+void LegacyNavigationManagerImpl::SetErrorRetryState(const NavigationItem* item,
+                                                     ErrorRetryState state) {
+  NOTREACHED();
+}
+
+ErrorRetryState LegacyNavigationManagerImpl::GetErrorRetryState(
+    const NavigationItem* item) const {
+  NOTREACHED();
+  return ErrorRetryState::NO_ERROR_DISPLAYED;
+}
+
 }  // namespace web

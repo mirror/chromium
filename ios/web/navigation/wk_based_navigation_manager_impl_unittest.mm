@@ -770,4 +770,44 @@ TEST_F(WKBasedNavigationManagerTest, EmptyWindowOpenNavigation) {
   manager_->GoToIndex(0);
 }
 
+// Tests state transitions between ErrorRetryStates.
+TEST_F(WKBasedNavigationManagerTest, SetErrorRetryState) {
+  NavigationItemImpl item;
+
+  // item is not tracked in error_retry_states_ so should default to NO_ERROR.
+  EXPECT_EQ(ErrorRetryState::NO_ERROR_DISPLAYED,
+            manager_->GetErrorRetryState(&item));
+
+  // The orders below matter because not all state transitions are valid.
+  // Invalid transitions are not tested because death tests are not supported in
+  // iOS simulator build.
+  manager_->SetErrorRetryState(&item, ErrorRetryState::HAS_HISTORY_ENTRY);
+  ASSERT_EQ(ErrorRetryState::HAS_HISTORY_ENTRY,
+            manager_->GetErrorRetryState(&item));
+
+  manager_->SetErrorRetryState(&item, ErrorRetryState::ERROR_DISPLAYED);
+  ASSERT_EQ(ErrorRetryState::ERROR_DISPLAYED,
+            manager_->GetErrorRetryState(&item));
+
+  manager_->SetErrorRetryState(&item, ErrorRetryState::PREPARE_URL_FOR_RELOAD);
+  ASSERT_EQ(ErrorRetryState::PREPARE_URL_FOR_RELOAD,
+            manager_->GetErrorRetryState(&item));
+
+  manager_->SetErrorRetryState(&item, ErrorRetryState::READY_TO_RELOAD);
+  ASSERT_EQ(ErrorRetryState::READY_TO_RELOAD,
+            manager_->GetErrorRetryState(&item));
+
+  manager_->SetErrorRetryState(&item, ErrorRetryState::HAS_HISTORY_ENTRY);
+  ASSERT_EQ(ErrorRetryState::HAS_HISTORY_ENTRY,
+            manager_->GetErrorRetryState(&item));
+
+  // Cycle through again, this time, terminate in no error.
+  manager_->SetErrorRetryState(&item, ErrorRetryState::ERROR_DISPLAYED);
+  manager_->SetErrorRetryState(&item, ErrorRetryState::PREPARE_URL_FOR_RELOAD);
+  manager_->SetErrorRetryState(&item, ErrorRetryState::READY_TO_RELOAD);
+  manager_->SetErrorRetryState(&item, ErrorRetryState::NO_ERROR_DISPLAYED);
+  ASSERT_EQ(ErrorRetryState::NO_ERROR_DISPLAYED,
+            manager_->GetErrorRetryState(&item));
+}
+
 }  // namespace web

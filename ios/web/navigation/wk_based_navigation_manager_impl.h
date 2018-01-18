@@ -7,6 +7,7 @@
 
 #include <stddef.h>
 
+#include <map>
 #include <memory>
 #include <vector>
 
@@ -67,6 +68,7 @@ class SessionStorageBuilder;
 //   single normal entry. The only difference is that a subsequent call to
 //   CommitPendingItem() will *replace* the empty window open item. From this
 //   point onward, it is as if the empty window open item never occurred.
+
 class WKBasedNavigationManagerImpl : public NavigationManagerImpl {
  public:
   WKBasedNavigationManagerImpl();
@@ -94,6 +96,9 @@ class WKBasedNavigationManagerImpl : public NavigationManagerImpl {
   void AddPushStateItemIfNecessary(const GURL& url,
                                    NSString* state_object,
                                    ui::PageTransition transition) override;
+  void SetErrorRetryState(const NavigationItem* item,
+                          ErrorRetryState state) override;
+  ErrorRetryState GetErrorRetryState(const NavigationItem* item) const override;
 
   // NavigationManager:
   BrowserState* GetBrowserState() const override;
@@ -177,6 +182,10 @@ class WKBasedNavigationManagerImpl : public NavigationManagerImpl {
   // TimeSmoother::GetSmoothedTime() with a const 'this'. Since NavigationItems
   // have to be lazily created on read, this is the only workaround.
   mutable TimeSmoother time_smoother_;
+
+  // Maps navigation item unique ID to error retry state. Only navigation items
+  // that failed the most recent load attempt are tracked.
+  std::map<int, ErrorRetryState> error_retry_states_;
 
   DISALLOW_COPY_AND_ASSIGN(WKBasedNavigationManagerImpl);
 };

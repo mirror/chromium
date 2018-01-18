@@ -125,10 +125,6 @@ void WKBasedNavigationManagerImpl::AddPendingItem(
       last_committed_item ? last_committed_item->GetURL() : GURL::EmptyGURL(),
       &transient_url_rewriters_);
   RemoveTransientURLRewriters();
-  // Ignore URL rewrite if this is a placeholder URL
-  if (placeholder_navigation_util::IsPlaceholderUrl(url)) {
-    pending_item_->SetURL(url);
-  }
   UpdatePendingItemUserAgentType(user_agent_override_option,
                                  GetLastCommittedNonAppSpecificItem(),
                                  pending_item_.get());
@@ -235,6 +231,52 @@ void WKBasedNavigationManagerImpl::AddPushStateItemIfNecessary(
     ui::PageTransition transition) {
   // WKBasedNavigationManager doesn't directly manage session history. Nothing
   // to do here.
+}
+
+void WKBasedNavigationManagerImpl::SetErrorRetryState(
+    const NavigationItem* item,
+    ErrorRetryState state) {
+  std::map<int, ErrorRetryState>::iterator record =
+      error_retry_states_.find(item->GetUniqueID());
+  if (state == ErrorRetryState::NO_ERROR_DISPLAYED) {
+    DCHECK(record != error_retry_states_.end());
+    DCHECK_EQ(ErrorRetryState::READY_TO_RELOAD, record->second);
+    error_retry_states_.erase(record);
+    return;
+  }
+
+  switch (state) {
+    case ErrorRetryState::HAS_HISTORY_ENTRY:
+      DCHECK(record == error_retry_states_.end() ||
+             record->second == ErrorRetryState::READY_TO_RELOAD)
+          << "Got unexpected state: " << static_cast<int>(record->second);
+      break;
+    case ErrorRetryState::ERROR_DISPLAYED:
+      DCHECK_EQ(ErrorRetryState::HAS_HISTORY_ENTRY, record->second);
+      break;
+    case ErrorRetryState::PREPARE_URL_FOR_RELOAD:
+      DCHECK_EQ(ErrorRetryState::ERROR_DISPLAYED, record->second);
+      break;
+    case ErrorRetryState::READY_TO_RELOAD:
+      DCHECK_EQ(ErrorRetryState::PREPARE_URL_FOR_RELOAD, record->second);
+      break;
+    default:
+      NOTREACHED();
+  }
+
+  error_retry_states_[item->GetUniqueID()] = state;
+}
+
+ErrorRetryState WKBasedNavigationManagerImpl::GetErrorRetryState(
+    const NavigationItem* item) const {
+  std::map<int, ErrorRetryState>::const_iterator record =
+      error_retry_states_.find(item->GetUniqueID());
+  if (record == error_retry_states_.end()) {
+    return ErrorRetryState::NO_ERROR_DISPLAYED;
+  }
+
+  DCHECK(record->second != ErrorRetryState::NO_ERROR_DISPLAYED);
+  return record->second;
 }
 
 BrowserState* WKBasedNavigationManagerImpl::GetBrowserState() const {
