@@ -1013,14 +1013,14 @@ crbug.com/652964 [ Linux Win ] fast/text/hyphens/midword-break-priority.html [ S
 crbug.com/405389 external/wpt/css/css-shapes/shape-outside/supported-shapes/polygon/shape-outside-polygon-017.html [ Failure ]
 crbug.com/424365 external/wpt/css/css-shapes/shape-outside/shape-image/shape-image-010.html [ Failure ]
 crbug.com/424365 external/wpt/css/css-shapes/shape-outside/shape-image/shape-image-024.html [ Failure ]
-crbug.com/441840 [ Linux Win ] external/wpt/css/css-shapes/shape-outside/values/shape-margin-001.html [ Failure ]
+crbug.com/441840 [ Win ] external/wpt/css/css-shapes/shape-outside/values/shape-margin-001.html [ Failure ]
 crbug.com/441840 external/wpt/css/css-shapes/shape-outside/values/shape-outside-circle-004.html [ Failure ]
 crbug.com/441840 external/wpt/css/css-shapes/shape-outside/values/shape-outside-circle-005.html [ Failure ]
 crbug.com/441840 external/wpt/css/css-shapes/shape-outside/values/shape-outside-ellipse-004.html [ Failure ]
 crbug.com/441840 external/wpt/css/css-shapes/shape-outside/values/shape-outside-ellipse-005.html [ Failure ]
 crbug.com/441840 external/wpt/css/css-shapes/shape-outside/values/shape-outside-inset-003.html [ Failure ]
 crbug.com/441840 external/wpt/css/css-shapes/shape-outside/values/shape-outside-polygon-004.html [ Failure ]
-crbug.com/441840 [ Linux Win ] external/wpt/css/css-shapes/shape-outside/values/shape-outside-shape-arguments-000.html [ Failure ]
+crbug.com/441840 [ Win ] external/wpt/css/css-shapes/shape-outside/values/shape-outside-shape-arguments-000.html [ Failure ]
 
 crbug.com/306730 external/wpt/css/css-text/i18n/css3-text-line-break-jazh-136.html [ Failure ]
 crbug.com/306730 external/wpt/css/css-text/i18n/css3-text-line-break-jazh-137.html [ Failure ]
@@ -1903,7 +1903,6 @@ crbug.com/626703 external/wpt/css/css-fonts/alternates-order.html [ Failure ]
 crbug.com/626703 external/wpt/css/css-fonts/font-features-across-space-1.html [ Failure ]
 crbug.com/626703 external/wpt/css/css-fonts/font-features-across-space-3.html [ Failure ]
 crbug.com/626703 external/wpt/css/css-fonts/font-kerning-03.html [ Failure ]
-crbug.com/626703 external/wpt/css/css-fonts/font-variant-alternates-01.html [ Failure ]
 crbug.com/626703 external/wpt/css/css-fonts/font-variant-alternates-02.html [ Failure ]
 crbug.com/626703 external/wpt/css/css-fonts/font-variant-alternates-03.html [ Failure ]
 crbug.com/626703 external/wpt/css/css-fonts/font-variant-alternates-04.html [ Failure ]
@@ -2298,7 +2297,6 @@ crbug.com/762017 external/wpt/html/semantics/embedded-content/media-elements/vid
 
 # Other untriaged test failures, timeouts and crashes from newly-imported WPT tests.
 crbug.com/666703 external/wpt/html/browsers/sandboxing/sandbox-disallow-same-origin.html [ Timeout ]
-crbug.com/626703 external/wpt/html/dom/documents/dom-tree-accessors/Document.currentScript.html [ Timeout ]
 crbug.com/626703 external/wpt/html/browsers/history/the-location-interface/location-protocol-setter-non-broken.html [ Failure Pass ]
 
 crbug.com/785940 external/wpt/web-animations/timing-model/timelines/document-timelines.html [ Failure Pass ]
@@ -2569,7 +2567,6 @@ crbug.com/709227 external/wpt/offscreen-canvas/pixel-manipulation/2d.imageData.g
 crbug.com/709227 external/wpt/offscreen-canvas/pixel-manipulation/2d.imageData.get.tiny.worker.html [ Failure ]
 crbug.com/709227 external/wpt/offscreen-canvas/pixel-manipulation/2d.imageData.put.nonfinite.worker.html [ Failure ]
 crbug.com/709227 external/wpt/offscreen-canvas/the-offscreen-canvas/2d.getcontext.extraargs.worker.html [ Failure ]
-crbug.com/709227 external/wpt/offscreen-canvas/the-offscreen-canvas/offscreencanvas.getcontext.worker.html [ Failure ]
 crbug.com/709227 external/wpt/offscreen-canvas/the-offscreen-canvas/size.attributes.idl.worker.html [ Failure ]
 crbug.com/709227 external/wpt/offscreen-canvas/the-offscreen-canvas/size.attributes.parse.em.worker.html [ Failure ]
 crbug.com/709227 external/wpt/offscreen-canvas/the-offscreen-canvas/size.attributes.parse.empty.worker.html [ Failure ]
@@ -2715,9 +2712,6 @@ crbug.com/680407 [ Mac ] fast/forms/select/menulist-appearance-basic.html [ Need
 crbug.com/705490 external/wpt/fetch/api/basic/error-after-response.html [ Timeout Pass ]
 crbug.com/705490 virtual/mojo-blobs/external/wpt/fetch/api/basic/error-after-response.html [ Timeout Pass ]
 crbug.com/705490 virtual/outofblink-cors/external/wpt/fetch/api/basic/error-after-response.html [ Timeout Pass ]
-
-# This test has device ID strings in failure messages which change on every test run.
-crbug.com/679742 external/wpt/mediacapture-streams/MediaStreamTrack-getSettings.https.html [ Failure ]
 
 crbug.com/765116 external/wpt/xhr/responsexml-document-properties.htm [ Failure ]
 
@@ -3233,7 +3227,7 @@ crbug.com/767469 virtual/stable/http/tests/navigation/start-load-during-provisio
 
 # Sheriff failures 2017-10-02
 crbug.com/770971 [ Win7 ] fast/forms/suggested-value.html [ Pass Failure ]
-crbug.com/771492 [ Win Linux Mac ] external/wpt/css/css-tables/table-model-fixup-2.html [ Failure ]
+crbug.com/771492 external/wpt/css/css-tables/table-model-fixup-2.html [ Pass Failure ]
 
 # Suspended WebRTC tests
 # Test fails, and output changes for each run.
