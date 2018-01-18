@@ -138,6 +138,7 @@ public class VrTestFramework {
      * @param webContents The WebContents object to run the JavaScript in.
      * @return The return value of the JavaScript.
      */
+    @SuppressWarnings("CatchFail")
     public static String runJavaScriptOrFail(String js, int timeout, WebContents webContents) {
         try {
             return JavaScriptUtils.executeJavaScriptAndWaitForResult(

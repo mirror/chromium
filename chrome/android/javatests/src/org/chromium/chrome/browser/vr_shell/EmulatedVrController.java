@@ -89,8 +89,8 @@ public class EmulatedVrController {
      * result in faster movement, e.g. when used for scrolling, a higher number results in faster
      * scrolling.
      */
-    public void performLinearTouchpadMovement(
-            float xStart, float yStart, float xEnd, float yEnd, int steps, int speed) {
+    public void performLinearTouchpadMovement(float xStart, float yStart, float xEnd, float yEnd,
+            int steps, int speed, boolean fling) {
         // Touchpad events have timestamps attached to them in nanoseconds - for smooth scrolling,
         // the timestamps should increase at a similar rate to the amount of time we actually wait
         // between sending events, which is determined by the given speed.
@@ -98,7 +98,7 @@ public class EmulatedVrController {
         long timestamp = mApi.touchEvent.startTouchSequence(xStart, yStart, simulatedDelay, speed);
         timestamp = mApi.touchEvent.dragFromTo(
                 xStart, yStart, xEnd, yEnd, steps, timestamp, simulatedDelay, speed);
-        mApi.touchEvent.endTouchSequence(xEnd, yEnd, timestamp, simulatedDelay, speed);
+        if (!fling) mApi.touchEvent.endTouchSequence(xEnd, yEnd, timestamp, simulatedDelay, speed);
     }
 
     /**
@@ -112,8 +112,10 @@ public class EmulatedVrController {
      * @param steps the number of intermediate steps to send while scrolling
      * @param speed how long to wait between steps in the scroll, with higher
      * numbers resulting in a faster scroll
+     * @param fling whether fling scrolling is allowed. Enabling this more closely emulates how a
+     * user will scroll, but is less precise, so only enable if you actually need it.
      */
-    public void scroll(ScrollDirection direction, int steps, int speed) {
+    public void scroll(ScrollDirection direction, int steps, int speed, boolean fling) {
         float startX, startY, endX, endY;
         startX = startY = endX = endY = 0.5f;
         switch (direction) {
@@ -136,7 +138,7 @@ public class EmulatedVrController {
             default:
                 Assert.fail("Unknown scroll direction enum given");
         }
-        performLinearTouchpadMovement(startX, startY, endX, endY, steps, speed);
+        performLinearTouchpadMovement(startX, startY, endX, endY, steps, speed, fling);
     }
 
     /**
