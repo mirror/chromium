@@ -50,7 +50,11 @@ cr.define('print_preview', function() {
     // Dispatched when the list item is activated.
     SELECT: 'print_preview.DestinationListItem.SELECT',
     REGISTER_PROMO_CLICKED:
-        'print_preview.DestinationListItem.REGISTER_PROMO_CLICKED'
+        'print_preview.DestinationListItem.REGISTER_PROMO_CLICKED',
+    // Dispatched when the "learn more" link for an unsupported cloud
+    // destination is clicked.
+    GCP_ERROR_LEARN_MORE_CLICK:
+        'print_preview.DestinationListItem.GCP_ERROR_LEARN_MORE_CLICK'
   };
 
   DestinationListItem.prototype = {
@@ -72,6 +76,9 @@ cr.define('print_preview', function() {
       this.tracker.add(
           this.getChildElement('.register-promo-button'), 'click',
           this.onRegisterPromoClicked_.bind(this));
+      this.tracker.add(
+          this.getChildElement('.learn-more-link'), 'click',
+          this.onGcpErrorLearnMoreClick_.bind(this));
     },
 
     /** @return {!print_preview.Destination} */
@@ -321,6 +328,17 @@ cr.define('print_preview', function() {
           new Event(DestinationListItem.EventType.REGISTER_PROMO_CLICKED);
       promoClickedEvent.destination = this.destination_;
       this.eventTarget_.dispatchEvent(promoClickedEvent);
+    },
+
+    /**
+     * Called when the learn more link for an unsupported cloud destination is
+     * clicked.
+     * @private
+     */
+    onGcpErrorLearnMoreClick_: function() {
+      cr.dispatchSimpleEvent(
+          this.eventTarget_,
+          DestinationListItem.EventType.GCP_ERROR_LEARN_MORE_CLICK);
     },
 
     /**
