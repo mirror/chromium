@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05d0c613_e021e820",
+        "filename": "build/config/posix/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-18T16:51:23Z",
+      "side": 1,
+      "message": "Update this comment. File gcc bug to add -nostdlib++, link to it here, say \"gcc doesn\u0027t have -notstdlib++.",
+      "range": {
+        "startLine": 67,
+        "startChar": 17,
+        "endLine": 67,
+        "endChar": 54
+      },
+      "revId": "553989a96ab5252b545776b14bdd8e5db067d9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04adea53_39405fb5",
+        "filename": "build/config/posix/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-18T16:51:23Z",
+      "side": 1,
+      "message": "Remove conditional and do body of if unconditionally; we\u0027re always in the is_clang branch on mac.",
+      "revId": "553989a96ab5252b545776b14bdd8e5db067d9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb81658_557322ac",
+        "filename": "build/config/posix/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-18T16:51:23Z",
+      "side": 1,
+      "message": "Remove whole block for same reason.",
+      "revId": "553989a96ab5252b545776b14bdd8e5db067d9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
