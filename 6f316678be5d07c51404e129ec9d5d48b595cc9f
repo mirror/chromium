@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d6faf62_2822e051",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-18T21:37:10Z",
+      "side": 1,
+      "message": "I don\u0027t see how this is ClientControlledShellSurface specific. For xdg shell clients, this logic makes sense when a compositor side frame has been requested. If it hasn\u0027t been requested then this logic needs to have no effect. Maybe that\u0027s the case already as parent targeter is different in that case?\n\nMaybe we just need to rephrase this comment and remove the reference to ClientControlledShellSurface. Please verify that this doesn\u0027t effect xdg clients that are not requesting a frame before landing though.",
+      "range": {
+        "startLine": 203,
+        "startChar": 7,
+        "endLine": 206,
+        "endChar": 59
+      },
+      "revId": "6f316678be5d07c51404e129ec9d5d48b595cc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
