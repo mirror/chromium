@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5074a438_291bb8fa",
+        "filename": "services/identity/public/cpp/identity_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-18T09:11:21Z",
+      "side": 1,
+      "message": "HasPrimaryAccount",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 32
+      },
+      "revId": "b92c7ec3867889aa0959c0fe83c691fc888260e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
