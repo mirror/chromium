@@ -43,8 +43,8 @@ ArcAppItem* ArcAppModelBuilder::GetArcAppItem(const std::string& app_id) {
 std::unique_ptr<ArcAppItem> ArcAppModelBuilder::CreateApp(
     const std::string& app_id,
     const ArcAppListPrefs::AppInfo& app_info) {
-  return base::MakeUnique<ArcAppItem>(profile(), GetSyncItem(app_id), app_id,
-                                      app_info.name);
+  return base::MakeUnique<ArcAppItem>(
+      profile(), model_updater(), GetSyncItem(app_id), app_id, app_info.name);
 }
 
 void ArcAppModelBuilder::OnAppRegistered(

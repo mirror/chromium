@@ -11,6 +11,7 @@
 
 #include "ash/app_list/model/app_list_item.h"
 #include "base/macros.h"
+#include "chrome/browser/ui/app_list/app_list_model_updater.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 
 class AppListControllerDelegate;
@@ -84,6 +85,9 @@ class ChromeAppListItem : public app_list::AppListItem {
 
   AppListControllerDelegate* GetController();
 
+  AppListModelUpdater* GetModelUpdater();
+  void SetModelUpdater(AppListModelUpdater* model_updater);
+
   // Updates item position and name from |sync_item|. |sync_item| must be valid.
   void UpdateFromSync(
       const app_list::AppListSyncableService::SyncItem* sync_item);
@@ -93,6 +97,7 @@ class ChromeAppListItem : public app_list::AppListItem {
 
  private:
   Profile* profile_;
+  AppListModelUpdater* model_updater_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeAppListItem);
 };
