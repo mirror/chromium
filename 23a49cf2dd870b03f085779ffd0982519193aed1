@@ -22,6 +22,29 @@
       "revId": "23a49cf2dd870b03f085779ffd0982519193aed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a72c8f_0517bb33",
+        "filename": "third_party/WebKit/Source/modules/xr/XRFrameProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-18T01:02:53Z",
+      "side": 1,
+      "message": "needs_copy\u003dfalse currently won\u0027t work right for Windows, there\u0027s a platform specific DCHECK(needs_copy) in XRFrameTransport::FrameSubmit that I kept from the previous code when moving it to the new class. Can you check with billorr@ if there\u0027s a better way to handle this? I think it\u0027s OK to just remove the DCHECK and update code comments. Basically, XRFrameTransport currently copies unconditionally on Windows, though future optimizations may be able to remove this in some cases.",
+      "range": {
+        "startLine": 332,
+        "startChar": 65,
+        "endLine": 332,
+        "endChar": 70
+      },
+      "revId": "23a49cf2dd870b03f085779ffd0982519193aed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
