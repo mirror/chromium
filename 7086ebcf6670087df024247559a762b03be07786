@@ -34,6 +34,24 @@
       "revId": "7086ebcf6670087df024247559a762b03be07786",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f10ac7_92a7f2f0",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-18T09:00:40Z",
+      "side": 1,
+      "message": "What I had in mind is the code below. My reasoning is that the DCHECK at the end makes it clear that we expect \"source\" to be set to a non-null value after the block above. This can help code readers decide whether they want to read the block in detail, and provides a hint to folks who tries to hack on the code. \n\nif (source_.IsIDBObjectStore()) {\n  source \u003d\n      IDBCursor::Source::FromIDBObjectStore(source_.GetAsIDBObjectStore());\n} else if (source_.IsIDBIndex()){\n  source \u003d IDBCursor::Source::FromIDBIndex(source_.GetAsIDBIndex());\n}\n\nDCHECK(source);",
+      "parentUuid": "6649699a_d901c4f7",
+      "revId": "7086ebcf6670087df024247559a762b03be07786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
