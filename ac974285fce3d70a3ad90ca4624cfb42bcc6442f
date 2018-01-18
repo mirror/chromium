@@ -124,6 +124,24 @@
       "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ab0fe9_dcbed8e7",
+        "filename": "content/browser/service_manager/service_manager_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-18T00:39:15Z",
+      "side": 1,
+      "message": "The reason why it appears to be more complex after my proposed change is that it includes two functional changes:\n1. It fixes a race condition that I believe to be present in the current state\n2. It changes the behavior from blocking on Shutdown() to non-blocking.\n\nThe current state of the code (before my proposed change) looks like there is less going on, but it took me a long time to figure out all the concurrency cases that can happen (and write the tests for them, which were missing). With that I am not convinced that it was really much simpler before.",
+      "parentUuid": "02c50c83_1f9392fd",
+      "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
