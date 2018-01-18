@@ -153,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "143093d1_0aecab95",
+        "filename": "components/autofill/content/common/submission_source_type_converters.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T08:48:15Z",
+      "side": 1,
+      "message": "In general, we want to encourage more use of the Mojo enums and structs directly. It\u0027s often the case that EnumTraits are very boilerplate code, since they\u0027re literally just mapping enumerator values of different types.\n\nHowever, since I\u0027m not familiar with the autofill layering, let\u0027s just go with typemapping using EnumTraits for now (and remove the LAST enumerator value from the C++ enum)",
+      "parentUuid": "749d4375_4f5fb1ce",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0a59590_e826b6eb",
         "filename": "components/autofill/content/renderer/autofill_agent.cc",
         "patchSetId": 8
@@ -223,6 +241,30 @@
       "side": 1,
       "message": "Is this a tradition? I see a lot of usage like this https://cs.chromium.org/search/?q\u003d_for_testing\u0026p\u003d1\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
       "parentUuid": "c3ee4b96_8da36939",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 58
+      },
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7082dd95_ace4ef13",
+        "filename": "components/autofill/content/renderer/form_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T08:48:15Z",
+      "side": 1,
+      "message": "I didn\u0027t look very closely, but it seems many of those are getters that are inlined in the header (and hence qualify for hacker_case naming rather than CamelCase).",
+      "parentUuid": "d3605337_2413f18d",
       "range": {
         "startLine": 94,
         "startChar": 18,
