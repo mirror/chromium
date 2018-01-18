@@ -2787,6 +2787,10 @@ const char kAutomaticTabDiscardingDescription[] =
 
 // Feature flags --------------------------------------------------------------
 
+const char kVrBrowsingNativeAndroidUiName[] = "VR browsing native android ui";
+const char kVrBrowsingNativeAndroidUiDescription[] =
+    "Enable Android UI elements in VR.";
+
 #if BUILDFLAG(ENABLE_VR)
 
 const char kWebVrVsyncAlignName[] = "WebVR VSync-aligned timing";

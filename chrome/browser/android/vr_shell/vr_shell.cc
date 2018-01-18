@@ -494,6 +494,23 @@ void VrShell::OnTabRemoved(JNIEnv* env,
   ui_->RemoveTab(incognito, id);
 }
 
+void VrShell::ShowAlertDialog(vr::ContentInputDelegate* delegate,
+                              int width,
+                              int height) {
+  ui_->SetAlertDialogEnabled(true, delegate, width, height);
+}
+
+void VrShell::CloseAlertDialog() {
+  ui_->SetAlertDialogEnabled(false, nullptr, 0, 0);
+}
+
+void VrShell::SetAlertDialogSize(int width, int height) {
+  PostToGlThread(FROM_HERE,
+                 base::Bind(&VrShellGl::UpdateUiTextureSize,
+                            gl_thread_->GetVrShellGl(), width, height));
+  ui_->SetAlertDialogSize(width, height);
+}
+
 void VrShell::ConnectPresentingService(
     device::mojom::VRSubmitFrameClientPtr submit_client,
     device::mojom::VRPresentationProviderRequest request,
@@ -517,6 +534,17 @@ base::android::ScopedJavaGlobalRef<jobject> VrShell::TakeContentSurface(
   compositor_->SurfaceChanged(nullptr);
   base::android::ScopedJavaGlobalRef<jobject> surface(env, content_surface_);
   content_surface_ = nullptr;
+  return surface;
+}
+
+base::android::ScopedJavaGlobalRef<jobject> VrShell::TakeUiSurface(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
+  if (!ui_surface_) {
+    return base::android::ScopedJavaGlobalRef<jobject>(env, nullptr);
+  }
+  base::android::ScopedJavaGlobalRef<jobject> surface(env, ui_surface_);
+  ui_surface_ = nullptr;
   return surface;
 }
 
@@ -548,6 +576,13 @@ void VrShell::ContentSurfaceChanged(jobject surface) {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_contentSurfaceChanged(env, j_vr_shell_);
   compositor_->SurfaceChanged(content_surface_);
+}
+
+void VrShell::UiSurfaceChanged(jobject surface) {
+  ui_surface_ = surface;
+  JNIEnv* env = base::android::AttachCurrentThread();
+  base::android::ScopedJavaGlobalRef<jobject> ref(env, surface);
+  Java_VrShellImpl_uiSurfaceChanged(env, j_vr_shell_, ref);
 }
 
 void VrShell::GvrDelegateReady(
