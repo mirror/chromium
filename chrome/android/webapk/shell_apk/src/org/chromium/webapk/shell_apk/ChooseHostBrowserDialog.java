@@ -11,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -192,8 +194,14 @@ public class ChooseHostBrowserDialog {
                 name.setText(item.getApplicationName());
                 name.setTextColor(WebApkUtils.getColor(res, R.color.black_alpha_87));
             } else {
-                name.setText(mContext.getString(R.string.host_browser_item_not_supporting_webapks,
-                        item.getApplicationName()));
+                String text = mContext.getString(R.string.host_browser_item_not_supporting_webapks,
+                        item.getApplicationName());
+                SpannableString ss = new SpannableString(text);
+                float unsupportedTextProportion = res.getDimension(R.dimen.text_size_medium_dense)
+                        / res.getDimension(R.dimen.text_size_large);
+                ss.setSpan(new RelativeSizeSpan(unsupportedTextProportion),
+                        item.getApplicationName().length() + 1, ss.length(), 0);
+                name.setText(ss);
                 name.setSingleLine(false);
                 name.setTextColor(WebApkUtils.getColor(res, R.color.black_alpha_38));
             }
