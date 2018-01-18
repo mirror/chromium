@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "978dda53_fea4c9a7",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-18T20:50:05Z",
+      "side": 1,
+      "message": "This wait is currently only exercised by tests, so my thought was base::ScopedAllowBaseSyncPrimitivesForTesting should be sufficient.\n\nBut considering this some more, I think it\u0027s wrong to use base::ScopedAllowBaseSyncPrimitivesForTesting here since it makes the behavior under test different from the behavior in the release. Using Stop() then Start() would work fine in on the CQ and waterfall, then fail in the Albatross ASAN release with DCHECKS on.\n\nI think we do need base::ScopedAllowBaseSyncPrimitivesOutsideBlockingScope here so that the code is the same between the tests and the release and works in both cases. gab?",
+      "parentUuid": "476c5b81_5a7b29e3",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42ee3d9b_90677bc0",
         "filename": "base/profiler/stack_sampling_profiler.cc",
         "patchSetId": 27
@@ -184,6 +202,24 @@
       "side": 1,
       "message": "Done. Approach adopted.\n\nBut should it be the following logic? If the event is un-signaled, do we still need to reset it?\n\nif (!profiling_inactive.IsSignaled()) {\n  profiling_inactive.Wait();\n  profiling_inactive.Reset();\n}",
       "parentUuid": "73a0a677_98de9529",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2102c739_a04d6520",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-18T20:50:05Z",
+      "side": 1,
+      "message": "There\u0027s no harm in this case in signaling an already-signaled event. I think we should go with gab\u0027s proposed logic since it more clearly conveys the intention of this code.",
+      "parentUuid": "0c810449_56453fc3",
       "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
