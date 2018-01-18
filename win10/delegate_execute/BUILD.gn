@@ -1,0 +1,51 @@
+# Copyright (c) 2018 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/config/chrome_build.gni")
+import("//chrome/process_version_rc_template.gni")
+
+executable("delegate_execute") {
+  sources = [
+    "delegate_execute.cc",
+    "delegate_execute.rc",
+  ]
+
+  configs -= [ "//build/config/win:console" ]
+  configs += [ "//build/config/win:windowed" ]
+
+  deps = [
+    ":lib",
+    ":version_resources",
+    "//build/win:default_exe_manifest",
+  ]
+}
+
+source_set("lib") {
+  visibility = [ ":*" ]
+  sources = [
+    "chrome_util.cc",
+    "chrome_util.h",
+    "crash_server_init.cc",
+    "crash_server_init.h",
+    "resource.h",
+  ]
+
+  public_deps = [
+    "//base",
+    "//chrome/common:constants",
+    "//chrome/installer/util:with_no_strings",
+    "//third_party/breakpad:breakpad_handler",
+  ]
+
+  if (is_chrome_branded) {
+    public_deps += [ "//google_update" ]
+  }
+}
+
+process_version_rc_template("version_resources") {
+  sources = [
+    "delegate_execute_exe.ver",
+  ]
+  output = "$target_gen_dir/delegate_execute_exe.rc"
+}

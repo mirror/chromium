@@ -1,0 +1,7 @@
+include_rules = [
+  "+base",
+  "+chrome/common",
+  "+chrome/installer",
+  "+google_update",
+  "+third_party/breakpad",
+]
