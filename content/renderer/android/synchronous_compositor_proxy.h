@@ -56,6 +56,7 @@ class SynchronousCompositorProxy : public ui::SynchronousInputHandler,
   void Invalidate() override;
   void SubmitCompositorFrame(uint32_t layer_tree_frame_sink_id,
                              viz::CompositorFrame frame) override;
+  void SetNeedsBeginFrames(bool needs_begin_frames) override;
 
   void SetLayerTreeFrameSink(
       SynchronousLayerTreeFrameSink* layer_tree_frame_sink);
@@ -101,6 +102,8 @@ class SynchronousCompositorProxy : public ui::SynchronousInputHandler,
   void SendAsyncRendererStateIfNeeded();
   void DoDemandDrawHw(const SyncCompositorDemandDrawHwParams& params,
                       IPC::Message* reply_message);
+  void OnSetBeginFrameSourcePaused(bool paused);
+  void OnBeginFrame(const viz::BeginFrameArgs& args);
 
   const int routing_id_;
   IPC::Sender* const sender_;

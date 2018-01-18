@@ -144,6 +144,9 @@ void SynchronousCompositorProxy::OnMessageReceived(
                                     DemandDrawSw)
     IPC_MESSAGE_HANDLER(SyncCompositorMsg_ZoomBy, SynchronouslyZoomBy)
     IPC_MESSAGE_HANDLER(SyncCompositorMsg_SetScroll, SetScroll)
+    IPC_MESSAGE_HANDLER(SyncCompositorMsg_SetBeginFramePaused,
+                        OnSetBeginFrameSourcePaused)
+    IPC_MESSAGE_HANDLER(SyncCompositorMsg_BeginFrame, OnBeginFrame)
   IPC_END_MESSAGE_MAP()
 }
 
@@ -194,6 +197,16 @@ void SynchronousCompositorProxy::DoDemandDrawHw(
     }
     inside_receive_ = false;
   }
+}
+
+void SynchronousCompositorProxy::OnSetBeginFrameSourcePaused(bool paused) {
+  if (layer_tree_frame_sink_)
+    layer_tree_frame_sink_->SetBeginFrameSourcePaused(paused);
+}
+
+void SynchronousCompositorProxy::OnBeginFrame(const viz::BeginFrameArgs& args) {
+  if (layer_tree_frame_sink_)
+    layer_tree_frame_sink_->BeginFrame(args);
 }
 
 void SynchronousCompositorProxy::SubmitCompositorFrameHwAsync(
@@ -353,6 +366,11 @@ void SynchronousCompositorProxy::SubmitCompositorFrame(
   } else if (software_draw_reply_) {
     SubmitCompositorFrameSw(std::move(frame));
   }
+}
+
+void SynchronousCompositorProxy::SetNeedsBeginFrames(bool needs_begin_frames) {
+  Send(new SyncCompositorHostMsg_SetNeedsBeginFrames(routing_id_,
+                                                     needs_begin_frames));
 }
 
 void SynchronousCompositorProxy::OnComputeScroll(
