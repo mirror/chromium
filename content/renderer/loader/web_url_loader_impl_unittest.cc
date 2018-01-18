@@ -76,7 +76,7 @@ class TestResourceDispatcher : public ResourceDispatcher {
       const url::Origin& frame_origin,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       SyncLoadResponse* response,
-      mojom::URLLoaderFactory* url_loader_factory,
+      network::mojom::URLLoaderFactory* url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles) override {
     *response = sync_load_response_;
   }
@@ -89,9 +89,10 @@ class TestResourceDispatcher : public ResourceDispatcher {
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       bool is_sync,
       std::unique_ptr<RequestPeer> peer,
-      mojom::URLLoaderFactory* url_loader_factory,
+      network::mojom::URLLoaderFactory* url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints) override {
+      network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints)
+      override {
     EXPECT_FALSE(peer_);
     if (sync_load_response_.encoded_body_length != -1)
       EXPECT_TRUE(is_sync);
@@ -133,22 +134,24 @@ class TestResourceDispatcher : public ResourceDispatcher {
   DISALLOW_COPY_AND_ASSIGN(TestResourceDispatcher);
 };
 
-class FakeURLLoaderFactory final : public mojom::URLLoaderFactory {
+class FakeURLLoaderFactory final : public network::mojom::URLLoaderFactory {
  public:
   FakeURLLoaderFactory() = default;
   ~FakeURLLoaderFactory() override = default;
-  void CreateLoaderAndStart(mojom::URLLoaderRequest request,
+  void CreateLoaderAndStart(network::mojom::URLLoaderRequest request,
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
                             const network::ResourceRequest& url_request,
-                            mojom::URLLoaderClientPtr client,
+                            network::mojom::URLLoaderClientPtr client,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override {
     NOTREACHED();
   }
 
-  void Clone(mojom::URLLoaderFactoryRequest request) override { NOTREACHED(); }
+  void Clone(network::mojom::URLLoaderFactoryRequest request) override {
+    NOTREACHED();
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FakeURLLoaderFactory);

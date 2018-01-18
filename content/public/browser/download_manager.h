@@ -40,8 +40,8 @@
 #include "content/public/browser/download_item.h"
 #include "content/public/browser/download_url_parameters.h"
 #include "content/public/common/download_stream.mojom.h"
-#include "content/public/common/url_loader.mojom.h"
 #include "net/base/net_errors.h"
+#include "services/network/public/interfaces/url_loader.mojom.h"
 
 class GURL;
 

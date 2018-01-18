@@ -6,10 +6,10 @@
 #define CONTENT_RENDERER_LOADER_SYNC_LOAD_CONTEXT_H_
 
 #include "base/macros.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/renderer/request_peer.h"
 #include "content/renderer/loader/resource_dispatcher.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 
 namespace base {
 class WaitableEvent;
@@ -40,13 +40,13 @@ class SyncLoadContext : public RequestPeer {
       scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner,
       const url::Origin& frame_origin,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
-      mojom::URLLoaderFactoryPtrInfo url_loader_factory_pipe,
+      network::mojom::URLLoaderFactoryPtrInfo url_loader_factory_pipe,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
       SyncLoadResponse* response,
       base::WaitableEvent* event);
 
   SyncLoadContext(network::ResourceRequest* request,
-                  mojom::URLLoaderFactoryPtrInfo url_loader_factory,
+                  network::mojom::URLLoaderFactoryPtrInfo url_loader_factory,
                   SyncLoadResponse* response,
                   base::WaitableEvent* event);
   ~SyncLoadContext() override;
@@ -71,7 +71,7 @@ class SyncLoadContext : public RequestPeer {
   base::WaitableEvent* event_;
 
   // State necessary to run a request on an independent thread.
-  mojom::URLLoaderFactoryPtr url_loader_factory_;
+  network::mojom::URLLoaderFactoryPtr url_loader_factory_;
   std::unique_ptr<ResourceDispatcher> resource_dispatcher_;
 
   int request_id_;

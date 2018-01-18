@@ -23,7 +23,7 @@ void SyncLoadContext::StartAsyncWithWaitableEvent(
     scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner,
     const url::Origin& frame_origin,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
-    mojom::URLLoaderFactoryPtrInfo url_loader_factory_pipe,
+    network::mojom::URLLoaderFactoryPtrInfo url_loader_factory_pipe,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
     SyncLoadResponse* response,
     base::WaitableEvent* event) {
@@ -34,12 +34,12 @@ void SyncLoadContext::StartAsyncWithWaitableEvent(
       std::move(request), routing_id, std::move(loading_task_runner),
       frame_origin, traffic_annotation, true /* is_sync */,
       base::WrapUnique(context), context->url_loader_factory_.get(),
-      std::move(throttles), mojom::URLLoaderClientEndpointsPtr());
+      std::move(throttles), network::mojom::URLLoaderClientEndpointsPtr());
 }
 
 SyncLoadContext::SyncLoadContext(
     network::ResourceRequest* request,
-    mojom::URLLoaderFactoryPtrInfo url_loader_factory,
+    network::mojom::URLLoaderFactoryPtrInfo url_loader_factory,
     SyncLoadResponse* response,
     base::WaitableEvent* event)
     : response_(response), event_(event) {

@@ -12,11 +12,11 @@
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
 #include "content/common/frame.mojom.h"
-#include "content/public/common/url_loader.mojom.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "net/url_request/redirect_info.h"
 #include "services/network/public/cpp/resource_response.h"
+#include "services/network/public/interfaces/url_loader.mojom.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "third_party/WebKit/public/platform/WebURLLoader.h"
 #include "third_party/WebKit/public/platform/WebURLLoaderFactory.h"
 #include "url/gurl.h"
@@ -41,7 +41,7 @@ struct CONTENT_EXPORT StreamOverrideParameters {
   ~StreamOverrideParameters();
 
   GURL stream_url;
-  mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints;
+  network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints;
   network::ResourceResponseHead response;
   std::vector<GURL> redirects;
   std::vector<network::ResourceResponseInfo> redirect_responses;
@@ -78,12 +78,12 @@ class CONTENT_EXPORT WebURLLoaderImpl : public blink::WebURLLoader {
  public:
   WebURLLoaderImpl(ResourceDispatcher* resource_dispatcher,
                    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-                   mojom::URLLoaderFactory* url_loader_factory);
+                   network::mojom::URLLoaderFactory* url_loader_factory);
   // When non-null |keep_alive_handle| is specified, this loader prolongs
   // this render process's lifetime.
   WebURLLoaderImpl(ResourceDispatcher* resource_dispatcher,
                    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-                   mojom::URLLoaderFactory* url_loader_factory,
+                   network::mojom::URLLoaderFactory* url_loader_factory,
                    mojom::KeepAliveHandlePtr keep_alive_handle);
   ~WebURLLoaderImpl() override;
 
