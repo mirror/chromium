@@ -32,6 +32,7 @@
 #include "core/dom/DocumentShutdownObserver.h"
 #include "core/editing/Forward.h"
 #include "core/editing/PlainTextRange.h"
+#include "core/editing/commands/TypingCommand.h"
 #include "core/editing/ime/ImeTextSpan.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Vector.h"
@@ -153,6 +154,9 @@ class CORE_EXPORT InputMethodController final
       const String&,
       int relative_caret_position,
       const Vector<ImeTextSpan>& ime_text_spans);
+
+  // Returns false if the frame was destroyed, true otherwise.
+  bool DeleteSelection() WARN_UNUSED_RESULT;
 
   // Returns true if moved caret successfully.
   bool MoveCaret(int new_caret_position);
