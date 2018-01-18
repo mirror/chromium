@@ -16,6 +16,24 @@
       "revId": "31233b19de2db23219e7e627847ef8d39566cb74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f7dfed_96a2c06e",
+        "filename": "base/win/win_util_internal.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-18T18:25:14Z",
+      "side": 1,
+      "message": "We don\u0027t support XP anymore. I\u0027m afraid I don\u0027t know any more about the comment than you do.",
+      "parentUuid": "93aef3f8_2a377630",
+      "revId": "31233b19de2db23219e7e627847ef8d39566cb74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
