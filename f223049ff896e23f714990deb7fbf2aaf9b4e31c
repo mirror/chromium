@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "855f8fb1_69943792",
+        "filename": "chrome/browser/autofill/autofill_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T01:38:48Z",
+      "side": 1,
+      "message": "Nit: even if",
+      "range": {
+        "startLine": 264,
+        "startChar": 70,
+        "endLine": 264,
+        "endChar": 74
+      },
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22624453_09cf603d",
+        "filename": "components/autofill/android/autofill_provider_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T01:38:48Z",
+      "side": 1,
+      "message": "This function could use a bit more documentation: it\u0027s not clear to me how OnFormsSeen is used, or when this signal is fired.\n\nPerhaps this could be done in a followup CL (document the control flow between the browser and the renderer side of autofill; as it is, it\u0027s not very clear to me how the two parts interact)",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd8eefe1_2e3da85e",
+        "filename": "components/autofill/content/common/autofill_driver.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T01:38:48Z",
+      "side": 1,
+      "message": "Nit: please add some comments that describe what these various values mean. It\u0027s not clear what the difference between \u0027probably form submitted\u0027 and \u0027form submission\u0027 are.",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e39ca2_c98724c0",
+        "filename": "components/autofill/content/common/autofill_driver.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T01:38:48Z",
+      "side": 1,
+      "message": "Nit: please document what |known_success| means.",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b15864_f23079cb",
+        "filename": "components/autofill/content/common/submission_source_type_converters.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T01:38:48Z",
+      "side": 1,
+      "message": "Please use StructTraits, not TypeConverter. That involves adding an entry to the typemap file and defining a StructTraits specialization. Please see https://chromium.googlesource.com/chromium/src/+/master/mojo/public/cpp/bindings#Type-Mapping for the Mojo documentation about this.\n\nThat being said, as mentioned below, it would be easier to just use the generated C++ mojo enum throughout--so can we do that?",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a59590_e826b6eb",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T01:38:48Z",
+      "side": 1,
+      "message": "It\u0027s not obvious to me why we pass time over mojo if we just pass base::TimeTicks::Now. If we\u0027re doing that, would it be possible to just use base::TimeTicks::Now() on the browser side?",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ee4b96_8da36939",
+        "filename": "components/autofill/content/renderer/form_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T01:38:48Z",
+      "side": 1,
+      "message": "Nit: name this FireProbablyFormSubmittedForTests; lower camel case is typically only used for cheap getters and setters.",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 58
+      },
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f0a91e_0c8300a5",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T01:38:48Z",
+      "side": 1,
+      "message": "This feels a bit awkward... it feels like what we semantically want is a FormStructure::Clone() method, and we would just pass the clone to StartUploadProcess().",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd4f460_4f04e0d7",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T01:38:48Z",
+      "side": 1,
+      "message": "Nit: what\u0027s \u0027process\u0027? I guess it means if the upload couldn\u0027t start?",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3326184_45a5ac4d",
+        "filename": "components/autofill/core/common/submission_source.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T01:38:48Z",
+      "side": 1,
+      "message": "Omit this, it\u0027s not used?\n\nAlso, looking at this in more detail, I wonder why we can\u0027t just use the generated Mojo C++ enum throughout?",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
