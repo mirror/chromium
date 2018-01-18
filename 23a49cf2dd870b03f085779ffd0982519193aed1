@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "468e5e29_2475caab",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLFramebuffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-18T21:40:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c500b1e_37a85018",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 17
+      },
+      "revId": "23a49cf2dd870b03f085779ffd0982519193aed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20a72c8f_0517bb33",
         "filename": "third_party/WebKit/Source/modules/xr/XRFrameProvider.cpp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "23a49cf2dd870b03f085779ffd0982519193aed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b41100b_090cfb65",
+        "filename": "third_party/WebKit/Source/modules/xr/XRFrameProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-18T21:40:19Z",
+      "side": 1,
+      "message": "Thanks for pointing this out! For the moment I\u0027ve mimicked the VRDisplay logic (would like to land the CL before the branch point) but I\u0027ll definitely follow up with Bill.",
+      "parentUuid": "20a72c8f_0517bb33",
+      "range": {
+        "startLine": 332,
+        "startChar": 65,
+        "endLine": 332,
+        "endChar": 70
+      },
+      "revId": "23a49cf2dd870b03f085779ffd0982519193aed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
