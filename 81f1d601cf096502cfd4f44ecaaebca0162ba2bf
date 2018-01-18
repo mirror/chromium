@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cfecc83_3748a2a2",
+        "filename": "ui/ozone/platform/cast/gl_surface_cast.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2018-01-18T22:10:23Z",
+      "side": 1,
+      "message": "Nit: I\u0027ve just noticed this, and I\u0027m not sure where the 59.9 value came from. I believe the standard video refresh rate value is 59.94 (e.g. do a google search for \"59.9 frames per second\" at look at results). So, since you are touching this code, maybe let\u0027s change those values here and on line 35 (and in your other CLs) from 59.9 to 59.94?",
+      "range": {
+        "startLine": 22,
+        "startChar": 45,
+        "endLine": 22,
+        "endChar": 49
+      },
+      "revId": "81f1d601cf096502cfd4f44ecaaebca0162ba2bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
