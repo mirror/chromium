@@ -298,10 +298,7 @@ void ManagePasswordsBubbleView::StyledLabelLinkClicked(
 }
 
 void ManagePasswordsBubbleView::CreateChild() {
-  if (model()->state() == password_manager::ui::PENDING_PASSWORD_STATE) {
-    AddChildView(new ManagePasswordPendingView(this));
-  } else if (model()->state() ==
-             password_manager::ui::PENDING_PASSWORD_UPDATE_STATE) {
+  if (model()->state() == password_manager::ui::PENDING_PASSWORD_UPDATE_STATE) {
     AddChildView(new ManagePasswordUpdatePendingView(this));
   } else if (model()->state() == password_manager::ui::CONFIRMATION_STATE) {
     AddChildView(new ManagePasswordSaveConfirmationView(this));

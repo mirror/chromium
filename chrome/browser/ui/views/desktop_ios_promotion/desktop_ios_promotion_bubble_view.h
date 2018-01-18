@@ -20,8 +20,7 @@ class Profile;
 // This view will always be created as a subview of an existing
 // bubble (ie. Password Bubble, Bookmark Bubble).
 class DesktopIOSPromotionBubbleView : public DesktopIOSPromotionView,
-                                      public views::View,
-                                      public views::ButtonListener {
+                                      public views::View {
  public:
   DesktopIOSPromotionBubbleView(
       Profile* profile,
@@ -31,12 +30,12 @@ class DesktopIOSPromotionBubbleView : public DesktopIOSPromotionView,
   // DesktopIOSPromotionView:
   void UpdateRecoveryPhoneLabel() override;
 
- private:
-  // ButtonListener:
-  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+  bool Accept();
+  bool Cancel();
+  base::string16 GetDialogButtonLabel(ui::DialogButton button) const;
+  gfx::ImageSkia GetWindowIcon();
 
-  views::Button* send_sms_button_ = nullptr;
-  views::Button* no_button_ = nullptr;
+ private:
   // The text that will appear on the promotion body.
   views::Label* promotion_text_label_;
   std::unique_ptr<DesktopIOSPromotionBubbleController> promotion_controller_;
