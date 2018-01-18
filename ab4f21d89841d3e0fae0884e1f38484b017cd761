@@ -22,6 +22,30 @@
       "revId": "ab4f21d89841d3e0fae0884e1f38484b017cd761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "801c146e_6717db58",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-18T23:04:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "668e3eef_9806be1a",
+      "range": {
+        "startLine": 219,
+        "startChar": 25,
+        "endLine": 219,
+        "endChar": 32
+      },
+      "revId": "ab4f21d89841d3e0fae0884e1f38484b017cd761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
