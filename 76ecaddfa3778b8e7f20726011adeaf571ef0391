@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04480bc4_c2922c3f",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-18T02:20:05Z",
+      "side": 1,
+      "message": "What about putting an object pointer to WrapperDescriptor?\n\nThen we can merge WrapperMarkingData into WrapperDescriptor.",
+      "revId": "76ecaddfa3778b8e7f20726011adeaf571ef0391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b4acba_2cc80d54",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-18T02:20:05Z",
+      "side": 1,
+      "message": "t \u003d\u003e traceable",
+      "revId": "76ecaddfa3778b8e7f20726011adeaf571ef0391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
