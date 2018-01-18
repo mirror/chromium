@@ -18,7 +18,6 @@ import android.view.inputmethod.InputConnection;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.ContentViewCore.InternalAccessDelegate;
-import org.chromium.content.browser.PopupZoomer;
 import org.chromium.content.browser.WindowAndroidChangedObserver;
 import org.chromium.content.browser.accessibility.WebContentsAccessibility;
 import org.chromium.content.browser.input.ImeAdapter;
@@ -95,10 +94,6 @@ public class TestContentViewCore implements ContentViewCore {
 
     @Override
     public void setContainerViewInternals(InternalAccessDelegate internalDispatcher) {}
-
-    @VisibleForTesting
-    @Override
-    public void setPopupZoomerForTest(PopupZoomer popupZoomer) {}
 
     @Override
     public void destroy() {}

@@ -167,7 +167,6 @@ public class ContentViewCoreImpl
 
     private boolean mAttachedToWindow;
 
-    private PopupZoomer mPopupZoomer;
     private SelectPopup mSelectPopup;
     private long mNativeSelectPopupSourceFrame;
 
@@ -367,10 +366,11 @@ public class ContentViewCoreImpl
 
         setContainerViewInternals(internalDispatcher);
 
-        mPopupZoomer = new PopupZoomer(mContext, mWebContents, mContainerView);
         mImeAdapter = new ImeAdapter(
                 mWebContents, mContainerView, new InputMethodManagerWrapper(mContext));
         mImeAdapter.addEventObserver(this);
+        mImeAdapter.addEventObserver(
+                TapDisambiguator.create(mContext, mWebContents, mContainerView));
         mTextSuggestionHost = new TextSuggestionHost(this);
 
         mWebContentsObserver = new ContentViewWebContentsObserver(this);
@@ -426,7 +426,7 @@ public class ContentViewCoreImpl
             TraceEvent.begin("ContentViewCore.setContainerView");
             if (mContainerView != null) {
                 hideSelectPopupWithCancelMessage();
-                mPopupZoomer.hide(false);
+                getTapDisambiguator().hidePopup(false);
                 mImeAdapter.setContainerView(containerView);
             }
 
@@ -446,6 +446,10 @@ public class ContentViewCoreImpl
         return GestureListenerManagerImpl.fromWebContents(mWebContents);
     }
 
+    private TapDisambiguator getTapDisambiguator() {
+        return TapDisambiguator.fromWebContents(mWebContents);
+    }
+
     @CalledByNative
     private void onNativeContentViewCoreDestroyed(long nativeContentViewCore) {
         assert nativeContentViewCore == mNativeContentViewCore;
@@ -455,12 +459,6 @@ public class ContentViewCoreImpl
     @Override
     public void setContainerViewInternals(InternalAccessDelegate internalDispatcher) {
         mContainerViewInternals = internalDispatcher;
-    }
-
-    @VisibleForTesting
-    @Override
-    public void setPopupZoomerForTest(PopupZoomer popupZoomer) {
-        mPopupZoomer = popupZoomer;
     }
 
     @Override
@@ -539,7 +537,8 @@ public class ContentViewCoreImpl
             return true;
         }
 
-        if (!mPopupZoomer.isShowing()) mPopupZoomer.setLastTouch(x, y);
+        TapDisambiguator tapDisambiguator = getTapDisambiguator();
+        if (!tapDisambiguator.isShowing()) tapDisambiguator.setLastTouch(x, y);
 
         return false;
     }
@@ -589,24 +588,24 @@ public class ContentViewCoreImpl
     }
 
     private void hidePopupsAndClearSelection() {
-        if (isAlive()) {
+        if (mWebContents != null) {
             getSelectionPopupController().destroyActionModeAndUnselect();
             destroyPastePopup();
+            getTapDisambiguator().hidePopup(false);
+            mWebContents.dismissTextHandles();
         }
         hideSelectPopupWithCancelMessage();
-        mPopupZoomer.hide(false);
         mTextSuggestionHost.hidePopups();
-        if (mWebContents != null) mWebContents.dismissTextHandles();
     }
 
     @CalledByNative
     private void hidePopupsAndPreserveSelection() {
-        if (isAlive()) {
+        if (mWebContents != null) {
             getSelectionPopupController().destroyActionModeAndKeepSelection();
             destroyPastePopup();
+            getTapDisambiguator().hidePopup(false);
         }
         hideSelectPopupWithCancelMessage();
-        mPopupZoomer.hide(false);
         mTextSuggestionHost.hidePopups();
     }
 
@@ -705,26 +704,6 @@ public class ContentViewCoreImpl
         getGestureListenerManager().updateOnTouchDown();
     }
 
-    private void updateAfterSizeChanged() {
-        mPopupZoomer.hide(false);
-
-        // Execute a delayed form focus operation because the OSK was brought
-        // up earlier.
-        Rect focusPreOSKViewportRect = mImeAdapter.getFocusPreOSKViewportRect();
-        if (!focusPreOSKViewportRect.isEmpty()) {
-            Rect rect = new Rect();
-            getContainerView().getWindowVisibleDisplayFrame(rect);
-            if (!rect.equals(focusPreOSKViewportRect)) {
-                // Only assume the OSK triggered the onSizeChanged if width was preserved.
-                if (rect.width() == focusPreOSKViewportRect.width()) {
-                    assert mWebContents != null;
-                    mWebContents.scrollFocusedEditableNodeIntoView();
-                }
-                cancelRequestToScrollFocusedEditableNodeIntoView();
-            }
-        }
-    }
-
     private void cancelRequestToScrollFocusedEditableNodeIntoView() {
         // Zero-ing the rect will prevent |updateAfterSizeChanged()| from
         // issuing the delayed form focus event.
@@ -780,8 +759,9 @@ public class ContentViewCoreImpl
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (mPopupZoomer.isShowing() && keyCode == KeyEvent.KEYCODE_BACK) {
-            mPopupZoomer.backButtonPressed();
+        TapDisambiguator tapDisambiguator = getTapDisambiguator();
+        if (tapDisambiguator.isShowing() && keyCode == KeyEvent.KEYCODE_BACK) {
+            tapDisambiguator.backButtonPressed();
             return true;
         }
         return mContainerViewInternals.super_onKeyUp(keyCode, event);
@@ -1010,9 +990,7 @@ public class ContentViewCoreImpl
                 || scrollOffsetX != mRenderCoordinates.getScrollX()
                 || scrollOffsetY != mRenderCoordinates.getScrollY();
 
-        final boolean needHidePopupZoomer = contentSizeChanged || scrollChanged;
-
-        if (needHidePopupZoomer) mPopupZoomer.hide(true);
+        if (contentSizeChanged || scrollChanged) getTapDisambiguator().hidePopup(true);
 
         if (scrollChanged) {
             mContainerViewInternals.onScrollChanged(
@@ -1041,9 +1019,7 @@ public class ContentViewCoreImpl
     // ImeEventObserver
 
     @Override
-    public void onImeEvent() {
-        mPopupZoomer.hide(true);
-    }
+    public void onImeEvent() {}
 
     @Override
     public void onNodeAttributeUpdated(boolean editable, boolean password) {

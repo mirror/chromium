@@ -498,9 +498,6 @@ public interface ContentViewCore {
     @VisibleForTesting
     ImeAdapter getImeAdapterForTest();
 
-    @VisibleForTesting
-    void setPopupZoomerForTest(PopupZoomer popupZoomer);
-
     /**
      * @return The amount of the top controls height if controls are in the state
      *    of shrinking Blink's view size, otherwise 0.
