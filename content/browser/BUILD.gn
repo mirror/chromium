@@ -100,6 +100,7 @@ jumbo_source_set("browser") {
     "//media:media_features",
     "//media/capture",
     "//media/capture/mojo:image_capture",
+    "//media/capture/mojo:video_capture",
     "//media/midi",
     "//media/midi:mojo",
     "//media/mojo:features",
@@ -1701,7 +1702,7 @@ jumbo_source_set("browser") {
     deps += [ "//ui/events" ]
   }
 
-  # ChromeOS also defines linux but their memory-monitors conflict.
+  # ChromeOS also defines linux but their memory-movideo_capture_hostnitors conflict.
   if (is_chromeos) {
     sources += [
       "memory/memory_monitor_chromeos.cc",

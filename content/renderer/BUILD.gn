@@ -574,6 +574,7 @@ target(link_target_type, "renderer") {
     "//media:media_features",
     "//media/blink",
     "//media/capture",
+    "//media/capture/mojo:video_capture",
     "//media/gpu",
     "//media/gpu/ipc/client",
     "//media/gpu/ipc/common",
