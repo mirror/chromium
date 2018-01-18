@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "368a54c5_6505d681",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-18T22:30:21Z",
+      "side": 1,
+      "message": "Thank you for pointing out and for the code snippet! Fixed.",
+      "parentUuid": "df5f1af4_142a8c19",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 16
+      },
+      "revId": "d9224f86307aecc6e80aae842545236fbd7cdff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7c855bf_7cfb3418",
         "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-18T16:23:31Z",
       "side": 1,
       "message": "note: all these functions in the shim will be called from different threads at the same time. You can\u0027t just use a bool. In the other cases the way they do this is via a thread-local-bool.",
+      "range": {
+        "startLine": 151,
+        "startChar": 1,
+        "endLine": 152,
+        "endChar": 18
+      },
+      "revId": "d9224f86307aecc6e80aae842545236fbd7cdff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742951fb_5923f418",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-18T22:30:21Z",
+      "side": 1,
+      "message": "Yes, I know that there is a race. But it seems ok here. The purpose of this bool is to guard against reentering the critical section by the same thread (that otherwise would cause a deadlock as the base::Lock is not recursive). So basically I only care that I read true from it when the *same* thread has already inside the critical section.\n\nThe benefit of having a plain static entered_ vs. a TLS one was just speed. But it comes at a cost of having other threads sometimes getting false positives and thus skipping samples.\n\nAnyway I now think it\u0027s better to make use a TLS here as we\u0027re already on the slow path. Fixed.",
+      "parentUuid": "f7c855bf_7cfb3418",
       "range": {
         "startLine": 151,
         "startChar": 1,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ad3d0a79_c68e245f",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-18T22:30:21Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c64e4d95_35371de5",
+      "range": {
+        "startLine": 232,
+        "startChar": 21,
+        "endLine": 232,
+        "endChar": 29
+      },
+      "revId": "d9224f86307aecc6e80aae842545236fbd7cdff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "499fbe35_056c3bd3",
         "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-18T16:23:31Z",
       "side": 1,
       "message": "I think these are mac only, but you\u0027ll hit them there",
+      "range": {
+        "startLine": 282,
+        "startChar": 2,
+        "endLine": 282,
+        "endChar": 37
+      },
+      "revId": "d9224f86307aecc6e80aae842545236fbd7cdff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f30f4a_b5a14194",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-18T22:30:21Z",
+      "side": 1,
+      "message": "Oh thanks. I was wondering if these are used. I\u0027ll disable tests on Mac until they are implemented. Strangely I haven\u0027t seen them hit there yet.",
+      "parentUuid": "499fbe35_056c3bd3",
       "range": {
         "startLine": 282,
         "startChar": 2,
