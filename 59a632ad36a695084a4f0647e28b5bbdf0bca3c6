@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4d1e7e8_4826f322",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:51:49Z",
+      "side": 1,
+      "message": "nit: move this into the horizontal block below.",
+      "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25846fdf_2b32cb8c",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:51:49Z",
+      "side": 1,
+      "message": "optional nit: expose an accessor like title() instead, or expose title_ and remove title().",
+      "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7bcf125_55dfca33",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:51:49Z",
+      "side": 1,
+      "message": "nit: take and store the orientation instead.",
+      "range": {
+        "startLine": 176,
+        "startChar": 20,
+        "endLine": 176,
+        "endChar": 30
+      },
+      "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a84e1676_51dec6c7",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:51:49Z",
+      "side": 1,
+      "message": "nit: make this protected, or private with an accessor for subclasses.",
+      "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
