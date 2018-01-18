@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e195381_104b285e",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-18T11:21:11Z",
+      "side": 1,
+      "message": "I was thinking about this too. But the wrapper descriptor is larger than marking data as it contains missed_write_barrier_callback (needed for the verifier). Merging them would increase memory usage for the marking deque.\n\nSince this structure will be used by all the visitors, it would be nice to keep it decoupled from the marking visitor.",
+      "parentUuid": "04480bc4_c2922c3f",
+      "revId": "76ecaddfa3778b8e7f20726011adeaf571ef0391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08b4acba_2cc80d54",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "76ecaddfa3778b8e7f20726011adeaf571ef0391",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc627cf2_9fd1dddf",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-18T11:21:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08b4acba_2cc80d54",
+      "revId": "76ecaddfa3778b8e7f20726011adeaf571ef0391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
