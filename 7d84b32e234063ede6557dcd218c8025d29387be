@@ -162,6 +162,30 @@
       "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2d9ecf_e56e048f",
+        "filename": "content/renderer/fetchers/resource_fetcher_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-18T15:30:29Z",
+      "side": 1,
+      "message": "Just because there\u0027s already likely some raciness and non-determinism, I don\u0027t think that\u0027s a reason to not be concerned about adding more?",
+      "parentUuid": "81ba1981_175b60c9",
+      "range": {
+        "startLine": 424,
+        "startChar": 41,
+        "endLine": 424,
+        "endChar": 73
+      },
+      "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
