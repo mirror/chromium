@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23bd2705_2b09dc5b",
+        "filename": "chrome/browser/extensions/api/extension_action/browser_action_interactive_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-18T18:05:10Z",
+      "side": 1,
+      "message": "Devlin, I copied over this sentence from https://chromium-review.googlesource.com/c/chromium/src/+/862183/9/chrome/browser/extensions/api/extension_action/browser_action_interactive_test.cc#140.\n\nI feel like this sentence is missing a verb. When you mean \"this method will ...\", what verb would follow the \"will\"?",
+      "range": {
+        "startLine": 136,
+        "startChar": 58,
+        "endLine": 138,
+        "endChar": 13
+      },
+      "revId": "f2445f926b66790720dbbf308174fd81f5ae264b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
