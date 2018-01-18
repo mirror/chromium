@@ -136,7 +136,7 @@ VisitedLinkEventListener::~VisitedLinkEventListener() {
 }
 
 void VisitedLinkEventListener::NewTable(mojo::SharedBufferHandle table) {
-  DCHECK(table.is_valid());
+  DCHECK(table);
   shared_memory_ = table.Clone(mojo::SharedBufferHandle::AccessMode::READ_ONLY);
   if (!shared_memory_.is_valid())
     return;

@@ -719,7 +719,7 @@ std::unique_ptr<base::SharedMemory> ChildThreadImpl::AllocateSharedMemory(
     size_t buf_size) {
   mojo::ScopedSharedBufferHandle mojo_buf =
       mojo::SharedBufferHandle::Create(buf_size);
-  if (!mojo_buf->is_valid()) {
+  if (!*mojo_buf) {
     LOG(WARNING) << "Browser failed to allocate shared memory";
     return nullptr;
   }
