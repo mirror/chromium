@@ -15,6 +15,7 @@ cr.define('extension_manager_tests', function() {
     Uninstall: 'uninstall',
     UninstallFromDetails: 'uninstall while in details view',
     UpdateItemData: 'update item data',
+    KioskMode: 'kiosk mode',
   };
 
   var suiteName = 'ExtensionManagerUnitTest';
@@ -281,6 +282,27 @@ cr.define('extension_manager_tests', function() {
       });
       expectEquals(ExtensionState.ENABLED, manager.extensions_[0].state);
     });
+
+    if (cr.isChromeOS) {
+      test(assert(TestNames.KioskMode), function() {
+        const browserProxy = new TestKioskBrowserProxy();
+        extensions.KioskBrowserProxyImpl.instance_ = browserProxy;
+
+        PolymerTest.clearBody();
+        manager = document.createElement('extensions-manager');
+        document.body.appendChild(manager);
+
+        expectFalse(!!manager.$$('extensions-kiosk-dialog'));
+
+        return browserProxy.whenCalled('initializeKioskAppSettings')
+            .then(() => {
+              expectTrue(manager.$$('extensions-toolbar').kioskEnabled);
+              manager.$$('extensions-toolbar').fire('kiosk-tap');
+              Polymer.dom.flush();
+              expectTrue(!!manager.$$('extensions-kiosk-dialog'));
+            });
+      });
+    }
   });
 
   return {
