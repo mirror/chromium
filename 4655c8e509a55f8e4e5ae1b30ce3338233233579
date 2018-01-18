@@ -16,6 +16,24 @@
       "revId": "4655c8e509a55f8e4e5ae1b30ce3338233233579",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e379a268_b7df2956",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeToolbar.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-18T02:49:06Z",
+      "side": 1,
+      "message": "I think that\u0027s a 10 out of 10.  Feels natural when I play around with it.  Looking back at the old bug where we introduced _lastMode and _lastScale, I feel like this covers the use cases for _lastScale (https://crbug.com/656020).  That is, if you can turn off auto-zoom, you don\u0027t need DevTools to remember the last scale anymore, so I think we can remove it.",
+      "parentUuid": "49c0264a_dddd90bd",
+      "revId": "4655c8e509a55f8e4e5ae1b30ce3338233233579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
