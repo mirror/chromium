@@ -65,6 +65,11 @@ class MetricsServiceAccessor {
       uint32_t trial_name_hash,
       uint32_t group_name_hash);
 
+  // Non-official builds always return false from IsMetricsReportingEnabled().
+  // Use this function to turn on the test used in official builds. This is
+  // only useful in tests.
+  static void SetForceOfficialEnabledTest(bool value);
+
  private:
   DISALLOW_COPY_AND_ASSIGN(MetricsServiceAccessor);
 };
