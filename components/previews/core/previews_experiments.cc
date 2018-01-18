@@ -223,6 +223,8 @@ std::string GetStringNameForType(PreviewsType type) {
   // The returned string is used to record histograms for the new preview type.
   // Also add the string to Previews.Types histogram suffix in histograms.xml.
   switch (type) {
+    case PreviewsType::NONE:
+      return "None";
     case PreviewsType::OFFLINE:
       return "Offline";
     case PreviewsType::LOFI:
@@ -233,7 +235,6 @@ std::string GetStringNameForType(PreviewsType type) {
       return "AMPRedirection";
     case PreviewsType::NOSCRIPT:
       return "NoScript";
-    case PreviewsType::NONE:
     case PreviewsType::LAST:
       break;
   }
