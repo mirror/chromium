@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b1b773c_3fbedbdb",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-18T16:09:04Z",
+      "side": 1,
+      "message": "Done. Yes, good point :)",
+      "parentUuid": "f3a93105_b8cf8607",
+      "revId": "700f21b4a8206b8b758adcd31815a480652a2071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6634571e_3cc60457",
         "filename": "content/browser/browsing_data/browsing_data_remover_impl_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "700f21b4a8206b8b758adcd31815a480652a2071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac41faf6_ec7daab2",
+        "filename": "content/browser/browsing_data/browsing_data_remover_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-18T16:09:04Z",
+      "side": 1,
+      "message": "Done. Agreed. This is copied and adapted from the test above. Fixed here, below, and in the original.\n\nASSERT is used in tests for \"if this isn\u0027t true now, then the rest of the test doesn\u0027t make any sense.\"",
+      "parentUuid": "6634571e_3cc60457",
+      "revId": "700f21b4a8206b8b758adcd31815a480652a2071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
