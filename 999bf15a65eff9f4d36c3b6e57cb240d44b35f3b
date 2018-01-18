@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bca7f8b9_8816ab20",
+        "filename": "net/quic/core/quic_packet_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-18T03:05:25Z",
+      "side": 1,
+      "message": "This code (net/quic/core and net/tools/quic) is shared with the internal repository and can not depend on chromium-specific data types, so I think we\u0027re going to need to rethink this logic.\nWe might be able to do something chrome-specific in QuicChromiumPacketWriter, as you\u0027ve done, and then in QuicChromiumClientSession, we can frob the annotation bit in the underlying write via a cast.\n\nThat being said, I see a TODO in quic_connection.cc to figure out how to pass in the annotation. Can you explain how the logic is going to work here? For example with QUIC we can put data for multiple different requests into the same packet. Can different requests have different annotations? is that problematic?",
+      "range": {
+        "startLine": 52,
+        "startChar": 60,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "999bf15a65eff9f4d36c3b6e57cb240d44b35f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
