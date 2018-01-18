@@ -148,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "ae8b475f_1e58b652",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-18T22:03:49Z",
+      "side": 1,
+      "message": "This doesn\u0027t work as written since TypingCommand::InsertText() is used to dispatch a textInput event. If we do this, we would have to add extra code to dispatch the textInput event. Do you want me to do this?\n\nThis code path is tested in these two test cases in inputevent-ime.html:\n\nsetComposition with open composition, empty text\ninsertText with open composition, empty text\n\n(and probably the \"without open composition\" variants as well, but we don\u0027t fire textInput for those, so this change doesn\u0027t affect them).",
+      "parentUuid": "728cad34_e38b32e9",
+      "revId": "dd8174a0cee5b7358e3f6457a256e378a1fe809d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f472058e_32c15903",
         "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.h",
         "patchSetId": 4
