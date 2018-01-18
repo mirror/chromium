@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9324670c_e35ee594",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-18T23:02:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7df8fdea_0cbf62c9",
+      "range": {
+        "startLine": 42,
+        "startChar": 23,
+        "endLine": 42,
+        "endChar": 77
+      },
+      "revId": "8ab1c51df48fffdf06939a1a4f72697dd0d2b54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ceb6b335_683470e6",
         "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-18T22:01:55Z",
       "side": 1,
       "message": "This needs to block on the thread joining before destroying the keyboard (we can\u0027t leave a pending destroy), or we\u0027ll get memory leaks or crashes.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 17
+      },
+      "revId": "8ab1c51df48fffdf06939a1a4f72697dd0d2b54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a87e10_a67090bd",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-18T23:02:31Z",
+      "side": 1,
+      "message": "Talked to you offline. Posting on thread that created it should work.",
+      "parentUuid": "ceb6b335_683470e6",
       "range": {
         "startLine": 69,
         "startChar": 2,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "1e334bc7_a53f1840",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-18T23:02:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0a57c3c_89467a99",
+      "revId": "8ab1c51df48fffdf06939a1a4f72697dd0d2b54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f4d871f_efc23251",
         "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
         "patchSetId": 6
@@ -79,6 +145,24 @@
       "revId": "8ab1c51df48fffdf06939a1a4f72697dd0d2b54c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36da7859_aca76b7d",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-18T23:02:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f4d871f_efc23251",
+      "revId": "8ab1c51df48fffdf06939a1a4f72697dd0d2b54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
