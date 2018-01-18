@@ -58,16 +58,6 @@ void ReportUsage(Usage usage) {
 
 }  // namespace
 
-MidiManager::MidiManager(MidiService* service)
-    : initialization_state_(InitializationState::NOT_STARTED),
-      finalized_(false),
-      result_(Result::NOT_INITIALIZED),
-      data_sent_(false),
-      data_received_(false),
-      service_(service) {
-  ReportUsage(Usage::CREATED);
-}
-
 MidiManager::~MidiManager() {
   // Make sure that Finalize() is called to clean up resources allocated on
   // the Chrome_IOThread.
@@ -203,6 +193,16 @@ void MidiManager::DispatchSendMidiData(MidiManagerClient* client,
                                        const std::vector<uint8_t>& data,
                                        double timestamp) {
   NOTREACHED();
+}
+
+MidiManager::MidiManager(MidiService* service)
+    : initialization_state_(InitializationState::NOT_STARTED),
+      finalized_(false),
+      result_(Result::NOT_INITIALIZED),
+      data_sent_(false),
+      data_received_(false),
+      service_(service) {
+  ReportUsage(Usage::CREATED);
 }
 
 void MidiManager::StartInitialization() {

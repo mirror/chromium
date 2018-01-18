@@ -868,8 +868,11 @@ void MidiManagerWin::SendOnTaskRunner(MidiManagerClient* client,
                                base::Unretained(this), client, data.size()));
 }
 
-MidiManager* MidiManager::Create(MidiService* service) {
-  if (base::FeatureList::IsEnabled(features::kMidiManagerWinrt) &&
+std::unique_ptr<MidiManager> MidiManager::Create(
+    MidiService* service,
+    MidiManager::BackendOption option) {
+  if ((base::FeatureList::IsEnabled(features::kMidiManagerWinrt) ||
+       option == MidiManager::BackendOption::kPreferAlternative) &&
       base::win::GetVersion() >= base::win::VERSION_WIN10) {
     return new MidiManagerWinrt(service);
   }
