@@ -79,7 +79,7 @@ void CloseSdk() {
   sdk_handle = nullptr;
 }
 
-bool LoadSdk(void* closure, gvr_keyboard_callback callback) {
+bool LoadSdk() {
   if (sdk_handle)
     return true;
 
@@ -119,6 +119,14 @@ bool LoadSdk(void* closure, gvr_keyboard_callback callback) {
 
 }  // namespace
 
+bool load_gvr_sdk() {
+  return LoadSdk();
+}
+
+void close_gvr_sdk() {
+  CloseSdk();
+}
+
 void gvr_keyboard_initialize(JNIEnv* env,
                              jobject app_context,
                              jobject class_loader) {
@@ -127,7 +135,7 @@ void gvr_keyboard_initialize(JNIEnv* env,
 
 gvr_keyboard_context* gvr_keyboard_create(void* closure,
                                           gvr_keyboard_callback callback) {
-  if (!LoadSdk(closure, callback)) {
+  if (!sdk_handle) {
     return nullptr;
   }
   return impl_gvr_keyboard_create(closure, callback);
@@ -135,7 +143,6 @@ gvr_keyboard_context* gvr_keyboard_create(void* closure,
 
 void gvr_keyboard_destroy(gvr_keyboard_context** context) {
   impl_gvr_keyboard_destroy(context);
-  CloseSdk();
 }
 
 int32_t gvr_keyboard_get_input_mode(gvr_keyboard_context* context) {
