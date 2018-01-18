@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d0e61616_35f375d5",
+        "filename": "tools/cygprofile/orderfile_generator_backend.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-18T09:45:01Z",
+      "side": 1,
+      "message": "The right thing to do here, I think, is not write a file at all, but pass the list to a function. So rather than make a small change here that might break something somewhere else, or at the least cause confusion because the term \"merged log\" is used all over the place, I\u0027d like to wait to make the correct fix.",
+      "parentUuid": "73b77560_969d14ed",
+      "range": {
+        "startLine": 544,
+        "startChar": 23,
+        "endLine": 544,
+        "endChar": 46
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b762596_7a37b9be",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2e4285_c8b9b0af",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-18T09:45:01Z",
+      "side": 1,
+      "message": "Done, modulo the fact that I want to be clear that \"offset\" is used in two different ways.",
+      "parentUuid": "6b762596_7a37b9be",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 61
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ccc942ff_f1912d86",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-18T09:45:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66ecc02e_d2e07686",
+      "range": {
+        "startLine": 25,
+        "startChar": 38,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef5da7a7_3e361a92",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-17T16:14:14Z",
       "side": 1,
       "message": "jfyi: if extracting symbols is too slow for us, we can make it 10x faster by writing it in C without regexp and string splitting (it does not eliminate the need of reading only once though)",
+      "range": {
+        "startLine": 29,
+        "startChar": 47,
+        "endLine": 29,
+        "endChar": 65
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d659da_2db580a6",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-18T09:45:01Z",
+      "side": 1,
+      "message": "It\u0027s not too slow if it\u0027s only done once.",
+      "parentUuid": "ef5da7a7_3e361a92",
       "range": {
         "startLine": 29,
         "startChar": 47,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "da69cad4_a66a5c71",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-18T09:45:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7506ecef_5650596f",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07e5ac39_c0853ec1",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "a5797d31_757f2be0",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-18T09:45:01Z",
+      "side": 1,
+      "message": "Done. Test added which found a couple more problems :) For python, testing \u003d\u003d compilation",
+      "parentUuid": "07e5ac39_c0853ec1",
+      "range": {
+        "startLine": 126,
+        "startChar": 48,
+        "endLine": 126,
+        "endChar": 58
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b8a3645_92769126",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2018-01-17T16:14:14Z",
       "side": 1,
       "message": "We disable ICF for instrumented builds. Instead of calling these offsets \u0027primary\u0027, can we assert that no two reached symbols have the same offset?\n\nIf we happen not to disable ICF in instrumented builds, then ICF decisions would be different there, and we would need to extract all symbols, not only primary to avoid missing symbols. Hence an assert is better.\n\noh wait .., it used to do exactly the same thing .. let\u0027s try a different approach then .. please add the assert and if it breaks in your testing, plz comment it out and file a bug against it.",
+      "range": {
+        "startLine": 248,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 25
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38b7df9_25f36ac5",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-18T09:45:01Z",
+      "side": 1,
+      "message": "We only use this primary symbol concept in this main() method which is used for debugging \u0026 experiments only. So we may not be disabling ICF.\n\nThe whole notion of primary symbol is kind of broken, because it gets confused with the symbol duplication done later. I\u0027d like to get rid of it entirely. But I\u0027m not sure if we rely on it for visualization or any other tools. Any opinion, Benoit?",
+      "parentUuid": "7b8a3645_92769126",
       "range": {
         "startLine": 248,
         "startChar": 2,
