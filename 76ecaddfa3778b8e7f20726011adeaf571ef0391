@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "363b2d16_80e27a79",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-18T11:31:26Z",
+      "side": 1,
+      "message": "Agreed that we want to separate the two structs.\n\nA few suggestions:\n\n- I still think it\u0027s better to put the object pointer to WrapperDescriptor. It will decrease # of parameters passed around visitors.\n\n- To clarify what the structs mean, you can probably rename WrapperDescriptor to WrapperDescriptorForVisitor, and WrapperMakingData to WrapperDescriptorForMarkingQueue.",
+      "parentUuid": "6e195381_104b285e",
+      "revId": "76ecaddfa3778b8e7f20726011adeaf571ef0391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08b4acba_2cc80d54",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 6
