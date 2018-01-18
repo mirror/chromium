@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
 import org.chromium.blink.mojom.RemoteInvocationArgument;
+import org.chromium.blink.mojom.RemoteInvocationError;
 import org.chromium.blink.mojom.RemoteInvocationResult;
 import org.chromium.blink.mojom.RemoteObject;
 
@@ -44,6 +45,24 @@ public final class RemoteObjectImplTest {
         }
         public void reset() {
             value = null;
+        }
+    }
+
+    private static class RemoteInvocationResultCapture
+            implements RemoteObject.InvokeMethodResponse {
+        private RemoteInvocationResult mResult = null;
+
+        void reset() {
+            mResult = null;
+        }
+        RemoteInvocationResult get() {
+            Assert.assertTrue("Response callback must be invoked.", mResult != null);
+            return mResult;
+        }
+
+        @Override
+        public void call(RemoteInvocationResult result) {
+            mResult = result;
         }
     }
 
@@ -141,12 +160,17 @@ public final class RemoteObjectImplTest {
         };
 
         RemoteObject remoteObject = new RemoteObjectImpl(target, TestJavascriptInterface.class);
+        RemoteInvocationResultCapture capture = new RemoteInvocationResultCapture();
         Assert.assertEquals(Integer.valueOf(0), frobnicateCount.value);
-        remoteObject.invokeMethod("frobnicate", new RemoteInvocationArgument[] {},
-                (RemoteInvocationResult result) -> {});
+
+        capture.reset();
+        remoteObject.invokeMethod("frobnicate", new RemoteInvocationArgument[] {}, capture);
+        Assert.assertEquals(RemoteInvocationError.OK, capture.get().error);
         Assert.assertEquals(Integer.valueOf(1), frobnicateCount.value);
-        remoteObject.invokeMethod("frobnicate", new RemoteInvocationArgument[] {},
-                (RemoteInvocationResult result) -> {});
+
+        capture.reset();
+        remoteObject.invokeMethod("frobnicate", new RemoteInvocationArgument[] {}, capture);
+        Assert.assertEquals(RemoteInvocationError.OK, capture.get().error);
         Assert.assertEquals(Integer.valueOf(2), frobnicateCount.value);
     }
 
@@ -168,12 +192,46 @@ public final class RemoteObjectImplTest {
         // The method overload to be called depends on the number of arguments supplied.
         // TODO(jbroman): Once it's possible to construct a non-trivial argument, do so.
         RemoteObject remoteObject = new RemoteObjectImpl(target, TestJavascriptInterface.class);
+        RemoteInvocationResultCapture capture = new RemoteInvocationResultCapture();
         Assert.assertEquals(Integer.valueOf(0), frobnicateCount.value);
-        remoteObject.invokeMethod("frobnicate", new RemoteInvocationArgument[] {},
-                (RemoteInvocationResult result) -> {});
+
+        capture.reset();
+        remoteObject.invokeMethod("frobnicate", new RemoteInvocationArgument[] {}, capture);
+        Assert.assertEquals(RemoteInvocationError.OK, capture.get().error);
         Assert.assertEquals(Integer.valueOf(1), frobnicateCount.value);
-        remoteObject.invokeMethod("frobnicate", new RemoteInvocationArgument[] {null},
-                (RemoteInvocationResult result) -> {});
+
+        capture.reset();
+        remoteObject.invokeMethod("frobnicate", new RemoteInvocationArgument[] {null}, capture);
+        Assert.assertEquals(RemoteInvocationError.OK, capture.get().error);
         Assert.assertEquals(Integer.valueOf(3), frobnicateCount.value);
+    }
+
+    @Test
+    public void testInvokeMethodNotFound() {
+        Object target = new Object() {
+            public void unexposedMethod() {
+                Assert.fail("Unexposed method should not be called.");
+            }
+
+            @TestJavascriptInterface
+            public void exposedMethod(Object argument) {
+                Assert.fail("Exposed method should only be called with the correct arity.");
+            }
+        };
+
+        RemoteObject remoteObject = new RemoteObjectImpl(target, TestJavascriptInterface.class);
+        RemoteInvocationResultCapture capture = new RemoteInvocationResultCapture();
+
+        capture.reset();
+        remoteObject.invokeMethod("nonexistentMethod", new RemoteInvocationArgument[] {}, capture);
+        Assert.assertEquals(RemoteInvocationError.METHOD_NOT_FOUND, capture.get().error);
+
+        capture.reset();
+        remoteObject.invokeMethod("unexposedMethod", new RemoteInvocationArgument[] {}, capture);
+        Assert.assertEquals(RemoteInvocationError.METHOD_NOT_FOUND, capture.get().error);
+
+        capture.reset();
+        remoteObject.invokeMethod("exposedMethod", new RemoteInvocationArgument[] {}, capture);
+        Assert.assertEquals(RemoteInvocationError.METHOD_NOT_FOUND, capture.get().error);
     }
 }
