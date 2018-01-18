@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "cb60b158_6a2de58b",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-18T19:26:11Z",
+      "side": 1,
+      "message": "Yeah, unfortunately if we open the file descriptor out of process, we won\u0027t be able to trace it back to a file path. (Well, maybe we can on some platforms, but I\u0027d rather not write a bunch of platform-specific code for a DLOG.)",
+      "parentUuid": "72aa9bbe_4f980027",
+      "range": {
+        "startLine": 195,
+        "startChar": 37,
+        "endLine": 195,
+        "endChar": 45
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3df04007_99ffbb19",
         "filename": "third_party/zlib/google/zip.cc",
         "patchSetId": 1
@@ -163,6 +187,30 @@
     },
     {
       "key": {
+        "uuid": "1460f314_11ea2a1b",
+        "filename": "third_party/zlib/google/zip_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-18T19:26:11Z",
+      "side": 1,
+      "message": "Usually entries in a ZIP file have a file-modified timestamp stored in them. Typical practice is to extract the file with that modified timestamp (and indeed, existing unit tests check that we do.) (Note: We will extract with the current time as the file _access_ time.) However, entries in the archive can lack this metadata altogether, which appears to be tested here with the UnixEpoch check - I think the implementation of this check is a detail of our underlying zip library, not of the file format, but to be honest, I just moved it from just had to move this code from old line :353 and would rather not modify it, even if the old way wasn\u0027t super readable.",
+      "parentUuid": "f0127cbb_52c57976",
+      "range": {
+        "startLine": 292,
+        "startChar": 59,
+        "endLine": 292,
+        "endChar": 68
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edb81b18_f79ec1ec",
         "filename": "third_party/zlib/google/zip_reader.cc",
         "patchSetId": 1
@@ -200,6 +248,24 @@
       "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b290f67d_8d809f8e",
+        "filename": "third_party/zlib/google/zip_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-18T19:26:11Z",
+      "side": 1,
+      "message": "This is actually an existing feature and is covered by existing unit tests; but previously it was done as a part of ExtractEntryIntoDirectory, and now has to be done by the delegate (because how we do it differs depending on whether we have a file path or file descriptor).",
+      "parentUuid": "5fe63dd2_bb001b13",
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +321,30 @@
       "side": 1,
       "message": "+1. Is it possible to unify them into one member (and one constructor, instead of two)",
       "parentUuid": "cb3e659a_285fe414",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 285,
+        "endChar": 42
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db301d9_c5f0ad89",
+        "filename": "third_party/zlib/google/zip_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-18T19:26:11Z",
+      "side": 1,
+      "message": "Yeah this is definitely the worst part of this CL. The issue is this: some call sites that use a FileWriterDelegate need to retain ownership of the base::File, but the new call sites won\u0027t (because they don\u0027t survive as long as the FileWriterDelegate does).\n\nA couple other solutions would be:\n(1) Push the problem to the call site: in this case we\u0027ll wind up keeping some sort of table of file descriptors to destroy... somewhere (?)\n(2) Create a OwnedFileWriterDelegate, which will contain a FileWriterDelegate to dispatch most operations to, as well as a unique_ptr for owned_file_.\n\nDoes (2) sound OK to you?",
+      "parentUuid": "020c82ef_f9e6c850",
       "range": {
         "startLine": 284,
         "startChar": 0,
