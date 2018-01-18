@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "900e8b13_08e0cec1",
+        "filename": "components/policy/core/browser/configuration_policy_pref_store.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-18T20:59:47Z",
+      "side": 0,
+      "message": "Regardless of where this function is going to stay, please also fix its old comment - the reference to the UI thread in it is meaningless, it\u0027s been ~5 years since this task began being posted simply on the current thread.\n\nMost probably, with your change that old explanation can be replaced with a reference to the ResourceBundle construction.",
+      "revId": "746227693eb6d8e8567c5e04d2d38f3efd250ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

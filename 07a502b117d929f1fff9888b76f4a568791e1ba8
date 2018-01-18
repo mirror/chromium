@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceae93c7_2594070c",
+        "filename": "components/policy/core/browser/browser_policy_connector_base.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-18T20:59:47Z",
+      "side": 1,
+      "message": "It\u0027s a bit weird to make BrowserPolicyConnectorBase inheriting from this tiny interface. The PolicyConnector class is basically a root which holds all the rest of the policy stack, and it seems abusive to say that it\u0027s also a handler for some small and specific task like error logging.\n\nWith the assumption that the LogErrors() code returns back to ConfigurationPolicyPrefStore, I see two alternatives here:\neither 1) find another class that exposes an observer interface for the ResourceBundle construction (or anything after that, e.g. PreCreateThreads() finished, etc.),\nor 2) make BrowserPolicyConnectorBase expose a simple observer interface for the ResourceBundle construction event (a method with a callback parameter would be sufficient).\n\nI\u0027d say that #1 sounds cleaner - however I didn\u0027t succeed in finding a very good candidate. If you don\u0027t have an idea either, then #2 should also work.",
+      "revId": "07a502b117d929f1fff9888b76f4a568791e1ba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
