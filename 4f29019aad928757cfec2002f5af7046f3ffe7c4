@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d7ed832_f9e6ddad",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 1563,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T14:11:08Z",
+      "side": 0,
+      "message": "Yay, this whole file looks so much better without both of these scenarios handled in DCPL. Thanks!",
+      "revId": "4f29019aad928757cfec2002f5af7046f3ffe7c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

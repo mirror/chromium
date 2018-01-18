@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12190998_367b7be3",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 1562,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T14:11:08Z",
+      "side": 1,
+      "message": "nit: s//A/",
+      "range": {
+        "startLine": 1562,
+        "startChar": 7,
+        "endLine": 1562,
+        "endChar": 19
+      },
+      "revId": "d9479ae70b486e10bc04622a02a5209ba5d2fd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c1422b2_c4901d2c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 54
+      },
+      "lineNbr": 2895,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T14:11:08Z",
+      "side": 1,
+      "message": "Thanks!",
+      "range": {
+        "startLine": 2895,
+        "startChar": 26,
+        "endLine": 2895,
+        "endChar": 69
+      },
+      "revId": "d9479ae70b486e10bc04622a02a5209ba5d2fd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
