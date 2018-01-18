@@ -318,6 +318,12 @@ bool ExecuteScriptWithoutUserGesture(const ToRenderFrameHost& adapter,
                                      const std::string& script)
     WARN_UNUSED_RESULT;
 
+// Same as content::ExecuteScript but consumes the user gesture sent to the
+// renderer before returning.
+bool ExecuteScriptWithScopedUserGesture(const ToRenderFrameHost& adapter,
+                                        const std::string& script)
+    WARN_UNUSED_RESULT;
+
 // Similar to ExecuteScript above, but
 // - Doesn't modify the |script|.
 // - Kicks off execution of the |script| in the specified frame and returns

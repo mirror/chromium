@@ -731,9 +731,8 @@ void RenderFrameHostImpl::ExecuteJavaScript(
 
 void RenderFrameHostImpl::ExecuteJavaScriptForTests(
     const base::string16& javascript) {
-  Send(new FrameMsg_JavaScriptExecuteRequestForTests(routing_id_,
-                                                     javascript,
-                                                     0, false, false));
+  Send(new FrameMsg_JavaScriptExecuteRequestForTests(routing_id_, javascript, 0,
+                                                     false, false, false));
 }
 
 void RenderFrameHostImpl::ExecuteJavaScriptForTests(
@@ -741,16 +740,21 @@ void RenderFrameHostImpl::ExecuteJavaScriptForTests(
      const JavaScriptResultCallback& callback) {
   int key = g_next_javascript_callback_id++;
   Send(new FrameMsg_JavaScriptExecuteRequestForTests(routing_id_, javascript,
-                                                     key, true, false));
+                                                     key, true, false, false));
   javascript_callbacks_.insert(std::make_pair(key, callback));
 }
 
 
 void RenderFrameHostImpl::ExecuteJavaScriptWithUserGestureForTests(
     const base::string16& javascript) {
-  Send(new FrameMsg_JavaScriptExecuteRequestForTests(routing_id_,
-                                                     javascript,
-                                                     0, false, true));
+  Send(new FrameMsg_JavaScriptExecuteRequestForTests(routing_id_, javascript, 0,
+                                                     false, true, false));
+}
+
+void RenderFrameHostImpl::ExecuteJavaScriptWithScopedUserGestureForTests(
+    const base::string16& javascript) {
+  Send(new FrameMsg_JavaScriptExecuteRequestForTests(routing_id_, javascript, 0,
+                                                     false, true, true));
 }
 
 void RenderFrameHostImpl::ExecuteJavaScriptInIsolatedWorld(

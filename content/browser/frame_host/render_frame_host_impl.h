@@ -205,6 +205,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
       const JavaScriptResultCallback& callback) override;
   void ExecuteJavaScriptWithUserGestureForTests(
       const base::string16& javascript) override;
+  void ExecuteJavaScriptWithScopedUserGestureForTests(
+      const base::string16& javascript) override;
   void ActivateFindInPageResultForAccessibility(int request_id) override;
   void InsertVisualStateCallback(const VisualStateCallback& callback) override;
   void CopyImageAt(int x, int y) override;

@@ -1016,7 +1016,8 @@ class CONTENT_EXPORT RenderFrameImpl
   void OnJavaScriptExecuteRequestForTests(const base::string16& javascript,
                                           int id,
                                           bool notify_result,
-                                          bool has_user_gesture);
+                                          bool has_user_gesture,
+                                          bool consume_user_gesture);
   void OnJavaScriptExecuteRequestInIsolatedWorld(const base::string16& jscript,
                                                  int id,
                                                  bool notify_result,
