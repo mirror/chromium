@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29f12d50_a8b4fc70",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-18T02:58:47Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ()?",
+      "range": {
+        "startLine": 976,
+        "startChar": 2,
+        "endLine": 976,
+        "endChar": 8
+      },
+      "revId": "2cca2b76f05f7aed9dba5b5945cb6153fe1d71c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
