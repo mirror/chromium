@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58f6ad06_03d4292f",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-18T09:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e275a5b_a54d948f",
+      "range": {
+        "startLine": 25,
+        "startChar": 19,
+        "endLine": 25,
+        "endChar": 29
+      },
+      "revId": "71437a1a19f0432368c874981868dcd3219ed7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18b2e19d_27911b97",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "71437a1a19f0432368c874981868dcd3219ed7ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee7ad0e_528d5b1c",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-18T09:04:32Z",
+      "side": 1,
+      "message": "Yes, it was to give an example, sorry.\n\nI am not fond of overriding -updateConstraints, per Apple documentation:\n\"It is almost always cleaner and easier to update a constraint immediately after the affecting change has occurred. For example, if you want to change a constraint in response to a button tap, make that change directly in the button’s action method.\n\nYou should only override this method when changing constraints in place is too slow, or when a view is producing a number of redundant changes.\"\n\nI don\u0027t think we are in one of those situation.\n\nHowever, we can move the creation of the constraints in this method.",
+      "parentUuid": "18b2e19d_27911b97",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 28
+      },
+      "revId": "71437a1a19f0432368c874981868dcd3219ed7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e999ae25_2a2454d6",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-18T09:04:32Z",
+      "side": 1,
+      "message": "Apparently the -activateConstraints and -deactivateConstraints are optimized. I have moved to this code.",
+      "parentUuid": "2df27f4e_c71422f3",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 14
+      },
+      "revId": "71437a1a19f0432368c874981868dcd3219ed7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce845eb9_ed54e06a",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.mm",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "71437a1a19f0432368c874981868dcd3219ed7ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc25f65_4c9f15d3",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-18T09:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce845eb9_ed54e06a",
+      "range": {
+        "startLine": 43,
+        "startChar": 23,
+        "endLine": 43,
+        "endChar": 54
+      },
+      "revId": "71437a1a19f0432368c874981868dcd3219ed7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
