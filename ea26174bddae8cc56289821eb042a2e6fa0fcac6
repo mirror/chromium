@@ -22,6 +22,30 @@
       "revId": "ea26174bddae8cc56289821eb042a2e6fa0fcac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631c69ac_7c14caf3",
+        "filename": "third_party/WebKit/Source/core/svg/SVGPathElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1124724
+      },
+      "writtenOn": "2018-01-18T01:07:08Z",
+      "side": 1,
+      "message": "This Cl and the other [1] is prepare to change AddPropertyToPresentationAttributeStyle take a  const CSSValue\u0026 instead of const CSSValue*, as sashab@ leave the TODO at Element.h:855. I will do the change at the next CL.\n[1]: https://chromium-review.googlesource.com/c/chromium/src/+/866618",
+      "parentUuid": "a4fc2b6b_15d923ec",
+      "range": {
+        "startLine": 117,
+        "startChar": 44,
+        "endLine": 117,
+        "endChar": 61
+      },
+      "revId": "ea26174bddae8cc56289821eb042a2e6fa0fcac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
