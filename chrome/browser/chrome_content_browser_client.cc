@@ -879,26 +879,31 @@ void ChromeContentBrowserClient::SetApplicationLocale(
   }
 }
 
-content::BrowserMainParts* ChromeContentBrowserClient::CreateBrowserMainParts(
+ChromeBrowserMainParts*
+ChromeContentBrowserClient::CreateChromeBrowserMainParts(
     const content::MainFunctionParams& parameters) {
-  ChromeBrowserMainParts* main_parts;
-  // Construct the Main browser parts based on the OS type.
+// Construct the Main browser parts based on the OS type.
 #if defined(OS_WIN)
-  main_parts = new ChromeBrowserMainPartsWin(parameters);
+  return new ChromeBrowserMainPartsWin(parameters);
 #elif defined(OS_MACOSX)
-  main_parts = new ChromeBrowserMainPartsMac(parameters);
+  return new ChromeBrowserMainPartsMac(parameters);
 #elif defined(OS_CHROMEOS)
-  main_parts = new chromeos::ChromeBrowserMainPartsChromeos(parameters);
+  return new chromeos::ChromeBrowserMainPartsChromeos(parameters);
 #elif defined(OS_LINUX)
-  main_parts = new ChromeBrowserMainPartsLinux(parameters);
+  return new ChromeBrowserMainPartsLinux(parameters);
 #elif defined(OS_ANDROID)
-  main_parts = new ChromeBrowserMainPartsAndroid(parameters);
+  return new ChromeBrowserMainPartsAndroid(parameters);
 #elif defined(OS_POSIX)
-  main_parts = new ChromeBrowserMainPartsPosix(parameters);
+  return new ChromeBrowserMainPartsPosix(parameters);
 #else
   NOTREACHED();
-  main_parts = new ChromeBrowserMainParts(parameters);
+  return new ChromeBrowserMainParts(parameters);
 #endif
+}
+
+content::BrowserMainParts* ChromeContentBrowserClient::CreateBrowserMainParts(
+    const content::MainFunctionParams& parameters) {
+  ChromeBrowserMainParts* main_parts = CreateChromeBrowserMainParts(parameters);
 
   chrome::AddProfilesExtraParts(main_parts);
 

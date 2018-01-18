@@ -95,6 +95,9 @@ class BrowserMainRunnerImpl : public BrowserMainRunner {
 
       main_loop_->Init();
 
+      if (parameters.post_main_loop_init_closure)
+        parameters.post_main_loop_init_closure->Run(main_loop_->parts());
+
       main_loop_->EarlyInitialization();
 
       // Must happen before we try to use a message loop or display any UI.
