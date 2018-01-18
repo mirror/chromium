@@ -25,6 +25,69 @@
     },
     {
       "key": {
+        "uuid": "2a7e4161_a16652a9",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-18T01:46:31Z",
+      "side": 1,
+      "message": "We don\u0027t need to have |TypingCommand::Options|. All call sites passes 0.",
+      "range": {
+        "startLine": 995,
+        "startChar": 44,
+        "endLine": 995,
+        "endChar": 74
+      },
+      "revId": "dd8174a0cee5b7358e3f6457a256e378a1fe809d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45d8f03_d85cb3bb",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-18T01:46:31Z",
+      "side": 1,
+      "message": "nit: We should move this to then-clause at L1001.",
+      "range": {
+        "startLine": 1007,
+        "startChar": 0,
+        "endLine": 1008,
+        "endChar": 17
+      },
+      "revId": "dd8174a0cee5b7358e3f6457a256e378a1fe809d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a600fd3_5530f6a7",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-18T01:46:31Z",
+      "side": 1,
+      "message": "Not related to this patch, but we should address in another patch:\n\nInsertTextDuringCompositionWithEvents() can send two \"input\" events:\n    case TypingCommand::TextCompositionType::kTextCompositionConfirm:\n      if (text.IsEmpty())\n        TypingCommand::DeleteSelection(*frame.GetDocument(), 0);\n      frame.GetDocument()-\u003eUpdateStyleAndLayoutIgnorePendingStylesheets();\n      TypingCommand::InsertText(*frame.GetDocument(), text, options,\n                                composition_type, is_incremental_insertion);\n      break;",
+      "revId": "dd8174a0cee5b7358e3f6457a256e378a1fe809d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f472058e_32c15903",
         "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.h",
         "patchSetId": 4
@@ -54,6 +117,24 @@
       "side": 1,
       "message": "Don\u0027t we need to check IsAvailable() after firing beforeinput?\n\nI was also predicting you\u0027d want me to use WARN_UNUSED_RESULT and return the final value of IsAvailable(). Do you not want me to do this?",
       "parentUuid": "f472058e_32c15903",
+      "revId": "dd8174a0cee5b7358e3f6457a256e378a1fe809d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fdaa80e_288e3f4e",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-18T01:46:31Z",
+      "side": 1,
+      "message": "I see. We should check IMC::IsAvaialbe().\nSince TypingCommand::kPreventSpellChecking has been gone, we don\u0027t need\nto have |TypingCommand::Options| here.",
+      "parentUuid": "5d8b8efc_d9d5bb3b",
       "revId": "dd8174a0cee5b7358e3f6457a256e378a1fe809d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
