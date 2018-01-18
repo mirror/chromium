@@ -92,6 +92,24 @@
       "revId": "3f77a35b5b84a61f79d8aedcda24dac0be444336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3809fa3_68400f93",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T09:11:27Z",
+      "side": 1,
+      "message": "Oops, didn\u0027t realize I didn\u0027t publish my earlier round of drafts. To clarify, this is done, because I changed how this work so we don\u0027t need to plumb it around anymore with override_initiator_type. It\u0027s used only for frames, so it feels a little awkward, but it works: the old setter override in blink::ResourceTimingInfo was also iframe specific, so it feels neutral overall.\n\nFor the above change, it\u0027s no longer a TODO because I took some existing plumbing (the has_committed_real_load bool on RequestNavigationParams) and moved it to be passed with earlier timing, so the information in the renderer is now always accurate.",
+      "parentUuid": "5a4598ba_8f3339b7",
+      "revId": "3f77a35b5b84a61f79d8aedcda24dac0be444336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
