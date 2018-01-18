@@ -16,6 +16,7 @@
 #include "content/network/data_pipe_element_reader.h"
 #include "content/network/network_context.h"
 #include "content/network/network_service_impl.h"
+#include "content/public/common/url_constants.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
 #include "net/base/elements_upload_data_stream.h"
 #include "net/base/mime_sniffer.h"
@@ -187,6 +188,14 @@ std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
       std::move(element_readers), body->identifier());
 }
 
+bool IsSafeRedirect(const GURL& url) {
+  if (url.SchemeIs(url::kAboutScheme) || url.SchemeIs(kChromeUIScheme) ||
+      url.SchemeIs(url::kDataScheme) || url.SchemeIsFile()) {
+    return false;
+  }
+  return true;
+}
+
 }  // namespace
 
 URLLoader::URLLoader(NetworkContext* context,
@@ -341,6 +350,12 @@ void URLLoader::OnReceivedRedirect(net::URLRequest* url_request,
                                    bool* defer_redirect) {
   DCHECK(url_request == url_request_.get());
   DCHECK(url_request->status().is_success());
+
+  // First, check that the redirect is allowed.
+  if (!IsSafeRedirect(redirect_info.new_url)) {
+    NotifyCompleted(net::ERR_UNSAFE_REDIRECT);
+    return;
+  }
 
   // Send the redirect response to the client, allowing them to inspect it and
   // optionally follow the redirect.
