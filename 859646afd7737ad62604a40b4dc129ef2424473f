@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7f64440_e8fe64db",
+        "filename": "components/arc/common/screen_capture.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-18T22:26:03Z",
+      "side": 1,
+      "message": "nit: spaces around the arrow. Same in L56.",
+      "range": {
+        "startLine": 50,
+        "startChar": 58,
+        "endLine": 50,
+        "endChar": 60
+      },
+      "revId": "859646afd7737ad62604a40b4dc129ef2424473f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
