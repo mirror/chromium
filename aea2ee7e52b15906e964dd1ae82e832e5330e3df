@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba607042_d6b7fac7",
+        "filename": "chrome/browser/policy/chrome_browser_policy_connector.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-18T22:59:10Z",
+      "side": 1,
+      "message": "nit: This part is outdated - it\u0027s just about notifying observers, no knowledge of errors flushing.",
+      "range": {
+        "startLine": 40,
+        "startChar": 55,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "aea2ee7e52b15906e964dd1ae82e832e5330e3df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937e63f7_fd917493",
+        "filename": "components/policy/core/browser/policy_error_map.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-18T22:59:10Z",
+      "side": 1,
+      "message": "nit: This method can be made const now.",
+      "revId": "aea2ee7e52b15906e964dd1ae82e832e5330e3df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
