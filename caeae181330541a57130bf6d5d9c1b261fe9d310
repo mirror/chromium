@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94706a63_2088ca65",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T19:28:08Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem used and I think it confuses the meaning of ModalDialogType.  I think if we do need this concept long term, I would rather see explicit methods like:\n\nsuspendType\nsuspendAll\n\nThen we can handle that internally.\n\nConceptually, we could also make it a var-arg\n\nsuspendType(int... types);\n\nThen we could define a constant in this file ALL_TYPES \u003d new int[] {APP_MODAL, TAB_MODAL}; and pass that in.",
+      "range": {
+        "startLine": 91,
+        "startChar": 28,
+        "endLine": 91,
+        "endChar": 37
+      },
+      "revId": "caeae181330541a57130bf6d5d9c1b261fe9d310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc21499_4d063315",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T19:28:08Z",
+      "side": 1,
+      "message": "We need to track the current type because a client could request a tab modal dialog to be shown but a presenter might not be registered?  So the current type and the current presenter might be conceptually different things?  I think it would be good to clarify that in some documentation (potentially when defining the type).",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 20
+      },
+      "revId": "caeae181330541a57130bf6d5d9c1b261fe9d310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1caf00_ec6f0fa3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T19:28:08Z",
+      "side": 1,
+      "message": "If you suspend your tab modal dialogs, could this end up triggering an app modal one?",
+      "range": {
+        "startLine": 223,
+        "startChar": 19,
+        "endLine": 223,
+        "endChar": 30
+      },
+      "revId": "caeae181330541a57130bf6d5d9c1b261fe9d310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
