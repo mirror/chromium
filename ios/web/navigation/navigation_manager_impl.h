@@ -44,6 +44,23 @@ enum class NavigationInitiationType {
   RENDERER_INITIATED,
 };
 
+// Defines the states of a NavigationItem that failed to load. This is used by
+// CRWWebController to coordinate the display of native error views.
+enum class ErrorRetryState {
+  // This navigation item is either new or last loaded without error.
+  NO_ERROR_DISPLAYED,
+  // This navigation item has a corresponding entry in the session history.
+  // Ready to present error in native view.
+  HAS_HISTORY_ENTRY,
+  // This navigation item failed to load and a native error was displayed.
+  ERROR_DISPLAYED,
+  // This navigation item is reactivated due to back/forward navigation and
+  // needs to try reloading.
+  PREPARE_URL_FOR_RELOAD,
+  // This navigation item is ready to be reloaded in web view.
+  READY_TO_RELOAD
+};
+
 // Implementation of NavigationManager.
 // Generally mirrors upstream's NavigationController.
 class NavigationManagerImpl : public NavigationManager {
@@ -154,6 +171,14 @@ class NavigationManagerImpl : public NavigationManager {
 
   // Same as GoToIndex(int), but allows renderer-initiated navigations.
   void GoToIndex(int index, NavigationInitiationType initiation_type);
+
+  // Setter and getter for the ErrorRetryState associated with |item|. Used
+  // exclusively by CRWWebController to manage when to display error in native
+  // view.
+  virtual void SetErrorRetryState(const NavigationItem* item,
+                                  ErrorRetryState state) = 0;
+  virtual ErrorRetryState GetErrorRetryState(
+      const NavigationItem* item) const = 0;
 
   // NavigationManager:
   NavigationItem* GetLastCommittedItem() const final;
