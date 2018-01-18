@@ -34,6 +34,24 @@
       "revId": "5354e5b0da02e5b22e4558d096d8bc53350ca776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f66a0c_400e3b42",
+        "filename": "chrome/browser/extensions/api/extension_action/browser_action_interactive_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-18T18:05:39Z",
+      "side": 1,
+      "message": "Follow up added. See https://chromium-review.googlesource.com/c/chromium/src/+/874431.",
+      "parentUuid": "f032c79e_58bc3ddd",
+      "revId": "5354e5b0da02e5b22e4558d096d8bc53350ca776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
