@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7069a67_fff1523f",
+        "filename": "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T20:37:41Z",
+      "side": 1,
+      "message": "Is this the identifier returned by AddFakeService? Is it just an opaque identifier that happens to be in string-shaped form?",
+      "revId": "cd37ea5b25425e94eaf8940a17b8b79612dd1d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
