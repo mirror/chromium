@@ -29,15 +29,16 @@ class VisibleSelectionTest : public EditingTestBase {
  protected:
   // Helper function to set the VisibleSelection base/extent.
   template <typename Strategy>
-  void SetSelection(VisibleSelectionTemplate<Strategy>& selection, int base) {
-    SetSelection(selection, base, base);
+  void SetSelectionAndEndTyping(VisibleSelectionTemplate<Strategy>& selection,
+                                int base) {
+    SetSelectionAndEndTyping(selection, base, base);
   }
 
   // Helper function to set the VisibleSelection base/extent.
   template <typename Strategy>
-  void SetSelection(VisibleSelectionTemplate<Strategy>& selection,
-                    int base,
-                    int extend) {
+  void SetSelectionAndEndTyping(VisibleSelectionTemplate<Strategy>& selection,
+                                int base,
+                                int extend) {
     Node* node = GetDocument().body()->firstChild();
     selection = CreateVisibleSelection(
         typename SelectionTemplate<Strategy>::Builder(selection.AsSelection())
@@ -234,8 +235,8 @@ TEST_F(VisibleSelectionTest, Initialisation) {
 
   VisibleSelection selection;
   VisibleSelectionInFlatTree selection_in_flat_tree;
-  SetSelection(selection, 0);
-  SetSelection(selection_in_flat_tree, 0);
+  SetSelectionAndEndTyping(selection, 0);
+  SetSelectionAndEndTyping(selection_in_flat_tree, 0);
 
   EXPECT_FALSE(selection.IsNone());
   EXPECT_FALSE(selection_in_flat_tree.IsNone());
@@ -532,8 +533,8 @@ TEST_F(VisibleSelectionTest, WordGranularity) {
 
   // Beginning of a word.
   {
-    SetSelection(selection, 0);
-    SetSelection(selection_in_flat_tree, 0);
+    SetSelectionAndEndTyping(selection, 0);
+    SetSelectionAndEndTyping(selection_in_flat_tree, 0);
     selection = ExpandUsingGranularity(selection, TextGranularity::kWord);
     selection_in_flat_tree =
         ExpandUsingGranularity(selection_in_flat_tree, TextGranularity::kWord);
@@ -548,8 +549,8 @@ TEST_F(VisibleSelectionTest, WordGranularity) {
 
   // Middle of a word.
   {
-    SetSelection(selection, 8);
-    SetSelection(selection_in_flat_tree, 8);
+    SetSelectionAndEndTyping(selection, 8);
+    SetSelectionAndEndTyping(selection_in_flat_tree, 8);
     selection = ExpandUsingGranularity(selection, TextGranularity::kWord);
     selection_in_flat_tree =
         ExpandUsingGranularity(selection_in_flat_tree, TextGranularity::kWord);
@@ -566,8 +567,8 @@ TEST_F(VisibleSelectionTest, WordGranularity) {
   // FIXME: that sounds buggy, we might want to select the word _before_ instead
   // of the space...
   {
-    SetSelection(selection, 5);
-    SetSelection(selection_in_flat_tree, 5);
+    SetSelectionAndEndTyping(selection, 5);
+    SetSelectionAndEndTyping(selection_in_flat_tree, 5);
     selection = ExpandUsingGranularity(selection, TextGranularity::kWord);
     selection_in_flat_tree =
         ExpandUsingGranularity(selection_in_flat_tree, TextGranularity::kWord);
@@ -584,8 +585,8 @@ TEST_F(VisibleSelectionTest, WordGranularity) {
   // FIXME: that sounds buggy, we might want to select the word _before_ instead
   // of the comma.
   {
-    SetSelection(selection, 26);
-    SetSelection(selection_in_flat_tree, 26);
+    SetSelectionAndEndTyping(selection, 26);
+    SetSelectionAndEndTyping(selection_in_flat_tree, 26);
     selection = ExpandUsingGranularity(selection, TextGranularity::kWord);
     selection_in_flat_tree =
         ExpandUsingGranularity(selection_in_flat_tree, TextGranularity::kWord);
@@ -600,8 +601,8 @@ TEST_F(VisibleSelectionTest, WordGranularity) {
 
   // After comma.
   {
-    SetSelection(selection, 27);
-    SetSelection(selection_in_flat_tree, 27);
+    SetSelectionAndEndTyping(selection, 27);
+    SetSelectionAndEndTyping(selection_in_flat_tree, 27);
     selection = ExpandUsingGranularity(selection, TextGranularity::kWord);
     selection_in_flat_tree =
         ExpandUsingGranularity(selection_in_flat_tree, TextGranularity::kWord);
@@ -616,8 +617,8 @@ TEST_F(VisibleSelectionTest, WordGranularity) {
 
   // When selecting part of a word.
   {
-    SetSelection(selection, 0, 1);
-    SetSelection(selection_in_flat_tree, 0, 1);
+    SetSelectionAndEndTyping(selection, 0, 1);
+    SetSelectionAndEndTyping(selection_in_flat_tree, 0, 1);
     selection = ExpandUsingGranularity(selection, TextGranularity::kWord);
     selection_in_flat_tree =
         ExpandUsingGranularity(selection_in_flat_tree, TextGranularity::kWord);
@@ -632,8 +633,8 @@ TEST_F(VisibleSelectionTest, WordGranularity) {
 
   // When selecting part of two words.
   {
-    SetSelection(selection, 2, 8);
-    SetSelection(selection_in_flat_tree, 2, 8);
+    SetSelectionAndEndTyping(selection, 2, 8);
+    SetSelectionAndEndTyping(selection_in_flat_tree, 2, 8);
     selection = ExpandUsingGranularity(selection, TextGranularity::kWord);
     selection_in_flat_tree =
         ExpandUsingGranularity(selection_in_flat_tree, TextGranularity::kWord);
