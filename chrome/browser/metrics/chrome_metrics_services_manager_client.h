@@ -19,6 +19,10 @@
 
 class PrefService;
 
+namespace metrics_services_manager {
+class MetricsServicesManager;
+}
+
 namespace metrics {
 class EnabledStateProvider;
 class MetricsStateManager;
@@ -39,6 +43,12 @@ class ChromeMetricsServicesManagerClient
  public:
   explicit ChromeMetricsServicesManagerClient(PrefService* local_state);
   ~ChromeMetricsServicesManagerClient() override;
+
+  // Called once MetricsServicesManager has been created to attach an observer
+  // needed for ChromeOS. This is called on all platforms, but only does
+  // something for ChromeOS.
+  void AttachChromeOSSettingsObserver(
+      metrics_services_manager::MetricsServicesManager* manager);
 
   // Unconditionally attempts to create a field trial to control client side
   // metrics/crash sampling to use as a fallback when one hasn't been
