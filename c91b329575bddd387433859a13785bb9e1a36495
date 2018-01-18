@@ -22,6 +22,30 @@
       "revId": "c91b329575bddd387433859a13785bb9e1a36495",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "544c36f9_7f5e62c8",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-18T10:07:07Z",
+      "side": 1,
+      "message": "At line95, the binding count is 2, the 1st one is held by |worker1| (line89), the 2nd one is held by |info| (line94), then, line97 found |info| has the same handle id with previous |worker1|, it will just return |worker1| and release |info|, which will close the 2nd connection to |mock_service_worker_object_host|, thus, we need this RunUntilIdle to trigger the connection error handler of |mock_service_worker_object_host| to change the binding count to 1.",
+      "parentUuid": "fc5b16e8_cdd977d4",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 35
+      },
+      "revId": "c91b329575bddd387433859a13785bb9e1a36495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
