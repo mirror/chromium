@@ -8,6 +8,7 @@
 #include "base/feature_list.h"
 
 extern const base::Feature kTabSwitcherPresentsBVC;
+extern const base::Feature kUIRebootPhase1;
 
 // Returns whether the tab switcher will present the BVC..
 bool TabSwitcherPresentsBVCEnabled();

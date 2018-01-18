@@ -11,10 +11,6 @@
 
 namespace flag_descriptions {
 
-const char kAdaptiveToolbarName[] = "Adaptive Toolbar";
-const char kAdaptiveToolbarDescription[] =
-    "When enabled, the adaptive toolbar will be used.";
-
 const char kBookmarkNewEditPageName[] = "Bookmark New Edit Page";
 const char kBookmarkNewEditPageDescription[] =
     "When enabled, the new bookmark edit page and folder picker will be used "
@@ -136,6 +132,10 @@ const char kTabSwitcherPresentsBVCDescription[] =
     "When enabled, the tab switcher will present the BVC, so that when the "
     "BVC is visible, the tab switcher will remain in the VC hierarchy "
     "underneath it.";
+
+const char kUIRebootPhase1Name[] = "UI Reboot Phase 1";
+const char kUIRebootPhase1Description[] =
+    "When enabled, the first phase of the iOS UI reboot will be displayed.";
 
 const char kUseDdljsonApiName[] = "Use new ddljson API for Doodles";
 const char kUseDdljsonApiDescription[] =
