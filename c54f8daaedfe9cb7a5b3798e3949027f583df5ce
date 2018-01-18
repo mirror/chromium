@@ -141,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "230c1a1d_4641578e",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:29:05Z",
+      "side": 1,
+      "message": "Yeah, using DIRECTIONALITY_AS_URL would be best and FORCE_LTR is probably fine (I don\u0027t think forced ltr level changes could cause host characters to appear to the right of path characters, but reach out to mgiuca@ if you\u0027re concerned). I suppose this is probably fine.\n\nActually, you might be able to just get the substring bounds of (or cursor position at) the single character at the end of |range| instead of finding the bounds of all host parts.",
+      "parentUuid": "9776539c_b1ab8398",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10f33dac_b22be11b",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 2
@@ -297,6 +315,24 @@
     },
     {
       "key": {
+        "uuid": "e1782c06_e9ccc644",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:29:05Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right, FADE_HEAD isn\u0027t a thing anymore. Renaming FADE_TAIL to FADE_OVERFLOW or just FADE sounds good (with a revised comment).",
+      "parentUuid": "102d4121_dd96b8ca",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f7f1462_840976b2",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 2
@@ -381,6 +417,24 @@
       "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f088f64_b46f7730",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:29:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "32c785a6_6616447b",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
