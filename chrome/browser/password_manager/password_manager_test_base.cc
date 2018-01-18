@@ -498,7 +498,8 @@ void PasswordManagerBrowserTestBase::VerifyPasswordIsSavedAndFilled(
   NavigateToFile(filename);
 
   NavigationObserver observer(WebContents());
-  ASSERT_TRUE(content::ExecuteScript(RenderFrameHost(), submission_script));
+  ASSERT_TRUE(content::ExecuteScriptWithScopedUserGesture(RenderFrameHost(),
+                                                          submission_script));
   observer.Wait();
   WaitForPasswordStore();
 

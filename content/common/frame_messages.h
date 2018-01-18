@@ -805,11 +805,12 @@ IPC_MESSAGE_ROUTED3(FrameMsg_JavaScriptExecuteRequest,
 
 // ONLY FOR TESTS: Same as above but adds a fake UserGestureindicator around
 // execution. (crbug.com/408426)
-IPC_MESSAGE_ROUTED4(FrameMsg_JavaScriptExecuteRequestForTests,
-                    base::string16,  /* javascript */
-                    int,  /* ID */
-                    bool, /* if true, a reply is requested */
-                    bool  /* if true, a user gesture indicator is created */)
+IPC_MESSAGE_ROUTED5(FrameMsg_JavaScriptExecuteRequestForTests,
+                    base::string16, /* javascript */
+                    int,            /* ID */
+                    bool,           /* if true, a reply is requested */
+                    bool,           /* if true, a user activation is created */
+                    bool /* if true, the created user activation is consumed */)
 
 // Same as FrameMsg_JavaScriptExecuteRequest above except the script is
 // run in the isolated world specified by the fourth parameter.
