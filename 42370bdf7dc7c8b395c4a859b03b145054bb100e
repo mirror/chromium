@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5984bb31_35ad43f3",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-18T22:30:05Z",
+      "side": 1,
+      "message": "Is this absolutely gauranteed to trigger \u0027old-image-changed\u0027 ? We should update the documenation, and maybe modify it to return false if it fails (if that\u0027s possible).\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/people_page/change_picture_browser_proxy.js?type\u003dcs\u0026q\u003dChangePictureBrowserProxyImpl\u0026sq\u003dpackage:chromium\u0026l\u003d54",
+      "revId": "42370bdf7dc7c8b395c4a859b03b145054bb100e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
