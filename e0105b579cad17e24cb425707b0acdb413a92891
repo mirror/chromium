@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "165fec2d_35f1eecf",
+        "filename": "extensions/browser/json_file_sanitizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-18T00:37:16Z",
+      "side": 1,
+      "message": "const std::string\u0026",
+      "range": {
+        "startLine": 28,
+        "startChar": 22,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "e0105b579cad17e24cb425707b0acdb413a92891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e657f3e_02c159c5",
+        "filename": "extensions/browser/json_file_sanitizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-18T00:37:16Z",
+      "side": 1,
+      "message": "Note that at this time it this is limited to JSON files that contain a unique dictionary as their root and will fail with a kDecodingError if that is not the case.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "e0105b579cad17e24cb425707b0acdb413a92891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7fc1db7_7ea467ec",
+        "filename": "extensions/browser/json_file_sanitizer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-18T00:37:16Z",
+      "side": 1,
+      "message": "Reduce spaces between fields.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 32
+      },
+      "revId": "e0105b579cad17e24cb425707b0acdb413a92891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8688963_68e82428",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-18T00:37:16Z",
+      "side": 1,
+      "message": "DCHECK?",
+      "revId": "e0105b579cad17e24cb425707b0acdb413a92891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582f8f1c_4cf37cd5",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-18T00:37:16Z",
+      "side": 1,
+      "message": "DCHECK?",
+      "revId": "e0105b579cad17e24cb425707b0acdb413a92891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9afec4_eccbb5a8",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-18T00:37:16Z",
+      "side": 1,
+      "message": "DCHECK?",
+      "revId": "e0105b579cad17e24cb425707b0acdb413a92891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0ca6c1_e658f3bc",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-18T00:37:16Z",
+      "side": 1,
+      "message": "DCHECK?",
+      "revId": "e0105b579cad17e24cb425707b0acdb413a92891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
