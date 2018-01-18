@@ -81,6 +81,7 @@ class ClientNativePixmapFactoryDmabuf : public ClientNativePixmapFactory {
             format == gfx::BufferFormat::RG_88 ||
             format == gfx::BufferFormat::YUV_420_BIPLANAR ||
 #endif
+            format == gfx::BufferFormat::BGRX_1010102 ||
             format == gfx::BufferFormat::BGRA_8888;
 #else
         return false;
