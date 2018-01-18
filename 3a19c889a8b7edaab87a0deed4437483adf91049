@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "434f8634_ab0c5847",
+        "filename": "content/common/associated_interface_provider_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-18T02:40:29Z",
+      "side": 1,
+      "message": "AssociatedInterfaceProviderImpl has two constructors. One creates the |local_provider_|, another doesn\u0027t. The layout-test calls the constructor which doesn\u0027t create the |local_provider_|.\nSee https://cs.chromium.org/chromium/src/content/renderer/render_frame_impl.cc?rcl\u003d320e9d6d68b6b347a5bb60ca0eeeab20b9cec9b1\u0026l\u003d2889",
+      "parentUuid": "58adab77_edb805a6",
+      "revId": "3a19c889a8b7edaab87a0deed4437483adf91049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d3e8f49_c45e067d",
         "filename": "content/shell/test_runner/BUILD.gn",
         "patchSetId": 7
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d386deab_21285106",
+        "filename": "third_party/WebKit/Source/modules/screen_orientation/ScreenOrientationControllerImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-18T02:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "888c3d51_f88e8f82",
+      "revId": "3a19c889a8b7edaab87a0deed4437483adf91049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b301256_d5513839",
         "filename": "third_party/WebKit/Source/modules/screen_orientation/ScreenOrientationControllerImpl.h",
         "patchSetId": 7
@@ -82,6 +118,24 @@
       "writtenOn": "2018-01-17T11:02:12Z",
       "side": 1,
       "message": "Why do we need a delegate class? Can we probably inline the class in ScreenOrientationControllerImpl?",
+      "revId": "3a19c889a8b7edaab87a0deed4437483adf91049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3541fd03_7a4d2085",
+        "filename": "third_party/WebKit/Source/modules/screen_orientation/ScreenOrientationControllerImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-18T02:40:29Z",
+      "side": 1,
+      "message": "See https://chromium-review.googlesource.com/c/chromium/src/+/848735/4/third_party/WebKit/Source/modules/screen_orientation/ScreenOrientationControllerImpl.h#78\n\nWe think it\u0027s ok to merge them and rewrite the unittest in next CL:)",
+      "parentUuid": "7b301256_d5513839",
       "revId": "3a19c889a8b7edaab87a0deed4437483adf91049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
