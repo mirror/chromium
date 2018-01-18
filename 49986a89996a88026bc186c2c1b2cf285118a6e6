@@ -48,6 +48,114 @@
     },
     {
       "key": {
+        "uuid": "920a9542_5f6f2f9d",
+        "filename": "third_party/WebKit/Source/platform/mojo/InterfaceInvalidatorTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-18T06:50:37Z",
+      "side": 1,
+      "message": "The tests should cover whether |binding_| dispatches its connection error too.",
+      "revId": "49986a89996a88026bc186c2c1b2cf285118a6e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2258c057_63f73a3f",
+        "filename": "third_party/WebKit/Source/platform/mojo/InterfaceInvalidatorTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-18T06:50:37Z",
+      "side": 1,
+      "message": "If you\u0027re only using RunUntilIdle(), you don\u0027t need to name the run_loop:\n\n  base::RunLoop().RunUntilIdle();",
+      "revId": "49986a89996a88026bc186c2c1b2cf285118a6e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb8b722_95678a96",
+        "filename": "third_party/WebKit/Source/platform/mojo/InterfaceInvalidatorTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-18T06:50:37Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s obvious what fully invalidated means. Before connection error notification might be clearer.",
+      "range": {
+        "startLine": 179,
+        "startChar": 52,
+        "endLine": 179,
+        "endChar": 68
+      },
+      "revId": "49986a89996a88026bc186c2c1b2cf285118a6e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ae6803_fc27bce6",
+        "filename": "third_party/WebKit/Source/platform/mojo/InterfaceInvalidatorTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-18T06:50:37Z",
+      "side": 1,
+      "message": "I think you want to RunUntilIdle() before resetting the invalidator.",
+      "revId": "49986a89996a88026bc186c2c1b2cf285118a6e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9633fff6_461dcb39",
+        "filename": "third_party/WebKit/Source/platform/mojo/InterfaceInvalidatorTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-18T06:50:37Z",
+      "side": 1,
+      "message": "wptr2.set_connection_error_handler(...)?",
+      "revId": "49986a89996a88026bc186c2c1b2cf285118a6e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c7e39b_78b01014",
+        "filename": "third_party/WebKit/Source/platform/mojo/InterfaceInvalidatorTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-18T06:50:37Z",
+      "side": 1,
+      "message": "Can you test invalidation in the middle of a sync IPC? I think the cases of invalidate and immediately return a response and invalidate but hold onto the response callback should be worth covering.\n\nFeel free to make PingService.Ping() sync.",
+      "revId": "49986a89996a88026bc186c2c1b2cf285118a6e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3eea022e_771eb4d8",
         "filename": "third_party/WebKit/Source/platform/mojo/WeakInterfacePtr.h",
         "patchSetId": 11
@@ -111,6 +219,23 @@
         "endLine": 29,
         "endChar": 33
       },
+      "revId": "49986a89996a88026bc186c2c1b2cf285118a6e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711c4e8d_01c3d77a",
+        "filename": "third_party/WebKit/Source/platform/mojo/WeakInterfacePtr.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-18T06:50:37Z",
+      "side": 1,
+      "message": "Is anything using this? If not, delete.",
       "revId": "49986a89996a88026bc186c2c1b2cf285118a6e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
