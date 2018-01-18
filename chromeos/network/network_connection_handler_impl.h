@@ -29,7 +29,8 @@ class CHROMEOS_EXPORT NetworkConnectionHandlerImpl
   void ConnectToNetwork(const std::string& service_path,
                         const base::Closure& success_callback,
                         const network_handler::ErrorCallback& error_callback,
-                        bool check_error_state) override;
+                        bool check_error_state,
+                        bool succeed_on_send_connect) override;
   void DisconnectNetwork(
       const std::string& service_path,
       const base::Closure& success_callback,
@@ -83,9 +84,12 @@ class CHROMEOS_EXPORT NetworkConnectionHandlerImpl
   // attempts a connection, otherwise invokes error_callback from
   // pending_requests_[service_path]. |check_error_state| is passed from
   // ConnectToNetwork(), see comment for info.
-  void VerifyConfiguredAndConnect(bool check_error_state,
-                                  const std::string& service_path,
-                                  const base::DictionaryValue& properties);
+  void VerifyConfiguredAndConnect(
+      const base::Closure& success_callback,
+      const network_handler::ErrorCallback& error_callback,
+      bool check_error_state,
+      const std::string& service_path,
+      const base::DictionaryValue& properties);
 
   bool IsNetworkProhibitedByPolicy(const std::string& type,
                                    const std::string& guid,
@@ -103,11 +107,13 @@ class CHROMEOS_EXPORT NetworkConnectionHandlerImpl
   void ConnectToQueuedNetwork();
 
   // Calls Shill.Manager.Connect asynchronously.
-  void CallShillConnect(const std::string& service_path);
+  void CallShillConnect(const std::string& service_path,
+                        const base::Closure& success_callback);
 
   // Handles failure from ConfigurationHandler calls.
   void HandleConfigurationFailure(
       const std::string& service_path,
+      const network_handler::ErrorCallback& error_callback,
       const std::string& error_name,
       std::unique_ptr<base::DictionaryValue> error_data);
 
@@ -124,10 +130,14 @@ class CHROMEOS_EXPORT NetworkConnectionHandlerImpl
 
   void CheckAllPendingRequests();
 
-  // Look up the ConnectRequest for |service_path| and call
-  // InvokeConnectErrorCallback.
-  void ErrorCallbackForPendingRequest(const std::string& service_path,
-                                      const std::string& error_name);
+  // If |error_callback| is not empty pass it to InvokeConnectErrorCallback,
+  // otherwise look up the ConnectRequest for |service_path| and call
+  // InvokeConnectErrorCallback with the request error callback. In either
+  // case this removes the pending request.
+  void ErrorOrPendingRequestCallback(
+      const std::string& service_path,
+      const std::string& error_name,
+      const network_handler::ErrorCallback& error_callback);
 
   // Calls Shill.Manager.Disconnect asynchronously.
   void CallShillDisconnect(
