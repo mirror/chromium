@@ -38,6 +38,7 @@ class MockDataUseAscriber : public data_use_measurement::DataUseAscriber {
   MOCK_CONST_METHOD0(
       CreateURLRequestClassifier,
       std::unique_ptr<data_use_measurement::URLRequestClassifier>());
+  MOCK_METHOD1(SetShouldDisableAscriber, void(bool disable_ascriber));
 };
 
 const int kInflationPercent = 50;

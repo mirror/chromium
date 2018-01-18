@@ -66,4 +66,6 @@ void DataUseAscriber::OnUrlRequestDestroyed(net::URLRequest* request) {
   recorder->OnUrlRequestDestroyed(request);
 }
 
+void DataUseAscriber::SetShouldDisableAscriber(bool disable_ascriber) {}
+
 }  // namespace data_use_measurement
