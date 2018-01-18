@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9f1af14_015c5400",
+        "filename": "android_webview/browser/renderer_host/aw_render_view_host_ext.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-18T17:52:26Z",
+      "side": 1,
+      "message": "I think this changes behavior for oopif, it\u0027s updating the background color of all frames rather than only the main frame now.\n\nEasier fix is to make sure the frame doesn\u0027t have a parent, but more proper fix is probably to not use RVH at all, and listen to RenderFrameCreated instead (and check for main frame there)",
+      "revId": "084ab81c4fed60983df3fb3989f6abb43c80f191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
