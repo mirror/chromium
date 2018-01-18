@@ -2264,6 +2264,10 @@ const char kVoiceSearchOnLocalNtpDescription[] =
     "Show a microphone for voice search on the local New Tab page "
     "if Google is the default search engine.";
 
+const char kEnableWebAuthenticationName[] = "WebAuthentication.";
+const char kEnableWebAuthenticationDescription[] =
+    "Enable WebAuthentication support.";
+
 #if defined(GOOGLE_CHROME_BUILD)
 
 const char kGoogleBrandedContextMenuName[] =
