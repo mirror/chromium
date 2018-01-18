@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "215801f1_b6a2f7bd",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-18T20:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a27201f_574adaf7",
+      "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce1da54a_a3ef65ea",
         "filename": "content/common/frame.mojom",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba1b882_394f08e7",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-18T20:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce1da54a_a3ef65ea",
+      "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0b36b893_8bccda1f",
+        "filename": "content/common/url_loader_factory_bundle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-18T20:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd94df8b_da5580ac",
+      "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d5b7268_d2271d00",
         "filename": "content/public/browser/render_frame_host.h",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d785ef12_984b842d",
+        "filename": "content/public/browser/render_frame_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-18T20:36:14Z",
+      "side": 1,
+      "message": "Done. Added comments for the usage \"to make sure all in-flight mojo messages have been received by the other end\".\n\nTo get rid of |FlushFrameNavigationControlForTesting()| we have to add an testing delegate in |RenderFrame| to send notification when the new bundle has been received.\nAnd to get rid of |FlushNetworkInterfaceForTesting()| we need to be able to register connection error observer on |RenderFrameHost|, and wait for its error notification before proceeding.\nEither way I don\u0027t feel it\u0027s easier than the current APIs...",
+      "parentUuid": "3d5b7268_d2271d00",
+      "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -273,6 +345,30 @@
       "side": 1,
       "message": "OK, makes sense. So let\u0027s stick with the override flag?",
       "parentUuid": "2d2c7603_381b6007",
+      "range": {
+        "startLine": 424,
+        "startChar": 41,
+        "endLine": 424,
+        "endChar": 73
+      },
+      "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ddf928e_069684be",
+        "filename": "content/renderer/fetchers/resource_fetcher_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-18T20:36:14Z",
+      "side": 1,
+      "message": "Thanks for providing opinions and discussions! I will keep the override flag for now until we have found a better solution.",
+      "parentUuid": "ed0f6f83_82d82334",
       "range": {
         "startLine": 424,
         "startChar": 41,
