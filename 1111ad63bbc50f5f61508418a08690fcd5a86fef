@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d073a177_6e71b953",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T18:02:04Z",
+      "side": 1,
+      "message": "nit: This and its reference can be removed too.",
+      "revId": "1111ad63bbc50f5f61508418a08690fcd5a86fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
