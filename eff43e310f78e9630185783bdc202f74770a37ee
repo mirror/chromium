@@ -16,6 +16,24 @@
       "revId": "eff43e310f78e9630185783bdc202f74770a37ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005b9632_cace1c23",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-18T15:36:52Z",
+      "side": 1,
+      "message": "Absolutely! Done. net::IOBuffer is refcounted, so I added an extra ref instead of doing a move assign.",
+      "parentUuid": "ee0f327f_dd16d07e",
+      "revId": "eff43e310f78e9630185783bdc202f74770a37ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
