@@ -214,7 +214,7 @@ class CONTENT_EXPORT DeviceSensorEventPump
 
       DCHECK(shared_buffer);
 
-      if (!shared_buffer_handle->is_valid() ||
+      if (!*shared_buffer_handle ||
           !shared_buffer_reader->GetReading(&reading)) {
         HandleSensorError();
         return false;
