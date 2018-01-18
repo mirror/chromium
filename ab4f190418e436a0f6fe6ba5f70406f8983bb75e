@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfde7b31_f6048238",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager_commands.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-18T09:33:06Z",
+      "side": 1,
+      "message": "By adding this, the condition check in canExecute() and execute() are inconsistent. Is it OK?",
+      "revId": "ab4f190418e436a0f6fe6ba5f70406f8983bb75e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b8e299_65ad8ee0",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager_commands.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-18T09:33:06Z",
+      "side": 1,
+      "message": "Remove this line.",
+      "revId": "ab4f190418e436a0f6fe6ba5f70406f8983bb75e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
