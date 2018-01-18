@@ -22,6 +22,8 @@ bool GetIsInMultiWindowModeValue();
 
 bool GetIsChromeHomeEnabled();
 
+bool GetIsChromeModernEnabled();
+
 } // namespace android
 } // namespace chrome
 

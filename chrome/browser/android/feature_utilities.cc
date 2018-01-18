@@ -35,6 +35,11 @@ bool GetIsChromeHomeEnabled() {
   return Java_FeatureUtilities_isChromeHomeEnabled(env);
 }
 
+bool GetIsChromeModernEnabled() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  return Java_FeatureUtilities_isChromeModernEnabled(env);
+}
+
 } // namespace android
 } // namespace chrome
 

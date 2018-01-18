@@ -255,6 +255,16 @@ public class FeatureUtilities {
         return sChromeHomeSwipeLogicType;
     }
 
+    /**
+     * @return Whether Chrome modern design is enabled. This returns true if Chrome Home is enabled.
+     */
+    @CalledByNative
+    public static boolean isChromeModernEnabled() {
+        if (isChromeHomeEnabled()) return true;
+        return ChromeFeatureList.isInitialized()
+                && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_MODERN_DESIGN);
+    }
+
     private static native void nativeSetCustomTabVisible(boolean visible);
     private static native void nativeSetIsInMultiWindowMode(boolean isInMultiWindowMode);
 }

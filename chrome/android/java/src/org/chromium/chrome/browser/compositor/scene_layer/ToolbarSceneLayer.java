@@ -157,7 +157,7 @@ public class ToolbarSceneLayer extends SceneOverlayLayer implements SceneOverlay
 
         // In Chrome Home, the url bar is always drawn in the Java layer rather than the
         // compositor layer.
-        if (FeatureUtilities.isChromeHomeEnabled()) alpha = 0;
+        if (FeatureUtilities.isChromeModernEnabled()) alpha = 0;
 
         update(color, alpha, mLayoutProvider.getFullscreenManager(), resourceManager,
                 forceHideBrowserControlsAndroidView, viewportMode, DeviceFormFactor.isTablet(),

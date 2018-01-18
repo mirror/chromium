@@ -229,7 +229,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
     @Override
     public void onFinishInflate() {
         super.onFinishInflate();
-        if (FeatureUtilities.isChromeHomeEnabled()) {
+        if (FeatureUtilities.isChromeModernEnabled()) {
             mTabContents = findViewById(R.id.tab_contents_modern);
             mTitleView = mTabContents.findViewById(R.id.title);
             mDescriptionView = mTabContents.findViewById(R.id.description);
@@ -246,7 +246,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
 
         mUndoContents = (LinearLayout) findViewById(R.id.undo_contents);
         mUndoButton = (Button) findViewById(R.id.undo_button);
-        if (FeatureUtilities.isChromeHomeEnabled()) {
+        if (FeatureUtilities.isChromeModernEnabled()) {
             findViewById(R.id.undo_start_space).setVisibility(View.VISIBLE);
             ApiCompatibilityUtils.setTextAppearance(mUndoButton, R.style.BlueButtonText2);
         }
@@ -318,7 +318,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
                     getContext().getString(R.string.accessibility_tabstrip_btn_close_tab, title));
         }
 
-        if (FeatureUtilities.isChromeHomeEnabled()) {
+        if (FeatureUtilities.isChromeModernEnabled()) {
             if (mTab.isIncognito()) {
                 setBackgroundResource(R.color.incognito_primary_color);
                 mFaviconView.getBackground().setLevel(mIncognitoLevel);
@@ -353,7 +353,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
                 mFaviconView.setImageResource(R.drawable.globe_incognito_favicon);
             }
 
-            if (FeatureUtilities.isChromeHomeEnabled()) {
+            if (FeatureUtilities.isChromeModernEnabled()) {
                 ((TintedImageView) mFaviconView).setTint(bitmap != null ? null : mDarkIconColor);
             }
         }
