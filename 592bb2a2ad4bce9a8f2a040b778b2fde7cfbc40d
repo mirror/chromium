@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "610134b3_b5a8706d",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-18T01:03:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a15ede13_7b8e9c54",
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e16a15b0_383bb380",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ffaa6448_6744a40f",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-18T01:03:32Z",
+      "side": 1,
+      "message": "I have gone with SessionStartAction",
+      "parentUuid": "e16a15b0_383bb380",
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e109f059_36b40882",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc5c632_52c82ce3",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-18T01:03:32Z",
+      "side": 1,
+      "message": "Removes.",
+      "parentUuid": "e109f059_36b40882",
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0fbee1_878da8b5",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-18T01:03:32Z",
+      "side": 1,
+      "message": "Added check to make sure it was in VR before going to fullscreen.",
+      "parentUuid": "19c31f65_6cb868ca",
+      "range": {
+        "startLine": 361,
+        "startChar": 12,
+        "endLine": 361,
+        "endChar": 19
+      },
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +200,54 @@
     },
     {
       "key": {
+        "uuid": "6c8d77c1_0171eb34",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-18T01:03:32Z",
+      "side": 1,
+      "message": "Moved this comment so the context helps clarify. Also modified to be more clear what it\u0027s supposed to be stating.",
+      "parentUuid": "6da85228_02c066f2",
+      "range": {
+        "startLine": 447,
+        "startChar": 29,
+        "endLine": 447,
+        "endChar": 44
+      },
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae32993d_f89527a6",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-18T01:03:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eba8ef9_c83364a4",
+      "range": {
+        "startLine": 447,
+        "startChar": 14,
+        "endLine": 447,
+        "endChar": 28
+      },
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f099e8e_30dc15f4",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
         "patchSetId": 5
@@ -136,6 +262,24 @@
       "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b64220_9c0747f5",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-18T01:03:32Z",
+      "side": 1,
+      "message": "Moved",
+      "parentUuid": "5f099e8e_30dc15f4",
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "917506b2_4b0a8890",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-18T01:03:32Z",
+      "side": 1,
+      "message": "Removed for now",
+      "parentUuid": "7c465b76_ff2472d5",
+      "range": {
+        "startLine": 476,
+        "startChar": 12,
+        "endLine": 476,
+        "endChar": 27
+      },
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "645605ae_2dbd228d",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 5
@@ -176,6 +344,24 @@
       "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb96237e_05b7c384",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2487,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-18T01:03:32Z",
+      "side": 1,
+      "message": "LGTM",
+      "parentUuid": "645605ae_2dbd228d",
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "fd9107b7_5c8e284b",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2492,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-18T01:03:32Z",
+      "side": 1,
+      "message": "Corrected in code",
+      "parentUuid": "7b55b6cf_c6b1aa02",
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e42c0888_9954145b",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 5
@@ -210,6 +414,24 @@
       "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f0cb68_f993b36a",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2495,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-18T01:03:32Z",
+      "side": 1,
+      "message": "Removed as per offline discussion",
+      "parentUuid": "e42c0888_9954145b",
+      "revId": "592bb2a2ad4bce9a8f2a040b778b2fde7cfbc40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
