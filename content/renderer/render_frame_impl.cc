@@ -4109,6 +4109,8 @@ void RenderFrameImpl::DidStartProvisionalLoad(
         pending_navigation_info_->triggering_event_info;
     info.form = pending_navigation_info_->form;
     info.source_location = pending_navigation_info_->source_location;
+    info.devtools_initiator_info =
+        pending_navigation_info_->devtools_initiator_info;
 
     pending_navigation_info_.reset(nullptr);
     BeginNavigation(info);
@@ -6729,7 +6731,11 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
           info.url_request.GetSuggestedFilename().has_value()
               ? base::Optional<std::string>(
                     info.url_request.GetSuggestedFilename()->Utf8())
-              : base::nullopt);
+              : base::nullopt,
+          info.devtools_initiator_info.IsNull()
+              ? base::nullopt
+              : base::Optional<std::string>(
+                    info.devtools_initiator_info.Utf8()));
 
   GetFrameHost()->BeginNavigation(MakeCommonNavigationParams(info, load_flags),
                                   std::move(begin_navigation_params));
@@ -7314,7 +7320,8 @@ RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
       client_redirect(info.is_client_redirect),
       triggering_event_info(info.triggering_event_info),
       form(info.form),
-      source_location(info.source_location) {}
+      source_location(info.source_location),
+      devtools_initiator_info(info.devtools_initiator_info) {}
 
 void RenderFrameImpl::BindWidget(mojom::WidgetRequest request) {
   GetRenderWidget()->SetWidgetBinding(std::move(request));

@@ -114,7 +114,8 @@ class NavigationURLLoaderNetworkServiceTest : public testing::Test {
             false /* is_form_submission */, GURL() /* searchable_form_url */,
             std::string() /* searchable_form_encoding */,
             url::Origin::Create(url), GURL() /* client_side_redirect_url */,
-            base::nullopt /* suggested_filename */);
+            base::nullopt /* suggested_filename */,
+            base::nullopt /* devtools_initiator_info */);
 
     CommonNavigationParams common_params;
     common_params.url = url;
@@ -127,7 +128,7 @@ class NavigationURLLoaderNetworkServiceTest : public testing::Test {
             true /* is_main_frame */, false /* parent_is_main_frame */,
             false /* are_ancestors_secure */, -1 /* frame_tree_node_id */,
             false /* is_for_guests_only */, false /* report_raw_headers */,
-            false /* is_prerenering */));
+            false /* is_prerenering */, base::UnguessableToken::Create()));
     std::vector<std::unique_ptr<URLLoaderRequestHandler>> handlers;
     most_recent_resource_request_ = base::nullopt;
     handlers.push_back(std::make_unique<TestURLLoaderRequestHandler>(
