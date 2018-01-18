@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39931d52_f8c147f2",
+        "filename": "net/proxy/proxy_config.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T23:20:54Z",
+      "side": 1,
+      "message": "Please move this operator\u003c\u003c() out of the production code.\n\nThere is a risk that it could be used for serialization, and then we end up with an unexpected dependency with the enum numerical value.\n\nTo handle this, how about instead:\n\nIf it is needed in a number of test files, extract the declaration/definition to a *unittest.h file. For an example see [1]\n\nWhen extracting it, we can either represent it as a global operator\u003c\u003c(), or my preference is as a PrintTo() function (since that prevents using operator\u003c\u003c). For example of PrintTo() see [2].\n\nIf it is only used in one or two places in tests, then I suggest changing the test instead. For instance instead of:\n\nEXPECT_EQ(a, b);\n\nCan change to:\n\nEXPECT_TRUE(a \u003d\u003d b);\n\n\n[1] https://cs.chromium.org/chromium/src/net/proxy/proxy_config_service_common_unittest.h\n[2] https://cs.chromium.org/chromium/src/net/cert/x509_cert_types_unittest.cc?l\u003d152",
+      "revId": "f0f3a175ca89df30ef56525828250c0409674b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f8c24d_05308da3",
+        "filename": "net/proxy/proxy_config.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T23:20:54Z",
+      "side": 1,
+      "message": "Note that the style guide would have this written with a C++ style cast.\n\nstatic_cast\u003cint\u003e(type) (or reinterpret_cast\u003cint\u003e(type), don\u0027t recall if static_cast handles this case).",
+      "revId": "f0f3a175ca89df30ef56525828250c0409674b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
