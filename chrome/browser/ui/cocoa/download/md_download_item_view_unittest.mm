@@ -69,7 +69,7 @@ TEST_F(MDDownloadItemViewTest, TestKeyboardAccess) {
                 // Nothing.
               ]));
 
-  test_window().pretendFullKeyboardAccessIsEnabled = YES;
+  test_window().fullKeyboardAccessIsEnabled = YES;
 
   EXPECT_NSEQ(test_window().validKeyViews, (@[
                 view_.primaryButton,

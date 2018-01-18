@@ -47,7 +47,7 @@ class CursorRendererMacTest : public ui::CocoaTest {
     cursor_renderer_->SetTargetView(view_);
     // Dis-associate mouse and cursor.
     StartEventTap();
-    [test_window() setPretendIsKeyWindow:YES];
+    [test_window() setIsKeyWindow:YES];
   }
 
   void TearDown() override {
@@ -192,13 +192,13 @@ TEST_F(CursorRendererMacTest, CursorOnActiveWindow) {
   EXPECT_TRUE(IsUserInteractingWithView());
 
   // Cursor not displayed if window is not activated.
-  [test_window() setPretendIsKeyWindow:NO];
+  [test_window() setIsKeyWindow:NO];
   MoveMouseCursorWithinWindow();
   EXPECT_FALSE(CursorDisplayed());
   EXPECT_TRUE(IsUserInteractingWithView());
 
   // Cursor is displayed again if window is activated again.
-  [test_window() setPretendIsKeyWindow:YES];
+  [test_window() setIsKeyWindow:YES];
   MoveMouseCursorWithinWindow();
   EXPECT_TRUE(CursorDisplayed());
   EXPECT_TRUE(IsUserInteractingWithView());
