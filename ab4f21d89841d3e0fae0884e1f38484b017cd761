@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "668e3eef_9806be1a",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-18T22:53:08Z",
+      "side": 1,
+      "message": "this may be a good point to describe the memlog-keep-small-allocations chrome://flag. Turning it off [default] causes allocations to be much smaller, and thus viewable in traincg UI.",
+      "range": {
+        "startLine": 219,
+        "startChar": 25,
+        "endLine": 219,
+        "endChar": 32
+      },
+      "revId": "ab4f21d89841d3e0fae0884e1f38484b017cd761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
