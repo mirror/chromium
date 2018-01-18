@@ -79,29 +79,6 @@ void Initialize(Platform* platform, service_manager::BinderRegistry* registry) {
   DCHECK(registry);
   Platform::Initialize(platform);
 
-#if !defined(ARCH_CPU_X86_64) && !defined(ARCH_CPU_ARM64) && defined(OS_WIN)
-  // Reserve address space on 32 bit Windows, to make it likelier that large
-  // array buffer allocations succeed.
-  BOOL is_wow_64 = -1;
-  if (!IsWow64Process(GetCurrentProcess(), &is_wow_64))
-    is_wow_64 = FALSE;
-  if (!is_wow_64) {
-    // Try to reserve as much address space as we reasonably can.
-    const size_t kMB = 1024 * 1024;
-    for (size_t size = 512 * kMB; size >= 32 * kMB; size -= 16 * kMB) {
-      if (base::ReserveAddressSpace(size)) {
-        // Report successful reservation.
-        DEFINE_STATIC_LOCAL(CustomCountHistogram, reservation_size_histogram,
-                            ("Renderer4.ReservedMemory", 32, 512, 32));
-        reservation_size_histogram.Count(size / kMB);
-
-        break;
-      }
-    }
-  }
-#endif  // !defined(ARCH_CPU_X86_64) && !defined(ARCH_CPU_ARM64) &&
-        // defined(OS_WIN)
-
   V8Initializer::InitializeMainThread(
       V8ContextSnapshotExternalReferences::GetTable());
 
