@@ -34,6 +34,12 @@ namespace {
 const char kTestNSUUID[] = "00000000-1111-2222-3333-444444444444";
 const char kTestHashAddress[] = "D1:6F:E3:22:FD:5B";
 const int kTestRssi = 0;
+
+// List of undocumented IOBluetooth APIs used for BluetoothAdapterMac.
+extern "C" {
+void IOBluetoothPreferenceSetControllerPowerState(int state);
+};
+
 }  // namespace
 
 namespace device {
@@ -141,6 +147,11 @@ class BluetoothAdapterMacTest : public testing::Test {
   int callback_count_;
   int error_callback_count_;
 };
+
+// Test if private IOBluetooth APIs are callabe on all supported macOS versions.
+TEST_F(BluetoothAdapterMacTest, IOBluetoothPrivateAPIs) {
+  IOBluetoothPreferenceSetControllerPowerState(true);
+}
 
 TEST_F(BluetoothAdapterMacTest, Poll) {
   PollAdapter();
