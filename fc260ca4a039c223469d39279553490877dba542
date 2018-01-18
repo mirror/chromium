@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0bb7e8c5_91c43804",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-18T12:10:30Z",
+      "side": 1,
+      "message": "Now I think this check is not needed, so just removed this check. Sorry for the confusion!",
+      "parentUuid": "d1f96c49_92c2d2d3",
+      "revId": "fc260ca4a039c223469d39279553490877dba542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40fbbdb2_95581a86",
         "filename": "components/exo/keyboard.cc",
         "patchSetId": 2
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Not waiting is fine if you prefer. Either way should work properly and be valid according to protocol.\n\nHowever, the client doesn\u0027t know that the focus window is not changing. I think it\u0027s valid behavior by the client to assume that keys don\u0027t need to be acked after receiving a leave event. Seems like we either need to change the spec so that keys need to be acked even after leave event is sent or we need to be consistent here and always clear pending_key_acks_ when sending leave event.",
       "parentUuid": "58407e9b_78ec4719",
+      "revId": "fc260ca4a039c223469d39279553490877dba542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bde5127_6f830d0f",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-18T12:10:30Z",
+      "side": 1,
+      "message": "You\u0027re right. pending_key_acks_ should be cleared here.",
+      "parentUuid": "6a0b861f_84630342",
       "revId": "fc260ca4a039c223469d39279553490877dba542",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
