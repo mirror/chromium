@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e68baf85_6887e643",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-18T14:48:38Z",
+      "side": 1,
+      "message": "I changed this so that we can mark `IsLowEnergyPowered()` as const. In general I am a fan of const correctness :)",
+      "parentUuid": "49d08c78_6b58ae07",
+      "revId": "585867348d13a66c644a09cf63cf8bd601fab9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5265dbf0_c96c40e7",
         "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "585867348d13a66c644a09cf63cf8bd601fab9f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1ff031_6dd7f8fb",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-18T14:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5265dbf0_c96c40e7",
+      "revId": "585867348d13a66c644a09cf63cf8bd601fab9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9d17d1e4_cf84ea73",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-18T14:48:38Z",
+      "side": 1,
+      "message": "Done. Thanks for pointing this out, the test was buggy as is.",
+      "parentUuid": "94122b64_2c9b85aa",
+      "revId": "585867348d13a66c644a09cf63cf8bd601fab9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2b3e5d6_008b2c9b",
         "filename": "device/bluetooth/bluetooth_preferences_mac.mm",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "57e87ae2_1c4598b1",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-18T14:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2b3e5d6_008b2c9b",
+      "revId": "585867348d13a66c644a09cf63cf8bd601fab9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ef90d4a_c3e22ac1",
         "filename": "device/bluetooth/test/mock_bluetooth_preferences_mac.mm",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "585867348d13a66c644a09cf63cf8bd601fab9f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb98b4c9_804453df",
+        "filename": "device/bluetooth/test/mock_bluetooth_preferences_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-18T14:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ef90d4a_c3e22ac1",
+      "revId": "585867348d13a66c644a09cf63cf8bd601fab9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
