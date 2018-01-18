@@ -51,7 +51,7 @@ class BASE_EXPORT TaskSchedulerImpl : public TaskScheduler {
 #endif
 
   // Creates a TaskSchedulerImpl with a production TaskTracker.
-  //|name| is used to label threads and histograms.
+  //|name| is used to label histograms, it must not be empty.
   explicit TaskSchedulerImpl(StringPiece name);
 
   // For testing only. Creates a TaskSchedulerImpl with a custom TaskTracker.
@@ -94,7 +94,6 @@ class BASE_EXPORT TaskSchedulerImpl : public TaskScheduler {
   // |all_tasks_user_blocking_| is set.
   TaskTraits SetUserBlockingPriorityIfNeeded(const TaskTraits& traits) const;
 
-  const std::string name_;
   Thread service_thread_;
   const std::unique_ptr<TaskTrackerImpl> task_tracker_;
   DelayedTaskManager delayed_task_manager_;
