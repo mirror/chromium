@@ -50,6 +50,24 @@
       "revId": "238be3535ccdf714677a05632021910e18086f41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646b7f72_c85a3abb",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-18T02:19:56Z",
+      "side": 1,
+      "message": "I don\u0027t quite follow this comment. Why do we need to cache data here?",
+      "parentUuid": "1130bc98_65db5250",
+      "revId": "238be3535ccdf714677a05632021910e18086f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
