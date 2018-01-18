@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "436fe571_4f86a9a1",
+        "filename": "tools/cygprofile/orderfile_generator_backend.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-18T17:32:16Z",
+      "side": 1,
+      "message": "nit: legacy?",
+      "range": {
+        "startLine": 746,
+        "startChar": 9,
+        "endLine": 746,
+        "endChar": 16
+      },
+      "revId": "1985fa51820a2398c8dcea5bf6e60fb5ad2a8d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
