@@ -56,7 +56,6 @@
 #include "content/browser/loader/resource_message_filter.h"
 #include "content/browser/loader/resource_request_info_impl.h"
 #include "content/browser/loader/resource_requester_info.h"
-#include "content/browser/loader/resource_scheduler.h"
 #include "content/browser/loader/stream_resource_handler.h"
 #include "content/browser/loader/throttling_resource_handler.h"
 #include "content/browser/loader/upload_data_stream_builder.h"
@@ -112,6 +111,7 @@
 #include "ppapi/features/features.h"
 #include "services/network/public/cpp/resource_request.h"
 #include "services/network/public/cpp/resource_request_body.h"
+#include "services/network/public/cpp/resource_scheduler.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "storage/browser/blob/blob_data_handle.h"
@@ -275,6 +275,33 @@ void LogBackForwardNavigationFlagsHistogram(int load_flags) {
 }
 
 }  // namespace
+
+// This class is an adapter of SchedulerResourceRequest. This is needed to
+// solve a dependency issue, i.e., ResourceThrottle is defined in
+// content/browser/loader while ScheduledResourceRequestAdapter is defined in
+// content/network.
+class ResourceDispatcherHostImpl::ScheduledResourceRequestAdapter final
+    : public ResourceThrottle {
+ public:
+  explicit ScheduledResourceRequestAdapter(
+      std::unique_ptr<network::ResourceScheduler::ScheduledResourceRequest>
+          request)
+      : request_(std::move(request)) {
+    request_->set_resume_callback(base::BindOnce(
+        &ScheduledResourceRequestAdapter::Resume, base::Unretained(this)));
+  }
+  ~ScheduledResourceRequestAdapter() override {}
+
+  // ResourceThrottle implementation
+  void WillStartRequest(bool* defer) override {
+    request_->WillStartRequest(defer);
+  }
+  const char* GetNameForLogging() const override { return "ResourceScheduler"; }
+
+ private:
+  std::unique_ptr<network::ResourceScheduler::ScheduledResourceRequest>
+      request_;
+};
 
 ResourceDispatcherHostImpl::LoadInfo::LoadInfo() {}
 ResourceDispatcherHostImpl::LoadInfo::LoadInfo(const LoadInfo& other) = default;
@@ -679,7 +706,7 @@ std::unique_ptr<net::ClientCertStore>
 }
 
 void ResourceDispatcherHostImpl::OnInit() {
-  scheduler_.reset(new ResourceScheduler(enable_resource_scheduler_));
+  scheduler_.reset(new network::ResourceScheduler(enable_resource_scheduler_));
 }
 
 void ResourceDispatcherHostImpl::OnShutdown() {
@@ -1358,8 +1385,9 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
 
   // TODO(ricea): Stop looking this up so much.
   ResourceRequestInfoImpl* info = ResourceRequestInfoImpl::ForRequest(request);
-  throttles.push_back(scheduler_->ScheduleRequest(child_id, route_id,
-                                                  info->IsAsync(), request));
+  throttles.push_back(std::make_unique<ScheduledResourceRequestAdapter>(
+      scheduler_->ScheduleRequest(child_id, route_id, info->IsAsync(),
+                                  request)));
 
   // Split the handler in two groups: the ones that need to execute
   // WillProcessResponse before mime sniffing and the others.

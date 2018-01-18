@@ -20,6 +20,8 @@ static_library("cpp") {
     "resource_request.h",
     "resource_request_body.cc",
     "resource_request_body.h",
+    "resource_scheduler.cc",
+    "resource_scheduler.h",
   ]
 
   public_deps = [
@@ -84,6 +86,7 @@ source_set("tests") {
     "network_struct_traits_unittest.cc",
     "proxy_config_traits_unittest.cc",
     "proxy_resolving_client_socket_unittest.cc",
+    "resource_scheduler_unittest.cc",
   ]
   deps = [
     ":cpp",
