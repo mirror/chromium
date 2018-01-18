@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0324eb44_a079ee10",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4335,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T17:15:27Z",
+      "side": 1,
+      "message": "Clarified (it\u0027s because the manager owns the errors as unique_ptrs, and OnInstallPromptDone() results in the error\u0027s removal).",
+      "parentUuid": "6b4bee39_20582990",
+      "range": {
+        "startLine": 4335,
+        "startChar": 55,
+        "endLine": 4335,
+        "endChar": 0
+      },
+      "revId": "151b309920cbdb439c3e8ab711b9b95f6d622b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60f0b45f_558e29fb",
         "filename": "chrome/browser/extensions/external_install_manager.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "151b309920cbdb439c3e8ab711b9b95f6d622b1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989971d8_c35629bc",
+        "filename": "chrome/browser/extensions/external_install_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T17:15:27Z",
+      "side": 1,
+      "message": "True.  Updated the CL to clarify \"no visible change\".",
+      "parentUuid": "60f0b45f_558e29fb",
+      "range": {
+        "startLine": 126,
+        "startChar": 20,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "151b309920cbdb439c3e8ab711b9b95f6d622b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
