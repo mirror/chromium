@@ -46,6 +46,30 @@
       "revId": "ea26174bddae8cc56289821eb042a2e6fa0fcac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f2ece8_9502a058",
+        "filename": "third_party/WebKit/Source/core/svg/SVGPathElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-18T09:11:23Z",
+      "side": 1,
+      "message": "Yes, that\u0027s fine and all, but since the function in question is trivial, adding the reference version before changing callers would have saved some back-and-forth on callsites.",
+      "parentUuid": "631c69ac_7c14caf3",
+      "range": {
+        "startLine": 117,
+        "startChar": 44,
+        "endLine": 117,
+        "endChar": 61
+      },
+      "revId": "ea26174bddae8cc56289821eb042a2e6fa0fcac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
