@@ -97148,28 +97148,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="WebCore.ScriptedIdleTaskController.IdleCallbackDeadline"
-    units="ms">
-  <obsolete>
-    Deprecated November 2017.
-  </obsolete>
-  <owner>rmcilroy@chromium.org</owner>
-  <summary>
-    The amount of time allotted to a requestIdleCallback callback, i.e., the
-    difference between the time when it is called and when its deadline expires.
-  </summary>
-</histogram>
-
-<histogram name="WebCore.ScriptedIdleTaskController.IdleCallbackOverrun"
-    units="ms">
-  <owner>rmcilroy@chromium.org</owner>
-  <summary>
-    The amount of time by which a requestIdleCallback callback overran its
-    deadline. Callbacks which don't overrun their deadline will report an
-    overrun of 0.
-  </summary>
-</histogram>
-
 <histogram name="WebCore.Scripts.Async.NotStreamingReason"
     enum="NotStreamingReason">
   <owner>marja@chromium.org</owner>
