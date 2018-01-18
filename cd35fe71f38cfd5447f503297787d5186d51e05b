@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8322487c_c47a79bd",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-18T17:52:16Z",
+      "side": 1,
+      "message": "Done.\n\nGood catch, also modified the devtools tests.",
+      "parentUuid": "84cdfec9_1b1c0a3f",
+      "range": {
+        "startLine": 1456,
+        "startChar": 24,
+        "endLine": 1456,
+        "endChar": 64
+      },
+      "revId": "cd35fe71f38cfd5447f503297787d5186d51e05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f3a0d77_b48ce955",
         "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.cpp",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "cd35fe71f38cfd5447f503297787d5186d51e05b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "824351ac_633b0ec1",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-18T17:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f3a0d77_b48ce955",
+      "range": {
+        "startLine": 191,
+        "startChar": 32,
+        "endLine": 191,
+        "endChar": 65
+      },
+      "revId": "cd35fe71f38cfd5447f503297787d5186d51e05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
