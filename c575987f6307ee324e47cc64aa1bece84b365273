@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a87cfc7_ffdf9585",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T16:11:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d6d0329_3db3e523",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bfc4f16_d53d6952",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationManagerProxyImpl.java",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beeb132e_c9e41cb9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationManagerProxyImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T16:11:48Z",
+      "side": 1,
+      "message": "I\u0027m changing it to allowing it on M+ over here. Other people shouldn\u0027t be restricted from using it if they\u0027re happy with the tradeoffs.",
+      "parentUuid": "8bfc4f16_d53d6952",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a4b59b89_5302f804",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationManagerProxyImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T16:11:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20f667ac_537bc18c",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6210256f_91b648f0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e043b2ad_dac70c08",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T16:11:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6210256f_91b648f0",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5591d0fb_b64268f7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5635111f_05485828",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T16:11:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5591d0fb_b64268f7",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "6dda6ca4_1a9a7125",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T16:11:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "683bc0f7_e88657c6",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9320bd4_45a88a91",
         "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
         "patchSetId": 4
@@ -136,6 +244,24 @@
       "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94dc0e2e_e243cb06",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T16:11:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9320bd4_45a88a91",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +294,24 @@
       "side": 1,
       "message": "Actually, don\u0027t worry about this.\n\nI\u0027m opening a bug for me to improve our test coverage of notification code on Android in general and tests for getNotifications can fall under that; not worth you digging into this now.",
       "parentUuid": "4eb40ef3_5bd99c62",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11d79ccf_adb15184",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/notifications/MockNotificationManagerProxy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T16:11:48Z",
+      "side": 1,
+      "message": "Ack, thanks. Let me know if I can help.",
+      "parentUuid": "634c6090_3a19261d",
       "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
