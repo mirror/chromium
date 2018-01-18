@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9f587f9_d3d46948",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-18T18:34:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a7648ad_bde3fab5",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 40
+      },
+      "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1597e7d_ec49bd9b",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-18T17:40:11Z",
       "side": 1,
       "message": "AddString can also take a std::string so this can just be:\n\nreturn url_without_parameter + \"\u0026b\u003d\" +  base::SysInfo::GetLsbReleaseBoard();",
+      "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2b07ff_61f18533",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-18T18:34:25Z",
+      "side": 1,
+      "message": "That didn\u0027t work, but it did work if I simply used base::ASCIIToUTF16(), so I did that instead.",
+      "parentUuid": "b1597e7d_ec49bd9b",
       "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "d9a838c9_d7903597",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-18T18:34:25Z",
+      "side": 1,
+      "message": "IMO, it makes more sense to process the URL in the C++ code. If we don\u0027t think that this is the best location, what do you think about potentially adding a helper function in this file?\n\nhttps://cs.chromium.org/chromium/src/components/google/core/browser/google_util.h\n\nI\u0027m thinking that we could add something like the AppendGoogleLocaleParam() function which is already there. Thoughts?",
+      "parentUuid": "c9220158_868fe608",
+      "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63e6d4f2_a3609b29",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 1
@@ -88,6 +148,30 @@
       "writtenOn": "2018-01-18T17:59:39Z",
       "side": 1,
       "message": "Is this ChromeOS only code? It does not look so. Same at line 1508.",
+      "range": {
+        "startLine": 1500,
+        "startChar": 25,
+        "endLine": 1500,
+        "endChar": 50
+      },
+      "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2632e249_097a1780",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-18T18:34:25Z",
+      "side": 1,
+      "message": "Good point - I moved the #if into the helper function (and just return the original URL if it\u0027s not CrOS).",
+      "parentUuid": "63e6d4f2_a3609b29",
       "range": {
         "startLine": 1500,
         "startChar": 25,
