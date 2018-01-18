@@ -34,7 +34,7 @@ class ProxyPolicyHandlerTest
     store_ = nullptr;
     policy_service_.reset(new PolicyServiceImpl(providers_));
     store_ = new ConfigurationPolicyPrefStore(
-        policy_service_.get(), &handler_list_, POLICY_LEVEL_MANDATORY);
+        nullptr, policy_service_.get(), &handler_list_, POLICY_LEVEL_MANDATORY);
   }
 
  protected:

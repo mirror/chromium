@@ -13,6 +13,7 @@
 #include "components/policy/core/common/policy_namespace.h"
 #include "components/policy/core/common/policy_service_impl.h"
 #include "components/policy/policy_constants.h"
+#include "ui/base/resource/resource_bundle.h"
 
 namespace policy {
 
@@ -121,6 +122,12 @@ void BrowserPolicyConnectorBase::SetPolicyProviderForTesting(
   g_testing_provider = provider;
 }
 
+void BrowserPolicyConnectorBase::NotifyWhenResourceBundleReady(
+    base::OnceClosure closure) {
+  DCHECK(!ui::ResourceBundle::HasSharedInstance());
+  resource_bundle_callbacks_.push_back(std::move(closure));
+}
+
 void BrowserPolicyConnectorBase::AddPolicyProvider(
     std::unique_ptr<ConfigurationPolicyProvider> provider) {
   policy_providers_.push_back(std::move(provider));
@@ -131,6 +138,13 @@ void BrowserPolicyConnectorBase::SetPlatformPolicyProvider(
   CHECK(!platform_policy_provider_);
   platform_policy_provider_ = provider.get();
   AddPolicyProvider(std::move(provider));
+}
+
+void BrowserPolicyConnectorBase::OnResourceBundleCreated() {
+  std::vector<base::OnceClosure> resource_bundle_callbacks;
+  std::swap(resource_bundle_callbacks, resource_bundle_callbacks_);
+  for (auto& closure : resource_bundle_callbacks)
+    std::move(closure).Run();
 }
 
 }  // namespace policy
