@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b4e6772_0d2820f0",
+        "filename": "chrome/browser/previews/previews_infobar_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-18T22:29:28Z",
+      "side": 1,
+      "message": "This change is because otherwise the infobar text is kinda unreadable without periods.",
+      "revId": "420fb633fc3358dafee40143917778b0b6aa75df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
