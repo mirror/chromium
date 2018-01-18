@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d951132f_855f8368",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-18T04:09:31Z",
+      "side": 1,
+      "message": "Since Document#body can\u0027t be UA shadow root please this to:\n\nElement* const target \u003d AssociatedElementOf(selection.Start());\nif (!target)\n  return GetFrame().GetDocument()-\u003ebody();\n\nOtherwise, this code makes readers confusing.",
+      "range": {
+        "startLine": 800,
+        "startChar": 0,
+        "endLine": 802,
+        "endChar": 46
+      },
+      "revId": "e0efbb5ad0c39fed6531f9a8f1688011846209d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39d711c_4ef4b986",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-18T04:09:31Z",
+      "side": 1,
+      "message": "nit: editing prefers early return style, please write:\n\nif (target-\u003eIsInUserAgentShadowRoot())\n  return target-\u003eOwnerShadowHost();\nreturn target;",
+      "range": {
+        "startLine": 804,
+        "startChar": 0,
+        "endLine": 806,
+        "endChar": 16
+      },
+      "revId": "e0efbb5ad0c39fed6531f9a8f1688011846209d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
