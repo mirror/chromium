@@ -7,6 +7,9 @@
 const base::Feature kTabSwitcherPresentsBVC{"TabSwitcherPresentsBVC",
                                             base::FEATURE_ENABLED_BY_DEFAULT};
 
+const base::Feature kUIRebootPhase1{"UIRebootPhase1",
+                                    base::FEATURE_DISABLED_BY_DEFAULT};
+
 bool TabSwitcherPresentsBVCEnabled() {
   return base::FeatureList::IsEnabled(kTabSwitcherPresentsBVC);
 }

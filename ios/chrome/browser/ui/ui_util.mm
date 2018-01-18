@@ -10,6 +10,7 @@
 #include "base/feature_list.h"
 #include "base/logging.h"
 #include "ios/chrome/app/tests_hook.h"
+#import "ios/chrome/browser/ui/main/main_feature_flags.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_private_base_feature.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
@@ -60,7 +61,7 @@ bool IsIPhoneX() {
 bool IsAdaptiveToolbarEnabled() {
   if (tests_hook::ForceAdaptiveToolbar())
     return true;
-  return base::FeatureList::IsEnabled(kAdaptiveToolbar);
+  return base::FeatureList::IsEnabled(kUIRebootPhase1);
 }
 
 bool IsSafeAreaCompatibleToolbarEnabled() {

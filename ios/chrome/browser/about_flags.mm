@@ -232,9 +232,10 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kShowAutofillTypePredictionsDescription,
      flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(autofill::features::kAutofillShowTypePredictions)},
-    {"adaptive-toolbar", flag_descriptions::kAdaptiveToolbarName,
-     flag_descriptions::kAdaptiveToolbarDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(kAdaptiveToolbar)},
+    {"ui-reboot-phase-1", flag_descriptions::kUIRebootPhase1Name,
+     flag_descriptions::kUIRebootPhase1Description, flags_ui::kOsIos,
+     FEATURE_VALUE_TYPE(kUIRebootPhase1)},
+
 };
 
 // Add all switches from experimental flags to |command_line|.
