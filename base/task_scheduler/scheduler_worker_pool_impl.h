@@ -58,17 +58,15 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
 
   // Constructs a pool without workers.
   //
-  // |name| is used to label the pool's threads ("TaskScheduler" + |name| +
-  // index) and histograms ("TaskScheduler." + histogram name + "." + |name| +
-  // extra suffixes). |priority_hint| is the preferred thread priority; the
-  // actual thread priority depends on shutdown state and platform capabilities.
-  // |task_tracker| keeps track of tasks. |delayed_task_manager| handles tasks
-  // posted with a delay.
-  SchedulerWorkerPoolImpl(
-      const std::string& name,
-      ThreadPriority priority_hint,
-      TaskTracker* task_tracker,
-      DelayedTaskManager* delayed_task_manager);
+  // |name| is used to label the pool's histograms ("TaskScheduler." +
+  // histogram_name + "." + |name| + extra suffixes). |priority_hint| is the
+  // preferred thread priority; the actual thread priority depends on shutdown
+  // state and platform capabilities. |task_tracker| keeps track of tasks.
+  // |delayed_task_manager| handles tasks posted with a delay.
+  SchedulerWorkerPoolImpl(std::string name,
+                          ThreadPriority priority_hint,
+                          TaskTracker* task_tracker,
+                          DelayedTaskManager* delayed_task_manager);
 
   // Creates workers following the |params| specification, allowing existing and
   // future tasks to run. Uses |service_thread_task_runner| to monitor for

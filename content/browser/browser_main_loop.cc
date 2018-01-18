@@ -599,9 +599,7 @@ BrowserMainLoop::BrowserMainLoop(const MainFunctionParams& parameters)
   DCHECK(!g_current_browser_main_loop);
   g_current_browser_main_loop = this;
 
-  // Use an empty string as TaskScheduler name to match the suffix of browser
-  // process TaskScheduler histograms.
-  base::TaskScheduler::Create("");
+  base::TaskScheduler::Create("Browser");
 }
 
 BrowserMainLoop::~BrowserMainLoop() {

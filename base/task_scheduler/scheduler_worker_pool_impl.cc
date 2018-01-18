@@ -153,12 +153,12 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
 };
 
 SchedulerWorkerPoolImpl::SchedulerWorkerPoolImpl(
-    const std::string& name,
+    std::string name,
     ThreadPriority priority_hint,
     TaskTracker* task_tracker,
     DelayedTaskManager* delayed_task_manager)
     : SchedulerWorkerPool(task_tracker, delayed_task_manager),
-      name_(name),
+      name_(std::move(name)),
       priority_hint_(priority_hint),
       lock_(shared_priority_queue_.container_lock()),
       idle_workers_stack_cv_for_testing_(lock_.CreateConditionVariable()),
