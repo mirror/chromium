@@ -46,19 +46,22 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 }  // namespace
 
+@interface AboutChromeCollectionViewController ()
+@property(strong, nonatomic)
+    CollectionViewModel<CollectionViewItem*>* collectionViewModel;
+@end
+
 @implementation AboutChromeCollectionViewController
+@synthesize collectionViewModel = _collectionViewModel;
 
 #pragma mark Initialization
 
 - (instancetype)init {
-  UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
-  self =
-      [super initWithLayout:layout style:CollectionViewControllerStyleAppBar];
+  self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
-    self.title = l10n_util::GetNSString(IDS_IOS_ABOUT_PRODUCT_NAME);
-    // TODO(crbug.com/764578): -loadModel should not be called from
-    // initializer. A possible fix is to move this call to -viewDidLoad.
+    self.collectionViewModel = [[CollectionViewModel alloc] init];
     [self loadModel];
+    self.title = l10n_util::GetNSString(IDS_IOS_ABOUT_PRODUCT_NAME);
   }
   return self;
 }
@@ -66,45 +69,71 @@ typedef NS_ENUM(NSInteger, ItemType) {
 #pragma mark SettingsRootCollectionViewController
 
 - (void)loadModel {
-  [super loadModel];
-  CollectionViewModel* model = self.collectionViewModel;
-
-  [model addSectionWithIdentifier:SectionIdentifierLinks];
+  [self.collectionViewModel addSectionWithIdentifier:SectionIdentifierLinks];
 
   CollectionViewTextItem* credits =
       [[CollectionViewTextItem alloc] initWithType:ItemTypeLinksCredits];
   credits.text = l10n_util::GetNSString(IDS_IOS_OPEN_SOURCE_LICENSES);
   credits.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
   credits.accessibilityTraits = UIAccessibilityTraitButton;
-  [model addItem:credits toSectionWithIdentifier:SectionIdentifierLinks];
+  [self.collectionViewModel addItem:credits
+            toSectionWithIdentifier:SectionIdentifierLinks];
 
   CollectionViewTextItem* terms =
       [[CollectionViewTextItem alloc] initWithType:ItemTypeLinksTerms];
   terms.text = l10n_util::GetNSString(IDS_IOS_TERMS_OF_SERVICE);
   terms.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
   terms.accessibilityTraits = UIAccessibilityTraitButton;
-  [model addItem:terms toSectionWithIdentifier:SectionIdentifierLinks];
+  [self.collectionViewModel addItem:terms
+            toSectionWithIdentifier:SectionIdentifierLinks];
 
   CollectionViewTextItem* privacy =
       [[CollectionViewTextItem alloc] initWithType:ItemTypeLinksPrivacy];
   privacy.text = l10n_util::GetNSString(IDS_IOS_PRIVACY_POLICY);
   privacy.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
   privacy.accessibilityTraits = UIAccessibilityTraitButton;
-  [model addItem:privacy toSectionWithIdentifier:SectionIdentifierLinks];
+  [self.collectionViewModel addItem:privacy
+            toSectionWithIdentifier:SectionIdentifierLinks];
 
-  [model addSectionWithIdentifier:SectionIdentifierFooter];
+  [self.collectionViewModel addSectionWithIdentifier:SectionIdentifierFooter];
 
   VersionItem* version = [[VersionItem alloc] initWithType:ItemTypeVersion];
   version.text = [self versionDescriptionString];
   version.accessibilityTraits = UIAccessibilityTraitButton;
-  [model addItem:version toSectionWithIdentifier:SectionIdentifierFooter];
+  [self.collectionViewModel addItem:version
+            toSectionWithIdentifier:SectionIdentifierFooter];
 }
 
-#pragma mark UICollectionViewDelegate
+#pragma mark - UITableViewDataSource
 
-- (void)collectionView:(UICollectionView*)collectionView
-    didSelectItemAtIndexPath:(NSIndexPath*)indexPath {
-  [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
+- (UITableViewCell*)tableView:(UITableView*)tableView
+        cellForRowAtIndexPath:(NSIndexPath*)indexPath {
+  CollectionViewItem* item =
+      [self.collectionViewModel itemAtIndexPath:indexPath];
+  Class cellClass = [item tableViewCellClass];
+  NSString* reuseIdentifier = NSStringFromClass(cellClass);
+  [self.tableView registerClass:cellClass
+         forCellReuseIdentifier:reuseIdentifier];
+  UITableViewCell* cell =
+      [self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier
+                                           forIndexPath:indexPath];
+  [item configureTableViewCell:cell];
+
+  return cell;
+}
+
+- (NSInteger)tableView:(UITableView*)tableView
+    numberOfRowsInSection:(NSInteger)section {
+  return [self.collectionViewModel numberOfItemsInSection:section];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView {
+  return [self.collectionViewModel numberOfSections];
+}
+
+#pragma mark - UITableViewDelegate
+- (void)tableView:(UITableView*)tableView
+    didSelectRowAtIndexPath:(NSIndexPath*)indexPath {
   NSInteger itemType =
       [self.collectionViewModel itemTypeForIndexPath:indexPath];
   switch (itemType) {
@@ -126,38 +155,10 @@ typedef NS_ENUM(NSInteger, ItemType) {
   }
 }
 
-#pragma mark MDCCollectionViewStylingDelegate
-
-// MDCCollectionViewStylingDelegate protocol is implemented so that the version
-// cell has an invisible background.
-- (MDCCollectionViewCellStyle)collectionView:(UICollectionView*)collectionView
-                         cellStyleForSection:(NSInteger)section {
-  NSInteger sectionIdentifier =
-      [self.collectionViewModel sectionIdentifierForSection:section];
-  switch (sectionIdentifier) {
-    case SectionIdentifierFooter:
-      return MDCCollectionViewCellStyleDefault;
-    default:
-      return self.styler.cellStyle;
-  }
-}
-
-- (BOOL)collectionView:(UICollectionView*)collectionView
-    shouldHideItemBackgroundAtIndexPath:(NSIndexPath*)indexPath {
-  NSInteger sectionIdentifier =
-      [self.collectionViewModel sectionIdentifierForSection:indexPath.section];
-  switch (sectionIdentifier) {
-    case SectionIdentifierFooter:
-      return YES;
-    default:
-      return NO;
-  }
-}
-
 #pragma mark Private methods
 
 - (void)openURL:(GURL)URL {
-  BlockToOpenURL(self, self.dispatcher)(URL);
+  // BlockToOpenURL(self, self.dispatcher)(URL);
 }
 
 - (void)copyVersionToPasteboard {
