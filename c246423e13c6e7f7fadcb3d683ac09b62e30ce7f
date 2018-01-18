@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "e473298c_71b11506",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-18T22:31:15Z",
+      "side": 1,
+      "message": "nit: no {} on one-line ifs here, and below. Looks like a pre-existing nit, but might as well fix :)",
+      "range": {
+        "startLine": 493,
+        "startChar": 3,
+        "endLine": 493,
+        "endChar": 0
+      },
+      "revId": "c246423e13c6e7f7fadcb3d683ac09b62e30ce7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e4ddade_1ff99276",
         "filename": "net/quic/chromium/quic_stream_factory.cc",
         "patchSetId": 1
