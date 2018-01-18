@@ -116,9 +116,7 @@ bool TabLifecycleUnitSource::TabLifecycleUnit::CanDiscard(
     return false;
 
 #if defined(OS_CHROMEOS)
-  // TODO(fdoray): Return false from IsVisible() when the WebContents is
-  // occluded.
-  if (GetWebContents()->IsVisible())
+  if (GetWebContents()->GetVisibility() == content::Visibility::VISIBLE)
     return false;
 #else
   // Do not discard the tab if it is currently active in its window.
