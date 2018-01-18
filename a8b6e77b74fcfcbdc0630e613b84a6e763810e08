@@ -122,6 +122,24 @@
       "revId": "a8b6e77b74fcfcbdc0630e613b84a6e763810e08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2f6724_5f905781",
+        "filename": "third_party/WebKit/public/platform/WebPointerProperties.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-18T19:31:00Z",
+      "side": 1,
+      "message": "When I added the setters a while back, I think I considered passing on a WebFloatPoint IIRC.  The problem is that many callers pass on expressions here, and those who don\u0027t, the source of the \"point\" like structure are of many different types, for example:\n- gfx::Vector2dF\n  https://cs.chromium.org/chromium/src/content/browser/renderer_host/input/legacy_input_router_impl_perftest.cc?rcl\u003dddf2ded45aba2a9522000bfa6c6daac2c4347ab2\u0026l\u003d173\n\n- PP_FloatPoint:\n  https://cs.chromium.org/chromium/src/content/renderer/pepper/event_conversion.cc?rcl\u003dddf2ded45aba2a9522000bfa6c6daac2c4347ab2\u0026l\u003d325\n\nOf course there are many cases of gfx::Point and IntPoint which are \"auto-converted\" to WebFloatPoint.  But the uncommon cases above were the main problem.\n\nIn any case, even if we decide to pass a WebFloatPoint param, the corresponding ref-fix will be big.  Let\u0027s file a code-health bug to do it separately.",
+      "parentUuid": "41884ead_14a4c5c1",
+      "revId": "a8b6e77b74fcfcbdc0630e613b84a6e763810e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
