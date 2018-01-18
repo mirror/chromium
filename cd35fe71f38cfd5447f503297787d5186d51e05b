@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84cdfec9_1b1c0a3f",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-18T16:08:41Z",
+      "side": 1,
+      "message": "Don\u0027t you want this to be null so that it\u0027s auto-determined?",
+      "range": {
+        "startLine": 1456,
+        "startChar": 24,
+        "endLine": 1456,
+        "endChar": 64
+      },
+      "revId": "cd35fe71f38cfd5447f503297787d5186d51e05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3a0d77_b48ce955",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-18T16:08:41Z",
+      "side": 1,
+      "message": "Also include net/nqe/effective_connection_type.h",
+      "range": {
+        "startLine": 191,
+        "startChar": 32,
+        "endLine": 191,
+        "endChar": 65
+      },
+      "revId": "cd35fe71f38cfd5447f503297787d5186d51e05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
