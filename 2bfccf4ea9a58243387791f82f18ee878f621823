@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7541cc03_23c81e51",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5745,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-18T01:11:20Z",
+      "side": 1,
+      "message": "Note: before the rest of this change, this test would fail DCHECK(IsRangeListSorted) during this call.",
+      "range": {
+        "startLine": 5745,
+        "startChar": 2,
+        "endLine": 5745,
+        "endChar": 26
+      },
+      "revId": "2bfccf4ea9a58243387791f82f18ee878f621823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "211a5d36_657ab145",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5769,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-18T01:11:20Z",
+      "side": 1,
+      "message": "Note: before the MergeAllAdjacentRanges portion of this change, buffered ranges here would be \"{ [0,60) [100,160) [500,510) [600,630) }\".",
+      "range": {
+        "startLine": 5769,
+        "startChar": 2,
+        "endLine": 5769,
+        "endChar": 32
+      },
+      "revId": "2bfccf4ea9a58243387791f82f18ee878f621823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
