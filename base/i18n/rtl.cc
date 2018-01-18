@@ -373,6 +373,27 @@ bool UnadjustStringForLocaleDirection(string16* text) {
 
 #endif  // !OS_WIN
 
+void EnsureTerminatedDirectionalFormatting(string16* text) {
+  int count = 0;
+  size_t length = text->length();
+  for (size_t i = 0; i < length; i++) {
+    char16 c = text->at(i);
+    if (c == kLeftToRightEmbeddingMark || c == kRightToLeftEmbeddingMark ||
+        c == kLeftToRightOverride || c == kRightToLeftOverride) {
+      ++count;
+    } else if (c == kPopDirectionalFormatting && count > 0) {
+      --count;
+    }
+  }
+  for (int j = 0; j < count; j++)
+    text->push_back(kPopDirectionalFormatting);
+}
+
+void SanitizeUserSuppliedString(string16* text) {
+  EnsureTerminatedDirectionalFormatting(text);
+  AdjustStringForLocaleDirection(text);
+}
+
 bool StringContainsStrongRTLChars(const string16& text) {
   const UChar* string = text.c_str();
   size_t length = text.length();

@@ -116,6 +116,14 @@ BASE_I18N_EXPORT bool AdjustStringForLocaleDirection(string16* text);
 // Undoes the actions of the above function (AdjustStringForLocaleDirection).
 BASE_I18N_EXPORT bool UnadjustStringForLocaleDirection(string16* text);
 
+// For every instance of a directional override/embedded character in |text|, a
+// terminating character is appended to |text|.
+BASE_I18N_EXPORT void EnsureTerminatedDirectionalFormatting(string16* text);
+
+// Sanitizes the |text| by terminating any directional override/embedded
+// characters and then adjusting the string for local direction.
+BASE_I18N_EXPORT void SanitizeUserSuppliedString(string16* text);
+
 // Returns true if the string contains at least one character with strong right
 // to left directionality; that is, a character with either R or AL Unicode
 // BiDi character type.
