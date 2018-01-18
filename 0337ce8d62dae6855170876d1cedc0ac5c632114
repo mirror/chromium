@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c802154_9aad12a7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/persistence/persistence-rename-mapped-file.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-18T17:18:13Z",
+      "side": 0,
+      "message": "I think this test makes sense even with auto-mapping.",
+      "revId": "0337ce8d62dae6855170876d1cedc0ac5c632114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310e29df_57a8774b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/DefaultMapping.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-18T17:18:13Z",
+      "side": 0,
+      "message": "Should we cleanup this interface as well?",
+      "revId": "0337ce8d62dae6855170876d1cedc0ac5c632114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40283f3b_f4fd5909",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/EditFileSystemView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-18T17:18:13Z",
+      "side": 0,
+      "message": "Unrelated, but we should clean the \"via .devtools\" part as well.",
+      "revId": "0337ce8d62dae6855170876d1cedc0ac5c632114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
