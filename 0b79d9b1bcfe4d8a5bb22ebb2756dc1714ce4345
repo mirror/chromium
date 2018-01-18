@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "799541a4_4fd87bb9",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-18T04:05:53Z",
+      "side": 1,
+      "message": "Agree, it should deleteContentForward,",
+      "parentUuid": "ed0f75b7_705935bc",
+      "range": {
+        "startLine": 348,
+        "startChar": 6,
+        "endLine": 351,
+        "endChar": 78
+      },
+      "revId": "0b79d9b1bcfe4d8a5bb22ebb2756dc1714ce4345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b3544f5_a835a919",
         "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
         "patchSetId": 6
