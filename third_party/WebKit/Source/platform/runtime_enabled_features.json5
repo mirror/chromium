@@ -814,6 +814,7 @@
     },
     {
       name: "PictureInPicture",
+      settable_from_internals: true,
     },
     {
       name: "PreciseMemoryInfo",
