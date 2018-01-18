@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "ae20a4e3_c78dbfc1",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-18T01:53:46Z",
+      "side": 1,
+      "message": "Hmm, is this actually possible? I feel like one of the inputevent-ime tests would have caught this.\n\nDeleteSelection() only fires an input event if text is empty. But if that’s the case, I think TypingCommand::InsertText() is a no-op and does not fire an input event.",
+      "parentUuid": "3a600fd3_5530f6a7",
+      "revId": "dd8174a0cee5b7358e3f6457a256e378a1fe809d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f472058e_32c15903",
         "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.h",
         "patchSetId": 4
