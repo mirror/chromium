@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "101e71c0_e8871fb2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/requestDevice/canonicalizeFilter/no-arguments.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-18T23:21:26Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like the right error message.",
+      "revId": "1507eb1274248d80cb779fc9749d4f55f43995a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
