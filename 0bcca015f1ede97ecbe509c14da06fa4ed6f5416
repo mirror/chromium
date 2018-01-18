@@ -16,6 +16,110 @@
       "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f81cb47_a5d12ad7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T00:01:02Z",
+      "side": 1,
+      "message": "Super nit: 72 chars \u003d)\n\nI\u0027d suggest something like this:\nAutoplay: force user activation for same-site links opened via the context menu.",
+      "parentUuid": "b05da8e3_54151f0c",
+      "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc1dd06_7def1d33",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T00:01:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure what \"the latter\" here is referring to.",
+      "range": {
+        "startLine": 10,
+        "startChar": 67,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db1a8866_a2c25ead",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4058,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T00:01:02Z",
+      "side": 1,
+      "message": "Nit: can probably leave out WebSecurityOrigin() here to make this marginally more readable.",
+      "range": {
+        "startLine": 4058,
+        "startChar": 10,
+        "endLine": 4058,
+        "endChar": 27
+      },
+      "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3751f155_a62593da",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T00:01:02Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this implicitly convert?",
+      "range": {
+        "startLine": 1076,
+        "startChar": 8,
+        "endLine": 1076,
+        "endChar": 25
+      },
+      "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04551a37_ab9782d5",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T00:01:02Z",
+      "side": 1,
+      "message": "Maybe call this forced_user_activation_? Because there are presumably instances where a load request is from a user activation where this won\u0027t be set?",
+      "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
