@@ -271,7 +271,7 @@ TEST_F(ServiceWorkerScriptURLLoaderTest, Success) {
 
   // The client should have received the response.
   EXPECT_TRUE(client_.has_received_response());
-  EXPECT_TRUE(client_.response_body().is_valid());
+  EXPECT_TRUE(client_.response_body());
   std::string response;
   EXPECT_TRUE(mojo::common::BlockingCopyToString(
       client_.response_body_release(), &response));
@@ -295,7 +295,7 @@ TEST_F(ServiceWorkerScriptURLLoaderTest, Success_EmptyBody) {
 
   // The client should have received the response.
   EXPECT_TRUE(client_.has_received_response());
-  EXPECT_TRUE(client_.response_body().is_valid());
+  EXPECT_TRUE(client_.response_body());
   std::string response;
   EXPECT_TRUE(mojo::common::BlockingCopyToString(
       client_.response_body_release(), &response));
@@ -325,7 +325,7 @@ TEST_F(ServiceWorkerScriptURLLoaderTest, Success_LargeBody) {
 
   // The client should have received the response.
   EXPECT_TRUE(client_.has_received_response());
-  EXPECT_TRUE(client_.response_body().is_valid());
+  EXPECT_TRUE(client_.response_body());
   std::string response;
   EXPECT_TRUE(mojo::common::BlockingCopyToString(
       client_.response_body_release(), &response));
@@ -444,7 +444,7 @@ TEST_F(ServiceWorkerScriptURLLoaderTest, Success_PathRestriction) {
 
   // The client should have received the response.
   EXPECT_TRUE(client_.has_received_response());
-  EXPECT_TRUE(client_.response_body().is_valid());
+  EXPECT_TRUE(client_.response_body());
   std::string response;
   EXPECT_TRUE(mojo::common::BlockingCopyToString(
       client_.response_body_release(), &response));

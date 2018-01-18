@@ -3720,7 +3720,7 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
   if (child_routing_id == MSG_ROUTING_NONE)
     return nullptr;
 
-  CHECK(child_interface_provider_handle.is_valid());
+  CHECK(child_interface_provider_handle);
   service_manager::mojom::InterfaceProviderPtr child_interface_provider;
   child_interface_provider.Bind(
       service_manager::mojom::InterfaceProviderPtrInfo(

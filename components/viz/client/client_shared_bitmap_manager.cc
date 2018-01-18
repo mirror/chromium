@@ -93,7 +93,7 @@ void CollectMemoryUsageAndDie(const gfx::Size& size, size_t alloc_size) {
 std::unique_ptr<base::SharedMemory> AllocateSharedMemory(size_t buf_size) {
   mojo::ScopedSharedBufferHandle mojo_buf =
       mojo::SharedBufferHandle::Create(buf_size);
-  if (!mojo_buf->is_valid()) {
+  if (!*mojo_buf) {
     LOG(WARNING) << "Browser failed to allocate shared memory";
     return nullptr;
   }

@@ -33,6 +33,10 @@ class MessageHandle {
 
   bool is_valid() const { return value_ != kInvalidMessageHandleValue; }
 
+  explicit operator bool() const {
+    return value_ != kInvalidMessageHandleValue;
+  }
+
   const MojoMessageHandle& value() const { return value_; }
   MojoMessageHandle* mutable_value() { return &value_; }
   void set_value(MojoMessageHandle value) { value_ = value; }
