@@ -22,6 +22,30 @@
       "revId": "1607978c1b79255fe4c65783e30dfd428d616597",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f17a5a_3acd908b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-18T05:09:45Z",
+      "side": 1,
+      "message": "Not really, see tests:\nhttp://jsbin.com/hodosi/edit?html,output\nIf we want getBoudningClientRect() to return the correct position, or maybe selecting can reveal where it is visually. To do this more correctly, I think I\u0027ll need to re-read NGExclusionSpace. Do you prefer that route?",
+      "parentUuid": "d2b5faec_2e1d8c7e",
+      "range": {
+        "startLine": 290,
+        "startChar": 31,
+        "endLine": 290,
+        "endChar": 57
+      },
+      "revId": "1607978c1b79255fe4c65783e30dfd428d616597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
