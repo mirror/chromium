@@ -65,6 +65,13 @@ void FrameCaptionButton::SetImage(CaptionButtonIcon icon,
   gfx::ImageSkia new_icon_image =
       gfx::CreateVectorIcon(icon_definition, GetButtonColor(use_light_images_));
 
+  icon_definition_ = &icon_definition;
+  SetImage(icon, animate, new_icon_image);
+}
+
+void FrameCaptionButton::SetImage(CaptionButtonIcon icon,
+                                  Animate animate,
+                                  gfx::ImageSkia& new_icon_image) {
   // The early return is dependent on |animate| because callers use SetImage()
   // with ANIMATE_NO to progress the crossfade animation to the end.
   if (icon == icon_ &&
@@ -77,7 +84,6 @@ void FrameCaptionButton::SetImage(CaptionButtonIcon icon,
     crossfade_icon_image_ = icon_image_;
 
   icon_ = icon;
-  icon_definition_ = &icon_definition;
   icon_image_ = new_icon_image;
 
   if (animate == ANIMATE_YES) {

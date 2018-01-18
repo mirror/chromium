@@ -42,6 +42,12 @@ class ASH_EXPORT FrameCaptionButton : public views::Button {
                 Animate animate,
                 const gfx::VectorIcon& icon_image);
 
+  // Deprecated.
+  // TODO(ohsima): Remove this.
+  void SetImage(CaptionButtonIcon icon,
+                Animate animate,
+                gfx::ImageSkia& icon_image);
+
   // Returns true if the button is crossfading to new visuals set in
   // SetImage().
   bool IsAnimatingImageSwap() const;
