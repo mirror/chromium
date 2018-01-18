@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14994753_1a00b97d",
+        "filename": "ash/public/cpp/shelf_model.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T21:42:22Z",
+      "side": 1,
+      "message": "nit: const method ?",
+      "revId": "e589f900047c08161ead29f56ce3230b974ed1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc038d7a_4b7ce25a",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T21:42:22Z",
+      "side": 1,
+      "message": "Would the notification indicator dot overlap with app icon? If it could, would it be painted on top of the app icon?\n\nPaintButtonContents draws stuff under children views so this might be a problem.",
+      "range": {
+        "startLine": 564,
+        "startChar": 18,
+        "endLine": 564,
+        "endChar": 37
+      },
+      "revId": "e589f900047c08161ead29f56ce3230b974ed1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a14a1f0a_a94d03f1",
+        "filename": "ash/shelf/shelf_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T21:42:22Z",
+      "side": 1,
+      "message": "nit: const bool if this is not going to change after initialized.",
+      "revId": "e589f900047c08161ead29f56ce3230b974ed1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31376d7b_409dc5c4",
+        "filename": "ash/shelf/shelf_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T21:42:22Z",
+      "side": 1,
+      "message": "nit: const bool ?",
+      "revId": "e589f900047c08161ead29f56ce3230b974ed1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
