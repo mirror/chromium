@@ -22,6 +22,30 @@
       "revId": "134c838dfa31415249bf2999b9a1fd7d7c0bd149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fefbc2d9_57117d47",
+        "filename": "chromecast/base/chromecast_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-18T20:04:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76ba637b_af2c3823",
+      "range": {
+        "startLine": 126,
+        "startChar": 15,
+        "endLine": 126,
+        "endChar": 16
+      },
+      "revId": "134c838dfa31415249bf2999b9a1fd7d7c0bd149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
