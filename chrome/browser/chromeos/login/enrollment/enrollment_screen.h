@@ -114,9 +114,9 @@ class EnrollmentScreen
   FRIEND_TEST_ALL_PREFIXES(ZeroTouchEnrollmentScreenUnitTest, Retries);
   FRIEND_TEST_ALL_PREFIXES(ZeroTouchEnrollmentScreenUnitTest, TestSuccess);
   FRIEND_TEST_ALL_PREFIXES(ZeroTouchEnrollmentScreenUnitTest,
-                           DoesNotRetryOnTopOfUser);
+                           DoNotRetryOnTopOfUser);
   FRIEND_TEST_ALL_PREFIXES(ZeroTouchEnrollmentScreenUnitTest,
-                           DoesNotRetryAfterSuccess);
+                           DoNotRetryAfterSuccess);
 
   // The authentication mechanisms that this class can use.
   enum Auth {
