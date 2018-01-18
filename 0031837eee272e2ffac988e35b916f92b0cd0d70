@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c554784_35975467",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditingCommandsUtilities.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1124724
+      },
+      "writtenOn": "2018-01-18T09:27:29Z",
+      "side": 1,
+      "message": "As the discuss in CL [1], should we remove this TODO?\n\n[1]: https://chromium-review.googlesource.com/c/chromium/src/+/866270",
+      "range": {
+        "startLine": 362,
+        "startChar": 0,
+        "endLine": 363,
+        "endChar": 58
+      },
+      "revId": "0031837eee272e2ffac988e35b916f92b0cd0d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
