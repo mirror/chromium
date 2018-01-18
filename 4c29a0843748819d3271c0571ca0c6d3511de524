@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11a8bfad_e271e458",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1812,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-18T06:38:13Z",
+      "side": 1,
+      "message": "Would we make sense to define some wrapper callback template that wraps a real callback and implements WorkerThread::Observer, therefore it can delete the callback internally if it gets notified?  Would it result in too much templating?  This request_id thing makes me feel a bit sad (while it\u0027s not your fault at all, to be clear... sorry for the rant)",
+      "revId": "4c29a0843748819d3271c0571ca0c6d3511de524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
