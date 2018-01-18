@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dda3525_ae588170",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-18T09:47:57Z",
+      "side": 1,
+      "message": "optional nit: DCHECK doesn\u0027t really help here, since it\u0027s obvious from the very next line that this is assumed to be non-null.",
+      "range": {
+        "startLine": 46,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "50a014910823c2e8ffee27e6ea76d653c1158475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd2b5e8_57a254b7",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-18T09:47:57Z",
+      "side": 1,
+      "message": "nit: system includes go first",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "50a014910823c2e8ffee27e6ea76d653c1158475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2703bd8_8546608d",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-18T09:47:57Z",
+      "side": 1,
+      "message": "nit: I think this can just be\ncontents-\u003eGetLastCommittedURL();",
+      "range": {
+        "startLine": 50,
+        "startChar": 71,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "50a014910823c2e8ffee27e6ea76d653c1158475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36894942_a673a4b9",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-18T09:47:57Z",
+      "side": 1,
+      "message": "nit: \"private:\"",
+      "range": {
+        "startLine": 55,
+        "startChar": 45,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "50a014910823c2e8ffee27e6ea76d653c1158475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d241199c_5c5ab368",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-18T09:47:57Z",
+      "side": 1,
+      "message": "Why shut down the test server? Won\u0027t the request just fail then, independent of the bad cert? (Was this copy-pasted from the test below?)",
+      "range": {
+        "startLine": 71,
+        "startChar": 67,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "50a014910823c2e8ffee27e6ea76d653c1158475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -202,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "1253dbf8_87dd284b",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-18T09:47:57Z",
+      "side": 1,
+      "message": "Yeah, \"chrome://newtab\" is a bit weird here. But WebContents only differentiates \"last committed URL\" (which is what it says) from \"visible URL\", which can be a pending URL during navigations. Usually that\u0027s what shows up in the Omnibox, hence \"visible\".",
+      "parentUuid": "06f7f248_00fee46c",
+      "range": {
+        "startLine": 32,
+        "startChar": 20,
+        "endLine": 32,
+        "endChar": 26
+      },
+      "revId": "bca9c088a1a7908a670dfe1b47315473b0843675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ff4afa9_1c488ec2",
         "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.cc",
         "patchSetId": 5
@@ -625,6 +649,30 @@
       "side": 1,
       "message": "From some brief experiments, calling Start twice is just fine, but will move it.",
       "parentUuid": "62d01ffe_7952cf3e",
+      "range": {
+        "startLine": 32,
+        "startChar": 45,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "bca9c088a1a7908a670dfe1b47315473b0843675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80c8bcfc_0e7be289",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-18T09:47:57Z",
+      "side": 1,
+      "message": "Really? It looks like you\u0027d hit this DCHECK:\nhttps://cs.chromium.org/chromium/src/net/test/embedded_test_server/embedded_test_server.cc?rcl\u003dc50697e7f73eb926ac0a2e4dabce7804306e19f1\u0026l\u003d98",
+      "parentUuid": "d387e027_6664e770",
       "range": {
         "startLine": 32,
         "startChar": 45,
