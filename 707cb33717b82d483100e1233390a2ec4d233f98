@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6834732d_29de943c",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 2705,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2018-01-18T23:13:58Z",
+      "side": 1,
+      "message": "I could be mistaken, but I thought these two options are what allows you to save output logs? Perhaps a note here explaining what they are for and why we ignore them (maybe a TODO to use them in a future CL?)",
+      "range": {
+        "startLine": 2705,
+        "startChar": 53,
+        "endLine": 2705,
+        "endChar": 68
+      },
+      "revId": "707cb33717b82d483100e1233390a2ec4d233f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
