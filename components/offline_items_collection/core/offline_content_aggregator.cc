@@ -29,7 +29,9 @@ bool MapContainsValue(const std::map<T, U>& map, U value) {
 }  // namespace
 
 OfflineContentAggregator::OfflineContentAggregator()
-    : sent_on_items_available_(false), weak_ptr_factory_(this) {}
+    : observers_count_(0),
+      sent_on_items_available_(false),
+      weak_ptr_factory_(this) {}
 
 OfflineContentAggregator::~OfflineContentAggregator() = default;
 
@@ -41,8 +43,8 @@ void OfflineContentAggregator::RegisterProvider(
   DCHECK(providers_.find(name_space) == providers_.end());
 
   // Only set up the connection to the provider if the provider isn't associated
-  // with any other namespace.
-  if (!MapContainsValue(providers_, provider))
+  // with any other namespace and there are registered observers.
+  if (!MapContainsValue(providers_, provider) && observers_count_ > 0)
     provider->AddObserver(this);
 
   providers_[name_space] = provider;
@@ -57,8 +59,10 @@ void OfflineContentAggregator::UnregisterProvider(
   pending_providers_.erase(provider);
 
   // Only clean up the connection to the provider if the provider isn't
-  // associated with any other namespace.
-  if (!MapContainsValue(providers_, provider)) {
+  // associated with any other namespace and there are registered observers
+  // (otherwise the connection was already cleaned up when the last observer
+  // unregistered).
+  if (!MapContainsValue(providers_, provider) && observers_count_ > 0) {
     provider->RemoveObserver(this);
     pending_actions_.erase(provider);
   }
@@ -206,6 +210,20 @@ void OfflineContentAggregator::AddObserver(
     return;
 
   observers_.AddObserver(observer);
+  ++observers_count_;
+
+  // If this is the first observer then connect with all known providers.
+  if (observers_count_ == 1) {
+    std::set<OfflineContentProvider*> already_connected;
+    for (std::pair<std::string, OfflineContentProvider*> namespace_provider :
+         providers_) {
+      // Do not connect with the same provider twice.
+      if (already_connected.count(namespace_provider.second))
+        continue;
+      already_connected.insert(namespace_provider.second);
+      namespace_provider.second->AddObserver(this);
+    }
+  }
 
   if (sent_on_items_available_ || providers_.empty()) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -223,6 +241,20 @@ void OfflineContentAggregator::RemoveObserver(
 
   signaled_observers_.erase(observer);
   observers_.RemoveObserver(observer);
+  --observers_count_;
+
+  // If this was the last observer then disconnect from all known providers.
+  if (observers_count_ == 0) {
+    std::set<OfflineContentProvider*> already_disconnected;
+    for (std::pair<std::string, OfflineContentProvider*> namespace_provider :
+         providers_) {
+      // Do not disconnect from the same provider twice.
+      if (already_disconnected.count(namespace_provider.second))
+        continue;
+      already_disconnected.insert(namespace_provider.second);
+      namespace_provider.second->AddObserver(this);
+    }
+  }
 }
 
 void OfflineContentAggregator::NotifyItemsAdded(const OfflineItemList& items) {
