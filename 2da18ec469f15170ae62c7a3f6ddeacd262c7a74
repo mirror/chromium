@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3ed0860_84a2ebde",
+        "filename": "ash/frame/caption_buttons/frame_back_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-18T22:00:56Z",
+      "side": 1,
+      "message": "Do we need to worry about how to release the pointer here?",
+      "revId": "2da18ec469f15170ae62c7a3f6ddeacd262c7a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee76dc0_e38229c4",
+        "filename": "ash/frame/caption_buttons/frame_caption_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-18T22:00:56Z",
+      "side": 1,
+      "message": "nit: Could you please add when to remove this, possible a bug #?",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "2da18ec469f15170ae62c7a3f6ddeacd262c7a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
