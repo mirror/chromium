@@ -82,12 +82,18 @@ class MIDI_EXPORT MidiManagerClient {
 // it does TaskService.
 class MIDI_EXPORT MidiManager {
  public:
-  static const size_t kMaxPendingClientCount = 128;
+  static constexpr size_t kMaxPendingClientCount = 128u;
 
-  explicit MidiManager(MidiService* service);
+  // Specifies a preference to choose a backend. Production code should use
+  // kPreferDefault that counts field trials in.
+  enum class BackendOption {
+    kPreferDefault,
+    kPreferAlternative,
+  };
+
   virtual ~MidiManager();
-
-  static MidiManager* Create(MidiService* service);
+  static std::unique_ptr<MidiManager> Create(MidiService* service,
+                                             BackendOption option);
 
   // Shuts down this manager. This function is split from the destructor
   // because it calls a virtual function.
@@ -128,6 +134,8 @@ class MIDI_EXPORT MidiManager {
 
  protected:
   friend class MidiManagerUsb;
+
+  explicit MidiManager(MidiService* service);
 
   // Initializes the platform dependent MIDI system. MidiManager class has a
   // default implementation that synchronously calls CompleteInitialization()
