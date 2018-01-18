@@ -16,6 +16,24 @@
       "revId": "154e36e48f7caf2aa9e635c242883917526651af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6c56b8_42c1d441",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-01-18T19:36:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70369c26_434f6edb",
+      "revId": "154e36e48f7caf2aa9e635c242883917526651af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
