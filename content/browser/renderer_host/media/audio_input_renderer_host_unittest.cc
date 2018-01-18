@@ -11,8 +11,7 @@
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
-#include "base/single_thread_task_runner.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/sequenced_task_runner.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/media/capture/audio_mirroring_manager.h"
 #include "content/browser/renderer_host/media/audio_input_device_manager.h"
@@ -150,14 +149,13 @@ class AudioInputRendererHostWithInterception : public AudioInputRendererHost {
 
 class MockAudioInputController : public AudioInputController {
  public:
-  MockAudioInputController(
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-      AudioInputController::SyncWriter* writer,
-      media::AudioManager* audio_manager,
-      AudioInputController::EventHandler* event_handler,
-      media::UserInputMonitor* user_input_monitor,
-      const media::AudioParameters& params,
-      StreamType type)
+  MockAudioInputController(scoped_refptr<base::SequencedTaskRunner> task_runner,
+                           AudioInputController::SyncWriter* writer,
+                           media::AudioManager* audio_manager,
+                           AudioInputController::EventHandler* event_handler,
+                           media::UserInputMonitor* user_input_monitor,
+                           const media::AudioParameters& params,
+                           StreamType type)
       : AudioInputController(std::move(task_runner),
                              event_handler,
                              writer,
@@ -209,7 +207,7 @@ class MockControllerFactory : public AudioInputController::Factory {
 
   // AudioInputController::Factory implementation:
   AudioInputController* Create(
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+      scoped_refptr<base::SequencedTaskRunner> task_runner,
       AudioInputController::SyncWriter* sync_writer,
       media::AudioManager* audio_manager,
       AudioInputController::EventHandler* event_handler,
