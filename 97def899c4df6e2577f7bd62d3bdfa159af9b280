@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "27e8aa9e_019bdf42",
+        "filename": "content/browser/loader/url_loader_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-18T06:06:45Z",
+      "side": 1,
+      "message": "Question: Can this be DCHECK(io_thread_task_runner_-\u003eBelongsToCurrentThread()), and done at the first line in this method? Or are these two runners different?",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 65
+      },
+      "revId": "97def899c4df6e2577f7bd62d3bdfa159af9b280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84578866_41bbea41",
         "filename": "content/browser/loader/url_loader_factory_impl.h",
         "patchSetId": 4
