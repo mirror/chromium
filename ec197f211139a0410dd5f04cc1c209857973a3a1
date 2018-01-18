@@ -16,6 +16,24 @@
       "revId": "ec197f211139a0410dd5f04cc1c209857973a3a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9397fe_df7dafa8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Settings.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-18T19:16:58Z",
+      "side": 1,
+      "message": "Sure, reverted this.",
+      "parentUuid": "f6399aae_e197bb90",
+      "revId": "ec197f211139a0410dd5f04cc1c209857973a3a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
