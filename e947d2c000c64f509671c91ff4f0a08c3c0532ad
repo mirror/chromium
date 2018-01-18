@@ -22,6 +22,30 @@
       "revId": "e947d2c000c64f509671c91ff4f0a08c3c0532ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c94e5f_306d505f",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-18T17:25:17Z",
+      "side": 1,
+      "message": "Ack. The second CL makes it const.",
+      "parentUuid": "75790915_afd6f2bb",
+      "range": {
+        "startLine": 242,
+        "startChar": 54,
+        "endLine": 242,
+        "endChar": 69
+      },
+      "revId": "e947d2c000c64f509671c91ff4f0a08c3c0532ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
