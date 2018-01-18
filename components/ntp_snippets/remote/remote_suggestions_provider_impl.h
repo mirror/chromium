@@ -161,6 +161,8 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
                            CallsSchedulerWhenSignedIn);
   FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
                            CallsSchedulerWhenSignedOut);
+  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
+                           RestartsFetchWhenSignedInWhileFetching);
   FRIEND_TEST_ALL_PREFIXES(
       RemoteSuggestionsProviderImplTest,
       ShouldNotSetExclusiveCategoryWhenFetchingSuggestions);
@@ -447,6 +449,13 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
 
   // A Timer for canceling too long fetches.
   std::unique_ptr<base::OneShotTimer> fetch_timeout_timer_;
+
+  // Stores whether a fetch is currently in flight.
+  bool fetch_in_progress_;
+
+  // If |fetch_in_progress_|, it stores whether it has been invalidated (and
+  // must be retried).
+  bool fetch_in_progress_invalidated_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoteSuggestionsProviderImpl);
 };

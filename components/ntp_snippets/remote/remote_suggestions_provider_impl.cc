@@ -390,7 +390,9 @@ RemoteSuggestionsProviderImpl::RemoteSuggestionsProviderImpl(
       breaking_news_raw_data_provider_(
           std::move(breaking_news_raw_data_provider)),
       debug_logger_(debug_logger),
-      fetch_timeout_timer_(std::move(fetch_timeout_timer)) {
+      fetch_timeout_timer_(std::move(fetch_timeout_timer)),
+      fetch_in_progress_(false),
+      fetch_in_progress_invalidated_(false) {
   DCHECK(debug_logger_);
   DCHECK(fetch_timeout_timer_);
   RestoreCategoriesFromPrefs();
@@ -573,6 +575,8 @@ void RemoteSuggestionsProviderImpl::FetchSuggestions(
     return;
   }
 
+  fetch_in_progress_ = true;
+  fetch_in_progress_invalidated_ = false;
   // |count_to_fetch| is actually ignored, because the server does not support
   // this functionality.
   RequestParams params = BuildFetchParams(/*fetched_category=*/base::nullopt,
@@ -896,11 +900,18 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
     Status status,
     RemoteSuggestionsFetcher::OptionalFetchedCategories fetched_categories) {
   debug_logger_->Log(FROM_HERE, /*message=*/std::string());
+  fetch_in_progress_ = false;
 
   if (!ready()) {
     // TODO(tschumann): What happens if this was a user-triggered, interactive
     // request? Is the UI waiting indefinitely now?
     return;
+  }
+
+  if (fetch_in_progress_invalidated_) {
+    // Disregard the results and start a fetch again.
+    fetch_in_progress_invalidated_ = false;
+    FetchSuggestions(interactive_request, std::move(callback));
   }
 
   if (!status.IsSuccess()) {
@@ -1344,7 +1355,15 @@ void RemoteSuggestionsProviderImpl::ClearCachedSuggestions() {
   }
 
   NukeAllSuggestions();
-  remote_suggestions_scheduler_->OnSuggestionsCleared();
+  if (fetch_in_progress_) {
+    // The cache got cleared because the params for the last fetch (sign-in
+    // state, language, ...) are not valid any more. Thus, also the fetch in
+    // progress is not valid any more. The flag below makes sure the current
+    // fetch is ignored and another one is issued right away.
+    fetch_in_progress_invalidated_ = true;
+  } else {
+    remote_suggestions_scheduler_->OnSuggestionsCleared();
+  }
 }
 
 void RemoteSuggestionsProviderImpl::NukeAllSuggestions() {
