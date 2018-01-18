@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86be49a9_720380c9",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2018-01-18T20:13:16Z",
+      "side": 1,
+      "message": "should we DCHECK(STATE_RESOLVE_HOST_COMPLETE, io_state_) here?",
+      "revId": "c246423e13c6e7f7fadcb3d683ac09b62e30ce7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4ddade_1ff99276",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2018-01-18T20:13:16Z",
+      "side": 1,
+      "message": "This change looks good, I suppose there will be future changes around this corner and this CL only prepares for that?",
+      "range": {
+        "startLine": 584,
+        "startChar": 57,
+        "endLine": 584,
+        "endChar": 0
+      },
+      "revId": "c246423e13c6e7f7fadcb3d683ac09b62e30ce7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
