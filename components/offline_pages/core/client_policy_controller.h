@@ -1,4 +1,4 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
++  // Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -64,6 +64,10 @@ class ClientPolicyController {
   // Returns whether pages for |name_space| originate from suggested URLs and
   // are downloaded on behalf of user.
   bool IsSuggested(const std::string& name_space) const;
+
+  // Returns whether we should allow pages for |name_space| to trigger
+  // downloads.
+  bool ShouldAllowDownloads(const std::string& name_space) const;
 
   void AddPolicyForTest(const std::string& name_space,
                         const OfflinePageClientPolicyBuilder& builder);
