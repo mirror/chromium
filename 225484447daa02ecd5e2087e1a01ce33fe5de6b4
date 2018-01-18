@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66cce5a5_681cbd0a",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-18T13:20:56Z",
+      "side": 1,
+      "message": "Should we add:\nDCHECK(image_decoder);\nDCHECK(!image_decoder_);\n\nlike the other members above?",
+      "revId": "225484447daa02ecd5e2087e1a01ce33fe5de6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d73509_c4a543ff",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-18T13:20:56Z",
+      "side": 1,
+      "message": "Do we need to DCHECK(image_decoder_), DCHECK(signin_client_), or something that ensures that Initialize() has been called before.",
+      "revId": "225484447daa02ecd5e2087e1a01ce33fe5de6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c1f9a3_3ee0d703",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-18T13:20:56Z",
+      "side": 1,
+      "message": "I see we\u0027re using the context from the signin client, which is implemented as the Profile\u0027s context.\n\nShould this be \n cookies_allowed: YES\n cookies_store: \"user\"\n?",
+      "range": {
+        "startLine": 287,
+        "startChar": 27,
+        "endLine": 287,
+        "endChar": 29
+      },
+      "revId": "225484447daa02ecd5e2087e1a01ce33fe5de6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
