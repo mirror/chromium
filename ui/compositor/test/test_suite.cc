@@ -22,6 +22,10 @@
 #include "ui/display/win/dpi.h"
 #endif
 
+#if defined(OS_MACOSX)
+#include "gpu/ipc/service/image_transport_surface.h"
+#endif
+
 namespace ui {
 namespace test {
 
@@ -44,6 +48,10 @@ void CompositorTestSuite::Initialize() {
 
 #if defined(OS_WIN)
   display::win::SetDefaultDeviceScaleFactor(1.0f);
+#endif
+
+#if defined(OS_MACOSX)
+  gpu::ImageTransportSurface::SetAllowOSMesaForTesting(true);
 #endif
 
   scoped_task_environment_ =
