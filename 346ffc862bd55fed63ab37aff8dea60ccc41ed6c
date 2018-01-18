@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "46d453d0_5366081a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-rendering-after-controls-added.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2018-01-18T11:16:55Z",
+      "side": 1,
+      "message": "Done. Added two rAFs for first cue layout. For now having only one rAF for screenshot, keeping faith in takeScreentshot() :)",
+      "parentUuid": "f5f32981_b8fb0f4b",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "346ffc862bd55fed63ab37aff8dea60ccc41ed6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f242bba1_92e9e4ef",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-rendering-after-controls-removed-ref.html",
         "patchSetId": 1
