@@ -37,24 +37,26 @@ class ProxyInfo;
 class NET_EXPORT ProxyConfig {
  public:
   // ProxyRules describes the "manual" proxy settings.
-  // TODO(eroman): Turn this into a class.
-  // TODO(crbug.com/546383): Update the enum names; "TYPE_SINGLE_PROXY" really
-  // means the same set of proxies are used for all requests.
   struct NET_EXPORT ProxyRules {
-    enum Type {
-      TYPE_NO_RULES,
-      TYPE_SINGLE_PROXY,
-      TYPE_PROXY_PER_SCHEME,
+    enum class Type {
+      EMPTY,
+      PROXY_LIST,
+      PROXY_LIST_PER_SCHEME,
     };
 
-    // Note that the default of TYPE_NO_RULES results in direct connections
+    // Lets ProxyRules::Type interact with gtest's debug messages.
+    friend std::ostream& operator<<(std::ostream& out, Type type) {
+        return out << int(type);
+    }
+
+    // Note that the default of Type::EMPTY results in direct connections
     // being made when using this ProxyConfig.
     ProxyRules();
     ProxyRules(const ProxyRules& other);
     ~ProxyRules();
 
     bool empty() const {
-      return type == TYPE_NO_RULES;
+      return type == Type::EMPTY;
     }
 
     // Sets |result| with the proxies to use for |url| based on the current
@@ -111,7 +113,7 @@ class NET_EXPORT ProxyConfig {
 
     // Returns one of {&proxies_for_http, &proxies_for_https, &proxies_for_ftp,
     // &fallback_proxies}, or NULL if there is no proxy to use.
-    // Should only call this if the type is TYPE_PROXY_PER_SCHEME.
+    // Should only call this if the type is Type::PROXY_LIST_PER_SCHEME.
     const ProxyList* MapUrlSchemeToProxyList(
         const std::string& url_scheme) const;
 
@@ -126,10 +128,10 @@ class NET_EXPORT ProxyConfig {
 
     Type type;
 
-    // Set if |type| is TYPE_SINGLE_PROXY.
+    // Set if |type| is Type::PROXY_LIST.
     ProxyList single_proxies;
 
-    // Set if |type| is TYPE_PROXY_PER_SCHEME.
+    // Set if |type| is Type::PROXY_LIST_PER_SCHEME.
     ProxyList proxies_for_http;
     ProxyList proxies_for_https;
     ProxyList proxies_for_ftp;
@@ -141,7 +143,7 @@ class NET_EXPORT ProxyConfig {
    private:
     // Returns one of {&proxies_for_http, &proxies_for_https, &proxies_for_ftp}
     // or NULL if it is a scheme that we don't have a mapping for. Should only
-    // call this if the type is TYPE_PROXY_PER_SCHEME. Intentionally returns
+    // call this if the type is Type::PROXY_LIST_PER_SCHEME. Intentionally returns
     // NULL for "ws" and "wss" as those are handled specially by
     // GetProxyListForWebSocketScheme().
     ProxyList* MapUrlSchemeToProxyListNoFallback(const std::string& scheme);
