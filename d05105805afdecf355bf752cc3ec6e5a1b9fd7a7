@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1813b4f6_460b82f7",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-18T21:03:54Z",
+      "side": 1,
+      "message": "nit: Would it be appropriate to move these to have |protected| visibility?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 47
+      },
+      "revId": "d05105805afdecf355bf752cc3ec6e5a1b9fd7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c94b85c_39a20c19",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34316,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-18T21:03:54Z",
+      "side": 1,
+      "message": "nit: s/lookups/lookup",
+      "range": {
+        "startLine": 34316,
+        "startChar": 26,
+        "endLine": 34316,
+        "endChar": 33
+      },
+      "revId": "d05105805afdecf355bf752cc3ec6e5a1b9fd7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522c32d7_b2336bd4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34316,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-18T21:03:54Z",
+      "side": 1,
+      "message": "nit: s/their/its",
+      "range": {
+        "startLine": 34316,
+        "startChar": 49,
+        "endLine": 34316,
+        "endChar": 54
+      },
+      "revId": "d05105805afdecf355bf752cc3ec6e5a1b9fd7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
