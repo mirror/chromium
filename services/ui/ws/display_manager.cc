@@ -91,6 +91,16 @@ bool DisplayManager::SetDisplayConfiguration(
     return false;
   }
 
+  // Bail if the config only has the virtual unified display and no mirrors.
+  LOG(ERROR) << "MSW SetDisplayConfiguration displays: " << displays.size()
+             << " mirrors: " << mirrors.size();
+  if (displays.size() == 1 && mirrors.empty() &&
+      displays[0].id() == display::kUnifiedDisplayId) {
+    LOG(ERROR) << "MSW SetDisplayConfiguration EARLY RETURN!";
+    // TODO(msw): Do not bail, that causes http://crbug.com/801257
+    // return true;
+  }
+
   std::set<int64_t> display_ids;
   size_t primary_display_index = std::numeric_limits<size_t>::max();
   bool found_internal_display = false;
@@ -141,8 +151,12 @@ bool DisplayManager::SetDisplayConfiguration(
     LOG(ERROR) << "SetDisplayConfiguration primary id not in displays";
     return false;
   }
+
+  // Ignore a temporarily missing interal display during ash unified mode setup.
   if (!found_internal_display &&
-      internal_display_id != display::kInvalidDisplayId) {
+      internal_display_id != display::kInvalidDisplayId &&
+      (displays.size() != 1 ||
+       displays[0].id() != display::kUnifiedDisplayId)) {
     LOG(ERROR) << "SetDisplayConfiguration internal display id not in displays";
     return false;
   }
