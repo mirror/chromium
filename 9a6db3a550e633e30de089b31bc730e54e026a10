@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4292a4d9_b3f7e008",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T14:39:07Z",
+      "side": 1,
+      "message": "Meh, I\u0027m okay with this one as-is I think.",
+      "parentUuid": "593f27d4_49fe8881",
+      "range": {
+        "startLine": 90,
+        "startChar": 25,
+        "endLine": 90,
+        "endChar": 29
+      },
+      "revId": "9a6db3a550e633e30de089b31bc730e54e026a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1313f643_2cc47140",
         "filename": "base/task_scheduler/task_scheduler_impl.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "9a6db3a550e633e30de089b31bc730e54e026a10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c2d85a_d1f9fc63",
+        "filename": "base/task_scheduler/task_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T14:39:07Z",
+      "side": 1,
+      "message": "Agreed, but I just figured that it didn\u0027t make sense to take by value on the receiving end per only needing the temp value.\nIt also doesn\u0027t make sense to use a StringPiece on this end because we need to construct a string.\nBut since we truly no longer need the string here we std::move it to show we don\u0027t need it, whether the recipient can take advantage of that or not is orthogonal?\n\nJust made them all StringPieces now and using JoinString() to avoid generating multiple strings.",
+      "parentUuid": "1313f643_2cc47140",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 47
+      },
+      "revId": "9a6db3a550e633e30de089b31bc730e54e026a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

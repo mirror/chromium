@@ -22,6 +22,30 @@
       "revId": "e3e442af97178bea8fa5894b324169f131cd1ffa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50fe533_b4801884",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T14:39:07Z",
+      "side": 1,
+      "message": "I agree but it explains why it\u0027s a not a ref and hints to the callers they should be handing their string in.\n\nI\u0027ll just take a StringPiece and copy it into my storage. I didn\u0027t originally want to do this to avoid someone with a real string that could hand it, not being able to.. but there are no such callers so it\u0027s fine...",
+      "parentUuid": "5a02cfac_b4769ec5",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 61
+      },
+      "revId": "e3e442af97178bea8fa5894b324169f131cd1ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
