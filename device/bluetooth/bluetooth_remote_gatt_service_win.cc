@@ -107,6 +107,8 @@ void BluetoothRemoteGattServiceWin::GattCharacteristicDiscoveryComplete(
 
   discovery_completed_included_characteristics_.insert(
       characteristic->GetIdentifier());
+  SetDiscoveryComplete(included_characteristics_.size() ==
+                       discovery_completed_included_characteristics_.size());
   adapter_->NotifyGattCharacteristicAdded(characteristic);
   NotifyGattDiscoveryCompleteForServiceIfNecessary();
 }
@@ -130,11 +132,20 @@ void BluetoothRemoteGattServiceWin::OnGetIncludedCharacteristics(
   if (--discovery_pending_count_ != 0)
     return;
 
-  // Report discovery complete.
-  SetDiscoveryComplete(true);
   UpdateIncludedCharacteristics(characteristics.get(), num);
+  SetDiscoveryComplete(included_characteristics_.size() ==
+                       discovery_completed_included_characteristics_.size());
+
+  // In case there new included characterisitics that haven't been discovered
+  // yet, observers should be notified once the discovery of these
+  // characteristics is complete. Hence the discovery complete flag is reset.
+  if (!IsDiscoveryComplete()) {
+    discovery_complete_notified_ = false;
+    return;
+  }
+
+  adapter_->NotifyGattServiceChanged(this);
   NotifyGattDiscoveryCompleteForServiceIfNecessary();
-  device_->GattServiceDiscoveryComplete(this);
 }
 
 void BluetoothRemoteGattServiceWin::UpdateIncludedCharacteristics(
@@ -179,18 +190,14 @@ void BluetoothRemoteGattServiceWin::UpdateIncludedCharacteristics(
                                         std::move(characteristic_object));
     }
   }
-
-  if (IsDiscoveryComplete())
-    adapter_->NotifyGattServiceChanged(this);
 }
 
 void BluetoothRemoteGattServiceWin::
     NotifyGattDiscoveryCompleteForServiceIfNecessary() {
-  if (discovery_completed_included_characteristics_.size() ==
-          included_characteristics_.size() &&
-      IsDiscoveryComplete() && !discovery_complete_notified_) {
-    adapter_->NotifyGattDiscoveryComplete(this);
+  if (IsDiscoveryComplete() && !discovery_complete_notified_) {
     discovery_complete_notified_ = true;
+    device_->GattServiceDiscoveryComplete(this);
+    adapter_->NotifyGattDiscoveryComplete(this);
   }
 }
 
