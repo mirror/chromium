@@ -85,6 +85,7 @@ struct BindSourceInfo;
 namespace net {
 class ClientCertIdentity;
 using ClientCertIdentityList = std::vector<std::unique_ptr<ClientCertIdentity>>;
+class ClientCertStore;
 class CookieOptions;
 class HttpRequestHeaders;
 class NetLog;
@@ -1028,6 +1029,10 @@ class CONTENT_EXPORT ContentBrowserClient {
   // If false, a task scheduler has been created by the embedder, and browser
   // main loop should skip creating a second one.
   virtual bool ShouldCreateTaskScheduler();
+
+  // Get platform ClientCertStore. May return nullptr.
+  virtual std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
+      ResourceContext* resource_context);
 };
 
 }  // namespace content
