@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c406f12_6726c695",
+        "filename": "chrome/common/extensions/manifest_handlers/extension_action_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T15:50:35Z",
+      "side": 1,
+      "message": "nit: indentation here is off by two spaces.  Also, let\u0027s move this up to line 87 of this patch set, directly beneath the was_installed_by_default() check.  That way, all the \"don\u0027t create an action for this\" pieces are grouped directly together.",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 16
+      },
+      "revId": "ab3b3fb78e5ee25e2ee1a6a6451243bc961792b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
