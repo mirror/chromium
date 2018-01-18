@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae6f42e8_0989ee89",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2018-01-18T19:50:05Z",
+      "side": 1,
+      "message": "Nit: ss -\u003e spannableName.",
+      "range": {
+        "startLine": 199,
+        "startChar": 32,
+        "endLine": 199,
+        "endChar": 34
+      },
+      "revId": "d05cefb24ea9369825893920569217ee01131414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a87a4e76_549ea2c0",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2018-01-18T19:50:05Z",
+      "side": 1,
+      "message": "Nit: unsupportedTextProportion -\u003e descriptionProportion?",
+      "range": {
+        "startLine": 200,
+        "startChar": 22,
+        "endLine": 200,
+        "endChar": 47
+      },
+      "revId": "d05cefb24ea9369825893920569217ee01131414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
