@@ -184,6 +184,7 @@ const CGFloat kToolbarHeight = 56;
     } else {
       _currentController = self.homePanel;
     }
+    [_currentController wasShown];
   }
   return self;
 }
