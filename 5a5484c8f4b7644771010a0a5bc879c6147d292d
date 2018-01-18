@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2816cc72_1af81a3a",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-18T23:12:27Z",
+      "side": 1,
+      "message": "Please prefer using base::TimeTicks (or base::TimeDelta?) here and elsewhere.\n\nFor example, for the first glance I have a hard time understanding if it\u0027s a time interval which it took for a page to become interactive or a timestamp of the moment when page became interactive.\n\n(also I wonder if there is a better name than \"InteractiveTime\", but I don\u0027t have any good ideas myself).",
+      "range": {
+        "startLine": 82,
+        "startChar": 26,
+        "endLine": 82,
+        "endChar": 49
+      },
+      "revId": "5a5484c8f4b7644771010a0a5bc879c6147d292d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d547686_63460656",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-18T23:12:27Z",
+      "side": 1,
+      "message": "base::Optional\u003cbase::TimeTicks\u003e to make it clear that there is a special \"not set\" value.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 8
+      },
+      "revId": "5a5484c8f4b7644771010a0a5bc879c6147d292d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
