@@ -45,6 +45,23 @@
       "revId": "d3101097aed6c0524e5d1a2a50ed9f4a7b7076f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8cf3eee_9b422075",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1230791
+      },
+      "writtenOn": "2018-01-18T22:54:52Z",
+      "side": 1,
+      "message": "Need to remove mContentViewRenderView here as well.\nSee https://chromium-review.googlesource.com/c/chromium/src/+/853285",
+      "revId": "d3101097aed6c0524e5d1a2a50ed9f4a7b7076f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
