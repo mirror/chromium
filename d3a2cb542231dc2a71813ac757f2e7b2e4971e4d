@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a48d28a_d646565b",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T18:55:50Z",
+      "side": 1,
+      "message": "Are you converting only URLs that are included in the doc you linked? Perhaps add a comment in the helper GetHelpURL function explaining when is it necessary to call it, so that future devs can have some guidance.",
+      "range": {
+        "startLine": 1709,
+        "startChar": 6,
+        "endLine": 1709,
+        "endChar": 74
+      },
+      "revId": "d3a2cb542231dc2a71813ac757f2e7b2e4971e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
