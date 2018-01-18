@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "3855d7c1_1bc34c16",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-18T15:08:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "545f72a7_3feefaaa",
+      "revId": "26be4cb5b565ce647867fd9e715a1d75a9f6da01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e63e5e6b_b4ca6166",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-18T15:08:56Z",
+      "side": 1,
+      "message": "I moved this out into OnGetIncludedCharacteristics() so that we don\u0027t have to call SetDiscoveryComplete() in here as well.\n\nPlease let me know what you think.",
+      "range": {
+        "startLine": 186,
+        "startChar": 6,
+        "endLine": 186,
+        "endChar": 25
+      },
+      "revId": "26be4cb5b565ce647867fd9e715a1d75a9f6da01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9191117e_547df6a6",
         "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
         "patchSetId": 5
@@ -33,6 +74,24 @@
       "revId": "26be4cb5b565ce647867fd9e715a1d75a9f6da01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37474f1_c21a8ea6",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-18T15:08:56Z",
+      "side": 1,
+      "message": "Done, I moved resetting the flag into OnGetIncludedCharacteristics() and left a comment.",
+      "parentUuid": "9191117e_547df6a6",
+      "revId": "26be4cb5b565ce647867fd9e715a1d75a9f6da01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
