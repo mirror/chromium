@@ -158,11 +158,6 @@ void DefaultState::HandleWorkspaceEvents(WindowState* window_state,
 
       aura::Window* window = window_state->window();
       gfx::Rect bounds = window->bounds();
-      // When window is added to a workspace, |bounds| may be not the original
-      // not-changed-by-user bounds, for example a resized bounds truncated by
-      // available workarea.
-      if (window_state->pre_added_to_workspace_window_bounds())
-        bounds = *window_state->pre_added_to_workspace_window_bounds();
 
       // Don't adjust window bounds if the bounds are empty as this
       // happens when a new views::Widget is created.
@@ -176,10 +171,17 @@ void DefaultState::HandleWorkspaceEvents(WindowState* window_state,
       if (!window_state->IsUserPositionable())
         return;
 
+      gfx::Rect display_area = ScreenUtil::GetDisplayBoundsInParent(window);
+      if (window_state->pre_added_window_bounds_ratio()) {
+        const gfx::RectF rect_f = gfx::ScaleRect(
+            *window_state->pre_added_window_bounds_ratio(),
+            (float)(display_area.width()), (float)(display_area.height()));
+        bounds.SetRect(rect_f.x(), rect_f.y(), rect_f.width(), rect_f.height());
+      }
+
       // Use entire display instead of workarea. The logic ensures 30%
       // visibility which should be enough to see where the window gets
       // moved.
-      gfx::Rect display_area = ScreenUtil::GetDisplayBoundsInParent(window);
       int min_width = bounds.width() * wm::kMinimumPercentOnScreenArea;
       int min_height = bounds.height() * wm::kMinimumPercentOnScreenArea;
       wm::AdjustBoundsToEnsureWindowVisibility(display_area, min_width,

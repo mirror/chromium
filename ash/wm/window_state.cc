@@ -381,8 +381,8 @@ void WindowState::SetPreAutoManageWindowBounds(const gfx::Rect& bounds) {
   pre_auto_manage_window_bounds_ = base::make_optional(bounds);
 }
 
-void WindowState::SetPreAddedToWorkspaceWindowBounds(const gfx::Rect& bounds) {
-  pre_added_to_workspace_window_bounds_ = base::make_optional(bounds);
+void WindowState::SetPreAddedWindowBoundsRatio(const gfx::RectF& bounds_ratio) {
+  pre_added_window_bounds_ratio_ = base::make_optional(bounds_ratio);
 }
 
 void WindowState::AddObserver(WindowStateObserver* observer) {
@@ -431,7 +431,7 @@ void WindowState::set_bounds_changed_by_user(bool bounds_changed_by_user) {
   bounds_changed_by_user_ = bounds_changed_by_user;
   if (bounds_changed_by_user) {
     pre_auto_manage_window_bounds_.reset();
-    pre_added_to_workspace_window_bounds_.reset();
+    pre_added_window_bounds_ratio_.reset();
   }
 }
 

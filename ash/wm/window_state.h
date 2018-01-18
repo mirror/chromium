@@ -16,6 +16,7 @@
 #include "base/optional.h"
 #include "ui/aura/window_observer.h"
 #include "ui/base/ui_base_types.h"
+#include "ui/gfx/geometry/rect_f.h"
 
 namespace gfx {
 class Rect;
@@ -249,11 +250,10 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   }
   void SetPreAutoManageWindowBounds(const gfx::Rect& bounds);
 
-  // Gets/Sets the property that is used on window added to workspace event.
-  base::Optional<gfx::Rect> pre_added_to_workspace_window_bounds() const {
-    return pre_added_to_workspace_window_bounds_;
+  base::Optional<gfx::RectF> pre_added_window_bounds_ratio() const {
+    return pre_added_window_bounds_ratio_;
   }
-  void SetPreAddedToWorkspaceWindowBounds(const gfx::Rect& bounds);
+  void SetPreAddedWindowBoundsRatio(const gfx::RectF& bounds_ratio);
 
   // Layout related properties
 
@@ -426,9 +426,7 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   // restored when only this one window gets shown.
   base::Optional<gfx::Rect> pre_auto_manage_window_bounds_;
 
-  // A property which resets when bounds is changed by user and sets when it is
-  // nullptr, and window is removing from a workspace.
-  base::Optional<gfx::Rect> pre_added_to_workspace_window_bounds_;
+  base::Optional<gfx::RectF> pre_added_window_bounds_ratio_;
 
   base::ObserverList<WindowStateObserver> observer_list_;
 
