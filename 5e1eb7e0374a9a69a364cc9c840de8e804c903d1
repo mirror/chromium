@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee098bd4_add4a48e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T05:38:33Z",
+      "side": 1,
+      "message": "Add a little bit detail (e.g. why this is a good change. also, mention that event-targeting + dispatch should still happen synchronously, which is why no test had to be updated etc.)",
+      "revId": "5e1eb7e0374a9a69a364cc9c840de8e804c903d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
