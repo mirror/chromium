@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0373acce_7b9d0b55",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_native_bridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-18T12:19:29Z",
+      "side": 1,
+      "message": "How about moving all the logic for deciding if we are possibly running translated code here and call this MaybeRunningOnMachineCodeTranslation() or similar?",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 37
+      },
+      "revId": "92f6db88eeb66518cf74252941bae88d4ded1fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f391d83d_46f2283b",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_native_bridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-18T12:19:29Z",
+      "side": 1,
+      "message": "I couldn\u0027t find any information about this - is it definitly the case (and will remain the case for future releases) that there will be no machine code translation from N+ ?",
+      "range": {
+        "startLine": 28,
+        "startChar": 30,
+        "endLine": 29,
+        "endChar": 40
+      },
+      "revId": "92f6db88eeb66518cf74252941bae88d4ded1fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe9d8d4_7176fc0f",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_rdebug.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-18T12:19:29Z",
+      "side": 1,
+      "message": "Could you move this to a ShouldCallRBrk helper function",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 243,
+        "endChar": 6
+      },
+      "revId": "92f6db88eeb66518cf74252941bae88d4ded1fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
