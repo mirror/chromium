@@ -85,6 +85,13 @@ class WEBVIEW_EXPORT WebView : public View,
     allow_accelerators_ = allow_accelerators;
   }
 
+  // If true the FocusBehavior of WebView changes depending upon whether
+  // WebView has content. If false WebView never internally changes the
+  // focus behavior.
+  void set_adjust_focus_behavior(bool adjust_focus_behavior) {
+    adjust_focus_behavior_ = adjust_focus_behavior;
+  }
+
   // Overridden from View:
   const char* GetClassName() const override;
 
@@ -158,6 +165,7 @@ class WEBVIEW_EXPORT WebView : public View,
   bool is_embedding_fullscreen_widget_;
   content::BrowserContext* browser_context_;
   bool allow_accelerators_;
+  bool adjust_focus_behavior_;
 
   DISALLOW_COPY_AND_ASSIGN(WebView);
 };
