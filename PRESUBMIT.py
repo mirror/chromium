@@ -2840,3 +2840,118 @@ def CheckChangeOnCommit(input_api, output_api):
   results.extend(input_api.canned_checks.CheckChangeHasDescription(
       input_api, output_api))
   return results
+
+
+def _CheckTranslationScreenshots(input_api, output_api):
+  PART_FILE_TAG = "part"
+  import os
+  import sys
+  from io import StringIO
+
+  sys.path = sys.path + [input_api.os_path.join(
+        input_api.PresubmitLocalPath(), 'tools', 'grit')]
+  import grit
+  import grit.grd_reader
+  import grit.node.message
+  import grit.util
+
+  def _GetGrdMessages(grd_path_or_string, dir_path='.'):
+    """Load the grd file and return a dict of message ids to messages.
+
+    Ignores any nested grdp files pointed by <part> tag.
+    """
+    doc = grit.grd_reader.Parse(grd_path_or_string, dir_path,
+        stop_after=None, first_ids_file=None,
+        debug=False, defines=None,
+        tags_to_ignore=set([PART_FILE_TAG]))
+    return {
+      msg.attrs['name']:msg for msg in doc.GetChildrenOfType(
+        grit.node.message.MessageNode)
+    }
+
+  def _GetGrdpMessagesFromString(grdp_string):
+    """Parses the contents of a grdp file given in grdp_string.
+
+    grd_reader can't parse grdp files directly. Instead, this creates a
+    temporary directory with a grd file pointing to the grdp file, and loads the
+    grd from there. Any nested grdp files (pointed by <part> tag) are ignored.
+    """
+    WRAPPER = """<?xml version="1.0" encoding="utf-8"?>
+    <grit latest_public_release="1" current_release="1">
+      <release seq="1">
+        <messages>
+          <part file="sub.grdp" />
+        </messages>
+      </release>
+    </grit>
+    """
+    with grit.util.TempDir({'main.grd': WRAPPER,
+                            'sub.grdp': grdp_string}) as temp_dir:
+      return _GetGrdMessages(temp_dir.GetPath('main.grd'), temp_dir.GetPath())
+
+
+  results = []
+  changed_messages = []
+  for f in input_api.AffectedFiles():
+    file_path = f.LocalPath()
+    if not file_path.endswith('.grd') and not file_path.endswith('.grdp'):
+      continue
+
+    old_id_to_msg_map = {}
+    new_id_to_msg_map = {}
+    if file_path.endswith('.grdp'):
+      if f.OldContents():
+        old_id_to_msg_map = _GetGrdpMessagesFromString(
+          unicode("\n".join(f.OldContents())))
+      if f.NewContents():
+        new_id_to_msg_map = _GetGrdpMessagesFromString(
+          unicode("\n".join(f.NewContents())))
+    else:
+      if f.OldContents():
+        old_id_to_msg_map = _GetGrdMessages(
+          StringIO(unicode("\n".join(f.OldContents()))))
+      if f.NewContents():
+        new_id_to_msg_map = _GetGrdMessages(
+          StringIO(unicode("\n".join(f.NewContents()))))
+
+    # Compute added, removed and modified string IDs.
+    old_ids = set(old_id_to_msg_map)
+    new_ids = set(new_id_to_msg_map)
+    added_ids = new_ids - old_ids
+    removed_ids = old_ids - new_ids
+    modified_ids = set([])
+    for key in old_ids.intersection(new_ids):
+      if (old_id_to_msg_map[key].FormatXml()
+          != new_id_to_msg_map[key].FormatXml()):
+        modified_ids.add(key)
+
+    # Check screenshot paths.
+    missing_screenshots = []
+    unneeded_screenshots = []
+    name, ext = os.path.splitext(os.path.basename(file_path))
+    screenshots_dir = os.path.join(
+        os.path.dirname(file_path), name + ext.replace('.', '_'))
+    for added_id in added_ids:
+      screenshot_path = os.path.join(screenshots_dir, added_id + '.png')
+      if not os.path.exists(screenshot_path):
+        missing_screenshots.append("New string:      %s" % added_id)
+    for modified_id in modified_ids:
+      screenshot_path = os.path.join(screenshots_dir, modified_id + '.png')
+      if not os.path.exists(screenshot_path):
+        missing_screenshots.append("Modified string: %s" % modified_id)
+
+    for removed_id in removed_ids:
+      screenshot_path = os.path.join(screenshots_dir, removed_id + '.png')
+      if os.path.exists(screenshot_path):
+        unneeded_screenshots.append("Removed string:  %s" % removed_id)
+
+    if missing_screenshots:
+      results.append(output_api.PresubmitNotifyResult(
+        "Missing screenshots for %s:\n  %s" % (
+          file_path, "\n  ".join(missing_screenshots))))
+    if unneeded_screenshots:
+      results.append(output_api.PresubmitNotifyResult(
+        "No longer needed screenshots for %s:\n  %s" % (
+          file_path, "\n  ".join(unneeded_screenshots))))
+
+  return results
