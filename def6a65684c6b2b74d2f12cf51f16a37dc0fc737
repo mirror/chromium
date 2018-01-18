@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4738cf2f_dd8d0064",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2018-01-18T18:51:45Z",
+      "side": 1,
+      "message": "If we don\u0027t depend on mac_views_browser, we at least seem to depend on toolkit_views, and that doesn\u0027t seem to be defined on Mac without mac_views_browser.  The problem is that //c/b/ui/views/media_router/* won\u0027t link (due to LocationBarView) without toolkit_views.\n\nWe are prepared to wait 3-6 months for mac_views_browser since Mac isn\u0027t a high priority for this already-low-use feature and we aren\u0027t familiar with Cocoa.",
+      "parentUuid": "e5bd5753_c7013138",
+      "revId": "def6a65684c6b2b74d2f12cf51f16a37dc0fc737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0745cae9_cd41e116",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "def6a65684c6b2b74d2f12cf51f16a37dc0fc737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34604077_3e56d984",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 3154,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2018-01-18T18:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0745cae9_cd41e116",
+      "revId": "def6a65684c6b2b74d2f12cf51f16a37dc0fc737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
