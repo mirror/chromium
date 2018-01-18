@@ -1501,7 +1501,10 @@ void PrintRenderFrameHelper::Print(blink::WebLocalFrame* frame,
     if (!self)
       return;
 
-    print_settings.params.print_scaling_option = scaling_option;
+    print_settings.params.print_scaling_option =
+        print_settings.params.use_page_defined_source_size
+            ? blink::kWebPrintScalingOptionSourceSize
+            : scaling_option;
     SetPrintPagesParams(print_settings);
     if (!print_settings.params.dpi || !print_settings.params.document_cookie) {
       DidFinishPrinting(OK);  // Release resources and fail silently on failure.

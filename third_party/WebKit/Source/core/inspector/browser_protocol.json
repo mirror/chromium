@@ -10007,6 +10007,12 @@
                             "description": "HTML template for the print footer. Should use the same format as the `headerTemplate`.",
                             "optional": true,
                             "type": "string"
+                        },
+                        {
+                            "name": "usePageDefinedSourceSize",
+                            "description": "Whether to use source size as defined by the page itself. Defaults to false,\nin which case the content will be scaled to fit the paper size.",
+                            "optional": true,
+                            "type": "boolean"
                         }
                     ],
                     "returns": [
