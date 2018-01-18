@@ -455,6 +455,18 @@ void ExtensionSystemImpl::InstallUpdate(
                                             unpacked_dir);
 }
 
+bool ExtensionSystemImpl::FinishDelayedInstallationIfReady(
+    const std::string& extension_id,
+    bool install_immediately) {
+  ExtensionService* service = extension_service();
+  DCHECK(service);
+
+  if (!service->GetPendingExtensionUpdate(extension_id))
+    return false;
+  return service->FinishDelayedInstallationIfReady(extension_id,
+                                                   install_immediately);
+}
+
 void ExtensionSystemImpl::RegisterExtensionWithRequestContexts(
     const Extension* extension,
     const base::Closure& callback) {
