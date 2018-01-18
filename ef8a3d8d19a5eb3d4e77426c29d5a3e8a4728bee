@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "b1033c9a_14a62aab",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-18T06:39:36Z",
+      "side": 1,
+      "message": "Ugrrr. Thank you very much for the info, testing and comments! I have totally misread.\n\nSo, stepping back, what we\u0027d like to support is constexpr copy/move ctor, in Optional.\nConsidering;\n- Currently the toolchain/spec looks to have an issue between trivially {copy,move} constructible and trivially destructible.\n- Even if it is fixed in upstream, we need to roll it.\n- If it is rolled, then I think it will be almost time to switch to C++17/C++20.\n\nSo, I don\u0027t think we need to support \"trivially_destructible \u003d false\" +\"constexpr copy,move constructor\" under the current situation. So I just dropped it with comment.\n\nAs for \"trivially_destructible \u003d true\" + \"constexpr copy,move constructor\" still needs to be fixed. And this CL (conceptually just dropping \"~OptionalStorageBase() \u003d default;\") should fix it. Also I reworded the comment a bit more.\n\nWDYT?",
+      "parentUuid": "ed5091fb_92918f5b",
+      "revId": "ef8a3d8d19a5eb3d4e77426c29d5a3e8a4728bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebc2f50b_802104ff",
         "filename": "base/optional_unittest.cc",
         "patchSetId": 2
