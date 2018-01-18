@@ -497,6 +497,24 @@
     },
     {
       "key": {
+        "uuid": "2a8ba338_4d6ed186",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-18T02:00:18Z",
+      "side": 1,
+      "message": "Can\u0027t we report multiple values via multiple calls (from multiple lines)?",
+      "parentUuid": "be5e2fef_28a097d6",
+      "revId": "89a15cad0f76e79e726b5c09bb07d80f2b6c4059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "275b2993_b0fb177a",
         "filename": "device/vr/openvr/openvr_device_provider.cc",
         "patchSetId": 1
