@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "781cffb0_ef9ca59a",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-18T21:01:09Z",
+      "side": 1,
+      "message": "I think it might be best to follow the previous pattern with an enum value for NO_TYPE_COMMITTED:\n\nif (cache no transform) {\n  Log(CACHE_NO_TRANSFORM, ...,passed_reasons);\n  return;\n}\npassed_reasons.append(CACHE_NO_TRANSFORM);\n\nif (!previews_user_data-\u003eHasCommittedPreviewsType()) {\n  Log(NO_TYPE_COMMITTED, ... NONE, ...,passed_reasons);\n  return;\n}\npassed_reasons.append(NO_TYPE_COMMITTED);\n\nLog(COMMITTED, previews_user_data-\u003ecommitted_previews_type(), ...,passed_reasons);\n\n\nI can definitely see how this complicates things a little bit though.\n\nthe various log outputs would look like\n\n-Committed LoFi\n-At least one previews type was available at commit time\n-There was no cache-control no transform header\n\n-No preview type was available at commit time\n-There was no cache-control no transform header\n\n-There was a cache-control no transform header\n\nFeel free to bring this to a white board too.",
+      "revId": "f26fadad087b92000e026fe5449cb1697971465c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd0ea14c_138f2ccb",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-18T21:01:09Z",
+      "side": 1,
+      "message": "Can you call LogCommittedPreviewsDecision once (instead of both places) if you move it outside of the scope of \"if (committed_type !\u003d previews::PreviewsType::NONE){...}\"",
+      "revId": "f26fadad087b92000e026fe5449cb1697971465c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b3d8ca_210cb5c9",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-18T21:01:09Z",
+      "side": 1,
+      "message": "this line seems unneeded? either pass in description_for_reason bool or use want_inveser_description everywhere.",
+      "revId": "f26fadad087b92000e026fe5449cb1697971465c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
