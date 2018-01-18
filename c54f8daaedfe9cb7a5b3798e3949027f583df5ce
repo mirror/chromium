@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b4aac450_adf37b99",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-18T22:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf363cd8_ca231a8a",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ade0005_b3d0c07e",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 2
@@ -65,6 +83,24 @@
       "writtenOn": "2018-01-17T19:59:25Z",
       "side": 1,
       "message": "nit: const here and elsewhere",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58dbe0e_bd7242fa",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-18T22:33:13Z",
+      "side": 1,
+      "message": "I agree that\u0027d be more correct, but generally the VR codebase doesn\u0027t do this for locals, and I\u0027d prefer to be consistent.",
+      "parentUuid": "8ade0005_b3d0c07e",
       "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -103,6 +139,24 @@
       "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c9c8ea_a5388d1d",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-18T22:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af5a746c_b7bced51",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -159,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "cee8d711_9c28598c",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-18T22:33:13Z",
+      "side": 1,
+      "message": "On your last suggestion, that implies that RTL characters can\u0027t tamper with the \".com\" part of the URL.  This is probably correct, but I think the tiny overhead in computing the union makes the intent clear - take the right edge, no matter what\u0027s in there.",
+      "parentUuid": "230c1a1d_4641578e",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10f33dac_b22be11b",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 2
@@ -194,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "f7eeb65f_88955fa4",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-18T22:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af700b7d_4415dc61",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9de137f4_8526321f",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 2
@@ -208,6 +298,24 @@
       "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c3b9c0_6e5252e3",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-18T22:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9de137f4_8526321f",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -228,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "97d961d0_3c863895",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-18T22:33:13Z",
+      "side": 1,
+      "message": "These constants are moving into our UI constants header.",
+      "parentUuid": "fc977f40_8e2447c1",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90b6d771_9731f5a4",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 2
@@ -245,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "4d65e9a7_2b0f8e0f",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-18T22:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90b6d771_9731f5a4",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f02f6d71_cdccb954",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 2
@@ -256,6 +400,24 @@
       "writtenOn": "2018-01-17T19:59:25Z",
       "side": 1,
       "message": "Is it possible to test these changes?",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4836ec80_56ae12bc",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-18T22:33:13Z",
+      "side": 1,
+      "message": "Yes.  More generally, I pivoted away from using RenderText, as discussed, but I think it\u0027s better long term to have RenderText support this long-term.  Is this something you see as highly desirable?",
+      "parentUuid": "f02f6d71_cdccb954",
       "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -333,6 +495,24 @@
     },
     {
       "key": {
+        "uuid": "7733d397_a44be9cf",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-18T22:33:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e1782c06_e9ccc644",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f7f1462_840976b2",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 2
@@ -347,6 +527,24 @@
       "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ff5820_a60b00cd",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-18T22:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f7f1462_840976b2",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -382,6 +580,24 @@
       "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbd1baf_99a94718",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-18T22:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b626ee7_22eee8e4",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
