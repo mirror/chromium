@@ -22,6 +22,30 @@
       "revId": "cc79218eac0a3b7d4b468e9a6b5981cd716a5a7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6adb75_41a5dde0",
+        "filename": "ui/events/ozone/evdev/keyboard_evdev.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-18T19:59:59Z",
+      "side": 0,
+      "message": "Right. Please see https://chromium-review.googlesource.com/c/chromium/src/+/874650/2/ui/events/event_auto_repeat_handler.cc#86 (follow up).\n\nWayland would not post any task, whereas KeyboardEvdev would keep the current post-based behavior.\n\nI still need to proper handle the wl_display_sync/wl_callback_add_listener thing you mentioned (in https://crrev.com/c/874670).",
+      "parentUuid": "5085ff3f_741744d8",
+      "range": {
+        "startLine": 178,
+        "startChar": 31,
+        "endLine": 178,
+        "endChar": 32
+      },
+      "revId": "cc79218eac0a3b7d4b468e9a6b5981cd716a5a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
