@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6536a04_47596cb5",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorDOMSnapshotAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-18T16:47:03Z",
+      "side": 1,
+      "message": "I think this can just be image_element-\u003ecurrentSrc(). We support WTFString in blink generated classes.",
+      "revId": "cf476928ff7fc1b9377162ead96fe5bdf28f7db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
