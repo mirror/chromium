@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eab997f0_a2a0572d",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-18T20:28:51Z",
+      "side": 1,
+      "message": "Why are you triggering a resize here?",
+      "revId": "94a57ca28a49e11278296c9969d37882d3101ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd68002_539f9847",
+        "filename": "ui/aura/test/window_event_dispatcher_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-18T20:28:51Z",
+      "side": 1,
+      "message": "Description of what this does exactly would be super helpful to future users.",
+      "revId": "94a57ca28a49e11278296c9969d37882d3101ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d15560c_953edc84",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-18T20:28:51Z",
+      "side": 1,
+      "message": "Is it possible to use a base::ScopedClosureRunner?",
+      "revId": "94a57ca28a49e11278296c9969d37882d3101ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d74214c_bd07bdb9",
+        "filename": "ui/aura/window_event_dispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-18T20:28:51Z",
+      "side": 1,
+      "message": "Maybe describe here too how to use this?",
+      "revId": "94a57ca28a49e11278296c9969d37882d3101ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
