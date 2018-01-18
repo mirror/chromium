@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a35db64b_a749f120",
+        "filename": "chrome/common/extensions/extension_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-18T01:12:53Z",
+      "side": 1,
+      "message": "These tests are essentially the same as those in base/i18n/rtl_unittest.cc.\nLet me know if it would be better if I\u0027d remove the tests here.",
+      "revId": "b60ab54fdcb1226614a632bb775e0b30566afa8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

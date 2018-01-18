@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32ddc771_06677864",
+        "filename": "extensions/common/extension.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-18T01:12:53Z",
+      "side": 0,
+      "message": "Woops, this should still be in the patch since it depends on https://chromium-review.googlesource.com/c/chromium/src/+/818457\n\nWill add this back in the next patch.",
+      "range": {
+        "startLine": 575,
+        "startChar": 2,
+        "endLine": 575,
+        "endChar": 62
+      },
+      "revId": "d21683cfa54bb12a0f73101e97e2414e0c182475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
