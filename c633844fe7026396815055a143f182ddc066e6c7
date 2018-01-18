@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e6db130_3cb4a413",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T11:02:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9fd2ebf_eaaac02f",
+      "revId": "c633844fe7026396815055a143f182ddc066e6c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99d37583_4f77010d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e8ff7a8f_5d4671bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T11:02:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99d37583_4f77010d",
+      "range": {
+        "startLine": 752,
+        "startChar": 0,
+        "endLine": 752,
+        "endChar": 22
+      },
+      "revId": "c633844fe7026396815055a143f182ddc066e6c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68cd81a9_b199bfce",
         "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
         "patchSetId": 2
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "56521d2c_31d09c48",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T11:02:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68cd81a9_b199bfce",
+      "revId": "c633844fe7026396815055a143f182ddc066e6c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d89668c9_11e8b9ea",
         "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "c633844fe7026396815055a143f182ddc066e6c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e8273d_7d4fd63d",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T11:02:30Z",
+      "side": 1,
+      "message": "I was just trying to save a few CPU cycles and some memory, although on second thought, it doesn\u0027t buy us much. Removed the check.",
+      "parentUuid": "d89668c9_11e8b9ea",
+      "revId": "c633844fe7026396815055a143f182ddc066e6c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
