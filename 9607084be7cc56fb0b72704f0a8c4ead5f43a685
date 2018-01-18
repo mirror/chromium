@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "168b263c_f2f1455d",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-18T18:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1421f14e_0c932a83",
+      "range": {
+        "startLine": 32,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "821c75df_055e750e",
         "filename": "base/profiler/stack_sampling_profiler.cc",
         "patchSetId": 27
@@ -39,6 +63,24 @@
       "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198f99e7_deb62a96",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-18T18:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "821c75df_055e750e",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +113,24 @@
       "side": 1,
       "message": "Chances are we\u0027ll still need a base::ScopedAllowBaseSyncPrimitivesForTesting here.",
       "parentUuid": "3bb44373_172a1256",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476c5b81_5a7b29e3",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-18T18:38:14Z",
+      "side": 1,
+      "message": "We still need the allowance in the if-block before the wait() call, right? \n\n@Mike, base::ScopedAllowBaseSyncPrimitivesForTesting is for tests per its comment. Do you mean base::ScopedAllowBaseSyncPrimitivesOutsideBlockingScope which I have been using?",
+      "parentUuid": "9b20404a_d74148c9",
       "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -112,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "0c810449_56453fc3",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-18T18:38:14Z",
+      "side": 1,
+      "message": "Done. Approach adopted.\n\nBut should it be the following logic? If the event is un-signaled, do we still need to reset it?\n\nif (!profiling_inactive.IsSignaled()) {\n  profiling_inactive.Wait();\n  profiling_inactive.Reset();\n}",
+      "parentUuid": "73a0a677_98de9529",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8522efdd_b4b7a81a",
         "filename": "base/profiler/stack_sampling_profiler.h",
         "patchSetId": 27
@@ -147,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "3a03e6f9_328a4589",
+        "filename": "base/profiler/stack_sampling_profiler.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-18T18:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d90197f9_5ce4af7f",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bb3d23e_65ec87c2",
         "filename": "base/profiler/stack_sampling_profiler.h",
         "patchSetId": 27
@@ -158,6 +254,24 @@
       "writtenOn": "2018-01-18T09:49:48Z",
       "side": 1,
       "message": "Don\u0027t need this member, just use kResetPolicy in the impl.",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a83213_74f99885",
+        "filename": "base/profiler/stack_sampling_profiler.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-18T18:38:14Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "9bb3d23e_65ec87c2",
       "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
