@@ -128,6 +128,10 @@ class ASH_EXPORT PowerButtonController
   // mode.
   bool enable_tablet_mode_ = false;
 
+  // True if the should show power button menu when long press the power button.
+  // Should be true for tablet and detachable devices.
+  bool show_power_button_menu_ = false;
+
   // True if the device should use non-tablet-style power button behavior even
   // if it is a convertible device.
   bool force_clamshell_power_button_ = false;
