@@ -99,7 +99,7 @@ class CORE_EXPORT FrameSelection final
   // SetSelectionAndEndTyping()
   // Set selection with end of typing processing == close typing and clear
   // typing style.
-  void SetSelection(const SelectionInDOMTree&);
+  void SetSelectionAndEndTyping(const SelectionInDOMTree&);
   void SelectAll(SetSelectionBy);
   void SelectAll();
   void Clear();
