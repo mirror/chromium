@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5d398ba3_36426cb9",
+        "filename": "third_party/guava/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-18T15:13:56Z",
+      "side": 1,
+      "message": "Peter: my point is that I\u0027m not comfortable with having gn accept it, even if the build fails down the line. Marcin\u0027s patch is a good example of why :)\n\nPerhaps we could limit the visibility of guava_java if it can\u0027t be testonly?",
+      "parentUuid": "e8b90b21_8b5b1812",
+      "revId": "d9750790101ffb3688bb1ea197108b48b42dcbc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f66a6f62_bbc07a00",
         "filename": "third_party/guava/OWNERS",
         "patchSetId": 1
