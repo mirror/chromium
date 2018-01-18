@@ -40,9 +40,11 @@
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/sync_preferences/pref_service_syncable.h"
+#include "components/url_formatter/url_fixer.h"
 #include "components/zoom/page_zoom.h"
 #include "components/zoom/zoom_controller.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/devtools_agent_host.h"
 #include "content/public/browser/keyboard_event_processing_result.h"
 #include "content/public/browser/native_web_keyboard_event.h"
@@ -1284,13 +1286,29 @@ void DevToolsWindow::SetIsDocked(bool dock_requested) {
 }
 
 void DevToolsWindow::OpenInNewTab(const std::string& url) {
-  content::OpenURLParams params(GURL(url), content::Referrer(),
+  GURL fixed_url =
+      url_formatter::FixupURL(GURL(url).possibly_invalid_spec(), std::string());
+  bool is_inspect_url =
+      fixed_url.host_piece() == chrome::kChromeUIInspectHost &&
+      fixed_url.scheme() == content::kChromeUIScheme;
+  content::ChildProcessSecurityPolicy* policy =
+      content::ChildProcessSecurityPolicy::GetInstance();
+  bool is_safe_to_request = !fixed_url.SchemeIsBlob() &&
+                            !fixed_url.SchemeIsFileSystem() &&
+                            policy->IsWebSafeScheme(fixed_url.scheme());
+
+  // Use about:blank instead of an empty GURL. The browser treats an empty GURL
+  // as navigating to the home page, which may be privileged (chrome://newtab/).
+  if (!is_inspect_url && !is_safe_to_request)
+    fixed_url = GURL(url::kAboutBlankURL);
+
+  content::OpenURLParams params(fixed_url, content::Referrer(),
                                 WindowOpenDisposition::NEW_FOREGROUND_TAB,
                                 ui::PAGE_TRANSITION_LINK, false);
   WebContents* inspected_web_contents = GetInspectedWebContents();
   if (!inspected_web_contents || !inspected_web_contents->OpenURL(params)) {
     chrome::ScopedTabbedBrowserDisplayer displayer(profile_);
-    chrome::AddSelectedTabWithURL(displayer.browser(), GURL(url),
+    chrome::AddSelectedTabWithURL(displayer.browser(), fixed_url,
                                   ui::PAGE_TRANSITION_LINK);
   }
 }
