@@ -22,6 +22,30 @@
       "revId": "0e2ef6cda26a3ef7a3c8c4ba30a3357c183f779e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f250bdbf_13cc1df9",
+        "filename": "remoting/client/chromoting_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-01-18T02:35:38Z",
+      "side": 1,
+      "message": "\u003e Why disable stats logging here, and not (for example) if the connection fails for some other reason?\nWe do. The code: `EnableStatsLogging(session_state_ \u003d\u003d protocol::ConnectionToHost::CONNECTED);` in OnConnectionState and `stats_logging_enabled_ \u003d false` in Disconnect() (I\u0027ve changed to EnableStatsLogging now) should do that.\n\n\u003e Having a specific method to close the connection in case of third party auth failure seems quite narrow. Could you have a generic Close() method that takes an error and sets the state to CLOSED, FAILED or CANCELED, and handles stats and state change logging? Basically a combination of the two changes you\u0027ve made to this file.\nDone. Added a DisconnectForReason() method.",
+      "parentUuid": "f555a103_9f366b83",
+      "range": {
+        "startLine": 175,
+        "startChar": 28,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "0e2ef6cda26a3ef7a3c8c4ba30a3357c183f779e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
