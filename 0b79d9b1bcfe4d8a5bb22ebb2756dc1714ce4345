@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4385b4a1_ac9fbb7d",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-18T04:29:01Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve added a note on the bug:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d802381#c3\n\nThis is more involved to fix though (can we do a forward delete with TypingCommand::DeleteSelection?), and I think it\u0027s a separate issue (although beforeinput might also have an inputType field?).\n\nWe also have the issue that isComposing should probably be true if there\u0027s an open composition (https://bugs.chromium.org/p/chromium/issues/detail?id\u003d802916).",
+      "parentUuid": "799541a4_4fd87bb9",
+      "range": {
+        "startLine": 348,
+        "startChar": 6,
+        "endLine": 351,
+        "endChar": 78
+      },
+      "revId": "0b79d9b1bcfe4d8a5bb22ebb2756dc1714ce4345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b3544f5_a835a919",
         "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
         "patchSetId": 6
@@ -60,6 +84,30 @@
       "writtenOn": "2018-01-18T02:42:49Z",
       "side": 1,
       "message": "nit: Does chongz\u0027s TODO at L1107 apply here?",
+      "range": {
+        "startLine": 1048,
+        "startChar": 39,
+        "endLine": 1048,
+        "endChar": 61
+      },
+      "revId": "0b79d9b1bcfe4d8a5bb22ebb2756dc1714ce4345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaee0e29_59dbdeb4",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-18T04:29:01Z",
+      "side": 1,
+      "message": "I think his TODO means that it\u0027s not always clear whether a selection should count as forwards or backwards. For example, if you have a caret selection and extend forwards and delete, I guess that\u0027s a forward deletion. But if you extend on both sides, it\u0027s not clear. We could split up the operation into two deletes I suppose, but I\u0027m not sure if that\u0027s desirable.",
+      "parentUuid": "9b3544f5_a835a919",
       "range": {
         "startLine": 1048,
         "startChar": 39,
