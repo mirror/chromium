@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "54f068bd_11738698",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-18T12:06:38Z",
+      "side": 1,
+      "message": "\u003e What do you think?\n\nHmm... We always use top of frame\u0027s visual view port when focused element is offscreen?\nBut we still need to consider container\u0027s visible rect because we should consider following case:\n-- \u003c--- upper edge of frame\u0027s visual view port\nF \u003c--- focused element, child of \u0027C\u0027, currently this is offscreen\nE \u003c--- focusable element, not child of \u0027C\u0027\nC \u003c--- container of \u0027F\u0027 and \u0027N\u0027\nN \u003c--- focusable element, child of \u0027C\u0027, onscreen\n\nIn this case, starting rect should be upper edge of C.\nIf I misunderstand your think, please correct me.\n\nAnd here is my idea for acquiring virtual rectfor starting rect:\n1. Find focused element\u0027s first container(A) that has \u0027on\u0027screen rect.\n2. visible rect \u003d A\u0027s rect - A\u0027s offscreen rect.\n3. starting_rect \u003d VirtualRectForDirection(type, visible rect)",
+      "parentUuid": "1aff6f72_c8b25a72",
+      "range": {
+        "startLine": 1406,
+        "startChar": 0,
+        "endLine": 1410,
+        "endChar": 28
+      },
+      "revId": "835f9b3d8574826dc1d3a5829a21a2cce4786a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9009250_9f941a13",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 28
