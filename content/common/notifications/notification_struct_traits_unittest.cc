@@ -12,9 +12,21 @@
 #include "mojo/public/cpp/test_support/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/modules/notifications/notification.mojom.h"
+#include "third_party/skia/include/core/SkBitmap.h"
 #include "url/gurl.h"
 
 namespace content {
+
+namespace {
+
+SkBitmap CreateBitmap(int width, int height, SkColor color) {
+  SkBitmap bitmap;
+  bitmap.allocN32Pixels(width, height);
+  bitmap.eraseColor(color);
+  return bitmap;
+}
+
+}  // namespace
 
 TEST(NotificationStructTraitsTest, NotificationDataRoundtrip) {
   PlatformNotificationData notification_data;
@@ -187,4 +199,53 @@ TEST(NotificationStructTraitsTest, DataExceedsMaximumSize) {
       mojo::test::SerializeAndDeserialize<blink::mojom::NotificationData>(
           &notification_data, &platform_notification_data));
 }
+
+TEST(NotificationStructTraitsTest, NotificationResourcesRoundtrip) {
+  NotificationResources resources;
+
+  resources.image = CreateBitmap(200, 100, SK_ColorMAGENTA);
+  resources.notification_icon = CreateBitmap(100, 50, SK_ColorGREEN);
+  resources.badge = CreateBitmap(20, 10, SK_ColorBLUE);
+
+  resources.action_icons.resize(2);
+  resources.action_icons[0] = CreateBitmap(10, 10, SK_ColorLTGRAY);
+  resources.action_icons[1] = CreateBitmap(11, 11, SK_ColorDKGRAY);
+
+  NotificationResources roundtrip_resources;
+
+  ASSERT_TRUE(
+      mojo::test::SerializeAndDeserialize<blink::mojom::NotificationResources>(
+          &resources, &roundtrip_resources));
+
+  EXPECT_EQ(resources.image.width(), roundtrip_resources.image.width());
+  EXPECT_EQ(resources.image.height(), roundtrip_resources.image.height());
+  EXPECT_EQ(resources.image.getColor(0, 0),
+            roundtrip_resources.image.getColor(0, 0));
+
+  EXPECT_EQ(resources.notification_icon.width(),
+            roundtrip_resources.notification_icon.width());
+  EXPECT_EQ(resources.notification_icon.height(),
+            roundtrip_resources.notification_icon.height());
+  EXPECT_EQ(resources.notification_icon.getColor(0, 0),
+            roundtrip_resources.notification_icon.getColor(0, 0));
+
+  EXPECT_EQ(resources.badge.width(), roundtrip_resources.badge.width());
+  EXPECT_EQ(resources.badge.height(), roundtrip_resources.badge.height());
+  EXPECT_EQ(resources.badge.getColor(0, 0),
+            roundtrip_resources.badge.getColor(0, 0));
+
+  ASSERT_EQ(resources.action_icons.size(),
+            roundtrip_resources.action_icons.size());
+
+  for (size_t i = 0; i < roundtrip_resources.action_icons.size(); ++i) {
+    SCOPED_TRACE(base::StringPrintf("Action index: %zd", i));
+    EXPECT_EQ(resources.action_icons[0].width(),
+              roundtrip_resources.action_icons[0].width());
+    EXPECT_EQ(resources.action_icons[0].height(),
+              roundtrip_resources.action_icons[0].height());
+    EXPECT_EQ(resources.action_icons[0].getColor(0, 0),
+              roundtrip_resources.action_icons[0].getColor(0, 0));
+  }
+}
+
 }  // namespace content
