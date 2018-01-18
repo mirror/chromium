@@ -35,7 +35,9 @@ void NOINLINE ForceSystemLeaks() {
 @synthesize pretendIsOccluded = pretendIsOccluded_;
 @synthesize pretendFullKeyboardAccessIsEnabled =
     pretendFullKeyboardAccessIsEnabled_;
+@synthesize pretendIsOnActiveSpace = pretendIsOnActiveSpace_;
 @synthesize useDefaultConstraints = useDefaultConstraints_;
+@synthesize pretendIsVisible = pretendIsVisible_;
 
 - (id)initWithContentRect:(NSRect)contentRect {
   self = [super initWithContentRect:contentRect
@@ -44,6 +46,8 @@ void NOINLINE ForceSystemLeaks() {
                               defer:NO];
   if (self) {
     useDefaultConstraints_ = YES;
+    pretendIsVisible_ = YES;
+    pretendIsOnActiveSpace_ = YES;
   }
   return self;
 }
@@ -56,6 +60,22 @@ void NOINLINE ForceSystemLeaks() {
   // Just a good place to put breakpoints when having problems with
   // unittests and CocoaTestHelperWindow.
   [super dealloc];
+}
+
++ (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
+  NSSet* keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
+  if ([key isEqualToString:@"visible"]) {
+    keyPaths = [keyPaths setByAddingObjectsFromArray:@[ @"pretendIsVisible" ]];
+  }
+  return keyPaths;
+}
+
+- (BOOL)isVisible {
+  return pretendIsVisible_;
+}
+
+- (BOOL)isOnActiveSpace {
+  return pretendIsOnActiveSpace_;
 }
 
 - (void)makePretendKeyWindowAndSetFirstResponder:(NSResponder*)responder {
@@ -73,6 +93,13 @@ void NOINLINE ForceSystemLeaks() {
   [[NSNotificationCenter defaultCenter]
       postNotificationName:NSWindowDidChangeOcclusionStateNotification
                     object:self];
+}
+
+- (void)setPretendIsOnActiveSpace:(BOOL)pretendIsOnActiveSpace {
+  pretendIsOnActiveSpace_ = pretendIsOnActiveSpace;
+  [[NSWorkspace sharedWorkspace].notificationCenter
+      postNotificationName:NSWorkspaceActiveSpaceDidChangeNotification
+                    object:[NSWorkspace sharedWorkspace]];
 }
 
 - (void)setPretendFullKeyboardAccessIsEnabled:(BOOL)enabled {

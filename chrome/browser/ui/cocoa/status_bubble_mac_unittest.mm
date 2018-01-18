@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "chrome/browser/ui/cocoa/status_bubble_mac.h"
+#import "chrome/browser/ui/cocoa/status_bubble_mac_testing.h"
 
 #include <Cocoa/Cocoa.h>
 
@@ -93,7 +93,7 @@ class StatusBubbleMacTest : public CocoaTest {
  public:
   void SetUp() override {
     CocoaTest::SetUp();
-    NSWindow* window = test_window();
+    CocoaTestHelperWindow* window = test_window();
     EXPECT_TRUE(window);
     delegate_.reset(
         [[StatusBubbleMacTestDelegate alloc] initWithWindow: window]);
@@ -133,7 +133,7 @@ class StatusBubbleMacTest : public CocoaTest {
     BubbleView* bubbleView = [bubble_->window_ contentView];
     return [bubbleView content];
   }
-  NSWindow* GetWindow() { return bubble_->window_; }
+  StatusBubbleWindow* GetWindow() { return bubble_->window_; }
   NSWindow* parent() {
     return bubble_->parent_;
   }
@@ -678,4 +678,22 @@ TEST_F(StatusBubbleMacTest, ReparentBubble) {
   // Switch back to the original parent with the bubble showing.
   bubble_->SetStatus(UTF8ToUTF16("Showing"));
   bubble_->SwitchParentWindow(test_window());
+}
+
+TEST_F(StatusBubbleMacTest, WaitsUntilVisible) {
+  test_window().pretendIsVisible = NO;
+  bubble_->SetStatus(UTF8ToUTF16("Show soon"));
+  EXPECT_NSEQ(nil, GetWindow().parentWindow);
+
+  test_window().pretendIsVisible = YES;
+  EXPECT_NSNE(nil, GetWindow().parentWindow);
+}
+
+TEST_F(StatusBubbleMacTest, WaitsUntilOnActiveSpace) {
+  test_window().pretendIsOnActiveSpace = NO;
+  bubble_->SetStatus(UTF8ToUTF16("Show soon"));
+  EXPECT_NSEQ(nil, GetWindow().parentWindow);
+
+  test_window().pretendIsOnActiveSpace = YES;
+  EXPECT_NSNE(nil, GetWindow().parentWindow);
 }
