@@ -296,7 +296,7 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
     video_frame_compositor_task_runner =
         render_thread->compositor_task_runner()
             ? render_thread->compositor_task_runner()
-            : base::ThreadTaskRunnerHandle::Get();
+            : render_frame_->GetTaskRunner(blink::TaskType::kMediaElementEvent);
   }
 
   DCHECK(layer_tree_view);
@@ -462,7 +462,8 @@ blink::WebMediaPlayer* MediaFactory::CreateWebMediaPlayerForMediaStream(
   scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner =
       render_thread->compositor_task_runner();
   if (!compositor_task_runner.get())
-    compositor_task_runner = base::ThreadTaskRunnerHandle::Get();
+    compositor_task_runner =
+        render_frame_->GetTaskRunner(blink::TaskType::kMediaElementEvent);
 
   return new WebMediaPlayerMS(
       frame, client, GetWebMediaPlayerDelegate(),
