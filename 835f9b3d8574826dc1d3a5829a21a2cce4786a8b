@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "343b6ccf_abba8997",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-18T06:01:00Z",
+      "side": 1,
+      "message": "Sorry. There was misunderstand and I couldn\u0027t notice that more early.\nRemoving these lines introduces big behavior change. Let me show you an easy example:\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n\u003cscrollable area(A)\u003e\n\u003cfocused element and offscreen\u003e\n\u003c/scrollable area\u003e\n\n\u003cscroable area(B) and candidate\u003e\nsome content\n\u003c/scrollable area\u003e\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n\nStep 1:\ncontainer: A\nstarting rect: upper edge of A\u0027s rect.\nSnav will find B as candidate\n\nStep 2:\ncontainer: B\nstarting rect(existing and this CL): upper edge of B\u0027s rect.\nstarting rect(you suggested): upper edge of A\u0027s rect.\n\nYour suggestion introduces different behavior at step2. Your suggestion may lead to more reasonable behavior, but I think we should change that in its own context, not in this CL.\nOne more thing, starting rect(you suggested) in step2 may points offscreen rect(if A is offscreen), but starting rect(existing and this CL) always doesn\u0027t(see UpdateFocusCandidateIfNeeded()). So we should choice starting rect more carefully if we going to change your suggestion.\n\nI removed section#3 in this commit message because this CL is not different with existing implementation in terms of starting rect. First I want to describe about https://chromium-review.googlesource.com/c/chromium/src/+/870029 , But the point is divided into its own CL. So there is no reason for describing about that in here.",
+      "parentUuid": "e58f5289_d41eca1e",
+      "range": {
+        "startLine": 1406,
+        "startChar": 0,
+        "endLine": 1410,
+        "endChar": 28
+      },
+      "revId": "835f9b3d8574826dc1d3a5829a21a2cce4786a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9009250_9f941a13",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 28
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-17T21:32:32Z",
       "side": 1,
       "message": "These lines are not needed? I just tried to remove them and I didn\u0027t get any failing layout tests. :) When this container is popped from the stack, L1429 will do the same scroll, right? Would be nice to get rid of this duplicated call...",
+      "range": {
+        "startLine": 1464,
+        "startChar": 0,
+        "endLine": 1467,
+        "endChar": 5
+      },
+      "revId": "835f9b3d8574826dc1d3a5829a21a2cce4786a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec8a21b_fa554808",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-18T06:01:00Z",
+      "side": 1,
+      "message": "These lines are slightly different with 1429 because these lines check whether a navigable container is offscreen after scrolling, but 1429 checks whether a non navigable container is offscreen after scrolling. So each blocks may work at different situation.\n\nBut I realized that all of these code in this loop are dead by line 1304. When stefan@ asked to me about this, I tested with removing 1304 so that some tests are failed. But if I keep the line 1304 and remove code in this loop only, all test are passed. I also did manually test for some suspected cases, but there was no problem.\n\nSo I added more clean up in this CL.\n\nFYI, historically these code are dead from https://codereview.chromium.org/797463003 .",
+      "parentUuid": "e9009250_9f941a13",
       "range": {
         "startLine": 1464,
         "startChar": 0,
@@ -68,6 +116,30 @@
       "revId": "835f9b3d8574826dc1d3a5829a21a2cce4786a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a59e75_0e90a9cc",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-18T06:01:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a92ae6e5_1996316e",
+      "range": {
+        "startLine": 1469,
+        "startChar": 7,
+        "endLine": 1469,
+        "endChar": 48
+      },
+      "revId": "835f9b3d8574826dc1d3a5829a21a2cce4786a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
