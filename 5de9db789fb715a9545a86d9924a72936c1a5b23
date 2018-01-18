@@ -16,6 +16,24 @@
       "revId": "5de9db789fb715a9545a86d9924a72936c1a5b23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75b06c9_29c2944d",
+        "filename": "third_party/WebKit/common/message_port/message_port.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-18T21:09:35Z",
+      "side": 1,
+      "message": "Good point. I reverted the change.",
+      "parentUuid": "2fced373_9d01960d",
+      "revId": "5de9db789fb715a9545a86d9924a72936c1a5b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
