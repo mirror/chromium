@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e053499_00d25e93",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-18T16:51:22Z",
+      "side": 1,
+      "message": "\"creating a child\"",
+      "revId": "093decc1bec7ac2463df40bc6795fc06b49d79b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
