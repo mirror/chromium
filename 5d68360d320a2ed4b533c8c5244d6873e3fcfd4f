@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b97de227_68e85a0d",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-18T12:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "877c91dd_3d24b55f",
+      "revId": "5d68360d320a2ed4b533c8c5244d6873e3fcfd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3ceaa0a_2f67ab4d",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 19
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c2d0d2dd_54c87a52",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-18T12:50:37Z",
+      "side": 1,
+      "message": "We don\u0027t create/remove tickers on the fly ATM. Updated.",
+      "parentUuid": "e3ceaa0a_2f67ab4d",
+      "revId": "5d68360d320a2ed4b533c8c5244d6873e3fcfd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c18e53e8_10abc83b",
         "filename": "cc/animation/animation_player.h",
         "patchSetId": 19
@@ -50,6 +86,24 @@
       "revId": "5d68360d320a2ed4b533c8c5244d6873e3fcfd4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c029ea5c_616623f3",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-18T12:50:37Z",
+      "side": 1,
+      "message": "An incremental member makes test easier to write but I guess it\u0027s not worth it. Changed to tickers_.size() + 1 to match behavior of AnimationIdProvider.",
+      "parentUuid": "c18e53e8_10abc83b",
+      "revId": "5d68360d320a2ed4b533c8c5244d6873e3fcfd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
