@@ -22,6 +22,29 @@
       "revId": "707cb33717b82d483100e1233390a2ec4d233f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b43543_32309b96",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2018-01-18T23:16:12Z",
+      "side": 1,
+      "message": "Add TODO here explaining that this is filtered here as a smoke test but plan is to eventually add a lot more tests.",
+      "range": {
+        "startLine": 322,
+        "startChar": 7,
+        "endLine": 322,
+        "endChar": 55
+      },
+      "revId": "707cb33717b82d483100e1233390a2ec4d233f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
