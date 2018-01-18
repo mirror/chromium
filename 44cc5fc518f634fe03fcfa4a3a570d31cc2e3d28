@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59c04065_15136613",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/remoteobjects/RemoteObjectImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-18T18:15:14Z",
+      "side": 1,
+      "message": "hmm... one more potential mojo/jni problem I didn\u0027t think about.\n\nold code did all of this with jni, which means it can check for java exception, and just early out. then the exception will eventually unwind down to the java looper, then process crashes with the exception, and app developer gets the java stack from their object\n\nby default, jni generator checks for exception after every native -\u003e java call, and crashes in native if there is an exception, which is a most useless thing for app developers because they get confused about the microdump in logcat that totally obscures the actual java exception. we don\u0027t want this behavior here\n\nwhich begs the question.. what does mojo do here? we want to hold the exception and unwind to the java looper in this case",
+      "revId": "44cc5fc518f634fe03fcfa4a3a570d31cc2e3d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1487ab07_d9adedcc",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/remoteobjects/RemoteObjectImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-18T18:15:14Z",
+      "side": 1,
+      "message": "is this necessary?",
+      "revId": "44cc5fc518f634fe03fcfa4a3a570d31cc2e3d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
