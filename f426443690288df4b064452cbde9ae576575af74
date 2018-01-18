@@ -22,6 +22,30 @@
       "revId": "f426443690288df4b064452cbde9ae576575af74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73acd8f_6bcd18c1",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-18T06:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1f04c3f_97382408",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 28
+      },
+      "revId": "f426443690288df4b064452cbde9ae576575af74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
