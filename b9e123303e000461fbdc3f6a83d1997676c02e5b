@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02790483_d6b5b545",
+        "filename": "components/prefs/pref_registry_simple.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T16:40:28Z",
+      "side": 1,
+      "message": "I agree it\u0027s silly to define all of these twice. Let\u0027s just use uint32_t flags \u003d 0 as a default value and remove the 2-param overload.\n\n(in follow-up CL)",
+      "revId": "b9e123303e000461fbdc3f6a83d1997676c02e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb388415_201a06e2",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T16:40:28Z",
+      "side": 1,
+      "message": "Need to update registration to use RegisterTimePref in variations_service.cc\n\n(seems to be registered in android_webview/browser/aw_field_trial_creator.cc too?)\n\nToo bad we can\u0027t enforce this easily....",
+      "range": {
+        "startLine": 183,
+        "startChar": 36,
+        "endLine": 183,
+        "endChar": 60
+      },
+      "revId": "b9e123303e000461fbdc3f6a83d1997676c02e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a25f05_fb9f4a27",
+        "filename": "components/variations/variations_request_scheduler_mobile_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T16:40:28Z",
+      "side": 1,
+      "message": "Update kVariationsLastFetchTime\u0027s definition to be about Time not 64-bit int\n\n// 64-bit integer serialization of the base::Time from the last successful seed\n// fetch (i.e. when the Variations server responds with 200 or 304).\n@https://cs.chromium.org/chromium/src/components/variations/pref_names.cc?rcl\u003d98befeaa4b51e0e3f9b62ffbd9517fbedf4e6562\u0026l\u003d26",
+      "revId": "b9e123303e000461fbdc3f6a83d1997676c02e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922af233_e636f744",
+        "filename": "components/variations/variations_seed_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T16:40:28Z",
+      "side": 1,
+      "message": "Update definition",
+      "range": {
+        "startLine": 299,
+        "startChar": 36,
+        "endLine": 299,
+        "endChar": 55
+      },
+      "revId": "b9e123303e000461fbdc3f6a83d1997676c02e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3945f8b1_9eee96e2",
+        "filename": "components/variations/variations_seed_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T16:40:28Z",
+      "side": 1,
+      "message": "Update definition",
+      "range": {
+        "startLine": 305,
+        "startChar": 36,
+        "endLine": 305,
+        "endChar": 58
+      },
+      "revId": "b9e123303e000461fbdc3f6a83d1997676c02e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
