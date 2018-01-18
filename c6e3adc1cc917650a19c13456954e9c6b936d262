@@ -283,6 +283,41 @@
     },
     {
       "key": {
+        "uuid": "6d260554_51673c55",
+        "filename": "base/i18n/rtl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T23:19:35Z",
+      "side": 1,
+      "message": "No, this is fine. I just wanted a basic test for each one, and then the more detailed tests using just one of them.",
+      "parentUuid": "a578edd6_f4b92a69",
+      "revId": "c6e3adc1cc917650a19c13456954e9c6b936d262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69ac48a_4ccac583",
+        "filename": "base/i18n/rtl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T23:19:35Z",
+      "side": 1,
+      "message": "Need to test a few more cases:\n\n- String without any dir-formatting characters.\n- String with properly terminated dir-formatting characters (no test input includes \\x202c which means the \"else if\" code path is untested).\n- String with over-terminated dir-formatting characters (e.g., \"\\x202egoogle\\x202c.com\\x202c\") --- tests the \"\u0026\u0026 count \u003e 0\" check\n- For good measure, string that over-terminates then re-opens: \"\\x202egoogle\\x202c\\x202c.\\x202ecom\" --- tests that we\u0027re actually keeping a running count (capped at 0) rather than just subtracting the number of pops from the number of pushes, which would pass all of the above cases.",
+      "revId": "c6e3adc1cc917650a19c13456954e9c6b936d262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c2c15af_b0f8d6a3",
         "filename": "extensions/common/extension.cc",
         "patchSetId": 2
