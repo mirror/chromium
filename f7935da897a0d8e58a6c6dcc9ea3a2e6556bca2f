@@ -412,6 +412,24 @@
     },
     {
       "key": {
+        "uuid": "1917f66a_a7a5df7f",
+        "filename": "ash/public/cpp/shelf_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:08:13Z",
+      "side": 1,
+      "message": "Makes sense, app-id is fine, at least for now.",
+      "parentUuid": "49ef5159_2538feb9",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edd2f87d_9c5278e3",
         "filename": "ash/public/cpp/shelf_model_unittest.cc",
         "patchSetId": 1
@@ -686,6 +704,24 @@
       "side": 1,
       "message": "From my understanding, adding the ScopedCanvas automatically completes the transforms on the canvas\u0027s stack when the object is deleted.\n\nIt seems commonplace on other icons where we perform a transform on the canvas and intend to un-do it before releasing the canvas.\n\nAs for simplifying this, I can put everything in Button::PaintButtonContents. \n\nRefactoring the status indicator looks like a fun project. I am definitely willing to give it a shot, I can create another bug to refactor it?",
       "parentUuid": "cf2b1d6b_3829e342",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21342d92_262e42a3",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:08:13Z",
+      "side": 1,
+      "message": "Followup for existing code is fine.",
+      "parentUuid": "26abe2cc_2238388f",
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -1299,6 +1335,30 @@
     },
     {
       "key": {
+        "uuid": "ed5b571c_62db2c94",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2177,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:08:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f76b6fd5_1fc8683c",
+      "range": {
+        "startLine": 2177,
+        "startChar": 20,
+        "endLine": 2177,
+        "endChar": 31
+      },
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6baddf5_c0fb041c",
         "filename": "ash/shell.cc",
         "patchSetId": 1
@@ -1328,6 +1388,24 @@
       "side": 1,
       "message": "Done. Used ScopedObserver. Should I convert the rest?",
       "parentUuid": "d6baddf5_c0fb041c",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0371bfe_f47db7da",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:08:13Z",
+      "side": 1,
+      "message": "No, leave the other observers non-scoped for now. (I\u0027m not sure how scoped observers handle the observed object being destroyed before the observer, and I think the non-scoped pattern is a little clearer sometimes)",
+      "parentUuid": "c784f4cc_ff2b1bab",
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

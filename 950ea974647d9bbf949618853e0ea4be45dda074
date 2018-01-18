@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a78dd40_a20ce34f",
+        "filename": "ash/public/cpp/shelf_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:08:13Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "950ea974647d9bbf949618853e0ea4be45dda074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686b7078_ed62f61f",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:08:13Z",
+      "side": 1,
+      "message": "Is it possible to draw directly to |canvas| by transforming the coordinates differently?",
+      "revId": "950ea974647d9bbf949618853e0ea4be45dda074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdbb5ec1_3efd42b0",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:08:13Z",
+      "side": 1,
+      "message": "nit: can we make this a local constexpr value too? (for this and line 179)",
+      "revId": "950ea974647d9bbf949618853e0ea4be45dda074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af27e3f_85dc1e2e",
+        "filename": "ash/shelf/shelf_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:08:13Z",
+      "side": 1,
+      "message": "nit: Sorry, this should be IsShowingNotificationIndicatorForTesting, or even better would be removing this helper and just having the tests check |button-\u003estate() \u0026 STATE_NOTIFICATION !\u003d 0| (some tests are already checking that, and it\u0027s equivalent)",
+      "revId": "950ea974647d9bbf949618853e0ea4be45dda074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a7a57f_5eb63a73",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T18:08:13Z",
+      "side": 1,
+      "message": "nit: use |\u003d std::make_unique| instead of |new|",
+      "revId": "950ea974647d9bbf949618853e0ea4be45dda074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
