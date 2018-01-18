@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f406d9_751d65c2",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-18T02:50:36Z",
+      "side": 1,
+      "message": "|autocapitalize \u003d\u003d \"\"| -\u003e |autocapitalize \u003d\u003d g_empty_string|",
+      "revId": "96e29b5ccd2e619282577c8a8fad4d58ecd7cdf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d7db65_2bb1427f",
+        "filename": "third_party/WebKit/Source/core/html/HTMLElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-18T02:50:36Z",
+      "side": 1,
+      "message": "|return g_empty_string;|\n( g_empty_atom if you change the return type to |const AtomicString\u0026|)",
+      "revId": "96e29b5ccd2e619282577c8a8fad4d58ecd7cdf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
