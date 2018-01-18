@@ -484,6 +484,30 @@
     },
     {
       "key": {
+        "uuid": "96ffbd18_4feea305",
+        "filename": "device/ctap/ctap_constants.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-18T18:59:00Z",
+      "side": 1,
+      "message": "Thank you for the advice! I\u0027ll use constexpr in .cc file and extern const in constants.h file from now and on.",
+      "parentUuid": "a807ab2f_c0463a87",
+      "range": {
+        "startLine": 98,
+        "startChar": 49,
+        "endLine": 98,
+        "endChar": 66
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6213b5e8_660d5554",
         "filename": "device/ctap/ctap_get_assertion_request_param.cc",
         "patchSetId": 14

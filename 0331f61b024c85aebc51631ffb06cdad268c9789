@@ -22,6 +22,30 @@
       "revId": "0331f61b024c85aebc51631ffb06cdad268c9789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30df25be_337cb10e",
+        "filename": "device/ctap/ctap_authenticator_response.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-18T18:59:00Z",
+      "side": 1,
+      "message": "CTAPAuthenticatorResponse is class encapsulation for response without any data. I was trying to make all responses from CTAP devices to be encapsulated in a class, but your absolutely right. Deleted this class and will you CTAPDeviceResponseCode instead.",
+      "parentUuid": "8c081a43_7d813774",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "0331f61b024c85aebc51631ffb06cdad268c9789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
