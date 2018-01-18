@@ -16,6 +16,24 @@
       "revId": "eaf5ae20a8bbe2a6c7c39f98385cce0fa5dbb1ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7438b1db_80c3c5fc",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1237329
+      },
+      "writtenOn": "2018-01-18T19:01:52Z",
+      "side": 1,
+      "message": "Embedder uses BrowserMainLoop for webview too, it also embed cronet, which may create some threads before BrowserMainLoop, this is the reason why re-creating TaskScheduler and destroy the existing one here is not safe.\n\nIn our case, we put both webview and cronet into one app, and our entry point creates TaskScheduler before webview and cronet are initialized and ignore creating it again, looks like it may violates the assumption if cronet is loaded before webview and creates some threads, is it ok?\n\nThanks!",
+      "parentUuid": "fee40431_7fcfb3ea",
+      "revId": "eaf5ae20a8bbe2a6c7c39f98385cce0fa5dbb1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
