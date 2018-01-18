@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d8fa128_cb628a5a",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2407,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-18T15:52:27Z",
+      "side": 1,
+      "message": "nit: s/GenerateMipmapTest/GenerateMipmap/",
+      "range": {
+        "startLine": 2407,
+        "startChar": 23,
+        "endLine": 2407,
+        "endChar": 41
+      },
+      "revId": "8053786f63c9e2d351648c7e94de5015272edb50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e597a221_bba919d1",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2409,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-18T15:52:27Z",
+      "side": 1,
+      "message": "I think you should create a GenerateMipmapMockGLESInterface class and mock the GLES functions we want to make sure are called. Otherwise, it\u0027s not clear what is tested below.",
+      "range": {
+        "startLine": 2409,
+        "startChar": 35,
+        "endLine": 2409,
+        "endChar": 52
+      },
+      "revId": "8053786f63c9e2d351648c7e94de5015272edb50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
