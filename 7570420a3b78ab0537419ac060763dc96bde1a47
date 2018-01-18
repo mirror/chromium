@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fad36fe_2d4aaf8e",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T03:40:55Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "7570420a3b78ab0537419ac060763dc96bde1a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f0d2be_eec0b4f4",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T03:40:55Z",
+      "side": 1,
+      "message": "Copy-paste?",
+      "range": {
+        "startLine": 5,
+        "startChar": 37,
+        "endLine": 5,
+        "endChar": 66
+      },
+      "revId": "7570420a3b78ab0537419ac060763dc96bde1a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c12558f_b4e1ce97",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T03:40:55Z",
+      "side": 1,
+      "message": "I am wondering if placing two tests that deal with different UI components (toolbar and dialog) on the same file is a good idea. How about the following?\n\n1) Move the tests that check whether the button in the toolbar is enabled/present/visible in the existing toolbar tests.\n2) Keep this file only for testing the dialog as a unit-test. In which case you probably don\u0027t need the enable-consumer-kiosk flag at all. Just using a test KioskBrowserProxy would be sufficient.",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "7570420a3b78ab0537419ac060763dc96bde1a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
