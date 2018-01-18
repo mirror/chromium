@@ -95,6 +95,7 @@ class ScopedHandleBase {
 
   const HandleType& get() const { return handle_; }
   const HandleType* operator->() const { return &handle_; }
+  const HandleType& operator*() const { return handle_; }
 
   template <typename PassedHandleType>
   static ScopedHandleBase<HandleType> From(
@@ -119,9 +120,9 @@ class ScopedHandleBase {
     handle_ = handle;
   }
 
-  bool is_valid() const { return handle_.is_valid(); }
+  bool is_valid() const { return static_cast<bool>(handle_); }
 
-  explicit operator bool() const { return handle_; }
+  explicit operator bool() const { return static_cast<bool>(handle_); }
 
   bool operator==(const ScopedHandleBase& other) const {
     return handle_.value() == other.get().value();
@@ -129,7 +130,7 @@ class ScopedHandleBase {
 
  private:
   void CloseIfNecessary() {
-    if (handle_.is_valid())
+    if (handle_)
       handle_.Close();
   }
 
@@ -160,8 +161,6 @@ class Handle {
     other.value_ = temp;
   }
 
-  bool is_valid() const { return value_ != kInvalidHandleValue; }
-
   explicit operator bool() const { return value_ != kInvalidHandleValue; }
 
   const MojoHandle& value() const { return value_; }
@@ -169,7 +168,7 @@ class Handle {
   void set_value(MojoHandle value) { value_ = value; }
 
   void Close() {
-    DCHECK(is_valid());
+    DCHECK(this);
     MojoResult result = MojoClose(value_);
     ALLOW_UNUSED_LOCAL(result);
     DCHECK_EQ(MOJO_RESULT_OK, result);

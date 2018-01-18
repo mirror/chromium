@@ -287,7 +287,7 @@ void ProfilingProcessHost::OnDumpProcessesForTracingCallback(
     mojo::ScopedSharedBufferHandle& buffer = buffer_ptr->buffer;
     uint32_t size = buffer_ptr->size;
 
-    if (!buffer->is_valid())
+    if (!*buffer)
       return;
 
     mojo::ScopedSharedBufferMapping mapping = buffer->Map(size);
