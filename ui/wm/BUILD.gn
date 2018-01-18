@@ -32,8 +32,6 @@ jumbo_component("wm") {
     "core/focus_rules.h",
     "core/native_cursor_manager.h",
     "core/native_cursor_manager_delegate.h",
-    "core/shadow.cc",
-    "core/shadow.h",
     "core/shadow_controller.cc",
     "core/shadow_controller.h",
     "core/shadow_types.cc",
