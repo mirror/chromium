@@ -26,6 +26,11 @@ class ManagedNetworkConfigurationHandler;
 class NetworkDeviceHandler;
 }
 
+namespace net {
+class X509Certificate;
+typedef std::vector<scoped_refptr<X509Certificate>> CertificateList;
+}  // namespace net
+
 namespace policy {
 
 class PolicyService;
@@ -48,7 +53,7 @@ class DeviceNetworkConfigurationUpdater : public NetworkConfigurationUpdater {
 
   // Returns all authority certificates from the currently applied ONC device
   // policy.
-  std::vector<std::string> GetAuthorityCertificates();
+  void GetAuthorityCertificates(net::CertificateList* out_authority_certs);
 
  private:
   DeviceNetworkConfigurationUpdater(

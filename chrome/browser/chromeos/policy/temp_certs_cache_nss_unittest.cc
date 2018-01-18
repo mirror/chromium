@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/chromeos/policy/untrusted_authority_certs_cache.h"
+#include "chrome/browser/chromeos/policy/temp_certs_cache_nss.h"
 
 #include <cert.h>
 #include <certdb.h>
@@ -18,6 +18,7 @@
 #include "net/cert/internal/cert_errors.h"
 #include "net/cert/internal/parse_certificate.h"
 #include "net/cert/pem_tokenizer.h"
+#include "net/cert/x509_certificate.h"
 #include "net/der/input.h"
 #include "net/test/test_data_directory.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -26,26 +27,12 @@ namespace policy {
 
 namespace {
 
-class UntrustedAuthorityCertsCacheTest : public testing::Test {
+class TempCertsCacheNSSTest : public testing::Test {
  public:
-  UntrustedAuthorityCertsCacheTest() {}
-  ~UntrustedAuthorityCertsCacheTest() override {}
+  TempCertsCacheNSSTest() {}
+  ~TempCertsCacheNSSTest() override {}
 
  protected:
-  // Reads the certificates from |pem_cert_files|, assuming that each file
-  // contains one CERTIFICATE block. Returns all certificates.
-  // Note: This funcion uses ASSERT_ macros, so the caller must verify for
-  // failures after it returns.
-  void GetAuthoritiesFromFiles(
-      std::vector<base::FilePath> pem_cert_files,
-      std::vector<std::string>* out_x509_authority_certs) {
-    for (const auto& pem_cert_file : pem_cert_files) {
-      std::string x509_authority_cert;
-      ASSERT_TRUE(base::ReadFileToString(pem_cert_file, &x509_authority_cert));
-      out_x509_authority_certs->push_back(std::move(x509_authority_cert));
-    }
-  }
-
   // Checks if the certificate stored in |pem_cert_file| can be found in the
   // default NSS certificate database using CERT_FindCertByName.
   // Stores the result in *|out_available|.
@@ -105,7 +92,7 @@ class UntrustedAuthorityCertsCacheTest : public testing::Test {
   }
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(UntrustedAuthorityCertsCacheTest);
+  DISALLOW_COPY_AND_ASSIGN(TempCertsCacheNSSTest);
 };
 
 // Checks that a certificate made available through the
@@ -115,14 +102,18 @@ class UntrustedAuthorityCertsCacheTest : public testing::Test {
 // net/third_party/nss/ssl/cmpcert.cc). Additionally, checks that the
 // certificate is not available after the UntrustedAuthorityCache goes out of
 // scope.
-TEST_F(UntrustedAuthorityCertsCacheTest, CertMadeAvailable) {
+TEST_F(TempCertsCacheNSSTest, CertMadeAvailable) {
   base::FilePath cert_file_path =
       net::GetTestCertsDirectory().AppendASCII("client_1_ca.pem");
   {
-    std::vector<std::string> x509_authority_certs;
-    ASSERT_NO_FATAL_FAILURE(
-        GetAuthoritiesFromFiles({cert_file_path}, &x509_authority_certs));
-    UntrustedAuthorityCertsCache cache(x509_authority_certs);
+    std::string x509_authority_cert;
+    ASSERT_TRUE(base::ReadFileToString(cert_file_path, &x509_authority_cert));
+    net::CertificateList x509_authority_certs =
+        net::X509Certificate::CreateCertificateListFromBytes(
+            x509_authority_cert.data(), x509_authority_cert.length(),
+            net::X509Certificate::Format::FORMAT_AUTO);
+
+    TempCertsCacheNSS cache(x509_authority_certs);
 
     bool cert_available = false;
     ASSERT_NO_FATAL_FAILURE(
