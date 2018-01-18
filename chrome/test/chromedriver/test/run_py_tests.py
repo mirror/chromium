@@ -2701,6 +2701,13 @@ if __name__ == '__main__':
       '', '--android-package',
       help=('Android package key. Possible values: ' +
             str(_ANDROID_NEGATIVE_FILTER.keys())))
+
+  # TODO(johnchen@chromium.org): Currently ignoring the following two options
+  # added by swarming, and write our output to stdout. Will investigate in the
+  # future what output is appropriate for these two options.
+  parser.add_option('', '--isolated-script-test-output')
+  parser.add_option('', '--isolated-script-test-perf-output')
+
   options, args = parser.parse_args()
 
   options.chromedriver = util.GetAbsolutePathOfUserPath(options.chromedriver)
