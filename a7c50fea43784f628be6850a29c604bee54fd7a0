@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e16ed90_c4635f28",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-18T16:05:53Z",
+      "side": 1,
+      "message": "Can this be done without the mutable ref?\nMaybe the regular for loop would be simpler than std::_foreach.",
+      "range": {
+        "startLine": 1042,
+        "startChar": 15,
+        "endLine": 1042,
+        "endChar": 18
+      },
+      "revId": "a7c50fea43784f628be6850a29c604bee54fd7a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
