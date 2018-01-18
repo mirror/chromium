@@ -9,14 +9,7 @@
 
 // Controller for the About Google Chrome collection view, which allows users to
 // view open source licenses, terms of service, etc.
-@interface AboutChromeCollectionViewController
-    : SettingsRootCollectionViewController
-
-- (instancetype)init NS_DESIGNATED_INITIALIZER;
-
-- (instancetype)initWithLayout:(UICollectionViewLayout*)layout
-                         style:(CollectionViewControllerStyle)style
-    NS_UNAVAILABLE;
+@interface AboutChromeCollectionViewController : UITableViewController
 
 @end
 

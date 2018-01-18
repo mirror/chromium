@@ -742,6 +742,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
       [self.collectionViewModel itemTypeForIndexPath:indexPath];
 
   SettingsRootCollectionViewController* controller;
+  UITableViewController* tableVC;
 
   switch (itemType) {
     case ItemTypeSignInButton:
@@ -786,7 +787,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
           initWithBrowserState:_browserState];
       break;
     case ItemTypeAboutChrome:
-      controller = [[AboutChromeCollectionViewController alloc] init];
+      tableVC = [[AboutChromeCollectionViewController alloc] init];
       break;
     case ItemTypeMemoryDebugging:
     case ItemTypeViewSource:
@@ -805,6 +806,9 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
     controller.dispatcher = self.dispatcher;
     [self.navigationController pushViewController:controller animated:YES];
   }
+
+  if (tableVC)
+    [self.navigationController pushViewController:tableVC animated:YES];
 }
 
 #pragma mark MDCCollectionViewStylingDelegate

@@ -91,4 +91,14 @@
   cell.detailTextLabel.numberOfLines = self.numberOfDetailTextLines;
 }
 
+- (void)configureTableViewCell:(UITableViewCell*)cell {
+  [super configureTableViewCell:cell];
+  cell.textLabel.text = self.text;
+
+  // Styling.
+  cell.textLabel.font = self.textFont;
+  cell.textLabel.textColor = self.textColor;
+  cell.textLabel.numberOfLines = self.numberOfTextLines;
+}
+
 @end
