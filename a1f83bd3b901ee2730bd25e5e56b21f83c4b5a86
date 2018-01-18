@@ -334,6 +334,30 @@
     },
     {
       "key": {
+        "uuid": "61a41d2b_d3ef4e65",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T10:59:44Z",
+      "side": 1,
+      "message": "Actually, I can\u0027t do this either because BlockingConstructor() cannot take parameters (LazyInstance only supports initializing from the default constructor).",
+      "parentUuid": "2144e8d4_2671f5f5",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 30
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "998c847f_5119c0d6",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 8
