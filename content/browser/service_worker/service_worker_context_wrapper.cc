@@ -80,7 +80,7 @@ void SkipWaitingWorkerOnIO(
   registration->ActivateWaitingVersionWhenReady();
 }
 
-void DidStartWorker(
+void ServiceWorkerContextWrapperDidStartWorker(
     scoped_refptr<ServiceWorkerVersion> version,
     ServiceWorkerContext::StartActiveWorkerCallback info_callback,
     base::OnceClosure error_callback,
@@ -101,15 +101,17 @@ void FoundReadyRegistrationForStartActiveWorker(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (service_worker_status == SERVICE_WORKER_OK) {
     // Note: There might be a remote possibility that
-    // |service_worker_registration|'s active version might change between here
-    // and DidStartWorker, so bind |active_version| to RunAfterStartWorker.
+    // |service_worker_registration|'s active version might change
+    // between here and ServiceWorkerContextWrapperDidStartWorker, so
+    // bind |active_version| to RunAfterStartWorker.
     scoped_refptr<ServiceWorkerVersion> active_version =
         service_worker_registration->active_version();
     DCHECK(active_version.get());
     active_version->RunAfterStartWorker(
         ServiceWorkerMetrics::EventType::EXTERNAL_REQUEST,
-        base::BindOnce(&DidStartWorker, active_version,
-                       std::move(info_callback), std::move(failure_callback)));
+        base::BindOnce(&ServiceWorkerContextWrapperDidStartWorker,
+                       active_version, std::move(info_callback),
+                       std::move(failure_callback)));
   } else {
     std::move(failure_callback).Run();
   }
