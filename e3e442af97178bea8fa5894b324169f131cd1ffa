@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a02cfac_b4769ec5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-18T14:18:35Z",
+      "side": 1,
+      "message": "This extra comment is not useful to the caller. The argument is taken by value, which means that a copy can be avoid by passing an r-value. This is all there is to know, but it is true for any movable argument taken by value.",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 61
+      },
+      "revId": "e3e442af97178bea8fa5894b324169f131cd1ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

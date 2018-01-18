@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "593f27d4_49fe8881",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-18T14:18:35Z",
+      "side": 1,
+      "message": "optional: thread_label",
+      "range": {
+        "startLine": 90,
+        "startChar": 25,
+        "endLine": 90,
+        "endChar": 29
+      },
+      "revId": "9a6db3a550e633e30de089b31bc730e54e026a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1313f643_2cc47140",
+        "filename": "base/task_scheduler/task_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-18T14:18:35Z",
+      "side": 1,
+      "message": "std::move() into a const\u0026 argument doesn\u0027t avoid a copy. Maybe use a StringPiece for this argument?",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 47
+      },
+      "revId": "9a6db3a550e633e30de089b31bc730e54e026a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
