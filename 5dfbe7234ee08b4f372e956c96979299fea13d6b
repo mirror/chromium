@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "06ef0453_c30bd005",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-18T12:33:14Z",
+      "side": 1,
+      "message": "Could you please attach screenshots to the bug. Or maybe even screen recording, since the feature is quite interactive.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 11
+      },
+      "revId": "5dfbe7234ee08b4f372e956c96979299fea13d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2df08763_602f4aaa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 15
@@ -41,6 +64,29 @@
         "startChar": 36,
         "endLine": 167,
         "endChar": 46
+      },
+      "revId": "5dfbe7234ee08b4f372e956c96979299fea13d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a24fc5_75b33b37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-18T12:33:14Z",
+      "side": 1,
+      "message": "nit: I would move the condition mSearchQuery \u003d\u003d null inside methods for creating different elements. IMHO, it\u0027ll be more error prone.",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 35
       },
       "revId": "5dfbe7234ee08b4f372e956c96979299fea13d6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -94,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "2f6e14b9_451864f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-18T12:33:14Z",
+      "side": 1,
+      "message": "what do you want to achieve with this matrix? Make icon white? I doubt that it\u0027ll work. But regardless, I think there must more readable way to do it.\n\nBut I actually think you don\u0027t need this code at all. Just from practical observation, that none of other SearchView clients (e.g. SingleCategoryPreferences.java) do this",
+      "range": {
+        "startLine": 359,
+        "startChar": 16,
+        "endLine": 359,
+        "endChar": 28
+      },
+      "revId": "5dfbe7234ee08b4f372e956c96979299fea13d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "569e567e_f7d838be",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 15
@@ -133,6 +202,29 @@
         "startChar": 16,
         "endLine": 383,
         "endChar": 39
+      },
+      "revId": "5dfbe7234ee08b4f372e956c96979299fea13d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462bf7e4_f90c1c5a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferencesTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-18T12:33:14Z",
+      "side": 1,
+      "message": "I like these tests! (but I not sure what are rules or if there are any for the domain names we can use in the code)",
+      "range": {
+        "startLine": 129,
+        "startChar": 44,
+        "endLine": 129,
+        "endChar": 70
       },
       "revId": "5dfbe7234ee08b4f372e956c96979299fea13d6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
