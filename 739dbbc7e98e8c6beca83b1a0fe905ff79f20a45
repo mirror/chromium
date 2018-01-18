@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "849c11a7_fc6f814c",
+        "filename": "cc/base/switches.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-18T19:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9ebd0d2_d1bebd51",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d884aea9_e4123c5d",
         "filename": "cc/base/switches.cc",
         "patchSetId": 28
@@ -33,6 +51,24 @@
       "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973e2135_be583356",
+        "filename": "cc/base/switches.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-18T19:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d884aea9_e4123c5d",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6261ad01_53428fb4",
+        "filename": "cc/scheduler/scheduler.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-18T19:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d61040e6_82d93f22",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "133b8d61_1d3a1261",
         "filename": "cc/scheduler/scheduler_unittest.cc",
         "patchSetId": 28
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0f45c309_44bc38a9",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-18T19:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "133b8d61_1d3a1261",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3a8a165_0cbfb336",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 28
@@ -84,6 +156,24 @@
       "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359e6766_5bbd3502",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-18T19:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3a8a165_0cbfb336",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "8dd1e802_8d1f1c4d",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-18T19:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33ba6ecd_dbf16fc1",
+      "range": {
+        "startLine": 891,
+        "startChar": 16,
+        "endLine": 891,
+        "endChar": 45
+      },
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "065487e7_a3e2845f",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 28
@@ -124,6 +238,24 @@
       "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a32eb9c_8e963a7c",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 2137,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-18T19:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "065487e7_a3e2845f",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "d7ee746b_902052b0",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 2139,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-18T19:30:20Z",
+      "side": 1,
+      "message": "Gotcha - so the default behavior here is still to return true if UpdateDrawProperties returns false. Is it in the scope of this cl to test/handle that case?",
+      "parentUuid": "7045d8bc_b9d84740",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d365ffdf_ef638169",
         "filename": "cc/trees/layer_tree_host_unittest.cc",
         "patchSetId": 28
@@ -158,6 +308,24 @@
       "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ed4f16_18535bad",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-18T19:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d365ffdf_ef638169",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
