@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9063036b_9010a6bd",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-18T18:10:01Z",
+      "side": 1,
+      "message": "When does a local frame not have a scheduler?",
+      "range": {
+        "startLine": 370,
+        "startChar": 22,
+        "endLine": 370,
+        "endChar": 36
+      },
+      "revId": "e82ec7daececf4dd723b49cfcd56101bd84d8c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7758a17_ddc20710",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-18T18:10:01Z",
+      "side": 1,
+      "message": "I think this is a bit clearer.\nif (interactive_time_.is_null() \u0026\u0026 scheduler) {\n  interactive_time_ \u003d base::TimeTicks() +\n                  base::TimeDelta::FromSecondsD(scheduler-\u003eGetInteractiveTime());\n}",
+      "range": {
+        "startLine": 208,
+        "startChar": 33,
+        "endLine": 208,
+        "endChar": 34
+      },
+      "revId": "e82ec7daececf4dd723b49cfcd56101bd84d8c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a90a710_203e5923",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-18T18:10:01Z",
+      "side": 1,
+      "message": "Let\u0027s make a temporary step_end_time, and use it here as well as in EndStep.\nWe can then just set step_start_time \u003d step_end_time at the end of the loop.\n\nI think that\u0027ll make this a bit easier to read.",
+      "range": {
+        "startLine": 360,
+        "startChar": 10,
+        "endLine": 360,
+        "endChar": 45
+      },
+      "revId": "e82ec7daececf4dd723b49cfcd56101bd84d8c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
