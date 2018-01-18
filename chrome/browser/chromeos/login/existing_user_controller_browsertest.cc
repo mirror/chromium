@@ -11,6 +11,7 @@
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -24,6 +25,7 @@
 #include "chrome/browser/chromeos/login/supervised/supervised_user_creation_screen.h"
 #include "chrome/browser/chromeos/login/ui/mock_login_display.h"
 #include "chrome/browser/chromeos/login/ui/mock_login_display_host.h"
+#include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/wizard_controller.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/policy/device_local_account.h"
@@ -53,6 +55,7 @@
 #include "components/policy/proto/device_management_backend.pb.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
+#include "components/user_manager/scoped_user_manager.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "components/user_manager/user_type.h"
@@ -432,13 +435,16 @@ class ExistingUserControllerPublicSessionTest
       controller->current_screen()->Hide();
   }
 
-  void ExpectSuccessfulLogin(const UserContext& user_context) {
+  void ExpectSuccessfulLogin(const UserContext& user_context, bool allow_oobe) {
     test::UserSessionManagerTestApi session_manager_test_api(
         UserSessionManager::GetInstance());
     session_manager_test_api.InjectStubUserContext(user_context);
-    EXPECT_CALL(*mock_login_display_host_,
-                StartWizard(OobeScreen::SCREEN_TERMS_OF_SERVICE))
-        .Times(0);
+    // There may be in-session oobe.
+    if (!allow_oobe) {
+      EXPECT_CALL(*mock_login_display_host_,
+                  StartWizard(OobeScreen::SCREEN_TERMS_OF_SERVICE))
+          .Times(0);
+    }
     EXPECT_CALL(*mock_login_display_, SetUIEnabled(false)).Times(AnyNumber());
     EXPECT_CALL(*mock_login_display_, SetUIEnabled(true)).Times(AnyNumber());
   }
@@ -543,7 +549,7 @@ IN_PROC_BROWSER_TEST_F(ExistingUserControllerPublicSessionTest,
   UserContext user_context(user_manager::USER_TYPE_PUBLIC_ACCOUNT,
                            public_session_account_id_);
   user_context.SetUserIDHash(user_context.GetAccountId().GetUserEmail());
-  ExpectSuccessfulLogin(user_context);
+  ExpectSuccessfulLogin(user_context, false /*allow_oobe*/);
   existing_user_controller()->OnSigninScreenReady();
 
   // Start auto-login and wait for login tasks to complete.
@@ -557,7 +563,7 @@ IN_PROC_BROWSER_TEST_F(ExistingUserControllerPublicSessionTest,
   UserContext user_context(user_manager::USER_TYPE_PUBLIC_ACCOUNT,
                            public_session_account_id_);
   user_context.SetUserIDHash(user_context.GetAccountId().GetUserEmail());
-  ExpectSuccessfulLogin(user_context);
+  ExpectSuccessfulLogin(user_context, true /*allow_oobe*/);
   existing_user_controller()->OnSigninScreenReady();
 
   content::WindowedNotificationObserver profile_prepared_observer(
@@ -591,7 +597,7 @@ IN_PROC_BROWSER_TEST_F(ExistingUserControllerPublicSessionTest,
   UserContext user_context(gaia_account_id_);
   user_context.SetKey(Key(kPassword));
   user_context.SetUserIDHash(user_context.GetAccountId().GetUserEmail());
-  ExpectSuccessfulLogin(user_context);
+  ExpectSuccessfulLogin(user_context, false /*allow_oobe*/);
 
   existing_user_controller()->OnSigninScreenReady();
   SetAutoLoginPolicy(kPublicSessionUserEmail, kAutoLoginLongDelay);
@@ -654,7 +660,7 @@ IN_PROC_BROWSER_TEST_F(ExistingUserControllerPublicSessionTest,
   UserContext user_context(gaia_account_id_);
   user_context.SetKey(Key(kPassword));
   user_context.SetUserIDHash(user_context.GetAccountId().GetUserEmail());
-  ExpectSuccessfulLogin(user_context);
+  ExpectSuccessfulLogin(user_context, true /*allow_oobe*/);
 
   existing_user_controller()->OnSigninScreenReady();
   SetAutoLoginPolicy(kPublicSessionUserEmail, kAutoLoginLongDelay);
@@ -685,7 +691,7 @@ IN_PROC_BROWSER_TEST_F(ExistingUserControllerPublicSessionTest,
   UserContext user_context(user_manager::USER_TYPE_PUBLIC_ACCOUNT,
                            public_session_account_id_);
   user_context.SetUserIDHash(user_context.GetAccountId().GetUserEmail());
-  ExpectSuccessfulLogin(user_context);
+  ExpectSuccessfulLogin(user_context, true /*allow_oobe*/);
   existing_user_controller()->OnSigninScreenReady();
   SetAutoLoginPolicy(kPublicSessionUserEmail, kAutoLoginLongDelay);
   EXPECT_TRUE(auto_login_timer());
