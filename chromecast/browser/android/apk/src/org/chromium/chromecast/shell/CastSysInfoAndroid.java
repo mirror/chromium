@@ -7,6 +7,7 @@ package org.chromium.chromecast.shell;
 import android.annotation.SuppressLint;
 import android.os.Build;
 
+import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 
@@ -18,8 +19,17 @@ public final class CastSysInfoAndroid {
     private static final String TAG = "CastSysInfoAndroid";
 
     @SuppressLint("HardwareIds")
+    @SuppressWarnings("deprecation")
     @CalledByNative
     private static String getSerialNumber() {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
+            try {
+                return Build.getSerial();
+            } catch (SecurityException e) {
+                Log.e(TAG, "Cannot get device serial number.");
+                return "";
+            }
+        }
         return Build.SERIAL;
     }
 
