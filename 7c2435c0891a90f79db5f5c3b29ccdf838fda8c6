@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2063e5e_e36d9c46",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-18T17:08:36Z",
+      "side": 0,
+      "message": "Are the ResourceSettings still used from RendererSettings then?",
+      "revId": "7c2435c0891a90f79db5f5c3b29ccdf838fda8c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d22a7af_21edd9fb",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-18T17:08:36Z",
+      "side": 0,
+      "message": "This was private here, but was put in public in the DisplayRP",
+      "revId": "7c2435c0891a90f79db5f5c3b29ccdf838fda8c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

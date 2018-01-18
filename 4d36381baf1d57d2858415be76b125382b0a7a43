@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c864702_c2699b75",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-18T17:08:36Z",
+      "side": 1,
+      "message": "This is a weird public method to have here, looking at it, the one caller is in the .cc file, and it could just call gl-\u003eGetIntegerv(GL_ACTIVE_TEXTURE, \u0026active_unit); itself. Maybe we could clean that up in another CL?",
+      "range": {
+        "startLine": 62,
+        "startChar": 15,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "4d36381baf1d57d2858415be76b125382b0a7a43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8dbd9d_234264f6",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-18T17:08:36Z",
+      "side": 1,
+      "message": "Can this go in the Settings constructor?",
+      "revId": "4d36381baf1d57d2858415be76b125382b0a7a43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f374232_e2cab7d2",
+        "filename": "cc/test/fake_resource_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-18T17:08:36Z",
+      "side": 1,
+      "message": "Are there still users of FakeResourceProvider as a type? My codesearching suggests no. Maybe it should stop subclassing ResourceProvider? (in another CL is good)",
+      "revId": "4d36381baf1d57d2858415be76b125382b0a7a43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
