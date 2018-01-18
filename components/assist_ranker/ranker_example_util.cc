@@ -121,7 +121,7 @@ bool FeatureToInt64(const Feature& feature,
   }
   *res = PairInt(type, value, index);
   return true;
-  }
+}
 
 bool GetOneHotValue(const std::string& key,
                     const RankerExample& example,

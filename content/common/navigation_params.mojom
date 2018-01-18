@@ -60,5 +60,10 @@ struct BeginNavigationParams {
   // attribute, this field will be set to the attribute's (possibly empty)
   // value.
   string? suggested_filename;
+
+  // If the navigation is renderer-initiated and the renderer is being
+  // inspected by DevTools, this field is non-null and contains the
+  // initiator information in DevTools protocol format.
+  string? devtools_initiator;
 };
 
