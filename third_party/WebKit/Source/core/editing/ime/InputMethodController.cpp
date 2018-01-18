@@ -169,8 +169,10 @@ void InsertTextDuringCompositionWithEvents(
       // Calling |TypingCommand::insertText()| with empty text will result in an
       // incorrect ending selection. We need to delete selection first.
       // https://crbug.com/693481
-      if (text.IsEmpty())
+      if (text.IsEmpty()) {
         TypingCommand::DeleteSelection(*frame.GetDocument(), 0);
+        break;
+      }
       frame.GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
       TypingCommand::InsertText(*frame.GetDocument(), text, options,
                                 composition_type, is_incremental_insertion);
