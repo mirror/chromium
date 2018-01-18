@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaacc960_f86ed34f",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-18T05:37:42Z",
+      "side": 1,
+      "message": "I was thinking of something like this (but it\u0027s slightly more involved to get right), but in thinking about this more I think the issue is WebView. That WebView automatically changes focus behavior conflicts too much with how clients (like BrowserView) want to use it. How about adding this to Webview:\n\n// If true the FocusBehavior of WebView changes depending upon whether\n// WebView has content. If false WebView never internally changes the\n// focus behavior.\nvoid set_adjust_focus_behavior(bool adjust_focus_behavior);\n\nDefault is true, but BrowserView would set it to false.",
+      "range": {
+        "startLine": 754,
+        "startChar": 4,
+        "endLine": 759,
+        "endChar": 5
+      },
+      "revId": "f1f01927ca6ae358b1514433c2ded394fc0b84ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
