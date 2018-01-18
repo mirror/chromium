@@ -773,6 +773,7 @@ void ResourceBundle::InitSharedInstance(Delegate* delegate) {
   } else {
     display_density = GetPrimaryDisplayScale();
   }
+  LOG(ERROR) << "\nABCD Display Density " << display_density << "\n";
   const ScaleFactor closest = FindClosestScaleFactorUnsafe(display_density);
   if (closest != SCALE_FACTOR_100P)
     supported_scale_factors.push_back(closest);
