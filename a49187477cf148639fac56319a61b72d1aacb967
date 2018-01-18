@@ -103,6 +103,24 @@
       "revId": "a49187477cf148639fac56319a61b72d1aacb967",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3261628_bd08a448",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T17:10:00Z",
+      "side": 1,
+      "message": "I forgot that there are tests using different builders and model updaters. A single overridden instance will not work there.\n\nGive this more thinking, your PS1 now makes sense that a ChromeAppListItem gets its model updater reference from its builder.\n\nSorry for the back and forth, let\u0027s go back to that patch. The PS1 description needs to be changed though. The main purpose of the change is to make ChromeAppListItem use the same model updater of its builder rather than fixing AppListSyncableService::BuildModel call in test.",
+      "parentUuid": "26c76553_5824d272",
+      "revId": "a49187477cf148639fac56319a61b72d1aacb967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
