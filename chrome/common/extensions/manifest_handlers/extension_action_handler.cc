@@ -91,6 +91,17 @@ bool ExtensionActionHandler::Parse(Extension* extension,
       return false;  // No one should use this key.
     }
 
+#if defined(OS_CHROMEOS)
+  // TODO(isandrk, https://crbug.com/801215): Don't synthesize action for
+  // "Assessment Assistant" extension in order to hide its icon in the chrome
+  // menu to avoid confusing users (temporary until M66 when it will become a
+  // component extension and won't be shown anyway).
+  constexpr char kAssessmentAssistantExtensionId[] =
+      "gndmhdcefbhlchkhipcnnbkcmicncehk";
+  if (extension->id() == kAssessmentAssistantExtensionId)
+    return true;
+#endif
+
     // Set an empty page action. We use a page action (instead of a browser
     // action) because the action should not be seen as enabled on every page.
     std::unique_ptr<ActionInfo> action_info(new ActionInfo());
