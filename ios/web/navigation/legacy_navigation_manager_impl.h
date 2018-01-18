@@ -53,6 +53,9 @@ class LegacyNavigationManagerImpl : public NavigationManagerImpl {
   void AddPushStateItemIfNecessary(const GURL& url,
                                    NSString* state_object,
                                    ui::PageTransition transition) override;
+  void SetErrorRetryState(const NavigationItem* item,
+                          ErrorRetryState state) override;
+  ErrorRetryState GetErrorRetryState(const NavigationItem* item) const override;
 
   // NavigationManager:
   BrowserState* GetBrowserState() const override;
