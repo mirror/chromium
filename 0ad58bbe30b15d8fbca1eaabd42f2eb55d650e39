@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6eebb7d9_51102d52",
+        "filename": "third_party/WebKit/Source/core/layout/BaselineAlignment.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-18T21:29:14Z",
+      "side": 1,
+      "message": "I understand the confusion. Bear in mind that IsHorizontalBaselineAxis(axis) refers to the baseline axis\u0027s orientation, not about the grid container\u0027s writing mode. In a way it\u0027s related to the grid container\u0027s writing mode, but not as you were thinking. \n\nThis function gives the margin \u0027over\u0027 in based on the baseline-axis, since in grid we can can 2-dimensional alignment by baseline. In horizontal writing-mode, the row-axis is the horizontal axis. When we use this axis to move the grid items so that they are baseline-aligned, we want their \"horizontal\" margin (right); the same will happen when using the column-axis under vertical writing mode, we also want in this case the \u0027right\u0027 margin.",
+      "parentUuid": "9eec21bb_613bbf5d",
+      "range": {
+        "startLine": 14,
+        "startChar": 54,
+        "endLine": 14,
+        "endChar": 59
+      },
+      "revId": "0ad58bbe30b15d8fbca1eaabd42f2eb55d650e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31be6e45_90e17542",
         "filename": "third_party/WebKit/Source/core/layout/BaselineAlignment.h",
         "patchSetId": 3
@@ -202,6 +226,24 @@
       "side": 1,
       "message": "Oh, a cyclical header dependency? A shot in the dark but maybe you can move the constructor of GridTrackSizingAlgorithm into the .cpp file.",
       "parentUuid": "634d73ec_81b6e1a3",
+      "revId": "0ad58bbe30b15d8fbca1eaabd42f2eb55d650e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78721197_dd94eed7",
+        "filename": "third_party/WebKit/Source/core/layout/BaselineAlignment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-18T21:29:14Z",
+      "side": 1,
+      "message": "Yeah, I thought about it. It may work, indeed. Thanks for the idea.",
+      "parentUuid": "4c4e3f4f_6c59974a",
       "revId": "0ad58bbe30b15d8fbca1eaabd42f2eb55d650e39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
