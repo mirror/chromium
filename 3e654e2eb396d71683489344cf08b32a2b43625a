@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9f7fa85_7532609f",
+        "filename": "ipc/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T18:23:50Z",
+      "side": 1,
+      "message": "Could we make mojo/public/interfaces/bindings:bindings a component instead? That should also address this issue, right?\n\nI understand the current overridden_deps support is insufficient. But I hope we could limit the usage of overridden_deps to blink stuff and remove them eventually by splitting up the huge targets (such as blink platform) properly. Making it more powerful and using it in more places IMO is not the right direction.\n\nWDYT? Thanks!",
+      "revId": "3e654e2eb396d71683489344cf08b32a2b43625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
