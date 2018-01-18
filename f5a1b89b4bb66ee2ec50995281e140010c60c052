@@ -196,6 +196,24 @@
       "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e949221d_372f592b",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-18T17:32:16Z",
+      "side": 1,
+      "message": "\u003e (not Chrome OS UI)\n\nHarmony sort of is going to be the default chrome os ui. Harmony implies a /lot/ of changes. Many of them, like ink drops and the appearance of controls etc., will apply on chrome os if they don\u0027t already. Some things like typography may differ on Chrome OS ui but I wouldn\u0027t go so far as to say Ash isn\u0027t getting harmony (\"harmony\" \u003d\u003d \"material design\" as far as I\u0027m concerned, hence \"IsSecondaryUiMaterial\").\n\nI just want it to be the case that when we delete IsSecondaryUiMaterial because it always returns true, the code looks right after we do so. Imagine the world where that\u0027s the case: there, kDefaultPlaceholderTextColor has no value except as a sort of hacky special value. What I\u0027m asking for at this point is\n\n  base::Optional\u003cSkColor\u003e placeholder_text_color_;\n\ninstead of \n\n  SkColor placeholder_text_color_;",
+      "parentUuid": "d8c545b0_5966ba39",
+      "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
