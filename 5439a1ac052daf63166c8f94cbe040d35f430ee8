@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79f3cc5d_ed40eaa3",
+        "filename": "chrome/common/extensions/api/speech/tts_engine_manifest_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T21:46:53Z",
+      "side": 1,
+      "message": "nit: nullptr in new code",
+      "range": {
+        "startLine": 119,
+        "startChar": 32,
+        "endLine": 119,
+        "endChar": 36
+      },
+      "revId": "5439a1ac052daf63166c8f94cbe040d35f430ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b9cbec_6a6c263d",
+        "filename": "chrome/common/extensions/api/speech/tts_engine_manifest_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T21:46:53Z",
+      "side": 1,
+      "message": "nit: prefer std::make_unique over \"bare\" new calls when possible:\n\nauto info \u003d std::make_unique\u003cTtsVoices\u003e();",
+      "revId": "5439a1ac052daf63166c8f94cbe040d35f430ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a2a2d0b_01980572",
+        "filename": "chrome/test/data/extensions/api_test/tts_engine/update_voices_api/test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T21:46:53Z",
+      "side": 1,
+      "message": "nit: Copyright 2018\n(update the year, and no (c))",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "5439a1ac052daf63166c8f94cbe040d35f430ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05130b46_e11fc699",
+        "filename": "chrome/test/data/extensions/api_test/tts_engine/update_voices_api/test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T21:46:53Z",
+      "side": 1,
+      "message": "Are these listeners needed?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 1
+      },
+      "revId": "5439a1ac052daf63166c8f94cbe040d35f430ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c3c86ae_baba5695",
+        "filename": "chrome/test/data/extensions/api_test/tts_engine/update_voices_api/test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T21:46:53Z",
+      "side": 1,
+      "message": "does chrome.test.assertEq not work here?  It does have logic for object comparison (that is, it doesn\u0027t just do \u003d\u003d)",
+      "revId": "5439a1ac052daf63166c8f94cbe040d35f430ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
