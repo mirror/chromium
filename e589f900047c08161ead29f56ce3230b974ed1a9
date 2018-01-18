@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7559e6e_62104ebe",
+        "filename": "ash/public/cpp/shelf_model.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-18T22:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14994753_1a00b97d",
+      "revId": "e589f900047c08161ead29f56ce3230b974ed1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc038d7a_4b7ce25a",
         "filename": "ash/shelf/shelf_button.cc",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "d78a893d_a6e0201c",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-18T22:09:02Z",
+      "side": 1,
+      "message": "Acknowledged, we talked offline and will address this in a future patch.",
+      "parentUuid": "dc038d7a_4b7ce25a",
+      "range": {
+        "startLine": 564,
+        "startChar": 18,
+        "endLine": 564,
+        "endChar": 37
+      },
+      "revId": "e589f900047c08161ead29f56ce3230b974ed1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a14a1f0a_a94d03f1",
         "filename": "ash/shelf/shelf_button.h",
         "patchSetId": 7
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "7bebfecf_352ec23a",
+        "filename": "ash/shelf/shelf_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-18T22:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a14a1f0a_a94d03f1",
+      "revId": "e589f900047c08161ead29f56ce3230b974ed1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31376d7b_409dc5c4",
         "filename": "ash/shelf/shelf_controller.h",
         "patchSetId": 7
@@ -73,6 +133,24 @@
       "revId": "e589f900047c08161ead29f56ce3230b974ed1a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc14f38_4a6d9bcb",
+        "filename": "ash/shelf/shelf_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-18T22:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31376d7b_409dc5c4",
+      "revId": "e589f900047c08161ead29f56ce3230b974ed1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
