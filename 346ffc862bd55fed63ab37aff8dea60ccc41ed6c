@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "f5f32981_b8fb0f4b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-rendering-after-controls-added.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-18T10:53:53Z",
+      "side": 1,
+      "message": "Yes, it should be two rAFs before setting .controls (per above), and not just two in total (so at least three levels of nesting when calling takeScreenshot() - I\u0027d even suggest double-nesting that too, but that\u0027s mostly because I distrust the screenshotting machinery...)",
+      "parentUuid": "9126b8ae_66278129",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "346ffc862bd55fed63ab37aff8dea60ccc41ed6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f242bba1_92e9e4ef",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-rendering-after-controls-removed-ref.html",
         "patchSetId": 1
