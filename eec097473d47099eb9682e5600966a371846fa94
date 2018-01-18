@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ba7121d1_42834508",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-18T16:27:20Z",
+      "side": 1,
+      "message": "Yes, I think named guides are better. \n\nOne problem with passing rects is that the API has to define which view\u0027s coordinates the rect is in. The advantage of using UIWindow coordinates is that it doesn\u0027t require either end of the API to make any assumptions about what views are available at the other end. For example, if the delegate handling this call isn\u0027t going to be directly presenting the OpenIn menu, it will need to make sure that whatever object is going to handle it can perform the coordinate conversion. This means either an intermediate coordinate conversion needs to be done, or (worse) the originating view also needs to be passed. The fact that UIKit uses this pattern doesn\u0027t justify it, and I\u0027m pretty sure all of the rect-based UIKit APIs predate autolayout.\n\nAnother problem is that rects that indicate the position of a view can go stale very easily (if the view rotates, for example). \n\nLayout guides solve these and other problems. We define a named guide and maintain it in the UI layer. It updates via autolayout. It can be converted to a rect if needed for legacy code. There\u0027s no need to pass UI-layer information around in the controller/coordinator layer.",
+      "parentUuid": "2d836183_cf0fd0cf",
+      "range": {
+        "startLine": 37,
+        "startChar": 46,
+        "endLine": 37,
+        "endChar": 50
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a363f8ca_99189129",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
         "patchSetId": 3
@@ -178,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "011fb6f8_9d597f77",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-18T16:27:20Z",
+      "side": 1,
+      "message": "That\u0027s fine, but a testing category seems appropriate.",
+      "parentUuid": "986b4df5_e287b81f",
+      "range": {
+        "startLine": 59,
+        "startChar": 1,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f9b9b23_d71bd31d",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
         "patchSetId": 3
@@ -272,6 +320,30 @@
     },
     {
       "key": {
+        "uuid": "0ec3fbfd_7e8c0fd4",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-18T16:27:20Z",
+      "side": 1,
+      "message": "statusLabel and actionButton are properties.\n\nMy general feeling is that things that look like properties should be properties.",
+      "parentUuid": "fb467d3c_d4ffc54f",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 29
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75ee356e_c15762c5",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
         "patchSetId": 3
@@ -307,6 +379,30 @@
       "side": 1,
       "message": "The embedding view controller is BVC, so is the suggestion to set these constraints in BVC?",
       "parentUuid": "75ee356e_c15762c5",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 9
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90bd8749_4395e570",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-18T16:27:20Z",
+      "side": 1,
+      "message": "Or in some object the BVC owns. Look at how other contained view controllers are handled.",
+      "parentUuid": "9dcbd35b_a7893bc6",
       "range": {
         "startLine": 71,
         "startChar": 5,
