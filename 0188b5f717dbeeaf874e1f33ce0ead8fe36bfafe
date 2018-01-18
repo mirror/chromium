@@ -34,6 +34,24 @@
       "revId": "0188b5f717dbeeaf874e1f33ce0ead8fe36bfafe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19cd4c1a_b66861a6",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T12:05:59Z",
+      "side": 1,
+      "message": "Oh sweet! I wasn\u0027t aware of this change, thanks for the pointer :)!\n\nI now understand what you meant by using C++\u0027s static init for LazyInstances (provided we\u0027d have to hide the static in a method).\n\nI think we should also update lazy_instance.h to mention that it should strictly be used for globals. To use NoDestructor\u003cT\u003e for locals instead.\n\nLGTM w/ that extra documentation.",
+      "parentUuid": "c6aa0d5e_c66c1190",
+      "revId": "0188b5f717dbeeaf874e1f33ce0ead8fe36bfafe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
