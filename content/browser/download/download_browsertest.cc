@@ -1349,6 +1349,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, RedirectWhileResume) {
   ++parameters.pattern_generator_seed;
   TestDownloadHttpResponse::StartServing(parameters, first_url);
 
+  LOG(WARNING) << "@@@";
   // We should never send a request to the decoy. If we do, the request will
   // always succeed, which results in behavior that diverges from what we want,
   // which is for the download to return to being interrupted.
