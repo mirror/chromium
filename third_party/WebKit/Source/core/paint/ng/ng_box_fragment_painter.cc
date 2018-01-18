@@ -113,8 +113,12 @@ void NGBoxFragmentPainter::PaintWithAdjustedOffset(
 
   if (original_phase != PaintPhase::kSelfBlockBackgroundOnly &&
       original_phase != PaintPhase::kSelfOutlineOnly) {
-    NGBoxClipper box_clipper(box_fragment_, info);
-    PaintObject(info, paint_offset);
+    if (is_inline_) {
+      PaintObject(info, paint_offset);
+    } else {
+      NGBoxClipper box_clipper(box_fragment_, info);
+      PaintObject(info, paint_offset);
+    }
   }
 
   if (ShouldPaintSelfOutline(original_phase)) {
