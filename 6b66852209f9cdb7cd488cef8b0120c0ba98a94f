@@ -16,6 +16,24 @@
       "revId": "6b66852209f9cdb7cd488cef8b0120c0ba98a94f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286acf57_6a9b82fe",
+        "filename": "device/gamepad/hid_dll_functions_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2018-01-18T21:27:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fff9b475_f3363464",
+      "revId": "6b66852209f9cdb7cd488cef8b0120c0ba98a94f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
