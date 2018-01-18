@@ -268,7 +268,6 @@ Textfield::Textfield()
       background_color_(SK_ColorWHITE),
       selection_text_color_(SK_ColorWHITE),
       selection_background_color_(SK_ColorBLUE),
-      placeholder_text_color_(kDefaultPlaceholderTextColor),
       placeholder_text_draw_flags_(gfx::Canvas::DefaultCanvasTextAlignment()),
       invalid_(false),
       text_input_type_(ui::TEXT_INPUT_TYPE_TEXT),

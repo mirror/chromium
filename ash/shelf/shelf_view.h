@@ -360,6 +360,9 @@ class ASH_EXPORT ShelfView : public views::View,
                 ui::MenuSourceType source_type,
                 views::InkDrop* ink_drop);
 
+  // Show a notification for an app, if any notifications exist.
+  void ShowNotifications(views::View* source, const gfx::Point& click_point);
+
   // Callback for MenuRunner.
   void OnMenuClosed(views::InkDrop* ink_drop);
 

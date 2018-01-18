@@ -4,6 +4,7 @@
 
 #include "ash/shelf/shelf.h"
 
+#include <map>
 #include <memory>
 
 #include "ash/public/cpp/config.h"
@@ -22,6 +23,14 @@
 #include "ui/display/types/display_constants.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
+#include "ui/message_center/message_center.h"
+#include "ui/message_center/views/message_view.h"
+#include "ui/message_center/views/message_view_factory.h"
+#include "ui/message_center/views/notification_view.h"
+#include "ui/message_center/views/notification_view_md.h"
+#include "ui/views/widget/widget_delegate.h"
+
+#include "ui/gfx/geometry/point.h"
 
 namespace ash {
 
@@ -259,6 +268,51 @@ void Shelf::ActivateShelfItemOnDisplay(int item_index, int64_t display_id) {
       ui::ET_KEY_RELEASED, ui::VKEY_UNKNOWN, ui::EF_NONE);
   item_delegate->ItemSelected(std::move(event), display_id, LAUNCH_FROM_UNKNOWN,
                               base::Bind(&NoopCallback));
+}
+
+void Shelf::ShowNotificationsForAppId(const std::string& app_id,
+                                      const gfx::Point& origin) {
+  ShelfModel* shelf_model = Shell::Get()->shelf_model();
+  auto* app_to_notification_id_map = shelf_model->app_id_to_notification_id();
+  auto app_to_notification_id_iter = app_to_notification_id_map->find(app_id);
+  if (app_to_notification_id_iter == app_to_notification_id_map->end())
+    return;
+
+  auto notifications = app_to_notification_id_iter->second;
+  const std::string& notification_id = *notifications.begin();
+  message_center::Notification* notification =
+      message_center::MessageCenter::Get()->FindVisibleNotificationById(
+          notification_id);
+  message_center::MessageView* n_view =
+      message_center::MessageViewFactory::Create(*notification, true);
+
+  // Create a crap widget.
+  views::Widget::InitParams init_params;
+  init_params.type = views::Widget::InitParams::TYPE_POPUP;
+  init_params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
+  init_params.accept_events = true;
+  init_params.parent = Shell::GetContainer(Shell::Get()->GetPrimaryRootWindow(),
+                                           kShellWindowId_MenuContainer);
+  // Set up the bounds.
+  gfx::Rect notification_bounds = gfx::Rect(origin, gfx::Size());
+  notification_bounds.Offset(0, -100);
+  LOG(ERROR) << notification_bounds.ToString();
+  init_params.bounds = notification_bounds;
+  views::Widget* widget = new views::Widget();
+  widget->Init(init_params);
+  widget->SetContentsView(n_view);
+  widget->SetSize(n_view->GetPreferredSize());
+  widget->Show();
+  // ??
+  widget->widget_delegate()->set_can_activate(true);
+  widget->Activate();
+
+  // Get just one notifications.
+
+  // put views in crap widget.
+
+  // Hackily show them, as in Notification_view_md_unittest
+  // Eventually patch the delegate in.
 }
 
 bool Shelf::ProcessGestureEvent(const ui::GestureEvent& event) {

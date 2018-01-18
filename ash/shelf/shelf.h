@@ -19,6 +19,7 @@ class Window;
 
 namespace gfx {
 class Rect;
+class Point;
 }
 
 namespace ui {
@@ -118,6 +119,10 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
   // Activates the shelf item specified by the index in the list of shelf items
   // on the display identified by |display_id|.
   static void ActivateShelfItemOnDisplay(int item_index, int64_t display_id);
+
+  // Shows all notifications for the |app_id|.
+  void ShowNotificationsForAppId(const std::string& app_id,
+                                 const gfx::Point& origin);
 
   // Handles a gesture |event| coming from a source outside the shelf widget
   // (e.g. the status area widget). Allows support for behaviors like toggling

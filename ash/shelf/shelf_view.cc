@@ -194,6 +194,13 @@ void ReflectItemStatus(const ShelfItem& item, ShelfButton* button) {
       button->AddState(ShelfButton::STATE_ATTENTION);
       break;
   }
+
+  if (app_list::features::IsTouchableAppContextMenuEnabled()) {
+    if (item.has_notification)
+      button->AddState(ShelfButton::STATE_NOTIFICATION);
+    else
+      button->ClearState(ShelfButton::STATE_NOTIFICATION);
+  }
 }
 
 // Returns the id of the display on which |view| is shown.
@@ -1926,9 +1933,23 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
       menu_alignment = views::MENU_ANCHOR_FIXED_SIDECENTER;
   }
 
+  ShowNotifications(source, click_point);
+
   // NOTE: if you convert to HAS_MNEMONICS be sure to update menu building code.
   launcher_menu_runner_->RunMenuAt(GetWidget(), nullptr, anchor, menu_alignment,
                                    source_type);
+}
+
+void ShelfView::ShowNotifications(views::View* source,
+                                  const gfx::Point& click_point) {
+  // For now, just show the notification at the click point.
+  const ShelfItem* item = ShelfItemForView(source);
+  if (!item)
+    return;
+  // Why not pass the item?
+  gfx::Point screen_bounds = source->bounds().origin();
+  views::View::ConvertPointToScreen(source, &screen_bounds);
+  shelf_->ShowNotificationsForAppId(item->id.app_id, screen_bounds);
 }
 
 void ShelfView::OnMenuClosed(views::InkDrop* ink_drop) {
