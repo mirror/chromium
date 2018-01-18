@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "950b1c94_f382e6a3",
+        "filename": "chrome/android/java/res/xml/single_website_preferences.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-18T13:13:54Z",
+      "side": 1,
+      "message": "Yeah, I think this needs to be determined more formally than based on a review comment... (see another comment from me in this batch).",
+      "parentUuid": "629f1573_9a6aa194",
+      "range": {
+        "startLine": 67,
+        "startChar": 45,
+        "endLine": 67,
+        "endChar": 69
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc956cef_dd85e60b",
         "filename": "chrome/android/java/res/xml/site_settings_preferences.xml",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Based on comments in:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/750200#message-9f31c5a496f95bc01dc1cd5d3d513a8c81065d46\n\nI\u0027ve been trying to place it between MIDI and Zoom, but that\u0027s been challenging when neither are present. Typically, it ends up being after Sound (which isn\u0027t listed in that doc :-( ) and before Storage and USB.\n\nWe\u0027re reaching out to find out if there is a better order for us to be using.",
       "parentUuid": "fc956cef_dd85e60b",
+      "range": {
+        "startLine": 68,
+        "startChar": 9,
+        "endLine": 68,
+        "endChar": 18
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e24c5cb9_f3c39ee5",
+        "filename": "chrome/android/java/res/xml/site_settings_preferences.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-18T13:13:54Z",
+      "side": 1,
+      "message": "The order of these preferences are important, they are in most security/privacy sensitive first and that determination should be made in at least consultation with UX and/or the PM for security. I would just talk to the owners of the doc, get them to assign a slot for this (update the doc) and then use the doc as the truth. If they\u0027ve already made a decision on the Sound category, then please prompt them to update the doc for posterity.\n\nThank you for reaching out to them.",
+      "parentUuid": "c91e6e01_55c60ef9",
       "range": {
         "startLine": 68,
         "startChar": 9,
@@ -648,6 +696,30 @@
       "side": 1,
       "message": "The recommended/default setting for CLIPBOARD_READ is ASK, so it wasn\u0027t clear which one should be (recommended) here. Do we have a precedent for choosing one over the other in that case?",
       "parentUuid": "b932bfbe_9d1787e3",
+      "range": {
+        "startLine": 894,
+        "startChar": 8,
+        "endLine": 894,
+        "endChar": 15
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9780f194_1fa83983",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-18T13:13:54Z",
+      "side": 1,
+      "message": "I think I saw another comment saying the switch should flip between ASK and BLOCK. It would seem the text here should then be changed to reflect that, something like: \"Ask before reading text and images from the clipboard (recommended)\"\n\nAlthough this should probably be determined by UX (or at least validated by UX).",
+      "parentUuid": "71b6f94e_665140e0",
       "range": {
         "startLine": 894,
         "startChar": 8,
