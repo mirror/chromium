@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "434c0c74_9df45319",
+        "filename": "chrome/browser/ui/views/infobars/confirm_infobar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-18T22:06:13Z",
+      "side": 0,
+      "message": "This comment merely restated the code, so I removed it as valueless.",
+      "revId": "930f8a3f17c4aac0338726044f61b7d600389e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7dbdf5f_f4c7f719",
+        "filename": "chrome/browser/ui/views/infobars/infobar_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-18T22:06:13Z",
+      "side": 0,
+      "message": "Note: I hope (but do not promise) that a future CL that gets rid of arrows will also find a way to get rid of kDefaultBarTargetHeight entirely.",
+      "revId": "930f8a3f17c4aac0338726044f61b7d600389e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
