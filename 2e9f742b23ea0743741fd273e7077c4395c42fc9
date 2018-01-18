@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "42d59d56_9169d899",
+        "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-18T11:05:20Z",
+      "side": 1,
+      "message": "OK, I guess we\u0027ll run the test in other configurations anyway.",
+      "parentUuid": "a03058eb_d1c251e2",
+      "range": {
+        "startLine": 801,
+        "startChar": 37,
+        "endLine": 801,
+        "endChar": 43
+      },
+      "revId": "2e9f742b23ea0743741fd273e7077c4395c42fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e78c14e3_ea121c44",
         "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
         "patchSetId": 1
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "em... I\u0027ll write another sentence here to see if it\u0027s better.\n\nHow about \"The override of the user data directory in the path service.\"?",
       "parentUuid": "1ef8aa8d_c68998ee",
+      "range": {
+        "startLine": 132,
+        "startChar": 5,
+        "endLine": 132,
+        "endChar": 45
+      },
+      "revId": "2e9f742b23ea0743741fd273e7077c4395c42fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99718482_64cd1424",
+        "filename": "chrome/test/base/testing_profile_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-18T11:05:20Z",
+      "side": 1,
+      "message": "Sounds good. Ideally, you could also explain why this is necessary (i.e. so we can point it to the profile directory managed by this class), and that it implies that tests using this shouldn\u0027t override the user data directory themselves.",
+      "parentUuid": "f1f123f2_d936d576",
       "range": {
         "startLine": 132,
         "startChar": 5,
