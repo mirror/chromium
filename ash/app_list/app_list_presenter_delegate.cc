@@ -158,7 +158,6 @@ void AppListPresenterDelegate::UpdateBounds() {
   if (!view_ || !is_visible_)
     return;
 
-  view_->UpdateBounds();
   view_->MaybeSetAnchorPoint(
       GetCenterOfDisplayForWindow(view_->GetWidget()->GetNativeWindow(),
                                   GetMinimumBoundsHeightForAppList(view_)));

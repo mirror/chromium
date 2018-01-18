@@ -94,10 +94,6 @@ void AppListPresenterDelegateMus::OnDismissed() {
 }
 
 void AppListPresenterDelegateMus::UpdateBounds() {
-  if (!view_ || !presenter_->GetTargetVisibility())
-    return;
-
-  view_->UpdateBounds();
 }
 
 gfx::Vector2d AppListPresenterDelegateMus::GetVisibilityAnimationOffset(
