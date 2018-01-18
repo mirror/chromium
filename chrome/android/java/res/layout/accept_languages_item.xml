@@ -9,7 +9,7 @@
     android:id="@+id/language_item"
     android:layout_marginStart="0dp"
     android:paddingStart="@dimen/pref_languages_padding"
-    android:paddingEnd="@dimen/pref_languages_padding"
+    android:paddingEnd="@dimen/pref_languages_item_end_padding"
     style="@style/ListItemContainer">
 
     <org.chromium.chrome.browser.widget.TintedImageView
