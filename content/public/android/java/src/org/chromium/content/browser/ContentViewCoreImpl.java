@@ -157,6 +157,8 @@ public class ContentViewCoreImpl
 
     private final Context mContext;
     private final String mProductVersion;
+    private final List<WindowEventObserver> mWindowEventObservers = new ArrayList<>();
+
     private ViewGroup mContainerView;
     private InternalAccessDelegate mContainerViewInternals;
     private WebContentsImpl mWebContents;
@@ -373,6 +375,11 @@ public class ContentViewCoreImpl
         mImeAdapter.addEventObserver(this);
         mTextSuggestionHost = new TextSuggestionHost(this);
 
+        mWindowEventObservers.add(getSelectionPopupController());
+        mWindowEventObservers.add(getGestureListenerManager());
+        mWindowEventObservers.add(mTextSuggestionHost);
+        mWindowEventObservers.add(mImeAdapter);
+
         mWebContentsObserver = new ContentViewWebContentsObserver(this);
 
         mShouldRequestUnbufferedDispatch = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
@@ -471,6 +478,7 @@ public class ContentViewCoreImpl
         }
         mWebContentsObserver.destroy();
         mWebContentsObserver = null;
+        mWindowEventObservers.clear();
         mImeAdapter.resetAndHideKeyboard();
         hidePopupsAndPreserveSelection();
         mWebContents = null;
@@ -628,13 +636,13 @@ public class ContentViewCoreImpl
     @Override
     public void onAttachedToWindow() {
         mAttachedToWindow = true;
+        for (WindowEventObserver observer : mWindowEventObservers) observer.onAttachedToWindow();
         addDisplayAndroidObserverIfNeeded();
         setAccessibilityState(mAccessibilityManager.isEnabled());
         updateTextSelectionUI(true);
         GamepadList.onAttachedToWindow(mContext);
         mAccessibilityManager.addAccessibilityStateChangeListener(this);
         mSystemCaptioningBridge.addListener(this);
-        mImeAdapter.onViewAttachedToWindow();
         if (mWebContentsAccessibility != null) {
             mWebContentsAccessibility.onAttachedToWindow();
         }
@@ -655,7 +663,7 @@ public class ContentViewCoreImpl
     @Override
     public void onDetachedFromWindow() {
         mAttachedToWindow = false;
-        mImeAdapter.onViewDetachedFromWindow();
+        for (WindowEventObserver observer : mWindowEventObservers) observer.onDetachedFromWindow();
         removeDisplayAndroidObserver();
         GamepadList.onDetachedFromWindow();
         mAccessibilityManager.removeAccessibilityStateChangeListener(this);
@@ -743,12 +751,11 @@ public class ContentViewCoreImpl
 
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
-        mImeAdapter.onWindowFocusChanged(hasWindowFocus);
-        if (!hasWindowFocus) resetGestureDetection();
-        if (isAlive()) {
-            getSelectionPopupController().onWindowFocusChanged(hasWindowFocus);
-            getGestureListenerManager().updateOnWindowFocusChanged(hasWindowFocus);
+        for (WindowEventObserver observer : mWindowEventObservers) {
+            observer.onWindowFocusChanged(hasWindowFocus);
         }
+
+        if (!hasWindowFocus) resetGestureDetection();
     }
 
     @Override

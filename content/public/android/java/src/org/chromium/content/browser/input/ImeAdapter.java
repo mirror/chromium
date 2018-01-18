@@ -37,6 +37,7 @@ import org.chromium.blink_public.web.WebFocusType;
 import org.chromium.blink_public.web.WebInputEventModifier;
 import org.chromium.blink_public.web.WebInputEventType;
 import org.chromium.blink_public.web.WebTextInputMode;
+import org.chromium.content.browser.WindowEventObserver;
 import org.chromium.content.browser.picker.InputDialogContainer;
 import org.chromium.content_public.browser.ImeEventObserver;
 import org.chromium.content_public.browser.WebContents;
@@ -71,7 +72,7 @@ import java.util.List;
  * lifetime of the object.
  */
 @JNINamespace("content")
-public class ImeAdapter {
+public class ImeAdapter implements WindowEventObserver {
     private static final String TAG = "cr_Ime";
     private static final boolean DEBUG_LOGS = false;
 
@@ -517,29 +518,24 @@ public class ImeAdapter {
         }
     }
 
-    /**
-     * Call this when window's focus has changed.
-     * @param gainFocus True if we're gaining focus.
-     */
+    // WindowEventObserver
+
+    @Override
     public void onWindowFocusChanged(boolean gainFocus) {
         if (mInputConnectionFactory != null) {
             mInputConnectionFactory.onWindowFocusChanged(gainFocus);
         }
     }
 
-    /**
-     * Call this when view is attached to window.
-     */
-    public void onViewAttachedToWindow() {
+    @Override
+    public void onAttachedToWindow() {
         if (mInputConnectionFactory != null) {
             mInputConnectionFactory.onViewAttachedToWindow();
         }
     }
 
-    /**
-     * Call this when view is detached from window.
-     */
-    public void onViewDetachedFromWindow() {
+    @Override
+    public void onDetachedFromWindow() {
         resetAndHideKeyboard();
         if (mInputConnectionFactory != null) {
             mInputConnectionFactory.onViewDetachedFromWindow();
