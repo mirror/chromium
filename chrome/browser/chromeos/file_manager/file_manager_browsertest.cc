@@ -244,6 +244,17 @@ WRAPPED_INSTANTIATE_TEST_CASE_P(
                       "createDirectoryFromDirectoryTreeWithoutChangingCurrentDi"
                       "rectory")));
 
+#if defined(DISABLE_SLOW_FILESAPP_TESTS)
+#define MAYBE_FileContextMenu DISABLED_FileContextMenu
+#else
+#define MAYBE_FileContextMenu FileContextMenu
+#endif
+WRAPPED_INSTANTIATE_TEST_CASE_P(
+    MAYBE_FileContextMenu,
+    FileManagerBrowserTest,
+    ::testing::Values(TestParameter(NOT_IN_GUEST_MODE,
+                                    "pasteIntoDirectoryInFileContextMenu")));
+
 // Fails on official build. http://crbug.com/429294
 #if defined(DISABLE_SLOW_FILESAPP_TESTS) || defined(OFFICIAL_BUILD)
 #define MAYBE_DriveSpecific DISABLED_DriveSpecific
@@ -559,7 +570,8 @@ WRAPPED_INSTANTIATE_TEST_CASE_P(
     ::testing::Values(
         TestParameter(NOT_IN_GUEST_MODE, "showHiddenFilesOnDownloads"),
         TestParameter(NOT_IN_GUEST_MODE, "showHiddenFilesOnDrive"),
-        TestParameter(NOT_IN_GUEST_MODE, "hideGoogleDocs")));
+        TestParameter(NOT_IN_GUEST_MODE, "hideGoogleDocs"),
+        TestParameter(NOT_IN_GUEST_MODE, "pasteIntoDirectory")));
 
 // Structure to describe an account info.
 struct TestAccountInfo {
