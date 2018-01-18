@@ -211,6 +211,8 @@ group("blink_platform_public_deps") {
     "//services/device/public/interfaces:interfaces_blink",
     "//services/network/public/cpp:cpp",
     "//services/network/public/interfaces",
+    "//services/network/public/interfaces:data_pipe_interface",
+    "//services/network/public/interfaces:data_pipe_interface_blink",
     "//services/network/public/interfaces:interfaces_blink",
     "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
     "//services/resource_coordinator/public/interfaces:interfaces_blink",
