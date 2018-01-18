@@ -19,6 +19,142 @@
     },
     {
       "key": {
+        "uuid": "edd948dd_7ed00dd2",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T22:33:26Z",
+      "side": 1,
+      "message": "Is there any benefit to reserving a size for the output parameter?",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0111403b_41aac919",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T22:33:26Z",
+      "side": 1,
+      "message": "Check the value of DecodeURLResult- must it be kAsciiOnly for Cast URLs?",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207ed74e_6feccf60",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T22:33:26Z",
+      "side": 1,
+      "message": "Check out net/base/url_util.h for utilities for manipulating URL queries.\n(Why is this not in url/?  Who knows!)",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e67401_c82ddd5e",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T22:33:26Z",
+      "side": 1,
+      "message": "Please check these query parameter values before treating them as valid app ids, etc.\nSame comment applies to values extracted from cast: URLs above.",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745a8078_b3ce90a3",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T22:33:26Z",
+      "side": 1,
+      "message": "What if cap_start_index is npos?",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05a7097_547e64cd",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T22:33:26Z",
+      "side": 1,
+      "message": "Does this logging need to be included?",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a29d2e9_6019f62b",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T22:33:26Z",
+      "side": 1,
+      "message": "Remove extra logging?",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527f9821_0fbdffb1",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T22:33:26Z",
+      "side": 1,
+      "message": "It could be simpler to have a single loop through the capabilities string that iterates character by character, rather than slicing the string then parsing it a second time.  I don\u0027t feel strongly though.",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8daaf0b_f34d739a",
         "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
         "patchSetId": 5
@@ -53,6 +189,23 @@
     },
     {
       "key": {
+        "uuid": "e2f54449_e641252c",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T22:33:26Z",
+      "side": 1,
+      "message": "If we converted these to be URLs would we need MediaSource at all?",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3015a6fd_795fd9c7",
         "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
         "patchSetId": 5
@@ -70,6 +223,24 @@
     },
     {
       "key": {
+        "uuid": "f3af1842_80800d22",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T22:33:26Z",
+      "side": 1,
+      "message": "Specifically, if there were a legacy Cast URL with 2 app ids, would that become 2 CastMediaSource objects?  Then maybe you don\u0027t need a separate AppInfo struct.",
+      "parentUuid": "3015a6fd_795fd9c7",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dba96162_d9d0a992",
         "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
         "patchSetId": 5
@@ -81,6 +252,41 @@
       "writtenOn": "2018-01-18T17:44:02Z",
       "side": 1,
       "message": "What is a broadcast request?  How is it related to launching a Cast application by id?",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f0cf3cf_34e48866",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T22:33:26Z",
+      "side": 1,
+      "message": "I looked through the sender SDK documentation and didn\u0027t see anything that seemed to relate to to broadcast media sources.",
+      "parentUuid": "dba96162_d9d0a992",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d21e9b3_51538e02",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T22:33:26Z",
+      "side": 1,
+      "message": "Please add cases to test cast URLs (both new and legacy) with invalid parameters.",
       "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
