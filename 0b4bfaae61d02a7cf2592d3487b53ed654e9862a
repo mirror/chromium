@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e5a5181f_7844b919",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-18T21:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0047972_725aeebb",
+      "range": {
+        "startLine": 227,
+        "startChar": 26,
+        "endLine": 227,
+        "endChar": 33
+      },
+      "revId": "0b4bfaae61d02a7cf2592d3487b53ed654e9862a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d1f30af_b83d4bbb",
         "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "98641048_a59429bb",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-18T21:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d1f30af_b83d4bbb",
+      "range": {
+        "startLine": 231,
+        "startChar": 25,
+        "endLine": 231,
+        "endChar": 34
+      },
+      "revId": "0b4bfaae61d02a7cf2592d3487b53ed654e9862a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da2bbee3_05f379bb",
         "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
         "patchSetId": 2
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "2aab2e02_a90759ec",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-18T21:00:05Z",
+      "side": 1,
+      "message": "Whoops, I removed \"DeletionWriteError\". Thanks for the catch!",
+      "parentUuid": "da2bbee3_05f379bb",
+      "revId": "0b4bfaae61d02a7cf2592d3487b53ed654e9862a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc292c47_fe97f539",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -76,6 +142,24 @@
       "writtenOn": "2018-01-17T19:51:37Z",
       "side": 1,
       "message": "I\u0027m confused that you list a bunch of histograms that should be created automatically using the suffix list below.  Why don\u0027t you just list the base class for those?  What are you trying to do here?",
+      "revId": "0b4bfaae61d02a7cf2592d3487b53ed654e9862a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf32c05_919a01e8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 96370,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-18T21:00:05Z",
+      "side": 1,
+      "message": "So a couple stats we only record for the \u0027Complete\u0027 mode:\nWebCore.IndexedDB.TombstoneSweeper.StatsTotalTime.Complete\nWebCore.IndexedDB.TombstoneSweeper.DeletionCommitTime.Complete\nWebCore.IndexedDB.TombstoneSweeper.DeletionTotalTime.Complete\n(see the doc here https://goo.gl/coKwA7)\n\nBecause of that I just list those separately. Does that answer your question? Is there a better way to do this?",
+      "parentUuid": "dc292c47_fe97f539",
       "revId": "0b4bfaae61d02a7cf2592d3487b53ed654e9862a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "fba13491_f3c83fd5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 110744,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-18T21:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fef85dc0_363c5b08",
+      "range": {
+        "startLine": 110744,
+        "startChar": 40,
+        "endLine": 110744,
+        "endChar": 62
+      },
+      "revId": "0b4bfaae61d02a7cf2592d3487b53ed654e9862a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "575920dc_2761604c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -116,6 +224,24 @@
       "writtenOn": "2018-01-17T19:51:37Z",
       "side": 1,
       "message": "Why are some affected histograms listed near the top and some listed near the bottom?",
+      "revId": "0b4bfaae61d02a7cf2592d3487b53ed654e9862a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a293fb_299313ae",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 110752,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-18T21:00:05Z",
+      "side": 1,
+      "message": "For some reason the formatter does this :(",
+      "parentUuid": "575920dc_2761604c",
       "revId": "0b4bfaae61d02a7cf2592d3487b53ed654e9862a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
