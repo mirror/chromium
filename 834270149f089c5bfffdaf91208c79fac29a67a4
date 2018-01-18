@@ -16,6 +16,24 @@
       "revId": "834270149f089c5bfffdaf91208c79fac29a67a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ad130b_ffc9a96c",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-18T04:02:46Z",
+      "side": 1,
+      "message": "Ah- including these from here sounds a little fishy, EmbeddedTestServer should be fine but URLLoader is the ones that supposed to live in Network Service.",
+      "parentUuid": "2a25e164_424da4e9",
+      "revId": "834270149f089c5bfffdaf91208c79fac29a67a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
