@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "e91bb772_82402544",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T17:28:36Z",
+      "side": 1,
+      "message": "Sorry for the confusion, I meant \"when Mac Views is the default.\"",
+      "parentUuid": "b32a5759_7b7919de",
+      "revId": "5ef9ed378e5e647d84bcc6b80e474d000d734fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de8cbfef_7d770fc5",
         "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.h",
         "patchSetId": 5
