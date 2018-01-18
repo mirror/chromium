@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ef51af3_653d7e04",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T17:15:18Z",
+      "side": 1,
+      "message": "very optional nit: remove this and inline the TimeDelta scope too.",
+      "revId": "f62690da5978d0bceb1de8393f83b7480cade44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6b436d_00b94cfc",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_editor_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T17:15:18Z",
+      "side": 1,
+      "message": "very optional nit: remove this and inline the TimeDelta scope too.",
+      "revId": "f62690da5978d0bceb1de8393f83b7480cade44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863cbba9_edf2d7d5",
+        "filename": "chrome/browser/ui/webui/about_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T17:15:18Z",
+      "side": 1,
+      "message": "optional nit: remove this too, it\u0027s also unused.",
+      "revId": "f62690da5978d0bceb1de8393f83b7480cade44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f71368_b00bc1cb",
+        "filename": "chrome/browser/ui/webui/about_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T17:15:18Z",
+      "side": 1,
+      "message": "optional nit: remove this too, it\u0027s also unused.",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 13
+      },
+      "revId": "f62690da5978d0bceb1de8393f83b7480cade44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
