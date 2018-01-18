@@ -796,6 +796,11 @@ Common.VersionController = class {
     networkLogColumnsSetting.set(columns);
   }
 
+  _updateVersionFrom25To26() {
+    var oldSetting = Common.settings.createLocalSetting('fileSystemMapping', {});
+    oldSetting.remove();
+  }
+
   _migrateSettingsFromLocalStorage() {
     // This step migrates all the settings except for the ones below into the browser profile.
     var localSettings = new Set([
@@ -828,7 +833,7 @@ Common.VersionController = class {
 };
 
 Common.VersionController._currentVersionName = 'inspectorVersion';
-Common.VersionController.currentVersion = 25;
+Common.VersionController.currentVersion = 26;
 
 /**
  * @type {!Common.Settings}
