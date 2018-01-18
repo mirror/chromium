@@ -22,6 +22,8 @@ namespace {
 scoped_refptr<base::RefCountedMemory> EncodeImageAsPNG(
     const gfx::Image& image) {
   std::vector<uint8_t> result;
+  if (image.IsEmpty())
+    return scoped_refptr<base::RefCountedMemory>();
   DCHECK(!image.AsImageSkia().GetRepresentation(1.0f).is_null());
   gfx::PNGCodec::FastEncodeBGRASkBitmap(image.AsBitmap(), true, &result);
   return base::RefCountedBytes::TakeVector(&result);
