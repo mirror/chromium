@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7625917_62bcc302",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-18T00:54:46Z",
+      "side": 1,
+      "message": "Done. Btw, it should be (!sampling_started_|...) in the DCHECK.",
+      "parentUuid": "900e9fd6_8a8697a8",
+      "range": {
+        "startLine": 824,
+        "startChar": 0,
+        "endLine": 824,
+        "endChar": 29
+      },
+      "revId": "bd3826f70a43dda79c6ec4120fbf29c5a30c8c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "991b4068_59f5d3fb",
         "filename": "base/profiler/stack_sampling_profiler.h",
         "patchSetId": 23
@@ -45,6 +69,30 @@
       "revId": "bd3826f70a43dda79c6ec4120fbf29c5a30c8c8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7966908a_2797ef6c",
+        "filename": "base/profiler/stack_sampling_profiler.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-18T00:54:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "991b4068_59f5d3fb",
+      "range": {
+        "startLine": 304,
+        "startChar": 5,
+        "endLine": 305,
+        "endChar": 34
+      },
+      "revId": "bd3826f70a43dda79c6ec4120fbf29c5a30c8c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

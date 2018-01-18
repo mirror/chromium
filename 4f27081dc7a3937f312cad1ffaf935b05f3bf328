@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "8f4a4a5c_7e3a2bdc",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-18T00:54:46Z",
+      "side": 1,
+      "message": "I\u0027ve added the DCHECK to make sure the event is signaled thus there is no wait on the thread.",
+      "parentUuid": "3c43e8ff_306b722b",
+      "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23e649ea_a83e0428",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 18

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d5cd519_627208ae",
+        "filename": "base/synchronization/waitable_event_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-18T00:54:46Z",
+      "side": 1,
+      "message": "I am not sure how to handle this case. I am not able to find any documentation on how to get the reset policy from an event handle (either the raw handle in the windows world or the wrapped ScopedHandle). \n\nAny suggestions please?",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "84c326fecb96932f45e3104d35e43e59a475e6d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
