@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a03bd142_7ccc535e",
+        "filename": "chrome/browser/app_mode/app_mode_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-18T05:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dae77a46_60a9e74f",
+      "revId": "2fa20e1836006915e119a082f641b69265479627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fefbfe3_0761c9bc",
         "filename": "chrome/browser/app_mode/app_mode_utils.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b5b5e8b3_4200f186",
+        "filename": "chrome/browser/app_mode/app_mode_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-18T05:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fefbfe3_0761c9bc",
+      "revId": "2fa20e1836006915e119a082f641b69265479627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5abd4613_4edcd6bb",
         "filename": "extensions/browser/api/management/management_api.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-17T19:29:49Z",
       "side": 1,
       "message": "How ugly is it to implement these restrictions in the features files instead?  It\u0027s more straightforward and resilient, and results in synchronous failure which is kind of nice.  But it\u0027s a lot of new child features...",
+      "revId": "2fa20e1836006915e119a082f641b69265479627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8883c99_aec4ae95",
+        "filename": "extensions/browser/api/management/management_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-18T05:21:23Z",
+      "side": 1,
+      "message": "It might be tricky without introducing feature property to indicate a feature is not available in kiosk sessions.\n(I would prefer to prevent secondary extensions from using these methods as well, so the api feature would have to be something like:\n\n\"management\": {\n  \"dependencies\": [\"permission:management\"],\n  \"session_types\": [\"!kiosk\"],  // not supported currently\n},\n\"management.uninstallSelf\": {\n  \"dependencies\": [],\n   \"session_types\": [\"!kiosk\"],\n   \"extension_types\":\n},\n\"management.getAll\": {\n  \"dependencies\": [\"permission:management\"],\n},\n\"management.get\": {\n  \"dependencies\": [\"permission:management\"]\n},\n\"management.setEnabled\": {\n  \"dependencies\": [\"permission:manager\"]\n}",
+      "parentUuid": "5abd4613_4edcd6bb",
       "revId": "2fa20e1836006915e119a082f641b69265479627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
