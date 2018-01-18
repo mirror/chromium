@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9a8d59a_4383c808",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-18T14:07:18Z",
+      "side": 1,
+      "message": "ERROR?",
+      "range": {
+        "startLine": 590,
+        "startChar": 7,
+        "endLine": 590,
+        "endChar": 16
+      },
+      "revId": "99e08326881d53cab8f55bdff265eabd283e3bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
