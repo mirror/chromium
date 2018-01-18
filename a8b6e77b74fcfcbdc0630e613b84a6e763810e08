@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed915fa7_792252f6",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T00:32:58Z",
+      "side": 1,
+      "message": "Nit: const LayoutSize kMaxSize(kMaxAdjustmentRadiusDips, kMaxAdjustmentRadiusDips);\n\n(I\u0027ll make this constexpr-ible in a followup)",
+      "revId": "a8b6e77b74fcfcbdc0630e613b84a6e763810e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "270a1213_f745a1f1",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T00:32:58Z",
+      "side": 1,
+      "message": "Please pass by mutable reference in Blink.",
+      "revId": "a8b6e77b74fcfcbdc0630e613b84a6e763810e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12840a74_f36bd637",
+        "filename": "third_party/WebKit/public/platform/WebPointerProperties.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T00:32:58Z",
+      "side": 1,
+      "message": "How come we don\u0027t just pass a WebFloatPoint here?",
+      "revId": "a8b6e77b74fcfcbdc0630e613b84a6e763810e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
