@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "889c2b4a_676bbecc",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2018-01-18T22:38:16Z",
+      "side": 1,
+      "message": "This line seems more strict than the browser settings, not more relaxed. Did you mean the two \"clear_reports\" options to be false?",
+      "revId": "e61ffdf97752935b320e8c934a648b7f0a288602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
