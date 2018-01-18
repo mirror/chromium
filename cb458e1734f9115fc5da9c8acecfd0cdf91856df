@@ -354,6 +354,30 @@
       "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7332768e_d854ba74",
+        "filename": "third_party/zlib/google/zip_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-18T21:13:01Z",
+      "side": 1,
+      "message": "I\u0027m personally ok with the current approach plus documentation.  I\u0027m also ok with (2) if others prefer it.",
+      "parentUuid": "4db301d9_c5f0ad89",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 285,
+        "endChar": 42
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
