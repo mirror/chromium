@@ -71,7 +71,6 @@ class DevToolsSession : public protocol::FrontendChannel,
  private:
   void SendResponse(std::unique_ptr<base::DictionaryValue> response);
   void MojoConnectionDestroyed();
-  void ReceivedBadMessage();
 
   // protocol::FrontendChannel implementation.
   void sendProtocolResponse(
@@ -83,7 +82,9 @@ class DevToolsSession : public protocol::FrontendChannel,
 
   // blink::mojom::DevToolsSessionHost implementation.
   void DispatchProtocolMessage(
-      blink::mojom::DevToolsMessageChunkPtr chunk) override;
+      const base::string16& message,
+      int call_id,
+      const base::Optional<std::string>& state) override;
 
   mojo::AssociatedBinding<blink::mojom::DevToolsSessionHost> binding_;
   blink::mojom::DevToolsSessionAssociatedPtr session_ptr_;
@@ -100,7 +101,6 @@ class DevToolsSession : public protocol::FrontendChannel,
   // |state_cookie_| always corresponds to a state before
   // any of the waiting for response messages have been handled.
   std::string state_cookie_;
-  std::string response_message_buffer_;
 
   base::WeakPtrFactory<DevToolsSession> weak_factory_;
 };
