@@ -46,6 +46,30 @@
       "revId": "2e3a09d956ad72075b8c67e4bb3e104176441c24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51893e9e_1cbd778d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchSelectionController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-18T16:41:35Z",
+      "side": 1,
+      "message": "Wait, you need to reverse your condition: !shouldSuppressTapBasedOnHeuristics",
+      "parentUuid": "5bb01563_4cfdbe66",
+      "range": {
+        "startLine": 394,
+        "startChar": 0,
+        "endLine": 395,
+        "endChar": 0
+      },
+      "revId": "2e3a09d956ad72075b8c67e4bb3e104176441c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
