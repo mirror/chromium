@@ -89,13 +89,11 @@ KeyedService* UserNetworkConfigurationUpdaterFactory::BuildServiceInstanceFor(
 // static
 bool UserNetworkConfigurationUpdaterFactory::AllowTrustedCertsFromPolicy(
     const user_manager::User* user) {
-  user_manager::UserType user_type = user->GetType();
+  const user_manager::UserType user_type = user->GetType();
 
-  // Disallow trusted root certs for public sessions.
-  // Also, guest sessions don't get user policy, but a
-  // UserNetworkCofnigurationUpdater can be created for them anyway.
-  return user_type != user_manager::USER_TYPE_GUEST &&
-         user_type != user_manager::USER_TYPE_PUBLIC_ACCOUNT;
+  // Guest sessions don't get user policy, but a UserNetworkConfigurationUpdater
+  // can be created for them anyway.
+  return user_type != user_manager::USER_TYPE_GUEST;
 }
 
 }  // namespace policy
