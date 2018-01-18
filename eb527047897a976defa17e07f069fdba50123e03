@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab850e13_841a0d06",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-18T17:45:29Z",
+      "side": 1,
+      "message": "I don\u0027t know the Vr structure so I don\u0027t know how this gets called in relation to other methods - but are we guarenteed this will never also get called witht he same last_source_id as SetVrMode()? We wouldn\u0027t want it to get called twice.",
+      "range": {
+        "startLine": 443,
+        "startChar": 9,
+        "endLine": 443,
+        "endChar": 22
+      },
+      "revId": "eb527047897a976defa17e07f069fdba50123e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e59afb3_2a9aed67",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-18T17:45:29Z",
+      "side": 1,
+      "message": "can you mention that this needs to be pulled from one of the approved ukm apis in \nhttps://chromium.googlesource.com/chromium/src.git/+/master/services/metrics/ukm_api.md",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "eb527047897a976defa17e07f069fdba50123e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
