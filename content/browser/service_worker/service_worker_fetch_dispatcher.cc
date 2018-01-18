@@ -430,7 +430,7 @@ class ServiceWorkerFetchDispatcher::ResponseCallback
 class ServiceWorkerFetchDispatcher::URLLoaderAssets
     : public base::RefCounted<ServiceWorkerFetchDispatcher::URLLoaderAssets> {
  public:
-  URLLoaderAssets(mojom::URLLoaderFactoryPtr url_loader_factory,
+  URLLoaderAssets(std::unique_ptr<mojom::URLLoaderFactory> url_loader_factory,
                   std::unique_ptr<mojom::URLLoader> url_loader,
                   std::unique_ptr<DelegatingURLLoaderClient> url_loader_client)
       : url_loader_factory_(std::move(url_loader_factory)),
@@ -446,7 +446,7 @@ class ServiceWorkerFetchDispatcher::URLLoaderAssets
   friend class base::RefCounted<URLLoaderAssets>;
   virtual ~URLLoaderAssets() {}
 
-  mojom::URLLoaderFactoryPtr url_loader_factory_;
+  std::unique_ptr<mojom::URLLoaderFactory> url_loader_factory_;
   std::unique_ptr<mojom::URLLoader> url_loader_;
   std::unique_ptr<DelegatingURLLoaderClient> url_loader_client_;
 
@@ -705,11 +705,8 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreload(
 
   DCHECK(!url_loader_assets_);
 
-  mojom::URLLoaderFactoryPtr url_loader_factory;
-  URLLoaderFactoryImpl::Create(
-      ResourceRequesterInfo::CreateForNavigationPreload(requester_info),
-      mojo::MakeRequest(&url_loader_factory),
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+  auto url_loader_factory = std::make_unique<URLLoaderFactoryImpl>(
+      ResourceRequesterInfo::CreateForNavigationPreload(requester_info));
 
   network::ResourceRequest request;
   request.method = original_request->method();
@@ -840,10 +837,9 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreloadWithURLLoader(
   // Unlike the non-S13N code path, we don't own the URLLoaderFactory being used
   // (it's the generic network factory), so we don't need to pass it to
   // URLLoaderAssets to keep it alive.
-  mojom::URLLoaderFactoryPtr null_factory;
+  auto null_factory = nullptr;
   url_loader_assets_ = base::MakeRefCounted<URLLoaderAssets>(
-      std::move(null_factory), std::move(url_loader),
-      std::move(url_loader_client));
+      null_factory, std::move(url_loader), std::move(url_loader_client));
   return true;
 }
 
