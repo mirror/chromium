@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b51dc23_ab671e94",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageGeneratorValue.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-18T19:31:26Z",
+      "side": 1,
+      "message": "I suppose this does address the problem, although it\u0027s rather non-obvious and still needs more assertions, I think, to assert that the size only differs when the count is being reduced to 1.",
+      "range": {
+        "startLine": 123,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 31
+      },
+      "revId": "6e650539e12301272c171356b01826cce4f72d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
