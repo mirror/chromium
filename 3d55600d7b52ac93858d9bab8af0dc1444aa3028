@@ -22,6 +22,30 @@
       "revId": "3d55600d7b52ac93858d9bab8af0dc1444aa3028",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bfe9057_d6117590",
+        "filename": "ui/events/ozone/evdev/keyboard_evdev.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-18T18:57:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72979d75_e89742e4",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 9
+      },
+      "revId": "3d55600d7b52ac93858d9bab8af0dc1444aa3028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
