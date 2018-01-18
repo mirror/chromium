@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "52de6a4c_285e2a77",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2018-01-18T01:00:40Z",
+      "side": 1,
+      "message": "@private removed.  thanks.",
+      "parentUuid": "eed19bdc_d258473e",
+      "range": {
+        "startLine": 82,
+        "startChar": 1,
+        "endLine": 82,
+        "endChar": 9
+      },
+      "revId": "84d75eccfe0a9e6866ca45dc46a7e63ded9a3e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d6ba8c_e0b63efc",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller_unittest.mm",
         "patchSetId": 2
