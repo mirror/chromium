@@ -129,6 +129,10 @@ void PrintMsg_PrintPages_Params::Reset() {
   pages = std::vector<int>();
 }
 
+SubframeContentInfo::SubframeContentInfo() : content_id(0), proxy_id(0) {}
+
+SubframeContentInfo::~SubframeContentInfo() {}
+
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
 PrintHostMsg_RequestPrintPreview_Params::
     PrintHostMsg_RequestPrintPreview_Params()
