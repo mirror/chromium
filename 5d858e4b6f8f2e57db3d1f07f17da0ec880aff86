@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c6c6148_39faf070",
+        "filename": "components/os_crypt/libsecret_util_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-18T14:56:32Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 66,
+        "startChar": 46,
+        "endLine": 66,
+        "endChar": 48
+      },
+      "revId": "5d858e4b6f8f2e57db3d1f07f17da0ec880aff86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
