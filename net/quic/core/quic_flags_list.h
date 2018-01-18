@@ -173,3 +173,7 @@ QUIC_FLAG(bool,
 // If true, inspects CHLO packets for indicator tags to allow early session
 // creation.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_inspect_chlo_tags, false)
+
+// When true, ignore the specified ack delay if it causes the RTT sample to be
+// less than min_rtt.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_min_rtt_ack_delay, false)
