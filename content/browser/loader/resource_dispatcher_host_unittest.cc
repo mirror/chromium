@@ -985,7 +985,7 @@ void CheckSuccessfulRequest(TestURLLoaderClient* client,
     EXPECT_EQ(reference_data, actual);
   }
   client->RunUntilComplete();
-  EXPECT_FALSE(client->response_body().is_valid());
+  EXPECT_FALSE(client->response_body());
   EXPECT_EQ(net::OK, client->completion_status().error_code);
 }
 
@@ -2259,7 +2259,7 @@ TEST_F(ResourceDispatcherHostTest, DataSentBeforeDetach) {
   // Verify the data that was received before cancellation. The request should
   // have appeared to cancel, however.
   client.RunUntilComplete();
-  EXPECT_TRUE(client.response_body().is_valid());
+  EXPECT_TRUE(client.response_body());
   EXPECT_EQ(net::ERR_ABORTED, client.completion_status().error_code);
 }
 

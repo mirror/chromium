@@ -400,7 +400,7 @@ class ListenerThatExpectsMessagePipeUsingParamTrait : public TestListenerBase {
     mojo::MessagePipeHandle handle;
     EXPECT_TRUE(IPC::ParamTraits<mojo::MessagePipeHandle>::Read(&message, &iter,
                                                                 &handle));
-    EXPECT_EQ(handle.is_valid(), receiving_valid_);
+    EXPECT_EQ(static_cast<bool>(handle), receiving_valid_);
     if (receiving_valid_) {
       ReadOK(handle);
       MojoClose(handle.value());
