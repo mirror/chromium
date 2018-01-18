@@ -157,8 +157,10 @@ class MainThreadEventQueueBrowserTest : public ContentBrowserTest {
     auto input_msg_watcher = std::make_unique<InputMsgWatcher>(
         GetWidgetHost(), blink::WebInputEvent::kTouchMove);
 
-    for (const auto& event : kEvents)
+    for (const auto& event : kEvents) {
+      printf("send events\n");
       GetWidgetHost()->ForwardEmulatedTouchEvent(event);
+    }
 
     // Runs until we get the InputMsgAck callback.
     EXPECT_EQ(INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING,
