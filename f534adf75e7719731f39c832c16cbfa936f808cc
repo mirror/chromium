@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e6448e6_060919e4",
+        "filename": "third_party/WebKit/LayoutTests/fast/alignment/parse-align-content.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2018-01-18T08:08:19Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we change the order here too?\nOr maybe have both \"stretch start safe\" and \"stretch safe start\"?\nBoth should be invalid I guess due to:\nhttps://github.com/w3c/csswg-drafts/commit/c38cac45421c55ccb6c70cd9e49a04fc36e6b19c",
+      "revId": "f534adf75e7719731f39c832c16cbfa936f808cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
