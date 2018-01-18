@@ -22,6 +22,30 @@
       "revId": "41156dfeb7c71cb1d89457f7da69aa65b670f634",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b353ae44_faf936b0",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-18T21:32:54Z",
+      "side": 1,
+      "message": "Oh, right. I was not sure if that seemed simpler or not so I punted and forgot. I think statics in general make testing harder in the case we wanted to control ids at some point in the future so I\u0027d slightly lean toward keeping it as a member on the pool.",
+      "parentUuid": "afb89255_50122631",
+      "range": {
+        "startLine": 177,
+        "startChar": 17,
+        "endLine": 177,
+        "endChar": 33
+      },
+      "revId": "41156dfeb7c71cb1d89457f7da69aa65b670f634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
