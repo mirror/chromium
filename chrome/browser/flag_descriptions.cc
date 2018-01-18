@@ -2917,6 +2917,14 @@ const char kUiSlowAnimationsDescription[] = "Makes all UI animations slow.";
 
 #endif  // defined(OS_CHROMEOS)
 
+#if defined(TOOLKIT_VIEWS)
+
+const char kDebugNavTreeName[] = "Debug NavTree.";
+const char kDebugNavTreeDescription[] =
+    "Show debug information for NavTree experiment.";
+
+#endif  // defined(TOOLKIT_VIEWS)
+
 #if defined(TOOLKIT_VIEWS) || defined(OS_ANDROID)
 
 const char kAutofillCreditCardUploadName[] =
