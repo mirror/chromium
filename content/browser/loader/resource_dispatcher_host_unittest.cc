@@ -900,7 +900,7 @@ void ResourceDispatcherHostTest::MakeTestRequestWithRenderFrame(
     mojom::URLLoaderClientPtr client) {
   network::ResourceRequest request = CreateResourceRequest("GET", type, url);
   request.render_frame_id = render_frame_id;
-  filter_->CreateLoaderAndStart(
+  filter_->GetURLLoaderFactoryForTesting()->CreateLoaderAndStart(
       std::move(loader_request), render_view_id, request_id,
       mojom::kURLLoadOptionNone, request, std::move(client),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
@@ -915,7 +915,7 @@ void ResourceDispatcherHostTest::MakeTestRequestWithResourceType(
     mojom::URLLoaderRequest loader_request,
     mojom::URLLoaderClientPtr client) {
   network::ResourceRequest request = CreateResourceRequest("GET", type, url);
-  filter->CreateLoaderAndStart(
+  filter->GetURLLoaderFactoryForTesting()->CreateLoaderAndStart(
       std::move(loader_request), render_view_id, request_id,
       mojom::kURLLoadOptionNone, request, std::move(client),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
@@ -932,7 +932,7 @@ void ResourceDispatcherHostTest::
   DCHECK_EQ(web_contents_filter_->child_id(),
             web_contents_->GetMainFrame()->GetProcess()->GetID());
   request.render_frame_id = web_contents_->GetMainFrame()->GetRoutingID();
-  web_contents_filter_->CreateLoaderAndStart(
+  web_contents_filter_->GetURLLoaderFactoryForTesting()->CreateLoaderAndStart(
       std::move(loader_request), 0, request_id, mojom::kURLLoadOptionNone,
       request, std::move(client),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
@@ -949,7 +949,7 @@ void ResourceDispatcherHostTest::MakeTestRequestWithPriorityAndRenderFrame(
       "GET", RESOURCE_TYPE_SUB_RESOURCE, GURL("http://example.com/priority"));
   request.render_frame_id = render_frame_id;
   request.priority = priority;
-  filter_->CreateLoaderAndStart(
+  filter_->GetURLLoaderFactoryForTesting()->CreateLoaderAndStart(
       std::move(loader_request), render_view_id, request_id,
       mojom::kURLLoadOptionNone, request, std::move(client),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
@@ -1050,7 +1050,7 @@ TEST_F(ResourceDispatcherHostTest, DownloadToNetworkCache) {
   network::ResourceRequest request_to_cache = CreateResourceRequest(
       "GET", RESOURCE_TYPE_IMAGE, net::URLRequestTestJob::test_url_3());
   request_to_cache.download_to_network_cache_only = true;
-  filter_->CreateLoaderAndStart(
+  filter_->GetURLLoaderFactoryForTesting()->CreateLoaderAndStart(
       mojo::MakeRequest(&loader2), 0, 2, mojom::kURLLoadOptionNone,
       request_to_cache, client2.CreateInterfacePtr(),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
@@ -1146,12 +1146,12 @@ TEST_F(ResourceDispatcherHostTest, DeletedFilterDetached) {
   network::ResourceRequest request_ping = CreateResourceRequest(
       "GET", RESOURCE_TYPE_PING, net::URLRequestTestJob::test_url_3());
 
-  filter_->CreateLoaderAndStart(
+  filter_->GetURLLoaderFactoryForTesting()->CreateLoaderAndStart(
       mojo::MakeRequest(&loader1), 0, 1, mojom::kURLLoadOptionNone,
       request_prefetch, client1.CreateInterfacePtr(),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
-  filter_->CreateLoaderAndStart(
+  filter_->GetURLLoaderFactoryForTesting()->CreateLoaderAndStart(
       mojo::MakeRequest(&loader2), 0, 2, mojom::kURLLoadOptionNone,
       request_ping, client2.CreateInterfacePtr(),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
@@ -1197,7 +1197,7 @@ TEST_F(ResourceDispatcherHostTest, DeletedFilterDetachedRedirect) {
       "GET", RESOURCE_TYPE_PREFETCH,
       net::URLRequestTestJob::test_url_redirect_to_url_2());
 
-  filter_->CreateLoaderAndStart(
+  filter_->GetURLLoaderFactoryForTesting()->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), 0, 1, mojom::kURLLoadOptionNone, request,
       client.CreateInterfacePtr(),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
@@ -2353,7 +2353,7 @@ TEST_F(ResourceDispatcherHostTest, DownloadToFile) {
   network::ResourceRequest request = CreateResourceRequest(
       "GET", RESOURCE_TYPE_SUB_RESOURCE, net::URLRequestTestJob::test_url_1());
   request.download_to_file = true;
-  filter_->CreateLoaderAndStart(
+  filter_->GetURLLoaderFactoryForTesting()->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), 0, 1, mojom::kURLLoadOptionNone, request,
       client.CreateInterfacePtr(),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));

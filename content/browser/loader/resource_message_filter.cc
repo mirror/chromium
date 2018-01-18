@@ -31,7 +31,6 @@ ResourceMessageFilter::ResourceMessageFilter(
     const GetContextsCallback& get_contexts_callback,
     const scoped_refptr<base::SingleThreadTaskRunner>& io_thread_runner)
     : BrowserMessageFilter(ResourceMsgStart),
-      BrowserAssociatedInterface<mojom::URLLoaderFactory>(this, this),
       is_channel_closed_(false),
       requester_info_(
           ResourceRequesterInfo::CreateForRenderer(child_id,
@@ -40,6 +39,10 @@ ResourceMessageFilter::ResourceMessageFilter(
                                                    file_system_context,
                                                    service_worker_context,
                                                    get_contexts_callback)),
+      url_loader_factory_(
+          std::make_unique<URLLoaderFactoryImpl>(requester_info_,
+                                                 io_thread_runner)),
+      associated_interface_(this, url_loader_factory_.get()),
       io_thread_task_runner_(io_thread_runner),
       weak_ptr_factory_(this) {}
 
@@ -57,9 +60,7 @@ void ResourceMessageFilter::OnFilterAdded(IPC::Channel*) {
 void ResourceMessageFilter::OnChannelClosing() {
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
 
-  // Close all additional Mojo connections opened to this object so that
-  // messages are not dispatched while it is being shut down.
-  bindings_.CloseAllBindings();
+  url_loader_factory_ = nullptr;
 
   // Unhook us from all pending network requests so they don't get sent to a
   // deleted object.
@@ -90,39 +91,17 @@ base::WeakPtr<ResourceMessageFilter> ResourceMessageFilter::GetWeakPtr() {
   return is_channel_closed_ ? nullptr : weak_ptr_factory_.GetWeakPtr();
 }
 
-void ResourceMessageFilter::CreateLoaderAndStart(
-    mojom::URLLoaderRequest request,
-    int32_t routing_id,
-    int32_t request_id,
-    uint32_t options,
-    const network::ResourceRequest& url_request,
-    mojom::URLLoaderClientPtr client,
-    const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
-  if (g_test_factory && !g_current_filter) {
-    g_current_filter = this;
-    g_test_factory->CreateLoaderAndStart(std::move(request), routing_id,
-                                         request_id, options, url_request,
-                                         std::move(client), traffic_annotation);
-    g_current_filter = nullptr;
-    return;
-  }
-
-  URLLoaderFactoryImpl::CreateLoaderAndStart(
-      requester_info_.get(), std::move(request), routing_id, request_id,
-      options, url_request, std::move(client),
-      net::NetworkTrafficAnnotationTag(traffic_annotation));
-}
-
-void ResourceMessageFilter::Clone(mojom::URLLoaderFactoryRequest request) {
-  bindings_.AddBinding(this, std::move(request));
-}
-
 int ResourceMessageFilter::child_id() const {
   return requester_info_->child_id();
 }
 
 void ResourceMessageFilter::InitializeForTest() {
   InitializeOnIOThread();
+}
+
+mojom::URLLoaderFactory*
+ResourceMessageFilter::GetURLLoaderFactoryForTesting() {
+  return url_loader_factory_.get();
 }
 
 void ResourceMessageFilter::SetNetworkFactoryForTesting(

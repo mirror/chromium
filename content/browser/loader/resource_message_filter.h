@@ -41,10 +41,7 @@ class ServiceWorkerContextWrapper;
 // delayed by costly UI processing that may be occuring on the main thread of
 // the browser.  It also means that any hangs in starting a network request
 // will not interfere with browser UI.
-class CONTENT_EXPORT ResourceMessageFilter
-    : public BrowserMessageFilter,
-      public BrowserAssociatedInterface<mojom::URLLoaderFactory>,
-      public mojom::URLLoaderFactory {
+class CONTENT_EXPORT ResourceMessageFilter : public BrowserMessageFilter {
  public:
   typedef base::Callback<void(ResourceType resource_type,
                               ResourceContext**,
@@ -71,22 +68,14 @@ class CONTENT_EXPORT ResourceMessageFilter
 
   base::WeakPtr<ResourceMessageFilter> GetWeakPtr();
 
-  void CreateLoaderAndStart(mojom::URLLoaderRequest request,
-                            int32_t routing_id,
-                            int32_t request_id,
-                            uint32_t options,
-                            const network::ResourceRequest& url_request,
-                            mojom::URLLoaderClientPtr client,
-                            const net::MutableNetworkTrafficAnnotationTag&
-                                traffic_annotation) override;
-  void Clone(mojom::URLLoaderFactoryRequest request) override;
-
   int child_id() const;
 
   ResourceRequesterInfo* requester_info_for_test() {
     return requester_info_.get();
   }
   void InitializeForTest();
+
+  mojom::URLLoaderFactory* GetURLLoaderFactoryForTesting();
 
   // Overrides the network URLLoaderFactory for subsequent requests. Passing a
   // null pointer will restore the default behavior.
@@ -113,10 +102,9 @@ class CONTENT_EXPORT ResourceMessageFilter
   bool is_channel_closed_;
   scoped_refptr<ResourceRequesterInfo> requester_info_;
 
-  // An additional set of non-associated bindings (beyond those held by the
-  // BrowserAssociatedInterface parent class) of pipes to this object's
-  // URLLoaderFactory interface.
-  mojo::BindingSet<mojom::URLLoaderFactory> bindings_;
+  std::unique_ptr<mojom::URLLoaderFactory> url_loader_factory_;
+
+  BrowserAssociatedInterface<mojom::URLLoaderFactory> associated_interface_;
 
   // Task runner for the IO thead.
   scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner_;
