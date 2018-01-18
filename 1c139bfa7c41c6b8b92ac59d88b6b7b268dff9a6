@@ -22,6 +22,30 @@
       "revId": "1c139bfa7c41c6b8b92ac59d88b6b7b268dff9a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9cd435_54c89ef5",
+        "filename": "chrome/browser/chromeos/policy/user_network_configuration_updater_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-18T18:38:25Z",
+      "side": 1,
+      "message": "Yeah, now that the condition is this simple, it\u0027s probably better to inline this into the callsite and get rid of the function (please don\u0027t forget to keep the comment:) ).\n\nMaybe a variable up there would be still good for readability, e.g.:\n bool allow_trusted_certs_from_policy \u003d user-\u003eGetType() !\u003d user_manager::USER_TYPE_GUEST;",
+      "parentUuid": "d8c03a9e_37569fb7",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 73
+      },
+      "revId": "1c139bfa7c41c6b8b92ac59d88b6b7b268dff9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
