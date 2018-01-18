@@ -410,7 +410,7 @@ void TextSuggestionController::ShowSpellCheckMenu(
   GetFrame().Selection().SetCaretVisible(false);
   GetDocument().Markers().AddActiveSuggestionMarker(
       active_suggestion_range, SK_ColorTRANSPARENT,
-      StyleableMarker::Thickness::kThin,
+      StyleableMarker::Thickness::kNone,
       LayoutTheme::GetTheme().PlatformActiveSpellingMarkerHighlightColor());
 
   Vector<String> suggestions;

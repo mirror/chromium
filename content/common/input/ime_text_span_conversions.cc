@@ -38,4 +38,34 @@ ui::ImeTextSpan::Type ConvertWebImeTextSpanTypeToUiType(
   return ui::ImeTextSpan::Type::kComposition;
 }
 
+blink::WebImeTextSpan::Thickness ConvertUiImeTextSpanThicknessToWebThickness(
+    ui::ImeTextSpan::Thickness thickness) {
+  switch (thickness) {
+    case ui::ImeTextSpan::Thickness::kNone:
+      return blink::WebImeTextSpan::Thickness::kNone;
+    case ui::ImeTextSpan::Thickness::kThin:
+      return blink::WebImeTextSpan::Thickness::kThin;
+    case ui::ImeTextSpan::Thickness::kThick:
+      return blink::WebImeTextSpan::Thickness::kThick;
+  }
+
+  NOTREACHED();
+  return blink::WebImeTextSpan::Thickness::kThin;
+}
+
+ui::ImeTextSpan::Thickness ConvertWebImeTextSpanThicknessToUiThickness(
+    blink::WebImeTextSpan::Thickness thickness) {
+  switch (thickness) {
+    case blink::WebImeTextSpan::Thickness::kNone:
+      return ui::ImeTextSpan::Thickness::kNone;
+    case blink::WebImeTextSpan::Thickness::kThin:
+      return ui::ImeTextSpan::Thickness::kThin;
+    case blink::WebImeTextSpan::Thickness::kThick:
+      return ui::ImeTextSpan::Thickness::kThick;
+  }
+
+  NOTREACHED();
+  return ui::ImeTextSpan::Thickness::kThin;
+}
+
 }  // namespace content

@@ -20,8 +20,17 @@ Color StyleableMarker::UnderlineColor() const {
   return underline_color_;
 }
 
-bool StyleableMarker::IsThick() const {
+bool StyleableMarker::HasThicknessNone() const {
+  return thickness_ == Thickness::kNone;
+}
+
+bool StyleableMarker::HasThicknessThick() const {
   return thickness_ == Thickness::kThick;
+}
+
+bool StyleableMarker::UseTextColor() const {
+  return thickness_ != Thickness::kNone &&
+         underline_color_ == Color::kTransparent;
 }
 
 Color StyleableMarker::BackgroundColor() const {
