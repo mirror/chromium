@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93aef3f8_2a377630",
+        "filename": "base/win/win_util_internal.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T08:42:01Z",
+      "side": 1,
+      "message": "Nit: I found this comment confusing: I\u0027m assuming it means that this method didn\u0027t exist in XP versions of the Windows SDK.\n\n(We don\u0027t even support XP anymore, AFAIK?)",
+      "revId": "31233b19de2db23219e7e627847ef8d39566cb74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
