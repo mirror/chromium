@@ -155,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "6c584bef_4a4e4d47",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-18T22:01:06Z",
+      "side": 1,
+      "message": "Hey Gab, this seems to be the last unsettled comment for now.",
+      "parentUuid": "978dda53_fea4c9a7",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42ee3d9b_90677bc0",
         "filename": "base/profiler/stack_sampling_profiler.cc",
         "patchSetId": 27
@@ -220,6 +238,24 @@
       "side": 1,
       "message": "There\u0027s no harm in this case in signaling an already-signaled event. I think we should go with gab\u0027s proposed logic since it more clearly conveys the intention of this code.",
       "parentUuid": "0c810449_56453fc3",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ffa326_d30be1c2",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-18T22:01:06Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2102c739_a04d6520",
       "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
