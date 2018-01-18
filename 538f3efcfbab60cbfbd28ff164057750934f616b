@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6943790_544fd49f",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-18T08:21:28Z",
+      "side": 1,
+      "message": "nit: let\u0027s add the same comments here too for 4 and 8",
+      "revId": "538f3efcfbab60cbfbd28ff164057750934f616b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
