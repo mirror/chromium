@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "667e17d0_4d7773f0",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-18T21:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "626d00b9_5df3a731",
+      "revId": "d137a9aea663b989265b294d4f36467c5d707bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "572fe287_07ea0cbd",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-18T20:15:20Z",
       "side": 1,
       "message": "nit: IWYU: #include \u003cmemory\u003e\n\ncan you run `git cl lint` to catch more of these?",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 17
+      },
+      "revId": "d137a9aea663b989265b294d4f36467c5d707bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a1d2bc_d6374069",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-18T21:56:03Z",
+      "side": 1,
+      "message": "Done - I wonder why this is not run by default.",
+      "parentUuid": "572fe287_07ea0cbd",
       "range": {
         "startLine": 135,
         "startChar": 7,
