@@ -233,6 +233,24 @@
     },
     {
       "key": {
+        "uuid": "8f889d1b_56b3eb5f",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-18T17:24:45Z",
+      "side": 1,
+      "message": "I believe I wrote a test with the assertions you are after here: https://chromium-review.googlesource.com/c/chromium/src/+/865154/7/chrome/browser/metrics/metrics_reporting_state_browsertest.cc . I need to do some cleanup (including adding the args). If you want to look at the test, that would be great, but feel free to wait for it all until I\u0027ve sorted the remaining issues.",
+      "parentUuid": "b99017f6_db09a412",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65fae94f_2c9c0922",
         "filename": "chrome/browser/metrics/metrics_reporting_state.cc",
         "patchSetId": 5
