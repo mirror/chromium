@@ -15,8 +15,8 @@
 #include "net/base/completion_callback.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_response_headers.h"
-#include "net/proxy/proxy_info.h"
-#include "net/proxy/proxy_server.h"
+#include "net/proxy_resolution/proxy_info.h"
+#include "net/base/proxy_server.h"
 #include "net/url_request/url_request.h"
 
 using content::BrowserThread;

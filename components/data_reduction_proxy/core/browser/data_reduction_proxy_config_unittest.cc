@@ -52,7 +52,7 @@
 #include "net/nqe/effective_connection_type.h"
 #include "net/nqe/external_estimate_provider.h"
 #include "net/nqe/network_quality_estimator_test_util.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/test_url_fetcher_factory.h"

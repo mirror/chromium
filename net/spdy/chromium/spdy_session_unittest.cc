@@ -28,7 +28,7 @@
 #include "net/log/test_net_log.h"
 #include "net/log/test_net_log_entry.h"
 #include "net/log/test_net_log_util.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "net/socket/client_socket_pool_manager.h"
 #include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
