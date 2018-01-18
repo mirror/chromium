@@ -8,6 +8,7 @@
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/policy/device_network_configuration_updater.h"
 #include "chromeos/network/onc/onc_utils.h"
+#include "net/cert/x509_util_nss.h"
 
 namespace policy {
 
@@ -19,6 +20,21 @@ UntrustedAuthorityCertsCache::UntrustedAuthorityCertsCache(
     if (!x509_cert) {
       LOG(ERROR) << "Unable to create untrusted authority certificate from PEM "
                     "encoding";
+      continue;
+    }
+
+    untrusted_authority_certs_.push_back(std::move(x509_cert));
+  }
+}
+
+UntrustedAuthorityCertsCache::UntrustedAuthorityCertsCache(
+    const net::CertificateList& certificates) {
+  for (const auto& certificate : certificates) {
+    net::ScopedCERTCertificate x509_cert =
+        net::x509_util::CreateCERTCertificateFromX509Certificate(
+            certificate.get());
+    if (!x509_cert) {
+      LOG(ERROR) << "Unable to create untrusted authority certificate";
       continue;
     }
 

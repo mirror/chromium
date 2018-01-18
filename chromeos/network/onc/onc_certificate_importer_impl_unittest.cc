@@ -54,12 +54,8 @@ class ONCCertificateImporterImplTest : public testing::Test {
   }
 
  protected:
-  void OnImportCompleted(
-      bool expected_success,
-      bool success,
-      net::ScopedCERTCertificateList onc_trusted_certificates) {
+  void OnImportCompleted(bool expected_success, bool success) {
     EXPECT_EQ(expected_success, success);
-    web_trust_certificates_ = std::move(onc_trusted_certificates);
   }
 
   void AddCertificatesFromFile(const std::string& filename,
@@ -73,14 +69,13 @@ class ONCCertificateImporterImplTest : public testing::Test {
     certificates_value.release()->GetAsList(&certificates);
     onc_certificates_.reset(certificates);
 
-    web_trust_certificates_.clear();
     CertificateImporterImpl importer(task_runner_, test_nssdb_.get());
+    OncParsedCertificates onc_parsed_certificates(*certificates);
     importer.ImportCertificates(
-        *certificates,
+        onc_parsed_certificates,
         ::onc::ONC_SOURCE_USER_IMPORT,  // allow web trust
         base::Bind(&ONCCertificateImporterImplTest::OnImportCompleted,
-                   base::Unretained(this),
-                   expected_success));
+                   base::Unretained(this), expected_success));
 
     task_runner_->RunUntilIdle();
 
@@ -126,7 +121,6 @@ class ONCCertificateImporterImplTest : public testing::Test {
   net::ScopedCERTCertificateList public_list_;
   // List of certs in the nssdb's "private" slot.
   net::ScopedCERTCertificateList private_list_;
-  net::ScopedCERTCertificateList web_trust_certificates_;
 
  private:
   net::ScopedCERTCertificateList ListCertsInPublicSlot() {
@@ -174,7 +168,6 @@ TEST_F(ONCCertificateImporterImplTest, MultipleCertificatesWithFailures) {
 TEST_F(ONCCertificateImporterImplTest, AddClientCertificate) {
   std::string guid;
   AddCertificateFromFile("certificate-client.onc", net::USER_CERT, &guid);
-  EXPECT_TRUE(web_trust_certificates_.empty());
   EXPECT_EQ(1ul, private_list_.size());
   EXPECT_TRUE(public_list_.empty());
 
@@ -221,11 +214,8 @@ TEST_F(ONCCertificateImporterImplTest, AddServerCertificateWithWebTrust) {
       PK11_ListPublicKeysInSlot(private_nssdb_.slot(), NULL);
   EXPECT_FALSE(pubkey_list);
 
-  ASSERT_EQ(1u, web_trust_certificates_.size());
   ASSERT_EQ(1u, public_list_.size());
   EXPECT_TRUE(private_list_.empty());
-  EXPECT_TRUE(CERT_CompareCerts(public_list_[0].get(),
-                                web_trust_certificates_[0].get()));
 }
 
 TEST_F(ONCCertificateImporterImplTest, AddWebAuthorityCertificateWithWebTrust) {
@@ -239,17 +229,12 @@ TEST_F(ONCCertificateImporterImplTest, AddWebAuthorityCertificateWithWebTrust) {
       PK11_ListPublicKeysInSlot(private_nssdb_.slot(), NULL);
   EXPECT_FALSE(pubkey_list);
 
-  ASSERT_EQ(1u, web_trust_certificates_.size());
   ASSERT_EQ(1u, public_list_.size());
   EXPECT_TRUE(private_list_.empty());
-  EXPECT_TRUE(CERT_CompareCerts(public_list_[0].get(),
-                                web_trust_certificates_[0].get()));
 }
 
 TEST_F(ONCCertificateImporterImplTest, AddAuthorityCertificateWithoutWebTrust) {
   AddCertificateFromFile("certificate-authority.onc", net::CA_CERT, NULL);
-  EXPECT_TRUE(web_trust_certificates_.empty());
-
   SECKEYPrivateKeyList* privkey_list =
       PK11_ListPrivKeysInSlot(private_nssdb_.slot(), NULL, NULL);
   EXPECT_FALSE(privkey_list);
