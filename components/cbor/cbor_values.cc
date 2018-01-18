@@ -12,6 +12,12 @@
 
 namespace cbor {
 
+CBORValue CBORValue::FromBoolean(bool boolean_value) {
+  if (boolean_value)
+    return CBORValue(CBORValue::SimpleValue::TRUE_VALUE);
+  return CBORValue(CBORValue::SimpleValue::FALSE_VALUE);
+}
+
 CBORValue::CBORValue() noexcept : type_(Type::NONE) {}
 
 CBORValue::CBORValue(CBORValue&& that) noexcept {
@@ -169,6 +175,11 @@ const CBORValue::MapValue& CBORValue::GetMap() const {
 CBORValue::SimpleValue CBORValue::GetSimpleValue() const {
   CHECK(is_simple());
   return simple_value_;
+}
+
+bool CBORValue::GetBool() const {
+  CHECK(is_bool());
+  return simple_value_ == SimpleValue::TRUE_VALUE;
 }
 
 void CBORValue::InternalMoveConstructFrom(CBORValue&& that) {
