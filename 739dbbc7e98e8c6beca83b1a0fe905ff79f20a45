@@ -294,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "89b9dee1_71157921",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 2139,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-18T20:06:44Z",
+      "side": 1,
+      "message": "I think it\u0027ll crash in some situations otherwise, so I think that it is.",
+      "parentUuid": "d7ee746b_902052b0",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d365ffdf_ef638169",
         "filename": "cc/trees/layer_tree_host_unittest.cc",
         "patchSetId": 28
