@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "10db6842_bdef7a16",
+        "filename": "chrome/common/extensions/docs/templates/articles/hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2018-01-18T22:09:22Z",
+      "side": 1,
+      "message": "Super small nit: now that you\u0027ve changed the title of the doc in the left-nav to be Linux installation, makes sense to repeat that change here.",
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5189909b_c9acb061",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2018-01-18T22:09:22Z",
+      "side": 1,
+      "message": "Ideally you want the headings in the table of contents to match the items in this list. So maybe it should be \u0027This article describes how to package, host, and update .crx files from a person server\u0027, if that is an accurate portrayal of the content. I\u0027m also adding a comment below to change the section title \u0027Autoupdate\u0027 to \u0027Updating\u0027 which compliments this sentence and the parallel doc in webstore hosting.",
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba87206d_5933e20e",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2018-01-18T22:09:22Z",
+      "side": 1,
+      "message": "Suggestion to link to \u0027Webstore Hosting and Updating\u0027 section instead.",
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70a954e0_c1496aaf",
         "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
         "patchSetId": 7
@@ -284,6 +335,40 @@
     },
     {
       "key": {
+        "uuid": "d470e185_159f6dd4",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2018-01-18T22:09:22Z",
+      "side": 1,
+      "message": "Suggestion to retitle this \u0027Updating\u0027.",
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26327aac_7351bfbb",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2018-01-18T22:09:22Z",
+      "side": 1,
+      "message": "This bullet list is strange to me. I realize it\u0027s been there for awhile, but I\u0027d like to suggest that we remove it. The next lines basically say the same things.",
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a41cc166_f6644030",
         "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
         "patchSetId": 7
@@ -446,6 +531,23 @@
       "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dae632a8_f42b46b9",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2018-01-18T22:09:22Z",
+      "side": 1,
+      "message": "Suggestion to put the elements into a table, as it would be visually easier to parse.",
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
