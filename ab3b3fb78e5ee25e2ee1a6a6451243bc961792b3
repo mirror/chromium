@@ -22,6 +22,30 @@
       "revId": "ab3b3fb78e5ee25e2ee1a6a6451243bc961792b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c222992_f098b095",
+        "filename": "chrome/common/extensions/manifest_handlers/extension_action_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2018-01-18T16:12:28Z",
+      "side": 1,
+      "message": "whoops, and good suggestion",
+      "parentUuid": "1c406f12_6726c695",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 16
+      },
+      "revId": "ab3b3fb78e5ee25e2ee1a6a6451243bc961792b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
