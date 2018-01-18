@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e545112_1220a2b6",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 9740,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-18T23:51:21Z",
+      "side": 1,
+      "message": "I was checking if a SSL proxy is in use, then it is always the SSL Socket params that are non-null. This is used by http_proxy_client_socket_pool to determine if the proxy is a secure proxy or not.\n\nI can rm it if it seems like a silly check?",
+      "parentUuid": "eef66208_c117859f",
+      "range": {
+        "startLine": 9740,
+        "startChar": 29,
+        "endLine": 9740,
+        "endChar": 48
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71419b8e_60ccd284",
         "filename": "net/http/http_proxy_client_socket_pool.cc",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-17T17:06:27Z",
       "side": 1,
       "message": "So SSL over a non-SSL proxy will always use the wrong connection timeout?  Does this affect any other case?",
+      "range": {
+        "startLine": 239,
+        "startChar": 30,
+        "endLine": 239,
+        "endChar": 41
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968547a5_bc0ee741",
+        "filename": "net/http/http_proxy_client_socket_pool.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-18T23:51:21Z",
+      "side": 1,
+      "message": "If the proxy is non-SSL, then does the establishing connection with the proxy require exchange of certs? If not, I believe a shorter timeout should work?",
+      "parentUuid": "71419b8e_60ccd284",
       "range": {
         "startLine": 239,
         "startChar": 30,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d9f6afe4_f68e8753",
+        "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-18T23:51:21Z",
+      "side": 1,
+      "message": "Done.\nSee ProxyPoolTimeoutWithConnectionProperty test below.",
+      "parentUuid": "94a86862_4d13fe73",
+      "range": {
+        "startLine": 761,
+        "startChar": 7,
+        "endLine": 761,
+        "endChar": 36
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dacbcf8_2881ebc4",
         "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd061c22_ba964ab2",
+        "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-18T23:51:21Z",
+      "side": 1,
+      "message": "Done. Interesting, I thought the guidelines to use \"const\" for variables scoped to a method were vague.",
+      "parentUuid": "2dacbcf8_2881ebc4",
+      "range": {
+        "startLine": 762,
+        "startChar": 6,
+        "endLine": 762,
+        "endChar": 17
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c167e6a3_bde1cdd9",
+        "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-18T23:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49e212f0_c0175e1f",
+      "range": {
+        "startLine": 764,
+        "startChar": 18,
+        "endLine": 764,
+        "endChar": 30
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7897fb39_2381878c",
         "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b576ec5c_13ede0c9",
+        "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-18T23:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7897fb39_2381878c",
+      "range": {
+        "startLine": 770,
+        "startChar": 24,
+        "endLine": 770,
+        "endChar": 34
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "87a063b7_5999e37f",
+        "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-18T23:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9cc584e_c9784588",
+      "range": {
+        "startLine": 777,
+        "startChar": 3,
+        "endLine": 777,
+        "endChar": 0
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "503c8283_9bb53426",
         "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
         "patchSetId": 8
@@ -183,6 +351,30 @@
       "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d528e3d_abe86b81",
+        "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-18T23:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "503c8283_9bb53426",
+      "range": {
+        "startLine": 786,
+        "startChar": 3,
+        "endLine": 786,
+        "endChar": 0
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "c35a0ecf_bc356b58",
+        "filename": "net/nqe/network_quality_estimator_test_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-18T23:51:21Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "96411716_63f5ae1d",
+      "range": {
+        "startLine": 125,
+        "startChar": 7,
+        "endLine": 125,
+        "endChar": 35
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06961f56_de021505",
         "filename": "net/nqe/network_quality_estimator_test_util.h",
         "patchSetId": 8
@@ -229,6 +445,30 @@
       "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf803fa7_4afbde9f",
+        "filename": "net/nqe/network_quality_estimator_test_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-18T23:51:21Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "06961f56_de021505",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 34
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
