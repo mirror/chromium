@@ -1,0 +1,22 @@
+// Contains features required for Ranker model inference and training.
+
+syntax = "proto2";
+
+option optimize_for = LITE_RUNTIME;
+
+package assist_ranker;
+
+message ExamplePreprocessorConfig {
+  // A list of features names for which you want to do special handling if
+  // the feature is missing in the RankerExample.
+  repeated string missing_features = 1;
+
+  // Boundaries to bucketize a feature.
+  message Boundaries { repeated float boundaries = 1; }
+
+  // A map of feature_name to boundaries for bucketizing this feature.
+  map<string, Boundaries> bucketizers = 2;
+
+  // A map from feature_value_name to indices for vectorizing a RankerExample.
+  map<string, int32> feature_indices = 3;
+}
