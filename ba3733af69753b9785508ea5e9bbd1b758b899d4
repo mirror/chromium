@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9a63770_ba776035",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2082,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-18T18:11:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b06d13be_c89ceacb",
+      "range": {
+        "startLine": 2082,
+        "startChar": 36,
+        "endLine": 2082,
+        "endChar": 39
+      },
+      "revId": "ba3733af69753b9785508ea5e9bbd1b758b899d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ed75d88_d7c9c98b",
         "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ae2feee1_52fb7a65",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-18T18:11:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ed75d88_d7c9c98b",
+      "range": {
+        "startLine": 2109,
+        "startChar": 52,
+        "endLine": 2109,
+        "endChar": 61
+      },
+      "revId": "ba3733af69753b9785508ea5e9bbd1b758b899d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59a99930_da495157",
         "filename": "components/viz/service/surfaces/surface_manager.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "ba3733af69753b9785508ea5e9bbd1b758b899d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95fb27f9_81165b78",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-18T18:11:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59a99930_da495157",
+      "range": {
+        "startLine": 511,
+        "startChar": 29,
+        "endLine": 511,
+        "endChar": 49
+      },
+      "revId": "ba3733af69753b9785508ea5e9bbd1b758b899d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
