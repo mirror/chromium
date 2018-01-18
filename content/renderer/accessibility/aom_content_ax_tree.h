@@ -27,10 +27,14 @@ class AomContentAxTree : public blink::ComputedAXTree {
   // blink::ComputedAXTree implementation.
   bool ComputeAccessibilityTree(blink::WebFrame*) override;
 
-  // Accessible property getters. These will return empty strings if the id does
-  // not correspond to a node in the current AXTree snapshot.
+  // These will return empty strings if the id does not correspond to a node in
+  // the current AXTree snapshot.
   const std::string GetNameFromId(int32_t) override;
   const std::string GetRoleFromId(int32_t) override;
+
+  // Get the specified attribute for a given AXID, returning true if the
+  // attribute is present on that corresponding AXNode.
+  bool GetIntAttributeForId(int32_t, blink::AOMIntAttribute, int32_t*) override;
 
  private:
   ui::AXTree tree_;
