@@ -20,6 +20,9 @@
 // MDCCollectionViewCell. The default is MDCCollectionViewCell.
 @property(nonatomic, assign) Class cellClass;
 
+// The TableView cell class to use in conjunction with this item.
+@property(nonatomic, assign) Class tableViewCellClass;
+
 - (instancetype)initWithType:(NSInteger)type NS_DESIGNATED_INITIALIZER;
 
 // Configures the given cell with the item's information. Override this method
@@ -27,6 +30,8 @@
 // the item to the cell.
 // The cell's class must match cellClass for the given instance.
 - (void)configureCell:(MDCCollectionViewCell*)cell NS_REQUIRES_SUPER;
+
+- (void)configureTableViewCell:(UITableViewCell*)cell NS_REQUIRES_SUPER;
 
 @end
 

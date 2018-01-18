@@ -17,11 +17,13 @@
 @synthesize type = _type;
 @synthesize cellClass = _cellClass;
 @synthesize accessibilityIdentifier = _accessibilityIdentifier;
+@synthesize tableViewCellClass = _tableViewCellClass;
 
 - (instancetype)initWithType:(NSInteger)type {
   if ((self = [super init])) {
     _type = type;
     _cellClass = [MDCCollectionViewCell class];
+    _tableViewCellClass = [UITableViewCell class];
   }
   return self;
 }
@@ -37,6 +39,12 @@
 
 - (void)configureCell:(MDCCollectionViewCell*)cell {
   DCHECK([cell class] == self.cellClass);
+  cell.accessibilityTraits = self.accessibilityTraits;
+  cell.accessibilityIdentifier = self.accessibilityIdentifier;
+}
+
+- (void)configureTableViewCell:(MDCCollectionViewCell*)cell {
+  DCHECK([cell class] == self.tableViewCellClass);
   cell.accessibilityTraits = self.accessibilityTraits;
   cell.accessibilityIdentifier = self.accessibilityIdentifier;
 }
