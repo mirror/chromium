@@ -91,6 +91,8 @@ int PartialCookieOrdering(const CanonicalCookie& a, const CanonicalCookie& b) {
 
 }  // namespace
 
+base::Time CanonicalCookie::last_creation_date_set_;
+
 // Keep defaults here in sync with content/public/common/cookie_manager.mojom.
 CanonicalCookie::CanonicalCookie()
     : secure_(false),
@@ -223,14 +225,14 @@ std::unique_ptr<CanonicalCookie> CanonicalCookie::Create(
   std::string cookie_path = CanonPathWithString(
       url, parsed_cookie.HasPath() ? parsed_cookie.Path() : std::string());
 
-  Time server_time(creation_time);
+  Time creation_time_for_expiration(creation_time.is_null() ? base::Time::Now()
+                                                            : creation_time);
+  Time server_time(creation_time_for_expiration);
   if (options.has_server_time())
     server_time = options.server_time();
 
-  DCHECK(!creation_time.is_null());
-  Time cookie_expires = CanonicalCookie::CanonExpiration(parsed_cookie,
-                                                         creation_time,
-                                                         server_time);
+  Time cookie_expires = CanonicalCookie::CanonExpiration(
+      parsed_cookie, creation_time_for_expiration, server_time);
 
   CookiePrefix prefix = GetCookiePrefix(parsed_cookie.Name());
   bool is_cookie_valid = IsCookiePrefixValid(prefix, url, parsed_cookie);
@@ -246,6 +248,7 @@ std::unique_ptr<CanonicalCookie> CanonicalCookie::Create(
       creation_time, cookie_expires, creation_time, parsed_cookie.IsSecure(),
       parsed_cookie.IsHttpOnly(), parsed_cookie.SameSite(),
       parsed_cookie.Priority()));
+  cc->AssignCreationDate();
   DCHECK(cc->IsCanonical());
   return cc;
 }
@@ -308,6 +311,24 @@ bool CanonicalCookie::IsEquivalentForSecureCookieMatching(
   return (name_ == ecc.Name() && (ecc.IsDomainMatch(DomainWithoutDot()) ||
                                   IsDomainMatch(ecc.DomainWithoutDot())) &&
           ecc.IsOnPath(Path()));
+}
+
+void CanonicalCookie::AssignCreationDate() {
+  if (!creation_date_.is_null())
+    return;
+
+  // The system resolution is not high enough, so we can have multiple
+  // set cookies that result in the same system time.  When this happens, we
+  // increment by one Time unit.
+  // This is all to allow cookie backing stores to use creation time as
+  // their unique primary key.
+  // TODO(rdsmith): Fix this.
+  creation_date_ = base::Time::Now();
+  if (!last_creation_date_set_.is_null() &&
+      creation_date_ <= last_creation_date_set_) {
+    creation_date_ = last_creation_date_set_ + TimeDelta::FromMicroseconds(1);
+  }
+  last_creation_date_set_ = creation_date_;
 }
 
 bool CanonicalCookie::IsOnPath(const std::string& url_path) const {

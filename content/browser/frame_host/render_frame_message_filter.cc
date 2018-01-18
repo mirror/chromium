@@ -461,8 +461,8 @@ void RenderFrameMessageFilter::SetCookie(int32_t render_frame_id,
   }
 
   net::CookieOptions options;
-  std::unique_ptr<net::CanonicalCookie> cookie = net::CanonicalCookie::Create(
-      url, cookie_line, base::Time::Now(), options);
+  std::unique_ptr<net::CanonicalCookie> cookie =
+      net::CanonicalCookie::Create(url, cookie_line, base::Time(), options);
   if (!cookie)
     return;
 

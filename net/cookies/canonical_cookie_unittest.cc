@@ -1205,4 +1205,67 @@ TEST(CanonicalCookieTest, CreateSanitizedCookie_Logic) {
   EXPECT_EQ("/foo%7F", cc->Path());
 }
 
+// Test that CanonicalCookie::Create() creates cookies with unique
+// creation times that are effectively base::Time::Now().
+TEST(CanonicalCookieTest, UniqueCreationTimes) {
+  base::Time null_time;
+  CookieOptions options;
+  const int kNumberOfCookies = 20;
+  std::vector<std::unique_ptr<CanonicalCookie>> cookie_vector;
+  cookie_vector.reserve(kNumberOfCookies);
+  base::Time start_time(base::Time::Now());
+  for (int i = 0; i < kNumberOfCookies; ++i) {
+    // Use a naked char vector to take as little time as possible in the loop
+    // and increase the chances of creation time collisions.
+    char cookie_line[] = "A=1";
+    cookie_vector.push_back(CanonicalCookie::Create(GURL("http://www.foo.com"),
+                                                    "A=1", null_time, options));
+    ++cookie_line[0];
+  }
+  base::Time end_time(base::Time::Now());
+
+  std::set<base::Time> unique_times;
+  for (int i = 0; i < kNumberOfCookies; i++) {
+    EXPECT_LE(start_time, cookie_vector[i]->CreationDate());
+    EXPECT_LE(cookie_vector[i]->CreationDate(),
+              end_time + base::TimeDelta::FromMilliseconds(1));
+    EXPECT_TRUE(unique_times.insert(cookie_vector[i]->CreationDate()).second);
+  }
+}
+
+// Test that CanonicalCookie::AssignCreationDate() assigns unique
+// creation times that are effectively base::Time::Now().
+TEST(CanonicalCookieTest, UniqueAssignedCreationTimes) {
+  CookieOptions options;
+  const int kNumberOfCookies = 20;
+  std::vector<CanonicalCookie> cookie_vector;
+  cookie_vector.reserve(kNumberOfCookies);
+  for (int i = 0; i < kNumberOfCookies; ++i) {
+    // Use a naked char vector to take as little time as possible in the loop
+    // and increase the chances of creation time collisions.
+    char cookie_name[] = "A";
+    CanonicalCookie c(CanonicalCookie(
+        cookie_name, "1", "www.foo.com", "/", base::Time(), base::Time(),
+        base::Time(), false, false, CookieSameSite::NO_RESTRICTION,
+        COOKIE_PRIORITY_DEFAULT));
+    EXPECT_EQ(c.CreationDate(), base::Time());
+    cookie_vector.push_back(c);
+    ++cookie_name[0];
+  }
+
+  base::Time start_time(base::Time::Now());
+  for (int i = 0; i < kNumberOfCookies; ++i)
+    cookie_vector[i].AssignCreationDate();
+  base::Time end_time(base::Time::Now());
+
+  std::set<base::Time> unique_times;
+  for (int i = 0; i < kNumberOfCookies; i++) {
+    EXPECT_LE(start_time, cookie_vector[i].CreationDate());
+    EXPECT_LE(cookie_vector[i].CreationDate(),
+              end_time + base::TimeDelta::FromMilliseconds(1));
+    EXPECT_TRUE(unique_times.insert(cookie_vector[i].CreationDate()).second)
+        << i;
+  }
+}
+
 }  // namespace net
