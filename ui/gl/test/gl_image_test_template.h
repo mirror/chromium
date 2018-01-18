@@ -287,8 +287,8 @@ TYPED_TEST_P(GLImageCopyTest, CopyTexImage) {
                                               gfx::BufferFormat::RGBA_8888, 0)),
       0, gfx::BufferFormat::RGBA_8888, texture_color, pixels.get());
   glBindTexture(target, texture);
-  glTexImage2D(target, 0, GL_RGBA, image_size.width(), image_size.height(), 0,
-               GL_RGBA, GL_UNSIGNED_BYTE, pixels.get());
+  //glTexImage2D(target, 0, GL_RGBA, image_size.width(), image_size.height(), 0,
+  //             GL_RGBA, GL_UNSIGNED_BYTE, pixels.get());
 
   // Copy |image| to |texture|.
   bool rv = image->CopyTexImage(target);
