@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ce8e9d59_72def4c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-18T00:00:27Z",
+      "side": 1,
+      "message": "This is a large enough change to deserve its own CL. Someone scanning through the CL titles would assume this is just a histograms change.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "feb9a2d6_7ee3c0e3",
         "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.h",
         "patchSetId": 4
@@ -13,6 +36,29 @@
       "writtenOn": "2018-01-17T17:01:22Z",
       "side": 1,
       "message": "Changes to scheduler_single_thread_task_runner_manager* could have been done in a separate CL. This CL is not trivial to review.",
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fcf75c2_1b61a9ad",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-18T00:00:27Z",
+      "side": 1,
+      "message": "Is the plan here to make |name| move-only? If so, std::string\u0026\u0026 might be what we want. Otherwise, this should probably stay as const std::string\u0026 as we need to do one copy regardless.",
+      "range": {
+        "startLine": 161,
+        "startChar": 12,
+        "endLine": 161,
+        "endChar": 27
+      },
       "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
