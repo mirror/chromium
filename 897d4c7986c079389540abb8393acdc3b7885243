@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "712d0232_c1f4a435",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-18T01:12:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b00f4ccc_8290d2f8",
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76e14735_3d4acf5f",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
         "patchSetId": 9
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "cebbb968_3d8e7ab9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-18T01:12:46Z",
+      "side": 1,
+      "message": "This is nicer, thanks",
+      "parentUuid": "76e14735_3d4acf5f",
+      "range": {
+        "startLine": 648,
+        "startChar": 38,
+        "endLine": 648,
+        "endChar": 46
+      },
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01a777f4_7e3226f6",
         "filename": "chrome/browser/banners/app_banner_manager.cc",
         "patchSetId": 9
@@ -56,6 +98,24 @@
       "revId": "897d4c7986c079389540abb8393acdc3b7885243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935cd4fb_264f958c",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-18T01:12:46Z",
+      "side": 1,
+      "message": "Given that this is a small utility function, and there are already 4 enum classes in InstallableMetrics (likely to be more), adding an additional enum feels like it would be overkill and potentially additionally confusing.",
+      "parentUuid": "01a777f4_7e3226f6",
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "230a7032_d2d3fac5",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-18T01:12:46Z",
+      "side": 1,
+      "message": "Because we use GetLastCommitedEntry() above, which corresponds to GetLastCommitedURL().",
+      "parentUuid": "ffe73f2e_99e53140",
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a92c78e2_8d64b7eb",
         "filename": "chrome/browser/installable/installable_metrics.h",
         "patchSetId": 9
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "51774edf_a295cd76",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-18T01:12:46Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "a92c78e2_8d64b7eb",
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a91ebd1_11e28937",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 9
@@ -107,6 +203,24 @@
       "revId": "897d4c7986c079389540abb8393acdc3b7885243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c7d1bf_73f0a97d",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 44406,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-18T01:12:46Z",
+      "side": 1,
+      "message": "The convention in this file roughly favours explicit month name without a day.",
+      "parentUuid": "6a91ebd1_11e28937",
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
