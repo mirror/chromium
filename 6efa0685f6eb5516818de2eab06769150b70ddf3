@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c3faddb_609e94aa",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-18T01:06:45Z",
+      "side": 1,
+      "message": "You should return context-\u003eSecurityOrigin(). There are too many ExecutionContexts.",
+      "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b5db1f_d78f0aea",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-18T01:06:45Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565e452c_446dabfa",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-18T01:06:45Z",
+      "side": 1,
+      "message": "Maybe we should use DEFINE_THREAD_SAFE_STATIC_LOCAL.",
+      "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72adf74_21be835f",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-18T01:06:45Z",
+      "side": 1,
+      "message": "Maybe we want to have a logic to make sure that ArrayBuffers in the main frame go to a dedicated partition. You can work on it in a follow-up CL.",
+      "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4818fca1_5440eba9",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-18T01:06:45Z",
+      "side": 1,
+      "message": "You can use WTF::CheckedNumeric.",
+      "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb5f9b0_43097f1a",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-18T01:06:45Z",
+      "side": 1,
+      "message": "Is this method still used?",
+      "revId": "6efa0685f6eb5516818de2eab06769150b70ddf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
