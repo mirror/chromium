@@ -2701,6 +2701,8 @@ if __name__ == '__main__':
       '', '--android-package',
       help=('Android package key. Possible values: ' +
             str(_ANDROID_NEGATIVE_FILTER.keys())))
+  parser.add_option('', '--isolated-script-test-output')
+  parser.add_option('', '--isolated-script-test-perf-output')
   options, args = parser.parse_args()
 
   options.chromedriver = util.GetAbsolutePathOfUserPath(options.chromedriver)
