@@ -40,6 +40,7 @@ using extensions::Extension;
 
 ExtensionAppItem::ExtensionAppItem(
     Profile* profile,
+    AppListModelUpdater* model_updater,
     const app_list::AppListSyncableService::SyncItem* sync_item,
     const std::string& extension_id,
     const std::string& extension_name,
@@ -55,6 +56,7 @@ ExtensionAppItem::ExtensionAppItem(
     UpdateFromSync(sync_item);
   else
     SetDefaultPositionIfApplicable();
+  SetModelUpdater(model_updater);
 }
 
 ExtensionAppItem::~ExtensionAppItem() {

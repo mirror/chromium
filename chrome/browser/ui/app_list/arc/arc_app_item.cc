@@ -19,6 +19,7 @@ const char ArcAppItem::kItemType[] = "ArcAppItem";
 
 ArcAppItem::ArcAppItem(
     Profile* profile,
+    AppListModelUpdater* model_updater,
     const app_list::AppListSyncableService::SyncItem* sync_item,
     const std::string& id,
     const std::string& name)
@@ -36,6 +37,7 @@ ArcAppItem::ArcAppItem(
     UpdateFromSync(sync_item);
   else
     SetDefaultPositionIfApplicable();
+  SetModelUpdater(model_updater);
 }
 
 ArcAppItem::~ArcAppItem() {

@@ -32,9 +32,7 @@ gfx::ImageSkia ChromeAppListItem::CreateDisabledIcon(
 
 ChromeAppListItem::ChromeAppListItem(Profile* profile,
                                      const std::string& app_id)
-    : app_list::AppListItem(app_id),
-      profile_(profile)  {
-}
+    : app_list::AppListItem(app_id), profile_(profile) {}
 
 ChromeAppListItem::~ChromeAppListItem() {
 }
@@ -57,6 +55,14 @@ AppListControllerDelegate* ChromeAppListItem::GetController() {
   return g_controller_for_test != nullptr
              ? g_controller_for_test
              : AppListService::Get()->GetControllerDelegate();
+}
+
+AppListModelUpdater* ChromeAppListItem::GetModelUpdater() {
+  return model_updater_;
+}
+
+void ChromeAppListItem::SetModelUpdater(AppListModelUpdater* model_updater) {
+  model_updater_ = model_updater;
 }
 
 void ChromeAppListItem::UpdateFromSync(
