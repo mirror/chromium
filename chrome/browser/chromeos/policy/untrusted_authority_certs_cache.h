@@ -11,6 +11,7 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "net/cert/scoped_nss_types.h"
+#include "net/cert/x509_certificate.h"
 
 namespace policy {
 
@@ -21,6 +22,8 @@ class UntrustedAuthorityCertsCache {
  public:
   explicit UntrustedAuthorityCertsCache(
       const std::vector<std::string>& onc_x509_authority_certs);
+  explicit UntrustedAuthorityCertsCache(
+      const net::CertificateList& certificates);
   ~UntrustedAuthorityCertsCache();
 
   static std::vector<std::string> GetUntrustedAuthoritiesFromDeviceOncPolicy();
