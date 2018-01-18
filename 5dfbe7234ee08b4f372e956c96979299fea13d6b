@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2df08763_602f4aaa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1258891
+      },
+      "writtenOn": "2018-01-18T11:58:18Z",
+      "side": 1,
+      "message": "What\u0027s the performance of this on a low-end device? Is it good enough for users that have a bunch of passwords?",
+      "range": {
+        "startLine": 167,
+        "startChar": 20,
+        "endLine": 167,
+        "endChar": 35
+      },
+      "revId": "5dfbe7234ee08b4f372e956c96979299fea13d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2963e483_3edece62",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1258891
+      },
+      "writtenOn": "2018-01-18T11:58:18Z",
+      "side": 1,
+      "message": "nit: remove java.lang",
+      "range": {
+        "startLine": 167,
+        "startChar": 36,
+        "endLine": 167,
+        "endChar": 46
+      },
+      "revId": "5dfbe7234ee08b4f372e956c96979299fea13d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a4850a_5f1e21b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1258891
+      },
+      "writtenOn": "2018-01-18T11:58:18Z",
+      "side": 1,
+      "message": "nit: remove \u0027,\u0027",
+      "range": {
+        "startLine": 195,
+        "startChar": 49,
+        "endLine": 195,
+        "endChar": 50
+      },
+      "revId": "5dfbe7234ee08b4f372e956c96979299fea13d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cca52460_12423ea5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1258891
+      },
+      "writtenOn": "2018-01-18T11:58:18Z",
+      "side": 1,
+      "message": "What does this do exactly? \n\nCould white_matrix be a drawable in the resources instead to make it more typical Android code? Alternatively, maybe make white_matrix a constant?",
+      "range": {
+        "startLine": 358,
+        "startChar": 28,
+        "endLine": 358,
+        "endChar": 47
+      },
+      "revId": "5dfbe7234ee08b4f372e956c96979299fea13d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569e567e_f7d838be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1258891
+      },
+      "writtenOn": "2018-01-18T11:58:18Z",
+      "side": 1,
+      "message": "Could you move this closer to the only call site?",
+      "range": {
+        "startLine": 369,
+        "startChar": 17,
+        "endLine": 369,
+        "endChar": 34
+      },
+      "revId": "5dfbe7234ee08b4f372e956c96979299fea13d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed2819a_1ab078c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1258891
+      },
+      "writtenOn": "2018-01-18T11:58:18Z",
+      "side": 1,
+      "message": "Maybe make this the argument to filterPasswords nullable so you can use it here too?",
+      "range": {
+        "startLine": 382,
+        "startChar": 16,
+        "endLine": 383,
+        "endChar": 39
+      },
+      "revId": "5dfbe7234ee08b4f372e956c96979299fea13d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
