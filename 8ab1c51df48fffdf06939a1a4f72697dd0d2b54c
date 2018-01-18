@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7df8fdea_0cbf62c9",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-18T22:01:55Z",
+      "side": 1,
+      "message": "This isn\u0027t safe, we could easily have deleted the keyboardDelegate while this was being created.",
+      "range": {
+        "startLine": 42,
+        "startChar": 23,
+        "endLine": 42,
+        "endChar": 77
+      },
+      "revId": "8ab1c51df48fffdf06939a1a4f72697dd0d2b54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceb6b335_683470e6",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-18T22:01:55Z",
+      "side": 1,
+      "message": "This needs to block on the thread joining before destroying the keyboard (we can\u0027t leave a pending destroy), or we\u0027ll get memory leaks or crashes.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 17
+      },
+      "revId": "8ab1c51df48fffdf06939a1a4f72697dd0d2b54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a57c3c_89467a99",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-18T22:01:55Z",
+      "side": 1,
+      "message": "use braces when you have an else",
+      "revId": "8ab1c51df48fffdf06939a1a4f72697dd0d2b54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4d871f_efc23251",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-18T22:01:55Z",
+      "side": 1,
+      "message": "DCHECK that you\u0027re either creating the keyboard or it\u0027s already created.",
+      "revId": "8ab1c51df48fffdf06939a1a4f72697dd0d2b54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
