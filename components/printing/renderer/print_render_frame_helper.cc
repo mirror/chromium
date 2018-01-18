@@ -930,10 +930,6 @@ void PrepareFrameAndViewForPrint::FinishPrinting() {
   on_ready_.Reset();
 }
 
-bool PrintRenderFrameHelper::Delegate::IsAskPrintSettingsEnabled() {
-  return true;
-}
-
 bool PrintRenderFrameHelper::Delegate::IsScriptedPrintEnabled() {
   return true;
 }
@@ -1489,7 +1485,7 @@ void PrintRenderFrameHelper::Print(blink::WebLocalFrame* frame,
   }
 
   // Ask the browser to show UI to retrieve the final print settings.
-  if (delegate_->IsAskPrintSettingsEnabled()) {
+  {
     // PrintHostMsg_ScriptedPrint in GetPrintSettingsFromUser() will reset
     // |print_scaling_option|, so save the value here and restore it afterwards.
     blink::WebPrintScalingOption scaling_option =
