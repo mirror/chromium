@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2e32afb_1f5bfef4",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-18T08:28:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bd5a5e3_3f10e42d",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c69e456_e20ea9bb",
         "filename": "device/ctap/authenticator_get_assertion_response.h",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4434b5_22a819ff",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-18T08:28:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c69e456_e20ea9bb",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 80
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ec8688e4_7bf49ef5",
+        "filename": "device/ctap/authenticator_get_info_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-18T08:28:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11517e5c_dbf7dfe0",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faffc718_7a0b6d17",
         "filename": "device/ctap/authenticator_get_info_response.h",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac60b2d_775c7719",
+        "filename": "device/ctap/authenticator_get_info_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-18T08:28:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faffc718_7a0b6d17",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 42
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9ff4ac3f_f0b183f9",
+        "filename": "device/ctap/authenticator_make_credential_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-18T08:28:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d567e43a_566a9485",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb0e2609_a46b4b43",
         "filename": "device/ctap/authenticator_options.cc",
         "patchSetId": 14
@@ -137,6 +257,30 @@
       "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f9f6e0_48216876",
+        "filename": "device/ctap/authenticator_options.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-18T08:28:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb0e2609_a46b4b43",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "fd59b065_77bc0c06",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-18T08:28:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04a6894e_413bde78",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c408fb14_b59b9cf1",
         "filename": "device/ctap/authenticator_options.h",
         "patchSetId": 14
@@ -177,6 +345,24 @@
       "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad7a3b4_b9aa3b0a",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-18T08:28:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c408fb14_b59b9cf1",
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "2c40884c_c8b1e1c2",
+        "filename": "device/ctap/ctap_constants.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-18T08:28:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e188153_0b6907b8",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "793a89bb_68db77f9",
         "filename": "device/ctap/ctap_constants.h",
         "patchSetId": 14
@@ -214,6 +424,30 @@
       "writtenOn": "2018-01-12T09:18:10Z",
       "side": 1,
       "message": "nit: if you drop the nested namespace, maybe name this kCTAPResponseCodeList to be more descriptive?\n\nalso, could you add extern linkage for this? otherwise there will be multiple copies of this array in the binary in case you include this header multiple times.",
+      "range": {
+        "startLine": 98,
+        "startChar": 49,
+        "endLine": 98,
+        "endChar": 66
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a638658_b33586d6",
+        "filename": "device/ctap/ctap_constants.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-18T08:28:20Z",
+      "side": 1,
+      "message": "|kCTAPResponseCodeList| was initialized and defined as constexpr per @reillyg\u0027s comment : https://chromium-review.googlesource.com/c/chromium/src/+/850895/8/device/ctap/ctap_constants.cc#11\n\nIs there a way to add extern linkage to constexpr variables? Please let me know which option would be better! :) I\u0027ll also apply same changes to (to be) newly added constants \"uv\"/ \"rp\"/ \"up\" .",
+      "parentUuid": "793a89bb_68db77f9",
       "range": {
         "startLine": 98,
         "startChar": 49,
@@ -269,6 +503,30 @@
       "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0b9da3_12968b8e",
+        "filename": "device/ctap/ctap_get_assertion_request_param.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-18T08:28:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "636e62bf_3b8394c4",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
