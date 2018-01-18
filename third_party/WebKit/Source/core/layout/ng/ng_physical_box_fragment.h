@@ -35,6 +35,8 @@ class CORE_EXPORT NGPhysicalBoxFragment final
   // overflow clip; i.e., AllowOverflowClip() returns false.
   bool HasOverflowClip() const;
   bool ShouldClipOverflow() const;
+  LayoutRect OverflowClipRect(const LayoutPoint&,
+                              OverlayScrollbarClipBehavior) const;
 
   // Visual rect of this box in the local coordinate. Does not include children
   // even if they overflow this box.

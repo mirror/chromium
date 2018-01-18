@@ -969,6 +969,9 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
     return Style()->IsHorizontalWritingMode() ? HorizontalScrollbarHeight()
                                               : VerticalScrollbarWidth();
   }
+  void ExcludeScrollbars(
+      LayoutRect&,
+      OverlayScrollbarClipBehavior = kIgnorePlatformOverlayScrollbarSize) const;
 
   // Return the width of the vertical scrollbar, unless it's larger than the
   // logical width of the content box, in which case we'll return that instead.
@@ -1336,6 +1339,9 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   void EnsureIsReadyForPaintInvalidation() override;
 
   virtual bool HasControlClip() const { return false; }
+  virtual LayoutRect ControlClipRect(const LayoutPoint&) const {
+    return LayoutRect();
+  }
 
   class MutableForPainting : public LayoutObject::MutableForPainting {
    public:
@@ -1381,10 +1387,6 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   }
 
  protected:
-  virtual LayoutRect ControlClipRect(const LayoutPoint&) const {
-    return LayoutRect();
-  }
-
   void WillBeDestroyed() override;
 
   void InsertedIntoTree() override;
@@ -1454,10 +1456,6 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   bool ColumnFlexItemHasStretchAlignment() const;
   bool IsStretchingColumnFlexItem() const;
   bool HasStretchedLogicalWidth() const;
-
-  void ExcludeScrollbars(
-      LayoutRect&,
-      OverlayScrollbarClipBehavior = kIgnorePlatformOverlayScrollbarSize) const;
 
   LayoutUnit ContainingBlockLogicalWidthForPositioned(
       const LayoutBoxModelObject* containing_block,

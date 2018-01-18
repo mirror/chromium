@@ -60,10 +60,8 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
   bool HasSelfPaintingLayer() const;
   LayoutRect VisualRect() const override { return visual_rect_; }
   LayoutRect VisualOverflowRect() const;
-  LayoutRect OverflowClipRect(const LayoutPoint& location,
-                              OverlayScrollbarClipBehavior) const {
-    return {location, VisualRect().Size()};
-  }
+  LayoutRect OverflowClipRect(const LayoutPoint&,
+                              OverlayScrollbarClipBehavior) const;
 
   // Paint all descendant inline box fragments that belong to the specified
   // LayoutObject.
