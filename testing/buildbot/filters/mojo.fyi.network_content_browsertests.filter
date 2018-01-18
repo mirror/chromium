@@ -47,6 +47,7 @@
 -DevToolsDownloadContentTest.DeniedDownload
 -DevToolsDownloadContentTest.DefaultDownloadHeadless
 -DevToolsDownloadContentTest.SingleDownload
+-DevToolsDownloadContentTest.Stream*
 -DevToolsProtocolTest.ControlNavigationsMainFrame
 -DevToolsProtocolTest.SubresourceWithCertificateError
 -GetUserMediaVideoCaptureBrowserTest.RecoverFromCrashInVideoCaptureProcess
