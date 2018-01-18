@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5affc852_5cfb73e1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 97154,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-18T16:50:09Z",
+      "side": 0,
+      "message": "this looks like it was already deprecated. In that case, we recommend not removing the description",
+      "range": {
+        "startLine": 97154,
+        "startChar": 15,
+        "endLine": 97154,
+        "endChar": 23
+      },
+      "revId": "03639ba0fb7568d8f0e7b57dee164e22add675b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32632fee_439fdc43",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 97163,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-18T16:50:09Z",
+      "side": 0,
+      "message": "This isn\u0027t being removed in this CL. Was this ever emitted?",
+      "revId": "03639ba0fb7568d8f0e7b57dee164e22add675b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
