@@ -92,6 +92,8 @@ class CBOR_EXPORT CBORValue {
     UNDEFINED = 23,
   };
 
+  static CBORValue FromBoolean(bool boolean_value);
+
   CBORValue(CBORValue&& that) noexcept;
   CBORValue() noexcept;  // A NONE value.
 
@@ -137,9 +139,14 @@ class CBOR_EXPORT CBORValue {
   bool is_array() const { return type() == Type::ARRAY; }
   bool is_map() const { return type() == Type::MAP; }
   bool is_simple() const { return type() == Type::SIMPLE_VALUE; }
+  bool is_bool() const {
+    return is_simple() && (GetSimpleValue() == SimpleValue::TRUE_VALUE ||
+                           GetSimpleValue() == SimpleValue::FALSE_VALUE);
+  }
 
   // These will all fatally assert if the type doesn't match.
   SimpleValue GetSimpleValue() const;
+  bool GetBool() const;
   const int64_t& GetInteger() const;
   const int64_t& GetUnsigned() const;
   const int64_t& GetNegative() const;
