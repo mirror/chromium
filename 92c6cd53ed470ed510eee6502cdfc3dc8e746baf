@@ -106,6 +106,24 @@
       "revId": "92c6cd53ed470ed510eee6502cdfc3dc8e746baf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdefe00a_8f5e7942",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-18T13:38:52Z",
+      "side": 1,
+      "message": "Yeah I already stole it. Don\u0027t steal my stealing too. Fortunately log formats are in the new patch so I can resolve this comment... phew.",
+      "parentUuid": "f6a0ebc5_e4ca0528",
+      "revId": "92c6cd53ed470ed510eee6502cdfc3dc8e746baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
