@@ -16,6 +16,24 @@
       "revId": "cd37ea5b25425e94eaf8940a17b8b79612dd1d94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b3035e_78e182ae",
+        "filename": "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-18T21:48:51Z",
+      "side": 1,
+      "message": "Yes, it\u0027s the same identifier.",
+      "parentUuid": "b7069a67_fff1523f",
+      "revId": "cd37ea5b25425e94eaf8940a17b8b79612dd1d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
