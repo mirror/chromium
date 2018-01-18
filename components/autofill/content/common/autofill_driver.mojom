@@ -14,15 +14,28 @@ import "url/mojo/url.mojom";
 // There is one instance of this interface per render frame host in the browser
 // process. All methods are called by renderer on browser.
 interface AutofillDriver {
+  enum SubmissionSource {
+    SAME_DOCUMENT_NAVIGATION, // The form was removed in same document
+                              // navigation.
+    XHR_SUCCEEDED, // The form was removed whem XHR succeeded.
+    FRAME_DETACHED, // The subframe which has form was detached.
+    DOM_MUTATION_AFTER_XHR, // The form was removed after XHR.
+    PROBABLY_FORM_SUBMITTED, // The form was probably submitted since new page
+                             // is loaded.
+    FORM_SUBMISSION, // Normal form submission.
+  };
+
   // Notification that forms have been seen that are candidates for
   // filling/submitting by the AutofillManager.
   FormsSeen(array<FormData> forms, mojo.common.mojom.TimeTicks timestamp);
 
-  // Notification that a form is about to be submitted. The user hit the button.
-  WillSubmitForm(FormData form, mojo.common.mojom.TimeTicks timestamp);
-
-  // Notification that a form has been submitted.
-  FormSubmitted(FormData form);
+  // Notification that a form has been submitted. The |known_success| indicates
+  // whether the submission succeeded or not. Currently, we assume submission
+  // succeeds if the form is removed.
+  FormSubmitted(FormData form,
+                bool known_success,
+                SubmissionSource source,
+                mojo.common.mojom.TimeTicks timestamp);
 
   // Notification that a form field's value has changed.
   TextFieldDidChange(FormData form,
