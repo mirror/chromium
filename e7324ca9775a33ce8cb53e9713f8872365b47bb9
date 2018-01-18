@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b103f274_dc91506e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T21:09:32Z",
+      "side": 1,
+      "message": "A couple things to think about with the current behavior.  Since destroying the native is deferred until the processing is complete, this callback might return after this UI has been destroyed, so when you start processing the information you\u0027ll want to do some sanity checking that any UI you interact with isn\u0027t dead.\n\nAlso, you should try turning on the developer option in Android \"Don\u0027t keep activities\" to test what happens when you kick of re-auth.  I don\u0027t know if this activity would be destroyed and whether that would break everything.  If that does happen, we might consider not kicking off the serialization until after they return (although we\u0027d somehow need to cache their selection, which might be just as hard).\n\nJust things to keep in mind with the fun of android.",
+      "range": {
+        "startLine": 129,
+        "startChar": 36,
+        "endLine": 129,
+        "endChar": 44
+      },
+      "revId": "e7324ca9775a33ce8cb53e9713f8872365b47bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f271874_30e7bb4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T21:09:32Z",
+      "side": 1,
+      "message": "do we need to do anything with the UI to prevent two serializations from happening at the same time?  Should we change the options menu/disable the item or something to prevent the state machine natively from getting borked?",
+      "revId": "e7324ca9775a33ce8cb53e9713f8872365b47bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d233b5_18d9f251",
+        "filename": "chrome/browser/android/password_ui_view_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T21:09:32Z",
+      "side": 1,
+      "message": "from my comment on the java side, should this be NOTREACHED as well since we maybe should disable the UI accordingly?",
+      "range": {
+        "startLine": 149,
+        "startChar": 9,
+        "endLine": 149,
+        "endChar": 14
+      },
+      "revId": "e7324ca9775a33ce8cb53e9713f8872365b47bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
