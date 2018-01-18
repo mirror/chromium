@@ -267,6 +267,149 @@
       "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32f3f02_fd1e19d3",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T11:53:32Z",
+      "side": 1,
+      "message": "nit: Unused I think.",
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82b3696_a3cde8e7",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T11:53:32Z",
+      "side": 1,
+      "message": "nit: Blank line above.\n\nOtherwise really nice, thanks!",
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e1be851_27f57701",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T11:53:32Z",
+      "side": 1,
+      "message": "nit: DCHECK_NE",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 8
+      },
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2ca7d2_6d1c63e0",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T11:53:32Z",
+      "side": 1,
+      "message": "nit: Incomplete link?",
+      "range": {
+        "startLine": 171,
+        "startChar": 37,
+        "endLine": 171,
+        "endChar": 55
+      },
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b379397_b811a8f7",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T11:53:32Z",
+      "side": 1,
+      "message": "typo: Assert",
+      "range": {
+        "startLine": 301,
+        "startChar": 43,
+        "endLine": 301,
+        "endChar": 48
+      },
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb2debb_6188d5ea",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T11:53:32Z",
+      "side": 1,
+      "message": "super nit: Consider introducing a named local const\u0026 variable for this, so that you can save 2 lines (no wrapping, and no braces needed) and it looks cleaner. :)",
+      "range": {
+        "startLine": 453,
+        "startChar": 44,
+        "endLine": 453,
+        "endChar": 74
+      },
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ef904a_326f6e41",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOriginTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T11:53:32Z",
+      "side": 1,
+      "message": "nit: Tautology. :)",
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
