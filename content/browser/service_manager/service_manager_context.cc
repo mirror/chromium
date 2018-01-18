@@ -548,9 +548,11 @@ ServiceManagerContext::ServiceManagerContext() {
   bool network_service_enabled =
       base::FeatureList::IsEnabled(features::kNetworkService);
   bool network_service_in_process =
-      base::FeatureList::IsEnabled(features::kNetworkServiceInProcess) ||
-      base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kSingleProcess);
+      !base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kForceOutOfProcessNetworkService) &&
+      (base::FeatureList::IsEnabled(features::kNetworkServiceInProcess) ||
+       base::CommandLine::ForCurrentProcess()->HasSwitch(
+           switches::kSingleProcess));
   if (network_service_enabled) {
     if (network_service_in_process) {
       service_manager::EmbeddedServiceInfo network_service_info;

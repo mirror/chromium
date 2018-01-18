@@ -92,4 +92,11 @@ URLLoaderFactoryBundle URLLoaderFactoryBundle::Clone() {
   return new_bundle;
 }
 
+void URLLoaderFactoryBundle::Update(URLLoaderFactoryBundle source_bundle) {
+  if (source_bundle.default_factory_)
+    default_factory_ = std::move(source_bundle.default_factory_);
+  for (auto& iter : source_bundle.factories_)
+    factories_[iter.first] = std::move(iter.second);
+}
+
 }  // namespace content
