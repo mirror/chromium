@@ -637,6 +637,12 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void ProgressFling(base::TimeTicks current_time);
   void StopFling();
 
+  void DidReceiveFirstFrameAfterNavigation();
+
+  uint32_t current_content_source_id() { return current_content_source_id_; }
+
+  void SetScreenOrientationForTesting(ScreenOrientationValues orientation);
+
  protected:
   // ---------------------------------------------------------------------------
   // The following method is overridden by RenderViewHost to send upwards to
@@ -1058,6 +1064,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   mojom::WidgetInputHandlerPtr widget_input_handler_;
   std::unique_ptr<mojom::WidgetInputHandler> legacy_widget_input_handler_;
   viz::mojom::InputTargetClientPtr input_target_client_;
+
+  base::Optional<ScreenOrientationValues> screen_orientation_for_testing_;
 
   base::WeakPtrFactory<RenderWidgetHostImpl> weak_factory_;
 
