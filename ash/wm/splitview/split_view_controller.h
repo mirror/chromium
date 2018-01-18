@@ -174,6 +174,9 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   // of the screen.
   void UpdateBlackScrim(const gfx::Point& location_in_screen);
 
+  // Updates |resizing_gap_layer_| during resizing.
+  void UpdateResizingGapLayer();
+
   // Updates the bounds for the snapped windows and divider according to the
   // current snap direction.
   void UpdateSnappedWindowsAndDividerBounds();
@@ -252,6 +255,11 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   // closer to the edge of the screen.
   std::unique_ptr<ui::Layer> black_scrim_layer_;
 
+  // A black scrim layer that fills in the resizing gap between the two snapped
+  // windows during resizing. We only update the snapped windows' bounds after
+  // resizing for smoother visual results.
+  std::unique_ptr<ui::Layer> resizing_gap_layer_;
+
   // The distance between the origin of the divider and the origin of the screen
   // in screen coordinates.
   //     |<---     divider_position_    --->|
@@ -261,6 +269,9 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   //     |                                  | |                    |
   //     ----------------------------------------------------------
   int divider_position_ = -1;
+
+  // The initial |divider_position_| during resizing.
+  int initial_divider_position_ = -1;
 
   // The location of the previous mouse/gesture event in screen coordinates.
   gfx::Point previous_event_location_;
