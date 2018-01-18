@@ -22,6 +22,30 @@
       "revId": "6f316678be5d07c51404e129ec9d5d48b595cc9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a45622f_e3eebdf9",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-18T22:38:52Z",
+      "side": 1,
+      "message": "Ok, I made change and enabled this only for ClientControlledShellSurface+!client_controlled_move_resize_ OR\nXdgShellSurface+server sdie decoration, and updated the comment.\n\nPTAL",
+      "parentUuid": "7d6faf62_2822e051",
+      "range": {
+        "startLine": 203,
+        "startChar": 7,
+        "endLine": 206,
+        "endChar": 59
+      },
+      "revId": "6f316678be5d07c51404e129ec9d5d48b595cc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
