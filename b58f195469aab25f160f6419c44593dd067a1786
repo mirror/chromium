@@ -249,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "2d5ffc63_7b4db24f",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1259934
+      },
+      "writtenOn": "2018-01-18T01:53:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78fc74c2_6e614bc3",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "b58f195469aab25f160f6419c44593dd067a1786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ddbe0ef_b2b6ccc6",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
         "patchSetId": 6
@@ -269,6 +293,30 @@
       "revId": "b58f195469aab25f160f6419c44593dd067a1786",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c5651b_df2489fe",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1259934
+      },
+      "writtenOn": "2018-01-18T01:53:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ddbe0ef_b2b6ccc6",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "b58f195469aab25f160f6419c44593dd067a1786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
