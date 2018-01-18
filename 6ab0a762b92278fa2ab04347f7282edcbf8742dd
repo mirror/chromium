@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2da79eb8_cda74c8c",
+        "filename": "chrome/browser/devtools/devtools_window.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1290,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-18T01:56:31Z",
+      "side": 1,
+      "message": "The fixup will convert \u0027about://inspect\u0027 into \u0027chrome://inspect\u0027",
+      "range": {
+        "startLine": 1290,
+        "startChar": 21,
+        "endLine": 1290,
+        "endChar": 29
+      },
+      "revId": "6ab0a762b92278fa2ab04347f7282edcbf8742dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

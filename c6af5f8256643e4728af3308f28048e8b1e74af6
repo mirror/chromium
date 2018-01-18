@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3d3e3b11_994f7a09",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2106,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-18T01:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7b19a5b_ec597e57",
+      "revId": "c6af5f8256643e4728af3308f28048e8b1e74af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "837bbcac_36055025",
         "filename": "chrome/browser/devtools/devtools_window.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-17T19:01:49Z",
       "side": 1,
       "message": "We should filter against GetInspectedWebContents() instead.\nAlso, GetRenderViewHost() may return null.",
+      "revId": "c6af5f8256643e4728af3308f28048e8b1e74af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf001d7_dbde98dc",
+        "filename": "chrome/browser/devtools/devtools_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-18T01:56:31Z",
+      "side": 1,
+      "message": "I see, main_web_contents_ might be higher privileged than the inspected contents.\nSince GetInspectedWebContents() may be null, I will try an approach that does not depend on WebContents at all.",
+      "parentUuid": "837bbcac_36055025",
       "revId": "c6af5f8256643e4728af3308f28048e8b1e74af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
