@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fac2d433_5aafdf17",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-18T05:52:26Z",
+      "side": 1,
+      "message": "String\u0026 -\u003e AtomicString\u0026",
+      "revId": "1df2efa3841d53d44e67a6e5cf54dbf71af18b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
