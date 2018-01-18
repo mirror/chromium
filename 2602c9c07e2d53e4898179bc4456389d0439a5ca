@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "afcb8119_a5973d2e",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2018-01-18T21:13:56Z",
+      "side": 1,
+      "message": "This should only happen if we get a sync notification to delete the address while we are editing it. This should be pretty rare. In this case I think creating returning would be fine. Should I return with an error like at line 185? I don\u0027t know the implications of returning an error.",
+      "parentUuid": "115aa6d8_ca9a45c9",
+      "revId": "2602c9c07e2d53e4898179bc4456389d0439a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56cabe70_6dac4dbc",
         "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "25a5cc3a_d99b8f3a",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2018-01-18T21:13:56Z",
+      "side": 1,
+      "message": "I tried looking at other classes for an example of a good api test but I\u0027m having trouble. Could you point me to one?\n\nOtherwise my idea is that we should mock a personal_data_manager an make sure the right calls are made (Update vs Create). Would that make sense?",
+      "parentUuid": "56cabe70_6dac4dbc",
+      "revId": "2602c9c07e2d53e4898179bc4456389d0439a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6590a30_a81ba210",
         "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-17T01:58:37Z",
       "side": 1,
       "message": "guid being valid does not necessary imply that the profile is an existing one - at least not by looking at this method only\n(it will happily proceed if a valid, non existing GUID is passed to it),",
+      "revId": "2602c9c07e2d53e4898179bc4456389d0439a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac9ccb3_df6fefb0",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2018-01-18T21:13:56Z",
+      "side": 1,
+      "message": "In this case checking if the guid is empty should give the same result but would maybe be more clear?\n\nSince we are in the settings, it should almost never happen that an existing card gets deleted while the user is editing it. Maybe some late sync from another chrome? In any case, UpdateCreditCard will return without doing anything if it cannot find.",
+      "parentUuid": "e6590a30_a81ba210",
       "revId": "2602c9c07e2d53e4898179bc4456389d0439a5ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
