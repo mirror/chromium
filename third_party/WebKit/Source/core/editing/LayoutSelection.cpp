@@ -27,6 +27,7 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
+#include "core/editing/VisibleSelection.h"
 #include "core/editing/VisibleUnits.h"
 #include "core/html/forms/TextControlElement.h"
 #include "core/layout/LayoutText.h"
@@ -699,23 +700,13 @@ std::pair<unsigned, unsigned> LayoutSelection::SelectionStartEndForNG(
   }
 }
 
-static NewPaintRangeAndSelectedLayoutObjects
-CalcSelectionRangeAndSetSelectionState(const FrameSelection& frame_selection) {
-  const SelectionInDOMTree& selection_in_dom =
-      frame_selection.GetSelectionInDOMTree();
-  if (selection_in_dom.IsNone())
-    return {};
-
-  const EphemeralRangeInFlatTree& selection =
-      CalcSelectionInFlatTree(frame_selection);
-  if (selection.IsCollapsed() || frame_selection.IsHidden())
-    return {};
-
+static SelectionPaintRange ComputePaintRangeInternal(
+    const EphemeralRangeInFlatTree& selection,
+    SelectedLayoutObjects* selected_objects) {
   // Find first/last visible LayoutObject while
   // marking SelectionState and collecting invalidation candidate LayoutObjects.
   LayoutObject* start_layout_object = nullptr;
   LayoutObject* end_layout_object = nullptr;
-  SelectedLayoutObjects selected_objects;
   for (const Node& node : selection.Nodes()) {
     LayoutObject* const layout_object = node.GetLayoutObject();
     if (!layout_object || !layout_object->CanBeSelectionLeaf())
@@ -730,8 +721,8 @@ CalcSelectionRangeAndSetSelectionState(const FrameSelection& frame_selection) {
     // In this loop, |end_layout_object| is pointing current last candidate
     // LayoutObject and if it is not start and we find next, we mark the
     // current one as kInside.
-    if (end_layout_object != start_layout_object)
-      MarkSelectedInside(&selected_objects, end_layout_object);
+    if (selected_objects && end_layout_object != start_layout_object)
+      MarkSelectedInside(selected_objects, end_layout_object);
     end_layout_object = layout_object;
   }
 
@@ -746,6 +737,58 @@ CalcSelectionRangeAndSetSelectionState(const FrameSelection& frame_selection) {
       *start_layout_object, selection.StartPosition().ToOffsetInAnchor());
   const WTF::Optional<unsigned> end_offset = ComputeEndOffset(
       *end_layout_object, selection.EndPosition().ToOffsetInAnchor());
+
+  return {start_layout_object, start_offset, end_layout_object, end_offset};
+}
+
+VisibleSelection LayoutSelection::ComputeVisibleSelection(
+    const SelectionInDOMTree& selection) {
+  const EphemeralRangeInFlatTree& flat_tree_range =
+      ConvertToSelectionInFlatTree(selection).ComputeRange();
+  const SelectionPaintRange& paint_range =
+      ComputePaintRangeInternal(flat_tree_range, nullptr);
+  if (paint_range.IsNull())
+    return {};
+  const Position start =
+      paint_range.StartOffset().has_value()
+          ? Position(*paint_range.StartLayoutObject()->GetNode(),
+                     paint_range.StartOffset().value())
+          : Position::BeforeNode(*paint_range.StartLayoutObject()->GetNode());
+  const Position end =
+      paint_range.EndOffset().has_value()
+          ? Position(*paint_range.EndLayoutObject()->GetNode(),
+                     paint_range.EndOffset().value())
+          : Position::AfterNode(*paint_range.EndLayoutObject()->GetNode());
+
+  if (selection.IsBaseFirst()) {
+    return VisibleSelection::CreateWithoutValidationDeprecated(
+        start, end, TextAffinity::kDefault);
+  }
+  return VisibleSelection::CreateWithoutValidationDeprecated(
+      end, start, TextAffinity::kDefault);
+}
+
+static NewPaintRangeAndSelectedLayoutObjects
+CalcSelectionRangeAndSetSelectionState(const FrameSelection& frame_selection) {
+  const SelectionInDOMTree& selection_in_dom =
+      frame_selection.GetSelectionInDOMTree();
+  if (selection_in_dom.IsNone())
+    return {};
+
+  const EphemeralRangeInFlatTree& selection =
+      CalcSelectionInFlatTree(frame_selection);
+  if (selection.IsCollapsed() || frame_selection.IsHidden())
+    return {};
+
+  SelectedLayoutObjects selected_objects;
+  const SelectionPaintRange& paint_range =
+      ComputePaintRangeInternal(selection, &selected_objects);
+  if (paint_range.IsNull())
+    return {};
+  LayoutObject* const start_layout_object = paint_range.StartLayoutObject();
+  LayoutObject* const end_layout_object = paint_range.EndLayoutObject();
+  const WTF::Optional<unsigned> start_offset = paint_range.StartOffset();
+  const WTF::Optional<unsigned> end_offset = paint_range.EndOffset();
 
   NewPaintRangeAndSelectedLayoutObjects new_range =
       start_layout_object == end_layout_object
