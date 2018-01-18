@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfd071a1_69da3c7f",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T18:43:41Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this #if? In the long run we should, but right now I\u0027d expect this to pass on Mac :)",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf96fe4_de68a1b8",
+        "filename": "content/common/notifications/notification_struct_traits_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T18:43:41Z",
+      "side": 1,
+      "message": "nits: please remove `const` from the arguments (they\u0027re very uncommon), blank lines in the namespace{} block and move the entire block to line ~28",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a1b5044_46f21876",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T18:43:41Z",
+      "side": 1,
+      "message": "nit: I\u0027d DCHECK(notification_resources) since the error would be clearer than the deref on line 116",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf91392_0018f33c",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T18:43:41Z",
+      "side": 1,
+      "message": "I think we can just inline this too and return the WebVector\u003c\u003e?",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933345f3_245b390e",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraitsTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T18:43:41Z",
+      "side": 1,
+      "message": "nits: blank line before closing the namespace, add \"  // namespace\" and also move to line ~33.",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5cff11f_7b47bf7e",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T18:43:41Z",
+      "side": 1,
+      "message": "nit: drop \"url\"",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db02e2b_6b721d98",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T18:43:41Z",
+      "side": 1,
+      "message": "no longer relevant, delete",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
