@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "621be5f9_cb5ae86c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/custom-user-timing/performanceobservers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-18T16:20:09Z",
+      "side": 1,
+      "message": "Should this cover endTime?",
+      "range": {
+        "startLine": 13,
+        "startChar": 14,
+        "endLine": 13,
+        "endChar": 23
+      },
+      "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e9d876_a3fe848e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/custom-user-timing/po-customusertiming-measure.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-18T16:20:09Z",
+      "side": 1,
+      "message": "There\u0027s probably a way to avoid hard coding this threshold.\n\nWhat about just setting the name of the last measure to \"done\", and waiting until we receive that PerformanceEntry?",
+      "range": {
+        "startLine": 24,
+        "startChar": 14,
+        "endLine": 24,
+        "endChar": 39
+      },
+      "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9a6e91_9c1014a9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/custom-user-timing/po-customusertiming-measure.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-18T16:20:09Z",
+      "side": 1,
+      "message": "Looks like this needs to be updated.",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 30,
+        "endChar": 73
+      },
+      "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d80ef4_beced649",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-18T16:20:09Z",
+      "side": 1,
+      "message": "nit: timestamps",
+      "range": {
+        "startLine": 66,
+        "startChar": 15,
+        "endLine": 66,
+        "endChar": 26
+      },
+      "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494f0b59_c8dd9ed0",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-18T16:20:09Z",
+      "side": 1,
+      "message": "Don\u0027t need this-\u003e, do you?",
+      "range": {
+        "startLine": 498,
+        "startChar": 2,
+        "endLine": 498,
+        "endChar": 8
+      },
+      "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da423f7f_8fee9520",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-18T16:20:09Z",
+      "side": 1,
+      "message": "I think we need to throw exceptions in this case, not crash.",
+      "range": {
+        "startLine": 526,
+        "startChar": 4,
+        "endLine": 526,
+        "endChar": 14
+      },
+      "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f059f8_e16a2619",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceMeasureOptions.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-18T16:20:09Z",
+      "side": 1,
+      "message": "ergonomics",
+      "range": {
+        "startLine": 11,
+        "startChar": 46,
+        "endLine": 11,
+        "endChar": 54
+      },
+      "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffbfdda8_f42a7bb9",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceMeasureOptions.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-18T16:20:09Z",
+      "side": 1,
+      "message": "List a bug number here.",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f49b78_9278f19d",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceUserTiming.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-18T16:20:09Z",
+      "side": 1,
+      "message": "This will never be a PerformanceMarkOptions, right?",
+      "range": {
+        "startLine": 77,
+        "startChar": 35,
+        "endLine": 77,
+        "endChar": 57
+      },
+      "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d350b1fb_9b0156b0",
+        "filename": "third_party/WebKit/Source/core/timing/WorkerPerformance.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-18T16:20:09Z",
+      "side": 1,
+      "message": "nit: timestamps",
+      "range": {
+        "startLine": 61,
+        "startChar": 15,
+        "endLine": 61,
+        "endChar": 26
+      },
+      "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
