@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2a7648ad_bde3fab5",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T17:59:39Z",
+      "side": 1,
+      "message": "Nit (optional): The current name is a bit too specific. Perhaps rename to GetHelpUrl() ?",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 40
+      },
+      "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1597e7d_ec49bd9b",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 1
@@ -30,6 +53,47 @@
       "writtenOn": "2018-01-18T17:40:11Z",
       "side": 1,
       "message": "+dpapad@, +dschyuler@ - It seems a little unfortunate to add this to every help URL, but I don\u0027t see an easy alternative. Here is where this is used:\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/a11y_page/manage_a11y_page.html?type\u003dcs\u0026q\u003da11yLearnMoreUrl\u0026sq\u003dpackage:chromium\u0026l\u003d40\n\nWe could set a \"crosBoard\" string and use a behavior to do this (e.g. href\u003d\"[[getHelpUrl(\u0027a11yLearnMoreUrl\u0027)]]\") but I\u0027m not sure that is any better? It would also loose the advantage of being able to use $i18nRaw.\n\nThoughts?",
+      "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9220158_868fe608",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T17:59:39Z",
+      "side": 1,
+      "message": "I don\u0027t think that delegating the responsibility of appending the parameter to the JS side is any better.\n\nAlso it is unclear to me why we use i18nRaw in the example you linked. In most similar cases i18n seems to be sufficient, see examples https://cs.chromium.org/search/?q\u003d%22Url%7D%22+file:%5Esrc/chrome/browser/resources/settings/+package:%5Echromium$\u0026type\u003dcs.",
+      "parentUuid": "cce28f4f_f0bd130c",
+      "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e6d4f2_a3609b29",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T17:59:39Z",
+      "side": 1,
+      "message": "Is this ChromeOS only code? It does not look so. Same at line 1508.",
+      "range": {
+        "startLine": 1500,
+        "startChar": 25,
+        "endLine": 1500,
+        "endChar": 50
+      },
       "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
