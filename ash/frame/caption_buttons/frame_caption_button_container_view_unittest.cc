@@ -176,7 +176,7 @@ TEST_F(FrameCaptionButtonContainerViewTest,
   gfx::Rect minimize_button_bounds = test.minimize_button()->bounds();
   gfx::Rect close_button_bounds = test.close_button()->bounds();
   EXPECT_EQ(close_button_bounds.x(), minimize_button_bounds.right());
-  EXPECT_EQ(initial_size_button_bounds, test.size_button()->bounds());
+  EXPECT_EQ(gfx::Rect(), test.size_button()->bounds());
   EXPECT_EQ(initial_close_button_bounds.size(), close_button_bounds.size());
   EXPECT_LT(container.GetPreferredSize().width(),
             initial_container_bounds.width());
