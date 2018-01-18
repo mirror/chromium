@@ -153,6 +153,24 @@
       "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634c6090_3a19261d",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/notifications/MockNotificationManagerProxy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-18T15:05:53Z",
+      "side": 1,
+      "message": "Actually, don\u0027t worry about this.\n\nI\u0027m opening a bug for me to improve our test coverage of notification code on Android in general and tests for getNotifications can fall under that; not worth you digging into this now.",
+      "parentUuid": "4eb40ef3_5bd99c62",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
