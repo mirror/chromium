@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aef724e_463604fc",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-18T17:18:18Z",
+      "side": 1,
+      "message": "We might want to check from the disassembly that this isn\u0027t being optimized out :)",
+      "range": {
+        "startLine": 856,
+        "startChar": 9,
+        "endLine": 856,
+        "endChar": 36
+      },
+      "revId": "6ea4f1d56239bf060c2417e03f026d27f8ea6317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
