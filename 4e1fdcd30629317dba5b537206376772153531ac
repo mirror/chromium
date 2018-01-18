@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2a04a66_54f45562",
+        "filename": "components/prefs/pref_registry_simple.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-18T01:45:03Z",
+      "side": 1,
+      "message": "It seems a bit silly, and potentially error-prone, that each RegisterFooPref() method is duplicated; and that they are not implemented in terms of one another. Would anyone be opposed to me sending out a follow-up CL that changes all two-arg implementations to be simple pass-through wrappers?  That is:\n\n  RegisterFooPref(const std::string\u0026 path, /* foo_type */ default_value) {\n    RegisterFooPref(path, default_value, NO_REGISTRATION_FLAGS)\n  }",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 1
+      },
+      "revId": "4e1fdcd30629317dba5b537206376772153531ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
