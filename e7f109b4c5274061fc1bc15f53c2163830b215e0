@@ -16,6 +16,24 @@
       "revId": "e7f109b4c5274061fc1bc15f53c2163830b215e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb98a92b_9f0ad7d2",
+        "filename": "build/config/gcc/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-18T23:34:17Z",
+      "side": 1,
+      "message": "w/o this, libcpp_is_static\u003dfalse: clang_x64/ijar fails due to being unable to find libc++.so\n\nw/o this, is_component_build\u003dtrue: seems to work, but generates libc++.cr.so instead (not sure if that\u0027s what we want)\n\nis_component_build\u003dfalse, libcpp_is_static\u003dtrue: libc++ is built as a source set, not a .so\n\nw/ this, libcpp_is_static\u003dfalse: everything seems to work, generates libc++.so",
+      "parentUuid": "b213e812_c592fe8d",
+      "revId": "e7f109b4c5274061fc1bc15f53c2163830b215e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
