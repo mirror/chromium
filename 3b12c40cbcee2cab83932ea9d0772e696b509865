@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "019c8a70_668f8f86",
+        "filename": "chrome/browser/resources/settings/date_time_page/date_time_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-18T01:01:29Z",
+      "side": 1,
+      "message": "\u003e PrefsBehavior is still used as a source for |pref| member.\n\nI see.\n\n\u003e TimeZoneAutoDetectMethod from date_time_types is used on line 73 here. Or did you mean another pref_types ?\n\nI\u0027ll comment on the .html file directly.",
+      "parentUuid": "77c86660_a165a7c4",
+      "range": {
+        "startLine": 14,
+        "startChar": 28,
+        "endLine": 14,
+        "endChar": 41
+      },
+      "revId": "3b12c40cbcee2cab83932ea9d0772e696b509865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eeb0e8fb_8997e759",
         "filename": "chrome/browser/resources/settings/date_time_page/date_time_types.js",
         "patchSetId": 5
