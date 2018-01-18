@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "877c91dd_3d24b55f",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-18T05:52:55Z",
+      "side": 1,
+      "message": "nit: Maybe use a count of ticking tickers to avoid looping?",
+      "revId": "5d68360d320a2ed4b533c8c5244d6873e3fcfd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ceaa0a_2f67ab4d",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-18T05:52:55Z",
+      "side": 1,
+      "message": "I thought the ticker_id was just going to be the index into the tickers vector? Do you expect lots of tickers to be created for a single animation player over time?",
+      "revId": "5d68360d320a2ed4b533c8c5244d6873e3fcfd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18e53e8_10abc83b",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-18T05:52:55Z",
+      "side": 1,
+      "message": "Can this just be tickers_.size()?",
+      "revId": "5d68360d320a2ed4b533c8c5244d6873e3fcfd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
