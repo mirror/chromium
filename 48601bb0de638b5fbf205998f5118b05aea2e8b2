@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "41ecaaa8_c8e3147e",
+        "filename": "third_party/WebKit/public/web/WebInputMethodController.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-18T07:21:57Z",
+      "side": 1,
+      "message": "Could you use WebLocalFrameImpl::SelectWordAroundCaret()?\n\nI think following steps might work:\n1. SelectionWordAroundCaret()\n2. GetSelectedTet()\n3. Get suggestions\n4. ReplaceSelection(suggested_text)",
+      "parentUuid": "b82a6c00_dd49e47a",
+      "range": {
+        "startLine": 76,
+        "startChar": 19,
+        "endLine": 76,
+        "endChar": 40
+      },
+      "revId": "48601bb0de638b5fbf205998f5118b05aea2e8b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c23d8c52_23fb9c00",
         "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
         "patchSetId": 11
@@ -76,6 +100,30 @@
       "writtenOn": "2018-01-18T03:53:01Z",
       "side": 1,
       "message": "It\u0027s fine to add a parameter here to disable smart replace. We might want an enum class parameter instead of bool for better clarity.",
+      "range": {
+        "startLine": 554,
+        "startChar": 32,
+        "endLine": 554,
+        "endChar": 57
+      },
+      "revId": "48601bb0de638b5fbf205998f5118b05aea2e8b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff616a16_e46bbaca",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-18T07:21:57Z",
+      "side": 1,
+      "message": "Could you explain why do you need to use non-smart replace? I would like to\nkeep API as simple as possible.",
+      "parentUuid": "c23d8c52_23fb9c00",
       "range": {
         "startLine": 554,
         "startChar": 32,
