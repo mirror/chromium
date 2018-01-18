@@ -80,6 +80,9 @@ suite('SiteDetails', function() {
         clipboard: {
           setting: settings.ContentSetting.ALLOW,
         },
+        sensors: {
+          setting: settings.ContentSetting.ALLOW,
+        },
       },
       exceptions: {
         ads: [createExceptionForTest()],
@@ -108,6 +111,7 @@ suite('SiteDetails', function() {
         unsandboxed_plugins: [createExceptionForTest()],
         protectedContent: [createExceptionForTest()],
         clipboard: [createExceptionForTest()],
+        sensors: [createExceptionForTest()],
       }
     };
 
@@ -148,6 +152,9 @@ suite('SiteDetails', function() {
                                                 .CLIPBOARD] =
         'enableClipboardContentSetting';
 
+    optionalSiteDetailsContentSettingsTypes[settings.ContentSettingsTypes
+                                                .SENSORS] =
+        'enableSensorsContentSetting';
     browserProxy.setPrefs(prefs);
 
     // Iterate over each flag in on / off state, assuming that the on state
@@ -208,6 +215,7 @@ suite('SiteDetails', function() {
     loadTimeData.overrideValues({enableSoundContentSetting: true});
     loadTimeData.overrideValues({enableSafeBrowsingSubresourceFilter: true});
     loadTimeData.overrideValues({enableClipboardContentSetting: true});
+    loadTimeData.overrideValues({enableSensorsContentSetting: true});
     testElement = createSiteDetails('https://foo.com:443');
 
     return browserProxy.whenCalled('isOriginValid')
