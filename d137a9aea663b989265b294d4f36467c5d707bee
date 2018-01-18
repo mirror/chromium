@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "626d00b9_5df3a731",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-18T19:26:01Z",
+      "side": 1,
+      "message": "std::make_unique?",
+      "revId": "d137a9aea663b989265b294d4f36467c5d707bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
