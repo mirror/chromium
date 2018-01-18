@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "7481117c_25661cb2",
+        "filename": "content/browser/renderer_host/media/video_capture_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-01-18T23:04:41Z",
+      "side": 1,
+      "message": "Still complains. Even after moving those methods to public, it complains about |host_-\u003econtrollers_| and OnError() access. I think removing friend class dependency will go more than the scope of this CL.",
+      "parentUuid": "9c2cfdf9_fa7590d6",
+      "revId": "510b025548c8d75c85e95453244b74795a057708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92ca72c6_0974113c",
         "filename": "content/browser/renderer_host/media/video_capture_unittest.cc",
         "patchSetId": 1

@@ -16,6 +16,24 @@
       "revId": "fdf691e807b77fc56c5fbf32614ec7816b505078",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c00cf970_e8c5ab98",
+        "filename": "content/browser/renderer_host/media/video_capture_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-01-18T23:04:41Z",
+      "side": 1,
+      "message": "Done. I actually had two test cases sharing the method before, but not applicable any more.",
+      "parentUuid": "2f93040e_eae6078c",
+      "revId": "fdf691e807b77fc56c5fbf32614ec7816b505078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
