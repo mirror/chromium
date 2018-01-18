@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c8ab349_0a8fabb9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-18T11:20:14Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "3732d063_3689f457",
+      "range": {
+        "startLine": 103,
+        "startChar": 37,
+        "endLine": 103,
+        "endChar": 44
+      },
+      "revId": "84ba8b47eaf9dd218dd31b4c542ee5a4a2afd9a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "716e44a4_b013413b",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "84ba8b47eaf9dd218dd31b4c542ee5a4a2afd9a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2863f154_5bf1acaf",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-18T11:20:14Z",
+      "side": 1,
+      "message": "Hm, it\u0027s a just memcpy (see the Robert\u0027s comment). This should be good enough for us.",
+      "parentUuid": "716e44a4_b013413b",
+      "range": {
+        "startLine": 531,
+        "startChar": 16,
+        "endLine": 531,
+        "endChar": 32
+      },
+      "revId": "84ba8b47eaf9dd218dd31b4c542ee5a4a2afd9a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
