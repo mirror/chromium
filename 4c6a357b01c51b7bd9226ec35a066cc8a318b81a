@@ -16,6 +16,23 @@
       "revId": "4c6a357b01c51b7bd9226ec35a066cc8a318b81a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5042222_385099e8",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-18T01:30:31Z",
+      "side": 0,
+      "message": "This comment confused me. It turns out it was wrong - it referenced the wrong header and wrong type. Oops. FYI.",
+      "revId": "4c6a357b01c51b7bd9226ec35a066cc8a318b81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
