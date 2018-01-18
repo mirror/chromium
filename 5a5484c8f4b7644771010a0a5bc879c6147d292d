@@ -45,6 +45,29 @@
       "revId": "5a5484c8f4b7644771010a0a5bc879c6147d292d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bddfc5f_9fe666dc",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-18T23:26:23Z",
+      "side": 1,
+      "message": "Reading the comment in InteractiveDetector.h: \"Detects when a page reaches First Idle\". If it\u0027s done on the page level (given that you\u0027re notifying multiple frames), please plumb it through WebViewScheduler. If it\u0027s done on frame level, please fix the comment.",
+      "range": {
+        "startLine": 373,
+        "startChar": 4,
+        "endLine": 373,
+        "endChar": 73
+      },
+      "revId": "5a5484c8f4b7644771010a0a5bc879c6147d292d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
