@@ -303,6 +303,7 @@ class FragmentPaintPropertyTreeBuilder {
   ALWAYS_INLINE void UpdateFragmentClip(const PaintLayer&);
   ALWAYS_INLINE void UpdateCssClip();
   ALWAYS_INLINE void UpdateLocalBorderBoxContext();
+  ALWAYS_INLINE void UpdateOverflowControlsClip();
   ALWAYS_INLINE void UpdateInnerBorderRadiusClip();
   ALWAYS_INLINE void UpdateOverflowClip();
   ALWAYS_INLINE void UpdatePerspective();
@@ -974,6 +975,25 @@ static bool NeedsOverflowClip(const LayoutObject& object) {
           NeedsFrameContentClip(*ToLayoutView(object).GetFrame()));
 }
 
+static IntRect OverflowControlsClipRect(const LayoutBox& box) {
+  return box.PixelSnappedBorderBoxRect(box.Layer()->SubpixelAccumulation());
+}
+
+static bool NeedsOverflowControlsClip(const LayoutObject& object) {
+  if (!object.HasOverflowClip())
+    return false;
+
+  const auto& box = ToLayoutBox(object);
+  const auto* scrollable_area = box.GetScrollableArea();
+  IntRect scroll_controls_bounds =
+      scrollable_area->ScrollCornerAndResizerRect();
+  if (const auto* scrollbar = scrollable_area->HorizontalScrollbar())
+    scroll_controls_bounds.Unite(scrollbar->FrameRect());
+  if (const auto* scrollbar = scrollable_area->VerticalScrollbar())
+    scroll_controls_bounds.Unite(scrollbar->FrameRect());
+  return !OverflowControlsClipRect(box).Contains(scroll_controls_bounds);
+}
+
 static bool NeedsInnerBorderRadiusClip(const LayoutObject& object) {
   if (!object.StyleRef().HasBorderRadius())
     return false;
@@ -1008,6 +1028,24 @@ static LayoutPoint VisualOffsetFromPaintOffsetRoot(
   if (paint_offset_root->HasOverflowClip())
     result += ToLayoutBox(paint_offset_root)->ScrolledContentOffset();
   return result;
+}
+
+void FragmentPaintPropertyTreeBuilder::UpdateOverflowControlsClip() {
+  DCHECK(properties_);
+
+  if (!object_.NeedsPaintPropertyUpdate() &&
+      !full_context_.force_subtree_update)
+    return;
+
+  if (NeedsOverflowControlsClip(object_)) {
+    IntRect clip_rect = OverflowControlsClipRect(ToLayoutBox(object_));
+    clip_rect.MoveBy(RoundedIntPoint(context_.current.paint_offset));
+    properties_->UpdateOverflowControlsClip(
+        context_.current.clip, context_.current.transform,
+        FloatRoundedRect(FloatRect(clip_rect)));
+  } else {
+    properties_->ClearOverflowControlsClip();
+  }
 }
 
 void FragmentPaintPropertyTreeBuilder::UpdateInnerBorderRadiusClip() {
@@ -1682,6 +1720,7 @@ void FragmentPaintPropertyTreeBuilder::UpdateForSelf() {
     if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
       UpdateEffect();
     UpdateFilter();
+    UpdateOverflowControlsClip();
   }
   UpdateLocalBorderBoxContext();
 }
@@ -1939,6 +1978,7 @@ void ObjectPaintPropertyTreeBuilder::UpdateFragments() {
       NeedsPaintOffsetTranslation(object_) || NeedsTransform(object_) ||
       NeedsEffect(object_) || NeedsTransformForNonRootSVG(object_) ||
       NeedsFilter(object_) || NeedsCssClip(object_) ||
+      NeedsOverflowControlsClip(object_) ||
       NeedsInnerBorderRadiusClip(object_) || NeedsOverflowClip(object_) ||
       NeedsPerspective(object_) || NeedsSVGLocalToBorderBoxTransform(object_) ||
       NeedsScrollOrScrollTranslation(object_) ||
