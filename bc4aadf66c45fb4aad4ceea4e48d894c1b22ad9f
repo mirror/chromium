@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a45cccf_b6d78d13",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-18T14:15:10Z",
+      "side": 1,
+      "message": "This breaks x86 and x64 compilation w/\n\n../../chrome/browser/about_flags.cc:1191:38: error: unused variable \u0027kWebXrRenderPathVariations\u0027 [-Werror,-Wunused-const-variable]\nconst FeatureEntry::FeatureVariation kWebXrRenderPathVariations[] \u003d {\n\n(e.g. https://ci.chromium.org/buildbot/chromium.android/Android%20x86%20Builder%20%28dbg%29/26350)\n\nThis presumably happens because enable_vr is false by default on those architectures \u0026 true by default on arm and arm64: https://codesearch.chromium.org/chromium/src/device/vr/features/features.gni?rcl\u003d8f678e5409a65d3af47685ec0760e7d242b41bcf\u0026l\u003d11",
+      "range": {
+        "startLine": 1191,
+        "startChar": 37,
+        "endLine": 1191,
+        "endChar": 63
+      },
+      "revId": "bc4aadf66c45fb4aad4ceea4e48d894c1b22ad9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
