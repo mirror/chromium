@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37518894_d23dd11e",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-18T19:08:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dda3525_ae588170",
+      "range": {
+        "startLine": 46,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "50a014910823c2e8ffee27e6ea76d653c1158475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddd2b5e8_57a254b7",
         "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.h",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "50a014910823c2e8ffee27e6ea76d653c1158475",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab99d66_02d8b8b3",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-18T19:08:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddd2b5e8_57a254b7",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "50a014910823c2e8ffee27e6ea76d653c1158475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0924970a_a5364a8c",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-18T19:08:46Z",
+      "side": 1,
+      "message": "It\u0027s not actually the same.  GetLastCommittedURL gets \"chrome://newtab\" rather than the nested new tab page url",
+      "parentUuid": "f2703bd8_8546608d",
+      "range": {
+        "startLine": 50,
+        "startChar": 71,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "50a014910823c2e8ffee27e6ea76d653c1158475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36894942_a673a4b9",
         "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle_browsertest.cc",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fc891fbb_09de88bf",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-18T19:08:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36894942_a673a4b9",
+      "range": {
+        "startLine": 55,
+        "startChar": 45,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "50a014910823c2e8ffee27e6ea76d653c1158475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d241199c_5c5ab368",
         "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle_browsertest.cc",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "50a014910823c2e8ffee27e6ea76d653c1158475",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d3f33f_fece1816",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-18T19:08:46Z",
+      "side": 1,
+      "message": "Yes, sorry, this was just something I was playing around with last night.  Bad certs actually don\u0027t get caught by the throttle, so I\u0027ll remove the test.  (They don\u0027t get caught by the old interceptor either, so this isn\u0027t a regression).  I\u0027ll file a bug.\ncrbug.com/803539",
+      "parentUuid": "d241199c_5c5ab368",
+      "range": {
+        "startLine": 71,
+        "startChar": 67,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "50a014910823c2e8ffee27e6ea76d653c1158475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
