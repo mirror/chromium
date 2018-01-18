@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4d8efaf6_91f33c01",
+        "filename": "ash/public/cpp/shelf_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-18T20:26:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a78dd40_a20ce34f",
+      "revId": "950ea974647d9bbf949618853e0ea4be45dda074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "686b7078_ed62f61f",
         "filename": "ash/shelf/shelf_button.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-18T18:08:13Z",
       "side": 1,
       "message": "Is it possible to draw directly to |canvas| by transforming the coordinates differently?",
+      "revId": "950ea974647d9bbf949618853e0ea4be45dda074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8dcfb1b_248eaaaf",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-18T20:26:58Z",
+      "side": 1,
+      "message": "I talked to compositor folks, until this is implemented, we need to do it that way. : \n\nhttps://docs.google.com/document/d/1eJArJkOhm-FTKKX6j7-zFV9aXVN0ZwA3RXlWifJFpiE/edit#heading\u003dh.fmaw172dbpia\n\nThe engineers sit next to me so I will know when this is complete and I\u0027ll convert it when they are done (Q3 2018 apparently)",
+      "parentUuid": "686b7078_ed62f61f",
       "revId": "950ea974647d9bbf949618853e0ea4be45dda074",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6e29b5ed_35c4c9a5",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-18T20:26:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdbb5ec1_3efd42b0",
+      "revId": "950ea974647d9bbf949618853e0ea4be45dda074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3af27e3f_85dc1e2e",
         "filename": "ash/shelf/shelf_button.h",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c1df274f_7427d545",
+        "filename": "ash/shelf/shelf_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-18T20:26:58Z",
+      "side": 1,
+      "message": "Agreed this is no longer necessary. Removed it and modified tests!",
+      "parentUuid": "3af27e3f_85dc1e2e",
+      "revId": "950ea974647d9bbf949618853e0ea4be45dda074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17a7a57f_5eb63a73",
         "filename": "ash/shelf/shelf_controller_unittest.cc",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "950ea974647d9bbf949618853e0ea4be45dda074",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8d6a06_e8a31fa9",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-18T20:26:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17a7a57f_5eb63a73",
+      "revId": "950ea974647d9bbf949618853e0ea4be45dda074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
