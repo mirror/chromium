@@ -301,27 +301,24 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
                 completionAnimator:(UIViewPropertyAnimator*)completionAnimator {
   // Hide the rightView button so its not visibile on its initial layout
   // while the expan animation is happening.
-  self.rightView.hidden = YES;
-  self.rightView.alpha = 0;
-  self.rightView.frame = CGRectLayoutOffset(
+  self.clearButton.hidden = YES;
+  self.clearButton.alpha = 0;
+  self.clearButton.frame = CGRectLayoutOffset(
       [self rightViewRectForBounds:self.bounds], kToolbarButtonAnimationOffset);
 
   [completionAnimator addAnimations:^{
-    self.rightView.hidden = NO;
-    self.rightView.alpha = 1.0;
-    self.rightView.frame = CGRectLayoutOffset(self.rightView.frame,
-                                              -kToolbarButtonAnimationOffset);
+    self.clearButton.hidden = NO;
+    self.clearButton.alpha = 1.0;
+    self.clearButton.frame = CGRectLayoutOffset(self.clearButton.frame,
+                                                -kToolbarButtonAnimationOffset);
   }];
 }
 
 - (void)addContractOmniboxAnimations:(UIViewPropertyAnimator*)animator {
   [animator addAnimations:^{
-    self.rightView.alpha = 0;
-    self.rightView.frame =
-        CGRectLayoutOffset(self.rightView.frame, kToolbarButtonAnimationOffset);
-  }];
-  [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
-    self.rightView = nil;
+    self.clearButton.alpha = 0;
+    self.clearButton.frame = CGRectLayoutOffset(self.clearButton.frame,
+                                                kToolbarButtonAnimationOffset);
   }];
 }
 
@@ -939,6 +936,15 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 
 - (CGRect)layoutLeftViewForBounds:(CGRect)bounds {
   return CGRectZero;
+}
+
+// Accesses the clear button view when it's available; correctly resolves RTL.
+- (UIView*)clearButton {
+  if ([self isTextFieldLTR]) {
+    return self.rightView;
+  } else {
+    return self.leftView;
+  }
 }
 
 @end
