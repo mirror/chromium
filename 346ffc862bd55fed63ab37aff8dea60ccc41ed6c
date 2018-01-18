@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c0fdc534_7062786a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-rendering-after-controls-added.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-18T10:41:22Z",
+      "side": 1,
+      "message": "Two nested rAFs ought to work in this case (two because layout isn\u0027t guaranteed until after the first frame has actually been produced.)",
+      "parentUuid": "c5fe6c36_e914290f",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "346ffc862bd55fed63ab37aff8dea60ccc41ed6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f242bba1_92e9e4ef",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-rendering-after-controls-removed-ref.html",
         "patchSetId": 1
