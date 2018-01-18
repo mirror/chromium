@@ -16,6 +16,24 @@
       "revId": "404e22f308a32854b94260fe711cda0687262522",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af0a8cc_cc46e548",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-18T16:56:03Z",
+      "side": 1,
+      "message": "Both your points are correct. Done.",
+      "parentUuid": "e933d292_15f8f5cb",
+      "revId": "404e22f308a32854b94260fe711cda0687262522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
