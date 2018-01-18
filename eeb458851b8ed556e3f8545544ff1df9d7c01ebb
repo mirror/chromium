@@ -16,6 +16,24 @@
       "revId": "eeb458851b8ed556e3f8545544ff1df9d7c01ebb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3e1516_e2531ba0",
+        "filename": "tools/git/move_source_file.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-18T04:58:46Z",
+      "side": 1,
+      "message": "Added a comment and changed to a simpler regex that will cover everything and would be pretty unlikely to match anything else.",
+      "parentUuid": "514a73d3_be7bf463",
+      "revId": "eeb458851b8ed556e3f8545544ff1df9d7c01ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
