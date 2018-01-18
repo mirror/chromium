@@ -16,6 +16,24 @@
       "revId": "0188b5f717dbeeaf874e1f33ce0ead8fe36bfafe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6aa0d5e_c66c1190",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T11:05:59Z",
+      "side": 1,
+      "message": "It is thread-safe. C++11 changed it:\n\n\u003e If multiple threads attempt to initialize the same static local variable concurrently, the initialization occurs exactly once (similar behavior can be obtained for arbitrary functions with std::call_once).\n\u003e \n\u003e Note: usual implementations of this feature use variants of the double-checked locking pattern, which reduces runtime overhead for already-initialized local statics to a single non-atomic boolean comparison.\n\n(from http://en.cppreference.com/w/cpp/language/storage_duration)\n\nAnd we also enabled it for our toolchain: see https://groups.google.com/a/chromium.org/d/msg/cxx/j5rFewBzSBQ/SLMznef7CgAJ and https://bugs.chromium.org/p/chromium/issues/detail?id\u003d686866\n\nWe\u0027d previously been asking people to switch away from LazyInstance to function-local leaked statics, but that has the aforementioned disadvantage of requiring a heap allocation and chasing a pointer.",
+      "parentUuid": "31d069f1_8c6ec9da",
+      "revId": "0188b5f717dbeeaf874e1f33ce0ead8fe36bfafe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
