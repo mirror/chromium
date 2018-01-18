@@ -104,6 +104,24 @@
     },
     {
       "key": {
+        "uuid": "683bc0f7_e88657c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T15:01:55Z",
+      "side": 1,
+      "message": "We handle this case in AppendJavaStringArrayToStringVector().",
+      "parentUuid": "778589dc_14c9d4bb",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9320bd4_45a88a91",
         "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
         "patchSetId": 4
