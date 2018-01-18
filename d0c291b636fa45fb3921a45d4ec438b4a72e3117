@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0291d29a_699c0997",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-18T15:28:00Z",
+      "side": 1,
+      "message": "I think you meant two separate links.\ncrrev.com/c/790119\ncrrev.com/c/844303",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 9
+      },
+      "revId": "d0c291b636fa45fb3921a45d4ec438b4a72e3117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22292d28_c21871d3",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-18T15:28:00Z",
+      "side": 1,
+      "message": "nit: Since subscription_id is a uint32_t, you can use \"auto\" instead of \"auto\u0026\"",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 13
+      },
+      "revId": "d0c291b636fa45fb3921a45d4ec438b4a72e3117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e7d7f5d_1e1aaedb",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-18T15:28:00Z",
+      "side": 1,
+      "message": "You can remove the loop and have a single listener.\nThe old test had one subscriber per type because each subscription had to be for a single type.\nAlternatively, instead of having all subscribers listen to all event types, you can have the same behavior as the old test by replacing \"true, true, true\" with \"i \u003d\u003d MEDIA_DEVICE_TYPE_AUDIO_INPUT, ... \"",
+      "range": {
+        "startLine": 350,
+        "startChar": 25,
+        "endLine": 350,
+        "endChar": 26
+      },
+      "revId": "d0c291b636fa45fb3921a45d4ec438b4a72e3117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ba38c5_ee392423",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-18T15:28:00Z",
+      "side": 1,
+      "message": "nit: I think we should rename this variable to |last_subscription_id|, since current kind of suggests that there is a special subscription that is the \"current\" one.",
+      "range": {
+        "startLine": 249,
+        "startChar": 11,
+        "endLine": 249,
+        "endChar": 35
+      },
+      "revId": "d0c291b636fa45fb3921a45d4ec438b4a72e3117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a7dfb0_2c0cfd6e",
+        "filename": "content/browser/renderer_host/media/media_devices_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-18T15:28:00Z",
+      "side": 1,
+      "message": "To maintain the functionality of the test, you should keep the single-type subscribers.",
+      "revId": "d0c291b636fa45fb3921a45d4ec438b4a72e3117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778f58a9_eb075dc1",
+        "filename": "content/renderer/pepper/pepper_media_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-18T15:28:00Z",
+      "side": 1,
+      "message": "This cast can be problematic since BindingId is size_t is 64 bits in many platforms. I think it\u0027s safer to change everything to size_t (or even mojo::BindingId), including in PepperDeviceEnumerationHostHelper, which is the only place where these IDs are used.",
+      "range": {
+        "startLine": 142,
+        "startChar": 21,
+        "endLine": 142,
+        "endChar": 29
+      },
+      "revId": "d0c291b636fa45fb3921a45d4ec438b4a72e3117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788b1aea_45628203",
+        "filename": "content/renderer/pepper/pepper_media_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-18T15:28:00Z",
+      "side": 1,
+      "message": "If you change to size_t, maybe you will need to replace this with 0U.",
+      "range": {
+        "startLine": 144,
+        "startChar": 10,
+        "endLine": 144,
+        "endChar": 11
+      },
+      "revId": "d0c291b636fa45fb3921a45d4ec438b4a72e3117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf11d0c_23e2fb1a",
+        "filename": "content/renderer/pepper/pepper_media_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-18T15:28:00Z",
+      "side": 1,
+      "message": "no need to cast to uint32_t if it\u0027s already uint32_t.\nAnyway, as stated above, I suggest that you switch to size_t or mojo::BindingId.",
+      "range": {
+        "startLine": 151,
+        "startChar": 35,
+        "endLine": 151,
+        "endChar": 43
+      },
+      "revId": "d0c291b636fa45fb3921a45d4ec438b4a72e3117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afd4125_f3bd2454",
+        "filename": "content/renderer/pepper/pepper_media_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-18T15:28:00Z",
+      "side": 1,
+      "message": "consider using base::Erase, which would result in simpler code.",
+      "range": {
+        "startLine": 154,
+        "startChar": 17,
+        "endLine": 154,
+        "endChar": 24
+      },
+      "revId": "d0c291b636fa45fb3921a45d4ec438b4a72e3117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
