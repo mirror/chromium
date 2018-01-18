@@ -22,6 +22,30 @@
       "revId": "1c9f746ce35927dd143431851901f340bde34d28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0574f16_9d542de2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanelMetrics.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2018-01-18T05:27:03Z",
+      "side": 1,
+      "message": "Glad you pushed back on this, it was a bad design.  No wonder it felt wrong...glad I asked you to take another look.\n\nNow it feels like I have a good design -- we only log outcomes when the outcomes are valid, which happens iff the panel is shown.",
+      "parentUuid": "99bbd44d_915283e7",
+      "range": {
+        "startLine": 335,
+        "startChar": 50,
+        "endLine": 335,
+        "endChar": 62
+      },
+      "revId": "1c9f746ce35927dd143431851901f340bde34d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
