@@ -38,6 +38,14 @@ bool NGPaintFragment::ShouldClipOverflow() const {
          ToNGPhysicalBoxFragment(*physical_fragment_).ShouldClipOverflow();
 }
 
+LayoutRect NGPaintFragment::OverflowClipRect(
+    const LayoutPoint& location,
+    OverlayScrollbarClipBehavior overlay_scrollbar_clip_behavior) const {
+  DCHECK(physical_fragment_->IsBox());
+  return ToNGPhysicalBoxFragment(*physical_fragment_)
+      .OverflowClipRect(location, overlay_scrollbar_clip_behavior);
+}
+
 LayoutRect NGPaintFragment::VisualOverflowRect() const {
   return physical_fragment_->VisualRectWithContents().ToLayoutRect();
 }

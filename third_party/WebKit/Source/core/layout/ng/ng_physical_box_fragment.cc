@@ -6,6 +6,9 @@
 
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutObject.h"
+#include "core/layout/LayoutView.h"
+#include "core/layout/ng/geometry/ng_box_strut.h"
+#include "core/page/scrolling/RootScrollerUtil.h"
 
 namespace blink {
 
@@ -88,6 +91,29 @@ NGPhysicalOffsetRect NGPhysicalBoxFragment::SelfVisualRect() const {
   // TODO(kojii): Implement for inline boxes.
   DCHECK(layout_object->IsLayoutInline());
   return {{}, Size()};
+}
+
+LayoutRect NGPhysicalBoxFragment::OverflowClipRect(
+    const LayoutPoint& location,
+    OverlayScrollbarClipBehavior overlay_scrollbar_clip_behavior) const {
+  DCHECK(GetLayoutObject() && GetLayoutObject()->IsBox());
+  const LayoutBox& layout_box = ToLayoutBox(*GetLayoutObject());
+
+  if (RootScrollerUtil::IsEffective(layout_box))
+    return layout_box.View()->ViewRect();
+
+  NGPixelSnappedPhysicalBoxStrut border = BorderWidths();
+  LayoutRect clip_rect(location.X() + border.left, location.Y() + border.top,
+                       Size().width - (border.left + border.right),
+                       Size().height - (border.top + border.bottom));
+
+  if (HasOverflowClip())
+    layout_box.ExcludeScrollbars(clip_rect, overlay_scrollbar_clip_behavior);
+
+  if (layout_box.HasControlClip())
+    clip_rect.Intersect(layout_box.ControlClipRect(location));
+
+  return clip_rect;
 }
 
 NGPhysicalOffsetRect NGPhysicalBoxFragment::VisualRectWithContents() const {

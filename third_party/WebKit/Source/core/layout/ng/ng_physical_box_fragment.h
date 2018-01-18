@@ -8,6 +8,7 @@
 #include "core/CoreExport.h"
 #include "core/layout/ng/inline/ng_baseline.h"
 #include "core/layout/ng/ng_physical_container_fragment.h"
+#include "platform/scroll/ScrollTypes.h"
 
 namespace blink {
 
@@ -35,6 +36,8 @@ class CORE_EXPORT NGPhysicalBoxFragment final
   // overflow clip; i.e., AllowOverflowClip() returns false.
   bool HasOverflowClip() const;
   bool ShouldClipOverflow() const;
+  LayoutRect OverflowClipRect(const LayoutPoint&,
+                              OverlayScrollbarClipBehavior) const;
 
   // Visual rect of this box in the local coordinate. Does not include children
   // even if they overflow this box.
