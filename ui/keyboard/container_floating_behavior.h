@@ -23,6 +23,23 @@ namespace keyboard {
 constexpr int kDefaultDistanceFromScreenBottom = 20;
 constexpr int kDefaultDistanceFromScreenRight = 20;
 
+enum class HorizontalAnchorDirection {
+  LEFT,
+  RIGHT,
+};
+
+enum class VerticalAnchorDirection {
+  TOP,
+  BOTTOM,
+};
+
+struct KeyboardPosition {
+  bool is_set;
+  HorizontalAnchorDirection horizontal_anchor_direction;
+  VerticalAnchorDirection vertical_anchor_direction;
+  gfx::Point offset;
+};
+
 class KEYBOARD_EXPORT ContainerFloatingBehavior : public ContainerBehavior {
  public:
   ContainerFloatingBehavior(KeyboardController* controller);
@@ -42,8 +59,10 @@ class KEYBOARD_EXPORT ContainerFloatingBehavior : public ContainerBehavior {
   bool IsOverscrollAllowed() const override;
   bool IsDragHandle(const gfx::Vector2d& offset,
                     const gfx::Size& keyboard_size) const override;
-  void SavePosition(const gfx::Point& position) override;
-  void HandlePointerEvent(const ui::LocatedEvent& event) override;
+  void SavePosition(const gfx::Rect& keyboard_bounds,
+                    const gfx::Size& screen_size) override;
+  void HandlePointerEvent(const ui::LocatedEvent& event,
+                          const gfx::Rect& display_bounds) override;
   void SetCanonicalBounds(aura::Window* container,
                           const gfx::Rect& display_bounds) override;
   ContainerType GetType() const override;
@@ -51,6 +70,11 @@ class KEYBOARD_EXPORT ContainerFloatingBehavior : public ContainerBehavior {
   bool BoundsObscureUsableRegion() const override;
   bool BoundsAffectWorkspaceLayout() const override;
   bool SetDraggableArea(const gfx::Rect& rect) override;
+
+  // Calculate the position of the keyboard for when it is being shown.
+  gfx::Point GetPositionForShowingKeyboard(
+      const gfx::Size& keyboard_size,
+      const gfx::Rect& display_bounds) const;
 
  private:
   // Ensures that the keyboard is neither off the screen nor overlapping an
@@ -66,15 +90,10 @@ class KEYBOARD_EXPORT ContainerFloatingBehavior : public ContainerBehavior {
   // position should be used.
   bool UseDefaultPosition() const;
 
-  // Calculate the position of the keyboard for when it is being shown.
-  gfx::Point GetPositionForShowingKeyboard(
-      const gfx::Size& keyboard_size,
-      const gfx::Rect& display_bounds) const;
-
   KeyboardController* controller_;
 
   // TODO(blakeo): cache the default_position_ on a per-display basis.
-  gfx::Point default_position_ = gfx::Point(-1, -1);
+  struct keyboard::KeyboardPosition default_position_;
 
   // Current state of a cursor drag to move the keyboard, if one exists.
   // Otherwise nullptr.
