@@ -14,6 +14,7 @@ if (is_android) {
 
 if (is_fuchsia) {
   import("//build/config/fuchsia/rules.gni")
+  import("//build/config/fuchsia/package.gni")
 }
 
 # Define a test as an executable (or apk on Android) with the "testonly" flag
@@ -225,29 +226,36 @@ template("test") {
       test_type = "gtest"
     }
   } else if (is_fuchsia) {
-    _output_name = invoker.target_name
-    _test_runner_target = "${_output_name}__test_runner_script"
+    _exe_target = "${invoker.target_name}__exec"
+    _pkg_target = "${invoker.target_name}__package"
+    _exec_output =
+        "$target_out_dir/${invoker.target_name}/${invoker.target_name}"
 
-    test_runner_script(_test_runner_target) {
-      forward_variables_from(invoker,
-                             [
-                               "data",
-                               "data_deps",
-                               "deps",
-                               "public_deps",
-                               "use_test_server",
-                             ])
-      test_name = _output_name
+    test_runner_script(target_name) {
+      forward_variables_from(invoker, [ "use_test_server" ])
+      exe_path = _exec_output
+      test_name = invoker.target_name
+      data_deps = [
+        ":${_exe_target}",
+      ]
     }
 
-    executable(target_name) {
+    executable(_exe_target) {
       testonly = true
       forward_variables_from(invoker, "*")
-      if (!defined(data_deps)) {
-        data_deps = []
-      }
-      data_deps += [ ":$_test_runner_target" ]
       deps += [ "//build/config:exe_and_shlib_deps" ]
+      output_name = rebase_path(_exec_output, root_out_dir)
+    }
+
+    # Packages must be built explicitly using their *__package target name.
+    # TODO(crbug.com/798851): Replace test_runner_script target with package().
+    package(_pkg_target) {
+      testonly = true
+      package_name = invoker.target_name
+      binary = _exec_output
+      data_deps = [
+        ":${_exe_target}",
+      ]
     }
   } else if (is_ios) {
     import("//build/config/ios/ios_sdk.gni")
