@@ -31,6 +31,10 @@
 #include "content/shell/browser/shell.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
+#include "base/json/json_reader.h"
+#include "base/trace_event/trace_log.h"
+#include "base/values.h"
+
 namespace {
 
 const char kDataURL[] =
@@ -64,6 +68,44 @@ const char kDataURL[] =
 }  // namespace
 
 namespace content {
+
+class LocalTraceDataCollector {
+ public:
+  explicit LocalTraceDataCollector(const std::string& config) {
+    const base::trace_event::TraceConfig trace_config(config);
+    tracing_modes_ = base::trace_event::TraceLog::RECORDING_MODE;
+    if (!trace_config.event_filters().empty())
+      tracing_modes_ |= base::trace_event::TraceLog::FILTERING_MODE;
+    base::trace_event::TraceLog::GetInstance()->SetEnabled(trace_config,
+                                                           tracing_modes_);
+  }
+
+  std::unique_ptr<base::Value> StopTracingAndWaitForData() {
+    all_data_ = "{\"traceEvents\":[";
+    base::RunLoop runloop;
+    base::trace_event::TraceLog::GetInstance()->SetDisabled(tracing_modes_);
+    base::trace_event::TraceLog::GetInstance()->Flush(
+        base::Bind(&LocalTraceDataCollector::OnTraceLogFlush,
+                   base::Unretained(this), runloop.QuitClosure()));
+    runloop.Run();
+    all_data_ += "]}";
+    return base::JSONReader::Read(all_data_);
+  }
+
+ private:
+  void OnTraceLogFlush(const base::Closure& callback,
+                       const scoped_refptr<base::RefCountedString>& events_str,
+                       bool has_more_events) {
+    if (!events_str->data().empty())
+      all_data_ += events_str->data();
+    if (!has_more_events)
+      callback.Run();
+  }
+
+  uint8_t tracing_modes_ = 0;
+  std::string all_data_;
+  DISALLOW_COPY_AND_ASSIGN(LocalTraceDataCollector);
+};
 
 // This class listens for terminated latency info events. It listens
 // for both the mouse event ack and the gpu swap buffers event since
@@ -140,7 +182,17 @@ class TracingRenderWidgetHostFactory : public RenderWidgetHostFactory {
 
 class MouseLatencyBrowserTest : public ContentBrowserTest {
  public:
-  MouseLatencyBrowserTest() : loop_(base::MessageLoop::TYPE_UI) {}
+  MouseLatencyBrowserTest()
+      : trace_collector_(
+            "{"
+            "\"enable_argument_filter\":false,"
+            "\"enable_systrace\":false,"
+            "\"included_categories\":["
+            "\"latencyInfo\""
+            "],"
+            "\"record_mode\":\"record-until-full\""
+            "}"),
+        loop_(base::MessageLoop::TYPE_UI) {}
   ~MouseLatencyBrowserTest() override {}
 
   RenderWidgetHostImpl* GetWidgetHost() {
@@ -150,16 +202,6 @@ class MouseLatencyBrowserTest : public ContentBrowserTest {
 
   void OnSyntheticGestureCompleted(SyntheticGesture::Result result) {
     EXPECT_EQ(SyntheticGesture::GESTURE_FINISHED, result);
-    runner_->Quit();
-  }
-
-  void OnTraceDataCollected(
-      std::unique_ptr<const base::DictionaryValue> metadata,
-      base::RefCountedString* trace_data_string) {
-    std::unique_ptr<base::Value> trace_data =
-        base::JSONReader::Read(trace_data_string->data());
-    ASSERT_TRUE(trace_data);
-    trace_data_ = trace_data->Clone();
     runner_->Quit();
   }
 
@@ -214,41 +256,16 @@ class MouseLatencyBrowserTest : public ContentBrowserTest {
     runner_->Run();
   }
 
-  void StartTracing() {
-    base::trace_event::TraceConfig trace_config(
-        "{"
-        "\"enable_argument_filter\":false,"
-        "\"enable_systrace\":false,"
-        "\"included_categories\":["
-        "\"latencyInfo\""
-        "],"
-        "\"record_mode\":\"record-until-full\""
-        "}");
-
-    base::RunLoop run_loop;
-    ASSERT_TRUE(TracingController::GetInstance()->StartTracing(
-        trace_config, run_loop.QuitClosure()));
-    run_loop.Run();
-  }
-
   const base::Value& StopTracing() {
-    bool success = TracingController::GetInstance()->StopTracing(
-        TracingController::CreateStringEndpoint(
-            base::Bind(&MouseLatencyBrowserTest::OnTraceDataCollected,
-                       base::Unretained(this))));
-    EXPECT_TRUE(success);
-
-    // Runs until we get the OnTraceDataCollected callback, which populates
-    // trace_data_;
-    runner_ = std::make_unique<base::RunLoop>();
-    runner_->Run();
-    return trace_data_;
+    trace_data_ = trace_collector_.StopTracingAndWaitForData();
+    return *trace_data_;
   }
 
  private:
+  LocalTraceDataCollector trace_collector_;
   base::MessageLoop loop_;
   std::unique_ptr<base::RunLoop> runner_;
-  base::Value trace_data_;
+  std::unique_ptr<base::Value> trace_data_;
   TracingRenderWidgetHostFactory widget_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MouseLatencyBrowserTest);
@@ -272,7 +289,6 @@ IN_PROC_BROWSER_TEST_F(MouseLatencyBrowserTest,
 
   auto filter = std::make_unique<InputMsgWatcher>(
       GetWidgetHost(), blink::WebInputEvent::kMouseUp);
-  StartTracing();
   DoSyncClick(gfx::PointF(100, 100));
   EXPECT_EQ(INPUT_EVENT_ACK_STATE_CONSUMED,
             filter->GetAckStateWaitIfNecessary());
@@ -321,7 +337,6 @@ IN_PROC_BROWSER_TEST_F(MouseLatencyBrowserTest,
                        MAYBE_CoalescedMouseMovesCorrectlyTerminated) {
   LoadURL();
 
-  StartTracing();
   DoSyncCoalescedMoves(gfx::PointF(100, 100), gfx::Vector2dF(150, 150),
                        gfx::Vector2dF(250, 250));
   static_cast<TracingRenderWidgetHost*>(
