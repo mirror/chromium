@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b06d13be_c89ceacb",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2082,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-18T16:49:34Z",
+      "side": 1,
+      "message": "in the",
+      "range": {
+        "startLine": 2082,
+        "startChar": 36,
+        "endLine": 2082,
+        "endChar": 39
+      },
+      "revId": "ba3733af69753b9785508ea5e9bbd1b758b899d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed75d88_d7c9c98b",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-18T16:49:34Z",
+      "side": 1,
+      "message": "|child_id2|",
+      "range": {
+        "startLine": 2109,
+        "startChar": 52,
+        "endLine": 2109,
+        "endChar": 61
+      },
+      "revId": "ba3733af69753b9785508ea5e9bbd1b758b899d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a99930_da495157",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-18T16:49:34Z",
+      "side": 1,
+      "message": "must be older than",
+      "range": {
+        "startLine": 511,
+        "startChar": 29,
+        "endLine": 511,
+        "endChar": 49
+      },
+      "revId": "ba3733af69753b9785508ea5e9bbd1b758b899d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
