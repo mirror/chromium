@@ -383,7 +383,7 @@ void ChromePasswordProtectionService::MaybeLogPasswordReuseDetectedEvent(
     content::WebContents* web_contents) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  if (!base::FeatureList::IsEnabled(kGaiaPasswordReuseReporting))
+  if (!IsEventLoggingEnabled())
     return;
 
   syncer::UserEventService* user_event_service =
@@ -422,7 +422,7 @@ void ChromePasswordProtectionService::LogPasswordReuseDialogInteraction(
     PasswordReuseDialogInteraction::InteractionResult interaction_result) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  if (!base::FeatureList::IsEnabled(kGaiaPasswordReuseReporting))
+  if (!IsEventLoggingEnabled())
     return;
 
   syncer::UserEventService* user_event_service =
@@ -527,7 +527,7 @@ void ChromePasswordProtectionService::MaybeLogPasswordReuseLookupEvent(
     content::WebContents* web_contents,
     PasswordProtectionService::RequestOutcome outcome,
     const LoginReputationClientResponse* response) {
-  if (!base::FeatureList::IsEnabled(kGaiaPasswordReuseReporting))
+  if (!IsEventLoggingEnabled())
     return;
 
   switch (outcome) {
@@ -801,7 +801,7 @@ ChromePasswordProtectionService::ChromePasswordProtectionService(
 
 std::unique_ptr<PasswordProtectionNavigationThrottle>
 MaybeCreateNavigationThrottle(content::NavigationHandle* navigation_handle) {
-  if (!base::FeatureList::IsEnabled(kGaiaPasswordReuseReporting))
+  if (!base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning))
     return nullptr;
   Profile* profile = Profile::FromBrowserContext(
       navigation_handle->GetWebContents()->GetBrowserContext());
@@ -810,6 +810,20 @@ MaybeCreateNavigationThrottle(content::NavigationHandle* navigation_handle) {
   // |service| can be null in tests.
   return service ? service->MaybeCreateNavigationThrottle(navigation_handle)
                  : nullptr;
+}
+
+PasswordProtectionTrigger
+ChromePasswordProtectionService::GetPasswordProtectionWarningTriggerPref()
+    const {
+  return static_cast<PasswordProtectionTrigger>(
+      profile_->GetPrefs()->GetInteger(
+          prefs::kPasswordProtectionWarningTrigger));
+}
+
+PasswordProtectionTrigger
+ChromePasswordProtectionService::GetPasswordProtectionRiskTriggerPref() const {
+  return static_cast<PasswordProtectionTrigger>(
+      profile_->GetPrefs()->GetInteger(prefs::kPasswordProtectionRiskTrigger));
 }
 
 }  // namespace safe_browsing
