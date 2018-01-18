@@ -801,6 +801,8 @@ Element* Editor::FindEventTargetFrom(const VisibleSelection& selection) const {
   if (!target)
     target = GetFrame().GetDocument()->body();
 
+  if (target->IsInUserAgentShadowRoot())
+    target = target->OwnerShadowHost();
   return target;
 }
 
