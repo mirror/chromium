@@ -40,6 +40,7 @@
 #include "chrome/browser/ui/views/autofill/save_card_icon_view.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
+#include "chrome/browser/ui/views/location_bar/bubble_icon_view.h"
 #include "chrome/browser/ui/views/location_bar/content_setting_image_view.h"
 #include "chrome/browser/ui/views/location_bar/find_bar_icon.h"
 #include "chrome/browser/ui/views/location_bar/keyword_hint_view.h"
@@ -648,6 +649,26 @@ void LocationBarView::Update(const WebContents* contents) {
 
 void LocationBarView::ResetTabState(WebContents* contents) {
   omnibox_view_->ResetTabState(contents);
+}
+
+bool LocationBarView::ActivateFirstInactiveBubbleForAccessibility() {
+  // Keep in ascending index in parent order.
+  std::vector<BubbleIconView*> views = {manage_passwords_icon_view_,
+                                        save_credit_card_icon_view_,
+                                        translate_icon_view_};
+  auto result =
+      std::find_if(views.begin(), views.end(), [](BubbleIconView* view) {
+        if (!view || !view->visible() || !view->GetBubble())
+          return false;
+
+        views::Widget* widget = view->GetBubble()->GetWidget();
+        return widget && widget->IsVisible() && !widget->IsActive();
+      });
+
+  if (result != views.end())
+    (*result)->GetBubble()->GetWidget()->Show();
+
+  return result != views.end();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
