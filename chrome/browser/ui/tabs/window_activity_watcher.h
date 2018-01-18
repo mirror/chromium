@@ -9,18 +9,20 @@
 
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
-#include "base/scoped_observer.h"
 #include "chrome/browser/ui/browser_list_observer.h"
+#include "chrome/browser/ui/browser_tab_strip_tracker.h"
+#include "chrome/browser/ui/browser_tab_strip_tracker_delegate.h"
+#include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "components/sessions/core/session_id.h"
-
-class BrowserList;
 
 // Observes browser window activity in order to log WindowMetrics UKMs for
 // browser events relative to tab activation and discarding.
 // Multiple tabs in the same browser can refer to the same WindowMetrics entry.
 // Must be used on the UI thread.
 // TODO(michaelpg): Observe app and ARC++ windows as well.
-class WindowActivityWatcher : public BrowserListObserver {
+class WindowActivityWatcher : public BrowserListObserver,
+                              public TabStripModelObserver,
+                              public BrowserTabStripTrackerDelegate {
  public:
   // Represents a UKM entry for window metrics.
   struct WindowMetrics;
@@ -43,10 +45,20 @@ class WindowActivityWatcher : public BrowserListObserver {
   void OnBrowserSetLastActive(Browser* browser) override;
   void OnBrowserNoLongerActive(Browser* browser) override;
 
-  ScopedObserver<BrowserList, BrowserListObserver> browser_list_observer_;
+  // TabStripModelObserver:
+  void TabInsertedAt(TabStripModel* tab_strip_model,
+                     content::WebContents* contents,
+                     int index,
+                     bool foreground) override;
+  void TabDetachedAt(content::WebContents* contents, int index) override;
 
-  // Cache of WindowMetrics logged for each window. Used to avoid logging
-  // duplicate identical UKM events.
+  // BrowserTabStripTrackerDelegate:
+  bool ShouldTrackBrowser(Browser* browser) override;
+
+  // Used to update the tab count for browser windows.
+  BrowserTabStripTracker browser_tab_strip_tracker_;
+
+  // WindowMetrics for each loggable browser window.
   base::flat_map<SessionID::id_type, WindowMetrics> window_metrics_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowActivityWatcher);

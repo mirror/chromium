@@ -95,3 +95,8 @@ void BrowserTabStripTracker::OnBrowserSetLastActive(Browser* browser) {
   if (browser_list_observer_)
     browser_list_observer_->OnBrowserSetLastActive(browser);
 }
+
+void BrowserTabStripTracker::OnBrowserNoLongerActive(Browser* browser) {
+  if (browser_list_observer_)
+    browser_list_observer_->OnBrowserNoLongerActive(browser);
+}
