@@ -151,23 +151,33 @@ void PasswordProtectionService::RecordWarningAction(WarningUIType ui_type,
   }
 }
 
-// static
 bool PasswordProtectionService::ShouldShowModalWarning(
     LoginReputationClientRequest::TriggerType trigger_type,
     bool matches_sync_password,
     LoginReputationClientRequest::PasswordReuseEvent::SyncAccountType
         account_type,
     LoginReputationClientResponse::VerdictType verdict_type) {
-  return base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning) &&
-         trigger_type == LoginReputationClientRequest::PASSWORD_REUSE_EVENT &&
-         matches_sync_password &&
-         account_type ==
-             LoginReputationClientRequest::PasswordReuseEvent::GMAIL &&
-         (verdict_type == LoginReputationClientResponse::PHISHING ||
-          (verdict_type == LoginReputationClientResponse::LOW_REPUTATION &&
-           base::GetFieldTrialParamByFeatureAsBool(
-               kGoogleBrandedPhishingWarning, "warn_on_low_reputation",
-               false)));
+  if (!base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning) ||
+      trigger_type != LoginReputationClientRequest::PASSWORD_REUSE_EVENT ||
+      !matches_sync_password ||
+      account_type ==
+          LoginReputationClientRequest::PasswordReuseEvent::NOT_SIGNED_IN) {
+    return false;
+  }
+
+  if (account_type == LoginReputationClientRequest::PasswordReuseEvent::GMAIL ||
+      (account_type ==
+           LoginReputationClientRequest::PasswordReuseEvent::GSUITE &&
+       GetPasswordProtectionWarningTriggerPref() == PHISHING_REUSE)) {
+    return verdict_type == LoginReputationClientResponse::PHISHING ||
+           (verdict_type == LoginReputationClientResponse::LOW_REPUTATION &&
+            base::GetFieldTrialParamByFeatureAsBool(
+                kGoogleBrandedPhishingWarning, "warn_on_low_reputation",
+                false));
+  }
+  return false;
+  // TODO(jialiul): Update this function when we start to support PASSWORD_REUSE
+  // trigger.
 }
 
 bool PasswordProtectionService::ShouldShowSofterWarning() {
@@ -836,6 +846,23 @@ bool PasswordProtectionService::IsModalWarningShowingInWebContents(
       return true;
   }
   return false;
+}
+
+bool PasswordProtectionService::IsEventLoggingEnabled() {
+  if (!base::FeatureList::IsEnabled(kGaiaPasswordReuseReporting))
+    return false;
+
+  LoginReputationClientRequest::PasswordReuseEvent::SyncAccountType
+      account_type = GetSyncAccountType();
+  if (account_type == LoginReputationClientRequest::PasswordReuseEvent::GMAIL ||
+      (account_type ==
+           LoginReputationClientRequest::PasswordReuseEvent::GSUITE &&
+       GetPasswordProtectionRiskTriggerPref() == PHISHING_REUSE)) {
+    return true;
+  }
+  return false;
+  // TODO(jialiul): Update this function when we start to support PASSWORD_REUSE
+  // trigger.
 }
 
 }  // namespace safe_browsing
