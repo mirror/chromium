@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "356144f2_1284d16d",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T23:20:06Z",
+      "side": 1,
+      "message": "\u003e Layout guides solve these and other problems. We define a named guide and maintain it in the UI layer. It updates via autolayout. It can be converted to a rect if needed for legacy code. There\u0027s no need to pass UI-layer information around in the controller/coordinator layer.\n\nUsing named layout guide makes download_manager_view_controller depend on BVC code (which has adds a named layout guide). I tried rewriting presentation using named layout guides and I ended up with more code, which was also coupled with BVC.\n\nI do understand that you may want to have consistency in codebase and use UILayoutGuide everywhere. How about I use UILayoutGuide, but will call AddNamedGuide inside view controller instead of BVC and will pass UILayoutGuide in callback? I\u0027ve made the change in this CL to make sure that my proposal is clear.",
+      "parentUuid": "ba7121d1_42834508",
+      "range": {
+        "startLine": 37,
+        "startChar": 46,
+        "endLine": 37,
+        "endChar": 50
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a363f8ca_99189129",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
         "patchSetId": 3
@@ -226,6 +250,30 @@
     },
     {
       "key": {
+        "uuid": "3d51c57b_a032180b",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T23:20:06Z",
+      "side": 1,
+      "message": "Testing categories look like backdoors for me (which is discouraged by http://go/unit-test-practices#public-apis). API should be either public or private. And tests should only test public APIs.\n\nBut I do see a value in a separate category, which I added and named UIElements",
+      "parentUuid": "011fb6f8_9d597f77",
+      "range": {
+        "startLine": 59,
+        "startChar": 1,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f9b9b23_d71bd31d",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
         "patchSetId": 3
@@ -344,6 +392,30 @@
     },
     {
       "key": {
+        "uuid": "2de6ed42_2540097b",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T23:20:06Z",
+      "side": 1,
+      "message": "Oh, right. Changed everything to properties and dot syntax.",
+      "parentUuid": "0ec3fbfd_7e8c0fd4",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 29
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75ee356e_c15762c5",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
         "patchSetId": 3
@@ -403,6 +475,30 @@
       "side": 1,
       "message": "Or in some object the BVC owns. Look at how other contained view controllers are handled.",
       "parentUuid": "9dcbd35b_a7893bc6",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 9
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6546c256_e6f8c447",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T23:20:06Z",
+      "side": 1,
+      "message": "I removed view.leftAnchor and view.rightAnchor constraints. Seems like presenter takes care of those. \n\nCreating UIView subclass just so we can override intrinsicContentSize seems like a hack to me. Is there a reason why you don\u0027t want to keep view.heightAnchor constraint? I think embedding view controller should not have the knowledge about toolbar size.",
+      "parentUuid": "90bd8749_4395e570",
       "range": {
         "startLine": 71,
         "startChar": 5,
@@ -482,6 +578,30 @@
       "revId": "eec097473d47099eb9682e5600966a371846fa94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e27eccb_6a6247dd",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T23:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "800f1a38_710f9960",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 24
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -717,6 +837,30 @@
       "revId": "eec097473d47099eb9682e5600966a371846fa94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e105b289_e5282e94",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T23:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20267179_44483acf",
+      "range": {
+        "startLine": 159,
+        "startChar": 16,
+        "endLine": 159,
+        "endChar": 22
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
