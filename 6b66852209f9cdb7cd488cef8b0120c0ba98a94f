@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fff9b475_f3363464",
+        "filename": "device/gamepad/hid_dll_functions_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-18T19:50:04Z",
+      "side": 1,
+      "message": "Style nit - It\u0027s recommended now to set initial values at the declaration site instead of in the initializer list. So:\n\nHidPGetCapsFunc hidp_get_caps_ \u003d nullptr; //etc",
+      "revId": "6b66852209f9cdb7cd488cef8b0120c0ba98a94f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
