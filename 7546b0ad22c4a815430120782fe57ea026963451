@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "66a4306d_7ea83765",
+        "filename": "chrome/browser/component_updater/subresource_filter_component_installer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-18T13:41:25Z",
+      "side": 1,
+      "message": "Sure, keeping it as-is is OK.",
+      "parentUuid": "47ce7283_fdb0a6f7",
+      "range": {
+        "startLine": 47,
+        "startChar": 43,
+        "endLine": 47,
+        "endChar": 54
+      },
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a80f350c_ad7279b6",
         "filename": "chrome/browser/component_updater/subresource_filter_component_installer_unittest.cc",
         "patchSetId": 3
@@ -98,6 +122,24 @@
       "revId": "7546b0ad22c4a815430120782fe57ea026963451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75343ed0_5dbc004a",
+        "filename": "chrome/browser/component_updater/subresource_filter_component_installer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-18T13:41:25Z",
+      "side": 1,
+      "message": "ditto, this is fine.",
+      "parentUuid": "561648c4_5fd37fb0",
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +178,30 @@
       "side": 1,
       "message": "I\u0027ve tried without success.\n\nExternal code implicitly uses knowledge that blocking task runner and background task runner are ThreadTaskRunnerHandle for the current thread. If we want to separate task runners we need to:\n\n1. TestRulesetPublisher for unit tests should have that code:\n\nvoid TestRulesetPublisher::SetRuleset(\n    const TestRuleset\u0026 unindexed_ruleset,\n    base::TestSimpleTaskRunner* blocking_task_runner,\n    base::TestSimpleTaskRunner* background_task_runner) {\n  ...\n  RulesetDistributionListener listener;\n  ...\n\n  // Wait for indexing started on after startup task (current thread message loop).\n  base::RunLoop().RunUntilIdle();\n\n  // Process indexing (separate TestSimpleTaskRunner tasks queue).\n  background_task_runner-\u003eRunUntilIdle();\n\n  // Process indexing results on UI thread to schedule file opening (current thread message loop).\n  base::RunLoop().RunUntilIdle();\n\n  // Process file opening (separate TestSimpleTaskRunner tasks queue)\n  blocking_task_runner-\u003eRunUntilIdle();\n\n  // Process the current message loop to publish ruleset from file opening task callback.\n  listener.AwaitDistribution();\n}\n\ninstead of the current:\n\nvoid TestRulesetPublisher::SetRuleset(const TestRuleset\u0026 unindexed_ruleset) {\n  ...\n  RulesetDistributionListener listener;\n  ...\n  // All staff belongs to the current thread ThreadTaskRunnerHandle, so just single base::RunLoop is enough.\n  listener.AwaitDistribution();\n}\n\n2. It is required to cheat somehow with navigation simulation so as |AsyncDocumentSubresourceFilter| posts core initialization on blocking pool, while |ActivationStateComputingNavigationThrottle| waits for activation state. And navigation simulator must a) know specific testing task runner b) know when to run its tasks.\n\n\nI\u0027m inclined to opinion that having blocking and background task runners initialized by |base::ThreadTaskRunnerHandle::Get()| is a quite good trade off for |SubresourceFilterTestHarness|.\n\nWhat do you think?",
       "parentUuid": "8e81c8c9_bcbdef06",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 39
+      },
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78516ca_7bc48b49",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_test_harness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-18T13:41:25Z",
+      "side": 1,
+      "message": "You raise very good points. Would you mind summarizing in a TODO(csharrison) above this call?\n\nThere may be tricks to use to make (1) and (2) nicer but I don\u0027t want to block the CL on it. Additionally, our browser and unit tests should give us sufficient coverage.",
+      "parentUuid": "5b732234_0a1d9257",
       "range": {
         "startLine": 83,
         "startChar": 6,

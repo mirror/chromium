@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3feef292_f8ab3235",
+        "filename": "components/subresource_filter/core/browser/ruleset_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-18T13:41:25Z",
+      "side": 1,
+      "message": "hmm maybe name it blocking_task_runner?",
+      "range": {
+        "startLine": 303,
+        "startChar": 30,
+        "endLine": 303,
+        "endChar": 41
+      },
+      "revId": "62ee499ca4765ac8b1e95b120736772cf62e7b27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27835c0f_9f50d68a",
+        "filename": "components/subresource_filter/core/browser/ruleset_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-18T13:41:25Z",
+      "side": 1,
+      "message": "\"ruleset file opening is scheduled during another file opening.\"",
+      "revId": "62ee499ca4765ac8b1e95b120736772cf62e7b27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2167883b_dfe9677d",
+        "filename": "components/subresource_filter/core/browser/ruleset_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-18T13:41:25Z",
+      "side": 1,
+      "message": "nit: remove empty line",
+      "revId": "62ee499ca4765ac8b1e95b120736772cf62e7b27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
