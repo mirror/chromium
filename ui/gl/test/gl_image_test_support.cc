@@ -6,6 +6,7 @@
 
 #include <vector>
 
+#include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/half_float.h"
 #include "ui/gl/init/gl_factory.h"
 #include "ui/gl/test/gl_surface_test_support.h"
@@ -121,9 +122,9 @@ void GLImageTestSupport::SetBufferDataToColor(int width,
         for (int x = 0; x < width; ++x) {
           *reinterpret_cast<uint32_t*>(&data[y * stride + x * 4]) =
               0x3 << 30 |  // Alpha channel is unused
-              ((color[0] << 2) | (color[0] >> 6)) << 20 |  // R
+              ((color[2] << 2) | (color[2] >> 6)) << 20 |  // B
               ((color[1] << 2) | (color[1] >> 6)) << 10 |  // G
-              ((color[2] << 2) | (color[2] >> 6));         // B
+              ((color[0] << 2) | (color[0] >> 6));         // R
         }
       }
       return;
@@ -218,7 +219,7 @@ void GLImageTestSupport::SetBufferDataToColor(int width,
     case gfx::BufferFormat::ETC1:
     case gfx::BufferFormat::RGBA_4444:
     case gfx::BufferFormat::UYVY_422:
-      NOTREACHED();
+      NOTREACHED() << gfx::BufferFormatToString(format);
       return;
   }
   NOTREACHED();
