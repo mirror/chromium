@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d43c41e3_6ce9c2ac",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-align/content-distribution/parse-align-content-001.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2018-01-18T14:13:19Z",
+      "side": 1,
+      "message": "You need to have this file under css-align/content-distribution/support/ or something like that, a subfolder of where the test is.\nI know this is a pain, but it\u0027s what we have at this point for CSS tests.",
+      "revId": "48adfe47cf21e16d81f4bb62b5db0c8fc29c7979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
