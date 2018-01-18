@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6cf19fc9_b4c505c0",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-18T02:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abc6ba86_36252e39",
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0da941fe_2d8188a5",
         "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143fbb2a_2f87ea5b",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-18T02:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0da941fe_2d8188a5",
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00aef819_2ce57508",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-18T02:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d4c802b_0dfe2aa6",
+      "range": {
+        "startLine": 48,
+        "startChar": 56,
+        "endLine": 48,
+        "endChar": 58
+      },
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "5c73da05_47bff7fc",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-18T02:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d6d67af_7be90d22",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 14
+      },
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1af45337_08477659",
         "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.cc",
         "patchSetId": 8
@@ -113,6 +197,24 @@
       "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6baf4a86_cf8f31c8",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-18T02:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1af45337_08477659",
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +264,30 @@
     },
     {
       "key": {
+        "uuid": "122899eb_0a5d9dd7",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-18T02:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05999f53_f0ba109f",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 14
+      },
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f04e6e53_6f7acad8",
         "filename": "chrome/browser/extensions/api/settings_private/generated_time_zone_pref_base.cc",
         "patchSetId": 8
@@ -176,6 +302,24 @@
       "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e64d21_361c667f",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_time_zone_pref_base.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-18T02:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f04e6e53_6f7acad8",
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +340,24 @@
     },
     {
       "key": {
+        "uuid": "c3729339_b8b40f89",
+        "filename": "chrome/browser/resources/settings/date_time_page/date_time_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-18T02:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d5f3011_77a2fa78",
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "597f5c9b_6a01fbbc",
         "filename": "chrome/browser/resources/settings/date_time_page/date_time_page.html",
         "patchSetId": 8
@@ -213,6 +375,24 @@
     },
     {
       "key": {
+        "uuid": "e0a59e43_f407e64b",
+        "filename": "chrome/browser/resources/settings/date_time_page/date_time_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-18T02:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "597f5c9b_6a01fbbc",
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efa558a7_0c1a0cfb",
         "filename": "chrome/browser/resources/settings/date_time_page/date_time_page.html",
         "patchSetId": 8
@@ -227,6 +407,24 @@
       "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "007d227d_48b79fbb",
+        "filename": "chrome/browser/resources/settings/date_time_page/date_time_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-18T02:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efa558a7_0c1a0cfb",
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -261,6 +459,24 @@
       "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baef6080_ccaf1d7d",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_subpage.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-18T02:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dca9485f_81b2a374",
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

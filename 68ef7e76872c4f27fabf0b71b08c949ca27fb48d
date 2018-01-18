@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ebea8024_222d8f0e",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_selector.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-18T02:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cf29fbc_46c8eb5c",
+      "revId": "68ef7e76872c4f27fabf0b71b08c949ca27fb48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c35c656b_44cc537d",
         "filename": "chrome/browser/resources/settings/date_time_page/timezone_subpage.html",
         "patchSetId": 7
