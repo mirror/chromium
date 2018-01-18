@@ -5,6 +5,7 @@
 #include "components/cbor/cbor_reader.h"
 
 #include <math.h>
+
 #include <utility>
 
 #include "base/numerics/checked_math.h"
@@ -54,15 +55,15 @@ const char kOutOfRangeIntegerValue[] =
 
 }  // namespace
 
-CBORReader::CBORReader(Bytes::const_iterator it, Bytes::const_iterator end)
+CBORReader::CBORReader(It it, It end)
     : it_(it), end_(end), error_code_(DecoderError::CBOR_NO_ERROR) {}
 CBORReader::~CBORReader() {}
 
 // static
-base::Optional<CBORValue> CBORReader::Read(const Bytes& data,
+base::Optional<CBORValue> CBORReader::Read(base::span<uint8_t const> data,
                                            DecoderError* error_code_out,
                                            int max_nesting_level) {
-  CBORReader reader(data.begin(), data.end());
+  CBORReader reader(data.cbegin(), data.cend());
   base::Optional<CBORValue> decoded_cbor = reader.DecodeCBOR(max_nesting_level);
 
   if (decoded_cbor)
