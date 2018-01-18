@@ -46,6 +46,30 @@
       "revId": "6e650539e12301272c171356b01826cce4f72d10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1446c8d_0c721679",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageGeneratorValue.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-18T20:01:31Z",
+      "side": 1,
+      "message": "Me too tired. Right, doesn\u0027t fix the underlying issue.",
+      "parentUuid": "70c02042_76a3c291",
+      "range": {
+        "startLine": 123,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 31
+      },
+      "revId": "6e650539e12301272c171356b01826cce4f72d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
