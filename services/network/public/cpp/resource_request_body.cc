@@ -76,6 +76,55 @@ std::vector<base::FilePath> ResourceRequestBody::GetReferencedFiles() const {
   return result;
 }
 
+scoped_refptr<ResourceRequestBody> ResourceRequestBody::Clone() const {
+  auto clone = base::MakeRefCounted<ResourceRequestBody>();
+
+  clone->identifier_ = identifier_;
+  clone->contains_sensitive_info_ = contains_sensitive_info_;
+  for (const DataElement& element : elements_) {
+    DataElement cloned_element;
+    switch (element.type()) {
+      case DataElement::TYPE_UNKNOWN:
+      case DataElement::TYPE_DISK_CACHE_ENTRY:
+      case DataElement::TYPE_BYTES_DESCRIPTION:
+        NOTREACHED();
+        break;
+      case DataElement::TYPE_DATA_PIPE: {
+        network::mojom::DataPipeGetterPtrInfo clone_ptr_info;
+        element.data_pipe()->Clone(mojo::MakeRequest(&clone_ptr_info));
+        network::mojom::DataPipeGetterPtr clone_ptr(std::move(clone_ptr_info));
+        cloned_element.SetToDataPipe(std::move(clone_ptr));
+        break;
+      }
+      case DataElement::TYPE_RAW_FILE:
+        cloned_element.SetToFileRange(
+            element.file().Duplicate(), element.path(), element.offset(),
+            element.length(), element.expected_modification_time());
+        break;
+      case DataElement::TYPE_FILE_FILESYSTEM:
+        cloned_element.SetToFileSystemUrlRange(
+            element.filesystem_url(), element.offset(), element.length(),
+            element.expected_modification_time());
+        break;
+      case DataElement::TYPE_BLOB:
+        NOTREACHED() << "Clone() is only used for NetworkService. There should "
+                        "be no blob elements in NetworkService";
+        break;
+      case DataElement::TYPE_FILE:
+        cloned_element.SetToFilePathRange(element.path(), element.offset(),
+                                          element.length(),
+                                          element.expected_modification_time());
+        break;
+      case DataElement::TYPE_BYTES:
+        cloned_element.SetToBytes(element.bytes(), element.length());
+        break;
+    }
+    clone->elements_.push_back(std::move(cloned_element));
+  }
+
+  return clone;
+}
+
 ResourceRequestBody::~ResourceRequestBody() {}
 
 }  // namespace network

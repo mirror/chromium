@@ -46,7 +46,7 @@ class DataElement {
     // Commonly used for Blob, and also for Upload when Network Service is
     // disabled:
     TYPE_BLOB,  // Used old IPC codepath only.
-    TYPE_FILE,
+    TYPE_FILE,  // Still used in NetworkService case.
 
     // Commonly used in every case:
     TYPE_BYTES,
