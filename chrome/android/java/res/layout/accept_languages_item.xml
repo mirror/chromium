@@ -20,7 +20,6 @@
         android:layout_height="match_parent"
         android:paddingStart="@dimen/selectable_list_layout_row_padding"
         android:paddingEnd="@dimen/selectable_list_layout_row_padding"
-        android:contentDescription="@string/accessibility_list_menu_button"
         android:background="@null"
         android:src="@drawable/ic_more_vert_black_24dp"
         chrome:menuWidth="@dimen/pref_languages_item_popup_width"
