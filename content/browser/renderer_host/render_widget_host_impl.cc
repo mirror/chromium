@@ -729,7 +729,9 @@ void RenderWidgetHostImpl::SetImportance(ChildProcessImportance importance) {
 }
 #endif
 
-bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
+bool RenderWidgetHostImpl::GetResizeParams(
+    ResizeParams* resize_params,
+    viz::LocalSurfaceId local_surface_id) {
   *resize_params = ResizeParams();
 
   GetScreenInfo(&resize_params->screen_info);
@@ -761,7 +763,8 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
     resize_params->visible_viewport_size = view_->GetVisibleViewportSize();
     // TODO(ccameron): GetLocalSurfaceId is not synchronized with the device
     // scale factor of the surface. Fix this.
-    viz::LocalSurfaceId local_surface_id = view_->GetLocalSurfaceId();
+    if (!local_surface_id.is_valid())
+      local_surface_id = view_->GetLocalSurfaceId();
     if (local_surface_id.is_valid())
       resize_params->local_surface_id = local_surface_id;
   }
@@ -801,6 +804,11 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
   return dirty;
 }
 
+bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
+  viz::LocalSurfaceId invalid_local_surface_id;
+  return GetResizeParams(resize_params, invalid_local_surface_id);
+}
+
 void RenderWidgetHostImpl::SetInitialRenderSizeParams(
     const ResizeParams& resize_params) {
   resize_ack_pending_ = resize_params.needs_resize_ack;
@@ -809,10 +817,17 @@ void RenderWidgetHostImpl::SetInitialRenderSizeParams(
 }
 
 void RenderWidgetHostImpl::WasResized() {
-  WasResized(false);
+  viz::LocalSurfaceId invalid_local_surface_id;
+  WasResized(false, invalid_local_surface_id);
 }
 
 void RenderWidgetHostImpl::WasResized(bool scroll_focused_node_into_view) {
+  viz::LocalSurfaceId invalid_local_surface_id;
+  WasResized(scroll_focused_node_into_view, invalid_local_surface_id);
+}
+
+void RenderWidgetHostImpl::WasResized(bool scroll_focused_node_into_view,
+                                      viz::LocalSurfaceId local_surface_id) {
   // Skip if the |delegate_| has already been detached because
   // it's web contents is being deleted.
   if (resize_ack_pending_ || !process_->HasConnection() || !view_ ||
@@ -821,7 +836,7 @@ void RenderWidgetHostImpl::WasResized(bool scroll_focused_node_into_view) {
   }
 
   std::unique_ptr<ResizeParams> params(new ResizeParams);
-  if (!GetResizeParams(params.get()))
+  if (!GetResizeParams(params.get(), local_surface_id))
     return;
   params->scroll_focused_node_into_view = scroll_focused_node_into_view;
 
@@ -2047,6 +2062,7 @@ void RenderWidgetHostImpl::OnResizeOrRepaintACK(
 
   // Update our knowledge of the RenderWidget's size.
   current_size_ = params.view_size;
+  received_local_surface_id_ = params.local_surface_id;
 
   bool is_resize_ack =
       ViewHostMsg_ResizeOrRepaint_ACK_Flags::is_resize_ack(params.flags);
@@ -2496,7 +2512,12 @@ void RenderWidgetHostImpl::DidAllocateLocalSurfaceIdForAutoResize(
   if (!view_ || last_auto_resize_request_number_ != sequence_number)
     return;
 
-  viz::LocalSurfaceId local_surface_id(view_->GetLocalSurfaceId());
+  viz::LocalSurfaceId local_surface_id;
+  if (received_local_surface_id_.is_valid()) {
+    local_surface_id = received_local_surface_id_;
+  } else {
+    local_surface_id = view_->GetLocalSurfaceId();
+  }
   if (local_surface_id.is_valid()) {
     ScreenInfo screen_info;
     GetScreenInfo(&screen_info);
