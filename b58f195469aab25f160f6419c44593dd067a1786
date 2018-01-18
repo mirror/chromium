@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "bafb8b76_4a157e01",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastIntents.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1259934
+      },
+      "writtenOn": "2018-01-18T01:51:45Z",
+      "side": 1,
+      "message": "I changes this intent action name to ACTION_STOP_WEB_CONTENT, and changes the other one to ACTION_ON_WEB_CONTENT_STOP which is filed after ACTION_STOP_WEB_CONTENT is done. Both CastWebContentsAcitivty and external activity should handle this intent to either stop itself or remove the fragment, or anything else base on its own logic. ACTION_STOP_ACTIVITY is removed.",
+      "parentUuid": "141a4031_32e073b3",
+      "range": {
+        "startLine": 28,
+        "startChar": 31,
+        "endLine": 28,
+        "endChar": 63
+      },
+      "revId": "b58f195469aab25f160f6419c44593dd067a1786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a505ffe3_a2f38c67",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsComponent.java",
         "patchSetId": 6
