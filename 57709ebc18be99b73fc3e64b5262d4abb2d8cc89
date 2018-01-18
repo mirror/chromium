@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9997d69e_b2620d07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-18T00:36:19Z",
+      "side": 1,
+      "message": "The title should mention which UI surface is affected",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "57709ebc18be99b73fc3e64b5262d4abb2d8cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5662c0_f2b5054d",
+        "filename": "chrome/android/java/res/layout/accept_languages_item.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-18T00:36:19Z",
+      "side": 1,
+      "message": "selectable_list_layout_row_padding is 16dp, which is what UX said was desired. Perhaps this padding should be removed and we should rely on pref_languages_padding on the root LinearLayout to set the end padding for the row to 16dp. That would ensure that the end padding is correct even when this button isn\u0027t visible.\n\nWith the current patch, the total end padding will be 16 + 6 \u003d 22. Doing a rough visual comparison between the image Khalil sent and the screenshot you sent, I think the icons in your screenshot are still too far from the edge.",
+      "range": {
+        "startLine": 45,
+        "startChar": 35,
+        "endLine": 45,
+        "endChar": 69
+      },
+      "revId": "57709ebc18be99b73fc3e64b5262d4abb2d8cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
