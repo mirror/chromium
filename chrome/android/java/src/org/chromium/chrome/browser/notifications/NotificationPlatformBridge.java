@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.service.notification.StatusBarNotification;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -739,6 +740,26 @@ public class NotificationPlatformBridge {
             WebApkServiceClient.getInstance().cancelNotification(
                     webApkPackage, notificationId, PLATFORM_ID);
         }
+    }
+
+    /**
+     * Returns the list of Notification Ids belonging to all active notifications, according to
+     * the OS.
+     * Even though the getActiveNotifications() API from NotificationManager class is available
+     * on Android M onwards, the code to synchronize the info from this API with Chrome's
+     * Notification Database is buggy on versions lower than Android O. We've thus intended for this
+     * method to only be called on Android O+.
+     */
+    @CalledByNative
+    private String[] getActiveNotificationsIds() {
+        assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
+        StatusBarNotification[] activeNotifications = mNotificationManager.getActiveNotifications();
+        if (activeNotifications == null) return null;
+        String[] result = new String[activeNotifications.length];
+        for (int i = 0; i < activeNotifications.length; i++) {
+            result[i] = activeNotifications[i].getTag();
+        }
+        return result;
     }
 
     /**
