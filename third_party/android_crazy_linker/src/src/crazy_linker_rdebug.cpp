@@ -12,9 +12,10 @@
 
 #include "crazy_linker_debug.h"
 #include "crazy_linker_globals.h"
+#include "crazy_linker_native_bridge.h"
 #include "crazy_linker_proc_maps.h"
-#include "crazy_linker_util.h"
 #include "crazy_linker_system.h"
+#include "crazy_linker_util.h"
 #include "elf_traits.h"
 
 namespace crazy {
@@ -214,6 +215,33 @@ bool RDebug::Init() {
   // executable.
   init_ = true;
 
+#ifdef NDEBUG
+  // For release builds, do not call the r_brk() function to reduce
+  // runtime crashes that may occur on devices that implement runtime
+  // translation of ARM machine code to x86. See https://crbug.com/796938
+  const int kSdkLevelLollipop = 22;
+  int sdk_level = *Globals::GetSDKBuildVersion();
+  if (sdk_level == 0) {
+    LOG("%s: ERROR: crazy_set_sdk_build_version() should have been called!",
+        __PRETTY_FUNCTION__);
+    sdk_level = kSdkLevelLollipop - 1;
+  } else {
+    LOG("%s: SDK level=%d", __PRETTY_FUNCTION__, sdk_level);
+  }
+  // Because it is hard to detect if runtime translation occurs before
+  // Lollipop, assume it is always enabled before this release, since the
+  // impact is to prevent the libraries from being visible to GDB, which
+  // is not a real concern in practice.
+  call_r_brk_ =
+      (sdk_level >= kSdkLevelLollipop) && !AndroidNativeBridgeIsInitialized();
+  LOG("%s: call_r_brk_=%s", __PRETTY_FUNCTION__,
+      call_r_brk_ ? "true" : "false");
+#else
+  // Always call it for debug builds.
+  call_r_brk_ = true;
+  LOG("%s: call_r_brk_=true (debug build)", __PRETTY_FUNCTION__);
+#endif
+
   size_t dynamic_addr = 0;
   size_t dynamic_size = 0;
   String path;
@@ -275,6 +303,13 @@ bool RDebug::Init() {
 
   LOG("%s: There is no non-0 DT_DEBUG entry in this process\n", __FUNCTION__);
   return false;
+}
+
+void RDebug::CallRBrk(int state) {
+  if (call_r_brk_) {
+    r_debug_->r_state = state;
+    r_debug_->r_brk();
+  }
 }
 
 namespace {
@@ -435,10 +470,6 @@ void RDebug::AddEntryImpl(link_map_t* entry) {
     return;
   }
 
-  // Tell GDB the list is going to be modified.
-  r_debug_->r_state = RT_ADD;
-  r_debug_->r_brk();
-
   // IMPORTANT: GDB expects the first entry in the list to correspond
   // to the executable. So add our new entry just after it. This is ok
   // because by default, the linker is always the second entry, as in:
@@ -465,6 +496,9 @@ void RDebug::AddEntryImpl(link_map_t* entry) {
     return;
   }
 
+  // Tell GDB the list is going to be modified.
+  CallRBrk(RT_ADD);
+
   link_map_t* before = r_debug_->r_map->l_next;
   link_map_t* after = before->l_next;
 
@@ -479,9 +513,8 @@ void RDebug::AddEntryImpl(link_map_t* entry) {
   WriteLinkMapField(&before->l_next, entry);
   WriteLinkMapField(&after->l_prev, entry);
 
-  // Tell GDB that the list modification has completed.
-  r_debug_->r_state = RT_CONSISTENT;
-  r_debug_->r_brk();
+  // Tell GDB the list modification has completed.
+  CallRBrk(RT_CONSISTENT);
 }
 
 void RDebug::DelEntryImpl(link_map_t* entry) {
@@ -491,8 +524,7 @@ void RDebug::DelEntryImpl(link_map_t* entry) {
     return;
 
   // Tell GDB the list is going to be modified.
-  r_debug_->r_state = RT_DELETE;
-  r_debug_->r_brk();
+  CallRBrk(RT_DELETE);
 
   // IMPORTANT: Before modifying the previous and next entries in the
   // list, ensure that they are writable. See comment above for more
@@ -509,8 +541,7 @@ void RDebug::DelEntryImpl(link_map_t* entry) {
   entry->l_next = NULL;
 
   // Tell GDB the list modification has completed.
-  r_debug_->r_state = RT_CONSISTENT;
-  r_debug_->r_brk();
+  CallRBrk(RT_CONSISTENT);
 }
 
 }  // namespace crazy

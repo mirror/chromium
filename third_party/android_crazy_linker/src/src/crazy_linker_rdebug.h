@@ -55,6 +55,14 @@
 // 'r_brk', and will be able to synchronize with the linker's
 // modifications.
 //
+// IMPORTANT TECHNICAL NOTE: On certain devices that implement runtime
+// translation of ARM machine instructions to x86, calling r_brk()
+// might crashes in certain cases, probably due to a bug in the
+// proprietary translation engine. To work-around this, release builds
+// of the crazy linker detect when this translation is active, and
+// then never calls r_brk(). This makes release build un-debuggable
+// with GDB on such devices (but Breakpad minidumps are not affected).
+//
 // The 'r_map' field is a list of nodes with the following structure
 // describing each loaded shared library for GDB:
 //
@@ -234,12 +242,20 @@ class RDebug {
       (*handler)(this, entry);
   }
 
+  // Call the debugger hook function |r_debug_->r_brk|.
+  // |state| is the value to write to |r_debug_->r_state|
+  // before that. This is done to coordinate with the
+  // debugger when modifications of the global |r_debug_|
+  // list are performed.
+  void CallRBrk(int state);
+
   RDebug(const RDebug&);
   RDebug& operator=(const RDebug&);
 
   r_debug* r_debug_;
   bool init_;
   bool readonly_entries_;
+  bool call_r_brk_;
   rdebug_callback_poster_t post_for_later_execution_;
   void* post_for_later_execution_context_;
 };
