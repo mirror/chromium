@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eaad2029_415192df",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-18T17:34:24Z",
+      "side": 1,
+      "message": "Sure, we can do that. Done.",
+      "parentUuid": "66cce5a5_681cbd0a",
+      "revId": "225484447daa02ecd5e2087e1a01ce33fe5de6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3d73509_c4a543ff",
         "filename": "components/signin/core/browser/account_fetcher_service.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "225484447daa02ecd5e2087e1a01ce33fe5de6b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26dcc6d9_a14bdee7",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-18T17:34:24Z",
+      "side": 1,
+      "message": "I can only add a DCHECK for |signin_client_| because |image_decoder_| is moved in line 272. Done",
+      "parentUuid": "f3d73509_c4a543ff",
+      "revId": "225484447daa02ecd5e2087e1a01ce33fe5de6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "225484447daa02ecd5e2087e1a01ce33fe5de6b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b21d739_e4e200de",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-18T17:34:24Z",
+      "side": 1,
+      "message": "Yes. Done.",
+      "parentUuid": "d2c1f9a3_3ee0d703",
+      "range": {
+        "startLine": 287,
+        "startChar": 27,
+        "endLine": 287,
+        "endChar": 29
+      },
+      "revId": "225484447daa02ecd5e2087e1a01ce33fe5de6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
