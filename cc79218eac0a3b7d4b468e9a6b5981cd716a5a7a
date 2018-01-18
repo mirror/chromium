@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5085ff3f_741744d8",
+        "filename": "ui/events/ozone/evdev/keyboard_evdev.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-01-18T19:45:01Z",
+      "side": 0,
+      "message": "This is analogous to the wl_display_sync call.\n\nThis ought to be organized so that evdev calls PostTask here, and wayland calls wl_display_sync here. Wayland does not need a post task at all; that needs to be triggered from the pong from wayland compositor instead (via wl_callback_add_listener to wl_display_sync).",
+      "range": {
+        "startLine": 178,
+        "startChar": 31,
+        "endLine": 178,
+        "endChar": 32
+      },
+      "revId": "cc79218eac0a3b7d4b468e9a6b5981cd716a5a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
