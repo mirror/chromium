@@ -29,6 +29,7 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h"
+#include "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper_delegate_impl.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
 #include "chrome/common/url_constants.h"
@@ -260,8 +261,9 @@ void CreateDiceTurnOnSyncHelper(Profile* profile,
   // DiceTurnSyncOnHelper is suicidal (it will kill itself once it finishes
   // enabling sync).
   new DiceTurnSyncOnHelper(
-      profile, browser, access_point, reason, account_id,
-      DiceTurnSyncOnHelper::SigninAbortedMode::REMOVE_ACCOUNT);
+      profile, access_point, reason, account_id,
+      DiceTurnSyncOnHelper::SigninAbortedMode::REMOVE_ACCOUNT,
+      std::make_unique<DiceTurnSyncOnHelperDelegateImpl>(browser));
 }
 
 // Shows UI for signin errors.

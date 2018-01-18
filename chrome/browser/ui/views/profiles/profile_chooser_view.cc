@@ -49,6 +49,7 @@
 #include "chrome/browser/ui/views/profiles/signin_view_controller_delegate_views.h"
 #include "chrome/browser/ui/views/profiles/user_manager_view.h"
 #include "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h"
+#include "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper_delegate_impl.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
 #include "chrome/common/pref_names.h"
@@ -690,10 +691,11 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
   } else if (sender == signin_with_gaia_account_button_) {
     // DiceTurnSyncOnHelper deletes itself once it's done.
     new DiceTurnSyncOnHelper(
-        browser_->profile(), browser_, access_point_,
+        browser_->profile(), access_point_,
         signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT,
         signin_with_gaia_account_id_,
-        DiceTurnSyncOnHelper::SigninAbortedMode::KEEP_ACCOUNT);
+        DiceTurnSyncOnHelper::SigninAbortedMode::KEEP_ACCOUNT,
+        std::make_unique<DiceTurnSyncOnHelperDelegateImpl>(browser_));
 
   } else {
     // Either one of the "other profiles", or one of the profile accounts
