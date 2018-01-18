@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d2f81a1_53a9548a",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIterator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-18T04:13:06Z",
+      "side": 1,
+      "message": "We don\u0027t need to have this function. These shortcut functions are historical\nthings and we should remove them.\n\nThese functions are used to be:\n  \n  bool SkipsUnselectableContent() const {\n    return behavior_ \u0026 kSkipsUnselectableContent;\n  }",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 3
+      },
+      "revId": "02eb3da9b580aa513432effe9ae430fa3560bdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
