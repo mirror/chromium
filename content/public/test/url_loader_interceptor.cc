@@ -269,9 +269,8 @@ void URLLoaderInterceptor::InitializeOnIOThread(base::OnceClosure closure) {
           return ResourceMessageFilter::GetCurrentForTesting()->child_id();
         }),
         base::BindRepeating([]() {
-          mojom::URLLoaderFactory* factory =
-              ResourceMessageFilter::GetCurrentForTesting();
-          return factory;
+          return ResourceMessageFilter::GetCurrentForTesting()
+              ->GetURLLoaderFactoryForTesting();
         }));
     ResourceMessageFilter::SetNetworkFactoryForTesting(rmf_interceptor_.get());
   }
