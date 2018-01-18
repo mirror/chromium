@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8c03a9e_37569fb7",
+        "filename": "chrome/browser/chromeos/policy/user_network_configuration_updater_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2018-01-18T18:07:25Z",
+      "side": 1,
+      "message": "Is this function needed? It\u0027s used only in one place (in this file).",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 73
+      },
+      "revId": "1c139bfa7c41c6b8b92ac59d88b6b7b268dff9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
