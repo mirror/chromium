@@ -65,6 +65,8 @@ class MetricsServiceAccessor {
       uint32_t trial_name_hash,
       uint32_t group_name_hash);
 
+  static void SetForceOfficialEnabledTest(bool value);
+
  private:
   DISALLOW_COPY_AND_ASSIGN(MetricsServiceAccessor);
 };

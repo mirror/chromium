@@ -62,6 +62,8 @@ namespace url {
 class Origin;
 }
 
+class ChromeBrowserMainParts;
+
 class ChromeContentBrowserClient : public content::ContentBrowserClient {
  public:
   ChromeContentBrowserClient();
@@ -77,6 +79,9 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   // Notification that the application locale has changed. This allows us to
   // update our I/O thread cache of this value.
   static void SetApplicationLocale(const std::string& locale);
+
+  ChromeBrowserMainParts* CreateChromeBrowserMainParts(
+      const content::MainFunctionParams& parameters);
 
   content::BrowserMainParts* CreateBrowserMainParts(
       const content::MainFunctionParams& parameters) override;
