@@ -751,6 +751,12 @@ void BrowserView::OnActiveTabChanged(content::WebContents* old_contents,
   // we don't want any WebContents to be attached, so that we
   // avoid an unnecessary resize and re-layout of a WebContents.
   if (change_tab_contents) {
+    if (contents_web_view_->GetWidget()) {
+      // Manually clear focus before setting focus behavior to never so that the
+      // focus is not temporarily advanced to an arbitrary place in the UI
+      // via SetFocusBehavior(FocusBehavior::NEVER), confusing screen readers.
+      contents_web_view_->GetWidget()->GetFocusManager()->ClearFocus();
+    }
     contents_web_view_->SetWebContents(nullptr);
     devtools_web_view_->SetWebContents(nullptr);
   }
