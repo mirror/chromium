@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9df57688_56f67341",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-18T12:54:25Z",
+      "side": 1,
+      "message": "Not yet; other code in this function uses yet. Soon though!",
+      "parentUuid": "24a26492_4168b122",
+      "range": {
+        "startLine": 333,
+        "startChar": 38,
+        "endLine": 333,
+        "endChar": 72
+      },
+      "revId": "611f23359bf4352ca974265ba3cfcf3e35cd1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9261f1a7_8195af51",
         "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-17T17:02:27Z",
       "side": 1,
       "message": "DependsOn(IdentityManagerFactory::GetInstance());?",
+      "revId": "611f23359bf4352ca974265ba3cfcf3e35cd1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c42d49d_bdcc316a",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-18T12:54:25Z",
+      "side": 1,
+      "message": "Great catch, thanks!",
+      "parentUuid": "9261f1a7_8195af51",
       "revId": "611f23359bf4352ca974265ba3cfcf3e35cd1b33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
