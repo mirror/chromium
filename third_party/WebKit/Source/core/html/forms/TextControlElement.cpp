@@ -445,6 +445,7 @@ bool TextControlElement::SetSelectionRange(
     DCHECK_EQ(start_position.AnchorNode()->OwnerShadowHost(), this);
     DCHECK_EQ(end_position.AnchorNode()->OwnerShadowHost(), this);
   }
+
 #endif  // DCHECK_IS_ON()
   frame->Selection().SetSelection(
       SelectionInDOMTree::Builder()
