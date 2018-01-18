@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b526e65d_1bab8bbc",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T23:07:06Z",
+      "side": 1,
+      "message": "Would it be OK to do this in setup(), near lines 33-34, so that you don\u0027t have to create a new element here?",
+      "range": {
+        "startLine": 288,
+        "startChar": 6,
+        "endLine": 290,
+        "endChar": 0
+      },
+      "revId": "a63f9649f1d3ba01342b3d3ad3396a5b039651ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ab993b_e5961a34",
+        "filename": "chrome/test/data/webui/extensions/extension_toolbar_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T23:07:06Z",
+      "side": 1,
+      "message": "Optional: We currently have two ways of doing the same thing, which is not ideal. One is ListenerMock(), the other one is eventToPromise(), see example usage in Extensions tests, at https://cs.chromium.org/chromium/src/chrome/test/data/webui/extensions/toggle_row_test.js?l\u003d23.\n\nUp to you on whether you want to switch this usage to eventToPromise, but eventually it would be nice if we converge to one (my vote is for the promise-based approach).",
+      "range": {
+        "startLine": 109,
+        "startChar": 47,
+        "endLine": 109,
+        "endChar": 59
+      },
+      "revId": "a63f9649f1d3ba01342b3d3ad3396a5b039651ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c55d54e_5f5fb747",
+        "filename": "chrome/test/data/webui/extensions/extension_toolbar_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T23:07:06Z",
+      "side": 1,
+      "message": "Nit: s/var/const, since you are already using const at line 104.",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 11
+      },
+      "revId": "a63f9649f1d3ba01342b3d3ad3396a5b039651ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
