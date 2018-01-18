@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5db6f092_d492e5bd",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-18T20:16:49Z",
+      "side": 1,
+      "message": "nit: initialize it at the definition? (you could move all of these if you\u0027re motivated)",
+      "revId": "9243eda5b427988c9253eb137bc896e871c36aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31965b55_eecd4aad",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 2979,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-18T20:16:49Z",
+      "side": 1,
+      "message": "Can you add some comments to explain these blocks, cuz I don\u0027t immediately see why the WillBeginImplFrame is happening so late in this test? I think I would have to read a bunch of other tests, or the scheduler code, to understand all the things this test does atm.",
+      "revId": "9243eda5b427988c9253eb137bc896e871c36aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8678a886_2933368b",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-18T20:16:49Z",
+      "side": 1,
+      "message": "Thanks, Can you drop it below the TRACE_EVENT so its not skipping being accounted in traces (its cheap but in principle)?\n\nWorth a comment to mention that this contributes to damage, so we reset it once we we\u0027re going to draw? (Which leads me to wonder if this is correct cuz we might not actually draw, we can abort below still, and then we won\u0027t tell the browser about the handle change.)",
+      "revId": "9243eda5b427988c9253eb137bc896e871c36aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40b9fa7_e05b20d2",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-18T20:16:49Z",
+      "side": 1,
+      "message": "Is there any way for the test to prove that DidInvalidateLayerTreeFrameSink *would* have been called before the test exited, if the code was wrong?",
+      "revId": "9243eda5b427988c9253eb137bc896e871c36aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

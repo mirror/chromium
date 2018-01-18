@@ -344,6 +344,24 @@
       "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5c64ee4_47ec7db5",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-18T20:16:49Z",
+      "side": 1,
+      "message": "Thanks these comments make the test 100% clear.",
+      "parentUuid": "48ed4f16_18535bad",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
