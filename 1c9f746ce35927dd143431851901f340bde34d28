@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99bbd44d_915283e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanelMetrics.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-18T00:10:08Z",
+      "side": 1,
+      "message": "I don\u0027t understand why we should consider the ranker prediction here. As I understand it, we should always log the outcome independently of whether or not the ranker is active.\n\nReading the code a bit more, if I understand correctly, you want to skip logging outcomes when shouldSuppressTapBasedOnHeuristics is true. If that is the case, it would be better to look directly at that variable and leave the ranker out of it.\n\nHowever, my opinion is that we could still log outcomes in that case, but log an extra outcome field that will allow to filter this data out for training if we want. But, that could be done in the future.",
+      "range": {
+        "startLine": 335,
+        "startChar": 50,
+        "endLine": 335,
+        "endChar": 62
+      },
+      "revId": "1c9f746ce35927dd143431851901f340bde34d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
