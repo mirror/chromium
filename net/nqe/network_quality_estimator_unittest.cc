@@ -930,7 +930,7 @@ TEST(NetworkQualityEstimatorTest, ObtainThresholdsOnlyRTT) {
   };
 
   for (const auto& test : tests) {
-    estimator.set_start_time_null_http_rtt(
+    estimator.SetStartTimeNullHttpRtt(
         base::TimeDelta::FromMilliseconds(test.rtt_msec));
     estimator.set_recent_http_rtt(
         base::TimeDelta::FromMilliseconds(test.rtt_msec));
@@ -988,7 +988,7 @@ TEST(NetworkQualityEstimatorTest, DefaultTransportRTTBasedThresholds) {
     estimator.SimulateNetworkChange(NetworkChangeNotifier::CONNECTION_WIFI,
                                     "test");
 
-    estimator.set_start_time_null_transport_rtt(
+    estimator.SetStartTimeNullTransportRtt(
         base::TimeDelta::FromMilliseconds(test.transport_rtt_msec));
     estimator.set_recent_transport_rtt(
         base::TimeDelta::FromMilliseconds(test.transport_rtt_msec));
@@ -1044,7 +1044,7 @@ TEST(NetworkQualityEstimatorTest, DefaultHttpRTTBasedThresholds) {
     estimator.SimulateNetworkChange(NetworkChangeNotifier::CONNECTION_WIFI,
                                     "test");
 
-    estimator.set_start_time_null_http_rtt(
+    estimator.SetStartTimeNullHttpRtt(
         base::TimeDelta::FromMilliseconds(test.http_rtt_msec));
     estimator.set_recent_http_rtt(
         base::TimeDelta::FromMilliseconds(test.http_rtt_msec));
@@ -1103,7 +1103,7 @@ TEST(NetworkQualityEstimatorTest, MAYBE_ObtainThresholdsOnlyTransportRTT) {
   };
 
   for (const auto& test : tests) {
-    estimator.set_start_time_null_transport_rtt(
+    estimator.SetStartTimeNullTransportRtt(
         base::TimeDelta::FromMilliseconds(test.transport_rtt_msec));
     estimator.set_recent_transport_rtt(
         base::TimeDelta::FromMilliseconds(test.transport_rtt_msec));
@@ -1164,7 +1164,7 @@ TEST(NetworkQualityEstimatorTest, ObtainThresholdsHttpRTTandThroughput) {
   };
 
   for (const auto& test : tests) {
-    estimator.set_start_time_null_http_rtt(
+    estimator.SetStartTimeNullHttpRtt(
         base::TimeDelta::FromMilliseconds(test.rtt_msec));
     estimator.set_recent_http_rtt(
         base::TimeDelta::FromMilliseconds(test.rtt_msec));
@@ -1229,7 +1229,7 @@ TEST(NetworkQualityEstimatorTest, ObtainThresholdsTransportRTTandThroughput) {
   };
 
   for (const auto& test : tests) {
-    estimator.set_start_time_null_transport_rtt(
+    estimator.SetStartTimeNullTransportRtt(
         base::TimeDelta::FromMilliseconds(test.transport_rtt_msec));
     estimator.set_recent_transport_rtt(
         base::TimeDelta::FromMilliseconds(test.transport_rtt_msec));
@@ -1689,8 +1689,7 @@ TEST(NetworkQualityEstimatorTest, MAYBE_TestEffectiveConnectionTypeObserver) {
 
   EXPECT_EQ(0U, observer.effective_connection_types().size());
 
-  estimator.set_start_time_null_http_rtt(
-      base::TimeDelta::FromMilliseconds(1500));
+  estimator.SetStartTimeNullHttpRtt(base::TimeDelta::FromMilliseconds(1500));
   estimator.set_start_time_null_downlink_throughput_kbps(100000);
 
   tick_clock.Advance(base::TimeDelta::FromMinutes(60));
@@ -1733,18 +1732,16 @@ TEST(NetworkQualityEstimatorTest, MAYBE_TestEffectiveConnectionTypeObserver) {
   EXPECT_EQ(1U, observer.effective_connection_types().size());
 
   // Change in connection type should send out notification to the observers.
-  estimator.set_start_time_null_http_rtt(
-      base::TimeDelta::FromMilliseconds(500));
+  estimator.SetStartTimeNullHttpRtt(base::TimeDelta::FromMilliseconds(500));
   estimator.SimulateNetworkChange(NetworkChangeNotifier::CONNECTION_WIFI,
                                   "test");
-  EXPECT_EQ(2U, observer.effective_connection_types().size());
+  EXPECT_EQ(3U, observer.effective_connection_types().size());
 
   // A change in effective connection type does not trigger notification to the
   // observers, since it is not accompanied by any new observation or a network
   // change event.
-  estimator.set_start_time_null_http_rtt(
-      base::TimeDelta::FromMilliseconds(100));
-  EXPECT_EQ(2U, observer.effective_connection_types().size());
+  estimator.SetStartTimeNullHttpRtt(base::TimeDelta::FromMilliseconds(100));
+  EXPECT_EQ(4U, observer.effective_connection_types().size());
 
   TestEffectiveConnectionTypeObserver observer_2;
   estimator.AddEffectiveConnectionTypeObserver(&observer_2);
@@ -1876,8 +1873,8 @@ TEST(NetworkQualityEstimatorTest, TestTransportRttUsedForHttpRttComputation) {
     tick_clock.Advance(base::TimeDelta::FromSeconds(1));
     estimator.SetTickClockForTesting(&tick_clock);
 
-    estimator.set_start_time_null_http_rtt(test.http_rtt);
-    estimator.set_start_time_null_transport_rtt(test.transport_rtt);
+    estimator.SetStartTimeNullHttpRtt(test.http_rtt);
+    estimator.SetStartTimeNullTransportRtt(test.transport_rtt);
 
     // Minimum number of transport RTT samples that should be present before
     // transport RTT estimate can be used to clamp the HTTP RTT.
@@ -1925,8 +1922,8 @@ TEST(NetworkQualityEstimatorTest, TestRTTAndThroughputEstimatesObserver) {
   base::TimeDelta http_rtt(base::TimeDelta::FromMilliseconds(100));
   base::TimeDelta transport_rtt(base::TimeDelta::FromMilliseconds(200));
   int32_t downstream_throughput_kbps(300);
-  estimator.set_start_time_null_http_rtt(http_rtt);
-  estimator.set_start_time_null_transport_rtt(transport_rtt);
+  estimator.SetStartTimeNullHttpRtt(http_rtt);
+  estimator.SetStartTimeNullTransportRtt(transport_rtt);
   estimator.set_start_time_null_downlink_throughput_kbps(
       downstream_throughput_kbps);
   tick_clock.Advance(base::TimeDelta::FromMinutes(60));
@@ -1965,10 +1962,9 @@ TEST(NetworkQualityEstimatorTest, TestRTTAndThroughputEstimatesObserver) {
   // A change in effective connection type does not trigger notification to the
   // observers, since it is not accompanied by any new observation or a network
   // change event.
-  estimator.set_start_time_null_http_rtt(
-      base::TimeDelta::FromMilliseconds(10000));
-  estimator.set_start_time_null_http_rtt(base::TimeDelta::FromMilliseconds(1));
-  EXPECT_EQ(0, observer.notifications_received() - notifications_received);
+  estimator.SetStartTimeNullHttpRtt(base::TimeDelta::FromMilliseconds(10000));
+  estimator.SetStartTimeNullHttpRtt(base::TimeDelta::FromMilliseconds(1));
+  EXPECT_EQ(2, observer.notifications_received() - notifications_received);
 
   TestRTTAndThroughputEstimatesObserver observer_2;
   estimator.AddRTTAndThroughputEstimatesObserver(&observer_2);
@@ -2496,10 +2492,10 @@ TEST(NetworkQualityEstimatorTest, MAYBE_RecordAccuracy) {
 
       // RTT is higher than threshold. Network is slow.
       // Network was predicted to be slow and actually was slow.
-      estimator.set_start_time_null_http_rtt(test.rtt);
+      estimator.SetStartTimeNullHttpRtt(test.rtt);
       estimator.set_recent_http_rtt(test.recent_rtt);
       estimator.set_rtt_estimate_internal(test.recent_rtt);
-      estimator.set_start_time_null_transport_rtt(test.rtt);
+      estimator.SetStartTimeNullTransportRtt(test.rtt);
       estimator.set_recent_transport_rtt(test.recent_rtt);
       estimator.set_start_time_null_downlink_throughput_kbps(
           test.downstream_throughput_kbps);
@@ -2836,12 +2832,12 @@ TEST(NetworkQualityEstimatorTest, TypicalNetworkQualities) {
       // Set the RTT and throughput values to the typical values for
       // |effective_connection_type|. The effective connection type should be
       // computed as |effective_connection_type|.
-      estimator.set_start_time_null_http_rtt(
+      estimator.SetStartTimeNullHttpRtt(
           estimator.params_
               ->TypicalNetworkQuality(static_cast<EffectiveConnectionType>(
                   effective_connection_type))
               .http_rtt());
-      estimator.set_start_time_null_transport_rtt(
+      estimator.SetStartTimeNullTransportRtt(
           estimator.params_
               ->TypicalNetworkQuality(static_cast<EffectiveConnectionType>(
                   effective_connection_type))
@@ -3358,7 +3354,7 @@ TEST(NetworkQualityEstimatorTest, HangingRequestUsingHttpOnly) {
           ->hanging_request_upper_bound_min_http_rtt()
           .InMilliseconds();
 
-  estimator.set_start_time_null_http_rtt(base::TimeDelta::FromMilliseconds(5));
+  estimator.SetStartTimeNullHttpRtt(base::TimeDelta::FromMilliseconds(5));
   base::RunLoop().RunUntilIdle();
   estimator.SimulateNetworkChange(
       NetworkChangeNotifier::ConnectionType::CONNECTION_UNKNOWN, "test");
@@ -3417,7 +3413,7 @@ TEST(NetworkQualityEstimatorTest, HangingRequestUsingTransportAndHttpOnly) {
           ->hanging_request_http_rtt_upper_bound_transport_rtt_multiplier();
 
   estimator.DisableOfflineCheckForTesting(true);
-  estimator.set_start_time_null_http_rtt(base::TimeDelta::FromMilliseconds(5));
+  estimator.SetStartTimeNullHttpRtt(base::TimeDelta::FromMilliseconds(5));
 
   for (size_t i = 0; i < 100; ++i) {
     // Throw enough transport RTT samples so that transport RTT estimate is
