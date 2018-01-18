@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7745d21_a61e6196",
+        "filename": "components/prefs/pref_registry_simple.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-18T21:56:19Z",
+      "side": 1,
+      "message": "By the way, do you have a preference between \"flags \u003d NO_REGISTRATION_FLAGS\" and \"flags \u003d 0\"? I think both have advantages – namely, \"NO_REGISTRATION_FLAGS\" makes the semantics extra clear, whereas \"0\" is less intrusive when scanning the file (and it seems like most clients don\u0027t pass flags, at least based on my experience).",
+      "range": {
+        "startLine": 33,
+        "startChar": 44,
+        "endLine": 33,
+        "endChar": 65
+      },
+      "revId": "45f8c3b416cae76ed606b880e8010f09ec8ae120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
