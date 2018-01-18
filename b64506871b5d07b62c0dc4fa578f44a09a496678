@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9f044214_6bb6c0e4",
+        "filename": "content/browser/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-18T17:59:58Z",
+      "side": 1,
+      "message": "Thanks for mentioning this!  I guess 1) might matter if you restart around midnight?  Agreed that it\u0027s unlikely to skew the results much.  For 2) I agree that UMA recording should be fast enough for us not to worry about this.",
+      "parentUuid": "a2d6a38b_b2dae6ab",
+      "revId": "b64506871b5d07b62c0dc4fa578f44a09a496678",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0173f35_2e757038",
         "filename": "content/browser/site_isolation_policy.cc",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2018-01-18T16:11:29Z",
       "side": 1,
       "message": "I\u0027ve wondered if this could be hidden inside an anonymous namespace, but I think this is fine as-is / it is not that important to respin the CL and/or have to merge back across M66/M65 boundary.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 56
+      },
+      "revId": "b64506871b5d07b62c0dc4fa578f44a09a496678",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2e6297a_bfd035b7",
+        "filename": "content/browser/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-18T17:59:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0173f35_2e757038",
       "range": {
         "startLine": 132,
         "startChar": 0,
