@@ -3781,7 +3781,6 @@ TEST_P(QuicConnectionTest, NewTimeoutAfterSendSilentClose) {
 }
 
 TEST_P(QuicConnectionTest, TimeoutAfterSendSilentCloseAndTLP) {
-  SetQuicReloadableFlag(quic_explicit_close_after_tlp, true);
   // Same test as above, but complete a handshake which enables silent close,
   // but sending TLPs causes the connection close to be sent.
   EXPECT_TRUE(connection_.connected());
@@ -3836,7 +3835,6 @@ TEST_P(QuicConnectionTest, TimeoutAfterSendSilentCloseAndTLP) {
 }
 
 TEST_P(QuicConnectionTest, TimeoutAfterSendSilentCloseWithOpenStreams) {
-  SetQuicReloadableFlag(quic_explicit_close_after_tlp, true);
   // Same test as above, but complete a handshake which enables silent close,
   // but having open streams causes the connection close to be sent.
   EXPECT_TRUE(connection_.connected());
