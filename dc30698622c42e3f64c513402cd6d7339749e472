@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e09df1_0e307f22",
+        "filename": "components/autofill/content/common/autofill_types.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T20:11:07Z",
+      "side": 1,
+      "message": "Nit: trailing whitespace here and below",
+      "revId": "dc30698622c42e3f64c513402cd6d7339749e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65faa7db_06345269",
+        "filename": "components/autofill/core/common/submission_source.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T20:11:07Z",
+      "side": 1,
+      "message": "Nit: please make this an enum class since we\u0027re moving it anyway.",
+      "revId": "dc30698622c42e3f64c513402cd6d7339749e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
