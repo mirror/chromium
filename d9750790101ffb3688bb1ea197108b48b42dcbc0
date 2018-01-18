@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "db3fee92_8a261827",
+        "filename": "third_party/guava/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2018-01-18T15:42:39Z",
+      "side": 1,
+      "message": "John: Switched to per-package visibility, that\u0027s great! Learned something new today already, thanks.\n\nMarcin: I don\u0027t think this CL should depend on the question of whether we want guava in our apks, which is still TBD. Until that question is settled, we still want to restrict usage as much as possible to tests and tooling.",
+      "parentUuid": "c85a4c2a_dc8b88d2",
+      "revId": "d9750790101ffb3688bb1ea197108b48b42dcbc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f66a6f62_bbc07a00",
         "filename": "third_party/guava/OWNERS",
         "patchSetId": 1
