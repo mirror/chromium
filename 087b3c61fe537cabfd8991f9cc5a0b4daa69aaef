@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42a4e78e_382577fa",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 39
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-18T19:54:48Z",
+      "side": 1,
+      "message": "optional nit: prefer SUCCEEDED",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "087b3c61fe537cabfd8991f9cc5a0b4daa69aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc4137a_8246d770",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 39
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-18T19:54:48Z",
+      "side": 1,
+      "message": "nit: Writing",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "087b3c61fe537cabfd8991f9cc5a0b4daa69aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0885c1_3a836654",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 39
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-18T19:54:48Z",
+      "side": 1,
+      "message": "I might be missing the context, but this seems extraneous method to me given we already have onPassowrdsFileExportProgress event. \n\nvar lastStatus \u003d ...;\nchrome.passwordsPrivate.onPasswordsFileExportProgress(function(s) { lastStatus \u003d s; });\nthen this just becomes\nfunction requestExportProgressStatus(f) { f(lastStatus); }\nCan we remove this method to keep the API lean?",
+      "revId": "087b3c61fe537cabfd8991f9cc5a0b4daa69aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
