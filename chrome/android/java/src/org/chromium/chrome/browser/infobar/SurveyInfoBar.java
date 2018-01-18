@@ -91,7 +91,7 @@ public class SurveyInfoBar extends InfoBar {
         });
 
         NoUnderlineClickableSpan clickableSpan = new NoUnderlineClickableSpan() {
-            /** Prevent double clicking on the text span .*/
+            /** Prevent double clicking on the text span. */
             private boolean mClicked;
 
             @Override
@@ -101,7 +101,7 @@ public class SurveyInfoBar extends InfoBar {
 
                 SurveyController.getInstance().showSurveyIfAvailable(
                         tab.getActivity(), mSiteId, mShowAsBottomSheet, mDisplayLogoResId);
-                closeInfoBar();
+                onCloseButtonClicked();
                 mClicked = true;
             }
         };
