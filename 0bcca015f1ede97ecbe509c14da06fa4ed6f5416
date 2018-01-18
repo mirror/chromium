@@ -220,6 +220,30 @@
     },
     {
       "key": {
+        "uuid": "7e727b64_1bacbd60",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T20:42:03Z",
+      "side": 1,
+      "message": "Ah... it\u0027s because C++ only allows one implicit conversion at a time, and this would require two, to go from SecurityOrigin* -\u003e scoped_refptr\u003cSecurityOrigin\u003e -\u003e WebSecurityOrigin\n\nOh well.",
+      "parentUuid": "2261f4bd_5f2d2eb2",
+      "range": {
+        "startLine": 1076,
+        "startChar": 8,
+        "endLine": 1076,
+        "endChar": 25
+      },
+      "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04551a37_ab9782d5",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
         "patchSetId": 1
