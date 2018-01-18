@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be3f626e_5b1bd580",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-18T19:21:25Z",
+      "side": 1,
+      "message": "Did you mean base::BindOnce(\u0026SetParent, child, parent) ?\n\nThere\u0027s no such RenderingWindowManager::SetParent, just a free function SetParent (i.e. doesn\u0027t need base::Unretained(this) either).",
+      "revId": "6128403fe8266b0927c6922cdb05d411562a122a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
