@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "086786cf_98a6f96b",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-18T01:18:45Z",
+      "side": 1,
+      "message": "Hmm, we still need this branch for ChromeOS.",
+      "parentUuid": "62f1821b_2db6118f",
+      "revId": "a355fd226198d89be4aa2926cbceecf1ea987167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83f3ac3f_cbc7511f",
         "filename": "extensions/shell/installer/linux/common/installer.include",
         "patchSetId": 7
@@ -81,6 +99,30 @@
       "revId": "a355fd226198d89be4aa2926cbceecf1ea987167",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b364e4_c040524f",
+        "filename": "extensions/shell/installer/linux/common/installer.include",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-18T01:18:45Z",
+      "side": 1,
+      "message": "We still need this for ChromeOS.",
+      "parentUuid": "8f5488ea_6544dcb3",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 36
+      },
+      "revId": "a355fd226198d89be4aa2926cbceecf1ea987167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
