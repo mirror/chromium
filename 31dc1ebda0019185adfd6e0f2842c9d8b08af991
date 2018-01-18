@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bf8956b_7cc3a7f3",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-18T23:20:38Z",
+      "side": 1,
+      "message": "This should instead be in the bot spec, e.g. https://codesearch.chromium.org/chromium/src/testing/buildbot/waterfalls.pyl?rcl\u003d2d201cd62a26cba7c3530c0971c046ed13403e8e\u0026l\u003d264",
+      "revId": "31dc1ebda0019185adfd6e0f2842c9d8b08af991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
