@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5b166369_736c9bc4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-18T14:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f81cb47_a5d12ad7",
+      "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cc1dd06_7def1d33",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -57,6 +75,30 @@
       "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a095b77d_e995b55c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-18T14:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cc1dd06_7def1d33",
+      "range": {
+        "startLine": 10,
+        "startChar": 67,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "3530af72_d8bc940d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4058,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-18T14:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db1a8866_a2c25ead",
+      "range": {
+        "startLine": 4058,
+        "startChar": 10,
+        "endLine": 4058,
+        "endChar": 27
+      },
+      "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3751f155_a62593da",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
         "patchSetId": 1
@@ -106,6 +172,30 @@
     },
     {
       "key": {
+        "uuid": "0f9101a9_7a9b1649",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-18T14:36:11Z",
+      "side": 1,
+      "message": "This is sorcery! :)",
+      "parentUuid": "3751f155_a62593da",
+      "range": {
+        "startLine": 1076,
+        "startChar": 8,
+        "endLine": 1076,
+        "endChar": 25
+      },
+      "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04551a37_ab9782d5",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
         "patchSetId": 1
@@ -117,6 +207,24 @@
       "writtenOn": "2018-01-18T00:01:02Z",
       "side": 1,
       "message": "Maybe call this forced_user_activation_? Because there are presumably instances where a load request is from a user activation where this won\u0027t be set?",
+      "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8ce50e5_f7653686",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-18T14:36:11Z",
+      "side": 1,
+      "message": "I would say yes and no. I have a follow-up CL that fully delegates setting the user activated before navigation to the `DocumentLoader`. I could have this rename in this CL only but with the follow-up the name change would be moot. Maybe we can discuss a final name in the other CL? :)",
+      "parentUuid": "04551a37_ab9782d5",
       "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
