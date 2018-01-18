@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76ab4b90_9e3ccdec",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-18T15:45:19Z",
+      "side": 1,
+      "message": "As discussed offline, we shouldn\u0027t need to use a lock.",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "d92e5989c47c10bae22f40a35180cd3460f05b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
