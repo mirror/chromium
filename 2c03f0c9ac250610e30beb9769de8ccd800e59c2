@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbeae03e_9fb691b4",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-18T20:36:36Z",
+      "side": 1,
+      "message": "this is a bit confusing, can you set it up so display_1 has zoom factor1?",
+      "range": {
+        "startLine": 1656,
+        "startChar": 0,
+        "endLine": 1656,
+        "endChar": 73
+      },
+      "revId": "2c03f0c9ac250610e30beb9769de8ccd800e59c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
