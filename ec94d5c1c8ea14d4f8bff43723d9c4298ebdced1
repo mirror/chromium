@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d9fdbd4a_2e7a98ff",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-18T04:01:13Z",
+      "side": 1,
+      "message": "This is an interesting example. I will make sure we match iOS Safari here and in the other cases you mentioned (since I see no compelling reason to differ) and put a spec update up for review tomorrow.",
+      "parentUuid": "32c58900_494d4f80",
+      "revId": "ec94d5c1c8ea14d4f8bff43723d9c4298ebdced1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ee7a1a9_2264c86b",
         "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp",
         "patchSetId": 1
