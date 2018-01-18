@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dc22752_ece152cf",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-18T00:48:28Z",
+      "side": 1,
+      "message": "IMO it is premature optimization to compute saveLayer bounds here. We used to raster on the fly on a real canvas, thus the need to know layer bounds beforehand. Now we always record drawing commands in a buffer. cc::DisplayItemList::EndPaintOfPairedEnd() is a much better place to compute saveLayer bounds.\n\nI think it will be a nice cleanup to remove compositing_bounds on CompositingRecorder altogether.",
+      "revId": "9454ef2995dc8d4c86b43cc18e72c35263704264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
