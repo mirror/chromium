@@ -221,6 +221,16 @@ void InkDropHostView::AnimateInkDrop(InkDropState state,
   GetInkDrop()->AnimateToState(state);
 }
 
+void InkDropHostView::ViewHierarchyChanged(
+    const ViewHierarchyChangedDetails& details) {
+  // If we're being removed destroy the ink-drop so that no stale ink-drop state
+  // is maintained until the host is re-added.
+  if (!details.is_add && details.child == this) {
+    ink_drop_.reset();
+  }
+  View::ViewHierarchyChanged(details);
+}
+
 void InkDropHostView::OnBoundsChanged(const gfx::Rect& previous_bounds) {
   if (ink_drop_)
     ink_drop_->HostSizeChanged(size());
