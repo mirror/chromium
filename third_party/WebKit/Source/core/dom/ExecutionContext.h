@@ -39,6 +39,7 @@
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/AccessControlStatus.h"
+#include "platform/mojo/InterfaceInvalidator.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/ReferrerPolicy.h"
 #include "v8/include/v8.h"
@@ -204,6 +205,10 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
 
   virtual scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) = 0;
 
+  mojo::InterfaceInvalidator* GetInterfaceInvalidator() {
+    return invalidator_.get();
+  }
+
  protected:
   ExecutionContext();
   virtual ~ExecutionContext();
@@ -228,6 +233,8 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
   int window_interaction_tokens_;
 
   ReferrerPolicy referrer_policy_;
+
+  std::unique_ptr<mojo::InterfaceInvalidator> invalidator_;
   DISALLOW_COPY_AND_ASSIGN(ExecutionContext);
 };
 
