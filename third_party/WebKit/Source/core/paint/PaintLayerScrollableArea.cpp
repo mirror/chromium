@@ -636,6 +636,22 @@ IntRect PaintLayerScrollableArea::VisibleContentRect(
                                      GetLayoutBox()->Location()));
 }
 
+LayoutRect PaintLayerScrollableArea::VisibleScrollSnapportRect() const {
+  const ComputedStyle* style = GetLayoutBox()->Style();
+  LayoutRect layout_content_rect(LayoutContentRect(kExcludeScrollbars));
+  layout_content_rect.MoveBy(LayoutPoint(-ScrollOrigin()));
+  LayoutRectOutsets padding(MinimumValueForLength(style->ScrollPaddingTop(),
+                                                  layout_content_rect.Height()),
+                            MinimumValueForLength(style->ScrollPaddingRight(),
+                                                  layout_content_rect.Width()),
+                            MinimumValueForLength(style->ScrollPaddingBottom(),
+                                                  layout_content_rect.Height()),
+                            MinimumValueForLength(style->ScrollPaddingLeft(),
+                                                  layout_content_rect.Width()));
+  layout_content_rect.Contract(padding);
+  return layout_content_rect;
+}
+
 IntSize PaintLayerScrollableArea::ContentsSize() const {
   return IntSize(PixelSnappedScrollWidth(), PixelSnappedScrollHeight());
 }
@@ -1910,14 +1926,15 @@ LayoutRect PaintLayerScrollableArea::ScrollIntoView(
           .BoundingBox());
   local_expose_rect.Move(-GetLayoutBox()->BorderLeft(),
                          -GetLayoutBox()->BorderTop());
-  LayoutRect visible_rect(IntPoint(), VisibleContentRect().Size());
-  LayoutRect r = ScrollAlignment::GetRectToExpose(
-      visible_rect, local_expose_rect, params.GetScrollAlignmentX(),
-      params.GetScrollAlignmentY());
+  local_expose_rect.Move(LayoutSize(GetScrollOffset()));
+  LayoutRect scroll_snapport_rect = VisibleScrollSnapportRect();
+
+  ScrollOffset new_scroll_offset =
+      ClampScrollOffset(ScrollAlignment::GetScrollOffsetToExpose(
+          scroll_snapport_rect, local_expose_rect, params.GetScrollAlignmentX(),
+          params.GetScrollAlignmentY(), GetScrollOffset()));
 
   ScrollOffset old_scroll_offset = GetScrollOffset();
-  ScrollOffset new_scroll_offset(ClampScrollOffset(RoundedIntSize(
-      ToScrollOffset(FloatPoint(r.Location()) + old_scroll_offset))));
   if (params.is_for_scroll_sequence) {
     DCHECK(params.GetScrollType() == kProgrammaticScroll ||
            params.GetScrollType() == kUserScroll);
@@ -1930,13 +1947,13 @@ LayoutRect PaintLayerScrollableArea::ScrollIntoView(
     SetScrollOffset(new_scroll_offset, params.GetScrollType(),
                     kScrollBehaviorInstant);
   }
-  ScrollOffset scroll_offset_difference =
-      ClampScrollOffset(new_scroll_offset) - old_scroll_offset;
+  ScrollOffset scroll_offset_difference = new_scroll_offset - old_scroll_offset;
   local_expose_rect.Move(-LayoutSize(scroll_offset_difference));
 
   LayoutRect intersect = LocalToAbsolute(
-      *GetLayoutBox(), Intersection(visible_rect, local_expose_rect));
-  if (intersect.IsEmpty() && !visible_rect.IsEmpty() &&
+      *GetLayoutBox(), Intersection(scroll_snapport_rect, local_expose_rect));
+  intersect.Move(LayoutSize(-old_scroll_offset));
+  if (intersect.IsEmpty() && !scroll_snapport_rect.IsEmpty() &&
       !local_expose_rect.IsEmpty()) {
     return LocalToAbsolute(*GetLayoutBox(), local_expose_rect);
   }
