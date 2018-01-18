@@ -48,11 +48,11 @@
       "platform": "linux"
     }],
     "v8_snapshot_32_data" : [{
-      "path": "assets/snapshot_blob_32.bin",
+      "path": "assets/v8_context_snapshot_32.bin",
       "platform": "android"
     }],
     "v8_snapshot_64_data" : [{
-      "path": "assets/snapshot_blob_64.bin",
+      "path": "assets/v8_context_snapshot_64.bin",
       "platform": "android"
     }],
     "v8_context_snapshot_data" : [{
