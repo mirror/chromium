@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d51bec2_658fd507",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2018-01-18T16:04:08Z",
+      "side": 1,
+      "message": "Nit (clickable link):\nBug: chromium:704091",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce93bd59_d9fe098f",
+        "filename": "chrome/browser/chromeos/policy/enrollment_handler_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2018-01-18T16:04:08Z",
+      "side": 1,
+      "message": "Please add {} (to be consistent with line 373).",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 398,
+        "endChar": 59
+      },
+      "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ae59ab_91bf4cd4",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2018-01-18T16:04:08Z",
+      "side": 1,
+      "message": "Nit: const",
+      "range": {
+        "startLine": 412,
+        "startChar": 0,
+        "endLine": 412,
+        "endChar": 19
+      },
+      "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee1d7be_a1d5ae49",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2018-01-18T16:04:08Z",
+      "side": 1,
+      "message": "Nit: ASSERT_EQ(expected, actual);",
+      "range": {
+        "startLine": 663,
+        "startChar": 0,
+        "endLine": 663,
+        "endChar": 59
+      },
+      "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75e2b47_e1c33f39",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2018-01-18T16:04:08Z",
+      "side": 1,
+      "message": "These two test cases share a lot of code between them. Could you factor out common code please?",
+      "range": {
+        "startLine": 667,
+        "startChar": 0,
+        "endLine": 667,
+        "endChar": 80
+      },
+      "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d196f0_cec03850",
+        "filename": "components/policy/core/common/cloud/cloud_policy_client_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2018-01-18T16:04:08Z",
+      "side": 1,
+      "message": "Could you explain the reason for this const var?",
+      "range": {
+        "startLine": 506,
+        "startChar": 20,
+        "endLine": 506,
+        "endChar": 30
+      },
+      "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
