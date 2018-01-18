@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0c30da2_40bbd2a0",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-18T03:53:54Z",
+      "side": 1,
+      "message": "this is not needed - you check that value is int at the beginning of the method",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 45
+      },
+      "revId": "0c7d1f9df032b3ac3ba676bef640a1020976b771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ab4a50_3b525c27",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-18T03:53:54Z",
+      "side": 1,
+      "message": "can you just call value-\u003eGetInteger()?\n(the backing value *is* integer, so what this does is static_cast\u003cint\u003e(static_cast\u003cdouble\u003e(int_value)))",
+      "range": {
+        "startLine": 91,
+        "startChar": 39,
+        "endLine": 91,
+        "endChar": 68
+      },
+      "revId": "0c7d1f9df032b3ac3ba676bef640a1020976b771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
