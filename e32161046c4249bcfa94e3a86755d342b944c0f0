@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dc96f13e_974a51e7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/autocapitalization/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-18T03:40:28Z",
+      "side": 1,
+      "message": "We need to follow the standard process of GitHub. http://web-platform-tests.org/writing-tests/submission-process.html",
+      "parentUuid": "eb9be5a0_6e01bc62",
+      "revId": "e32161046c4249bcfa94e3a86755d342b944c0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f90fd471_7a8ee7e3",
         "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/element-instance-property-listing-expected.txt",
         "patchSetId": 1
