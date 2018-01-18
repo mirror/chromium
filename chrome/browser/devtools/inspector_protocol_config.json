@@ -12,6 +12,11 @@
                 "include_events": []
             },
             {
+                "domain": "Permissions",
+                "include": [ "setPermission" ],
+                "include_events": []
+            },
+            {
                 "domain": "Browser",
                 "include": [ "getWindowForTarget", "getWindowBounds", "setWindowBounds", "close" ],
                 "include_events": []

@@ -1047,6 +1047,25 @@
                     ]
                 },
                 {
+                    "name": "setPermission",
+                    "description": "Get position and size of the browser window.",
+                    "experimental": true,
+                    "parameters": [
+                        {
+                            "name": "windowId",
+                            "description": "Browser window id.",
+                            "$ref": "WindowID"
+                        }
+                    ],
+                    "returns": [
+                        {
+                            "name": "bounds",
+                            "description": "Bounds information of the window. When window state is 'minimized', the restored window\nposition and size are returned.",
+                            "$ref": "Bounds"
+                        }
+                    ]
+                },
+                {
                     "name": "getWindowForTarget",
                     "description": "Get the browser window that contains the devtools target.",
                     "experimental": true,

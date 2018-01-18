@@ -501,6 +501,16 @@ domain Browser
       # position and size are returned.
       Bounds bounds
 
+  # Get position and size of the browser window.
+  experimental command setPermission
+    parameters
+      # Browser window id.
+      WindowID windowId
+    returns
+      # Bounds information of the window. When window state is 'minimized', the restored window
+      # position and size are returned.
+      Bounds bounds
+
   # Get the browser window that contains the devtools target.
   experimental command getWindowForTarget
     parameters
