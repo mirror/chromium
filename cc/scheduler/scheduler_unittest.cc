@@ -50,6 +50,7 @@ class FakeSchedulerClient : public SchedulerClient,
       : inside_action_(false),
         inside_begin_impl_frame_(false),
         automatic_ack_(true),
+        will_begin_impl_frame_might_have_damage_(true),
         scheduler_(nullptr) {
     Reset();
   }
@@ -102,8 +103,11 @@ class FakeSchedulerClient : public SchedulerClient,
   void SetAutomaticSubmitCompositorFrameAck(bool automatic_ack) {
     automatic_ack_ = automatic_ack;
   }
+  void SetWillBeginImplFrameMightHaveDamage(bool might_have_damage) {
+    will_begin_impl_frame_might_have_damage_ = might_have_damage;
+  }
   // SchedulerClient implementation.
-  void WillBeginImplFrame(const viz::BeginFrameArgs& args) override {
+  bool WillBeginImplFrame(const viz::BeginFrameArgs& args) override {
     EXPECT_FALSE(inside_begin_impl_frame_);
     EXPECT_FALSE(inside_action_);
     base::AutoReset<bool> mark_inside(&inside_action_, true);
@@ -113,6 +117,7 @@ class FakeSchedulerClient : public SchedulerClient,
       scheduler_->SetNeedsOneBeginImplFrame();
     if (will_begin_impl_frame_causes_redraw_)
       scheduler_->SetNeedsRedraw();
+    return will_begin_impl_frame_might_have_damage_;
   }
   void DidFinishImplFrame() override {
     EXPECT_TRUE(inside_begin_impl_frame_);
@@ -261,6 +266,7 @@ class FakeSchedulerClient : public SchedulerClient,
   bool draw_will_happen_;
   bool swap_will_happen_if_draw_happens_;
   bool automatic_ack_;
+  bool will_begin_impl_frame_might_have_damage_;
   int num_draws_;
   viz::BeginFrameArgs last_begin_main_frame_args_;
   viz::BeginFrameAck last_begin_frame_ack_;
@@ -2958,6 +2964,29 @@ TEST_F(SchedulerTest, SetNeedsOneBeginImplFrame) {
 
   // Scheduler shuts down the source now that no begin frame is requested.
   EXPECT_ACTIONS("RemoveObserver(this)");
+}
+
+TEST_F(SchedulerTest, AbortEarlyIfNoDamage) {
+  SetUpScheduler(EXTERNAL_BFS);
+
+  // WillBeginImplFrame will return false, so draws should never be scheduled
+  // and client_->num_draws() should stay at 0.
+  client_->SetWillBeginImplFrameMightHaveDamage(false);
+
+  scheduler_->SetNeedsRedraw();
+  EXPECT_EQ(0, client_->num_draws());
+
+  EXPECT_SCOPED(AdvanceFrame());
+  task_runner().RunPendingTasks();  // Run posted deadline.
+  EXPECT_EQ(0, client_->num_draws());
+
+  scheduler_->SetNeedsRedraw();
+  // Should not try to schedule a draw.
+  EXPECT_ACTIONS("AddObserver(this)", "WillBeginImplFrame");
+
+  EXPECT_SCOPED(AdvanceFrame());
+  task_runner().RunPendingTasks();  // Run posted deadline.
+  EXPECT_EQ(0, client_->num_draws());
 }
 
 TEST_F(SchedulerTest, SynchronousCompositorCommitAndVerifyBeginFrameAcks) {
