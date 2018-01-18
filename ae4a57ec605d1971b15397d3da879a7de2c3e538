@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1740da98_855356f9",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-18T05:29:25Z",
+      "side": 1,
+      "message": "nit: maybe have using typedef within this file scope too, this appears multiple times but feels a little cryptic",
+      "revId": "ae4a57ec605d1971b15397d3da879a7de2c3e538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
