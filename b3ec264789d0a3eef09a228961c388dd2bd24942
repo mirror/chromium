@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5ea5d80_a179849f",
+        "filename": "remoting/protocol/mobile_network_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-01-18T23:55:40Z",
+      "side": 1,
+      "message": "TBH I\u0027m not sure how reliable this information is. The safer way might be to check WIFI availability using platform-specific code. I\u0027ll look into that if you think that\u0027s better.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 62
+      },
+      "revId": "b3ec264789d0a3eef09a228961c388dd2bd24942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
