@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2db1cb1e_d917a667",
+        "filename": "chrome/browser/sync/test/integration/single_client_app_list_sync_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T00:16:10Z",
+      "side": 1,
+      "message": "These seems not used.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 69
+      },
+      "revId": "a49187477cf148639fac56319a61b72d1aacb967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d88af3_4a204e2f",
+        "filename": "chrome/browser/ui/app_list/app_list_model_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T00:16:10Z",
+      "side": 1,
+      "message": "I don\u0027t think we would need to undo the overridden. So get rid of this and assume \"true\" when the method is called.",
+      "range": {
+        "startLine": 34,
+        "startChar": 46,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "a49187477cf148639fac56319a61b72d1aacb967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9071b46f_c0e32638",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T00:16:10Z",
+      "side": 1,
+      "message": "no const when returning non-const object",
+      "range": {
+        "startLine": 96,
+        "startChar": 41,
+        "endLine": 96,
+        "endChar": 46
+      },
+      "revId": "a49187477cf148639fac56319a61b72d1aacb967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fbdb9b9_8e78c213",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T00:16:10Z",
+      "side": 1,
+      "message": "Think we probably does not need this per item. Can we move it to cc and share it for all items? If we can, make OverrideModelUpdaterForTest a static method in L74 and only call it once in test setup.",
+      "revId": "a49187477cf148639fac56319a61b72d1aacb967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
