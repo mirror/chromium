@@ -22,8 +22,6 @@ URLLoaderFactoryImpl::URLLoaderFactoryImpl(
   DCHECK((requester_info_->IsRenderer() && requester_info_->filter()) ||
          requester_info_->IsNavigationPreload());
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
-  bindings_.set_connection_error_handler(base::Bind(
-      &URLLoaderFactoryImpl::OnConnectionError, base::Unretained(this)));
 }
 
 URLLoaderFactoryImpl::~URLLoaderFactoryImpl() {
@@ -38,52 +36,16 @@ void URLLoaderFactoryImpl::CreateLoaderAndStart(
     const network::ResourceRequest& url_request,
     mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
-  CreateLoaderAndStart(
-      requester_info_.get(), std::move(request), routing_id, request_id,
-      options, url_request, std::move(client),
+  ResourceDispatcherHostImpl* rdh = ResourceDispatcherHostImpl::Get();
+  DCHECK(rdh->io_thread_task_runner()->BelongsToCurrentThread());
+  rdh->OnRequestResourceWithMojo(
+      requester_info_.get(), routing_id, request_id, options, url_request,
+      std::move(request), std::move(client),
       static_cast<net::NetworkTrafficAnnotationTag>(traffic_annotation));
 }
 
 void URLLoaderFactoryImpl::Clone(mojom::URLLoaderFactoryRequest request) {
   bindings_.AddBinding(this, std::move(request));
-}
-
-// static
-void URLLoaderFactoryImpl::CreateLoaderAndStart(
-    ResourceRequesterInfo* requester_info,
-    mojom::URLLoaderRequest request,
-    int32_t routing_id,
-    int32_t request_id,
-    uint32_t options,
-    const network::ResourceRequest& url_request,
-    mojom::URLLoaderClientPtr client,
-    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
-  DCHECK(ResourceDispatcherHostImpl::Get()
-             ->io_thread_task_runner()
-             ->BelongsToCurrentThread());
-
-  ResourceDispatcherHostImpl* rdh = ResourceDispatcherHostImpl::Get();
-  rdh->OnRequestResourceWithMojo(requester_info, routing_id, request_id,
-                                 options, url_request, std::move(request),
-                                 std::move(client), traffic_annotation);
-}
-
-// static
-void URLLoaderFactoryImpl::Create(
-    scoped_refptr<ResourceRequesterInfo> requester_info,
-    mojom::URLLoaderFactoryRequest request,
-    const scoped_refptr<base::SingleThreadTaskRunner>& io_thread_runner) {
-  // This instance is effectively reference counted by the number of pipes open
-  // to it and will get deleted when all clients drop their connections.
-  // Please see OnConnectionError() for details.
-  auto* impl =
-      new URLLoaderFactoryImpl(std::move(requester_info), io_thread_runner);
-  impl->Clone(std::move(request));
-}
-
-void URLLoaderFactoryImpl::OnConnectionError() {
-  if (bindings_.empty())
-    delete this;
 }
 
 }  // namespace content
