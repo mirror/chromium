@@ -215,6 +215,24 @@
     },
     {
       "key": {
+        "uuid": "b99017f6_db09a412",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-18T06:05:33Z",
+      "side": 1,
+      "message": "Thanks for the excellent summary! Just what I was looking for.\n\nI think I can do this. One question about checking consent. I think you mean IsMetricsReportingEnabled. Do I have that right? Assuming I do then in order to test that in non-official builds I need to do either of the following:\n1. check the pref that function checks for (suffers from the problem that could change and test would still potentially pass).\n2. enable the code in the official code path to be used in tests (probably by a static boolean)\n\nIf I have this right I\u0027m inclined to do 2. WDYT?",
+      "parentUuid": "d239f698_ccca07b0",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65fae94f_2c9c0922",
         "filename": "chrome/browser/metrics/metrics_reporting_state.cc",
         "patchSetId": 5
