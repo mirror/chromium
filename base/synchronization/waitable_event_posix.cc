@@ -44,7 +44,8 @@ namespace base {
 // -----------------------------------------------------------------------------
 WaitableEvent::WaitableEvent(ResetPolicy reset_policy,
                              InitialState initial_state)
-    : kernel_(new WaitableEventKernel(reset_policy, initial_state)) {}
+    : policy_(reset_policy),
+      kernel_(new WaitableEventKernel(reset_policy, initial_state)) {}
 
 WaitableEvent::~WaitableEvent() = default;
 
@@ -77,6 +78,10 @@ bool WaitableEvent::IsSignaled() {
   if (result && !kernel_->manual_reset_)
     kernel_->signaled_ = false;
   return result;
+}
+
+WaitableEvent::ResetPolicy WaitableEvent::reset_policy() {
+  return policy_;
 }
 
 // -----------------------------------------------------------------------------

@@ -814,9 +814,27 @@ void StackSamplingProfiler::Start() {
   if (!native_sampler)
     return;
 
+  // The IsSignaled() DCHECK below requires that the WaitableEvent be manually
+  // reset, to avoid signaling the event in IsSignaled() itself.
+  DCHECK(profiling_inactive_.reset_policy() ==
+         WaitableEvent::ResetPolicy::MANUAL);
+
+  // Check IsSignaled() to handle both the sampling_started_ and
+  // !sampling_started_ cases. This guarantees the event is signaled thus there
+  // is no wait on the thread.
+  DCHECK(!sampling_started_ || profiling_inactive_.IsSignaled());
+
   // Wait for profiling to be "inactive", then reset it for the upcoming run.
+  //
+  // Waiting on this event enables us to ensure that the previous profiling
+  // occurring on the profiler thread has stopped before either starting
+  // profiling afresh from the same profiler, or destroying the profiler. We
+  // can't use task posting for this coordination because the thread owning the
+  // profiler may not have a message loop.
+  base::ScopedAllowBaseSyncPrimitivesOutsideBlockingScope allow_sync_primitives;
   profiling_inactive_.Wait();
   profiling_inactive_.Reset();
+  sampling_started_ = true;
 
   DCHECK_EQ(NULL_PROFILER_ID, profiler_id_);
   profiler_id_ = SamplingThread::GetInstance()->Add(

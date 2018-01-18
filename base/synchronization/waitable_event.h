@@ -86,6 +86,9 @@ class BASE_EXPORT WaitableEvent {
   // is not a manual reset event, then this test will cause a reset.
   bool IsSignaled();
 
+  // Returns the reset policy.
+  ResetPolicy reset_policy();
+
   // Wait indefinitely for the event to be signaled. Wait's return "happens
   // after" |Signal| has completed. This means that it's safe for a
   // WaitableEvent to synchronise its own destruction, like this:
@@ -161,6 +164,8 @@ class BASE_EXPORT WaitableEvent {
  private:
   friend class WaitableEventWatcher;
 
+  const ResetPolicy policy_;
+
 #if defined(OS_WIN)
   win::ScopedHandle handle_;
 #elif defined(OS_MACOSX)
@@ -219,8 +224,6 @@ class BASE_EXPORT WaitableEvent {
 
     DISALLOW_COPY_AND_ASSIGN(ReceiveRight);
   };
-
-  const ResetPolicy policy_;
 
   // The receive right for the event.
   scoped_refptr<ReceiveRight> receive_right_;
