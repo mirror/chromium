@@ -45,12 +45,12 @@ constexpr char kAndroidMSdkVersion[] = "23";
 // Contains map of profile to check result of ARC allowed. Contains true if ARC
 // allowed check was performed and ARC is allowed. If map does not contain
 // a value then this means that check has not been performed yet.
-base::LazyInstance<std::map<const Profile*, bool>>::DestructorAtExit
+base::LazyInstance<std::map<const Profile*, bool>>::Leaky
     g_profile_status_check = LAZY_INSTANCE_INITIALIZER;
 
 // The cached value of migration allowed for profile. It is necessary to use
 // the same value during a user session.
-base::LazyInstance<std::map<base::FilePath, bool>>::DestructorAtExit
+base::LazyInstance<std::map<base::FilePath, bool>>::Leaky
     g_is_arc_migration_allowed = LAZY_INSTANCE_INITIALIZER;
 
 // Let IsAllowedForProfile() return "false" for any profile.
@@ -70,7 +70,7 @@ bool g_arc_blocked_due_to_incomaptible_filesystem_for_testing = false;
 // implemented. After it's done such types of accounts cannot even sign-in
 // with incompatible filesystem. Hence it'll be safe to always regard compatible
 // for them then.
-base::LazyInstance<std::set<AccountId>>::DestructorAtExit
+base::LazyInstance<std::set<AccountId>>::Leaky
     g_known_compatible_users = LAZY_INSTANCE_INITIALIZER;
 
 // Returns whether ARC can run on the filesystem mounted at |path|.

@@ -97,7 +97,7 @@ class SafeBrowsingBlockingPageFactoryImpl
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingBlockingPageFactoryImpl);
 };
 
-static base::LazyInstance<SafeBrowsingBlockingPageFactoryImpl>::DestructorAtExit
+static base::LazyInstance<SafeBrowsingBlockingPageFactoryImpl>::Leaky
     g_safe_browsing_blocking_page_factory_impl = LAZY_INSTANCE_INITIALIZER;
 
 // static

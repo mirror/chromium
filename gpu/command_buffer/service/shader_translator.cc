@@ -36,7 +36,7 @@ class ShaderTranslatorInitializer {
   }
 };
 
-base::LazyInstance<ShaderTranslatorInitializer>::DestructorAtExit
+base::LazyInstance<ShaderTranslatorInitializer>::Leaky
     g_translator_initializer = LAZY_INSTANCE_INITIALIZER;
 
 void GetAttributes(ShHandle compiler, AttributeMap* var_map) {

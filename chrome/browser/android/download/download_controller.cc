@@ -52,7 +52,7 @@ using content::WebContents;
 
 namespace {
 // Guards download_controller_
-base::LazyInstance<base::Lock>::DestructorAtExit g_download_controller_lock_;
+base::LazyInstance<base::Lock>::Leaky g_download_controller_lock_;
 
 // If received bytes is more than the size limit and resumption will restart
 // from the beginning, throttle it.

@@ -518,7 +518,7 @@ class VectorIconCache {
   DISALLOW_COPY_AND_ASSIGN(VectorIconCache);
 };
 
-static base::LazyInstance<VectorIconCache>::DestructorAtExit g_icon_cache =
+static base::LazyInstance<VectorIconCache>::Leaky g_icon_cache =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

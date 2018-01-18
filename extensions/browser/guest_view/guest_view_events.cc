@@ -100,7 +100,7 @@ class EventMap {
   DISALLOW_COPY_AND_ASSIGN(EventMap);
 };
 
-base::LazyInstance<EventMap>::DestructorAtExit g_event_map =
+base::LazyInstance<EventMap>::Leaky g_event_map =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

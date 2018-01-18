@@ -307,10 +307,10 @@ namespace {
 
 static int g_request_count = 0;
 
-base::LazyInstance<base::TimeTicks>::DestructorAtExit g_last_request_time =
+base::LazyInstance<base::TimeTicks>::Leaky g_last_request_time =
     LAZY_INSTANCE_INITIALIZER;
 
-base::LazyInstance<base::ThreadChecker>::DestructorAtExit
+base::LazyInstance<base::ThreadChecker>::Leaky
     g_single_thread_checker = LAZY_INSTANCE_INITIALIZER;
 
 void LogRequestStartHistograms() {

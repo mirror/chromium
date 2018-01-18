@@ -24,7 +24,7 @@ const char kTCPSocketTypeInvalidError[] =
 const char kSocketListenError[] = "Could not listen on the specified port.";
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<
-    ApiResourceManager<ResumableTCPSocket>>>::DestructorAtExit g_factory =
+    ApiResourceManager<ResumableTCPSocket>>>::Leaky g_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 // static
@@ -35,7 +35,7 @@ ApiResourceManager<ResumableTCPSocket>::GetFactoryInstance() {
 }
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<
-    ApiResourceManager<ResumableTCPServerSocket>>>::DestructorAtExit
+    ApiResourceManager<ResumableTCPServerSocket>>>::Leaky
     g_server_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static

@@ -101,7 +101,7 @@ class DefaultDownloadDirectory {
   DISALLOW_COPY_AND_ASSIGN(DefaultDownloadDirectory);
 };
 
-base::LazyInstance<DefaultDownloadDirectory>::DestructorAtExit
+base::LazyInstance<DefaultDownloadDirectory>::Leaky
     g_default_download_directory = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

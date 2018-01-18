@@ -18,7 +18,7 @@
 namespace {
 
 using GuestViewContainerMap = std::map<int, guest_view::GuestViewContainer*>;
-static base::LazyInstance<GuestViewContainerMap>::DestructorAtExit
+static base::LazyInstance<GuestViewContainerMap>::Leaky
     g_guest_view_container_map = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

@@ -46,7 +46,7 @@ base::LazyInstance<AXTreeIDMap>::Leaky g_ax_tree_id_map =
     LAZY_INSTANCE_INITIALIZER;
 
 // A function to call when focus changes, for testing only.
-base::LazyInstance<base::Closure>::DestructorAtExit
+base::LazyInstance<base::Closure>::Leaky
     g_focus_change_callback_for_testing = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

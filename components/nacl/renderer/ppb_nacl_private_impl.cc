@@ -150,7 +150,7 @@ class NaClPluginInstance {
 
 typedef std::unordered_map<PP_Instance, std::unique_ptr<NaClPluginInstance>>
     InstanceMap;
-base::LazyInstance<InstanceMap>::DestructorAtExit g_instance_map =
+base::LazyInstance<InstanceMap>::Leaky g_instance_map =
     LAZY_INSTANCE_INITIALIZER;
 
 NaClPluginInstance* GetNaClPluginInstance(PP_Instance instance) {

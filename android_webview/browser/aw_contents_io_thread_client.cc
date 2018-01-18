@@ -86,11 +86,11 @@ class RfhToIoThreadClientMap {
 };
 
 // static
-LazyInstance<RfhToIoThreadClientMap>::DestructorAtExit g_instance_ =
+LazyInstance<RfhToIoThreadClientMap>::Leaky g_instance_ =
     LAZY_INSTANCE_INITIALIZER;
 
 // static
-LazyInstance<JavaObjectWeakGlobalRef>::DestructorAtExit g_sw_instance_ =
+LazyInstance<JavaObjectWeakGlobalRef>::Leaky g_sw_instance_ =
     LAZY_INSTANCE_INITIALIZER;
 
 // static

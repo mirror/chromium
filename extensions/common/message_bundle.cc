@@ -318,7 +318,7 @@ struct ExtensionToMessagesMap {
   ExtensionToL10nMessagesMap messages_map;
 };
 
-static base::LazyInstance<ExtensionToMessagesMap>::DestructorAtExit
+static base::LazyInstance<ExtensionToMessagesMap>::Leaky
     g_extension_to_messages_map = LAZY_INSTANCE_INITIALIZER;
 
 ExtensionToMessagesMap::ExtensionToMessagesMap() {}

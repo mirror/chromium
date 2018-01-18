@@ -45,7 +45,7 @@ namespace {
 
 typedef std::map<content::WebContents*, WebNavigationTabObserver*>
     TabObserverMap;
-static base::LazyInstance<TabObserverMap>::DestructorAtExit g_tab_observer =
+static base::LazyInstance<TabObserverMap>::Leaky g_tab_observer =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

@@ -35,7 +35,7 @@ namespace {
 // collections.
 const int kGatherIntervalInSeconds = 120;
 
-base::LazyInstance<PerformanceMonitor>::DestructorAtExit g_monitor =
+base::LazyInstance<PerformanceMonitor>::Leaky g_monitor =
     LAZY_INSTANCE_INITIALIZER;
 
 void GatherMetricsForRenderProcess(content::RenderProcessHost* host,
