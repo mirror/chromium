@@ -110,6 +110,15 @@ class LoginDisplayHost {
   // Returns whether current host is for voice interaction OOBE.
   virtual bool IsVoiceInteractionOobe() = 0;
 
+  void CompleteLogin(const UserContext& user_context);
+  void OnGaiaScreenReady();
+  void SetDisplayEmail(const std::string& email);
+  void SetDisplayAndGivenName(const std::string& display_name,
+                              const std::string& given_name);
+  void LoadWallpaper(const AccountId& account_id);
+  void LoadSigninWallpaper();
+  bool IsUserWhitelisted(const AccountId& account_id);
+
  protected:
   // Default LoginDisplayHost. Child class sets the reference.
   static LoginDisplayHost* default_host_;
