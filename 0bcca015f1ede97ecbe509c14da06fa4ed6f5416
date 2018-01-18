@@ -196,6 +196,30 @@
     },
     {
       "key": {
+        "uuid": "2261f4bd_5f2d2eb2",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-18T15:50:42Z",
+      "side": 1,
+      "message": "Actually, I had to put these back because the compiler reminded me why they were here: the input here are pointers and `WebSecurityOrigin` can take a `nullptr` and be \"empty\".",
+      "parentUuid": "0f9101a9_7a9b1649",
+      "range": {
+        "startLine": 1076,
+        "startChar": 8,
+        "endLine": 1076,
+        "endChar": 25
+      },
+      "revId": "0bcca015f1ede97ecbe509c14da06fa4ed6f5416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04551a37_ab9782d5",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
         "patchSetId": 1
