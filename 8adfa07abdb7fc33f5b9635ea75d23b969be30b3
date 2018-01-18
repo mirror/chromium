@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b2c060c_919aac7f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "Can you remove this change, as it appears unrelated?",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "661616fb_74751462",
+        "filename": "content/network/proxy_config_service_mojo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "What is this file being added for? This doesn\u0027t seem relevant to the CL.",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd756e5e_1c1fd7ab",
+        "filename": "content/network/proxy_config_service_mojo_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "Same question",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f20cb9_4c91339d",
+        "filename": "content/public/common/proxy_config.typemap",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "I wouldn\u0027t expect this CL to have added files (only renamed ones).",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edefc5a7_7560d0fa",
+        "filename": "content/public/common/proxy_config_traits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "same question",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8fa12f_e9546e61",
+        "filename": "content/public/common/proxy_config_traits_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "same question",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860917df_4d2bf183",
+        "filename": "net/proxy_resolution/proxy_config.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "Sort.\n\nIs git cl upload not warning about these?",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd01c66_3cb72a24",
+        "filename": "net/proxy_resolution/proxy_config_service_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "sort",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab3042ea_4ed91cb7",
+        "filename": "net/proxy_resolution/proxy_config_service_mac.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "sort",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8173937_aeaae80a",
+        "filename": "net/proxy_resolution/proxy_info.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "sort",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1ac0b3_26b31dd7",
+        "filename": "net/proxy_resolution/proxy_list.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "sort",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4feba5bd_0e05b16e",
+        "filename": "net/proxy_resolution/proxy_list_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "sort",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d37e4f5_3b383b6f",
+        "filename": "net/proxy_resolution/proxy_resolver_mac.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "sort",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cba69b2_4e22b861",
+        "filename": "net/proxy_resolution/proxy_service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "sort",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73eaf461_327ba13c",
+        "filename": "net/proxy_resolution/proxy_service_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "sort",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba6372c_9451e80c",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-18T22:58:33Z",
+      "side": 1,
+      "message": "Can you remove this change?\n\nWindows headers are very silly, and ordering can make a difference.\n\nFor instance when using winsock can\u0027t include windows.h before winsock headers or it will break some things. This case here is probably fine, but I wouldn\u0027t touch it to be safe.",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
