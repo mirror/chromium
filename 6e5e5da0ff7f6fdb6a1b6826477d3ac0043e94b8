@@ -34,6 +34,24 @@
       "revId": "6e5e5da0ff7f6fdb6a1b6826477d3ac0043e94b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859fb7e1_348c5f1a",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-18T00:40:07Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve filed https://crbug.com/803278",
+      "parentUuid": "35d8ebdc_3b41cfb7",
+      "revId": "6e5e5da0ff7f6fdb6a1b6826477d3ac0043e94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
