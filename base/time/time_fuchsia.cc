@@ -26,7 +26,7 @@ ALWAYS_INLINE int64_t ZxTimeToMicroseconds(zx_time_t nanos) {
 // Time -----------------------------------------------------------------------
 
 // static
-Time Time::Now() {
+Time Time::NowIgnoringOverride() {
   const zx_time_t nanos_since_unix_epoch = zx_time_get(ZX_CLOCK_UTC);
   CHECK(nanos_since_unix_epoch != 0);
   // The following expression will overflow in the year 289938 A.D.:
@@ -35,14 +35,14 @@ Time Time::Now() {
 }
 
 // static
-Time Time::NowFromSystemTime() {
-  return Now();
+Time Time::NowFromSystemTimeIgnoringOverride() {
+  return NowIgnoringOverride();
 }
 
 // TimeTicks ------------------------------------------------------------------
 
 // static
-TimeTicks TimeTicks::Now() {
+TimeTicks TimeTicks::NowIgnoringOverride() {
   const zx_time_t nanos_since_boot = zx_time_get(ZX_CLOCK_MONOTONIC);
   CHECK(nanos_since_boot != 0);
   return TimeTicks(ZxTimeToMicroseconds(nanos_since_boot));

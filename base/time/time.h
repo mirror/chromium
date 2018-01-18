@@ -85,7 +85,9 @@
 
 namespace base {
 
+class Clock;
 class PlatformThreadHandle;
+class TickClock;
 class TimeDelta;
 
 // The functions in the time_internal namespace are meant to be used only by the
@@ -514,14 +516,34 @@ class BASE_EXPORT Time : public time_internal::TimeBase<Time> {
 
   // Returns the current time. Watch out, the system might adjust its clock
   // in which case time will actually go backwards. We don't guarantee that
-  // times are increasing, or that two calls to Now() won't be the same.
+  // times are increasing, or that two calls to Now() won't be the same. The
+  // returned value may be overridden by SetNowOverride().
   static Time Now();
+
+  // Returns the current time. Same as Now() but ignores any override set
+  // by SetNowOverride(). To be used in places where emulated/overridden time
+  // should be disregarded.
+  static Time NowIgnoringOverride();
 
   // Returns the current time. Same as Now() except that this function always
   // uses system time so that there are no discrepancies between the returned
   // time and system time even on virtual environments including our test bot.
-  // For timing sensitive unittests, this function should be used.
+  // For timing sensitive unittests, this function should be used. The returned
+  // value may be overridden by SetNowOverride().
   static Time NowFromSystemTime();
+
+  // Returns the current time. Same as NowFromSystemTime() but ignores any
+  // override set by SetNowOverride(). To be used in places where
+  // emulated/overridden time should be disregarded.
+  static Time NowFromSystemTimeIgnoringOverride();
+
+  // Override the value returned by Now() and NowFromSystemTime() with the value
+  // returned by the provided Clock. The override will be effective globally
+  // within the current process.
+  static void SetNowOverride(Clock* override);
+
+  // Reset override set by SetNowOverride().
+  static void ClearNowOverride();
 
   // Converts to/from TimeDeltas relative to the Windows epoch (1601-01-01
   // 00:00:00 UTC). Prefer these methods for opaque serialization and
@@ -794,8 +816,21 @@ class BASE_EXPORT TimeTicks : public time_internal::TimeBase<TimeTicks> {
   // Platform-dependent tick count representing "right now." When
   // IsHighResolution() returns false, the resolution of the clock could be
   // as coarse as ~15.6ms. Otherwise, the resolution should be no worse than one
-  // microsecond.
+  // microsecond. The returned value may be overridden by SetNowOverride().
   static TimeTicks Now();
+
+  // Returns the current tick count. Same as Now() but ignores any override set
+  // by SetNowOverride(). To be used in places where emulated/overridden time
+  // should be disregarded.
+  static TimeTicks NowIgnoringOverride();
+
+  // Override the value returned by Now() with the value returned by the
+  // provided TickClock. The override will be effective globally within the
+  // current process.
+  static void SetNowOverride(TickClock* override);
+
+  // Reset override set by SetNowOverride().
+  static void ClearNowOverride();
 
   // Returns true if the high resolution clock is working on this system and
   // Now() will return high resolution values. Note that, on systems where the
