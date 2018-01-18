@@ -309,17 +309,17 @@ class URLLoaderTest : public testing::Test {
   // block on trying to write the body buffer.
   int Load(const GURL& url, std::string* body = nullptr) WARN_UNUSED_RESULT {
     DCHECK(!ran_);
-    mojom::URLLoaderPtr loader;
+    network::mojom::URLLoaderPtr loader;
 
     network::ResourceRequest request =
         CreateResourceRequest(!request_body_ ? "GET" : "POST", url);
-    uint32_t options = mojom::kURLLoadOptionNone;
+    uint32_t options = network::mojom::kURLLoadOptionNone;
     if (send_ssl_with_response_)
-      options |= mojom::kURLLoadOptionSendSSLInfoWithResponse;
+      options |= network::mojom::kURLLoadOptionSendSSLInfoWithResponse;
     if (sniff_)
-      options |= mojom::kURLLoadOptionSniffMimeType;
+      options |= network::mojom::kURLLoadOptionSniffMimeType;
     if (send_ssl_for_cert_error_)
-      options |= mojom::kURLLoadOptionSendSSLInfoForCertificateError;
+      options |= network::mojom::kURLLoadOptionSendSSLInfoForCertificateError;
 
     if (request_body_)
       request.request_body = request_body_;
@@ -666,7 +666,7 @@ TEST_F(URLLoaderTest, DestroyContextWithLiveRequest) {
   GURL url = test_server()->GetURL("/hung-after-headers");
   network::ResourceRequest request = CreateResourceRequest("GET", url);
 
-  mojom::URLLoaderPtr loader;
+  network::mojom::URLLoaderPtr loader;
   // The loader is implicitly owned by the client and the NetworkContext, so
   // don't hold on to a pointer to it.
   base::WeakPtr<URLLoader> loader_impl =
@@ -825,7 +825,7 @@ TEST_F(URLLoaderTest, CloseResponseBodyConsumerBeforeProducer) {
   network::ResourceRequest request =
       CreateResourceRequest("GET", server.GetURL("/hello.html"));
 
-  mojom::URLLoaderPtr loader;
+  network::mojom::URLLoaderPtr loader;
   // The loader is implicitly owned by the client and the NetworkContext.
   new URLLoader(context(), mojo::MakeRequest(&loader), 0, request, false,
                 client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS,
@@ -866,7 +866,7 @@ TEST_F(URLLoaderTest, PauseReadingBodyFromNetBeforeRespnoseHeaders) {
   network::ResourceRequest request =
       CreateResourceRequest("GET", server.GetURL(kPath));
 
-  mojom::URLLoaderPtr loader;
+  network::mojom::URLLoaderPtr loader;
   // The loader is implicitly owned by the client and the NetworkContext.
   new URLLoader(context(), mojo::MakeRequest(&loader), 0, request, false,
                 client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS,
@@ -923,7 +923,7 @@ TEST_F(URLLoaderTest, PauseReadingBodyFromNetWhenReadIsPending) {
   network::ResourceRequest request =
       CreateResourceRequest("GET", server.GetURL(kPath));
 
-  mojom::URLLoaderPtr loader;
+  network::mojom::URLLoaderPtr loader;
   // The loader is implicitly owned by the client and the NetworkContext.
   new URLLoader(context(), mojo::MakeRequest(&loader), 0, request, false,
                 client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS,
@@ -969,7 +969,7 @@ TEST_F(URLLoaderTest, ResumeReadingBodyFromNetAfterClosingConsumer) {
   network::ResourceRequest request =
       CreateResourceRequest("GET", server.GetURL(kPath));
 
-  mojom::URLLoaderPtr loader;
+  network::mojom::URLLoaderPtr loader;
   // The loader is implicitly owned by the client and the NetworkContext.
   new URLLoader(context(), mojo::MakeRequest(&loader), 0, request, false,
                 client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS,
@@ -1009,7 +1009,7 @@ TEST_F(URLLoaderTest, MultiplePauseResumeReadingBodyFromNet) {
   network::ResourceRequest request =
       CreateResourceRequest("GET", server.GetURL(kPath));
 
-  mojom::URLLoaderPtr loader;
+  network::mojom::URLLoaderPtr loader;
   // The loader is implicitly owned by the client and the NetworkContext.
   new URLLoader(context(), mojo::MakeRequest(&loader), 0, request, false,
                 client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS,
