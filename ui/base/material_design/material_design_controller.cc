@@ -77,6 +77,9 @@ MaterialDesignController::Mode MaterialDesignController::GetMode() {
 
 // static
 bool MaterialDesignController::IsSecondaryUiMaterial() {
+#if defined(OS_MACOSX) && BUILDFLAG(MAC_VIEWS_BROWSER)
+  return true;
+#endif
   return base::FeatureList::IsEnabled(features::kSecondaryUiMd);
 }
 
