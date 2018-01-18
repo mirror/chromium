@@ -385,6 +385,14 @@ template &lt;typename T&gt;<br/>void Function(T&amp;&amp; t) { ... }</code></td>
 </tr>
 
 <tr>
+<td>Binary literals</td>
+<td><code>int i = 0b1001;</code></td>
+<td>Allows defining literals in base two.</td>
+<td><a href="http://en.cppreference.com/w/cpp/language/integer_literal">Integer literals</a></td>
+<td><a href="https://groups.google.com/a/chromium.org/d/topic/cxx/zsGhgaKLmIk/discussion">Discussion thread</a></td>
+</tr>
+
+<tr>
 <td>Relaxed constant expressions</td>
 <td><code>constexpr int Factorial(int n) {<br>&nbsp;&nbsp;int result = 1;<br>&nbsp;&nbsp;while (n > 0)<br>&nbsp;&nbsp;&nbsp;&nbsp;result *= n--;<br>&nbsp;&nbsp;return result;<br>}</code></td>
 <td>Allows use of more declarations, conditional statements and loops inside <code>constexpr</code> functions.</td>
@@ -974,15 +982,6 @@ something, remove all callers and remove the function instead.</td>
 <td>Allows classes with default member initializers to be initialized with aggregate initialization, optionally omitting data members with such initializers.</td>
 <td><a href="http://en.cppreference.com/w/cpp/language/aggregate_initialization">aggregate initialization</a></td>
 <td></td>
-</tr>
-
-<tr>
-<td>Binary literals</td>
-<td><code>int i = 0b1001;</code></td>
-<td>Allows defining literals in base two.</td>
-<td><a href="http://en.cppreference.com/w/cpp/language/integer_literal">Integer literals</a></td>
-<td>Might confuse syntax highlighting in editors. No standard library support
-for printing or reading in this format. Still seems useful in minor ways.</td>
 </tr>
 
 <tr>
