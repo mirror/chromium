@@ -46,6 +46,30 @@
       "revId": "41156dfeb7c71cb1d89457f7da69aa65b670f634",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d92fde_2b0fe3d9",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-18T21:45:17Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "b353ae44_faf936b0",
+      "range": {
+        "startLine": 177,
+        "startChar": 17,
+        "endLine": 177,
+        "endChar": 33
+      },
+      "revId": "41156dfeb7c71cb1d89457f7da69aa65b670f634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
