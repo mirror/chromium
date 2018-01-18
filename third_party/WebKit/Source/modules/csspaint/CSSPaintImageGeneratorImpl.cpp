@@ -60,41 +60,47 @@ bool CSSPaintImageGeneratorImpl::HasDocumentDefinition() const {
   return paint_worklet_->GetDocumentDefinitionMap().Contains(name_);
 }
 
+bool CSSPaintImageGeneratorImpl::HasValidDocumentDefinition(
+    DocumentPaintDefinition*& definition) const {
+  if (!HasDocumentDefinition())
+    return false;
+  definition = paint_worklet_->GetDocumentDefinitionMap().at(name_);
+  if (definition == kInvalidDocumentDefinition)
+    return false;
+  return true;
+}
+
 const Vector<CSSPropertyID>&
 CSSPaintImageGeneratorImpl::NativeInvalidationProperties() const {
   DEFINE_STATIC_LOCAL(Vector<CSSPropertyID>, empty_vector, ());
-  if (!HasDocumentDefinition())
+  DocumentPaintDefinition* definition;
+  if (!HasValidDocumentDefinition(definition))
     return empty_vector;
-  DocumentPaintDefinition* definition =
-      paint_worklet_->GetDocumentDefinitionMap().at(name_);
   return definition->NativeInvalidationProperties();
 }
 
 const Vector<AtomicString>&
 CSSPaintImageGeneratorImpl::CustomInvalidationProperties() const {
   DEFINE_STATIC_LOCAL(Vector<AtomicString>, empty_vector, ());
-  if (!HasDocumentDefinition())
+  DocumentPaintDefinition* definition;
+  if (!HasValidDocumentDefinition(definition))
     return empty_vector;
-  DocumentPaintDefinition* definition =
-      paint_worklet_->GetDocumentDefinitionMap().at(name_);
   return definition->CustomInvalidationProperties();
 }
 
 bool CSSPaintImageGeneratorImpl::HasAlpha() const {
-  if (!HasDocumentDefinition())
+  DocumentPaintDefinition* definition;
+  if (!HasValidDocumentDefinition(definition))
     return false;
-  DocumentPaintDefinition* definition =
-      paint_worklet_->GetDocumentDefinitionMap().at(name_);
   return definition->GetPaintRenderingContext2DSettings().alpha();
 }
 
 const Vector<CSSSyntaxDescriptor>&
 CSSPaintImageGeneratorImpl::InputArgumentTypes() const {
   DEFINE_STATIC_LOCAL(Vector<CSSSyntaxDescriptor>, empty_vector, ());
-  if (!HasDocumentDefinition())
+  DocumentPaintDefinition* definition;
+  if (!HasValidDocumentDefinition(definition))
     return empty_vector;
-  DocumentPaintDefinition* definition =
-      paint_worklet_->GetDocumentDefinitionMap().at(name_);
   return definition->InputArgumentTypes();
 }
 

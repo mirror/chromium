@@ -16,6 +16,7 @@ namespace blink {
 
 class CSSSyntaxDescriptor;
 class Document;
+class DocumentPaintDefinition;
 class Image;
 class PaintWorklet;
 
@@ -47,6 +48,7 @@ class CSSPaintImageGeneratorImpl final : public CSSPaintImageGenerator {
   CSSPaintImageGeneratorImpl(PaintWorklet*, const String&);
 
   bool HasDocumentDefinition() const;
+  bool HasValidDocumentDefinition(DocumentPaintDefinition*&) const;
 
   Member<Observer> observer_;
   Member<PaintWorklet> paint_worklet_;
