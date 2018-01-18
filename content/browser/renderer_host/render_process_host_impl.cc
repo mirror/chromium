@@ -2003,7 +2003,7 @@ void RenderProcessHostImpl::GetAssociatedInterface(
 }
 
 void RenderProcessHostImpl::GetBlobURLLoaderFactory(
-    mojom::URLLoaderFactoryRequest request) {
+    network::mojom::URLLoaderFactoryRequest request) {
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     NOTREACHED();
     return;
@@ -2059,7 +2059,7 @@ void RenderProcessHostImpl::CreateRendererHost(
 }
 
 void RenderProcessHostImpl::CreateURLLoaderFactory(
-    mojom::URLLoaderFactoryRequest request) {
+    network::mojom::URLLoaderFactoryRequest request) {
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     NOTREACHED();
     return;

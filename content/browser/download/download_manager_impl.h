@@ -147,7 +147,7 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
       std::vector<GURL> url_chain,
       const base::Optional<std::string>& suggested_filename,
       scoped_refptr<network::ResourceResponse> response,
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
+      network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       net::CertStatus cert_status,
       int frame_tree_node_id);
 
@@ -223,7 +223,7 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
       const base::Optional<std::string>& suggested_filename,
       scoped_refptr<network::ResourceResponse> response,
       net::CertStatus cert_status,
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
+      network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       bool is_download_allowed);
 
   // Called when a navigation turns to be a download. Create a new
@@ -237,7 +237,7 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
       const base::Optional<std::string>& suggested_filename,
       scoped_refptr<network::ResourceResponse> response,
       net::CertStatus cert_status,
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints);
+      network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints);
 
   // Factory for creation of downloads items.
   std::unique_ptr<DownloadItemFactory> item_factory_;

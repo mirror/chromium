@@ -32,7 +32,6 @@
 #include "content/public/common/previews_state.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/service_worker_modes.h"
-#include "content/public/common/url_loader.mojom.h"
 #include "content/public/renderer/child_url_loader_factory_getter.h"
 #include "content/public/renderer/fixed_received_data.h"
 #include "content/public/renderer/request_peer.h"
@@ -56,6 +55,7 @@
 #include "net/url_request/url_request_data_job.h"
 #include "services/network/public/cpp/resource_request.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
+#include "services/network/public/interfaces/url_loader.mojom.h"
 #include "third_party/WebKit/common/mime_util/mime_util.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
 #include "third_party/WebKit/public/platform/WebHTTPLoadInfo.h"
@@ -398,7 +398,7 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   Context(WebURLLoaderImpl* loader,
           ResourceDispatcher* resource_dispatcher,
           scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-          mojom::URLLoaderFactory* factory,
+          network::mojom::URLLoaderFactory* factory,
           mojom::KeepAliveHandlePtr keep_alive_handle);
 
   ResourceDispatcher* resource_dispatcher() { return resource_dispatcher_; }
@@ -460,7 +460,7 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   int request_id_;
 
   // These are owned by the Blink::Platform singleton.
-  mojom::URLLoaderFactory* url_loader_factory_;
+  network::mojom::URLLoaderFactory* url_loader_factory_;
 };
 
 // A thin wrapper class for Context to ensure its lifetime while it is
@@ -519,7 +519,7 @@ WebURLLoaderImpl::Context::Context(
     WebURLLoaderImpl* loader,
     ResourceDispatcher* resource_dispatcher,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    mojom::URLLoaderFactory* url_loader_factory,
+    network::mojom::URLLoaderFactory* url_loader_factory,
     mojom::KeepAliveHandlePtr keep_alive_handle_ptr)
     : loader_(loader),
       use_stream_on_response_(false),
@@ -691,7 +691,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
   // The renderer should request a stream which contains the body of the
   // response. If the Network Service or NavigationMojoResponse is enabled, the
   // URLLoaderClientEndpoints is used instead to get the body.
-  mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints;
+  network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints;
   if (stream_override_) {
     CHECK(IsBrowserSideNavigationEnabled());
     DCHECK(!sync_load_response);
@@ -1109,7 +1109,7 @@ void WebURLLoaderImpl::RequestPeerImpl::OnCompletedRequest(
 WebURLLoaderImpl::WebURLLoaderImpl(
     ResourceDispatcher* resource_dispatcher,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    mojom::URLLoaderFactory* url_loader_factory)
+    network::mojom::URLLoaderFactory* url_loader_factory)
     : WebURLLoaderImpl(resource_dispatcher,
                        std::move(task_runner),
                        url_loader_factory,
@@ -1118,7 +1118,7 @@ WebURLLoaderImpl::WebURLLoaderImpl(
 WebURLLoaderImpl::WebURLLoaderImpl(
     ResourceDispatcher* resource_dispatcher,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    mojom::URLLoaderFactory* url_loader_factory,
+    network::mojom::URLLoaderFactory* url_loader_factory,
     mojom::KeepAliveHandlePtr keep_alive_handle)
     : context_(new Context(this,
                            resource_dispatcher,
