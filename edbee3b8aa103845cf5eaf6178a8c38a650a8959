@@ -136,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "9fff6d4e_bb701db3",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-18T02:48:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfedb887_1e04ed55",
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d6d67af_7be90d22",
         "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.h",
         "patchSetId": 8
@@ -281,6 +299,30 @@
         "startChar": 3,
         "endLine": 19,
         "endChar": 14
+      },
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cd5f158_d59d115d",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-18T02:48:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c1dfa79_77a373dd",
+      "range": {
+        "startLine": 19,
+        "startChar": 30,
+        "endLine": 19,
+        "endChar": 31
       },
       "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -442,6 +484,24 @@
       "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68ee9a4_25ef5e63",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_selector.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-18T02:48:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b5a09aa_b28080a9",
+      "revId": "edbee3b8aa103845cf5eaf6178a8c38a650a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
