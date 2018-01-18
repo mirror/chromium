@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "0d5e543c_7ededfbb",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-18T18:14:40Z",
+      "side": 1,
+      "message": "Ack, that makes sense. I assumed CBORValue had a non-const GetMap() overload. Might be worthwhile to add that overload in the future, but definitely not needed in this CL.\n\nCould you then re-add the const in line 47? decoded_map continues to be a const-ref, it would be confusing to not mark it explicitly as const.\n\nRegarding your it-second changes: Can you drop the std::move() around them? They are misleading as well, because they don\u0027t do anything. As you correctly point out, |it| is a const_iterator, thus it-\u003esecond is a const reference which you can\u0027t move from.",
+      "parentUuid": "185b7f25_19f91a38",
+      "range": {
+        "startLine": 54,
+        "startChar": 64,
+        "endLine": 54,
+        "endChar": 71
+      },
+      "revId": "fb548b3d9bcca1cf47649ec1ca6793d6273ff770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e124ae6_c956707f",
         "filename": "device/ctap/device_response_convertor.cc",
         "patchSetId": 12
