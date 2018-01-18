@@ -385,6 +385,14 @@ void WindowState::SetPreAddedToWorkspaceWindowBounds(const gfx::Rect& bounds) {
   pre_added_to_workspace_window_bounds_ = base::make_optional(bounds);
 }
 
+void WindowState::SetPreMoveDisplayBounds(const gfx::Rect* bounds) {
+  if (!bounds) {
+    pre_move_display_bounds_.reset();
+    return;
+  }
+  pre_move_display_bounds_ = base::make_optional(*bounds);
+}
+
 void WindowState::AddObserver(WindowStateObserver* observer) {
   observer_list_.AddObserver(observer);
 }

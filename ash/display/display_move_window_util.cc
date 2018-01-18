@@ -11,6 +11,7 @@
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/shell.h"
 #include "ash/wm/mru_window_tracker.h"
+#include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "ui/aura/window.h"
 #include "ui/display/display.h"
@@ -183,6 +184,8 @@ void HandleMoveActiveWindowToDisplay(DisplayMoveWindowDirection direction) {
   int64_t dest_display_id = GetNextDisplay(origin_display, direction);
   if (dest_display_id == display::kInvalidDisplayId)
     return;
+
+  wm::GetWindowState(window)->SetPreMoveDisplayBounds(&origin_display.bounds());
   wm::MoveWindowToDisplay(window, dest_display_id);
 
   // Send a11y alert.
