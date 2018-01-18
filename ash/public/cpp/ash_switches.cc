@@ -146,6 +146,10 @@ const char kForceClamshellPowerButton[] = "force-clamshell-power-button";
 // Whether this device has an internal stylus.
 const char kHasInternalStylus[] = "has-internal-stylus";
 
+// If true, long press the power button in tablet mode will show the power
+// button menu. It is usually set for tablet and detachable device currently.
+const char kShowPowerButtonMenu[] = "show-power-button-menu";
+
 // Draws a circle at each touch point, similar to the Android OS developer
 // option "Show taps".
 const char kShowTaps[] = "show-taps";
