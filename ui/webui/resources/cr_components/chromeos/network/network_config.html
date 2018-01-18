@@ -163,24 +163,21 @@
       </div>
     </template>
 
-    <template is="dom-if" if="[[propertiesSent_]]">
-      <div class="property-box">
-        <div class="start layout horizontal center">
-          <cr-network-icon is-list-item
-              network-state="[[getIconState_(configProperties_)]]">
-          </cr-network-icon>
-          <div>[[i18n('OncConnecting')]]</div>
-        </div>
+    <div class="property-box"
+        hidden="[[!connectingIsVisible_(propertiesSent_, error_)]]">
+      <div class="start layout horizontal center">
+        <cr-network-icon is-list-item
+            network-state="[[getIconState_(configProperties_)]]">
+        </cr-network-icon>
+        <div>[[i18n('OncConnecting')]]</div>
       </div>
-    </template>
+    </div>
 
-    <template is="dom-if" if="[[error_]]">
-      <div class="property-box">
-        <div id="error" class="start">
-          [[getError_(error_)]]
-        </div>
+    <div class="property-box" hidden="[[!error_]]">
+      <div id="error" class="start">
+        [[getError_(error_)]]
       </div>
-    </template>
+    </div>
 
   </template>
   <script src="network_config.js"></script>
