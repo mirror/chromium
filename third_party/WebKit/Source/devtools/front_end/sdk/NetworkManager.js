@@ -448,6 +448,7 @@ SDK.NetworkDispatcher = class {
    */
   responseReceived(requestId, loaderId, time, resourceType, response, frameId) {
     var networkRequest = this._inflightRequestsById[requestId];
+
     var lowercaseHeaders = SDK.NetworkManager.lowercaseHeaders(response.headers);
     if (!networkRequest) {
       // We missed the requestWillBeSent.
@@ -491,6 +492,8 @@ SDK.NetworkDispatcher = class {
   dataReceived(requestId, time, dataLength, encodedDataLength) {
     var networkRequest = this._inflightRequestsById[requestId];
     if (!networkRequest)
+      networkRequest = this._maybeAdoptMainResourceRequest(requestId);
+    if (!networkRequest)
       return;
 
     networkRequest.resourceSize += dataLength;
@@ -510,6 +513,8 @@ SDK.NetworkDispatcher = class {
    */
   loadingFinished(requestId, finishTime, encodedDataLength, blockedCrossSiteDocument) {
     var networkRequest = this._inflightRequestsById[requestId];
+    if (!networkRequest)
+      networkRequest = this._maybeAdoptMainResourceRequest(requestId);
     if (!networkRequest)
       return;
     this._finishNetworkRequest(networkRequest, finishTime, encodedDataLength, blockedCrossSiteDocument);
@@ -722,11 +727,31 @@ SDK.NetworkDispatcher = class {
   }
 
   /**
+   * @param {string} requestId
+   * @return {?SDK.NetworkRequest}
+   */
+  _maybeAdoptMainResourceRequest(requestId) {
+    var request = SDK.multitargetNetworkManager._inflightMainResourceRequests.get(requestId);
+    if (!request)
+      return null;
+    var oldDispatcher = SDK.NetworkManager.forRequest(request)._dispatcher;
+    delete oldDispatcher._inflightRequestsById[requestId];
+    delete oldDispatcher._inflightRequestsByURL[request.url()];
+    this._inflightRequestsById[requestId] = request;
+    this._inflightRequestsByURL[request.url()] = request;
+    request[SDK.NetworkManager._networkManagerForRequestSymbol] = this._manager;
+    return request;
+  }
+
+  /**
    * @param {!SDK.NetworkRequest} networkRequest
    */
   _startNetworkRequest(networkRequest) {
     this._inflightRequestsById[networkRequest.requestId()] = networkRequest;
     this._inflightRequestsByURL[networkRequest.url()] = networkRequest;
+    if (networkRequest.loaderId === networkRequest.requestId())
+      SDK.multitargetNetworkManager._inflightMainResourceRequests.set(networkRequest.requestId(), networkRequest);
+
     this._manager.dispatchEventToListeners(SDK.NetworkManager.Events.RequestStarted, networkRequest);
   }
 
@@ -751,6 +776,7 @@ SDK.NetworkDispatcher = class {
     this._manager.dispatchEventToListeners(SDK.NetworkManager.Events.RequestFinished, networkRequest);
     delete this._inflightRequestsById[networkRequest.requestId()];
     delete this._inflightRequestsByURL[networkRequest.url()];
+    SDK.multitargetNetworkManager._inflightMainResourceRequests.delete(networkRequest.requestId());
 
     if (blockedCrossSiteDocument) {
       var message = Common.UIString(
@@ -798,6 +824,8 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
     this._userAgentOverride = '';
     /** @type {!Set<!Protocol.NetworkAgent>} */
     this._agents = new Set();
+    /** @type {!Map<string, !SDK.NetworkRequest>} */
+    this._inflightMainResourceRequests = new Map();
     /** @type {!SDK.NetworkManager.Conditions} */
     this._networkConditions = SDK.NetworkManager.NoThrottlingConditions;
     /** @type {?Promise} */
@@ -852,6 +880,12 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
    * @param {!SDK.Target} target
    */
   targetRemoved(target) {
+    for (var entry of this._inflightMainResourceRequests) {
+      var manager = SDK.NetworkManager.forRequest(/** @type {!SDK.NetworkRequest} */ (entry[1]));
+      if (manager.target() !== target)
+        continue;
+      this._inflightMainResourceRequests.delete(/** @type {string} */ (entry[0]));
+    }
     this._agents.delete(target.networkAgent());
   }
 
