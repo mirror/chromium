@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "124af5d0_a4ba5635",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-18T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b24d8b0_0795ba42",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 22
+      },
+      "revId": "e459c0d135da72df32be6794ff69e1535a8a30e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4d0e3b_f2252750",
         "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
         "patchSetId": 27
@@ -45,6 +69,30 @@
       "revId": "e459c0d135da72df32be6794ff69e1535a8a30e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a0bd4e_9f3e2a53",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-18T22:25:44Z",
+      "side": 1,
+      "message": "I didn\u0027t realize MakeUnique was deprecated. Done.",
+      "parentUuid": "5a4d0e3b_f2252750",
+      "range": {
+        "startLine": 74,
+        "startChar": 14,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "e459c0d135da72df32be6794ff69e1535a8a30e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4b0b4e79_bd413f19",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator_unittest.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-18T22:25:44Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "31369804_58a776da",
+      "range": {
+        "startLine": 40,
+        "startChar": 29,
+        "endLine": 40,
+        "endChar": 50
+      },
+      "revId": "e459c0d135da72df32be6794ff69e1535a8a30e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab0e7848_bbfbaf95",
         "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator_unittest.mm",
         "patchSetId": 27
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1914d84a_a07309f8",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator_unittest.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-18T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab0e7848_bbfbaf95",
+      "range": {
+        "startLine": 85,
+        "startChar": 35,
+        "endLine": 85,
+        "endChar": 41
+      },
+      "revId": "e459c0d135da72df32be6794ff69e1535a8a30e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f4e45fb_b52c5c62",
         "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator_unittest.mm",
         "patchSetId": 27
@@ -114,6 +210,30 @@
       "revId": "e459c0d135da72df32be6794ff69e1535a8a30e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0704acb_469eac81",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator_unittest.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-18T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f4e45fb_b52c5c62",
+      "range": {
+        "startLine": 98,
+        "startChar": 40,
+        "endLine": 98,
+        "endChar": 43
+      },
+      "revId": "e459c0d135da72df32be6794ff69e1535a8a30e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

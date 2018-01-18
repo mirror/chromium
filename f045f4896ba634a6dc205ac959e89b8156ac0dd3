@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f19358a7_701fc7be",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-18T22:25:44Z",
+      "side": 1,
+      "message": "After further discussion offline, we decided to do as you suggested and have BVC create the PolicyDecider so that the code path tested in the unittest is the same.",
+      "parentUuid": "d3ff3522_0b71fde3",
+      "range": {
+        "startLine": 46,
+        "startChar": 35,
+        "endLine": 46,
+        "endChar": 50
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd197320_4f526396",
         "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
         "patchSetId": 24
