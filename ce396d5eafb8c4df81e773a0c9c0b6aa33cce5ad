@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d46d9162_7ef54222",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-18T05:15:41Z",
+      "side": 1,
+      "message": "up to you, but slightly prefer:\n\nRenderFrameHostImpl* main_rfh \u003d nullptr;\nif (main_frame_routing_id_ !\u003d MSG_ROUTING_NONE) {\n  main_rfh \u003d RFHI::FromID(...);\n  DCHECK(main_rfh);\n}",
+      "revId": "ce396d5eafb8c4df81e773a0c9c0b6aa33cce5ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb4ed67_0f51e085",
+        "filename": "third_party/WebKit/public/platform/WebResourceTimingInfo.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-18T05:15:41Z",
+      "side": 1,
+      "message": "I\u0027m afraid it\u0027s easy to forget update some of the struct or conversion code when we add a new field; maybe also have a reverse pointer here, i.e. note that this corresponds to content::ServerTimingInfo, here and for the other two structs.",
+      "revId": "ce396d5eafb8c4df81e773a0c9c0b6aa33cce5ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
