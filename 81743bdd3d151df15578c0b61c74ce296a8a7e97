@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd014b6c_c937b1e2",
+        "filename": "content/network/resource_scheduler_client.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-18T05:25:52Z",
+      "side": 1,
+      "message": "Should this maybe have a Detach() method which nullifies context_ so that any method calls after that will be no-op (or just for DCHECK)?",
+      "revId": "81743bdd3d151df15578c0b61c74ce296a8a7e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aeaa64a_9c2db2db",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-18T05:25:52Z",
+      "side": 1,
+      "message": "Should this rather be \"ResourceScheduler\"?",
+      "revId": "81743bdd3d151df15578c0b61c74ce296a8a7e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4002a729_2f708361",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-18T05:25:52Z",
+      "side": 1,
+      "message": "nit: 8 /* child_id */, 9 /* route_id */",
+      "revId": "81743bdd3d151df15578c0b61c74ce296a8a7e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
