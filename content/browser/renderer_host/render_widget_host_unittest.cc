@@ -152,6 +152,39 @@ class MockInputRouter : public InputRouter {
 class MockRenderWidgetHost : public RenderWidgetHostImpl {
  public:
 
+  void setFake(){
+    viz::mojom::CompositorFrameSinkClientPtr renderer_compositor_frame_sink_ptr_;
+
+    viz::mojom::CompositorFrameSinkPtr sink;
+    viz::mojom::CompositorFrameSinkRequest sink_request =
+                   mojo::MakeRequest(&sink);
+    viz::mojom::CompositorFrameSinkClientRequest client_request =
+                       mojo::MakeRequest(&renderer_compositor_frame_sink_ptr_);
+    
+    FakeRendererCompositorFrameSink x(std::move(sink), std::move(client_request));
+    /* */
+
+    renderer_compositor_frame_sink_ = reinterpret_cast<viz::mojom::CompositorFrameSinkClientPtr>(&x);
+
+    /*
+    renderer_compositor_frame_sink_ =
+        std::unique_ptr<FakeRendererCompositorFrameSink>{
+            std::move(sink), std::move(client_request)};
+
+    */
+
+    /*
+    renderer_compositor_frame_sink_ =
+        std::make_unique<FakeRendererCompositorFrameSink>(
+            std::move(sink), std::move(client_request));
+   */
+
+   //renderer_compositor_frame_sink_.reset(x);
+   //renderer_compositor_frame_sink_ = x;
+
+
+  }
+
   // Allow poking at a few private members.
   using RenderWidgetHostImpl::GetResizeParams;
   using RenderWidgetHostImpl::OnResizeOrRepaintACK;
