@@ -2511,17 +2511,32 @@ bool QuicConnection::SendConnectivityProbingPacket(
   QUIC_DLOG(INFO) << ENDPOINT << "Sending connectivity probing packet for "
                   << "connection_id = " << connection_id_;
 
-  std::unique_ptr<QuicEncryptedPacket> probing_packet(
+  OwningSerializedPacketPointer probing_packet(
       packet_generator_.SerializeConnectivityProbingPacket());
+  DCHECK_EQ(IsRetransmittable(*probing_packet), NO_RETRANSMITTABLE_DATA);
 
   WriteResult result = probing_writer->WritePacket(
-      probing_packet->data(), probing_packet->length(), self_address().host(),
-      peer_address, per_packet_options_);
+      probing_packet->encrypted_buffer, probing_packet->encrypted_length,
+      self_address().host(), peer_address, per_packet_options_);
 
   if (result.status == WRITE_STATUS_ERROR) {
     QUIC_DLOG(INFO) << "Write probing packet not finished with error = "
                     << result.error_code;
     return false;
+  }
+
+  // Call OnPacketSent regardless of the write result. This treats a blocked
+  // write the same as a packet loss.
+  sent_packet_manager_.OnPacketSent(
+      probing_packet.get(), probing_packet->original_packet_number,
+      clock_->Now(), probing_packet->transmission_type,
+      NO_RETRANSMITTABLE_DATA);
+
+  if (result.status == WRITE_STATUS_BLOCKED) {
+    visitor_->OnWriteBlocked();
+    if (probing_writer->IsWriteBlockedDataBuffered()) {
+      QUIC_BUG << "Write probing packet blocked";
+    }
   }
 
   return true;

@@ -1278,11 +1278,13 @@ TEST_P(QuicConnectionTest, ReceivePaddedPingAtServer) {
 
   // Process a padded PING packet with no peer address change on server side
   // will be ignored.
-  std::unique_ptr<QuicEncryptedPacket> probing_packet(
+  OwningSerializedPacketPointer probing_packet(
       QuicPacketCreatorPeer::SerializeConnectivityProbingPacket(
           &peer_creator_));
-  std::unique_ptr<QuicReceivedPacket> received(
-      ConstructReceivedPacket(*probing_packet, clock_.Now()));
+  std::unique_ptr<QuicReceivedPacket> received(ConstructReceivedPacket(
+      QuicEncryptedPacket(probing_packet->encrypted_buffer,
+                          probing_packet->encrypted_length),
+      clock_.Now()));
 
   ProcessReceivedPacket(kSelfAddress, kPeerAddress, *received);
   EXPECT_EQ(kPeerAddress, connection_.peer_address());
@@ -1317,11 +1319,13 @@ TEST_P(QuicConnectionTest, ReceiveConnectivityProbingAtServer) {
   const QuicSocketAddress kNewPeerAddress =
       QuicSocketAddress(QuicIpAddress::Loopback6(), /*port=*/23456);
 
-  std::unique_ptr<QuicEncryptedPacket> probing_packet(
+  OwningSerializedPacketPointer probing_packet(
       QuicPacketCreatorPeer::SerializeConnectivityProbingPacket(
           &peer_creator_));
-  std::unique_ptr<QuicReceivedPacket> received(
-      ConstructReceivedPacket(*probing_packet, clock_.Now()));
+  std::unique_ptr<QuicReceivedPacket> received(ConstructReceivedPacket(
+      QuicEncryptedPacket(probing_packet->encrypted_buffer,
+                          probing_packet->encrypted_length),
+      clock_.Now()));
 
   ProcessReceivedPacket(kSelfAddress, kNewPeerAddress, *received);
   if (GetQuicReloadableFlag(quic_server_reply_to_connectivity_probing)) {
@@ -1365,11 +1369,13 @@ TEST_P(QuicConnectionTest, MigrateAfterProbingAtServer) {
   const QuicSocketAddress kNewPeerAddress =
       QuicSocketAddress(QuicIpAddress::Loopback6(), /*port=*/23456);
 
-  std::unique_ptr<QuicEncryptedPacket> probing_packet(
+  OwningSerializedPacketPointer probing_packet(
       QuicPacketCreatorPeer::SerializeConnectivityProbingPacket(
           &peer_creator_));
-  std::unique_ptr<QuicReceivedPacket> received(
-      ConstructReceivedPacket(*probing_packet, clock_.Now()));
+  std::unique_ptr<QuicReceivedPacket> received(ConstructReceivedPacket(
+      QuicEncryptedPacket(probing_packet->encrypted_buffer,
+                          probing_packet->encrypted_length),
+      clock_.Now()));
   ProcessReceivedPacket(kSelfAddress, kNewPeerAddress, *received);
   if (GetQuicReloadableFlag(quic_server_reply_to_connectivity_probing)) {
     EXPECT_EQ(kPeerAddress, connection_.peer_address());
@@ -1410,11 +1416,13 @@ TEST_P(QuicConnectionTest, ReceivePaddedPingAtClient) {
   EXPECT_CALL(visitor_, OnConnectionMigration(PORT_CHANGE)).Times(0);
   EXPECT_CALL(visitor_, OnConnectivityProbeReceived(_, _)).Times(1);
 
-  std::unique_ptr<QuicEncryptedPacket> probing_packet(
+  OwningSerializedPacketPointer probing_packet(
       QuicPacketCreatorPeer::SerializeConnectivityProbingPacket(
           &peer_creator_));
-  std::unique_ptr<QuicReceivedPacket> received(
-      ConstructReceivedPacket(*probing_packet, clock_.Now()));
+  std::unique_ptr<QuicReceivedPacket> received(ConstructReceivedPacket(
+      QuicEncryptedPacket(probing_packet->encrypted_buffer,
+                          probing_packet->encrypted_length),
+      clock_.Now()));
   ProcessReceivedPacket(kSelfAddress, kPeerAddress, *received);
 
   EXPECT_EQ(kPeerAddress, connection_.peer_address());
@@ -1445,11 +1453,13 @@ TEST_P(QuicConnectionTest, ReceiveConnectivityProbingAtClient) {
   const QuicSocketAddress kNewSelfAddress =
       QuicSocketAddress(QuicIpAddress::Loopback6(), /*port=*/23456);
 
-  std::unique_ptr<QuicEncryptedPacket> probing_packet(
+  OwningSerializedPacketPointer probing_packet(
       QuicPacketCreatorPeer::SerializeConnectivityProbingPacket(
           &peer_creator_));
-  std::unique_ptr<QuicReceivedPacket> received(
-      ConstructReceivedPacket(*probing_packet, clock_.Now()));
+  std::unique_ptr<QuicReceivedPacket> received(ConstructReceivedPacket(
+      QuicEncryptedPacket(probing_packet->encrypted_buffer,
+                          probing_packet->encrypted_length),
+      clock_.Now()));
   ProcessReceivedPacket(kNewSelfAddress, kPeerAddress, *received);
 
   EXPECT_EQ(kPeerAddress, connection_.peer_address());

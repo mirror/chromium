@@ -570,6 +570,23 @@ class EndToEndTest : public QuicTestWithParam<TestParams> {
         *client_->client()->client_session(), n);
   }
 
+  void WaitForDelayedAcks() {
+    // kWaitDuration is a period of time that is long enough for all delayed
+    // acks to be sent and received on the other end.
+    const QuicTime::Delta kWaitDuration =
+        4 * QuicTime::Delta::FromMilliseconds(kMaxDelayedAckTimeMs);
+
+    const QuicClock* clock =
+        client_->client()->client_session()->connection()->clock();
+
+    QuicTime wait_until = clock->ApproximateNow() + kWaitDuration;
+    while (clock->ApproximateNow() < wait_until) {
+      QUIC_LOG_EVERY_N_SEC(INFO, 0.01) << "Waiting for delayed acks...";
+      // This waits for up to 50 ms.
+      client_->client()->WaitForEvents();
+    }
+  }
+
   bool initialized_;
   QuicSocketAddress server_address_;
   string server_hostname_;
@@ -2979,6 +2996,27 @@ TEST_P(EndToEndTest, DoNotCrashOnPacketWriteError) {
   headers[":authority"] = server_hostname_;
 
   client->SendCustomSynchronousRequest(headers, body);
+}
+
+// Regression test for b/71711996. This test sends a connectivity probing packet
+// as its last sent packet, and makes sure the server's ACK of that packet does
+// not cause the client to fail.
+TEST_P(EndToEndTest, LastPacketSentIsConnectivityProbing) {
+  ASSERT_TRUE(Initialize());
+
+  EXPECT_EQ(kFooResponseBody, client_->SendSynchronousRequest("/foo"));
+  EXPECT_EQ("200", client_->response_headers()->find(":status")->second);
+
+  // Wait for the client's ACK (of the response) to be received by the server.
+  WaitForDelayedAcks();
+
+  // We are sending a connectivity probing packet from an unchanged client
+  // address, so the server will not respond to us with a connectivity probing
+  // packet, however the server should send an ack-only packet to us.
+  client_->SendConnectivityProbing();
+
+  // Wait for the server's last ACK to be received by the client.
+  WaitForDelayedAcks();
 }
 
 class EndToEndBufferedPacketsTest : public EndToEndTest {
