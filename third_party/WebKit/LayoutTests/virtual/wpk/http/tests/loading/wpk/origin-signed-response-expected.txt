@@ -1,0 +1,18 @@
+main frame - didStartProvisionalLoadForFrame
+main frame - didCommitLoadForFrame
+main frame - didReceiveTitle: OriginSignedResponseHandler
+main frame - didFinishDocumentLoadForFrame
+main frame - didHandleOnloadEventsForFrame
+main frame - didFinishLoadForFrame
+frame "test_frame" - didReceiveTitle: 
+frame "test_frame" - didStartProvisionalLoadForFrame
+frame "test_frame" - didReceiveServerRedirectForProvisionalLoadForFrame
+frame "test_frame" - didCommitLoadForFrame
+frame "test_frame" - didReceiveTitle: 
+frame "test_frame" - didFinishDocumentLoadForFrame
+frame "test_frame" - didHandleOnloadEventsForFrame
+frame "test_frame" - didFinishLoadForFrame
+This is a testharness.js-based test.
+PASS Location of OriginSignedResponseHandler
+Harness: the test ran to completion.
+
