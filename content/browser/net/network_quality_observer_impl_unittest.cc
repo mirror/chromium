@@ -19,7 +19,7 @@ TEST(NetworkQualityObserverImplTest, TestObserverNotified) {
   base::MessageLoopForIO message_loop;
 
   net::TestNetworkQualityEstimator estimator;
-  estimator.set_start_time_null_http_rtt(base::TimeDelta::FromMilliseconds(1));
+  estimator.SetStartTimeNullHttpRtt(base::TimeDelta::FromMilliseconds(1));
 
   NetworkQualityObserverImpl observer(&estimator);
   // Give a chance for |observer| to register with the |estimator|.
@@ -30,8 +30,7 @@ TEST(NetworkQualityObserverImplTest, TestObserverNotified) {
   base::RunLoop().RunUntilIdle();
 
   base::HistogramTester histogram_tester;
-  estimator.set_start_time_null_http_rtt(
-      base::TimeDelta::FromMilliseconds(500));
+  estimator.SetStartTimeNullHttpRtt(base::TimeDelta::FromMilliseconds(500));
   // Run one main frame request to force recomputation of effective connection
   // type.
   estimator.RunOneRequest();
@@ -40,16 +39,14 @@ TEST(NetworkQualityObserverImplTest, TestObserverNotified) {
   histogram_tester.ExpectBucketCount(
       "NQE.ContentObserver.NetworkQualityMeaningfullyChanged", 1, 1);
 
-  estimator.set_start_time_null_http_rtt(
-      base::TimeDelta::FromMilliseconds(625));
+  estimator.SetStartTimeNullHttpRtt(base::TimeDelta::FromMilliseconds(625));
   estimator.RunOneRequest();
   base::RunLoop().RunUntilIdle();
   // RTT changed from 500 msec to 625 msec.
   histogram_tester.ExpectBucketCount(
       "NQE.ContentObserver.NetworkQualityMeaningfullyChanged", 1, 2);
 
-  estimator.set_start_time_null_http_rtt(
-      base::TimeDelta::FromMilliseconds(626));
+  estimator.SetStartTimeNullHttpRtt(base::TimeDelta::FromMilliseconds(626));
   estimator.RunOneRequest();
   base::RunLoop().RunUntilIdle();
   // RTT changed from 625 msec to 626 msec which is not a meaningful change.
