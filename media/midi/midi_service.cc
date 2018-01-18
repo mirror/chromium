@@ -15,7 +15,8 @@ namespace midi {
 
 std::unique_ptr<MidiManager> MidiService::ManagerFactory::Create(
     MidiService* service) {
-  return std::unique_ptr<MidiManager>(MidiManager::Create(service));
+  return MidiManager::Create(service,
+                             MidiManager::BackendOption::kPreferDefault);
 }
 
 // static
