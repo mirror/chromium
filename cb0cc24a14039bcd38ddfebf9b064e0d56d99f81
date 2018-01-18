@@ -34,6 +34,24 @@
       "revId": "cb0cc24a14039bcd38ddfebf9b064e0d56d99f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad5cd41f_ccb89fe4",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/ApplicationUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T19:13:58Z",
+      "side": 0,
+      "message": "From my email about this:\n\"\"\"\nProbably easiest to look at the original CL where I added this:\nhttps://codereview.chromium.org/776713002\n\nThere used to be a protected method called initializeLibraryDependencies in ContentApplication where subclasses could override and initialize their dependencies.  In particular,  ResourceExtractor.setMandatoryPaksToExtract(MANDATORY_PAK_FILES); and PathUtils.setPrivateDataDirectorySuffix(PRIVATE_DATA_DIRECTORY_SUFFIX); from ContentShellApplication.\n\nThose last two calls were moved out of the protected method to attachBaseContext.  That might be early enough to not need these calls at all.  We can try to remove it and see if there are any flakes.  I don\u0027t honestly recall enough about the original change (and I didn\u0027t file a bug at the time, so shame on me) to know whether we still need this code, but I think it would be OK to experiment with removing it. \n\"\"\"",
+      "parentUuid": "10c3b69c_07e53c84",
+      "revId": "cb0cc24a14039bcd38ddfebf9b064e0d56d99f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
