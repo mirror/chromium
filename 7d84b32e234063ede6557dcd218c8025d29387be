@@ -114,6 +114,30 @@
       "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5365f8e0_54f62900",
+        "filename": "content/renderer/fetchers/resource_fetcher_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-18T15:23:38Z",
+      "side": 1,
+      "message": "Some classes my send messages when being destroyed, which will change the code path we exercise (I\u0027m not sure there are any such classes, but that\u0027s not something where we can check for regressions)",
+      "parentUuid": "b475b0db_db96b5e5",
+      "range": {
+        "startLine": 424,
+        "startChar": 41,
+        "endLine": 424,
+        "endChar": 73
+      },
+      "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
