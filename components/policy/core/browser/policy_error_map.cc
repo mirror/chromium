@@ -198,8 +198,9 @@ base::string16 PolicyErrorMap::GetErrors(const std::string& policy) {
 }
 
 bool PolicyErrorMap::empty() {
-  CheckReadyAndConvert();
-  return map_.empty();
+  // This doesn't call CheckReadyAndConvert() to allow code to destroy empty
+  // maps rather than having to attach observers.
+  return pending_.empty() && map_.empty();
 }
 
 size_t PolicyErrorMap::size() {

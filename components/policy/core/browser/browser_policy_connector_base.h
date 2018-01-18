@@ -6,7 +6,9 @@
 #define COMPONENTS_POLICY_CORE_BROWSER_BROWSER_POLICY_CONNECTOR_BASE_H_
 
 #include <memory>
+#include <vector>
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "components/policy/core/browser/configuration_policy_handler_list.h"
 #include "components/policy/core/common/schema.h"
@@ -62,6 +64,9 @@ class POLICY_EXPORT BrowserPolicyConnectorBase {
   static void SetPolicyProviderForTesting(
       ConfigurationPolicyProvider* provider);
 
+  // Adds a callback that is notified the the ResourceBundle is loaded.
+  void NotifyWhenResourceBundleReady(base::OnceClosure closure);
+
  protected:
   // Builds an uninitialized BrowserPolicyConnectorBase. InitPolicyProviders()
   // should be called to create and start the policy components.
@@ -82,6 +87,10 @@ class POLICY_EXPORT BrowserPolicyConnectorBase {
   // most once, and uses the same priority order as AddPolicyProvider().
   void SetPlatformPolicyProvider(
       std::unique_ptr<ConfigurationPolicyProvider> provider);
+
+  // Must be called when ui::ResourceBundle has been loaded, results in running
+  // any callbacks scheduled in NotifyWhenResourceBundleReady().
+  void OnResourceBundleCreated();
 
  private:
   // Whether InitPolicyProviders() but not Shutdown() has been invoked.
@@ -106,6 +115,9 @@ class POLICY_EXPORT BrowserPolicyConnectorBase {
 
   // Must be deleted before all the policy providers.
   std::unique_ptr<PolicyService> policy_service_;
+
+  // Callbacks scheduled via NotifyWhenResourceBundleReady().
+  std::vector<base::OnceClosure> resource_bundle_callbacks_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserPolicyConnectorBase);
 };
