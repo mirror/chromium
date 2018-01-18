@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c73757c_bcdd8974",
+        "filename": "chrome_debug.log",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-18T23:36:31Z",
+      "side": 1,
+      "message": "I will remove this before submitting",
+      "revId": "2333bec7f1ce47ba5cc35900f88beab5863ed32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
