@@ -33,6 +33,24 @@
       "revId": "2433b0376163dc33f3e019936148c36976ba511e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016f4028_29371269",
+        "filename": "third_party/WebKit/public/platform/AOMEnums.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-18T04:31:54Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s a good idea. These APIs are meant to be separate.",
+      "parentUuid": "2c4c4f87_d2044e4e",
+      "revId": "2433b0376163dc33f3e019936148c36976ba511e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
