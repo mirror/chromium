@@ -14,7 +14,17 @@ WindowEventDispatcherTestApi::WindowEventDispatcherTestApi(
 }
 
 bool WindowEventDispatcherTestApi::HoldingPointerMoves() const {
-  return dispatcher_->move_hold_count_ > 0;
+  return dispatcher_->move_hold_count_ > 0 || dispatcher_->held_move_event_;
+}
+
+void WindowEventDispatcherTestApi::WaitUntilPointerMovesDispatched() {
+  if (!HoldingPointerMoves())
+    return;
+  base::RunLoop run_loop;
+  dispatcher_->set_did_dispatch_held_move_event_callback(
+      run_loop.QuitClosure());
+  run_loop.Run();
+  DCHECK(!HoldingPointerMoves());
 }
 
 }  // namespace test
