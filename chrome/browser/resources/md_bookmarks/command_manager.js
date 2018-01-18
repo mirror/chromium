@@ -689,9 +689,9 @@ cr.define('bookmarks', function() {
     /** @private */
     computeHasAnySublabel_: function() {
       if (!this.menuIds_)
-        return;
+        return false;
 
-      this.hasAnySublabel_ = this.menuCommands_.some(
+      return this.menuCommands_.some(
           (command) => this.getCommandSublabel_(command) != '');
     },
 
