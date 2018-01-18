@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c105dce3_77e989ea",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-18T15:05:50Z",
+      "side": 1,
+      "message": "Thread-unsafe. |observers_| may changed on UI thread during this.\n\nnit/style: Could you elide braces for one line for-stmt case?",
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135e79e5_b1917371",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-18T15:05:50Z",
+      "side": 1,
+      "message": "not necessary to capture everything. You just need |timer| by value.",
+      "range": {
+        "startLine": 236,
+        "startChar": 7,
+        "endLine": 236,
+        "endChar": 8
+      },
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9f5560_b3369751",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-18T15:05:50Z",
+      "side": 1,
+      "message": "Instead of reset, could you remove the element?",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 16
+      },
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea292ae3_83d13243",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-18T15:05:50Z",
+      "side": 1,
+      "message": "Thread-unsafe. Because this object lives on UI thread, it must not be run on |timer_task_runner_|. \"const\" wouldn\u0027t work.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 51
+      },
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af648cd4_54c04ca6",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-18T15:05:50Z",
+      "side": 1,
+      "message": "nit/style could you elide braces, here, too?",
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f3841b_e4f7e2d2",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-18T15:05:50Z",
+      "side": 1,
+      "message": "You can use mojom::TimerPtr*. You can return nullptr on error.",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 34
+      },
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3574c6_321ff7ad",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-18T15:05:50Z",
+      "side": 1,
+      "message": "nit/optional/suggestion: Often we call this like HasTimer?",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 21
+      },
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95be3f9_ad47eb53",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-18T15:05:50Z",
+      "side": 1,
+      "message": "maybe\n\nstruct ArcTimerInfo {\n  mojom::TimerPtr timer;\n  base::ScopedFD read_fd;\n};\n\nshould work. Copy ctor will be deleted implicitly, because ScopedFD is non-copy-constructible.",
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2ce7f4_67f08bb8",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-18T15:05:50Z",
+      "side": 1,
+      "message": "Looks conflicting with your implementation?\nEven if CreateTimers fails to set timer, this still returns true?",
+      "range": {
+        "startLine": 174,
+        "startChar": 3,
+        "endLine": 174,
+        "endChar": 64
+      },
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
