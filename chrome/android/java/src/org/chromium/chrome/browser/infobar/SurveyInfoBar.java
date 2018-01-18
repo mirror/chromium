@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.infobar;
 import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
@@ -15,6 +16,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.survey.SurveyController;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.chrome.browser.util.AccessibilityUtil;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.text.NoUnderlineClickableSpan;
 import org.chromium.ui.text.SpanApplier;
@@ -35,6 +37,13 @@ public class SurveyInfoBar extends InfoBar {
 
     // The delegate to handle what happens when info bar events are triggered.
     private final SurveyInfoBarDelegate mDelegate;
+
+    // Boolean to track if the infobar was clicked to prevent double triggering of the survey.
+    private boolean mClicked;
+
+    // Boolean to track if the infobar was closed via survey acceptance or onCloseButtonClicked() to
+    // prevent onStartHiding() from being called after.
+    private boolean mClosedByInteraction;
 
     /**
      * Create and show the {@link SurveyInfoBar}.
@@ -80,8 +89,12 @@ public class SurveyInfoBar extends InfoBar {
             @Override
             public void onHidden(Tab tab) {
                 mDelegate.onSurveyInfoBarTabHidden();
-                closeInfoBar();
                 tab.removeObserver(this);
+
+                // Closes the infobar without calling the {@link SurveyInfoBarDelegate}'s
+                // onSurveyInfoBarCloseButtonClicked.
+                SurveyInfoBar.super.onCloseButtonClicked();
+                // TODO(mdjones): add a proper close method to programatically close the infobar.
             }
 
             @Override
@@ -91,18 +104,13 @@ public class SurveyInfoBar extends InfoBar {
         });
 
         NoUnderlineClickableSpan clickableSpan = new NoUnderlineClickableSpan() {
-            /** Prevent double clicking on the text span .*/
-            private boolean mClicked;
+            /** Prevent double clicking on the text span. */
 
             @Override
             public void onClick(View widget) {
                 if (mClicked) return;
-                mDelegate.onSurveyTriggered();
-
-                SurveyController.getInstance().showSurveyIfAvailable(
-                        tab.getActivity(), mSiteId, mShowAsBottomSheet, mDisplayLogoResId);
-                closeInfoBar();
-                mClicked = true;
+                showSurvey(tab);
+                mClosedByInteraction = true;
             }
         };
 
@@ -114,22 +122,15 @@ public class SurveyInfoBar extends InfoBar {
         prompt.setMovementMethod(LinkMovementMethod.getInstance());
         prompt.setGravity(Gravity.CENTER_VERTICAL);
         ApiCompatibilityUtils.setTextAppearance(prompt, R.style.BlackTitle1);
+        addAccessibilityClickListener(prompt, tab);
         layout.addContent(prompt, 1f);
-    }
-
-    /**
-     * Closes the infobar without calling the {@link SurveyInfoBarDelegate}'s
-     * onSurveyInfoBarCloseButtonClicked.
-     */
-    private void closeInfoBar() {
-        // TODO(mdjones): add a proper close method to programatically close the infobar.
-        super.onCloseButtonClicked();
     }
 
     @Override
     public void onCloseButtonClicked() {
-        mDelegate.onSurveyInfoBarCloseButtonClicked();
         super.onCloseButtonClicked();
+        mDelegate.onSurveyInfoBarClosed(true, true);
+        mClosedByInteraction = true;
     }
 
     @CalledByNative
@@ -137,6 +138,46 @@ public class SurveyInfoBar extends InfoBar {
             int displayLogoResId, SurveyInfoBarDelegate surveyInfoBarDelegate) {
         return new SurveyInfoBar(
                 siteId, showAsBottomSheet, displayLogoResId, surveyInfoBarDelegate);
+    }
+
+    /**
+     * Allows the survey infobar to be triggered when talkback is enabled.
+     * @param view The view to attach the listener.
+     * @param tab The tab to attach the infobar.
+     */
+    private void addAccessibilityClickListener(TextView view, Tab tab) {
+        view.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mClicked || !AccessibilityUtil.isAccessibilityEnabled()) return;
+                showSurvey(tab);
+                mClosedByInteraction = true;
+            }
+        });
+    }
+
+    @Override
+    protected void onStartedHiding() {
+        super.onStartedHiding();
+        if (mClosedByInteraction) return;
+        if (isFrontInfoBar()) {
+            mDelegate.onSurveyInfoBarClosed(false, true);
+        } else {
+            mDelegate.onSurveyInfoBarClosed(false, false);
+        }
+    }
+
+    /**
+     * Shows the survey and closes the infobar.
+     * @param tab The tab on which to show the survey.
+     */
+    private void showSurvey(Tab tab) {
+        mClicked = true;
+        mDelegate.onSurveyTriggered();
+
+        SurveyController.getInstance().showSurveyIfAvailable(
+                tab.getActivity(), mSiteId, mShowAsBottomSheet, mDisplayLogoResId);
+        super.onCloseButtonClicked();
     }
 
     private static native void nativeCreate(WebContents webContents, String siteId,
