@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49d08c78_6b58ae07",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-18T03:40:30Z",
+      "side": 1,
+      "message": "No objection, but curious as to why we are changing this here?",
+      "revId": "585867348d13a66c644a09cf63cf8bd601fab9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5265dbf0_c96c40e7",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-18T03:40:30Z",
+      "side": 1,
+      "message": "nit: split this test.",
+      "revId": "585867348d13a66c644a09cf63cf8bd601fab9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94122b64_2c9b85aa",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-18T03:40:30Z",
+      "side": 1,
+      "message": "Run the message loop in case there are any posted tasks.",
+      "revId": "585867348d13a66c644a09cf63cf8bd601fab9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b3e5d6_008b2c9b",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-18T03:40:30Z",
+      "side": 1,
+      "message": "I think we still need a small unit test to make sure we don\u0027t break 10.9. We won\u0027t get any link errors because we link on the latest version but the function might not be there in other versions in which case we would crash. A small unit test in bluetooth_adapter_mac_unittest.mm that just calls the function with \"true\" should be enough.",
+      "revId": "585867348d13a66c644a09cf63cf8bd601fab9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef90d4a_c3e22ac1",
+        "filename": "device/bluetooth/test/mock_bluetooth_preferences_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-18T03:40:30Z",
+      "side": 1,
+      "message": "This is a bit unusual so let\u0027s add a comment.\n\n// On real devices, the Bluetooth classic code will dispatch the AdapterPoweredChanged event.\n// Test code does not fake Bluetooth classic behavior so we dispatch the event directly.",
+      "revId": "585867348d13a66c644a09cf63cf8bd601fab9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
