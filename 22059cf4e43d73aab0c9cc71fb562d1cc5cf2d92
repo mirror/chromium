@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "cdcaa2dc_557ba58d",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-18T20:12:35Z",
+      "side": 1,
+      "message": "We use DCHECKs to indicate developer error, so the question is: what bad would happen if StatusBubbleWindow out-lives its parent window? I think it\u0027s reasonable to add the DCHECK since it basically documents the cleanup order we\u0027re expecting. It doesn\u0027t look like there\u0027s zombie potential from not doing it, though.",
+      "parentUuid": "91d535ce_7f53fdbe",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efffea5c_8416ecc5",
         "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
         "patchSetId": 11

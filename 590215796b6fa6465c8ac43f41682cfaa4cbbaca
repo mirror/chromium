@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77bc8fb1_1efce7d5",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-18T20:12:35Z",
+      "side": 1,
+      "message": "nit: YES (and NO on line 127), or make the type |bool|.",
+      "range": {
+        "startLine": 110,
+        "startChar": 41,
+        "endLine": 110,
+        "endChar": 45
+      },
+      "revId": "590215796b6fa6465c8ac43f41682cfaa4cbbaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
