@@ -87,7 +87,10 @@ NSString* TooltipForURLAndTitle(NSString* url, NSString* title) {
 }
 
 bool ShouldDoExperimentalRTLLayout() {
-  return base::i18n::IsRTL() && base::FeatureList::IsEnabled(features::kMacRTL);
+  return base::i18n::IsRTL() &&
+         base::FeatureList::IsEnabled(features::kMacRTL) &&
+         base::FeatureList::IsEnabled(
+             features::kMacMaterialDesignDownloadShelf);
 }
 
 bool ShouldFlipWindowControlsInRTL() {

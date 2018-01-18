@@ -37,9 +37,11 @@ NSString* ReplaceNSStringPlaceholders(NSString* formatString,
 // Generates a tooltip string for a given URL and title.
 NSString* TooltipForURLAndTitle(NSString* url, NSString* title);
 
-// Returns whether both:
+// Returns whether:
 // 1) Mac RTL support is enabled via the MacRTL feature;
 // 2) The browser UI is in RTL mode.
+// 3) The MacMDDownloadShelf is on. This is a dependency since
+// the old download shelf doesn't support RTL.
 // If MacRTL becomes the default, this function can be replaced with
 // uses of base::i18n::IsRTL().
 bool ShouldDoExperimentalRTLLayout();
