@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7e07b95_e7d28316",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-18T17:40:53Z",
+      "side": 1,
+      "message": "I would be fine with landing this one already. The GC plugin is on the way (needs clang roll) and I already fixed all the issues it found.\n\nKentaro, wdyt?",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd35ca0_4637a243",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-18T17:40:53Z",
+      "side": 1,
+      "message": "This should probably just be TraceWrappers but then it does not fit nicely into AdjustAnd*Mark*. Lets see what this looks like when we apply the same approach to Oilpan.",
+      "range": {
+        "startLine": 111,
+        "startChar": 14,
+        "endLine": 111,
+        "endChar": 32
+      },
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
