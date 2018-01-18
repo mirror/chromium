@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95618795_923f7a70",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-01-18T20:53:59Z",
+      "side": 1,
+      "message": "Nit: \"UI Reboot\" is the name of a specific subpiece of the work, so we shouldn\u0027t reuse it to stand for everything. \n Alternatives?\n\"UI Refresh Phase 1\"\n\"New UI Phase 1\"\n\"2018 UI Phase 1\"",
+      "revId": "e74a11c6fdee5e4ecb4ff853cd48ca2f068b8420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68ca2ef_271a8e7a",
+        "filename": "ios/chrome/browser/ui/main/main_feature_flags.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-01-18T20:53:59Z",
+      "side": 1,
+      "message": "This is ok here, but would probably fit better in ios/chrome/browser/ui/ui_feature_flags.h\".",
+      "revId": "e74a11c6fdee5e4ecb4ff853cd48ca2f068b8420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
