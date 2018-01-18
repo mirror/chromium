@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4d21244_ddfbefb0",
+        "filename": "chrome/services/file_util/public/cpp/sandboxed_rar_analyzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2018-01-18T20:12:54Z",
+      "side": 1,
+      "message": "nit: fix year, and you don\u0027t need (c)",
+      "revId": "bcd7ff7567a6c5f5f1e39d9b3fc19da2d5473b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817709ef_7843b615",
+        "filename": "chrome/services/file_util/public/cpp/sandboxed_rar_analyzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2018-01-18T20:12:54Z",
+      "side": 1,
+      "message": "An idea: Do we want to know more details about failures? Like, if a large fraction of unpackings fail, we\u0027d like to have an idea of why.",
+      "revId": "bcd7ff7567a6c5f5f1e39d9b3fc19da2d5473b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
