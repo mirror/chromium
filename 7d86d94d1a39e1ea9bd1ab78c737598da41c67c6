@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9f5ef12_2f239037",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-18T12:03:47Z",
+      "side": 1,
+      "message": "Add STACK_ALLOCATED() as the Descriptor only temporarily lives on the stack during dispatch.",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 24
+      },
+      "revId": "7d86d94d1a39e1ea9bd1ab78c737598da41c67c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

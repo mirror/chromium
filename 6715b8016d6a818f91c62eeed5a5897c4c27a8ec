@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a78d33a_3776a6da",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/gc-freeze-with-attribute-listeners.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-18T12:03:47Z",
+      "side": 1,
+      "message": "Test artifact.",
+      "revId": "6715b8016d6a818f91c62eeed5a5897c4c27a8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

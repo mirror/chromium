@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ee9e9e81_de4db8c8",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-18T12:03:47Z",
+      "side": 1,
+      "message": "I would keep as it is currently to keep the CL as simple as possible.\n\nIn future, I can think of computing the header eagerly so that we do not need to pass the actual object. A tuple of (header, traceCallback) should be enough for all tracing purposes.",
+      "parentUuid": "363b2d16_80e27a79",
+      "revId": "76ecaddfa3778b8e7f20726011adeaf571ef0391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08b4acba_2cc80d54",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 6
