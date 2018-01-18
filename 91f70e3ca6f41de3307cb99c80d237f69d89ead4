@@ -16,6 +16,24 @@
       "revId": "91f70e3ca6f41de3307cb99c80d237f69d89ead4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca367c4_bf734e0e",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-18T23:35:27Z",
+      "side": 1,
+      "message": "FTP responses, chrome:// responses, failed requests, some mock responses, file responses, etc, don\u0027t have headers.  Not sure when this code is triggered, but it may well be one of those cases.",
+      "parentUuid": "1ed07525_f139941a",
+      "revId": "91f70e3ca6f41de3307cb99c80d237f69d89ead4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
