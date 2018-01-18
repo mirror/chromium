@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27a3ce95_99e28c66",
+        "filename": "components/tracing/common/trace_config_file.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-18T23:23:29Z",
+      "side": 1,
+      "message": "SELinux mode stuff is only relevant for Android M+",
+      "range": {
+        "startLine": 68,
+        "startChar": 23,
+        "endLine": 68,
+        "endChar": 25
+      },
+      "revId": "78c75cfa83a6734b8ba181f3186ab64850d531ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
