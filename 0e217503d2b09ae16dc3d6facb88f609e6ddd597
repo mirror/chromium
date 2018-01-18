@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9403c5d_bb520627",
+        "filename": "services/network/public/cpp/loader_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-18T21:56:12Z",
+      "side": 0,
+      "message": "this was already being done for navigation requests in ResourceDispatcherHostImpl::BeginNavigationRequest (old path) and NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService (new path). I added it to subresources in web_url_request_util.cc.",
+      "revId": "0e217503d2b09ae16dc3d6facb88f609e6ddd597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af54ee0c_f88df396",
+        "filename": "services/network/public/cpp/loader_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-18T21:56:12Z",
+      "side": 0,
+      "message": "this was already being done for frames in the browser (same two methods as above)",
+      "revId": "0e217503d2b09ae16dc3d6facb88f609e6ddd597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770b0d9d_e360a41d",
+        "filename": "services/network/public/cpp/loader_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-18T21:56:12Z",
+      "side": 0,
+      "message": "I moved this to web_url_loader_impl.cc",
+      "revId": "0e217503d2b09ae16dc3d6facb88f609e6ddd597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
