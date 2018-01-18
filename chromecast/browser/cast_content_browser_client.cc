@@ -171,6 +171,15 @@ void CastContentBrowserClient::AppendExtraCommandLineSwitches(
   std::string process_type =
       command_line->GetSwitchValueNative(switches::kProcessType);
   if (process_type == switches::kGpuProcess) {
+    static const char* const kForwardSwitches[] = {
+        switches::kCastInitialScreenHeight, switches::kCastInitialScreenWidth,
+        switches::kVSyncInterval,
+    };
+    base::CommandLine* browser_command_line =
+        base::CommandLine::ForCurrentProcess();
+    command_line->CopySwitchesFrom(*browser_command_line, kForwardSwitches,
+                                   arraysize(kForwardSwitches));
+
     gfx::Size res =
         display::Screen::GetScreen()->GetPrimaryDisplay().GetSizeInPixel();
     if (!command_line->HasSwitch(switches::kCastInitialScreenWidth)) {
