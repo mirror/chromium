@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c402bb5_446c7b7b",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-18T06:35:38Z",
+      "side": 1,
+      "message": "Folll -\u003e Foll",
+      "revId": "947c785dedae5fa7d2931c6023a350d8b6d5a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
