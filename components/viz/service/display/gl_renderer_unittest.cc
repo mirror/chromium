@@ -2400,6 +2400,47 @@ TEST_F(GLRendererTest, OutputColorMatrixTest) {
   EXPECT_TRUE(output_color_matrix_invoked);
 }
 
+// TODO(crbug.com/803286): Currently npot texture always return false on ubuntu
+// desktop.  The npot texture check is probably failing on desktop GL. This test
+// crashes DCHECK npot texture to catch this. When
+// GLRendererPixelTest.DISABLED_TrilinearFiltering got passed, can remove this.
+TEST_F(GLRendererTest, GenerateMipmapTest) {
+  // Initialize the mock GL interface, the output surface and the renderer.
+  auto gl_owned = std::make_unique<OutputColorMatrixMockGLES2Interface>();
+  auto provider = cc::TestContextProvider::Create();
+  provider->BindToCurrentThread();
+  std::unique_ptr<cc::FakeOutputSurface> output_surface(
+      cc::FakeOutputSurface::Create3d(std::move(provider)));
+  cc::FakeOutputSurfaceClient output_surface_client;
+  output_surface->BindToClient(&output_surface_client);
+  std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
+      cc::FakeResourceProvider::CreateDisplayResourceProvider(
+          output_surface->context_provider(), nullptr);
+  RendererSettings settings;
+  FakeRendererGL renderer(&settings, output_surface.get(),
+                          resource_provider.get());
+  renderer.Initialize();
+  renderer.SetVisible(true);
+
+  gfx::Size viewport_size(100, 100);
+  RenderPassId child_pass_id = 2;
+  // Create a child pass with mipmap to ensure that npot texture is enabled.
+  RenderPass* child_pass =
+      cc::AddRenderPass(&render_passes_in_draw_order_, child_pass_id,
+                        gfx::Rect(viewport_size) + gfx::Vector2d(1, 2),
+                        gfx::Transform(), cc::FilterOperations());
+  child_pass->generate_mipmap = true;
+
+  RenderPassId root_pass_id = 1;
+  RenderPass* root_pass = cc::AddRenderPass(
+      &render_passes_in_draw_order_, root_pass_id, gfx::Rect(viewport_size),
+      gfx::Transform(), cc::FilterOperations());
+  root_pass->damage_rect = gfx::Rect(0, 0, 25, 25);
+  cc::AddRenderPassQuad(root_pass, child_pass);
+  renderer.DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
+  DrawFrame(&renderer, viewport_size);
+}
+
 class PartialSwapMockGLES2Interface : public cc::TestGLES2Interface {
  public:
   explicit PartialSwapMockGLES2Interface(bool support_dc_layers)
