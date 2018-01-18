@@ -66,6 +66,11 @@ class WebRemoteFrameClient {
   // defined by the browser and passed into Blink upon frame creation.
   virtual WebString GetDevToolsFrameToken() { return WebString(); }
 
+  // Print out this frame.
+  // |rect| is the rectangular area this frame resides on its parent frame.
+  // |content_id| is a unique id for the rendered content in this process.
+  virtual void Print(const WebRect& rect, uint32_t content_id) {}
+
  protected:
   virtual ~WebRemoteFrameClient() = default;
 };
