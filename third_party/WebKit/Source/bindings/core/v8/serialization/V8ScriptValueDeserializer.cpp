@@ -563,6 +563,11 @@ V8ScriptValueDeserializer::GetOrCreateBlobDataHandle(const String& uuid,
   BlobDataHandleMap::const_iterator it = handles.find(uuid);
   if (it != handles.end())
     return it->value;
+  // Creating a BlobDataHandle from an empty string will get this renderer
+  // killed, so since we're parsing untrusted data (from possibly another
+  // process/renderer) return null instead.
+  if (uuid.IsEmpty())
+    return nullptr;
   return BlobDataHandle::Create(uuid, type, size);
 }
 
