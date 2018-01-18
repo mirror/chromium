@@ -24,9 +24,12 @@
 #include "chrome/common/pref_names.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/prefs/pref_service.h"
+#include "components/ukm/content/source_url_recorder.h"
 #include "content/public/browser/permission_type.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/origin_util.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "url/gurl.h"
 
 #if defined(OS_ANDROID)
@@ -120,6 +123,20 @@ void RecordEngagementMetric(const std::vector<PermissionRequest*>& requests,
       site_engagement_service->GetScore(requests[0]->GetOrigin());
 
   base::UmaHistogramPercentage(name, engagement_score);
+}
+
+int BucketPriorCount(int prior) {
+  // This bucketing matches UMA_HISTOGRAM_COUNTS_10000.
+  int buckets[49] = {1,    2,    3,    4,    5,    6,    7,    8,    10,   12,
+                     14,   17,   20,   24,   29,   34,   40,   48,   57,   68,
+                     81,   96,   114,  135,  160,  190,  226,  268,  318,  378,
+                     449,  533,  633,  752,  894,  1062, 1262, 1500, 1782, 2117,
+                     2516, 2990, 3553, 4222, 5017, 5961, 7083, 8416, 10000};
+  for (int bucket = 0; bucket < 49; ++bucket) {
+    if (prior < buckets[bucket])
+      return bucket;
+  }
+  return 49;
 }
 
 }  // anonymous namespace
@@ -302,7 +319,7 @@ void PermissionUmaUtil::PermissionPromptResolved(
 
   for (PermissionRequest* request : requests) {
     ContentSettingsType permission = request->GetContentSettingsType();
-    // TODO(timloh): We only record ignore metrics for permissions which use
+    // TODO(timloh): We only record these metrics for permissions which use
     // PermissionRequestImpl as the other subclasses don't support
     // GetGestureType and GetContentSettingsType.
     if (permission == CONTENT_SETTINGS_TYPE_DEFAULT)
@@ -325,6 +342,7 @@ void PermissionUmaUtil::PermissionPromptResolved(
     RecordPermissionPromptPriorCount(
         permission, priorIgnorePrefix,
         autoblocker->GetIgnoreCount(requesting_origin, permission));
+
 #if defined(OS_ANDROID)
     if (permission == CONTENT_SETTINGS_TYPE_GEOLOCATION &&
         permission_action != PermissionAction::IGNORED) {
@@ -416,15 +434,33 @@ void PermissionUmaUtil::RecordPermissionAction(
     PermissionRequestGestureType gesture_type,
     const GURL& requesting_origin,
     Profile* profile) {
+  PermissionDecisionAutoBlocker* autoblocker =
+      PermissionDecisionAutoBlocker::GetForProfile(profile);
+  int dismiss_count =
+      autoblocker->GetDismissCount(requesting_origin, permission);
+  int ignore_count = autoblocker->GetIgnoreCount(requesting_origin, permission);
+
   if (IsOptedIntoPermissionActionReporting(profile)) {
-    PermissionDecisionAutoBlocker* autoblocker =
-        PermissionDecisionAutoBlocker::GetForProfile(profile);
-    PermissionReportInfo report_info(
-        requesting_origin, permission, action, source_ui, gesture_type,
-        autoblocker->GetDismissCount(requesting_origin, permission),
-        autoblocker->GetIgnoreCount(requesting_origin, permission));
+    PermissionReportInfo report_info(requesting_origin, permission, action,
+                                     source_ui, gesture_type, dismiss_count,
+                                     ignore_count);
     g_browser_process->safe_browsing_service()
         ->ui_manager()->ReportPermissionAction(report_info);
+  }
+
+  if (ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get()) {
+    // The actual website isn't active (or necessarily open) when permissions
+    // are revoked from Site Settings.
+    ukm::SourceId source_id = ukm::UkmRecorder::GetNewSourceID();
+    ukm_recorder->UpdateSourceURL(source_id, requesting_origin);
+    ukm::builders::Permission(source_id)
+        .SetAction(static_cast<int64_t>(action))
+        .SetGesture(static_cast<int64_t>(gesture_type))
+        .SetPermissionType(permission)
+        .SetPriorDismissals(BucketPriorCount(dismiss_count))
+        .SetPriorIgnores(BucketPriorCount(ignore_count))
+        .SetSource(static_cast<int64_t>(source_ui))
+        .Record(ukm_recorder);
   }
 
   bool secure_origin = content::IsOriginSecure(requesting_origin);
