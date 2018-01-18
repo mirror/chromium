@@ -476,6 +476,30 @@
       "revId": "a66d4e09c10e361bd339d0d7ec2e7b5068dc4441",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c2ad74_0ae3d2ef",
+        "filename": "device/ctap/device_response_convertor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-18T18:02:54Z",
+      "side": 1,
+      "message": "Ack. I\u0027ll create a follow up CL for this! :)",
+      "parentUuid": "7dfcfc82_12a32e51",
+      "range": {
+        "startLine": 33,
+        "startChar": 31,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "a66d4e09c10e361bd339d0d7ec2e7b5068dc4441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
