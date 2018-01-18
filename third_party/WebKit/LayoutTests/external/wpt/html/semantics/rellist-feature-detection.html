@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<title>Test relList attribute</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+let link_support_table = [
+                           // Support and unsupport table for link element.
+                           {
+                             support : ['modulepreload', 'preload', 'preconnect', 'dns-prefetch', 'stylesheet', 'import', 'icon', 'alternate', 'prefetch',
+                                        'prerender', 'next', 'manifest', 'apple-touch-icon', 'apple-touch-icon-precomposed', 'canonical'],
+                             unsupport : ['author', 'bookmark', 'external', 'help', 'license', 'nofollow', 'pingback', 'prev', 'search', 'tag', 'noreferrer', 'noopener']
+                           },
+                           // Support and unsupport table for a, area element.
+                           {
+                             support : ['noreferrer', 'noopener'],
+                             unsupport : ['author', 'bookmark', 'external', 'help', 'license', 'nofollow', 'pingback', 'prev', 'search', 'tag', 'modulepreload', 'preload',
+                                         'preconnect', 'dns-prefetch', 'stylesheet', 'import', 'icon', 'alternate', 'prefetch', 'prerender', 'next', 'manifest',
+                                         'apple-touch-icon', 'apple-touch-icon-precomposed', 'canonical']
+                           }
+                         ];
+function test_rellist(tag_name, rel_table) {
+  let element = document.createElement(tag_name);
+  let tag = element.tagName;
+  // Test that setting rel is also setting relList, for both
+  // valid and invalid values.
+  element.rel = 'whatever';
+  assert_true(element.relList.contains('whatever'), 'tag = ' + tag + ', setting rel is not working');
+  element.rel = 'prefetch';
+  assert_true(element.relList.contains('prefetch'), 'tag = ' + tag + ', setting rel is not working');
+  // Test that add() works.
+  element.relList.add('preloadwhatever');
+  assert_equals(element.rel, 'prefetch preloadwhatever', 'tag = ' + tag + ', add is not working');
+  assert_true(element.relList.contains('preloadwhatever'), 'tag = ' + tag + ', add is not working');
+  // Test that remove() works.
+  element.relList.remove('preloadwhatever');
+  assert_equals(element.rel, 'prefetch', 'remove ' + tag);
+  assert_false(element.relList.contains('preloadwhatever'), 'tag = ' + tag + ', remove is not working');
+  // Test that toggle() works.
+  element.relList.toggle('prefetch', false);
+  assert_equals(element.rel, '', 'tag = ' + tag + ', toggle is not working');
+  element.relList.toggle('prefetch', true);
+  assert_equals(element.rel, 'prefetch', 'tag = ' + tag + ', toggle is not working');
+  // Test that replace() works.
+  element.relList.replace('prefetch', 'first');
+  assert_equals(element.rel, 'first', 'tag = ' + tag + ', replace is not working');
+  // Test that indexed item getter works.
+  element.relList.add('second');
+  assert_equals(element.relList.length, 2, 'tag = ' + tag + ', relList length is not correct');
+  assert_equals(element.relList[0], 'first', 'tag = ' + tag + ', relList indexed item is not correct');
+  assert_equals(element.relList[1], 'second', 'tag = ' + tag + ', relList indexed item is not correct');
+  // Test that relList is  [SameObject].
+  let savedRelList = element.relList;
+  element.rel = 'something';
+  assert_equals(element.relList, savedRelList, 'tag = ' + tag + ', SameObject is not working');
+
+  // Test that supports() is returning true for valid values
+  // and false for invalid ones.
+  let supported = rel_table['support'];
+  for (let link_type in supported)
+  {
+    assert_true(element.relList.supports(supported[link_type]), 'tag = ' + tag + ', link type = ' + supported[link_type] + ' must be supported');
+  }
+  let unsupported = rel_table['unsupport'];
+  for (let link_type in unsupported)
+  {
+    assert_false(element.relList.supports(unsupported[link_type]), 'tag = ' + tag + ', link type = ' + unsupported[link_type] + ' must be unsupported');
+  }
+}
+
+test(function() {
+  test_rellist('LINK', link_support_table[0]);
+  test_rellist('A', link_support_table[1]);
+  test_rellist('AREA', link_support_table[1]);
+}, 'Make sure that relList based feature detection is working');
+</script>
