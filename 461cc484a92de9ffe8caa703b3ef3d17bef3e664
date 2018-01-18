@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b9e8be9_da38a808",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-18T02:34:14Z",
+      "side": 1,
+      "message": "doh - it looks like height() is zero in fullscreen. So I guess we can stick with std::min, but add a comment ~\n\n  // Note height() may be zero in fullscreen.",
+      "revId": "461cc484a92de9ffe8caa703b3ef3d17bef3e664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
