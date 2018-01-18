@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "44a0459b_74077ede",
+        "filename": "net/socket/datagram_client_socket.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-18T19:34:07Z",
+      "side": 1,
+      "message": "I was actually thinking of making it more generic, so we can reuse it for future experiments before or after we making this change permanent/default. However, because of the buffer length differences, I don\u0027t think we can enable the optimization for all callers by default.\n\nI can rename the method to be more specific, e.g.:\nEnableRecvOptimization()\nEnableConnectedRecvOptimization()\n\nWhat do you think?",
+      "parentUuid": "f9c23d64_23c8e195",
+      "range": {
+        "startLine": 49,
+        "startChar": 38,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "98eb1dea1508d0f0340ffa128ee1a47d4bf4ec7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "daef8ebc_1fd5e0a3",
         "filename": "net/socket/udp_socket_posix.cc",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "164cea00_a6a21b30",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-18T19:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daef8ebc_1fd5e0a3",
+      "range": {
+        "startLine": 780,
+        "startChar": 10,
+        "endLine": 780,
+        "endChar": 0
+      },
+      "revId": "98eb1dea1508d0f0340ffa128ee1a47d4bf4ec7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a167e7d_71cc7aaf",
         "filename": "net/socket/udp_socket_posix.cc",
         "patchSetId": 12
@@ -68,6 +116,30 @@
       "revId": "98eb1dea1508d0f0340ffa128ee1a47d4bf4ec7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c501d59_250f22db",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-18T19:34:07Z",
+      "side": 1,
+      "message": "Neat. Done.",
+      "parentUuid": "2a167e7d_71cc7aaf",
+      "range": {
+        "startLine": 804,
+        "startChar": 3,
+        "endLine": 804,
+        "endChar": 0
+      },
+      "revId": "98eb1dea1508d0f0340ffa128ee1a47d4bf4ec7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
