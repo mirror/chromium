@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9dbddd83_b30ca31a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-01-18T01:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b77b1912_1adbd567",
+      "range": {
+        "startLine": 202,
+        "startChar": 24,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d16bf134_eb0b5a21",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-15T20:47:30Z",
       "side": 1,
       "message": "I think style guide disallows non-const references outside of local vars.\n\nMaybe Blink style is different - but if not, suggest using a pointer instead. (Even if Blink allows it, imho I think pointer would be clearer.)",
+      "range": {
+        "startLine": 203,
+        "startChar": 33,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88ccbf8_b82334e3",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-01-18T01:12:14Z",
+      "side": 1,
+      "message": "There\u0027s https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Use-references-for-all-non_null-pointer-arguments but that\u0027s for arguments. Changed to a pointer for the member.",
+      "parentUuid": "d16bf134_eb0b5a21",
       "range": {
         "startLine": 203,
         "startChar": 33,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "09150c3b_83ecad00",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-01-18T01:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a7ffbea_0ab624da",
+      "range": {
+        "startLine": 205,
+        "startChar": 2,
+        "endLine": 205,
+        "endChar": 0
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c48ea466_da77212b",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-15T20:47:30Z",
       "side": 1,
       "message": "It\u0027s kind of unfortunate that the timings to the two metrics might be different, since each construct gets its own start time - which might differ.\n\nHave you considered a structure that would allow sharing the same start time? Not only would ensure the two are consistent, but it would be a bit more efficient since the time only needs to be queried once.",
+      "range": {
+        "startLine": 210,
+        "startChar": 72,
+        "endLine": 210,
+        "endChar": 0
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc028409_4d84d4f7",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-01-18T01:12:14Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m confused. This does make sure that the same time gets recorded to both, no?\nSee the code in the destructor which records \"elapsed\" for counter_ as well as RecordUkmPerformanceMetric",
+      "parentUuid": "c48ea466_da77212b",
       "range": {
         "startLine": 210,
         "startChar": 72,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ec877a52_656e4181",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 5784,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-01-18T01:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0cc54e2_992d5783",
+      "range": {
+        "startLine": 5784,
+        "startChar": 16,
+        "endLine": 5784,
+        "endChar": 21
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb0b3d34_a3cef1fe",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
         "patchSetId": 7
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9f95c7df_5b534466",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-01-18T01:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb0b3d34_a3cef1fe",
+      "range": {
+        "startLine": 970,
+        "startChar": 69,
+        "endLine": 970,
+        "endChar": 0
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b516d7f3_6b175b16",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 7
@@ -160,6 +304,30 @@
       "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ceee26_5edbfb44",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-01-18T01:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b516d7f3_6b175b16",
+      "range": {
+        "startLine": 2362,
+        "startChar": 41,
+        "endLine": 2362,
+        "endChar": 0
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
