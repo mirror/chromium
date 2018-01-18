@@ -52,6 +52,24 @@
       "revId": "cb0cc24a14039bcd38ddfebf9b064e0d56d99f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601c73ba_286ccabf",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/ApplicationUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-18T19:41:54Z",
+      "side": 0,
+      "message": "Going through trybots a few times isn\u0027t a enough test for \"try it and see\" since tests are retried, so it\u0027s hard to see new flakes.\n\nBut looks like things like getTargetContext is set pretty early in ActivityThread.bindApplication before entering any test-specific code anyway, so unlikely to a problem.",
+      "parentUuid": "ad5cd41f_ccb89fe4",
+      "revId": "cb0cc24a14039bcd38ddfebf9b064e0d56d99f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
