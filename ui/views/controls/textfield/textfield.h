@@ -489,7 +489,7 @@ class VIEWS_EXPORT Textfield : public View,
 
   // Placeholder text color.
   // TODO(estade): remove this when Harmony/MD is default.
-  SkColor placeholder_text_color_;
+  base::Optional<SkColor> placeholder_text_color_;
 
   // The draw flags specified for |placeholder_text_|.
   int placeholder_text_draw_flags_;
