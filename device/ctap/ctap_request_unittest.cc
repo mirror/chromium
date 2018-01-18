@@ -222,4 +222,6 @@ TEST(CTAPRequestTest, TestConstructGetAssertionRequest) {
   EXPECT_THAT(*serialized_data, testing::ElementsAreArray(kSerializedRequest));
 }
 
+TEST(CTAPRequestTest, TestConstructCtapAuthenticatorRequestParam) {}
+
 }  // namespace device
