@@ -173,6 +173,14 @@ bool IsDownload(const ResourceResponse& response,
           response.head.headers->response_code() / 100 == 2);
 }
 
+bool IsSafeRedirect(const GURL& url) {
+  if (url.SchemeIs(url::kAboutScheme) || url.SchemeIs(kChromeUIScheme) ||
+      url.SchemeIs(url::kDataScheme) || url.SchemeIsFile()) {
+    return false;
+  }
+  return true;
+}
+
 }  // namespace
 
 // Kept around during the lifetime of the navigation request, and is
@@ -587,6 +595,12 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     if (--redirect_limit_ == 0) {
       OnComplete(
           network::URLLoaderCompletionStatus(net::ERR_TOO_MANY_REDIRECTS));
+      return;
+    }
+
+    if (!IsSafeRedirect(redirect_info.new_url)) {
+      // The redirect is unsafe, don't proceed.
+      OnComplete(network::URLLoaderCompletionStatus(net::ERR_UNSAFE_REDIRECT));
       return;
     }
 
