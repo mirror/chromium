@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0e44e026_e2aeda3f",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-18T02:31:26Z",
+      "side": 1,
+      "message": "Please initialize this to nullptr. The compiler should optimize the assignment away, and it gives us some insurance against forgetting to initialize the pointer in some code path.",
+      "revId": "b7d2ef967bf6bafda914ea966c3a9cd859820e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1d8eaab_59251a4d",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
         "patchSetId": 3
