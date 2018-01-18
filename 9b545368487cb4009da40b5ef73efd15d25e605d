@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64a89852_f7951df9",
+        "filename": "base/task_scheduler/task_scheduler_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-18T14:26:36Z",
+      "side": 1,
+      "message": "\u003d base::JoinString({histogram_label, kEnvironmentParams[environment_type].name_suffix}, \".\");\n\nTo get the automatic .reserve().",
+      "range": {
+        "startLine": 43,
+        "startChar": 43,
+        "endLine": 46,
+        "endChar": 57
+      },
+      "revId": "9b545368487cb4009da40b5ef73efd15d25e605d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eef97c5_39c7ce12",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-18T14:26:36Z",
+      "side": 1,
+      "message": "histogram_label",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 10
+      },
+      "revId": "9b545368487cb4009da40b5ef73efd15d25e605d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d83b88_9dda7edd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 111668,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-18T14:26:36Z",
+      "side": 1,
+      "message": "It is plural below. Could be singular everywhere.",
+      "range": {
+        "startLine": 111668,
+        "startChar": 13,
+        "endLine": 111668,
+        "endChar": 26
+      },
+      "revId": "9b545368487cb4009da40b5ef73efd15d25e605d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
