@@ -432,9 +432,10 @@ PaintResult PaintLayerPainter::PaintLayerContents(
   if (should_composite_for_blend_mode ||
       paint_layer_.PaintsWithTransparency(
           painting_info.GetGlobalPaintFlags())) {
-    FloatRect compositing_bounds = FloatRect(paint_layer_.PaintingExtent(
-        painting_info.root_layer, painting_info.sub_pixel_accumulation,
-        painting_info.GetGlobalPaintFlags()));
+    FloatRect compositing_bounds =
+        PixelSnappedIntRect(paint_layer_.PaintingExtent(
+            painting_info.root_layer, painting_info.sub_pixel_accumulation,
+            painting_info.GetGlobalPaintFlags()));
     compositing_recorder.emplace(
         context, paint_layer_.GetLayoutObject(),
         WebCoreCompositeToSkiaComposite(
