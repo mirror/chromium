@@ -92,6 +92,7 @@ String ServiceWorkerRegistration::scope() const {
 
 String ServiceWorkerRegistration::updateViaCache() const {
   switch (handle_->Registration()->UpdateViaCache()) {
+    case mojom::ServiceWorkerUpdateViaCache::kDefault:
     case mojom::ServiceWorkerUpdateViaCache::kImports:
       return "imports";
     case mojom::ServiceWorkerUpdateViaCache::kAll:

@@ -14,6 +14,7 @@ const int64 kInvalidServiceWorkerRegistrationId = -1;
 // Represents ServiceWorkerUpdateViaCache enum for ServiceWorkerRegistrationOptions:
 // https://w3c.github.io/ServiceWorker/#enumdef-serviceworkerupdateviacache
 enum ServiceWorkerUpdateViaCache {
+  kDefault,
   kImports,
   kAll,
   kNone,
@@ -23,7 +24,7 @@ enum ServiceWorkerUpdateViaCache {
 // https://w3c.github.io/ServiceWorker/#dictdef-registrationoptions
 struct ServiceWorkerRegistrationOptions {
   url.mojom.Url scope;
-  ServiceWorkerUpdateViaCache update_via_cache = kImports;
+  ServiceWorkerUpdateViaCache update_via_cache = kDefault;
 };
 
 // Describes a ServiceWorkerRegistration:
