@@ -13,6 +13,10 @@
 #include "base/command_line.h"
 #include "build/build_config.h"
 
+#if defined(USE_AURA)
+#include "ui/aura/env.h"
+#endif
+
 #if defined(OS_WIN)
 namespace sandbox {
 struct SandboxInterfaceInfo;
@@ -25,33 +29,23 @@ class ScopedNSAutoreleasePool;
 }
 #endif
 
-#if defined(USE_AURA)
-#include "ui/aura/env.h"
-#endif
-
 namespace content {
 
+class BrowserMainParts;
+
+using CreatedMainPartsClosure = base::Callback<void(BrowserMainParts*)>;
+
 struct MainFunctionParams {
-  explicit MainFunctionParams(const base::CommandLine& cl)
-      : command_line(cl),
-#if defined(OS_WIN)
-        sandbox_info(NULL),
-#elif defined(OS_MACOSX)
-        autorelease_pool(NULL),
-#elif defined(OS_POSIX) && !defined(OS_ANDROID)
-        zygote_child(false),
-#endif
-        ui_task(NULL) {
-  }
+  explicit MainFunctionParams(const base::CommandLine& cl) : command_line(cl) {}
 
   const base::CommandLine& command_line;
 
 #if defined(OS_WIN)
-  sandbox::SandboxInterfaceInfo* sandbox_info;
+  sandbox::SandboxInterfaceInfo* sandbox_info = nullptr;
 #elif defined(OS_MACOSX)
-  base::mac::ScopedNSAutoreleasePool* autorelease_pool;
+  base::mac::ScopedNSAutoreleasePool* autorelease_pool = nullptr;
 #elif defined(OS_POSIX) && !defined(OS_ANDROID)
-  bool zygote_child;
+  bool zygote_child = false;
 #endif
 
 #if defined(USE_AURA)
@@ -63,7 +57,11 @@ struct MainFunctionParams {
 
   // Used by InProcessBrowserTest. If non-null BrowserMain schedules this
   // task to run on the MessageLoop and BrowserInit is not invoked.
-  base::Closure* ui_task;
+  base::Closure* ui_task = nullptr;
+
+  // Used by InProcessBrowserTest. If non-null this is Run() after
+  // BrowserMainParts has been created and before PreEarlyInitialization().
+  CreatedMainPartsClosure* created_main_parts_closure = nullptr;
 };
 
 }  // namespace content
