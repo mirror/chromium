@@ -10,7 +10,7 @@ namespace extensions {
 
 // For managing API resources of type LogSourceResource.
 static base::LazyInstance<BrowserContextKeyedAPIFactory<
-    ApiResourceManager<LogSourceResource>>>::DestructorAtExit
+    ApiResourceManager<LogSourceResource>>>::Leaky
     g_log_source_resource_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static

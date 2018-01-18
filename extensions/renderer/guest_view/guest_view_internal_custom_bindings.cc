@@ -40,7 +40,7 @@ namespace {
 // GuestViewInternalCustomBindings::RegisterView(), and accessed via
 // GuestViewInternalCustomBindings::GetViewFromID().
 using ViewMap = std::map<int, v8::Global<v8::Object>*>;
-static base::LazyInstance<ViewMap>::DestructorAtExit weak_view_map =
+static base::LazyInstance<ViewMap>::Leaky weak_view_map =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

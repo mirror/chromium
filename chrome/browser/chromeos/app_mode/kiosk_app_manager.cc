@@ -205,7 +205,7 @@ const char KioskAppManager::kKeyAutoLoginState[] = "auto_login_state";
 const char KioskAppManager::kIconCacheDir[] = "kiosk/icon";
 
 // static
-static base::LazyInstance<KioskAppManager>::DestructorAtExit instance =
+static base::LazyInstance<KioskAppManager>::Leaky instance =
     LAZY_INSTANCE_INITIALIZER;
 KioskAppManager* KioskAppManager::Get() {
   return instance.Pointer();

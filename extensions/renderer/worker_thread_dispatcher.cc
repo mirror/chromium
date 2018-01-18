@@ -26,7 +26,7 @@ namespace extensions {
 
 namespace {
 
-base::LazyInstance<WorkerThreadDispatcher>::DestructorAtExit
+base::LazyInstance<WorkerThreadDispatcher>::Leaky
     g_worker_thread_dispatcher_instance = LAZY_INSTANCE_INITIALIZER;
 base::LazyInstance<base::ThreadLocalPointer<extensions::ServiceWorkerData>>::
     DestructorAtExit g_data_tls = LAZY_INSTANCE_INITIALIZER;

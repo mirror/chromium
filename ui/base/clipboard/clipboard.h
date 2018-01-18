@@ -338,13 +338,13 @@ class UI_BASE_EXPORT Clipboard : public base::ThreadChecker {
   // is done (in the unit test case), but a user (like content) can set which
   // threads are allowed to call this method.
   using AllowedThreadsVector = std::vector<base::PlatformThreadId>;
-  static base::LazyInstance<AllowedThreadsVector>::DestructorAtExit
+  static base::LazyInstance<AllowedThreadsVector>::Leaky
       allowed_threads_;
 
   // Mapping from threads to clipboard objects.
   using ClipboardMap =
       base::flat_map<base::PlatformThreadId, std::unique_ptr<Clipboard>>;
-  static base::LazyInstance<ClipboardMap>::DestructorAtExit clipboard_map_;
+  static base::LazyInstance<ClipboardMap>::Leaky clipboard_map_;
 
   // Mutex that controls access to |g_clipboard_map|.
   static base::LazyInstance<base::Lock>::Leaky clipboard_map_lock_;

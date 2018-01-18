@@ -108,7 +108,7 @@ class GpuInProcessThreadHolder : public base::Thread {
   GpuFeatureInfo gpu_feature_info_;
 };
 
-base::LazyInstance<GpuInProcessThreadHolder>::DestructorAtExit
+base::LazyInstance<GpuInProcessThreadHolder>::Leaky
     g_default_service = LAZY_INSTANCE_INITIALIZER;
 
 class ScopedEvent {

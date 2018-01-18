@@ -110,7 +110,7 @@ bool StartSandboxLinux(gpu::GpuWatchdogThread*,
 bool StartSandboxWindows(const sandbox::SandboxInterfaceInfo*);
 #endif
 
-base::LazyInstance<viz::VizMainImpl::LogMessages>::DestructorAtExit
+base::LazyInstance<viz::VizMainImpl::LogMessages>::Leaky
     deferred_messages = LAZY_INSTANCE_INITIALIZER;
 
 bool GpuProcessLogMessageHandler(int severity,

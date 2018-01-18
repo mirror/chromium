@@ -11,7 +11,7 @@
 
 namespace device {
 
-base::LazyInstance<scoped_refptr<BluetoothSocketThread>>::DestructorAtExit
+base::LazyInstance<scoped_refptr<BluetoothSocketThread>>::Leaky
     g_instance = LAZY_INSTANCE_INITIALIZER;
 
 // static

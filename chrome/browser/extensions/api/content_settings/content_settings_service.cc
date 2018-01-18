@@ -27,7 +27,7 @@ ContentSettingsService* ContentSettingsService::Get(
 BrowserContextKeyedAPIFactory<ContentSettingsService>*
 ContentSettingsService::GetFactoryInstance() {
   static base::LazyInstance<
-      BrowserContextKeyedAPIFactory<ContentSettingsService>>::DestructorAtExit
+      BrowserContextKeyedAPIFactory<ContentSettingsService>>::Leaky
       factory = LAZY_INSTANCE_INITIALIZER;
   return factory.Pointer();
 }

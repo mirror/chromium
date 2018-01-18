@@ -239,16 +239,16 @@ void InitializeV8IfNeeded(const base::CommandLine& command_line,
 }  // namespace
 
 #if !defined(CHROME_MULTIPLE_DLL_CHILD)
-base::LazyInstance<ContentBrowserClient>::DestructorAtExit
+base::LazyInstance<ContentBrowserClient>::Leaky
     g_empty_content_browser_client = LAZY_INSTANCE_INITIALIZER;
 #endif  //  !CHROME_MULTIPLE_DLL_CHILD
 
 #if !defined(CHROME_MULTIPLE_DLL_BROWSER)
-base::LazyInstance<ContentGpuClient>::DestructorAtExit
+base::LazyInstance<ContentGpuClient>::Leaky
     g_empty_content_gpu_client = LAZY_INSTANCE_INITIALIZER;
-base::LazyInstance<ContentRendererClient>::DestructorAtExit
+base::LazyInstance<ContentRendererClient>::Leaky
     g_empty_content_renderer_client = LAZY_INSTANCE_INITIALIZER;
-base::LazyInstance<ContentUtilityClient>::DestructorAtExit
+base::LazyInstance<ContentUtilityClient>::Leaky
     g_empty_content_utility_client = LAZY_INSTANCE_INITIALIZER;
 #endif  // !CHROME_MULTIPLE_DLL_BROWSER
 
