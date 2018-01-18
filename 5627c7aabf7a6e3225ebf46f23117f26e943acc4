@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ee1ec2a_a8f72685",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-18T10:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e66b1c7e_27c53123",
+      "range": {
+        "startLine": 25,
+        "startChar": 38,
+        "endLine": 25,
+        "endChar": 47
+      },
+      "revId": "5627c7aabf7a6e3225ebf46f23117f26e943acc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8438782c_cd6ddebd",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-18T10:09:34Z",
       "side": 1,
       "message": "These offsets are relative to the start of .text, not to the binary\u0027s start, right?",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 8
+      },
+      "revId": "5627c7aabf7a6e3225ebf46f23117f26e943acc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46198bdf_01c2e0ec",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-18T10:24:14Z",
+      "side": 1,
+      "message": "Yes, good point, clarified.",
+      "parentUuid": "8438782c_cd6ddebd",
       "range": {
         "startLine": 27,
         "startChar": 2,

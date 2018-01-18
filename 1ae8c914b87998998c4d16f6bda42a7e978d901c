@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dfb3a7d1_e26369b0",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-18T10:24:14Z",
+      "side": 1,
+      "message": "I\u0027ll clarify. Technically, we rely on what symbol_extractor does. I\u0027ll add a sort just in case things change.",
+      "parentUuid": "838c1997_56bd0f1c",
+      "range": {
+        "startLine": 47,
+        "startChar": 11,
+        "endLine": 47,
+        "endChar": 14
+      },
+      "revId": "1ae8c914b87998998c4d16f6bda42a7e978d901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "593ccc88_2155aacd",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "1ae8c914b87998998c4d16f6bda42a7e978d901c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b59a243_c2e42fb9",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-18T10:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "593ccc88_2155aacd",
+      "range": {
+        "startLine": 66,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 11
+      },
+      "revId": "1ae8c914b87998998c4d16f6bda42a7e978d901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
