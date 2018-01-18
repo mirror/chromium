@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6bb98f3_f393ea88",
+        "filename": "chrome/android/java/res/values/arrays.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-18T22:01:52Z",
+      "side": 0,
+      "message": "Can this file be removed?",
+      "revId": "40126a62123c1e8704b2f92a6ef54eb3e6ce52db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
