@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9d6b1ef8_5bc0c2ab",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeAutocapitalizeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-18T18:15:41Z",
+      "side": 1,
+      "message": "nit: Can we remove this?",
+      "range": {
+        "startLine": 24,
+        "startChar": 24,
+        "endLine": 24,
+        "endChar": 52
+      },
+      "revId": "1df2efa3841d53d44e67a6e5cf54dbf71af18b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd2e2d19_7e5c2e96",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeAutocapitalizeTest.java",
         "patchSetId": 3
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "I removed the form inheritance test from this CL because I’m not adding support from form inheritance until https://chromium-review.googlesource.com/c/chromium/src/+/872090 (where I’m re-adding the test case).\n\nIs this the difference you’re referring to? (I also updated the copyright year)",
       "parentUuid": "dd2e2d19_7e5c2e96",
+      "range": {
+        "startLine": 25,
+        "startChar": 13,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "1df2efa3841d53d44e67a6e5cf54dbf71af18b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53bba1a5_c82888f2",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeAutocapitalizeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-18T18:15:41Z",
+      "side": 1,
+      "message": "Ah, I see it now.",
+      "parentUuid": "08613c60_4ca35cd7",
       "range": {
         "startLine": 25,
         "startChar": 13,
