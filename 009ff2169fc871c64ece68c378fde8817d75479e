@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f610b17f_8613e4c2",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1976,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-18T00:36:16Z",
+      "side": 1,
+      "message": "How confident are we that this won\u0027t fail? Alternatively, we can just \"return result \u003d\u003d MOJO_RESULT_OK;\"",
+      "revId": "009ff2169fc871c64ece68c378fde8817d75479e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d37981_4bbac43f",
+        "filename": "components/printing/service/public/cpp/pdf_service_mojo_utils.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-18T00:36:16Z",
+      "side": 1,
+      "message": "weili: Do we ever pass in a handle that is read-write?",
+      "revId": "009ff2169fc871c64ece68c378fde8817d75479e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
