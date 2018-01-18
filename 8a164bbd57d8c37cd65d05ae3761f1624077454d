@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fc12095_f2919365",
+        "filename": "ios/chrome/browser/ui/settings/reauthentication_module.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2018-01-18T10:04:35Z",
+      "side": 1,
+      "message": "Is there a nicer way to do this ?",
+      "revId": "8a164bbd57d8c37cd65d05ae3761f1624077454d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
