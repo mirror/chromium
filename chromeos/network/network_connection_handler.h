@@ -131,18 +131,22 @@ class CHROMEOS_EXPORT NetworkConnectionHandler {
   void SetTetherDelegate(TetherDelegate* tether_delegate);
 
   // ConnectToNetwork() will start an asynchronous connection attempt.
-  // On success, |success_callback| will be called.
+  // When the connection request completes, |success_callback| will be called.
   // On failure, |error_callback| will be called with |error_name| one of the
   //   constants defined above.
   // |error_message| will contain an additional error string for debugging.
   // If |check_error_state| is true, the current state of the network is
-  //  checked for errors, otherwise current state is ignored (e.g. for recently
-  //  configured networks or repeat attempts).
+  //   checked for errors, otherwise current state is ignored (e.g. for recently
+  //   configured networks or repeat attempts).
+  // If |succeed_on_send_connect| is true, |success_callback| will be invoked
+  //   when the connect request is successfully made and not when the connection
+  //   completes.
   virtual void ConnectToNetwork(
       const std::string& service_path,
       const base::Closure& success_callback,
       const network_handler::ErrorCallback& error_callback,
-      bool check_error_state) = 0;
+      bool check_error_state,
+      bool succeed_on_send_connect) = 0;
 
   // DisconnectNetwork() will send a Disconnect request to Shill.
   // On success, |success_callback| will be called.

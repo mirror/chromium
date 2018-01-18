@@ -560,10 +560,9 @@ void MobileActivator::HandleOTASPTimeout() {
 
 void MobileActivator::ConnectNetwork(const NetworkState* network) {
   NetworkHandler::Get()->network_connection_handler()->ConnectToNetwork(
-      network->path(),
-      base::Bind(&base::DoNothing),
-      network_handler::ErrorCallback(),
-      false /* check_error_state */);
+      network->path(), base::Bind(&base::DoNothing),
+      network_handler::ErrorCallback(), false /* check_error_state */,
+      true /* succeed_on_send_connect */);
 }
 
 void MobileActivator::ForceReconnect(const NetworkState* network,

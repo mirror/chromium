@@ -181,7 +181,8 @@ void NetworkConnectionHandlerImpl::ConnectToNetwork(
     const std::string& service_path,
     const base::Closure& success_callback,
     const network_handler::ErrorCallback& error_callback,
-    bool check_error_state) {
+    bool check_error_state,
+    bool succeed_on_send_connect) {
   NET_LOG_USER("ConnectToNetwork", service_path);
   for (auto& observer : observers_)
     observer.ConnectToNetworkRequested(service_path);
@@ -248,21 +249,45 @@ void NetworkConnectionHandlerImpl::ConnectToNetwork(
   if (!network || network->profile_path().empty())
     profile_path = GetDefaultUserProfilePath(network);
 
-  // All synchronous checks passed, add |service_path| to connecting list.
-  pending_requests_.emplace(
-      service_path, ConnectRequest(service_path, profile_path, success_callback,
-                                   error_callback));
-
-  // Connect immediately to 'connectable' networks.
-  // TODO(stevenjb): Shill needs to properly set Connectable for VPN.
+  bool call_connect = false;
   if (network && network->connectable() && network->type() != shill::kTypeVPN) {
     if (IsNetworkProhibitedByPolicy(network->type(), network->guid(),
                                     network->profile_path())) {
-      ErrorCallbackForPendingRequest(service_path, kErrorUnmanagedNetwork);
+      InvokeConnectErrorCallback(service_path, error_callback,
+                                 kErrorUnmanagedNetwork);
       return;
     }
+    // Connect immediately to 'connectable' networks.
+    // TODO(stevenjb): Shill needs to properly set Connectable for VPN.
+    call_connect = true;
+  }
 
-    CallShillConnect(service_path);
+  // Set the callbacks to run prior to a successful connect based on
+  // |succeed_on_send_connect|.
+  base::Closure immediate_success_callback;
+  network_handler::ErrorCallback immediate_error_callback;
+
+  // Initial synchronous checks passed, add |service_path| to connecting list.
+  if (succeed_on_send_connect) {
+    // |success_callback| or |error_callback| will be triggered below so
+    // use empty callbacks in the ConnectRequest.
+    pending_requests_.emplace(
+        service_path,
+        ConnectRequest(service_path, profile_path, base::Closure(),
+                       network_handler::ErrorCallback()));
+    immediate_success_callback = success_callback;
+    immediate_error_callback = error_callback;
+  } else {
+    pending_requests_.emplace(service_path,
+                              ConnectRequest(service_path, profile_path,
+                                             success_callback, error_callback));
+    // The callbacks are stored in the ConnectRequest to be called on error or
+    // after a the connection attempt succeeded or failed, so empty callbacks
+    // will be passed to the methods below.
+  }
+
+  if (call_connect) {
+    CallShillConnect(service_path, immediate_success_callback);
     return;
   }
 
@@ -272,9 +297,10 @@ void NetworkConnectionHandlerImpl::ConnectToNetwork(
   configuration_handler_->GetShillProperties(
       service_path,
       base::Bind(&NetworkConnectionHandlerImpl::VerifyConfiguredAndConnect,
-                 AsWeakPtr(), check_error_state),
+                 AsWeakPtr(), immediate_success_callback,
+                 immediate_error_callback, check_error_state),
       base::Bind(&NetworkConnectionHandlerImpl::HandleConfigurationFailure,
-                 AsWeakPtr(), service_path));
+                 AsWeakPtr(), service_path, immediate_error_callback));
 }
 
 void NetworkConnectionHandlerImpl::DisconnectNetwork(
@@ -345,6 +371,8 @@ NetworkConnectionHandlerImpl::GetPendingRequest(
 // ConnectToNetwork implementation
 
 void NetworkConnectionHandlerImpl::VerifyConfiguredAndConnect(
+    const base::Closure& success_callback,
+    const network_handler::ErrorCallback& error_callback,
     bool check_error_state,
     const std::string& service_path,
     const base::DictionaryValue& service_properties) {
@@ -357,7 +385,8 @@ void NetworkConnectionHandlerImpl::VerifyConfiguredAndConnect(
   service_properties.GetBooleanWithoutPathExpansion(
       shill::kPassphraseRequiredProperty, &passphrase_required);
   if (passphrase_required) {
-    ErrorCallbackForPendingRequest(service_path, kErrorPassphraseRequired);
+    ErrorOrPendingRequestCallback(service_path, kErrorPassphraseRequired,
+                                  error_callback);
     return;
   }
 
@@ -373,7 +402,7 @@ void NetworkConnectionHandlerImpl::VerifyConfiguredAndConnect(
   // been recently configured), we need to check Connectable again.
   if (connectable && type != shill::kTypeVPN) {
     // TODO(stevenjb): Shill needs to properly set Connectable for VPN.
-    CallShillConnect(service_path);
+    CallShillConnect(service_path, success_callback);
     return;
   }
 
@@ -394,7 +423,8 @@ void NetworkConnectionHandlerImpl::VerifyConfiguredAndConnect(
           shill::kL2tpIpsecClientCertIdProperty, &vpn_client_cert_id);
     }
     if (vpn_provider_type.empty() || vpn_provider_host.empty()) {
-      ErrorCallbackForPendingRequest(service_path, kErrorConfigurationRequired);
+      ErrorOrPendingRequestCallback(service_path, kErrorConfigurationRequired,
+                                    error_callback);
       return;
     }
   }
@@ -412,7 +442,8 @@ void NetworkConnectionHandlerImpl::VerifyConfiguredAndConnect(
   }
 
   if (IsNetworkProhibitedByPolicy(type, guid, profile)) {
-    ErrorCallbackForPendingRequest(service_path, kErrorUnmanagedNetwork);
+    ErrorOrPendingRequestCallback(service_path, kErrorUnmanagedNetwork,
+                                  error_callback);
     return;
   }
 
@@ -455,7 +486,8 @@ void NetworkConnectionHandlerImpl::VerifyConfiguredAndConnect(
     // User must be logged in to connect to a network requiring a certificate.
     if (!logged_in_ || !cert_loader_) {
       NET_LOG_ERROR("User not logged in", "");
-      ErrorCallbackForPendingRequest(service_path, kErrorCertificateRequired);
+      ErrorOrPendingRequestCallback(service_path, kErrorCertificateRequired,
+                                    error_callback);
       return;
     }
     // If certificates have not been loaded yet, queue the connect request.
@@ -470,13 +502,15 @@ void NetworkConnectionHandlerImpl::VerifyConfiguredAndConnect(
         onc::client_cert::kPattern) {
       if (!ClientCertResolver::ResolveCertificatePatternSync(
               client_cert_type, cert_config_from_policy, &config_properties)) {
-        ErrorCallbackForPendingRequest(service_path, kErrorCertificateRequired);
+        ErrorOrPendingRequestCallback(service_path, kErrorCertificateRequired,
+                                      error_callback);
         return;
       }
     } else if (check_error_state && !client_cert::IsCertificateConfigured(
                                         client_cert_type, service_properties)) {
       // Network may not be configured.
-      ErrorCallbackForPendingRequest(service_path, kErrorConfigurationRequired);
+      ErrorOrPendingRequestCallback(service_path, kErrorConfigurationRequired,
+                                    error_callback);
       return;
     }
   }
@@ -488,14 +522,15 @@ void NetworkConnectionHandlerImpl::VerifyConfiguredAndConnect(
     if (VPNRequiresCredentials(service_path, vpn_provider_type,
                                *provider_properties)) {
       NET_LOG_USER("VPN Requires Credentials", service_path);
-      ErrorCallbackForPendingRequest(service_path, kErrorConfigurationRequired);
+      ErrorOrPendingRequestCallback(service_path, kErrorConfigurationRequired,
+                                    error_callback);
       return;
     }
 
     // If it's L2TP/IPsec PSK, there is no properties to configure, so proceed
     // to connect.
     if (client_cert_type == client_cert::CONFIG_TYPE_NONE) {
-      CallShillConnect(service_path);
+      CallShillConnect(service_path, success_callback);
       return;
     }
   }
@@ -506,9 +541,9 @@ void NetworkConnectionHandlerImpl::VerifyConfiguredAndConnect(
         service_path, config_properties,
         NetworkConfigurationObserver::SOURCE_USER_ACTION,
         base::Bind(&NetworkConnectionHandlerImpl::CallShillConnect, AsWeakPtr(),
-                   service_path),
+                   service_path, success_callback),
         base::Bind(&NetworkConnectionHandlerImpl::HandleConfigurationFailure,
-                   AsWeakPtr(), service_path));
+                   AsWeakPtr(), service_path, error_callback));
     return;
   }
 
@@ -516,10 +551,12 @@ void NetworkConnectionHandlerImpl::VerifyConfiguredAndConnect(
   // 'Connectable' is false. If |check_error_state| is true, signal an
   // error, otherwise attempt to connect to possibly gain additional error
   // state from Shill (or in case 'Connectable' is improperly unset).
-  if (check_error_state)
-    ErrorCallbackForPendingRequest(service_path, kErrorConfigurationRequired);
-  else
-    CallShillConnect(service_path);
+  if (check_error_state) {
+    ErrorOrPendingRequestCallback(service_path, kErrorConfigurationRequired,
+                                  error_callback);
+  } else {
+    CallShillConnect(service_path, success_callback);
+  }
 }
 
 bool NetworkConnectionHandlerImpl::IsNetworkProhibitedByPolicy(
@@ -606,13 +643,19 @@ void NetworkConnectionHandlerImpl::ConnectToQueuedNetwork() {
       queued_connect_->error_callback;
 
   NET_LOG_EVENT("Connecting to Queued Network", service_path);
+  // For queued requests, if |succeed_on_send_connect| was true the
+  // success or failure callback was already called and the request
+  // callbacks will be empty, so assume 'false' for |succeed_on_send_connect|.
   ConnectToNetwork(service_path, success_callback, error_callback,
-                   false /* check_error_state */);
+                   false /* check_error_state */,
+                   false /* succeed_on_send_connect */);
 }
 
 void NetworkConnectionHandlerImpl::CallShillConnect(
-    const std::string& service_path) {
+    const std::string& service_path,
+    const base::Closure& success_callback) {
   NET_LOG_EVENT("Sending Connect Request to Shill", service_path);
+  InvokeConnectSuccessCallback(service_path, success_callback);
   network_state_handler_->ClearLastErrorForNetwork(service_path);
   DBusThreadManager::Get()->GetShillServiceClient()->Connect(
       dbus::ObjectPath(service_path),
@@ -624,17 +667,26 @@ void NetworkConnectionHandlerImpl::CallShillConnect(
 
 void NetworkConnectionHandlerImpl::HandleConfigurationFailure(
     const std::string& service_path,
+    const network_handler::ErrorCallback& error_callback,
     const std::string& error_name,
     std::unique_ptr<base::DictionaryValue> error_data) {
+  NET_LOG(ERROR) << "Connect configuration failure: " << error_name;
+  if (!error_callback.is_null()) {
+    InvokeConnectErrorCallback(service_path, error_callback,
+                               kErrorConfigureFailed);
+    pending_requests_.erase(service_path);
+    return;
+  }
   ConnectRequest* request = GetPendingRequest(service_path);
   if (!request) {
     NET_LOG_ERROR("HandleConfigurationFailure called with no pending request.",
                   service_path);
     return;
   }
-  network_handler::ErrorCallback error_callback = request->error_callback;
+  network_handler::ErrorCallback request_error_callback =
+      request->error_callback;
   pending_requests_.erase(service_path);
-  InvokeConnectErrorCallback(service_path, error_callback,
+  InvokeConnectErrorCallback(service_path, request_error_callback,
                              kErrorConfigureFailed);
 }
 
@@ -744,19 +796,26 @@ void NetworkConnectionHandlerImpl::CheckAllPendingRequests() {
 
 // Connect callbacks
 
-void NetworkConnectionHandlerImpl::ErrorCallbackForPendingRequest(
+void NetworkConnectionHandlerImpl::ErrorOrPendingRequestCallback(
     const std::string& service_path,
-    const std::string& error_name) {
+    const std::string& error_name,
+    const network_handler::ErrorCallback& error_callback) {
+  if (!error_callback.is_null()) {
+    InvokeConnectErrorCallback(service_path, error_callback, error_name);
+    pending_requests_.erase(service_path);
+    return;
+  }
   ConnectRequest* request = GetPendingRequest(service_path);
   if (!request) {
-    NET_LOG_ERROR("ErrorCallbackForPendingRequest with no pending request.",
+    NET_LOG_ERROR("ErrorOrPendingRequestCallback with no pending request.",
                   service_path);
     return;
   }
-  // Remove the entry before invoking the callback in case it triggers a retry.
-  network_handler::ErrorCallback error_callback = request->error_callback;
+  // Remove entry before invoking the callback in case it triggers a retry.
+  network_handler::ErrorCallback request_error_callback =
+      request->error_callback;
   pending_requests_.erase(service_path);
-  InvokeConnectErrorCallback(service_path, error_callback, error_name);
+  InvokeConnectErrorCallback(service_path, request_error_callback, error_name);
 }
 
 // Disconnect
