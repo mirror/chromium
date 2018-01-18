@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c001a8df_b9451b50",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-18T19:36:06Z",
+      "side": 1,
+      "message": "Alright, sorry for yanking you around.  Looking at the documentation, I think it\u0027s only supposed to report once, so no reason to reset it. https://cs.chromium.org/chromium/src/device/bluetooth/bluetooth_adapter.h?l\u003d181\n(Also, it\u0027s deprecated, so best not to change current functionality)",
+      "revId": "6c6a487ef3bdb178de6fe2627a0286d059c5ade0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
