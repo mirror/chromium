@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "106c2189_8af3434f",
+        "filename": "ash/new_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-18T01:07:29Z",
+      "side": 1,
+      "message": "nit: missing \"is\" :)",
+      "range": {
+        "startLine": 25,
+        "startChar": 61,
+        "endLine": 25,
+        "endChar": 75
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6771cc02_81db74db",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-18T01:07:29Z",
+      "side": 1,
+      "message": "This is the legacy Windows-style Virtual Key code list, which we should avoid referring to in new code.  IIUC though, this CL is adding introspection into the existing VKEY-based ui::Accelerator table?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 46
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04cb9032_09452282",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-18T01:07:29Z",
+      "side": 1,
+      "message": "As per style-guide (see https://google.github.io/styleguide/cppguide.html#General_Naming_Rules), we don\u0027t abbreviate namespace names, I\u0027m afraid.",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c2dac5c_af9a7fa6",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-18T01:07:29Z",
+      "side": 1,
+      "message": "It would be helpful to have a little context as to what the category means or is used for. e.g. will it be used to group shortcuts in the viewer?",
+      "range": {
+        "startLine": 16,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 42
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a56df64_fe388cf4",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-18T01:07:29Z",
+      "side": 1,
+      "message": "nit: Can we reword this comment to focus on describing what this struct is for, and why, rather than describing it in terms of things \"we\" had to do? That will tend to make the comments more readable by others.\n\ne.g. you might say:\n\"AcceleratorId describes an accelerator key+modifiers combination. (//ash provides helpers for working with accelerator combinations but we cannot depend on it here)\"\n\nI\u0027m not sure what you mean by the sentence about dynamically generating |replacement_codes| from this?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 56
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca7ecbb_0b523038",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-18T01:07:29Z",
+      "side": 1,
+      "message": "nit: Describing how many fields and what types are isn\u0027t really necessary for the reader to understand this struct - you really want to describe here how it is intended to be used. Similarly, saying \"its categories, description and shortcut\" doesn\u0027t really add anything.\n\nYou might trim the comment down to something like \"Metadata about a keyboard shortcut, including cached description strings.\" and then jump straight in to describing the Alt + left arrow example that you have below.",
+      "range": {
+        "startLine": 36,
+        "startChar": 71,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3611000_f2907125",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-18T01:07:29Z",
+      "side": 1,
+      "message": "nit: replacement_codes",
+      "range": {
+        "startLine": 56,
+        "startChar": 43,
+        "endLine": 56,
+        "endChar": 58
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504a0d39_c45e357d",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-18T01:07:29Z",
+      "side": 1,
+      "message": "Suggest clarifying where this Id comes from, e.g. is it the Id of a string previously cached with some other component?",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 9
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6754ab41_34a5bae3",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-18T01:07:29Z",
+      "side": 1,
+      "message": "nit: Do you mean \"to the same KeyboardShortcutItem.\" or is ksv something else in this context?",
+      "range": {
+        "startLine": 71,
+        "startChar": 44,
+        "endLine": 71,
+        "endChar": 61
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a170ce5b_610a72de",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-18T01:07:29Z",
+      "side": 1,
+      "message": "nit: It\u0027s not clear what this means - ui::KeyboardCode is just a type, so the reader can see from the code below that that\u0027s what is being stored - I think you meant to express what the meaning of the values is?",
+      "range": {
+        "startLine": 89,
+        "startChar": 25,
+        "endLine": 89,
+        "endChar": 65
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea1987d_ca987734",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-18T01:07:29Z",
+      "side": 1,
+      "message": "nit: Are you missing an \"if\"?",
+      "range": {
+        "startLine": 90,
+        "startChar": 5,
+        "endLine": 90,
+        "endChar": 8
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334509d7_d984f539",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-18T01:07:29Z",
+      "side": 1,
+      "message": "Its not clear why this is \"replacement\"_codes - in what context are these codes replacing something, or being replaced? Based on the description, they sound like the codes for the all the keys involved in the shortcut, from which we can construct the shortcut string?",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 49
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdfe3dae_a8264c7a",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-18T01:07:29Z",
+      "side": 1,
+      "message": "IIUC these are two examples of shortcuts re-defined using the new scheme?  If so then suggest adding a comment preceding them, with a bug link for the full migrated shortcut system.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 76
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06accc7c_1d375325",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-18T01:07:29Z",
+      "side": 1,
+      "message": "nit: Capitalize these, since they are names of things.",
+      "range": {
+        "startLine": 16,
+        "startChar": 21,
+        "endLine": 16,
+        "endChar": 35
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
