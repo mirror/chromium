@@ -15,6 +15,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "content/common/accessibility_messages.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "content/renderer/accessibility/blink_ax_enum_conversion.h"
 #include "content/renderer/accessibility/render_accessibility_impl.h"
 #include "content/renderer/browser_plugin/browser_plugin.h"
@@ -531,8 +532,22 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
     }
 
     // Font size is in pixels.
-    if (src.FontSize())
-      dst->AddFloatAttribute(ui::AX_ATTR_FONT_SIZE, src.FontSize());
+    if (src.FontSize()) {
+      float font_size = src.FontSize();
+      WebLocalFrame* web_frame = document().GetFrame();
+      if (web_frame) {
+        RenderView* render_view =
+            RenderFrame::FromWebFrame(web_frame)->GetRenderView();
+        float zoom_factor = 1;
+        WebView* web_view = render_view->GetWebView();
+        if (web_view)
+          zoom_factor = web_view->ZoomLevelToZoomFactor(web_view->ZoomLevel());
+        if (UseZoomForDSFEnabled() && render_view)
+          zoom_factor *= render_view->GetDeviceScaleFactor();
+        font_size /= zoom_factor;
+      }
+      dst->AddFloatAttribute(ui::AX_ATTR_FONT_SIZE, font_size);
+    }
 
     if (src.AriaCurrentState()) {
       dst->AddIntAttribute(ui::AX_ATTR_ARIA_CURRENT_STATE,
