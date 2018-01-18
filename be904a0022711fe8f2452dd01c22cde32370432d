@@ -70,6 +70,24 @@
       "revId": "be904a0022711fe8f2452dd01c22cde32370432d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c3f598_bc716f53",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-01-18T18:36:34Z",
+      "side": 1,
+      "message": "Alright, thanks for the explanation. I see your point that it it will not work to just move this code to CanDispatchEvent() because then translating events into the right coordinate system gets much harder.\n \nIIRC there\u0027s a 2nd set of coordinates for each X event that works in a more sensible way when you consider capture use cases (the \"root\" coordinates). So I still believe this could be simpler if we used that, but that\u0027d require a bunch more changes and shouldn\u0027t be done with this CL.",
+      "parentUuid": "7ab39cf4_9041b0f2",
+      "revId": "be904a0022711fe8f2452dd01c22cde32370432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
