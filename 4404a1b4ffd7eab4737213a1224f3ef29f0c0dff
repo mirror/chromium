@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2e04c645_e800f8ad",
+        "filename": "tools/cygprofile/orderfile_generator_backend.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-18T17:30:19Z",
+      "side": 1,
+      "message": "I assumed that the file was useful for debugging/triaging. I never used it myself, so I would not object to removing it.",
+      "parentUuid": "d0e61616_35f375d5",
+      "range": {
+        "startLine": 544,
+        "startChar": 23,
+        "endLine": 544,
+        "endChar": 46
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b762596_7a37b9be",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 4
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "We only use this primary symbol concept in this main() method which is used for debugging \u0026 experiments only. So we may not be disabling ICF.\n\nThe whole notion of primary symbol is kind of broken, because it gets confused with the symbol duplication done later. I\u0027d like to get rid of it entirely. But I\u0027m not sure if we rely on it for visualization or any other tools. Any opinion, Benoit?",
       "parentUuid": "7b8a3645_92769126",
+      "range": {
+        "startLine": 248,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 25
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae74c84_41be68b9",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-18T17:30:19Z",
+      "side": 1,
+      "message": "I actually checked whether we still disable ICF in instrumented builds, and we do indeed disable it. I guess you already did all the testing and introducing an assert is no longer cheap :(\n\nOK.",
+      "parentUuid": "d38b7df9_25f36ac5",
       "range": {
         "startLine": 248,
         "startChar": 2,
