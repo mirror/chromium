@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afb89255_50122631",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-18T21:26:01Z",
+      "side": 1,
+      "message": "Any reason you decided to keep it here? Or just preference?",
+      "range": {
+        "startLine": 177,
+        "startChar": 17,
+        "endLine": 177,
+        "endChar": 33
+      },
+      "revId": "41156dfeb7c71cb1d89457f7da69aa65b670f634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
