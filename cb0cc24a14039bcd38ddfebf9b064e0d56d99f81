@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37765bba_b2a789c7",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/ApplicationUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-18T19:06:37Z",
+      "side": 0,
+      "message": "these checks might still be important?",
+      "revId": "cb0cc24a14039bcd38ddfebf9b064e0d56d99f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
