@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5ea7b2e_e02b4d15",
+        "filename": "base/i18n/rtl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T03:43:43Z",
+      "side": 1,
+      "message": "Can you use for (auto c : text) ?",
+      "revId": "c6e3adc1cc917650a19c13456954e9c6b936d262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a432f3_845d08ab",
+        "filename": "base/i18n/rtl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T03:43:43Z",
+      "side": 1,
+      "message": "s/embedded/embedding/",
+      "range": {
+        "startLine": 119,
+        "startChar": 48,
+        "endLine": 119,
+        "endChar": 56
+      },
+      "revId": "c6e3adc1cc917650a19c13456954e9c6b936d262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629682b0_412c714c",
+        "filename": "base/i18n/rtl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T03:43:43Z",
+      "side": 1,
+      "message": "This might be easier to explain as \"Ensures |text| contains no unterminated directional formatting characters, by appending the appropriate pop-directional-formatting characters to the end of |text|.\"\n\n(Note: Your current text says \"for every instance\", whereas the reality is only *unterminated* instances.)",
+      "revId": "c6e3adc1cc917650a19c13456954e9c6b936d262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb3619a_f8389ec9",
+        "filename": "base/i18n/rtl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T03:43:43Z",
+      "side": 1,
+      "message": "s/embedded/embedding/",
+      "range": {
+        "startLine": 123,
+        "startChar": 64,
+        "endLine": 123,
+        "endChar": 72
+      },
+      "revId": "c6e3adc1cc917650a19c13456954e9c6b936d262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6a273d_9e7a185b",
+        "filename": "base/i18n/rtl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T03:43:43Z",
+      "side": 1,
+      "message": "s/local/locale/",
+      "range": {
+        "startLine": 124,
+        "startChar": 48,
+        "endLine": 124,
+        "endChar": 53
+      },
+      "revId": "c6e3adc1cc917650a19c13456954e9c6b936d262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6406ae5_a5ca4f70",
+        "filename": "base/i18n/rtl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T03:43:43Z",
+      "side": 1,
+      "message": "I don\u0027t think |sentence| (and the later appending of sentence) really adds anything.\n\nIf you were rendering this out (or running it through the rendering pipeline past the point of the bidi algorithm), then it would be helpful in making sure that this sentence is ordered correctly. But since you are just comparing the two strings, there is no way that appending sentence on the end of both strings could make it fail, so I would just take this out.",
+      "revId": "c6e3adc1cc917650a19c13456954e9c6b936d262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e481f7f4_abb42802",
+        "filename": "base/i18n/rtl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T03:43:43Z",
+      "side": 1,
+      "message": "Can you test the other three formatting chars (U+202A, U+202B, and U+202D).",
+      "revId": "c6e3adc1cc917650a19c13456954e9c6b936d262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
