@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62376b71_cd4b06cc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/help/ReleaseNoteText.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-18T01:22:56Z",
+      "side": 1,
+      "message": "I would swap the code stepping and multiple recording.",
+      "revId": "b47960f3ba936d5ce49addb82a56c65ad960b59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
