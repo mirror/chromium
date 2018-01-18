@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a59cb2c_34b077ff",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-18T23:58:26Z",
+      "side": 1,
+      "message": "This class member style is also used in this generated file:\nhttps://cs.chromium.org/chromium/src/out/Debug/gen/services/metrics/public/cpp/ukm_builders.h?rcl\u003d2c445d0dda8e1437390c2c235e533eb165e93f3b\u0026l\u003d22\n\nI have moved the assignment to the .cc to be more consistent.\n\nKeep it as member variable reduces the work to call it since all code in google3 also reads it as member variable.\n\nWDYT?",
+      "parentUuid": "b524a604_e70bb258",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 35
+      },
+      "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb5d380c_572c1f42",
         "filename": "components/assist_ranker/example_preprocessing.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ac81b3_e270de63",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-18T23:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb5d380c_572c1f42",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 20
+      },
+      "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "28d1b198_dbdfb35c",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-18T23:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f90f94b1_80f031e9",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 7
+      },
+      "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26758213_0edf2125",
         "filename": "components/assist_ranker/example_preprocessing.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4bddc99_983bab3b",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-18T23:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26758213_0edf2125",
+      "range": {
+        "startLine": 113,
+        "startChar": 6,
+        "endLine": 113,
+        "endChar": 9
+      },
+      "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f5f985be_0b7c3fb2",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-18T23:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eaf5128_417c2d64",
+      "range": {
+        "startLine": 157,
+        "startChar": 6,
+        "endLine": 157,
+        "endChar": 9
+      },
+      "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c606d95d_32d1a80b",
         "filename": "components/assist_ranker/example_preprocessing.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f640f17c_f7af1441",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-18T23:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c606d95d_32d1a80b",
+      "range": {
+        "startLine": 185,
+        "startChar": 6,
+        "endLine": 185,
+        "endChar": 9
+      },
+      "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
