@@ -147,8 +147,14 @@ Bindings.StylesSourceMapping = class {
    */
   _styleSheetChanged(event) {
     var header = this._cssModel.styleSheetHeaderForId(event.data.styleSheetId);
-    if (!header || !this._acceptsHeader(header))
+    if (!header)
       return;
+    if (!this._acceptsHeader(header)) {
+      var document = Bindings.resourceMapping.documentBindingForUrl(this._cssModel.target(), header.resourceURL());
+      if (document)
+        document.styleSheetChanged(header, event.data.edit);
+      return;
+    }
     var styleFile = this._styleFiles.get(header.resourceURL());
     styleFile._styleSheetChanged(header);
   }

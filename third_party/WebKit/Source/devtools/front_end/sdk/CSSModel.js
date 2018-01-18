@@ -591,6 +591,7 @@ SDK.CSSModel = class extends SDK.SDKModel {
     var styleSheetHeader = new SDK.CSSStyleSheetHeader(this, header);
     this._styleSheetIdToHeader.set(header.styleSheetId, styleSheetHeader);
     var url = styleSheetHeader.resourceURL();
+    console.log('style sheet added', styleSheetHeader.resourceURL());
     if (!this._styleSheetIdsForURL.get(url))
       this._styleSheetIdsForURL.set(url, {});
     var frameIdToStyleSheetIds = this._styleSheetIdsForURL.get(url);

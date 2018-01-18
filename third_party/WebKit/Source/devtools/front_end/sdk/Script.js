@@ -46,7 +46,8 @@ SDK.Script = class {
    */
   constructor(
       debuggerModel, scriptId, sourceURL, startLine, startColumn, endLine, endColumn, executionContextId, hash,
-      isContentScript, isLiveEdit, sourceMapURL, hasSourceURL, length) {
+    isContentScript, isLiveEdit, sourceMapURL, hasSourceURL, length) {
+    console.log('script created', sourceURL, startLine, startColumn);
     this.debuggerModel = debuggerModel;
     this.scriptId = scriptId;
     this.sourceURL = sourceURL;
@@ -54,6 +55,9 @@ SDK.Script = class {
     this.columnOffset = startColumn;
     this.endLine = endLine;
     this.endColumn = endColumn;
+
+    this.editedLineOffset = this.lineOffset;
+    this.editedColumnOffset = this.columnOffset;
 
     this.executionContextId = executionContextId;
     this.hash = hash;

@@ -69,7 +69,12 @@ Bindings.ResourceMapping = class {
     if (!info)
       return null;
     var uiSourceCode = info._project.uiSourceCodeForURL(script.sourceURL);
-    return uiSourceCode ? uiSourceCode.uiLocation(jsLocation.lineNumber, jsLocation.columnNumber) : null;
+    var lineNumber = jsLocation.lineNumber;
+    var columnNumber = jsLocation.columnNumber;
+    if (jsLocation.lineNumber === script.lineOffset)
+      columnNumber += script.editedColumnOffset - script.columnOffset;
+    lineNumber += script.editedLineOffset - script.lineOffset;
+    return uiSourceCode ? uiSourceCode.uiLocation(lineNumber, columnNumber) : null;
   }
 
   /**
@@ -88,6 +93,18 @@ Bindings.ResourceMapping = class {
     if (!debuggerModel)
       return null;
     return debuggerModel.createRawLocationByURL(uiSourceCode.url(), lineNumber, columnNumber);
+  }
+
+  /**
+   * @param {!SDK.Target} target
+   * @param {string} url
+   * @return {?Bindings.ResourceMapping.DocumentBinding}
+   */
+  documentBindingForUrl(target, url) {
+    var info = this._infoForTarget(target);
+    if (!info)
+      return null;
+    return info._bindings.get(url) || null;
   }
 
   /**
@@ -224,6 +241,59 @@ Bindings.ResourceMapping.Binding = class {
     Bindings.NetworkProject.setInitialFrameAttribution(this._uiSourceCode, resource.frameId);
     this._project.addUISourceCodeWithProvider(
         this._uiSourceCode, this, Bindings.resourceMetadata(resource), resource.mimeType);
+  }
+
+  /**
+   * @return {!Array<!SDK.CSSStyleHeader>}
+   */
+  _inlineStyles() {
+    var target = Bindings.NetworkProject.targetForUISourceCode(this._uiSourceCode);
+    var cssModel = target.model(SDK.CSSModel);
+    var stylesheets = [];
+    if (cssModel) {
+      for (var headerId of cssModel.styleSheetIdsForURL(this._uiSourceCode.url())) {
+        var header = cssModel.styleSheetHeaderForId(headerId);
+        if (header)
+          stylesheets.push(header);
+      }
+    }
+    return stylesheets;
+  }
+
+  /**
+   * @return {!Array<!SDK.Script>}
+   */
+  _inlineScripts() {
+    var target = Bindings.NetworkProject.targetForUISourceCode(this._uiSourceCode);
+    var debuggerModel = target.model(SDK.DebuggerModel);
+    if (!debuggerModel)
+      return [];
+    return debuggerModel.scriptsForSourceURL(this._uiSourceCode.url());
+  }
+
+  /**
+   * @param {!SDK.CSSStyleSheetHeader} stylesheet
+   * @param {!SDK.CSSModel.Edit} edit
+   */
+  async styleSheetChanged(stylesheet, edit) {
+    var scripts = this._inlineScripts();
+    var styles = this._inlineStyles();
+    var content = await this._uiSourceCode.requestContent();
+    if (!content)
+      return;
+    var text = new TextUtils.Text(content);
+    var oldRange = edit.oldRange.relativeFrom(stylesheet.startLine, stylesheet.startColumn);
+    var newRange = edit.newRange.relativeFrom(stylesheet.startLine, stylesheet.startColumn);
+    this._uiSourceCode.addRevision(text.replaceRange(oldRange, edit.payload.cssText));
+    for (var script of scripts) {
+      var scriptOffset = TextUtils.TextRange.createFromLocation(script.editedLineOffset, script.editedColumnOffset);
+      if (!scriptOffset.follows(oldRange))
+        continue;
+      scriptOffset = scriptOffset.rebaseAfterTextEdit(oldRange, newRange);
+      script.editedLineOffset = scriptOffset.startLine;
+      script.editedColumnOffset = scriptOffset.startColumn;
+      Bindings.debuggerWorkspaceBinding.updateLocations(script);
+    }
   }
 
   /**

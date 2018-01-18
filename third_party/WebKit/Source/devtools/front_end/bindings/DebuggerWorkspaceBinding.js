@@ -61,6 +61,17 @@ Bindings.DebuggerWorkspaceBinding = class {
   }
 
   /**
+   * @param {!SDK.Script} script
+   * @param {!TextUtils.TextRange} oldRange
+   * @param {!TextUtils.TextRange} newRange
+   */
+  rebaseLocations(script, oldRange, newRange) {
+    var modelData = this._debuggerModelToData.get(script.debuggerModel);
+    if (modelData)
+      modelData._rebaseLocations(script, oldRange, newRange);
+  }
+
+  /**
    * @param {!SDK.DebuggerModel.Location} rawLocation
    * @param {function(!Bindings.LiveLocation)} updateDelegate
    * @param {!Bindings.LiveLocationPool} locationPool
@@ -294,6 +305,16 @@ Bindings.DebuggerWorkspaceBinding.ModelData = class {
   }
 
   /**
+   * @param {!SDK.Script} script
+   * @param {!TextUtils.TextRange} oldRange
+   * @param {!TextUtils.TextRange} newRange
+   */
+  _rebaseLocations(script, oldRange, newRange) {
+    for (var location of this._locations.get(script))
+      location.rebaseLocation(oldRange, newRange);
+  }
+
+  /**
    * @param {!SDK.DebuggerModel.Location} rawLocation
    * @return {?Workspace.UILocation}
    */
@@ -354,6 +375,18 @@ Bindings.DebuggerWorkspaceBinding.Location = class extends Bindings.LiveLocation
     this._script = script;
     this._rawLocation = rawLocation;
     this._binding = binding;
+  }
+
+  /**
+   * @param {!TextUtils.TextRange} oldRange
+   * @param {!TextUtils.TextRange} newRange
+   */
+  rebaseLocation(oldRange, newRange) {
+    var locationRange = TextUtils.TextRange.createFromLocation(this._rawLocation.lineNumber, this._rawLocation.columnNumber);
+    var rebasedRange = locationRange.rebaseAfterTextEdit(oldRange, newRange);
+    this._rawLocation.lineNumber = rebasedRange.startLine;
+    this._rawLocation.columnNumber = rebasedRange.startColumn;
+    this.update();
   }
 
   /**

@@ -45,6 +45,15 @@ Bindings.CSSWorkspaceBinding = class {
   }
 
   /**
+   * @param {!SDK.CSSStyleSheetHeader} header
+   * @param {!TextUtils.TextRange} oldRange
+   * @param {!TextUtils.TextRange} newRange
+   */
+  rebaseLocations(header, oldRange, newRange) {
+    this._modelToInfo.get(header.cssModel())._rebaseLocations(header, oldRange, newRange);
+  }
+
+  /**
    * @param {!SDK.CSSLocation} rawLocation
    * @param {function(!Bindings.LiveLocation)} updateDelegate
    * @param {!Bindings.LiveLocationPool} locationPool
@@ -193,6 +202,16 @@ Bindings.CSSWorkspaceBinding.ModelInfo = class {
   }
 
   /**
+   * @param {!SDK.CSSStyleSheetHeader} header
+   * @param {!TextUtils.TextRange} oldRange
+   * @param {!TextUtils.TextRange} newRange
+   */
+  _rebaseLocations(header, oldRange, newRange) {
+    for (var location of this._locations.get(header))
+      location.rebaseLocation(oldRange, newRange);
+  }
+
+  /**
    * @param {!Common.Event} event
    */
   _styleSheetAdded(event) {
@@ -268,6 +287,18 @@ Bindings.CSSWorkspaceBinding.LiveLocation = class extends Bindings.LiveLocationW
     this._columnNumber = rawLocation.columnNumber;
     this._info = info;
     this._header = null;
+  }
+
+  /**
+   * @param {!TextUtils.TextRange} oldRange
+   * @param {!TextUtils.TextRange} newRange
+   */
+  rebaseLocation(oldRange, newRange) {
+    var locationRange = TextUtils.TextRange.createFromLocation(this._lineNumber, this._columnNumber);
+    var rebasedRange = locationRange.rebaseAfterTextEdit(oldRange, newRange);
+    this._lineNumber = rebasedRange.startLine;
+    this._columnNumber = rebasedRange.startColumn;
+    this.update();
   }
 
   /**
