@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "052a753d_79cd6802",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-rendering-after-controls-added.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-18T09:37:21Z",
+      "side": 1,
+      "message": "This changes the behavior of the test - previously we ensured that a layout (and paint) had taken place before doing this.",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "346ffc862bd55fed63ab37aff8dea60ccc41ed6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f242bba1_92e9e4ef",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-rendering-after-controls-removed-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-18T09:37:21Z",
+      "side": 1,
+      "message": "-2 is supposed to be the right answer here.",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 14
+      },
+      "revId": "346ffc862bd55fed63ab37aff8dea60ccc41ed6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6e9308_d9e248d8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-rendering-after-controls-removed.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-18T09:37:21Z",
+      "side": 1,
+      "message": "This change makes the test flaky in the opposite direction since now the removal of the controls will be racing with layout. Previously we ensured that layout had been performed (with cues) before removing the controls - here that is no longer guaranteed to be the case.",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "346ffc862bd55fed63ab37aff8dea60ccc41ed6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

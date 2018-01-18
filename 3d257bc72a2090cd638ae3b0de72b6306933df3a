@@ -46,6 +46,30 @@
       "revId": "3d257bc72a2090cd638ae3b0de72b6306933df3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f500af3_3065cb5d",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-cue-rendering-after-controls-removed.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-18T09:37:21Z",
+      "side": 0,
+      "message": "IIRC, the issue with crbug.com/688670 is that we end up triggering a relayout and thus the cue gets laid out as if the controls weren\u0027t there at all, failing the test. So a stable-state has nothing to do with it really AFAICR, except that it may influence when the cue container is laid out (or isn\u0027t.) I think that this is a rather fundamental issue in the current cue layout implementation.",
+      "parentUuid": "42b091c6_e46d7c06",
+      "range": {
+        "startLine": 26,
+        "startChar": 21,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "3d257bc72a2090cd638ae3b0de72b6306933df3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
