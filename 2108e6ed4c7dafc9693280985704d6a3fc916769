@@ -460,6 +460,30 @@
     },
     {
       "key": {
+        "uuid": "a807ab2f_c0463a87",
+        "filename": "device/ctap/ctap_constants.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-18T09:58:06Z",
+      "side": 1,
+      "message": "Declaring a constexpr array is fine in the cc file, as there are no binary bloat concerns. In a header file it is different, though. Here you would get internal linkage, which is what we don\u0027t want. `extern constexpr` doesn\u0027t work, because they contradict each other. `constexpr` implies knowing the value at compile time, while `extern` variables are only known during linking. The easiest thing you could do to fix it is to declare a constexpr function, see [1] for details (sorry, Google only). E.g. instead of\n\n  constexpr std::array\u003cCTAPDeviceResponseCode, 51\u003e kResponseCodeList \u003d {..};\n\nyou declare a function like this:\n\n  constexpr std::array\u003cCTAPDeviceResponseCode, 51\u003e GetResponseCodeList() {\n    return {..};\n  }\n\n[1] http://go/totw/140#a-constexpr-function",
+      "parentUuid": "6a638658_b33586d6",
+      "range": {
+        "startLine": 98,
+        "startChar": 49,
+        "endLine": 98,
+        "endChar": 66
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6213b5e8_660d5554",
         "filename": "device/ctap/ctap_get_assertion_request_param.cc",
         "patchSetId": 14

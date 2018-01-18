@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c081a43_7d813774",
+        "filename": "device/ctap/ctap_authenticator_response.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-18T09:58:06Z",
+      "side": 1,
+      "message": "This class seems to add little value instead of just using a CTAPDeviceResponseCode directly. Why exactly is this class needed?",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "0331f61b024c85aebc51631ffb06cdad268c9789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
