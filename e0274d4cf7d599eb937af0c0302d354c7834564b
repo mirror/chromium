@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2bcce3d_85b13003",
+        "filename": "content/browser/media/capture/frame_sink_video_capture_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-18T20:27:03Z",
+      "side": 1,
+      "message": "nit: define a constant something like kMaxNumFramesInFlight?",
+      "range": {
+        "startLine": 227,
+        "startChar": 31,
+        "endLine": 227,
+        "endChar": 34
+      },
+      "revId": "e0274d4cf7d599eb937af0c0302d354c7834564b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e3bfbe_76c040f3",
+        "filename": "content/browser/media/capture/frame_sink_video_capture_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-18T20:27:03Z",
+      "side": 1,
+      "message": "Will this still be possibly called, or NOTREACHED()?",
+      "revId": "e0274d4cf7d599eb937af0c0302d354c7834564b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26a9416_07d15b7a",
+        "filename": "content/browser/media/capture/frame_sink_video_capture_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-18T20:27:03Z",
+      "side": 1,
+      "message": "Is |receiver_needs_start_notification_| always true here? IIUC, OnCapturerCreated() is only called once after connecting to a new capturer (Ln 140). It seems that |receiver_needs_start_notification_| is not needed.",
+      "range": {
+        "startLine": 365,
+        "startChar": 6,
+        "endLine": 365,
+        "endChar": 40
+      },
+      "revId": "e0274d4cf7d599eb937af0c0302d354c7834564b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
