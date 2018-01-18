@@ -13,7 +13,7 @@ namespace autofill {
 
 namespace {
 
-static base::LazyInstance<AutofillClock>::DestructorAtExit g_autofill_clock =
+static base::LazyInstance<AutofillClock>::Leaky g_autofill_clock =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

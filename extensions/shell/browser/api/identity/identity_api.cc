@@ -43,7 +43,7 @@ IdentityAPI* IdentityAPI::Get(content::BrowserContext* context) {
 // static
 BrowserContextKeyedAPIFactory<IdentityAPI>* IdentityAPI::GetFactoryInstance() {
   static base::LazyInstance<
-      BrowserContextKeyedAPIFactory<IdentityAPI>>::DestructorAtExit factory =
+      BrowserContextKeyedAPIFactory<IdentityAPI>>::Leaky factory =
       LAZY_INSTANCE_INITIALIZER;
   return factory.Pointer();
 }

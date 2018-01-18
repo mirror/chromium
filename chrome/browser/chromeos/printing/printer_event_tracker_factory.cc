@@ -15,7 +15,7 @@
 
 namespace chromeos {
 namespace {
-base::LazyInstance<PrinterEventTrackerFactory>::DestructorAtExit
+base::LazyInstance<PrinterEventTrackerFactory>::Leaky
     g_printer_tracker = LAZY_INSTANCE_INITIALIZER;
 }  // namespace
 

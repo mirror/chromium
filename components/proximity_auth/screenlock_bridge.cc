@@ -19,7 +19,7 @@
 namespace proximity_auth {
 namespace {
 
-base::LazyInstance<ScreenlockBridge>::DestructorAtExit
+base::LazyInstance<ScreenlockBridge>::Leaky
     g_screenlock_bridge_instance = LAZY_INSTANCE_INITIALIZER;
 
 // Ids for the icons that are supported by lock screen and signin screen

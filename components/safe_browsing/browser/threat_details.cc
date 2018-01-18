@@ -55,10 +55,10 @@ typedef std::unordered_set<std::string> StringSet;
 // request and response headers. All entries in this list should be lower-case
 // to support case-insensitive comparison.
 struct WhitelistedHttpsHeadersTraits
-    : base::internal::DestructorAtExitLazyInstanceTraits<StringSet> {
+    : base::internal::LeakyLazyInstanceTraits<StringSet> {
   static StringSet* New(void* instance) {
     StringSet* headers =
-        base::internal::DestructorAtExitLazyInstanceTraits<StringSet>::New(
+        base::internal::LeakyLazyInstanceTraits<StringSet>::New(
             instance);
     headers->insert({"google-creative-id", "google-lineitem-id", "referer",
                      "content-type", "content-length", "date", "server",
@@ -284,7 +284,7 @@ class ThreatDetailsFactoryImpl : public ThreatDetailsFactory {
   DISALLOW_COPY_AND_ASSIGN(ThreatDetailsFactoryImpl);
 };
 
-static base::LazyInstance<ThreatDetailsFactoryImpl>::DestructorAtExit
+static base::LazyInstance<ThreatDetailsFactoryImpl>::Leaky
     g_threat_details_factory_impl = LAZY_INSTANCE_INITIALIZER;
 
 // Create a ThreatDetails for the given tab.

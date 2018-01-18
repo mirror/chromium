@@ -862,7 +862,7 @@ void ManagementAPI::Shutdown() {
 }
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<ManagementAPI>>::DestructorAtExit g_factory =
+    BrowserContextKeyedAPIFactory<ManagementAPI>>::Leaky g_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 // static

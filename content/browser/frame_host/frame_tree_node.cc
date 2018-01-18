@@ -34,7 +34,7 @@ namespace {
 // FrameTreeNodes.
 typedef base::hash_map<int, FrameTreeNode*> FrameTreeNodeIdMap;
 
-base::LazyInstance<FrameTreeNodeIdMap>::DestructorAtExit
+base::LazyInstance<FrameTreeNodeIdMap>::Leaky
     g_frame_tree_node_id_map = LAZY_INSTANCE_INITIALIZER;
 
 // These values indicate the loading progress status. The minimum progress

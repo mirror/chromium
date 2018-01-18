@@ -228,7 +228,7 @@ void AlarmManager::SetClockForTesting(base::Clock* clock) {
 }
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<AlarmManager>>::DestructorAtExit g_factory =
+    BrowserContextKeyedAPIFactory<AlarmManager>>::Leaky g_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 // static

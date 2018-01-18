@@ -27,7 +27,7 @@ struct GlobalState {
   base::android::ScopedJavaGlobalRef<jobject> j_shell_manager;
 };
 
-base::LazyInstance<GlobalState>::DestructorAtExit g_global_state =
+base::LazyInstance<GlobalState>::Leaky g_global_state =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

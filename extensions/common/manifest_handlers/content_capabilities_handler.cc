@@ -32,7 +32,7 @@ ContentCapabilitiesInfo::ContentCapabilitiesInfo() {
 ContentCapabilitiesInfo::~ContentCapabilitiesInfo() {
 }
 
-static base::LazyInstance<ContentCapabilitiesInfo>::DestructorAtExit
+static base::LazyInstance<ContentCapabilitiesInfo>::Leaky
     g_empty_content_capabilities_info = LAZY_INSTANCE_INITIALIZER;
 
 // static

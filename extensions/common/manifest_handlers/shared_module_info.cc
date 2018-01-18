@@ -32,7 +32,7 @@ namespace {
 
 const char kSharedModule[] = "shared_module";
 
-static base::LazyInstance<SharedModuleInfo>::DestructorAtExit
+static base::LazyInstance<SharedModuleInfo>::Leaky
     g_empty_shared_module_info = LAZY_INSTANCE_INITIALIZER;
 
 const SharedModuleInfo& GetSharedModuleInfo(const Extension* extension) {

@@ -390,7 +390,7 @@ class ActivityLogState {
   DISALLOW_COPY_AND_ASSIGN(ActivityLogState);
 };
 
-base::LazyInstance<ActivityLogState>::DestructorAtExit g_activity_log_state =
+base::LazyInstance<ActivityLogState>::Leaky g_activity_log_state =
     LAZY_INSTANCE_INITIALIZER;
 
 // Returns the ActivityLog associated with the given |browser_context| after

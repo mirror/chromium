@@ -120,7 +120,7 @@ api::webstore_private::Result WebstoreInstallHelperResultToApiResult(
   return api::webstore_private::RESULT_NONE;
 }
 
-static base::LazyInstance<PendingApprovals>::DestructorAtExit
+static base::LazyInstance<PendingApprovals>::Leaky
     g_pending_approvals = LAZY_INSTANCE_INITIALIZER;
 
 // A preference set by the web store to indicate login information for
