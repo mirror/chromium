@@ -2,6 +2,80 @@
   "comments": [
     {
       "key": {
+        "uuid": "37fad55a_61ff0160",
+        "filename": "chrome/common/chrome_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T22:29:43Z",
+      "side": 1,
+      "message": "all of this was specific to CommandExecuteImpl and should be removed",
+      "revId": "a49060602900f25ae789b97df96f82ca516d382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e506b3_585ceee9",
+        "filename": "chrome/installer/mini_installer/chrome.release",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T22:29:43Z",
+      "side": 1,
+      "message": "i\u0027m not sure \"delegate_execute\" is the right name for this new binary. the old was specifically for handling activation via the IExecuteCommand interface as required for dual-mode browsers. this new one is for activation via the notification center thing. i think it\u0027s best to either name it specifically for what it does, or name it generally for the category of things it could be good at. in the former \"notification_helper\" is okay. for the latter \"chrome_server\" or something might be good since it\u0027s an out-of-proc COM server that does *stuff* on behalf of chrome. what do you think?",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 20
+      },
+      "revId": "a49060602900f25ae789b97df96f82ca516d382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "602f559a_6cdbf59e",
+        "filename": "win10/delegate_execute/command_execute_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T22:29:43Z",
+      "side": 1,
+      "message": "this should be removed, though you\u0027ll need to do the same CLSID tricks",
+      "revId": "a49060602900f25ae789b97df96f82ca516d382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73832eab_f7e9f3b5",
+        "filename": "win10/delegate_execute/crash_server_init.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T22:29:43Z",
+      "side": 1,
+      "message": "you\u0027ll need to use crashpad rather than breakpad",
+      "revId": "a49060602900f25ae789b97df96f82ca516d382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f93c639a_f9daccd9",
         "filename": "win10/delegate_execute/delegate_execute.cc",
         "patchSetId": 2
@@ -13,6 +87,30 @@
       "writtenOn": "2018-01-17T07:08:31Z",
       "side": 1,
       "message": "As we have discussed in the CL and design doc, we probably need to do register the NotificationActivator object (INotificationActivationCallback) here, and unregister it in PostMessageLoop below. Correct me if I am wrong please.",
+      "range": {
+        "startLine": 44,
+        "startChar": 10,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "a49060602900f25ae789b97df96f82ca516d382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a07706_26c4a80d",
+        "filename": "win10/delegate_execute/delegate_execute.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T22:29:43Z",
+      "side": 1,
+      "message": "i think what you want to do is replace CommandExecuteImpl with whatever your class is. this function registers that with a class factory and such below.",
+      "parentUuid": "f93c639a_f9daccd9",
       "range": {
         "startLine": 44,
         "startChar": 10,
@@ -48,6 +146,47 @@
     },
     {
       "key": {
+        "uuid": "6393e79c_9bbb7842",
+        "filename": "win10/delegate_execute/delegate_execute.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T22:29:43Z",
+      "side": 1,
+      "message": "add a dependency on //chrome/install_static:primary_module and then put a call to install_static::InitializeProductDetailsForPrimaryModule() at the very tippity top of _tWinMain.",
+      "parentUuid": "ca2d45ec_96d0b149",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 56
+      },
+      "revId": "a49060602900f25ae789b97df96f82ca516d382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d6f66f4_717390d7",
+        "filename": "win10/delegate_execute/delegate_execute.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T22:29:43Z",
+      "side": 1,
+      "message": "this and everything else relating to running chrome in immersive/metro mode must be removed",
+      "revId": "a49060602900f25ae789b97df96f82ca516d382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9c07712_28733907",
         "filename": "win10/delegate_execute/delegate_execute_operation.h",
         "patchSetId": 2
@@ -59,6 +198,30 @@
       "writtenOn": "2018-01-17T07:08:31Z",
       "side": 1,
       "message": "This operation makes chrome be launched via the IExecuteCommand interface exposed by delegate_execute in this implementation, while the RELAUNCH_CHROME operation below makes Chrome be launched via ShellExecute. \n\nAs the EXE is only going to be invoked by toast activation only, I think we can remove everything related to the RELAUNCH_CHROME operation, right?",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 19
+      },
+      "revId": "a49060602900f25ae789b97df96f82ca516d382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a3b3590_a5c4eb97",
+        "filename": "win10/delegate_execute/delegate_execute_operation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T22:29:43Z",
+      "side": 1,
+      "message": "yup. most of the implementation of the old delegate_execute should remain in the grave. only the spirit of the binary should be carried forward. :-)",
+      "parentUuid": "c9c07712_28733907",
       "range": {
         "startLine": 25,
         "startChar": 3,
