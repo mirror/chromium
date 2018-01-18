@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a6994d2_9cfa985f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNodeOptions.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-01-18T23:06:58Z",
+      "side": 1,
+      "message": "I don\u0027t think the actual name has been decided.  The spec issues uses both processorData and processorOptions.",
+      "revId": "fa2f7fcb7163eb36cb5afc50f129dbaa72c76d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
