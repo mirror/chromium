@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8025459_62e0943b",
+        "filename": "chrome/browser/autofill/autofill_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-18T04:47:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "855f8fb1_69943792",
+      "range": {
+        "startLine": 264,
+        "startChar": 70,
+        "endLine": 264,
+        "endChar": 74
+      },
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22624453_09cf603d",
         "filename": "components/autofill/android/autofill_provider_android.cc",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-18T01:38:48Z",
       "side": 1,
       "message": "This function could use a bit more documentation: it\u0027s not clear to me how OnFormsSeen is used, or when this signal is fired.\n\nPerhaps this could be done in a followup CL (document the control flow between the browser and the renderer side of autofill; as it is, it\u0027s not very clear to me how the two parts interact)",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5acb3eca_a2aa9f5b",
+        "filename": "components/autofill/android/autofill_provider_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-18T04:47:28Z",
+      "side": 1,
+      "message": "Sure, will have a followup CL.",
+      "parentUuid": "22624453_09cf603d",
       "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +135,24 @@
     },
     {
       "key": {
+        "uuid": "749d4375_4f5fb1ce",
+        "filename": "components/autofill/content/common/submission_source_type_converters.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-18T04:47:28Z",
+      "side": 1,
+      "message": "I am not sure the generated C++ mojo enum is suitable here because submission source is defined and used in core. \n\nalso see my other comments in submission_source.h, let me know what you think, thanks",
+      "parentUuid": "06b15864_f23079cb",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0a59590_e826b6eb",
         "filename": "components/autofill/content/renderer/autofill_agent.cc",
         "patchSetId": 8
@@ -104,6 +164,24 @@
       "writtenOn": "2018-01-18T01:38:48Z",
       "side": 1,
       "message": "It\u0027s not obvious to me why we pass time over mojo if we just pass base::TimeTicks::Now. If we\u0027re doing that, would it be possible to just use base::TimeTicks::Now() on the browser side?",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db9c248_13dc770f",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-18T04:47:28Z",
+      "side": 1,
+      "message": "This is legacy code, I don\u0027t know the reason behind this. filed crbug.com/803333 to track it.",
+      "parentUuid": "b0a59590_e826b6eb",
       "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -133,6 +211,30 @@
     },
     {
       "key": {
+        "uuid": "d3605337_2413f18d",
+        "filename": "components/autofill/content/renderer/form_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-18T04:47:28Z",
+      "side": 1,
+      "message": "Is this a tradition? I see a lot of usage like this https://cs.chromium.org/search/?q\u003d_for_testing\u0026p\u003d1\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "c3ee4b96_8da36939",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 58
+      },
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45f0a91e_0c8300a5",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 8
@@ -144,6 +246,24 @@
       "writtenOn": "2018-01-18T01:38:48Z",
       "side": 1,
       "message": "This feels a bit awkward... it feels like what we semantically want is a FormStructure::Clone() method, and we would just pass the clone to StartUploadProcess().",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5bf5299_c56f39b4",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-18T04:47:28Z",
+      "side": 1,
+      "message": "Sounds reasonable, filed a bug and added TODO",
+      "parentUuid": "45f0a91e_0c8300a5",
       "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -164,6 +284,24 @@
       "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76e17cb_a4996f44",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-18T04:47:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acd4f460_4f04e0d7",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +334,24 @@
       "side": 1,
       "message": "It means we will have mojo code in autofill/core directory, doesn\u0027t it?\n\nCurrently components/autofill/core/ doesn\u0027t have any mojo code, it seems autofill limits mojo code in autofill/content, I don\u0027t know if there any reason for this, or it just happens to be.\n\nDoes ios use mojo? if not, this might be the reason.",
       "parentUuid": "f3326184_45a5ac4d",
+      "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd0e5bf_2b652d68",
+        "filename": "components/autofill/core/common/submission_source.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-18T04:47:28Z",
+      "side": 1,
+      "message": "ios does use mojo, but use different interface.",
+      "parentUuid": "c374b450_7bf7f455",
       "revId": "f223049ff896e23f714990deb7fbf2aaf9b4e31c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
