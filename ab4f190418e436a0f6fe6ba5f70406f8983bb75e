@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "efa8333e_68a8c256",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager_commands.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-18T11:07:12Z",
+      "side": 1,
+      "message": "Thanks for catching this.\nIt had only worked when clicking the gear menu button right after focusing in the file list,\nbut now I fixed it.",
+      "parentUuid": "bfde7b31_f6048238",
+      "revId": "ab4f190418e436a0f6fe6ba5f70406f8983bb75e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94b8e299_65ad8ee0",
         "filename": "ui/file_manager/file_manager/foreground/js/file_manager_commands.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "ab4f190418e436a0f6fe6ba5f70406f8983bb75e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdcd7ea2_47a35416",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager_commands.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-18T11:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94b8e299_65ad8ee0",
+      "revId": "ab4f190418e436a0f6fe6ba5f70406f8983bb75e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
