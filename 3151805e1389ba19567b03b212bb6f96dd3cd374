@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43fb8304_d63b9c54",
+        "filename": "content/browser/android/synchronous_compositor_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-18T22:30:19Z",
+      "side": 1,
+      "message": "group with this with LayerTreeFrameSinkCreated, the other IPC handler here",
+      "revId": "3151805e1389ba19567b03b212bb6f96dd3cd374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f45454_42113082",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-18T22:30:19Z",
+      "side": 1,
+      "message": "it\u0027s not ok to drop this state in the else case, and it should persist across different LayerTreeFrameSinks, so should cache this in this class and call SetBeginFrameSourcePaused in SetLayerTreeFrameSink as well",
+      "revId": "3151805e1389ba19567b03b212bb6f96dd3cd374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad988f8_ae186091",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-18T22:30:19Z",
+      "side": 1,
+      "message": "group these with other IPC handlers",
+      "revId": "3151805e1389ba19567b03b212bb6f96dd3cd374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
