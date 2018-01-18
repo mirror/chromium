@@ -571,8 +571,9 @@ bool Extension::LoadName(base::string16* error) {
   }
   base::string16 sanitized_name =
       base::CollapseWhitespace(localized_name, true);
+  base::i18n::SanitizeUserSuppliedString(&sanitized_name);
+
   non_localized_name_ = base::UTF16ToUTF8(sanitized_name);
-  base::i18n::AdjustStringForLocaleDirection(&sanitized_name);
   name_ = base::UTF16ToUTF8(sanitized_name);
   return true;
 }
