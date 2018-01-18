@@ -11,6 +11,8 @@ const ROOT_PATH = '../../../../../';
 GEN_INCLUDE(
     [ROOT_PATH + 'chrome/test/data/webui/polymer_browser_test_base.js']);
 
+GEN('#include "components/subresource_filter/core/browser/subresource_filter_features.h"');
+
 /**
  * Test fixture for Polymer Settings elements.
  * @constructor
@@ -20,6 +22,9 @@ function CrSettingsBrowserTest() {}
 
 CrSettingsBrowserTest.prototype = {
   __proto__: PolymerTest.prototype,
+
+  featureList:
+      ['subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI', ''],
 
   /** @override */
   get browsePreload() {
