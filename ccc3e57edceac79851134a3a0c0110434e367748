@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71b150d4_e63e1b06",
+        "filename": "ash/public/cpp/ash_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-18T01:37:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f98dd5e_eec5b758",
+      "revId": "ccc3e57edceac79851134a3a0c0110434e367748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d71bc4cc_cfc1815c",
         "filename": "ash/public/cpp/ash_switches.cc",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-18T01:26:32Z",
       "side": 1,
       "message": "nit: devices (but feel free to remove this second sentence)",
+      "range": {
+        "startLine": 150,
+        "startChar": 60,
+        "endLine": 150,
+        "endChar": 66
+      },
+      "revId": "ccc3e57edceac79851134a3a0c0110434e367748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d26f1c_1edb18e9",
+        "filename": "ash/public/cpp/ash_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-18T01:37:19Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "d71bc4cc_cfc1815c",
       "range": {
         "startLine": 150,
         "startChar": 60,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "934c8b04_d9b7a77e",
+        "filename": "ash/system/power/convertible_power_button_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-18T01:37:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b223810_08ee5af3",
+      "revId": "ccc3e57edceac79851134a3a0c0110434e367748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f51473a_3b99c5ec",
         "filename": "ash/system/power/convertible_power_button_controller.h",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "ccc3e57edceac79851134a3a0c0110434e367748",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69382c75_8bd4e570",
+        "filename": "ash/system/power/convertible_power_button_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-18T01:37:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f51473a_3b99c5ec",
+      "revId": "ccc3e57edceac79851134a3a0c0110434e367748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "7e262519_61ea9252",
+        "filename": "ash/system/power/power_button_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-18T01:37:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2fc248e_e7fbf029",
+      "revId": "ccc3e57edceac79851134a3a0c0110434e367748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a88e0115_6bb0bd25",
         "filename": "ash/system/power/power_button_controller.h",
         "patchSetId": 4
@@ -107,6 +203,24 @@
       "revId": "ccc3e57edceac79851134a3a0c0110434e367748",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce73113_11c8efcb",
+        "filename": "ash/system/power/power_button_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-18T01:37:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a88e0115_6bb0bd25",
+      "revId": "ccc3e57edceac79851134a3a0c0110434e367748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
