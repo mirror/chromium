@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dc4ada9_ec95b469",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2018-01-18T14:44:52Z",
+      "side": 1,
+      "message": "Doesn\u0027t convert_bus_ keep stuff in the output format?",
+      "revId": "655a46f06302bce228364a9d070eb99a437ab893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e39448a_0047d7ce",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2018-01-18T14:44:52Z",
+      "side": 1,
+      "message": "nit: It\u0027s a bit tricky to keep track of all these parameters. Suggest formatting like so:\nlog_callback_.Run(base::StringPrintf(\n    \"WASAPIAIS::Open: failed, result \u003d %d, hresult \u003d %#lx, \"\n    \"input format \u003d %#x/%d/%ld/%d/%d/%ld/%d, \"\n    \"output format \u003d %#x/%d/%ld/%d/%d/%ld/%d\",\n    open_result_, hr,\n    input_format_.wFormatTag, input_format_.nChannels,\n    input_format_.nSamplesPerSec, input_format_.wBitsPerSample,\n    input_format_.nBlockAlign, input_format_.nAvgBytesPerSec,\n    input_format_.cbSize,\n    output_format_.wFormatTag, output_format_.nChannels,\n    output_format_.nSamplesPerSec, output_format_.wBitsPerSample,\n    output_format_.nBlockAlign, output_format_.nAvgBytesPerSec,\n    output_format_.cbSize));\n\n(and possibly surround it with // clang-format off and // clang-format on if it insists on reformatting it.)\n\nI won\u0027t insist, though. I\u0027ve reformatted it and am sufficiently sure they\u0027re both identical. :)",
+      "revId": "655a46f06302bce228364a9d070eb99a437ab893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
