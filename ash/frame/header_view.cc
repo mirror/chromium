@@ -157,7 +157,9 @@ void HeaderView::ChildPreferredSizeChanged(views::View* child) {
   // size changes.
   if (child != caption_button_container_)
     return;
-  parent()->Layout();
+
+  if (parent())
+    parent()->Layout();
 }
 
 void HeaderView::OnTabletModeStarted() {
