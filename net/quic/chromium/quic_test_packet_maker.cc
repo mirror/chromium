@@ -746,6 +746,24 @@ QuicTestPacketMaker::MakeInitialSettingsPacketAndSaveData(
   return MakePacket(header_, QuicFrame(&quic_frame));
 }
 
+std::unique_ptr<QuicReceivedPacket> QuicTestPacketMaker::MakePriorityPacket(
+    QuicPacketNumber packet_number,
+    bool should_include_version,
+    QuicStreamId id,
+    QuicStreamId parent_stream_id,
+    int weight,
+    bool exclusive,
+    QuicStreamOffset* offset) {
+  InitializeHeader(packet_number, should_include_version);
+  SpdyPriorityIR priority_frame(id, parent_stream_id, weight, exclusive);
+  SpdySerializedFrame spdy_frame =
+      spdy_request_framer_.SerializeFrame(priority_frame);
+  QuicStreamFrame frame(kHeadersStreamId, false, *offset,
+                        QuicStringPiece(spdy_frame.data(), spdy_frame.size()));
+  *offset += spdy_frame.size();
+  return MakePacket(header_, QuicFrame(&frame));
+}
+
 void QuicTestPacketMaker::ClientUpdateWithStreamDestruction(
     QuicStreamId stream_id) {
   DCHECK_EQ(Perspective::IS_CLIENT, perspective_);

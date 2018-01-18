@@ -1354,6 +1354,33 @@ TEST_P(QuicChromiumClientSessionTest, MigrateToSocketReadError) {
   EXPECT_TRUE(new_socket_data.AllWriteDataConsumed());
 }
 
+TEST_P(QuicChromiumClientSessionTest, WritePriorityFrame) {
+  MockRead reads[] = {MockRead(SYNCHRONOUS, ERR_IO_PENDING, 0)};
+
+  QuicStreamOffset headers_stream_offset = 0;
+  std::unique_ptr<QuicEncryptedPacket> settings_packet(
+      client_maker_.MakeInitialSettingsPacket(1, &headers_stream_offset));
+  std::unique_ptr<QuicEncryptedPacket> priority_packet(
+      client_maker_.MakePriorityPacket(2, true, 7, 5, 100, true,
+                                       &headers_stream_offset));
+  MockWrite writes[] = {
+      MockWrite(ASYNC, settings_packet->data(), settings_packet->length(), 1),
+      MockWrite(SYNCHRONOUS, priority_packet->data(), priority_packet->length(),
+                2)};
+
+  socket_data_.reset(new SequencedSocketData(reads, arraysize(reads), writes,
+                                             arraysize(writes)));
+
+  Initialize();
+  CompleteCryptoHandshake();
+
+  session_->WritePriority(7, 5, 100, true);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(socket_data_->AllReadDataConsumed());
+  EXPECT_TRUE(socket_data_->AllWriteDataConsumed());
+}
+
 }  // namespace
 }  // namespace test
 }  // namespace net
