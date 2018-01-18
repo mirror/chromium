@@ -1030,10 +1030,12 @@ void WebPluginContainerImpl::ComputeClipRectsForPlugin(
 
   // Note: FrameRect() for this plugin is equal to contentBoxRect, mapped to the
   // containing view space, and rounded off.
-  // See LayoutEmbeddedContent.cpp::updateGeometryInternal. To remove the lossy
-  // effect of rounding off, use contentBoxRect directly.
-  LayoutRect unclipped_absolute_rect(box->ContentBoxRect());
-  box->MapToVisualRectInAncestorSpace(root_view, unclipped_absolute_rect);
+  // See LayoutEmbeddedContentUpdateGeometry. To remove the lossy effect of
+  // rounding off, use contentBoxRect directly.
+  LayoutRect unclipped_absolute_rect(
+      box->LocalToAbsoluteQuad(FloatQuad(FloatRect(box->ContentBoxRect())),
+                               kTraverseDocumentBoundaries | kUseTransforms)
+          .BoundingBox());
 
   // The frameRect is already in absolute space of the local frame to the
   // plugin.
@@ -1048,7 +1050,8 @@ void WebPluginContainerImpl::ComputeClipRectsForPlugin(
                      .BoundingBox());
   // Finally, adjust for scrolling of the root frame, which the above does not
   // take into account.
-  layout_window_rect.MoveBy(-root_view->ViewRect().Location());
+  layout_window_rect =
+      root_view->GetFrameView()->AbsoluteToRootFrame(layout_window_rect);
   window_rect = PixelSnappedIntRect(layout_window_rect);
 
   LayoutRect layout_clipped_local_rect = unclipped_absolute_rect;
