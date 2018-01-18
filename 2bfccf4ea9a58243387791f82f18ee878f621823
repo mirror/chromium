@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "468673e0_65d2d7c8",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5744,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2018-01-18T20:24:52Z",
+      "side": 1,
+      "message": "This is hard to read. I would simply say:\n\nAppending a buffer with duration 4ms (much larger than previous buffers). This grows the fudge room to 8ms (2x 4ms). Expect that the first 3 ranges are retroactively merged.",
+      "range": {
+        "startLine": 5739,
+        "startChar": 4,
+        "endLine": 5744,
+        "endChar": 42
+      },
+      "revId": "2bfccf4ea9a58243387791f82f18ee878f621823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7541cc03_23c81e51",
         "filename": "media/filters/source_buffer_stream_unittest.cc",
         "patchSetId": 4
@@ -25,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "1162458f_7577124a",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5745,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2018-01-18T20:24:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7541cc03_23c81e51",
+      "range": {
+        "startLine": 5745,
+        "startChar": 2,
+        "endLine": 5745,
+        "endChar": 26
+      },
+      "revId": "2bfccf4ea9a58243387791f82f18ee878f621823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "211a5d36_657ab145",
         "filename": "media/filters/source_buffer_stream_unittest.cc",
         "patchSetId": 4
@@ -45,6 +92,30 @@
       "revId": "2bfccf4ea9a58243387791f82f18ee878f621823",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52edc79a_037b0e0d",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5769,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2018-01-18T20:24:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "211a5d36_657ab145",
+      "range": {
+        "startLine": 5769,
+        "startChar": 2,
+        "endLine": 5769,
+        "endChar": 32
+      },
+      "revId": "2bfccf4ea9a58243387791f82f18ee878f621823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3cf1bed_ac92c64e",
+        "filename": "media/filters/source_buffer_range_by_dts.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2018-01-18T20:24:52Z",
+      "side": 1,
+      "message": "I think this is confusing. \n\nWhen we discussed, the main motivation for adding the 1 microsecond was out of concern that TimeRanges would otherwise break. Thats not mentioned here.\n\nI wouldn\u0027t mention fudge room, nor GetApproximateDuration. The fact that this was used in the past seems to be just cruft. IMHO, folks should not have the impulse to use it now, so explaining away an impulse I don\u0027t have just confuses me. Zero duration is valid and we would use it as-is were it not for the TimeRanges concern.",
+      "range": {
+        "startLine": 439,
+        "startChar": 3,
+        "endLine": 443,
+        "endChar": 26
+      },
+      "revId": "fd54aa948f6202b860c3de432dd04866dc92f29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07073a5a_15eae286",
+        "filename": "media/filters/source_buffer_range_by_pts.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2018-01-18T20:24:52Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 491,
+        "startChar": 47,
+        "endLine": 494,
+        "endChar": 26
+      },
+      "revId": "fd54aa948f6202b860c3de432dd04866dc92f29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a97cf2f_8791364d",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1560,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2018-01-18T20:24:52Z",
+      "side": 1,
+      "message": "We should rename this to \"MergeWithNextRangeIfNecessary\"",
+      "range": {
+        "startLine": 1560,
+        "startChar": 4,
+        "endLine": 1560,
+        "endChar": 37
+      },
+      "revId": "fd54aa948f6202b860c3de432dd04866dc92f29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

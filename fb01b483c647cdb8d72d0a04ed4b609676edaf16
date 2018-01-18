@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e3dbf78_3e4b04fe",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2018-01-18T20:24:52Z",
+      "side": 0,
+      "message": "Just to confirm, this test is deleted is expecting the opposite of the new behavior? I.e. - we now desire \"inconsistent range adjacency determination\" - if the fudge room grows we want to retroactively consider ranges to be adjacent.",
+      "range": {
+        "startLine": 1315,
+        "startChar": 48,
+        "endLine": 1316,
+        "endChar": 34
+      },
+      "revId": "fb01b483c647cdb8d72d0a04ed4b609676edaf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
