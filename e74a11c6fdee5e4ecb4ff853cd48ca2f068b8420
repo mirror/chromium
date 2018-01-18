@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c679ce6_de44593e",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-18T22:39:41Z",
+      "side": 1,
+      "message": "went with \u0027UI Refresh Phase 1\u0027",
+      "parentUuid": "95618795_923f7a70",
+      "revId": "e74a11c6fdee5e4ecb4ff853cd48ca2f068b8420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b68ca2ef_271a8e7a",
         "filename": "ios/chrome/browser/ui/main/main_feature_flags.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "e74a11c6fdee5e4ecb4ff853cd48ca2f068b8420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c39f97c_2874250b",
+        "filename": "ios/chrome/browser/ui/main/main_feature_flags.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-18T22:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b68ca2ef_271a8e7a",
+      "revId": "e74a11c6fdee5e4ecb4ff853cd48ca2f068b8420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
