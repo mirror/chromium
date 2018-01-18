@@ -270,6 +270,355 @@
     },
     {
       "key": {
+        "uuid": "7c16c88a_efb2b09b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-from-nested-frame.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "s/str/code/",
+      "range": {
+        "startLine": 15,
+        "startChar": 28,
+        "endLine": 15,
+        "endChar": 31
+      },
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "466f55de_8177efbc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-from-nested-frame.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "nit: As I mentioned elsewhere, it might make sense to move these testing constants into credential-helpers.js.",
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c8c002_5741adfc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-from-nested-frame.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "nit: let",
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "343bb047_9f421702",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-from-nested-frame.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "nit: Add comment:\n\nLoad the content we want to inject into the nested frames below into \n|templateFrame| so that we don\u0027t have to use string literals here.",
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90f7179_52472a54",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-from-nested-frame.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "s//about:blank/",
+      "range": {
+        "startLine": 102,
+        "startChar": 51,
+        "endLine": 102,
+        "endChar": 60
+      },
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c86a146_811dd794",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-from-nested-frame.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "bypass has the \"go around\" connotation, let\u0027s use `pass`",
+      "range": {
+        "startLine": 118,
+        "startChar": 107,
+        "endLine": 118,
+        "endChar": 113
+      },
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee654dd_24a14d8e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-origins.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "Will this set rpID to \"\" or null? The former should not succeed.",
+      "range": {
+        "startLine": 106,
+        "startChar": 14,
+        "endLine": 106,
+        "endChar": 16
+      },
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753ebb76_5f4761d5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-origins.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "nit: Can this be http only?",
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4e6f3e_629f9775",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-origins.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "Consider using EventWatcher to avoid having to create a Promise by hand? Same below.",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 31
+      },
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937524c3_07b57141",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/credential-helpers.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "global nit: use UPPER_CASE for constants, and lowerCamelCase for non-constants.",
+      "range": {
+        "startLine": 149,
+        "startChar": 4,
+        "endLine": 149,
+        "endChar": 17
+      },
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a5b56b_2103771e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/nested-mock-authenticator-client.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "nit: Can be omitted.",
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3f8b04_1b1b3027",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/nested-mock-authenticator-client.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "Possibly you could define this as a constant in the -helper.js (possibly have FOO and BAR ids for testing), and then the parent can just use that very same value and you don\u0027t have to reference the parent here.",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 63
+      },
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3156dfa5_a781c2c0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/publickey-create-helper.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "nit: What\u0027s the difference between this and the nested-mock-auth-client? Can we merge these two somehow?",
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ccd5c9_f1471352",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/publickey-create-helper.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "nit: Add \u003c!DOCTYPE HTML\u003e.",
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f26bf72_7ab5052e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/publickey-create-helper.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "nit: u-\u003equeryParams\nnit: new_id-\u003erelyingPartyId",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 10
+      },
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5ffd0c_25acb116",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/publickey-create-helper.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "global nit: lowerCamelCase for variable names in JS.",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ec0933_395b6758",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/publickey-create-helper.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-18T12:15:22Z",
+      "side": 1,
+      "message": "nit: wrap before .then, and indent both .then and .catch by 2 spaces",
+      "range": {
+        "startLine": 21,
+        "startChar": 61,
+        "endLine": 21,
+        "endChar": 68
+      },
+      "revId": "d19bf468969d464e7fd0e7028f29a6219c0981d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f32f3f02_fd1e19d3",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 14
