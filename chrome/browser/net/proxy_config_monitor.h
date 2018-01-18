@@ -12,7 +12,7 @@
 #include "content/public/common/proxy_config.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_ptr_set.h"
-#include "net/proxy/proxy_config_service.h"
+#include "net/proxy_resolution/proxy_config_service.h"
 
 namespace net {
 class ProxyConfig;

@@ -34,6 +34,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
+#include "chromeos/audio/cras_audio_handler.h"
 #include "components/prefs/pref_service.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/zoom/zoom_controller.h"
@@ -58,7 +59,6 @@
 #include "net/base/network_change_notifier.h"
 #include "net/url_request/url_fetcher.h"
 #include "ui/app_list/app_list_switches.h"
-#include "chromeos/audio/cras_audio_handler.h"
 
 using base::RecordAction;
 using base::UserMetricsAction;
