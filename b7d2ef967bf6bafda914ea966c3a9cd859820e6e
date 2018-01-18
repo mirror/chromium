@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1c826284_972abe4a",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-18T03:01:22Z",
+      "side": 1,
+      "message": "Ah, sorry, I misread. This does get initialized correctly.",
+      "parentUuid": "ee4371c9_495fd44f",
+      "revId": "b7d2ef967bf6bafda914ea966c3a9cd859820e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1d8eaab_59251a4d",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
         "patchSetId": 3
@@ -69,6 +87,23 @@
       "revId": "b7d2ef967bf6bafda914ea966c3a9cd859820e6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a20851ef_1548908f",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-18T03:01:22Z",
+      "side": 1,
+      "message": "Please DCHECK(source) after the if/else block computing its value.",
+      "revId": "b7d2ef967bf6bafda914ea966c3a9cd859820e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
