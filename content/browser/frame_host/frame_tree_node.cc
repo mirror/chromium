@@ -163,7 +163,8 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
       devtools_frame_token_(devtools_frame_token),
       frame_owner_properties_(frame_owner_properties),
       loading_progress_(kLoadingProgressNotStarted),
-      blame_context_(frame_tree_node_id_, parent) {
+      blame_context_(frame_tree_node_id_, parent),
+      was_user_activated_(false) {
   std::pair<FrameTreeNodeIdMap::iterator, bool> result =
       g_frame_tree_node_id_map.Get().insert(
           std::make_pair(frame_tree_node_id_, this));
@@ -637,6 +638,7 @@ void FrameTreeNode::BeforeUnloadCanceled() {
 void FrameTreeNode::OnSetHasReceivedUserGesture() {
   render_manager_.OnSetHasReceivedUserGesture();
   replication_state_.has_received_user_gesture = true;
+  was_user_activated_ = true;
 }
 
 void FrameTreeNode::OnSetHasReceivedUserGestureBeforeNavigation(bool value) {

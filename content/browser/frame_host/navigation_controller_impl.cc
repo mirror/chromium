@@ -786,8 +786,8 @@ void NavigationControllerImpl::LoadURLWithParams(const LoadURLParams& params) {
         base::TimeTicks() +
         base::TimeDelta::FromMilliseconds(params.intent_received_timestamp));
   }
-  entry->set_has_user_gesture(params.has_user_gesture);
 #endif
+  entry->set_has_user_gesture(params.has_user_gesture);
 
   switch (params.load_type) {
     case LOAD_TYPE_DEFAULT:

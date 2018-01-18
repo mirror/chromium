@@ -3277,7 +3277,7 @@ void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
   CommitNavigation(nullptr, mojom::URLLoaderClientEndpointsPtr(),
                    std::unique_ptr<StreamHandle>(), common_params,
                    RequestNavigationParams(), false, base::nullopt,
-                   base::UnguessableToken::Create() /* not traced */);
+                   base::UnguessableToken::Create() /* not traced */, false);
 }
 
 void RenderFrameHostImpl::Stop() {
@@ -3425,7 +3425,8 @@ void RenderFrameHostImpl::CommitNavigation(
     const RequestNavigationParams& request_params,
     bool is_view_source,
     base::Optional<SubresourceLoaderParams> subresource_loader_params,
-    const base::UnguessableToken& devtools_navigation_token) {
+    const base::UnguessableToken& devtools_navigation_token,
+    bool was_activated) {
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::CommitNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
                common_params.url.possibly_invalid_spec());
@@ -3450,7 +3451,8 @@ void RenderFrameHostImpl::CommitNavigation(
         ResourceResponseHead(), GURL(), common_params, request_params,
         mojom::URLLoaderClientEndpointsPtr(),
         /*subresource_loader_factories=*/base::nullopt,
-        /*controller_service_worker=*/nullptr, devtools_navigation_token);
+        /*controller_service_worker=*/nullptr, devtools_navigation_token,
+        was_activated);
     return;
   }
 
@@ -3579,7 +3581,8 @@ void RenderFrameHostImpl::CommitNavigation(
       head, body_url, common_params, request_params,
       std::move(url_loader_client_endpoints),
       std::move(subresource_loader_factories),
-      std::move(controller_service_worker_info), devtools_navigation_token);
+      std::move(controller_service_worker_info), devtools_navigation_token,
+      was_activated);
 
   // If a network request was made, update the Previews state.
   if (IsURLHandledByNetworkStack(common_params.url) &&

@@ -364,6 +364,9 @@ class CONTENT_EXPORT FrameTreeNode {
   // applied to the frame.
   void UpdateActiveSandboxFlags(blink::WebSandboxFlags sandbox_flags);
 
+  // Returns whether the frame received a user activation.
+  bool was_user_activated() const { return was_user_activated_; }
+
  private:
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessFeaturePolicyBrowserTest,
                            ContainerPolicyDynamic);
@@ -478,6 +481,10 @@ class CONTENT_EXPORT FrameTreeNode {
   // browser process activities to this node (when possible).  It is unrelated
   // to the core logic of FrameTreeNode.
   FrameTreeNodeBlameContext blame_context_;
+
+  // Whether the frame received a user activation. Used to carry information
+  // when navigating.
+  bool was_user_activated_;
 
   DISALLOW_COPY_AND_ASSIGN(FrameTreeNode);
 };

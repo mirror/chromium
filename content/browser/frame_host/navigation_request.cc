@@ -53,6 +53,7 @@
 #include "content/public/common/web_preferences.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
+#include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/base/url_util.h"
 #include "net/http/http_request_headers.h"
 #include "net/url_request/redirect_info.h"
@@ -198,6 +199,28 @@ void AddAdditionalRequestHeaders(
 // blink::SchemeRegistry::ShouldTreatURLSchemeAsLegacy.
 bool ShouldTreatURLSchemeAsLegacy(const GURL& url) {
   return url.SchemeIs(url::kFtpScheme) || url.SchemeIs(url::kGopherScheme);
+}
+
+bool ShouldPropagateUserActivation(const url::Origin& previous_origin,
+                                   const url::Origin& new_origin) {
+  if ((previous_origin.scheme() != "http" &&
+       previous_origin.scheme() != "https") ||
+      (new_origin.scheme() != "http" && new_origin.scheme() != "https")) {
+    return false;
+  }
+
+  if (previous_origin.host() == new_origin.host())
+    return true;
+
+  std::string previous_domain =
+      net::registry_controlled_domains::GetDomainAndRegistry(
+          previous_origin.host(),
+          net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES);
+  std::string new_domain =
+      net::registry_controlled_domains::GetDomainAndRegistry(
+          new_origin.host(),
+          net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES);
+  return !previous_domain.empty() && previous_domain == new_domain;
 }
 
 }  // namespace
@@ -1255,6 +1278,29 @@ void NavigationRequest::CommitNavigation() {
          navigation_handle_->IsSameDocument());
   DCHECK(!common_params_.url.SchemeIs(url::kJavaScriptScheme));
 
+  // A navigation is user activated if it contains a user gesture or the frame
+  // received a gesture and the navigation is renderer initiated. If the
+  // navigation is browser initiated, it has to come from the context menu.
+  // In all cases, the previous and new URLs have to match the
+  // `ShouldPropagateUserActivation` requirements (same eTLD+1).
+  bool was_activated = false;
+  if (ShouldPropagateUserActivation(
+          url::Origin::Create(frame_tree_node_->current_url()),
+          url::Origin::Create(navigation_handle_->GetURL())) &&
+      navigation_handle_->IsRendererInitiated() &&
+      frame_tree_node_->was_user_activated()) {
+    was_activated = true;
+  } else if (ShouldPropagateUserActivation(
+                 url::Origin::Create(navigation_handle_->GetReferrer().url),
+                 url::Origin::Create(navigation_handle_->GetURL()))) {
+    if (navigation_handle_->HasUserGesture() &&
+        navigation_handle_->IsRendererInitiated()) {
+      was_activated = true;
+    }
+    if (navigation_handle_->WasStartedFromContextMenu())
+      was_activated = true;
+  }
+
   // Retrieve the RenderFrameHost that needs to commit the navigation.
   RenderFrameHostImpl* render_frame_host =
       navigation_handle_->GetRenderFrameHost();
@@ -1268,7 +1314,8 @@ void NavigationRequest::CommitNavigation() {
   render_frame_host->CommitNavigation(
       response_.get(), std::move(url_loader_client_endpoints_),
       std::move(body_), common_params_, request_params_, is_view_source_,
-      std::move(subresource_loader_params_), devtools_navigation_token_);
+      std::move(subresource_loader_params_), devtools_navigation_token_,
+      was_activated);
 
   frame_tree_node_->ResetNavigationRequest(true, true);
 }

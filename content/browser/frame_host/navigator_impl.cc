@@ -1044,7 +1044,7 @@ void NavigatorImpl::RequestNavigation(
         nullptr,  // body
         scoped_request->common_params(), scoped_request->request_params(),
         scoped_request->is_view_source(), base::nullopt,
-        scoped_request->devtools_navigation_token());
+        scoped_request->devtools_navigation_token(), false);
     return;
   }
 

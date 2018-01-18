@@ -3057,7 +3057,8 @@ void RenderFrameImpl::CommitNavigation(
     mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
     mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info,
-    const base::UnguessableToken& devtools_navigation_token) {
+    const base::UnguessableToken& devtools_navigation_token,
+    bool was_activated) {
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
   // frame, but it was aborted, then ignore it.
   if (!browser_side_navigation_pending_ &&
@@ -3277,6 +3278,9 @@ void RenderFrameImpl::CommitNavigation(
       frame_->Load(request, load_type, item_for_history_navigation,
                    history_load_type, is_client_redirect,
                    devtools_navigation_token);
+
+      if (was_activated && frame_->GetProvisionalDocumentLoader())
+        frame_->GetProvisionalDocumentLoader()->SetUserActivated();
 
       // The load of the URL can result in this frame being removed. Use a
       // WeakPtr as an easy way to detect whether this has occured. If so, this
@@ -4049,17 +4053,6 @@ void RenderFrameImpl::DidCreateDocumentLoader(
     source_location.column_number =
         navigation_state->common_params().source_location->column_number;
     document_loader->SetSourceLocation(source_location);
-  }
-
-  // Mark the loader as user activated if started from a context menu and the
-  // URLs are matching the user activation persistence rules.
-  if (navigation_state->common_params().started_from_context_menu &&
-      WebDocumentLoader::ShouldPersistUserActivation(
-          WebSecurityOrigin(
-              url::Origin::Create(navigation_state->common_params().url)),
-          WebSecurityOrigin(url::Origin::Create(
-              navigation_state->common_params().referrer.url)))) {
-    document_loader->SetUserActivated();
   }
 
   // Create the serviceworker's per-document network observing object if it

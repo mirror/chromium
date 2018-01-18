@@ -546,7 +546,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
       const RequestNavigationParams& request_params,
       bool is_view_source,
       base::Optional<SubresourceLoaderParams> subresource_loader_params,
-      const base::UnguessableToken& devtools_navigation_token);
+      const base::UnguessableToken& devtools_navigation_token,
+      bool was_activated);
 
   // Indicates that a navigation failed and that this RenderFrame should display
   // an error page.
