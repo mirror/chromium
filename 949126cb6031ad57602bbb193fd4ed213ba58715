@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9524bd7_b25ec0bd",
+        "filename": "ash/system/tray/tray_background_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T01:36:24Z",
+      "side": 1,
+      "message": "Why/how does |clipping_window_| affect key-events/accelerators?",
+      "revId": "949126cb6031ad57602bbb193fd4ed213ba58715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
