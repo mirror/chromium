@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0fe487be_d6d4f07b",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-18T18:13:05Z",
+      "side": 1,
+      "message": "It turns out that the test doesn\u0027t actually need to know about StatusBubbleWindow, so I deleted the new header and added a getter that returns it as a regular NSWindow.",
+      "parentUuid": "19d7661b_b0822294",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "683823ef_5ba2f974",
         "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-18T03:09:19Z",
       "side": 1,
       "message": "I think this should \n\n // Appropriate comment.\n DCHECK(!statusBubbleParentWindow_);\n\nstatusBubbleParentWindow_ isn\u0027t retained, so there\u0027s no good guarantee it hasn\u0027t been dealloced. I think that guarantee instead comes from ~StatusBubbleMac() calling Detach before releasing its ref in its scoped_nsobject\u003cStatusBubbleWindow\u003e, so statusBubbleParentWindow_ should always be null when this dealloc is called.",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d535ce_7f53fdbe",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-18T18:13:05Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I agree with adding DCHECK here. There\u0027s no guarantee that statusBubbleParentWindow_ outlives this window, but that\u0027s similar to how delegates work: classes don\u0027t generally throw an error if they dealloc without their delegate(s) having been cleared; it\u0027s up to the delegate to either clear itself or release the delegating object first. Here, it should be fine for ~StatusBubbleMac() to not Detach, because StatusBubbleMac is owned by BrowserWindowController, which deletes it in windowWillClose: (while the window still exists).\n\nrsesek@, do you have any thoughts?",
+      "parentUuid": "683823ef_5ba2f974",
       "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "70fae8ce_c937a0f6",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-18T18:13:05Z",
+      "side": 1,
+      "message": "I\u0027m genuinely unsure if this magic is still needed, but I didn\u0027t want to fiddle with it in this change :/. I\u0027m in favor of switching the status bubble to MacViews, but not necessarily in a rush to do it ahead of MacViews browser.",
+      "parentUuid": "efffea5c_8416ecc5",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da1ba96f_171bd083",
         "filename": "chrome/browser/ui/cocoa/status_bubble_mac_testing.h",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54742bf_5cd4e13d",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac_testing.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-18T18:13:05Z",
+      "side": 1,
+      "message": "Ack (file is gone now).",
+      "parentUuid": "da1ba96f_171bd083",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8fb7d6ce_edbfc981",
+        "filename": "ui/base/test/cocoa_helper.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-18T18:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f4a97e8_0d618f4c",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d811c91_eef4cabe",
         "filename": "ui/base/test/cocoa_helper.mm",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a44855_d8fbef5d",
+        "filename": "ui/base/test/cocoa_helper.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-18T18:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d811c91_eef4cabe",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "17598be7_4b00177d",
+        "filename": "ui/base/test/cocoa_helper.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-18T18:13:05Z",
+      "side": 1,
+      "message": "I ended up deleting pretendIsVisible. #NoMoreLies.",
+      "parentUuid": "8674c10b_442322ee",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5f13157_7d848f8c",
         "filename": "ui/base/test/cocoa_helper.mm",
         "patchSetId": 11
@@ -135,6 +261,24 @@
       "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7faac74a_acd94d4e",
+        "filename": "ui/base/test/cocoa_helper.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-18T18:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5f13157_7d848f8c",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
