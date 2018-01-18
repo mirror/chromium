@@ -93,6 +93,30 @@
       "revId": "d0eaa3996672df6ef51c0b679c0b12bad096df25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c25154_0e7fe20e",
+        "filename": "base/time/time_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-18T06:51:15Z",
+      "side": 1,
+      "message": "Hmm...I was thinking something more simple, that would run in the existing base_unittests infrastructure for Android. Could you do something like this: https://cs.chromium.org/chromium/src/base/android/jni_android_unittest.cc \n\nBased on that, perhaps this would work:\n\n#include \"base/android/jni_android.h\"\n\n// NOTE: inside namespace base::android...\n\nTEST(TimeTicks, Android_FromUptimeMillis_ClocksMatch) {\n  JNIEnv* const env \u003d AttachCurrentThread();\n  ScopedJavaLocalRef\u003cjclass\u003e clazz(GetClass(env, \"android/os/SystemClock\"));\n  const jmethodID method_id \u003d MethodID::Get(env, clazz, \"uptimeMillis\", \"()L\");\n  CHECK(method_id);\n\n  const TimeTicks lower_bound_ticks \u003d TimeTicks::Now();\n  const TimeTicks converted_ticks \u003d\n      TimeTicks::FromUptimeMillis(env-\u003eCallStaticLongMethod(clazz, method_id));\n  const TimeTicks upper_bound_ticks \u003d TimeTicks::Now();\n  EXPECT_LE(lower_bound_ticks, converted_ticks);\n  EXPECT_GE(upper_bound_ticks, converted_ticks);\n}",
+      "parentUuid": "f05d2650_b676f8fa",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 69
+      },
+      "revId": "d0eaa3996672df6ef51c0b679c0b12bad096df25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
