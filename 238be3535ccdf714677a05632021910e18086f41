@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca0ee0de_1a22cbec",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T02:08:12Z",
+      "side": 1,
+      "message": "Let\u0027s put this feature in extensions/common/extension_features",
+      "revId": "238be3535ccdf714677a05632021910e18086f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f6176f_83955b14",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T02:08:12Z",
+      "side": 1,
+      "message": "I don\u0027t quite grok this section, so I\u0027ll leave it to Josh/Sorin.",
+      "revId": "238be3535ccdf714677a05632021910e18086f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1130bc98_65db5250",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T02:08:12Z",
+      "side": 1,
+      "message": "we\u0027re looking up the data a bunch here; let\u0027s cache it.",
+      "revId": "238be3535ccdf714677a05632021910e18086f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
