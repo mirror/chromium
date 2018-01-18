@@ -34,6 +34,24 @@
       "revId": "949126cb6031ad57602bbb193fd4ed213ba58715",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ce375d_b750bb26",
+        "filename": "ash/system/tray/tray_background_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T03:37:01Z",
+      "side": 1,
+      "message": "Sounds like clipping_window_ is focusable (otherwise, it would not receive any key events). This should not be the case. (i.e. when clipping_window_ is created, it should have a delegate, which overrides CanFocus() to return false)",
+      "parentUuid": "032d84f4_cbe11775",
+      "revId": "949126cb6031ad57602bbb193fd4ed213ba58715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
