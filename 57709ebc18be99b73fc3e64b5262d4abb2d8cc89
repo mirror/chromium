@@ -45,6 +45,30 @@
       "revId": "57709ebc18be99b73fc3e64b5262d4abb2d8cc89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15bc2223_a43782fd",
+        "filename": "chrome/android/java/res/layout/accept_languages_item.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2018-01-18T04:03:37Z",
+      "side": 1,
+      "message": "As we discussed, set to 0 for main page and keep 16dp in add language page.",
+      "parentUuid": "bf5662c0_f2b5054d",
+      "range": {
+        "startLine": 45,
+        "startChar": 35,
+        "endLine": 45,
+        "endChar": 69
+      },
+      "revId": "57709ebc18be99b73fc3e64b5262d4abb2d8cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
