@@ -16,6 +16,24 @@
       "revId": "b4461fee62e2bc76dd314640f126cdcb1e2f2b61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6347db_1e6484e6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/xhr/xmlhttprequest-sync-default-feature-policy.sub.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-18T16:53:24Z",
+      "side": 1,
+      "message": "That\u0027s true, if open() throws a NetworkError, then this will pass. (It can\u0027t, currently, but it\u0027s conceivable that a bug might cause that to happen)\n\nI restructured to avoid this in https://crrev.com/c/874270 (added you as reviewer there)",
+      "parentUuid": "78ac9e65_2a918348",
+      "revId": "b4461fee62e2bc76dd314640f126cdcb1e2f2b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
