@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e65e141_284e9bf3",
+        "filename": "content/browser/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-18T02:33:23Z",
+      "side": 1,
+      "message": "Comparing to what Enterprise.Policies.* does in PolicyStatisticsCollector::Initialize(), they\u0027ve got some logic to save the last update time and only record metrics if the last update was more than 24 hours ago.  I\u0027m not convinced we need it too though - we\u0027ve already been recording our metrics once per startup, including when the same user restarted multiple times per day, and we should still be able to separate out unique users via \"count unique users per bucket\" on UMA for any given day.  WDYT?",
+      "revId": "b64506871b5d07b62c0dc4fa578f44a09a496678",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
