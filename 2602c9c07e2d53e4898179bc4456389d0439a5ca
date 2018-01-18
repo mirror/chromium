@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3655319f_13fac449",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-18T21:55:53Z",
+      "side": 1,
+      "message": "I think that would be reasonable, from the perspective of the API - if we cannot find an entry to update, it\u0027s an error (especially if we allow setting partial information - we might end up with an unexpected result); and the function already errors out in certain situations.\n\nThough, you might check with someone more familiar with the expectations of the UI.",
+      "parentUuid": "afcb8119_a5973d2e",
+      "revId": "2602c9c07e2d53e4898179bc4456389d0439a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56cabe70_6dac4dbc",
         "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
         "patchSetId": 8
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "f99bccf0_df54c651",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-18T21:55:53Z",
+      "side": 1,
+      "message": "Actually, autofill_private_api already has some API test :)\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/extensions/api/autofill_private/autofill_private_apitest.cc\nhttps://cs.chromium.org/chromium/src/chrome/test/data/extensions/api_test/autofill_private/test.js\n\nFrom my understanding, the issue is that updating address/credit card entry with partial information resets the rest of the entry information?\n\nMaybe you could add a API test that creates a credit card (address), then sets only a subset of the information, and finally verifies that the unset information was not cleared (you should be able to do all of that in autofill_provider/test.js).\n\nIf there is some info that is generally inaccessible from JS layer, you might do the first and the last step in C++ portiona of the test (i.e. before and after calling RunAutofillSubtest)",
+      "parentUuid": "25a5cc3a_d99b8f3a",
+      "revId": "2602c9c07e2d53e4898179bc4456389d0439a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6590a30_a81ba210",
         "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
         "patchSetId": 8
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "In this case checking if the guid is empty should give the same result but would maybe be more clear?\n\nSince we are in the settings, it should almost never happen that an existing card gets deleted while the user is editing it. Maybe some late sync from another chrome? In any case, UpdateCreditCard will return without doing anything if it cannot find.",
       "parentUuid": "e6590a30_a81ba210",
+      "revId": "2602c9c07e2d53e4898179bc4456389d0439a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d7844e_4e8658f7",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-18T21:55:53Z",
+      "side": 1,
+      "message": "yeah, but it would be more readable to remember before hand whether the entry is new or not, and check that here.",
+      "parentUuid": "4ac9ccb3_df6fefb0",
       "revId": "2602c9c07e2d53e4898179bc4456389d0439a5ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
