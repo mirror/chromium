@@ -23,8 +23,7 @@
 
   do {
     nextEvent = [[self window]
-        nextEventMatchingMask:NSRightMouseDraggedMask |
-                              NSRightMouseUpMask];
+        nextEventMatchingMask:NSRightMouseDraggedMask | NSRightMouseUpMask];
 
     mouseInBounds = NSPointInRect(
         [self convertPoint:[nextEvent locationInWindow] fromView:nil],
