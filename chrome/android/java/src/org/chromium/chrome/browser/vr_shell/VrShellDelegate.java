@@ -50,6 +50,9 @@ import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.help.HelpAndFeedback;
 import org.chromium.chrome.browser.infobar.InfoBarIdentifier;
 import org.chromium.chrome.browser.infobar.SimpleConfirmInfoBarBuilder;
+import org.chromium.chrome.browser.modaldialog.AppModalPresenter;
+import org.chromium.chrome.browser.modaldialog.ModalDialogManager;
+import org.chromium.chrome.browser.modaldialog.VrModalPresenter;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.webapps.WebappActivity;
@@ -175,6 +178,9 @@ public class VrShellDelegate
     // Gets run when the user exits VR mode by clicking the 'x' button or system UI back button.
     private Runnable mCloseButtonListener;
 
+    private FrameLayout mUiView;
+    private VrDialog mDialog;
+
     private static final class VrBroadcastReceiver extends BroadcastReceiver {
         private final WeakReference<ChromeActivity> mTargetActivity;
 
@@ -280,6 +286,44 @@ public class VrShellDelegate
     public static boolean isInVr() {
         if (sInstance == null) return false;
         return sInstance.mInVr;
+    }
+
+    /**
+     * Set View for the Dialog that should show up on top of the main content.
+     */
+    public static void setDialogView(VrDialog dialog, View view) {
+        if (sInstance == null) return;
+        if (view != null) {
+            sInstance.mUiView.addView(view);
+            sInstance.mDialog = dialog;
+        } else {
+            sInstance.mUiView.removeAllViews();
+        }
+        sInstance.mVrShell.setDialogView(view);
+    }
+
+    /**
+     * Close the popup Dialog in VR.
+     */
+    public static void closeVrDialog() {
+        if (sInstance == null) return;
+        sInstance.nativeCloseAlertDialog(sInstance.mNativeVrShellDelegate);
+    }
+
+    /**
+     * Set size of the Dialog in VR.
+     */
+    public static void setDialogSize(int width, int height) {
+        if (sInstance == null) return;
+        sInstance.nativeSetAlertDialogSize(sInstance.mNativeVrShellDelegate, width, height);
+    }
+
+    /**
+     * Initialize the Dialog in VR.
+     */
+    public static void initVrDialog(long delegate, int width, int height) {
+        if (sInstance == null) return;
+        sInstance.nativeAddAlertDialog(sInstance.mNativeVrShellDelegate, delegate, width, height);
     }
 
     /**
@@ -812,6 +856,13 @@ public class VrShellDelegate
             mVrDaydreamApi.launchVrHomescreen();
             return;
         }
+
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.VR_BROWSING_NATIVE_ANDROID_UI)) {
+            mActivity.getModalDialogManager().cancelAllDialogs();
+            mActivity.setModalDialogManager(new ModalDialogManager(
+                    new VrModalPresenter(mActivity), ModalDialogManager.APP_MODAL));
+        }
+
         mExitedDueToUnsupportedMode = false;
 
         addVrViews();
@@ -1433,7 +1484,17 @@ public class VrShellDelegate
 
         if (!mInVr) return;
         mInVr = false;
-
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.VR_BROWSING_NATIVE_ANDROID_UI)) {
+            closeVrDialog();
+            mActivity.getModalDialogManager().cancelAllDialogs();
+            mActivity.setModalDialogManager(new ModalDialogManager(
+                    new AppModalPresenter(mActivity), ModalDialogManager.APP_MODAL));
+            if (mDialog != null) {
+                mDialog.dismiss();
+                mDialog = null;
+            }
+            setDialogView(null, null);
+        }
         if (mShowingDaydreamDoff) {
             onExitVrResult(true);
             return;
@@ -1670,6 +1731,8 @@ public class VrShellDelegate
         LayoutParams params = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
+        mUiView = new FrameLayout(decor.getContext());
+        decor.addView(mUiView, params);
         decor.addView(mVrShell.getContainer(), params);
         mActivity.onEnterVr();
     }
@@ -1678,6 +1741,7 @@ public class VrShellDelegate
         mVrShell.onBeforeWindowDetached();
         mActivity.onExitVr();
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
+        decor.removeView(mUiView);
         decor.removeView(mVrShell.getContainer());
     }
 
@@ -1778,6 +1842,11 @@ public class VrShellDelegate
     private native void nativeOnResume(long nativeVrShellDelegate);
     private native boolean nativeIsClearActivatePending(long nativeVrShellDelegate);
     private native void nativeDestroy(long nativeVrShellDelegate);
+    private static native void nativeCloseAlertDialog(long nativeVrShellDelegate);
+    private static native void nativeAddAlertDialog(
+            long nativeVrShellDelegate, long delegate, int width, int height);
+    private static native void nativeSetAlertDialogSize(
+            long nativeVrShellDelegate, int width, int height);
     private static native void nativeRegisterVrAssetsComponent();
     private static native void nativeOnChromeStarted();
 }

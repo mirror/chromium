@@ -26,6 +26,7 @@ class GlBrowserInterface {
   virtual void GvrDelegateReady(
       gvr::ViewerType viewer_type,
       device::mojom::VRDisplayFrameTransportOptionsPtr) = 0;
+  virtual void UiSurfaceChanged(jobject surface) = 0;
   virtual void UpdateGamepadData(device::GvrGamepadData) = 0;
   virtual void ForceExitVr() = 0;
   virtual void OnContentPaused(bool enabled) = 0;

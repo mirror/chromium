@@ -262,6 +262,31 @@ void VrShellDelegate::OnListeningForActivateChanged(bool listening) {
   }
 }
 
+void VrShellDelegate::AddAlertDialog(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj,
+    // vr::ContentInputDelegate* delegate,
+    jlong delegate,
+    int width,
+    int height) {
+  vr_shell_->ShowAlertDialog(
+      reinterpret_cast<vr::ContentInputDelegate*>(delegate), width, height);
+}
+
+void VrShellDelegate::CloseAlertDialog(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj) {
+  vr_shell_->CloseAlertDialog();
+}
+
+void VrShellDelegate::SetAlertDialogSize(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj,
+    int width,
+    int height) {
+  vr_shell_->SetAlertDialogSize(width, height);
+}
+
 void VrShellDelegate::SetListeningForActivate(bool listening) {
   clear_activate_task_.Cancel();
   JNIEnv* env = AttachCurrentThread();

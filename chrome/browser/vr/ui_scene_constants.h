@@ -195,6 +195,10 @@ static constexpr float kTimeoutButtonTextWidthDMM = 0.058f;
 static constexpr float kTimeoutButtonTextHeightDMM = 0.024f;
 static constexpr float kTimeoutButtonTextVerticalOffsetDMM = 0.024f;
 
+static constexpr float kHostedDialogHeightRatio = 0.6f;
+static constexpr float kHostedDialogWidthRatio = 0.6f;
+static constexpr float kHostedDialogDepthOffset = 0.3f;
+
 static constexpr float kScreenDimmerOpacity = 0.9f;
 
 static constexpr gfx::Point3F kOrigin = {0.0f, 0.0f, 0.0f};

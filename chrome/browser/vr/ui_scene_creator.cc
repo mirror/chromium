@@ -412,6 +412,7 @@ void UiSceneCreator::CreateScene() {
   CreateBackground();
   CreateViewportAwareRoot();
   CreateContentQuad();
+  CreateHostedDialog();
   CreateExitPrompt();
   CreateAudioPermissionPrompt();
   CreateSystemIndicators();
@@ -427,6 +428,61 @@ void UiSceneCreator::CreateScene() {
   CreateWebVrSubtree();
   CreateKeyboard();
   CreateController();
+}
+
+void UiSceneCreator::CreateHostedDialog() {
+  auto backplane = std::make_unique<InvisibleHitTarget>();
+  backplane->SetDrawPhase(kPhaseForeground);
+  backplane->SetName(kHostedDialogBackplane);
+  backplane->SetSize(kPromptBackplaneSize, kPromptBackplaneSize);
+  backplane->SetTranslate(0.0,
+                          kContentVerticalOffset + kExitPromptVerticalOffset,
+                          -kContentDistance);
+  backplane->AddBinding(VR_BIND_FUNC(bool, Model, model_,
+                                     model->native_ui.alert_dialog_enabled,
+                                     UiElement, backplane.get(), SetVisible));
+
+  std::unique_ptr<ContentElement> hosted_dialog =
+      std::make_unique<ContentElement>(content_input_delegate_,
+                                       base::Bind([](const gfx::SizeF&) {}));
+  hosted_dialog->SetName(k2dDialog);
+  hosted_dialog->SetDrawPhase(kPhaseForeground);
+  hosted_dialog->SetSize(kContentWidth * kHostedDialogWidthRatio,
+                         kContentHeight * kHostedDialogHeightRatio);
+  hosted_dialog->SetVisible(false);
+  hosted_dialog->set_requires_layout(false);
+  hosted_dialog->set_corner_radius(kContentCornerRadius);
+  hosted_dialog->SetTransitionedProperties({BOUNDS});
+  hosted_dialog->SetTranslate(0, 0, kHostedDialogDepthOffset);
+
+  hosted_dialog->AddBinding(VR_BIND_FUNC(
+      ContentInputDelegatePtr, Model, model_, model->native_ui.delegate,
+      ContentElement, hosted_dialog.get(), SetDelegate));
+  hosted_dialog->AddBinding(VR_BIND_FUNC(unsigned int, Model, model_,
+                                         model->ui_texture_id, ContentElement,
+                                         hosted_dialog.get(), SetTextureId));
+  hosted_dialog->AddBinding(std::make_unique<Binding<bool>>(
+      base::Bind([](Model* m) { return m->native_ui.alert_dialog_enabled; },
+                 base::Unretained(model_)),
+      base::Bind(
+          [](ContentElement* dialog, const bool& enabled) {
+            dialog->SetVisible(enabled);
+            dialog->set_requires_layout(enabled);
+            dialog->set_hit_testable(enabled);
+          },
+          base::Unretained(hosted_dialog.get()))));
+
+  hosted_dialog->AddBinding(std::make_unique<Binding<float>>(
+      base::Bind([](Model* m) { return m->native_ui.size_ratio; },
+                 base::Unretained(model_)),
+      base::Bind(
+          [](ContentElement* dialog, const float& value) {
+            dialog->SetSize(kContentWidth * kHostedDialogWidthRatio,
+                            kContentWidth * kHostedDialogWidthRatio * value);
+          },
+          base::Unretained(hosted_dialog.get()))));
+  backplane->AddChild(std::move(hosted_dialog));
+  scene_->AddUiElement(k2dBrowsingRoot, std::move(backplane));
 }
 
 void UiSceneCreator::Create2dBrowsingSubtreeRoots() {
