@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "174771cd_5c4b7f57",
+        "filename": "chrome/common/media_router/media_source_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T17:44:02Z",
+      "side": 1,
+      "message": "Do we need this to specifically filter for legacy URLs?  Or can we just have IsCastPresentationURL?",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8daaf0b_f34d739a",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T17:44:02Z",
+      "side": 1,
+      "message": "Are these the capabilities *required* for the device to support the app?  Can this be required_capabilities and the comment updated to reflect that?",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a0aa8f_2ccfdc1e",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T17:44:02Z",
+      "side": 1,
+      "message": "Document this please",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3015a6fd_795fd9c7",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T17:44:02Z",
+      "side": 1,
+      "message": "When would a media source have multiple app ids?",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba96162_d9d0a992",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-18T17:44:02Z",
+      "side": 1,
+      "message": "What is a broadcast request?  How is it related to launching a Cast application by id?",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
