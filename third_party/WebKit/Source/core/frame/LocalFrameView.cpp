@@ -3187,7 +3187,6 @@ void LocalFrameView::UpdateLifecyclePhasesInternal(
         layout_view->Compositor()->UpdateIfNeededRecursive(target_state);
       } else {
         ForAllNonThrottledLocalFrameViews([](LocalFrameView& frame_view) {
-          frame_view.GetLayoutView()->Layer()->UpdateDescendantDependentFlags();
           frame_view.GetLayoutView()->CommitPendingSelection();
         });
       }

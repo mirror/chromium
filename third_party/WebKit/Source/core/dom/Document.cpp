@@ -203,6 +203,7 @@
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/page/scrolling/SnapCoordinator.h"
 #include "core/page/scrolling/TopDocumentRootScrollerController.h"
+#include "core/paint/PaintLayer.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
 #include "core/policy/DocumentPolicy.h"
 #include "core/probe/CoreProbes.h"
@@ -2185,6 +2186,8 @@ void Document::UpdateStyleAndLayoutTree() {
   UpdateStyle();
 
   NotifyLayoutTreeOfSubtreeChanges();
+
+  View()->Layer()->UpdateDescendantDependentFlags();
 
   // As a result of the style recalculation, the currently hovered element might
   // have been detached (for example, by setting display:none in the :hover
