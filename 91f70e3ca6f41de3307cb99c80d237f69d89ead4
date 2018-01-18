@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ed07525_f139941a",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-18T23:28:32Z",
+      "side": 1,
+      "message": "Apparently this happens in some of the tests, where the navigation_handle doesn\u0027t get set in time for the headers to be set.  The NavigationThrottle documentation says that WillProcessResponse will only be called with then headers are ready, but so I assume this only happens in tests, but I\u0027m really not sure at this point...reaching out to a few people so I can figure this out and write the appropriate comment here.",
+      "revId": "91f70e3ca6f41de3307cb99c80d237f69d89ead4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
