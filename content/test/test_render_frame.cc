@@ -142,7 +142,7 @@ void TestRenderFrame::Navigate(const CommonNavigationParams& common_params,
                    request_params, mojom::URLLoaderClientEndpointsPtr(),
                    URLLoaderFactoryBundle(),
                    mojom::ControllerServiceWorkerInfoPtr(),
-                   base::UnguessableToken::Create());
+                   base::UnguessableToken::Create(), false);
 }
 
 void TestRenderFrame::SwapOut(

@@ -84,7 +84,8 @@ interface FrameNavigationControl {
       URLLoaderClientEndpoints? url_loader_client_endpoints,
       URLLoaderFactoryBundle? subresource_loader_factories,
       ControllerServiceWorkerInfo? controller_service_worker_info,
-      mojo.common.mojom.UnguessableToken devtools_navigation_token);
+      mojo.common.mojom.UnguessableToken devtools_navigation_token,
+      bool was_activated);
 
   // Tells the renderer that a failed navigation is ready to commit.
   //
