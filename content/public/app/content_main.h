@@ -30,7 +30,11 @@ struct SandboxInterfaceInfo;
 }
 
 namespace content {
+class BrowserMainParts;
+
 class ContentMainDelegate;
+
+using PostMainLoopInitClosure = base::Callback<void(BrowserMainParts*)>;
 
 struct ContentMainParams {
   explicit ContentMainParams(ContentMainDelegate* delegate)
@@ -52,6 +56,8 @@ struct ContentMainParams {
   // Used by browser_tests. If non-null BrowserMain schedules this task to run
   // on the MessageLoop. It's owned by the test code.
   base::Closure* ui_task = nullptr;
+
+  PostMainLoopInitClosure* post_main_loop_init_closure = nullptr;
 
 #if defined(USE_AURA)
   aura::Env::Mode env_mode = aura::Env::Mode::LOCAL;

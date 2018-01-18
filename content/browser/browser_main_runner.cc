@@ -95,6 +95,9 @@ class BrowserMainRunnerImpl : public BrowserMainRunner {
 
       main_loop_->Init();
 
+      if (parameters.post_main_loop_init_closure)
+        parameters.post_main_loop_init_closure->Run(main_loop_->parts());
+
       const int early_init_error_code = main_loop_->EarlyInitialization();
       if (early_init_error_code > 0)
         return early_init_error_code;
