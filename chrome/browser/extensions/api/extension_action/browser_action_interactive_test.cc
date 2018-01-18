@@ -132,14 +132,23 @@ class BrowserActionInteractiveTest : public ExtensionApiTest {
   }
 
   // Open an extension popup via the chrome.browserAction.openPopup API.
-  void OpenPopupViaAPI() {
+  // If |will_reply| is true, then the listener is responsible for having a
+  // test message listener that replies to the extension. Otherwise, this
+  // method will in order to avoid leaking an API function while waiting for
+  // a reply.
+  void OpenPopupViaAPI(bool will_reply) {
     // Setup the notification observer to wait for the popup to finish loading.
     content::WindowedNotificationObserver frame_observer(
         content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME,
         content::NotificationService::AllSources());
+    std::unique_ptr<ExtensionTestMessageListener> listener;
+    if (!will_reply)
+      listener = std::make_unique<ExtensionTestMessageListener>("ready", false);
     // Show first popup in first window and expect it to have loaded.
     ASSERT_TRUE(RunExtensionSubtest("browser_action/open_popup",
                                     "open_popup_succeeds.html")) << message_;
+    if (listener)
+      EXPECT_TRUE(listener->WaitUntilSatisfied());
     frame_observer.Wait();
     EnsurePopupActive();
   }
@@ -203,7 +212,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest, TestOpenPopup) {
   // Setup extension message listener to wait for javascript to finish running.
   ExtensionTestMessageListener listener("ready", true);
   {
-    OpenPopupViaAPI();
+    OpenPopupViaAPI(true);
     EXPECT_TRUE(browserActionBar.HasPopup());
     browserActionBar.HidePopup();
   }
@@ -329,7 +338,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest,
   if (!ShouldRunPopupTest())
     return;
 
-  OpenPopupViaAPI();
+  OpenPopupViaAPI(false);
   ExtensionService* service = extensions::ExtensionSystem::Get(
       browser()->profile())->extension_service();
   ASSERT_FALSE(
@@ -346,7 +355,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest,
 IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest, FocusLossClosesPopup1) {
   if (!ShouldRunPopupTest())
     return;
-  OpenPopupViaAPI();
+  OpenPopupViaAPI(false);
   ClosePopupViaFocusLoss();
 }
 
@@ -374,7 +383,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest, TabSwitchClosesPopup) {
   ASSERT_EQ(2, browser()->tab_strip_model()->count());
   EXPECT_EQ(browser()->tab_strip_model()->GetWebContentsAt(1),
             browser()->tab_strip_model()->GetActiveWebContents());
-  OpenPopupViaAPI();
+  OpenPopupViaAPI(false);
 
   content::WindowedNotificationObserver observer(
       extensions::NOTIFICATION_EXTENSION_HOST_DESTROYED,
@@ -392,7 +401,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest,
     return;
 
   // First, we open a popup.
-  OpenPopupViaAPI();
+  OpenPopupViaAPI(false);
   BrowserActionTestUtil browser_action_test_util(browser());
   EXPECT_TRUE(browser_action_test_util.HasPopup());
 
@@ -449,7 +458,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest,
   if (!ShouldRunPopupTest())
     return;
 
-  OpenPopupViaAPI();
+  OpenPopupViaAPI(false);
   BrowserActionTestUtil test_util(browser());
   const gfx::NativeView view = test_util.GetPopupNativeView();
   EXPECT_NE(static_cast<gfx::NativeView>(NULL), view);
