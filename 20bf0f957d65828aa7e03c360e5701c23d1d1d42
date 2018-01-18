@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c10153a_e0a02588",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-18T05:57:07Z",
+      "side": 1,
+      "message": "nit: s/Element*/Element* const/\n\nTo avoid future change introduces multiple assignment.",
+      "revId": "20bf0f957d65828aa7e03c360e5701c23d1d1d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
