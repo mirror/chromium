@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3aab2536_b9e663de",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-18T20:51:30Z",
+      "side": 1,
+      "message": "If there is any resize queued it needs to happen.",
+      "parentUuid": "eab997f0_a2a0572d",
+      "revId": "94a57ca28a49e11278296c9969d37882d3101ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bd68002_539f9847",
         "filename": "ui/aura/test/window_event_dispatcher_test_api.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "94a57ca28a49e11278296c9969d37882d3101ea2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f5d1a0_a42f2015",
+        "filename": "ui/aura/test/window_event_dispatcher_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-18T20:51:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bd68002_539f9847",
+      "revId": "94a57ca28a49e11278296c9969d37882d3101ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "299c2723_6b7b4e32",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-18T20:51:30Z",
+      "side": 1,
+      "message": "Based on my understanding these are the only two places that we should call this method? I think it is possible to exit this method without having dispatched held_move_event_?",
+      "parentUuid": "3d15560c_953edc84",
+      "revId": "94a57ca28a49e11278296c9969d37882d3101ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d74214c_bd07bdb9",
         "filename": "ui/aura/window_event_dispatcher.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "94a57ca28a49e11278296c9969d37882d3101ea2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb03ddef_dd7b11b9",
+        "filename": "ui/aura/window_event_dispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-18T20:51:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d74214c_bd07bdb9",
+      "revId": "94a57ca28a49e11278296c9969d37882d3101ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
