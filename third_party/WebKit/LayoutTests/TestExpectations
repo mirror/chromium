@@ -2518,7 +2518,7 @@ crbug.com/787084 http/tests/security/contentSecurityPolicy/report-blocked-data-u
 
 crbug.com/702837 fast/text/aat-morx.html [ Skip ]
 
-crbug.com/688670 media/track/track-cue-rendering-after-controls-removed.html [ Pass Failure ]
+crbug.com/688670 external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-rendering-after-controls-removed.html [ Pass Failure ]
 
 crbug.com/664858 virtual/threaded/fast/scroll-behavior/overflow-scroll-animates.html [ Skip ]
 crbug.com/664858 virtual/threaded/fast/scroll-behavior/smooth-scroll/horizontal-smooth-scroll-in-rtl.html [ Skip ]
