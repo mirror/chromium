@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b68edd3_2083ae67",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-18T21:15:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fad36fe_2d4aaf8e",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "7570420a3b78ab0537419ac060763dc96bde1a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53f0d2be_eec0b4f4",
         "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "665db991_429264fd",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-18T21:15:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53f0d2be_eec0b4f4",
+      "range": {
+        "startLine": 5,
+        "startChar": 37,
+        "endLine": 5,
+        "endChar": 66
+      },
+      "revId": "7570420a3b78ab0537419ac060763dc96bde1a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c12558f_b4e1ce97",
         "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "7570420a3b78ab0537419ac060763dc96bde1a47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef2e5ce_5677da71",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-18T21:15:34Z",
+      "side": 1,
+      "message": "Done. For the initial tests I added in this CL a browserProxy is not needed yet, but I\u0027ll for sure need to add it in the follow-up CL to add more tests.",
+      "parentUuid": "7c12558f_b4e1ce97",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "7570420a3b78ab0537419ac060763dc96bde1a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
