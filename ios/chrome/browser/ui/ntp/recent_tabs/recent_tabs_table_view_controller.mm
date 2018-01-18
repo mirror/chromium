@@ -213,19 +213,6 @@ enum CellType {
                   action:@selector(handleLongPress:)];
   longPress.delegate = self;
   [self.tableView addGestureRecognizer:longPress];
-
-  [self.tableView addObserver:self
-                   forKeyPath:@"contentSize"
-                      options:0
-                      context:NULL];
-}
-
-- (void)observeValueForKeyPath:(NSString*)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary*)change
-                       context:(void*)context {
-  if ([keyPath isEqualToString:@"contentSize"])
-    [delegate_ recentTabsTableViewContentMoved:self.tableView];
 }
 
 - (SectionType)sectionType:(NSInteger)section {
@@ -415,12 +402,8 @@ enum CellType {
   ProceduralBlock openHistory = ^{
     [weakSelf.dispatcher showHistory];
   };
-  // Dismiss modal, if shown, and open history.
-  if (self.handsetCommandHandler) {
-    [self.handsetCommandHandler dismissRecentTabsWithCompletion:openHistory];
-  } else {
-    openHistory();
-  }
+  DCHECK(self.handsetCommandHandler);
+  [self.handsetCommandHandler dismissRecentTabsWithCompletion:openHistory];
 }
 
 #pragma mark - Handling of the collapsed sections.
@@ -996,12 +979,6 @@ enum CellType {
     return [RecentlyTabsTopSpacingHeader desiredHeightInUITableViewCell];
   }
   return 0;
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView*)scrollView {
-  [delegate_ recentTabsTableViewContentMoved:self.tableView];
 }
 
 #pragma mark - SigninPromoViewConsumer
