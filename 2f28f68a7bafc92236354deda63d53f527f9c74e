@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9414bbb_06b6ccd7",
+        "filename": "chrome/browser/chromeos/app_mode/kiosk_app_data.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-18T00:12:15Z",
+      "side": 1,
+      "message": "auto unpacker \u003d base::MakeRefCounted\u003cSandboxedUnpacker\u003e",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 41
+      },
+      "revId": "2f28f68a7bafc92236354deda63d53f527f9c74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92626471_f500f066",
+        "filename": "chrome/browser/chromeos/app_mode/kiosk_external_update_validator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-18T00:12:15Z",
+      "side": 1,
+      "message": "auto unpacker \u003d base::MakeRefCounted\u003cSandboxedUnpacker\u003e",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 39
+      },
+      "revId": "2f28f68a7bafc92236354deda63d53f527f9c74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8ba78d_9722a38f",
+        "filename": "extensions/browser/image_sanitizer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-18T00:12:15Z",
+      "side": 1,
+      "message": "Can you swap the order of these two parameters? It makes more sense for the last callback called to be the last one passed in.",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 49
+      },
+      "revId": "2f28f68a7bafc92236354deda63d53f527f9c74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97fcc6ac_10bddd71",
+        "filename": "extensions/browser/image_sanitizer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-18T00:12:15Z",
+      "side": 1,
+      "message": "Reduce spaces here as well.",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 53
+      },
+      "revId": "2f28f68a7bafc92236354deda63d53f527f9c74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714840f3_2343c305",
+        "filename": "extensions/browser/image_sanitizer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-18T00:12:15Z",
+      "side": 1,
+      "message": "ASSERT_TRUE(base::ContainsKey(*decoded_images(), path));",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 69
+      },
+      "revId": "2f28f68a7bafc92236354deda63d53f527f9c74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
