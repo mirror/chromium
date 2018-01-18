@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "95251248_dbffa23a",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-18T01:44:37Z",
+      "side": 1,
+      "message": "on the first profiling start and",
+      "range": {
+        "startLine": 823,
+        "startChar": 68,
+        "endLine": 823,
+        "endChar": 69
+      },
+      "revId": "84c326fecb96932f45e3104d35e43e59a475e6d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d5cd519_627208ae",
         "filename": "base/synchronization/waitable_event_win.cc",
         "patchSetId": 25
@@ -13,6 +36,30 @@
       "writtenOn": "2018-01-18T00:54:46Z",
       "side": 1,
       "message": "I am not sure how to handle this case. I am not able to find any documentation on how to get the reset policy from an event handle (either the raw handle in the windows world or the wrapped ScopedHandle). \n\nAny suggestions please?",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "84c326fecb96932f45e3104d35e43e59a475e6d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f97d0a_a80e4e48",
+        "filename": "base/synchronization/waitable_event_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-18T01:44:37Z",
+      "side": 1,
+      "message": "Unfortunately it seems we can\u0027t get a lot of useful information on the use of this function from code search since it doesn\u0027t index Windows builds.\n\nMaybe try testing a change that removes the function on the full suite of Windows bots? With the information on what breaks we should be able to better reason about how to address based on the users.",
+      "parentUuid": "1d5cd519_627208ae",
       "range": {
         "startLine": 35,
         "startChar": 6,
