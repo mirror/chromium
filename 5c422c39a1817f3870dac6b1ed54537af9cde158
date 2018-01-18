@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "949d8254_9f6d9b3f",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-18T01:50:20Z",
+      "side": 1,
+      "message": "This is no longer used.",
+      "revId": "5c422c39a1817f3870dac6b1ed54537af9cde158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56b9a95_a4073ed5",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-18T01:50:20Z",
+      "side": 1,
+      "message": "Following up on my previous comment, this was moved down, but much of this comment seems to apply to the entire if block. We are basically determining what is a real navigation and setting the two variables above only for real navigations. What being slightly off for these values is unclear, though.",
+      "revId": "5c422c39a1817f3870dac6b1ed54537af9cde158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d65a54_77dbb2bc",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 2492,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-18T01:50:20Z",
+      "side": 1,
+      "message": "while in XR",
+      "range": {
+        "startLine": 2492,
+        "startChar": 79,
+        "endLine": 2492,
+        "endChar": 80
+      },
+      "revId": "5c422c39a1817f3870dac6b1ed54537af9cde158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6dd47a_a11e24d9",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 2497,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-18T01:50:20Z",
+      "side": 1,
+      "message": "in XR",
+      "range": {
+        "startLine": 2497,
+        "startChar": 64,
+        "endLine": 2497,
+        "endChar": 65
+      },
+      "revId": "5c422c39a1817f3870dac6b1ed54537af9cde158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
