@@ -46,6 +46,30 @@
       "revId": "e66c12822ea1c6961230cb09ecb5765091c13e60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb44f8d0_84cc578f",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-18T01:09:53Z",
+      "side": 1,
+      "message": "focus doesn\u0027t tend to care about bounds but about the index (View::GetIndexOf, etc.)",
+      "parentUuid": "c4723bfa_ce5cddca",
+      "range": {
+        "startLine": 656,
+        "startChar": 6,
+        "endLine": 664,
+        "endChar": 12
+      },
+      "revId": "e66c12822ea1c6961230cb09ecb5765091c13e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
