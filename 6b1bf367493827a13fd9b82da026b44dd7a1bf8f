@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0753077_8646ec35",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-18T08:05:31Z",
+      "side": 1,
+      "message": "Will modify.",
+      "parentUuid": "4269b426_213784a3",
+      "revId": "6b1bf367493827a13fd9b82da026b44dd7a1bf8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1870275_b2e589a9",
         "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos_unittest.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-18T07:00:36Z",
       "side": 1,
       "message": "Can you rename this? Global variables are usually named g_foo.\n\nAlso, global non-PODs add static initializers. This would not be allowed in production code.",
+      "revId": "6b1bf367493827a13fd9b82da026b44dd7a1bf8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6904efd_8d14e3cb",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-18T08:05:31Z",
+      "side": 1,
+      "message": "Will change.",
+      "parentUuid": "e1870275_b2e589a9",
       "revId": "6b1bf367493827a13fd9b82da026b44dd7a1bf8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

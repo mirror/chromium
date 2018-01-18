@@ -16,6 +16,24 @@
       "revId": "cd1e6ab16c394b4c9de8501c5bb3d2cfcefa006a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc7ebaa_113dcdde",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-18T08:05:31Z",
+      "side": 0,
+      "message": "As we have the raw data in unittest file, so if want to check device_id, we need the same util functions such as GetStorageIdFromStorageName, etc.\nCan we move these util functions out the nameless namespace and put them in a \"storage_info_utils.h\", so the unit test and MediaTransferProtocolDeviceObserverChromeOS can both use them?",
+      "parentUuid": "851f2691_addfb92c",
+      "revId": "cd1e6ab16c394b4c9de8501c5bb3d2cfcefa006a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
