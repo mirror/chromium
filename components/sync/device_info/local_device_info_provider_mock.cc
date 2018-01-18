@@ -23,6 +23,10 @@ LocalDeviceInfoProviderMock::LocalDeviceInfoProviderMock(
       signin_scoped_device_id);
 }
 
+LocalDeviceInfoProviderMock::LocalDeviceInfoProviderMock(
+    std::unique_ptr<DeviceInfo> local_device_info)
+    : is_initialized_(true), local_device_info_(std::move(local_device_info)) {}
+
 LocalDeviceInfoProviderMock::~LocalDeviceInfoProviderMock() {}
 
 const DeviceInfo* LocalDeviceInfoProviderMock::GetLocalDeviceInfo() const {

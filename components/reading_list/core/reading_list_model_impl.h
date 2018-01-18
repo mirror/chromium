@@ -107,6 +107,9 @@ class ReadingListModelImpl : public ReadingListModel,
     DISALLOW_COPY_AND_ASSIGN(ScopedReadingListBatchUpdate);
   };
 
+  static std::unique_ptr<ReadingListModelStorage> DestroyAndStealStorageForTest(
+      std::unique_ptr<ReadingListModelImpl> model);
+
  protected:
   void EnteringBatchUpdates() override;
   void LeavingBatchUpdates() override;

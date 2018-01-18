@@ -255,10 +255,11 @@ base::Optional<syncer::ModelError> ReadingListStore::MergeSyncData(
       *(entity_data->specifics.mutable_reading_list()) = *entry_sync_pb;
       entity_data->non_unique_name = entry_sync_pb->entry_id();
 
-      // TODO(crbug.com/666232): Investigate if there is a risk of sync
-      // ping-pong.
-      change_processor()->Put(entry_sync_pb->entry_id(), std::move(entity_data),
-                              metadata_change_list.get());
+      if (specifics.SerializeAsString() != entry_sync_pb->SerializeAsString()) {
+        change_processor()->Put(entry_sync_pb->entry_id(),
+                                std::move(entity_data),
+                                metadata_change_list.get());
+      }
     }
   }
 
@@ -342,11 +343,12 @@ base::Optional<syncer::ModelError> ReadingListStore::ApplySyncChanges(
         *(entity_data->specifics.mutable_reading_list()) = *entry_sync_pb;
         entity_data->non_unique_name = entry_sync_pb->entry_id();
 
-        // TODO(crbug.com/666232): Investigate if there is a risk of sync
-        // ping-pong.
-        change_processor()->Put(entry_sync_pb->entry_id(),
-                                std::move(entity_data),
-                                metadata_change_list.get());
+        if (specifics.SerializeAsString() !=
+            entry_sync_pb->SerializeAsString()) {
+          change_processor()->Put(entry_sync_pb->entry_id(),
+                                  std::move(entity_data),
+                                  metadata_change_list.get());
+        }
       }
     }
   }
@@ -462,4 +464,8 @@ bool ReadingListStore::CompareEntriesForSync(
     }
   }
   return true;
+}
+
+std::unique_ptr<syncer::ModelTypeStore> ReadingListStore::StealStoreForTest() {
+  return std::move(store_);
 }

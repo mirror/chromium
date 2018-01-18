@@ -60,14 +60,11 @@ bool FakeModelTypeChangeProcessor::IsTrackingMetadata() {
   return true;
 }
 
-void FakeModelTypeChangeProcessor::ReportError(const ModelError& error) {
-  EXPECT_TRUE(expect_error_);
-  expect_error_ = false;
-}
-
 void FakeModelTypeChangeProcessor::ReportError(const base::Location& location,
                                                const std::string& message) {
-  ReportError(ModelError(location, message));
+  EXPECT_TRUE(expect_error_)
+      << " with error " << location.ToString() << ": " << message;
+  expect_error_ = false;
 }
 
 void FakeModelTypeChangeProcessor::ExpectError() {
