@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc632eac_c6a2fd86",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T19:35:46Z",
+      "side": 0,
+      "message": "Please don\u0027t forget to delete this file from internal repo.",
+      "range": {
+        "startLine": 47,
+        "startChar": 111,
+        "endLine": 47,
+        "endChar": 139
+      },
+      "revId": "90908ed0cd3c47c2b2f4467daf5fd40ac777b1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
