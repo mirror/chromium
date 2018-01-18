@@ -28,7 +28,7 @@ std::unique_ptr<AudioPostProcessor> PostProcessorFactory::CreatePostProcessor(
     const std::string& library_path,
     const std::string& config,
     int channels) {
-  libraries_.push_back(base::MakeUnique<base::ScopedNativeLibrary>(
+  libraries_.push_back(std::make_unique<base::ScopedNativeLibrary>(
       base::FilePath(library_path)));
   CHECK(libraries_.back()->is_valid())
       << "Could not open post processing library " << library_path;
