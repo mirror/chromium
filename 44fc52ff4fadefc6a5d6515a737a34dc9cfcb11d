@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ec67170_a70eda15",
+        "filename": "ui/gl/test/gl_image_test_support.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-18T16:59:48Z",
+      "side": 1,
+      "message": "It forces single-threaded execution via on-thread mojo.",
+      "parentUuid": "3c86a953_af88c7bd",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 68
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b427da6e_3820afee",
         "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-11T19:36:04Z",
       "side": 1,
       "message": "Can this be null? I may have missed a call site, but seemed like there would always be a callback.",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 21
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f2b0ac_a7feba26",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-18T16:59:48Z",
+      "side": 1,
+      "message": "Yes. Good catch. I\u0027d forgotten to clean this up from before I finished adding AfterSandboxEntry. So, made nicer.",
+      "parentUuid": "b427da6e_3820afee",
       "range": {
         "startLine": 88,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "801f0e6d_bbbfc8a3",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-18T16:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed6159a0_87e69307",
+      "range": {
+        "startLine": 111,
+        "startChar": 9,
+        "endLine": 111,
+        "endChar": 15
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8377803f_782f9f80",
         "filename": "ui/ozone/platform/drm/gpu/drm_thread.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555fada4_05d366ce",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-18T16:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8377803f_782f9f80",
+      "range": {
+        "startLine": 153,
+        "startChar": 20,
+        "endLine": 153,
+        "endChar": 36
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1441eaba_f8f170e9",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-18T16:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b7bfe93_c6f95995",
+      "range": {
+        "startLine": 86,
+        "startChar": 71,
+        "endLine": 86,
+        "endChar": 73
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dc20995_c354db7d",
         "filename": "ui/ozone/platform/drm/host/drm_device_connection.cc",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3a7576_08587ee0",
+        "filename": "ui/ozone/platform/drm/host/drm_device_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-18T16:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dc20995_c354db7d",
+      "range": {
+        "startLine": 49,
+        "startChar": 15,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "0e3709b9_688357a2",
+        "filename": "ui/ozone/platform/drm/host/drm_device_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-18T16:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e40a050_7ebcade7",
+      "range": {
+        "startLine": 54,
+        "startChar": 19,
+        "endLine": 54,
+        "endChar": 74
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c545d6d7_7cfc98e3",
         "filename": "ui/ozone/platform/drm/host/drm_device_connection.cc",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ed8a05_9b250a96",
+        "filename": "ui/ozone/platform/drm/host/drm_device_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-18T16:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c545d6d7_7cfc98e3",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 5
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "3c8cbc33_645d733a",
+        "filename": "ui/ozone/platform/drm/host/drm_device_connection.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-18T16:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6036da1f_3cfac3af",
+      "range": {
+        "startLine": 66,
+        "startChar": 1,
+        "endLine": 66,
+        "endChar": 2
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11a1cd0b_e4c1317a",
         "filename": "ui/ozone/public/ozone_switches.h",
         "patchSetId": 3
@@ -220,6 +436,30 @@
       "writtenOn": "2018-01-11T19:36:04Z",
       "side": 1,
       "message": "Is this used anywhere? I couldn\u0027t find a use case.",
+      "range": {
+        "startLine": 19,
+        "startChar": 36,
+        "endLine": 19,
+        "endChar": 50
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd819d37_d49a4adc",
+        "filename": "ui/ozone/public/ozone_switches.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-18T16:59:48Z",
+      "side": 1,
+      "message": "it\u0027s used in https://chromium-review.googlesource.com/c/chromium/src/+/861906 to enable the mojo path",
+      "parentUuid": "11a1cd0b_e4c1317a",
       "range": {
         "startLine": 19,
         "startChar": 36,
