@@ -64,7 +64,9 @@ namespace em = enterprise_management;
 
 using testing::AnyNumber;
 using testing::AtLeast;
+using testing::AtMost;
 using testing::Mock;
+using testing::SaveArg;
 using testing::_;
 
 namespace policy {
@@ -639,6 +641,51 @@ TEST_F(UserCloudPolicyManagerChromeOSTest,
   // away after the construction.
   MakeManagerWithPreloadedStore(0);
   EXPECT_TRUE(manager_->policies().Equals(expected_bundle_));
+}
+
+TEST_F(UserCloudPolicyManagerChromeOSTest, TestLifetimeReportingRegular) {
+  ASSERT_NO_FATAL_FAILURE(MakeManagerWithEmptyStore(1000));
+
+  store_->NotifyStoreLoaded();
+
+  em::DeviceManagementRequest register_request;
+
+  EXPECT_CALL(device_management_service_,
+              StartJob(dm_protocol::kValueRequestRegister, _, _, _, _, _))
+      .Times(AtMost(1))
+      .WillOnce(SaveArg<5>(&register_request));
+
+  MockDeviceManagementJob* register_job = IssueOAuthToken(false);
+  ASSERT_TRUE(register_job);
+  Mock::VerifyAndClearExpectations(&device_management_service_);
+  ASSERT_TRUE(register_request.has_register_request());
+  ASSERT_TRUE(register_request.register_request().has_lifetime());
+  ASSERT_EQ(register_request.register_request().lifetime(),
+            em::DeviceRegisterRequest::LIFETIME_INDEFINITE);
+}
+
+TEST_F(UserCloudPolicyManagerChromeOSTest, TestLifetimeReportingEphemeralUser) {
+  user_manager_->set_current_user_ephemeral(true);
+
+  ASSERT_NO_FATAL_FAILURE(MakeManagerWithEmptyStore(1000));
+
+  store_->NotifyStoreLoaded();
+
+  em::DeviceManagementRequest register_request;
+
+  EXPECT_CALL(device_management_service_,
+              StartJob(dm_protocol::kValueRequestRegister, _, _, _, _, _))
+      .Times(AtMost(1))
+      .WillOnce(SaveArg<5>(&register_request));
+
+  MockDeviceManagementJob* register_job = IssueOAuthToken(false);
+  ASSERT_TRUE(register_job);
+
+  Mock::VerifyAndClearExpectations(&device_management_service_);
+  ASSERT_TRUE(register_request.has_register_request());
+  ASSERT_TRUE(register_request.register_request().has_lifetime());
+  ASSERT_EQ(register_request.register_request().lifetime(),
+            em::DeviceRegisterRequest::LIFETIME_EPHEMERAL_USER);
 }
 
 }  // namespace policy
