@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30a4d443_9c409468",
+        "filename": "services/network/public/interfaces/network_service.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T21:57:20Z",
+      "side": 1,
+      "message": "It seems more consistent to use the path relatvie to src root, WDYT? (This and other mojom files)",
+      "revId": "47a1c4f558ea7f5b4a412ef9140837c472232022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
