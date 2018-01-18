@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f462d98_7d49570b",
+        "filename": "chrome/test/data/webui/settings/cr_settings_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T17:46:43Z",
+      "side": 1,
+      "message": "Not sure this is the best approach to fix the test.\n\n1) This is enabling the feature for all Settings tests, when it only needs to be enabled for CrSiteDetailsTests at https://cs.chromium.org/chromium/src/chrome/test/data/webui/settings/cr_settings_browsertest.js?l\u003d882.\n\n2) The feature on/off is reflected in the UI by a loadTimeData |enableSafeBrowsingSubresourceFilter| boolean defined at [1]. This boolean is directly manipulated in the test to achieve the desired result, without relying on the C++ sending a particular value, see  [2]. So it is unclear why we both need to enable the feature on the C++ side, when the test already fakes the enabled/disabled status of the feature in JS.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc?l\u003d2073\n[2] https://cs.chromium.org/search/?q\u003denableSafeBrowsingSubresourceFilter+file:site_details_tests.js\u0026type\u003dcs",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 79
+      },
+      "revId": "a472fd3ad2e625efb83e864979a489ef36ae5f35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
