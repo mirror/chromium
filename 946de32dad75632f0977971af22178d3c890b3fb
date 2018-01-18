@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a08a9dec_21bed6f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-18T13:39:08Z",
+      "side": 1,
+      "message": "For the sake of completeness, maybe say\n\n\"this relands commit 53549f0a1c2, reverted by bfdecad144, due to https://bugs.chromium.org/p/chromium/issues/detail?id\u003d794140.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "946de32dad75632f0977971af22178d3c890b3fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32765b68_e9bed1d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-18T13:39:08Z",
+      "side": 1,
+      "message": "spurious \"-\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "946de32dad75632f0977971af22178d3c890b3fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3166ec30_57c01f2e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-18T13:39:08Z",
+      "side": 1,
+      "message": "Maybe it is worth to highlight on the commit message that although the original commit message stated that there were no behavior difference, there actually was one: changing the implicit cast to explicit, caused subtle behavior differences.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 50
+      },
+      "revId": "946de32dad75632f0977971af22178d3c890b3fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53efe5d7_1c80c69a",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1780,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-18T13:39:08Z",
+      "side": 1,
+      "message": "so, in this reland, rather than reverting back to pass \"event\" to ::ConvertEventLocationToTargetWindowLocation and do an implicit cast (which is what was done before), the CL adds an extra safety check in DesktopWindowTreeHostX11::DispatchEvent, to ensure we bail out earlier when event type is UNKNOWN.\n\n@sadrul, is this approach Ok with you or would you prefer keep the previous implicit cast when calling ::ConvertEventLocationToTargetWindowLocation and remove the safety if-check?\n\nAlso, as I understand it, it is hard to provide a unit test to this case (as explained in https://chromium-review.googlesource.com/c/chromium/src/+/853953/6#message-76811f30001b1d6100728c7ce5c4b25c00a5be5c), so maybe we can add\n\na) a TODO(msisov): try to add a test that covers this scenario. See \u003clink to explanation\u003e.\n\nb) an extra comment explaining why the if-check is needed.\n\n.. and move on with reviews?",
+      "range": {
+        "startLine": 1780,
+        "startChar": 39,
+        "endLine": 1780,
+        "endChar": 62
+      },
+      "revId": "946de32dad75632f0977971af22178d3c890b3fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
