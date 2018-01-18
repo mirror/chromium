@@ -245,6 +245,24 @@
     },
     {
       "key": {
+        "uuid": "fd5ed815_fd9490a9",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-18T12:45:03Z",
+      "side": 1,
+      "message": "That could be flaky (maybe not in this case) since where the scroll stops will be time dependent. In general it would also add potentially unwanted side effects.\n\nI\u0027m not attached to any particular solution but I do think this will come up again at some point. I\u0027ve noticed WebKit folks are already uneasy about how long WPT take to run.",
+      "parentUuid": "a1768fea_d12de61a",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b1a2e9a_ed55161d",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
         "patchSetId": 48
@@ -387,6 +405,24 @@
       "side": 1,
       "message": "You are correct, but, if we call setupElements() in onload and use test() as opposed to async_test() there is still no guarantee that the setupElements() method gets called before the tests. Async test here makes it possible so I can make sure\n 1- We do have a body,\n 2- Tests run after set up.",
       "parentUuid": "54e0717e_980f7ca4",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96fe1436_f47b014f",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-18T12:45:03Z",
+      "side": 1,
+      "message": "When you call `test(myFunc, \"Test myFunc)`, myFunc is run in the test() call. So:\n\nsetupElements();\ntest(...)\n\nShould guarantee setupElements is called before your test is run.",
+      "parentUuid": "b739e9e3_839e57b1",
       "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
