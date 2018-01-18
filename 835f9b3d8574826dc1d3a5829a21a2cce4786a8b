@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "05f4ca45_b5ef84b3",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-18T14:00:39Z",
+      "side": 1,
+      "message": "\u003e Hmm... We always use top of frame\u0027s visual view port when focused element is offscreen?\n\nYes, why not? :) (Top of DOWN-key was pressed, bottom if UP key was pressed that is).\n\nIf the focused element is offscreen (say JS scrolled \u003cbody\u003e downwards), at the next spatnav stroke, that doesn\u0027t matter: We want spatnav to first look for already visible focusables - not pick focusables nearby offscreen F. I\u0027ve already landed snav-use-visual-viewport.html to test this behavior.\n\nAh, that reminds me... We already have a helper to do this! :) \n\nSo we could just do:\n\n  // Figure out the starting rect.\n  LayoutRect starting_rect \u003d\n      VirtualRectForDirection(type, FrameRectInAbsoluteCoordinates(cur_frame));\n\n\u003e ... consider following case:\n\u003e -- \u003c--- upper edge of frame\u0027s visual view port\n\u003e F \u003c--- focused element, child of \u0027C\u0027, currently this is offscreen\n\u003e E \u003c--- focusable element, not child of \u0027C\u0027\n\u003e C \u003c--- container of \u0027F\u0027 and \u0027N\u0027\n\u003e N \u003c--- focusable element, child of \u0027C\u0027, onscreen\n\u003e In this case, starting rect should be upper edge of C.\n\nThat would cause a window scroll up to C. That sudden scroll might confuse or annoy users? I think users expect to reach things that they can see in their viewport first.\n\nIndeed that\u0027s a change not related to this CL\u0027s bug so I broke it out to https://chromium-review.googlesource.com/873645.",
+      "parentUuid": "54f068bd_11738698",
+      "range": {
+        "startLine": 1406,
+        "startChar": 0,
+        "endLine": 1410,
+        "endChar": 28
+      },
+      "revId": "835f9b3d8574826dc1d3a5829a21a2cce4786a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9009250_9f941a13",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 28
