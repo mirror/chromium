@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "fb5ddc1e_6aaa55b5",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-18T07:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57f68ffb_12e48404",
+      "range": {
+        "startLine": 326,
+        "startChar": 29,
+        "endLine": 326,
+        "endChar": 62
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb1de96c_502a1a4c",
         "filename": "content/browser/renderer_host/p2p/socket_host.h",
         "patchSetId": 5
@@ -226,6 +250,30 @@
       "side": 1,
       "message": "base::Optional\u003cnet::NetworkTrafficAnnotationTag\u003e seems like the right solution for this. Or alternatively we could remove the default SendBuffer() constructor and use base::Optional for write_buffer_",
       "parentUuid": "6c2b7a81_9d7a53fa",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 43
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9274d0_7d36caca",
+        "filename": "content/browser/renderer_host/p2p/socket_host_tcp.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-18T07:02:41Z",
+      "side": 1,
+      "message": "If you prefer that I would change SendBeffer() constructor to base::Optional, I would do so. But otherwise, we have almost always used mutable annotations for these use cases and it inherently does the checks required to ensure that the content is valid. I prefer it this way to base::Optional\u003cnet::Network...\u003e, but I will change it if you insist.\nBTW, I changed the comment on Mutable annotations to include these cases: crrev.com/c/872930",
+      "parentUuid": "3598b886_4e47f6a5",
       "range": {
         "startLine": 70,
         "startChar": 9,
