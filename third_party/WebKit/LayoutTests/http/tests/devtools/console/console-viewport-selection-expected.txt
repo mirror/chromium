@@ -1,9 +1,6 @@
 Tests that console viewport handles selection properly.
 
 
-Running: verifyViewportIsTallEnough
-Viewport contains 13 messages
-
 Running: testSelectionSingleLineText
 Selected text:<<<EOL
 nsole

@@ -54,26 +54,28 @@
     willHide = [];
   }
 
-  function logMessages(count, repeating, callback) {
-    var awaitingMessagesCount = count;
-    function messageAdded() {
-      if (!--awaitingMessagesCount) {
-        viewport.invalidate();
-        callback();
-      } else {
-        ConsoleTestRunner.addConsoleSniffer(messageAdded, false);
+  function logMessages(count, repeating) {
+    TestRunner.addResult('Logging ' + count + ' messages');
+    return new Promise(resolve => {
+      var awaitingMessagesCount = count;
+      function messageAdded() {
+        if (!--awaitingMessagesCount) {
+          viewport.invalidate();
+          resolve();
+        } else {
+          ConsoleTestRunner.addConsoleSniffer(messageAdded, false);
+        }
       }
-    }
-    ConsoleTestRunner.addConsoleSniffer(messageAdded, false);
-    if (!repeating)
-      TestRunner.evaluateInPage(String.sprintf('addMessages(%d)', count));
-    else
-      TestRunner.evaluateInPage(String.sprintf('addRepeatingMessages(%d)', count));
+      ConsoleTestRunner.addConsoleSniffer(messageAdded, false);
+      if (!repeating)
+        TestRunner.evaluateInPage(String.sprintf('addMessages(%d)', count));
+      else
+        TestRunner.evaluateInPage(String.sprintf('addRepeatingMessages(%d)', count));
+    });
   }
 
   function printStuckToBottom() {
-    TestRunner.addResult(
-        'Is at bottom: ' + viewport.element.isScrolledToBottom() + ', should stick: ' + viewport.stickToBottom());
+    TestRunner.addResult('Is at bottom: ' + viewport.element.isScrolledToBottom());
   }
 
   function clearConsoleAndReset() {
@@ -81,67 +83,120 @@
     resetShowHideCounts();
   }
 
+  // The viewport element's bounding box may include padding/margins.
+  // Measure these and treat messages in the padding/margin as NOT visible.
+  await logMessages(1, false);
+  var viewportRect = viewport.element.getBoundingClientRect();
+  var firstRect = consoleView._visibleViewMessages[0]._element.getBoundingClientRect();
+  var viewportMargin = firstRect.top - viewportRect.top;
+  TestRunner.addResult(`Viewport element has margin of ${viewportMargin}px`);
+  clearConsoleAndReset();
+
   TestRunner.addSniffer(Console.ConsoleViewMessage.prototype, 'wasShown', onMessageShown, true);
   TestRunner.addSniffer(Console.ConsoleViewMessage.prototype, 'willHide', onMessageHidden, true);
 
   TestRunner.runTestSuite([
-    function addSmallCount(next) {
-      clearConsoleAndReset();
-      logMessages(smallCount, false, () => printAndResetCounts(next));
+    async function testFirstLastVisibleIndices(next) {
+      dumpVisibleIndices();
+      await logMessages(100, false);
+      viewport.forceScrollItemToBeFirst(0);
+      dumpVisibleIndices();
+      viewport.forceScrollItemToBeFirst(1);
+      dumpVisibleIndices();
+      viewport.element.scrollTop += (consoleView.minimumRowHeight() - 1);
+      viewport.refresh();
+      dumpVisibleIndices();
+      viewport.forceScrollItemToBeLast(50);
+      dumpVisibleIndices();
+      viewport.forceScrollItemToBeLast(99);
+      dumpVisibleIndices();
+      next();
+
+      function dumpVisibleIndices() {
+        var first = -1;
+        var last = -1;
+        var viewportRect = viewport.element.getBoundingClientRect();
+        for (var i = 0; i < consoleView._visibleViewMessages.length; i++) {
+          var item = consoleView._visibleViewMessages[i];
+          if (!item._element)
+            continue;
+          var itemRect = item._element.getBoundingClientRect();
+          if (first === -1 && itemRect.bottom > viewportRect.top + viewportMargin + 1)
+            first = i;
+          if (last === -1 && itemRect.bottom >= viewportRect.bottom - viewportMargin - 1)
+            last = i;
+        }
+        var total = first === -1 ? 0 : (last - first + 1);
+        TestRunner.addResult(`First visible: ${first}, Last visible: ${last}, Total visible: ${total}
+First active: ${viewport._firstActiveIndex}, Last active: ${viewport._lastActiveIndex}\n`);
+      }
     },
 
-    function addMaxVisibleCount(next) {
+    async function addSmallCount(next) {
       clearConsoleAndReset();
-      logMessages(maxVisibleCount, false, () => printAndResetCounts(next));
+      await logMessages(smallCount, false);
+      printAndResetCounts(next);
     },
 
-    function addMaxActiveCount(next) {
+    async function addMaxVisibleCount(next) {
       clearConsoleAndReset();
-      logMessages(maxActiveCount, false, () => printAndResetCounts(next));
+      await logMessages(maxVisibleCount, false);
+      printAndResetCounts(next);
+    },
+
+    async function addMaxActiveCount(next) {
+      clearConsoleAndReset();
+      await logMessages(maxActiveCount, false);
+      printAndResetCounts(next);
       printStuckToBottom();
     },
 
-    function addMoreThanMaxActiveCount(next) {
+    async function addMoreThanMaxActiveCount(next) {
       clearConsoleAndReset();
-      logMessages(maxActiveCount, false, step2);
-      function step2() {
-        logMessages(smallCount, false, () => printAndResetCounts(next));
+      await logMessages(maxActiveCount, false);
+      step2();
+      async function step2() {
+        await logMessages(smallCount, false);
+        printAndResetCounts(next);
         printStuckToBottom();
       }
     },
 
-    function scrollUpWithinActiveWindow(next) {
+    async function scrollUpWithinActiveWindow(next) {
       clearConsoleAndReset();
-      logMessages(maxActiveCount, false, step2);
+      await logMessages(maxActiveCount, false);
+      step2();
       printStuckToBottom();
-      function step2() {
+      async function step2() {
         resetShowHideCounts();
         viewport.forceScrollItemToBeFirst(0);
         printAndResetCounts(next);
       }
     },
 
-    function scrollUpToPositionOutsideOfActiveWindow(next) {
+    async function scrollUpToPositionOutsideOfActiveWindow(next) {
       clearConsoleAndReset();
-      logMessages(maxActiveCount + smallCount, false, step2);
+      await logMessages(maxActiveCount + smallCount, false);
+      step2();
       printStuckToBottom();
-      function step2() {
+      async function step2() {
         resetShowHideCounts();
         viewport.forceScrollItemToBeFirst(0);
         printAndResetCounts(next);
       }
     },
 
-    function logRepeatingMessages(next) {
+    async function logRepeatingMessages(next) {
       clearConsoleAndReset();
-      logMessages(maxVisibleCount, true, () => printAndResetCounts(next));
+      await logMessages(maxVisibleCount, true);
+      printAndResetCounts(next);
     },
 
-    function reorderingMessages(next) {
+    async function reorderingMessages(next) {
       clearConsoleAndReset();
-      TestRunner.addResult('Logging ' + smallCount + ' messages');
-      logMessages(smallCount, false, () => printAndResetCounts(step2));
-      function step2() {
+      await logMessages(smallCount, false);
+      printAndResetCounts(step2);
+      async function step2() {
         resetShowHideCounts();
         TestRunner.addResult('Swapping messages 0 and 1');
         var temp = consoleView._visibleViewMessages[0];

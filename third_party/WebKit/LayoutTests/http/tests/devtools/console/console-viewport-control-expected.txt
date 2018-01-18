@@ -1,30 +1,61 @@
 Verifies viewport correctly shows and hides messages while logging and scrolling.
 
 Max visible messages count: 13, active count: 25
+Logging 1 messages
+Viewport element has margin of 2px
+
+Running: testFirstLastVisibleIndices
+First visible: -1, Last visible: -1, Total visible: 0
+First active: -1, Last active: -1
+
+Logging 100 messages
+First visible: 0, Last visible: 10, Total visible: 11
+First active: 0, Last active: 24
+
+First visible: 1, Last visible: 11, Total visible: 11
+First active: 0, Last active: 24
+
+First visible: 1, Last visible: 12, Total visible: 12
+First active: 0, Last active: 24
+
+First visible: 40, Last visible: 50, Total visible: 11
+First active: 35, Last active: 59
+
+First visible: 89, Last visible: 99, Total visible: 11
+First active: 84, Last active: 99
+
 
 Running: addSmallCount
+Logging 3 messages
 Messages shown: 3, hidden: 0
 
 Running: addMaxVisibleCount
+Logging 13 messages
 Messages shown: 13, hidden: 0
 
 Running: addMaxActiveCount
-Is at bottom: true, should stick: true
+Logging 25 messages
 Messages shown: 25, hidden: 0
 
 Running: addMoreThanMaxActiveCount
-Is at bottom: true, should stick: true
+Logging 25 messages
+Is at bottom: true
+Logging 3 messages
 Messages shown: 28, hidden: 3
 
 Running: scrollUpWithinActiveWindow
-Is at bottom: true, should stick: true
+Logging 25 messages
+Is at bottom: true
 Messages shown: 0, hidden: 0
 
 Running: scrollUpToPositionOutsideOfActiveWindow
-Is at bottom: true, should stick: true
+Logging 28 messages
+Is at bottom: true
 Messages shown: 3, hidden: 3
 
 Running: logRepeatingMessages
+Logging 13 messages
+Is at bottom: true
 Messages shown: 1, hidden: 0
 
 Running: reorderingMessages
