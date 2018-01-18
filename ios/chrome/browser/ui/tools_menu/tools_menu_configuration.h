@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @class ReadingListMenuNotifier;
+@protocol SettingsNavigationControllerDelegate
+, SettingsBrowserStateProvider;
 
 namespace web {
 enum class UserAgentType : short;
@@ -63,6 +65,10 @@ class Tracker;
 // tracker. Tracker must not be destroyed during lifetime of
 // ToolsMenuConfiguration. Defaults to |nullptr|.
 @property(nonatomic, assign) feature_engagement::Tracker* engagementTracker;
+// A delegate that may be used to provide data to presented Settings UI.
+@property(nonatomic, weak)
+    id<SettingsNavigationControllerDelegate, SettingsBrowserStateProvider>
+        settingsDelegate;
 
 // Initialize a ToolsMenuContext instance with default values. |displayView| is
 // the weakly-held parent view within which the popup tools menu using this
