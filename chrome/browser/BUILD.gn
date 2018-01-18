@@ -4742,7 +4742,7 @@ static_library("test_support") {
     deps += [ "//chromeos:test_support" ]
   }
 
-  if (is_mac && !mac_views_browser) {
+  if (is_mac) {
     sources += [
       "chooser_controller/mock_chooser_controller.cc",
       "chooser_controller/mock_chooser_controller.h",
