@@ -390,7 +390,7 @@ public class ContextualSearchSelectionController {
         // If we're suppressing based on heuristics then Ranker doesn't need to know about it.
         @AssistRankerPrediction
         int tapPrediction = AssistRankerPrediction.UNDETERMINED;
-        if (!shouldSuppressTapBasedOnHeuristics) {
+        if (shouldSuppressTapBasedOnHeuristics) {
             tapHeuristics.logRankerTapSuppression(rankerLogger);
             mHandler.logNonHeuristicFeatures(rankerLogger);
             tapPrediction = rankerLogger.runPredictionForTapSuppression();
