@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54a127e4_6e913f6b",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-18T04:56:21Z",
+      "side": 1,
+      "message": "Or we can probably use specific_include_rules only for tests",
+      "revId": "2722a9e5a19d4178f03010cf5b96305f0f67ac9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
