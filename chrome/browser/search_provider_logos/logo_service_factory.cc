@@ -10,7 +10,6 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/suggestions/image_decoder_impl.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
-#include "chrome/browser/signin/gaia_cookie_manager_service_factory.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/search_provider_logos/logo_service.h"
 #include "components/search_provider_logos/logo_service_impl.h"
@@ -53,7 +52,6 @@ LogoServiceFactory::LogoServiceFactory()
     : BrowserContextKeyedServiceFactory(
           "LogoService",
           BrowserContextDependencyManager::GetInstance()) {
-  DependsOn(GaiaCookieManagerServiceFactory::GetInstance());
   DependsOn(TemplateURLServiceFactory::GetInstance());
 }
 
@@ -63,10 +61,9 @@ KeyedService* LogoServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
   Profile* profile = static_cast<Profile*>(context);
   DCHECK(!profile->IsOffTheRecord());
-  return new LogoServiceImpl(
-      profile->GetPath().Append(kCachedLogoDirectory),
-      GaiaCookieManagerServiceFactory::GetForProfile(profile),
-      TemplateURLServiceFactory::GetForProfile(profile),
-      base::MakeUnique<suggestions::ImageDecoderImpl>(),
-      profile->GetRequestContext(), base::BindRepeating(&UseGrayLogo));
+  return new LogoServiceImpl(profile->GetPath().Append(kCachedLogoDirectory),
+                             TemplateURLServiceFactory::GetForProfile(profile),
+                             base::MakeUnique<suggestions::ImageDecoderImpl>(),
+                             profile->GetRequestContext(),
+                             base::BindRepeating(&UseGrayLogo));
 }

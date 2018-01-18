@@ -44,6 +44,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/web_contents_tester.h"
+#include "content/test/test_web_contents.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -138,10 +139,10 @@ class TabManagerTest : public ChromeRenderViewHostTestHarness {
   }
 
   WebContents* CreateWebContents() {
-    content::WebContents* web_contents = CreateTestWebContents();
+    content::TestWebContents* web_contents =
+        content::TestWebContents::Create(profile(), nullptr);
     // Commit an URL to allow discarding.
-    content::WebContentsTester::For(web_contents)
-        ->NavigateAndCommit(GURL("https://www.example.com"));
+    web_contents->NavigateAndCommit(GURL("https://www.example.com"));
     return web_contents;
   }
 
@@ -242,7 +243,8 @@ class TabManagerTest : public ChromeRenderViewHostTestHarness {
 
  protected:
   std::unique_ptr<NavigationHandle> CreateTabAndNavigation(const char* url) {
-    content::WebContents* web_contents = CreateTestWebContents();
+    content::TestWebContents* web_contents =
+        content::TestWebContents::Create(profile(), nullptr);
     TabUIHelper::CreateForWebContents(web_contents);
     return content::NavigationHandle::CreateNavigationHandleForTesting(
         GURL(url), web_contents->GetMainFrame());

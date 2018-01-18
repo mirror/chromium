@@ -179,7 +179,7 @@ void RemoteSuggestionsFetcherImpl::FetchSnippets(
       .SetUrlRequestContextGetter(url_request_context_getter_)
       .SetUserClassifier(*user_classifier_);
 
-  if (signin_manager_->IsAuthenticated()) {
+  if (signin_manager_->IsAuthenticated() || signin_manager_->AuthInProgress()) {
     // Signed-in: get OAuth token --> fetch suggestions.
     pending_requests_.emplace(std::move(builder), std::move(callback));
     StartTokenRequest();

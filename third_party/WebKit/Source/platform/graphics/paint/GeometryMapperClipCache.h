@@ -7,7 +7,6 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/graphics/paint/FloatClipRect.h"
-#include "platform/scroll/ScrollTypes.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
@@ -28,18 +27,14 @@ class PLATFORM_EXPORT GeometryMapperClipCache {
   struct ClipAndTransform {
     const ClipPaintPropertyNode* ancestor_clip;
     const TransformPaintPropertyNode* ancestor_transform;
-    OverlayScrollbarClipBehavior clip_behavior;
     bool operator==(const ClipAndTransform& other) const {
       return ancestor_clip == other.ancestor_clip &&
-             ancestor_transform == other.ancestor_transform &&
-             clip_behavior == other.clip_behavior;
+             ancestor_transform == other.ancestor_transform;
     }
     ClipAndTransform(const ClipPaintPropertyNode* ancestor_clip_arg,
-                     const TransformPaintPropertyNode* ancestor_transform_arg,
-                     OverlayScrollbarClipBehavior clip_behavior_arg)
+                     const TransformPaintPropertyNode* ancestor_transform_arg)
         : ancestor_clip(ancestor_clip_arg),
-          ancestor_transform(ancestor_transform_arg),
-          clip_behavior(clip_behavior_arg) {}
+          ancestor_transform(ancestor_transform_arg) {}
   };
 
   // Returns the clip visual rect  of the owning

@@ -35,7 +35,8 @@ class RendererMetricsHelperTest : public ::testing::Test {
     mock_task_runner_ =
         base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(&clock_, true);
     scheduler_ = std::make_unique<RendererSchedulerImpl>(
-        CreateTaskQueueManagerForTest(nullptr, mock_task_runner_, &clock_));
+        CreateTaskQueueManagerWithUnownedClockForTest(
+            nullptr, mock_task_runner_, &clock_));
     metrics_helper_ = &scheduler_->main_thread_only().metrics_helper;
   }
 
@@ -56,7 +57,7 @@ class RendererMetricsHelperTest : public ::testing::Test {
     TaskQueue::PostedTask posted_task(base::Closure(), FROM_HERE);
     TaskQueue::Task task(std::move(posted_task), base::TimeTicks());
     metrics_helper_->RecordTaskMetrics(queue.get(), task, start,
-                                       start + duration, base::nullopt);
+                                       start + duration);
   }
 
   void RunTask(WebFrameScheduler* scheduler,
@@ -71,7 +72,7 @@ class RendererMetricsHelperTest : public ::testing::Test {
     TaskQueue::PostedTask posted_task(base::Closure(), FROM_HERE);
     TaskQueue::Task task(std::move(posted_task), base::TimeTicks());
     metrics_helper_->RecordTaskMetrics(queue.get(), task, start,
-                                       start + duration, base::nullopt);
+                                       start + duration);
   }
 
   base::TimeTicks Milliseconds(int milliseconds) {

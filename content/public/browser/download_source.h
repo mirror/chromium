@@ -21,26 +21,37 @@ enum class DownloadSource {
   // Drag and drop.
   DRAG_AND_DROP = 2,
 
+  // User manually resume the download.
+  MANUAL_RESUMPTION = 3,
+
+  // Auto resumption in download system.
+  AUTO_RESUMPTION = 4,
+
   // Renderer initiated download, mostly from Javascript or HTML <a> tag.
-  FROM_RENDERER = 3,
+  FROM_RENDERER = 5,
 
   // Extension download API.
-  EXTENSION_API = 4,
+  EXTENSION_API = 6,
 
   // Extension web store installer.
-  EXTENSION_INSTALLER = 5,
+  EXTENSION_INSTALLER = 7,
+
+  // Plugin triggered download.
+  PLUGIN = 8,
+
+  // Plugin installer download.
+  PLUGIN_INSTALLER = 9,
 
   // Download service API background download.
-  INTERNAL_API = 6,
+  INTERNAL_API = 10,
 
-  // Download through web contents API.
-  WEB_CONTENTS_API = 7,
+  // Save package download.
+  SAVE_PACKAGE = 11,
 
   // Offline page download.
-  OFFLINE_PAGE = 8,
+  OFFLINE_PAGE = 12,
 
-  // Context menu download.
-  CONTEXT_MENU = 9,
+  COUNT = 13
 };
 
 }  // namespace content

@@ -13,6 +13,7 @@
 #include "base/bind_helpers.h"
 #include "base/callback.h"
 #include "base/command_line.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
@@ -329,7 +330,7 @@ class PreviewsIODataTest : public testing::Test {
  public:
   PreviewsIODataTest()
       : field_trial_list_(nullptr),
-        io_data_(std::make_unique<TestPreviewsIOData>(
+        io_data_(base::MakeUnique<TestPreviewsIOData>(
             scoped_task_environment_.GetMainThreadTaskRunner(),
             scoped_task_environment_.GetMainThreadTaskRunner())),
         optimization_guide_service_(
@@ -349,7 +350,7 @@ class PreviewsIODataTest : public testing::Test {
   }
 
   void InitializeIOData() {
-    io_data_ = std::make_unique<TestPreviewsIOData>(
+    io_data_ = base::MakeUnique<TestPreviewsIOData>(
         scoped_task_environment_.GetMainThreadTaskRunner(),
         scoped_task_environment_.GetMainThreadTaskRunner());
   }
@@ -357,12 +358,12 @@ class PreviewsIODataTest : public testing::Test {
   void InitializeUIServiceWithoutWaitingForBlackList() {
     ui_service_.reset(new TestPreviewsUIService(
         io_data_.get(), scoped_task_environment_.GetMainThreadTaskRunner(),
-        std::make_unique<TestPreviewsOptOutStore>(),
-        std::make_unique<TestPreviewsOptimizationGuide>(
+        base::MakeUnique<TestPreviewsOptOutStore>(),
+        base::MakeUnique<TestPreviewsOptimizationGuide>(
             &optimization_guide_service_,
             scoped_task_environment_.GetMainThreadTaskRunner()),
         base::Bind(&IsPreviewFieldTrialEnabled),
-        std::make_unique<PreviewsLogger>()));
+        base::MakeUnique<PreviewsLogger>()));
   }
 
   void InitializeUIService() {
@@ -861,7 +862,7 @@ TEST_F(PreviewsIODataTest, LogDecisionMadeBlacklistStatusesDefault) {
     auto expected_reason = expected_reasons[i];
 
     std::unique_ptr<TestPreviewsBlackList> blacklist =
-        std::make_unique<TestPreviewsBlackList>(expected_reason, io_data());
+        base::MakeUnique<TestPreviewsBlackList>(expected_reason, io_data());
     io_data()->InjectTestBlacklist(std::move(blacklist));
 
     io_data()->ShouldAllowPreviewAtECT(*CreateRequest(), expected_type,
@@ -898,7 +899,7 @@ TEST_F(PreviewsIODataTest, LogDecisionMadeBlacklistStatusesIgnore) {
 
   for (auto blacklist_decision : blacklist_decisions) {
     std::unique_ptr<TestPreviewsBlackList> blacklist =
-        std::make_unique<TestPreviewsBlackList>(blacklist_decision, io_data());
+        base::MakeUnique<TestPreviewsBlackList>(blacklist_decision, io_data());
     io_data()->InjectTestBlacklist(std::move(blacklist));
 
     io_data()->ShouldAllowPreviewAtECT(
@@ -919,7 +920,7 @@ TEST_F(PreviewsIODataTest, LogDecisionMadeNetworkQualityNotAvailable) {
   InitializeUIService();
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
   std::unique_ptr<TestPreviewsBlackList> blacklist =
-      std::make_unique<TestPreviewsBlackList>(
+      base::MakeUnique<TestPreviewsBlackList>(
           PreviewsEligibilityReason::ALLOWED, io_data());
   io_data()->InjectTestBlacklist(std::move(blacklist));
 
@@ -962,7 +963,7 @@ TEST_F(PreviewsIODataTest, LogDecisionMadeNetworkNotSlow) {
   InitializeUIService();
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
   std::unique_ptr<TestPreviewsBlackList> blacklist =
-      std::make_unique<TestPreviewsBlackList>(
+      base::MakeUnique<TestPreviewsBlackList>(
           PreviewsEligibilityReason::ALLOWED, io_data());
   io_data()->InjectTestBlacklist(std::move(blacklist));
 
@@ -1005,7 +1006,7 @@ TEST_F(PreviewsIODataTest, LogDecisionMadeHostBlacklisted) {
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled",
                              {{"short_host_blacklist", "example.com"}});
   std::unique_ptr<TestPreviewsBlackList> blacklist =
-      std::make_unique<TestPreviewsBlackList>(
+      base::MakeUnique<TestPreviewsBlackList>(
           PreviewsEligibilityReason::ALLOWED, io_data());
   io_data()->InjectTestBlacklist(std::move(blacklist));
 
@@ -1050,7 +1051,7 @@ TEST_F(PreviewsIODataTest, LogDecisionMadeHostBlacklisted) {
 TEST_F(PreviewsIODataTest, LogDecisionMadeReloadDisallowed) {
   InitializeUIService();
   std::unique_ptr<TestPreviewsBlackList> blacklist =
-      std::make_unique<TestPreviewsBlackList>(
+      base::MakeUnique<TestPreviewsBlackList>(
           PreviewsEligibilityReason::ALLOWED, io_data());
   io_data()->InjectTestBlacklist(std::move(blacklist));
 
@@ -1105,7 +1106,7 @@ TEST_F(PreviewsIODataTest, IgnoreBlacklistEnabledViaFlag) {
 
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
   std::unique_ptr<TestPreviewsBlackList> blacklist =
-      std::make_unique<TestPreviewsBlackList>(
+      base::MakeUnique<TestPreviewsBlackList>(
           PreviewsEligibilityReason::HOST_BLACKLISTED, io_data());
   io_data()->InjectTestBlacklist(std::move(blacklist));
   network_quality_estimator()->set_effective_connection_type(
@@ -1127,7 +1128,7 @@ TEST_F(PreviewsIODataTest, LogDecisionMadeAllowPreviewsOnECT) {
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
 
   std::unique_ptr<TestPreviewsBlackList> blacklist =
-      std::make_unique<TestPreviewsBlackList>(
+      base::MakeUnique<TestPreviewsBlackList>(
           PreviewsEligibilityReason::ALLOWED, io_data());
 
   io_data()->InjectTestBlacklist(std::move(blacklist));

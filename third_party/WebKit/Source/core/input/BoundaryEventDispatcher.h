@@ -16,8 +16,8 @@ class BoundaryEventDispatcher {
   STACK_ALLOCATED();
 
  public:
-  BoundaryEventDispatcher() = default;
-  virtual ~BoundaryEventDispatcher() = default;
+  BoundaryEventDispatcher() {}
+  virtual ~BoundaryEventDispatcher() {}
 
   void SendBoundaryEvents(EventTarget* exited_target,
                           EventTarget* entered_target);

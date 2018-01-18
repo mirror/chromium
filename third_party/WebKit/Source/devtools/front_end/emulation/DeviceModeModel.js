@@ -57,8 +57,6 @@ Emulation.DeviceModeModel = class extends Common.Object {
     this._mode = null;
     /** @type {number} */
     this._fitScale = 1;
-    this._touchEnabled = false;
-    this._touchMobile = false;
 
     /** @type {?SDK.EmulationModel} */
     this._emulationModel = null;
@@ -352,8 +350,6 @@ Emulation.DeviceModeModel = class extends Common.Object {
         this._onModelAvailable = null;
         callback();
       }
-    } else {
-      emulationModel.emulateTouch(this._touchEnabled, this._touchMobile);
     }
   }
 
@@ -688,8 +684,6 @@ Emulation.DeviceModeModel = class extends Common.Object {
    * @param {boolean} mobile
    */
   _applyTouch(touchEnabled, mobile) {
-    this._touchEnabled = touchEnabled;
-    this._touchMobile = mobile;
     for (var emulationModel of SDK.targetManager.models(SDK.EmulationModel))
       emulationModel.emulateTouch(touchEnabled, mobile);
   }

@@ -81,7 +81,7 @@ class InheritedAutosChecker
 
 class CSSClipNonInterpolableValue : public NonInterpolableValue {
  public:
-  ~CSSClipNonInterpolableValue() final = default;
+  ~CSSClipNonInterpolableValue() final {}
 
   static scoped_refptr<CSSClipNonInterpolableValue> Create(
       const ClipAutos& clip_autos) {
@@ -107,7 +107,7 @@ DEFINE_NON_INTERPOLABLE_VALUE_TYPE_CASTS(CSSClipNonInterpolableValue);
 class UnderlyingAutosChecker
     : public CSSInterpolationType::CSSConversionChecker {
  public:
-  ~UnderlyingAutosChecker() final = default;
+  ~UnderlyingAutosChecker() final {}
 
   static std::unique_ptr<UnderlyingAutosChecker> Create(
       const ClipAutos& underlying_autos) {

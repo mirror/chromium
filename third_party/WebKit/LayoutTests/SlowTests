@@ -48,8 +48,8 @@ crbug.com/24182 jquery/event.html [ Slow ]
 crbug.com/24182 jquery/manipulation.html [ Slow ]
 crbug.com/24182 jquery/offset.html [ Slow ]
 crbug.com/24182 jquery/traversing.html [ Slow ]
-crbug.com/24182 external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cues-cuechange.html [ Slow ]
-crbug.com/24182 external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cues-enter-exit.html [ Slow ]
+crbug.com/24182 media/track/track-cues-cuechange.html [ Slow ]
+crbug.com/24182 media/track/track-cues-enter-exit.html [ Slow ]
 crbug.com/24182 media/controls/controls-cast-do-not-fade-out.html [ Slow ]
 crbug.com/24182 virtual/new-remote-playback-pipeline/media/controls/controls-cast-do-not-fade-out.html [ Slow ]
 crbug.com/24182 media/controls/controls-cast-overlay-slow-fade.html [ Slow ]
@@ -241,8 +241,7 @@ crbug.com/570656 [ Mac ] fast/text/unicode-fallback-font.html [ Slow ]
 
 crbug.com/658211 [ Win7 Debug ] fast/text/line-break-ascii.html [ Slow ]
 
-crbug.com/802029 fast/dom/shadow/focus-controller-recursion-crash.html [ Slow ]
-crbug.com/802029 virtual/incremental-shadow-dom/fast/dom/shadow/focus-controller-recursion-crash.html [ Slow ]
+crbug.com/445194 fast/dom/shadow/focus-controller-recursion-crash.html [ Slow ]
 crbug.com/697735 external/wpt/editing/run/backcolor.html [ Slow ]
 crbug.com/697735 external/wpt/editing/run/bold.html [ Slow ]
 crbug.com/697735 external/wpt/editing/run/createlink.html [ Slow ]
@@ -463,5 +462,3 @@ crbug.com/779965 external/wpt/beacon/headers/header-content-type.html [ Slow ]
 
 # This page loads slow in real browser, and can timeout in SPv2 layout test.
 crbug.com/779366 fast/shapes/crash-allocating-very-large-raster-shape.html [ Slow ]
-
-crbug.com/787971 external/wpt/WebCryptoAPI/wrapKey_unwrapKey/wrapKey_unwrapKey.https.worker.html [ Slow ]

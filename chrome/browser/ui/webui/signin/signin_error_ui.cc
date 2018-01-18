@@ -6,6 +6,7 @@
 
 #include <vector>
 
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile_attributes_entry.h"
@@ -46,7 +47,7 @@ void SigninErrorUI::Initialize(Browser* browser, bool is_system_profile) {
   Profile* webui_profile = Profile::FromWebUI(web_ui());
   Profile* signin_profile;
   std::unique_ptr<SigninErrorHandler> handler =
-      std::make_unique<SigninErrorHandler>(browser, is_system_profile);
+      base::MakeUnique<SigninErrorHandler>(browser, is_system_profile);
 
   if (is_system_profile) {
     signin_profile = g_browser_process->profile_manager()->GetProfileByPath(

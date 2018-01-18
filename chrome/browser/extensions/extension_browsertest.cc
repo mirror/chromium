@@ -57,7 +57,6 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
-#include "extensions/browser/disable_reason.h"
 #include "extensions/browser/extension_dialog_auto_confirm.h"
 #include "extensions/browser/extension_host.h"
 #include "extensions/browser/extension_prefs.h"
@@ -66,6 +65,7 @@
 #include "extensions/browser/notification_types.h"
 #include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/browser/uninstall_reason.h"
+#include "extensions/common/disable_reason.h"
 #include "extensions/common/extension_set.h"
 #include "net/url_request/url_request_file_job.h"
 
@@ -85,25 +85,30 @@ namespace {
 // Maps all chrome-extension://<id>/_test_resources/foo requests to
 // chrome/test/data/extensions/foo. This is what allows us to share code between
 // tests without needing to duplicate files in each extension.
-void ExtensionProtocolTestHandler(const base::FilePath& test_dir_root,
-                                  base::FilePath* directory_path,
-                                  base::FilePath* relative_path) {
+net::URLRequestJob* ExtensionProtocolTestHandler(
+    const base::FilePath& test_dir_root,
+    net::URLRequest* request,
+    net::NetworkDelegate* network_delegate,
+    const base::FilePath& relative_path) {
   // Only map paths that begin with _test_resources.
   if (!base::FilePath(FILE_PATH_LITERAL("_test_resources"))
-           .IsParent(*relative_path)) {
-    return;
+           .IsParent(relative_path)) {
+    return nullptr;
   }
 
-  // Replace _test_resources/foo with chrome/test/data/extensions/foo.
-  *directory_path = test_dir_root;
+  // Replace _test_resources/foo with chrome/test/data/foo.
   std::vector<base::FilePath::StringType> components;
-  relative_path->GetComponents(&components);
+  relative_path.GetComponents(&components);
   DCHECK_GT(components.size(), 1u);
-  base::FilePath new_relative_path;
+  base::FilePath resource_path = test_dir_root;
   for (size_t i = 1u; i < components.size(); ++i)
-    new_relative_path = new_relative_path.Append(components[i]);
+    resource_path = resource_path.Append(components[i]);
 
-  *relative_path = new_relative_path;
+  return new net::URLRequestFileJob(
+      request, network_delegate, resource_path,
+      base::CreateTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN}));
 }
 
 }  // namespace

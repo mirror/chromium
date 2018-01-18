@@ -54,7 +54,7 @@ bool ShouldIgnoreSSLError(net::URLRequest* request) {
     return true;
   bool allow_localhost = base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kAllowInsecureLocalhost);
-  if (allow_localhost && net::IsLocalhost(request->url()))
+  if (allow_localhost && net::IsLocalhost(request->url().host()))
     return true;
   return false;
 }

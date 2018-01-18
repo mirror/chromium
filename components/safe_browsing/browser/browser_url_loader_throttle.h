@@ -41,13 +41,13 @@ class BrowserURLLoaderThrottle : public content::URLLoaderThrottle {
   ~BrowserURLLoaderThrottle() override;
 
   // content::URLLoaderThrottle implementation.
-  void WillStartRequest(network::ResourceRequest* request,
+  void WillStartRequest(content::ResourceRequest* request,
                         bool* defer) override;
   void WillRedirectRequest(const net::RedirectInfo& redirect_info,
-                           const network::ResourceResponseHead& response_head,
+                           const content::ResourceResponseHead& response_head,
                            bool* defer) override;
   void WillProcessResponse(const GURL& response_url,
-                           const network::ResourceResponseHead& response_head,
+                           const content::ResourceResponseHead& response_head,
                            bool* defer) override;
 
  private:

@@ -45,7 +45,7 @@ SVGTransformListTearOff::SVGTransformListTearOff(
           property_is_anim_val,
           attribute_name) {}
 
-SVGTransformListTearOff::~SVGTransformListTearOff() = default;
+SVGTransformListTearOff::~SVGTransformListTearOff() {}
 
 SVGTransformTearOff* SVGTransformListTearOff::createSVGTransformFromMatrix(
     SVGMatrixTearOff* matrix) const {

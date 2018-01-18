@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/files/file.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "chrome/browser/chromeos/file_system_provider/abort_callback.h"
 #include "chrome/browser/chromeos/file_system_provider/fake_provided_file_system.h"
@@ -60,7 +61,7 @@ class FileSystemProviderThrottledFileSystemTest : public testing::Test {
         extensions::SOURCE_FILE);
 
     file_system_.reset(new ThrottledFileSystem(
-        std::make_unique<FakeProvidedFileSystem>(file_system_info)));
+        base::MakeUnique<FakeProvidedFileSystem>(file_system_info)));
   }
 
   content::TestBrowserThreadBundle thread_bundle_;

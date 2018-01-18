@@ -1271,10 +1271,13 @@ void ExtensionService::AddExtension(const Extension* extension) {
     // Track down the cases when this can happen, and remove this
     // DumpWithoutCrashing() (possibly replacing it with a CHECK).
     NOTREACHED();
-    DEBUG_ALIAS_FOR_CSTR(extension_id_copy, extension->id().c_str(), 33);
+    char extension_id_copy[33];
+    base::strlcpy(extension_id_copy, extension->id().c_str(),
+                  arraysize(extension_id_copy));
     Manifest::Location location = extension->location();
     int creation_flags = extension->creation_flags();
     Manifest::Type type = extension->manifest()->type();
+    base::debug::Alias(extension_id_copy);
     base::debug::Alias(&location);
     base::debug::Alias(&creation_flags);
     base::debug::Alias(&type);

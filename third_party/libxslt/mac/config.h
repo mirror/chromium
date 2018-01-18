@@ -106,9 +106,6 @@
 /* Define to 1 if you have the <string.h> header file. */
 #define HAVE_STRING_H 1
 
-/* Define to 1 if you have the `strxfrm_l' function. */
-#define HAVE_STRXFRM_L 1
-
 /* Define to 1 if you have the <sys/select.h> header file. */
 #define HAVE_SYS_SELECT_H 1
 
@@ -158,19 +155,19 @@
 #define PACKAGE_BUGREPORT ""
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME "libxslt"
+#define PACKAGE_NAME ""
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "libxslt 1.1.32"
+#define PACKAGE_STRING ""
 
 /* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "libxslt"
+#define PACKAGE_TARNAME ""
 
 /* Define to the home page for this package. */
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.1.32"
+#define PACKAGE_VERSION ""
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
@@ -198,7 +195,7 @@
 
 
 /* Version number of package */
-#define VERSION "1.1.32"
+#define VERSION "1.1.29"
 
 /* Define if debugging support is enabled */
 /* #undef WITH_DEBUGGER */

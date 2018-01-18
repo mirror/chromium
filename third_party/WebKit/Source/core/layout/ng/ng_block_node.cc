@@ -225,8 +225,9 @@ MinMaxSize NGBlockNode::ComputeMinMaxSize() {
   }
 
   scoped_refptr<NGConstraintSpace> constraint_space =
-      NGConstraintSpaceBuilder(Style().GetWritingMode(),
-                               InitialContainingBlockSize())
+      NGConstraintSpaceBuilder(
+          Style().GetWritingMode(),
+          /* icb_size */ {NGSizeIndefinite, NGSizeIndefinite})
           .SetTextDirection(Style().Direction())
           .ToConstraintSpace(Style().GetWritingMode());
 
@@ -245,8 +246,9 @@ MinMaxSize NGBlockNode::ComputeMinMaxSize() {
 
   // Now, redo with infinite space for max_content
   constraint_space =
-      NGConstraintSpaceBuilder(Style().GetWritingMode(),
-                               InitialContainingBlockSize())
+      NGConstraintSpaceBuilder(
+          Style().GetWritingMode(),
+          /* icb_size */ {NGSizeIndefinite, NGSizeIndefinite})
           .SetTextDirection(Style().Direction())
           .SetAvailableSize({LayoutUnit::Max(), LayoutUnit()})
           .SetPercentageResolutionSize({LayoutUnit(), LayoutUnit()})

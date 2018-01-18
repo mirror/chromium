@@ -11,6 +11,7 @@
 #include "modules/ModulesExport.h"
 #include "modules/csspaint/PaintWorkletPendingGeneratorRegistry.h"
 #include "platform/bindings/ScriptWrappable.h"
+#include "platform/graphics/ImageBuffer.h"
 
 namespace blink {
 
@@ -27,6 +28,7 @@ class MODULES_EXPORT PaintWorkletGlobalScope final
   static PaintWorkletGlobalScope* Create(
       LocalFrame*,
       std::unique_ptr<GlobalScopeCreationParams>,
+      v8::Isolate*,
       WorkerReportingProxy&,
       PaintWorkletPendingGeneratorRegistry*,
       size_t global_scope_number);
@@ -47,6 +49,7 @@ class MODULES_EXPORT PaintWorkletGlobalScope final
  private:
   PaintWorkletGlobalScope(LocalFrame*,
                           std::unique_ptr<GlobalScopeCreationParams>,
+                          v8::Isolate*,
                           WorkerReportingProxy&,
                           PaintWorkletPendingGeneratorRegistry*);
 

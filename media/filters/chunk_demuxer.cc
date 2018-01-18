@@ -773,10 +773,8 @@ void ChunkDemuxer::OnEnabledAudioTracksChanged(
   base::AutoLock auto_lock(lock_);
   std::set<ChunkDemuxerStream*> enabled_streams;
   for (const auto& id : track_ids) {
-    auto it = track_id_to_demux_stream_map_.find(id);
-    if (it == track_id_to_demux_stream_map_.end())
-      continue;
-    ChunkDemuxerStream* stream = it->second;
+    ChunkDemuxerStream* stream = track_id_to_demux_stream_map_[id];
+    DCHECK(stream);
     DCHECK_EQ(DemuxerStream::AUDIO, stream->type());
     // TODO(servolk): Remove after multiple enabled audio tracks are supported
     // by the media::RendererImpl.
@@ -808,12 +806,9 @@ void ChunkDemuxer::OnSelectedVideoTrackChanged(
   base::AutoLock auto_lock(lock_);
   ChunkDemuxerStream* selected_stream = nullptr;
   if (track_id) {
-    auto it = track_id_to_demux_stream_map_.find(*track_id);
-    if (it != track_id_to_demux_stream_map_.end()) {
-      selected_stream = it->second;
-      DCHECK(selected_stream);
-      DCHECK_EQ(DemuxerStream::VIDEO, selected_stream->type());
-    }
+    selected_stream = track_id_to_demux_stream_map_[*track_id];
+    DCHECK(selected_stream);
+    DCHECK_EQ(DemuxerStream::VIDEO, selected_stream->type());
   }
 
   // First disable all streams that need to be disabled and then enable the

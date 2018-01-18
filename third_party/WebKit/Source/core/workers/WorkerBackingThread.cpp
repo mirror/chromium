@@ -68,7 +68,7 @@ WorkerBackingThread::WorkerBackingThread(WebThread* thread,
       is_owning_thread_(false),
       should_call_gc_on_shutdown_(should_call_gc_on_shutdown) {}
 
-WorkerBackingThread::~WorkerBackingThread() = default;
+WorkerBackingThread::~WorkerBackingThread() {}
 
 void WorkerBackingThread::InitializeOnBackingThread(
     const WorkerBackingThreadStartupData& startup_data) {

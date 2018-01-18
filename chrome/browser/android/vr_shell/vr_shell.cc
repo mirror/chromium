@@ -10,6 +10,7 @@
 #include <utility>
 
 #include "base/android/jni_string.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/threading/platform_thread.h"
@@ -138,7 +139,7 @@ VrShell::VrShell(JNIEnv* env,
       web_vr_autopresentation_expected_(
           ui_initial_state.web_vr_autopresentation_expected),
       window_(window),
-      compositor_(std::make_unique<VrCompositor>(window_, this)),
+      compositor_(base::MakeUnique<VrCompositor>(window_)),
       delegate_provider_(delegate),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       reprojected_rendering_(reprojected_rendering),
@@ -150,12 +151,12 @@ VrShell::VrShell(JNIEnv* env,
   g_vr_shell_instance = this;
   j_vr_shell_.Reset(env, obj);
 
-  gl_thread_ = std::make_unique<VrGLThread>(
+  gl_thread_ = base::MakeUnique<VrGLThread>(
       weak_ptr_factory_.GetWeakPtr(), main_thread_task_runner_, gvr_api,
       ui_initial_state, reprojected_rendering_, HasDaydreamSupport(env));
   ui_ = gl_thread_.get();
-  toolbar_ = std::make_unique<vr::ToolbarHelper>(ui_, this);
-  autocomplete_controller_ = std::make_unique<AutocompleteController>(
+  toolbar_ = base::MakeUnique<vr::ToolbarHelper>(ui_, this);
+  autocomplete_controller_ = base::MakeUnique<AutocompleteController>(
       base::BindRepeating(&vr::BrowserUiInterface::SetOmniboxSuggestions,
                           base::Unretained(ui_)));
 
@@ -212,7 +213,7 @@ void VrShell::SwapContents(
   ContentFrameWasResized(false /* unused */);
   SetUiState();
 
-  vr_web_contents_observer_ = std::make_unique<VrWebContentsObserver>(
+  vr_web_contents_observer_ = base::MakeUnique<VrWebContentsObserver>(
       web_contents_, this, ui_, toolbar_.get());
 
   if (target) {
@@ -222,11 +223,11 @@ void VrShell::SwapContents(
     return;
   }
   web_contents_event_forwarder_ =
-      std::make_unique<vr::WebContentsEventForwarder>(
+      base::MakeUnique<vr::WebContentsEventForwarder>(
           GetNonNativePageWebContents());
   // TODO(billorr): Make VrMetricsHelper tab-aware and able to track multiple
   // tabs. crbug.com/684661
-  metrics_helper_ = std::make_unique<VrMetricsHelper>(
+  metrics_helper_ = base::MakeUnique<VrMetricsHelper>(
       GetNonNativePageWebContents(),
       webvr_mode_ ? vr::Mode::kWebVr : vr::Mode::kVrBrowsingRegular,
       web_vr_autopresentation_expected_);
@@ -650,7 +651,7 @@ void VrShell::ContentWasHidden() {
 void VrShell::ContentWasShown() {
   if (GetNonNativePageWebContents()) {
     web_contents_event_forwarder_ =
-        std::make_unique<vr::WebContentsEventForwarder>(
+        base::MakeUnique<vr::WebContentsEventForwarder>(
             GetNonNativePageWebContents());
   }
 }
@@ -983,11 +984,6 @@ void VrShell::OnAssetsLoaded(vr::AssetsLoadStatus status,
 
 void VrShell::OnAssetsComponentReady() {
   ui_->OnAssetsComponentReady();
-}
-
-void VrShell::DidSwapBuffers() {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  Java_VrShellImpl_didSwapBuffers(env, j_vr_shell_);
 }
 
 // ----------------------------------------------------------------------------

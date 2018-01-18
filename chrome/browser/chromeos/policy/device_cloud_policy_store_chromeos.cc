@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/sequenced_task_runner.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
@@ -116,7 +117,7 @@ DeviceCloudPolicyStoreChromeOS::CreateValidator(
     const em::PolicyFetchResponse& policy) {
   std::unique_ptr<DeviceCloudPolicyValidator> validator(
       DeviceCloudPolicyValidator::Create(
-          std::make_unique<em::PolicyFetchResponse>(policy),
+          base::MakeUnique<em::PolicyFetchResponse>(policy),
           background_task_runner_));
   validator->ValidateDomain(install_attributes_->GetDomain());
   validator->ValidatePolicyType(dm_protocol::kChromeDevicePolicyType);
@@ -156,7 +157,7 @@ void DeviceCloudPolicyStoreChromeOS::UpdateFromService() {
   const chromeos::DeviceSettingsService::Status service_status =
       device_settings_service_->status();
   if (service_status == chromeos::DeviceSettingsService::STORE_SUCCESS) {
-    policy_ = std::make_unique<em::PolicyData>();
+    policy_ = base::MakeUnique<em::PolicyData>();
     const em::PolicyData* policy_data = device_settings_service_->policy_data();
     if (policy_data)
       policy_->MergeFrom(*policy_data);

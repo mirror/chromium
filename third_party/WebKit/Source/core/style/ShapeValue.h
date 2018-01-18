@@ -86,10 +86,9 @@ class ShapeValue final : public GarbageCollectedFinalized<ShapeValue> {
  private:
   ShapeValue(scoped_refptr<BasicShape> shape, CSSBoxType css_box)
       : type_(kShape), shape_(std::move(shape)), css_box_(css_box) {}
-  ShapeValue(ShapeValueType type)
-      : type_(type), css_box_(CSSBoxType::kMissing) {}
+  ShapeValue(ShapeValueType type) : type_(type), css_box_(kBoxMissing) {}
   ShapeValue(StyleImage* image)
-      : type_(kImage), image_(image), css_box_(CSSBoxType::kContent) {}
+      : type_(kImage), image_(image), css_box_(kContentBox) {}
   ShapeValue(CSSBoxType css_box) : type_(kBox), css_box_(css_box) {}
 
   ShapeValueType type_;

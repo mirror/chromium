@@ -7,7 +7,10 @@
 #include "content/public/common/origin_util.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/common/service_worker_modes.h"
-#include "services/network/public/cpp/cors/cors.h"
+#include "third_party/WebKit/public/platform/WebCORS.h"
+#include "third_party/WebKit/public/platform/WebHTTPHeaderMap.h"
+#include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
+#include "third_party/WebKit/public/platform/WebURLRequest.h"
 
 using network::mojom::CORSError;
 using network::mojom::FetchRequestMode;
@@ -16,7 +19,7 @@ namespace content {
 
 namespace {
 
-bool CalculateCORSFlag(const network::ResourceRequest& request) {
+bool CalculateCORSFlag(const ResourceRequest& request) {
   if (request.fetch_request_mode == FetchRequestMode::kNavigate &&
       (request.resource_type == RESOURCE_TYPE_MAIN_FRAME ||
        request.resource_type == RESOURCE_TYPE_SUB_FRAME)) {
@@ -31,15 +34,6 @@ bool CalculateCORSFlag(const network::ResourceRequest& request) {
   return !security_origin.IsSameOriginWith(url_origin);
 }
 
-base::Optional<std::string> GetHeaderString(
-    const scoped_refptr<net::HttpResponseHeaders>& headers,
-    const std::string& header_name) {
-  std::string header_value;
-  if (!headers->GetNormalizedHeader(header_name, &header_value))
-    return base::nullopt;
-  return header_value;
-}
-
 }  // namespace
 
 // TODO(toyoshim): At the moment this class simply forwards all calls to the
@@ -49,7 +43,7 @@ CORSURLLoader::CORSURLLoader(
     int32_t routing_id,
     int32_t request_id,
     uint32_t options,
-    const network::ResourceRequest& resource_request,
+    const ResourceRequest& resource_request,
     mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
     mojom::URLLoaderFactory* network_loader_factory)
@@ -120,24 +114,17 @@ void CORSURLLoader::ResumeReadingBodyFromNet() {
 }
 
 void CORSURLLoader::OnReceiveResponse(
-    const network::ResourceResponseHead& response_head,
+    const ResourceResponseHead& response_head,
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
   DCHECK(network_loader_);
   DCHECK(forwarding_client_);
   DCHECK(!is_waiting_follow_redirect_call_);
   if (fetch_cors_flag_ &&
-      network::cors::IsCORSEnabledRequestMode(fetch_request_mode_)) {
-    base::Optional<CORSError> cors_error = network::cors::CheckAccess(
+      blink::WebCORS::IsCORSEnabledRequestMode(fetch_request_mode_)) {
+    base::Optional<CORSError> cors_error = blink::WebCORS::CheckAccess(
         last_response_url_, response_head.headers->response_code(),
-        GetHeaderString(response_head.headers,
-                        network::cors::header_names::kAccessControlAllowOrigin),
-        GetHeaderString(
-            response_head.headers,
-            network::cors::header_names::kAccessControlAllowSuborigin),
-        GetHeaderString(
-            response_head.headers,
-            network::cors::header_names::kAccessControlAllowCredentials),
+        blink::WebHTTPHeaderMap(response_head.headers.get()),
         fetch_credentials_mode_, security_origin_);
     if (cors_error) {
       // TODO(toyoshim): Generate related_response_headers here.
@@ -152,7 +139,7 @@ void CORSURLLoader::OnReceiveResponse(
 
 void CORSURLLoader::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
-    const network::ResourceResponseHead& response_head) {
+    const ResourceResponseHead& response_head) {
   DCHECK(network_loader_);
   DCHECK(forwarding_client_);
   DCHECK(!is_waiting_follow_redirect_call_);

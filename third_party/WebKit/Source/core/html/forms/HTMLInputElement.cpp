@@ -74,7 +74,6 @@
 #include "platform/text/PlatformLocale.h"
 #include "platform/wtf/MathExtras.h"
 #include "public/platform/TaskType.h"
-#include "public/platform/WebScrollIntoViewParams.h"
 
 namespace blink {
 
@@ -128,7 +127,7 @@ HTMLInputElement* HTMLInputElement::Create(Document& document,
       new HTMLInputElement(document, created_by_parser);
   if (!created_by_parser) {
     DCHECK(input_element->input_type_view_->NeedsShadowSubtree());
-    input_element->CreateLegacyUserAgentShadowRootV0();
+    input_element->CreateUserAgentShadowRoot();
     input_element->CreateShadowSubtree();
   }
   return input_element;
@@ -152,7 +151,7 @@ HTMLImageLoader& HTMLInputElement::EnsureImageLoader() {
   return *image_loader_;
 }
 
-HTMLInputElement::~HTMLInputElement() = default;
+HTMLInputElement::~HTMLInputElement() {}
 
 const AtomicString& HTMLInputElement::GetName() const {
   return name_.IsNull() ? g_empty_atom : name_;
@@ -315,10 +314,8 @@ void HTMLInputElement::UpdateFocusAppearanceWithOptions(
     // case of RangeSelection. crbug.com/443061.
     GetDocument().EnsurePaintLocationDataValidForNode(this);
     if (!options.preventScroll()) {
-      if (GetLayoutObject()) {
-        GetLayoutObject()->ScrollRectToVisible(BoundingBox(),
-                                               WebScrollIntoViewParams());
-      }
+      if (GetLayoutObject())
+        GetLayoutObject()->ScrollRectToVisible(BoundingBox());
       if (GetDocument().GetFrame())
         GetDocument().GetFrame()->Selection().RevealSelection();
     }
@@ -381,7 +378,7 @@ void HTMLInputElement::InitializeTypeInParsing() {
   has_been_password_field_ |= new_type_name == InputTypeNames::password;
 
   if (input_type_view_->NeedsShadowSubtree()) {
-    CreateLegacyUserAgentShadowRootV0();
+    CreateUserAgentShadowRoot();
     CreateShadowSubtree();
   }
 
@@ -440,7 +437,7 @@ void HTMLInputElement::UpdateType() {
   input_type_ = new_type;
   input_type_view_ = input_type_->CreateView();
   if (input_type_view_->NeedsShadowSubtree()) {
-    EnsureLegacyUserAgentShadowRootV0();
+    EnsureUserAgentShadowRoot();
     CreateShadowSubtree();
   }
 
@@ -1949,7 +1946,7 @@ void HTMLInputElement::ChildrenChanged(const ChildrenChange& change) {
   // Some input types only need shadow roots to hide any children that may
   // have been appended by script. For such types, shadow roots are lazily
   // created when children are added for the first time.
-  EnsureLegacyUserAgentShadowRootV0();
+  EnsureUserAgentShadowRoot();
   ContainerNode::ChildrenChanged(change);
 }
 

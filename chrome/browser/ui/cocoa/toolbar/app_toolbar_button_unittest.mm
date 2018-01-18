@@ -74,7 +74,7 @@ class AppToolbarButtonTest : public CocoaTest {
         base::FieldTrialList::CreateFieldTrial(kTrialName, kGroupName);
 
     std::unique_ptr<base::FeatureList> feature_list(
-        std::make_unique<base::FeatureList>());
+        base::MakeUnique<base::FeatureList>());
     feature_list->RegisterFieldTrialOverride(
         features::kAnimatedAppMenuIcon.name,
         base::FeatureList::OVERRIDE_ENABLE_FEATURE, field_trial);

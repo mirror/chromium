@@ -2,8 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chrome/browser/policy/file_selection_dialogs_policy_handler.h"
 #include "chrome/common/pref_names.h"
@@ -32,7 +31,7 @@ TEST_F(FileSelectionDialogsPolicyTest, Default) {
 TEST_F(FileSelectionDialogsPolicyTest, EnableFileSelectionDialogs) {
   policy_.Set(key::kAllowFileSelectionDialogs, POLICY_LEVEL_MANDATORY,
               POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
-              std::make_unique<base::Value>(true), nullptr);
+              base::MakeUnique<base::Value>(true), nullptr);
   handler_.ApplyPolicySettings(policy_, &prefs_);
 
   // Allowing file-selection dialogs should not influence the PromptForDownload
@@ -43,7 +42,7 @@ TEST_F(FileSelectionDialogsPolicyTest, EnableFileSelectionDialogs) {
 TEST_F(FileSelectionDialogsPolicyTest, DisableFileSelectionDialogs) {
   policy_.Set(key::kAllowFileSelectionDialogs, POLICY_LEVEL_MANDATORY,
               POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
-              std::make_unique<base::Value>(false), nullptr);
+              base::MakeUnique<base::Value>(false), nullptr);
   handler_.ApplyPolicySettings(policy_, &prefs_);
 
   // Disabling file-selection dialogs should disable the PromptForDownload pref.

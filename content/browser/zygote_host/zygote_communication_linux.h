@@ -34,8 +34,7 @@ class CONTENT_EXPORT ZygoteCommunication {
   ZygoteCommunication();
   ~ZygoteCommunication();
 
-  void Init(
-      base::OnceCallback<pid_t(base::CommandLine*, base::ScopedFD*)> launcher);
+  void Init(base::OnceCallback<void(base::CommandLine*)> add_switches_callback);
 
   // Tries to start a process of type indicated by process_type.
   // Returns its pid on success, otherwise base::kNullProcessHandle;

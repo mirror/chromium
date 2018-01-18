@@ -45,7 +45,7 @@ URLRequestFtpJob::URLRequestFtpJob(
     : URLRequestJob(request, network_delegate),
       priority_(DEFAULT_PRIORITY),
       proxy_service_(request_->context()->proxy_service()),
-      proxy_resolve_request_(NULL),
+      pac_request_(NULL),
       http_response_info_(NULL),
       read_in_progress_(false),
       ftp_transaction_factory_(ftp_transaction_factory),
@@ -104,7 +104,7 @@ void URLRequestFtpJob::SetPriority(RequestPriority priority) {
 }
 
 void URLRequestFtpJob::Start() {
-  DCHECK(!proxy_resolve_request_);
+  DCHECK(!pac_request_);
   DCHECK(!ftp_transaction_);
   DCHECK(!http_transaction_);
 
@@ -117,7 +117,7 @@ void URLRequestFtpJob::Start() {
         request_->url(), "GET", &proxy_info_,
         base::Bind(&URLRequestFtpJob::OnResolveProxyComplete,
                    base::Unretained(this)),
-        &proxy_resolve_request_, NULL, request_->net_log());
+        &pac_request_, NULL, request_->net_log());
 
     if (rv == ERR_IO_PENDING)
       return;
@@ -126,9 +126,9 @@ void URLRequestFtpJob::Start() {
 }
 
 void URLRequestFtpJob::Kill() {
-  if (proxy_resolve_request_) {
-    proxy_service_->CancelRequest(proxy_resolve_request_);
-    proxy_resolve_request_ = nullptr;
+  if (pac_request_) {
+    proxy_service_->CancelPacRequest(pac_request_);
+    pac_request_ = nullptr;
   }
   if (ftp_transaction_)
     ftp_transaction_.reset();
@@ -139,7 +139,7 @@ void URLRequestFtpJob::Kill() {
 }
 
 void URLRequestFtpJob::OnResolveProxyComplete(int result) {
-  proxy_resolve_request_ = NULL;
+  pac_request_ = NULL;
 
   if (result != OK) {
     OnStartCompletedAsync(result);
@@ -172,8 +172,9 @@ void URLRequestFtpJob::StartFtpTransaction() {
   if (ftp_transaction_) {
     rv = ftp_transaction_->Start(
         &ftp_request_info_,
-        base::Bind(&URLRequestFtpJob::OnStartCompleted, base::Unretained(this)),
-        request_->net_log(), request_->traffic_annotation());
+        base::Bind(&URLRequestFtpJob::OnStartCompleted,
+                   base::Unretained(this)),
+        request_->net_log());
     if (rv == ERR_IO_PENDING)
       return;
   } else {
@@ -277,8 +278,8 @@ void URLRequestFtpJob::RestartTransactionWithAuth() {
 }
 
 LoadState URLRequestFtpJob::GetLoadState() const {
-  if (proxy_resolve_request_)
-    return proxy_service_->GetLoadState(proxy_resolve_request_);
+  if (pac_request_)
+    return proxy_service_->GetLoadState(pac_request_);
   if (proxy_info_.is_direct()) {
     return ftp_transaction_ ?
         ftp_transaction_->GetLoadState() : LOAD_STATE_IDLE;

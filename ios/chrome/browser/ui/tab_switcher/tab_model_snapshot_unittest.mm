@@ -4,12 +4,7 @@
 
 #import "ios/chrome/browser/ui/tab_switcher/tab_model_snapshot.h"
 
-#import "ios/chrome/browser/tabs/legacy_tab_helper.h"
 #import "ios/chrome/browser/tabs/tab.h"
-#import "ios/chrome/browser/web_state_list/fake_web_state_list_delegate.h"
-#import "ios/chrome/browser/web_state_list/web_state_list.h"
-#import "ios/chrome/browser/web_state_list/web_state_opener.h"
-#import "ios/web/public/test/fakes/test_web_state.h"
 #include "testing/platform_test.h"
 #import "third_party/ocmock/OCMock/OCMock.h"
 
@@ -17,46 +12,24 @@
 #error "This file requires ARC support."
 #endif
 
-@interface TabModelSnapshotTestTabMock : NSObject
-
-@property(nonatomic, copy) NSString* tabId;
-@property(nonatomic, copy) NSString* urlDisplayString;
-@property(nonatomic, assign) double lastVisitedTimestamp;
-
-@end
-
-@implementation TabModelSnapshotTestTabMock
-
-@synthesize tabId = _tabId;
-@synthesize urlDisplayString = _urlDisplayString;
-@synthesize lastVisitedTimestamp = _lastVisitedTimestamp;
-
-@end
-
-@interface TabModelSnapshotTestTabModelMock : NSObject
-@end
-
-@implementation TabModelSnapshotTestTabModelMock {
-  FakeWebStateListDelegate _webStateListDelegate;
-  std::unique_ptr<WebStateList> _webStateList;
+@interface TabModelMock : NSObject<NSFastEnumeration> {
+  NSArray* tabs_;
 }
+@end
 
-- (instancetype)initWithTabs:(NSArray<Tab*>*)tabs {
+@implementation TabModelMock
+
+- (id)initWithTabs:(NSArray*)tabs {
   if ((self = [super init])) {
-    _webStateList = std::make_unique<WebStateList>(&_webStateListDelegate);
-    for (Tab* tab in tabs) {
-      auto testWebState = std::make_unique<web::TestWebState>();
-      LegacyTabHelper::CreateForWebStateForTesting(testWebState.get(), tab);
-      _webStateList->InsertWebState(0, std::move(testWebState),
-                                    WebStateList::INSERT_NO_FLAGS,
-                                    WebStateOpener());
-    }
+    tabs_ = tabs;
   }
   return self;
 }
 
-- (WebStateList*)webStateList {
-  return _webStateList.get();
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState*)state
+                                  objects:(id __unsafe_unretained*)stackbuf
+                                    count:(NSUInteger)len {
+  return [tabs_ countByEnumeratingWithState:state objects:stackbuf count:len];
 }
 
 @end
@@ -66,12 +39,11 @@ namespace {
 class TabModelSnapshotTest : public PlatformTest {
  protected:
   Tab* TabMock(NSString* tabId, NSString* url, double time) {
-    TabModelSnapshotTestTabMock* tabMock =
-        [[TabModelSnapshotTestTabMock alloc] init];
-    tabMock.tabId = tabId;
-    tabMock.urlDisplayString = url;
-    tabMock.lastVisitedTimestamp = time;
-    return static_cast<Tab*>(tabMock);
+    id tabMock = [OCMockObject mockForClass:[Tab class]];
+    [[[tabMock stub] andReturn:tabId] tabId];
+    [[[tabMock stub] andReturn:url] urlDisplayString];
+    [[[tabMock stub] andReturnValue:OCMOCK_VALUE(time)] lastVisitedTimestamp];
+    return (Tab*)tabMock;
   }
 };
 
@@ -106,9 +78,9 @@ TEST_F(TabModelSnapshotTest, TestSnapshotHashes) {
   Tab* tab1 = TabMock(@"id1", @"url1", 12345.6789);
   Tab* tab2 = TabMock(@"id2", @"url1", 12345.6789);
 
-  TabModelSnapshotTestTabModelMock* tabModel =
-      [[TabModelSnapshotTestTabModelMock alloc] initWithTabs:@[ tab1, tab2 ]];
-  TabModelSnapshot tabModelSnapshot(static_cast<TabModel*>(tabModel));
+  TabModelMock* tabModel = [[TabModelMock alloc] initWithTabs:@[ tab1, tab2 ]];
+  TabModelSnapshot tabModelSnapshot((TabModel*)tabModel);
+  tabModel = nil;
 
   EXPECT_EQ(tabModelSnapshot.hashes().size(), 2UL);
   EXPECT_EQ(tabModelSnapshot.hashes()[0],

@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/profiles/profile.h"
@@ -179,7 +180,7 @@ ChromeContentRulesRegistry::CreateRule(
 
   // Note: |api_rule| may contain tags, but these are ignored.
 
-  return std::make_unique<ContentRule>(extension, std::move(conditions),
+  return base::MakeUnique<ContentRule>(extension, std::move(conditions),
                                        std::move(actions), *api_rule.priority);
 }
 

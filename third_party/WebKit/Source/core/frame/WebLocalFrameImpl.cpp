@@ -139,7 +139,6 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/PageScaleConstraintsSet.h"
 #include "core/frame/PausableScriptExecutor.h"
-#include "core/frame/PausableTask.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/RemoteFrameOwner.h"
 #include "core/frame/ScreenOrientationController.h"
@@ -209,7 +208,6 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Time.h"
-#include "public/platform/InterfaceRegistry.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebDoubleSize.h"
 #include "public/platform/WebFloatPoint.h"
@@ -434,7 +432,7 @@ class ChromePluginPrintContext final : public ChromePrintContext {
         plugin_(plugin),
         print_params_(print_params) {}
 
-  ~ChromePluginPrintContext() override = default;
+  ~ChromePluginPrintContext() override {}
 
   virtual void Trace(blink::Visitor* visitor) {
     visitor->Trace(plugin_);
@@ -761,13 +759,6 @@ void WebLocalFrameImpl::RequestExecuteV8Function(
   PausableScriptExecutor::CreateAndRun(GetFrame(), ToIsolate(GetFrame()),
                                        context, function, receiver, argc, argv,
                                        callback);
-}
-
-void WebLocalFrameImpl::PostPausableTask(PausableTaskCallback callback) {
-  DCHECK(GetFrame());
-  Document* document = GetFrame()->GetDocument();
-  DCHECK(document);
-  PausableTask::Post(document, std::move(callback));
 }
 
 void WebLocalFrameImpl::ExecuteScriptInIsolatedWorld(
@@ -1764,11 +1755,8 @@ void WebLocalFrameImpl::InitializeCoreFrame(Page& page,
     frame_->GetDocument()->GetMutableSecurityOrigin()->GrantUniversalAccess();
   }
 
-  if (frame_->IsLocalRoot()) {
-    frame_->GetInterfaceRegistry()->AddAssociatedInterface(
-        WTF::BindRepeating(&WebLocalFrameImpl::BindDevToolsAgentRequest,
-                           WrapWeakPersistent(this)));
-  }
+  if (frame_->IsLocalRoot())
+    dev_tools_agent_ = WebDevToolsAgentImpl::Create(this);
 
   if (!owner) {
     // This trace event is needed to detect the main frame of the
@@ -2611,18 +2599,6 @@ Node* WebLocalFrameImpl::ContextMenuNodeInner() const {
       ->GetPage()
       ->GetContextMenuController()
       .ContextMenuNodeForFrame(GetFrame());
-}
-
-void WebLocalFrameImpl::SetDevToolsAgentImpl(WebDevToolsAgentImpl* agent) {
-  DCHECK(!dev_tools_agent_);
-  dev_tools_agent_ = agent;
-}
-
-void WebLocalFrameImpl::BindDevToolsAgentRequest(
-    mojom::blink::DevToolsAgentAssociatedRequest request) {
-  if (!dev_tools_agent_)
-    dev_tools_agent_ = WebDevToolsAgentImpl::CreateForFrame(this);
-  dev_tools_agent_->BindRequest(std::move(request));
 }
 
 }  // namespace blink

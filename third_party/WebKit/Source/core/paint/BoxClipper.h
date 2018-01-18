@@ -5,17 +5,20 @@
 #ifndef BoxClipper_h
 #define BoxClipper_h
 
-#include "core/paint/BoxClipperBase.h"
 #include "platform/geometry/LayoutPoint.h"
 #include "platform/graphics/paint/DisplayItem.h"
+#include "platform/graphics/paint/ScopedPaintChunkProperties.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Optional.h"
 
 namespace blink {
 
 class LayoutBox;
+struct PaintInfo;
 
 enum ContentsClipBehavior { kForceContentsClip, kSkipContentsClipIfPossible };
 
-class BoxClipper : public BoxClipperBase {
+class BoxClipper {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
@@ -29,6 +32,8 @@ class BoxClipper : public BoxClipperBase {
   const LayoutBox& box_;
   const PaintInfo& paint_info_;
   DisplayItem::Type clip_type_;
+
+  Optional<ScopedPaintChunkProperties> scoped_clip_property_;
 };
 
 }  // namespace blink

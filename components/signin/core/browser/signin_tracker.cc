@@ -49,6 +49,10 @@ void SigninTracker::OnRefreshTokenAvailable(const std::string& account_id) {
   observer_->SigninSuccess();
 }
 
+void SigninTracker::OnRefreshTokenRevoked(const std::string& account_id) {
+  NOTREACHED();
+}
+
 void SigninTracker::OnAddAccountToCookieCompleted(
     const std::string& account_id,
     const GoogleServiceAuthError& error) {

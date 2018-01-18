@@ -4,8 +4,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include <memory>
-
 #include "base/command_line.h"
 #import "base/mac/scoped_nsobject.h"
 #include "base/run_loop.h"
@@ -107,10 +105,10 @@ class PermissionBubbleInteractiveUITest
     EXPECT_TRUE(ui_test_utils::BringBrowserWindowToFront(browser()));
 
     test_api_ =
-        std::make_unique<test::PermissionRequestManagerTestApi>(browser());
+        base::MakeUnique<test::PermissionRequestManagerTestApi>(browser());
     EXPECT_TRUE(test_api_->manager());
 
-    decoration_test_api_ = std::make_unique<test::LocationBarDecorationTestApi>(
+    decoration_test_api_ = base::MakeUnique<test::LocationBarDecorationTestApi>(
         GetPageInfoDecoration(browser()->window()->GetNativeWindow()));
 
     test_api_->AddSimpleRequest(CONTENT_SETTINGS_TYPE_GEOLOCATION);

@@ -121,6 +121,7 @@ class CORE_EXPORT ScrollingCoordinator final
   bool ScrollableAreaScrollLayerDidChange(ScrollableArea*);
   void ScrollableAreaScrollbarLayerDidChange(ScrollableArea*,
                                              ScrollbarOrientation);
+  void SetLayerIsContainerForFixedPositionLayers(GraphicsLayer*, bool);
   void UpdateLayerPositionConstraint(PaintLayer*);
   void TouchEventTargetRectsDidChange();
   void WillDestroyLayer(PaintLayer*);

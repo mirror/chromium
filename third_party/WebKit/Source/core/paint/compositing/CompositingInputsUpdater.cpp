@@ -19,7 +19,7 @@ namespace blink {
 CompositingInputsUpdater::CompositingInputsUpdater(PaintLayer* root_layer)
     : geometry_map_(kUseTransforms), root_layer_(root_layer) {}
 
-CompositingInputsUpdater::~CompositingInputsUpdater() = default;
+CompositingInputsUpdater::~CompositingInputsUpdater() {}
 
 void CompositingInputsUpdater::Update() {
   TRACE_EVENT0("blink", "CompositingInputsUpdater::update");
@@ -156,19 +156,10 @@ void CompositingInputsUpdater::UpdateRecursive(PaintLayer* layer,
         ClipRect clip_rect;
         layer->Clipper(PaintLayer::kDoNotUseGeometryMapper)
             .CalculateBackgroundClipRect(
-                ClipRectsContext(root_layer_,
-                                 kAbsoluteClipRectsIgnoringViewportClip,
-                                 kIgnorePlatformOverlayScrollbarSize,
-                                 kIgnoreOverflowClipAndScroll),
+                ClipRectsContext(
+                    root_layer_, kAbsoluteClipRectsIgnoringViewportClip,
+                    kIgnorePlatformOverlayScrollbarSize, kIgnoreOverflowClip),
                 clip_rect);
-        // Scroll offset is not included in the clip rect returned above
-        // (see kIgnoreOverflowClipAndScroll), so we need to add it in
-        // now. Scroll offset is excluded so that we do not need to invalidate
-        // the clip rect cache on scroll.
-        if (root_layer_->ScrollsOverflow()) {
-          clip_rect.Move(
-              LayoutSize(-root_layer_->GetScrollableArea()->GetScrollOffset()));
-        }
         IntRect snapped_clip_rect = PixelSnappedIntRect(clip_rect.Rect());
         properties.clipped_absolute_bounding_box =
             properties.unclipped_absolute_bounding_box;

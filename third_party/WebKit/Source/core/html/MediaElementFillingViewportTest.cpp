@@ -15,7 +15,7 @@ namespace blink {
 
 class MediaElementFillingViewportTest : public SimTest {
  protected:
-  MediaElementFillingViewportTest() = default;
+  MediaElementFillingViewportTest() {}
 
   void SetUp() override {
     SimTest::SetUp();

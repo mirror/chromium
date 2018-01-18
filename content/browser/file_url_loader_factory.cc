@@ -23,6 +23,7 @@
 #include "build/build_config.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/file_url_loader.h"
+#include "content/public/common/resource_request.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
@@ -37,7 +38,6 @@
 #include "net/http/http_byte_range.h"
 #include "net/http/http_util.h"
 #include "net/url_request/redirect_info.h"
-#include "services/network/public/cpp/resource_request.h"
 #include "storage/common/fileapi/file_system_util.h"
 #include "url/gurl.h"
 
@@ -89,7 +89,7 @@ class FileURLDirectoryLoader
       public net::DirectoryLister::DirectoryListerDelegate {
  public:
   static void CreateAndStart(const base::FilePath& profile_path,
-                             const network::ResourceRequest& request,
+                             const ResourceRequest& request,
                              mojom::URLLoaderRequest loader,
                              mojom::URLLoaderClientPtrInfo client_info,
                              std::unique_ptr<FileURLLoaderObserver> observer) {
@@ -114,7 +114,7 @@ class FileURLDirectoryLoader
   ~FileURLDirectoryLoader() override = default;
 
   void Start(const base::FilePath& profile_path,
-             const network::ResourceRequest& request,
+             const ResourceRequest& request,
              mojom::URLLoaderRequest loader,
              mojom::URLLoaderClientPtrInfo client_info,
              std::unique_ptr<content::FileURLLoaderObserver> observer) {
@@ -150,7 +150,7 @@ class FileURLDirectoryLoader
       return;
     }
 
-    network::ResourceResponseHead head;
+    ResourceResponseHead head;
     head.mime_type = "text/html";
     head.charset = "utf-8";
     client->OnReceiveResponse(head, base::nullopt, nullptr);
@@ -287,7 +287,7 @@ class FileURLDirectoryLoader
 class FileURLLoader : public mojom::URLLoader {
  public:
   static void CreateAndStart(const base::FilePath& profile_path,
-                             const network::ResourceRequest& request,
+                             const ResourceRequest& request,
                              mojom::URLLoaderRequest loader,
                              mojom::URLLoaderClientPtrInfo client_info,
                              DirectoryLoadingPolicy directory_loading_policy,
@@ -317,14 +317,14 @@ class FileURLLoader : public mojom::URLLoader {
   ~FileURLLoader() override = default;
 
   void Start(const base::FilePath& profile_path,
-             const network::ResourceRequest& request,
+             const ResourceRequest& request,
              mojom::URLLoaderRequest loader,
              mojom::URLLoaderClientPtrInfo client_info,
              DirectoryLoadingPolicy directory_loading_policy,
              FileAccessPolicy file_access_policy,
              LinkFollowingPolicy link_following_policy,
              std::unique_ptr<FileURLLoaderObserver> observer) {
-    network::ResourceResponseHead head;
+    ResourceResponseHead head;
     head.request_start = base::TimeTicks::Now();
     head.response_start = base::TimeTicks::Now();
     binding_.Bind(std::move(loader));
@@ -381,7 +381,7 @@ class FileURLLoader : public mojom::URLLoader {
       }
 
       // Restart the request with a directory loader.
-      network::ResourceRequest new_request = request;
+      ResourceRequest new_request = request;
       new_request.url = directory_url;
       FileURLDirectoryLoader::CreateAndStart(
           profile_path, new_request, binding_.Unbind(), client.PassInterface(),
@@ -406,7 +406,7 @@ class FileURLLoader : public mojom::URLLoader {
       client->OnReceiveRedirect(redirect_info, head);
 
       // Restart the request with the new URL.
-      network::ResourceRequest new_request = request;
+      ResourceRequest new_request = request;
       new_request.url = redirect_info.new_url;
       return Start(profile_path, request, binding_.Unbind(),
                    client.PassInterface(), directory_loading_policy,
@@ -598,7 +598,7 @@ void FileURLLoaderFactory::CreateLoaderAndStart(
     int32_t routing_id,
     int32_t request_id,
     uint32_t options,
-    const network::ResourceRequest& request,
+    const ResourceRequest& request,
     mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
   base::FilePath file_path;
@@ -625,7 +625,7 @@ void FileURLLoaderFactory::Clone(mojom::URLLoaderFactoryRequest loader) {
   bindings_.AddBinding(this, std::move(loader));
 }
 
-void CreateFileURLLoader(const network::ResourceRequest& request,
+void CreateFileURLLoader(const ResourceRequest& request,
                          mojom::URLLoaderRequest loader,
                          mojom::URLLoaderClientPtr client,
                          std::unique_ptr<FileURLLoaderObserver> observer) {

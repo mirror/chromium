@@ -11,6 +11,7 @@
 
 #include "ash/ime/test_ime_controller.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_task_environment.h"
@@ -63,7 +64,7 @@ class TestInputMethodManager : public MockInputMethodManager {
     }
     std::unique_ptr<std::vector<InputMethodDescriptor>> GetActiveInputMethods()
         const override {
-      return std::make_unique<std::vector<InputMethodDescriptor>>(
+      return base::MakeUnique<std::vector<InputMethodDescriptor>>(
           input_methods_);
     }
     const InputMethodDescriptor* GetInputMethodFromId(
@@ -160,7 +161,7 @@ class ImeControllerClientTest : public testing::Test {
 
 TEST_F(ImeControllerClientTest, Construction) {
   std::unique_ptr<ImeControllerClient> client =
-      std::make_unique<ImeControllerClient>(&input_method_manager_);
+      base::MakeUnique<ImeControllerClient>(&input_method_manager_);
   client->InitForTesting(ime_controller_.CreateInterfacePtr());
   EXPECT_EQ(1, input_method_manager_.add_observer_count_);
   EXPECT_EQ(1, input_method_manager_.add_menu_observer_count_);

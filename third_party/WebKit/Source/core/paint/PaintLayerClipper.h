@@ -60,8 +60,7 @@ class PropertyTreeState;
 
 enum ShouldRespectOverflowClipType {
   kIgnoreOverflowClip,
-  kRespectOverflowClip,
-  kIgnoreOverflowClipAndScroll
+  kRespectOverflowClip
 };
 
 class ClipRectsContext {

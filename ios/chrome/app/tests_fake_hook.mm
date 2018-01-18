@@ -28,9 +28,6 @@ bool DisableSigninRecallPromo() {
 bool DisableUpdateService() {
   return false;
 }
-bool ForceAdaptiveToolbar() {
-  return false;
-}
 void SetUpTestsIfPresent() {}
 void RunTestsIfPresent() {}
 

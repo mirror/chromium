@@ -115,6 +115,11 @@ class PrintViewManagerBase : public content::NotificationObserver,
 
 // Helpers for PrintForPrintPreview();
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+  void CreateQueryWithSettings(
+      std::unique_ptr<base::DictionaryValue> job_settings,
+      content::RenderFrameHost* rfh,
+      base::OnceCallback<void(scoped_refptr<printing::PrinterQuery>)> callback);
+
   void OnPrintSettingsDone(
       const scoped_refptr<base::RefCountedBytes>& print_data,
       int page_count,
@@ -140,9 +145,10 @@ class PrintViewManagerBase : public content::NotificationObserver,
   // |cookie|. If so, returns the document associated with the cookie.
   PrintedDocument* GetDocument(int cookie);
 
-  // Starts printing |document| with the given |print_data|. This method assumes
-  // |print_data| contains valid data.
-  void PrintDocument(PrintedDocument* document,
+  // Starts printing a document with data given in |print_data|. |print_data|
+  // must successfully initialize a metafile. |document| is the printed
+  // document associated with the print job. Returns true if successful.
+  bool PrintDocument(PrintedDocument* document,
                      const scoped_refptr<base::RefCountedBytes>& print_data,
                      const gfx::Size& page_size,
                      const gfx::Rect& content_area,

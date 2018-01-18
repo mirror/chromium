@@ -40,6 +40,7 @@ namespace blink {
 ErrorEvent::ErrorEvent()
     : sanitized_message_(),
       location_(SourceLocation::Create(String(), 0, 0, nullptr)),
+      error_(this),
       world_(&DOMWrapperWorld::Current(v8::Isolate::GetCurrent())) {}
 
 ErrorEvent::ErrorEvent(ScriptState* script_state,
@@ -47,6 +48,7 @@ ErrorEvent::ErrorEvent(ScriptState* script_state,
                        const ErrorEventInit& initializer)
     : Event(type, initializer),
       sanitized_message_(),
+      error_(this),
       world_(&script_state->World()) {
   if (initializer.hasMessage())
     sanitized_message_ = initializer.message();
@@ -66,6 +68,7 @@ ErrorEvent::ErrorEvent(const String& message,
     : Event(EventTypeNames::error, false, true),
       sanitized_message_(message),
       location_(std::move(location)),
+      error_(this),
       world_(world) {
   if (!error.IsEmpty())
     error_.Set(error.GetIsolate(), error.V8Value());
@@ -76,7 +79,7 @@ void ErrorEvent::SetUnsanitizedMessage(const String& message) {
   unsanitized_message_ = message;
 }
 
-ErrorEvent::~ErrorEvent() = default;
+ErrorEvent::~ErrorEvent() {}
 
 const AtomicString& ErrorEvent::InterfaceName() const {
   return EventNames::ErrorEvent;

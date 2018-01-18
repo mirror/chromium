@@ -32,9 +32,9 @@
 
 namespace blink {
 
+class EntryCallback;
 class FileSystemCallback;
 class LocalDOMWindow;
-class V8EntryCallback;
 class V8ErrorCallback;
 
 class DOMWindowFileSystem {
@@ -48,7 +48,7 @@ class DOMWindowFileSystem {
                                       V8ErrorCallback*);
   static void webkitResolveLocalFileSystemURL(LocalDOMWindow&,
                                               const String&,
-                                              V8EntryCallback*,
+                                              EntryCallback*,
                                               V8ErrorCallback*);
 
   // They are placed here and in all capital letters so they can be checked

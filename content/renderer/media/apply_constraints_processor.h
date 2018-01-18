@@ -21,7 +21,6 @@ class WebString;
 
 namespace content {
 
-class MediaStreamAudioSource;
 class MediaStreamVideoSource;
 class MediaStreamVideoTrack;
 
@@ -60,10 +59,6 @@ class CONTENT_EXPORT ApplyConstraintsProcessor {
   bool AbortIfVideoRequestStateInvalid();  // Returns true if aborted.
   VideoCaptureSettings SelectVideoSettings(media::VideoCaptureFormats formats);
   void FinalizeVideoRequest();
-
-  // Helpers for audio requests.
-  void ProcessAudioRequest();
-  MediaStreamAudioSource* GetCurrentAudioSource();
 
   // General helpers
   void ApplyConstraintsSucceeded();

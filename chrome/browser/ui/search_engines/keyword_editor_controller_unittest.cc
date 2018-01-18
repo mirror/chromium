@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/compiler_specific.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/profiles/profile.h"
@@ -242,7 +243,7 @@ TEST_F(KeywordEditorControllerTest, MutateTemplateURLService) {
   TemplateURLData data;
   data.SetShortName(ASCIIToUTF16("b"));
   data.SetKeyword(ASCIIToUTF16("a"));
-  TemplateURL* turl = util()->model()->Add(std::make_unique<TemplateURL>(data));
+  TemplateURL* turl = util()->model()->Add(base::MakeUnique<TemplateURL>(data));
 
   // Table model should have updated.
   VerifyChangeCount(1, 0, 0, 0);

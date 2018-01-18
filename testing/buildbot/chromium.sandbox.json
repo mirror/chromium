@@ -84,7 +84,7 @@
       {
         "swarming": {
           "can_use_on_swarming_builders": true,
-          "shards": 10
+          "shards": 5
         },
         "test": "browser_tests"
       },
@@ -108,7 +108,7 @@
         "name": "site_per_process_browser_tests",
         "swarming": {
           "can_use_on_swarming_builders": true,
-          "shards": 10
+          "shards": 5
         },
         "test": "browser_tests"
       },
@@ -196,7 +196,7 @@
       },
       {
         "args": [
-          "--enable-features=VizDisplayCompositor",
+          "--enable-viz",
           "--test-launcher-filter-file=../../testing/buildbot/filters/viz.content_browsertests.filter"
         ],
         "name": "viz_content_browsertests",
@@ -224,7 +224,7 @@
       },
       {
         "args": [
-          "--enable-features=VizDisplayCompositor",
+          "--enable-viz",
           "--test-launcher-filter-file=../../testing/buildbot/filters/viz.content_unittests.filter"
         ],
         "name": "viz_content_unittests",
@@ -605,8 +605,7 @@
       },
       {
         "args": [
-          "--xvfb",
-          "--jobs=1"
+          "--xvfb"
         ],
         "isolate_name": "telemetry_perf_unittests",
         "name": "telemetry_perf_unittests",

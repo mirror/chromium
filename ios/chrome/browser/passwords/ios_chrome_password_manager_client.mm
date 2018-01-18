@@ -24,7 +24,6 @@
 #include "ios/chrome/browser/passwords/password_manager_internals_service_factory.h"
 #include "ios/chrome/browser/signin/signin_manager_factory.h"
 #include "ios/chrome/browser/sync/ios_chrome_profile_sync_service_factory.h"
-#include "net/cert/cert_status_flags.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "url/gurl.h"
 
@@ -165,7 +164,7 @@ void IOSChromePasswordManagerClient::ForceSavePassword() {
 bool IOSChromePasswordManagerClient::IsSavingAndFillingEnabledForCurrentPage()
     const {
   return *saving_passwords_enabled_ && !IsIncognito() &&
-         !net::IsCertStatusError(GetMainFrameCertStatus()) &&
+         !DidLastPageLoadEncounterSSLErrors() &&
          IsFillingEnabledForCurrentPage();
 }
 

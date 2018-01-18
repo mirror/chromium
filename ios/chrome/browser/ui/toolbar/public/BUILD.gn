@@ -7,7 +7,6 @@ source_set("public") {
   sources = [
     "abstract_toolbar.h",
     "abstract_web_toolbar.h",
-    "fakebox_focuser.h",
     "legacy_toolbar_coordinator.h",
     "omnibox_focuser.h",
     "primary_toolbar_coordinator.h",
@@ -15,7 +14,6 @@ source_set("public") {
     "toolbar.h",
     "toolbar_controller_constants.h",
     "toolbar_controller_constants.mm",
-    "toolbar_coordinating.h",
     "toolbar_utils.h",
     "toolbar_utils.mm",
     "web_toolbar_controller_constants.h",
@@ -28,7 +26,6 @@ source_set("public") {
     "//ios/chrome/browser/ui/activity_services/requirements",
     "//ios/chrome/browser/ui/bubble",
     "//ios/chrome/browser/ui/fullscreen:new_fullscreen_ui",
-    "//ios/chrome/browser/ui/ntp",
     "//ios/chrome/browser/ui/qr_scanner/requirements",
     "//ios/chrome/browser/ui/tools_menu/public",
     "//ios/public/provider/chrome/browser/voice",

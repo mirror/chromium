@@ -111,7 +111,7 @@ FetchRequestData::FetchRequestData()
       mode_(network::mojom::FetchRequestMode::kNoCORS),
       credentials_(network::mojom::FetchCredentialsMode::kOmit),
       cache_mode_(mojom::FetchCacheMode::kDefault),
-      redirect_(network::mojom::FetchRedirectMode::kFollow),
+      redirect_(WebURLRequest::kFetchRedirectModeFollow),
       response_tainting_(kBasicTainting),
       keepalive_(false) {}
 

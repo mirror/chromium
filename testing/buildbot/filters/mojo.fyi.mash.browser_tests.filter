@@ -20,11 +20,8 @@
 -PolicyTest.*
 -UserTypeInstantiation/AccessibilityManagerUserTypeTest.*
 -VolumeControllerSoundsTest.*
--WizardControllerTest.*
-
-# Login constructs ash::FocusRingController and KeyboardDrivenOobeKeyHandler,
-# both of which use ash::Shell.
 -WizardControllerKioskFlowTest.*
+-WizardControllerTest.*
 
 # Uses ash::Shell::GetRootWindowForNewWindows to choose a display for the app list.
 # More generally, app list needs to move into ash.
@@ -154,9 +151,8 @@
 -KioskTest.*
 -KioskUpdateTest.*
 
-# Panel state lookup failures for window active, item running, etc.
--LauncherPlatformAppBrowserTest.PanelAttentionStatus
--LauncherPlatformAppBrowserTest.PanelItemClickBehavior
+# Window state lookup failures for minimized, active, etc.
+-LauncherPlatformAppBrowserTest.*
 
 # JS failure: hasAccessToCurrentWindow: FAIL (no message)
 -LockScreenNoteTakingTest.*
@@ -192,11 +188,9 @@
 # Crash in autofill::SaveCardBubbleViews::ShouldShowCloseButton().
 -SaveCardBubbleControllerImplTest.*
 
-# WindowSizerAsh does not compute correct show state.
--ShelfAppBrowserTest.AppWindowRestoreBehaviorTest
-
-# ash::Shell access in test for display configuration.
--ShelfAppBrowserTest.LaunchAppFromDisplayWithoutFocus*
+# ash::Shell access in test.
+-ShelfAppBrowserTest.*
+-ShelfAppBrowserTestNoDefaultBrowser.*
 
 # ash::Shell access in test.
 -ShutdownPolicyInSessionTest.*
@@ -209,7 +203,6 @@
 
 # ash::Shell access in test for StatusAreaWidget.
 -SupervisedUserCreationTest.*
-
 # Crash. Database is locked.
 -SyncAwareCounterTest.*
 
@@ -254,9 +247,3 @@
 
 # crbug.com/792641 - Disable tests on mash during Wallpaper re-factoring
 -WallPaperPrivateApiTest.*
-
-# Sending invalid FrameSinkIds crbug.com/796999
--WebviewLoginTest.AllowNewUser
--EnterpriseEnrollmentTest.TestAuthCodeGetsProperlyReceivedFromGaia
--PowerPolicyLoginScreenBrowserTest.SetDevicePolicy
--EnterpriseEnrollmentTest.TestActiveDirectoryEnrollment_Success

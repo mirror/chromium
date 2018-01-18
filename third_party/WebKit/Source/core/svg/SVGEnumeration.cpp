@@ -36,7 +36,7 @@ namespace blink {
 
 DEFINE_SVG_PROPERTY_TYPE_CASTS(SVGEnumerationBase);
 
-SVGEnumerationBase::~SVGEnumerationBase() = default;
+SVGEnumerationBase::~SVGEnumerationBase() {}
 
 SVGPropertyBase* SVGEnumerationBase::CloneForAnimation(
     const String& value) const {

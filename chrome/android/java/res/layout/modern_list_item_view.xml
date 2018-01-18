@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textAppearance="@style/BlackTitle1" />
+            android:textAppearance="@style/BlackDenseListText1" />
 
         <TextView
             android:id="@+id/description"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textAppearance="@style/BlackBody" />
+            android:textAppearance="@style/BlackDenseListText2" />
     </LinearLayout>
 
 </merge>

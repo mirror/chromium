@@ -26,13 +26,13 @@
 #include "build/build_config.h"
 #include "content/child/child_thread_impl.h"
 #include "content/child/scoped_child_process_reference.h"
-#include "content/common/loader_util.h"
 #include "content/common/service_worker/service_worker_types.h"
-#include "content/common/weak_wrapper_shared_url_loader_factory.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/previews_state.h"
 #include "content/public/common/referrer.h"
+#include "content/public/common/resource_request.h"
+#include "content/public/common/resource_request_body.h"
 #include "content/public/common/service_worker_modes.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "content/public/renderer/child_url_loader_factory_getter.h"
@@ -56,7 +56,6 @@
 #include "net/ssl/ssl_cipher_suite_names.h"
 #include "net/ssl/ssl_connection_status_flags.h"
 #include "net/url_request/url_request_data_job.h"
-#include "services/network/public/cpp/resource_request.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "third_party/WebKit/common/mime_util/mime_util.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
@@ -94,9 +93,6 @@ namespace content {
 // Utilities ------------------------------------------------------------------
 
 namespace {
-
-constexpr char kStylesheetAcceptHeader[] = "text/css,*/*;q=0.1";
-constexpr char kImageAcceptHeader[] = "image/webp,image/apng,image/*,*/*;q=0.8";
 
 using HeadersVector = network::HttpRawRequestResponseInfo::HeadersVector;
 
@@ -197,7 +193,7 @@ net::RequestPriority ConvertWebKitPriorityToNetPriority(
 // Extracts info from a data scheme URL |url| into |info| and |data|. Returns
 // net::OK if successful. Returns a net error code otherwise.
 int GetInfoFromDataURL(const GURL& url,
-                       network::ResourceResponseInfo* info,
+                       ResourceResponseInfo* info,
                        std::string* data) {
   // Assure same time for all time fields of data: URLs.
   Time now = Time::Now();
@@ -248,7 +244,7 @@ blink::WebURLResponse::SignedCertificateTimestamp NetSCTToBlinkSCT(
 }
 
 void SetSecurityStyleAndDetails(const GURL& url,
-                                const network::ResourceResponseInfo& info,
+                                const ResourceResponseInfo& info,
                                 WebURLResponse* response,
                                 bool report_security_info) {
   if (!report_security_info) {
@@ -388,12 +384,9 @@ std::unique_ptr<blink::WebURLLoader> WebURLLoaderFactoryImpl::CreateURLLoader(
 
   DCHECK(task_runner);
   DCHECK(resource_dispatcher_);
-  // TODO(crbug.com/796425): Temporarily wrap the raw mojom::URLLoaderFactory
-  // pointer into SharedURLLoaderFactory.
   return std::make_unique<WebURLLoaderImpl>(
       resource_dispatcher_.get(), std::move(task_runner),
-      base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
-          loader_factory_getter_->GetFactoryForURL(request.Url())));
+      loader_factory_getter_->GetFactoryForURL(request.Url()));
 }
 
 // This inner class exists since the WebURLLoader may be deleted while inside a
@@ -406,7 +399,7 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   Context(WebURLLoaderImpl* loader,
           ResourceDispatcher* resource_dispatcher,
           scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-          scoped_refptr<SharedURLLoaderFactory> factory,
+          mojom::URLLoaderFactory* factory,
           mojom::KeepAliveHandlePtr keep_alive_handle);
 
   ResourceDispatcher* resource_dispatcher() { return resource_dispatcher_; }
@@ -423,8 +416,8 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
 
   void OnUploadProgress(uint64_t position, uint64_t size);
   bool OnReceivedRedirect(const net::RedirectInfo& redirect_info,
-                          const network::ResourceResponseInfo& info);
-  void OnReceivedResponse(const network::ResourceResponseInfo& info);
+                          const ResourceResponseInfo& info);
+  void OnReceivedResponse(const ResourceResponseInfo& info);
   void OnDownloadedData(int len, int encoded_data_length);
   void OnReceivedData(std::unique_ptr<ReceivedData> data);
   void OnTransferSizeUpdated(int transfer_size_diff);
@@ -467,7 +460,8 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   DeferState defers_loading_;
   int request_id_;
 
-  scoped_refptr<SharedURLLoaderFactory> url_loader_factory_;
+  // These are owned by the Blink::Platform singleton.
+  mojom::URLLoaderFactory* url_loader_factory_;
 };
 
 // A thin wrapper class for Context to ensure its lifetime while it is
@@ -480,8 +474,8 @@ class WebURLLoaderImpl::RequestPeerImpl : public RequestPeer {
   // RequestPeer methods:
   void OnUploadProgress(uint64_t position, uint64_t size) override;
   bool OnReceivedRedirect(const net::RedirectInfo& redirect_info,
-                          const network::ResourceResponseInfo& info) override;
-  void OnReceivedResponse(const network::ResourceResponseInfo& info) override;
+                          const ResourceResponseInfo& info) override;
+  void OnReceivedResponse(const ResourceResponseInfo& info) override;
   void OnDownloadedData(int len, int encoded_data_length) override;
   void OnReceivedData(std::unique_ptr<ReceivedData> data) override;
   void OnTransferSizeUpdated(int transfer_size_diff) override;
@@ -502,10 +496,10 @@ class WebURLLoaderImpl::SinkPeer : public RequestPeer {
   // RequestPeer implementation:
   void OnUploadProgress(uint64_t position, uint64_t size) override {}
   bool OnReceivedRedirect(const net::RedirectInfo& redirect_info,
-                          const network::ResourceResponseInfo& info) override {
+                          const ResourceResponseInfo& info) override {
     return true;
   }
-  void OnReceivedResponse(const network::ResourceResponseInfo& info) override {}
+  void OnReceivedResponse(const ResourceResponseInfo& info) override {}
   void OnDownloadedData(int len, int encoded_data_length) override {}
   void OnReceivedData(std::unique_ptr<ReceivedData> data) override {}
   void OnTransferSizeUpdated(int transfer_size_diff) override {}
@@ -526,7 +520,7 @@ WebURLLoaderImpl::Context::Context(
     WebURLLoaderImpl* loader,
     ResourceDispatcher* resource_dispatcher,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
+    mojom::URLLoaderFactory* url_loader_factory,
     mojom::KeepAliveHandlePtr keep_alive_handle_ptr)
     : loader_(loader),
       use_stream_on_response_(false),
@@ -541,7 +535,7 @@ WebURLLoaderImpl::Context::Context(
               : nullptr),
       defers_loading_(NOT_DEFERRING),
       request_id_(-1),
-      url_loader_factory_(std::move(url_loader_factory)) {
+      url_loader_factory_(url_loader_factory) {
   DCHECK(url_loader_factory_ || !resource_dispatcher);
 }
 
@@ -638,8 +632,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
   // TODO(horo): Check credentials flag is unset when credentials mode is omit.
   //             Check credentials flag is set when credentials mode is include.
 
-  std::unique_ptr<network::ResourceRequest> resource_request(
-      new network::ResourceRequest);
+  std::unique_ptr<ResourceRequest> resource_request(new ResourceRequest);
 
   resource_request->method = method;
   resource_request->url = url_;
@@ -652,26 +645,14 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
 
   resource_request->referrer_policy =
       Referrer::ReferrerPolicyForUrlRequest(request.GetReferrerPolicy());
-  resource_request->resource_type = WebURLRequestToResourceType(request);
 
   resource_request->headers = GetWebURLRequestHeaders(request);
-  if (resource_request->resource_type == RESOURCE_TYPE_STYLESHEET) {
-    resource_request->headers.SetHeader(kAcceptHeader, kStylesheetAcceptHeader);
-  } else if (resource_request->resource_type == RESOURCE_TYPE_FAVICON ||
-             resource_request->resource_type == RESOURCE_TYPE_IMAGE) {
-    resource_request->headers.SetHeader(kAcceptHeader, kImageAcceptHeader);
-  } else {
-    // Calling SetHeaderIfMissing() instead of SetHeader() because JS can
-    // manually set an accept header on an XHR.
-    resource_request->headers.SetHeaderIfMissing(kAcceptHeader,
-                                                 kDefaultAcceptHeader);
-  }
-
   resource_request->load_flags = GetLoadFlagsForWebURLRequest(request);
   // |plugin_child_id| only needs to be non-zero if the request originates
   // outside the render process, so we can use requestorProcessID even
   // for requests from in-process plugins.
   resource_request->plugin_child_id = request.GetPluginChildID();
+  resource_request->resource_type = WebURLRequestToResourceType(request);
   resource_request->priority =
       ConvertWebKitPriorityToNetPriority(request.GetPriority());
   resource_request->appcache_host_id = request.AppCacheHostID();
@@ -682,7 +663,8 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
       static_cast<int>(GetServiceWorkerModeForWebURLRequest(request));
   resource_request->fetch_request_mode = request.GetFetchRequestMode();
   resource_request->fetch_credentials_mode = request.GetFetchCredentialsMode();
-  resource_request->fetch_redirect_mode = request.GetFetchRedirectMode();
+  resource_request->fetch_redirect_mode =
+      static_cast<int>(GetFetchRedirectModeForWebURLRequest(request));
   resource_request->fetch_integrity =
       GetFetchIntegrityForWebURLRequest(request);
   resource_request->fetch_request_context_type =
@@ -771,7 +753,7 @@ void WebURLLoaderImpl::Context::OnUploadProgress(uint64_t position,
 
 bool WebURLLoaderImpl::Context::OnReceivedRedirect(
     const net::RedirectInfo& redirect_info,
-    const network::ResourceResponseInfo& info) {
+    const ResourceResponseInfo& info) {
   if (!client_)
     return false;
 
@@ -793,7 +775,7 @@ bool WebURLLoaderImpl::Context::OnReceivedRedirect(
 }
 
 void WebURLLoaderImpl::Context::OnReceivedResponse(
-    const network::ResourceResponseInfo& initial_info) {
+    const ResourceResponseInfo& initial_info) {
   if (!client_)
     return;
 
@@ -801,7 +783,7 @@ void WebURLLoaderImpl::Context::OnReceivedResponse(
       "loading", "WebURLLoaderImpl::Context::OnReceivedResponse",
       this, TRACE_EVENT_FLAG_FLOW_IN | TRACE_EVENT_FLAG_FLOW_OUT);
 
-  network::ResourceResponseInfo info = initial_info;
+  ResourceResponseInfo info = initial_info;
 
   // PlzNavigate: during navigations, the ResourceResponse has already been
   // received on the browser side, and has been passed down to the renderer.
@@ -898,6 +880,13 @@ void WebURLLoaderImpl::Context::OnReceivedData(
   if (!client_)
     return;
 
+  if (stream_override_ && stream_override_->stream_url.is_empty()) {
+    // Since ResourceDispatcher::ContinueForNavigation called OnComplete
+    // immediately, it didn't have the size of the resource immediately. So as
+    // data is read off the data pipe, keep track of how much we're reading.
+    stream_override_->total_transferred += data_length;
+  }
+
   TRACE_EVENT_WITH_FLOW0(
       "loading", "WebURLLoaderImpl::Context::OnReceivedData",
       this, TRACE_EVENT_FLAG_FLOW_IN | TRACE_EVENT_FLAG_FLOW_OUT);
@@ -938,6 +927,12 @@ void WebURLLoaderImpl::Context::OnCompletedRequest(
     const network::URLLoaderCompletionStatus& status) {
   int64_t total_transfer_size = status.encoded_data_length;
   int64_t encoded_body_size = status.encoded_body_length;
+
+  if (stream_override_ && stream_override_->stream_url.is_empty()) {
+    // TODO(kinuko|scottmg|jam): This is wrong. https://crbug.com/705744.
+    total_transfer_size = stream_override_->total_transferred;
+    encoded_body_size = stream_override_->total_transferred;
+  }
 
   if (ftp_listing_delegate_) {
     ftp_listing_delegate_->OnCompletedRequest();
@@ -1057,7 +1052,7 @@ void WebURLLoaderImpl::Context::HandleDataURL() {
       return;
   }
 
-  network::ResourceResponseInfo info;
+  ResourceResponseInfo info;
   std::string data;
 
   int error_code = GetInfoFromDataURL(url_, &info, &data);
@@ -1087,12 +1082,12 @@ void WebURLLoaderImpl::RequestPeerImpl::OnUploadProgress(uint64_t position,
 
 bool WebURLLoaderImpl::RequestPeerImpl::OnReceivedRedirect(
     const net::RedirectInfo& redirect_info,
-    const network::ResourceResponseInfo& info) {
+    const ResourceResponseInfo& info) {
   return context_->OnReceivedRedirect(redirect_info, info);
 }
 
 void WebURLLoaderImpl::RequestPeerImpl::OnReceivedResponse(
-    const network::ResourceResponseInfo& info) {
+    const ResourceResponseInfo& info) {
   context_->OnReceivedResponse(info);
 }
 
@@ -1128,32 +1123,31 @@ void WebURLLoaderImpl::RequestPeerImpl::OnCompletedRequest(
 WebURLLoaderImpl::WebURLLoaderImpl(
     ResourceDispatcher* resource_dispatcher,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    scoped_refptr<SharedURLLoaderFactory> url_loader_factory)
+    mojom::URLLoaderFactory* url_loader_factory)
     : WebURLLoaderImpl(resource_dispatcher,
                        std::move(task_runner),
-                       std::move(url_loader_factory),
+                       url_loader_factory,
                        nullptr) {}
 
 WebURLLoaderImpl::WebURLLoaderImpl(
     ResourceDispatcher* resource_dispatcher,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
+    mojom::URLLoaderFactory* url_loader_factory,
     mojom::KeepAliveHandlePtr keep_alive_handle)
     : context_(new Context(this,
                            resource_dispatcher,
                            std::move(task_runner),
-                           std::move(url_loader_factory),
+                           url_loader_factory,
                            std::move(keep_alive_handle))) {}
 
 WebURLLoaderImpl::~WebURLLoaderImpl() {
   Cancel();
 }
 
-void WebURLLoaderImpl::PopulateURLResponse(
-    const WebURL& url,
-    const network::ResourceResponseInfo& info,
-    WebURLResponse* response,
-    bool report_security_info) {
+void WebURLLoaderImpl::PopulateURLResponse(const WebURL& url,
+                                           const ResourceResponseInfo& info,
+                                           WebURLResponse* response,
+                                           bool report_security_info) {
   response->SetURL(url);
   response->SetResponseTime(info.response_time);
   response->SetMIMEType(WebString::FromUTF8(info.mime_type));

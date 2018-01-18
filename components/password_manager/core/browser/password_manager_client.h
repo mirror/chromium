@@ -12,7 +12,6 @@
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/credentials_filter.h"
 #include "components/password_manager/core/browser/password_store.h"
-#include "net/cert/cert_status_flags.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 
 class PrefService;
@@ -183,8 +182,9 @@ class PasswordManagerClient {
   // Returns true if last navigation page had HTTP error i.e 5XX or 4XX
   virtual bool WasLastNavigationHTTPError() const;
 
-  // Obtains the cert status for the main frame.
-  virtual net::CertStatus GetMainFrameCertStatus() const;
+  // Returns whether any SSL certificate errors were encountered as a result of
+  // the last page load.
+  virtual bool DidLastPageLoadEncounterSSLErrors() const;
 
   // If this browsing session should not be persisted.
   virtual bool IsIncognito() const;

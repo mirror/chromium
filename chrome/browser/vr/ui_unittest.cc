@@ -5,6 +5,7 @@
 #include "chrome/browser/vr/ui_scene_creator.h"
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/numerics/ranges.h"
 #include "base/stl_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -28,7 +29,6 @@
 #include "chrome/browser/vr/ui_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/browser/vr/ui_scene_constants.h"
-#include "components/omnibox/browser/autocomplete_match.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
@@ -51,11 +51,7 @@ const std::set<UiElementName> kElementsVisibleInBrowsing = {
     kContentQuad,
     kContentQuadShadow,
     kBackplane,
-    kUrlBarBackButton,
-    kUrlBarBackButtonIcon,
-    kUrlBarSeparator,
-    kUrlBarOriginRegion,
-    kUrlBarOriginContent,
+    kUrlBar,
     kUnderDevelopmentNotice,
     kController,
     kReticle,
@@ -67,6 +63,31 @@ const std::set<UiElementName> kElementsVisibleWithExitPrompt = {
     kBackgroundTop,   kBackgroundBottom,    kCeiling,        kFloor,
     kExitPrompt,      kExitPromptBackplane, kController,     kReticle,
     kLaser,
+};
+const std::set<UiElementName> kHitTestableElements = {
+    kFloor,
+    kCeiling,
+    kBackplane,
+    kKeyboard,
+    kContentQuad,
+    kAudioCaptureIndicator,
+    kVideoCaptureIndicator,
+    kScreenCaptureIndicator,
+    kBluetoothConnectedIndicator,
+    kLocationAccessIndicator,
+    kExitPrompt,
+    kExitPromptBackplane,
+    kAudioPermissionPrompt,
+    kAudioPermissionPromptBackplane,
+    kUrlBar,
+    kOmniboxContainer,
+    kLoadingIndicator,
+    kWebVrTimeoutSpinner,
+    kWebVrTimeoutMessage,
+    kWebVrTimeoutMessageIcon,
+    kWebVrTimeoutMessageText,
+    kWebVrTimeoutMessageButtonText,
+    kSpeechRecognitionResultBackplane,
 };
 const std::set<UiElementType> kHitTestableElementTypes = {
     kTypeButtonHitTarget,         kTypeTextInputText,
@@ -311,14 +332,14 @@ TEST_F(UiTest, UiModeOmniboxEditing) {
   EXPECT_EQ(NumVisibleInTree(kOmniboxRoot), 0);
   VerifyOnlyElementsVisible("Initial", kElementsVisibleInBrowsing);
 
-  model_->push_mode(kModeEditingOmnibox);
+  ui_->SetOmniboxEditingEnabled(true);
   EXPECT_TRUE(RunFor(MsToDelta(1000)));
   EXPECT_EQ(model_->ui_modes.size(), 2u);
   EXPECT_EQ(model_->ui_modes[1], kModeEditingOmnibox);
   EXPECT_EQ(model_->ui_modes[0], kModeBrowsing);
   EXPECT_GT(NumVisibleInTree(kOmniboxRoot), 0);
 
-  model_->pop_mode(kModeEditingOmnibox);
+  ui_->SetOmniboxEditingEnabled(false);
   EXPECT_TRUE(RunFor(MsToDelta(1000)));
   EXPECT_EQ(model_->ui_modes.size(), 1u);
   EXPECT_EQ(model_->ui_modes.back(), kModeBrowsing);
@@ -333,7 +354,7 @@ TEST_F(UiTest, UiModeVoiceSearchFromOmnibox) {
   EXPECT_EQ(NumVisibleInTree(kOmniboxRoot), 0);
   VerifyOnlyElementsVisible("Initial", kElementsVisibleInBrowsing);
 
-  model_->push_mode(kModeEditingOmnibox);
+  ui_->SetOmniboxEditingEnabled(true);
   EXPECT_TRUE(RunFor(MsToDelta(1000)));
   EXPECT_EQ(model_->ui_modes.size(), 2u);
   EXPECT_EQ(model_->ui_modes[1], kModeEditingOmnibox);
@@ -356,7 +377,7 @@ TEST_F(UiTest, UiModeVoiceSearchFromOmnibox) {
   EXPECT_TRUE(RunFor(MsToDelta(1000)));
   EXPECT_GT(NumVisibleInTree(kOmniboxRoot), 0);
 
-  model_->pop_mode(kModeEditingOmnibox);
+  ui_->SetOmniboxEditingEnabled(false);
   EXPECT_EQ(model_->ui_modes.size(), 1u);
   EXPECT_EQ(model_->ui_modes.back(), kModeBrowsing);
   EXPECT_TRUE(RunFor(MsToDelta(10)));
@@ -687,6 +708,25 @@ TEST_F(UiTest, PropagateContentBoundsOnFullscreen) {
   OnBeginFrame();
 }
 
+TEST_F(UiTest, HitTestableElements) {
+  CreateScene(kNotInCct, kNotInWebVr);
+  for (const auto& element : scene_->root_element()) {
+    if (element.type() != kTypeNone) {
+      const bool should_be_hit_testable =
+          kHitTestableElementTypes.find(element.type()) !=
+          kHitTestableElementTypes.end();
+      EXPECT_EQ(should_be_hit_testable, element.hit_testable())
+          << "element type: " << UiElementTypeToString(element.type());
+    } else {
+      const bool should_be_hit_testable =
+          kHitTestableElements.find(element.name()) !=
+          kHitTestableElements.end();
+      EXPECT_EQ(should_be_hit_testable, element.hit_testable())
+          << "element name: " << UiElementNameToString(element.name());
+    }
+  }
+}
+
 TEST_F(UiTest, DontPropagateContentBoundsOnNegligibleChange) {
   CreateScene(kNotInCct, kNotInWebVr);
 
@@ -892,14 +932,13 @@ TEST_F(UiTest, OmniboxSuggestionBindings) {
   OnBeginFrame();
   EXPECT_EQ(container->children().size(), 0u);
 
-  model_->push_mode(kModeEditingOmnibox);
+  ui_->SetOmniboxEditingEnabled(true);
   OnBeginFrame();
   EXPECT_EQ(container->children().size(), 0u);
   EXPECT_EQ(NumVisibleInTree(kOmniboxSuggestions), 1);
 
   model_->omnibox_suggestions.emplace_back(
       OmniboxSuggestion(base::string16(), base::string16(),
-                        ACMatchClassifications(), ACMatchClassifications(),
                         AutocompleteMatch::Type::VOICE_SUGGEST, GURL()));
   OnBeginFrame();
   EXPECT_EQ(container->children().size(), 1u);
@@ -914,9 +953,9 @@ TEST_F(UiTest, OmniboxSuggestionBindings) {
 TEST_F(UiTest, OmniboxSuggestionNavigates) {
   CreateScene(kNotInCct, kNotInWebVr);
   GURL gurl("http://test.com/");
-  model_->omnibox_suggestions.emplace_back(OmniboxSuggestion(
-      base::string16(), base::string16(), ACMatchClassifications(),
-      ACMatchClassifications(), AutocompleteMatch::Type::VOICE_SUGGEST, gurl));
+  model_->omnibox_suggestions.emplace_back(
+      OmniboxSuggestion(base::string16(), base::string16(),
+                        AutocompleteMatch::Type::VOICE_SUGGEST, gurl));
   OnBeginFrame();
 
   UiElement* suggestions = scene_->GetUiElementByName(kOmniboxSuggestions);
@@ -1056,7 +1095,7 @@ TEST_F(UiTest, TextureBackgroundAfterAssetLoaded) {
   EXPECT_FALSE(IsVisible(k2dBrowsingDefaultBackground));
   EXPECT_FALSE(IsVisible(kContentQuad));
 
-  auto assets = std::make_unique<Assets>();
+  auto assets = base::MakeUnique<Assets>();
   ui_->OnAssetsLoaded(AssetsLoadStatus::kSuccess, std::move(assets),
                       base::Version("1.0"));
 

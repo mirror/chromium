@@ -22,7 +22,6 @@
 #include "base/test/null_task_runner.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/simple_test_tick_clock.h"
-#include "base/test/test_timeouts.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "components/viz/common/features.h"
@@ -1809,8 +1808,10 @@ void RenderWidgetHostViewAuraTest::TimerBasedWheelEventPhaseInfo() {
 
   // Let the MouseWheelPhaseHandler::mouse_wheel_end_dispatch_timer_ fire. A
   // synthetic wheel event with zero deltas and kPhaseEnded will be sent.
-  base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(100));
-  base::RunLoop().RunUntilIdle();
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
+      base::TimeDelta::FromMilliseconds(100));
+  base::RunLoop().Run();
 
   events = GetAndResetDispatchedMessages();
   const WebMouseWheelEvent* wheel_end_event =
@@ -1845,12 +1846,6 @@ void RenderWidgetHostViewAuraTest::TimerBasedLatchingBreaksWithMouseMove() {
   // The test is valid only when wheel scroll latching is enabled.
   if (wheel_scrolling_mode_ == kWheelScrollingModeNone)
     return;
-
-  // Set the mouse_wheel_phase_handler_ timer timeout to a large value to make
-  // sure that the timer is still running when the wheel event with different
-  // location is sent.
-  view_->event_handler()->set_mouse_wheel_wheel_phase_handler_timeout(
-      TestTimeouts::action_max_timeout());
 
   view_->InitAsChild(nullptr);
   view_->Show();
@@ -1926,11 +1921,6 @@ void RenderWidgetHostViewAuraTest::TouchpadFlingStartResetsWheelPhaseState() {
   // The test is valid only when wheel scroll latching is enabled.
   if (wheel_scrolling_mode_ == kWheelScrollingModeNone)
     return;
-
-  // Set the mouse_wheel_phase_handler_ timer timeout to a large value to make
-  // sure that the timer is still running when the touchpad fling start is sent.
-  view_->event_handler()->set_mouse_wheel_wheel_phase_handler_timeout(
-      TestTimeouts::action_max_timeout());
 
   // When the user puts their fingers down a GFC is receieved.
   ui::ScrollEvent fling_cancel(ui::ET_SCROLL_FLING_CANCEL, gfx::Point(2, 2),
@@ -2044,12 +2034,6 @@ void RenderWidgetHostViewAuraTest::
   // The test is valid only when wheel scroll latching is enabled.
   if (wheel_scrolling_mode_ == kWheelScrollingModeNone)
     return;
-
-  // Set the mouse_wheel_phase_handler_ timer timeout to a large value to make
-  // sure that the timer is still running when the GSB event with touch source
-  // is sent.
-  view_->event_handler()->set_mouse_wheel_wheel_phase_handler_timeout(
-      TestTimeouts::action_max_timeout());
 
   ui::ScrollEvent scroll0(ui::ET_SCROLL, gfx::Point(2, 2),
                           ui::EventTimeForNow(), 0, 0, 5, 0, 5, 2);
@@ -2370,69 +2354,6 @@ TEST_F(RenderWidgetHostViewAuraTest, AutoResizeWithScale) {
     EXPECT_EQ(2, std::get<3>(params).device_scale_factor);
     EXPECT_NE(local_surface_id1, std::get<4>(params));
     EXPECT_NE(local_surface_id2, std::get<4>(params));
-  }
-}
-
-// This test verifies that in AutoResize mode a new
-// ViewMsg_SetLocalSurfaceIdForAutoResize message is sent when size
-// changes.
-TEST_F(RenderWidgetHostViewAuraTest, AutoResizeWithBrowserInitiatedResize) {
-  view_->InitAsChild(nullptr);
-  aura::client::ParentWindowWithContext(
-      view_->GetNativeView(), parent_view_->GetNativeView()->GetRootWindow(),
-      gfx::Rect());
-  sink_->ClearMessages();
-  viz::LocalSurfaceId local_surface_id1(view_->GetLocalSurfaceId());
-  EXPECT_TRUE(local_surface_id1.is_valid());
-
-  widget_host_->SetAutoResize(true, gfx::Size(50, 50), gfx::Size(100, 100));
-  ViewHostMsg_ResizeOrRepaint_ACK_Params params;
-  params.view_size = gfx::Size(75, 75);
-  params.sequence_number = 1;
-  widget_host_->OnResizeOrRepaintACK(params);
-
-  // RenderWidgetHostImpl has delayed auto-resize processing. Yield here to
-  // let it complete.
-  base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                run_loop.QuitClosure());
-  run_loop.Run();
-
-  viz::LocalSurfaceId local_surface_id2;
-  ASSERT_EQ(1u, sink_->message_count());
-  {
-    const IPC::Message* msg = sink_->GetMessageAt(0);
-    EXPECT_EQ(static_cast<uint32_t>(ViewMsg_SetLocalSurfaceIdForAutoResize::ID),
-              msg->type());
-    ViewMsg_SetLocalSurfaceIdForAutoResize::Param params;
-    ViewMsg_SetLocalSurfaceIdForAutoResize::Read(msg, &params);
-    EXPECT_EQ(1u, std::get<0>(params));  // sequence_number
-    EXPECT_EQ("50x50", std::get<1>(params).ToString());
-    EXPECT_EQ("100x100", std::get<2>(params).ToString());
-    EXPECT_EQ(1, std::get<3>(params).device_scale_factor);
-    local_surface_id2 = std::get<4>(params);
-    EXPECT_NE(local_surface_id1, local_surface_id2);
-  }
-
-  sink_->ClearMessages();
-
-  view_->SetSize(gfx::Size(120, 120));
-  viz::LocalSurfaceId local_surface_id3;
-  // Find out what the second IPC is.
-  ASSERT_EQ(2u, sink_->message_count());
-  {
-    const IPC::Message* msg = sink_->GetMessageAt(0);
-    EXPECT_EQ(static_cast<uint32_t>(ViewMsg_SetLocalSurfaceIdForAutoResize::ID),
-              msg->type());
-    ViewMsg_SetLocalSurfaceIdForAutoResize::Param params;
-    ViewMsg_SetLocalSurfaceIdForAutoResize::Read(msg, &params);
-    EXPECT_EQ(1u, std::get<0>(params));  // sequence_number
-    EXPECT_EQ("50x50", std::get<1>(params).ToString());
-    EXPECT_EQ("100x100", std::get<2>(params).ToString());
-    EXPECT_EQ(1, std::get<3>(params).device_scale_factor);
-    local_surface_id3 = std::get<4>(params);
-    EXPECT_NE(local_surface_id1, local_surface_id3);
-    EXPECT_NE(local_surface_id2, local_surface_id3);
   }
 }
 
@@ -5034,12 +4955,15 @@ TEST_F(RenderWidgetHostViewAuraOverscrollTest,
   // enough overscroll to complete the gesture, the overscroll controller
   // will reset the state. The scroll-end should therefore be dispatched to the
   // renderer, and the gesture-event-filter should await an ACK for it.
-  base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(10));
-  base::RunLoop().RunUntilIdle();
-  events = GetAndResetDispatchedMessages();
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
+      base::TimeDelta::FromMilliseconds(15));
+  base::RunLoop().Run();
+
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
   EXPECT_EQ(OverscrollSource::NONE, overscroll_source());
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
+  events = GetAndResetDispatchedMessages();
   EXPECT_EQ("GestureScrollEnd", GetMessageNames(events));
 }
 
@@ -5155,8 +5079,10 @@ TEST_F(RenderWidgetHostViewAuraOverscrollTest, OverscrollWithTouchEvents) {
 
   SimulateGestureEvent(blink::WebInputEvent::kGestureScrollEnd,
                        blink::kWebGestureDeviceTouchscreen);
-  base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(10));
-  base::RunLoop().RunUntilIdle();
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
+      base::TimeDelta::FromMilliseconds(10));
+  base::RunLoop().Run();
   events = GetAndResetDispatchedMessages();
   EXPECT_EQ("GestureScrollEnd", GetMessageNames(events));
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
@@ -5207,8 +5133,10 @@ TEST_F(RenderWidgetHostViewAuraOverscrollTest,
                        blink::kWebGestureDeviceTouchscreen);
   events = GetAndResetDispatchedMessages();
   EXPECT_EQ(0U, events.size());
-  base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(10));
-  base::RunLoop().RunUntilIdle();
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
+      base::TimeDelta::FromMilliseconds(10));
+  base::RunLoop().Run();
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
   EXPECT_EQ(OverscrollSource::NONE, overscroll_source());
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
@@ -5248,8 +5176,10 @@ TEST_F(RenderWidgetHostViewAuraOverscrollTest,
                        blink::kWebGestureDeviceTouchscreen);
   events = GetAndResetDispatchedMessages();
   EXPECT_EQ(0U, events.size());
-  base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(10));
-  base::RunLoop().RunUntilIdle();
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
+      base::TimeDelta::FromMilliseconds(10));
+  base::RunLoop().Run();
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
   EXPECT_EQ(OverscrollSource::NONE, overscroll_source());
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());

@@ -11,7 +11,6 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "net/base/net_export.h"
-#include "net/http/http_request_info.h"
 #include "net/spdy/chromium/spdy_session_key.h"
 #include "net/spdy/core/spdy_protocol.h"
 #include "url/gurl.h"
@@ -46,9 +45,7 @@ class NET_EXPORT Http2PushPromiseIndex {
 
     // Return true if a pushed stream with |url| can be used for a request with
     // |key|.
-    virtual bool ValidatePushedStream(SpdyStreamId stream_id,
-                                      const GURL& url,
-                                      const HttpRequestInfo& request_info,
+    virtual bool ValidatePushedStream(const GURL& url,
                                       const SpdySessionKey& key) const = 0;
 
     // Generate weak pointer.  Guaranateed to be called synchronously after
@@ -93,7 +90,6 @@ class NET_EXPORT Http2PushPromiseIndex {
   // session exists.
   void ClaimPushedStream(const SpdySessionKey& key,
                          const GURL& url,
-                         const HttpRequestInfo& request_info,
                          base::WeakPtr<SpdySession>* session,
                          SpdyStreamId* stream_id);
 

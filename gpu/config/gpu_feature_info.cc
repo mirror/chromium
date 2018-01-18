@@ -6,8 +6,6 @@
 
 #include <algorithm>
 
-#include "gpu/config/gpu_blacklist.h"
-#include "gpu/config/gpu_driver_bug_list.h"
 #include "gpu/config/gpu_driver_bug_workaround_type.h"
 #include "ui/gl/gl_context.h"
 
@@ -48,7 +46,7 @@ bool GpuFeatureInfo::IsWorkaroundEnabled(int32_t workaround) const {
          this->enabled_gpu_driver_bug_workarounds.end();
 }
 
-bool GpuFeatureInfo::IsInitialized() const {
+bool GpuFeatureInfo::IsValid() const {
   // Check if any feature status is undefined.
   return status_values[GPU_FEATURE_TYPE_GPU_COMPOSITING] !=
          kGpuFeatureStatusUndefined;

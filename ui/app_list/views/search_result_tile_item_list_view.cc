@@ -190,8 +190,4 @@ bool SearchResultTileItemListView::OnKeyPressed(const ui::KeyEvent& event) {
   return false;
 }
 
-const char* SearchResultTileItemListView::GetClassName() const {
-  return "SearchResultTileItemListView";
-}
-
 }  // namespace app_list

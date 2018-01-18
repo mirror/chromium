@@ -692,7 +692,7 @@ function setupChromeApis() {
     },
     i18n: {
       getUILanguage: function() {
-        return 'en-US';
+        return 'en-US'
       }
     },
     notifications: {
@@ -705,10 +705,7 @@ function setupChromeApis() {
         }
         callback();
       },
-      clear: function(id, callback) {
-        delete this.items[id];
-        callback();
-      },
+      clear: function(id, callback) { delete this.items[id]; callback(); },
       items: {},
       onButtonClicked: {
         addListener: function(listener) {
@@ -725,10 +722,10 @@ function setupChromeApis() {
       }
     },
     runtime: {
-      getURL: function(path) {
-        return path;
-      },
-      onStartup: {addListener: function() {}}
+      getURL: function(path) { return path; },
+      onStartup: {
+        addListener: function() {}
+      }
     }
   };
 }

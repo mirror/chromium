@@ -23,7 +23,7 @@ NGLineBoxFragmentBuilder::NGLineBoxFragmentBuilder(
     : NGContainerFragmentBuilder(style, writing_mode, TextDirection::kLtr),
       node_(node) {}
 
-NGLineBoxFragmentBuilder::~NGLineBoxFragmentBuilder() = default;
+NGLineBoxFragmentBuilder::~NGLineBoxFragmentBuilder() {}
 
 void NGLineBoxFragmentBuilder::Reset() {
   children_.clear();
@@ -143,8 +143,8 @@ scoped_refptr<NGLayoutResult> NGLineBoxFragmentBuilder::ToLineBoxFragment() {
       end_margin_strut_,
       /* intrinsic_block_size */ LayoutUnit(),
       /* minimal_space_shortage */ LayoutUnit::Max(), EBreakBetween::kAuto,
-      EBreakBetween::kAuto, /* has_forced_break */ false, is_pushed_by_floats_,
-      NGLayoutResult::kSuccess));
+      EBreakBetween::kAuto,
+      /* has_forced_break */ false, NGLayoutResult::kSuccess));
 }
 
 }  // namespace blink

@@ -811,7 +811,9 @@ LogMessage::~LogMessage() {
 
     // Ensure the first characters of the string are on the stack so they
     // are contained in minidumps for diagnostic purposes.
-    DEBUG_ALIAS_FOR_CSTR(str_stack, str_newline.c_str(), 1024);
+    char str_stack[1024];
+    str_newline.copy(str_stack, arraysize(str_stack));
+    base::debug::Alias(str_stack);
 
     if (log_assert_handler_stack.IsCreated() &&
         !log_assert_handler_stack.Get().empty()) {

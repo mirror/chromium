@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted_memory.h"
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
@@ -152,7 +153,7 @@ void SystemInfoUIHTMLSource::RequestComplete() {
   webui::SetLoadTimeDataDefaults(app_locale, &strings);
 
   if (response_.get()) {
-    auto details = std::make_unique<base::ListValue>();
+    auto details = base::MakeUnique<base::ListValue>();
     for (SystemLogsResponse::const_iterator it = response_->begin();
          it != response_->end();
          ++it) {
@@ -192,7 +193,7 @@ void SystemInfoHandler::RegisterMessages() {
 ////////////////////////////////////////////////////////////////////////////////
 
 SystemInfoUI::SystemInfoUI(content::WebUI* web_ui) : WebUIController(web_ui) {
-  web_ui->AddMessageHandler(std::make_unique<SystemInfoHandler>());
+  web_ui->AddMessageHandler(base::MakeUnique<SystemInfoHandler>());
   SystemInfoUIHTMLSource* html_source = new SystemInfoUIHTMLSource();
 
   // Set up the chrome://system/ source.

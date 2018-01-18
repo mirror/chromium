@@ -36,9 +36,9 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/Settings.h"
+#include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLImageElement.h"
-#include "core/html/canvas/HTMLCanvasElement.h"
-#include "core/html/canvas/ImageData.h"
+#include "core/html/ImageData.h"
 #include "core/html/media/HTMLVideoElement.h"
 #include "core/imagebitmap/ImageBitmap.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -94,9 +94,9 @@
 #include "platform/bindings/V8BindingMacros.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/graphics/AcceleratedStaticBitmapImage.h"
-#include "platform/graphics/Canvas2DLayerBridge.h"
 #include "platform/graphics/CanvasResourceProvider.h"
 #include "platform/graphics/GraphicsContext.h"
+#include "platform/graphics/gpu/AcceleratedImageBufferSurface.h"
 #include "platform/graphics/gpu/SharedGpuContext.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/wtf/CheckedNumeric.h"
@@ -767,21 +767,18 @@ scoped_refptr<StaticBitmapImage> WebGLRenderingContextBase::GetImage(
   if (IsMainThread()) {
     GetDrawingBuffer()->ResolveAndBindForReadAndDraw();
     IntSize size = ClampedCanvasSize();
-    std::unique_ptr<CanvasResourceProvider> resource_provider =
-        CanvasResourceProvider::Create(
-            size, CanvasResourceProvider::kAcceleratedResourceUsage,
-            SharedGpuContext::ContextProviderWrapper());
-    if (!resource_provider || !resource_provider->IsValid())
+    std::unique_ptr<AcceleratedImageBufferSurface> surface =
+        std::make_unique<AcceleratedImageBufferSurface>(size, ColorParams());
+    if (!surface->IsValid())
       return nullptr;
-    if (!CopyRenderingResultsFromDrawingBuffer(resource_provider.get(),
-                                               kBackBuffer)) {
+    if (!CopyRenderingResultsFromDrawingBuffer(surface.get(), kBackBuffer)) {
       // copyRenderingResultsFromDrawingBuffer is expected to always succeed
       // because we've explicitly created an Accelerated surface and have
       // already validated it.
       NOTREACHED();
       return nullptr;
     }
-    return resource_provider->Snapshot();
+    return surface->NewImageSnapshot(hint);
   }
 
   // If on a worker thread, create a copy from the drawing buffer and create
@@ -996,7 +993,6 @@ WebGLRenderingContextBase::WebGLRenderingContextBase(
       restore_timer_(task_runner,
                      this,
                      &WebGLRenderingContextBase::MaybeRestoreContext),
-      task_runner_(task_runner),
       generated_image_cache_(4),
       synthesized_errors_to_console_(true),
       num_gl_errors_to_console_allowed_(kMaxGLErrorsAllowedToConsole),
@@ -1469,7 +1465,7 @@ bool WebGLRenderingContextBase::PaintRenderingResultsToCanvas(
   ScopedFramebufferRestorer fbo_restorer(this);
 
   GetDrawingBuffer()->ResolveAndBindForReadAndDraw();
-  if (!CopyRenderingResultsFromDrawingBuffer(canvas()->ResourceProvider(),
+  if (!CopyRenderingResultsFromDrawingBuffer(canvas()->WebGLBuffer(),
                                              source_buffer)) {
     // Currently, copyRenderingResultsFromDrawingBuffer is expected to always
     // succeed because cases where canvas()-buffer() is not accelerated are
@@ -1483,7 +1479,7 @@ bool WebGLRenderingContextBase::PaintRenderingResultsToCanvas(
 }
 
 bool WebGLRenderingContextBase::CopyRenderingResultsFromDrawingBuffer(
-    CanvasResourceProvider* resource_provider,
+    AcceleratedImageBufferSurface* webgl_buffer,
     SourceDrawingBuffer source_buffer) const {
   if (!drawing_buffer_)
     return false;
@@ -1492,7 +1488,7 @@ bool WebGLRenderingContextBase::CopyRenderingResultsFromDrawingBuffer(
   if (!provider)
     return false;
   gpu::gles2::GLES2Interface* gl = provider->ContextGL();
-  GLuint texture_id = resource_provider->GetBackingTextureHandleForOverwrite();
+  GLuint texture_id = webgl_buffer->GetBackingTextureHandleForOverwrite();
   if (!texture_id)
     return false;
 
@@ -5307,18 +5303,16 @@ void WebGLRenderingContextBase::TexImageHelperHTMLVideoElement(
   if (use_copyTextureCHROMIUM) {
     // Try using an accelerated image buffer, this allows YUV conversion to be
     // done on the GPU.
-    std::unique_ptr<CanvasResourceProvider> resource_provider =
-        CanvasResourceProvider::Create(
-            IntSize(video->videoWidth(), video->videoHeight()),
-            CanvasResourceProvider::kAcceleratedResourceUsage,
-            SharedGpuContext::ContextProviderWrapper());
-    if (resource_provider && resource_provider->IsValid()) {
+    std::unique_ptr<AcceleratedImageBufferSurface> surface =
+        std::make_unique<AcceleratedImageBufferSurface>(
+            IntSize(video->videoWidth(), video->videoHeight()));
+    if (surface->IsValid()) {
       // The video element paints an RGBA frame into our surface here. By
       // using an AcceleratedImageBufferSurface, we enable the WebMediaPlayer
       // implementation to do any necessary color space conversion on the GPU
       // (though it may still do a CPU conversion and upload the results).
       video->PaintCurrentFrame(
-          resource_provider->Canvas(),
+          surface->Canvas(),
           IntRect(0, 0, video->videoWidth(), video->videoHeight()), nullptr,
           already_uploaded_id, frame_metadata_ptr);
 
@@ -5331,7 +5325,8 @@ void WebGLRenderingContextBase::TexImageHelperHTMLVideoElement(
                      video->videoHeight(), 0, format, type, nullptr);
 
       if (Extensions3DUtil::CanUseCopyTextureCHROMIUM(target)) {
-        scoped_refptr<StaticBitmapImage> image = resource_provider->Snapshot();
+        scoped_refptr<StaticBitmapImage> image =
+            surface->NewImageSnapshot(kPreferAcceleration);
         if (!!image &&
             image->CopyToTexture(
                 ContextGL(), target, texture->Object(),
@@ -6305,25 +6300,8 @@ void WebGLRenderingContextBase::LoseContextImpl(
 
   RemoveAllCompressedTextureFormats();
 
-  // If the DrawingBuffer is destroyed during a real lost context event it
-  // causes the CommandBufferProxy that the DrawingBuffer owns, which is what
-  // issued the lost context event in the first place, to be destroyed before
-  // the event is done being handled. This causes a crash when an outstanding
-  // AutoLock goes out of scope. To avoid this, we create a no-op task to hold
-  // a reference to the DrawingBuffer until this function is done executing.
-  if (mode == kRealLostContext) {
-    task_runner_->PostTask(
-        FROM_HERE,
-        WTF::Bind(&WebGLRenderingContextBase::HoldReferenceToDrawingBuffer,
-                  WrapWeakPersistent(this), WTF::RetainedRef(drawing_buffer_)));
-  }
-
-  // Always destroy the context, regardless of context loss mode. This will
-  // set drawing_buffer_ to null, but it won't actually be destroyed until the
-  // above task is executed. drawing_buffer_ is recreated in the event that the
-  // context is restored by MaybeRestoreContext. If this was a real lost context
-  // the OpenGL calls done during DrawingBuffer destruction will be ignored.
-  DestroyContext();
+  if (mode != kRealLostContext)
+    DestroyContext();
 
   ConsoleDisplayPreference display =
       (mode == kRealLostContext) ? kDisplayInConsole : kDontDisplayInConsole;
@@ -6340,10 +6318,6 @@ void WebGLRenderingContextBase::LoseContextImpl(
   // Always defer the dispatch of the context lost event, to implement
   // the spec behavior of queueing a task.
   dispatch_context_lost_event_timer_.StartOneShot(TimeDelta(), FROM_HERE);
-}
-
-void WebGLRenderingContextBase::HoldReferenceToDrawingBuffer(DrawingBuffer*) {
-  // This function intentionally left blank.
 }
 
 void WebGLRenderingContextBase::ForceRestoreContext() {
@@ -7535,9 +7509,13 @@ void WebGLRenderingContextBase::MaybeRestoreContext(TimerBase*) {
     }
   }
 
-  // Drawing buffer should have aready been destroyed during context loss to
-  // ensure its resources were freed.
-  DCHECK(!GetDrawingBuffer());
+  // If the context was lost due to RealLostContext, we need to destroy the old
+  // DrawingBuffer before creating new DrawingBuffer to ensure resource budget
+  // enough.
+  if (GetDrawingBuffer()) {
+    drawing_buffer_->BeginDestruction();
+    drawing_buffer_ = nullptr;
+  }
 
   auto execution_context = Host()->GetTopExecutionContext();
   Platform::ContextAttributes attributes = ToPlatformContextAttributes(

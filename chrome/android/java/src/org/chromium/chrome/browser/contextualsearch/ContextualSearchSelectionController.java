@@ -11,6 +11,7 @@ import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel;
+import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.GestureStateListener;
@@ -50,8 +51,6 @@ public class ContextualSearchSelectionController {
     private static final int MAX_SELECTION_LENGTH = 100;
 
     private static final int INVALID_DURATION = -1;
-    // A default tap duration value when we can't compute it.
-    private static final int DEFAULT_DURATION = 0;
 
     private final ChromeActivity mActivity;
     private final ContextualSearchSelectionHandler mHandler;
@@ -341,10 +340,9 @@ public class ContextualSearchSelectionController {
         mWasTapGestureDetected = false;
         // TODO(donnd): refactor to avoid needing a new handler API method as suggested by Pedro.
         if (mSelectionType != SelectionType.LONG_PRESS) {
-            if (mTapTimeNanoseconds != 0) {
-                mTapDurationMs = (int) ((System.nanoTime() - mTapTimeNanoseconds)
-                        / ContextualSearchHeuristic.NANOSECONDS_IN_A_MILLISECOND);
-            }
+            assert mTapTimeNanoseconds != 0 : "mTapTimeNanoseconds not set!";
+            mTapDurationMs = (int) ((System.nanoTime() - mTapTimeNanoseconds)
+                    / ContextualSearchHeuristic.NANOSECONDS_IN_A_MILLISECOND);
             mWasTapGestureDetected = true;
             mSelectionType = SelectionType.TAP;
             mX = x;
@@ -372,7 +370,7 @@ public class ContextualSearchSelectionController {
         int y = (int) mY;
 
         // TODO(donnd): Remove tap counters.
-        if (mTapDurationMs == INVALID_DURATION) mTapDurationMs = DEFAULT_DURATION;
+        assert mTapDurationMs != INVALID_DURATION : "mTapDurationMs not set!";
         TapSuppressionHeuristics tapHeuristics = new TapSuppressionHeuristics(this, mLastTapState,
                 x, y, contextualSearchContext, mTapDurationMs, mWasSelectionEmptyBeforeTap);
         // TODO(donnd): Move to be called when the panel closes to work with states that change.
@@ -395,7 +393,7 @@ public class ContextualSearchSelectionController {
         int tapPrediction = AssistRankerPrediction.UNDETERMINED;
         if (!shouldSuppressTapBasedOnHeuristics) {
             tapHeuristics.logRankerTapSuppression(rankerLogger);
-            mHandler.logNonHeuristicFeatures(rankerLogger);
+            logNonHeuristicFeatures(rankerLogger);
             tapPrediction = rankerLogger.runPredictionForTapSuppression();
         }
 
@@ -447,6 +445,16 @@ public class ContextualSearchSelectionController {
             basePageWebContents.adjustSelectionByCharacterOffset(
                     selectionStartAdjust, selectionEndAdjust, /* show_selection_menu = */ false);
         }
+    }
+
+    /**
+     * Logs all the features that we can obtain without accessing heuristics, i.e. from global
+     * state.
+     * @param rankerLogger The {@link ContextualSearchRankerLogger} to log the features to.
+     */
+    private void logNonHeuristicFeatures(ContextualSearchRankerLogger rankerLogger) {
+        boolean didOptIn = !PrefServiceBridge.getInstance().isContextualSearchUninitialized();
+        rankerLogger.logFeature(ContextualSearchRankerLogger.Feature.DID_OPT_IN, didOptIn);
     }
 
     // ============================================================================================

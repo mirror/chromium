@@ -98,8 +98,6 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     private float mLastContentDpr;
     private Boolean mPaused;
 
-    private boolean mPendingVSyncPause;
-
     private AndroidUiGestureTarget mAndroidUiGestureTarget;
 
     private OnDispatchTouchEventCallback mOnDispatchTouchEventForTesting;
@@ -312,7 +310,7 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     // TODO(crbug.com/762588): Fix getRealMetrics and remove suppression.
     @SuppressLint("NewApi")
     public void initializeNative(Tab currentTab, boolean forWebVr,
-            boolean webVrAutopresentationExpected, boolean inCct, boolean browsingDisabled) {
+            boolean webVrAutopresentationExpected, boolean inCct) {
         assert currentTab != null;
         // Get physical and pixel size of the display, which is needed by native
         // to dynamically calculate the content's resolution and window size.
@@ -322,6 +320,7 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
         float displayHeightMeters = (dm.heightPixels / dm.ydpi) * INCHES_TO_METERS;
 
         mContentVrWindowAndroid = new VrWindowAndroid(mActivity, mContentVirtualDisplay);
+        boolean browsingDisabled = !VrShellDelegate.isVrShellEnabled(mDelegate.getVrSupportLevel());
         boolean hasOrCanRequestAudioPermission =
                 mActivity.getWindowAndroid().hasPermission(android.Manifest.permission.RECORD_AUDIO)
                 || mActivity.getWindowAndroid().canRequestPermission(
@@ -633,21 +632,8 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
 
     @Override
     public void setWebVrModeEnabled(boolean enabled, boolean showToast) {
+        mContentVrWindowAndroid.setVSyncPaused(enabled);
         nativeSetWebVrMode(mNativeVrShell, enabled, showToast);
-        if (!enabled) mContentVrWindowAndroid.setVSyncPaused(false);
-
-        // Wait for the compositor to produce a frame to allow the omnibox to start hiding before
-        // we pause VSync. Control heights may not be correct as the omnibox might animate, but this
-        // is handled when exiting VR.
-        mPendingVSyncPause = enabled;
-    }
-
-    @CalledByNative
-    private void didSwapBuffers() {
-        if (mPendingVSyncPause) {
-            mContentVrWindowAndroid.setVSyncPaused(true);
-            mPendingVSyncPause = false;
-        }
     }
 
     @Override

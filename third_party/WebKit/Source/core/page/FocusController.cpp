@@ -1499,9 +1499,8 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
   while (!consumed && container) {
     consumed =
         AdvanceFocusDirectionallyInContainer(container, starting_rect, type);
-    if (consumed)
-      break;
-
+    starting_rect =
+        NodeRectInAbsoluteCoordinates(container, true /* ignore border */);
     container =
         ScrollableEnclosingBoxOrParentFrameForNodeInDirection(type, container);
     if (container && container->IsDocumentNode())

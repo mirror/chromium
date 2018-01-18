@@ -29,7 +29,7 @@ class LayoutSubtreeRootList : public DepthOrderedLayoutObjectList {
   DISALLOW_NEW();
 
  public:
-  LayoutSubtreeRootList() = default;
+  LayoutSubtreeRootList() {}
 
   void ClearAndMarkContainingBlocksForLayout();
 

@@ -177,8 +177,7 @@ ScreenCaptureNotificationUI::Create(const base::string16& text) {
                       kHorizontalMargin * 2 - gripWidth - buttonsWidth;
   gfx::FontList font_list;
   base::string16 elidedText =
-      gfx::ElideText(text, font_list, maxLabelWidth, gfx::ELIDE_MIDDLE,
-                     gfx::Typesetter::NATIVE);
+      ElideText(text, font_list, maxLabelWidth, gfx::ELIDE_MIDDLE);
   NSString* statusText = base::SysUTF16ToNSString(elidedText);
   base::scoped_nsobject<NSTextField> statusTextField(
       [[NSTextField alloc] initWithFrame:ui::kWindowSizeDeterminedLater]);

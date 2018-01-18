@@ -18,7 +18,6 @@
 #include "net/socket/client_socket_pool.h"
 #include "net/socket/client_socket_pool_base.h"
 #include "net/socket/connection_attempts.h"
-#include "net/socket/socket_tag.h"
 
 namespace net {
 
@@ -103,7 +102,6 @@ class NET_EXPORT_PRIVATE TransportConnectJob : public ConnectJob {
   TransportConnectJob(
       const std::string& group_name,
       RequestPriority priority,
-      const SocketTag& socket_tag,
       ClientSocketPool::RespectLimits respect_limits,
       const scoped_refptr<TransportSocketParams>& params,
       base::TimeDelta timeout_duration,
@@ -203,7 +201,6 @@ class NET_EXPORT_PRIVATE TransportClientSocketPool : public ClientSocketPool {
   int RequestSocket(const std::string& group_name,
                     const void* resolve_info,
                     RequestPriority priority,
-                    const SocketTag& socket_tag,
                     RespectLimits respect_limits,
                     ClientSocketHandle* handle,
                     const CompletionCallback& callback,

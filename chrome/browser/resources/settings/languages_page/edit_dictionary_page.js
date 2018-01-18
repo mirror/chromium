@@ -6,11 +6,6 @@
  * @fileoverview 'settings-edit-dictionary-page' is a sub-page for editing
  * the "dictionary" of custom words used for spell check.
  */
-
-// Max valid word size defined in
-// https://cs.chromium.org/chromium/src/components/spellcheck/common/spellcheck_common.h?l=28
-const MAX_CUSTOM_DICTIONARY_WORD_BYTES = 99;
-
 Polymer({
   is: 'settings-edit-dictionary-page',
 
@@ -59,32 +54,13 @@ Polymer({
   },
 
   /**
-   * Check if the field is empty or invalid.
-   * @param {string} word
-   * @return {boolean}
+   * Check if the new word text-field is empty.
    * @private
+   * @param {string} value
+   * @return {boolean} true if value is empty, false otherwise.
    */
-  disableAddButton_: function(word) {
-    return word.trim().length == 0 || this.isWordInvalid_(word);
-  },
-
-  /**
-   * If the word is invalid, returns true (or a message if one is provided).
-   * Otherwise returns false.
-   * @param {string} word
-   * @param {string} duplicateError
-   * @param {string} lengthError
-   * @return {string|boolean}
-   * @private
-   */
-  isWordInvalid_: function(word, duplicateError, lengthError) {
-    const trimmedWord = word.trim();
-    if (this.words_.indexOf(trimmedWord) != -1)
-      return duplicateError || true;
-    else if (trimmedWord.length > MAX_CUSTOM_DICTIONARY_WORD_BYTES)
-      return lengthError || true;
-
-    return false;
+  validateWord_: function(value) {
+    return !!value.trim();
   },
 
   /**
@@ -120,12 +96,10 @@ Polymer({
    * @param {!{detail: !{key: string}}} e
    */
   onKeysPress_: function(e) {
-    if (e.detail.key == 'enter' &&
-        !this.disableAddButton_(this.newWordValue_)) {
+    if (e.detail.key == 'enter')
       this.addWordFromInput_();
-    } else if (e.detail.key == 'esc') {
+    else if (e.detail.key == 'esc')
       e.detail.keyboardEvent.target.value = '';
-    }
   },
 
   /**
@@ -154,7 +128,10 @@ Polymer({
     if (!word)
       return;
 
-    this.languageSettingsPrivate.addSpellcheckWord(word);
+    const index = this.words_.indexOf(word);
+    if (index == -1) {
+      this.languageSettingsPrivate.addSpellcheckWord(word);
+    }
   },
 
   /**

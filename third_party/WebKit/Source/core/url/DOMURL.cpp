@@ -50,7 +50,7 @@ DOMURL::DOMURL(const String& url,
     exception_state.ThrowTypeError("Invalid URL");
 }
 
-DOMURL::~DOMURL() = default;
+DOMURL::~DOMURL() {}
 
 void DOMURL::Trace(blink::Visitor* visitor) {
   visitor->Trace(search_params_);

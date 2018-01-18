@@ -15,7 +15,7 @@ class MessageReport : public ReportBody {
   MessageReport(const String& message, std::unique_ptr<SourceLocation> location)
       : message_(message), location_(std::move(location)) {}
 
-  ~MessageReport() override = default;
+  ~MessageReport() override {}
 
   String message() const { return message_; }
   long lineNumber() const { return location_->LineNumber(); }

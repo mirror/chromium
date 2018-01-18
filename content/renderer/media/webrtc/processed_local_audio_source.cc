@@ -33,14 +33,10 @@ void* const kProcessedLocalAudioSourceIdentifier =
 ProcessedLocalAudioSource::ProcessedLocalAudioSource(
     int consumer_render_frame_id,
     const MediaStreamDevice& device,
-    bool hotword_enabled,
-    bool disable_local_echo,
     const AudioProcessingProperties& audio_processing_properties,
     const ConstraintsCallback& started_callback,
     PeerConnectionDependencyFactory* factory)
-    : MediaStreamAudioSource(true /* is_local_source */,
-                             hotword_enabled,
-                             disable_local_echo),
+    : MediaStreamAudioSource(true /* is_local_source */),
       consumer_render_frame_id_(consumer_render_frame_id),
       pc_factory_(factory),
       audio_processing_properties_(audio_processing_properties),
@@ -286,9 +282,6 @@ void ProcessedLocalAudioSource::Capture(const media::AudioBus* audio_bus,
   // of the audio, instead of just snapshotting TimeTicks::Now(), for proper
   // audio/video sync.  http://crbug.com/335335
   const base::TimeTicks reference_clock_snapshot = base::TimeTicks::Now();
-  TRACE_EVENT2("audio", "ProcessedLocalAudioSource::Capture", "now (ms)",
-               (reference_clock_snapshot - base::TimeTicks()).InMillisecondsF(),
-               "delay (ms)", audio_delay_milliseconds);
 
   // Map internal volume range of [0.0, 1.0] into [0, 255] used by AGC.
   // The volume can be higher than 255 on Linux, and it will be cropped to

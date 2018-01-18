@@ -4,8 +4,7 @@
 
 #include "chrome/browser/ui/toolbar/mock_component_toolbar_actions_factory.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/ui/toolbar/test_toolbar_action_view_controller.h"
 #include "chrome/browser/ui/toolbar/toolbar_action_view_controller.h"
 
@@ -30,6 +29,6 @@ MockComponentToolbarActionsFactory::GetComponentToolbarActionForId(
     Browser* browser,
     ToolbarActionsBar* bar) {
   DCHECK_EQ(kActionIdForTesting, id);
-  return std::make_unique<TestToolbarActionViewController>(
+  return base::MakeUnique<TestToolbarActionViewController>(
       MockComponentToolbarActionsFactory::kActionIdForTesting);
 }

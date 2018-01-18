@@ -11,6 +11,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/lazy_instance.h"
+#include "base/memory/ptr_util.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
@@ -702,7 +703,7 @@ bool EasyUnlockPrivateGetRemoteDevicesFunction::RunAsync() {
     const base::ListValue* devices =
         EasyUnlockService::Get(profile)->GetRemoteDevices();
     SetResult(devices ? devices->CreateDeepCopy()
-                      : std::make_unique<base::ListValue>());
+                      : base::MakeUnique<base::ListValue>());
     SendResponse(true);
   }
 

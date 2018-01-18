@@ -48,11 +48,11 @@ GetAdditionalNavigationRequestClientHintsHeaders(
   if (!url.SchemeIsHTTPOrHTTPS())
     return nullptr;
 
-  if (url.SchemeIs(url::kHttpScheme) && !net::IsLocalhost(url))
+  if (url.SchemeIs(url::kHttpScheme) && !net::IsLocalhost(url.host()))
     return nullptr;
 
   DCHECK(url.SchemeIs(url::kHttpsScheme) ||
-         (url.SchemeIs(url::kHttpScheme) && net::IsLocalhost(url)));
+         (url.SchemeIs(url::kHttpScheme) && net::IsLocalhost(url.host())));
 
   Profile* profile = Profile::FromBrowserContext(context);
   if (!profile)

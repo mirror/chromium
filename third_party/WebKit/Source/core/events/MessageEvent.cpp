@@ -40,27 +40,6 @@ static inline bool IsValidSource(EventTarget* source) {
          source->ToServiceWorker();
 }
 
-MessageEvent::V8GCAwareString::V8GCAwareString(const String& value)
-    : string_(value) {
-  const int64_t size = string_.length();
-  v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(size);
-}
-
-MessageEvent::V8GCAwareString::~V8GCAwareString() {
-  const int64_t size = string_.length();
-  v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(-size);
-}
-
-MessageEvent::V8GCAwareString& MessageEvent::V8GCAwareString::operator=(
-    const String& other) {
-  const int64_t old_size = string_.length();
-  const int64_t new_size = other.length();
-  string_ = other;
-  v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(new_size -
-                                                                   old_size);
-  return *this;
-}
-
 MessageEvent::MessageEvent() : data_type_(kDataTypeScriptValue) {}
 
 MessageEvent::MessageEvent(const AtomicString& type,
@@ -109,6 +88,9 @@ MessageEvent::MessageEvent(scoped_refptr<SerializedScriptValue> data,
       last_event_id_(last_event_id),
       source_(source),
       ports_(ports) {
+  if (data_as_serialized_script_value_)
+    data_as_serialized_script_value_->Value()
+        ->RegisterMemoryAllocatedWithCurrentScriptContext();
   DCHECK(IsValidSource(source_.Get()));
 }
 
@@ -127,6 +109,9 @@ MessageEvent::MessageEvent(scoped_refptr<SerializedScriptValue> data,
       source_(source),
       channels_(std::move(channels)),
       suborigin_(suborigin) {
+  if (data_as_serialized_script_value_)
+    data_as_serialized_script_value_->Value()
+        ->RegisterMemoryAllocatedWithCurrentScriptContext();
   DCHECK(IsValidSource(source_.Get()));
 }
 
@@ -154,7 +139,7 @@ MessageEvent::MessageEvent(DOMArrayBuffer* data,
       data_as_array_buffer_(data),
       origin_(origin) {}
 
-MessageEvent::~MessageEvent() = default;
+MessageEvent::~MessageEvent() {}
 
 MessageEvent* MessageEvent::Create(const AtomicString& type,
                                    const MessageEventInit& initializer,
@@ -212,6 +197,10 @@ void MessageEvent::initMessageEvent(const AtomicString& type,
   ports_ = ports;
   is_ports_dirty_ = true;
   suborigin_ = "";
+
+  if (data_as_serialized_script_value_)
+    data_as_serialized_script_value_->Value()
+        ->RegisterMemoryAllocatedWithCurrentScriptContext();
 }
 
 void MessageEvent::initMessageEvent(const AtomicString& type,

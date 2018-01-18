@@ -23,8 +23,7 @@ bool IsTouchDragDropEnabled() {
 bool IsMusHostingViz() {
 #if defined(USE_AURA)
   auto* cmd = base::CommandLine::ForCurrentProcess();
-  return cmd->HasSwitch(switches::kMus) &&
-         cmd->HasSwitch(switches::kMusHostingViz);
+  return cmd->GetSwitchValueASCII(switches::kMus) == switches::kMusHostVizValue;
 #else
   return false;
 #endif

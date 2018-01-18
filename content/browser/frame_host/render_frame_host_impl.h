@@ -31,8 +31,6 @@
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/loader/global_routing_id.h"
-#include "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.h"
-#include "content/browser/renderer_host/media/render_frame_audio_output_stream_factory.h"
 #include "content/browser/site_instance_impl.h"
 #include "content/browser/webui/web_ui_impl.h"
 #include "content/common/ax_content_node_data.h"
@@ -94,17 +92,12 @@ class ListValue;
 
 namespace blink {
 struct FramePolicy;
-struct WebScrollIntoViewParams;
+struct WebRemoteScrollProperties;
 }
 
 namespace gfx {
 class Range;
 class Rect;
-}
-
-namespace network {
-class ResourceRequestBody;
-struct ResourceResponse;
 }
 
 namespace content {
@@ -128,6 +121,7 @@ class RenderWidgetHostDelegate;
 class RenderWidgetHostImpl;
 class RenderWidgetHostView;
 class RenderWidgetHostViewBase;
+class ResourceRequestBody;
 class SensorProviderProxyImpl;
 class StreamHandle;
 class TimeoutMonitor;
@@ -137,6 +131,7 @@ struct ContextMenuParams;
 struct FileChooserParams;
 struct FrameOwnerProperties;
 struct RequestNavigationParams;
+struct ResourceResponse;
 struct SubresourceLoaderParams;
 
 class CONTENT_EXPORT RenderFrameHostImpl
@@ -539,7 +534,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // the parameters to create a custom subresource loader in the renderer
   // process, e.g. by AppCache etc.
   void CommitNavigation(
-      network::ResourceResponse* response,
+      ResourceResponse* response,
       mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       std::unique_ptr<StreamHandle> body,
       const CommonNavigationParams& common_params,
@@ -791,7 +786,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnAccessibilityFindInPageResult(
       const AccessibilityHostMsg_FindInPageResultParams& params);
   void OnAccessibilityChildFrameHitTestResult(
-      int action_request_id,
       const gfx::Point& point,
       int child_frame_routing_id,
       int child_frame_browser_plugin_instance_id,
@@ -820,7 +814,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnSetHasReceivedUserGestureBeforeNavigation(bool value);
   void OnScrollRectToVisibleInParentFrame(
       const gfx::Rect& rect_to_scroll,
-      const blink::WebScrollIntoViewParams& params);
+      const blink::WebRemoteScrollProperties& properties);
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
   void OnShowPopup(const FrameHostMsg_ShowPopup_Params& params);
@@ -861,7 +855,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
                      const std::string& unique_name) override;
   void EnforceInsecureRequestPolicy(
       blink::WebInsecureRequestPolicy policy) override;
-  void EnforceInsecureNavigationsSet(const std::vector<uint32_t>& set) override;
   void DidSetFramePolicyHeaders(
       blink::WebSandboxFlags sandbox_flags,
       const blink::ParsedFeaturePolicy& parsed_header) override;
@@ -901,8 +894,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // |body|.  It is important that the ResourceRequestBody has been validated
   // upon receipt from the renderer process to prevent it from forging access to
   // files without the user's consent.
-  void GrantFileAccessFromResourceRequestBody(
-      const network::ResourceRequestBody& body);
+  void GrantFileAccessFromResourceRequestBody(const ResourceRequestBody& body);
 
   void UpdatePermissionsForNavigation(
       const CommonNavigationParams& common_params,
@@ -954,8 +946,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void CreateUsbDeviceManager(device::mojom::UsbDeviceManagerRequest request);
   void CreateUsbChooserService(device::mojom::UsbChooserServiceRequest request);
 
-  void CreateAudioInputStreamFactory(
-      mojom::RendererAudioInputStreamFactoryRequest request);
   void CreateAudioOutputStreamFactory(
       mojom::RendererAudioOutputStreamFactoryRequest request);
 
@@ -1296,7 +1286,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // |FrameHostMsg_TextSurroundingSelectionResponse| message comes.
   TextSurroundingSelectionCallback text_surrounding_selection_callback_;
 
-  UniqueAudioInputStreamFactoryPtr audio_input_stream_factory_;
   UniqueAudioOutputStreamFactoryPtr audio_output_stream_factory_;
 
   // Hosts media::mojom::InterfaceFactory for the RenderFrame and forwards

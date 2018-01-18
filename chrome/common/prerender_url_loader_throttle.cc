@@ -7,10 +7,10 @@
 #include "build/build_config.h"
 #include "chrome/common/prerender_util.h"
 #include "content/public/common/content_constants.h"
+#include "content/public/common/resource_request.h"
+#include "content/public/common/resource_response.h"
 #include "net/base/load_flags.h"
 #include "net/url_request/redirect_info.h"
-#include "services/network/public/cpp/resource_request.h"
-#include "services/network/public/cpp/resource_response.h"
 
 namespace prerender {
 
@@ -39,9 +39,8 @@ void CancelPrerenderForSyncDeferredRedirect(
 }
 
 // Returns true if the response has a "no-store" cache control header.
-bool IsNoStoreResponse(const network::ResourceResponseHead& response_head) {
-  return response_head.headers &&
-         response_head.headers->HasHeaderValue("cache-control", "no-store");
+bool IsNoStoreResponse(const content::ResourceResponseHead& response_head) {
+  return response_head.headers->HasHeaderValue("cache-control", "no-store");
 }
 
 }  // namespace
@@ -75,7 +74,7 @@ void PrerenderURLLoaderThrottle::DetachFromCurrentSequence() {
 }
 
 void PrerenderURLLoaderThrottle::WillStartRequest(
-    network::ResourceRequest* request,
+    content::ResourceRequest* request,
     bool* defer) {
   resource_type_ = static_cast<content::ResourceType>(request->resource_type);
   // Abort any prerenders that spawn requests that use unsupported HTTP
@@ -141,7 +140,7 @@ void PrerenderURLLoaderThrottle::WillStartRequest(
 
 void PrerenderURLLoaderThrottle::WillRedirectRequest(
     const net::RedirectInfo& redirect_info,
-    const network::ResourceResponseHead& response_head,
+    const content::ResourceResponseHead& response_head,
     bool* defer) {
   redirect_count_++;
   if (mode_ == PREFETCH_ONLY) {
@@ -181,7 +180,7 @@ void PrerenderURLLoaderThrottle::WillRedirectRequest(
 
 void PrerenderURLLoaderThrottle::WillProcessResponse(
     const GURL& response_url,
-    const network::ResourceResponseHead& response_head,
+    const content::ResourceResponseHead& response_head,
     bool* defer) {
   if (mode_ != PREFETCH_ONLY)
     return;

@@ -3191,8 +3191,6 @@ TEST_F(TransportSecurityStateStaticTest, IsPreloaded) {
   const std::string google = "google";
   const std::string www_google = "www.google";
   const std::string foo = "foo";
-  const std::string bank = "example.bank";
-  const std::string insurance = "sub.example.insurance";
 
   TransportSecurityState state;
   TransportSecurityState::STSState sts_state;
@@ -3204,10 +3202,6 @@ TEST_F(TransportSecurityStateStaticTest, IsPreloaded) {
   EXPECT_TRUE(GetStaticDomainState(&state, google, &sts_state, &pkp_state));
   EXPECT_TRUE(GetStaticDomainState(&state, www_google, &sts_state, &pkp_state));
   EXPECT_TRUE(GetStaticDomainState(&state, foo, &sts_state, &pkp_state));
-  EXPECT_TRUE(GetStaticDomainState(&state, bank, &sts_state, &pkp_state));
-  EXPECT_TRUE(sts_state.include_subdomains);
-  EXPECT_TRUE(GetStaticDomainState(&state, insurance, &sts_state, &pkp_state));
-  EXPECT_TRUE(sts_state.include_subdomains);
   EXPECT_FALSE(
       GetStaticDomainState(&state, a_www_paypal, &sts_state, &pkp_state));
   EXPECT_FALSE(
@@ -3440,9 +3434,6 @@ TEST_F(TransportSecurityStateStaticTest, Preloaded) {
 
   EXPECT_TRUE(StaticShouldRedirect("crate.io"));
   EXPECT_TRUE(StaticShouldRedirect("foo.crate.io"));
-
-  EXPECT_TRUE(StaticShouldRedirect("sub.bank"));
-  EXPECT_TRUE(StaticShouldRedirect("sub.insurance"));
 }
 
 TEST_F(TransportSecurityStateStaticTest, PreloadedPins) {
@@ -3594,7 +3585,7 @@ TEST_F(TransportSecurityStateStaticTest, OptionalHSTSCertPins) {
   EXPECT_TRUE(HasStaticPublicKeyPins("googlesyndication.com"));
   EXPECT_TRUE(HasStaticPublicKeyPins("doubleclick.net"));
   EXPECT_TRUE(HasStaticPublicKeyPins("ad.doubleclick.net"));
-  EXPECT_TRUE(HasStaticPublicKeyPins("redirector.gvt1.com"));
+  EXPECT_FALSE(HasStaticPublicKeyPins("learn.doubleclick.net"));
   EXPECT_TRUE(HasStaticPublicKeyPins("a.googlegroups.com"));
 }
 

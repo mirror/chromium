@@ -41,6 +41,9 @@ IPC_ENUM_TRAITS_MAX_VALUE(blink::mojom::ServiceWorkerResponseError,
 IPC_ENUM_TRAITS_MAX_VALUE(blink::mojom::ServiceWorkerClientType,
                           blink::mojom::ServiceWorkerClientType::kLast)
 
+IPC_ENUM_TRAITS_MAX_VALUE(network::mojom::FetchResponseType,
+                          network::mojom::FetchResponseType::kLast)
+
 IPC_ENUM_TRAITS_MAX_VALUE(content::ServiceWorkerFetchType,
                           content::ServiceWorkerFetchType::LAST)
 
@@ -140,8 +143,8 @@ IPC_MESSAGE_ROUTED2(ServiceWorkerHostMsg_OpenNewTab,
                     int /* request_id */,
                     GURL /* url */)
 
-// Ask the browser to open a Payment Handler window (renderer->browser).
-IPC_MESSAGE_ROUTED2(ServiceWorkerHostMsg_OpenPaymentHandlerWindow,
+// Ask the browser to open a popup tab/window (renderer->browser).
+IPC_MESSAGE_ROUTED2(ServiceWorkerHostMsg_OpenNewPopup,
                     int /* request_id */,
                     GURL /* url */)
 

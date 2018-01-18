@@ -12,6 +12,7 @@
 #include "ash/accelerators/accelerator_commands.h"
 #include "ash/accelerators/debug_commands.h"
 #include "ash/accessibility/accessibility_controller.h"
+#include "ash/accessibility/accessibility_delegate.h"
 #include "ash/debug.h"
 #include "ash/display/display_configuration_controller.h"
 #include "ash/display/display_move_window_util.h"
@@ -22,6 +23,7 @@
 #include "ash/media_controller.h"
 #include "ash/multi_profile_uma.h"
 #include "ash/new_window_controller.h"
+#include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/config.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
@@ -39,6 +41,7 @@
 #include "ash/system/palette/palette_utils.h"
 #include "ash/system/power/power_button_controller.h"
 #include "ash/system/status_area_widget.h"
+#include "ash/system/system_notifier.h"
 #include "ash/system/toast/toast_data.h"
 #include "ash/system/toast/toast_manager.h"
 #include "ash/system/tray/system_tray.h"
@@ -84,8 +87,6 @@
 #include "ui/message_center/message_center.h"
 
 namespace ash {
-
-const char kNotifierAccelerator[] = "ash.accelerator-controller";
 
 const char kHighContrastToggleAccelNotificationId[] =
     "chrome://settings/accessibility/highcontrast";
@@ -173,12 +174,11 @@ void ShowDeprecatedAcceleratorNotification(const char* const notification_id,
           gfx::Image(), base::string16(), GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              kNotifierAccelerator),
+              system_notifier::kNotifierDeprecatedAccelerator),
           message_center::RichNotificationData(),
           new DeprecatedAcceleratorNotificationDelegate,
           kNotificationKeyboardIcon, SystemNotificationWarningLevel::NORMAL);
   notification->set_clickable(true);
-  notification->set_priority(message_center::SYSTEM_PRIORITY);
   message_center::MessageCenter::Get()->AddNotification(
       std::move(notification));
 }
@@ -511,7 +511,7 @@ bool CanHandleToggleAppList(const ui::Accelerator& accelerator,
     // When spoken feedback is enabled, we should neither toggle the list nor
     // consume the key since Search+Shift is one of the shortcuts the a11y
     // feature uses. crbug.com/132296
-    if (Shell::Get()->accessibility_controller()->IsSpokenFeedbackEnabled())
+    if (Shell::Get()->accessibility_delegate()->IsSpokenFeedbackEnabled())
       return false;
   }
   return true;
@@ -644,6 +644,16 @@ bool CanHandleLock() {
 void HandleLock() {
   base::RecordAction(UserMetricsAction("Accel_LockScreen_L"));
   Shell::Get()->session_controller()->LockScreen();
+}
+
+bool CanHandleMoveWindowBetweenDisplays() {
+  if (!switches::IsDisplayMoveWindowAccelsEnabled())
+    return false;
+  display::DisplayManager* display_manager = Shell::Get()->display_manager();
+  // Accelerators to move window between displays on unified desktop mode and
+  // mirror mode is disabled.
+  return !display_manager->IsInUnifiedMode() &&
+         !display_manager->IsInMirrorMode();
 }
 
 PaletteTray* GetPaletteTray() {
@@ -786,15 +796,6 @@ void HandleToggleCapsLock() {
   keyboard->SetCapsLockEnabled(!keyboard->CapsLockIsEnabled());
 }
 
-bool CanHandleToggleDictation() {
-  return chromeos::switches::AreExperimentalAccessibilityFeaturesEnabled();
-}
-
-void HandleToggleDictation() {
-  base::RecordAction(UserMetricsAction("Accel_Toggle_Dictation"));
-  Shell::Get()->accessibility_controller()->ToggleDictation();
-}
-
 void HandleToggleHighContrast() {
   base::RecordAction(UserMetricsAction("Accel_Toggle_High_Contrast"));
 
@@ -815,11 +816,10 @@ void HandleToggleHighContrast() {
             gfx::Image(), base::string16() /* display source */, GURL(),
             message_center::NotifierId(
                 message_center::NotifierId::SYSTEM_COMPONENT,
-                kNotifierAccelerator),
+                system_notifier::kNotifierAccessibility),
             message_center::RichNotificationData(), nullptr,
             kNotificationAccessibilityIcon,
             SystemNotificationWarningLevel::NORMAL);
-    notification->set_priority(message_center::SYSTEM_PRIORITY);
     message_center::MessageCenter::Get()->AddNotification(
         std::move(notification));
   } else {
@@ -833,10 +833,8 @@ void HandleToggleHighContrast() {
 void HandleToggleSpokenFeedback() {
   base::RecordAction(UserMetricsAction("Accel_Toggle_Spoken_Feedback"));
 
-  AccessibilityController* controller =
-      Shell::Get()->accessibility_controller();
-  controller->SetSpokenFeedbackEnabled(!controller->IsSpokenFeedbackEnabled(),
-                                       A11Y_NOTIFICATION_SHOW);
+  Shell::Get()->accessibility_delegate()->ToggleSpokenFeedback(
+      A11Y_NOTIFICATION_SHOW);
 }
 
 void HandleVolumeDown(mojom::VolumeController* volume_controller,
@@ -1191,7 +1189,7 @@ bool AcceleratorController::CanPerformAction(
     case MOVE_WINDOW_TO_BELOW_DISPLAY:
     case MOVE_WINDOW_TO_LEFT_DISPLAY:
     case MOVE_WINDOW_TO_RIGHT_DISPLAY:
-      return CanHandleMoveActiveWindowBetweenDisplays();
+      return CanHandleMoveWindowBetweenDisplays();
     case NEW_INCOGNITO_WINDOW:
       return CanHandleNewIncognitoWindow();
     case NEXT_IME:
@@ -1219,8 +1217,6 @@ bool AcceleratorController::CanPerformAction(
       return CanHandleToggleAppList(accelerator, previous_accelerator);
     case TOGGLE_CAPS_LOCK:
       return CanHandleToggleCapsLock(accelerator, previous_accelerator);
-    case TOGGLE_DICTATION:
-      return CanHandleToggleDictation();
     case TOGGLE_MESSAGE_CENTER_BUBBLE:
       return CanHandleToggleMessageCenterBubble();
     case TOGGLE_MIRROR_MODE:
@@ -1543,9 +1539,6 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
       break;
     case TOGGLE_CAPS_LOCK:
       HandleToggleCapsLock();
-      break;
-    case TOGGLE_DICTATION:
-      HandleToggleDictation();
       break;
     case TOGGLE_FULLSCREEN:
       HandleToggleFullscreen(accelerator);

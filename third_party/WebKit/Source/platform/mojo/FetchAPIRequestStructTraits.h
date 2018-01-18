@@ -16,6 +16,16 @@ class KURL;
 namespace mojo {
 
 template <>
+struct EnumTraits<::blink::mojom::FetchRedirectMode,
+                  ::blink::WebURLRequest::FetchRedirectMode> {
+  static ::blink::mojom::FetchRedirectMode ToMojom(
+      ::blink::WebURLRequest::FetchRedirectMode input);
+
+  static bool FromMojom(::blink::mojom::FetchRedirectMode input,
+                        ::blink::WebURLRequest::FetchRedirectMode* out);
+};
+
+template <>
 struct EnumTraits<::blink::mojom::RequestContextType,
                   ::blink::WebURLRequest::RequestContext> {
   static ::blink::mojom::RequestContextType ToMojom(
@@ -75,7 +85,7 @@ struct StructTraits<::blink::mojom::FetchAPIRequestDataView,
     return request.CacheMode();
   }
 
-  static ::network::mojom::FetchRedirectMode redirect_mode(
+  static ::blink::WebURLRequest::FetchRedirectMode redirect_mode(
       const ::blink::WebServiceWorkerRequest& request) {
     return request.RedirectMode();
   }

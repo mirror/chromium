@@ -6,8 +6,6 @@
 
 #include "core/CSSValueKeywords.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
-#include "core/css/properties/ComputedStyleUtils.h"
-#include "core/style/ComputedStyle.h"
 
 namespace blink {
 namespace CSSLonghand {
@@ -20,25 +18,6 @@ const CSSValue* AnimationFillMode::ParseSingleValue(
       CSSPropertyParserHelpers::ConsumeIdent<CSSValueNone, CSSValueForwards,
                                              CSSValueBackwards, CSSValueBoth>,
       range);
-}
-
-const CSSValue* AnimationFillMode::CSSValueFromComputedStyleInternal(
-    const ComputedStyle& style,
-    const SVGComputedStyle&,
-    const LayoutObject*,
-    Node* styled_node,
-    bool allow_visited_style) const {
-  CSSValueList* list = CSSValueList::CreateCommaSeparated();
-  const CSSAnimationData* animation_data = style.Animations();
-  if (animation_data) {
-    for (size_t i = 0; i < animation_data->FillModeList().size(); ++i) {
-      list->Append(*ComputedStyleUtils::ValueForAnimationFillMode(
-          animation_data->FillModeList()[i]));
-    }
-  } else {
-    list->Append(*CSSIdentifierValue::Create(CSSValueNone));
-  }
-  return list;
 }
 
 }  // namespace CSSLonghand

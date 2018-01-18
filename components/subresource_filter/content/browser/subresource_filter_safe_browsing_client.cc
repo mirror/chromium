@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
@@ -20,10 +21,12 @@ namespace subresource_filter {
 
 std::unique_ptr<base::trace_event::TracedValue>
 SubresourceFilterSafeBrowsingClient::CheckResult::ToTracedValue() const {
-  auto value = std::make_unique<base::trace_event::TracedValue>();
+  auto value = base::MakeUnique<base::trace_event::TracedValue>();
   value->SetInteger("request_id", request_id);
   value->SetInteger("threat_type", threat_type);
-  value->SetValue("threat_metadata", *threat_metadata.ToTracedValue());
+  value->SetInteger("pattern_type",
+                    static_cast<int>(threat_metadata.threat_pattern_type));
+  // TODO(crbug.com/756009): Add "experimental" and "warning" when it lands.
   value->SetInteger("check_time (us)", check_time.InMicroseconds());
   value->SetBoolean("finished", finished);
   return value;
@@ -46,7 +49,7 @@ void SubresourceFilterSafeBrowsingClient::CheckUrlOnIO(const GURL& url,
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   DCHECK(!url.is_empty());
 
-  auto request = std::make_unique<SubresourceFilterSafeBrowsingClientRequest>(
+  auto request = base::MakeUnique<SubresourceFilterSafeBrowsingClientRequest>(
       request_id, database_manager_, io_task_runner_, this);
   auto* raw_request = request.get();
   DCHECK(requests_.find(raw_request) == requests_.end());
@@ -54,7 +57,7 @@ void SubresourceFilterSafeBrowsingClient::CheckUrlOnIO(const GURL& url,
   TRACE_EVENT_ASYNC_BEGIN1(TRACE_DISABLED_BY_DEFAULT("loading"),
                            "SubresourceFilterSBCheck", raw_request,
                            "check_result",
-                           std::make_unique<base::trace_event::TracedValue>());
+                           base::MakeUnique<base::trace_event::TracedValue>());
   raw_request->Start(url);
   // Careful, |raw_request| can be destroyed after this line.
 }

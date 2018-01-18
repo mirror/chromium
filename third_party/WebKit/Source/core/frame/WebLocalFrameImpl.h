@@ -44,7 +44,6 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebFileSystemType.h"
 #include "public/web/WebLocalFrame.h"
-#include "public/web/devtools_agent.mojom-blink.h"
 
 #include <memory>
 
@@ -122,7 +121,6 @@ class CORE_EXPORT WebLocalFrameImpl final
                                 int argc,
                                 v8::Local<v8::Value> argv[],
                                 WebScriptExecutionCallback*) override;
-  void PostPausableTask(PausableTaskCallback) override;
   void ExecuteScriptInIsolatedWorld(
       int world_id,
       const WebScriptSource* sources_in,
@@ -367,7 +365,6 @@ class CORE_EXPORT WebLocalFrameImpl final
     return GetFrame() ? GetFrame()->View() : nullptr;
   }
 
-  void SetDevToolsAgentImpl(WebDevToolsAgentImpl*);
   WebDevToolsAgentImpl* DevToolsAgentImpl() const {
     return dev_tools_agent_.Get();
   }
@@ -457,8 +454,6 @@ class CORE_EXPORT WebLocalFrameImpl final
   void DispatchPrintEventRecursively(const AtomicString& event_type);
 
   Node* ContextMenuNodeInner() const;
-
-  void BindDevToolsAgentRequest(mojom::blink::DevToolsAgentAssociatedRequest);
 
   Member<LocalFrameClient> local_frame_client_;
 

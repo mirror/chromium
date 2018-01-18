@@ -233,11 +233,7 @@ class CORE_EXPORT StyleEngine final
                              TextPosition start_position,
                              StyleEngineContext&);
 
-  void CollectFeaturesTo(RuleFeatureSet& features) const {
-    CollectUserStyleFeaturesTo(features);
-    CollectScopedStyleFeaturesTo(features);
-  }
-
+  void CollectScopedStyleFeaturesTo(RuleFeatureSet&) const;
   void EnsureUAStyleForFullscreen();
   void EnsureUAStyleForElement(const Element&);
 
@@ -337,9 +333,6 @@ class CORE_EXPORT StyleEngine final
 
   void CreateResolver();
   void ClearResolvers();
-
-  void CollectUserStyleFeaturesTo(RuleFeatureSet&) const;
-  void CollectScopedStyleFeaturesTo(RuleFeatureSet&) const;
 
   CSSStyleSheet* ParseSheet(Element&,
                             const String& text,

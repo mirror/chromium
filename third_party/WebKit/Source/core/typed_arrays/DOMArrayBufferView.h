@@ -30,7 +30,7 @@ class CORE_EXPORT DOMArrayBufferView : public ScriptWrappable {
   static const ViewType kTypeFloat64 = WTF::ArrayBufferView::kTypeFloat64;
   static const ViewType kTypeDataView = WTF::ArrayBufferView::kTypeDataView;
 
-  virtual ~DOMArrayBufferView() = default;
+  virtual ~DOMArrayBufferView() {}
 
   DOMArrayBuffer* buffer() const {
     DCHECK(!IsShared());

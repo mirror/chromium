@@ -26,7 +26,7 @@ namespace blink {
 LayoutTableCaption::LayoutTableCaption(Element* element)
     : LayoutBlockFlow(element) {}
 
-LayoutTableCaption::~LayoutTableCaption() = default;
+LayoutTableCaption::~LayoutTableCaption() {}
 
 LayoutUnit LayoutTableCaption::ContainingBlockLogicalWidthForContent() const {
   LayoutBlock* cb = ContainingBlock();

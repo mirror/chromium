@@ -17,12 +17,6 @@
 var tilesAreLoaded = false;
 
 
-var numDdllogResponsesReceived = 0;
-var lastDdllogResponse = '';
-
-var onDdllogResponse = null;
-
-
 /**
  * Controls rendering the new tab page for InstantExtended.
  * @return {Object} A limited interface for testing the local NTP.
@@ -242,11 +236,12 @@ function getIsThemeDark() {
  * @private
  */
 function renderTheme() {
-  $(IDS.NTP_CONTENTS).classList.toggle(CLASSES.DARK, getIsThemeDark());
-
   var info = getThemeBackgroundInfo();
-  if (!info)
+  var isThemeDark = getIsThemeDark();
+  $(IDS.NTP_CONTENTS).classList.toggle(CLASSES.DARK, isThemeDark);
+  if (!info) {
     return;
+  }
 
   var background = [convertToRGBAColor(info.backgroundColorRgba),
                     info.imageUrl,
@@ -260,21 +255,10 @@ function renderTheme() {
   document.body.classList.toggle(CLASSES.NON_WHITE_BG, isNonWhiteBackground);
   updateThemeAttribution(info.attributionUrl, info.imageHorizontalAlignment);
   setCustomThemeStyle(info);
-}
 
-/**
- * Sends the current theme info to the most visited iframe.
- * @private
- */
-function sendThemeInfoToMostVisitedIframe() {
-  var info = getThemeBackgroundInfo();
-  if (!info)
-    return;
-
-  var isThemeDark = getIsThemeDark();
-
-  var message = {cmd: 'updateTheme'};
-  message.isThemeDark = isThemeDark;
+  // Inform the most visited iframe of the new theme.
+  var themeinfo = {cmd: 'updateTheme'};
+  themeinfo.isThemeDark = isThemeDark;
 
   var titleColor = NTP_DESIGN.titleColor;
   if (!info.usingDefaultTheme && info.textColorRgba) {
@@ -282,9 +266,9 @@ function sendThemeInfoToMostVisitedIframe() {
   } else if (isThemeDark) {
     titleColor = NTP_DESIGN.titleColorAgainstDark;
   }
-  message.tileTitleColor = convertToRGBAColor(titleColor);
+  themeinfo.tileTitleColor = convertToRGBAColor(titleColor);
 
-  $(IDS.TILES_IFRAME).contentWindow.postMessage(message, '*');
+  $(IDS.TILES_IFRAME).contentWindow.postMessage(themeinfo, '*');
 }
 
 
@@ -317,7 +301,6 @@ function renderOneGoogleBarTheme() {
 function onThemeChange() {
   renderTheme();
   renderOneGoogleBarTheme();
-  sendThemeInfoToMostVisitedIframe();
 }
 
 
@@ -633,8 +616,6 @@ function init() {
   ntpApiHandle.onthemechange = onThemeChange;
   ntpApiHandle.onmostvisitedchange = onMostVisitedChange;
 
-  renderTheme();
-
   var searchboxApiHandle = embeddedSearchApiHandle.searchBox;
 
   if (configData.isGooglePage) {
@@ -703,24 +684,21 @@ function init() {
       if (ddl === null) {
         // Got no ddl object at all, the feature is probably disabled. Just show
         // the logo.
-        showLogoOrDoodle(/*fromCache=*/true);
+        showLogoOrDoodle(null, null, /*fromCache=*/true);
         return;
       }
 
       // Got a (possibly empty) ddl object. Show logo or doodle.
-      targetDoodle.image = ddl.image || null;
-      targetDoodle.metadata = ddl.metadata || null;
-      showLogoOrDoodle(/*fromCache=*/true);
+      showLogoOrDoodle(
+          ddl.image || null, ddl.metadata || null, /*fromCache=*/true);
       // Never hide an interactive doodle if it was already shown.
       if (ddl.metadata && (ddl.metadata.type === LOGO_TYPE.INTERACTIVE))
         return;
       // If we got a valid ddl object (from cache), load a fresh one.
       if (ddl.v !== null) {
-        loadDoodle(ddl.v, function(ddl2) {
-          if (ddl2.usable) {
-            targetDoodle.image = ddl2.image || null;
-            targetDoodle.metadata = ddl2.metadata || null;
-            fadeToLogoOrDoodle();
+        loadDoodle(ddl.v, function(ddl) {
+          if (ddl.usable) {
+            fadeToLogoOrDoodle(ddl.image, ddl.metadata);
           }
         });
       }
@@ -772,7 +750,7 @@ function init() {
 
   iframe.onload = function() {
     reloadTiles();
-    sendThemeInfoToMostVisitedIframe();
+    renderTheme();
   };
 
   window.addEventListener('message', handlePostMessage);
@@ -859,99 +837,58 @@ var loadDoodle = function(v, onload) {
 };
 
 
-/** Handles the response of a doodle impression ping, i.e. stores the
- * appropriate interactionLogUrl or onClickUrlExtraParams.
+/** Returns true if the doodle given by |image| and |metadata| is currently
+ * visible. If |image| is null, returns true when the default logo is visible;
+ * if non-null, checks that it matches the doodle that is currently visible.
+ * Here, "visible" means fully-visible or fading in.
  *
- * @param {!Object} ddllog Response object from the ddllog ping.
- * @param {!boolean} isAnimated
- */
-var handleDdllogResponse = function(ddllog, isAnimated) {
-  if (ddllog && ddllog.interaction_log_url) {
-    let interactionLogUrl =
-        new URL(ddllog.interaction_log_url, configData.googleBaseUrl);
-    if (isAnimated) {
-      targetDoodle.animatedInteractionLogUrl = interactionLogUrl;
-    } else {
-      targetDoodle.staticInteractionLogUrl = interactionLogUrl;
-    }
-    lastDdllogResponse = 'interaction_log_url ' + ddllog.interaction_log_url;
-  } else if (ddllog && ddllog.target_url_params) {
-    targetDoodle.onClickUrlExtraParams =
-        new URLSearchParams(ddllog.target_url_params);
-    lastDdllogResponse = 'target_url_params ' + ddllog.target_url_params;
-  } else {
-    console.log('Invalid or missing ddllog response:');
-    console.log(ddllog);
-  }
-};
-
-
-/** Logs a doodle impression at the given logUrl, and handles the response via
- * handleDdllogResponse.
- *
- * @param {!string} logUrl
- * @param {!boolean} isAnimated
- */
-var logDoodleImpression = function(logUrl, isAnimated) {
-  lastDdllogResponse = '';
-  fetch(logUrl, {credentials: 'omit'})
-      .then(function(response) {
-        return response.text();
-      })
-      .then(function(text) {
-        // Remove the optional XSS preamble.
-        const preamble = ')]}\'';
-        if (text.startsWith(preamble)) {
-          text = text.substr(preamble.length);
-        }
-        try {
-          var json = JSON.parse(text);
-        } catch (error) {
-          console.log('Failed to parse doodle impression response as JSON:');
-          console.log(error);
-          return;
-        }
-        handleDdllogResponse(json.ddllog, isAnimated);
-      })
-      .catch(function(error) {
-        console.log('Error logging doodle impression to "' + logUrl + '":');
-        console.log(error);
-      })
-      .finally(function() {
-        ++numDdllogResponsesReceived;
-        if (onDdllogResponse !== null) {
-          onDdllogResponse();
-        }
-      });
-};
-
-
-/** Returns true if the target doodle is currently visible. If |image| is null,
- * returns true when the default logo is visible; if non-null, checks that it
- * matches the doodle that is currently visible. Here, "visible" means
- * fully-visible or fading in.
- *
+ * @param {?Object} image
+ * @param {?Object} metadata
  * @returns {boolean}
  */
-var isDoodleCurrentlyVisible = function() {
+var isDoodleCurrentlyVisible = function(image, metadata) {
   var haveDoodle = ($(IDS.LOGO_DOODLE).classList.contains(CLASSES.SHOW_LOGO));
-  var wantDoodle =
-      (targetDoodle.image !== null) && (targetDoodle.metadata !== null);
-  if (!haveDoodle || !wantDoodle) {
+  var wantDoodle = (image !== null) && (metadata !== null);
+  if (!haveDoodle || !wantDoodle)
     return haveDoodle === wantDoodle;
-  }
 
-  // Have a visible doodle and a target doodle. Test that they match.
-  if (targetDoodle.metadata.type === LOGO_TYPE.INTERACTIVE) {
+  // Have a visible doodle and a query doodle. Test that they match.
+  if (metadata.type === LOGO_TYPE.INTERACTIVE) {
     var logoDoodleIframe = $(IDS.LOGO_DOODLE_IFRAME);
     return logoDoodleIframe.classList.contains(CLASSES.SHOW_LOGO) &&
-        (logoDoodleIframe.src === targetDoodle.metadata.fullPageUrl);
+        (logoDoodleIframe.src === metadata.fullPageUrl);
   } else {
     var logoDoodleImage = $(IDS.LOGO_DOODLE_IMAGE);
     var logoDoodleButton = $(IDS.LOGO_DOODLE_BUTTON);
     return logoDoodleButton.classList.contains(CLASSES.SHOW_LOGO) &&
-        ((logoDoodleImage.src === targetDoodle.image) ||
-         (logoDoodleImage.src === targetDoodle.metadata.animatedUrl));
+        ((logoDoodleImage.src === image) ||
+         (logoDoodleImage.src === metadata.animatedUrl));
+  }
+};
+
+
+var showLogoOrDoodle = function(image, metadata, fromCache) {
+  if (metadata !== null) {
+    applyDoodleMetadata(metadata);
+    if (metadata.type === LOGO_TYPE.INTERACTIVE) {
+      $(IDS.LOGO_DOODLE_BUTTON).classList.remove(CLASSES.SHOW_LOGO);
+      $(IDS.LOGO_DOODLE_IFRAME).classList.add(CLASSES.SHOW_LOGO);
+    } else {
+      $(IDS.LOGO_DOODLE_IMAGE).src = image;
+      $(IDS.LOGO_DOODLE_BUTTON).classList.add(CLASSES.SHOW_LOGO);
+      $(IDS.LOGO_DOODLE_IFRAME).classList.remove(CLASSES.SHOW_LOGO);
+
+      var isCta = !!metadata.animatedUrl;
+      var eventType = isCta ?
+          (fromCache ? LOG_TYPE.NTP_CTA_LOGO_SHOWN_FROM_CACHE :
+                       LOG_TYPE.NTP_CTA_LOGO_SHOWN_FRESH) :
+          (fromCache ? LOG_TYPE.NTP_STATIC_LOGO_SHOWN_FROM_CACHE :
+                       LOG_TYPE.NTP_STATIC_LOGO_SHOWN_FRESH);
+      ntpApiHandle.logEvent(eventType);
+    }
+    $(IDS.LOGO_DOODLE).classList.add(CLASSES.SHOW_LOGO);
+  } else {
+    $(IDS.LOGO_DEFAULT).classList.add(CLASSES.SHOW_LOGO);
   }
 };
 
@@ -963,57 +900,6 @@ var isDoodleCurrentlyVisible = function() {
 var targetDoodle = {
   image: null,
   metadata: null,
-  // The log URLs and params may be filled with the response from the
-  // corresponding impression log URL.
-  staticInteractionLogUrl: null,
-  animatedInteractionLogUrl: null,
-  onClickUrlExtraParams: null,
-};
-
-
-var getDoodleTargetUrl = function() {
-  let url = new URL(targetDoodle.metadata.onClickUrl);
-  if (targetDoodle.onClickUrlExtraParams) {
-    for (var param of targetDoodle.onClickUrlExtraParams) {
-      url.searchParams.append(param[0], param[1]);
-    }
-  }
-  return url;
-};
-
-
-var showLogoOrDoodle = function(fromCache) {
-  if (targetDoodle.metadata !== null) {
-    applyDoodleMetadata();
-    if (targetDoodle.metadata.type === LOGO_TYPE.INTERACTIVE) {
-      $(IDS.LOGO_DOODLE_BUTTON).classList.remove(CLASSES.SHOW_LOGO);
-      $(IDS.LOGO_DOODLE_IFRAME).classList.add(CLASSES.SHOW_LOGO);
-    } else {
-      $(IDS.LOGO_DOODLE_IMAGE).src = targetDoodle.image;
-      $(IDS.LOGO_DOODLE_BUTTON).classList.add(CLASSES.SHOW_LOGO);
-      $(IDS.LOGO_DOODLE_IFRAME).classList.remove(CLASSES.SHOW_LOGO);
-
-      // Log the impression in Chrome metrics.
-      var isCta = !!targetDoodle.metadata.animatedUrl;
-      var eventType = isCta ?
-          (fromCache ? LOG_TYPE.NTP_CTA_LOGO_SHOWN_FROM_CACHE :
-                       LOG_TYPE.NTP_CTA_LOGO_SHOWN_FRESH) :
-          (fromCache ? LOG_TYPE.NTP_STATIC_LOGO_SHOWN_FROM_CACHE :
-                       LOG_TYPE.NTP_STATIC_LOGO_SHOWN_FRESH);
-      ntpApiHandle.logEvent(eventType);
-
-      // Ping the proper impression logging URL if it exists.
-      var logUrl = isCta ? targetDoodle.metadata.ctaLogUrl :
-                           targetDoodle.metadata.logUrl;
-      if (logUrl) {
-        logDoodleImpression(logUrl, /*isAnimated=*/false);
-      }
-    }
-    $(IDS.LOGO_DOODLE).classList.add(CLASSES.SHOW_LOGO);
-  } else {
-    // No doodle. Just show the default logo.
-    $(IDS.LOGO_DEFAULT).classList.add(CLASSES.SHOW_LOGO);
-  }
 };
 
 
@@ -1043,22 +929,24 @@ var startFadeOut = function(element) {
  * Integrates a fresh doodle into the page as appropriate. If the correct logo
  * or doodle is already shown, just updates the metadata. Otherwise, initiates
  * a fade from the currently-shown logo/doodle to the new one.
+ *
+ * @param {?Object} image
+ * @param {?Object} metadata
  */
-var fadeToLogoOrDoodle = function() {
+var fadeToLogoOrDoodle = function(image, metadata) {
   // If the image is already visible, there's no need to start a fade-out.
   // However, metadata may have changed, so update the doodle's alt text and
   // href, if applicable.
-  if (isDoodleCurrentlyVisible()) {
-    if (targetDoodle.metadata !== null) {
-      applyDoodleMetadata();
+  if (isDoodleCurrentlyVisible(image, metadata)) {
+    if (metadata !== null) {
+      applyDoodleMetadata(metadata);
     }
     return;
   }
 
-  // It's not the same doodle. Clear any loging URLs/params we might have.
-  targetDoodle.staticInteractionLogUrl = null;
-  targetDoodle.animatedInteractionLogUrl = null;
-  targetDoodle.onClickUrlExtraParams = null;
+  // Set the target to use once the current logo/doodle has finished fading out.
+  targetDoodle.image = image;
+  targetDoodle.metadata = metadata;
 
   // Start fading out the current logo or doodle. onDoodleFadeOutComplete will
   // apply the change when the fade-out finishes.
@@ -1071,86 +959,47 @@ var onDoodleFadeOutComplete = function(e) {
   // Fade-out finished. Start fading in the appropriate logo.
   $(IDS.LOGO_DOODLE).classList.add(CLASSES.FADE);
   $(IDS.LOGO_DEFAULT).classList.add(CLASSES.FADE);
-  showLogoOrDoodle(/*fromCache=*/false);
+  showLogoOrDoodle(
+      targetDoodle.image, targetDoodle.metadata, /*fromCache=*/false);
 
   this.removeEventListener('transitionend', onDoodleFadeOutComplete);
 };
 
 
-var applyDoodleMetadata = function() {
+var applyDoodleMetadata = function(metadata) {
   var logoDoodleButton = $(IDS.LOGO_DOODLE_BUTTON);
   var logoDoodleImage = $(IDS.LOGO_DOODLE_IMAGE);
   var logoDoodleIframe = $(IDS.LOGO_DOODLE_IFRAME);
 
-  switch (targetDoodle.metadata.type) {
+  switch (metadata.type) {
     case LOGO_TYPE.SIMPLE:
-      logoDoodleImage.title = targetDoodle.metadata.altText;
+      logoDoodleImage.title = metadata.altText;
 
-      // On click, navigate to the target URL.
       logoDoodleButton.onclick = function() {
-        // Log the click in Chrome metrics.
         ntpApiHandle.logEvent(LOG_TYPE.NTP_STATIC_LOGO_CLICKED);
-
-        // Ping the static interaction_log_url if there is one.
-        if (targetDoodle.staticInteractionLogUrl) {
-          navigator.sendBeacon(targetDoodle.staticInteractionLogUrl);
-          targetDoodle.staticInteractionLogUrl = null;
-        }
-
-        window.location = getDoodleTargetUrl();
+        window.location = metadata.onClickUrl;
       };
       break;
 
     case LOGO_TYPE.ANIMATED:
-      logoDoodleImage.title = targetDoodle.metadata.altText;
-      // The CTA image is currently shown; on click, show the animated one.
+      logoDoodleImage.title = metadata.altText;
+
       logoDoodleButton.onclick = function(e) {
-        e.preventDefault();
-
-        // Log the click in Chrome metrics.
         ntpApiHandle.logEvent(LOG_TYPE.NTP_CTA_LOGO_CLICKED);
-
-        // Ping the static interaction_log_url if there is one.
-        if (targetDoodle.staticInteractionLogUrl) {
-          navigator.sendBeacon(targetDoodle.staticInteractionLogUrl);
-          targetDoodle.staticInteractionLogUrl = null;
-        }
-
-        // Once the animated image loads, ping the impression log URL.
-        if (targetDoodle.metadata.logUrl) {
-          logoDoodleImage.onload = function() {
-            logDoodleImpression(
-                targetDoodle.metadata.logUrl, /*isAnimated=*/true);
-          };
-        }
-        logoDoodleImage.src = targetDoodle.metadata.animatedUrl;
-
-        // When the animated image is clicked, navigate to the target URL.
+        e.preventDefault();
+        logoDoodleImage.src = metadata.animatedUrl;
         logoDoodleButton.onclick = function() {
-          // Log the click in Chrome metrics.
           ntpApiHandle.logEvent(LOG_TYPE.NTP_ANIMATED_LOGO_CLICKED);
-
-          // Ping the animated interaction_log_url if there is one.
-          if (targetDoodle.animatedInteractionLogUrl) {
-            navigator.sendBeacon(targetDoodle.animatedInteractionLogUrl);
-            targetDoodle.animatedInteractionLogUrl = null;
-          }
-
-          window.location = getDoodleTargetUrl();
+          window.location = metadata.onClickUrl;
         };
       };
       break;
 
     case LOGO_TYPE.INTERACTIVE:
-      logoDoodleIframe.title = targetDoodle.metadata.altText;
-      logoDoodleIframe.src = targetDoodle.metadata.fullPageUrl;
+      logoDoodleIframe.title = metadata.altText;
+      logoDoodleIframe.src = metadata.fullPageUrl;
       document.body.style.setProperty(
-          '--logo-iframe-width', targetDoodle.metadata.iframeWidthPx + 'px');
-      document.body.style.setProperty(
-          '--logo-iframe-height', targetDoodle.metadata.iframeHeightPx + 'px');
-      document.body.style.setProperty(
-          '--logo-iframe-initial-height',
-          targetDoodle.metadata.iframeHeightPx + 'px');
+          '--logo-iframe-initial-height', metadata.iframeHeightPx + 'px');
       break;
   }
 };

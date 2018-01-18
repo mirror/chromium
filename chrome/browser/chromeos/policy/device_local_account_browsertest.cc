@@ -26,6 +26,7 @@
 #include "base/json/json_writer.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
@@ -389,7 +390,7 @@ std::unique_ptr<net::FakeURLFetcher> RunCallbackAndReturnFakeURLFetcher(
     net::HttpStatusCode response_code,
     net::URLRequestStatus::Status status) {
   task_runner->PostTask(FROM_HERE, callback);
-  return std::make_unique<net::FakeURLFetcher>(url, delegate, response_data,
+  return base::MakeUnique<net::FakeURLFetcher>(url, delegate, response_data,
                                                response_code, status);
 }
 
@@ -1264,7 +1265,7 @@ IN_PROC_BROWSER_TEST_F(DeviceLocalAccountTest, ExtensionCacheImplTest) {
                  extensions::LocalExtensionCache::kCacheReadyFlagFileName),
              0, base::Time::Now());
   extensions::ExtensionCacheImpl cache_impl(
-      std::make_unique<extensions::ChromeOSExtensionCacheDelegate>(impl_path));
+      base::MakeUnique<extensions::ChromeOSExtensionCacheDelegate>(impl_path));
   std::unique_ptr<base::RunLoop> run_loop;
   run_loop.reset(new base::RunLoop);
   cache_impl.Start(base::Bind(&OnExtensionCacheImplInitialized, &run_loop));

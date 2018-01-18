@@ -238,10 +238,6 @@
       status: "experimental",
     },
     {
-      name: "CSSLayoutAPI",
-      status: "experimental",
-    },
-    {
       name: "CSSMaskSourceType",
       status: "experimental",
     },
@@ -272,7 +268,7 @@
     {
       name: "CSSPaintAPI",
       depends_on: ["Worklet"],
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "CSSPaintAPIArguments",
@@ -314,9 +310,6 @@
     {
       name: "CustomElementsBuiltin",
       status: "test",
-    },
-    {
-      name: "CustomUserTiming",
     },
     {
       name: "Database",
@@ -653,6 +646,9 @@
       name: "ModuleScriptsImportMetaUrl",
     },
     {
+      name: "MojoBlobs",
+    },
+    {
       name: "MojoBlobURLs",
     },
     {
@@ -841,6 +837,10 @@
       status: "stable",
     },
     {
+      name: "PreventLayerSquashing",
+      status: "stable",
+    },
+    {
       name: "PrintBrowser",
     },
     {
@@ -900,6 +900,10 @@
     // crbug.com/417782 tracks enabling this by default.
     {
       name: "RootLayerScrolling",
+    },
+    {
+      name: "RTCRtpSenderReplaceTrack",
+      status: "experimental",
     },
     {
       name: "RTCUnifiedPlan",
@@ -1191,7 +1195,7 @@
     },
     {
       name: "Worklet",
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "WorkStealingInScriptRunner",

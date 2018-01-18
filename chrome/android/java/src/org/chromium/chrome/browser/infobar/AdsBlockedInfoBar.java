@@ -5,9 +5,6 @@
 package org.chromium.chrome.browser.infobar;
 
 import android.support.v7.widget.SwitchCompat;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -15,7 +12,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ResourceId;
-import org.chromium.ui.text.NoUnderlineClickableSpan;
 import org.chromium.ui.widget.ButtonCompat;
 
 /**
@@ -54,26 +50,9 @@ public class AdsBlockedInfoBar extends ConfirmInfoBar implements OnCheckedChange
     public void createContent(InfoBarLayout layout) {
         super.createContent(layout);
         if (mIsShowingExplanation) {
-            String title = layout.getContext().getString(R.string.blocked_ads_prompt_title);
-            layout.setMessage(title);
-
-            SpannableStringBuilder description = new SpannableStringBuilder();
-            description.append(new SpannableString(mFollowUpMessage));
-            description.append(" ");
-            int spanStart = description.length();
+            layout.setMessage(mFollowUpMessage);
             String learnMore = layout.getContext().getString(R.string.learn_more);
-            description.append(learnMore);
-
-            NoUnderlineClickableSpan clickableSpan = new NoUnderlineClickableSpan() {
-                @Override
-                public void onClick(View view) {
-                    onLinkClicked();
-                }
-            };
-            description.setSpan(clickableSpan, spanStart, description.length(),
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            layout.getMessageLayout().addDescription(description);
-
+            layout.appendMessageLinkText(learnMore);
             setButtons(layout, mOKButtonText, null);
             InfoBarControlLayout controlLayout = layout.addControlLayout();
 

@@ -157,6 +157,7 @@ bool CompositeEditCommand::Apply() {
   // do it on their own (see TypingCommand::typingAddedToOpenCommand).
   if (!IsTypingCommand())
     frame->GetEditor().AppliedEditing(this);
+  SetShouldRetainAutocorrectionIndicator(false);
   return !editing_state.IsAborted();
 }
 
@@ -190,6 +191,8 @@ bool CompositeEditCommand::IsDragAndDropCommand() const {
 bool CompositeEditCommand::IsReplaceSelectionCommand() const {
   return false;
 }
+
+void CompositeEditCommand::SetShouldRetainAutocorrectionIndicator(bool) {}
 
 //
 // sugary-sweet convenience functions to help create and apply edit commands in
@@ -1290,9 +1293,6 @@ void CompositeEditCommand::MoveParagraphWithClones(
     HTMLElement* block_element,
     Node* outer_node,
     EditingState* editing_state) {
-  // InsertListCommandTest.InsertListWithCollapsedVisibility reaches here.
-  ABORT_EDITING_COMMAND_IF(start_of_paragraph_to_move.IsNull());
-  ABORT_EDITING_COMMAND_IF(end_of_paragraph_to_move.IsNull());
   DCHECK(outer_node);
   DCHECK(block_element);
 

@@ -64,15 +64,15 @@ namespace blink {
 // static
 VibrationController::VibrationPattern
 VibrationController::SanitizeVibrationPattern(
-    const UnsignedLongOrUnsignedLongSequence& input) {
-  VibrationPattern pattern;
+    const UnsignedLongOrUnsignedLongSequence& pattern) {
+  VibrationPattern sanitized;
 
-  if (input.IsUnsignedLong())
-    pattern.push_back(input.GetAsUnsignedLong());
-  else if (input.IsUnsignedLongSequence())
-    pattern = input.GetAsUnsignedLongSequence();
+  if (pattern.IsUnsignedLong())
+    sanitized.push_back(pattern.GetAsUnsignedLong());
+  else if (pattern.IsUnsignedLongSequence())
+    sanitized = pattern.GetAsUnsignedLongSequence();
 
-  return sanitizeVibrationPatternInternal(pattern);
+  return sanitizeVibrationPatternInternal(sanitized);
 }
 
 VibrationController::VibrationController(LocalFrame& frame)

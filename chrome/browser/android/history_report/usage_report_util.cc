@@ -40,7 +40,7 @@ bool ShouldIgnoreUrl(const GURL& url) {
     return true;
 
   // Ignore localhost URLs.
-  if (net::IsLocalhost(url))
+  if (net::IsLocalhost(url.host_piece()))
     return true;
 
   return false;

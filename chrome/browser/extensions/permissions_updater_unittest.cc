@@ -8,6 +8,7 @@
 
 #include "base/files/file_path.h"
 #include "base/json/json_file_value_serializer.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
 #include "base/values.h"
@@ -258,7 +259,7 @@ TEST_F(PermissionsUpdaterTest, RevokingPermissions) {
   auto api_permission_set = [](APIPermission::ID id) {
     APIPermissionSet apis;
     apis.insert(id);
-    return std::make_unique<PermissionSet>(apis, ManifestPermissionSet(),
+    return base::MakeUnique<PermissionSet>(apis, ManifestPermissionSet(),
                                            URLPatternSet(), URLPatternSet());
   };
 
@@ -266,7 +267,7 @@ TEST_F(PermissionsUpdaterTest, RevokingPermissions) {
     URLPatternSet set;
     URLPattern pattern(URLPattern::SCHEME_ALL, url.spec());
     set.AddPattern(pattern);
-    return std::make_unique<PermissionSet>(
+    return base::MakeUnique<PermissionSet>(
         APIPermissionSet(), ManifestPermissionSet(), set, URLPatternSet());
   };
 
@@ -498,10 +499,11 @@ TEST_F(PermissionsUpdaterTest, Delegate) {
   required_permissions.Append("tabs").Append("management").Append("cookies");
   scoped_refptr<const Extension> extension =
       CreateExtensionWithOptionalPermissions(
-          std::make_unique<base::ListValue>(), required_permissions.Build(),
+          base::MakeUnique<base::ListValue>(),
+          required_permissions.Build(),
           "My Extension");
 
-  auto test_delegate = std::make_unique<PermissionsUpdaterTestDelegate>();
+  auto test_delegate = base::MakeUnique<PermissionsUpdaterTestDelegate>();
   PermissionsUpdater::SetPlatformDelegate(test_delegate.get());
   PermissionsUpdater updater(profile());
   updater.InitializePermissions(extension.get());

@@ -31,7 +31,7 @@
 
 namespace blink {
 
-DOMURLUtils::~DOMURLUtils() = default;
+DOMURLUtils::~DOMURLUtils() {}
 
 void DOMURLUtils::setHref(const String& value) {
   SetInput(value);

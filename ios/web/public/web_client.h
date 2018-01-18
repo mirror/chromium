@@ -127,7 +127,7 @@ class WebClient {
   //
   // TODO(crbug.com/703964): Change the return value to NSArray<NSString*> to
   // improve performance.
-  virtual NSString* GetDocumentStartScriptForMainFrame(
+  virtual NSString* GetEarlyPageScriptForMainFrame(
       BrowserState* browser_state) const;
 
   using StaticServiceMap =

@@ -3,8 +3,6 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/chromeos/login/quick_unlock/fingerprint_storage.h"
-
-#include <memory>
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_factory.h"
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_storage.h"
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_utils.h"
@@ -19,7 +17,7 @@ namespace {
 
 class FingerprintStorageUnitTest : public testing::Test {
  protected:
-  FingerprintStorageUnitTest() : profile_(std::make_unique<TestingProfile>()) {}
+  FingerprintStorageUnitTest() : profile_(base::MakeUnique<TestingProfile>()) {}
   ~FingerprintStorageUnitTest() override {}
 
   // testing::Test:

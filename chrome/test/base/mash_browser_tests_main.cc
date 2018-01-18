@@ -43,9 +43,8 @@ class MusTestLauncherDelegate : public ChromeTestLauncherDelegate {
     content::GetContentMainParams()->create_discardable_memory =
         (config_ == AshConfig::MUS);
     if (config_ == AshConfig::MASH) {
-      base::CommandLine::ForCurrentProcess()->AppendSwitch(switches::kMus);
-      base::CommandLine::ForCurrentProcess()->AppendSwitch(
-          switches::kMusHostingViz);
+      base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+          switches::kMus, switches::kMusHostVizValue);
     }
     return ChromeTestLauncherDelegate::RunTestSuite(argc, argv);
   }

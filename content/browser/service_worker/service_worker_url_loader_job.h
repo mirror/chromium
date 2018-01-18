@@ -67,7 +67,7 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob : public mojom::URLLoader {
   ServiceWorkerURLLoaderJob(
       LoaderCallback loader_callback,
       Delegate* delegate,
-      const network::ResourceRequest& resource_request,
+      const ResourceRequest& resource_request,
       scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter);
 
   ~ServiceWorkerURLLoaderJob() override;
@@ -146,7 +146,7 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob : public mojom::URLLoader {
   LoaderCallback loader_callback_;
 
   Delegate* delegate_;
-  network::ResourceRequest resource_request_;
+  ResourceRequest resource_request_;
   scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter_;
   std::unique_ptr<ServiceWorkerFetchDispatcher> fetch_dispatcher_;
   std::unique_ptr<StreamWaiter> stream_waiter_;
@@ -154,7 +154,7 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob : public mojom::URLLoader {
   blink::mojom::BlobPtr body_as_blob_;
 
   bool did_navigation_preload_ = false;
-  network::ResourceResponseHead response_head_;
+  ResourceResponseHead response_head_;
   base::Optional<net::SSLInfo> ssl_info_;
 
   // Pointer to the URLLoaderClient (i.e. NavigationURLLoader).

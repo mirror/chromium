@@ -26,6 +26,7 @@
 #include "content/browser/loader/mock_resource_loader.h"
 #include "content/browser/loader/temporary_file_stream.h"
 #include "content/browser/loader/test_resource_handler.h"
+#include "content/public/common/resource_response.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "net/base/completion_callback.h"
 #include "net/base/file_stream.h"
@@ -38,7 +39,6 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_status.h"
 #include "net/url_request/url_request_test_util.h"
-#include "services/network/public/cpp/resource_response.h"
 #include "storage/browser/blob/shareable_file_reference.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -332,8 +332,7 @@ class RedirectToFileResourceHandlerTest
   // and wait for it to resume the request if running an async test.
   MockResourceLoader::Status OnResponseStartedAndWaitForResult()
       WARN_UNUSED_RESULT {
-    mock_loader_->OnResponseStarted(
-        base::MakeRefCounted<network::ResourceResponse>());
+    mock_loader_->OnResponseStarted(base::MakeRefCounted<ResourceResponse>());
     if (GetParam() == CompletionMode::ASYNC) {
       EXPECT_EQ(MockResourceLoader::Status::CALLBACK_PENDING,
                 mock_loader_->status());
@@ -418,8 +417,7 @@ TEST_P(RedirectToFileResourceHandlerTest, SingleBodyReadDelayedFileOnResponse) {
     mock_loader_->WaitUntilIdleOrCanceled();
   }
   ASSERT_EQ(MockResourceLoader::Status::IDLE, mock_loader_->status());
-  mock_loader_->OnResponseStarted(
-      base::MakeRefCounted<network::ResourceResponse>());
+  mock_loader_->OnResponseStarted(base::MakeRefCounted<ResourceResponse>());
   ASSERT_EQ(MockResourceLoader::Status::CALLBACK_PENDING,
             mock_loader_->status());
 
@@ -453,8 +451,7 @@ TEST_P(RedirectToFileResourceHandlerTest, SingleBodyReadDelayedFileError) {
     mock_loader_->WaitUntilIdleOrCanceled();
   }
   ASSERT_EQ(MockResourceLoader::Status::IDLE, mock_loader_->status());
-  mock_loader_->OnResponseStarted(
-      base::MakeRefCounted<network::ResourceResponse>());
+  mock_loader_->OnResponseStarted(base::MakeRefCounted<ResourceResponse>());
   ASSERT_EQ(MockResourceLoader::Status::CALLBACK_PENDING,
             mock_loader_->status());
 

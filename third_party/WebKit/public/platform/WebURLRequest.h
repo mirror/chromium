@@ -106,6 +106,14 @@ class WebURLRequest {
     kRequestContextXSLT
   };
 
+  // Corresponds to Fetch request's "redirect mode":
+  // https://fetch.spec.whatwg.org/#concept-request-redirect-mode
+  enum FetchRedirectMode : uint8_t {
+    kFetchRedirectModeFollow,
+    kFetchRedirectModeError,
+    kFetchRedirectModeManual
+  };
+
   // Used to report performance metrics timed from the UI action that
   // triggered them (as opposed to navigation start time used in the
   // Navigation Timing API).
@@ -281,10 +289,8 @@ class WebURLRequest {
       network::mojom::FetchCredentialsMode);
 
   // The redirect mode which is used in Fetch API.
-  BLINK_PLATFORM_EXPORT network::mojom::FetchRedirectMode GetFetchRedirectMode()
-      const;
-  BLINK_PLATFORM_EXPORT void SetFetchRedirectMode(
-      network::mojom::FetchRedirectMode);
+  BLINK_PLATFORM_EXPORT FetchRedirectMode GetFetchRedirectMode() const;
+  BLINK_PLATFORM_EXPORT void SetFetchRedirectMode(FetchRedirectMode);
 
   // The integrity which is used in Fetch API.
   BLINK_PLATFORM_EXPORT WebString GetFetchIntegrity() const;

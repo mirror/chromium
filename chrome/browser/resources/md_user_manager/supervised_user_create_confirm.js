@@ -11,9 +11,9 @@
 (function() {
 /**
  * Maximum length of the supervised user profile name or custodian's username.
- * @type {number}
+ * @const {number}
  */
-const MAX_NAME_LENGTH = 50;
+var MAX_NAME_LENGTH = 50;
 
 Polymer({
   is: 'supervised-user-create-confirm',
@@ -50,7 +50,7 @@ Polymer({
    * @private
    */
   onTap_: function(event) {
-    const element = Polymer.dom(event).rootTarget;
+    var element = Polymer.dom(event).rootTarget;
 
     // Handle the tap event only if the target is a '<a>' element.
     if (element.nodeName == 'A') {
@@ -67,7 +67,7 @@ Polymer({
    * @private
    */
   elideProfileName_: function(profileInfo) {
-    const name = profileInfo ? profileInfo.name : '';
+    var name = profileInfo ? profileInfo.name : '';
     return elide(name, MAX_NAME_LENGTH);
   },
 
@@ -79,7 +79,7 @@ Polymer({
    * @private
    */
   elideCustodianUsername_: function(profileInfo) {
-    const name = profileInfo ? profileInfo.custodianUsername : '';
+    var name = profileInfo ? profileInfo.custodianUsername : '';
     return elide(name, MAX_NAME_LENGTH);
   },
 

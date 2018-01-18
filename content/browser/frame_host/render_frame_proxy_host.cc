@@ -234,8 +234,9 @@ void RenderFrameProxyHost::SetFocusedFrame() {
 
 void RenderFrameProxyHost::ScrollRectToVisible(
     const gfx::Rect& rect_to_scroll,
-    const blink::WebScrollIntoViewParams& params) {
-  Send(new FrameMsg_ScrollRectToVisible(routing_id_, rect_to_scroll, params));
+    const blink::WebRemoteScrollProperties properties) {
+  Send(new FrameMsg_ScrollRectToVisible(routing_id_, rect_to_scroll,
+                                        properties));
 }
 
 void RenderFrameProxyHost::SetDestructionCallback(
@@ -296,8 +297,7 @@ void RenderFrameProxyHost::OnOpenURL(
       current_rfh, validated_url, site_instance_.get(), std::vector<GURL>(),
       params.referrer, ui::PAGE_TRANSITION_LINK, GlobalRequestID(),
       params.should_replace_current_entry, params.uses_post ? "POST" : "GET",
-      params.resource_request_body, params.extra_headers,
-      params.suggested_filename);
+      params.resource_request_body, params.extra_headers);
 }
 
 void RenderFrameProxyHost::OnRouteMessageEvent(

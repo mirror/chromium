@@ -221,10 +221,6 @@ sk_sp<SkImage> TakeOwnershipOfSkImageBacking(GrContext* context,
 // called while holding the context lock.
 void DeleteSkImageAndPreventCaching(viz::RasterContextProvider* context,
                                     sk_sp<SkImage>&& image) {
-  // No need to do anything for a non-texture-backed images.
-  if (!image->isTextureBacked())
-    return;
-
   sk_sp<SkImage> image_owned =
       TakeOwnershipOfSkImageBacking(context->GrContext(), std::move(image));
   // If context is lost, we may get a null image here.
@@ -1495,11 +1491,6 @@ void GpuImageDecodeCache::RunPendingContextThreadOperations() {
   for (auto* image : images_pending_unlock_) {
     context_->RasterInterface()->UnlockDiscardableTextureCHROMIUM(
         GlIdFromSkImage(image));
-  }
-  if (images_pending_unlock_.size() > 0) {
-    // When we unlock images, we remove any outstanding texture bindings. We
-    // need to inform Skia so it will re-generate these bindings if needed.
-    context_->GrContext()->resetContext(kTextureBinding_GrGLBackendState);
   }
   images_pending_unlock_.clear();
 

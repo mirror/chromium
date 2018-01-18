@@ -16,9 +16,8 @@ namespace blink {
 
 WorkerShadowPage::WorkerShadowPage(Client* client)
     : client_(client),
-      web_view_(WebViewImpl::Create(nullptr,
-                                    mojom::PageVisibilityState::kVisible,
-                                    nullptr)),
+      web_view_(
+          WebViewImpl::Create(nullptr, mojom::PageVisibilityState::kVisible)),
       main_frame_(WebLocalFrameImpl::CreateMainFrame(web_view_,
                                                      this,
                                                      nullptr,
@@ -31,8 +30,7 @@ WorkerShadowPage::WorkerShadowPage(Client* client)
   // not create graphics layers.
   web_view_->GetSettings()->SetAcceleratedCompositingEnabled(false);
 
-  main_frame_->SetDevToolsAgentImpl(
-      WebDevToolsAgentImpl::CreateForWorker(main_frame_, client_));
+  main_frame_->DevToolsAgentImpl()->SetClient(client_);
 }
 
 WorkerShadowPage::~WorkerShadowPage() {
@@ -85,11 +83,11 @@ WorkerShadowPage::CreateURLLoaderFactory() {
   return Platform::Current()->CreateDefaultURLLoaderFactory();
 }
 
-WebString WorkerShadowPage::GetDevToolsFrameToken() {
+WebString WorkerShadowPage::GetInstrumentationToken() {
   // TODO(dgozman): instrumentation token will have to be passed directly to
   // DevTools once we stop using a frame for workers. Currently, we rely on
   // the frame's instrumentation token to match the worker.
-  return client_->GetDevToolsFrameToken();
+  return client_->GetInstrumentationToken();
 }
 
 bool WorkerShadowPage::WasInitialized() const {
@@ -110,11 +108,6 @@ void WorkerShadowPage::AdvanceState(State new_state) {
       state_ = new_state;
       return;
   }
-}
-
-void WorkerShadowPage::GetDevToolsAgent(
-    mojom::blink::DevToolsAgentAssociatedRequest request) {
-  main_frame_->DevToolsAgentImpl()->BindRequest(std::move(request));
 }
 
 }  // namespace blink

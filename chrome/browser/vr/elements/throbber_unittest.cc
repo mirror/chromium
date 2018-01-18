@@ -4,8 +4,7 @@
 
 #include "chrome/browser/vr/elements/throbber.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "cc/animation/transform_operation.h"
 #include "cc/animation/transform_operations.h"
 #include "chrome/browser/vr/elements/ui_element.h"
@@ -25,7 +24,7 @@ constexpr float kInitialOpacity = 0.8;
 
 TEST(Throbber, CircleGrowAnimation) {
   UiScene scene;
-  auto element = std::make_unique<Throbber>();
+  auto element = base::MakeUnique<Throbber>();
   element->SetSize(kTestSize, kTestSize);
   element->set_corner_radius(kTestSize / 2);
   element->SetScale(kInitialScale, kInitialScale, kInitialScale);

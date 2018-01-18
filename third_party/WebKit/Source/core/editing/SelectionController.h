@@ -107,13 +107,15 @@ class CORE_EXPORT SelectionController final
   void SelectClosestWordOrLinkFromMouseEvent(
       const MouseEventWithHitTestResults&);
   void SetNonDirectionalSelectionIfNeeded(const SelectionInFlatTree&,
-                                          const SetSelectionOptions&,
-                                          EndPointsAdjustmentMode);
+                                          TextGranularity,
+                                          EndPointsAdjustmentMode,
+                                          HandleVisibility);
   void SetCaretAtHitTestResult(const HitTestResult&);
   bool UpdateSelectionForMouseDownDispatchingSelectStart(
       Node*,
       const SelectionInFlatTree&,
-      const SetSelectionOptions&);
+      TextGranularity,
+      HandleVisibility);
 
   FrameSelection& Selection() const;
 
@@ -147,8 +149,7 @@ class CORE_EXPORT SelectionController final
 
 bool IsLinkSelection(const MouseEventWithHitTestResults&);
 bool IsExtendingSelection(const MouseEventWithHitTestResults&);
-CORE_EXPORT SelectionInFlatTree
-AdjustSelectionWithTrailingWhitespace(const SelectionInFlatTree&);
+
 }  // namespace blink
 
 #endif  // SelectionController_h

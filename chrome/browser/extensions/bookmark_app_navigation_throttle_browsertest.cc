@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
@@ -28,6 +29,7 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/context_menu_params.h"
+#include "content/public/common/resource_request_body.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_frame_navigation_observer.h"
 #include "content/public/test/test_navigation_observer.h"
@@ -41,7 +43,6 @@
 #include "net/test/embedded_test_server/http_request.h"
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/url_request/url_fetcher.h"
-#include "services/network/public/cpp/resource_request_body.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -82,7 +83,7 @@ class BookmarkAppNavigationObserver : public content::TestNavigationObserver {
 
   bool last_navigation_is_post() const { return last_navigation_is_post_; }
 
-  const scoped_refptr<network::ResourceRequestBody>&
+  const scoped_refptr<content::ResourceRequestBody>&
   last_resource_request_body() const {
     return last_resource_request_body_;
   }
@@ -99,7 +100,7 @@ class BookmarkAppNavigationObserver : public content::TestNavigationObserver {
   bool last_navigation_is_post_;
 
   // The request body of the last navigation if it was a post request.
-  scoped_refptr<network::ResourceRequestBody> last_resource_request_body_;
+  scoped_refptr<content::ResourceRequestBody> last_resource_request_body_;
 };
 
 void ExpectNavigationResultHistogramEquals(
@@ -263,7 +264,7 @@ void SubmitFormAndWait(content::WebContents* web_contents,
 
   EXPECT_EQ(is_post, observer.last_navigation_is_post());
   if (is_post) {
-    const std::vector<network::DataElement>* elements =
+    const std::vector<content::ResourceRequestBody::Element>* elements =
         observer.last_resource_request_body()->elements();
     EXPECT_EQ(1u, elements->size());
     const auto& element = elements->front();
@@ -297,7 +298,7 @@ const char kOutOfScopeUrlPath[] = "/out_of_scope/index.html";
 class BookmarkAppNavigationThrottleBrowserTest : public ExtensionBrowserTest {
  public:
   void SetUp() override {
-    scoped_feature_list_ = std::make_unique<base::test::ScopedFeatureList>();
+    scoped_feature_list_ = base::MakeUnique<base::test::ScopedFeatureList>();
     scoped_feature_list_->InitAndEnableFeature(features::kDesktopPWAWindowing);
 
     // Register a request handler that will return empty pages. Tests are
@@ -309,7 +310,7 @@ class BookmarkAppNavigationThrottleBrowserTest : public ExtensionBrowserTest {
               request.GetURL().path() == "/client-redirect") {
             return std::unique_ptr<HttpResponse>();
           }
-          auto response = std::make_unique<BasicHttpResponse>();
+          auto response = base::MakeUnique<BasicHttpResponse>();
           response->set_content_type("text/html");
           response->AddCustomHeader("Access-Control-Allow-Origin", "*");
           return static_cast<std::unique_ptr<HttpResponse>>(

@@ -29,8 +29,7 @@ class URLLoaderClientImpl::DeferredMessage {
 class URLLoaderClientImpl::DeferredOnReceiveResponse final
     : public DeferredMessage {
  public:
-  explicit DeferredOnReceiveResponse(
-      const network::ResourceResponseHead& response_head)
+  explicit DeferredOnReceiveResponse(const ResourceResponseHead& response_head)
       : response_head_(response_head) {}
 
   void HandleMessage(ResourceDispatcher* dispatcher, int request_id) override {
@@ -39,14 +38,14 @@ class URLLoaderClientImpl::DeferredOnReceiveResponse final
   bool IsCompletionMessage() const override { return false; }
 
  private:
-  const network::ResourceResponseHead response_head_;
+  const ResourceResponseHead response_head_;
 };
 
 class URLLoaderClientImpl::DeferredOnReceiveRedirect final
     : public DeferredMessage {
  public:
   DeferredOnReceiveRedirect(const net::RedirectInfo& redirect_info,
-                            const network::ResourceResponseHead& response_head)
+                            const ResourceResponseHead& response_head)
       : redirect_info_(redirect_info), response_head_(response_head) {}
 
   void HandleMessage(ResourceDispatcher* dispatcher, int request_id) override {
@@ -56,7 +55,7 @@ class URLLoaderClientImpl::DeferredOnReceiveRedirect final
 
  private:
   const net::RedirectInfo redirect_info_;
-  const network::ResourceResponseHead response_head_;
+  const ResourceResponseHead response_head_;
 };
 
 class URLLoaderClientImpl::DeferredOnDataDownloaded final
@@ -225,7 +224,7 @@ void URLLoaderClientImpl::Bind(mojom::URLLoaderClientEndpointsPtr endpoints) {
 }
 
 void URLLoaderClientImpl::OnReceiveResponse(
-    const network::ResourceResponseHead& response_head,
+    const ResourceResponseHead& response_head,
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
   has_received_response_ = true;
@@ -240,7 +239,7 @@ void URLLoaderClientImpl::OnReceiveResponse(
 
 void URLLoaderClientImpl::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
-    const network::ResourceResponseHead& response_head) {
+    const ResourceResponseHead& response_head) {
   DCHECK(!has_received_response_);
   DCHECK(!body_consumer_);
   if (NeedsStoringMessage()) {

@@ -58,7 +58,6 @@ TEST_F(ReplaceSelectionCommandTest, pastingEmptySpan) {
 
 // This is a regression test for https://crbug.com/668808
 TEST_F(ReplaceSelectionCommandTest, pasteSpanInText) {
-  GetDocument().SetCompatibilityMode(Document::kQuirksMode);
   GetDocument().setDesignMode("on");
   SetBodyContent("<b>text</b>");
 

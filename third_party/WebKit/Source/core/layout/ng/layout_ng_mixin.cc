@@ -18,7 +18,7 @@
 namespace blink {
 
 template <typename Base>
-LayoutNGMixin<Base>::~LayoutNGMixin() = default;
+LayoutNGMixin<Base>::~LayoutNGMixin() {}
 
 template <typename Base>
 bool LayoutNGMixin<Base>::IsOfType(LayoutObject::LayoutObjectType type) const {
@@ -144,28 +144,6 @@ template <typename Base>
 void LayoutNGMixin<Base>::SetPaintFragment(
     scoped_refptr<const NGPhysicalFragment> fragment) {
   paint_fragment_ = std::make_unique<NGPaintFragment>(std::move(fragment));
-}
-
-static Vector<NGPaintFragment*> GetNGPaintFragmentsInternal(
-    NGPaintFragment* paint,
-    const LayoutObject& layout_object) {
-  if (!paint)
-    return Vector<NGPaintFragment*>();
-  Vector<NGPaintFragment*> fragments;
-  if (paint->GetLayoutObject() == &layout_object)
-    fragments.push_back(paint);
-  for (const auto& child : paint->Children()) {
-    const auto& result =
-        GetNGPaintFragmentsInternal(child.get(), layout_object);
-    fragments.AppendVector(result);
-  }
-  return fragments;
-}
-
-template <typename Base>
-Vector<NGPaintFragment*> LayoutNGMixin<Base>::GetPaintFragments(
-    const LayoutObject& layout_object) const {
-  return GetNGPaintFragmentsInternal(PaintFragment(), layout_object);
 }
 
 template <typename Base>

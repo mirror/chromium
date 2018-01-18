@@ -16,6 +16,10 @@
 #include "content/network/data_pipe_element_reader.h"
 #include "content/network/network_context.h"
 #include "content/network/network_service_impl.h"
+#include "content/public/common/referrer.h"
+#include "content/public/common/resource_request.h"
+#include "content/public/common/resource_request_body.h"
+#include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
 #include "net/base/elements_upload_data_stream.h"
@@ -25,8 +29,6 @@
 #include "net/cert/symantec_certs.h"
 #include "net/url_request/url_request_context.h"
 #include "services/network/public/cpp/net_adapters.h"
-#include "services/network/public/cpp/resource_request.h"
-#include "services/network/public/cpp/resource_response.h"
 
 namespace content {
 
@@ -37,7 +39,7 @@ constexpr size_t kDefaultAllocationSize = 512 * 1024;
 // content/browser/loader/resource_loader.cc
 void PopulateResourceResponse(net::URLRequest* request,
                               bool is_load_timing_enabled,
-                              network::ResourceResponse* response) {
+                              ResourceResponse* response) {
   response->head.request_time = request->request_time();
   response->head.response_time = request->response_time();
   response->head.headers = request->response_headers();
@@ -77,17 +79,17 @@ void PopulateResourceResponse(net::URLRequest* request,
 // ResourceRequestBody.
 class BytesElementReader : public net::UploadBytesElementReader {
  public:
-  BytesElementReader(network::ResourceRequestBody* resource_request_body,
-                     const network::DataElement& element)
+  BytesElementReader(ResourceRequestBody* resource_request_body,
+                     const ResourceRequestBody::Element& element)
       : net::UploadBytesElementReader(element.bytes(), element.length()),
         resource_request_body_(resource_request_body) {
-    DCHECK_EQ(network::DataElement::TYPE_BYTES, element.type());
+    DCHECK_EQ(ResourceRequestBody::Element::TYPE_BYTES, element.type());
   }
 
   ~BytesElementReader() override {}
 
  private:
-  scoped_refptr<network::ResourceRequestBody> resource_request_body_;
+  scoped_refptr<ResourceRequestBody> resource_request_body_;
 
   DISALLOW_COPY_AND_ASSIGN(BytesElementReader);
 };
@@ -98,31 +100,31 @@ class BytesElementReader : public net::UploadBytesElementReader {
 // files survive until upload completion.
 class FileElementReader : public net::UploadFileElementReader {
  public:
-  FileElementReader(network::ResourceRequestBody* resource_request_body,
+  FileElementReader(ResourceRequestBody* resource_request_body,
                     base::TaskRunner* task_runner,
-                    const network::DataElement& element)
+                    const ResourceRequestBody::Element& element)
       : net::UploadFileElementReader(task_runner,
                                      element.path(),
                                      element.offset(),
                                      element.length(),
                                      element.expected_modification_time()),
         resource_request_body_(resource_request_body) {
-    DCHECK_EQ(network::DataElement::TYPE_FILE, element.type());
+    DCHECK_EQ(ResourceRequestBody::Element::TYPE_FILE, element.type());
   }
 
   ~FileElementReader() override {}
 
  private:
-  scoped_refptr<network::ResourceRequestBody> resource_request_body_;
+  scoped_refptr<ResourceRequestBody> resource_request_body_;
 
   DISALLOW_COPY_AND_ASSIGN(FileElementReader);
 };
 
 class RawFileElementReader : public net::UploadFileElementReader {
  public:
-  RawFileElementReader(network::ResourceRequestBody* resource_request_body,
+  RawFileElementReader(ResourceRequestBody* resource_request_body,
                        base::TaskRunner* task_runner,
-                       const network::DataElement& element)
+                       const ResourceRequestBody::Element& element)
       : net::UploadFileElementReader(
             task_runner,
             // TODO(mmenke): Is duplicating this necessary?
@@ -132,52 +134,52 @@ class RawFileElementReader : public net::UploadFileElementReader {
             element.length(),
             element.expected_modification_time()),
         resource_request_body_(resource_request_body) {
-    DCHECK_EQ(network::DataElement::TYPE_RAW_FILE, element.type());
+    DCHECK_EQ(ResourceRequestBody::Element::TYPE_RAW_FILE, element.type());
   }
 
   ~RawFileElementReader() override {}
 
  private:
-  scoped_refptr<network::ResourceRequestBody> resource_request_body_;
+  scoped_refptr<ResourceRequestBody> resource_request_body_;
 
   DISALLOW_COPY_AND_ASSIGN(RawFileElementReader);
 };
 
 // TODO: copied from content/browser/loader/upload_data_stream_builder.cc.
 std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
-    network::ResourceRequestBody* body,
+    ResourceRequestBody* body,
     base::SequencedTaskRunner* file_task_runner) {
   std::vector<std::unique_ptr<net::UploadElementReader>> element_readers;
   for (const auto& element : *body->elements()) {
     switch (element.type()) {
-      case network::DataElement::TYPE_BYTES:
+      case ResourceRequestBody::Element::TYPE_BYTES:
         element_readers.push_back(
             std::make_unique<BytesElementReader>(body, element));
         break;
-      case network::DataElement::TYPE_FILE:
+      case ResourceRequestBody::Element::TYPE_FILE:
         element_readers.push_back(std::make_unique<FileElementReader>(
             body, file_task_runner, element));
         break;
-      case network::DataElement::TYPE_RAW_FILE:
+      case ResourceRequestBody::Element::TYPE_RAW_FILE:
         element_readers.push_back(std::make_unique<RawFileElementReader>(
             body, file_task_runner, element));
         break;
-      case network::DataElement::TYPE_FILE_FILESYSTEM:
+      case ResourceRequestBody::Element::TYPE_FILE_FILESYSTEM:
         CHECK(false) << "Should never be reached";
         break;
-      case network::DataElement::TYPE_BLOB: {
+      case ResourceRequestBody::Element::TYPE_BLOB: {
         CHECK(false) << "Network service always uses DATA_PIPE for blobs.";
         break;
       }
-      case network::DataElement::TYPE_DATA_PIPE: {
+      case ResourceRequestBody::Element::TYPE_DATA_PIPE: {
         element_readers.push_back(std::make_unique<DataPipeElementReader>(
-            body, const_cast<network::DataElement*>(&element)
+            body, const_cast<storage::DataElement*>(&element)
                       ->ReleaseDataPipeGetter()));
         break;
       }
-      case network::DataElement::TYPE_DISK_CACHE_ENTRY:
-      case network::DataElement::TYPE_BYTES_DESCRIPTION:
-      case network::DataElement::TYPE_UNKNOWN:
+      case ResourceRequestBody::Element::TYPE_DISK_CACHE_ENTRY:
+      case ResourceRequestBody::Element::TYPE_BYTES_DESCRIPTION:
+      case ResourceRequestBody::Element::TYPE_UNKNOWN:
         NOTREACHED();
         break;
     }
@@ -192,14 +194,14 @@ std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
 URLLoader::URLLoader(NetworkContext* context,
                      mojom::URLLoaderRequest url_loader_request,
                      int32_t options,
-                     const network::ResourceRequest& request,
+                     const ResourceRequest& request,
                      bool report_raw_headers,
                      mojom::URLLoaderClientPtr url_loader_client,
                      const net::NetworkTrafficAnnotationTag& traffic_annotation,
                      uint32_t process_id)
     : context_(context),
       options_(options),
-      resource_type_(request.resource_type),
+      resource_type_(static_cast<ResourceType>(request.resource_type)),
       is_load_timing_enabled_(request.enable_load_timing),
       process_id_(process_id),
       render_frame_id_(request.render_frame_id),
@@ -219,9 +221,14 @@ URLLoader::URLLoader(NetworkContext* context,
   url_request_ = context_->url_request_context()->CreateRequest(
       GURL(request.url), request.priority, this, traffic_annotation);
   url_request_->set_method(request.method);
+
   url_request_->set_site_for_cookies(request.site_for_cookies);
-  url_request_->SetReferrer(ComputeReferrer(request.referrer));
-  url_request_->set_referrer_policy(request.referrer_policy);
+
+  const Referrer referrer(request.referrer,
+                          Referrer::NetReferrerPolicyToBlinkReferrerPolicy(
+                              request.referrer_policy));
+  Referrer::SetReferrerForRequest(url_request_.get(), referrer);
+
   url_request_->SetExtraRequestHeaders(request.headers);
 
   // Resolve elements from request_body and prepare upload data.
@@ -243,7 +250,9 @@ URLLoader::URLLoader(NetworkContext* context,
 
   url_request_->set_initiator(request.request_initiator);
 
-  if (request.update_first_party_url_on_redirect) {
+  // TODO(qinmin): network service shouldn't know about resource type, need
+  // to introduce another field to set this.
+  if (resource_type_ == RESOURCE_TYPE_MAIN_FRAME) {
     url_request_->set_first_party_url_policy(
         net::URLRequest::UPDATE_FIRST_PARTY_URL_ON_REDIRECT);
   }
@@ -256,6 +265,8 @@ URLLoader::URLLoader(NetworkContext* context,
     url_request_->SetResponseHeadersCallback(
         base::Bind(&URLLoader::SetRawResponseHeaders, base::Unretained(this)));
   }
+
+  AttachAcceptHeader(resource_type_, url_request_.get());
 
   url_request_->Start();
 }
@@ -346,8 +357,7 @@ void URLLoader::OnReceivedRedirect(net::URLRequest* url_request,
   // optionally follow the redirect.
   *defer_redirect = true;
 
-  scoped_refptr<network::ResourceResponse> response =
-      new network::ResourceResponse();
+  scoped_refptr<ResourceResponse> response = new ResourceResponse();
   PopulateResourceResponse(url_request_.get(), is_load_timing_enabled_,
                            response.get());
   if (report_raw_headers_) {
@@ -400,7 +410,7 @@ void URLLoader::OnResponseStarted(net::URLRequest* url_request, int net_error) {
     upload_progress_tracker_ = nullptr;
   }
 
-  response_ = new network::ResourceResponse();
+  response_ = new ResourceResponse();
   PopulateResourceResponse(url_request_.get(), is_load_timing_enabled_,
                            response_.get());
   if (report_raw_headers_) {

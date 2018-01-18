@@ -207,8 +207,8 @@ bool IsSupportedInFeaturePolicy(FeaturePolicyFeature feature) {
     case FeaturePolicyFeature::kAmbientLightSensor:
     case FeaturePolicyFeature::kGyroscope:
     case FeaturePolicyFeature::kMagnetometer:
-    case FeaturePolicyFeature::kSyncXHR:
       return true;
+    case FeaturePolicyFeature::kSyncXHR:
     case FeaturePolicyFeature::kVibrate:
       return RuntimeEnabledFeatures::FeaturePolicyExperimentalFeaturesEnabled();
     default:
@@ -232,7 +232,6 @@ const FeatureNameMap& GetDefaultFeatureNameMap() {
     default_feature_name_map.Set("geolocation",
                                  FeaturePolicyFeature::kGeolocation);
     default_feature_name_map.Set("midi", FeaturePolicyFeature::kMidiFeature);
-    default_feature_name_map.Set("sync-xhr", FeaturePolicyFeature::kSyncXHR);
     default_feature_name_map.Set("vr", FeaturePolicyFeature::kWebVr);
     default_feature_name_map.Set("accelerometer",
                                  FeaturePolicyFeature::kAccelerometer);
@@ -251,6 +250,7 @@ const FeatureNameMap& GetDefaultFeatureNameMap() {
                                    FeaturePolicyFeature::kDocumentWrite);
       default_feature_name_map.Set("sync-script",
                                    FeaturePolicyFeature::kSyncScript);
+      default_feature_name_map.Set("sync-xhr", FeaturePolicyFeature::kSyncXHR);
     }
     if (RuntimeEnabledFeatures::FeaturePolicyAutoplayFeatureEnabled()) {
       default_feature_name_map.Set("autoplay", FeaturePolicyFeature::kAutoplay);

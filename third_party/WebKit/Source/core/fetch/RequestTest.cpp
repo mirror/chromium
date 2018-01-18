@@ -65,8 +65,8 @@ TEST(ServiceWorkerRequestTest, FromAndToWebRequest) {
   const network::mojom::FetchCredentialsMode kCredentialsMode =
       network::mojom::FetchCredentialsMode::kInclude;
   const auto kCacheMode = mojom::FetchCacheMode::kValidateCache;
-  const network::mojom::FetchRedirectMode kRedirectMode =
-      network::mojom::FetchRedirectMode::kError;
+  const WebURLRequest::FetchRedirectMode kRedirectMode =
+      WebURLRequest::kFetchRedirectModeError;
 
   web_request.SetURL(url);
   web_request.SetMethod(method);

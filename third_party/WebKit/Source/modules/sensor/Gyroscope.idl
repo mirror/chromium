@@ -11,7 +11,6 @@
     ConstructorCallWith=ExecutionContext,
     RaisesException=Constructor,
     SecureContext,
-    Exposed=Window,
     MeasureAs=GyroscopeConstructor
 ] interface Gyroscope : Sensor {
     readonly attribute unrestricted double? x;

@@ -14,6 +14,10 @@
 #include "base/test/mock_callback.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/test_mock_time_task_runner.h"
+#include "components/signin/core/browser/account_tracker_service.h"
+#include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
+#include "components/signin/core/browser/fake_signin_manager.h"
+#include "components/signin/core/browser/test_signin_client.h"
 #include "components/suggestions/blacklist_store.h"
 #include "components/suggestions/features.h"
 #include "components/suggestions/image_manager.h"
@@ -21,18 +25,18 @@
 #include "components/suggestions/suggestions_store.h"
 #include "components/sync/driver/fake_sync_service.h"
 #include "components/sync/driver/sync_service.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "net/base/url_util.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_status_code.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_request_status.h"
 #include "net/url_request/url_request_test_util.h"
-#include "services/identity/public/cpp/identity_manager.h"
-#include "services/identity/public/cpp/identity_test_environment.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/image/image.h"
 
+using sync_preferences::TestingPrefServiceSyncable;
 using syncer::SyncServiceObserver;
 using testing::_;
 using testing::AnyNumber;
@@ -44,9 +48,7 @@ using testing::StrictMock;
 
 namespace {
 
-const char kGaiaId[] = "foo_gaia";
-const char kEmail[] = "foo_email";
-const char kRefreshToken[] = "foo_token";
+const char kAccountId[] = "account";
 const char kSuggestionsUrlPath[] = "/chromesuggestions";
 const char kBlacklistUrlPath[] = "/chromesuggestions/blacklist";
 const char kBlacklistClearUrlPath[] = "/chromesuggestions/blacklist/clear";
@@ -133,22 +135,31 @@ class MockBlacklistStore : public suggestions::BlacklistStore {
   MOCK_METHOD1(FilterSuggestions, void(SuggestionsProfile*));
 };
 
-class SuggestionsServiceTest : public testing::Test {
+class SuggestionsServiceTest : public testing::Test,
+                               public OAuth2TokenService::DiagnosticsObserver {
  protected:
   SuggestionsServiceTest()
       : task_runner_(new base::TestMockTimeTaskRunner(
             base::TestMockTimeTaskRunner::Type::kBoundToThread)),
+        signin_client_(&pref_service_),
+        signin_manager_(&signin_client_, &account_tracker_),
         request_context_(
             new net::TestURLRequestContextGetter(task_runner_.get())),
         mock_thumbnail_manager_(nullptr),
         mock_blacklist_store_(nullptr),
         test_suggestions_store_(nullptr) {
-    identity_test_env_.MakePrimaryAccountAvailable(kGaiaId, kEmail,
-                                                   kRefreshToken);
-    identity_test_env_.SetAutomaticIssueOfAccessTokens(true);
+    SigninManagerBase::RegisterProfilePrefs(pref_service_.registry());
+    SigninManagerBase::RegisterPrefs(pref_service_.registry());
+
+    signin_manager_.SignIn(kAccountId);
+    token_service_.UpdateCredentials(kAccountId, "refresh_token");
+    token_service_.set_auto_post_fetch_response_on_message_loop(true);
+    token_service_.AddDiagnosticsObserver(this);
   }
 
-  ~SuggestionsServiceTest() override {}
+  ~SuggestionsServiceTest() override {
+    token_service_.RemoveDiagnosticsObserver(this);
+  }
 
   void SetUp() override {
     EXPECT_CALL(*sync_service(), CanSyncStart())
@@ -170,7 +181,7 @@ class SuggestionsServiceTest : public testing::Test {
     mock_thumbnail_manager_ = new StrictMock<MockImageManager>();
     mock_blacklist_store_ = new StrictMock<MockBlacklistStore>();
     suggestions_service_ = std::make_unique<SuggestionsServiceImpl>(
-        identity_test_env_.identity_manager(), &mock_sync_service_,
+        &signin_manager_, &token_service_, &mock_sync_service_,
         request_context_.get(), base::WrapUnique(test_suggestions_store_),
         base::WrapUnique(mock_thumbnail_manager_),
         base::WrapUnique(mock_blacklist_store_),
@@ -204,6 +215,8 @@ class SuggestionsServiceTest : public testing::Test {
 
   base::TestMockTimeTaskRunner* task_runner() { return task_runner_.get(); }
 
+  FakeProfileOAuth2TokenService* token_service() { return &token_service_; }
+
   MockSyncService* sync_service() { return &mock_sync_service_; }
 
   MockImageManager* thumbnail_manager() { return mock_thumbnail_manager_; }
@@ -216,20 +229,34 @@ class SuggestionsServiceTest : public testing::Test {
     return suggestions_service_.get();
   }
 
-  identity::IdentityTestEnvironment* identity_test_env() {
-    return &identity_test_env_;
+  void set_on_access_token_request_callback(base::OnceClosure callback) {
+    on_access_token_request_callback_ = std::move(callback);
   }
 
  private:
+  // OAuth2TokenService::DiagnosticsObserver:
+  void OnAccessTokenRequested(
+      const std::string& account_id,
+      const std::string& consumer_id,
+      const OAuth2TokenService::ScopeSet& scopes) override {
+    if (on_access_token_request_callback_)
+      std::move(on_access_token_request_callback_).Run();
+  }
+
   scoped_refptr<base::TestMockTimeTaskRunner> task_runner_;
+  TestingPrefServiceSyncable pref_service_;
+  AccountTrackerService account_tracker_;
+  TestSigninClient signin_client_;
+  FakeSigninManagerBase signin_manager_;
   net::TestURLFetcherFactory factory_;
-  identity::IdentityTestEnvironment identity_test_env_;
+  FakeProfileOAuth2TokenService token_service_;
   MockSyncService mock_sync_service_;
   scoped_refptr<net::TestURLRequestContextGetter> request_context_;
   // Owned by the SuggestionsService.
   MockImageManager* mock_thumbnail_manager_;
   MockBlacklistStore* mock_blacklist_store_;
   TestSuggestionsStore* test_suggestions_store_;
+  base::OnceClosure on_access_token_request_callback_;
 
   std::unique_ptr<SuggestionsServiceImpl> suggestions_service_;
 
@@ -387,7 +414,7 @@ TEST_F(SuggestionsServiceTest, FetchSuggestionsDataSyncDisabled) {
 }
 
 TEST_F(SuggestionsServiceTest, FetchSuggestionsDataNoAccessToken) {
-  identity_test_env()->SetAutomaticIssueOfAccessTokens(false);
+  token_service()->set_auto_post_fetch_response_on_message_loop(false);
 
   base::MockCallback<SuggestionsService::ResponseCallback> callback;
   EXPECT_CALL(callback, Run(_)).Times(0);
@@ -396,11 +423,15 @@ TEST_F(SuggestionsServiceTest, FetchSuggestionsDataNoAccessToken) {
   EXPECT_CALL(*blacklist_store(), GetTimeUntilReadyForUpload(_))
       .WillOnce(Return(false));
 
+  base::RunLoop run_loop;
+  set_on_access_token_request_callback(run_loop.QuitClosure());
+
   suggestions_service()->FetchSuggestionsData();
 
-  identity_test_env()->WaitForAccessTokenRequestAndRespondWithError(
-      GoogleServiceAuthError(
-          GoogleServiceAuthError::State::INVALID_GAIA_CREDENTIALS));
+  run_loop.Run();
+
+  token_service()->IssueErrorForAllPendingRequests(GoogleServiceAuthError(
+      GoogleServiceAuthError::State::INVALID_GAIA_CREDENTIALS));
 
   // Wait for eventual (but unexpected) network requests.
   task_runner()->RunUntilIdle();

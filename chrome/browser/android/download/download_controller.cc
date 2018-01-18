@@ -112,7 +112,6 @@ void CreateContextMenuDownload(
       offline_pages::android::OfflinePageBridge::GetEncodedOriginApp(
           web_contents));
   RecordDownloadSource(DOWNLOAD_INITIATED_BY_CONTEXT_MENU);
-  dl_params->set_download_source(content::DownloadSource::CONTEXT_MENU);
   dlm->DownloadUrl(std::move(dl_params));
 }
 
@@ -448,7 +447,7 @@ void DownloadController::OnDownloadUpdated(DownloadItem* item) {
 void DownloadController::OnDangerousDownload(DownloadItem* item) {
   WebContents* web_contents = item->GetWebContents();
   if (!web_contents) {
-    auto download_manager_getter = std::make_unique<DownloadManagerGetter>(
+    auto download_manager_getter = base::MakeUnique<DownloadManagerGetter>(
         BrowserContext::GetDownloadManager(item->GetBrowserContext()));
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,

@@ -152,10 +152,10 @@ class RootInlineBox : public InlineFlowBox {
   LineLayoutBlockFlow Block() const;
 
   InlineBox* ClosestLeafChildForPoint(const LayoutPoint&,
-                                      bool only_editable_leaves) const;
+                                      bool only_editable_leaves);
   InlineBox* ClosestLeafChildForLogicalLeftPosition(
       LayoutUnit,
-      bool only_editable_leaves = false) const;
+      bool only_editable_leaves = false);
 
   void AppendFloat(LayoutBox* floating_box) {
     DCHECK(!IsDirty());

@@ -82,15 +82,14 @@ void SkipWaitingWorkerOnIO(
 
 void DidStartWorker(
     scoped_refptr<ServiceWorkerVersion> version,
-    ServiceWorkerContext::StartActiveWorkerCallback info_callback,
-    base::OnceClosure error_callback,
-    ServiceWorkerStatusCode start_worker_status) {
-  if (start_worker_status != SERVICE_WORKER_OK) {
-    std::move(error_callback).Run();
-    return;
-  }
+    ServiceWorkerContext::StartActiveWorkerCallback info_callback) {
   EmbeddedWorkerInstance* instance = version->embedded_worker();
   std::move(info_callback).Run(instance->process_id(), instance->thread_id());
+}
+
+void DidFailStartWorker(base::OnceClosure error_callback,
+                        ServiceWorkerStatusCode code) {
+  std::move(error_callback).Run();
 }
 
 void FoundReadyRegistrationForStartActiveWorker(
@@ -109,7 +108,8 @@ void FoundReadyRegistrationForStartActiveWorker(
     active_version->RunAfterStartWorker(
         ServiceWorkerMetrics::EventType::EXTERNAL_REQUEST,
         base::BindOnce(&DidStartWorker, active_version,
-                       std::move(info_callback), std::move(failure_callback)));
+                       std::move(info_callback)),
+        base::BindOnce(&DidFailStartWorker, std::move(failure_callback)));
   } else {
     std::move(failure_callback).Run();
   }
@@ -281,6 +281,7 @@ void ServiceWorkerContextWrapper::RegisterServiceWorker(
       net::SimplifyUrlForRequest(options.scope), options.update_via_cache);
   context()->RegisterServiceWorker(
       net::SimplifyUrlForRequest(script_url), options_to_pass,
+      nullptr /* provider_host */,
       base::Bind(&FinishRegistrationOnIO, base::Passed(std::move(callback))));
 }
 

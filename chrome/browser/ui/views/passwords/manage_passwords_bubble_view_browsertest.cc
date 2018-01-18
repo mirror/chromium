@@ -4,14 +4,11 @@
 
 #include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
 
-#include <memory>
-
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/ui/passwords/manage_passwords_test.h"
 #include "chrome/browser/ui/test/test_browser_dialog.h"
-#include "chrome/browser/ui/views/passwords/manage_password_auto_sign_in_view.h"
 
 class ManagePasswordsBubbleDialogViewTest
     : public SupportsTestDialog<ManagePasswordsTest> {
@@ -33,9 +30,9 @@ class ManagePasswordsBubbleDialogViewTest
       test_form()->username_value = base::ASCIIToUTF16("pet12@gmail.com");
       std::vector<std::unique_ptr<autofill::PasswordForm>> local_credentials;
       local_credentials.push_back(
-          std::make_unique<autofill::PasswordForm>(*test_form()));
+          base::MakeUnique<autofill::PasswordForm>(*test_form()));
 
-      ManagePasswordAutoSignInView::set_auto_signin_toast_timeout(10);
+      ManagePasswordsBubbleView::set_auto_signin_toast_timeout(10);
       SetupAutoSignin(std::move(local_credentials));
     } else {
       ADD_FAILURE() << "Unknown dialog type";

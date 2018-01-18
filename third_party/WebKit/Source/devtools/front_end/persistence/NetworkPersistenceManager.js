@@ -10,7 +10,6 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     super();
     this._bindingSymbol = Symbol('NetworkPersistenceBinding');
     this._originalResponseContentPromiseSymbol = Symbol('OriginalResponsePromise');
-    this._savingSymbol = Symbol('SavingForOverrides');
 
     this._enabledSetting = Common.settings.moduleSetting('persistenceNetworkOverridesEnabled');
     this._enabledSetting.addChangeListener(this._enabledChanged, this);
@@ -220,9 +219,8 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     networkUISourceCode[this._bindingSymbol] = binding;
     fileSystemUISourceCode[this._bindingSymbol] = binding;
     Persistence.persistence.addBinding(binding);
-    var uiSourceCodeOfTruth = networkUISourceCode[this._savingSymbol] ? networkUISourceCode : fileSystemUISourceCode;
-    var content = await uiSourceCodeOfTruth.requestContent();
-    Persistence.persistence.syncContent(uiSourceCodeOfTruth, content);
+    var content = await fileSystemUISourceCode.requestContent();
+    Persistence.persistence.syncContent(fileSystemUISourceCode, content);
   }
 
   /**
@@ -237,7 +235,7 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
    */
   canSaveUISourceCodeForOverrides(uiSourceCode) {
     return this._active && uiSourceCode.project().type() === Workspace.projectTypes.Network &&
-        !uiSourceCode[this._bindingSymbol] && !uiSourceCode[this._savingSymbol];
+        !uiSourceCode[this._bindingSymbol];
   }
 
   /**
@@ -246,7 +244,6 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
   async saveUISourceCodeForOverrides(uiSourceCode) {
     if (!this.canSaveUISourceCodeForOverrides(uiSourceCode))
       return;
-    uiSourceCode[this._savingSymbol] = true;
     var encodedPath = this._encodedPathFromUrl(uiSourceCode.url());
     var content = await uiSourceCode.requestContent();
     var encoded = await uiSourceCode.contentEncoded();
@@ -255,7 +252,6 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     encodedPath = encodedPath.substr(0, lastIndexOfSlash);
     await this._project.createFile(encodedPath, encodedFileName, content, encoded);
     this._fileCreatedForTest(encodedPath, encodedFileName);
-    uiSourceCode[this._savingSymbol] = false;
   }
 
   /**

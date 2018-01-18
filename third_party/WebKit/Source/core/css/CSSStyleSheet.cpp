@@ -396,9 +396,9 @@ bool CSSStyleSheet::IsLoading() const {
   return contents_->IsLoading();
 }
 
-MediaList* CSSStyleSheet::media() {
+MediaList* CSSStyleSheet::media() const {
   if (!media_queries_)
-    media_queries_ = MediaQuerySet::Create();
+    return nullptr;
 
   if (!media_cssom_wrapper_)
     media_cssom_wrapper_ = MediaList::Create(media_queries_.get(),

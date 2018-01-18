@@ -287,25 +287,22 @@ class ShadowBoundaryAdjuster final {
  public:
   template <typename Strategy>
   static SelectionTemplate<Strategy> AdjustSelection(
-      const SelectionTemplate<Strategy>& selection) {
-    if (!selection.IsRange())
-      return selection;
-
+      const SelectionTemplate<Strategy>& granularity_adjusted_selection) {
     const EphemeralRangeTemplate<Strategy> expanded_range =
-        selection.ComputeRange();
+        granularity_adjusted_selection.ComputeRange();
 
     const EphemeralRangeTemplate<Strategy> shadow_adjusted_range =
-        selection.IsBaseFirst()
+        granularity_adjusted_selection.IsBaseFirst()
             ? EphemeralRangeTemplate<Strategy>(
                   expanded_range.StartPosition(),
-                  AdjustSelectionEndToAvoidCrossingShadowBoundaries(
-                      expanded_range))
+                      AdjustSelectionEndToAvoidCrossingShadowBoundaries(
+                          expanded_range))
             : EphemeralRangeTemplate<Strategy>(
-                  AdjustSelectionStartToAvoidCrossingShadowBoundaries(
-                      expanded_range),
+                      AdjustSelectionStartToAvoidCrossingShadowBoundaries(
+                          expanded_range),
                   expanded_range.EndPosition());
     typename SelectionTemplate<Strategy>::Builder builder;
-    return selection.IsBaseFirst()
+    return granularity_adjusted_selection.IsBaseFirst()
                ? builder.SetAsForwardSelection(shadow_adjusted_range).Build()
                : builder.SetAsBackwardSelection(shadow_adjusted_range).Build();
   }

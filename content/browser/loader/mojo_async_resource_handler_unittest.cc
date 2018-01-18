@@ -31,6 +31,7 @@
 #include "content/public/browser/resource_throttle.h"
 #include "content/public/browser/stream_info.h"
 #include "content/public/common/previews_state.h"
+#include "content/public/common/resource_response.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -56,7 +57,6 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_status.h"
 #include "net/url_request/url_request_test_util.h"
-#include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/page_transition_types.h"
@@ -163,12 +163,13 @@ class TestResourceDispatcherHostDelegate final
 
   void OnResponseStarted(net::URLRequest* request,
                          ResourceContext* resource_context,
-                         network::ResourceResponse* response) override {}
+                         ResourceResponse* response) override {
+  }
 
   void OnRequestRedirected(const GURL& redirect_url,
                            net::URLRequest* request,
                            ResourceContext* resource_context,
-                           network::ResourceResponse* response) override {
+                           ResourceResponse* response) override {
     ADD_FAILURE() << "OnRequestRedirected should not be called.";
   }
 
@@ -294,7 +295,7 @@ class TestURLLoaderFactory final : public mojom::URLLoaderFactory {
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
-                            const network::ResourceRequest& url_request,
+                            const ResourceRequest& url_request,
                             mojom::URLLoaderClientPtr client_ptr,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override {
@@ -348,7 +349,7 @@ class MojoAsyncResourceHandlerTestBase {
         PREVIEWS_OFF,                            // previews_state
         nullptr);                                // navigation_ui_data
 
-    network::ResourceRequest request;
+    ResourceRequest request;
     base::WeakPtr<mojo::StrongBinding<mojom::URLLoaderFactory>> weak_binding =
         mojo::MakeStrongBinding(std::make_unique<TestURLLoaderFactory>(),
                                 mojo::MakeRequest(&url_loader_factory_));
@@ -387,7 +388,7 @@ class MojoAsyncResourceHandlerTestBase {
   // Returns false if something bad happens.
   bool CallOnResponseStarted() {
     MockResourceLoader::Status result = mock_loader_->OnResponseStarted(
-        base::MakeRefCounted<network::ResourceResponse>());
+        base::MakeRefCounted<ResourceResponse>());
     EXPECT_EQ(MockResourceLoader::Status::IDLE, result);
     if (result != MockResourceLoader::Status::IDLE)
       return false;
@@ -509,8 +510,7 @@ TEST_F(MojoAsyncResourceHandlerTest, OnResponseStarted) {
   ASSERT_EQ(MockResourceLoader::Status::IDLE,
             mock_loader_->OnWillStart(request_->url()));
 
-  scoped_refptr<network::ResourceResponse> response =
-      new network::ResourceResponse();
+  scoped_refptr<ResourceResponse> response = new ResourceResponse();
   response->head.content_length = 99;
   response->head.request_start =
       base::TimeTicks::UnixEpoch() + base::TimeDelta::FromDays(14);
@@ -665,7 +665,7 @@ TEST_F(MojoAsyncResourceHandlerTest, OnResponseCompleted2) {
             mock_loader_->OnWillStart(request_->url()));
   ASSERT_EQ(MockResourceLoader::Status::IDLE,
             mock_loader_->OnResponseStarted(
-                base::MakeRefCounted<network::ResourceResponse>()));
+                base::MakeRefCounted<ResourceResponse>()));
   ASSERT_FALSE(url_loader_client_.has_received_response());
   url_loader_client_.RunUntilResponseReceived();
 
@@ -1211,10 +1211,9 @@ TEST_P(MojoAsyncResourceHandlerWithAllocationSizeTest, RedirectHandling) {
 
   net::RedirectInfo redirect_info;
   redirect_info.status_code = 301;
-  ASSERT_EQ(
-      MockResourceLoader::Status::CALLBACK_PENDING,
-      mock_loader_->OnRequestRedirected(
-          redirect_info, base::MakeRefCounted<network::ResourceResponse>()));
+  ASSERT_EQ(MockResourceLoader::Status::CALLBACK_PENDING,
+            mock_loader_->OnRequestRedirected(
+                redirect_info, base::MakeRefCounted<ResourceResponse>()));
 
   ASSERT_FALSE(url_loader_client_.has_received_response());
   ASSERT_FALSE(url_loader_client_.has_received_redirect());
@@ -1232,10 +1231,9 @@ TEST_P(MojoAsyncResourceHandlerWithAllocationSizeTest, RedirectHandling) {
   url_loader_client_.ClearHasReceivedRedirect();
   // Redirect once more.
   redirect_info.status_code = 302;
-  ASSERT_EQ(
-      MockResourceLoader::Status::CALLBACK_PENDING,
-      mock_loader_->OnRequestRedirected(
-          redirect_info, base::MakeRefCounted<network::ResourceResponse>()));
+  ASSERT_EQ(MockResourceLoader::Status::CALLBACK_PENDING,
+            mock_loader_->OnRequestRedirected(
+                redirect_info, base::MakeRefCounted<ResourceResponse>()));
 
   ASSERT_FALSE(url_loader_client_.has_received_response());
   ASSERT_FALSE(url_loader_client_.has_received_redirect());
@@ -1253,7 +1251,7 @@ TEST_P(MojoAsyncResourceHandlerWithAllocationSizeTest, RedirectHandling) {
   // Give the final response.
   ASSERT_EQ(MockResourceLoader::Status::IDLE,
             mock_loader_->OnResponseStarted(
-                base::MakeRefCounted<network::ResourceResponse>()));
+                base::MakeRefCounted<ResourceResponse>()));
 
   net::URLRequestStatus status(net::URLRequestStatus::SUCCESS, net::OK);
   ASSERT_EQ(MockResourceLoader::Status::IDLE,
@@ -1285,7 +1283,7 @@ TEST_P(
             mock_loader_->OnWillStart(request_->url()));
   ASSERT_EQ(MockResourceLoader::Status::IDLE,
             mock_loader_->OnResponseStarted(
-                base::MakeRefCounted<network::ResourceResponse>()));
+                base::MakeRefCounted<ResourceResponse>()));
 
   ASSERT_FALSE(url_loader_client_.has_received_response());
   url_loader_client_.RunUntilResponseReceived();
@@ -1337,7 +1335,7 @@ TEST_P(
 
   ASSERT_EQ(MockResourceLoader::Status::IDLE,
             mock_loader_->OnResponseStarted(
-                base::MakeRefCounted<network::ResourceResponse>()));
+                base::MakeRefCounted<ResourceResponse>()));
 
   ASSERT_FALSE(url_loader_client_.has_received_response());
   url_loader_client_.RunUntilResponseReceived();
@@ -1383,7 +1381,7 @@ TEST_F(MojoAsyncResourceHandlerDeferOnResponseStartedTest,
   // since |defer_on_response_started| is true.
   {
     MockResourceLoader::Status result = mock_loader_->OnResponseStarted(
-        base::MakeRefCounted<network::ResourceResponse>());
+        base::MakeRefCounted<ResourceResponse>());
     EXPECT_EQ(MockResourceLoader::Status::CALLBACK_PENDING, result);
     std::unique_ptr<base::Value> request_state = request_->GetStateAsValue();
     base::Value* delegate_blocked_by =

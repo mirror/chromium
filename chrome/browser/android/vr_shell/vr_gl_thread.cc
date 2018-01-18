@@ -49,12 +49,12 @@ void VrGLThread::Init() {
       base::FeatureList::IsEnabled(features::kVrBrowserKeyboard);
   if (keyboard_enabled) {
     keyboard_delegate_ = GvrKeyboardDelegate::Create();
-    text_input_delegate_ = std::make_unique<vr::TextInputDelegate>();
+    text_input_delegate_ = base::MakeUnique<vr::TextInputDelegate>();
   }
   auto* keyboard_delegate =
       !keyboard_delegate_ ? nullptr : keyboard_delegate_.get();
   auto ui =
-      std::make_unique<vr::Ui>(this, this, keyboard_delegate,
+      base::MakeUnique<vr::Ui>(this, this, keyboard_delegate,
                                text_input_delegate_.get(), ui_initial_state_);
   if (keyboard_enabled) {
     text_input_delegate_->SetRequestFocusCallback(
@@ -73,7 +73,7 @@ void VrGLThread::Init() {
     LoadAssets();
   }
 
-  vr_shell_gl_ = std::make_unique<VrShellGl>(
+  vr_shell_gl_ = base::MakeUnique<VrShellGl>(
       this, std::move(ui), gvr_api_, reprojected_rendering_, daydream_support_,
       ui_initial_state_.in_web_vr);
 

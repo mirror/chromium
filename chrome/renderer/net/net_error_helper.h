@@ -15,14 +15,11 @@
 #include "chrome/common/network_diagnostics.mojom.h"
 #include "chrome/renderer/net/net_error_helper_core.h"
 #include "chrome/renderer/net/net_error_page_controller.h"
-#include "chrome/renderer/ssl/ssl_certificate_error_page_controller.h"
 #include "components/error_page/common/net_error_info.h"
-#include "components/security_interstitials/core/controller_client.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/public/renderer/render_frame_observer_tracker.h"
 #include "content/public/renderer/render_thread_observer.h"
 #include "mojo/public/cpp/bindings/associated_binding_set.h"
-#include "net/base/net_errors.h"
 
 class GURL;
 
@@ -50,7 +47,6 @@ class NetErrorHelper
       public content::RenderThreadObserver,
       public NetErrorHelperCore::Delegate,
       public NetErrorPageController::Delegate,
-      public SSLCertificateErrorPageController::Delegate,
       public chrome::mojom::NetworkDiagnosticsClient,
       public chrome::mojom::NavigationCorrector {
  public:
@@ -60,10 +56,6 @@ class NetErrorHelper
   // NetErrorPageController::Delegate implementation
   void ButtonPressed(NetErrorHelperCore::Button button) override;
   void TrackClick(int tracking_id) override;
-
-  // SSLCertificateErrorPageController::Delegate implementation
-  void SendCommand(
-      security_interstitials::SecurityInterstitialCommand command) override;
 
   // RenderFrameObserver implementation.
   void DidStartProvisionalLoad(blink::WebDocumentLoader* loader) override;
@@ -78,14 +70,13 @@ class NetErrorHelper
   // RenderThreadObserver implementation.
   void NetworkStateChanged(bool online) override;
 
-  // Sets values in |pending_error_page_info_|. If |error_html| is not null, it
-  // initializes |error_html| with the HTML of an error page in response to
+  // Initializes |error_html| with the HTML of an error page in response to
   // |error|.  Updates internals state with the assumption the page will be
   // loaded immediately.
-  void PrepareErrorPage(const error_page::Error& error,
-                        bool is_failed_post,
-                        bool is_ignoring_cache,
-                        std::string* error_html);
+  void GetErrorHTML(const error_page::Error& error,
+                    bool is_failed_post,
+                    bool is_ignoring_cache,
+                    std::string* error_html);
 
   // Returns whether a load for |url| in the |frame| the NetErrorHelper is
   // attached to should have its error page suppressed.
@@ -106,7 +97,7 @@ class NetErrorHelper
       bool* download_button_shown,
       std::string* html) const override;
   void LoadErrorPage(const std::string& html, const GURL& failed_url) override;
-  void EnablePageHelperFunctions(net::Error net_error) override;
+  void EnablePageHelperFunctions() override;
   void UpdateErrorPage(const error_page::Error& error,
                        bool is_failed_post,
                        bool can_use_local_diagnostics_service) override;
@@ -161,15 +152,11 @@ class NetErrorHelper
   mojo::AssociatedBindingSet<chrome::mojom::NavigationCorrector>
       navigation_corrector_bindings_;
 
-  // Weak factories for vending weak pointers to a NetErrorPageController and
-  // a SSLCertificateErrorPageController. Weak pointers are invalidated on each
-  // commit, to prevent getting messages from Controllers used for the previous
-  // commit that haven't yet been cleaned up.
+  // Weak factory for vending a weak pointer to a NetErrorPageController. Weak
+  // pointers are invalidated on each commit, to prevent getting messages from
+  // Controllers used for the previous commit that haven't yet been cleaned up.
   base::WeakPtrFactory<NetErrorPageController::Delegate>
       weak_controller_delegate_factory_;
-
-  base::WeakPtrFactory<SSLCertificateErrorPageController::Delegate>
-      weak_ssl_error_controller_delegate_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(NetErrorHelper);
 };

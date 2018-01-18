@@ -8,8 +8,8 @@
 
 goog.provide('__crWeb.legacy');
 
-// Requires __crWeb.common and __crWeb.message provided by
-// __crWeb.allFramesWebBundle.
+goog.require('__crWeb.common');
+goog.require('__crWeb.message');
 
 /** Beginning of anonymouse object */
 (function() {
@@ -26,6 +26,10 @@ goog.provide('__crWeb.legacy');
     // Send the favicons to the browser.
     __gCrWeb.message.invokeOnHost({'command': 'document.favicons',
                                    'favicons': __gCrWeb.common.getFavicons()});
+
+    // Add placeholders for plugin content.
+    if (__gCrWeb.common.updatePluginPlaceholders())
+      __gCrWeb.message.invokeOnHost({'command': 'addPluginPlaceholders'});
   }
 
 }());  // End of anonymouse object

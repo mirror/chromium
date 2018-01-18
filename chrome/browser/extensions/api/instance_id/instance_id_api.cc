@@ -4,9 +4,8 @@
 
 #include "chrome/browser/extensions/api/instance_id/instance_id_api.h"
 
-#include <memory>
-
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "chrome/browser/gcm/instance_id/instance_id_profile_service.h"
 #include "chrome/browser/gcm/instance_id/instance_id_profile_service_factory.h"
@@ -96,7 +95,7 @@ ExtensionFunction::ResponseAction InstanceIDGetIDFunction::DoWork() {
 }
 
 void InstanceIDGetIDFunction::GetIDCompleted(const std::string& id) {
-  Respond(OneArgument(std::make_unique<base::Value>(id)));
+  Respond(OneArgument(base::MakeUnique<base::Value>(id)));
 }
 
 InstanceIDGetCreationTimeFunction::InstanceIDGetCreationTimeFunction() {}
@@ -113,7 +112,7 @@ ExtensionFunction::ResponseAction InstanceIDGetCreationTimeFunction::DoWork() {
 void InstanceIDGetCreationTimeFunction::GetCreationTimeCompleted(
     const base::Time& creation_time) {
   Respond(
-      OneArgument(std::make_unique<base::Value>(creation_time.ToDoubleT())));
+      OneArgument(base::MakeUnique<base::Value>(creation_time.ToDoubleT())));
 }
 
 InstanceIDGetTokenFunction::InstanceIDGetTokenFunction() {}
@@ -142,7 +141,7 @@ void InstanceIDGetTokenFunction::GetTokenCompleted(
     const std::string& token,
     instance_id::InstanceID::Result result) {
   if (result == instance_id::InstanceID::SUCCESS)
-    Respond(OneArgument(std::make_unique<base::Value>(token)));
+    Respond(OneArgument(base::MakeUnique<base::Value>(token)));
   else
     Respond(Error(InstanceIDResultToError(result)));
 }

@@ -296,7 +296,8 @@ class NetworkChangeNotifier::HistogramWatcher : public ConnectionTypeObserver,
   // from the network thread.
   void NotifyDataReceived(const URLRequest& request, int bytes_read) {
     DCHECK(thread_checker_.CalledOnValidThread());
-    if (IsLocalhost(request.url()) || !request.url().SchemeIsHTTPOrHTTPS()) {
+    if (IsLocalhost(request.url().host()) ||
+        !request.url().SchemeIsHTTPOrHTTPS()) {
       return;
     }
 

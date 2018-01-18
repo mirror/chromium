@@ -8,6 +8,7 @@
 #include "base/android/jni_string.h"
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/android/bookmarks/partner_bookmarks_shim.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/favicon/favicon_service_factory.h"
@@ -162,7 +163,7 @@ jlong PartnerBookmarksReader::AddPartnerBookmark(
   jlong node_id = 0;
   if (wip_partner_bookmarks_root_.get()) {
     std::unique_ptr<BookmarkNode> node =
-        std::make_unique<BookmarkNode>(wip_next_available_id_++, GURL(url));
+        base::MakeUnique<BookmarkNode>(wip_next_available_id_++, GURL(url));
     node->set_type(is_folder ? BookmarkNode::FOLDER : BookmarkNode::URL);
     node->SetTitle(title);
 
@@ -203,7 +204,7 @@ jlong PartnerBookmarksReader::AddPartnerBookmark(
                                            parent->child_count());
   } else {
     std::unique_ptr<BookmarkPermanentNode> node =
-        std::make_unique<BookmarkPermanentNode>(wip_next_available_id_++);
+        base::MakeUnique<BookmarkPermanentNode>(wip_next_available_id_++);
     node_id = node->id();
     node->SetTitle(title);
     wip_partner_bookmarks_root_ = std::move(node);

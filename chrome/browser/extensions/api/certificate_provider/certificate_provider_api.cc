@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/chromeos/certificate_provider/certificate_provider_service.h"
 #include "chrome/browser/chromeos/certificate_provider/certificate_provider_service_factory.h"
 #include "chrome/common/extensions/api/certificate_provider.h"
@@ -256,7 +257,7 @@ void CertificateProviderRequestPinFunction::GetQuotaLimitHeuristics(
   QuotaLimitHeuristic::Config short_limit_config = {
       api::certificate_provider::kMaxClosedDialogsPer10Mins,
       base::TimeDelta::FromMinutes(10)};
-  heuristics->push_back(std::make_unique<QuotaService::TimedLimit>(
+  heuristics->push_back(base::MakeUnique<QuotaService::TimedLimit>(
       short_limit_config, new QuotaLimitHeuristic::SingletonBucketMapper(),
       "MAX_PIN_DIALOGS_CLOSED_PER_10_MINUTES"));
 }

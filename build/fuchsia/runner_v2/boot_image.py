@@ -20,6 +20,9 @@ Host *
   User fuchsia
   IdentitiesOnly yes
   IdentityFile {identity}
+  ControlPersist yes
+  ControlMaster auto
+  ControlPath /tmp/fuchsia--%r@%h:%p
   ServerAliveInterval 1
   ServerAliveCountMax 1"""
 

@@ -34,8 +34,8 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
+#include "core/html/HTMLContentElement.h"
 #include "core/html/HTMLImageLoader.h"
-#include "core/html/HTMLSlotElement.h"
 #include "core/html/PluginDocument.h"
 #include "core/html_names.h"
 #include "core/input/EventHandler.h"
@@ -207,13 +207,6 @@ void HTMLPlugInElement::AttachLayoutTree(AttachContext& context) {
   LayoutObject* layout_object = GetLayoutObject();
   if (layout_object && !layout_object->IsFloatingOrOutOfFlowPositioned())
     context.previous_in_flow = layout_object;
-}
-
-void HTMLPlugInElement::IntrinsicDimensionsChanged() {
-  if (auto* layout_object = GetLayoutObject()) {
-    layout_object->SetNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(
-        LayoutInvalidationReason::kUnknown);
-  }
 }
 
 void HTMLPlugInElement::UpdatePlugin() {
@@ -685,8 +678,7 @@ bool HTMLPlugInElement::AllowedToLoadPlugin(const KURL& url,
 }
 
 void HTMLPlugInElement::DidAddUserAgentShadowRoot(ShadowRoot&) {
-  UserAgentShadowRoot()->AppendChild(
-      HTMLSlotElement::CreateUserAgentDefaultSlot(GetDocument()));
+  UserAgentShadowRoot()->AppendChild(HTMLContentElement::Create(GetDocument()));
 }
 
 bool HTMLPlugInElement::HasFallbackContent() const {

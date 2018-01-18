@@ -20,6 +20,7 @@
 #include "components/sessions/core/tab_restore_service.h"
 #include "components/toolbar/test_toolbar_model.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
+#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #import "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_paths.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
@@ -142,9 +143,11 @@ using web::WebStateImpl;
 - (void)updateToolbarState;
 - (void)adjustToolbarHeight;
 - (void)setShareButtonEnabled:(BOOL)enabled;
+- (id)toolsPopupController;
 - (BOOL)isOmniboxFirstResponder;
 - (BOOL)showingOmniboxPopup;
 - (void)selectedTabChanged;
+- (void)dismissToolsMenuPopup;
 - (void)cancelOmniboxEdit;
 - (void)setBackgroundAlpha:(CGFloat)alpha;
 - (void)browserStateDestroyed;
@@ -169,6 +172,9 @@ using web::WebStateImpl;
 - (void)setShareButtonEnabled:(BOOL)enabled {
   return;
 }
+- (id)toolsPopupController {
+  return nil;
+}
 - (BOOL)isOmniboxFirstResponder {
   return NO;
 }
@@ -176,6 +182,9 @@ using web::WebStateImpl;
   return NO;
 }
 - (void)selectedTabChanged {
+  return;
+}
+- (void)dismissToolsMenuPopup {
   return;
 }
 - (void)cancelOmniboxEdit {
@@ -366,8 +375,20 @@ TEST_F(BrowserViewControllerTest, TestTabDeselected) {
 
 TEST_F(BrowserViewControllerTest, TestNativeContentController) {
   id<CRWNativeContent> controller =
-      [bvc_ controllerForURL:GURL(kChromeUINewTabURL)
+      [bvc_ controllerForURL:GURL(kChromeUIBookmarksURL)
                     webState:webStateImpl_.get()];
+  EXPECT_TRUE(controller != nil);
+  // TODO(crbug.com/753599): When the old bookmark is gone, rewrite the
+  // following so that it will expect PageNotAvailable only.
+  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration) || !IsIPadIdiom()) {
+    EXPECT_TRUE(
+        [controller isMemberOfClass:[PageNotAvailableController class]]);
+  } else {
+    EXPECT_TRUE([controller isMemberOfClass:[NewTabPageController class]]);
+  }
+
+  controller = [bvc_ controllerForURL:GURL(kChromeUINewTabURL)
+                             webState:webStateImpl_.get()];
   EXPECT_TRUE(controller != nil);
   EXPECT_TRUE([controller isMemberOfClass:[NewTabPageController class]]);
 

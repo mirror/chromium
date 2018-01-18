@@ -32,7 +32,7 @@ class NinePieceImagePainter {
                     SkBlendMode = SkBlendMode::kSrcOver);
 
  private:
-  NinePieceImagePainter() = default;
+  NinePieceImagePainter() {}
 };
 
 }  // namespace blink

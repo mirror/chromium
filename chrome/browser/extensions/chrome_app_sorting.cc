@@ -5,7 +5,6 @@
 #include "chrome/browser/extensions/chrome_app_sorting.h"
 
 #include <algorithm>
-#include <memory>
 #include <utility>
 #include <vector>
 
@@ -326,7 +325,7 @@ void ChromeAppSorting::SetAppLaunchOrdinal(
 
   std::unique_ptr<base::Value> new_value =
       new_app_launch_ordinal.IsValid()
-          ? std::make_unique<base::Value>(
+          ? base::MakeUnique<base::Value>(
                 new_app_launch_ordinal.ToInternalValue())
           : nullptr;
 
@@ -406,7 +405,7 @@ void ChromeAppSorting::SetPageOrdinal(
 
   std::unique_ptr<base::Value> new_value =
       new_page_ordinal.IsValid()
-          ? std::make_unique<base::Value>(new_page_ordinal.ToInternalValue())
+          ? base::MakeUnique<base::Value>(new_page_ordinal.ToInternalValue())
           : nullptr;
 
   ExtensionPrefs::Get(browser_context_)

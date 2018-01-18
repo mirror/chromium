@@ -21,9 +21,10 @@ class MockScriptedIdleTaskControllerScheduler final : public WebScheduler {
  public:
   MockScriptedIdleTaskControllerScheduler(bool should_yield)
       : should_yield_(should_yield) {}
-  ~MockScriptedIdleTaskControllerScheduler() override = default;
+  ~MockScriptedIdleTaskControllerScheduler() override {}
 
   // WebScheduler implementation:
+  WebTaskRunner* LoadingTaskRunner() override { return nullptr; }
   WebTaskRunner* TimerTaskRunner() override { return nullptr; }
   WebTaskRunner* CompositorTaskRunner() override { return nullptr; }
   WebTaskRunner* V8TaskRunner() override { return nullptr; }
@@ -63,7 +64,7 @@ class MockScriptedIdleTaskControllerThread final : public WebThread {
  public:
   MockScriptedIdleTaskControllerThread(bool should_yield)
       : scheduler_(should_yield) {}
-  ~MockScriptedIdleTaskControllerThread() override = default;
+  ~MockScriptedIdleTaskControllerThread() override {}
   bool IsCurrentThread() const override { return true; }
   WebScheduler* Scheduler() const override { return &scheduler_; }
 
@@ -79,7 +80,7 @@ class MockScriptedIdleTaskControllerPlatform : public TestingPlatformSupport {
  public:
   MockScriptedIdleTaskControllerPlatform(bool should_yield)
       : thread_(should_yield) {}
-  ~MockScriptedIdleTaskControllerPlatform() override = default;
+  ~MockScriptedIdleTaskControllerPlatform() override {}
   WebThread* CurrentThread() override { return &thread_; }
 
   void RunIdleTask() { thread_.RunIdleTask(); }

@@ -49,13 +49,7 @@ class StringOrTrustedHTML;
 class V0InsertionPoint;
 class WhitespaceAttacher;
 
-enum class ShadowRootType {
-  kLegacyUserAgentV0,
-  V0,
-  kOpen,
-  kClosed,
-  kUserAgentV1
-};
+enum class ShadowRootType { kUserAgent, V0, kOpen, kClosed };
 
 class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
   DEFINE_WRAPPERTYPEINFO();
@@ -99,12 +93,7 @@ class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
   }
   bool IsV1() const {
     return GetType() == ShadowRootType::kOpen ||
-           GetType() == ShadowRootType::kClosed ||
-           GetType() == ShadowRootType::kUserAgentV1;
-  }
-  bool IsUserAgent() const {
-    return GetType() == ShadowRootType::kLegacyUserAgentV0 ||
-           GetType() == ShadowRootType::kUserAgentV1;
+           GetType() == ShadowRootType::kClosed;
   }
 
   void AttachLayoutTree(AttachContext&) override;
@@ -202,12 +191,11 @@ class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
   TraceWrapperMember<StyleSheetList> style_sheet_list_;
   Member<SlotAssignment> slot_assignment_;
   unsigned short child_shadow_root_count_;
-  // TODO(kochi): Once kUserAgentTypeV0 is gone, shrink this to 2.
-  unsigned short type_ : 3;
+  unsigned short type_ : 2;
   unsigned short registered_with_parent_shadow_root_ : 1;
   unsigned short descendant_insertion_points_is_valid_ : 1;
   unsigned short delegates_focus_ : 1;
-  unsigned short unused_ : 10;
+  unsigned short unused_ : 11;
 };
 
 inline Element* ShadowRoot::ActiveElement() const {
@@ -219,10 +207,6 @@ inline ShadowRoot* Element::ShadowRootIfV1() const {
   if (root && root->IsV1())
     return root;
   return nullptr;
-}
-
-inline bool Node::IsInUserAgentShadowRoot() const {
-  return ContainingShadowRoot() && ContainingShadowRoot()->IsUserAgent();
 }
 
 DEFINE_NODE_TYPE_CASTS(ShadowRoot, IsShadowRoot());

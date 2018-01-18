@@ -46,7 +46,7 @@ class CORE_EXPORT CSSNumericValue : public CSSStyleValue {
   bool equals(const HeapVector<CSSNumberish>&);
 
   // Converts between compatible types, as defined in the IDL.
-  CSSUnitValue* to(const String&, ExceptionState&);
+  CSSNumericValue* to(const String&, ExceptionState&);
   CSSMathSum* toSum(const Vector<String>&, ExceptionState&);
 
   // Internal methods.

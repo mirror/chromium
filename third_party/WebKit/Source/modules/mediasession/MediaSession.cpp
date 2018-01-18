@@ -238,7 +238,6 @@ void MediaSession::Trace(blink::Visitor* visitor) {
 void MediaSession::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
   for (auto handler : action_handlers_.Values())
     visitor->TraceWrappers(handler);
-  ScriptWrappable::TraceWrappers(visitor);
 }
 
 }  // namespace blink

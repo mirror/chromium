@@ -84,7 +84,7 @@ class CORE_EXPORT CanvasImageSource {
   virtual bool IsAccelerated() const = 0;
 
  protected:
-  virtual ~CanvasImageSource() = default;
+  virtual ~CanvasImageSource() {}
 };
 
 }  // namespace blink

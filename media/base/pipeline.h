@@ -73,11 +73,6 @@ class MEDIA_EXPORT Pipeline {
     // configs provided by OnMetadata.
     virtual void OnAudioConfigChange(const AudioDecoderConfig& config) = 0;
     virtual void OnVideoConfigChange(const VideoDecoderConfig& config) = 0;
-
-    // Executed whenever the underlying AudioDecoder or VideoDecoder changes
-    // during playback.
-    virtual void OnAudioDecoderChange(const std::string& name) = 0;
-    virtual void OnVideoDecoderChange(const std::string& name) = 0;
   };
 
   virtual ~Pipeline() {}

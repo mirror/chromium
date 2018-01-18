@@ -6,9 +6,9 @@
 
 namespace blink {
 
-RecordTest::RecordTest() = default;
+RecordTest::RecordTest() {}
 
-RecordTest::~RecordTest() = default;
+RecordTest::~RecordTest() {}
 
 void RecordTest::setStringLongRecord(
     const Vector<std::pair<String, int32_t>>& arg) {

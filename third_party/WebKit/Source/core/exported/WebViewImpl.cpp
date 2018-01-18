@@ -30,14 +30,13 @@
 
 #include "core/exported/WebViewImpl.h"
 
-#include <algorithm>
 #include <memory>
-#include <utility>
 
 #include "base/memory/scoped_refptr.h"
 #include "build/build_config.h"
 #include "core/CSSValueKeywords.h"
 #include "core/CoreInitializer.h"
+#include "core/animation/CompositorMutatorImpl.h"
 #include "core/clipboard/DataObject.h"
 #include "core/dom/ContextFeaturesClientImpl.h"
 #include "core/dom/Document.h"
@@ -124,10 +123,10 @@
 #include "platform/geometry/FloatRect.h"
 #include "platform/graphics/Color.h"
 #include "platform/graphics/CompositorMutatorClient.h"
-#include "platform/graphics/CompositorMutatorImpl.h"
 #include "platform/graphics/FirstPaintInvalidationTracking.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/Image.h"
+#include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/gpu/DrawingBuffer.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/image-decoders/ImageDecoder.h"
@@ -150,7 +149,6 @@
 #include "public/platform/WebInputEvent.h"
 #include "public/platform/WebLayerTreeView.h"
 #include "public/platform/WebMenuSourceType.h"
-#include "public/platform/WebScrollIntoViewParams.h"
 #include "public/platform/WebTextInputInfo.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebVector.h"
@@ -303,18 +301,14 @@ class ColorOverlay final : public PageOverlay::Delegate {
 // WebView ----------------------------------------------------------------
 
 WebView* WebView::Create(WebViewClient* client,
-                         mojom::PageVisibilityState visibility_state,
-                         WebView* opener) {
-  return WebViewImpl::Create(client, visibility_state,
-                             static_cast<WebViewImpl*>(opener));
+                         mojom::PageVisibilityState visibility_state) {
+  return WebViewImpl::Create(client, visibility_state);
 }
 
 WebViewImpl* WebViewImpl::Create(WebViewClient* client,
-                                 mojom::PageVisibilityState visibility_state,
-                                 WebViewImpl* opener) {
+                                 mojom::PageVisibilityState visibility_state) {
   // Pass the WebViewImpl's self-reference to the caller.
-  auto web_view =
-      base::AdoptRef(new WebViewImpl(client, visibility_state, opener));
+  auto web_view = base::AdoptRef(new WebViewImpl(client, visibility_state));
   web_view->AddRef();
   return web_view.get();
 }
@@ -335,8 +329,7 @@ void WebViewImpl::SetPrerendererClient(
 }
 
 WebViewImpl::WebViewImpl(WebViewClient* client,
-                         mojom::PageVisibilityState visibility_state,
-                         WebViewImpl* opener)
+                         mojom::PageVisibilityState visibility_state)
     : client_(client),
       chrome_client_(ChromeClientImpl::Create(this)),
       should_auto_resize_(false),
@@ -381,8 +374,7 @@ WebViewImpl::WebViewImpl(WebViewClient* client,
   Page::PageClients page_clients;
   page_clients.chrome_client = chrome_client_.Get();
 
-  page_ =
-      Page::CreateOrdinary(page_clients, opener ? opener->GetPage() : nullptr);
+  page_ = Page::CreateOrdinary(page_clients);
   CoreInitializer::GetInstance().ProvideModulesToPage(*page_, client_);
   page_->SetValidationMessageClient(ValidationMessageClientImpl::Create(*this));
   SetVisibilityState(visibility_state, true);
@@ -1850,7 +1842,7 @@ void WebViewImpl::BeginFrame(double last_frame_time_monotonic) {
     client->LayoutOverlay();
 }
 
-void WebViewImpl::UpdateLifecycle(LifecycleUpdate requested_update) {
+void WebViewImpl::UpdateAllLifecyclePhases() {
   TRACE_EVENT0("blink", "WebViewImpl::updateAllLifecyclePhases");
   if (!MainFrameImpl())
     return;
@@ -1858,12 +1850,9 @@ void WebViewImpl::UpdateLifecycle(LifecycleUpdate requested_update) {
   DocumentLifecycle::AllowThrottlingScope throttling_scope(
       MainFrameImpl()->GetFrame()->GetDocument()->Lifecycle());
 
-  PageWidgetDelegate::UpdateLifecycle(*page_, *MainFrameImpl()->GetFrame(),
-                                      requested_update);
+  PageWidgetDelegate::UpdateAllLifecyclePhases(*page_,
+                                               *MainFrameImpl()->GetFrame());
   UpdateLayerTreeBackgroundColor();
-
-  if (requested_update == LifecycleUpdate::kPrePaint)
-    return;
 
   if (auto* client = GetValidationMessageClient())
     client->PaintOverlay();
@@ -2473,8 +2462,7 @@ bool WebViewImpl::ScrollFocusedEditableElementIntoView() {
     LayoutObject* layout_object = element->GetLayoutObject();
     if (!layout_object)
       return false;
-    layout_object->ScrollRectToVisible(element->BoundingBox(),
-                                       WebScrollIntoViewParams());
+    layout_object->ScrollRectToVisible(element->BoundingBox());
     return true;
   }
 

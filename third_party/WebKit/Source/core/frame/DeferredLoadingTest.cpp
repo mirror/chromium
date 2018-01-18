@@ -19,7 +19,7 @@ static const char kHistogramName[] =
 
 class DeferredLoadingTest : public SimTest {
  protected:
-  DeferredLoadingTest() = default;
+  DeferredLoadingTest() {}
 
   void SetUp() override {
     SimTest::SetUp();

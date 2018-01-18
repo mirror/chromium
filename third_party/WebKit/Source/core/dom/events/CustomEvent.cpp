@@ -30,12 +30,12 @@
 
 namespace blink {
 
-CustomEvent::CustomEvent() = default;
+CustomEvent::CustomEvent() : detail_(this) {}
 
 CustomEvent::CustomEvent(ScriptState* script_state,
                          const AtomicString& type,
                          const CustomEventInit& initializer)
-    : Event(type, initializer) {
+    : Event(type, initializer), detail_(this) {
   world_ = WrapRefCounted(&script_state->World());
   if (initializer.hasDetail()) {
     detail_.Set(initializer.detail().GetIsolate(),
@@ -43,7 +43,7 @@ CustomEvent::CustomEvent(ScriptState* script_state,
   }
 }
 
-CustomEvent::~CustomEvent() = default;
+CustomEvent::~CustomEvent() {}
 
 void CustomEvent::initCustomEvent(ScriptState* script_state,
                                   const AtomicString& type,

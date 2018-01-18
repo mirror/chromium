@@ -18,11 +18,10 @@ void TestMediaTransferProtocolManagerChromeOS::AddObserver(Observer* observer) {
 void TestMediaTransferProtocolManagerChromeOS::RemoveObserver(
     Observer* observer) {}
 
-void TestMediaTransferProtocolManagerChromeOS::GetStorages(
-    GetStoragesCallback callback) const {
-  std::move(callback).Run(std::vector<std::string>());
+const std::vector<std::string>
+TestMediaTransferProtocolManagerChromeOS::GetStorages() const {
+  return std::vector<std::string>();
 }
-
 const device::mojom::MtpStorageInfo*
 TestMediaTransferProtocolManagerChromeOS::GetStorageInfo(
     const std::string& storage_name) const {

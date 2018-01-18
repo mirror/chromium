@@ -23,7 +23,29 @@
 
 namespace {
 
+using UpdateClientCallback =
+    extensions::UpdateDataProvider::UpdateClientCallback;
+
 void SendUninstallPingCompleteCallback(update_client::Error error) {}
+
+void InstallUpdateCallback(content::BrowserContext* context,
+                           const std::string& extension_id,
+                           const std::string& public_key,
+                           const base::FilePath& unpacked_dir,
+                           UpdateClientCallback update_client_callback) {
+  using InstallError = update_client::InstallError;
+  using Result = update_client::CrxInstaller::Result;
+  extensions::ExtensionSystem::Get(context)->InstallUpdate(
+      extension_id, public_key, unpacked_dir,
+      base::BindOnce(
+          [](UpdateClientCallback update_client_callback, bool success) {
+            DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+            std::move(update_client_callback)
+                .Run(Result(success ? InstallError::NONE
+                                    : InstallError::GENERIC_ERROR));
+          },
+          std::move(update_client_callback)));
+}
 
 }  // namespace
 
@@ -67,8 +89,8 @@ UpdateService::UpdateService(
       update_client_(update_client),
       weak_ptr_factory_(this) {
   DCHECK(update_client_);
-  update_data_provider_ =
-      base::MakeRefCounted<UpdateDataProvider>(browser_context_);
+  update_data_provider_ = base::MakeRefCounted<UpdateDataProvider>(
+      browser_context_, base::BindOnce(&InstallUpdateCallback));
 }
 
 UpdateService::~UpdateService() {}

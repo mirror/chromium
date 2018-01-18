@@ -11,7 +11,6 @@
 #include "base/sequenced_task_runner.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
-#include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/power/ml/idle_event_notifier.h"
 #include "chrome/browser/chromeos/power/ml/user_activity_event.pb.h"
 #include "chrome/browser/chromeos/power/ml/user_activity_logger_delegate.h"
@@ -22,10 +21,6 @@
 #include "services/viz/public/interfaces/compositing/video_detector_observer.mojom.h"
 #include "ui/base/user_activity/user_activity_detector.h"
 #include "ui/base/user_activity/user_activity_observer.h"
-
-namespace base {
-class Clock;
-}
 
 namespace chromeos {
 namespace power {
@@ -44,8 +39,7 @@ class UserActivityLogger : public ui::UserActivityObserver,
                      ui::UserActivityDetector* detector,
                      chromeos::PowerManagerClient* power_manager_client,
                      session_manager::SessionManager* session_manager,
-                     viz::mojom::VideoDetectorObserverRequest request,
-                     const chromeos::ChromeUserManager* user_manager);
+                     viz::mojom::VideoDetectorObserverRequest request);
   ~UserActivityLogger() override;
 
   // ui::UserActivityObserver overrides.
@@ -88,13 +82,10 @@ class UserActivityLogger : public ui::UserActivityObserver,
 
   // Set the task runner for testing purpose.
   void SetTaskRunnerForTesting(
-      scoped_refptr<base::SequencedTaskRunner> task_runner,
-      std::unique_ptr<base::Clock> test_clock);
+      scoped_refptr<base::SequencedTaskRunner> task_runner);
 
-  // Time when an idle event is received and we start logging. Null if an idle
-  // event hasn't been observed.
-  // TODO(jiameng): replace it by base::TimeTicks (http://crbug.com/802942).
-  base::Time idle_event_start_;
+  // Flag indicating whether an idle event has been observed.
+  bool idle_event_observed_ = false;
 
   chromeos::PowerManagerClient::LidState lid_state_ =
       chromeos::PowerManagerClient::LidState::NOT_PRESENT;
@@ -117,9 +108,6 @@ class UserActivityLogger : public ui::UserActivityObserver,
   // Features extracted when receives an idle event.
   UserActivityEvent::Features features_;
 
-  // It is base::DefaultClock, but will be set to a mock clock for tests.
-  std::unique_ptr<base::Clock> clock_;
-
   UserActivityLoggerDelegate* const logger_delegate_;
 
   ScopedObserver<IdleEventNotifier, IdleEventNotifier::Observer>
@@ -136,8 +124,6 @@ class UserActivityLogger : public ui::UserActivityObserver,
   session_manager::SessionManager* const session_manager_;
 
   mojo::Binding<viz::mojom::VideoDetectorObserver> binding_;
-
-  const chromeos::ChromeUserManager* const user_manager_;
 
   // Delay after screen idle event, used to trigger TIMEOUT for user activity
   // logging.

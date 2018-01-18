@@ -4,7 +4,6 @@
 
 #include "chrome/browser/ui/webui/webapks_ui.h"
 
-#include <memory>
 #include <string>
 
 #include "chrome/browser/profiles/profile.h"
@@ -35,7 +34,7 @@ WebUIDataSource* CreateWebApksUIDataSource() {
 WebApksUI::WebApksUI(content::WebUI* web_ui)
     : content::WebUIController(web_ui) {
   Profile* profile = Profile::FromWebUI(web_ui);
-  web_ui->AddMessageHandler(std::make_unique<WebApksHandler>());
+  web_ui->AddMessageHandler(base::MakeUnique<WebApksHandler>());
   WebUIDataSource::Add(profile, CreateWebApksUIDataSource());
 }
 

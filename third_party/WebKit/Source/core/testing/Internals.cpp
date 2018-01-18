@@ -735,7 +735,7 @@ CSSStyleDeclaration* Internals::computedStyleIncludingVisitedInfo(
 
 ShadowRoot* Internals::createUserAgentShadowRoot(Element* host) {
   DCHECK(host);
-  return &host->EnsureUserAgentShadowRootV1();
+  return &host->EnsureUserAgentShadowRoot();
 }
 
 void Internals::setBrowserControlsState(float top_height,
@@ -792,8 +792,7 @@ String Internals::shadowRootType(const Node* root,
   }
 
   switch (ToShadowRoot(root)->GetType()) {
-    case ShadowRootType::kLegacyUserAgentV0:
-    case ShadowRootType::kUserAgentV1:
+    case ShadowRootType::kUserAgent:
       return String("UserAgentShadowRoot");
     case ShadowRootType::V0:
       return String("V0ShadowRoot");
@@ -1618,6 +1617,36 @@ Node* Internals::touchNodeAdjustedToBestContextMenuNode(
   event_handler.BestContextMenuNodeForHitTestResult(result, adjusted_point,
                                                     target_node);
   return target_node;
+}
+
+DOMRectReadOnly* Internals::bestZoomableAreaForTouchPoint(
+    long x,
+    long y,
+    long width,
+    long height,
+    Document* document,
+    ExceptionState& exception_state) {
+  DCHECK(document);
+  if (!document->GetFrame()) {
+    exception_state.ThrowDOMException(kInvalidAccessError,
+                                      "The document provided is invalid.");
+    return nullptr;
+  }
+
+  document->UpdateStyleAndLayout();
+
+  IntSize radius(width / 2, height / 2);
+  IntPoint point(x + radius.Width(), y + radius.Height());
+
+  Node* target_node = nullptr;
+  IntRect zoomable_area;
+  bool found_node =
+      document->GetFrame()->GetEventHandler().BestZoomableAreaForTouchPoint(
+          point, radius, zoomable_area, target_node);
+  if (found_node)
+    return DOMRectReadOnly::FromIntRect(zoomable_area);
+
+  return nullptr;
 }
 
 int Internals::lastSpellCheckRequestSequence(Document* document,

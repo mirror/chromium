@@ -47,7 +47,7 @@ class CORE_EXPORT PageOverlay : public GraphicsLayerClient,
  public:
   class Delegate {
    public:
-    virtual ~Delegate() = default;
+    virtual ~Delegate() {}
 
     // Paints page overlay contents.
     virtual void PaintPageOverlay(const PageOverlay&,

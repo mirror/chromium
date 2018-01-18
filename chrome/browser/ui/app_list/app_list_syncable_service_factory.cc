@@ -6,6 +6,7 @@
 
 #include <set>
 
+#include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/profiles/incognito_helpers.h"
 #include "chrome/browser/profiles/profile.h"
@@ -46,7 +47,7 @@ std::unique_ptr<KeyedService> AppListSyncableServiceFactory::BuildInstanceFor(
   }
   VLOG(1) << "BuildInstanceFor: " << profile->GetDebugName()
           << " (" << profile << ")";
-  return std::make_unique<AppListSyncableService>(
+  return base::MakeUnique<AppListSyncableService>(
       profile, extensions::ExtensionSystem::Get(profile));
 }
 

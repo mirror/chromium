@@ -104,11 +104,3 @@ void SelectedKeywordDecoration::SetImage(NSImage* image) {
     search_image_.reset([image retain]);
   BubbleDecoration::SetImage(image);
 }
-
-NSString* SelectedKeywordDecoration::GetAccessibilityLabel() {
-  return full_string_.get();
-}
-
-bool SelectedKeywordDecoration::IsAccessibilityIgnored() {
-  return true;
-}

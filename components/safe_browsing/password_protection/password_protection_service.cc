@@ -5,13 +5,12 @@
 #include "components/safe_browsing/password_protection/password_protection_service.h"
 
 #include <stddef.h>
-
-#include <memory>
 #include <string>
 
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
@@ -121,11 +120,11 @@ PasswordProtectionService::~PasswordProtectionService() {
 }
 
 bool PasswordProtectionService::CanGetReputationOfURL(const GURL& url) {
-  if (!url.is_valid() || !url.SchemeIsHTTPOrHTTPS() || net::IsLocalhost(url))
+  if (!url.is_valid() || !url.SchemeIsHTTPOrHTTPS())
     return false;
 
   const std::string hostname = url.HostNoBrackets();
-  return !net::IsHostnameNonUnique(hostname) &&
+  return !net::IsLocalhost(hostname) && !net::IsHostnameNonUnique(hostname) &&
          hostname.find('.') != std::string::npos;
 }
 
@@ -283,7 +282,7 @@ void PasswordProtectionService::CacheVerdict(
           std::string(), nullptr));
 
   if (!cache_dictionary || !cache_dictionary.get())
-    cache_dictionary = std::make_unique<base::DictionaryValue>();
+    cache_dictionary = base::MakeUnique<base::DictionaryValue>();
 
   std::unique_ptr<base::DictionaryValue> verdict_entry(
       CreateDictionaryFromVerdict(verdict, receive_time));
@@ -752,7 +751,7 @@ PasswordProtectionService::CreateDictionaryFromVerdict(
     const LoginReputationClientResponse* verdict,
     const base::Time& receive_time) {
   std::unique_ptr<base::DictionaryValue> result =
-      std::make_unique<base::DictionaryValue>();
+      base::MakeUnique<base::DictionaryValue>();
   result->SetInteger(kCacheCreationTime,
                      static_cast<int>(receive_time.ToDoubleT()));
   std::string serialized_proto(verdict->SerializeAsString());
@@ -805,14 +804,14 @@ PasswordProtectionService::MaybeCreateNavigationThrottle(
         request->trigger_type() ==
             safe_browsing::LoginReputationClientRequest::PASSWORD_REUSE_EVENT &&
         request->matches_sync_password()) {
-      return std::make_unique<PasswordProtectionNavigationThrottle>(
+      return base::MakeUnique<PasswordProtectionNavigationThrottle>(
           navigation_handle, request, /*is_warning_showing=*/false);
     }
   }
 
   for (scoped_refptr<PasswordProtectionRequest> request : warning_requests_) {
     if (request->web_contents() == web_contents) {
-      return std::make_unique<PasswordProtectionNavigationThrottle>(
+      return base::MakeUnique<PasswordProtectionNavigationThrottle>(
           navigation_handle, request, /*is_warning_showing=*/true);
     }
   }

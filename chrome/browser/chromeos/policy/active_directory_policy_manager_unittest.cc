@@ -10,6 +10,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -86,7 +87,7 @@ namespace policy {
 class ActiveDirectoryPolicyManagerTest : public testing::Test {
  public:
   ActiveDirectoryPolicyManagerTest() {
-    auto mock_client_unique_ptr = std::make_unique<TestAuthPolicyClient>();
+    auto mock_client_unique_ptr = base::MakeUnique<TestAuthPolicyClient>();
     mock_client_ = mock_client_unique_ptr.get();
     chromeos::DBusThreadManager::GetSetterForTesting()->SetAuthPolicyClient(
         std::move(mock_client_unique_ptr));
@@ -128,7 +129,7 @@ class ActiveDirectoryPolicyManagerTest : public testing::Test {
 
   // To be handed over to ActiveDirectoryPolicyManager ...
   std::unique_ptr<MockCloudPolicyStore> mock_store_unique_ptr_{
-      std::make_unique<MockCloudPolicyStore>()};
+      base::MakeUnique<MockCloudPolicyStore>()};
 
   // ... but keeping a non-owned pointer.
   MockCloudPolicyStore* mock_store_{mock_store_unique_ptr_.get()};
@@ -191,7 +192,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest,
   policy_manager_->Init(&schema_registry_);
 
   // Simulate successful store load.
-  mock_store_->policy_ = std::make_unique<enterprise_management::PolicyData>();
+  mock_store_->policy_ = base::MakeUnique<enterprise_management::PolicyData>();
   mock_store_->NotifyStoreLoaded();
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
@@ -221,7 +222,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest,
   policy_manager_->Init(&schema_registry_);
 
   // Simulate successful store load.
-  mock_store_->policy_ = std::make_unique<enterprise_management::PolicyData>();
+  mock_store_->policy_ = base::MakeUnique<enterprise_management::PolicyData>();
   mock_store_->NotifyStoreLoaded();
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
@@ -258,7 +259,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest, WaitInfinite_LoadSuccess_FetchFail) {
   policy_manager_->Init(&schema_registry_);
 
   // Simulate successful store load.
-  mock_store_->policy_ = std::make_unique<enterprise_management::PolicyData>();
+  mock_store_->policy_ = base::MakeUnique<enterprise_management::PolicyData>();
   mock_store_->NotifyStoreLoaded();
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
@@ -293,7 +294,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest, WaitFinite_LoadSuccess_FetchFail) {
   policy_manager_->Init(&schema_registry_);
 
   // Simulate successful store load.
-  mock_store_->policy_ = std::make_unique<enterprise_management::PolicyData>();
+  mock_store_->policy_ = base::MakeUnique<enterprise_management::PolicyData>();
   mock_store_->NotifyStoreLoaded();
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
@@ -331,7 +332,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest, WaitFinite_FetchFail_LoadSuccess) {
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
   // Simulate successful store load.
-  mock_store_->policy_ = std::make_unique<enterprise_management::PolicyData>();
+  mock_store_->policy_ = base::MakeUnique<enterprise_management::PolicyData>();
   mock_store_->NotifyStoreLoaded();
   EXPECT_TRUE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 }
@@ -365,7 +366,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest, WaitFinite_LoadFail_FetchFail) {
   ExpectSessionExited();
 
   // Simulate successful store load.
-  mock_store_->policy_ = std::make_unique<enterprise_management::PolicyData>();
+  mock_store_->policy_ = base::MakeUnique<enterprise_management::PolicyData>();
   mock_store_->NotifyStoreLoaded();
   EXPECT_TRUE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 }
@@ -388,7 +389,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest, WaitFinite_LoadSuccess_FetchTimeout) {
   policy_manager_->Init(&schema_registry_);
 
   // Simulate successful store load.
-  mock_store_->policy_ = std::make_unique<enterprise_management::PolicyData>();
+  mock_store_->policy_ = base::MakeUnique<enterprise_management::PolicyData>();
   mock_store_->NotifyStoreLoaded();
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
@@ -434,7 +435,7 @@ TEST_F(ActiveDirectoryPolicyManagerTest, WaitFinite_LoadTimeout_FetchTimeout) {
   EXPECT_FALSE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 
   // Simulate successful store load.
-  mock_store_->policy_ = std::make_unique<enterprise_management::PolicyData>();
+  mock_store_->policy_ = base::MakeUnique<enterprise_management::PolicyData>();
   mock_store_->NotifyStoreLoaded();
   EXPECT_TRUE(policy_manager_->IsInitializationComplete(POLICY_DOMAIN_CHROME));
 }

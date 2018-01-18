@@ -16,10 +16,8 @@ WaitableEventWatcher::WaitableEventWatcher() = default;
 
 WaitableEventWatcher::~WaitableEventWatcher() {}
 
-bool WaitableEventWatcher::StartWatching(
-    WaitableEvent* event,
-    EventCallback callback,
-    scoped_refptr<SequencedTaskRunner> task_runner) {
+bool WaitableEventWatcher::StartWatching(WaitableEvent* event,
+                                         EventCallback callback) {
   DCHECK(event);
   callback_ = std::move(callback);
   event_ = event;

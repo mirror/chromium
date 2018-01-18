@@ -25,11 +25,11 @@ namespace content {
 
 namespace {
 
-network::ResourceResponseHead RewriteServiceWorkerTime(
+ResourceResponseHead RewriteServiceWorkerTime(
     base::TimeTicks service_worker_start_time,
     base::TimeTicks service_worker_ready_time,
-    const network::ResourceResponseHead& response_head) {
-  network::ResourceResponseHead new_head = response_head;
+    const ResourceResponseHead& response_head) {
+  ResourceResponseHead new_head = response_head;
   new_head.service_worker_start_time = service_worker_start_time;
   new_head.service_worker_ready_time = service_worker_ready_time;
   return new_head;
@@ -40,8 +40,8 @@ network::ResourceResponseHead RewriteServiceWorkerTime(
 // connection is closed.
 class HeaderRewritingURLLoaderClient : public mojom::URLLoaderClient {
  public:
-  using RewriteHeaderCallback = base::Callback<network::ResourceResponseHead(
-      const network::ResourceResponseHead&)>;
+  using RewriteHeaderCallback =
+      base::Callback<ResourceResponseHead(const ResourceResponseHead&)>;
 
   static mojom::URLLoaderClientPtr CreateAndBind(
       mojom::URLLoaderClientPtr url_loader_client,
@@ -76,7 +76,7 @@ class HeaderRewritingURLLoaderClient : public mojom::URLLoaderClient {
 
   // mojom::URLLoaderClient implementation:
   void OnReceiveResponse(
-      const network::ResourceResponseHead& response_head,
+      const ResourceResponseHead& response_head,
       const base::Optional<net::SSLInfo>& ssl_info,
       mojom::DownloadedTempFilePtr downloaded_file) override {
     DCHECK(url_loader_client_.is_bound());
@@ -85,9 +85,8 @@ class HeaderRewritingURLLoaderClient : public mojom::URLLoaderClient {
         std::move(downloaded_file));
   }
 
-  void OnReceiveRedirect(
-      const net::RedirectInfo& redirect_info,
-      const network::ResourceResponseHead& response_head) override {
+  void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
+                         const ResourceResponseHead& response_head) override {
     DCHECK(url_loader_client_.is_bound());
     url_loader_client_->OnReceiveRedirect(
         redirect_info, rewrite_header_callback_.Run(response_head));
@@ -140,7 +139,7 @@ ServiceWorkerSubresourceLoader::ServiceWorkerSubresourceLoader(
     int32_t routing_id,
     int32_t request_id,
     uint32_t options,
-    const network::ResourceRequest& resource_request,
+    const ResourceRequest& resource_request,
     mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
     scoped_refptr<ControllerServiceWorkerConnector> controller_connector,
@@ -177,7 +176,7 @@ void ServiceWorkerSubresourceLoader::DeleteSoon() {
 }
 
 void ServiceWorkerSubresourceLoader::StartRequest(
-    const network::ResourceRequest& resource_request) {
+    const ResourceRequest& resource_request) {
   DCHECK_EQ(Status::kNotStarted, status_);
   status_ = Status::kStarted;
 
@@ -185,8 +184,7 @@ void ServiceWorkerSubresourceLoader::StartRequest(
       static_cast<ResourceType>(resource_request.resource_type)));
 
   DCHECK(!inflight_fetch_request_);
-  inflight_fetch_request_ =
-      std::make_unique<network::ResourceRequest>(resource_request);
+  inflight_fetch_request_ = std::make_unique<ResourceRequest>(resource_request);
   controller_connector_->AddObserver(this);
   fetch_request_restarted_ = false;
 
@@ -209,21 +207,6 @@ void ServiceWorkerSubresourceLoader::DispatchFetchEvent() {
   // the network provider has already been discarded. In that case, We don't
   // need to return an error as the client must be shutting down.
   if (!controller) {
-    auto controller_state = controller_connector_->state();
-    if (controller_state ==
-        ControllerServiceWorkerConnector::State::kNoController) {
-      // The controller was lost after this loader or its loader factory was
-      // created.
-      default_loader_factory_getter_->GetNetworkLoaderFactory()
-          ->CreateLoaderAndStart(url_loader_binding_.Unbind(), routing_id_,
-                                 request_id_, options_, resource_request_,
-                                 std::move(url_loader_client_),
-                                 traffic_annotation_);
-      DeleteSoon();
-      return;
-    }
-    DCHECK_EQ(ControllerServiceWorkerConnector::State::kNoContainerHost,
-              controller_state);
     SettleInflightFetchRequestIfNeeded();
     return;
   }
@@ -514,7 +497,7 @@ void ServiceWorkerSubresourceLoaderFactory::CreateLoaderAndStart(
     int32_t routing_id,
     int32_t request_id,
     uint32_t options,
-    const network::ResourceRequest& resource_request,
+    const ResourceRequest& resource_request,
     mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
   // This loader destructs itself, as we want to transparently switch to the

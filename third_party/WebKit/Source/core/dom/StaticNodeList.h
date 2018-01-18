@@ -71,7 +71,7 @@ StaticNodeTypeList<NodeType>* StaticNodeTypeList<NodeType>::Adopt(
 }
 
 template <typename NodeType>
-StaticNodeTypeList<NodeType>::~StaticNodeTypeList() = default;
+StaticNodeTypeList<NodeType>::~StaticNodeTypeList() {}
 
 template <typename NodeType>
 unsigned StaticNodeTypeList<NodeType>::length() const {

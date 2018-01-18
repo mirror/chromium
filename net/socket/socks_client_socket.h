@@ -35,8 +35,7 @@ class NET_EXPORT_PRIVATE SOCKSClientSocket : public StreamSocket {
   SOCKSClientSocket(std::unique_ptr<ClientSocketHandle> transport_socket,
                     const HostResolver::RequestInfo& req_info,
                     RequestPriority priority,
-                    HostResolver* host_resolver,
-                    const NetworkTrafficAnnotationTag& traffic_annotation);
+                    HostResolver* host_resolver);
 
   // On destruction Disconnect() is called.
   ~SOCKSClientSocket() override;
@@ -141,9 +140,6 @@ class NET_EXPORT_PRIVATE SOCKSClientSocket : public StreamSocket {
   RequestPriority priority_;
 
   NetLogWithSource net_log_;
-
-  // Traffic annotation for socket control.
-  NetworkTrafficAnnotationTag traffic_annotation_;
 
   DISALLOW_COPY_AND_ASSIGN(SOCKSClientSocket);
 };

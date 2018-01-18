@@ -560,7 +560,6 @@ interface CDATASection : Text
     attribute @@toStringTag
     method constructor
 interface CSS
-    static getter layoutWorklet
     static getter paintWorklet
     static method Hz
     static method Q
@@ -3248,6 +3247,7 @@ interface HTMLOptionsCollection : HTMLCollection
     method @@iterator
     method add
     method constructor
+    method namedItem
     method remove
     setter length
     setter selectedIndex
@@ -3378,7 +3378,6 @@ interface HTMLShadowElement : HTMLElement
 interface HTMLSlotElement : HTMLElement
     attribute @@toStringTag
     getter name
-    method assignedElements
     method assignedNodes
     method constructor
     setter name

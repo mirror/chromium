@@ -20,8 +20,3 @@ Console scrollTop: 10
 Panel console was opened.
 Console scrollTop: 10
 
-Running: testCloseDrawerFromConsolePanelAndOpenFromAnotherPanel
-Panel sources was opened.
-Drawer panel set to console-view
-Console scrollTop: 10
-

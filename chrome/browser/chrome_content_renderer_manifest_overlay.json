@@ -1,6 +1,5 @@
 {
   "display_name": "Chrome Render Process",
-  "name": "content_renderer",
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {
@@ -24,7 +23,6 @@
           "blink::mojom::document_metadata::CopylessPaste",
           "chrome::mojom::ChromeRenderFrame",
           "chrome::mojom::ContentSettingsRenderer",
-          "chrome::mojom::PrerenderDispatcher",
           "dom_distiller::mojom::DistillerPageNotifierService",
           "extensions::mojom::AppWindow",
           "spellcheck::mojom::SpellCheckPanel"

@@ -25,8 +25,7 @@ class CC_EXPORT SurfaceLayerImpl : public LayerImpl {
   }
   ~SurfaceLayerImpl() override;
 
-  void SetPrimarySurfaceId(const viz::SurfaceId& surface_id,
-                           base::Optional<uint32_t> deadline_in_frames);
+  void SetPrimarySurfaceId(const viz::SurfaceId& surface_id);
   const viz::SurfaceId& primary_surface_id() const {
     return primary_surface_id_;
   }
@@ -39,10 +38,6 @@ class CC_EXPORT SurfaceLayerImpl : public LayerImpl {
   void SetFallbackSurfaceId(const viz::SurfaceId& surface_id);
   const viz::SurfaceId& fallback_surface_id() const {
     return fallback_surface_id_;
-  }
-
-  base::Optional<uint32_t> deadline_in_frames() const {
-    return deadline_in_frames_;
   }
 
   void SetStretchContentToFillBounds(bool stretch_content);
@@ -72,7 +67,6 @@ class CC_EXPORT SurfaceLayerImpl : public LayerImpl {
 
   viz::SurfaceId primary_surface_id_;
   viz::SurfaceId fallback_surface_id_;
-  base::Optional<uint32_t> deadline_in_frames_;
 
   bool stretch_content_to_fill_bounds_ = false;
 

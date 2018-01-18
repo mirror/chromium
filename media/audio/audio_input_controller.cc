@@ -121,8 +121,7 @@ class AudioInputController::AudioCallback
   void OnData(const AudioBus* source,
               base::TimeTicks capture_time,
               double volume) override {
-    TRACE_EVENT1("audio", "AudioInputController::OnData", "capture time (ms)",
-                 (capture_time - base::TimeTicks()).InMillisecondsF());
+    TRACE_EVENT1("audio", "AC::OnData", "capture time", capture_time);
 
     received_callback_ = true;
 

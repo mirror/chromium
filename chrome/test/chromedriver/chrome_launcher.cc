@@ -53,7 +53,6 @@
 #include "crypto/rsa_private_key.h"
 #include "crypto/sha2.h"
 #include "third_party/zlib/google/zip.h"
-#include "url/gurl.h"
 
 #if defined(OS_POSIX)
 #include <fcntl.h>
@@ -633,8 +632,7 @@ Status GetExtensionBackgroundPage(const base::DictionaryValue* manifest,
   manifest->GetString("background_page", &bg_page_name);
   if (bg_page_name.empty() || !persistent)
     return Status(kOk);
-  GURL baseUrl("chrome-extension://" + id + "/");
-  *bg_page = baseUrl.Resolve(bg_page_name).spec();
+  *bg_page = "chrome-extension://" + id + "/" + bg_page_name;
   return Status(kOk);
 }
 

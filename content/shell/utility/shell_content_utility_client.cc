@@ -8,12 +8,10 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/command_line.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ptr_util.h"
 #include "base/process/process.h"
 #include "content/public/child/child_thread.h"
-#include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/simple_connection_filter.h"
 #include "content/public/test/test_service.h"
@@ -22,7 +20,6 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/buffer.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
-#include "services/test/echo/echo_service.h"
 
 namespace content {
 
@@ -80,23 +77,18 @@ std::unique_ptr<service_manager::Service> CreateTestService() {
 
 }  // namespace
 
-ShellContentUtilityClient::ShellContentUtilityClient() {
-  if (base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kProcessType) == switches::kUtilityProcess)
-    network_service_test_helper_ = std::make_unique<NetworkServiceTestHelper>();
-}
+ShellContentUtilityClient::ShellContentUtilityClient() {}
 
 ShellContentUtilityClient::~ShellContentUtilityClient() {
 }
 
 void ShellContentUtilityClient::UtilityThreadStarted() {
   auto registry = std::make_unique<service_manager::BinderRegistry>();
-  registry->AddInterface(base::BindRepeating(&TestServiceImpl::Create),
+  registry->AddInterface(base::Bind(&TestServiceImpl::Create),
                          base::ThreadTaskRunnerHandle::Get());
   registry->AddInterface<mojom::PowerMonitorTest>(
-      base::BindRepeating(
-          &PowerMonitorTestImpl::MakeStrongBinding,
-          base::Passed(std::make_unique<PowerMonitorTestImpl>())),
+      base::Bind(&PowerMonitorTestImpl::MakeStrongBinding,
+                 base::Passed(std::make_unique<PowerMonitorTestImpl>())),
       base::ThreadTaskRunnerHandle::Get());
   content::ChildThread::Get()
       ->GetServiceManagerConnection()
@@ -105,22 +97,14 @@ void ShellContentUtilityClient::UtilityThreadStarted() {
 }
 
 void ShellContentUtilityClient::RegisterServices(StaticServiceMap* services) {
-  {
-    service_manager::EmbeddedServiceInfo info;
-    info.factory = base::BindRepeating(&CreateTestService);
-    services->insert(std::make_pair(kTestServiceUrl, info));
-  }
-
-  {
-    service_manager::EmbeddedServiceInfo info;
-    info.factory = base::BindRepeating(&echo::CreateEchoService);
-    services->insert(std::make_pair(echo::mojom::kServiceName, info));
-  }
+  service_manager::EmbeddedServiceInfo info;
+  info.factory = base::Bind(&CreateTestService);
+  services->insert(std::make_pair(kTestServiceUrl, info));
 }
 
 void ShellContentUtilityClient::RegisterNetworkBinders(
     service_manager::BinderRegistry* registry) {
-  network_service_test_helper_->RegisterNetworkBinders(registry);
+  network_service_test_helper_.RegisterNetworkBinders(registry);
 }
 
 }  // namespace content

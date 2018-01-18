@@ -39,7 +39,7 @@ InspectorEmulationAgent::InspectorEmulationAgent(
     WebLocalFrameImpl* web_local_frame_impl)
     : web_local_frame_(web_local_frame_impl) {}
 
-InspectorEmulationAgent::~InspectorEmulationAgent() = default;
+InspectorEmulationAgent::~InspectorEmulationAgent() {}
 
 WebViewImpl* InspectorEmulationAgent::GetWebViewImpl() {
   return web_local_frame_->ViewImpl();

@@ -31,9 +31,6 @@ using ::testing::UnorderedElementsAre;
 
 namespace {
 
-constexpr char kTestOrigin[] = "http://example.com/";
-constexpr char kTestPSLOrigin[] = "http://1.example.com/";
-
 std::vector<const autofill::PasswordForm*> GetRawPointers(
     const std::vector<std::unique_ptr<autofill::PasswordForm>>& forms) {
   std::vector<const autofill::PasswordForm*> result;
@@ -51,12 +48,12 @@ class ManagePasswordsStateTest : public testing::Test {
   }
 
   void SetUp() override {
-    test_local_form_.origin = GURL(kTestOrigin);
+    test_local_form_.origin = GURL("http://example.com");
     test_local_form_.username_value = base::ASCIIToUTF16("username");
     test_local_form_.username_element = base::ASCIIToUTF16("username_element");
     test_local_form_.password_value = base::ASCIIToUTF16("12345");
 
-    test_psl_form_.origin = GURL(kTestPSLOrigin);
+    test_psl_form_.origin = GURL("http://1.example.com");
     test_psl_form_.username_value = base::ASCIIToUTF16("username_psl");
     test_psl_form_.username_element = base::ASCIIToUTF16("username_element");
     test_psl_form_.password_value = base::ASCIIToUTF16("12345");
@@ -204,10 +201,7 @@ void ManagePasswordsStateTest::TestAllUpdates() {
 
   // Push "Add".
   autofill::PasswordForm form;
-  GURL::Replacements replace_path;
-  replace_path.SetPathStr("absolutely_different_path");
-  form.origin = origin.ReplaceComponents(replace_path);
-  form.signon_realm = form.origin.GetOrigin().spec();
+  form.origin = origin;
   form.username_value = base::ASCIIToUTF16("user15");
   form.password_value = base::ASCIIToUTF16("12345");
   password_manager::PasswordStoreChange change(
@@ -412,7 +406,7 @@ TEST_F(ManagePasswordsStateTest, PasswordAutofilled) {
   std::map<base::string16, const autofill::PasswordForm*> password_form_map;
   password_form_map.insert(
       std::make_pair(test_local_form().username_value, &test_local_form()));
-  const GURL origin(kTestOrigin);
+  GURL origin("https://example.com");
   passwords_data().OnPasswordAutofilled(password_form_map, origin, nullptr);
 
   EXPECT_THAT(passwords_data().GetCurrentForms(),
@@ -427,7 +421,7 @@ TEST_F(ManagePasswordsStateTest, PasswordAutofillWithSavedFederations) {
   std::map<base::string16, const autofill::PasswordForm*> password_form_map;
   password_form_map.insert(
       std::make_pair(test_local_form().username_value, &test_local_form()));
-  const GURL origin(kTestOrigin);
+  GURL origin("https://example.com");
   std::vector<const autofill::PasswordForm*> federated;
   federated.push_back(&test_local_federated_form());
   passwords_data().OnPasswordAutofilled(password_form_map, origin, &federated);
@@ -445,7 +439,7 @@ TEST_F(ManagePasswordsStateTest, ActiveOnMixedPSLAndNonPSLMatched) {
   std::map<base::string16, const autofill::PasswordForm*> password_form_map;
   password_form_map[test_local_form().username_value] = &test_local_form();
   password_form_map[test_psl_form().username_value] = &test_psl_form();
-  const GURL origin(kTestOrigin);
+  GURL origin("https://example.com");
   passwords_data().OnPasswordAutofilled(password_form_map, origin, nullptr);
 
   EXPECT_THAT(passwords_data().GetCurrentForms(),
@@ -459,8 +453,8 @@ TEST_F(ManagePasswordsStateTest, ActiveOnMixedPSLAndNonPSLMatched) {
 TEST_F(ManagePasswordsStateTest, InactiveOnPSLMatched) {
   std::map<base::string16, const autofill::PasswordForm*> password_form_map;
   password_form_map[test_psl_form().username_value] = &test_psl_form();
-  passwords_data().OnPasswordAutofilled(password_form_map, GURL(kTestOrigin),
-                                        nullptr);
+  passwords_data().OnPasswordAutofilled(
+      password_form_map, GURL("https://example.com/"), nullptr);
 
   EXPECT_THAT(passwords_data().GetCurrentForms(), IsEmpty());
   EXPECT_EQ(password_manager::ui::INACTIVE_STATE, passwords_data().state());

@@ -14,7 +14,6 @@
 #include "base/containers/queue.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/threading/sequenced_task_runner_handle.h"
 #include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
 #include "components/viz/common/surfaces/stub_surface_reference_factory.h"
 #include "components/viz/common/surfaces/surface_info.h"
@@ -55,13 +54,9 @@ SurfaceManager::SurfaceManager(LifetimeType lifetime_type,
   thread_checker_.DetachFromThread();
   if (using_surface_references()) {
     reference_factory_ = new StubSurfaceReferenceFactory();
-
-    // Android WebView doesn't have a task runner and doesn't need the timer.
-    if (base::SequencedTaskRunnerHandle::IsSet()) {
-      temporary_reference_timer_.Start(
-          FROM_HERE, base::TimeDelta::FromSeconds(10), this,
-          &SurfaceManager::MarkOldTemporaryReferences);
-    }
+    temporary_reference_timer_.Start(
+        FROM_HERE, base::TimeDelta::FromSeconds(10), this,
+        &SurfaceManager::MarkOldTemporaryReferences);
     // TODO(kylechar): After collecting UMA stats on the number of old temporary
     // references, we may want to turn the timer off when there are no temporary
     // references to avoid waking the thread unnecessarily.
@@ -161,6 +156,12 @@ void SurfaceManager::DestroySurface(const SurfaceId& surface_id) {
   surfaces_to_destroy_.insert(surface_id);
 }
 
+void SurfaceManager::SurfaceSubtreeDamaged(const SurfaceId& surface_id) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  for (auto& observer : observer_list_)
+    observer.OnSurfaceSubtreeDamaged(surface_id);
+}
+
 void SurfaceManager::RequireSequence(const SurfaceId& surface_id,
                                      const SurfaceSequence& sequence) {
   DCHECK_EQ(lifetime_type_, LifetimeType::SEQUENCES);
@@ -202,9 +203,13 @@ void SurfaceManager::InvalidateFrameSinkId(const FrameSinkId& frame_sink_id) {
 
 void SurfaceManager::SetFrameSinkDebugLabel(const FrameSinkId& frame_sink_id,
                                             const std::string& debug_label) {
+#if DCHECK_IS_ON()
   auto it = valid_frame_sink_labels_.find(frame_sink_id);
   DCHECK(it != valid_frame_sink_labels_.end());
   it->second = debug_label;
+#else
+  NOTREACHED();
+#endif
 }
 
 std::string SurfaceManager::GetFrameSinkDebugLabel(
@@ -510,9 +515,7 @@ Surface* SurfaceManager::GetLatestInFlightSurface(
   for (const LocalSurfaceId& local_surface_id : base::Reversed(temp_surfaces)) {
     // The in-flight surface cannot be newer than the primary surface ID.
     if (local_surface_id.parent_sequence_number() >
-            primary_surface_id.local_surface_id().parent_sequence_number() ||
-        local_surface_id.child_sequence_number() >
-            primary_surface_id.local_surface_id().child_sequence_number()) {
+        primary_surface_id.local_surface_id().parent_sequence_number()) {
       continue;
     }
 

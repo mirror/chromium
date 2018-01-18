@@ -14,7 +14,6 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/compiler_specific.h"
 #include "base/hash.h"
 #include "base/logging.h"
 #include "base/strings/string16.h"
@@ -50,10 +49,6 @@ using base::win::ScopedHString;
 using message_center::RichNotificationData;
 
 namespace {
-
-// This string needs to be max 16 characters to work on Windows 10 prior to
-// applying Creators Update (build 15063).
-const wchar_t kGroup[] = L"Notifications";
 
 typedef winfoundtn::ITypedEventHandler<winui::Notifications::ToastNotification*,
                                        IInspectable*>
@@ -149,8 +144,6 @@ class NotificationPlatformBridgeWinImpl
   HRESULT GetToastNotification(
       const message_center::Notification& notification,
       const NotificationTemplateBuilder& notification_template_builder,
-      const std::string& profile_id,
-      bool incognito,
       winui::Notifications::IToastNotification** toast_notification) {
     *toast_notification = nullptr;
 
@@ -214,15 +207,19 @@ class NotificationPlatformBridgeWinImpl
     mswr::ComPtr<winui::Notifications::IToastNotification2> toast2;
     toast2.Attach(toast2ptr);
 
-    // Set the Group and Tag values for the notification, in order to support
-    // closing/replacing notification by tag. Both of these values have a limit
-    // of 64 characters, which is problematic because they are out of our
-    // control and Tag can contain just about anything. Therefore we use a hash
-    // of the Tag value to produce uniqueness that fits within the specified
-    // limits. Although Group is hard-coded, uniqueness is guaranteed through
-    // features providing a sufficiently distinct notification.id().
-    ScopedHString group = ScopedHString::Create(kGroup);
-    ScopedHString tag = ScopedHString::Create(GetTag(notification.id()));
+    // Set the Group and Tag values for the notification, in order to group the
+    // notifications by origin and support replacing notification by tag. Both
+    // of these values have a limit of 64 characters, which is problematic
+    // because they are out of our control and, at least Tag, can contain just
+    // about anything. Therefore we use a hash of the origin and the id (which
+    // contains the tag value) to produce uniqueness that fits within the
+    // specified limits. Furthermore, collisions are not the end of the world
+    // because uniqueness is decided based on the pair [group, tag] as opposed
+    // to just the tag.
+    ScopedHString group = ScopedHString::Create(
+        base::UintToString16(base::Hash(notification.origin_url().spec())));
+    ScopedHString tag = ScopedHString::Create(
+        base::UintToString16(base::Hash(notification.id())));
 
     hr = toast2->put_Group(group.get());
     if (FAILED(hr)) {
@@ -234,48 +231,6 @@ class NotificationPlatformBridgeWinImpl
     if (FAILED(hr)) {
       LOG(ERROR) << "Failed to set Tag";
       return hr;
-    }
-
-    // By default, Windows 10 will always show the notification on screen.
-    // Chrome, however, wants to suppress them if both conditions are true:
-    // 1) Renotify flag is not set.
-    // 2) They are not new (no other notification with same tag is found).
-    if (!notification.renotify()) {
-      std::vector<winui::Notifications::IToastNotification*> notifications;
-      GetNotifications(profile_id, incognito, &notifications);
-
-      for (winui::Notifications::IToastNotification* notification :
-           notifications) {
-        winui::Notifications::IToastNotification2* t2 = nullptr;
-        HRESULT hr = notification->QueryInterface(&t2);
-        if (FAILED(hr))
-          continue;
-
-        HSTRING hstring_group;
-        hr = t2->get_Group(&hstring_group);
-        if (FAILED(hr)) {
-          LOG(ERROR) << "Failed to get group value";
-          return hr;
-        }
-        ScopedHString scoped_group(hstring_group);
-
-        HSTRING hstring_tag;
-        hr = t2->get_Tag(&hstring_tag);
-        if (FAILED(hr)) {
-          LOG(ERROR) << "Failed to get tag value";
-          return hr;
-        }
-        ScopedHString scoped_tag(hstring_tag);
-
-        if (group.Get() != scoped_group.Get() || tag.Get() != scoped_tag.Get())
-          continue;  // Because it is not a repeat of an toast.
-
-        hr = toast2->put_SuppressPopup(true);
-        if (FAILED(hr)) {
-          LOG(ERROR) << "Failed to set suppress value";
-          return hr;
-        }
-      }
     }
 
     return S_OK;
@@ -302,8 +257,8 @@ class NotificationPlatformBridgeWinImpl
         NotificationTemplateBuilder::Build(image_retainer_.get(), encoded_id,
                                            profile_id, *notification);
     mswr::ComPtr<winui::Notifications::IToastNotification> toast;
-    HRESULT hr = GetToastNotification(*notification, *notification_template,
-                                      profile_id, incognito, &toast);
+    HRESULT hr =
+        GetToastNotification(*notification, *notification_template, &toast);
     if (FAILED(hr)) {
       LOG(ERROR) << "Unable to get a toast notification";
       return;
@@ -344,115 +299,7 @@ class NotificationPlatformBridgeWinImpl
   void Close(const std::string& profile_id,
              const std::string& notification_id) {
     DCHECK(task_runner_->RunsTasksInCurrentSequence());
-
-    mswr::ComPtr<winui::Notifications::IToastNotificationHistory> history;
-    if (!GetIToastNotificationHistory(&history)) {
-      LOG(ERROR) << "Failed to get IToastNotificationHistory";
-      return;
-    }
-
-    ScopedHString application_id = ScopedHString::Create(GetAppId());
-    ScopedHString group = ScopedHString::Create(kGroup);
-    ScopedHString tag = ScopedHString::Create(GetTag(notification_id));
-
-    HRESULT hr = history->RemoveGroupedTagWithId(tag.get(), group.get(),
-                                                 application_id.get());
-    if (FAILED(hr)) {
-      LOG(ERROR) << "Failed to remove notification with id "
-                 << notification_id.c_str();
-    }
-  }
-
-  bool GetIToastNotificationHistory(
-      winui::Notifications::IToastNotificationHistory** notification_history)
-      const WARN_UNUSED_RESULT {
-    mswr::ComPtr<winui::Notifications::IToastNotificationManagerStatics>
-        toast_manager;
-    HRESULT hr = CreateActivationFactory(
-        RuntimeClass_Windows_UI_Notifications_ToastNotificationManager,
-        toast_manager.GetAddressOf());
-    if (FAILED(hr)) {
-      LOG(ERROR) << "Unable to create the ToastNotificationManager";
-      return false;
-    }
-
-    mswr::ComPtr<winui::Notifications::IToastNotificationManagerStatics2>
-        toast_manager2;
-    hr = toast_manager
-             .As<winui::Notifications::IToastNotificationManagerStatics2>(
-                 &toast_manager2);
-    if (FAILED(hr)) {
-      LOG(ERROR) << "Failed to get IToastNotificationManagerStatics2";
-      return false;
-    }
-
-    hr = toast_manager2->get_History(notification_history);
-    if (FAILED(hr)) {
-      LOG(ERROR) << "Failed to get IToastNotificationHistory";
-      return false;
-    }
-
-    return true;
-  }
-
-  void GetDisplayedFromActionCenter(
-      const std::string& profile_id,
-      bool incognito,
-      std::vector<winui::Notifications::IToastNotification*>* notifications)
-      const {
-    mswr::ComPtr<winui::Notifications::IToastNotificationHistory> history;
-    if (!GetIToastNotificationHistory(&history)) {
-      LOG(ERROR) << "Failed to get IToastNotificationHistory";
-      return;
-    }
-
-    mswr::ComPtr<winui::Notifications::IToastNotificationHistory2> history2;
-    HRESULT hr =
-        history.As<winui::Notifications::IToastNotificationHistory2>(&history2);
-    if (FAILED(hr)) {
-      LOG(ERROR) << "Failed to get IToastNotificationHistory2";
-      return;
-    }
-
-    ScopedHString application_id = ScopedHString::Create(GetAppId());
-
-    mswr::ComPtr<winfoundtn::Collections::IVectorView<
-        winui::Notifications::ToastNotification*>>
-        list;
-    hr = history2->GetHistoryWithId(application_id.get(), &list);
-    if (FAILED(hr)) {
-      LOG(ERROR) << "GetHistoryWithId failed";
-      return;
-    }
-
-    uint32_t size;
-    hr = list->get_Size(&size);
-    if (FAILED(hr)) {
-      LOG(ERROR) << "History get_Size call failed";
-      return;
-    }
-
-    winui::Notifications::IToastNotification* tn;
-    for (uint32_t index = 0; index < size; ++index) {
-      hr = list->GetAt(0U, &tn);
-      if (FAILED(hr)) {
-        LOG(ERROR) << "Failed to get notification " << index << " of " << size;
-        continue;
-      }
-      notifications->push_back(tn);
-    }
-  }
-
-  void GetNotifications(const std::string& profile_id,
-                        bool incognito,
-                        std::vector<winui::Notifications::IToastNotification*>*
-                            notifications) const {
-    if (!NotificationPlatformBridgeWinImpl::notifications_for_testing_) {
-      GetDisplayedFromActionCenter(profile_id, incognito, notifications);
-    } else {
-      *notifications =
-          *NotificationPlatformBridgeWinImpl::notifications_for_testing_;
-    }
+    // TODO(peter): Implement the ability to close notifications.
   }
 
   void GetDisplayed(const std::string& profile_id,
@@ -461,32 +308,11 @@ class NotificationPlatformBridgeWinImpl
     // TODO(finnur): Once this function is properly implemented, add DCHECK(UI)
     // to NotificationPlatformBridgeWin::GetDisplayed.
     DCHECK(task_runner_->RunsTasksInCurrentSequence());
-
-    std::vector<winui::Notifications::IToastNotification*> notifications;
-    GetNotifications(profile_id, incognito, &notifications);
-
     auto displayed_notifications = std::make_unique<std::set<std::string>>();
-    for (winui::Notifications::IToastNotification* notification :
-         notifications) {
-      std::string toast_id = GetNotificationId(notification);
-      std::string decoded_notification_id;
-      std::string decoded_profile_id;
-      bool decoded_incognito;
-      if (!NotificationPlatformBridgeWin::DecodeTemplateId(
-              toast_id, nullptr, &decoded_notification_id, &decoded_profile_id,
-              &decoded_incognito, nullptr)) {
-        LOG(ERROR) << "Failed to decode notification ID";
-        continue;
-      }
-      if (decoded_profile_id != profile_id || decoded_incognito != incognito)
-        continue;
-      displayed_notifications->insert(decoded_notification_id);
-    }
-
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
         base::Bind(callback, base::Passed(&displayed_notifications),
-                   true /* supports_synchronization */));
+                   false /* supports_synchronization */));
   }
 
   void SetReadyCallback(
@@ -551,20 +377,11 @@ class NotificationPlatformBridgeWinImpl
 
  private:
   friend class base::RefCountedThreadSafe<NotificationPlatformBridgeWinImpl>;
-  friend class NotificationPlatformBridgeWin;
 
   ~NotificationPlatformBridgeWinImpl() = default;
 
-  base::string16 GetAppId() const {
-    return ShellUtil::GetBrowserModelId(InstallUtil::IsPerUserInstall());
-  }
-
-  base::string16 GetTag(const std::string& notification_id) {
-    return base::UintToString16(base::Hash(notification_id));
-  }
-
   std::string GetNotificationId(
-      winui::Notifications::IToastNotification* notification) const {
+      winui::Notifications::IToastNotification* notification) {
     mswr::ComPtr<winxml::Dom::IXmlDocument> document;
     HRESULT hr = notification->get_Content(&document);
     if (FAILED(hr)) {
@@ -689,16 +506,15 @@ class NotificationPlatformBridgeWinImpl
       return hr;
     }
 
-    ScopedHString application_id = ScopedHString::Create(GetAppId());
+    base::string16 browser_model_id =
+        ShellUtil::GetBrowserModelId(InstallUtil::IsPerUserInstall());
+    ScopedHString application_id = ScopedHString::Create(browser_model_id);
     hr = toast_manager->CreateToastNotifierWithId(application_id.get(),
                                                   &notifier_);
     if (FAILED(hr))
       LOG(ERROR) << "Unable to create the ToastNotifier";
     return hr;
   }
-
-  static std::vector<ABI::Windows::UI::Notifications::IToastNotification*>*
-      notifications_for_testing_;
 
   // Whether the required functions from combase.dll have been loaded.
   bool com_functions_initialized_;
@@ -714,9 +530,6 @@ class NotificationPlatformBridgeWinImpl
 
   DISALLOW_COPY_AND_ASSIGN(NotificationPlatformBridgeWinImpl);
 };
-
-std::vector<ABI::Windows::UI::Notifications::IToastNotification*>*
-    NotificationPlatformBridgeWinImpl::notifications_for_testing_ = nullptr;
 
 NotificationPlatformBridgeWin::NotificationPlatformBridgeWin() {
   task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
@@ -782,12 +595,6 @@ void NotificationPlatformBridgeWin::ForwardHandleEventForTesting(
       operation, notification, args, by_user));
 }
 
-void NotificationPlatformBridgeWin::SetDisplayedNotificationsForTesting(
-    std::vector<ABI::Windows::UI::Notifications::IToastNotification*>*
-        notifications) {
-  NotificationPlatformBridgeWinImpl::notifications_for_testing_ = notifications;
-}
-
 // static
 bool NotificationPlatformBridgeWin::DecodeTemplateId(
     const std::string& encoded,
@@ -796,7 +603,6 @@ bool NotificationPlatformBridgeWin::DecodeTemplateId(
     std::string* profile_id,
     bool* incognito,
     GURL* origin_url) {
-  DCHECK(notification_id);
   const char kDelimiter[] = "|";
   const int kMinVectorSize = 5;
   std::vector<std::string> split = base::SplitString(
@@ -804,21 +610,16 @@ bool NotificationPlatformBridgeWin::DecodeTemplateId(
   if (split.size() < kMinVectorSize)
     return false;
 
-  if (notification_type) {
-    int type = -1;
-    if (!base::StringToInt(split[0], &type))
-      return false;
-    if (type < 0 || type > static_cast<int>(NotificationHandler::Type::MAX))
-      return false;
-    *notification_type = static_cast<NotificationHandler::Type>(type);
-  }
+  int type = -1;
+  if (!base::StringToInt(split[0], &type))
+    return false;
+  if (type < 0 || type > static_cast<int>(NotificationHandler::Type::MAX))
+    return false;
+  *notification_type = static_cast<NotificationHandler::Type>(type);
 
-  if (profile_id)
-    *profile_id = split[1];
-  if (incognito)
-    *incognito = split[2] == "1" ? true : false;
-  if (origin_url)
-    *origin_url = GURL(split[3]);
+  *profile_id = split[1];
+  *incognito = split[2] == "1" ? true : false;
+  *origin_url = GURL(split[3]);
 
   notification_id->clear();
   // Notification IDs is the rest of the string (delimeters not stripped off).
@@ -857,6 +658,5 @@ HRESULT NotificationPlatformBridgeWin::GetToastNotificationForTesting(
     const NotificationTemplateBuilder& notification_template_builder,
     winui::Notifications::IToastNotification** toast_notification) {
   return impl_->GetToastNotification(
-      notification, notification_template_builder, "UnusedValue",
-      false /* incognito */, toast_notification);
+      notification, notification_template_builder, toast_notification);
 }

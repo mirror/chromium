@@ -21,7 +21,6 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/shill_service_client.h"
 #include "chromeos/network/managed_network_configuration_handler.h"
-#include "chromeos/network/network_event_log.h"
 #include "chromeos/network/network_state.h"
 #include "components/onc/onc_constants.h"
 #include "dbus/object_path.h"
@@ -440,11 +439,7 @@ void ClientCertResolver::NetworkListChanged() {
     networks_to_check.push_back(*it);
   }
 
-  if (!networks_to_check.empty()) {
-    NET_LOG(EVENT) << "ClientCertResolver: NetworkListChanged: "
-                   << networks_to_check.size();
-    ResolveNetworks(networks_to_check);
-  }
+  ResolveNetworks(networks_to_check);
 }
 
 void ClientCertResolver::NetworkConnectionStateChanged(
@@ -452,11 +447,8 @@ void ClientCertResolver::NetworkConnectionStateChanged(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (!ClientCertificatesLoaded())
     return;
-  if (!network->IsConnectingOrConnected()) {
-    NET_LOG(EVENT) << "ClientCertResolver: ConnectionStateChanged: "
-                   << network->name();
+  if (!network->IsConnectedState() && !network->IsConnectingState())
     ResolveNetworks(NetworkStateHandler::NetworkStateList(1, network));
-  }
 }
 
 void ClientCertResolver::OnCertificatesLoaded(
@@ -465,7 +457,6 @@ void ClientCertResolver::OnCertificatesLoaded(
   VLOG(2) << "OnCertificatesLoaded.";
   if (!ClientCertificatesLoaded())
     return;
-  NET_LOG(EVENT) << "ClientCertResolver: Certificates Loaded.";
   // Compare all networks with all certificates.
   NetworkStateHandler::NetworkStateList networks;
   network_state_handler_->GetNetworkListByType(
@@ -491,8 +482,6 @@ void ClientCertResolver::PolicyAppliedToNetwork(
     LOG(ERROR) << "service path '" << service_path << "' unknown.";
     return;
   }
-  NET_LOG(EVENT) << "ClientCertResolver: PolicyAppliedToNetwork: "
-                 << network->name();
   NetworkStateHandler::NetworkStateList networks;
   networks.push_back(network);
   ResolveNetworks(networks);
@@ -599,8 +588,7 @@ void ClientCertResolver::ConfigureCertificates(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   for (NetworkCertMatches::const_iterator it = matches->begin();
        it != matches->end(); ++it) {
-    NET_LOG(EVENT) << "Configuring certificate for network: "
-                   << it->service_path;
+    VLOG(1) << "Configuring certificate of network " << it->service_path;
     base::DictionaryValue shill_properties;
     if (it->pkcs11_id.empty()) {
       client_cert::SetEmptyShillProperties(it->cert_config_type,

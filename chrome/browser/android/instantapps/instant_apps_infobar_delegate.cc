@@ -4,10 +4,9 @@
 
 #include "chrome/browser/android/instantapps/instant_apps_infobar_delegate.h"
 
-#include <memory>
-
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/user_metrics.h"
 #include "chrome/browser/android/instantapps/instant_apps_settings.h"
 #include "chrome/browser/infobars/infobar_service.h"
@@ -26,7 +25,7 @@ void InstantAppsInfoBarDelegate::Create(content::WebContents* web_contents,
                                         bool instant_app_is_default) {
   InfoBarService* infobar_service =
       InfoBarService::FromWebContents(web_contents);
-  infobar_service->AddInfoBar(std::make_unique<InstantAppsInfoBar>(
+  infobar_service->AddInfoBar(base::MakeUnique<InstantAppsInfoBar>(
       std::unique_ptr<InstantAppsInfoBarDelegate>(
           new InstantAppsInfoBarDelegate(web_contents, jdata, url,
                                          instant_app_is_default))));

@@ -10,6 +10,7 @@
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/browser_process.h"
@@ -138,7 +139,7 @@ class NetworkingCastPrivateApiTest : public ExtensionApiTest {
  private:
   std::unique_ptr<ChromeNetworkingCastPrivateDelegate>
   CreateNetworkingCastPrivateDelegate() {
-    return std::make_unique<TestNetworkingCastPrivateDelegate>();
+    return base::MakeUnique<TestNetworkingCastPrivateDelegate>();
   }
 
   ChromeNetworkingCastPrivateDelegate::FactoryCallback

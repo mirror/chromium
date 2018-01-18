@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/callback.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "components/safe_browsing/common/safe_browsing.mojom.h"
@@ -101,7 +102,7 @@ class WebSocketSBHandshakeThrottleTest : public ::testing::Test {
  protected:
   WebSocketSBHandshakeThrottleTest() : mojo_binding_(&safe_browsing_) {
     mojo_binding_.Bind(mojo::MakeRequest(&safe_browsing_ptr_));
-    throttle_ = std::make_unique<WebSocketSBHandshakeThrottle>(
+    throttle_ = base::MakeUnique<WebSocketSBHandshakeThrottle>(
         safe_browsing_ptr_.get());
   }
 

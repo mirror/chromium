@@ -19,7 +19,7 @@
 AutoSigninFirstRunDialogView::AutoSigninFirstRunDialogView(
     PasswordDialogController* controller,
     content::WebContents* web_contents)
-    : controller_(controller), web_contents_(web_contents) {
+    : controller_(controller), web_contents_(web_contents), text_(nullptr) {
   chrome::RecordDialogCreation(chrome::DialogIdentifier::AUTO_SIGNIN_FIRST_RUN);
 }
 
@@ -46,13 +46,6 @@ base::string16 AutoSigninFirstRunDialogView::GetWindowTitle() const {
 
 bool AutoSigninFirstRunDialogView::ShouldShowCloseButton() const {
   return false;
-}
-
-gfx::Size AutoSigninFirstRunDialogView::CalculatePreferredSize() const {
-  const int width = ChromeLayoutProvider::Get()->GetDistanceMetric(
-                        DISTANCE_MODAL_DIALOG_PREFERRED_WIDTH) -
-                    margins().width();
-  return gfx::Size(width, GetHeightForWidth(width));
 }
 
 void AutoSigninFirstRunDialogView::WindowClosing() {
@@ -90,20 +83,21 @@ void AutoSigninFirstRunDialogView::StyledLabelLinkClicked(
 }
 
 void AutoSigninFirstRunDialogView::InitWindow() {
-  set_margins(ChromeLayoutProvider::Get()->GetDialogInsetsForContentType(
-      views::TEXT, views::TEXT));
+  SetBorder(views::CreateEmptyBorder(
+      ChromeLayoutProvider::Get()->GetDialogInsetsForContentType(views::TEXT,
+                                                                 views::TEXT)));
   SetLayoutManager(std::make_unique<views::FillLayout>());
 
   std::pair<base::string16, gfx::Range> text_content =
       controller_->GetAutoSigninText();
-  auto text = std::make_unique<views::StyledLabel>(text_content.first, this);
-  text->SetTextContext(CONTEXT_BODY_TEXT_LARGE);
-  text->SetDefaultTextStyle(STYLE_SECONDARY);
+  text_ = new views::StyledLabel(text_content.first, this);
+  text_->SetTextContext(CONTEXT_BODY_TEXT_LARGE);
+  text_->SetDefaultTextStyle(STYLE_SECONDARY);
   if (!text_content.second.is_empty()) {
-    text->AddStyleRange(text_content.second,
-                        views::StyledLabel::RangeStyleInfo::CreateForLink());
+    text_->AddStyleRange(text_content.second,
+                         views::StyledLabel::RangeStyleInfo::CreateForLink());
   }
-  AddChildView(text.release());
+  AddChildView(text_);
 }
 
 AutoSigninFirstRunPrompt* CreateAutoSigninPromptView(

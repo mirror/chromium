@@ -4,6 +4,7 @@
 
 #include "chrome/browser/extensions/extension_action_manager.h"
 
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/extensions/api/system_indicator/system_indicator_manager_factory.h"
 #include "chrome/browser/extensions/extension_action.h"
 #include "chrome/browser/profiles/profile.h"
@@ -110,10 +111,10 @@ ExtensionAction* GetOrCreateOrNull(
   }
 
   auto action =
-      std::make_unique<ExtensionAction>(extension, action_type, *action_info);
+      base::MakeUnique<ExtensionAction>(extension, action_type, *action_info);
 
   if (action->default_icon()) {
-    action->SetDefaultIconImage(std::make_unique<IconImage>(
+    action->SetDefaultIconImage(base::MakeUnique<IconImage>(
         profile, &extension, *action->default_icon(),
         ExtensionAction::ActionIconSize(),
         ExtensionAction::FallbackIcon().AsImageSkia(), nullptr));
@@ -153,7 +154,7 @@ std::unique_ptr<ExtensionAction> ExtensionActionManager::GetBestFitAction(
   // If no ActionInfo exists for |extension|, create and return a new action
   // with a blank ActionInfo.
   // Populate any missing values from |extension|'s manifest.
-  return std::make_unique<ExtensionAction>(extension, type,
+  return base::MakeUnique<ExtensionAction>(extension, type,
                                            info ? *info : ActionInfo());
 }
 

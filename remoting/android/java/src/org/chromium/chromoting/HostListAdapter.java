@@ -4,7 +4,6 @@
 
 package org.chromium.chromoting;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -20,7 +19,6 @@ class HostListAdapter extends ArrayAdapter<HostInfo> {
     }
 
     /** Generates a View corresponding to this particular host. */
-    @SuppressLint("ResourceType")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final HostInfo host = getItem(position);

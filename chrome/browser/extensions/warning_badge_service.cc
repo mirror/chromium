@@ -6,9 +6,8 @@
 
 #include <stddef.h>
 
-#include <memory>
-
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/extensions/warning_badge_service_factory.h"
@@ -161,7 +160,7 @@ void WarningBadgeService::ShowBadge(bool show) {
   if (error && !show)
     service->RemoveGlobalError(error);
   else if (!error && show)
-    service->AddGlobalError(std::make_unique<ErrorBadge>(this));
+    service->AddGlobalError(base::MakeUnique<ErrorBadge>(this));
 }
 
 }  // namespace extensions

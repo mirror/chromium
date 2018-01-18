@@ -78,7 +78,7 @@ class GLInProcessContextImpl
       const gpu::InProcessCommandBuffer::PresentationCallback& callback)
       override;
   void SetLock(base::Lock* lock) override;
-  gpu::ServiceTransferCache* GetTransferCacheForTest() const override;
+  gpu::gles2::ContextGroup* ContextGroupForTesting() const override;
 
  private:
   void OnSignalSyncPoint(const base::Closure& callback);
@@ -143,9 +143,9 @@ void GLInProcessContextImpl::SetLock(base::Lock* lock) {
   NOTREACHED();
 }
 
-gpu::ServiceTransferCache* GLInProcessContextImpl::GetTransferCacheForTest()
+gpu::gles2::ContextGroup* GLInProcessContextImpl::ContextGroupForTesting()
     const {
-  return command_buffer_->GetTransferCacheForTest();
+  return command_buffer_->ContextGroupForTesting();
 }
 
 gpu::ContextResult GLInProcessContextImpl::Initialize(

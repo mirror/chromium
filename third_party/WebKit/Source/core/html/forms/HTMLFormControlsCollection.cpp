@@ -53,7 +53,7 @@ HTMLFormControlsCollection* HTMLFormControlsCollection::Create(
   return new HTMLFormControlsCollection(owner_node);
 }
 
-HTMLFormControlsCollection::~HTMLFormControlsCollection() = default;
+HTMLFormControlsCollection::~HTMLFormControlsCollection() {}
 
 const ListedElement::List& HTMLFormControlsCollection::ListedElements() const {
   return ToHTMLFormElement(ownerNode()).ListedElements();

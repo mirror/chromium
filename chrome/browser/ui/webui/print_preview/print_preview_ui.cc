@@ -13,6 +13,7 @@
 #include "base/feature_list.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted_memory.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
@@ -496,10 +497,10 @@ PrintPreviewUI::PrintPreviewUI(content::WebUI* web_ui)
   // Set up the chrome://theme/ source.
   content::URLDataSource::Add(profile, new ThemeSource(profile));
 
-  auto handler = std::make_unique<PrintPreviewHandler>();
+  auto handler = base::MakeUnique<PrintPreviewHandler>();
   handler_ = handler.get();
   web_ui->AddMessageHandler(std::move(handler));
-  web_ui->AddMessageHandler(std::make_unique<MetricsHandler>());
+  web_ui->AddMessageHandler(base::MakeUnique<MetricsHandler>());
 
   g_print_preview_request_id_map.Get().Set(id_, -1);
 }

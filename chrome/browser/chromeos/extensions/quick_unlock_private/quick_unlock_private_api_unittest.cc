@@ -6,8 +6,6 @@
 
 #include "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api.h"
 
-#include <memory>
-
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
@@ -67,7 +65,7 @@ class FakeEasyUnlockService : public EasyUnlockServiceRegular {
 
 std::unique_ptr<KeyedService> CreateEasyUnlockServiceForTest(
     content::BrowserContext* context) {
-  return std::make_unique<FakeEasyUnlockService>(
+  return base::MakeUnique<FakeEasyUnlockService>(
       Profile::FromBrowserContext(context));
 }
 
@@ -148,7 +146,7 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
     // Run the function.
     std::unique_ptr<base::Value> result =
         RunFunction(new QuickUnlockPrivateGetAvailableModesFunction(),
-                    std::make_unique<base::ListValue>());
+                    base::MakeUnique<base::ListValue>());
 
     // Extract the results.
     QuickUnlockModeList modes;
@@ -168,7 +166,7 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
   QuickUnlockModeList GetActiveModes() {
     std::unique_ptr<base::Value> result =
         RunFunction(new QuickUnlockPrivateGetActiveModesFunction(),
-                    std::make_unique<base::ListValue>());
+                    base::MakeUnique<base::ListValue>());
 
     QuickUnlockModeList modes;
 
@@ -214,7 +212,7 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
   }
 
   CredentialCheck CheckCredentialUsingPin(const std::string& pin) {
-    auto params = std::make_unique<base::ListValue>();
+    auto params = base::MakeUnique<base::ListValue>();
     params->AppendString(ToString(QuickUnlockMode::QUICK_UNLOCK_MODE_PIN));
     params->AppendString(pin);
 
@@ -228,7 +226,7 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
 
   void CheckGetCredentialRequirements(int expected_pin_min_length,
                                       int expected_pin_max_length) {
-    auto params = std::make_unique<base::ListValue>();
+    auto params = base::MakeUnique<base::ListValue>();
     params->AppendString(ToString(QuickUnlockMode::QUICK_UNLOCK_MODE_PIN));
 
     std::unique_ptr<base::Value> result =
@@ -254,15 +252,15 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
                              const QuickUnlockModeList& modes,
                              const CredentialList& passwords) {
     // Serialize parameters.
-    auto params = std::make_unique<base::ListValue>();
+    auto params = base::MakeUnique<base::ListValue>();
     params->AppendString(password);
 
-    auto serialized_modes = std::make_unique<base::ListValue>();
+    auto serialized_modes = base::MakeUnique<base::ListValue>();
     for (QuickUnlockMode mode : modes)
       serialized_modes->AppendString(quick_unlock_private::ToString(mode));
     params->Append(std::move(serialized_modes));
 
-    auto serialized_passwords = std::make_unique<base::ListValue>();
+    auto serialized_passwords = base::MakeUnique<base::ListValue>();
     for (const std::string& password : passwords)
       serialized_passwords->AppendString(password);
     params->Append(std::move(serialized_passwords));
@@ -315,7 +313,7 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
     return std::unique_ptr<base::Value>(
         api_test_utils::RunFunctionWithDelegateAndReturnSingleResult(
             func, std::move(params), profile(),
-            std::make_unique<ExtensionFunctionDispatcher>(profile()),
+            base::MakeUnique<ExtensionFunctionDispatcher>(profile()),
             api_test_utils::NONE));
   }
 

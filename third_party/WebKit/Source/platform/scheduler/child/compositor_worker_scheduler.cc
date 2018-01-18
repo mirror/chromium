@@ -37,10 +37,9 @@ void CompositorWorkerScheduler::OnTaskCompleted(
     WorkerTaskQueue* worker_task_queue,
     const TaskQueue::Task& task,
     base::TimeTicks start,
-    base::TimeTicks end,
-    base::Optional<base::TimeDelta> thread_time) {
+    base::TimeTicks end) {
   compositor_metrics_helper_.RecordTaskMetrics(worker_task_queue, task, start,
-                                               end, thread_time);
+                                               end);
 }
 
 scoped_refptr<base::SingleThreadTaskRunner>
@@ -97,8 +96,6 @@ void CompositorWorkerScheduler::DidProcessIdleTask() {}
 base::TimeTicks CompositorWorkerScheduler::NowTicks() {
   return base::TimeTicks::Now();
 }
-
-void CompositorWorkerScheduler::SetThreadType(ThreadType thread_type) {}
 
 }  // namespace scheduler
 }  // namespace blink

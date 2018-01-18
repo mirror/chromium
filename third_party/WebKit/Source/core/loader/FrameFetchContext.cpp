@@ -66,7 +66,6 @@
 #include "core/svg/graphics/SVGImageChromeClient.h"
 #include "core/timing/Performance.h"
 #include "core/timing/PerformanceBase.h"
-#include "platform/Histogram.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/bindings/V8DOMActivityLogger.h"
 #include "platform/exported/WrappedResourceRequest.h"
@@ -89,7 +88,6 @@
 #include "platform/wtf/Vector.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebApplicationCacheHost.h"
-#include "public/platform/WebEffectiveConnectionType.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
@@ -305,7 +303,7 @@ scoped_refptr<WebTaskRunner> FrameFetchContext::GetLoadingTaskRunner() {
   return GetFrame()->GetTaskRunner(TaskType::kNetworking);
 }
 
-WebFrameScheduler* FrameFetchContext::GetFrameScheduler() const {
+WebFrameScheduler* FrameFetchContext::GetFrameScheduler() {
   if (IsDetached())
     return nullptr;
   return GetFrame()->FrameScheduler();
@@ -353,14 +351,6 @@ void FrameFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
 
   if (save_data_enabled_)
     request.SetHTTPHeaderField(HTTPNames::Save_Data, "on");
-
-  if (GetLocalFrameClient()->GetPreviewsStateForFrame() &
-      WebURLRequest::kNoScriptOn) {
-    request.AddHTTPHeaderField(
-        "Intervention",
-        "<https://www.chromestatus.com/features/4775088607985664>; "
-        "level=\"warning\"");
-  }
 
   if (GetLocalFrameClient()->GetPreviewsStateForFrame() &
       WebURLRequest::kClientLoFiOn) {
@@ -435,11 +425,10 @@ void FrameFetchContext::DispatchDidChangeResourcePriority(
     int intra_priority_value) {
   if (IsDetached())
     return;
-  TRACE_EVENT1("devtools.timeline", "ResourceChangePriority", "data",
-               InspectorChangeResourcePriorityEvent::Data(
-                   MasterDocumentLoader(), identifier, load_priority));
-  probe::didChangeResourcePriority(GetFrame(), MasterDocumentLoader(),
-                                   identifier, load_priority);
+  TRACE_EVENT1(
+      "devtools.timeline", "ResourceChangePriority", "data",
+      InspectorChangeResourcePriorityEvent::Data(identifier, load_priority));
+  probe::didChangeResourcePriority(GetFrame(), identifier, load_priority);
 }
 
 void FrameFetchContext::PrepareRequest(ResourceRequest& request,
@@ -511,7 +500,7 @@ void FrameFetchContext::DispatchDidReceiveResponse(
 
   if (response_type == ResourceResponseType::kFromMemoryCache) {
     // Note: probe::willSendRequest needs to precede before this probe method.
-    probe::markResourceAsCached(GetFrame(), MasterDocumentLoader(), identifier);
+    probe::markResourceAsCached(GetFrame(), identifier);
     if (response.IsNull())
       return;
   }
@@ -576,8 +565,7 @@ void FrameFetchContext::DispatchDidReceiveEncodedData(unsigned long identifier,
                                                       int encoded_data_length) {
   if (IsDetached())
     return;
-  probe::didReceiveEncodedDataLength(GetFrame()->GetDocument(),
-                                     MasterDocumentLoader(), identifier,
+  probe::didReceiveEncodedDataLength(GetFrame()->GetDocument(), identifier,
                                      encoded_data_length);
 }
 
@@ -590,8 +578,7 @@ void FrameFetchContext::DispatchDidDownloadData(unsigned long identifier,
   GetFrame()->Loader().Progress().IncrementProgress(identifier, data_length);
   probe::didReceiveData(GetFrame()->GetDocument(), identifier,
                         MasterDocumentLoader(), nullptr, data_length);
-  probe::didReceiveEncodedDataLength(GetFrame()->GetDocument(),
-                                     MasterDocumentLoader(), identifier,
+  probe::didReceiveEncodedDataLength(GetFrame()->GetDocument(), identifier,
                                      encoded_data_length);
 }
 
@@ -645,10 +632,8 @@ void FrameFetchContext::DispatchDidFail(unsigned long identifier,
   }
   // Notification to FrameConsole should come AFTER InspectorInstrumentation
   // call, DevTools front-end relies on this.
-  if (!is_internal_request) {
-    GetFrame()->Console().DidFailLoading(MasterDocumentLoader(), identifier,
-                                         error);
-  }
+  if (!is_internal_request)
+    GetFrame()->Console().DidFailLoading(identifier, error);
 }
 
 void FrameFetchContext::DispatchDidLoadResourceFromMemoryCache(
@@ -1255,47 +1240,6 @@ void FrameFetchContext::Trace(blink::Visitor* visitor) {
 
 void FrameFetchContext::RecordDataUriWithOctothorpe() {
   UseCounter::Count(GetFrame(), WebFeature::kDataUriHasOctothorpe);
-}
-
-ResourceLoadPriority FrameFetchContext::ModifyPriorityForExperiments(
-    ResourceLoadPriority priority) const {
-  if (!GetSettings())
-    return priority;
-
-  WebEffectiveConnectionType max_effective_connection_type_threshold =
-      GetSettings()->GetLowPriorityIframesThreshold();
-
-  if (max_effective_connection_type_threshold <=
-      WebEffectiveConnectionType::kTypeOffline) {
-    return priority;
-  }
-
-  WebEffectiveConnectionType effective_connection_type =
-      GetNetworkStateNotifier().EffectiveType();
-
-  if (effective_connection_type <= WebEffectiveConnectionType::kTypeOffline) {
-    return priority;
-  }
-
-  if (effective_connection_type > max_effective_connection_type_threshold) {
-    // Network is not slow enough.
-    return priority;
-  }
-
-  if (GetFrame()->IsMainFrame()) {
-    DEFINE_STATIC_LOCAL(EnumerationHistogram, main_frame_priority_histogram,
-                        ("LowPriorityIframes.MainFrameRequestPriority",
-                         static_cast<int>(ResourceLoadPriority::kHighest) + 1));
-    main_frame_priority_histogram.Count(static_cast<int>(priority));
-    return priority;
-  }
-
-  DEFINE_STATIC_LOCAL(EnumerationHistogram, iframe_priority_histogram,
-                      ("LowPriorityIframes.IframeRequestPriority",
-                       static_cast<int>(ResourceLoadPriority::kHighest) + 1));
-  iframe_priority_histogram.Count(static_cast<int>(priority));
-  // When enabled, the priority of all resources in subframe is dropped.
-  return ResourceLoadPriority::kLowest;
 }
 
 }  // namespace blink

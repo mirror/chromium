@@ -14,36 +14,23 @@
 #include <libxml/xmlstring.h>
 #include "xsltexports.h"
 
-#if defined(_WIN32) && !defined(__CYGWIN__)
-#include <windows.h>
-#include <winnls.h>
-#endif
+#ifdef XSLT_LOCALE_XLOCALE
 
-#if 0
-
-/*
- * XSLT_LOCALE_POSIX:
- * Macro indicating to use POSIX locale extensions
- */
-#define XSLT_LOCALE_POSIX
-
-#ifdef HAVE_LOCALE_H
 #include <locale.h>
-#endif
-#ifdef HAVE_XLOCALE_H
 #include <xlocale.h>
-#endif
 
+#ifdef __GLIBC__
+/*locale_t is defined only if _GNU_SOURCE is defined*/
+typedef __locale_t xsltLocale;
+#else
 typedef locale_t xsltLocale;
+#endif
 typedef xmlChar xsltLocaleChar;
 
-#elif 0
+#elif defined(XSLT_LOCALE_WINAPI)
 
-/*
- * XSLT_LOCALE_WINAPI:
- * Macro indicating to use WinAPI for extended locale support
- */
-#define XSLT_LOCALE_WINAPI
+#include <windows.h>
+#include <winnls.h>
 
 typedef LCID xsltLocale;
 typedef wchar_t xsltLocaleChar;
@@ -52,9 +39,11 @@ typedef wchar_t xsltLocaleChar;
 
 /*
  * XSLT_LOCALE_NONE:
- * Macro indicating that there's no extended locale support
+ * Macro indicating that locale are not supported
  */
+#ifndef XSLT_LOCALE_NONE
 #define XSLT_LOCALE_NONE
+#endif
 
 typedef void *xsltLocale;
 typedef xmlChar xsltLocaleChar;

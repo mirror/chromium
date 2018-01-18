@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view_ids.h"
@@ -63,8 +64,8 @@ std::unique_ptr<views::View> GetBaseProfileLabel(
     base::string16* accessible_content,
     bool enabled = true) {
   DCHECK(accessible_content);
-  std::unique_ptr<views::View> container = std::make_unique<views::View>();
-  std::unique_ptr<views::BoxLayout> layout = std::make_unique<views::BoxLayout>(
+  std::unique_ptr<views::View> container = base::MakeUnique<views::View>();
+  std::unique_ptr<views::BoxLayout> layout = base::MakeUnique<views::BoxLayout>(
       views::BoxLayout::kVertical, gfx::Insets(), 0);
   layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
@@ -74,7 +75,7 @@ std::unique_ptr<views::View> GetBaseProfileLabel(
     const int text_style = type == AddressStyleType::DETAILED
                                ? static_cast<int>(STYLE_EMPHASIZED)
                                : static_cast<int>(views::style::STYLE_PRIMARY);
-    std::unique_ptr<views::Label> label = std::make_unique<views::Label>(
+    std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(
         s1, views::style::CONTEXT_LABEL, text_style);
     label->set_id(static_cast<int>(DialogViewID::PROFILE_LABEL_LINE_1));
     label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
@@ -86,7 +87,7 @@ std::unique_ptr<views::View> GetBaseProfileLabel(
   }
 
   if (!s2.empty()) {
-    std::unique_ptr<views::Label> label = std::make_unique<views::Label>(s2);
+    std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(s2);
     label->set_id(static_cast<int>(DialogViewID::PROFILE_LABEL_LINE_2));
     label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     if (!enabled) {
@@ -97,7 +98,7 @@ std::unique_ptr<views::View> GetBaseProfileLabel(
   }
 
   if (!s3.empty()) {
-    std::unique_ptr<views::Label> label = std::make_unique<views::Label>(s3);
+    std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(s3);
     label->set_id(static_cast<int>(DialogViewID::PROFILE_LABEL_LINE_3));
     label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     if (!enabled) {
@@ -137,7 +138,7 @@ std::unique_ptr<views::View> GetShippingAddressLabel(
 std::unique_ptr<views::Label> GetLabelForMissingInformation(
     const base::string16& missing_info) {
   std::unique_ptr<views::Label> label =
-      std::make_unique<views::Label>(missing_info, CONTEXT_DEPRECATED_SMALL);
+      base::MakeUnique<views::Label>(missing_info, CONTEXT_DEPRECATED_SMALL);
   label->set_id(static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
   // Missing information typically has a nice shade of blue.
   label->SetEnabledColor(label->GetNativeTheme()->GetSystemColor(
@@ -183,7 +184,7 @@ std::unique_ptr<views::View> CreateSheetHeaderView(
     bool show_back_arrow,
     const base::string16& title,
     views::ButtonListener* listener) {
-  std::unique_ptr<views::View> container = std::make_unique<views::View>();
+  std::unique_ptr<views::View> container = base::MakeUnique<views::View>();
   views::GridLayout* layout = container->SetLayoutManager(
       std::make_unique<views::GridLayout>(container.get()));
 
@@ -239,7 +240,7 @@ std::unique_ptr<views::ImageView> CreateInstrumentIconView(
     const base::string16& tooltip_text,
     float opacity) {
   std::unique_ptr<views::ImageView> icon_view =
-      std::make_unique<views::ImageView>();
+      base::MakeUnique<views::ImageView>();
   icon_view->set_can_process_events_within_subtree(false);
   if (img != nullptr) {
     icon_view->SetImage(*img);
@@ -256,7 +257,7 @@ std::unique_ptr<views::ImageView> CreateInstrumentIconView(
 }
 
 std::unique_ptr<views::View> CreateProductLogoFooterView() {
-  std::unique_ptr<views::View> content_view = std::make_unique<views::View>();
+  std::unique_ptr<views::View> content_view = base::MakeUnique<views::View>();
 
   auto layout = std::make_unique<views::BoxLayout>(
       views::BoxLayout::kHorizontal, gfx::Insets(), 0);
@@ -267,7 +268,7 @@ std::unique_ptr<views::View> CreateProductLogoFooterView() {
 
   // Adds the Chrome logo image.
   std::unique_ptr<views::ImageView> chrome_logo =
-      std::make_unique<views::ImageView>();
+      base::MakeUnique<views::ImageView>();
   chrome_logo->set_can_process_events_within_subtree(false);
   chrome_logo->SetImage(ui::ResourceBundle::GetSharedInstance()
                             .GetImageNamed(IDR_PRODUCT_LOGO_NAME_22)
@@ -337,11 +338,11 @@ std::unique_ptr<views::Border> CreatePaymentRequestRowBorder(
     SkColor color,
     const gfx::Insets& insets) {
   return views::CreateBorderPainter(
-      std::make_unique<PaymentRequestRowBorderPainter>(color), insets);
+      base::MakeUnique<PaymentRequestRowBorderPainter>(color), insets);
 }
 
 std::unique_ptr<views::Label> CreateBoldLabel(const base::string16& text) {
-  return std::make_unique<views::Label>(text, views::style::CONTEXT_LABEL,
+  return base::MakeUnique<views::Label>(text, views::style::CONTEXT_LABEL,
                                         STYLE_EMPHASIZED);
 }
 
@@ -349,7 +350,7 @@ std::unique_ptr<views::Label> CreateMediumLabel(const base::string16& text) {
   // TODO(tapted): This should refer to a style in the Chrome typography spec.
   // Also, it needs to handle user setups where the default font is BOLD already
   // since asking for a MEDIUM font will give a lighter font.
-  std::unique_ptr<views::Label> label = std::make_unique<views::Label>(text);
+  std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(text);
   label->SetFontList(
       ui::ResourceBundle::GetSharedInstance().GetFontListWithDelta(
           ui::kLabelFontSizeDelta, gfx::Font::NORMAL,
@@ -360,7 +361,7 @@ std::unique_ptr<views::Label> CreateMediumLabel(const base::string16& text) {
 std::unique_ptr<views::Label> CreateHintLabel(
     const base::string16& text,
     gfx::HorizontalAlignment alignment) {
-  std::unique_ptr<views::Label> label = std::make_unique<views::Label>(
+  std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(
       text, views::style::CONTEXT_LABEL, STYLE_HINT);
   label->SetHorizontalAlignment(alignment);
   return label;
@@ -372,7 +373,7 @@ std::unique_ptr<views::View> CreateShippingOptionLabel(
     bool emphasize_label,
     base::string16* accessible_content) {
   DCHECK(accessible_content);
-  std::unique_ptr<views::View> container = std::make_unique<views::View>();
+  std::unique_ptr<views::View> container = base::MakeUnique<views::View>();
 
   auto layout = std::make_unique<views::BoxLayout>(views::BoxLayout::kVertical,
                                                    gfx::Insets(), 0);
@@ -384,7 +385,7 @@ std::unique_ptr<views::View> CreateShippingOptionLabel(
     const base::string16& text = base::UTF8ToUTF16(shipping_option->label);
     std::unique_ptr<views::Label> shipping_label =
         emphasize_label ? CreateMediumLabel(text)
-                        : std::make_unique<views::Label>(text);
+                        : base::MakeUnique<views::Label>(text);
     // Strings from the website may not match the locale of the device, so align
     // them according to the language of the text. This will result, for
     // example, in "he" labels being right-aligned in a browser that's using
@@ -395,7 +396,7 @@ std::unique_ptr<views::View> CreateShippingOptionLabel(
     container->AddChildView(shipping_label.release());
 
     std::unique_ptr<views::Label> amount_label =
-        std::make_unique<views::Label>(formatted_amount);
+        base::MakeUnique<views::Label>(formatted_amount);
     amount_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     amount_label->set_id(
         static_cast<int>(DialogViewID::SHIPPING_OPTION_AMOUNT));

@@ -4,7 +4,6 @@
 
 #include "ui/app_list/views/search_result_tile_item_view.h"
 
-#include "ash/app_list/model/app_list_view_state.h"
 #include "ash/app_list/model/search/search_result.h"
 #include "base/i18n/number_formatting.h"
 #include "base/metrics/histogram_macros.h"
@@ -90,8 +89,7 @@ SearchResultTileItemView::SearchResultTileItemView(
       view_delegate_(view_delegate),
       pagination_model_(pagination_model),
       is_play_store_app_search_enabled_(
-          features::IsPlayStoreAppSearchEnabled()),
-      weak_ptr_factory_(this) {
+          features::IsPlayStoreAppSearchEnabled()) {
   SetFocusBehavior(FocusBehavior::ALWAYS);
 
   // When |item_| is null, the tile is invisible. Calling SetSearchResult with a
@@ -234,25 +232,6 @@ void SearchResultTileItemView::SetParentBackgroundColor(SkColor color) {
   UpdateBackgroundColor();
 }
 
-void SearchResultTileItemView::OnContextMenuClosed(
-    const base::TimeTicks& open_time) {
-  base::TimeDelta user_journey_time = base::TimeTicks::Now() - open_time;
-  if (IsSuggestedAppTile()) {
-    if (view_delegate_->GetModel()->state_fullscreen() ==
-        AppListViewState::PEEKING) {
-      UMA_HISTOGRAM_TIMES("Apps.ContextMenuUserJourneyTime.SuggestedAppPeeking",
-                          user_journey_time);
-    } else {
-      UMA_HISTOGRAM_TIMES(
-          "Apps.ContextMenuUserJourneyTime.SuggestedAppFullscreen",
-          user_journey_time);
-    }
-  } else {
-    UMA_HISTOGRAM_TIMES("Apps.ContextMenuUserJourneyTime.SearchResult",
-                        user_journey_time);
-  }
-}
-
 void SearchResultTileItemView::ButtonPressed(views::Button* sender,
                                              const ui::Event& event) {
   if (IsSuggestedAppTile())
@@ -280,11 +259,6 @@ void SearchResultTileItemView::GetAccessibleNodeData(
 }
 
 bool SearchResultTileItemView::OnKeyPressed(const ui::KeyEvent& event) {
-  // Return early if |item_| was deleted due to the search result list changing.
-  // see crbug.com/801142
-  if (!item_)
-    return true;
-
   if (event.key_code() == ui::VKEY_RETURN) {
     if (IsSuggestedAppTile())
       LogAppLaunch();
@@ -378,31 +352,12 @@ void SearchResultTileItemView::ShowContextMenuForView(
   if (!menu_model)
     return;
 
-  if (IsSuggestedAppTile()) {
-    if (view_delegate_->GetModel()->state_fullscreen() ==
-        AppListViewState::PEEKING) {
-      UMA_HISTOGRAM_ENUMERATION(
-          "Apps.ContextMenuShowSource.SuggestedAppPeeking", source_type,
-          ui::MenuSourceType::MENU_SOURCE_TYPE_LAST);
-    } else {
-      UMA_HISTOGRAM_ENUMERATION(
-          "Apps.ContextMenuShowSource.SuggestedAppFullscreen", source_type,
-          ui::MenuSourceType::MENU_SOURCE_TYPE_LAST);
-    }
-  } else {
-    UMA_HISTOGRAM_ENUMERATION("Apps.ContextMenuShowSource.SearchResult",
-                              source_type,
-                              ui::MenuSourceType::MENU_SOURCE_TYPE_LAST);
-  }
-
   // TODO(warx): This is broken (https://crbug.com/795994).
   if (!HasFocus())
     result_container_->ClearSelectedIndex();
 
-  context_menu_runner_.reset(new views::MenuRunner(
-      menu_model, views::MenuRunner::HAS_MNEMONICS,
-      base::Bind(&SearchResultTileItemView::OnContextMenuClosed,
-                 weak_ptr_factory_.GetWeakPtr(), base::TimeTicks::Now())));
+  context_menu_runner_.reset(
+      new views::MenuRunner(menu_model, views::MenuRunner::HAS_MNEMONICS));
   context_menu_runner_->RunMenuAt(GetWidget(), nullptr,
                                   gfx::Rect(point, gfx::Size()),
                                   views::MENU_ANCHOR_TOPLEFT, source_type);

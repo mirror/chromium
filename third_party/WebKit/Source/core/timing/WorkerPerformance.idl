@@ -54,8 +54,7 @@
 
     // User Timing
     // https://w3c.github.io/user-timing/#extensions-performance-interface
-    [CallWith=ScriptState, RaisesException] void mark(DOMString markName);
-    [CallWith=ScriptState, RuntimeEnabled=CustomUserTiming, RaisesException] void mark(DOMString markName, (DOMHighResTimeStamp or PerformanceMarkOptions) startTimeOrPerformanceMarkOptions);
+    [RaisesException] void mark(DOMString markName);
     void clearMarks(optional DOMString markName = null);
 
     [RaisesException] void measure(DOMString measureName, optional DOMString startMark = null, optional DOMString endMark = null);

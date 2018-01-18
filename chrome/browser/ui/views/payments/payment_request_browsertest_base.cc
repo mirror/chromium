@@ -14,6 +14,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/autofill/personal_data_manager_factory.h"
@@ -91,7 +92,7 @@ void PaymentRequestBrowserTestBase::SetUpCommandLine(
 
 void PaymentRequestBrowserTestBase::SetUpOnMainThread() {
   // Setup the https server.
-  https_server_ = std::make_unique<net::EmbeddedTestServer>(
+  https_server_ = base::MakeUnique<net::EmbeddedTestServer>(
       net::EmbeddedTestServer::TYPE_HTTPS);
   host_resolver()->AddRule("a.com", "127.0.0.1");
   host_resolver()->AddRule("b.com", "127.0.0.1");
@@ -452,7 +453,7 @@ void PaymentRequestBrowserTestBase::AddCreditCard(
   autofill::PersonalDataManager* personal_data_manager = GetDataManager();
   if (card.record_type() != autofill::CreditCard::LOCAL_CARD) {
     personal_data_manager->AddServerCreditCardForTest(
-        std::make_unique<autofill::CreditCard>(card));
+        base::MakeUnique<autofill::CreditCard>(card));
     return;
   }
   size_t card_count = personal_data_manager->GetCreditCards().size();
@@ -476,7 +477,7 @@ void PaymentRequestBrowserTestBase::CreatePaymentRequestForTest(
       content::WebContents::FromRenderFrameHost(render_frame_host);
   DCHECK(web_contents);
   std::unique_ptr<TestChromePaymentRequestDelegate> delegate =
-      std::make_unique<TestChromePaymentRequestDelegate>(
+      base::MakeUnique<TestChromePaymentRequestDelegate>(
           web_contents, this /* observer */, is_incognito_, is_valid_ssl_,
           is_browser_window_active_);
   delegate_ = delegate.get();

@@ -23,13 +23,10 @@
 #include "ios/chrome/browser/app_startup_parameters.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/metrics/first_user_action_recorder.h"
-#import "ios/chrome/browser/tabs/legacy_tab_helper.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/u2f/u2f_controller.h"
 #import "ios/chrome/browser/ui/main/browser_view_information.h"
-#import "ios/chrome/browser/web/tab_id_tab_helper.h"
-#import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "net/base/mac/url_conversions.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
@@ -318,18 +315,17 @@ NSString* const kShortcutQRScanner = @"OpenQRScanner";
     return;
   }
 
+  // TODO(crbug.com/619598): move this code to BrowserViewInformation to hide
+  // implementation details of TabModel.
   // Iterate through mainTabModel and OTRTabModel to find the corresponding tab.
   NSArray* tabModels = @[
     [browserViewInformation mainTabModel], [browserViewInformation otrTabModel]
   ];
   for (TabModel* tabModel in tabModels) {
-    WebStateList* webStateList = tabModel.webStateList;
-    for (int index = 0; index < webStateList->count(); ++index) {
-      web::WebState* webState = webStateList->GetWebStateAt(index);
-      NSString* currentTabID = TabIdTabHelper::FromWebState(webState)->tab_id();
-      if ([currentTabID isEqualToString:tabID]) {
-        Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
+    for (Tab* tab in tabModel) {
+      if ([tab.tabId isEqualToString:tabID]) {
         [tab evaluateU2FResultFromURL:URL];
+        return;
       }
     }
   }

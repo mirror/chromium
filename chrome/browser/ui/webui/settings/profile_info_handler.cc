@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/webui/settings/profile_info_handler.h"
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
@@ -202,7 +203,7 @@ ProfileInfoHandler::GetAccountNameAndIcon() const {
   }
 #endif  // defined(OS_CHROMEOS)
 
-  auto response = std::make_unique<base::DictionaryValue>();
+  auto response = base::MakeUnique<base::DictionaryValue>();
   response->SetString("name", name);
   response->SetString("iconUrl", icon_url);
   return response;

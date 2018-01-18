@@ -124,12 +124,11 @@ void FrameConsole::ReportResourceResponseReceived(
       response.HttpStatusText() + ')';
   ConsoleMessage* console_message = ConsoleMessage::CreateForRequest(
       kNetworkMessageSource, kErrorMessageLevel, message,
-      response.Url().GetString(), loader, request_identifier);
+      response.Url().GetString(), request_identifier);
   AddMessage(console_message);
 }
 
-void FrameConsole::DidFailLoading(DocumentLoader* loader,
-                                  unsigned long request_identifier,
+void FrameConsole::DidFailLoading(unsigned long request_identifier,
                                   const ResourceError& error) {
   if (error.IsCancellation())  // Report failures only.
     return;
@@ -141,7 +140,7 @@ void FrameConsole::DidFailLoading(DocumentLoader* loader,
   }
   AddMessageToStorage(ConsoleMessage::CreateForRequest(
       kNetworkMessageSource, kErrorMessageLevel, message.ToString(),
-      error.FailingURL(), loader, request_identifier));
+      error.FailingURL(), request_identifier));
 }
 
 void FrameConsole::Trace(blink::Visitor* visitor) {

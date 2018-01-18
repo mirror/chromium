@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 
 import org.chromium.base.ThreadUtils;
-import org.chromium.chrome.browser.download.DownloadUpdate.PendingState;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.components.offline_items_collection.ContentId;
 import org.chromium.components.offline_items_collection.OfflineItem.Progress;
@@ -82,12 +81,12 @@ public class MockDownloadNotificationService2 extends DownloadNotificationServic
     @Override
     void notifyDownloadPaused(ContentId id, String fileName, boolean isResumable,
             boolean isAutoResumable, boolean isOffTheRecord, boolean isTransient, Bitmap icon,
-            boolean hasUserGesture, boolean forceRebuild, PendingState pendingState) {
+            boolean hasUserGesture, boolean forceRebuild) {
         ThreadUtils.runOnUiThreadBlocking(
                 ()
                         -> MockDownloadNotificationService2.super.notifyDownloadPaused(id, fileName,
                                 isResumable, isAutoResumable, isOffTheRecord, isTransient, icon,
-                                hasUserGesture, forceRebuild, pendingState));
+                                hasUserGesture, forceRebuild));
     }
 
     @Override

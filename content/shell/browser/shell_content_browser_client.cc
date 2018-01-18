@@ -41,9 +41,8 @@
 #include "content/shell/grit/shell_resources.h"
 #include "media/mojo/features.h"
 #include "net/ssl/client_cert_identity.h"
-#include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context_getter.h"
-#include "services/test/echo/public/interfaces/echo.mojom.h"
+#include "services/test/echo/echo_service.h"
 #include "storage/browser/quota/quota_settings.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "url/gurl.h"
@@ -190,7 +189,7 @@ bool ShellContentBrowserClient::IsHandledURL(const GURL& url) {
     if (url.scheme() == kProtocolList[i])
       return true;
   }
-  return net::URLRequest::IsHandledProtocol(url.scheme());
+  return false;
 }
 
 void ShellContentBrowserClient::BindInterfaceRequestFromFrame(
@@ -216,12 +215,16 @@ void ShellContentBrowserClient::RegisterInProcessServices(
     services->insert(std::make_pair(media::mojom::kMediaServiceName, info));
   }
 #endif
+  {
+    service_manager::EmbeddedServiceInfo info;
+    info.factory = base::Bind(&echo::CreateEchoService);
+    services->insert(std::make_pair(echo::mojom::kServiceName, info));
+  }
 }
 
 void ShellContentBrowserClient::RegisterOutOfProcessServices(
     OutOfProcessServiceMap* services) {
   (*services)[kTestServiceUrl] = base::UTF8ToUTF16("Test Service");
-  (*services)[echo::mojom::kServiceName] = base::UTF8ToUTF16("Echo Service");
 }
 
 bool ShellContentBrowserClient::ShouldTerminateOnServiceQuit(

@@ -52,7 +52,7 @@ ServiceWorkerDevToolsAgentHost::ServiceWorkerDevToolsAgentHost(
     bool is_installed_version,
     const base::UnguessableToken& devtools_worker_token)
     : DevToolsAgentHostImpl(devtools_worker_token.ToString()),
-      state_(WORKER_NOT_READY),
+      state_(WORKER_UNINSPECTED),
       devtools_worker_token_(devtools_worker_token),
       worker_process_id_(worker_process_id),
       worker_route_id_(worker_route_id),
@@ -116,36 +116,44 @@ ServiceWorkerDevToolsAgentHost::~ServiceWorkerDevToolsAgentHost() {
 }
 
 void ServiceWorkerDevToolsAgentHost::AttachSession(DevToolsSession* session) {
-  if (state_ == WORKER_READY) {
-    if (sessions().size() == 1) {
-      BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                              base::BindOnce(&SetDevToolsAttachedOnIO,
-                                             context_weak_, version_id_, true));
-    }
-    // RenderProcessHost should not be null here, but even if it _is_ null,
-    // session does not depend on the process to do messaging.
-    session->SetRenderer(RenderProcessHost::FromID(worker_process_id_),
-                         nullptr);
-    session->AttachToAgent(agent_ptr_);
+  if (state_ != WORKER_INSPECTED) {
+    state_ = WORKER_INSPECTED;
+    AttachToWorker();
+  }
+  if (RenderProcessHost* host = RenderProcessHost::FromID(worker_process_id_)) {
+    session->SetRenderer(host, nullptr);
+    host->Send(
+        new DevToolsAgentMsg_Attach(worker_route_id_, session->session_id()));
   }
   session->SetFallThroughForNotFound(true);
   session->AddHandler(base::WrapUnique(new protocol::InspectorHandler()));
   session->AddHandler(base::WrapUnique(new protocol::NetworkHandler(GetId())));
   session->AddHandler(base::WrapUnique(new protocol::SchemaHandler()));
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::BindOnce(&SetDevToolsAttachedOnIO,
+                                         context_weak_, version_id_, true));
 }
 
 void ServiceWorkerDevToolsAgentHost::DetachSession(int session_id) {
-  // Destroying session automatically detaches in renderer.
-  if (state_ == WORKER_READY && sessions().empty()) {
-    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::BindOnce(&SetDevToolsAttachedOnIO,
-                                           context_weak_, version_id_, false));
+  if (RenderProcessHost* host = RenderProcessHost::FromID(worker_process_id_))
+    host->Send(new DevToolsAgentMsg_Detach(worker_route_id_, session_id));
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::BindOnce(&SetDevToolsAttachedOnIO,
+                                         context_weak_, version_id_, false));
+  if (state_ == WORKER_INSPECTED) {
+    state_ = WORKER_UNINSPECTED;
+    DetachFromWorker();
+  } else if (state_ == WORKER_PAUSED_FOR_REATTACH) {
+    state_ = WORKER_UNINSPECTED;
   }
 }
 
 bool ServiceWorkerDevToolsAgentHost::DispatchProtocolMessage(
     DevToolsSession* session,
     const std::string& message) {
+  if (state_ != WORKER_INSPECTED)
+    return true;
+
   int call_id = 0;
   std::string method;
   if (session->Dispatch(message, &call_id, &method) !=
@@ -153,41 +161,73 @@ bool ServiceWorkerDevToolsAgentHost::DispatchProtocolMessage(
     return true;
   }
 
-  session->DispatchProtocolMessageToAgent(call_id, method, message);
-  session->waiting_messages()[call_id] = {method, message};
+  if (RenderProcessHost* host = RenderProcessHost::FromID(worker_process_id_)) {
+    host->Send(new DevToolsAgentMsg_DispatchOnInspectorBackend(
+        worker_route_id_, session->session_id(), call_id, method, message));
+    session->waiting_messages()[call_id] = {method, message};
+  }
   return true;
 }
 
-void ServiceWorkerDevToolsAgentHost::WorkerReadyForInspection(
-    blink::mojom::DevToolsAgentAssociatedPtrInfo devtools_agent_ptr_info) {
-  DCHECK_EQ(WORKER_NOT_READY, state_);
-  state_ = WORKER_READY;
-  agent_ptr_.Bind(std::move(devtools_agent_ptr_info));
-  if (!sessions().empty()) {
+bool ServiceWorkerDevToolsAgentHost::OnMessageReceived(
+    const IPC::Message& msg) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  bool handled = true;
+  IPC_BEGIN_MESSAGE_MAP(ServiceWorkerDevToolsAgentHost, msg)
+    IPC_MESSAGE_HANDLER(DevToolsClientMsg_DispatchOnInspectorFrontend,
+                        OnDispatchOnInspectorFrontend)
+    IPC_MESSAGE_UNHANDLED(handled = false)
+  IPC_END_MESSAGE_MAP()
+  return handled;
+}
+
+void ServiceWorkerDevToolsAgentHost::PauseForDebugOnStart() {
+  DCHECK(state_ == WORKER_UNINSPECTED);
+  state_ = WORKER_PAUSED_FOR_DEBUG_ON_START;
+}
+
+bool ServiceWorkerDevToolsAgentHost::IsPausedForDebugOnStart() {
+  return state_ == WORKER_PAUSED_FOR_DEBUG_ON_START ||
+         state_ == WORKER_READY_FOR_DEBUG_ON_START;
+}
+
+bool ServiceWorkerDevToolsAgentHost::IsReadyForInspection() {
+  return state_ == WORKER_INSPECTED || state_ == WORKER_UNINSPECTED ||
+         state_ == WORKER_READY_FOR_DEBUG_ON_START;
+}
+
+void ServiceWorkerDevToolsAgentHost::WorkerReadyForInspection() {
+  if (state_ == WORKER_PAUSED_FOR_REATTACH) {
+    DCHECK(IsAttached());
+    state_ = WORKER_INSPECTED;
+    AttachToWorker();
+    if (RenderProcessHost* host =
+            RenderProcessHost::FromID(worker_process_id_)) {
+      for (DevToolsSession* session : sessions()) {
+        session->SetRenderer(host, nullptr);
+        host->Send(new DevToolsAgentMsg_Reattach(
+            worker_route_id_, session->session_id(), session->state_cookie()));
+        for (const auto& pair : session->waiting_messages()) {
+          int call_id = pair.first;
+          const DevToolsSession::Message& message = pair.second;
+          host->Send(new DevToolsAgentMsg_DispatchOnInspectorBackend(
+              worker_route_id_, session->session_id(), call_id, message.method,
+              message.message));
+        }
+      }
+    }
     BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
                             base::BindOnce(&SetDevToolsAttachedOnIO,
                                            context_weak_, version_id_, true));
-  }
-
-  // RenderProcessHost should not be null here, but even if it _is_ null,
-  // session does not depend on the process to do messaging.
-  RenderProcessHost* host = RenderProcessHost::FromID(worker_process_id_);
-  for (DevToolsSession* session : sessions()) {
-    session->SetRenderer(host, nullptr);
-    session->ReattachToAgent(agent_ptr_);
-    for (const auto& pair : session->waiting_messages()) {
-      int call_id = pair.first;
-      const DevToolsSession::Message& message = pair.second;
-      session->DispatchProtocolMessageToAgent(call_id, message.method,
-                                              message.message);
-    }
+  } else if (state_ == WORKER_PAUSED_FOR_DEBUG_ON_START) {
+    state_ = WORKER_READY_FOR_DEBUG_ON_START;
   }
 }
 
 void ServiceWorkerDevToolsAgentHost::WorkerRestarted(int worker_process_id,
                                                      int worker_route_id) {
   DCHECK_EQ(WORKER_TERMINATED, state_);
-  state_ = WORKER_NOT_READY;
+  state_ = IsAttached() ? WORKER_PAUSED_FOR_REATTACH : WORKER_UNINSPECTED;
   worker_process_id_ = worker_process_id;
   worker_route_id_ = worker_route_id;
   RenderProcessHost* host = RenderProcessHost::FromID(worker_process_id_);
@@ -197,12 +237,32 @@ void ServiceWorkerDevToolsAgentHost::WorkerRestarted(int worker_process_id,
 
 void ServiceWorkerDevToolsAgentHost::WorkerDestroyed() {
   DCHECK_NE(WORKER_TERMINATED, state_);
+  if (state_ == WORKER_INSPECTED) {
+    DCHECK(IsAttached());
+    for (auto* inspector : protocol::InspectorHandler::ForAgentHost(this))
+      inspector->TargetCrashed();
+    DetachFromWorker();
+    for (DevToolsSession* session : sessions())
+      session->SetRenderer(nullptr, nullptr);
+  }
   state_ = WORKER_TERMINATED;
-  agent_ptr_.reset();
-  for (auto* inspector : protocol::InspectorHandler::ForAgentHost(this))
-    inspector->TargetCrashed();
-  for (DevToolsSession* session : sessions())
-    session->SetRenderer(nullptr, nullptr);
+}
+
+void ServiceWorkerDevToolsAgentHost::AttachToWorker() {
+  if (RenderProcessHost* host = RenderProcessHost::FromID(worker_process_id_))
+    host->AddRoute(worker_route_id_, this);
+}
+
+void ServiceWorkerDevToolsAgentHost::DetachFromWorker() {
+  if (RenderProcessHost* host = RenderProcessHost::FromID(worker_process_id_))
+    host->RemoveRoute(worker_route_id_);
+}
+
+void ServiceWorkerDevToolsAgentHost::OnDispatchOnInspectorFrontend(
+    const DevToolsMessageChunk& message) {
+  DevToolsSession* session = SessionById(message.session_id);
+  if (session)
+    session->ReceiveMessageChunk(message);
 }
 
 }  // namespace content

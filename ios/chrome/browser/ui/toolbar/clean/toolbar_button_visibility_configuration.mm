@@ -31,11 +31,10 @@
   }
 }
 
-- (ToolbarComponentVisibility)leadingForwardButtonVisibility {
+- (ToolbarComponentVisibility)forwardButtonVisibility {
   switch (self.type) {
     case PRIMARY:
-      return ToolbarComponentVisibilityAlways &
-             ~self.trailingForwardButtonVisibility;
+      return ToolbarComponentVisibilityAlways;
     case SECONDARY:
       return ToolbarComponentVisibilityNone;
     case LEGACY:
@@ -45,24 +44,13 @@
   }
 }
 
-- (ToolbarComponentVisibility)trailingForwardButtonVisibility {
-  switch (self.type) {
-    case PRIMARY:
-      return ToolbarComponentVisibilityCompactWidthRegularHeight;
-    case SECONDARY:
-      return ToolbarComponentVisibilityNone;
-    case LEGACY:
-      return ToolbarComponentVisibilityNone;
-  }
-}
-
 - (ToolbarComponentVisibility)tabGridButtonVisibility {
   switch (self.type) {
     case PRIMARY:
-      return ToolbarComponentVisibilityCompactWidthCompactHeight |
-             ToolbarComponentVisibilityRegularWidthCompactHeight;
+      return ToolbarComponentVisibilityAlways &
+             ~ToolbarComponentVisibilityRegularWidthRegularHeight;
     case SECONDARY:
-      return ToolbarComponentVisibilitySplit;
+      return ToolbarComponentVisibilityAlways;
     case LEGACY:
       return ToolbarComponentVisibilityIPhoneOnly;
   }
@@ -71,10 +59,9 @@
 - (ToolbarComponentVisibility)toolsMenuButtonVisibility {
   switch (self.type) {
     case PRIMARY:
-      return ToolbarComponentVisibilityAlways &
-             ~ToolbarComponentVisibilityCompactWidthRegularHeight;
+      return ToolbarComponentVisibilityAlways;
     case SECONDARY:
-      return ToolbarComponentVisibilitySplit;
+      return ToolbarComponentVisibilityAlways;
     case LEGACY:
       return ToolbarComponentVisibilityAlways;
   }
@@ -86,7 +73,7 @@
       return ToolbarComponentVisibilityAlways &
              ~ToolbarComponentVisibilityCompactWidthRegularHeight;
     case SECONDARY:
-      return ToolbarComponentVisibilitySplit;
+      return ToolbarComponentVisibilityAlways;
     case LEGACY:
       return ToolbarComponentVisibilityRegularWidthCompactHeight |
              ToolbarComponentVisibilityRegularWidthRegularHeight;
@@ -98,7 +85,7 @@
     case PRIMARY:
       return ToolbarComponentVisibilityRegularWidthRegularHeight;
     case SECONDARY:
-      return ToolbarComponentVisibilityNone;
+      return ToolbarComponentVisibilityRegularWidthRegularHeight;
     case LEGACY:
       return ToolbarComponentVisibilityRegularWidthCompactHeight |
              ToolbarComponentVisibilityRegularWidthRegularHeight;
@@ -110,7 +97,7 @@
     case PRIMARY:
       return ToolbarComponentVisibilityRegularWidthRegularHeight;
     case SECONDARY:
-      return ToolbarComponentVisibilityNone;
+      return ToolbarComponentVisibilityRegularWidthRegularHeight;
     case LEGACY:
       return ToolbarComponentVisibilityRegularWidthCompactHeight |
              ToolbarComponentVisibilityRegularWidthRegularHeight;
@@ -123,7 +110,7 @@
       return ToolbarComponentVisibilityAlways &
              ~ToolbarComponentVisibilityCompactWidthRegularHeight;
     case SECONDARY:
-      return ToolbarComponentVisibilitySplit;
+      return ToolbarComponentVisibilityAlways;
     case LEGACY:
       return ToolbarComponentVisibilityRegularWidthCompactHeight |
              ToolbarComponentVisibilityRegularWidthRegularHeight;
@@ -158,7 +145,7 @@
     case PRIMARY:
       return ToolbarComponentVisibilityNone;
     case SECONDARY:
-      return ToolbarComponentVisibilitySplit;
+      return ToolbarComponentVisibilityAlways;
     case LEGACY:
       return ToolbarComponentVisibilityNone;
   }

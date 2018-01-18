@@ -260,7 +260,7 @@ class CONTENT_EXPORT RenderWidget
   void DidReceiveCompositorFrameAck() override;
   bool IsClosing() const override;
   void RequestScheduleAnimation() override;
-  void UpdateVisualState(VisualStateUpdate requested_update) override;
+  void UpdateVisualState() override;
   void WillBeginCompositorFrame() override;
   std::unique_ptr<cc::SwapPromise> RequestCopyOfOutputForLayoutTest(
       std::unique_ptr<viz::CopyOutputRequest> request) override;
@@ -849,18 +849,6 @@ class CONTENT_EXPORT RenderWidget
   bool has_added_input_handler_;
 
  private:
-  // TODO(ekaramad): This method should not be confused with its RenderView
-  // variant, GetWebFrameWidget(). Currently Cast and AndroidWebview's
-  // ContentRendererClients are the only users of the public variant. The public
-  // method will eventually be removed from RenderView and uses of the method
-  // will obtain WebFrameWidget from WebLocalFrame.
-  // Returns the WebFrameWidget associated with this RenderWidget if any.
-  // Returns nullptr if GetWebWidget() returns nullptr or returns a WebWidget
-  // that is not a WebFrameWidget. A WebFrameWidget only makes sense when there
-  // a local root associated with it. RenderWidgetFullscreenPepper and a swapped
-  // out RenderWidgets are amongst the cases where this method returns nullptr.
-  blink::WebFrameWidget* GetFrameWidget() const;
-
   // Applies/Removes the DevTools device emulation transformation to/from a
   // window rect.
   void ScreenRectToEmulatedIfNeeded(blink::WebRect* window_rect) const;

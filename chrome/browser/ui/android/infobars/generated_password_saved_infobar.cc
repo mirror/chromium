@@ -4,7 +4,6 @@
 
 #include "chrome/browser/ui/android/infobars/generated_password_saved_infobar.h"
 
-#include <memory>
 #include <utility>
 
 #include "base/android/jni_android.h"
@@ -21,7 +20,7 @@ void GeneratedPasswordSavedInfoBarDelegateAndroid::Create(
     content::WebContents* web_contents) {
   InfoBarService::FromWebContents(web_contents)
       ->AddInfoBar(
-          std::make_unique<GeneratedPasswordSavedInfoBar>(base::WrapUnique(
+          base::MakeUnique<GeneratedPasswordSavedInfoBar>(base::WrapUnique(
               new GeneratedPasswordSavedInfoBarDelegateAndroid())));
 }
 

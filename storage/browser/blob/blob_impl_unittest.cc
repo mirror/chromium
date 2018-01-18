@@ -4,8 +4,6 @@
 
 #include "storage/browser/blob/blob_impl.h"
 
-#include <memory>
-
 #include "base/run_loop.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/test/scoped_task_environment.h"
@@ -63,7 +61,7 @@ class MockBlobReaderClient : public blink::mojom::BlobReaderClient {
 
 class BlobImplTest : public testing::Test {
  public:
-  void SetUp() override { context_ = std::make_unique<BlobStorageContext>(); }
+  void SetUp() override { context_ = base::MakeUnique<BlobStorageContext>(); }
 
   std::unique_ptr<BlobDataHandle> CreateBlobFromString(
       const std::string& uuid,

@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/containers/adapters.h"
+#include "base/memory/ptr_util.h"
 #include "base/numerics/ranges.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
@@ -194,7 +195,7 @@ UiScene::Elements UiScene::GetPotentiallyVisibleElements() const {
 }
 
 UiScene::UiScene() {
-  root_element_ = std::make_unique<UiElement>();
+  root_element_ = base::MakeUnique<UiElement>();
   root_element_->SetName(kRoot);
   root_element_->SetDrawPhase(kPhaseNone);
   root_element_->set_hit_testable(false);

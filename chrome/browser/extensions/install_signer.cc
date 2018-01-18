@@ -15,6 +15,7 @@
 #include "base/json/json_writer.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/process/process_info.h"
@@ -126,7 +127,7 @@ bool ValidateExpireDateFormat(const std::string& input) {
 void SetExtensionIdSet(base::DictionaryValue* dictionary,
                        const char* key,
                        const ExtensionIdSet& ids) {
-  auto id_list = std::make_unique<base::ListValue>();
+  auto id_list = base::MakeUnique<base::ListValue>();
   for (ExtensionIdSet::const_iterator i = ids.begin(); i != ids.end(); ++i)
     id_list->AppendString(*i);
   dictionary->Set(key, std::move(id_list));

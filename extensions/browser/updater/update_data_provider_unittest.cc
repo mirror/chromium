@@ -17,13 +17,13 @@
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/update_client/update_client.h"
-#include "extensions/browser/disable_reason.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/extensions_test.h"
 #include "extensions/browser/test_extensions_browser_client.h"
 #include "extensions/browser/updater/extension_installer.h"
+#include "extensions/common/disable_reason.h"
 #include "extensions/common/extension_builder.h"
 
 namespace extensions {
@@ -134,7 +134,11 @@ class UpdateDataProviderTest : public ExtensionsTest {
 
 TEST_F(UpdateDataProviderTest, GetData_NoDataAdded) {
   scoped_refptr<UpdateDataProvider> data_provider =
-      base::MakeRefCounted<UpdateDataProvider>(nullptr);
+      base::MakeRefCounted<UpdateDataProvider>(
+          nullptr,
+          base::BindOnce([](content::BrowserContext*, const std::string&,
+                            const std::string&, const base::FilePath&,
+                            UpdateClientCallback update_client_callback) {}));
 
   std::vector<std::string> ids({kExtensionId1});
   std::vector<update_client::CrxComponent> data;
@@ -144,7 +148,13 @@ TEST_F(UpdateDataProviderTest, GetData_NoDataAdded) {
 
 TEST_F(UpdateDataProviderTest, GetData_EnabledExtension) {
   scoped_refptr<UpdateDataProvider> data_provider =
-      base::MakeRefCounted<UpdateDataProvider>(browser_context());
+      base::MakeRefCounted<UpdateDataProvider>(
+          browser_context(),
+          base::BindOnce([](content::BrowserContext* context,
+                            const std::string& extension_id,
+                            const std::string& public_key,
+                            const base::FilePath& temp_dir,
+                            UpdateClientCallback update_client_callback) {}));
 
   const std::string version = "0.1.2.3";
   AddExtension(kExtensionId1, version, true,
@@ -165,7 +175,13 @@ TEST_F(UpdateDataProviderTest, GetData_EnabledExtension) {
 
 TEST_F(UpdateDataProviderTest, GetData_EnabledExtensionWithData) {
   scoped_refptr<UpdateDataProvider> data_provider =
-      base::MakeRefCounted<UpdateDataProvider>(browser_context());
+      base::MakeRefCounted<UpdateDataProvider>(
+          browser_context(),
+          base::BindOnce([](content::BrowserContext* context,
+                            const std::string& extension_id,
+                            const std::string& public_key,
+                            const base::FilePath& temp_dir,
+                            UpdateClientCallback update_client_callback) {}));
 
   const std::string version = "0.1.2.3";
   AddExtension(kExtensionId1, version, true,
@@ -189,7 +205,13 @@ TEST_F(UpdateDataProviderTest, GetData_EnabledExtensionWithData) {
 
 TEST_F(UpdateDataProviderTest, GetData_DisabledExtension_WithNoReason) {
   scoped_refptr<UpdateDataProvider> data_provider =
-      base::MakeRefCounted<UpdateDataProvider>(browser_context());
+      base::MakeRefCounted<UpdateDataProvider>(
+          browser_context(),
+          base::BindOnce([](content::BrowserContext* context,
+                            const std::string& extension_id,
+                            const std::string& public_key,
+                            const base::FilePath& temp_dir,
+                            UpdateClientCallback update_client_callback) {}));
 
   const std::string version = "0.1.2.3";
   AddExtension(kExtensionId1, version, false,
@@ -212,7 +234,13 @@ TEST_F(UpdateDataProviderTest, GetData_DisabledExtension_WithNoReason) {
 
 TEST_F(UpdateDataProviderTest, GetData_DisabledExtension_UnknownReason) {
   scoped_refptr<UpdateDataProvider> data_provider =
-      base::MakeRefCounted<UpdateDataProvider>(browser_context());
+      base::MakeRefCounted<UpdateDataProvider>(
+          browser_context(),
+          base::BindOnce([](content::BrowserContext* context,
+                            const std::string& extension_id,
+                            const std::string& public_key,
+                            const base::FilePath& temp_dir,
+                            UpdateClientCallback update_client_callback) {}));
 
   const std::string version = "0.1.2.3";
   AddExtension(kExtensionId1, version, false,
@@ -235,7 +263,13 @@ TEST_F(UpdateDataProviderTest, GetData_DisabledExtension_UnknownReason) {
 
 TEST_F(UpdateDataProviderTest, GetData_DisabledExtension_WithReasons) {
   scoped_refptr<UpdateDataProvider> data_provider =
-      base::MakeRefCounted<UpdateDataProvider>(browser_context());
+      base::MakeRefCounted<UpdateDataProvider>(
+          browser_context(),
+          base::BindOnce([](content::BrowserContext* context,
+                            const std::string& extension_id,
+                            const std::string& public_key,
+                            const base::FilePath& temp_dir,
+                            UpdateClientCallback update_client_callback) {}));
 
   const std::string version = "0.1.2.3";
   AddExtension(kExtensionId1, version, false,
@@ -262,7 +296,13 @@ TEST_F(UpdateDataProviderTest, GetData_DisabledExtension_WithReasons) {
 TEST_F(UpdateDataProviderTest,
        GetData_DisabledExtension_WithReasonsAndUnknownReason) {
   scoped_refptr<UpdateDataProvider> data_provider =
-      base::MakeRefCounted<UpdateDataProvider>(browser_context());
+      base::MakeRefCounted<UpdateDataProvider>(
+          browser_context(),
+          base::BindOnce([](content::BrowserContext* context,
+                            const std::string& extension_id,
+                            const std::string& public_key,
+                            const base::FilePath& temp_dir,
+                            UpdateClientCallback update_client_callback) {}));
 
   const std::string version = "0.1.2.3";
   AddExtension(kExtensionId1, version, false,
@@ -292,7 +332,13 @@ TEST_F(UpdateDataProviderTest,
 TEST_F(UpdateDataProviderTest, GetData_MultipleExtensions) {
   // GetData with more than 1 extension.
   scoped_refptr<UpdateDataProvider> data_provider =
-      base::MakeRefCounted<UpdateDataProvider>(browser_context());
+      base::MakeRefCounted<UpdateDataProvider>(
+          browser_context(),
+          base::BindOnce([](content::BrowserContext* context,
+                            const std::string& extension_id,
+                            const std::string& public_key,
+                            const base::FilePath& temp_dir,
+                            UpdateClientCallback update_client_callback) {}));
 
   const std::string version1 = "0.1.2.3";
   const std::string version2 = "9.8.7.6";
@@ -321,7 +367,13 @@ TEST_F(UpdateDataProviderTest, GetData_MultipleExtensions) {
 TEST_F(UpdateDataProviderTest, GetData_MultipleExtensions_DisabledExtension) {
   // One extension is disabled.
   scoped_refptr<UpdateDataProvider> data_provider =
-      base::MakeRefCounted<UpdateDataProvider>(browser_context());
+      base::MakeRefCounted<UpdateDataProvider>(
+          browser_context(),
+          base::BindOnce([](content::BrowserContext* context,
+                            const std::string& extension_id,
+                            const std::string& public_key,
+                            const base::FilePath& temp_dir,
+                            UpdateClientCallback update_client_callback) {}));
 
   const std::string version1 = "0.1.2.3";
   const std::string version2 = "9.8.7.6";
@@ -354,7 +406,13 @@ TEST_F(UpdateDataProviderTest,
        GetData_MultipleExtensions_NotInstalledExtension) {
   // One extension is not installed.
   scoped_refptr<UpdateDataProvider> data_provider =
-      base::MakeRefCounted<UpdateDataProvider>(browser_context());
+      base::MakeRefCounted<UpdateDataProvider>(
+          browser_context(),
+          base::BindOnce([](content::BrowserContext* context,
+                            const std::string& extension_id,
+                            const std::string& public_key,
+                            const base::FilePath& temp_dir,
+                            UpdateClientCallback update_client_callback) {}));
 
   const std::string version = "0.1.2.3";
   AddExtension(kExtensionId1, version, true,
@@ -378,7 +436,13 @@ TEST_F(UpdateDataProviderTest, GetData_MultipleExtensions_CorruptExtension) {
   // With non-default data, one extension is corrupted:
   // is_corrupt_reinstall=true.
   scoped_refptr<UpdateDataProvider> data_provider =
-      base::MakeRefCounted<UpdateDataProvider>(browser_context());
+      base::MakeRefCounted<UpdateDataProvider>(
+          browser_context(),
+          base::BindOnce([](content::BrowserContext* context,
+                            const std::string& extension_id,
+                            const std::string& public_key,
+                            const base::FilePath& temp_dir,
+                            UpdateClientCallback update_client_callback) {}));
 
   const std::string version1 = "0.1.2.3";
   const std::string version2 = "9.8.7.6";

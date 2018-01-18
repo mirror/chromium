@@ -571,8 +571,6 @@ void RenderWidgetHostViewAndroid::InitAsFullscreen(
 }
 
 void RenderWidgetHostViewAndroid::WasResized() {
-  if (delegated_frame_host_)
-    delegated_frame_host_->WasResized();
   host_->WasResized();
 }
 
@@ -845,10 +843,6 @@ void RenderWidgetHostViewAndroid::SetNeedsBeginFrames(bool needs_begin_frames) {
     AddBeginFrameRequest(PERSISTENT_BEGIN_FRAME);
   else
     ClearBeginFrameRequest(PERSISTENT_BEGIN_FRAME);
-}
-
-void RenderWidgetHostViewAndroid::SetWantsAnimateOnlyBeginFrames() {
-  wants_animate_only_begin_frames_ = true;
 }
 
 viz::SurfaceId RenderWidgetHostViewAndroid::GetCurrentSurfaceId() const {
@@ -2152,12 +2146,6 @@ RenderWidgetHostViewAndroid::GetTouchSelectionControllerClientManager() {
   return touch_selection_controller_client_manager_.get();
 }
 
-viz::LocalSurfaceId RenderWidgetHostViewAndroid::GetLocalSurfaceId() const {
-  if (delegated_frame_host_)
-    return delegated_frame_host_->GetLocalSurfaceId();
-  return viz::LocalSurfaceId();
-}
-
 bool RenderWidgetHostViewAndroid::OnMouseEvent(
     const ui::MotionEventAndroid& event) {
   RecordToolTypeForActionDown(event);
@@ -2290,10 +2278,6 @@ void RenderWidgetHostViewAndroid::OnBeginFrame(
 const viz::BeginFrameArgs& RenderWidgetHostViewAndroid::LastUsedBeginFrameArgs()
     const {
   return last_begin_frame_args_;
-}
-
-bool RenderWidgetHostViewAndroid::WantsAnimateOnlyBeginFrames() const {
-  return wants_animate_only_begin_frames_;
 }
 
 void RenderWidgetHostViewAndroid::SendBeginFramePaused() {

@@ -169,7 +169,7 @@ class ChromeOSManagedDeviceInfoPrivateTest : public ChromeOSInfoPrivateTest {
   void SetUpInProcessBrowserTestFixture() override {
     // Set up fake install attributes.
     std::unique_ptr<chromeos::StubInstallAttributes> attributes =
-        std::make_unique<chromeos::StubInstallAttributes>();
+        base::MakeUnique<chromeos::StubInstallAttributes>();
     attributes->SetCloudManaged("fake-domain", "fake-id");
     policy::BrowserPolicyConnectorChromeOS::SetInstallAttributesForTesting(
         attributes.release());

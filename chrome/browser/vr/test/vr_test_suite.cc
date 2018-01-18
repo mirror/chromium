@@ -4,8 +4,6 @@
 
 #include "chrome/browser/vr/test/vr_test_suite.h"
 
-#include <memory>
-
 #include "base/files/file_util.h"
 #include "base/path_service.h"
 #include "base/test/scoped_task_environment.h"
@@ -24,7 +22,7 @@ void VrTestSuite::Initialize() {
   base::TestSuite::Initialize();
 
   scoped_task_environment_ =
-      std::make_unique<base::test::ScopedTaskEnvironment>(
+      base::MakeUnique<base::test::ScopedTaskEnvironment>(
           base::test::ScopedTaskEnvironment::MainThreadType::UI);
 
   mojo::edk::Init();

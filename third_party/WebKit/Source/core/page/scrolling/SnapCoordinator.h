@@ -37,9 +37,8 @@ class CORE_EXPORT SnapCoordinator final
   void SnapContainerDidChange(LayoutBox&, ScrollSnapType);
   void SnapAreaDidChange(LayoutBox&, ScrollSnapAlign);
 
-  // Returns the SnapContainerData if the snap container has one.
-  Optional<SnapContainerData> GetSnapContainerData(
-      const LayoutBox& snap_container) const;
+  // Returns the SnapContainerData for the specific snap container.
+  SnapContainerData EnsureSnapContainerData(const LayoutBox& snap_container);
 
   // Calculate the SnapAreaData for the specific snap area in its snap
   // container.
@@ -62,6 +61,10 @@ class CORE_EXPORT SnapCoordinator final
                        bool did_scroll_x,
                        bool did_scroll_y,
                        FloatPoint* snap_position);
+  static FloatPoint FindSnapPosition(const FloatPoint& current_position,
+                                     const SnapContainerData&,
+                                     bool should_snap_on_x,
+                                     bool should_snap_on_y);
 
 #ifndef NDEBUG
   void ShowSnapAreaMap();

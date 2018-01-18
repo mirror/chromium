@@ -1104,27 +1104,27 @@ int UseCounter::MapCSSPropertyIdToCSSSampleIdForHistogram(
       return 571;
     case CSSPropertyScrollPaddingInlineEnd:
       return 572;
-    case CSSPropertyScrollMargin:
+    case CSSPropertyScrollSnapMargin:
       return 573;
-    case CSSPropertyScrollMarginTop:
+    case CSSPropertyScrollSnapMarginTop:
       return 574;
-    case CSSPropertyScrollMarginRight:
+    case CSSPropertyScrollSnapMarginRight:
       return 575;
-    case CSSPropertyScrollMarginBottom:
+    case CSSPropertyScrollSnapMarginBottom:
       return 576;
-    case CSSPropertyScrollMarginLeft:
+    case CSSPropertyScrollSnapMarginLeft:
       return 577;
-    case CSSPropertyScrollMarginBlock:
+    case CSSPropertyScrollSnapMarginBlock:
       return 578;
-    case CSSPropertyScrollMarginBlockStart:
+    case CSSPropertyScrollSnapMarginBlockStart:
       return 579;
-    case CSSPropertyScrollMarginBlockEnd:
+    case CSSPropertyScrollSnapMarginBlockEnd:
       return 580;
-    case CSSPropertyScrollMarginInline:
+    case CSSPropertyScrollSnapMarginInline:
       return 581;
-    case CSSPropertyScrollMarginInlineStart:
+    case CSSPropertyScrollSnapMarginInlineStart:
       return 582;
-    case CSSPropertyScrollMarginInlineEnd:
+    case CSSPropertyScrollSnapMarginInlineEnd:
       return 583;
     case CSSPropertyScrollSnapStop:
       return 584;

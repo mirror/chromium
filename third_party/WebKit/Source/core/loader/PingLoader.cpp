@@ -283,7 +283,7 @@ void PingLoader::SendViolationReport(LocalFrame* frame,
   request.SetFetchCredentialsMode(
       network::mojom::FetchCredentialsMode::kSameOrigin);
   request.SetRequestContext(WebURLRequest::kRequestContextCSPReport);
-  request.SetFetchRedirectMode(network::mojom::FetchRedirectMode::kError);
+  request.SetFetchRedirectMode(WebURLRequest::kFetchRedirectModeError);
   FetchParameters params(request);
   params.MutableOptions().initiator_info.name =
       FetchInitiatorTypeNames::violationreport;

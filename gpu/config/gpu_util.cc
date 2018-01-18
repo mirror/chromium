@@ -191,6 +191,12 @@ void ParseSecondaryGpuDevicesFromCommandLine(
   const char* secondary_vendor_switch_key = switches::kGpuSecondaryVendorIDs;
   const char* secondary_device_switch_key = switches::kGpuSecondaryDeviceIDs;
 
+  if (command_line.HasSwitch(switches::kGpuTestingSecondaryVendorIDs) &&
+      command_line.HasSwitch(switches::kGpuTestingSecondaryDeviceIDs)) {
+    secondary_vendor_switch_key = switches::kGpuTestingSecondaryVendorIDs;
+    secondary_device_switch_key = switches::kGpuTestingSecondaryDeviceIDs;
+  }
+
   if (!command_line.HasSwitch(secondary_vendor_switch_key) ||
       !command_line.HasSwitch(secondary_device_switch_key)) {
     return;
@@ -327,9 +333,6 @@ GpuFeatureInfo ComputeGpuFeatureInfoForSwiftShader() {
 }
 
 GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
-                                     bool ignore_gpu_blacklist,
-                                     bool disable_gpu_driver_bug_workarounds,
-                                     bool log_gpu_control_list_decisions,
                                      base::CommandLine* command_line) {
   bool use_swift_shader = false;
   bool use_swift_shader_for_webgl = false;
@@ -345,20 +348,10 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
 
   GpuFeatureInfo gpu_feature_info;
   std::set<int> blacklisted_features;
-  if (!ignore_gpu_blacklist) {
+  if (!command_line->HasSwitch(switches::kIgnoreGpuBlacklist)) {
     std::unique_ptr<GpuBlacklist> list(GpuBlacklist::Create());
-    if (log_gpu_control_list_decisions)
-      list->EnableControlListLogging("gpu_blacklist");
-    unsigned target_test_group = 0u;
-    if (command_line->HasSwitch(switches::kGpuBlacklistTestGroup)) {
-      std::string test_group_string =
-          command_line->GetSwitchValueASCII(switches::kGpuBlacklistTestGroup);
-      if (!base::StringToUint(test_group_string, &target_test_group))
-        target_test_group = 0u;
-    }
-    blacklisted_features = list->MakeDecision(
-        GpuControlList::kOsAny, std::string(), gpu_info, target_test_group);
-    gpu_feature_info.applied_gpu_blacklist_entries = list->GetActiveEntries();
+    blacklisted_features =
+        list->MakeDecision(GpuControlList::kOsAny, std::string(), gpu_info);
   }
 
   gpu_feature_info.status_values[GPU_FEATURE_TYPE_GPU_RASTERIZATION] =
@@ -401,17 +394,10 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
 
   std::set<int> enabled_driver_bug_workarounds;
   std::vector<std::string> driver_bug_disabled_extensions;
-  if (!disable_gpu_driver_bug_workarounds) {
+  if (!command_line->HasSwitch(switches::kDisableGpuDriverBugWorkarounds)) {
     std::unique_ptr<gpu::GpuDriverBugList> list(GpuDriverBugList::Create());
-    unsigned target_test_group = 0u;
-    if (command_line->HasSwitch(switches::kGpuDriverBugListTestGroup)) {
-      std::string test_group_string = command_line->GetSwitchValueASCII(
-          switches::kGpuDriverBugListTestGroup);
-      if (!base::StringToUint(test_group_string, &target_test_group))
-        target_test_group = 0u;
-    }
-    enabled_driver_bug_workarounds = list->MakeDecision(
-        GpuControlList::kOsAny, std::string(), gpu_info, target_test_group);
+    enabled_driver_bug_workarounds =
+        list->MakeDecision(GpuControlList::kOsAny, std::string(), gpu_info);
     gpu_feature_info.applied_gpu_driver_bug_list_entries =
         list->GetActiveEntries();
 

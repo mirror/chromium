@@ -38,11 +38,12 @@ GuestViewImpl.prototype.attachImpl$ = function(
     return;
   }
 
-  // Callback wrapper function to set the contentWindow following attachment,
+  // Callback wrapper function to store the contentWindow from the attachGuest()
+  // callback, handle potential attaching failure, register an automatic detach,
   // and advance the queue.
-  var callbackWrapper = function(callback) {
-    var contentWindow = getIframeContentWindow(viewInstanceId);
+  var callbackWrapper = function(callback, contentWindow) {
     // Check if attaching failed.
+    contentWindow = getIframeContentWindow(viewInstanceId);
     if (!contentWindow) {
       this.state = GuestViewImpl.GuestState.GUEST_STATE_CREATED;
       this.internalInstanceId = 0;

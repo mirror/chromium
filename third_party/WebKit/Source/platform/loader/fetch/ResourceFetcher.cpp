@@ -217,8 +217,7 @@ ResourceLoadPriority ResourceFetcher::ComputeLoadPriority(
   // well as to ensure that there isn't priority churn if images move in and out
   // of the viewport, or are displayed more than once, both in and out of the
   // viewport.
-  return std::max(Context().ModifyPriorityForExperiments(priority),
-                  resource_request.Priority());
+  return std::max(priority, resource_request.Priority());
 }
 
 static void PopulateTimingInfo(ResourceTimingInfo* info, Resource* resource) {
@@ -1261,11 +1260,12 @@ void ResourceFetcher::ClearContext() {
     // The use of WrapPersistent creates a reference cycle intentionally,
     // to keep the ResourceFetcher and ResourceLoaders alive until the requests
     // complete or the timer fires.
-    keepalive_loaders_task_handle_ = PostDelayedCancellableTask(
-        *Context().GetLoadingTaskRunner(), FROM_HERE,
-        WTF::Bind(&ResourceFetcher::StopFetchingIncludingKeepaliveLoaders,
-                  WrapPersistent(this)),
-        kKeepaliveLoadersTimeout);
+    keepalive_loaders_task_handle_ =
+        Context().GetLoadingTaskRunner()->PostDelayedCancellableTask(
+            FROM_HERE,
+            WTF::Bind(&ResourceFetcher::StopFetchingIncludingKeepaliveLoaders,
+                      WrapPersistent(this)),
+            kKeepaliveLoadersTimeout);
   }
 }
 

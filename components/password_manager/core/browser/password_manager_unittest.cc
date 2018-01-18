@@ -62,6 +62,7 @@ class MockPasswordManagerClient : public StubPasswordManagerClient {
   }
 
   MOCK_CONST_METHOD0(IsSavingAndFillingEnabledForCurrentPage, bool());
+  MOCK_CONST_METHOD0(DidLastPageLoadEncounterSSLErrors, bool());
   MOCK_CONST_METHOD0(GetPasswordStore, PasswordStore*());
   // The code inside EXPECT_CALL for PromptUserToSaveOrUpdatePasswordPtr and
   // ShowManualFallbackForSavingPtr owns the PasswordFormManager* argument.
@@ -154,6 +155,8 @@ class PasswordManagerTest : public testing::Test {
         .WillRepeatedly(Return(manager_.get()));
     EXPECT_CALL(driver_, GetPasswordAutofillManager())
         .WillRepeatedly(Return(password_autofill_manager_.get()));
+    EXPECT_CALL(client_, DidLastPageLoadEncounterSSLErrors())
+        .WillRepeatedly(Return(false));
 
     ON_CALL(client_, GetMainFrameURL()).WillByDefault(ReturnRef(test_url_));
   }
@@ -1707,10 +1710,10 @@ TEST_F(PasswordManagerTest,
 }
 
 TEST_F(PasswordManagerTest, ForceSavingPasswords) {
-  // Add the PasswordForceSaving feature.
+  // Add the enable-password-force-saving feature.
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndEnableFeature(
-      features::kPasswordForceSaving);
+      features::kEnablePasswordForceSaving);
   PasswordForm form(MakeSimpleForm());
 
   std::vector<PasswordForm> observed;
@@ -1734,10 +1737,10 @@ TEST_F(PasswordManagerTest, ForceSavingPasswords) {
 
 // Forcing Chrome to save an empty passwords should fail without a crash.
 TEST_F(PasswordManagerTest, ForceSavingPasswords_Empty) {
-  // Add the PasswordForceSaving feature.
+  // Add the enable-password-force-saving feature.
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndEnableFeature(
-      features::kPasswordForceSaving);
+      features::kEnablePasswordForceSaving);
   PasswordForm empty_password_form;
 
   std::vector<PasswordForm> observed;

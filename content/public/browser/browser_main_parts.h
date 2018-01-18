@@ -53,9 +53,7 @@ class CONTENT_EXPORT BrowserMainParts {
   BrowserMainParts() {}
   virtual ~BrowserMainParts() {}
 
-  // A return value other than RESULT_CODE_NORMAL_EXIT indicates error and is
-  // used as the exit status.
-  virtual int PreEarlyInitialization();
+  virtual void PreEarlyInitialization() {}
 
   virtual void PostEarlyInitialization() {}
 

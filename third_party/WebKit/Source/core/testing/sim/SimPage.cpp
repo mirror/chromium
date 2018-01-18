@@ -11,7 +11,7 @@ namespace blink {
 
 SimPage::SimPage() : page_(nullptr) {}
 
-SimPage::~SimPage() = default;
+SimPage::~SimPage() {}
 
 void SimPage::SetPage(Page* page) {
   page_ = page;

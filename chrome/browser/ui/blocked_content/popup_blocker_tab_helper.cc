@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/command_line.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
@@ -168,7 +169,7 @@ void PopupBlockerTabHelper::AddBlockedPopup(
   int id = next_id_;
   next_id_++;
   blocked_popups_[id] =
-      std::make_unique<BlockedRequest>(params, window_features);
+      base::MakeUnique<BlockedRequest>(params, window_features);
   TabSpecificContentSettings::FromWebContents(web_contents())->
       OnContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS);
   for (auto& observer : observers_)

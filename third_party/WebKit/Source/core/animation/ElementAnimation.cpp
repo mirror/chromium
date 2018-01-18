@@ -5,6 +5,7 @@
 #include "core/animation/ElementAnimation.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/dictionary_sequence_or_dictionary.h"
 #include "core/animation/Animation.h"
 #include "core/animation/DocumentTimeline.h"
 #include "core/animation/EffectInput.h"
@@ -16,6 +17,7 @@
 #include "core/animation/TimingInput.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
+#include "core/dom/ExecutionContext.h"
 #include "platform/bindings/ScriptState.h"
 
 namespace blink {
@@ -23,7 +25,7 @@ namespace blink {
 Animation* ElementAnimation::animate(
     ScriptState* script_state,
     Element& element,
-    const ScriptValue& keyframes,
+    const DictionarySequenceOrDictionary& effect_input,
     UnrestrictedDoubleOrKeyframeAnimationOptions options,
     ExceptionState& exception_state) {
   EffectModel::CompositeOperation composite = EffectModel::kCompositeReplace;
@@ -35,7 +37,8 @@ Animation* ElementAnimation::animate(
   }
 
   KeyframeEffectModelBase* effect = EffectInput::Convert(
-      &element, keyframes, composite, script_state, exception_state);
+      &element, effect_input, composite, ExecutionContext::From(script_state),
+      exception_state);
   if (exception_state.HadException())
     return nullptr;
 
@@ -50,13 +53,14 @@ Animation* ElementAnimation::animate(
   return animation;
 }
 
-Animation* ElementAnimation::animate(ScriptState* script_state,
-                                     Element& element,
-                                     const ScriptValue& keyframes,
-                                     ExceptionState& exception_state) {
-  KeyframeEffectModelBase* effect =
-      EffectInput::Convert(&element, keyframes, EffectModel::kCompositeReplace,
-                           script_state, exception_state);
+Animation* ElementAnimation::animate(
+    ScriptState* script_state,
+    Element& element,
+    const DictionarySequenceOrDictionary& effect_input,
+    ExceptionState& exception_state) {
+  KeyframeEffectModelBase* effect = EffectInput::Convert(
+      &element, effect_input, EffectModel::kCompositeReplace,
+      ExecutionContext::From(script_state), exception_state);
   if (exception_state.HadException())
     return nullptr;
   return animateInternal(element, effect, Timing());

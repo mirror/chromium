@@ -642,6 +642,7 @@ void BrowsingHistoryService::WebHistoryQueryComplete(
         const base::ListValue* ids = nullptr;
         base::string16 url;
         base::string16 title;
+        base::Time visit_time;
 
         if (!(events->GetDictionary(i, &event) &&
               event->GetList("result", &results) &&

@@ -4,8 +4,7 @@
 
 #include "chrome/browser/ui/webui/print_preview/sticky_settings.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/pref_names.h"
@@ -33,7 +32,7 @@ void StickySettings::StoreAppState(const std::string& data) {
 }
 
 void StickySettings::SaveInPrefs(PrefService* prefs) const {
-  auto value = std::make_unique<base::DictionaryValue>();
+  auto value = base::MakeUnique<base::DictionaryValue>();
   if (printer_app_state_)
     value->SetString(kSettingAppState, printer_app_state_.value());
   prefs->Set(prefs::kPrintPreviewStickySettings, *value);

@@ -380,7 +380,7 @@ class DeleteStreamDelegate : public TestDelegateBase {
 }  // namespace
 
 class BidirectionalStreamQuicImplTest
-    : public ::testing::TestWithParam<std::tuple<QuicTransportVersion, bool>> {
+    : public ::testing::TestWithParam<QuicTransportVersion> {
  protected:
   static const bool kFin = true;
   static const bool kIncludeVersion = true;
@@ -398,25 +398,21 @@ class BidirectionalStreamQuicImplTest
   };
 
   BidirectionalStreamQuicImplTest()
-      : version_(std::get<0>(GetParam())),
-        client_headers_include_h2_stream_dependency_(std::get<1>(GetParam())),
-        crypto_config_(crypto_test_utils::ProofVerifierForTesting(),
+      : crypto_config_(crypto_test_utils::ProofVerifierForTesting(),
                        TlsClientHandshaker::CreateSslCtx()),
         read_buffer_(new IOBufferWithSize(4096)),
         connection_id_(2),
         stream_id_(GetNthClientInitiatedStreamId(0)),
-        client_maker_(version_,
+        client_maker_(GetParam(),
                       connection_id_,
                       &clock_,
                       kDefaultServerHostName,
-                      Perspective::IS_CLIENT,
-                      client_headers_include_h2_stream_dependency_),
-        server_maker_(version_,
+                      Perspective::IS_CLIENT),
+        server_maker_(GetParam(),
                       connection_id_,
                       &clock_,
                       kDefaultServerHostName,
-                      Perspective::IS_SERVER,
-                      false),
+                      Perspective::IS_SERVER),
         random_generator_(0),
         destination_(kDefaultServerHostName, kDefaultServerPort) {
     IPAddress ip(192, 0, 2, 33);
@@ -483,7 +479,7 @@ class BidirectionalStreamQuicImplTest
         new QuicChromiumPacketWriter(socket.get(), runner_.get()),
         true /* owns_writer */, Perspective::IS_CLIENT,
         SupportedVersions(
-            net::ParsedQuicVersion(net::PROTOCOL_QUIC_CRYPTO, version_)));
+            net::ParsedQuicVersion(net::PROTOCOL_QUIC_CRYPTO, GetParam())));
     base::TimeTicks dns_end = base::TimeTicks::Now();
     base::TimeTicks dns_start = dns_end - base::TimeDelta::FromMilliseconds(1);
 
@@ -502,9 +498,8 @@ class BidirectionalStreamQuicImplTest
         kMaxMigrationsToNonDefaultNetworkOnPathDegrading,
         kQuicYieldAfterPacketsRead,
         QuicTime::Delta::FromMilliseconds(kQuicYieldAfterDurationMilliseconds),
-        client_headers_include_h2_stream_dependency_, /*cert_verify_flags=*/0,
-        DefaultQuicConfig(), &crypto_config_, "CONNECTION_UNKNOWN", dns_start,
-        dns_end, &push_promise_index_, nullptr,
+        /*cert_verify_flags=*/0, DefaultQuicConfig(), &crypto_config_,
+        "CONNECTION_UNKNOWN", dns_start, dns_end, &push_promise_index_, nullptr,
         base::ThreadTaskRunnerHandle::Get().get(),
         /*socket_performance_watcher=*/nullptr, net_log().bound().net_log()));
     session_->Initialize();
@@ -585,26 +580,12 @@ class BidirectionalStreamQuicImplTest
       RequestPriority request_priority,
       size_t* spdy_headers_frame_length,
       QuicStreamOffset* offset) {
-    return ConstructRequestHeadersPacketInner(
-        packet_number, stream_id, fin, request_priority, 0,
-        spdy_headers_frame_length, offset);
-  }
-
-  std::unique_ptr<QuicReceivedPacket> ConstructRequestHeadersPacketInner(
-      QuicPacketNumber packet_number,
-      QuicStreamId stream_id,
-      bool fin,
-      RequestPriority request_priority,
-      QuicStreamId parent_stream_id,
-      size_t* spdy_headers_frame_length,
-      QuicStreamOffset* offset) {
     SpdyPriority priority =
         ConvertRequestPriorityToQuicPriority(request_priority);
     std::unique_ptr<QuicReceivedPacket> packet(
         client_maker_.MakeRequestHeadersPacket(
             packet_number, stream_id, kIncludeVersion, fin, priority,
-            std::move(request_headers_), parent_stream_id,
-            spdy_headers_frame_length, offset));
+            std::move(request_headers_), spdy_headers_frame_length, offset));
     DVLOG(2) << "packet(" << packet_number << "): " << std::endl
              << QuicTextUtils::HexDump(packet->AsStringPiece());
     return packet;
@@ -623,7 +604,7 @@ class BidirectionalStreamQuicImplTest
     std::unique_ptr<QuicReceivedPacket> packet(
         client_maker_.MakeRequestHeadersAndMultipleDataFramesPacket(
             packet_number, stream_id_, kIncludeVersion, fin, priority,
-            std::move(request_headers_), 0, header_stream_offset,
+            std::move(request_headers_), header_stream_offset,
             spdy_headers_frame_length, data));
     DVLOG(2) << "packet(" << packet_number << "): " << std::endl
              << QuicTextUtils::HexDump(packet->AsStringPiece());
@@ -769,12 +750,10 @@ class BidirectionalStreamQuicImplTest
   QuicChromiumClientSession* session() const { return session_.get(); }
 
   QuicStreamId GetNthClientInitiatedStreamId(int n) {
-    return test::GetNthClientInitiatedStreamId(version_, n);
+    return test::GetNthClientInitiatedStreamId(GetParam(), n);
   }
 
  protected:
-  const QuicTransportVersion version_;
-  const bool client_headers_include_h2_stream_dependency_;
   BoundTestNetLog net_log_;
   scoped_refptr<TestTaskRunner> runner_;
   std::unique_ptr<MockWrite[]> mock_writes_;
@@ -803,11 +782,9 @@ class BidirectionalStreamQuicImplTest
   HostPortPair destination_;
 };
 
-INSTANTIATE_TEST_CASE_P(
-    Version,
-    BidirectionalStreamQuicImplTest,
-    ::testing::Combine(::testing::ValuesIn(AllSupportedTransportVersions()),
-                       ::testing::Bool()));
+INSTANTIATE_TEST_CASE_P(Version,
+                        BidirectionalStreamQuicImplTest,
+                        ::testing::ValuesIn(AllSupportedTransportVersions()));
 
 TEST_P(BidirectionalStreamQuicImplTest, GetRequest) {
   SetRequest("GET", "/", DEFAULT_PRIORITY);
@@ -917,8 +894,8 @@ TEST_P(BidirectionalStreamQuicImplTest, LoadTimingTwoRequests) {
   // SetRequest() again for second request as |request_headers_| was moved.
   SetRequest("GET", "/", DEFAULT_PRIORITY);
   AddWrite(ConstructRequestHeadersPacketInner(
-      2, GetNthClientInitiatedStreamId(1), kFin, DEFAULT_PRIORITY,
-      GetNthClientInitiatedStreamId(0), nullptr, &offset));
+      2, GetNthClientInitiatedStreamId(1), kFin, DEFAULT_PRIORITY, nullptr,
+      &offset));
   AddWrite(ConstructInitialSettingsPacket(3, &offset));
   AddWrite(ConstructClientAckPacket(4, 3, 1, 1));
   Initialize();

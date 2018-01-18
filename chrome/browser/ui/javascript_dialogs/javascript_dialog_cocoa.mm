@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/javascript_dialogs/javascript_dialog_cocoa.h"
 
 #import "base/mac/scoped_nsobject.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
 #import "chrome/browser/ui/cocoa/constrained_window/constrained_window_alert.h"
 #import "chrome/browser/ui/cocoa/constrained_window/constrained_window_custom_sheet.h"
@@ -179,7 +180,7 @@ JavaScriptDialogCocoa::JavaScriptDialogCocoa(
     const base::string16& default_prompt_text,
     content::JavaScriptDialogManager::DialogClosedCallback dialog_callback)
     : JavaScriptDialog(parent_web_contents),
-      impl_(std::make_unique<JavaScriptDialogCocoaImpl>(
+      impl_(base::MakeUnique<JavaScriptDialogCocoaImpl>(
           this,
           parent_web_contents,
           alerting_web_contents,

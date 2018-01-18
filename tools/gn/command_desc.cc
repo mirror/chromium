@@ -272,7 +272,6 @@ bool PrintConfig(const Config* config,
   HANDLER(variables::kCflagsObjCC, DefaultHandler);
   HANDLER(variables::kDefines, DefaultHandler);
   HANDLER(variables::kIncludeDirs, DefaultHandler);
-  HANDLER(variables::kInputs, DefaultHandler);
   HANDLER(variables::kLdflags, DefaultHandler);
   HANDLER(variables::kLibs, DefaultHandler);
   HANDLER(variables::kLibDirs, DefaultHandler);

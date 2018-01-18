@@ -103,7 +103,11 @@ ScriptCustomElementDefinition::ScriptCustomElementDefinition(
     HashSet<AtomicString>&& observed_attributes)
     : CustomElementDefinition(descriptor, std::move(observed_attributes)),
       script_state_(script_state),
-      constructor_(script_state->GetIsolate(), constructor) {
+      constructor_(script_state->GetIsolate(), this, constructor),
+      connected_callback_(this),
+      disconnected_callback_(this),
+      adopted_callback_(this),
+      attribute_changed_callback_(this) {
   v8::Isolate* isolate = script_state->GetIsolate();
   if (!connected_callback.IsEmpty())
     connected_callback_.Set(isolate, connected_callback);
@@ -122,7 +126,6 @@ void ScriptCustomElementDefinition::TraceWrappers(
   visitor->TraceWrappers(disconnected_callback_.Cast<v8::Value>());
   visitor->TraceWrappers(adopted_callback_.Cast<v8::Value>());
   visitor->TraceWrappers(attribute_changed_callback_.Cast<v8::Value>());
-  CustomElementDefinition::TraceWrappers(visitor);
 }
 
 HTMLElement* ScriptCustomElementDefinition::HandleCreateElementSyncException(

@@ -304,7 +304,7 @@ void AccountReconcilorTest::SetAccountConsistency(
     signin::AccountConsistencyMethod method) {
   account_consistency_ = method;
   scoped_account_consistency_ =
-      std::make_unique<signin::ScopedAccountConsistency>(method);
+      base::MakeUnique<signin::ScopedAccountConsistency>(method);
 }
 
 TEST_F(AccountReconcilorTest, Basic) {

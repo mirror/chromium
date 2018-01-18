@@ -11,6 +11,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/compiler_specific.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
@@ -246,7 +247,7 @@ void ProfileAuthDataTest::PopulateBrowserContext(
       net::CookieStore::SetCookiesCallback());
 
   GetChannelIDs(browser_context)
-      ->SetChannelID(std::make_unique<net::ChannelIDStore::ChannelID>(
+      ->SetChannelID(base::MakeUnique<net::ChannelIDStore::ChannelID>(
           kChannelIDServerIdentifier, base::Time(), std::move(channel_id_key)));
 }
 

@@ -4,9 +4,8 @@
 
 #include "chrome/browser/policy/local_sync_policy_handler.h"
 
-#include <memory>
-
 #include "base/files/file_path.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chrome/browser/policy/policy_path_parser.h"
 #include "components/policy/core/common/policy_map.h"
@@ -30,7 +29,7 @@ void LocalSyncPolicyHandler::ApplyPolicySettings(const PolicyMap& policies,
     base::FilePath::StringType expanded_value =
         policy::path_parser::ExpandPathVariables(string_value);
     prefs->SetValue(syncer::prefs::kLocalSyncBackendDir,
-                    std::make_unique<base::Value>(expanded_value));
+                    base::MakeUnique<base::Value>(expanded_value));
   }
 }
 

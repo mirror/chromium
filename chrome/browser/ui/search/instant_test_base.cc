@@ -4,8 +4,7 @@
 
 #include "chrome/browser/ui/search/instant_test_base.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
@@ -38,7 +37,7 @@ void InstantTestBase::SetupInstant(Browser* browser) {
     data.suggestions_url = base_url_.spec() + "#q={searchTerms}";
   data.alternate_urls.push_back(base_url_.spec() + "#q={searchTerms}");
 
-  TemplateURL* template_url = service->Add(std::make_unique<TemplateURL>(data));
+  TemplateURL* template_url = service->Add(base::MakeUnique<TemplateURL>(data));
   service->SetUserSelectedDefaultSearchProvider(template_url);
 }
 

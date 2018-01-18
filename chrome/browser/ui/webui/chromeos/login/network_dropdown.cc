@@ -11,6 +11,7 @@
 #include "ash/system/network/network_icon.h"
 #include "ash/system/network/network_icon_animation.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
@@ -83,7 +84,7 @@ void NetworkMenuWebUI::OnItemChosen(int id) {
 
 std::unique_ptr<base::ListValue> NetworkMenuWebUI::ConvertMenuModel(
     ui::MenuModel* model) {
-  auto list = std::make_unique<base::ListValue>();
+  auto list = base::MakeUnique<base::ListValue>();
   for (int i = 0; i < model->GetItemCount(); ++i) {
     ui::MenuModel::ItemType type = model->GetTypeAt(i);
     int id;
@@ -91,7 +92,7 @@ std::unique_ptr<base::ListValue> NetworkMenuWebUI::ConvertMenuModel(
       id = -2;
     else
       id = model->GetCommandIdAt(i);
-    auto item = std::make_unique<base::DictionaryValue>();
+    auto item = base::MakeUnique<base::DictionaryValue>();
     item->SetInteger("id", id);
     base::string16 label = model->GetLabelAt(i);
     base::ReplaceSubstringsAfterOffset(&label, 0, base::ASCIIToUTF16("&&"),

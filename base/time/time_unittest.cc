@@ -117,26 +117,6 @@ class TimeTest : public testing::Test {
   Time comparison_time_pdt_;
 };
 
-// Test conversion to/from TimeDeltas elapsed since the Windows epoch.
-// Conversions should be idempotent and non-lossy.
-TEST_F(TimeTest, DeltaSinceWindowsEpoch) {
-  const TimeDelta delta = TimeDelta::FromMicroseconds(123);
-  EXPECT_EQ(delta,
-            Time::FromDeltaSinceWindowsEpoch(delta).ToDeltaSinceWindowsEpoch());
-
-  const Time now = Time::Now();
-  const Time actual =
-      Time::FromDeltaSinceWindowsEpoch(now.ToDeltaSinceWindowsEpoch());
-  EXPECT_EQ(now, actual);
-
-  // Null times should remain null after a round-trip conversion. This is an
-  // important invariant for the common use case of serialization +
-  // deserialization.
-  const Time should_be_null =
-      Time::FromDeltaSinceWindowsEpoch(Time().ToDeltaSinceWindowsEpoch());
-  EXPECT_TRUE(should_be_null.is_null());
-}
-
 // Test conversion to/from time_t.
 TEST_F(TimeTest, TimeT) {
   EXPECT_EQ(10, Time().FromTimeT(10).ToTimeT());

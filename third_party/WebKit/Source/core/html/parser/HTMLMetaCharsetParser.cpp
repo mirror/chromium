@@ -42,7 +42,7 @@ HTMLMetaCharsetParser::HTMLMetaCharsetParser()
       in_head_section_(true),
       done_checking_(false) {}
 
-HTMLMetaCharsetParser::~HTMLMetaCharsetParser() = default;
+HTMLMetaCharsetParser::~HTMLMetaCharsetParser() {}
 
 bool HTMLMetaCharsetParser::ProcessMeta() {
   const HTMLToken::AttributeList& token_attributes = token_.Attributes();

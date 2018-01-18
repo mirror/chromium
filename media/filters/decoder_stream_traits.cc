@@ -61,7 +61,6 @@ void DecoderStreamTraits<DemuxerStream::AUDIO>::InitializeDecoder(
     const InitCB& init_cb,
     const OutputCB& output_cb) {
   DCHECK(config.IsValidConfig());
-  stats_.audio_decoder_name = decoder->GetDisplayName();
   decoder->Initialize(config, cdm_context, init_cb, output_cb);
 }
 
@@ -148,7 +147,6 @@ void DecoderStreamTraits<DemuxerStream::VIDEO>::InitializeDecoder(
     const InitCB& init_cb,
     const OutputCB& output_cb) {
   DCHECK(config.IsValidConfig());
-  stats_.video_decoder_name = decoder->GetDisplayName();
   decoder->Initialize(config, low_delay, cdm_context, init_cb, output_cb);
 }
 

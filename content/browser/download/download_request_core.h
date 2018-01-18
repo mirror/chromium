@@ -53,8 +53,7 @@ class CONTENT_EXPORT DownloadRequestCore
   // |is_parallel_request| is true.
   DownloadRequestCore(net::URLRequest* request,
                       Delegate* delegate,
-                      bool is_parallel_request,
-                      DownloadSource download_source);
+                      bool is_parallel_request);
   ~DownloadRequestCore();
 
   // Should be called when the URLRequest::Delegate receives OnResponseStarted.
@@ -158,9 +157,6 @@ class CONTENT_EXPORT DownloadRequestCore
   // interrupt reason in |abort_reason_| will be used instead of USER_CANCELED
   // which is vague.
   DownloadInterruptReason abort_reason_;
-
-  // Source of the download, used in metrics.
-  DownloadSource download_source_;
 
   // Each successful OnWillRead will yield a buffer of this size.
   static const int kReadBufSize = 32768;   // bytes

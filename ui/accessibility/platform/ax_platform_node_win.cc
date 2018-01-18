@@ -163,11 +163,12 @@ namespace {
 typedef base::hash_set<AXPlatformNodeWin*> AXPlatformNodeWinSet;
 // Set of all AXPlatformNodeWin objects that were the target of an
 // alert event.
-base::LazyInstance<AXPlatformNodeWinSet>::Leaky g_alert_targets =
+base::LazyInstance<AXPlatformNodeWinSet>::DestructorAtExit g_alert_targets =
     LAZY_INSTANCE_INITIALIZER;
 
-base::LazyInstance<base::ObserverList<IAccessible2UsageObserver>>::Leaky
-    g_iaccessible2_usage_observer_list = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<base::ObserverList<IAccessible2UsageObserver>>::
+    DestructorAtExit g_iaccessible2_usage_observer_list =
+        LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
@@ -226,7 +227,7 @@ AXPlatformNode* AXPlatformNode::FromNativeViewAccessible(
 
 using UniqueIdMap = base::hash_map<int32_t, AXPlatformNode*>;
 // Map from each AXPlatformNode's unique id to its instance.
-base::LazyInstance<UniqueIdMap>::Leaky g_unique_id_map =
+base::LazyInstance<UniqueIdMap>::DestructorAtExit g_unique_id_map =
     LAZY_INSTANCE_INITIALIZER;
 
 // static

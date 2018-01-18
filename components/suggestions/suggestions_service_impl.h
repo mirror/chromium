@@ -30,9 +30,8 @@
 #include "services/identity/public/cpp/primary_account_access_token_fetcher.h"
 #include "url/gurl.h"
 
-namespace identity {
-class IdentityManager;
-}  // namespace identity
+class OAuth2TokenService;
+class SigninManagerBase;
 
 namespace net {
 class URLRequestContextGetter;
@@ -57,7 +56,8 @@ class SuggestionsServiceImpl : public SuggestionsService,
                                public net::URLFetcherDelegate,
                                public syncer::SyncServiceObserver {
  public:
-  SuggestionsServiceImpl(identity::IdentityManager* identity_manager,
+  SuggestionsServiceImpl(SigninManagerBase* signin_manager,
+                         OAuth2TokenService* token_service,
                          syncer::SyncService* sync_service,
                          net::URLRequestContextGetter* url_request_context,
                          std::unique_ptr<SuggestionsStore> suggestions_store,
@@ -176,7 +176,8 @@ class SuggestionsServiceImpl : public SuggestionsService,
 
   base::ThreadChecker thread_checker_;
 
-  identity::IdentityManager* identity_manager_;
+  SigninManagerBase* signin_manager_;
+  OAuth2TokenService* token_service_;
 
   syncer::SyncService* sync_service_;
   ScopedObserver<syncer::SyncService, syncer::SyncServiceObserver>

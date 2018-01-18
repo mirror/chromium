@@ -90,6 +90,7 @@
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "platform/EventDispatchForbiddenScope.h"
+#include "platform/Histogram.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/scroll/ScrollbarTheme.h"
@@ -123,6 +124,7 @@ class PostMessageTimer final
         location_(std::move(location)),
         user_gesture_token_(user_gesture_token),
         disposal_allowed_(true) {
+    probe::AsyncTaskScheduled(window.document(), "postMessage", this);
   }
 
   MessageEvent* Event() const { return event_; }
@@ -620,7 +622,6 @@ void LocalDOMWindow::SchedulePostMessage(
                            UserGestureIndicator::CurrentToken());
   timer->StartOneShot(TimeDelta(), FROM_HERE);
   timer->PauseIfNeeded();
-  probe::AsyncTaskScheduled(document(), "postMessage", timer);
   post_message_timers_.insert(timer);
 }
 
@@ -632,8 +633,7 @@ void LocalDOMWindow::PostMessageTimerFired(PostMessageTimer* timer) {
 
   UserGestureToken* token = timer->GetUserGestureToken();
   std::unique_ptr<UserGestureIndicator> gesture_indicator;
-  if (!RuntimeEnabledFeatures::UserActivationV2Enabled() && token &&
-      token->HasGestures() && document())
+  if (token && token->HasGestures() && document())
     gesture_indicator = Frame::NotifyUserActivation(document()->GetFrame());
 
   event->EntangleMessagePorts(document());
@@ -1503,7 +1503,17 @@ DispatchEventResult LocalDOMWindow::DispatchEvent(Event* event,
 
   TRACE_EVENT1("devtools.timeline", "EventDispatch", "data",
                InspectorEventDispatchEvent::Data(*event));
-  return FireEventListeners(event);
+  DispatchEventResult result;
+
+  if (GetFrame() && GetFrame()->IsMainFrame() &&
+      event->type() == EventTypeNames::resize) {
+    SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.EventListenerDuration.Resize");
+    result = FireEventListeners(event);
+  } else {
+    result = FireEventListeners(event);
+  }
+
+  return result;
 }
 
 void LocalDOMWindow::RemoveAllEventListeners() {

@@ -46,7 +46,6 @@ class ContentSettingImageModel {
     MIDI_SYSEX = 12,
     SOUND = 13,
     FRAMEBUST = 14,
-    CLIPBOARD_READ = 15,
 
     NUM_IMAGE_TYPES
   };

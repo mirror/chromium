@@ -66,7 +66,7 @@ HTMLFormControlElement::HTMLFormControlElement(const QualifiedName& tag_name,
   SetHasCustomStyleCallbacks();
 }
 
-HTMLFormControlElement::~HTMLFormControlElement() = default;
+HTMLFormControlElement::~HTMLFormControlElement() {}
 
 void HTMLFormControlElement::Trace(blink::Visitor* visitor) {
   ListedElement::Trace(visitor);
@@ -375,7 +375,7 @@ String HTMLFormControlElement::ResultForDialogSubmit() {
   return FastGetAttribute(valueAttr);
 }
 
-void HTMLFormControlElement::DidRecalcStyle(StyleRecalcChange) {
+void HTMLFormControlElement::DidRecalcStyle() {
   if (LayoutObject* layout_object = GetLayoutObject())
     layout_object->UpdateFromElement();
 }

@@ -4,39 +4,42 @@
 
 #include "content/browser/renderer_host/render_widget_targeter.h"
 
-#include "content/browser/renderer_host/input/one_shot_timeout_monitor.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
-#include "ui/events/blink/blink_event_util.h"
 
 namespace content {
 
 namespace {
 
+blink::WebMouseEvent Convert(RenderWidgetHostViewBase* root_view,
+                             RenderWidgetHostViewBase* target,
+                             const blink::WebMouseEvent& event) {
+  if (root_view != target) {
+    auto mouse_event = event;
+    gfx::PointF transformed_point;
+    if (!root_view->TransformPointToCoordSpaceForView(
+            mouse_event.PositionInWidget(), target, &transformed_point)) {
+      return blink::WebMouseEvent();
+    }
+    mouse_event.SetPositionInWidget(transformed_point.x(),
+                                    transformed_point.y());
+    return mouse_event;
+  }
+  return event;
+}
+
+// TODO(crbug.com/796656): Currently merges only mouse-move events. This needs
+// to handle more events (e.g. wheel, touch-move etc.).
 bool MergeEventIfPossible(const blink::WebInputEvent& event,
                           ui::WebScopedInputEvent* blink_event) {
-  if (ui::CanCoalesce(event, **blink_event)) {
-    ui::Coalesce(event, blink_event->get());
+  if (event.GetType() == blink::WebInputEvent::kMouseMove &&
+      (*blink_event)->GetType() == event.GetType() &&
+      (*blink_event)->GetModifiers() == event.GetModifiers()) {
+    *blink_event = ui::WebInputEventTraits::Clone(event);
     return true;
   }
   return false;
-}
-
-gfx::PointF ComputeEventLocation(const blink::WebInputEvent& event) {
-  if (blink::WebInputEvent::IsMouseEventType(event.GetType()) ||
-      event.GetType() == blink::WebInputEvent::kMouseWheel) {
-    return static_cast<const blink::WebMouseEvent&>(event).PositionInWidget();
-  }
-  if (blink::WebInputEvent::IsTouchEventType(event.GetType())) {
-    return static_cast<const blink::WebTouchEvent&>(event)
-        .touches[0]
-        .PositionInWidget();
-  }
-  if (blink::WebInputEvent::IsGestureEventType(event.GetType()))
-    return static_cast<const blink::WebGestureEvent&>(event).PositionInWidget();
-
-  return gfx::PointF();
 }
 
 }  // namespace
@@ -93,28 +96,16 @@ void RenderWidgetTargeter::FindTargetAndDispatch(
 
   RenderWidgetTargetResult result =
       delegate_->FindTargetSynchronously(root_view, event);
+  if (!result.view)
+    return;
 
   RenderWidgetHostViewBase* target = result.view;
   auto* event_ptr = &event;
-  // TODO(kenrb, wjmaclean): Asynchronous hit tests don't work properly with
-  // GuestViews, so rely on the synchronous result.
-  // See https://crbug.com/802378.
-  if (result.should_query_view && !target->IsRenderWidgetHostViewGuest()) {
-    // TODO(kenrb, sadrul): When all event types support asynchronous hit
-    // testing, we should be able to have FindTargetSynchronously return the
-    // view and location to use for the renderer hit test query.
-    // Currently it has to return the surface hit test target, for event types
-    // that ignore |result.should_query_view|, and therefore we have to use
-    // root_view and the original event location for the initial query.
-    QueryClient(root_view, root_view, *event_ptr, latency,
-                ComputeEventLocation(event), nullptr, gfx::PointF());
+  if (result.should_query_view) {
+    QueryClient(root_view, target, *event_ptr, latency, result.target_location);
   } else {
     FoundTarget(root_view, target, *event_ptr, latency, result.target_location);
   }
-}
-
-void RenderWidgetTargeter::ViewWillBeDestroyed(RenderWidgetHostViewBase* view) {
-  unresponsive_views_.erase(view);
 }
 
 void RenderWidgetTargeter::QueryClient(
@@ -122,41 +113,27 @@ void RenderWidgetTargeter::QueryClient(
     RenderWidgetHostViewBase* target,
     const blink::WebInputEvent& event,
     const ui::LatencyInfo& latency,
-    const gfx::PointF& target_location,
-    RenderWidgetHostViewBase* last_request_target,
-    const gfx::PointF& last_target_location) {
+    const base::Optional<gfx::PointF>& target_location) {
   DCHECK(!request_in_flight_);
-
+  DCHECK(blink::WebInputEvent::IsMouseEventType(event.GetType()));
+  auto mouse_event = static_cast<const blink::WebMouseEvent&>(event);
+  if (target_location.has_value()) {
+    mouse_event.SetPositionInWidget(target_location->x(), target_location->y());
+  } else {
+    mouse_event = Convert(root_view, target, mouse_event);
+  }
+  if (mouse_event.GetType() == blink::WebInputEvent::kUndefined)
+    return;
   request_in_flight_ = true;
   auto* target_client =
       target->GetRenderWidgetHostImpl()->input_target_client();
-  if (blink::WebInputEvent::IsMouseEventType(event.GetType()) ||
-      event.GetType() == blink::WebInputEvent::kMouseWheel ||
-      event.GetType() == blink::WebInputEvent::kTouchStart ||
-      (blink::WebInputEvent::IsGestureEventType(event.GetType()) &&
-       (static_cast<const blink::WebGestureEvent&>(event).source_device ==
-            blink::WebGestureDevice::kWebGestureDeviceTouchscreen ||
-        static_cast<const blink::WebGestureEvent&>(event).source_device ==
-            blink::WebGestureDevice::kWebGestureDeviceTouchpad))) {
-    async_hit_test_timeout_.reset(new OneShotTimeoutMonitor(
-        base::BindOnce(
-            &RenderWidgetTargeter::AsyncHitTestTimedOut,
-            weak_ptr_factory_.GetWeakPtr(), root_view->GetWeakPtr(),
-            target->GetWeakPtr(), target_location,
-            last_request_target ? last_request_target->GetWeakPtr() : nullptr,
-            last_target_location, ui::WebInputEventTraits::Clone(event),
-            latency),
-        async_hit_test_timeout_delay_));
-    target_client->FrameSinkIdAt(
-        gfx::ToCeiledPoint(target_location),
-        base::BindOnce(&RenderWidgetTargeter::FoundFrameSinkId,
-                       weak_ptr_factory_.GetWeakPtr(), root_view->GetWeakPtr(),
-                       target->GetWeakPtr(),
-                       ui::WebInputEventTraits::Clone(event), latency,
-                       ++last_request_id_, target_location));
-    return;
-  }
-  NOTREACHED();
+  target_client->FrameSinkIdAt(
+      gfx::ToCeiledPoint(mouse_event.PositionInWidget()),
+      base::BindOnce(&RenderWidgetTargeter::FoundFrameSinkId,
+                     weak_ptr_factory_.GetWeakPtr(), root_view->GetWeakPtr(),
+                     target->GetWeakPtr(),
+                     static_cast<const blink::WebMouseEvent&>(event), latency,
+                     target_location));
 }
 
 void RenderWidgetTargeter::FlushEventQueue() {
@@ -176,35 +153,28 @@ void RenderWidgetTargeter::FlushEventQueue() {
 void RenderWidgetTargeter::FoundFrameSinkId(
     base::WeakPtr<RenderWidgetHostViewBase> root_view,
     base::WeakPtr<RenderWidgetHostViewBase> target,
-    ui::WebScopedInputEvent event,
+    const blink::WebInputEvent& event,
     const ui::LatencyInfo& latency,
-    uint32_t request_id,
-    const gfx::PointF& target_location,
+    const base::Optional<gfx::PointF>& target_location,
     const viz::FrameSinkId& frame_sink_id) {
-  if (request_id != last_request_id_ || !request_in_flight_) {
-    // This is a response to a request that already timed out, so the event
-    // should have already been dispatched. Mark the renderer as responsive
-    // and otherwise ignore this response.
-    unresponsive_views_.erase(target.get());
-    return;
-  }
-
   request_in_flight_ = false;
-  async_hit_test_timeout_.reset(nullptr);
   auto* view = delegate_->FindViewFromFrameSinkId(frame_sink_id);
   if (!view)
     view = target.get();
-
   // If a client was asked to find a target, then it is necessary to keep
   // asking the clients until a client claims an event for itself.
-  if (view == target.get() ||
-      unresponsive_views_.find(view) != unresponsive_views_.end()) {
-    FoundTarget(root_view.get(), view, *event, latency, target_location);
+  if (view == target.get()) {
+    FoundTarget(root_view.get(), view, event, latency, target_location);
   } else {
-    gfx::PointF location = target_location;
-    target->TransformPointToCoordSpaceForView(location, view, &location);
-    QueryClient(root_view.get(), view, *event, latency, location, target.get(),
-                target_location);
+    base::Optional<gfx::PointF> location = target_location;
+    if (target_location) {
+      gfx::PointF updated_location = *target_location;
+      if (target->TransformPointToCoordSpaceForView(updated_location, view,
+                                                    &updated_location)) {
+        location.emplace(updated_location);
+      }
+    }
+    QueryClient(root_view.get(), view, event, latency, location);
   }
 }
 
@@ -216,61 +186,22 @@ void RenderWidgetTargeter::FoundTarget(
     const base::Optional<gfx::PointF>& target_location) {
   if (!root_view)
     return;
-  // TODO: Unify position conversion for all event types.
-  if (blink::WebInputEvent::IsMouseEventType(event.GetType())) {
-    blink::WebMouseEvent mouse_event =
-        static_cast<const blink::WebMouseEvent&>(event);
-    if (target_location.has_value()) {
-      mouse_event.SetPositionInWidget(target_location->x(),
-                                      target_location->y());
-    }
-    if (mouse_event.GetType() != blink::WebInputEvent::kUndefined)
-      delegate_->DispatchEventToTarget(root_view, target, mouse_event, latency);
-  } else if (event.GetType() == blink::WebInputEvent::kMouseWheel ||
-             blink::WebInputEvent::IsTouchEventType(event.GetType()) ||
-             blink::WebInputEvent::IsGestureEventType(event.GetType())) {
-    DCHECK(!blink::WebInputEvent::IsGestureEventType(event.GetType()) ||
-           (static_cast<const blink::WebGestureEvent&>(event).source_device ==
-                blink::WebGestureDevice::kWebGestureDeviceTouchscreen ||
-            static_cast<const blink::WebGestureEvent&>(event).source_device ==
-                blink::WebGestureDevice::kWebGestureDeviceTouchpad));
-    delegate_->DispatchEventToTarget(root_view, target, event, latency);
-  } else {
+  if (!blink::WebInputEvent::IsMouseEventType(event.GetType())) {
+    // TODO(crbug.com/796656): Handle other types of events.
     NOTREACHED();
     return;
   }
-  FlushEventQueue();
-}
 
-void RenderWidgetTargeter::AsyncHitTestTimedOut(
-    base::WeakPtr<RenderWidgetHostViewBase> current_request_root_view,
-    base::WeakPtr<RenderWidgetHostViewBase> current_request_target,
-    const gfx::PointF& current_target_location,
-    base::WeakPtr<RenderWidgetHostViewBase> last_request_target,
-    const gfx::PointF& last_target_location,
-    ui::WebScopedInputEvent event,
-    const ui::LatencyInfo& latency) {
-  DCHECK(request_in_flight_);
-  request_in_flight_ = false;
-
-  if (!current_request_root_view)
-    return;
-
-  // Mark view as unresponsive so further events will not be sent to it.
-  if (current_request_target)
-    unresponsive_views_.insert(current_request_target.get());
-
-  if (current_request_root_view.get() == current_request_target.get()) {
-    // When a request to the top-level frame times out then the event gets
-    // sent there anyway. It will trigger the hung renderer dialog if the
-    // renderer fails to process it.
-    FoundTarget(current_request_root_view.get(),
-                current_request_root_view.get(), *event, latency,
-                current_target_location);
+  blink::WebMouseEvent mouse_event =
+      static_cast<const blink::WebMouseEvent&>(event);
+  if (target_location.has_value()) {
+    mouse_event.SetPositionInWidget(target_location->x(), target_location->y());
   } else {
-    FoundTarget(current_request_root_view.get(), last_request_target.get(),
-                *event, latency, last_target_location);
+    mouse_event = Convert(root_view, target, mouse_event);
   }
+  if (mouse_event.GetType() != blink::WebInputEvent::kUndefined)
+    delegate_->DispatchEventToTarget(root_view, target, mouse_event, latency);
+  FlushEventQueue();
 }
 
 }  // namespace content

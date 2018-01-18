@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/lazy_instance.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/extensions/api/sync_file_system/sync_file_system_api_helpers.h"
 #include "chrome/browser/sync_file_system/sync_event_observer.h"
 #include "chrome/browser/sync_file_system/sync_file_system_service.h"
@@ -128,7 +129,7 @@ void ExtensionSyncEventObserver::BroadcastOrDispatchEvent(
   EventRouter* event_router = EventRouter::Get(browser_context_);
   DCHECK(event_router);
 
-  auto event = std::make_unique<Event>(histogram_value, event_name,
+  auto event = base::MakeUnique<Event>(histogram_value, event_name,
                                        std::move(values), browser_context_);
 
   // No app_origin, broadcast to all listening extensions for this event name.

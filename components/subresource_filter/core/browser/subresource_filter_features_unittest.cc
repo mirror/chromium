@@ -40,7 +40,7 @@ class ScopedExperimentalStateToggle {
         kTestFieldTrialName, kTestExperimentGroupName);
 
     std::unique_ptr<base::FeatureList> feature_list =
-        std::make_unique<base::FeatureList>();
+        base::MakeUnique<base::FeatureList>();
     feature_list->RegisterFieldTrialOverride(
         kSafeBrowsingSubresourceFilter.name, feature_state, field_trial);
     scoped_feature_list_.InitWithFeatureList(std::move(feature_list));

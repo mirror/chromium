@@ -466,7 +466,6 @@ class CONTENT_EXPORT DownloadItem : public base::SupportsUserData {
 
   // Debug/testing -------------------------------------------------------------
   virtual std::string DebugString(bool verbose) const = 0;
-  virtual void SimulateErrorForTesting(DownloadInterruptReason reason) = 0;
 };
 
 }  // namespace content

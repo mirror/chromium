@@ -30,6 +30,7 @@
 
 #include "core/animation/KeyframeEffect.h"
 
+#include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/unrestricted_double_or_keyframe_effect_options.h"
 #include "core/animation/AnimationEffectTiming.h"
@@ -52,9 +53,9 @@ KeyframeEffect* KeyframeEffect::Create(
 }
 
 KeyframeEffect* KeyframeEffect::Create(
-    ScriptState* script_state,
+    ExecutionContext* execution_context,
     Element* element,
-    const ScriptValue& keyframes,
+    const DictionarySequenceOrDictionary& effect_input,
     const UnrestrictedDoubleOrKeyframeEffectOptions& options,
     ExceptionState& exception_state) {
   DCHECK(RuntimeEnabledFeatures::WebAnimationsAPIEnabled());
@@ -76,39 +77,28 @@ KeyframeEffect* KeyframeEffect::Create(
     return nullptr;
   }
 
-  KeyframeEffectModelBase* model = EffectInput::Convert(
-      element, keyframes, composite, script_state, exception_state);
-  if (exception_state.HadException())
-    return nullptr;
-
-  return Create(element, model, timing);
+  return Create(element,
+                EffectInput::Convert(element, effect_input, composite,
+                                     execution_context, exception_state),
+                timing);
 }
 
-KeyframeEffect* KeyframeEffect::Create(ScriptState* script_state,
-                                       Element* element,
-                                       const ScriptValue& keyframes,
-                                       ExceptionState& exception_state) {
+KeyframeEffect* KeyframeEffect::Create(
+    ExecutionContext* execution_context,
+    Element* element,
+    const DictionarySequenceOrDictionary& effect_input,
+    ExceptionState& exception_state) {
   DCHECK(RuntimeEnabledFeatures::WebAnimationsAPIEnabled());
   if (element) {
     UseCounter::Count(
         element->GetDocument(),
         WebFeature::kAnimationConstructorKeyframeListEffectNoTiming);
   }
-  KeyframeEffectModelBase* model =
-      EffectInput::Convert(element, keyframes, EffectModel::kCompositeReplace,
-                           script_state, exception_state);
-  if (exception_state.HadException())
-    return nullptr;
-  return Create(element, model, Timing());
-}
-
-KeyframeEffect* KeyframeEffect::Create(ScriptState* script_state,
-                                       KeyframeEffectReadOnly* source,
-                                       ExceptionState& exception_state) {
-  Timing new_timing = source->SpecifiedTiming();
-  KeyframeEffectModelBase* model = source->Model()->Clone();
-  return new KeyframeEffect(source->Target(), model, new_timing,
-                            source->GetPriority(), source->GetEventDelegate());
+  return Create(element,
+                EffectInput::Convert(element, effect_input,
+                                     EffectModel::kCompositeReplace,
+                                     execution_context, exception_state),
+                Timing());
 }
 
 KeyframeEffect::KeyframeEffect(Element* target,
@@ -118,7 +108,7 @@ KeyframeEffect::KeyframeEffect(Element* target,
                                EventDelegate* event_delegate)
     : KeyframeEffectReadOnly(target, model, timing, priority, event_delegate) {}
 
-KeyframeEffect::~KeyframeEffect() = default;
+KeyframeEffect::~KeyframeEffect() {}
 
 void KeyframeEffect::setComposite(String composite_string) {
   EffectModel::CompositeOperation composite;

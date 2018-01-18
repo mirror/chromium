@@ -54,7 +54,7 @@ ALIGNMENT_ORDER = [
     'StyleOffsetRotation',
     'TransformOrigin',
     'ScrollPadding',
-    'ScrollMargin',
+    'ScrollSnapMargin',
     'LengthBox',
     'LengthSize',
     'FloatSize',

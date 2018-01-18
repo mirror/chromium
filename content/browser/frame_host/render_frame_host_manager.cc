@@ -501,12 +501,8 @@ RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
     if (speculative_render_frame_host_) {
       // If the speculative RenderFrameHost is trying to commit a navigation,
       // inform the NavigationController that the load of the corresponding
-      // NavigationEntry stopped if needed. This is the case if the new
-      // navigation was started from BeginNavigation. If the navigation was
-      // started through the NavigationController, the NavigationController has
-      // already updated its state properly, and doesn't need to be notified.
-      if (speculative_render_frame_host_->navigation_handle() &&
-          request.from_begin_navigation()) {
+      // NavigationEntry stopped.
+      if (speculative_render_frame_host_->navigation_handle()) {
         frame_tree_node_->navigator()->DiscardPendingEntryIfNeeded(
             speculative_render_frame_host_->navigation_handle()
                 ->pending_nav_entry_id());
@@ -536,21 +532,6 @@ RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
     if (!speculative_render_frame_host_ ||
         speculative_render_frame_host_->GetSiteInstance() !=
             dest_site_instance.get()) {
-      // If there is a speculative RenderFrameHost trying to commit a
-      // navigation, inform the NavigationController that the load of the
-      // corresponding NavigationEntry stopped if needed. This is the case if
-      // the new navigation was started from BeginNavigation. If the navigation
-      // was started through the NavigationController, the NavigationController
-      // has already updated its state properly, and doesn't need to be
-      // notified.
-      if (speculative_render_frame_host_ &&
-          speculative_render_frame_host_->navigation_handle() &&
-          request.from_begin_navigation()) {
-        frame_tree_node_->navigator()->DiscardPendingEntryIfNeeded(
-            speculative_render_frame_host_->navigation_handle()
-                ->pending_nav_entry_id());
-      }
-
       // If a previous speculative RenderFrameHost didn't exist or if its
       // SiteInstance differs from the one for the current URL, a new one needs
       // to be created.
@@ -650,6 +631,14 @@ RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
 
 void RenderFrameHostManager::CleanUpNavigation() {
   if (speculative_render_frame_host_) {
+    // If the speculative RenderFrameHost is trying to commit a navigation,
+    // inform the NavigationController that the load of the corresponding
+    // NavigationEntry stopped.
+    if (speculative_render_frame_host_->navigation_handle()) {
+      frame_tree_node_->navigator()->DiscardPendingEntryIfNeeded(
+          speculative_render_frame_host_->navigation_handle()
+              ->pending_nav_entry_id());
+    }
     bool was_loading = speculative_render_frame_host_->is_loading();
     DiscardUnusedFrame(UnsetSpeculativeRenderFrameHost());
     if (was_loading)
@@ -704,14 +693,6 @@ void RenderFrameHostManager::OnEnforceInsecureRequestPolicy(
   for (const auto& pair : proxy_hosts_) {
     pair.second->Send(new FrameMsg_EnforceInsecureRequestPolicy(
         pair.second->GetRoutingID(), policy));
-  }
-}
-
-void RenderFrameHostManager::OnEnforceInsecureNavigationsSet(
-    const std::vector<uint32_t>& insecure_navigations_set) {
-  for (const auto& pair : proxy_hosts_) {
-    pair.second->Send(new FrameMsg_EnforceInsecureNavigationsSet(
-        pair.second->GetRoutingID(), insecure_navigations_set));
   }
 }
 
@@ -1684,30 +1665,26 @@ int RenderFrameHostManager::CreateRenderFrameProxy(SiteInstance* instance) {
   CHECK(instance);
   CHECK_NE(instance, render_frame_host_->GetSiteInstance());
 
-  // Return an already existing RenderFrameProxyHost if one exists and is alive.
+  RenderViewHostImpl* render_view_host = nullptr;
+
+  // Ensure a RenderViewHost exists for |instance|, as it creates the page
+  // level structure in Blink.
+  render_view_host =
+      frame_tree_node_->frame_tree()->GetRenderViewHost(instance);
+  if (!render_view_host) {
+    CHECK(frame_tree_node_->IsMainFrame());
+    render_view_host = frame_tree_node_->frame_tree()->CreateRenderViewHost(
+        instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE, true, true);
+  }
+
   RenderFrameProxyHost* proxy = GetRenderFrameProxyHost(instance);
   if (proxy && proxy->is_render_frame_proxy_live())
     return proxy->GetRoutingID();
 
-  // At this point we know that we either have to 1) create a new
-  // RenderFrameProxyHost or 2) revive an existing, but no longer alive
-  // RenderFrameProxyHost.
-  RenderViewHostImpl* render_view_host =
-      frame_tree_node_->frame_tree()->GetRenderViewHost(instance);
-  if (!proxy) {
-    // Before creating a new RenderFrameProxyHost, ensure a RenderViewHost
-    // exists for |instance|, as it creates the page level structure in Blink.
-    if (!render_view_host) {
-      CHECK(frame_tree_node_->IsMainFrame());
-      render_view_host = frame_tree_node_->frame_tree()->CreateRenderViewHost(
-          instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE, true, true);
-    }
-
+  if (!proxy)
     proxy = CreateRenderFrameProxyHost(instance, render_view_host);
-  }
 
-  // Make sure that the RenderFrameProxy is present in the renderer.
-  if (frame_tree_node_->IsMainFrame() && render_view_host) {
+  if (frame_tree_node_->IsMainFrame()) {
     InitRenderView(render_view_host, proxy);
   } else {
     proxy->InitRenderFrameProxy();
@@ -2057,19 +2034,7 @@ void RenderFrameHostManager::CommitPending() {
       render_frame_host_->GetView()->Focus();
     } else {
       // The main frame's view is already focused, but we need to set
-      // page-level focus in the subframe's renderer.  Before doing that, also
-      // tell the new renderer what the focused frame is if that frame is not
-      // in its process, so that Blink's page-level focus logic won't try to
-      // reset frame focus to the main frame.  See https://crbug.com/802156.
-      FrameTreeNode* focused_frame =
-          frame_tree_node_->frame_tree()->GetFocusedFrame();
-      if (focused_frame && !focused_frame->IsMainFrame() &&
-          focused_frame->current_frame_host()->GetSiteInstance() !=
-              render_frame_host_->GetSiteInstance()) {
-        focused_frame->render_manager()
-            ->GetRenderFrameProxyHost(render_frame_host_->GetSiteInstance())
-            ->SetFocusedFrame();
-      }
+      // page-level focus in the subframe's renderer.
       frame_tree_node_->frame_tree()->SetPageFocus(
           render_frame_host_->GetSiteInstance(), true);
     }

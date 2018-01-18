@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/files/file_util.h"
 #include "base/memory/ptr_util.h"
+#include "base/message_loop/message_loop.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/sys_byteorder.h"
 #include "base/test/scoped_task_environment.h"
@@ -35,10 +36,6 @@ uint32_t ReadLE4(const char* buf) {
   return static_cast<uint8_t>(buf[0]) | (static_cast<uint8_t>(buf[1]) << 8) |
          (static_cast<uint8_t>(buf[2]) << 16) |
          (static_cast<uint8_t>(buf[3]) << 24);
-}
-
-base::File OpenFile(const base::FilePath& file_path) {
-  return base::File(file_path, base::File::FLAG_OPEN | base::File::FLAG_WRITE);
 }
 
 }  // namespace
@@ -143,7 +140,7 @@ class AudioDebugFileWriterTest
 
   void VerifyRecording(const base::FilePath& file_path) {
     base::File file(file_path, base::File::FLAG_OPEN | base::File::FLAG_READ);
-    ASSERT_TRUE(file.IsValid());
+    EXPECT_TRUE(file.IsValid());
 
     char wav_header[kWavHeaderSize];
     EXPECT_EQ(file.Read(0, wav_header, kWavHeaderSize),
@@ -183,11 +180,9 @@ class AudioDebugFileWriterTest
 
   void RecordAndVerifyOnce() {
     base::FilePath file_path;
-    ASSERT_TRUE(base::CreateTemporaryFile(&file_path));
-    base::File file = OpenFile(file_path);
-    ASSERT_TRUE(file.IsValid());
+    EXPECT_TRUE(base::CreateTemporaryFile(&file_path));
 
-    debug_writer_->Start(std::move(file));
+    debug_writer_->Start(file_path);
 
     DoDebugRecording();
 
@@ -201,7 +196,7 @@ class AudioDebugFileWriterTest
       LOG(ERROR) << "Test failed; keeping recording(s) at ["
                  << file_path.value().c_str() << "].";
     } else {
-      ASSERT_TRUE(base::DeleteFile(file_path, false));
+      EXPECT_TRUE(base::DeleteFile(file_path, false));
     }
   }
 
@@ -253,11 +248,9 @@ TEST_P(AudioDebugFileWriterSingleThreadTest,
   debug_writer_.reset(new AudioDebugFileWriter(params_));
 
   base::FilePath file_path;
-  ASSERT_TRUE(base::CreateTemporaryFile(&file_path));
-  base::File file = OpenFile(file_path);
-  ASSERT_TRUE(file.IsValid());
+  EXPECT_TRUE(base::CreateTemporaryFile(&file_path));
 
-  debug_writer_->Start(std::move(file));
+  debug_writer_->Start(file_path);
 
   DoDebugRecording();
 
@@ -271,14 +264,14 @@ TEST_P(AudioDebugFileWriterSingleThreadTest,
     LOG(ERROR) << "Test failed; keeping recording(s) at ["
                << file_path.value().c_str() << "].";
   } else {
-    ASSERT_TRUE(base::DeleteFile(file_path, false));
+    EXPECT_TRUE(base::DeleteFile(file_path, false));
   }
 }
 
-TEST_P(AudioDebugFileWriterBehavioralTest, StartWithInvalidFile) {
+TEST_P(AudioDebugFileWriterBehavioralTest, FileCreationError) {
   debug_writer_.reset(new AudioDebugFileWriter(params_));
-  base::File file;  // Invalid file, recording should not crash
-  debug_writer_->Start(std::move(file));
+  base::FilePath file_path;  // Empty file name.
+  debug_writer_->Start(file_path);
   DoDebugRecording();
 }
 
@@ -296,10 +289,8 @@ TEST_P(AudioDebugFileWriterBehavioralTest, DestroyNotStarted) {
 TEST_P(AudioDebugFileWriterBehavioralTest, DestroyStarted) {
   debug_writer_.reset(new AudioDebugFileWriter(params_));
   base::FilePath file_path;
-  ASSERT_TRUE(base::CreateTemporaryFile(&file_path));
-  base::File file = OpenFile(file_path);
-  ASSERT_TRUE(file.IsValid());
-  debug_writer_->Start(std::move(file));
+  EXPECT_TRUE(base::CreateTemporaryFile(&file_path));
+  debug_writer_->Start(file_path);
   debug_writer_.reset();
 }
 

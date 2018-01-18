@@ -320,32 +320,20 @@ void OmniboxEditModel::AdjustTextForCopy(int sel_min,
   // We can't use CurrentTextIsURL() or GetDataForURLExport() because right now
   // the user is probably holding down control to cause the copy, which will
   // screw up our calculation of the desired_tld.
-  AutocompleteMatch match_from_text;
-  client_->GetAutocompleteClassifier()->Classify(*text, is_keyword_selected(),
-                                                 true, ClassifyPage(),
-                                                 &match_from_text, nullptr);
-  if (AutocompleteMatch::IsSearchType(match_from_text.type))
+  AutocompleteMatch match;
+  client_->GetAutocompleteClassifier()->Classify(
+      *text, is_keyword_selected(), true, ClassifyPage(), &match, nullptr);
+  if (AutocompleteMatch::IsSearchType(match.type))
     return;
-  *url = match_from_text.destination_url;
+  *url = match.destination_url;
 
   // Prefix the text with 'http://' if the text doesn't start with 'http://',
   // the text parses as a url with a scheme of http, the user selected the
   // entire host, and the user hasn't edited the host or manually removed the
   // scheme.
-  GURL reference_url = PermanentURL();
-  // If the popup is open, and the user is in input mode, and has a current
-  // match, use the destination URL as the reference URL instead.
-  if (PopupIsOpen() && user_input_in_progress_) {
-    AutocompleteMatch current_match = CurrentMatch(nullptr);
-    if (!AutocompleteMatch::IsSearchType(current_match.type) &&
-        current_match.destination_url.is_valid()) {
-      reference_url = current_match.destination_url;
-    }
-  }
-
-  if (reference_url.SchemeIs(url::kHttpScheme) &&
-      url->SchemeIs(url::kHttpScheme) &&
-      reference_url.host_piece() == url->host_piece()) {
+  GURL perm_url(PermanentURL());
+  if (perm_url.SchemeIs(url::kHttpScheme) && url->SchemeIs(url::kHttpScheme) &&
+      perm_url.host_piece() == url->host_piece()) {
     *write_url = true;
     base::string16 http = base::ASCIIToUTF16(url::kHttpScheme) +
         base::ASCIIToUTF16(url::kStandardSchemeSeparator);
@@ -407,20 +395,9 @@ void OmniboxEditModel::StartAutocomplete(bool has_selected_text,
   // of the form "<keyword> <query>", where our query is |user_text_|.
   // So we need to adjust the cursor position forward by the length of
   // any keyword added by MaybePrependKeyword() above.
-  if (is_keyword_selected()) {
-    // If there is user text, the cursor is past the keyword and doesn't
-    // account for its size.  Add the keyword's size to the position passed
-    // to autocomplete.
-    if (!user_text_.empty()) {
-      cursor_position += input_text.length() - user_text_.length();
-    } else {
-      // Otherwise, cursor may point into keyword or otherwise not account
-      // for the keyword's size (depending on how this code is reached).
-      // Pass a cursor at end of input to autocomplete.  This is safe in all
-      // conditions.
-      cursor_position = input_text.length();
-    }
-  }
+  if (is_keyword_selected())
+    cursor_position += input_text.length() - user_text_.length();
+
   input_ = AutocompleteInput(input_text, cursor_position, ClassifyPage(),
                              client_->GetSchemeClassifier());
   input_.set_current_url(client_->GetURL());

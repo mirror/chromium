@@ -574,8 +574,7 @@ class LayerTreeHostAnimationTestForceRedraw
       layer_tree_host()->SetNeedsAnimate();
   }
 
-  void UpdateLayerTreeHost(
-      LayerTreeHostClient::VisualStateUpdate requested_update) override {
+  void UpdateLayerTreeHost() override {
     layer_tree_host()->SetNeedsCommitWithForcedRedraw();
   }
 
@@ -1880,8 +1879,7 @@ class LayerTreeHostAnimationTestSetPotentiallyAnimatingOnLacDestruction
 
   void DidCommit() override { PostSetNeedsCommitToMainThread(); }
 
-  void UpdateLayerTreeHost(
-      LayerTreeHostClient::VisualStateUpdate requested_update) override {
+  void UpdateLayerTreeHost() override {
     if (layer_tree_host()->SourceFrameNumber() == 2) {
       // Destroy player.
       timeline_->DetachPlayer(player_.get());
@@ -1957,8 +1955,7 @@ class LayerTreeHostAnimationTestRebuildPropertyTreesOnAnimationSetNeedsCommit
       PostSetNeedsCommitToMainThread();
   }
 
-  void UpdateLayerTreeHost(
-      LayerTreeHostClient::VisualStateUpdate requested_update) override {
+  void UpdateLayerTreeHost() override {
     if (layer_tree_host()->SourceFrameNumber() == 1) {
       EXPECT_FALSE(layer_tree_host()->property_trees()->needs_rebuild);
       AddAnimatedTransformToPlayer(player_child_.get(), 1.0, 5, 5);

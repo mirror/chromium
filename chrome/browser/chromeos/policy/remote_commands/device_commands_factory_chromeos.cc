@@ -35,7 +35,7 @@ DeviceCommandsFactoryChromeOS::BuildJobForType(em::RemoteCommand_Type type) {
           chromeos::DBusThreadManager::Get()->GetPowerManagerClient()));
     case em::RemoteCommand_Type_DEVICE_SCREENSHOT:
       return base::WrapUnique<RemoteCommandJob>(new DeviceCommandScreenshotJob(
-          std::make_unique<ScreenshotDelegate>()));
+          base::MakeUnique<ScreenshotDelegate>()));
     case em::RemoteCommand_Type_DEVICE_SET_VOLUME:
       return base::WrapUnique<RemoteCommandJob>(
           new DeviceCommandSetVolumeJob());

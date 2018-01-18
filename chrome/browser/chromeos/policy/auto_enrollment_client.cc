@@ -389,16 +389,16 @@ bool AutoEnrollmentClient::OnDeviceStateRequestCompletion(
       UpdateDict(
           dict.Get(), kDeviceStateManagementDomain,
           state_response.has_management_domain(),
-          std::make_unique<base::Value>(state_response.management_domain()));
+          base::MakeUnique<base::Value>(state_response.management_domain()));
 
       std::string restore_mode =
           ConvertRestoreMode(state_response.restore_mode());
       UpdateDict(dict.Get(), kDeviceStateRestoreMode, !restore_mode.empty(),
-                 std::make_unique<base::Value>(restore_mode));
+                 base::MakeUnique<base::Value>(restore_mode));
 
       UpdateDict(dict.Get(), kDeviceStateDisabledMessage,
                  state_response.has_disabled_state(),
-                 std::make_unique<base::Value>(
+                 base::MakeUnique<base::Value>(
                      state_response.disabled_state().message()));
 
       // Logging as "WARNING" to make sure it's preserved in the logs.

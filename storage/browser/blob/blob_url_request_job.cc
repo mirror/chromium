@@ -38,6 +38,7 @@
 #include "storage/browser/blob/blob_reader.h"
 #include "storage/browser/fileapi/file_stream_reader.h"
 #include "storage/browser/fileapi/file_system_url.h"
+#include "storage/common/data_element.h"
 
 namespace storage {
 

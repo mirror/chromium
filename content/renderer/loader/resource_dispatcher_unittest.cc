@@ -21,8 +21,10 @@
 #include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
 #include "content/common/appcache_interfaces.h"
-#include "content/common/weak_wrapper_shared_url_loader_factory.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/resource_request.h"
+#include "content/public/common/resource_request_body.h"
+#include "content/public/common/resource_response.h"
 #include "content/public/common/service_worker_modes.h"
 #include "content/public/renderer/fixed_received_data.h"
 #include "content/public/renderer/request_peer.h"
@@ -33,13 +35,10 @@
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
-#include "services/network/public/cpp/resource_request.h"
-#include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebReferrerPolicy.h"
-#include "third_party/WebKit/public/platform/scheduler/test/renderer_scheduler_test_support.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -70,7 +69,7 @@ class ResourceDispatcherTest : public testing::Test,
       int32_t routing_id,
       int32_t request_id,
       uint32_t options,
-      const network::ResourceRequest& url_request,
+      const ResourceRequest& url_request,
       mojom::URLLoaderClientPtr client,
       const net::MutableNetworkTrafficAnnotationTag& annotation) override {
     loader_and_clients_.emplace_back(std::move(request), std::move(client));
@@ -79,7 +78,7 @@ class ResourceDispatcherTest : public testing::Test,
   void Clone(mojom::URLLoaderFactoryRequest request) override { NOTREACHED(); }
 
   void CallOnReceiveResponse(mojom::URLLoaderClient* client) {
-    network::ResourceResponseHead head;
+    ResourceResponseHead head;
     std::string raw_headers(kTestPageHeaders);
     std::replace(raw_headers.begin(), raw_headers.end(), '\n', '\0');
     head.headers = new net::HttpResponseHeaders(raw_headers);
@@ -88,9 +87,8 @@ class ResourceDispatcherTest : public testing::Test,
     client->OnReceiveResponse(head, {}, {});
   }
 
-  std::unique_ptr<network::ResourceRequest> CreateResourceRequest() {
-    std::unique_ptr<network::ResourceRequest> request(
-        new network::ResourceRequest());
+  std::unique_ptr<ResourceRequest> CreateResourceRequest() {
+    std::unique_ptr<ResourceRequest> request(new ResourceRequest());
 
     request->method = "GET";
     request->url = GURL(kTestPageUrl);
@@ -109,16 +107,14 @@ class ResourceDispatcherTest : public testing::Test,
 
   ResourceDispatcher* dispatcher() { return dispatcher_.get(); }
 
-  int StartAsync(std::unique_ptr<network::ResourceRequest> request,
-                 network::ResourceRequestBody* request_body,
+  int StartAsync(std::unique_ptr<ResourceRequest> request,
+                 ResourceRequestBody* request_body,
                  TestRequestPeer::Context* peer_context) {
     std::unique_ptr<TestRequestPeer> peer(
         new TestRequestPeer(dispatcher(), peer_context));
     int request_id = dispatcher()->StartAsync(
-        std::move(request), 0,
-        blink::scheduler::GetSingleThreadTaskRunnerForTesting(), url::Origin(),
-        TRAFFIC_ANNOTATION_FOR_TESTS, false, std::move(peer),
-        base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(this),
+        std::move(request), 0, nullptr, url::Origin(),
+        TRAFFIC_ANNOTATION_FOR_TESTS, false, std::move(peer), this,
         std::vector<std::unique_ptr<URLLoaderThrottle>>(),
         mojom::URLLoaderClientEndpointsPtr());
     peer_context->request_id = request_id;
@@ -168,14 +164,12 @@ class TestResourceDispatcherDelegate : public ResourceDispatcherDelegate {
 
     void OnUploadProgress(uint64_t position, uint64_t size) override {}
 
-    bool OnReceivedRedirect(
-        const net::RedirectInfo& redirect_info,
-        const network::ResourceResponseInfo& info) override {
+    bool OnReceivedRedirect(const net::RedirectInfo& redirect_info,
+                            const ResourceResponseInfo& info) override {
       return false;
     }
 
-    void OnReceivedResponse(
-        const network::ResourceResponseInfo& info) override {
+    void OnReceivedResponse(const ResourceResponseInfo& info) override {
       response_info_ = info;
     }
 
@@ -198,7 +192,7 @@ class TestResourceDispatcherDelegate : public ResourceDispatcherDelegate {
 
    private:
     std::unique_ptr<RequestPeer> original_peer_;
-    network::ResourceResponseInfo response_info_;
+    ResourceResponseInfo response_info_;
     std::string data_;
 
     DISALLOW_COPY_AND_ASSIGN(WrapperPeer);
@@ -209,7 +203,7 @@ class TestResourceDispatcherDelegate : public ResourceDispatcherDelegate {
 };
 
 TEST_F(ResourceDispatcherTest, DelegateTest) {
-  std::unique_ptr<network::ResourceRequest> request(CreateResourceRequest());
+  std::unique_ptr<ResourceRequest> request(CreateResourceRequest());
   TestRequestPeer::Context peer_context;
   StartAsync(std::move(request), nullptr, &peer_context);
 
@@ -255,7 +249,7 @@ TEST_F(ResourceDispatcherTest, DelegateTest) {
 }
 
 TEST_F(ResourceDispatcherTest, CancelDuringCallbackWithWrapperPeer) {
-  std::unique_ptr<network::ResourceRequest> request(CreateResourceRequest());
+  std::unique_ptr<ResourceRequest> request(CreateResourceRequest());
   TestRequestPeer::Context peer_context;
   StartAsync(std::move(request), nullptr, &peer_context);
   peer_context.cancel_on_receive_response = true;
@@ -310,8 +304,8 @@ TEST_F(ResourceDispatcherTest, SerializedPostData) {
 
 class TimeConversionTest : public ResourceDispatcherTest {
  public:
-  void PerformTest(const network::ResourceResponseHead& response_head) {
-    std::unique_ptr<network::ResourceRequest> request(CreateResourceRequest());
+  void PerformTest(const ResourceResponseHead& response_head) {
+    std::unique_ptr<ResourceRequest> request(CreateResourceRequest());
     TestRequestPeer::Context peer_context;
     StartAsync(std::move(request), nullptr, &peer_context);
 
@@ -321,17 +315,15 @@ class TimeConversionTest : public ResourceDispatcherTest {
     client->OnReceiveResponse(response_head, {}, {});
   }
 
-  const network::ResourceResponseInfo& response_info() const {
-    return response_info_;
-  }
+  const ResourceResponseInfo& response_info() const { return response_info_; }
 
  private:
-  network::ResourceResponseInfo response_info_;
+  ResourceResponseInfo response_info_;
 };
 
 // TODO(simonjam): Enable this when 10829031 lands.
 TEST_F(TimeConversionTest, DISABLED_ProperlyInitialized) {
-  network::ResourceResponseHead response_head;
+  ResourceResponseHead response_head;
   response_head.request_start = base::TimeTicks::FromInternalValue(5);
   response_head.response_start = base::TimeTicks::FromInternalValue(15);
   response_head.load_timing.request_start_time = base::Time::Now();
@@ -350,7 +342,7 @@ TEST_F(TimeConversionTest, DISABLED_ProperlyInitialized) {
 }
 
 TEST_F(TimeConversionTest, PartiallyInitialized) {
-  network::ResourceResponseHead response_head;
+  ResourceResponseHead response_head;
   response_head.request_start = base::TimeTicks::FromInternalValue(5);
   response_head.response_start = base::TimeTicks::FromInternalValue(15);
 
@@ -362,7 +354,7 @@ TEST_F(TimeConversionTest, PartiallyInitialized) {
 }
 
 TEST_F(TimeConversionTest, NotInitialized) {
-  network::ResourceResponseHead response_head;
+  ResourceResponseHead response_head;
 
   PerformTest(response_head);
 

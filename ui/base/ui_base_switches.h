@@ -55,7 +55,7 @@ UI_BASE_EXPORT extern const char kMangleLocalizedStrings[];
 
 #if defined(USE_AURA)
 UI_BASE_EXPORT extern const char kMus[];
-UI_BASE_EXPORT extern const char kMusHostingViz[];
+UI_BASE_EXPORT extern const char kMusHostVizValue[];
 #endif
 
 }  // namespace switches

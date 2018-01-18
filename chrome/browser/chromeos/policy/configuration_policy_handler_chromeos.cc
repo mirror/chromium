@@ -17,6 +17,7 @@
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/values.h"
@@ -267,7 +268,7 @@ void NetworkConfigurationPolicyHandler::PrepareForDisplaying(
   std::unique_ptr<base::Value> sanitized_config =
       SanitizeNetworkConfig(entry->value.get());
   if (!sanitized_config)
-    sanitized_config = std::make_unique<base::Value>();
+    sanitized_config = base::MakeUnique<base::Value>();
 
   policies->Set(policy_name(), entry->level, entry->scope, entry->source,
                 std::move(sanitized_config), nullptr);
@@ -304,7 +305,7 @@ NetworkConfigurationPolicyHandler::SanitizeNetworkConfig(
 
   base::JSONWriter::WriteWithOptions(
       *toplevel_dict, base::JSONWriter::OPTIONS_PRETTY_PRINT, &json_string);
-  return std::make_unique<base::Value>(json_string);
+  return base::MakeUnique<base::Value>(json_string);
 }
 
 PinnedLauncherAppsPolicyHandler::PinnedLauncherAppsPolicyHandler()
@@ -328,7 +329,7 @@ void PinnedLauncherAppsPolicyHandler::ApplyList(
   std::unique_ptr<base::ListValue> pinned_apps_list(new base::ListValue());
   for (const base::Value& entry : filtered_list->GetList()) {
     const std::string& app_id = entry.GetString();
-    auto app_dict = std::make_unique<base::DictionaryValue>();
+    auto app_dict = base::MakeUnique<base::DictionaryValue>();
     app_dict->SetString(kPinnedAppsPrefAppIDPath, app_id);
     pinned_apps_list->Append(std::move(app_dict));
   }

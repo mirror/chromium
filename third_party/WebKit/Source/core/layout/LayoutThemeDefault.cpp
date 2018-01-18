@@ -59,7 +59,7 @@ LayoutThemeDefault::LayoutThemeDefault()
   caret_blink_interval_ = LayoutTheme::CaretBlinkInterval();
 }
 
-LayoutThemeDefault::~LayoutThemeDefault() = default;
+LayoutThemeDefault::~LayoutThemeDefault() {}
 
 bool LayoutThemeDefault::ThemeDrawsFocusRing(const ComputedStyle& style) const {
   if (UseMockTheme()) {

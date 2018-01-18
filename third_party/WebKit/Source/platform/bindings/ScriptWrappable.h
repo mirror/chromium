@@ -34,7 +34,6 @@
 #include "build/build_config.h"
 #include "platform/PlatformExport.h"
 #include "platform/bindings/TraceWrapperBase.h"
-#include "platform/bindings/TraceWrapperV8Reference.h"
 #include "platform/bindings/WrapperTypeInfo.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Noncopyable.h"
@@ -58,11 +57,6 @@ class PLATFORM_EXPORT ScriptWrappable
   virtual ~ScriptWrappable() = default;
 
   virtual void Trace(blink::Visitor*) {}
-
-  void TraceWrappers(const ScriptWrappableVisitor*) const override {
-    // TODO(mlippautz/ulan): Trace |main_world_wrapper_| here once the GC plugin
-    // can make sure that all children properly dispatch to ScriptWrappable.
-  }
 
   bool IsScriptWrappable() const override { return true; }
 
@@ -122,27 +116,28 @@ class PLATFORM_EXPORT ScriptWrappable
       wrapper = MainWorldWrapper(isolate);
       return false;
     }
-    main_world_wrapper_.Set(isolate, wrapper);
+    main_world_wrapper_.Reset(isolate, wrapper);
+    wrapper_type_info->ConfigureWrapper(&main_world_wrapper_);
+    main_world_wrapper_.SetWeak();
     DCHECK(ContainsWrapper());
-    wrapper_type_info->ConfigureWrapper(&main_world_wrapper_.Get());
+    ScriptWrappableVisitor::WriteBarrier(isolate, main_world_wrapper_);
     return true;
   }
 
   // Dissociates the wrapper, if any, from this instance.
   void UnsetWrapperIfAny() {
     if (ContainsWrapper()) {
-      main_world_wrapper_.Get().Reset();
+      main_world_wrapper_.Reset();
       WrapperTypeInfo::WrapperDestroyed();
     }
   }
 
   bool IsEqualTo(const v8::Local<v8::Object>& other) const {
-    return main_world_wrapper_.Get() == other;
+    return main_world_wrapper_ == other;
   }
 
   bool SetReturnValue(v8::ReturnValue<v8::Value> return_value) {
-    v8::Isolate* isolate = return_value.GetIsolate();
-    return_value.Set(main_world_wrapper_.Get().Get(isolate));
+    return_value.Set(main_world_wrapper_);
     return ContainsWrapper();
   }
 
@@ -164,17 +159,17 @@ class PLATFORM_EXPORT ScriptWrappable
   friend class V8PrivateProperty;
 
   v8::Local<v8::Object> MainWorldWrapper(v8::Isolate* isolate) const {
-    return main_world_wrapper_.NewLocal(isolate);
+    return v8::Local<v8::Object>::New(isolate, main_world_wrapper_);
   }
 
   // Only use when really necessary, i.e., when passing over this
   // ScriptWrappable's reference to V8. Should only be needed by GC
   // infrastructure.
   const v8::Persistent<v8::Object>* RawMainWorldWrapper() const {
-    return &main_world_wrapper_.Get();
+    return &main_world_wrapper_;
   }
 
-  TraceWrapperV8Reference<v8::Object> main_world_wrapper_;
+  v8::Persistent<v8::Object> main_world_wrapper_;
 };
 
 // Defines |GetWrapperTypeInfo| virtual method which returns the WrapperTypeInfo

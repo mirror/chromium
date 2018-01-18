@@ -29,7 +29,6 @@ class VIZ_SERVICE_EXPORT PrimaryBeginFrameSource
   void OnBeginFrame(const BeginFrameArgs& args) override;
   const BeginFrameArgs& LastUsedBeginFrameArgs() const override;
   void OnBeginFrameSourcePausedChanged(bool paused) override;
-  bool WantsAnimateOnlyBeginFrames() const override;
 
   // BeginFrameSource implementation.
   void DidFinishFrame(BeginFrameObserver* obs) override;

@@ -59,12 +59,12 @@ class WebIDBKeyPath {
   WebIDBKeyPath& operator=(const WebIDBKeyPath& key_path) = default;
 
   WebIDBKeyPathType KeyPathType() const { return type_; }
-
-  // Only valid for ArrayType.
-  const WebVector<WebString>& Array() const { return array_; }
-
-  // Only valid for StringType.
-  const WebString& String() const { return string_; }
+  const WebVector<WebString>& Array() const {
+    return array_;
+  }  // Only valid for ArrayType.
+  const WebString& GetString() const {
+    return string_;
+  }  // Only valid for StringType.
 
  private:
   WebIDBKeyPathType type_;

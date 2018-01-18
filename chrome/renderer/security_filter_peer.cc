@@ -76,13 +76,13 @@ void SecurityFilterPeer::OnUploadProgress(uint64_t position, uint64_t size) {
 
 bool SecurityFilterPeer::OnReceivedRedirect(
     const net::RedirectInfo& redirect_info,
-    const network::ResourceResponseInfo& info) {
+    const content::ResourceResponseInfo& info) {
   NOTREACHED();
   return false;
 }
 
 void SecurityFilterPeer::OnReceivedResponse(
-    const network::ResourceResponseInfo& info) {
+    const content::ResourceResponseInfo& info) {
   NOTREACHED();
 }
 
@@ -100,7 +100,7 @@ void SecurityFilterPeer::OnTransferSizeUpdated(int transfer_size_diff) {
 
 void SecurityFilterPeer::OnCompletedRequest(
     const network::URLLoaderCompletionStatus& status) {
-  network::ResourceResponseInfo info;
+  content::ResourceResponseInfo info;
   info.mime_type = mime_type_;
   info.headers = CreateHeaders(mime_type_);
   info.content_length = static_cast<int>(data_.size());

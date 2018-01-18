@@ -21,8 +21,6 @@ class SingleThreadTaskRunner;
 
 namespace blink {
 
-class WebTaskRunner;
-
 // TaskHandle is associated to a task posted by
 // WebTaskRunner::postCancellableTask or
 // WebTaskRunner::postCancellableDelayedTask and cancels the associated task on
@@ -50,13 +48,7 @@ class BLINK_PLATFORM_EXPORT TaskHandle {
   class Runner;
 
  private:
-  friend BLINK_PLATFORM_EXPORT WARN_UNUSED_RESULT TaskHandle
-  PostCancellableTask(WebTaskRunner&, const base::Location&, base::OnceClosure);
-  friend BLINK_PLATFORM_EXPORT WARN_UNUSED_RESULT TaskHandle
-  PostDelayedCancellableTask(WebTaskRunner&,
-                             const base::Location&,
-                             base::OnceClosure,
-                             TimeDelta delay);
+  friend class WebTaskRunner;
 
   explicit TaskHandle(scoped_refptr<Runner>);
   scoped_refptr<Runner> runner_;
@@ -81,6 +73,15 @@ class BLINK_PLATFORM_EXPORT WebTaskRunner
   // For same-thread posting. Must be called from the associated WebThread.
   void PostTask(const base::Location&, base::OnceClosure);
 
+  // For same-thread cancellable task posting. Returns a TaskHandle object for
+  // cancellation.
+  WARN_UNUSED_RESULT TaskHandle PostCancellableTask(const base::Location&,
+                                                    base::OnceClosure);
+  WARN_UNUSED_RESULT TaskHandle
+  PostDelayedCancellableTask(const base::Location&,
+                             base::OnceClosure,
+                             TimeDelta delay);
+
  protected:
   friend ThreadSafeRefCounted<WebTaskRunner>;
   WebTaskRunner() = default;
@@ -98,16 +99,6 @@ BLINK_PLATFORM_EXPORT void PostDelayedCrossThreadTask(WebTaskRunner&,
                                                       const base::Location&,
                                                       CrossThreadClosure,
                                                       TimeDelta delay);
-
-// For same-thread cancellable task posting. Returns a TaskHandle object for
-// cancellation.
-BLINK_PLATFORM_EXPORT WARN_UNUSED_RESULT TaskHandle
-PostCancellableTask(WebTaskRunner&, const base::Location&, base::OnceClosure);
-BLINK_PLATFORM_EXPORT WARN_UNUSED_RESULT TaskHandle
-PostDelayedCancellableTask(WebTaskRunner&,
-                           const base::Location&,
-                           base::OnceClosure,
-                           TimeDelta delay);
 
 }  // namespace blink
 

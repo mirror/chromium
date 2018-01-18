@@ -202,7 +202,6 @@ TEST_P(PaintPropertyTreeBuilderTest, FixedPosition) {
 }
 
 TEST_P(PaintPropertyTreeBuilderTest, PositionAndScroll) {
-  GetDocument().SetCompatibilityMode(Document::kQuirksMode);
   LoadTestData("position-and-scroll.html");
 
   Element* scroller = GetDocument().getElementById("scroller");
@@ -270,34 +269,6 @@ TEST_P(PaintPropertyTreeBuilderTest, PositionAndScroll) {
   CHECK_EXACT_VISUAL_RECT(LayoutRect(123, 456, 300, 400),
                           abs_pos->GetLayoutObject(),
                           frame_view->GetLayoutView());
-}
-
-TEST_P(PaintPropertyTreeBuilderTest, OverflowScrollExcludeScrollbars) {
-  SetBodyInnerHTML(R"HTML(
-    <div id='scroller'
-         style='width: 100px; height: 100px; overflow: scroll;
-                 border: 10px solid blue'>
-      <div style='width: 400px; height: 400px'></div>
-    </div>
-  )HTML");
-  CHECK(GetDocument().GetPage()->GetScrollbarTheme().UsesOverlayScrollbars());
-
-  const auto* properties = PaintPropertiesForElement("scroller");
-  const auto* overflow_clip = properties->OverflowClip();
-
-  EXPECT_EQ(FrameContentClip(), overflow_clip->Parent());
-  EXPECT_EQ(properties->PaintOffsetTranslation(),
-            overflow_clip->LocalTransformSpace());
-  EXPECT_EQ(FloatRoundedRect(10, 10, 100, 100), overflow_clip->ClipRect());
-
-  PaintLayer* paint_layer =
-      ToLayoutBoxModelObject(GetLayoutObjectByElementId("scroller"))->Layer();
-  EXPECT_TRUE(paint_layer->GetScrollableArea()
-                  ->VerticalScrollbar()
-                  ->IsOverlayScrollbar());
-
-  EXPECT_EQ(FloatRoundedRect(10, 10, 93, 93),
-            overflow_clip->ClipRectExcludingOverlayScrollbars());
 }
 
 TEST_P(PaintPropertyTreeBuilderTest, OverflowScrollVerticalRL) {
@@ -1219,9 +1190,6 @@ TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetTranslationSVGHTMLBoundary) {
 }
 
 TEST_P(PaintPropertyTreeBuilderTest, SVGViewportContainer) {
-  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
-    return;
-
   SetBodyInnerHTML(R"HTML(
     <!-- border radius of inner svg elemnents should be ignored. -->
     <style>svg { border-radius: 10px }</style>
@@ -1279,38 +1247,6 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGViewportContainer) {
   ASSERT_NE(nullptr, transform);
   EXPECT_EQ(TransformationMatrix().Translate(20, 30), transform->Matrix());
   EXPECT_EQ(parent_transform, transform->Parent());
-}
-
-TEST_P(PaintPropertyTreeBuilderTest, SVGForeignObjectOverflowClip) {
-  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
-    return;
-
-  SetBodyInnerHTML(R"HTML(
-    <svg id='svg'>
-      <foreignObject id='object1' x='10' y='20' width='30' height='40'
-          overflow='hidden'>
-      </foreignObject>
-      <foreignObject id='object2' x='50' y='60' width='30' height='40'
-          overflow='visible'>
-      </foreignObject>
-    </svg>
-  )HTML");
-
-  const auto* svg_properties = PaintPropertiesForElement("svg");
-  ASSERT_NE(nullptr, svg_properties);
-  const auto* parent_transform = svg_properties->PaintOffsetTranslation();
-  const auto* parent_clip = svg_properties->OverflowClip();
-
-  const auto* properties1 = PaintPropertiesForElement("object1");
-  ASSERT_NE(nullptr, properties1);
-  const auto* clip = properties1->OverflowClip();
-  ASSERT_NE(nullptr, clip);
-  EXPECT_EQ(parent_clip, clip->Parent());
-  EXPECT_EQ(FloatRect(10, 20, 30, 40), clip->ClipRect().Rect());
-  EXPECT_EQ(parent_transform, clip->LocalTransformSpace());
-
-  const auto* properties2 = PaintPropertiesForElement("object2");
-  EXPECT_EQ(nullptr, properties2);
 }
 
 TEST_P(PaintPropertyTreeBuilderTest,
@@ -1409,7 +1345,6 @@ TEST_P(PaintPropertyTreeBuilderTest, ControlClip) {
 }
 
 TEST_P(PaintPropertyTreeBuilderTest, ControlClipInsideForeignObject) {
-  GetDocument().SetCompatibilityMode(Document::kQuirksMode);
   SetBodyInnerHTML(R"HTML(
     <div style='column-count:2;'>
       <div style='columns: 2'>

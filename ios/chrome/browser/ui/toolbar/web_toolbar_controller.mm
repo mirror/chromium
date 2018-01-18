@@ -46,7 +46,6 @@
 #import "ios/chrome/browser/ui/commands/start_voice_search_command.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
 #import "ios/chrome/browser/ui/image_util/image_util.h"
-#import "ios/chrome/browser/ui/location_bar/location_bar_url_loader.h"
 #include "ios/chrome/browser/ui/location_bar/location_bar_view.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
@@ -109,7 +108,6 @@ using ios::material::TimingFunction;
 
 @interface WebToolbarController ()<DropAndNavigateDelegate,
                                    LocationBarDelegate,
-                                   LocationBarURLLoader,
                                    OmniboxPopupPositioner,
                                    ToolbarViewDelegate> {
   // Top-level view for web content.
@@ -510,7 +508,6 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
   _locationBar = base::MakeUnique<LocationBarControllerImpl>(
       _locationBarView, _browserState, self, self.dispatcher);
   _omniboxPopupCoordinator = _locationBar->CreatePopupCoordinator(self);
-  _locationBar->SetURLLoader(self);
   [_omniboxPopupCoordinator start];
 
   // Create the determinate progress bar (phone only).
@@ -915,7 +912,7 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
 }
 
 #pragma mark -
-#pragma mark LocationBarURLLoader methods.
+#pragma mark LocationBarDelegate methods.
 
 - (void)loadGURLFromLocationBar:(const GURL&)url
                      transition:(ui::PageTransition)transition {
@@ -945,9 +942,6 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
   }
   [self cancelOmniboxEdit];
 }
-
-#pragma mark -
-#pragma mark LocationBarDelegate methods.
 
 - (void)locationBarHasBecomeFirstResponder {
   [self.delegate locationBarDidBecomeFirstResponder];
@@ -984,9 +978,6 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
   _locationBar->HideKeyboardAndEndEditing();
   [self updateToolbarState];
 }
-
-#pragma mark -
-#pragma mark FakeboxFocuser methods.
 
 - (void)focusFakebox {
   if (IsIPadIdiom()) {
@@ -1923,6 +1914,10 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
              ->GetVoiceSearchProvider()
              ->IsVoiceSearchEnabled());
   [self.dispatcher preloadVoiceSearch];
+}
+
+- (void)navigateToMemexTabSwitcher {
+  // no-op since WTC won't support the memex Tab Switcher.
 }
 
 #pragma mark - UIViewController

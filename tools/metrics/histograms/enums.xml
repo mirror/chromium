@@ -393,7 +393,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="Social Eng Ads Interstitial"/>
   <int value="2" label="Phishing Interstitial"/>
   <int value="3" label="Subresource Filter"/>
-  <int value="4" label="Better Ads Standard"/>
 </enum>
 
 <enum name="ActiveWindowShowType">
@@ -3253,7 +3252,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="17" label="AddFolder"/>
   <int value="18" label="Import"/>
   <int value="19" label="Export"/>
-  <int value="20" label="Help center"/>
 </enum>
 
 <enum name="BookmarksEntryPoint">
@@ -3674,11 +3672,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="Hardware accelerated"/>
 </enum>
 
-<enum name="BooleanHasCert">
-  <int value="0" label="Certificate absent"/>
-  <int value="1" label="Certificate present"/>
-</enum>
-
 <enum name="BooleanHasCollapseKey">
   <int value="0" label="No collapse_key"/>
   <int value="1" label="Has collapse_key"/>
@@ -3742,11 +3735,6 @@ uploading your change for review.  These are checked by presubmit scripts.
 <enum name="BooleanInForeground">
   <int value="0" label="Background"/>
   <int value="1" label="Foreground"/>
-</enum>
-
-<enum name="BooleanInstalled">
-  <int value="0" label="Not installed"/>
-  <int value="1" label="Installed"/>
 </enum>
 
 <enum name="BooleanInvalid">
@@ -4152,11 +4140,6 @@ uploading your change for review.  These are checked by presubmit scripts.
 <enum name="BooleanWaited">
   <int value="0" label="Did not wait"/>
   <int value="1" label="Waited"/>
-</enum>
-
-<enum name="BooleanWarningReceived">
-  <int value="0" label="Warning Not Received"/>
-  <int value="1" label="Warning Received"/>
 </enum>
 
 <enum name="BooleanWasFast">
@@ -4883,41 +4866,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="196"
       label="User requested recovery for training memory and rebooting."/>
   <int value="255" label="Unspecified/unknown error in user-mode"/>
-</enum>
-
-<enum name="ChromeOSUICommands">
-<!-- Please put in checks to ensure Command IDs are stable before adding them to this enum. -->
-
-  <int value="0" label="Launch App"/>
-  <int value="1" label="Close"/>
-  <int value="2" label="Toggle Pin"/>
-  <int value="3" label="Open in a pinned tab"/>
-  <int value="4" label="Open in a regular tab"/>
-  <int value="5" label="Open in fullscreen"/>
-  <int value="6" label="Open in window"/>
-  <int value="7" label="Open in a new window"/>
-  <int value="8" label="Open in a new incognito window"/>
-  <int value="100" label="Launch New"/>
-  <int value="101" label="Toggle Pin"/>
-  <int value="102" label="Show App Info"/>
-  <int value="103" label="Options"/>
-  <int value="104" label="Uninstall"/>
-  <int value="105" label="Remove From Folder"/>
-  <int value="106" label="Open in New Window"/>
-  <int value="107" label="Open in New Incognito Window"/>
-  <int value="108" label="Install"/>
-  <int value="200" label="Open in a pinned tab"/>
-  <int value="201" label="Open in a regular tab."/>
-  <int value="202" label="Open in fullscreen"/>
-  <int value="203" label="Open in a window"/>
-  <int value="500" label="Toggle Auto Hide"/>
-  <int value="501" label="Shelf Alignment Menu"/>
-  <int value="502" label="Shelf Alignment Left"/>
-  <int value="503" label="Shelf Alignment Right"/>
-  <int value="504" label="Shelf Alignment Bottom"/>
-  <int value="505" label="Change Wallpaper"/>
-<!-- Please put in checks to ensure Command IDs are stable before adding them to this enum. -->
-
 </enum>
 
 <enum name="ChromeOSUserImageId">
@@ -8147,29 +8095,6 @@ Called by update_net_error_codes.py.-->
   <int value="2" label="Network change event"/>
 </enum>
 
-<enum name="DataReductionProxyPingbackCrashAction">
-  <int value="0" label="Detected">
-    A crash was detected during the page load.
-  </int>
-  <int value="1" label="Dump analysis succeeded">
-    A crash was analyzed and the report was added to the pending pingback.
-  </int>
-  <int value="2" label="Dump analysis did not finish">
-    A crash was attempted to be analyzed did not finish before the report was
-    sent.
-  </int>
-  <int value="3" label="Dump not analyzed">
-    A crash was not analyzed and the report was added to the pending pingback.
-    This is default behavior for non-Android crashes.
-  </int>
-  <int value="4" label="Send succeeded">
-    A crash report was successfully uploaded.
-  </int>
-  <int value="5" label="Send failed">
-    A crash report was attempted to be sent, but did not upload successfully.
-  </int>
-</enum>
-
 <enum name="DataReductionProxyProbeURLFetchResult">
   <int value="0" label="Internet disconnected"/>
   <int value="1" label="Probe failed, proxy disabled"/>
@@ -8686,11 +8611,6 @@ Called by update_net_error_codes.py.-->
   <int value="0" label="BOTH_NONEMPTY"/>
   <int value="1" label="SYNC_EMPTY"/>
   <int value="2" label="PREF_EMPTY"/>
-</enum>
-
-<enum name="DeviceOrientation">
-  <int value="0" label="Landscape"/>
-  <int value="1" label="Portrait"/>
 </enum>
 
 <enum name="DeviceOrientationSensorTypeAndroid">
@@ -9342,151 +9262,6 @@ Called by update_net_error_codes.py.-->
   <int value="1" label="Touchview"/>
 </enum>
 
-<enum name="DownEventInputFormFactorDestinationCombination">
-  <int value="0"
-      label="Unknown input in clamshell mode, destination is
-             others(everything except browser and apps)"/>
-  <int value="1"
-      label="Unknown input in clamshell mode, destination is inside the
-             browser frame"/>
-  <int value="2"
-      label="Unknown input in clamshell mode, destination is regular chrome
-             app"/>
-  <int value="3"
-      label="Unknown input in clamshell mode, destination is ARC app(Android
-             app in ChromeOS)"/>
-  <int value="4"
-      label="Unknown input in touchview mode landscape orientation,
-             destination is others(everything except browser and apps)"/>
-  <int value="5"
-      label="Unknown input in touchview mode landscape orientation,
-             destination is inside the browser frame"/>
-  <int value="6"
-      label="Unknown input in touchview mode landscape orientation,
-             destination is regular chrome app"/>
-  <int value="7"
-      label="Unknown input in touchview mode landscape orientation,
-             destination is ARC app(Android app in ChromeOS)"/>
-  <int value="8"
-      label="Unknown input in touchview mode portrait orientation,
-             destination is others(everything except browser and apps)"/>
-  <int value="9"
-      label="Unknown input in touchview mode portrait orientation,
-             destination is inside the browser frame"/>
-  <int value="10"
-      label="Unknown input in touchview mode portrait orientation,
-             destination is regular chrome app"/>
-  <int value="11"
-      label="Unknown input in touchview mode portrait orientation,
-             destination is ARC app(Android app in ChromeOS)"/>
-  <int value="12"
-      label="Mouse input in clamshell mode, destination is others(everything
-             except browser and apps)"/>
-  <int value="13"
-      label="Mouse input in clamshell mode, destination is inside the browser
-             frame"/>
-  <int value="14"
-      label="Mouse input in clamshell mode, destination is regular chrome app"/>
-  <int value="15"
-      label="Mouse input in clamshell mode, destination is ARC app(Android
-             app in ChromeOS)"/>
-  <int value="16"
-      label="Mouse input in touchview mode landscape orientation, destination
-             is others(everything except browser and apps)"/>
-  <int value="17"
-      label="Mouse input in touchview mode landscape orientation, destination
-             is inside the browser frame"/>
-  <int value="18"
-      label="Mouse input in touchview mode landscape orientation, destination
-             is regular chrome app"/>
-  <int value="19"
-      label="Mouse input in touchview mode landscape orientation, destination
-             is ARC app(Android app in ChromeOS)"/>
-  <int value="20"
-      label="Mouse input in touchview mode portrait orientation, destination
-             is others(everything except browser and apps)"/>
-  <int value="21"
-      label="Mouse input in touchview mode portrait orientation, destination
-             is inside the browser frame"/>
-  <int value="22"
-      label="Mouse input in touchview mode portrait orientation, destination
-             is regular chrome app"/>
-  <int value="23"
-      label="Mouse input in touchview mode portrait orientation, destination
-             is ARC app(Android app in ChromeOS)"/>
-  <int value="24"
-      label="Stylus input in clamshell mode, destination is others(everything
-             except browser and apps)"/>
-  <int value="25"
-      label="Stylus input in clamshell mode, destination is inside the
-             browser frame"/>
-  <int value="26"
-      label="Stylus input in clamshell mode, destination is regular chrome
-             app"/>
-  <int value="27"
-      label="Stylus input in clamshell mode, destination is ARC app(Android
-             app in ChromeOS)"/>
-  <int value="28"
-      label="Stylus input in touchview mode landscape orientation,
-             destination is others(everything except browser and apps)"/>
-  <int value="29"
-      label="Stylus input in touchview mode landscape orientation,
-             destination is inside the browser frame"/>
-  <int value="30"
-      label="Stylus input in touchview mode landscape orientation,
-             destination is regular chrome app"/>
-  <int value="31"
-      label="Stylus input in touchview mode landscape orientation,
-             destination is ARC app(Android app in ChromeOS)"/>
-  <int value="32"
-      label="Stylus input in touchview mode portrait orientation, destination
-             is others(everything except browser and apps)"/>
-  <int value="33"
-      label="Stylus input in touchview mode portrait orientation, destination
-             is inside the browser frame"/>
-  <int value="34"
-      label="Stylus input in touchview mode portrait orientation, destination
-             is regular chrome app"/>
-  <int value="35"
-      label="Stylus input in touchview mode portrait orientation, destination
-             is ARC app(Android app in ChromeOS)"/>
-  <int value="36"
-      label="Touch input in clamshell mode, destination is others(everything
-             except browser and apps)"/>
-  <int value="37"
-      label="Touch input in clamshell mode, destination is inside the browser
-             frame"/>
-  <int value="38"
-      label="Touch input in clamshell mode, destination is regular chrome app"/>
-  <int value="39"
-      label="Touch input in clamshell mode, destination is ARC app(Android
-             app in ChromeOS)"/>
-  <int value="40"
-      label="Touch input in touchview mode landscape orientation, destination
-             is others(everything except browser and apps)"/>
-  <int value="41"
-      label="Touch input in touchview mode landscape orientation, destination
-             is inside the browser frame"/>
-  <int value="42"
-      label="Touch input in touchview mode landscape orientation, destination
-             is regular chrome app"/>
-  <int value="43"
-      label="Touch input in touchview mode landscape orientation, destination
-             is ARC app(Android app in ChromeOS)"/>
-  <int value="44"
-      label="Touch input in touchview mode portrait orientation, destination
-             is others(everything except browser and apps)"/>
-  <int value="45"
-      label="Touch input in touchview mode portrait orientation, destination
-             is inside the browser frame"/>
-  <int value="46"
-      label="Touch input in touchview mode portrait orientation, destination
-             is regular chrome app"/>
-  <int value="47"
-      label="Touch input in touchview mode portrait orientation, destination
-             is ARC app(Android app in ChromeOS)"/>
-</enum>
-
 <enum name="DownEventSource">
   <int value="0" label="Unknown"/>
   <int value="1" label="Mouse"/>
@@ -9705,11 +9480,6 @@ Called by update_net_error_codes.py.-->
   <int value="24" label="No bytes received after content length mismatch"/>
   <int value="25" label="Target determination requeted"/>
   <int value="26" label="Target determination completed"/>
-  <int value="27"
-      label="Cross origin download without content disposition headers"/>
-  <int value="28" label="Download attemps before sending the request"/>
-  <int value="29" label="Download attempts for manual download resumption."/>
-  <int value="30" label="Download attempts for auto download resumption."/>
 </enum>
 
 <enum name="DownloadDatabaseRecordDroppedType">
@@ -9734,24 +9504,11 @@ Called by update_net_error_codes.py.-->
   <int value="11" label="Resume"/>
 </enum>
 
-<enum name="DownloadedFileAction">
-  <int value="0" label="Opened in Drive"/>
-  <int value="1" label="Opened in another app"/>
-  <int value="2" label="No action"/>
-</enum>
-
 <enum name="DownloadFilePickerResult">
   <int value="0" label="SAME"/>
   <int value="1" label="DIFFERENT_DIR"/>
   <int value="2" label="DIFFERENT_NAME"/>
   <int value="3" label="CANCEL"/>
-</enum>
-
-<enum name="DownloadFileResult">
-  <int value="0" label="Completed"/>
-  <int value="1" label="Canceled"/>
-  <int value="2" label="Failure"/>
-  <int value="3" label="Other"/>
 </enum>
 
 <enum name="DownloadFunctions">
@@ -12447,7 +12204,6 @@ Called by update_net_error_codes.py.-->
   <int value="407" label="ThirdPartyBlockingEnabled"/>
   <int value="408" label="SpellcheckEnabled"/>
   <int value="409" label="AdsSettingForIntrusiveAdsSites"/>
-  <int value="410" label="RestrictAccountsToPatterns"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">
@@ -14572,7 +14328,6 @@ Called by update_net_error_codes.py.-->
   <int value="1208" label="DEVELOPERPRIVATE_GETEXTENSIONSIZE"/>
   <int value="1209" label="CRYPTOTOKENPRIVATE_ISAPPIDHASHINENTERPRISECONTEXT"/>
   <int value="1210" label="CRYPTOTOKENPRIVATE_CANAPPIDGETATTESTATION"/>
-  <int value="1211" label="SYSTEM_DISPLAY_SETMIRRORMODE"/>
 </enum>
 
 <enum name="ExtensionIconState">
@@ -15128,11 +14883,6 @@ Called by update_net_error_codes.py.-->
   <int value="5" label="ENABLED (not in webstore)"/>
   <int value="6" label="UNINSTALLED (in webstore)"/>
   <int value="7" label="UNINSTALLED (not in webstore)"/>
-</enum>
-
-<enum name="ExternalLauncherOption">
-  <int value="0" label="Cancel"/>
-  <int value="1" label="Open"/>
 </enum>
 
 <enum name="ExternallyConditionalizedType">
@@ -17370,8 +17120,7 @@ Called by update_net_error_codes.py.-->
   <int value="2065" label="PersistentClientHintHeader"/>
   <int value="2066" label="StyleSheetListNonNullAnonymousNamedGetter"/>
   <int value="2067" label="OffMainThreadFetch"/>
-  <int value="2068"
-      label="OBSOLETE_HTMLOptionsCollectionNamedGetterReturnsNodeList"/>
+  <int value="2068" label="HTMLOptionsCollectionNamedGetterReturnsNodeList"/>
   <int value="2069" label="ARIAActiveDescendantAttribute"/>
   <int value="2070" label="ARIAAtomicAttribute"/>
   <int value="2071" label="ARIAAutocompleteAttribute"/>
@@ -17635,12 +17384,6 @@ Called by update_net_error_codes.py.-->
   <int value="2326" label="BasicShapeEllipseNoRadius"/>
   <int value="2327" label="BasicShapeEllipseOneRadius"/>
   <int value="2328" label="BasicShapeEllipseTwoRadius"/>
-  <int value="2329" label="TemporalInputTypeChooserByTrustedClick"/>
-  <int value="2330" label="TemporalInputTypeChooserByUntrustedClick"/>
-  <int value="2331" label="TemporalInputTypeIgnoreUntrustedClick"/>
-  <int value="2332" label="ColorInputTypeChooserByTrustedClick"/>
-  <int value="2333" label="ColorInputTypeChooserByUntrustedClick"/>
-  <int value="2334" label="CSSTypedOMStylePropertyMap"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -18674,35 +18417,6 @@ Called by update_net_error_codes.py.-->
   <int value="4" label="User left the page before first contentful paint"/>
 </enum>
 
-<enum name="FirstRunLaunchSource">
-  <summary>
-    External applications/promotions that triggered Chrome launch and First Run.
-  </summary>
-  <int value="0" label="Smart App Banner"/>
-  <int value="1" label="Mobile Safari"/>
-  <int value="2" label="Others"/>
-</enum>
-
-<enum name="FirstRunSignInResult">
-  <summary>Result states for the first-run sign-in flow.</summary>
-  <int value="0" label="Skipped Immediately"/>
-  <int value="1" label="Successful"/>
-  <int value="2" label="Gave Up"/>
-  <int value="3" label="Have SSO account, Skipped Immediately"/>
-  <int value="4" label="Have SSO account, Successful"/>
-  <int value="5" label="Have SSO account, Gave Up"/>
-</enum>
-
-<enum name="FirstUserActionType">
-  <summary>
-    Types of actions a user can perform upon startup or unbackgrounding.
-  </summary>
-  <int value="0" label="New Task"/>
-  <int value="1" label="Continuation"/>
-  <int value="2" label="Expiration"/>
-  <int value="3" label="Start on NTP"/>
-</enum>
-
 <enum name="FlashNavigateUsageType">
   <int value="0" label="Rejected because of Authorization header."/>
   <int value="1" label="Rejected because of Cache-Control header."/>
@@ -18759,29 +18473,6 @@ Called by update_net_error_codes.py.-->
   <int value="3" label="Libsecret failure"/>
   <int value="4" label="GNOME success"/>
   <int value="5" label="GNOME failure"/>
-</enum>
-
-<enum name="FoundationFileSystemError">
-  <int value="0" label="NSNoError"/>
-  <int value="4" label="NSFileNoSuchFileError"/>
-  <int value="255" label="NSFileLockingError"/>
-  <int value="256" label="NSFileReadUnknownError"/>
-  <int value="257" label="NSFileReadNoPermissionError"/>
-  <int value="258" label="NSFileReadInvalidFileNameError"/>
-  <int value="259" label="NSFileReadCorruptFileError"/>
-  <int value="260" label="NSFileReadNoSuchFileError"/>
-  <int value="261" label="NSFileReadInapplicableStringEncodingError"/>
-  <int value="262" label="NSFileReadUnsupportedSchemeError"/>
-  <int value="263" label="NSFileReadTooLargeError"/>
-  <int value="264" label="NSFileReadUnknownStringEncodingError"/>
-  <int value="512" label="NSFileWriteUnknownError"/>
-  <int value="513" label="NSFileWriteNoPermissionError"/>
-  <int value="514" label="NSFileWriteInvalidFileNameError"/>
-  <int value="516" label="NSFileWriteFileExistsError"/>
-  <int value="517" label="NSFileWriteInapplicableStringEncodingError"/>
-  <int value="518" label="NSFileWriteUnsupportedSchemeError"/>
-  <int value="640" label="NSFileWriteOutOfSpaceError"/>
-  <int value="642" label="NSFileWriteVolumeReadOnlyError"/>
 </enum>
 
 <enum name="FramebustPermissions">
@@ -20154,12 +19845,6 @@ Called by update_net_error_codes.py.-->
   <int value="32770" label="PDF"/>
 </enum>
 
-<enum name="GeolocationAuthorizationAction">
-  <int value="0" label="Location authorized"/>
-  <int value="1" label="Location permanently denied (Don't Allow)"/>
-  <int value="2" label="Location denied at this prompt (Not Now)"/>
-</enum>
-
 <enum name="GeolocationDisclosureResult">
   <int value="0" label="Ignored"/>
   <int value="1" label="Settings clicked"/>
@@ -20220,17 +19905,6 @@ Called by update_net_error_codes.py.-->
   <int value="42" label="Location off, app denied, domain denied"/>
   <int value="43" label="Unsuitable URL"/>
   <int value="44" label="Not using HTTPS"/>
-</enum>
-
-<enum name="GeolocationHeaderSentOrNot">
-  <int value="0" label="Location disabled for Google domain"/>
-  <int value="1" label="Location preference not set for Google domain"/>
-  <int value="2" label="Location not available"/>
-  <int value="3" label="Location stale"/>
-  <int value="4" label="Header sent"/>
-  <int value="5" label="Location disabled for Chrome app"/>
-  <int value="6" label="iOS: Location disabled for Omnibox query"/>
-  <int value="7" label="Google domain does not accept locations"/>
 </enum>
 
 <enum name="GeolocationInfoBarDelegateAndroidEvent">
@@ -22365,13 +22039,6 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
   <int value="4" label="Open()"/>
 </enum>
 
-<enum name="InfoBarClosingStates">
-  <int value="0" label="Accepted survey"/>
-  <int value="1" label="Tapped close button"/>
-  <int value="2" label="Indirectly closed while visible"/>
-  <int value="3" label="Indirectly closed while hidden"/>
-</enum>
-
 <enum name="InfoBarIdentifier">
   <int value="1" label="APP_BANNER_INFOBAR_DELEGATE"/>
   <int value="2" label="APP_BANNER_INFOBAR_DELEGATE_DESKTOP (Obsolete)"/>
@@ -23108,19 +22775,6 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
   <int value="3" label="Hosts found but no notification shown"/>
 </enum>
 
-<enum name="InstantTethering_SessionCompletionReason">
-  <int value="0" label="Other"/>
-  <int value="1" label="User disconnected"/>
-  <int value="2" label="Connection dropped"/>
-  <int value="3" label="User logged out"/>
-  <int value="4" label="User closed lid"/>
-  <int value="5" label="Pref disabled"/>
-  <int value="6" label="Bluetooth disabled"/>
-  <int value="7" label="Cellular disabled"/>
-  <int value="8" label="Wi-Fi disabled"/>
-  <int value="9" label="Bluetooth controller disappeared"/>
-</enum>
-
 <enum name="IntelMaxMicroArchitecture">
   <int value="0" label="Pentium"/>
   <int value="1" label="SSE"/>
@@ -23210,19 +22864,6 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
   <int value="2" label="SubframeBlocked"/>
 </enum>
 
-<enum name="IOSHandoffOrigin">
-  <int value="0" label="Unknown Origin"/>
-  <int value="1" label="Chrome on iOS"/>
-  <int value="2" label="Chrome on Mac"/>
-</enum>
-
-<enum name="IosLocationAuthorizationStatus">
-  <int value="0" label="NotDetermined"/>
-  <int value="1" label="Restricted"/>
-  <int value="2" label="Denied"/>
-  <int value="3" label="Authorized"/>
-</enum>
-
 <enum name="IOSNTPImpression">
   <int value="0" label="Local suggestions"/>
   <int value="1" label="Remote suggestions"/>
@@ -23265,30 +22906,11 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
   <int value="3" label="Bookmark item"/>
 </enum>
 
-<enum name="iOSSizeClassForReporting">
-  <int value="0" label="Unspecified"/>
-  <int value="1" label="Compact"/>
-  <int value="2" label="Regular"/>
-</enum>
-
 <enum name="IOSSpotlightAction">
   <int value="0" label="New Tab"/>
   <int value="1" label="New Incognito Tab"/>
   <int value="2" label="Voice Search"/>
   <int value="3" label="QR Code Scanner"/>
-</enum>
-
-<enum name="IOSSpotlightAvailability">
-  <int value="0" label="Unsupported"/>
-  <int value="1" label="Unavailable"/>
-  <int value="2" label="Available"/>
-</enum>
-
-<enum name="IOSSpotlightOrigin">
-  <int value="0" label="Unknown Origin"/>
-  <int value="1" label="Bookmark"/>
-  <int value="2" label="Top Sites"/>
-  <int value="3" label="Actions"/>
 </enum>
 
 <enum name="IPCAttachmentBrokerPrivilegedBrokerAttachmentError">
@@ -25202,7 +24824,6 @@ from previous Chrome versions.
   <int value="-1998927516" label="enable-md-settings"/>
   <int value="-1989747818" label="TabStripKeyboardFocus:disabled"/>
   <int value="-1985025593" label="file-manager-enable-new-gallery"/>
-  <int value="-1983569861" label="WebXROrientationSensorDevice:disabled"/>
   <int value="-1980328793" label="trace-upload-url"/>
   <int value="-1977496883" label="ViewPasswords:enabled"/>
   <int value="-1973722176" label="VoiceSearchOnLocalNtp:enabled"/>
@@ -25281,7 +24902,6 @@ from previous Chrome versions.
   <int value="-1847835522" label="disable-touch-adjustment"/>
   <int value="-1847776781"
       label="enable-loading-ipc-optimization-for-small-resources"/>
-  <int value="-1839874877" label="WebXROrientationSensorDevice:enabled"/>
   <int value="-1839637286" label="AutofillCreditCardBankNameDisplay:disabled"/>
   <int value="-1839496458" label="disable-file-manager-touch-mode"/>
   <int value="-1838482444" label="disable-settings-window"/>
@@ -25323,7 +24943,6 @@ from previous Chrome versions.
   <int value="-1719833926" label="disable-answers-in-suggest"/>
   <int value="-1716654100" label="tab-capture-downscale-quality"/>
   <int value="-1714128884" label="disable-launcher-search-provider-api"/>
-  <int value="-1713564656" label="ProtectSyncCredentialOnReauth:enabled"/>
   <int value="-1711751318" label="enable-data-reduction-proxy-lo-fi-preview"/>
   <int value="-1703709912" label="enable-new-ntp"/>
   <int value="-1703308540" label="disable-webaudio"/>
@@ -25409,7 +25028,6 @@ from previous Chrome versions.
   <int value="-1490298774" label="enable-captive-portal-bypass-proxy-option"/>
   <int value="-1488744539" label="QuickUnlockFingerprint:enabled"/>
   <int value="-1487243228" label="NewUsbBackend:disabled"/>
-  <int value="-1486198877" label="VrIconInDaydreamHome:disabled"/>
   <int value="-1482730792" label="stop-in-background:enabled"/>
   <int value="-1482685863" label="enable-request-tablet-site"/>
   <int value="-1480926949" label="MaterialDesignBookmarks:enabled"/>
@@ -25431,7 +25049,6 @@ from previous Chrome versions.
   <int value="-1456004000" label="VrShell:disabled"/>
   <int value="-1454397907" label="OptimizationHints:disabled"/>
   <int value="-1450576851" label="OmniboxUIExperimentVerticalLayout:enabled"/>
-  <int value="-1446425986" label="ProtectSyncCredentialOnReauth:disabled"/>
   <int value="-1444051091" label="ash-disable-night-light"/>
   <int value="-1443796945" label="OfflinePagesSharing:disabled"/>
   <int value="-1440440375" label="WebVrAutopresent:enabled"/>
@@ -25541,9 +25158,9 @@ from previous Chrome versions.
   <int value="-1174267639" label="ClientLoFi:disabled"/>
   <int value="-1172572865" label="NTPShowGoogleGInOmnibox:enabled"/>
   <int value="-1172204005" label="enable-offline-auto-reload-visible-only"/>
+  <int value="-1171900360" label="EnablePreventLayerSquashing:disabled"/>
   <int value="-1162944097" label="enable-color-correct-rendering"/>
   <int value="-1161409696" label="MediaRemotingEncrypted:enabled"/>
-  <int value="-1161384421" label="ContextualSuggestionsAboveArticles:enabled"/>
   <int value="-1160941363" label="AffiliationBasedMatching:disabled"/>
   <int value="-1160026273" label="enable-web-notification-custom-layouts"/>
   <int value="-1159563774" label="enable-accessibility-script-injection"/>
@@ -25650,7 +25267,6 @@ from previous Chrome versions.
   <int value="-881054479" label="WebAssemblyStreaming:disabled"/>
   <int value="-879055117" label="ClipboardContentSetting:enabled"/>
   <int value="-879031960" label="FetchKeepaliveTimeoutSetting:disabled"/>
-  <int value="-876773752" label="enable-tablet-splitview"/>
   <int value="-876148583" label="ArcBootCompletedBroadcast:disabled"/>
   <int value="-867087281" label="enable-virtual-keyboard"/>
   <int value="-866993841" label="OfflinePagesCTV2:disabled"/>
@@ -25699,7 +25315,6 @@ from previous Chrome versions.
   <int value="-772679248" label="MojoVideoEncodeAccelerator:enabled"/>
   <int value="-771080109" label="GrantNotificationsToDSE:disabled"/>
   <int value="-770319039" label="enable-touch-editing"/>
-  <int value="-765715931" label="ash-disable-v1-app-back-button"/>
   <int value="-763759697" label="enable-audio-support-for-desktop-share"/>
   <int value="-759830869" label="enable-tab-discarding"/>
   <int value="-757946835"
@@ -26246,8 +25861,6 @@ from previous Chrome versions.
   <int value="721225492" label="PolicyTool:enabled"/>
   <int value="723619383" label="TopSitesFromSiteEngagement:enabled"/>
   <int value="724208771" label="TabsInCBD:enabled"/>
-  <int value="727571565" label="PasswordForceSaving"/>
-  <int value="728656094" label="PasswordForceSaving:disabled"/>
   <int value="730024226" label="enable-out-of-process-pdf"/>
   <int value="730750097" label="PermissionsBlacklist:disabled"/>
   <int value="732703958" label="enable-gesture-tap-highlight"/>
@@ -26345,7 +25958,6 @@ from previous Chrome versions.
   <int value="1005684777" label="PictureInPicture:disabled"/>
   <int value="1007444341" label="enable-prefixed-encrypted-media"/>
   <int value="1015895665" label="drop-sync-credential:enabled"/>
-  <int value="1017364362" label="VrIconInDaydreamHome:enabled"/>
   <int value="1018998019" label="memlog"/>
   <int value="1019623058" label="ash-enable-shelf-model-synchronization"/>
   <int value="1019857902"
@@ -26355,7 +25967,6 @@ from previous Chrome versions.
   <int value="1033597574" label="disable-layer-squashing"/>
   <int value="1036068554" label="enable-android-pay-integration-v2"/>
   <int value="1043334401" label="disable-slimming-paint-invalidation"/>
-  <int value="1046878091" label="PasswordForceSaving:enabled"/>
   <int value="1049885154" label="OfflinePagesPrefetching:disabled"/>
   <int value="1050048304" label="enable-font-cache-scaling"/>
   <int value="1050321458" label="new-profile-management"/>
@@ -26372,9 +25983,9 @@ from previous Chrome versions.
   <int value="1070449228" label="ContextualSuggestionsCarousel:enabled"/>
   <int value="1072010558" label="NTPModernLayout:disabled"/>
   <int value="1074359194" label="UseSuggestionsEvenIfFew:enabled"/>
+  <int value="1075637651" label="disable-tablet-splitview"/>
   <int value="1079032226" label="ParallelDownloading:enabled"/>
   <int value="1081546525" label="ash-enable-docked-windows"/>
-  <int value="1082405724" label="AutofillUpstreamUseGooglePayBranding:enabled"/>
   <int value="1087235172" label="file-manager-enable-new-audio-player"/>
   <int value="1090377940" label="enable-quic-https"/>
   <int value="1092896354" label="EnableFullscreenAppList:disabled"/>
@@ -26428,7 +26039,6 @@ from previous Chrome versions.
   <int value="1214455758" label="VideoRotateToFullscreen:disabled"/>
   <int value="1215531732" label="OmniboxUIExperiments:disabled"/>
   <int value="1217907443" label="spurious-power-button-keyboard-accel"/>
-  <int value="1219317631" label="ContextualSuggestionsAboveArticles:disabled"/>
   <int value="1219628795" label="PrintScaling:disabled"/>
   <int value="1219826373" label="ServiceWorkerNavigationPreload:enabled"/>
   <int value="1220171692" label="SpeculativeLaunchServiceWorker:enabled"/>
@@ -26574,7 +26184,6 @@ from previous Chrome versions.
   <int value="1548776701" label="AllBookmarks:disabled"/>
   <int value="1548942246" label="PassiveDocumentEventListeners:disabled"/>
   <int value="1560188739" label="reader-mode-heuristics"/>
-  <int value="1563255033" label="memlog-stack-mode"/>
   <int value="1567839560"
       label="ChromeHomePersonalizedOmniboxSuggestions:disabled"/>
   <int value="1579461102" label="MemoryCoordinator:disabled"/>
@@ -26630,6 +26239,7 @@ from previous Chrome versions.
   <int value="1719189460" label="EnablePasswordSelection:disabled"/>
   <int value="1723601083" label="enable-app-window-controls"/>
   <int value="1724800383" label="AsmJsToWebAssembly:disabled"/>
+  <int value="1725954299" label="EnablePreventLayerSquashing:enabled"/>
   <int value="1730094138" label="enable-md-storage-manager"/>
   <int value="1730236697" label="force-device-scale-factor"/>
   <int value="1730416578" label="NTPCondensedLayout:enabled"/>
@@ -26653,8 +26263,6 @@ from previous Chrome versions.
   <int value="1786386775" label="TranslateCompactUI:disabled"/>
   <int value="1789517771" label="MacV2Sandbox:enabled"/>
   <int value="1803465156" label="enable-zero-suggest-most-visited"/>
-  <int value="1809323887"
-      label="AutofillUpstreamUseGooglePayBranding:disabled"/>
   <int value="1809940714" label="SpeculativeLaunchServiceWorker:disabled"/>
   <int value="1812368073" label="enable-new-app-list-mixer"/>
   <int value="1814671708" label="disable-password-manager-reauthentication"/>
@@ -26698,7 +26306,6 @@ from previous Chrome versions.
   <int value="1889076955" label="disable-app-link"/>
   <int value="1891210939" label="enable-blink-features"/>
   <int value="1892201400" label="enable-password-separated-signin-flow"/>
-  <int value="1892640848" label="third-party-doodle-url"/>
   <int value="1893317228" label="WebPayments:enabled"/>
   <int value="1893463366" label="EnableHtmlBaseUsernameDetector:enabled"/>
   <int value="1896456311" label="enable-password-save-in-page-navigation"/>
@@ -27682,17 +27289,17 @@ Called by update_use_counter_css.py.-->
   <int value="570" label="scroll-padding-inline"/>
   <int value="571" label="scroll-padding-inline-start"/>
   <int value="572" label="scroll-padding-inline-end"/>
-  <int value="573" label="scroll-margin"/>
-  <int value="574" label="scroll-margin-top"/>
-  <int value="575" label="scroll-margin-right"/>
-  <int value="576" label="scroll-margin-bottom"/>
-  <int value="577" label="scroll-margin-left"/>
-  <int value="578" label="scroll-margin-block"/>
-  <int value="579" label="scroll-margin-block-start"/>
-  <int value="580" label="scroll-margin-block-end"/>
-  <int value="581" label="scroll-margin-inline"/>
-  <int value="582" label="scroll-margin-inline-start"/>
-  <int value="583" label="scroll-margin-inline-end"/>
+  <int value="573" label="scroll-snap-margin"/>
+  <int value="574" label="scroll-snap-margin-top"/>
+  <int value="575" label="scroll-snap-margin-right"/>
+  <int value="576" label="scroll-snap-margin-bottom"/>
+  <int value="577" label="scroll-snap-margin-left"/>
+  <int value="578" label="scroll-snap-margin-block"/>
+  <int value="579" label="scroll-snap-margin-block-start"/>
+  <int value="580" label="scroll-snap-margin-block-end"/>
+  <int value="581" label="scroll-snap-margin-inline"/>
+  <int value="582" label="scroll-snap-margin-inline-start"/>
+  <int value="583" label="scroll-snap-margin-inline-end"/>
   <int value="584" label="scroll-snap-stop"/>
   <int value="585" label="overscroll-behavior"/>
   <int value="586" label="overscroll-behavior-x"/>
@@ -28446,20 +28053,6 @@ Called by update_use_counter_css.py.-->
   <int value="2" label="Suspended"/>
 </enum>
 
-<enum name="MenuSourceType">
-  <int value="0" label="None"/>
-  <int value="1" label="Mouse"/>
-  <int value="2" label="Keyboard"/>
-  <int value="3" label="Touch"/>
-  <int value="4" label="Touch Edit Menu"/>
-  <int value="5" label="Long Press"/>
-  <int value="6" label="Long Tap"/>
-  <int value="7" label="Touch Handle"/>
-  <int value="8" label="Stylus"/>
-  <int value="9" label="Adjust Selection"/>
-  <int value="10" label="Adjust Selection Reset"/>
-</enum>
-
 <enum name="MessageLoopProblems">
   <int value="0" label="Message Post"/>
   <int value="1" label="Completion Post"/>
@@ -28666,12 +28259,6 @@ Called by update_use_counter_css.py.-->
   <int value="4" label="Storage permission failed due to missing WebContents"/>
 </enum>
 
-<enum name="MobileFreLinkTappedStatus">
-  <int value="0" label="Link successfully loaded."/>
-  <int value="1" label="Link failed to load."/>
-  <int value="2" label="Link load did not complete."/>
-</enum>
-
 <enum name="MobileFreProgress">
   <int value="0" label="FRE started"/>
   <int value="1" label="Welcome shown"/>
@@ -28703,22 +28290,6 @@ Called by update_use_counter_css.py.-->
   <int value="4" label="Infobar dismissed after tab closed"/>
 </enum>
 
-<enum name="MobileSessionCallerApp">
-  <int value="0" label="Google Search"/>
-  <int value="1" label="Gmail"/>
-  <int value="2" label="Google+"/>
-  <int value="3" label="Google Drive"/>
-  <int value="4" label="Google Earth"/>
-  <int value="5" label="Other Google Apps"/>
-  <int value="6" label="Other"/>
-  <int value="7" label="Mobile Safari"/>
-  <int value="8" label="Other Apple Apps"/>
-  <int value="9" label="YouTube"/>
-  <int value="10" label="Google Maps"/>
-  <int value="11" label="Information not available"/>
-  <int value="12" label="Chrome Today Extension"/>
-</enum>
-
 <enum name="MobileSessionShutdownType">
   <int value="0" label="Shutdown in background"/>
   <int value="1" label="Shutdown in foreground; no log; no memory warning"/>
@@ -28726,16 +28297,6 @@ Called by update_use_counter_css.py.-->
   <int value="3" label="Shutdown in foreground; no log; with memory warning"/>
   <int value="4" label="Shutdown in foreground; with log; with memory warning"/>
   <int value="5" label="First launch after upgrade"/>
-</enum>
-
-<enum name="MobileSessionStartAction">
-  <int value="0" label="Open http"/>
-  <int value="1" label="Open https"/>
-  <int value="2" label="Open file"/>
-  <int value="3" label="x-callback-url open"/>
-  <int value="4" label="x-callback-url other"/>
-  <int value="5" label="Other"/>
-  <int value="6" label="x-callback-url app-group-command"/>
 </enum>
 
 <enum name="MobileStartingAction">
@@ -32393,6 +31954,45 @@ Called by update_net_trust_anchors.py.-->
   <int value="9" label="TokenDisabled"/>
 </enum>
 
+<enum name="OSAgnosticErrno">
+  <summary>Errno values with the same meanings on Mac/Win/Linux.</summary>
+  <int value="0" label="0">No error</int>
+  <int value="1" label="EPERM">Operation not permitted</int>
+  <int value="2" label="ENOENT">No such file or directory</int>
+  <int value="3" label="ESRCH">No such process</int>
+  <int value="4" label="EINTR">Interrupted function call</int>
+  <int value="5" label="EIO">Input/output error</int>
+  <int value="6" label="ENXIO">No such device or address</int>
+  <int value="7" label="E2BIG">Arg list too long</int>
+  <int value="8" label="ENOEXEC">Exec format error</int>
+  <int value="9" label="EBADF">Bad file descriptor</int>
+  <int value="10" label="ECHILD">No child processes</int>
+  <int value="11" label="EDEADLK">Resource deadlock avoided</int>
+  <int value="12" label="ENOMEM">Cannot allocate memory</int>
+  <int value="13" label="EACCES">Permission denied</int>
+  <int value="14" label="EFAULT">Bad address</int>
+  <int value="15" label="ENOTBLK">Not a block device</int>
+  <int value="16" label="EBUSY">Resource busy</int>
+  <int value="17" label="EEXIST">File exists</int>
+  <int value="18" label="EXDEV">Improper link</int>
+  <int value="19" label="ENODEV">Operation not supported by device</int>
+  <int value="20" label="ENOTDIR">Not a directory</int>
+  <int value="21" label="EISDIR">Is a directory</int>
+  <int value="22" label="EINVAL">Invalid argument</int>
+  <int value="23" label="ENFILE">Too many open files in system</int>
+  <int value="24" label="EMFILE">Too many open files</int>
+  <int value="25" label="ENOTTY">Inappropriate ioctl for device</int>
+  <int value="26" label="ETXTBSY">Text file busy</int>
+  <int value="27" label="EFBIG">File too large</int>
+  <int value="28" label="ENOSPC">Device out of space</int>
+  <int value="29" label="ESPIPE">Illegal seek</int>
+  <int value="30" label="EROFS">Read-only file system</int>
+  <int value="31" label="EMLINK">Too many links</int>
+  <int value="32" label="EPIPE">Broken pipe</int>
+  <int value="33" label="EDOM">Numerical argument out of domain</int>
+  <int value="34" label="ERANGE">Numerical result out of range</int>
+</enum>
+
 <enum name="OsSuite">
   <int value="0" label="Windows Home Edition (or unknown)"/>
   <int value="1" label="Windows Professional/Ultimate Editions"/>
@@ -34580,78 +34180,6 @@ Called by update_net_trust_anchors.py.-->
   <int value="11" label="Bad Key Validation Signature"/>
 </enum>
 
-<enum name="PopularOSErrno">
-  <summary>
-    Popular errno values. See the descriptions on &quot;*/*/*&quot; labels for
-    the applicable OS, usually Linux/Mac/Windows. See
-    http://www.ioplex.com/~miallen/errcmp.html and
-    http://www.ioplex.com/~miallen/errcmpp.html for more info.
-  </summary>
-  <int value="0" label="0">No error</int>
-  <int value="1" label="EPERM">Operation not permitted</int>
-  <int value="2" label="ENOENT">No such file or directory</int>
-  <int value="3" label="ESRCH">No such process</int>
-  <int value="4" label="EINTR">Interrupted function call</int>
-  <int value="5" label="EIO">Input/output error</int>
-  <int value="6" label="ENXIO">No such device or address</int>
-  <int value="7" label="E2BIG">Arg list too long</int>
-  <int value="8" label="ENOEXEC">Exec format error</int>
-  <int value="9" label="EBADF">Bad file descriptor</int>
-  <int value="10" label="ECHILD">No child processes</int>
-  <int value="11" label="EAGAIN/EDEADLK/EAGAIN">
-    Try again on Linux. Resource deadlock avoided on Mac. Resource temporarily
-    unavailable on Windows.
-  </int>
-  <int value="12" label="ENOMEM">Cannot allocate memory</int>
-  <int value="13" label="EACCES">Permission denied</int>
-  <int value="14" label="EFAULT">Bad address</int>
-  <int value="15" label="ENOTBLK">Not a block device</int>
-  <int value="16" label="EBUSY">Resource busy</int>
-  <int value="17" label="EEXIST">File exists</int>
-  <int value="18" label="EXDEV">Improper link</int>
-  <int value="19" label="ENODEV">Operation not supported by device</int>
-  <int value="20" label="ENOTDIR">Not a directory</int>
-  <int value="21" label="EISDIR">Is a directory</int>
-  <int value="22" label="EINVAL">Invalid argument</int>
-  <int value="23" label="ENFILE">Too many open files in system</int>
-  <int value="24" label="EMFILE">Too many open files</int>
-  <int value="25" label="ENOTTY">Inappropriate ioctl for device</int>
-  <int value="26" label="ETXTBSY">Text file busy</int>
-  <int value="27" label="EFBIG">File too large</int>
-  <int value="28" label="ENOSPC">Device out of space</int>
-  <int value="29" label="ESPIPE">Illegal seek</int>
-  <int value="30" label="EROFS">Read-only file system</int>
-  <int value="31" label="EMLINK">Too many links</int>
-  <int value="32" label="EPIPE">Broken pipe</int>
-  <int value="33" label="EDOM">Numerical argument out of domain</int>
-  <int value="34" label="ERANGE">Numerical result out of range</int>
-  <int value="35" label="EDEADLK/EAGAIN/EUCLEAN">
-    Resource deadlock would occur on Linux. Resource temporarily unavailable on
-    Mac. Unknown error on Windows.
-  </int>
-  <int value="36" label="ENAMETOOLONG/EINPROGRESS/EDEADLK">
-    File name too long on Linux. Operation now in progress on Mac. Resource
-    deadlock avoided on Windows.
-  </int>
-  <int value="45" label="EL2NSYNC/EOPNOTSUPP/_">
-    Level 2 not synchronized on Linux. Operation not supported on Mac. Resource
-    deadlock avoided on Windows.
-  </int>
-  <int value="63" label="ENOSR/ENAMETOOLONG/_">
-    Out of streams resources on Linux. File name too long on Mac.
-  </int>
-  <int value="69" label="ESRMNT/EDQUOT/_">
-    Srmount error on Linux. Disk quota exceeded on Mac.
-  </int>
-  <int value="92" label="ENOPROTOOPT/EILSEQ/_">
-    Protocol not supported on Linux. Illegal byte sequence on Mac.
-  </int>
-  <int value="95" label="EOPNOTSUPP/_/_">
-    Operation not supported on transport endpoint on Linux.
-  </int>
-  <int value="122" label="EDQUOT/_/_">Quota exceeeded on Linux.</int>
-</enum>
-
 <enum name="PopupBlockerAction">
   <int value="0" label="Popup initiated"/>
   <int value="1" label="Popup blocked"/>
@@ -34808,19 +34336,6 @@ Called by update_net_trust_anchors.py.-->
   <int value="0" label="VERSION_UNINITIALIZED"/>
   <int value="1" label="VERSION_PRE_MIGRATION"/>
   <int value="2" label="VERSION_LATEST"/>
-</enum>
-
-<enum name="PrefServiceReadError">
-  <int value="0" label="PREF_READ_ERROR_NONE"/>
-  <int value="1" label="PREF_READ_ERROR_JSON_PARSE"/>
-  <int value="2" label="PREF_READ_ERROR_JSON_TYPE"/>
-  <int value="3" label="PREF_READ_ERROR_ACCESS_DENIED"/>
-  <int value="4" label="PREF_READ_ERROR_FILE_OTHER"/>
-  <int value="5" label="PREF_READ_ERROR_FILE_LOCKED"/>
-  <int value="6" label="PREF_READ_ERROR_NO_FILE"/>
-  <int value="7" label="PREF_READ_ERROR_JSON_REPEAT"/>
-  <int value="8" label="PREF_READ_ERROR_OTHER"/>
-  <int value="9" label="PREF_READ_ERROR_FILE_NOT_SPECIFIED"/>
 </enum>
 
 <enum name="PreloadedListCheckResult">
@@ -35251,19 +34766,6 @@ Called by update_net_trust_anchors.py.-->
              max"/>
   <int value="4"
       label="Timestamp shown indicating the page was just updated on reload"/>
-</enum>
-
-<enum name="PreviewsProcessHintsResult">
-  <int value="0" label="No hints found">
-    Previews processed but no Previews hints found.
-  </int>
-  <int value="1" label="Hints found">
-    Previews processed and Previews hints found.
-  </int>
-  <int value="2" label="Failed processing">
-    Failed to finish processing same version previously so skipping to avoid
-    potential crash loop.
-  </int>
 </enum>
 
 <enum name="PreviewsType">
@@ -36205,16 +35707,6 @@ Called by update_net_trust_anchors.py.-->
   <int value="254" label="DOMAIN_SPIDEROAK_COM"/>
 </enum>
 
-<enum name="PullDownGestureAction">
-  <summary>The type of action performed on the overscroll UI.</summary>
-  <int value="0" label="NewTab">The user selected the new tab action.</int>
-  <int value="1" label="Refresh">The user selected the refresh action.</int>
-  <int value="2" label="CloseTab">The user selected the close tab action.</int>
-  <int value="3" label="Canceled">
-    The user canceled the action by scrolling back up.
-  </int>
-</enum>
-
 <enum name="PushDeliveryStatus">
   <int value="0" label="Successful"/>
   <int value="1" label="Message was invalid"/>
@@ -36959,18 +36451,12 @@ Called by update_net_trust_anchors.py.-->
   <int value="24" label="UnspecedLoading"/>
   <int value="25" label="Unthrottled"/>
   <int value="26" label="InternalTest"/>
-  <int value="27" label="InternalWebCrypto"/>
 </enum>
 
 <enum name="RendererSchedulerThreadType">
   <int value="0" label="MainThread"/>
-  <int value="1" label="UnspecifiedWorkerThread"/>
+  <int value="1" label="WorkerThread"/>
   <int value="2" label="CompositorThread"/>
-  <int value="3" label="DedicatedWorkerThread"/>
-  <int value="4" label="SharedWorkerThread"/>
-  <int value="5" label="AnimationWorkletThread"/>
-  <int value="6" label="ServiceWorkerThread"/>
-  <int value="7" label="AudioWorkletThread"/>
 </enum>
 
 <enum name="RendererType">
@@ -38506,15 +37992,6 @@ Called by update_net_trust_anchors.py.-->
   <int value="11" label="SHOW_WHITEPAPER"/>
 </enum>
 
-<enum name="SecurityLevel">
-  <int value="0" label="None"/>
-  <int value="1" label="Non-secure with warning"/>
-  <int value="2" label="Secure with EV certificate"/>
-  <int value="3" label="Secure"/>
-  <int value="4" label="Secure with policy-installed certificate"/>
-  <int value="5" label="Dangerous"/>
-</enum>
-
 <enum name="SelectFileDialogScope">
   <int value="0" label="Generic files"/>
   <int value="1" label="Images"/>
@@ -38941,7 +38418,6 @@ Called by update_net_trust_anchors.py.-->
   <int value="4" label="Recently prompted, no reset required"/>
   <int value="5" label="Other setting requires reset, no reset required"/>
   <int value="6" label="Policy detected, no reset required"/>
-  <int value="7" label="Overriden by extension, no reset required"/>
 </enum>
 
 <enum name="SettingsResetPromptSettingsReset">
@@ -39836,23 +39312,6 @@ Called by update_net_trust_anchors.py.-->
   <int value="0" label="Legacy prompt shown"/>
   <int value="1" label="On transition to infected state"/>
   <int value="2" label="On browser window available"/>
-</enum>
-
-<enum name="SoftwareReporterSequenceResult">
-  <int value="1" label="Not scheduled"/>
-  <int value="2" label="Timed-out"/>
-  <int value="3" label="Component not available"/>
-  <int value="4" label="Process failed to launch"/>
-  <int value="5" label="General failure"/>
-  <int value="6" label="Nothing found"/>
-  <int value="7" label="Cleanup not offered"/>
-  <int value="8" label="Cleanup to be offered"/>
-</enum>
-
-<enum name="SoftwareReporterSequenceType">
-  <int value="1" label="Periodic run"/>
-  <int value="2" label="User-initiated with logs disabled"/>
-  <int value="3" label="User-initiated with logs enabled"/>
 </enum>
 
 <enum name="SpareWebContentsStatus">
@@ -40897,12 +40356,6 @@ Called by update_net_trust_anchors.py.-->
   <int value="7" label="Protocol error"/>
 </enum>
 
-<enum name="SSOPromoUserAction">
-  <int value="0" label="ACTION_DISMISSED"/>
-  <int value="1" label="ACTION_ENABLED_SSO_ACCOUNT"/>
-  <int value="2" label="ACTION_ADDED_ANOTHER_ACCOUNT"/>
-</enum>
-
 <enum name="StarsLaunchLocation">
   <int value="0" label="All Items"/>
   <int value="1" label="Uncategorized"/>
@@ -41390,16 +40843,6 @@ would be helpful to identify which type is being sent.
   <int value="5" label="Unknown response code"/>
 </enum>
 
-<enum name="SurveyFilteringResult">
-  <int value="0" label="Survey info bar already displayed"/>
-  <int value="1" label="Chrome Home enabled for less than one week"/>
-  <int value="2" label="Force Survey On command present"/>
-  <int value="3" label="User already sampled today"/>
-  <int value="4" label="Max number is missing"/>
-  <int value="5" label="Rolled a non-zero number"/>
-  <int value="6" label="User selected for survey"/>
-</enum>
-
 <enum name="SuspendAttempt">
   <int value="0" label="Attempted"/>
 </enum>
@@ -41856,13 +41299,6 @@ would be helpful to identify which type is being sent.
   <int value="2" label="Discarded a tab"/>
   <int value="3"
       label="Discarded a tab playing audio (included in the previous one)"/>
-</enum>
-
-<enum name="TabForegroundState">
-  <int value="0" label="Foreground (app in foreground)"/>
-  <int value="1" label="Background (app in foreground)"/>
-  <int value="2" label="Foreground (app in background)"/>
-  <int value="3" label="Background (app in background)"/>
 </enum>
 
 <enum name="TabLoadingState">
@@ -43321,9 +42757,7 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="35380758" label="download_manager_resume"/>
   <int value="35565745" label="gaia_auth_list_accounts"/>
   <int value="36859107" label="logo_tracker"/>
-  <int value="37249086" label="android_device_manager_socket"/>
   <int value="37531401" label="proxy_script_fetcher"/>
-  <int value="39356976" label="android_web_socket"/>
   <int value="39877119" label="gaia_auth_exchange_device_id"/>
   <int value="40534770" label="obsolete_favicon_component"/>
   <int value="41154842" label="doodle_service"/>
@@ -43404,8 +42838,6 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="89771989" label="asset_links"/>
   <int value="91597383" label="gaia_auth_login"/>
   <int value="93232258" label="mojo_context_state"/>
-  <int value="94099818" label="bluetooth_socket"/>
-  <int value="95075845" label="port_forwarding_controller_socket"/>
   <int value="95588446" label="payments_sync_cards"/>
   <int value="95682324" label="ranker_url_fetcher"/>
   <int value="95711309" label="ntp_contextual_suggestions_fetch"/>
@@ -43439,7 +42871,6 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="111904019" label="affiliation_lookup"/>
   <int value="112189210" label="favicon_loader"/>
   <int value="112303907" label="blob_read"/>
-  <int value="113065062" label="tethering_handler_socket"/>
   <int value="113231892" label="url_fetcher_downloader"/>
   <int value="113553577" label="certificate_verifier"/>
   <int value="114468207" label="ssl_name_mismatch_lookup"/>
@@ -43572,8 +43003,6 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="4" label="Locally Managed"/>
   <int value="5" label="Kiosk App"/>
   <int value="6" label="Regular Supervised"/>
-  <int value="7" label="ARC Kiosk"/>
-  <int value="8" label="Active Directory"/>
 </enum>
 
 <enum name="V8CacheBehaviour">
@@ -44915,12 +44344,6 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="0" label="WEB_HISTORY_QUERY_FAILED">Failed</int>
   <int value="1" label="WEB_HISTORY_QUERY_SUCCEEDED">Succeeded</int>
   <int value="2" label="WEB_HISTORY_QUERY_TIMED_OUT">Timed out</int>
-</enum>
-
-<enum name="WebpDecodedFormat">
-  <int value="1" label="JPEG"/>
-  <int value="2" label="PNG"/>
-  <int value="3" label="TIFF"/>
 </enum>
 
 <enum name="WebRTCAecDelayEstimateReliability">

@@ -28,11 +28,9 @@ namespace data_reduction_proxy {
 // URLFetcherDelegate for fetching the warmup URL.
 class WarmupURLFetcher : public net::URLFetcherDelegate {
  public:
-  enum class FetchResult { kFailed, kSuccessful, kTimedOut };
-
   // The proxy server that was used to fetch the request, and whether the fetch
   // was successful.
-  typedef base::RepeatingCallback<void(const net::ProxyServer&, FetchResult)>
+  typedef base::RepeatingCallback<void(const net::ProxyServer&, bool)>
       WarmupURLFetcherCallback;
 
   WarmupURLFetcher(const scoped_refptr<net::URLRequestContextGetter>&
@@ -56,18 +54,17 @@ class WarmupURLFetcher : public net::URLFetcherDelegate {
   void GetWarmupURLWithQueryParam(GURL* warmup_url_with_query_params) const;
 
   // Returns the time for which the fetching of the warmup URL probe should be
-  // delayed.
-  virtual base::TimeDelta GetFetchWaitTime() const;
+  // delayed. |previous_attempt_counts| is the count of fetch attempts that
+  // have been made to the proxy for which the delay is being computed.
+  // Virtualized for testing.
+  virtual base::TimeDelta GetFetchWaitTime(
+      size_t previous_attempt_counts) const;
 
  private:
   // Creates and immediately starts a URLFetcher that fetches the warmup URL.
   void FetchWarmupURLNow();
 
   void OnURLFetchComplete(const net::URLFetcher* source) override;
-
-  // Count of fetch attempts that have been made to the proxy which is being
-  // probed.
-  size_t previous_attempt_counts_;
 
   // Timer used to delay the fetching of the warmup probe URL.
   base::OneShotTimer fetch_delay_timer_;

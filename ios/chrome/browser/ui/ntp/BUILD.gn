@@ -51,6 +51,7 @@ source_set("ntp_controller") {
     "new_tab_page_controller.mm",
   ]
   deps = [
+    ":modal_ntp",
     ":ntp",
     ":ntp_internal",
     "//base",
@@ -81,6 +82,8 @@ source_set("ntp_controller") {
 source_set("ntp_internal") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
+    "centering_scrollview.h",
+    "centering_scrollview.mm",
     "incognito_view.h",
     "incognito_view.mm",
     "incognito_view_controller.h",
@@ -105,6 +108,7 @@ source_set("ntp_internal") {
     ":ntp_header",
   ]
   deps = [
+    ":modal_ntp",
     ":ntp",
     ":ntp_tile",
     "resources:bookmarks_bar_bg",
@@ -158,6 +162,7 @@ source_set("ntp_internal") {
     "//components/suggestions",
     "//ios/chrome/app/strings",
     "//ios/chrome/browser",
+    "//ios/chrome/browser/bookmarks:features",
     "//ios/chrome/browser/browser_state",
     "//ios/chrome/browser/favicon",
     "//ios/chrome/browser/history",
@@ -209,16 +214,32 @@ source_set("ntp_tile") {
   ]
 }
 
+# TODO(crbug.com/768817): Remove the following once new bookmarks are enabled by
+# default.
+source_set("modal_ntp") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  sources = [
+    "modal_ntp.h",
+    "modal_ntp.mm",
+  ]
+  deps = [
+    "//ios/chrome/browser/bookmarks:features",
+    "//ios/chrome/browser/ui:ui_util",
+  ]
+}
+
 source_set("unit_tests") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true
   sources = [
+    "centering_scrollview_unittest.mm",
     "new_tab_page_bar_unittest.mm",
     "new_tab_page_controller_unittest.mm",
     "notification_promo_whats_new_unittest.mm",
     "ntp_tile_saver_unittest.mm",
   ]
   deps = [
+    ":modal_ntp",
     ":ntp",
     ":ntp_controller",
     ":ntp_internal",
@@ -235,6 +256,7 @@ source_set("unit_tests") {
     "//ios/chrome/app/strings",
     "//ios/chrome/browser",
     "//ios/chrome/browser/bookmarks",
+    "//ios/chrome/browser/bookmarks:features",
     "//ios/chrome/browser/browser_state:test_support",
     "//ios/chrome/browser/favicon",
     "//ios/chrome/browser/search_engines",
@@ -265,10 +287,12 @@ source_set("eg_tests") {
     "new_tab_page_egtest.mm",
   ]
   deps = [
+    ":modal_ntp",
     ":ntp_controller",
     "//components/strings",
     "//ios/chrome/app/strings",
     "//ios/chrome/browser",
+    "//ios/chrome/browser/bookmarks:features",
     "//ios/chrome/browser/ui",
     "//ios/chrome/browser/ui/commands",
     "//ios/chrome/browser/ui/content_suggestions:content_suggestions_constant",

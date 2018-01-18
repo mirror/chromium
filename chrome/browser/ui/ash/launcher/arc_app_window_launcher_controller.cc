@@ -11,6 +11,7 @@
 #include "ash/public/cpp/window_properties.h"
 #include "ash/shell.h"
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/chromeos/arc/arc_optin_uma.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/profiles/profile.h"
@@ -38,34 +39,21 @@ namespace {
 constexpr size_t kMaxIconPngSize = 64 * 1024;  // 64 kb
 
 blink::WebScreenOrientationLockType BlinkOrientationLockFromMojom(
-    blink::WebScreenOrientationLockType natural_orientation,
     arc::mojom::OrientationLock orientation_lock) {
   DCHECK_NE(arc::mojom::OrientationLock::CURRENT, orientation_lock);
-
-  // In Android, "portrait" means 90 degrees counterclockwise rotation
-  // on naturally landscape devices.
-  bool reverse_portrait_orientation =
-      natural_orientation == blink::kWebScreenOrientationLockLandscape;
-
   switch (orientation_lock) {
     case arc::mojom::OrientationLock::PORTRAIT:
       return blink::kWebScreenOrientationLockPortrait;
     case arc::mojom::OrientationLock::LANDSCAPE:
       return blink::kWebScreenOrientationLockLandscape;
+    case arc::mojom::OrientationLock::PORTRAIT_PRIMARY:
+      return blink::kWebScreenOrientationLockPortraitPrimary;
     case arc::mojom::OrientationLock::LANDSCAPE_PRIMARY:
       return blink::kWebScreenOrientationLockLandscapePrimary;
+    case arc::mojom::OrientationLock::PORTRAIT_SECONDARY:
+      return blink::kWebScreenOrientationLockPortraitSecondary;
     case arc::mojom::OrientationLock::LANDSCAPE_SECONDARY:
       return blink::kWebScreenOrientationLockLandscapeSecondary;
-
-    case arc::mojom::OrientationLock::PORTRAIT_PRIMARY:
-      return reverse_portrait_orientation
-                 ? blink::kWebScreenOrientationLockPortraitSecondary
-                 : blink::kWebScreenOrientationLockPortraitPrimary;
-
-    case arc::mojom::OrientationLock::PORTRAIT_SECONDARY:
-      return reverse_portrait_orientation
-                 ? blink::kWebScreenOrientationLockPortraitPrimary
-                 : blink::kWebScreenOrientationLockPortraitSecondary;
     default:
       return blink::kWebScreenOrientationLockAny;
   }
@@ -314,7 +302,7 @@ void ArcAppWindowLauncherController::AttachControllerToWindowIfNeeded(
   views::Widget* widget = views::Widget::GetWidgetForNativeWindow(window);
   DCHECK(widget);
   DCHECK(!info->app_window());
-  info->set_app_window(std::make_unique<ArcAppWindow>(
+  info->set_app_window(base::MakeUnique<ArcAppWindow>(
       task_id, info->app_shelf_id(), widget, this));
   info->app_window()->SetDescription(info->title(), info->icon_data_png());
   RegisterApp(info);
@@ -366,7 +354,7 @@ void ArcAppWindowLauncherController::OnTaskCreated(
   const arc::ArcAppShelfId arc_app_shelf_id =
       arc::ArcAppShelfId::FromIntentAndAppId(intent, arc_app_id);
   task_id_to_app_window_info_[task_id] =
-      std::make_unique<AppWindowInfo>(arc_app_shelf_id, intent);
+      base::MakeUnique<AppWindowInfo>(arc_app_shelf_id, intent);
   // Don't create shelf icon for non-primary user.
   if (observed_profile_ != owner()->profile())
     return;
@@ -585,7 +573,7 @@ ArcAppWindowLauncherController::AttachControllerToTask(
   }
 
   std::unique_ptr<ArcAppWindowLauncherItemController> controller =
-      std::make_unique<ArcAppWindowLauncherItemController>(
+      base::MakeUnique<ArcAppWindowLauncherItemController>(
           app_shelf_id.ToString());
   ArcAppWindowLauncherItemController* item_controller = controller.get();
   const ash::ShelfID shelf_id(app_shelf_id.ToString());
@@ -669,14 +657,9 @@ void ArcAppWindowLauncherController::SetOrientationLockForAppWindow(
           ScreenOrientationController::LockCompletionBehavior::DisableSensor;
     }
   }
-
-  blink::WebScreenOrientationLockType natural_orientation =
-      ash::Shell::Get()->screen_orientation_controller()->natural_orientation();
-
   ash::Shell* shell = ash::Shell::Get();
   shell->screen_orientation_controller()->LockOrientationForWindow(
-      window,
-      BlinkOrientationLockFromMojom(natural_orientation, orientation_lock),
+      window, BlinkOrientationLockFromMojom(orientation_lock),
       lock_completion_behavior);
 }
 

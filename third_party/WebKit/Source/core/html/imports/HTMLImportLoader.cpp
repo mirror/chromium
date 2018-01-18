@@ -47,7 +47,7 @@ HTMLImportLoader::HTMLImportLoader(HTMLImportsController* controller)
       state_(kStateLoading),
       microtask_queue_(V0CustomElementSyncMicrotaskQueue::Create()) {}
 
-HTMLImportLoader::~HTMLImportLoader() = default;
+HTMLImportLoader::~HTMLImportLoader() {}
 
 void HTMLImportLoader::Dispose() {
   controller_ = nullptr;

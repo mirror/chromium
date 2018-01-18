@@ -52,7 +52,6 @@ enum CollectionType {
   // Named HTMLCollection types cached in the document.
   kWindowNamedItems,
   kDocumentNamedItems,
-  kDocumentAllNamedItems,
 
   // Named HTMLCollection types cached in elements.
   kClassCollectionType,

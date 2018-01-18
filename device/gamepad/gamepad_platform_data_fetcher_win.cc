@@ -109,8 +109,6 @@ void GamepadPlatformDataFetcherWin::EnumerateDevices() {
       DWORD res = xinput_get_capabilities_(i, XINPUT_FLAG_GAMEPAD, &caps);
       xinput_connected_[i] = (res == ERROR_SUCCESS);
       if (!xinput_connected_[i]) {
-        if (haptics_[i])
-          haptics_[i]->Shutdown();
         haptics_[i] = nullptr;
         continue;
       }

@@ -180,8 +180,10 @@ void TargetAutoAttacher::ReattachServiceWorkers(bool waiting_for_debugger) {
 
   auto matching = GetMatchingServiceWorkers(browser_context, frame_urls_);
   Hosts new_hosts;
-  for (const auto& pair : matching)
-    new_hosts.insert(pair.second);
+  for (const auto& pair : matching) {
+    if (pair.second->IsReadyForInspection())
+      new_hosts.insert(pair.second);
+  }
   ReattachTargetsOfType(new_hosts, DevToolsAgentHost::kTypeServiceWorker,
                         waiting_for_debugger);
 }
@@ -237,20 +239,27 @@ void TargetAutoAttacher::SetAttachToFrames(bool attach_to_frames) {
 
 // -------- ServiceWorkerDevToolsManager::Observer ----------
 
-void TargetAutoAttacher::WorkerCreated(ServiceWorkerDevToolsAgentHost* host,
-                                       bool* should_pause_on_start) {
+void TargetAutoAttacher::WorkerCreated(ServiceWorkerDevToolsAgentHost* host) {
   BrowserContext* browser_context = nullptr;
   if (render_frame_host_)
     browser_context = render_frame_host_->GetProcess()->GetBrowserContext();
   auto hosts = GetMatchingServiceWorkers(browser_context, frame_urls_);
-  if (hosts.find(host->GetId()) != hosts.end()) {
-    *should_pause_on_start = wait_for_debugger_on_start_;
-    Hosts new_hosts;
-    for (const auto& pair : hosts)
-      new_hosts.insert(pair.second);
-    ReattachTargetsOfType(new_hosts, DevToolsAgentHost::kTypeServiceWorker,
-                          wait_for_debugger_on_start_);
+  if (hosts.find(host->GetId()) != hosts.end() && !host->IsAttached() &&
+      !host->IsPausedForDebugOnStart() && wait_for_debugger_on_start_) {
+    host->PauseForDebugOnStart();
   }
+}
+
+void TargetAutoAttacher::WorkerReadyForInspection(
+    ServiceWorkerDevToolsAgentHost* host) {
+  DCHECK(host->IsReadyForInspection());
+  if (ServiceWorkerDevToolsManager::GetInstance()
+          ->debug_service_worker_on_start()) {
+    // When debug_service_worker_on_start is true, a new DevTools window will
+    // be opened in ServiceWorkerDevToolsManager::WorkerReadyForInspection.
+    return;
+  }
+  ReattachServiceWorkers(host->IsPausedForDebugOnStart());
 }
 
 void TargetAutoAttacher::WorkerVersionInstalled(

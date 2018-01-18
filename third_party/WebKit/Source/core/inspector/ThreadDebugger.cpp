@@ -37,7 +37,7 @@ ThreadDebugger::ThreadDebugger(v8::Isolate* isolate)
       v8_inspector_(v8_inspector::V8Inspector::create(isolate, this)),
       v8_tracing_cpu_profiler_(v8::TracingCpuProfiler::Create(isolate)) {}
 
-ThreadDebugger::~ThreadDebugger() = default;
+ThreadDebugger::~ThreadDebugger() {}
 
 // static
 ThreadDebugger* ThreadDebugger::From(v8::Isolate* isolate) {
@@ -108,7 +108,7 @@ void ThreadDebugger::AsyncTaskFinished(void* task) {
 }
 
 v8_inspector::V8StackTraceId ThreadDebugger::StoreCurrentStackTrace(
-    const StringView& description) {
+    const String& description) {
   return v8_inspector_->storeCurrentStackTrace(
       ToV8InspectorStringView(description));
 }

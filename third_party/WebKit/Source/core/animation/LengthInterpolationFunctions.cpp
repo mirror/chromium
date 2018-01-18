@@ -34,7 +34,7 @@ class CSSLengthNonInterpolableValue : public NonInterpolableValue {
   DECLARE_NON_INTERPOLABLE_VALUE_TYPE();
 
  private:
-  CSSLengthNonInterpolableValue() = default;
+  CSSLengthNonInterpolableValue() {}
 };
 
 DEFINE_NON_INTERPOLABLE_VALUE_TYPE(CSSLengthNonInterpolableValue);

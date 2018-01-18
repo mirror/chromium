@@ -7,12 +7,8 @@
 #include "base/logging.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
-#import "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h"
-#import "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.h"
-#import "ios/chrome/browser/ui/toolbar/clean/toolbar_tab_grid_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
-#import "ios/third_party/material_components_ios/src/components/ProgressView/src/MaterialProgressView.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -33,30 +29,27 @@
 // Buttons from the trailing stack view.
 @property(nonatomic, strong) NSArray<ToolbarButton*>* trailingStackViewButtons;
 
-// Progress bar displayed below the toolbar, redefined as readwrite.
-@property(nonatomic, strong, readwrite) MDCProgressView* progressBar;
-
 #pragma mark** Buttons in the leading stack view. **
-// Button to navigate back, redefined as readwrite.
-@property(nonatomic, strong, readwrite) ToolbarButton* backButton;
-// Button to navigate forward, leading position, redefined as readwrite.
-@property(nonatomic, strong, readwrite) ToolbarButton* forwardLeadingButton;
-// Button to display the TabGrid, redefined as readwrite.
-@property(nonatomic, strong, readwrite) ToolbarTabGridButton* tabGridButton;
-// Button to stop the loading of the page, redefined as readwrite.
-@property(nonatomic, strong, readwrite) ToolbarButton* stopButton;
-// Button to reload the page, redefined as readwrite.
-@property(nonatomic, strong, readwrite) ToolbarButton* reloadButton;
+// Button to navigate back.
+@property(nonatomic, strong) ToolbarButton* backButton;
+// Button to navigate forward, leading position.
+@property(nonatomic, strong) ToolbarButton* forwardLeadingButton;
+// Button to display the TabGrid.
+@property(nonatomic, strong) ToolbarButton* tabGridButton;
+// Button to stop the loading of the page.
+@property(nonatomic, strong) ToolbarButton* stopButton;
+// Button to reload the page.
+@property(nonatomic, strong) ToolbarButton* reloadButton;
 
 #pragma mark** Buttons in the trailing stack view. **
-// Button to navigate forward, trailing position, redefined as readwrite.
-@property(nonatomic, strong, readwrite) ToolbarButton* forwardTrailingButton;
-// Button to display the share menu, redefined as readwrite.
-@property(nonatomic, strong, readwrite) ToolbarButton* shareButton;
-// Button to manage the bookmarks of this page, redefined as readwrite.
-@property(nonatomic, strong, readwrite) ToolbarButton* bookmarkButton;
+// Button to navigate forward, trailing position.
+@property(nonatomic, strong) ToolbarButton* forwardTrailingButton;
+// Button to display the share menu.
+@property(nonatomic, strong) ToolbarButton* shareButton;
+// Button to manage the bookmarks of this page.
+@property(nonatomic, strong) ToolbarButton* bookmarkButton;
 // Button to display the tools menu, redefined as readwrite.
-@property(nonatomic, strong, readwrite) ToolbarToolsMenuButton* toolsMenuButton;
+@property(nonatomic, strong) ToolbarToolsMenuButton* toolsMenuButton;
 
 @end
 
@@ -66,7 +59,6 @@
 @synthesize topSafeAnchor = _topSafeAnchor;
 @synthesize buttonFactory = _buttonFactory;
 @synthesize allButtons = _allButtons;
-@synthesize progressBar = _progressBar;
 @synthesize leadingStackView = _leadingStackView;
 @synthesize leadingStackViewButtons = _leadingStackViewButtons;
 @synthesize backButton = _backButton;
@@ -99,41 +91,26 @@
   }
   DCHECK(self.buttonFactory);
 
-  self.backgroundColor =
-      self.buttonFactory.toolbarConfiguration.backgroundColor;
   self.translatesAutoresizingMaskIntoConstraints = NO;
-
-  [self setUpLocationBar];
-  [self setUpLeadingStackView];
-  [self setUpTrailingStackView];
-  [self setUpProgressBar];
-
-  [self setUpConstraints];
-}
-
-// Sets the location bar container and its view if present.
-- (void)setUpLocationBar {
   self.locationBarContainer = [[UIView alloc] init];
-  self.locationBarContainer.backgroundColor =
-      self.buttonFactory.toolbarConfiguration.omniboxBackgroundColor;
-  self.locationBarContainer.layer.cornerRadius =
-      kAdaptiveLocationBarCornerRadius;
+  self.locationBarContainer.backgroundColor = [UIColor whiteColor];
   [self.locationBarContainer
       setContentHuggingPriority:UILayoutPriorityDefaultLow
                         forAxis:UILayoutConstraintAxisHorizontal];
   self.locationBarContainer.translatesAutoresizingMaskIntoConstraints = NO;
   [self addSubview:self.locationBarContainer];
 
-  if (self.locationBarView) {
-    [self.locationBarContainer addSubview:self.locationBarView];
-  }
+  [self setUpLeadingStackView];
+  [self setUpTrailingStackView];
+
+  [self setUpConstraints];
 }
 
 // Sets the leading stack view.
 - (void)setUpLeadingStackView {
   self.backButton = [self.buttonFactory backButton];
-  self.forwardLeadingButton = [self.buttonFactory leadingForwardButton];
-  self.tabGridButton = [self.buttonFactory tabGridButton];
+  self.forwardLeadingButton = [self.buttonFactory forwardButton];
+  self.tabGridButton = [self.buttonFactory tabSwitcherStripButton];
   self.stopButton = [self.buttonFactory stopButton];
   self.stopButton.hiddenInCurrentState = YES;
   self.reloadButton = [self.buttonFactory reloadButton];
@@ -150,7 +127,7 @@
 
 // Sets the trailing stack view.
 - (void)setUpTrailingStackView {
-  self.forwardTrailingButton = [self.buttonFactory trailingForwardButton];
+  self.forwardTrailingButton = [self.buttonFactory forwardButton];
   self.shareButton = [self.buttonFactory shareButton];
   self.bookmarkButton = [self.buttonFactory bookmarkButton];
   self.toolsMenuButton = [self.buttonFactory toolsMenuButton];
@@ -163,14 +140,6 @@
       initWithArrangedSubviews:self.trailingStackViewButtons];
   self.trailingStackView.translatesAutoresizingMaskIntoConstraints = NO;
   [self addSubview:self.trailingStackView];
-}
-
-// Sets the progress bar up.
-- (void)setUpProgressBar {
-  self.progressBar = [[MDCProgressView alloc] init];
-  self.progressBar.translatesAutoresizingMaskIntoConstraints = NO;
-  self.progressBar.hidden = YES;
-  [self addSubview:self.progressBar];
 }
 
 // Sets the constraints up.
@@ -194,14 +163,11 @@
     [self.locationBarContainer.trailingAnchor
         constraintEqualToAnchor:self.trailingStackView.leadingAnchor],
     [self.locationBarContainer.bottomAnchor
-        constraintEqualToAnchor:self.bottomAnchor
-                       constant:-kLocationBarVerticalMargin],
+        constraintEqualToAnchor:safeArea.bottomAnchor],
     [self.locationBarContainer.topAnchor
-        constraintEqualToAnchor:self.topSafeAnchor
-                       constant:kLocationBarVerticalMargin],
+        constraintEqualToAnchor:self.topSafeAnchor],
     [self.locationBarContainer.heightAnchor
-        constraintEqualToConstant:kToolbarHeight -
-                                  2 * kLocationBarVerticalMargin],
+        constraintEqualToConstant:kToolbarHeight],
   ]];
 
   // Trailing StackView constraints.
@@ -213,21 +179,6 @@
     [self.trailingStackView.topAnchor
         constraintEqualToAnchor:self.topSafeAnchor],
   ]];
-
-  // locationBarView constraints, if present.
-  if (self.locationBarView) {
-    AddSameConstraints(self.locationBarContainer, self.locationBarView);
-  }
-
-  // ProgressBar constraints.
-  [NSLayoutConstraint activateConstraints:@[
-    [self.progressBar.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-    [self.progressBar.trailingAnchor
-        constraintEqualToAnchor:self.trailingAnchor],
-    [self.progressBar.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
-    [self.progressBar.heightAnchor
-        constraintEqualToConstant:kProgressBarHeight],
-  ]];
 }
 
 #pragma mark - Property accessors
@@ -238,16 +189,12 @@
   }
   [_locationBarView removeFromSuperview];
 
-  _locationBarView = locationBarView;
   locationBarView.translatesAutoresizingMaskIntoConstraints = NO;
   [locationBarView setContentHuggingPriority:UILayoutPriorityDefaultLow
                                      forAxis:UILayoutConstraintAxisHorizontal];
-
-  if (!self.locationBarContainer || !locationBarView)
-    return;
-
   [self.locationBarContainer addSubview:locationBarView];
   AddSameConstraints(self.locationBarContainer, locationBarView);
+  _locationBarView = locationBarView;
 }
 
 - (NSArray<ToolbarButton*>*)allButtons {

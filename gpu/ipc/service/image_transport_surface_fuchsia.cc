@@ -5,7 +5,6 @@
 #include "gpu/ipc/service/image_transport_surface.h"
 
 #include "base/logging.h"
-#include "ui/gl/gl_surface.h"
 #include "ui/gl/gl_surface_osmesa.h"
 #include "ui/gl/gl_surface_stub.h"
 
@@ -17,8 +16,7 @@ scoped_refptr<gl::GLSurface> ImageTransportSurface::CreateNativeSurface(
     SurfaceHandle surface_handle,
     gl::GLSurfaceFormat format) {
   if (gl::GetGLImplementation() == gl::kGLImplementationOSMesaGL) {
-    return gl::InitializeGLSurfaceWithFormat(
-        new gl::GLSurfaceOSMesa(format, gfx::Size(1, 1)), format);
+    return new gl::GLSurfaceOSMesa(format, gfx::Size(1, 1));
   }
 
   DCHECK(gl::GetGLImplementation() == gl::kGLImplementationMockGL ||

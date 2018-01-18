@@ -94,14 +94,14 @@ class ThrottlingURLLoader::ForwardingThrottleDelegate
 };
 
 ThrottlingURLLoader::StartInfo::StartInfo(
-    scoped_refptr<SharedURLLoaderFactory> in_url_loader_factory,
+    mojom::URLLoaderFactory* in_url_loader_factory,
     int32_t in_routing_id,
     int32_t in_request_id,
     uint32_t in_options,
     StartLoaderCallback in_start_loader_callback,
-    network::ResourceRequest* in_url_request,
+    ResourceRequest* in_url_request,
     scoped_refptr<base::SingleThreadTaskRunner> in_task_runner)
-    : url_loader_factory(std::move(in_url_loader_factory)),
+    : url_loader_factory(in_url_loader_factory),
       routing_id(in_routing_id),
       request_id(in_request_id),
       options(in_options),
@@ -112,7 +112,7 @@ ThrottlingURLLoader::StartInfo::StartInfo(
 ThrottlingURLLoader::StartInfo::~StartInfo() = default;
 
 ThrottlingURLLoader::ResponseInfo::ResponseInfo(
-    const network::ResourceResponseHead& in_response_head,
+    const ResourceResponseHead& in_response_head,
     const base::Optional<net::SSLInfo>& in_ssl_info,
     mojom::DownloadedTempFilePtr in_downloaded_file)
     : response_head(in_response_head),
@@ -123,7 +123,7 @@ ThrottlingURLLoader::ResponseInfo::~ResponseInfo() = default;
 
 ThrottlingURLLoader::RedirectInfo::RedirectInfo(
     const net::RedirectInfo& in_redirect_info,
-    const network::ResourceResponseHead& in_response_head)
+    const ResourceResponseHead& in_response_head)
     : redirect_info(in_redirect_info), response_head(in_response_head) {}
 
 ThrottlingURLLoader::RedirectInfo::~RedirectInfo() = default;
@@ -137,19 +137,19 @@ ThrottlingURLLoader::PriorityInfo::~PriorityInfo() = default;
 
 // static
 std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
-    scoped_refptr<SharedURLLoaderFactory> factory,
+    mojom::URLLoaderFactory* factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
     int32_t routing_id,
     int32_t request_id,
     uint32_t options,
-    network::ResourceRequest* url_request,
+    ResourceRequest* url_request,
     mojom::URLLoaderClient* client,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   std::unique_ptr<ThrottlingURLLoader> loader(new ThrottlingURLLoader(
       std::move(throttles), client, traffic_annotation));
-  loader->Start(std::move(factory), routing_id, request_id, options,
-                StartLoaderCallback(), url_request, std::move(task_runner));
+  loader->Start(factory, routing_id, request_id, options, StartLoaderCallback(),
+                url_request, std::move(task_runner));
   return loader;
 }
 
@@ -158,7 +158,7 @@ std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
     StartLoaderCallback start_loader_callback,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
     int32_t routing_id,
-    network::ResourceRequest* url_request,
+    ResourceRequest* url_request,
     mojom::URLLoaderClient* client,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
@@ -229,12 +229,12 @@ ThrottlingURLLoader::ThrottlingURLLoader(
 }
 
 void ThrottlingURLLoader::Start(
-    scoped_refptr<SharedURLLoaderFactory> factory,
+    mojom::URLLoaderFactory* factory,
     int32_t routing_id,
     int32_t request_id,
     uint32_t options,
     StartLoaderCallback start_loader_callback,
-    network::ResourceRequest* url_request,
+    ResourceRequest* url_request,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   DCHECK_EQ(DEFERRED_NONE, deferred_stage_);
   DCHECK(!loader_cancelled_);
@@ -255,26 +255,26 @@ void ThrottlingURLLoader::Start(
 
     if (deferred) {
       deferred_stage_ = DEFERRED_START;
-      start_info_ = std::make_unique<StartInfo>(
-          std::move(factory), routing_id, request_id, options,
-          std::move(start_loader_callback), url_request,
-          std::move(task_runner));
+      start_info_ =
+          std::make_unique<StartInfo>(factory, routing_id, request_id, options,
+                                      std::move(start_loader_callback),
+                                      url_request, std::move(task_runner));
       return;
     }
   }
 
-  StartNow(factory.get(), routing_id, request_id, options,
+  StartNow(factory, routing_id, request_id, options,
            std::move(start_loader_callback), url_request,
            std::move(task_runner));
 }
 
 void ThrottlingURLLoader::StartNow(
-    SharedURLLoaderFactory* factory,
+    mojom::URLLoaderFactory* factory,
     int32_t routing_id,
     int32_t request_id,
     uint32_t options,
     StartLoaderCallback start_loader_callback,
-    network::ResourceRequest* url_request,
+    ResourceRequest* url_request,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   mojom::URLLoaderClientPtr client;
   client_binding_.Bind(mojo::MakeRequest(&client), std::move(task_runner));
@@ -329,7 +329,7 @@ void ThrottlingURLLoader::StopDeferringForThrottle(
 }
 
 void ThrottlingURLLoader::OnReceiveResponse(
-    const network::ResourceResponseHead& response_head,
+    const ResourceResponseHead& response_head,
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
   DCHECK_EQ(DEFERRED_NONE, deferred_stage_);
@@ -362,7 +362,7 @@ void ThrottlingURLLoader::OnReceiveResponse(
 
 void ThrottlingURLLoader::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
-    const network::ResourceResponseHead& response_head) {
+    const ResourceResponseHead& response_head) {
   DCHECK_EQ(DEFERRED_NONE, deferred_stage_);
   DCHECK(!loader_cancelled_);
   DCHECK(deferring_throttles_.empty());
@@ -456,7 +456,7 @@ void ThrottlingURLLoader::OnClientConnectionError() {
   // browser-side navigation this error on async loads will confuse the loading
   // of cross-origin iframes.
   if (is_synchronous_ || content::IsBrowserSideNavigationEnabled())
-    CancelWithError(net::ERR_ABORTED);
+    CancelWithError(net::ERR_FAILED);
 }
 
 void ThrottlingURLLoader::CancelWithError(int error_code) {
@@ -480,7 +480,7 @@ void ThrottlingURLLoader::Resume() {
   deferred_stage_ = DEFERRED_NONE;
   switch (prev_deferred_stage) {
     case DEFERRED_START: {
-      StartNow(start_info_->url_loader_factory.get(), start_info_->routing_id,
+      StartNow(start_info_->url_loader_factory, start_info_->routing_id,
                start_info_->request_id, start_info_->options,
                std::move(start_info_->start_loader_callback),
                &start_info_->url_request, std::move(start_info_->task_runner));

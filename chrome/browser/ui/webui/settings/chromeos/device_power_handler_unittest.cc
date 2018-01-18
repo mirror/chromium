@@ -9,6 +9,7 @@
 #include "ash/system/power/power_status.h"
 #include "base/json/json_writer.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/values.h"
@@ -39,15 +40,15 @@ class PowerHandlerTest : public testing::Test {
     std::unique_ptr<chromeos::DBusThreadManagerSetter> dbus_setter =
         chromeos::DBusThreadManager::GetSetterForTesting();
     dbus_setter->SetPowerManagerClient(
-        std::make_unique<chromeos::FakePowerManagerClient>());
+        base::MakeUnique<chromeos::FakePowerManagerClient>());
     power_manager_client_ = static_cast<chromeos::FakePowerManagerClient*>(
         chromeos::DBusThreadManager::Get()->GetPowerManagerClient());
     ash::PowerStatus::Initialize();
 
     chromeos::PowerPrefs::RegisterUserProfilePrefs(prefs_.registry());
 
-    handler_ = std::make_unique<TestPowerHandler>(&prefs_);
-    test_api_ = std::make_unique<PowerHandler::TestAPI>(handler_.get());
+    handler_ = base::MakeUnique<TestPowerHandler>(&prefs_);
+    test_api_ = base::MakeUnique<PowerHandler::TestAPI>(handler_.get());
     handler_->set_web_ui(&web_ui_);
     handler_->RegisterMessages();
     handler_->AllowJavascriptForTesting();
@@ -169,7 +170,7 @@ TEST_F(PowerHandlerTest, SendSettingsForControlledPrefs) {
   // Making an arbitrary delay pref managed should result in the idle setting
   // being reported as controlled.
   prefs_.SetManagedPref(prefs::kPowerAcScreenDimDelayMs,
-                        std::make_unique<base::Value>(10000));
+                        base::MakeUnique<base::Value>(10000));
   EXPECT_EQ(
       CreateSettingsChangedString(
           PowerHandler::IdleBehavior::DISPLAY_OFF_SLEEP,
@@ -180,7 +181,7 @@ TEST_F(PowerHandlerTest, SendSettingsForControlledPrefs) {
   // Ditto for making the lid action pref managed.
   prefs_.SetManagedPref(
       prefs::kPowerLidClosedAction,
-      std::make_unique<base::Value>(PowerPolicyController::ACTION_SUSPEND));
+      base::MakeUnique<base::Value>(PowerPolicyController::ACTION_SUSPEND));
   EXPECT_EQ(
       CreateSettingsChangedString(
           PowerHandler::IdleBehavior::DISPLAY_OFF_SLEEP,
@@ -195,9 +196,9 @@ TEST_F(PowerHandlerTest, SendIdleSettingForPrefChanges) {
   // Set a do-nothing idle action and a nonzero screen-off delay.
   prefs_.SetUserPref(
       prefs::kPowerAcIdleAction,
-      std::make_unique<base::Value>(PowerPolicyController::ACTION_DO_NOTHING));
+      base::MakeUnique<base::Value>(PowerPolicyController::ACTION_DO_NOTHING));
   prefs_.SetUserPref(prefs::kPowerAcScreenOffDelayMs,
-                     std::make_unique<base::Value>(10000));
+                     base::MakeUnique<base::Value>(10000));
   EXPECT_EQ(CreateSettingsChangedString(PowerHandler::IdleBehavior::DISPLAY_OFF,
                                         false /* idle_controlled */,
                                         PowerPolicyController::ACTION_SUSPEND,
@@ -207,7 +208,7 @@ TEST_F(PowerHandlerTest, SendIdleSettingForPrefChanges) {
 
   // Now set the delay to zero and check that the setting goes to "display on".
   prefs_.SetUserPref(prefs::kPowerAcScreenOffDelayMs,
-                     std::make_unique<base::Value>(0));
+                     base::MakeUnique<base::Value>(0));
   EXPECT_EQ(CreateSettingsChangedString(PowerHandler::IdleBehavior::DISPLAY_ON,
                                         false /* idle_controlled */,
                                         PowerPolicyController::ACTION_SUSPEND,
@@ -217,7 +218,7 @@ TEST_F(PowerHandlerTest, SendIdleSettingForPrefChanges) {
 
   // Other idle actions should result in an "other" setting.
   prefs_.SetUserPref(prefs::kPowerAcIdleAction,
-                     std::make_unique<base::Value>(
+                     base::MakeUnique<base::Value>(
                          PowerPolicyController::ACTION_STOP_SESSION));
   EXPECT_EQ(CreateSettingsChangedString(
                 PowerHandler::IdleBehavior::OTHER, false /* idle_controlled */,
@@ -230,7 +231,7 @@ TEST_F(PowerHandlerTest, SendIdleSettingForPrefChanges) {
 TEST_F(PowerHandlerTest, SendLidSettingForPrefChanges) {
   prefs_.SetUserPref(
       prefs::kPowerLidClosedAction,
-      std::make_unique<base::Value>(PowerPolicyController::ACTION_SHUT_DOWN));
+      base::MakeUnique<base::Value>(PowerPolicyController::ACTION_SHUT_DOWN));
   EXPECT_EQ(
       CreateSettingsChangedString(
           PowerHandler::IdleBehavior::DISPLAY_OFF_SLEEP,
@@ -239,7 +240,7 @@ TEST_F(PowerHandlerTest, SendLidSettingForPrefChanges) {
       GetLastSettingsChangedMessage());
 
   prefs_.SetUserPref(prefs::kPowerLidClosedAction,
-                     std::make_unique<base::Value>(
+                     base::MakeUnique<base::Value>(
                          PowerPolicyController::ACTION_STOP_SESSION));
   EXPECT_EQ(CreateSettingsChangedString(
                 PowerHandler::IdleBehavior::DISPLAY_OFF_SLEEP,

@@ -134,8 +134,11 @@ bool TrafficAnnotationAuditor::RunClangTool(
 
   // Get list of files/folders to process.
   std::vector<std::string> file_paths;
-  GenerateFilesListForClangTool(path_filters, filter_files_based_on_heuristics,
-                                use_compile_commands, &file_paths);
+  if (!GenerateFilesListForClangTool(path_filters,
+                                     filter_files_based_on_heuristics,
+                                     use_compile_commands, &file_paths)) {
+    return false;
+  }
   if (file_paths.empty())
     return true;
 
@@ -221,7 +224,7 @@ bool TrafficAnnotationAuditor::RunClangTool(
   return result;
 }
 
-void TrafficAnnotationAuditor::GenerateFilesListForClangTool(
+bool TrafficAnnotationAuditor::GenerateFilesListForClangTool(
     const std::vector<std::string>& path_filters,
     bool filter_files_based_on_heuristics,
     bool use_compile_commands,
@@ -232,7 +235,7 @@ void TrafficAnnotationAuditor::GenerateFilesListForClangTool(
   // from the results.
   if (!filter_files_based_on_heuristics || use_compile_commands) {
     *file_paths = path_filters;
-    return;
+    return true;
   }
 
   TrafficAnnotationFileFilter filter;
@@ -244,7 +247,7 @@ void TrafficAnnotationAuditor::GenerateFilesListForClangTool(
         source_path_,
         safe_list_[static_cast<int>(AuditorException::ExceptionType::ALL)], "",
         file_paths);
-    return;
+    return true;
   }
 
   base::FilePath original_path;
@@ -283,6 +286,13 @@ void TrafficAnnotationAuditor::GenerateFilesListForClangTool(
   }
 
   base::SetCurrentDirectory(original_path);
+
+  if (file_paths->empty() && !possibly_deleted_files) {
+    LOG(ERROR) << "No file is specified for annotation tests.";
+    return false;
+  }
+
+  return true;
 }
 
 bool TrafficAnnotationAuditor::IsSafeListed(

@@ -57,7 +57,6 @@
 #include "core/dom/TreeScope.h"
 #include "core/dom/UserActionElementSet.h"
 #include "core/dom/ViewportDescription.h"
-#include "core/editing/Forward.h"
 #include "core/frame/DOMTimerCoordinator.h"
 #include "core/frame/HostsUsingFeatures.h"
 #include "core/html/custom/V0CustomElement.h"
@@ -284,8 +283,6 @@ class CORE_EXPORT Document : public ContainerNode,
   // https://dom.spec.whatwg.org/#dom-document-document
   static Document* Create(Document&);
   ~Document() override;
-  static Range* CreateRangeAdjustedToTreeScope(const TreeScope&,
-                                               const Position&);
 
   // Support JS introspection of frame policy (e.g. feature policy).
   Policy* policy();
@@ -430,7 +427,6 @@ class CORE_EXPORT Document : public ContainerNode,
 
   HTMLCollection* WindowNamedItems(const AtomicString& name);
   DocumentNameCollection* DocumentNamedItems(const AtomicString& name);
-  HTMLCollection* DocumentAllNamedItems(const AtomicString& name);
 
   // "defaultView" attribute defined in HTML spec.
   LocalDOMWindow* defaultView() const;
@@ -1356,8 +1352,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   SnapCoordinator* GetSnapCoordinator();
 
-  void DidEnforceInsecureRequestPolicy();
-  void DidEnforceInsecureNavigationsSet();
+  void EnforceInsecureRequestPolicy(WebInsecureRequestPolicy);
 
   bool MayContainV0Shadow() const { return may_contain_v0_shadow_; }
 

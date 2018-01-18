@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/extensions/extension_message_bubble_controller.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/grit/generated_resources.h"
@@ -115,7 +116,7 @@ ExtensionMessageBubbleBridge::GetExtraViewInfo() {
   DCHECK(extension);
 
   std::unique_ptr<ExtraViewInfo> extra_view_info =
-      std::make_unique<ExtraViewInfo>();
+      base::MakeUnique<ExtraViewInfo>();
 
   if (IsPolicyIndicationNeeded(extension)) {
     DCHECK_EQ(1u, list.size());

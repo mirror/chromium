@@ -99,12 +99,12 @@ class WebRemotePlaybackClient;
 class WebRTCPeerConnectionHandler;
 class WebServiceWorkerProvider;
 class WebSpellCheckPanelHostClient;
-struct WebScrollIntoViewParams;
+struct WebRemoteScrollProperties;
 class WebTextCheckClient;
 
 class CORE_EXPORT LocalFrameClient : public FrameClient {
  public:
-  ~LocalFrameClient() override = default;
+  ~LocalFrameClient() override {}
 
   virtual WebFrame* GetWebFrame() const { return nullptr; }
 
@@ -278,7 +278,6 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void DidChangeName(const String&) {}
 
   virtual void DidEnforceInsecureRequestPolicy(WebInsecureRequestPolicy) {}
-  virtual void DidEnforceInsecureNavigationsSet(const std::vector<unsigned>&) {}
 
   virtual void DidChangeFramePolicy(Frame* child_frame,
                                     SandboxFlags,
@@ -372,11 +371,13 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual void DidBlockFramebust(const KURL&) {}
 
+  virtual String GetInstrumentationToken() = 0;
+
   // Called when the corresponding frame should be scrolled in a remote parent
   // frame.
   virtual void ScrollRectToVisibleInParentFrame(
       const WebRect&,
-      const WebScrollIntoViewParams&) {}
+      const WebRemoteScrollProperties&) {}
 
   virtual void SetVirtualTimePauser(
       WebScopedVirtualTimePauser virtual_time_pauser) {}
@@ -388,8 +389,6 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void DidChangeSelection(bool is_selection_empty) {}
 
   virtual void DidChangeContents() {}
-
-  virtual Frame* FindFrame(const AtomicString& name) const = 0;
 };
 
 }  // namespace blink

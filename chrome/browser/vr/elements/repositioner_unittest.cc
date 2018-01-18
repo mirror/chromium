@@ -4,8 +4,7 @@
 
 #include "chrome/browser/vr/elements/repositioner.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "cc/test/geometry_test_utils.h"
 #include "chrome/browser/vr/test/animation_utils.h"
@@ -40,10 +39,10 @@ void CheckRepositionedCorrectly(size_t test_case_index,
 
 TEST(Repositioner, RepositionNegativeZWithReticle) {
   UiScene scene;
-  auto child = std::make_unique<UiElement>();
+  auto child = base::MakeUnique<UiElement>();
   child->SetTranslate(0, 0, -kTestRepositionDistance);
   auto* element = child.get();
-  auto parent = std::make_unique<Repositioner>(kTestRepositionDistance);
+  auto parent = base::MakeUnique<Repositioner>(kTestRepositionDistance);
   auto* repositioner = parent.get();
   parent->AddChild(std::move(child));
   scene.AddUiElement(kRoot, std::move(parent));

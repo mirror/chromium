@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <memory>
-
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -183,12 +181,12 @@ IN_PROC_BROWSER_TEST_F(PasswordDialogViewTest,
   form.display_name = base::ASCIIToUTF16("Peter");
   form.username_value = base::ASCIIToUTF16("peter@pan.test");
   form.icon_url = GURL("broken url");
-  local_credentials.push_back(std::make_unique<autofill::PasswordForm>(form));
+  local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
   form.icon_url = embedded_test_server()->GetURL("/icon.png");
   form.display_name = base::ASCIIToUTF16("Peter Pan");
   form.federation_origin =
       url::Origin::Create(GURL("https://google.com/federation"));
-  local_credentials.push_back(std::make_unique<autofill::PasswordForm>(form));
+  local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
 
   // Prepare to capture the network request.
   EXPECT_CALL(*this, OnIconRequestDone());
@@ -214,13 +212,13 @@ IN_PROC_BROWSER_TEST_F(
   form.display_name = base::ASCIIToUTF16("Peter");
   form.username_value = base::ASCIIToUTF16("peter@pan.test");
   form.icon_url = GURL("broken url");
-  local_credentials.push_back(std::make_unique<autofill::PasswordForm>(form));
+  local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
   GURL icon_url("https://google.com/icon.png");
   form.icon_url = icon_url;
   form.display_name = base::ASCIIToUTF16("Peter Pan");
   form.federation_origin =
       url::Origin::Create(GURL("https://google.com/federation"));
-  local_credentials.push_back(std::make_unique<autofill::PasswordForm>(form));
+  local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
 
   SetupChooseCredentials(std::move(local_credentials), origin);
   ASSERT_TRUE(controller()->current_account_chooser());
@@ -245,7 +243,7 @@ IN_PROC_BROWSER_TEST_F(PasswordDialogViewTest,
   form.origin = origin;
   form.display_name = base::ASCIIToUTF16("Peter");
   form.username_value = base::ASCIIToUTF16("peter@pan.test");
-  local_credentials.push_back(std::make_unique<autofill::PasswordForm>(form));
+  local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
 
   SetupChooseCredentials(std::move(local_credentials), origin);
 
@@ -265,7 +263,7 @@ IN_PROC_BROWSER_TEST_F(PasswordDialogViewTest,
   form.origin = origin;
   form.display_name = base::ASCIIToUTF16("Peter");
   form.username_value = base::ASCIIToUTF16("peter@pan.test");
-  local_credentials.push_back(std::make_unique<autofill::PasswordForm>(form));
+  local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
 
   SetupChooseCredentials(std::move(local_credentials), origin);
 
@@ -285,7 +283,7 @@ IN_PROC_BROWSER_TEST_F(PasswordDialogViewTest,
   form.origin = origin;
   form.display_name = base::ASCIIToUTF16("Peter");
   form.username_value = base::ASCIIToUTF16("peter@pan.test");
-  local_credentials.push_back(std::make_unique<autofill::PasswordForm>(form));
+  local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
 
   SetupChooseCredentials(std::move(local_credentials), origin);
 
@@ -314,7 +312,7 @@ IN_PROC_BROWSER_TEST_F(PasswordDialogViewTest,
   form.origin = origin;
   form.display_name = base::ASCIIToUTF16("Peter");
   form.username_value = base::ASCIIToUTF16("peter@pan.test");
-  local_credentials.push_back(std::make_unique<autofill::PasswordForm>(form));
+  local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
 
   SetupChooseCredentials(std::move(local_credentials), origin);
 
@@ -346,7 +344,7 @@ IN_PROC_BROWSER_TEST_F(PasswordDialogViewTest,
   form.origin = origin;
   form.display_name = base::ASCIIToUTF16("Peter");
   form.username_value = base::ASCIIToUTF16("peter@pan.test");
-  local_credentials.push_back(std::make_unique<autofill::PasswordForm>(form));
+  local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
 
   Browser* incognito = CreateIncognitoBrowser();
   content::WebContents* tab = SetupTabWithTestController(incognito);
@@ -451,18 +449,18 @@ void PasswordDialogViewTest::ShowUi(const std::string& name) {
   form.username_value = base::ASCIIToUTF16("peter@pan.test");
   if (name == "PopupAutoSigninPrompt") {
     form.icon_url = GURL("broken url");
-    local_credentials.push_back(std::make_unique<autofill::PasswordForm>(form));
+    local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
     form.icon_url = GURL("https://google.com/icon.png");
     form.display_name = base::ASCIIToUTF16("Peter");
     form.federation_origin =
         url::Origin::Create(GURL("https://google.com/federation"));
-    local_credentials.push_back(std::make_unique<autofill::PasswordForm>(form));
+    local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
     controller()->OnAutoSignin(std::move(local_credentials), origin);
     EXPECT_EQ(password_manager::ui::AUTO_SIGNIN_STATE,
               controller()->GetState());
   } else if (base::StartsWith(name, "PopupAccountChooserWith",
                               base::CompareCase::SENSITIVE)) {
-    local_credentials.push_back(std::make_unique<autofill::PasswordForm>(form));
+    local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
     if (name == "PopupAccountChooserWithMultipleCredentialClickSignIn") {
       form.icon_url = GURL("https://google.com/icon.png");
       form.display_name = base::ASCIIToUTF16("Tinkerbell");
@@ -470,19 +468,19 @@ void PasswordDialogViewTest::ShowUi(const std::string& name) {
       form.federation_origin =
           url::Origin::Create(GURL("https://google.com/neverland"));
       local_credentials.push_back(
-          std::make_unique<autofill::PasswordForm>(form));
+          base::MakeUnique<autofill::PasswordForm>(form));
       form.display_name = base::ASCIIToUTF16("James Hook");
       form.username_value = base::ASCIIToUTF16("james@pan.test");
       form.federation_origin =
           url::Origin::Create(GURL("https://google.com/jollyroger"));
       local_credentials.push_back(
-          std::make_unique<autofill::PasswordForm>(form));
+          base::MakeUnique<autofill::PasswordForm>(form));
       form.display_name = base::ASCIIToUTF16("Wendy Darling");
       form.username_value = base::ASCIIToUTF16("wendy@pan.test");
       form.federation_origin =
           url::Origin::Create(GURL("https://google.com/london"));
       local_credentials.push_back(
-          std::make_unique<autofill::PasswordForm>(form));
+          base::MakeUnique<autofill::PasswordForm>(form));
     }
     SetupChooseCredentials(std::move(local_credentials), origin);
   } else {

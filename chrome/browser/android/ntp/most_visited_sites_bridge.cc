@@ -232,7 +232,7 @@ void MostVisitedSitesBridge::SetHomePageClient(
     const base::android::JavaParamRef<jobject>& obj,
     const base::android::JavaParamRef<jobject>& j_client) {
   most_visited_->SetHomePageClient(
-      std::make_unique<JavaHomePageClient>(env, j_client, profile_));
+      base::MakeUnique<JavaHomePageClient>(env, j_client, profile_));
 }
 
 void MostVisitedSitesBridge::AddOrRemoveBlacklistedUrl(

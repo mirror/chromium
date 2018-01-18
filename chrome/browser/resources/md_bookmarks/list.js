@@ -46,7 +46,6 @@ Polymer({
 
   listeners: {
     'click': 'deselectItems_',
-    'contextmenu': 'onContextMenu_',
     'open-command-menu': 'onOpenCommandMenu_',
   },
 
@@ -275,20 +274,5 @@ Polymer({
 
     if (handled)
       e.stopPropagation();
-  },
-
-  /**
-   * @param {Event} e
-   * @private
-   */
-  onContextMenu_: function(e) {
-    e.preventDefault();
-    this.deselectItems_();
-
-    this.fire('open-command-menu', {
-      x: e.clientX,
-      y: e.clientY,
-      source: MenuSource.LIST,
-    });
   },
 });

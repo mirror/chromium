@@ -6,8 +6,6 @@
 
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/parser/FontVariantNumericParser.h"
-#include "core/css/properties/ComputedStyleUtils.h"
-#include "core/style/ComputedStyle.h"
 
 namespace blink {
 namespace CSSLonghand {
@@ -27,15 +25,6 @@ const CSSValue* FontVariantNumeric::ParseSingleValue(
   } while (!range.AtEnd());
 
   return numeric_parser.FinalizeValue();
-}
-
-const CSSValue* FontVariantNumeric::CSSValueFromComputedStyleInternal(
-    const ComputedStyle& style,
-    const SVGComputedStyle&,
-    const LayoutObject*,
-    Node* styled_node,
-    bool allow_visited_style) const {
-  return ComputedStyleUtils::ValueForFontVariantNumeric(style);
 }
 
 }  // namespace CSSLonghand

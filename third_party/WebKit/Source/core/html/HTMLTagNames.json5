@@ -80,10 +80,7 @@
       name: "button",
       interfaceHeaderDir: "core/html/forms",
     },
-    {
-      name: "canvas",
-      interfaceHeaderDir: "core/html/canvas",
-    },
+    "canvas",
     {
       name: "caption",
       interfaceName: "HTMLTableCaptionElement",
@@ -480,10 +477,7 @@
       name: "tr",
       interfaceName: "HTMLTableRowElement",
     },
-    {
-      name: "track",
-      interfaceHeaderDir: "core/html/track",
-    },
+    "track",
     {
       name: "tt",
       interfaceName: "HTMLElement",

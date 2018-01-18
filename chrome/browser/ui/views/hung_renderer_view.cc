@@ -4,11 +4,11 @@
 
 #include "chrome/browser/ui/views/hung_renderer_view.h"
 
-#include <memory>
 #include <utility>
 #include <vector>
 
 #include "base/i18n/rtl.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -42,6 +42,7 @@
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/widget/widget.h"
+#include "ui/views/window/client_view.h"
 
 #if defined(OS_WIN)
 #include "chrome/browser/hang_monitor/hang_crash_dump_win.h"
@@ -87,7 +88,7 @@ void HungPagesTableModel::InitForWebContents(WebContents* hung_contents) {
     // Force hung_contents to be first.
     if (hung_contents) {
       tab_observers_.push_back(
-          std::make_unique<WebContentsObserverImpl>(this, hung_contents));
+          base::MakeUnique<WebContentsObserverImpl>(this, hung_contents));
     }
     for (TabContentsIterator it; !it.done(); it.Next()) {
       if (*it != hung_contents &&
@@ -95,7 +96,7 @@ void HungPagesTableModel::InitForWebContents(WebContents* hung_contents) {
               hung_contents->GetMainFrame()->GetProcess() &&
           !it->IsCrashed())
         tab_observers_.push_back(
-            std::make_unique<WebContentsObserverImpl>(this, *it));
+            base::MakeUnique<WebContentsObserverImpl>(this, *it));
     }
   }
   // The world is different.
@@ -296,7 +297,13 @@ void HungRendererDialogView::ShowForWebContents(WebContents* contents) {
     // one is showing.
     hung_pages_table_model_->InitForWebContents(contents);
 
-    UpdateLabels();
+    info_label_->SetText(
+        l10n_util::GetPluralStringFUTF16(IDS_BROWSER_HANGMONITOR_RENDERER,
+                                         hung_pages_table_model_->RowCount()));
+    Layout();
+
+    // Make Widget ask for the window title again.
+    GetWidget()->UpdateWindowTitle();
 
     GetWidget()->Show();
   }
@@ -341,12 +348,9 @@ int HungRendererDialogView::GetDialogButtons() const {
 
 base::string16 HungRendererDialogView::GetDialogButtonLabel(
     ui::DialogButton button) const {
-  if (button == ui::DIALOG_BUTTON_CANCEL) {
-    return l10n_util::GetPluralStringFUTF16(
-        IDS_BROWSER_HANGMONITOR_RENDERER_END,
-        hung_pages_table_model_->RowCount());
-  }
-  return l10n_util::GetStringUTF16(IDS_BROWSER_HANGMONITOR_RENDERER_WAIT);
+  return l10n_util::GetStringUTF16(button == ui::DIALOG_BUTTON_OK
+                                       ? IDS_BROWSER_HANGMONITOR_RENDERER_WAIT
+                                       : IDS_BROWSER_HANGMONITOR_RENDERER_END);
 }
 
 bool HungRendererDialogView::Cancel() {
@@ -455,12 +459,4 @@ void HungRendererDialogView::RestartHangTimer() {
   auto* render_view_host = hung_pages_table_model_->GetRenderViewHost();
   if (render_view_host)
     render_view_host->GetWidget()->RestartHangMonitorTimeoutIfNecessary();
-}
-
-void HungRendererDialogView::UpdateLabels() {
-  GetWidget()->UpdateWindowTitle();
-  info_label_->SetText(l10n_util::GetPluralStringFUTF16(
-      IDS_BROWSER_HANGMONITOR_RENDERER, hung_pages_table_model_->RowCount()));
-  // Update the "Exit" button.
-  DialogModelChanged();
 }

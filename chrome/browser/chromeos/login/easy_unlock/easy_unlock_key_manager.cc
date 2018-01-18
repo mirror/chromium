@@ -9,6 +9,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/login/easy_unlock/easy_unlock_tpm_key_manager.h"
@@ -89,7 +90,7 @@ void EasyUnlockKeyManager::RefreshKeysWithTpmKeyPresent(
     devices.clear();
 
   write_operation_queue_.push_back(
-      std::make_unique<EasyUnlockRefreshKeysOperation>(
+      base::MakeUnique<EasyUnlockRefreshKeysOperation>(
           user_context, tpm_public_key, devices,
           base::Bind(&EasyUnlockKeyManager::OnKeysRefreshed,
                      weak_ptr_factory_.GetWeakPtr(), callback)));
@@ -99,7 +100,7 @@ void EasyUnlockKeyManager::RefreshKeysWithTpmKeyPresent(
 void EasyUnlockKeyManager::GetDeviceDataList(
     const UserContext& user_context,
     const GetDeviceDataListCallback& callback) {
-  read_operation_queue_.push_back(std::make_unique<EasyUnlockGetKeysOperation>(
+  read_operation_queue_.push_back(base::MakeUnique<EasyUnlockGetKeysOperation>(
       user_context, base::Bind(&EasyUnlockKeyManager::OnKeysFetched,
                                weak_ptr_factory_.GetWeakPtr(), callback)));
   RunNextOperation();

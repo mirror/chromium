@@ -83,7 +83,7 @@ SVGPath::SVGPath(CSSPathValue* path_value) : path_value_(path_value) {
   DCHECK(path_value_);
 }
 
-SVGPath::~SVGPath() = default;
+SVGPath::~SVGPath() {}
 
 String SVGPath::ValueAsString() const {
   return BuildStringFromByteStream(ByteStream());

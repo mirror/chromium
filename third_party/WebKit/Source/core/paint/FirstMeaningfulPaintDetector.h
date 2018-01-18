@@ -40,7 +40,7 @@ class CORE_EXPORT FirstMeaningfulPaintDetector
   static FirstMeaningfulPaintDetector& From(Document&);
 
   FirstMeaningfulPaintDetector(PaintTiming*, Document&);
-  virtual ~FirstMeaningfulPaintDetector() = default;
+  virtual ~FirstMeaningfulPaintDetector() {}
 
   void MarkNextPaintAsMeaningfulIfNeeded(const LayoutObjectCounter&,
                                          int contents_height_before_layout,

@@ -126,7 +126,7 @@ class CONTENT_EXPORT ServiceWorkerContextClient
   void OpenNewTab(
       const blink::WebURL&,
       std::unique_ptr<blink::WebServiceWorkerClientCallbacks>) override;
-  void OpenPaymentHandlerWindow(
+  void OpenNewPopup(
       const blink::WebURL&,
       std::unique_ptr<blink::WebServiceWorkerClientCallbacks>) override;
   void SetCachedMetadata(const blink::WebURL&,
@@ -152,6 +152,10 @@ class CONTENT_EXPORT ServiceWorkerContextClient
                             const blink::WebString& message,
                             int line_number,
                             const blink::WebString& source_url) override;
+  void SendDevToolsMessage(int session_id,
+                           int call_id,
+                           const blink::WebString& message,
+                           const blink::WebString& state) override;
   void DidHandleActivateEvent(int request_id,
                               blink::mojom::ServiceWorkerEventStatus status,
                               double dispatch_event_time) override;
@@ -256,7 +260,7 @@ class CONTENT_EXPORT ServiceWorkerContextClient
   // This method needs to be used only if the event comes directly from a
   // client, which means it is coming through the ControllerServiceWorkerImpl.
   void DispatchOrQueueFetchEvent(
-      const network::ResourceRequest& request,
+      const ResourceRequest& request,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       DispatchFetchEventCallback callback);
@@ -311,7 +315,7 @@ class CONTENT_EXPORT ServiceWorkerContextClient
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       DispatchFetchEventCallback callback) override;
   void DispatchFetchEvent(
-      const network::ResourceRequest& request,
+      const ResourceRequest& request,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       DispatchFetchEventCallback callback) override;

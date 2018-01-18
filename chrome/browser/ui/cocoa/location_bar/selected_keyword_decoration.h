@@ -33,9 +33,6 @@ class SelectedKeywordDecoration : public BubbleDecoration {
 
   void SetImage(NSImage* image);
 
-  NSString* GetAccessibilityLabel() override;
-  bool IsAccessibilityIgnored() override;
-
  private:
   friend class SelectedKeywordDecorationTest;
   FRIEND_TEST_ALL_PREFIXES(SelectedKeywordDecorationTest,

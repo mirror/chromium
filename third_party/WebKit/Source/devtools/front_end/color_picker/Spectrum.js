@@ -521,9 +521,9 @@ ColorPicker.Spectrum = class extends UI.VBox {
     var paletteTop = 236;
     if (this._contrastDetails && this._contrastDetails.visible()) {
       if (this._contrastDetails.expanded())
-        paletteTop += 78;
+        paletteTop += 84;
       else
-        paletteTop += 36;
+        paletteTop += 42;
     }
     this.element.style.height = (paletteTop + paletteMargin + (paletteColorHeight + paletteMargin) * rowsNeeded) + 'px';
     this.dispatchEventToListeners(ColorPicker.Spectrum.Events.SizeChanged);

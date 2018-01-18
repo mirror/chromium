@@ -59,7 +59,7 @@ HTMLAnchorElement* HTMLAnchorElement::Create(Document& document) {
   return new HTMLAnchorElement(aTag, document);
 }
 
-HTMLAnchorElement::~HTMLAnchorElement() = default;
+HTMLAnchorElement::~HTMLAnchorElement() {}
 
 bool HTMLAnchorElement::SupportsFocus() const {
   if (HasEditableStyle(*this))

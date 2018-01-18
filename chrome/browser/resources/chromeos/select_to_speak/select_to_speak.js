@@ -6,6 +6,9 @@ var AutomationEvent = chrome.automation.AutomationEvent;
 var EventType = chrome.automation.EventType;
 var RoleType = chrome.automation.RoleType;
 
+// Whether reading selected text is enabled.
+const READ_SELECTION_ENABLED = false;
+
 // CrosSelectToSpeakStartSpeechMethod enums.
 // These values are persited to logs and should not be renumbered or re-used.
 // See tools/metrics/histograms/enums.xml.
@@ -394,15 +397,7 @@ var SelectToSpeak = function() {
    */
   this.intervalId_;
 
-  // Enable reading selection at keystroke when experimental accessibility
-  // features are enabled.
-  // TODO(katie): When the feature is approved, remove this variable and
-  // callback. The feature will be always enabled.
-  this.readSelectionEnabled_ = false;
-  chrome.commandLinePrivate.hasSwitch(
-      'enable-experimental-accessibility-features', (result) => {
-        this.readSelectionEnabled_ = result;
-      });
+  this.readSelectionEnabled_ = READ_SELECTION_ENABLED;
 
   this.initPreferences_();
 

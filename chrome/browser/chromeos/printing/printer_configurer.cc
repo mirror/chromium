@@ -15,6 +15,7 @@
 #include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/md5.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "chrome/browser/chromeos/printing/ppd_provider_factory.h"
 #include "chrome/browser/component_updater/cros_component_installer.h"
@@ -278,7 +279,7 @@ std::string PrinterConfigurer::SetupFingerprint(const Printer& printer) {
 
 // static
 std::unique_ptr<PrinterConfigurer> PrinterConfigurer::Create(Profile* profile) {
-  return std::make_unique<PrinterConfigurerImpl>(profile);
+  return base::MakeUnique<PrinterConfigurerImpl>(profile);
 }
 
 }  // namespace chromeos

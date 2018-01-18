@@ -23,6 +23,8 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/sequenced_task_runner_handle.h"
+#include "content/public/common/resource_request.h"
+#include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -33,10 +35,8 @@
 #include "net/base/request_priority.h"
 #include "net/http/http_request_headers.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
-#include "services/network/public/cpp/data_element.h"
-#include "services/network/public/cpp/resource_request.h"
-#include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/interfaces/data_pipe_getter.mojom.h"
+#include "storage/common/data_element.h"
 
 namespace content {
 
@@ -175,9 +175,8 @@ class BodyHandler;
 class SimpleURLLoaderImpl : public SimpleURLLoader,
                             public mojom::URLLoaderClient {
  public:
-  SimpleURLLoaderImpl(
-      std::unique_ptr<network::ResourceRequest> resource_request,
-      const net::NetworkTrafficAnnotationTag& annotation_tag);
+  SimpleURLLoaderImpl(std::unique_ptr<ResourceRequest> resource_request,
+                      const net::NetworkTrafficAnnotationTag& annotation_tag);
   ~SimpleURLLoaderImpl() override;
 
   // SimpleURLLoader implementation.
@@ -206,7 +205,7 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
                            const std::string& upload_content_type) override;
   void SetRetryOptions(int max_retries, int retry_mode) override;
   int NetError() const override;
-  const network::ResourceResponseHead* ResponseInfo() const override;
+  const ResourceResponseHead* ResponseInfo() const override;
 
   // Called by BodyHandler when the BodyHandler body handler is done. If |error|
   // is not net::OK, some error occurred reading or consuming the body. If it is
@@ -246,7 +245,7 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
     // Result of the request.
     int net_error = net::ERR_IO_PENDING;
 
-    std::unique_ptr<network::ResourceResponseHead> response_info;
+    std::unique_ptr<ResourceResponseHead> response_info;
   };
 
   // Prepares internal state to start a request, and then calls StartRequest().
@@ -261,12 +260,11 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
   void Retry();
 
   // mojom::URLLoaderClient implementation;
-  void OnReceiveResponse(const network::ResourceResponseHead& response_head,
+  void OnReceiveResponse(const ResourceResponseHead& response_head,
                          const base::Optional<net::SSLInfo>& ssl_info,
                          mojom::DownloadedTempFilePtr downloaded_file) override;
-  void OnReceiveRedirect(
-      const net::RedirectInfo& redirect_info,
-      const network::ResourceResponseHead& response_head) override;
+  void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
+                         const ResourceResponseHead& response_head) override;
   void OnDataDownloaded(int64_t data_length, int64_t encoded_length) override;
   void OnReceiveCachedMetadata(const std::vector<uint8_t>& data) override;
   void OnTransferSizeUpdated(int32_t transfer_size_diff) override;
@@ -313,7 +311,7 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
 
   // Populated in the constructor, and cleared once no longer needed, when no
   // more retries are possible.
-  std::unique_ptr<network::ResourceRequest> resource_request_;
+  std::unique_ptr<ResourceRequest> resource_request_;
   const net::NetworkTrafficAnnotationTag annotation_tag_;
   // Cloned from the input URLLoaderFactory if it may be needed to follow
   // redirects.
@@ -876,7 +874,7 @@ class SaveToFileBodyHandler : public BodyHandler {
 };
 
 SimpleURLLoaderImpl::SimpleURLLoaderImpl(
-    std::unique_ptr<network::ResourceRequest> resource_request,
+    std::unique_ptr<ResourceRequest> resource_request,
     const net::NetworkTrafficAnnotationTag& annotation_tag)
     : resource_request_(std::move(resource_request)),
       annotation_tag_(annotation_tag),
@@ -887,15 +885,15 @@ SimpleURLLoaderImpl::SimpleURLLoaderImpl(
   DETACH_FROM_SEQUENCE(sequence_checker_);
 #if DCHECK_IS_ON()
   if (resource_request_->request_body) {
-    for (const network::DataElement& element :
+    for (const storage::DataElement& element :
          *resource_request_->request_body->elements()) {
       // Files should be attached with AttachFileForUpload, so that (Once
       // supported) they can be opened in the current process.
       //
       // TODO(mmenke): Add a similar method for bytes, to allow streaming of
       // large byte buffers to the network process when uploading.
-      DCHECK(element.type() != network::DataElement::TYPE_FILE &&
-             element.type() != network::DataElement::TYPE_BYTES);
+      DCHECK(element.type() != storage::DataElement::TYPE_FILE &&
+             element.type() != storage::DataElement::TYPE_BYTES);
     }
   }
 #endif  // DCHECK_IS_ON()
@@ -972,7 +970,7 @@ void SimpleURLLoaderImpl::AttachStringForUpload(
   DCHECK(resource_request_->method != "GET" &&
          resource_request_->method != "HEAD");
 
-  resource_request_->request_body = new network::ResourceRequestBody();
+  resource_request_->request_body = new ResourceRequestBody();
 
   if (upload_data.length() <= kMaxUploadStringSizeToCopy) {
     int copy_length = static_cast<int>(upload_data.length());
@@ -1002,7 +1000,7 @@ void SimpleURLLoaderImpl::AttachFileForUpload(
 
   // Create an empty body to make DCHECKing that there's no upload body yet
   // simpler.
-  resource_request_->request_body = new network::ResourceRequestBody();
+  resource_request_->request_body = new ResourceRequestBody();
   // TODO(mmenke): Open the file in the current process and append the file
   // handle instead of the file path.
   resource_request_->request_body->AppendFileRange(
@@ -1024,13 +1022,13 @@ void SimpleURLLoaderImpl::SetRetryOptions(int max_retries, int retry_mode) {
 
 #if DCHECK_IS_ON()
   if (max_retries > 0 && resource_request_->request_body) {
-    for (const network::DataElement& element :
+    for (const storage::DataElement& element :
          *resource_request_->request_body->elements()) {
       // Data pipes are single-use, so can't retry uploads when there's a data
       // pipe.
       // TODO(mmenke):  Data pipes can be Cloned(), though, so maybe update code
       // to do that?
-      DCHECK(element.type() != network::DataElement::TYPE_DATA_PIPE);
+      DCHECK(element.type() != storage::DataElement::TYPE_DATA_PIPE);
     }
   }
 #endif  // DCHECK_IS_ON()
@@ -1043,7 +1041,7 @@ int SimpleURLLoaderImpl::NetError() const {
   return request_state_->net_error;
 }
 
-const network::ResourceResponseHead* SimpleURLLoaderImpl::ResponseInfo() const {
+const ResourceResponseHead* SimpleURLLoaderImpl::ResponseInfo() const {
   // Should only be called once the request is compelete.
   DCHECK(request_state_->finished);
   return request_state_->response_info.get();
@@ -1115,7 +1113,7 @@ void SimpleURLLoaderImpl::StartRequest(
   // code doesn't call the Clone() method), so need to create another one, if
   // uploading a string via a data pipe.
   if (string_upload_data_pipe_getter_) {
-    resource_request_->request_body = new network::ResourceRequestBody();
+    resource_request_->request_body = new ResourceRequestBody();
     network::mojom::DataPipeGetterPtr data_pipe_getter;
     resource_request_->request_body->AppendDataPipe(
         string_upload_data_pipe_getter_->GetPtrForNewUpload());
@@ -1149,7 +1147,7 @@ void SimpleURLLoaderImpl::Retry() {
 }
 
 void SimpleURLLoaderImpl::OnReceiveResponse(
-    const network::ResourceResponseHead& response_head,
+    const ResourceResponseHead& response_head,
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -1176,14 +1174,14 @@ void SimpleURLLoaderImpl::OnReceiveResponse(
   }
 
   request_state_->response_info =
-      std::make_unique<network::ResourceResponseHead>(response_head);
+      std::make_unique<ResourceResponseHead>(response_head);
   if (!allow_http_error_results_ && response_code / 100 != 2)
     FinishWithResult(net::ERR_FAILED);
 }
 
 void SimpleURLLoaderImpl::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
-    const network::ResourceResponseHead& response_head) {
+    const ResourceResponseHead& response_head) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (request_state_->response_info) {
     // If the headers have already been received, the URLLoader is violating the
@@ -1321,7 +1319,7 @@ void SimpleURLLoaderImpl::MaybeComplete() {
 }  // namespace
 
 std::unique_ptr<SimpleURLLoader> SimpleURLLoader::Create(
-    std::unique_ptr<network::ResourceRequest> resource_request,
+    std::unique_ptr<ResourceRequest> resource_request,
     const net::NetworkTrafficAnnotationTag& annotation_tag) {
   DCHECK(resource_request);
   return std::make_unique<SimpleURLLoaderImpl>(std::move(resource_request),

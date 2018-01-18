@@ -40,7 +40,7 @@ LayoutSearchField::LayoutSearchField(HTMLInputElement* element)
   DCHECK_EQ(element->type(), InputTypeNames::search);
 }
 
-LayoutSearchField::~LayoutSearchField() = default;
+LayoutSearchField::~LayoutSearchField() {}
 
 inline Element* LayoutSearchField::SearchDecorationElement() const {
   return InputElement()->UserAgentShadowRoot()->getElementById(

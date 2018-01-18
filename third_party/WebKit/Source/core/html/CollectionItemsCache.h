@@ -66,7 +66,7 @@ CollectionItemsCache<Collection, NodeType>::CollectionItemsCache()
     : list_valid_(false) {}
 
 template <typename Collection, typename NodeType>
-CollectionItemsCache<Collection, NodeType>::~CollectionItemsCache() = default;
+CollectionItemsCache<Collection, NodeType>::~CollectionItemsCache() {}
 
 template <typename Collection, typename NodeType>
 void CollectionItemsCache<Collection, NodeType>::Invalidate() {

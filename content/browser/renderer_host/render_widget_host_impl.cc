@@ -31,9 +31,9 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "cc/base/switches.h"
-#include "cc/trees/render_frame_metadata.h"
 #include "components/viz/common/features.h"
 #include "components/viz/common/quads/compositor_frame.h"
+#include "components/viz/common/switches.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
 #include "content/browser/accessibility/browser_accessibility_state_impl.h"
@@ -384,21 +384,25 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
   touch_emulator_.reset();
   SetWidget(std::move(widget));
 
-  const auto* command_line = base::CommandLine::ForCurrentProcess();
-  if (!command_line->HasSwitch(switches::kDisableHangMonitor)) {
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDisableHangMonitor)) {
     hang_monitor_timeout_.reset(new TimeoutMonitor(
         base::Bind(&RenderWidgetHostImpl::RendererIsUnresponsive,
                    weak_factory_.GetWeakPtr())));
   }
 
-  if (!command_line->HasSwitch(switches::kDisableNewContentRenderingTimeout)) {
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDisableNewContentRenderingTimeout)) {
     new_content_rendering_timeout_.reset(new TimeoutMonitor(
         base::Bind(&RenderWidgetHostImpl::ClearDisplayedGraphics,
                    weak_factory_.GetWeakPtr())));
   }
 
   enable_surface_synchronization_ = features::IsSurfaceSynchronizationEnabled();
-  enable_viz_ = base::FeatureList::IsEnabled(features::kVizDisplayCompositor);
+
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+  enable_viz_ = command_line.HasSwitch(switches::kEnableViz);
 
   delegate_->RenderWidgetCreated(this);
 }
@@ -626,8 +630,6 @@ bool RenderWidgetHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(DragHostMsg_UpdateDragCursor, OnUpdateDragCursor)
     IPC_MESSAGE_HANDLER(ViewHostMsg_FrameSwapMessages,
                         OnFrameSwapMessagesReceived)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_OnRenderFrameSubmitted,
-                        OnRenderFrameMetadata)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -809,10 +811,6 @@ void RenderWidgetHostImpl::SetInitialRenderSizeParams(
 }
 
 void RenderWidgetHostImpl::WasResized() {
-  WasResized(false);
-}
-
-void RenderWidgetHostImpl::WasResized(bool scroll_focused_node_into_view) {
   // Skip if the |delegate_| has already been detached because
   // it's web contents is being deleted.
   if (resize_ack_pending_ || !process_->HasConnection() || !view_ ||
@@ -823,7 +821,6 @@ void RenderWidgetHostImpl::WasResized(bool scroll_focused_node_into_view) {
   std::unique_ptr<ResizeParams> params(new ResizeParams);
   if (!GetResizeParams(params.get()))
     return;
-  params->scroll_focused_node_into_view = scroll_focused_node_into_view;
 
   bool width_changed =
       !old_resize_params_ ||
@@ -1097,7 +1094,7 @@ void RenderWidgetHostImpl::ForwardMouseEvent(const WebMouseEvent& mouse_event) {
   }
 
   ForwardMouseEventWithLatencyInfo(mouse_event,
-                                   ui::LatencyInfo(ui::SourceEventType::MOUSE));
+                                   ui::LatencyInfo(ui::SourceEventType::OTHER));
   if (owner_delegate_)
     owner_delegate_->RenderWidgetDidForwardMouseEvent(mouse_event);
 }
@@ -2679,11 +2676,6 @@ void RenderWidgetHostImpl::SetNeedsBeginFrame(bool needs_begin_frame) {
   OnSetNeedsBeginFrames(needs_begin_frame);
 }
 
-void RenderWidgetHostImpl::SetWantsAnimateOnlyBeginFrames() {
-  if (view_)
-    view_->SetWantsAnimateOnlyBeginFrames();
-}
-
 void RenderWidgetHostImpl::SubmitCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
     viz::CompositorFrame frame,
@@ -2707,8 +2699,7 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
       RenderWidgetSurfaceProperties::FromCompositorFrame(frame);
 
   if (local_surface_id == last_local_surface_id_ &&
-      SurfacePropertiesMismatch(new_surface_properties,
-                                last_surface_properties_)) {
+      new_surface_properties != last_surface_properties_) {
     static auto* crash_key = base::debug::AllocateCrashKeyString(
         "surface-invariants-violation", base::debug::CrashKeySize::Size256);
     base::debug::ScopedCrashKeyString key_value(
@@ -2926,46 +2917,6 @@ void RenderWidgetHostImpl::SetWidget(mojom::WidgetPtr widget) {
 void RenderWidgetHostImpl::ProgressFling(base::TimeTicks current_time) {
   if (input_router_)
     input_router_->ProgressFling(current_time);
-}
-
-void RenderWidgetHostImpl::StopFling() {
-  if (input_router_)
-    input_router_->StopFling();
-}
-
-void RenderWidgetHostImpl::OnRenderFrameMetadata(
-    const cc::RenderFrameMetadata& metadata) {
-  last_render_frame_metadata_ = metadata;
-}
-
-// TODO(ericrk): On Android, with surface synchronization enabled,  we need to
-// request a new surface ID when things like top/bottom control height or
-// selection handles change. This will be enabled by child surface id
-// generation. For now ignore these mismatches.  Remove this function when this
-// issue is resolved: https://crbug.com/789259 and https://crbug.com/801350
-bool RenderWidgetHostImpl::SurfacePropertiesMismatch(
-    const RenderWidgetSurfaceProperties& first,
-    const RenderWidgetSurfaceProperties& second) const {
-#ifdef OS_ANDROID
-  if (enable_surface_synchronization_) {
-    // To make this comparison resistant to changes in
-    // RenderWidgetSurfaceProperties, create new properties which are forced to
-    // match only for those categories we want to ignore.
-    RenderWidgetSurfaceProperties second_reduced = second;
-    second_reduced.top_controls_height = first.top_controls_height;
-    second_reduced.top_controls_shown_ratio = first.top_controls_shown_ratio;
-    second_reduced.bottom_controls_height = first.bottom_controls_height;
-    second_reduced.bottom_controls_shown_ratio =
-        first.bottom_controls_shown_ratio;
-    second_reduced.selection = first.selection;
-
-    return first != second_reduced;
-  }
-#endif
-
-  // For non-Android or when surface synchronization is not enabled, just use a
-  // basic comparison.
-  return first != second;
 }
 
 }  // namespace content

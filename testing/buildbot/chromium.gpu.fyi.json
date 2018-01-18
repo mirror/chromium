@@ -10683,13 +10683,6 @@
           ]
         },
         "test": "angle_end2end_tests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -10707,13 +10700,6 @@
           ]
         },
         "test": "angle_white_box_tests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -10733,13 +10719,6 @@
           ]
         },
         "test": "gles2_conform_test",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -10760,13 +10739,6 @@
           ]
         },
         "test": "gles2_conform_test",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -10784,13 +10756,6 @@
           ]
         },
         "test": "gles2_conform_test",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -10805,13 +10770,6 @@
           ]
         },
         "test": "gpu_unittests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -10826,13 +10784,6 @@
           ]
         },
         "test": "swiftshader_unittests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       }
     ],
@@ -10853,13 +10804,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -10889,13 +10833,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -10918,13 +10855,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -10947,13 +10877,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -10982,13 +10905,6 @@
             }
           ],
           "shards": 20
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -11015,13 +10931,6 @@
             }
           ],
           "shards": 2
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -11048,13 +10957,6 @@
             }
           ],
           "shards": 2
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -11081,13 +10983,6 @@
             }
           ],
           "shards": 2
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -11114,13 +11009,6 @@
             }
           ],
           "shards": 2
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       }
     ]
@@ -15225,13 +15113,6 @@
           ]
         },
         "test": "angle_end2end_tests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -15250,13 +15131,6 @@
           ]
         },
         "test": "angle_unittests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -15274,13 +15148,6 @@
           ]
         },
         "test": "angle_white_box_tests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -15302,13 +15169,6 @@
           ]
         },
         "test": "browser_tests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -15327,13 +15187,6 @@
           ]
         },
         "test": "gl_tests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -15353,13 +15206,6 @@
           ]
         },
         "test": "gl_tests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -15377,13 +15223,6 @@
           ]
         },
         "test": "gl_unittests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -15403,13 +15242,6 @@
           ]
         },
         "test": "gles2_conform_test",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -15430,13 +15262,6 @@
           ]
         },
         "test": "gles2_conform_test",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -15454,13 +15279,6 @@
           ]
         },
         "test": "gles2_conform_test",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -15475,13 +15293,6 @@
           ]
         },
         "test": "gpu_unittests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -15496,13 +15307,6 @@
           ]
         },
         "test": "swiftshader_unittests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -15523,13 +15327,6 @@
           ]
         },
         "test": "video_decode_accelerator_unittest",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -15550,13 +15347,6 @@
           ]
         },
         "test": "video_decode_accelerator_unittest",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -15577,13 +15367,6 @@
           ]
         },
         "test": "video_decode_accelerator_unittest",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       }
     ],
@@ -15604,13 +15387,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -15636,13 +15412,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -15668,13 +15437,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -15700,13 +15462,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -15732,13 +15487,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -15768,13 +15516,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -15807,13 +15548,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -15836,13 +15570,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -15883,13 +15610,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -15916,13 +15636,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -15948,13 +15661,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -15977,13 +15683,6 @@
               "pool": "Chrome-GPU"
             }
           ]
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -16012,13 +15711,6 @@
             }
           ],
           "shards": 20
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -16047,13 +15739,6 @@
             }
           ],
           "shards": 20
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -16082,13 +15767,6 @@
             }
           ],
           "shards": 20
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -16115,13 +15793,6 @@
             }
           ],
           "shards": 2
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -16148,13 +15819,6 @@
             }
           ],
           "shards": 2
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -16181,13 +15845,6 @@
             }
           ],
           "shards": 2
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -16214,13 +15871,6 @@
             }
           ],
           "shards": 2
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -16247,13 +15897,6 @@
             }
           ],
           "shards": 2
-        },
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       }
     ]
@@ -16301,13 +15944,6 @@
           "shards": 4
         },
         "test": "angle_deqp_egl_tests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -16328,13 +15964,6 @@
           "shards": 4
         },
         "test": "angle_deqp_gles2_tests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -16355,13 +15984,6 @@
           "shards": 6
         },
         "test": "angle_deqp_gles31_tests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -16382,13 +16004,6 @@
           "shards": 6
         },
         "test": "angle_deqp_gles31_tests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       },
       {
@@ -16409,13 +16024,6 @@
           "shards": 12
         },
         "test": "angle_deqp_gles3_tests",
-        "trigger_script": {
-          "args": [
-            "--gpu-trigger-configs",
-            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
-          ],
-          "script": "//content/test/gpu/trigger_gpu_test.py"
-        },
         "use_xvfb": false
       }
     ],

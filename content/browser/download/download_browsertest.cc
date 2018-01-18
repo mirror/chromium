@@ -631,28 +631,6 @@ net::EmbeddedTestServer::HandleRequestCallback CreateBasicResponseHandler(
                     headers, content_type, body);
 }
 
-std::unique_ptr<net::test_server::HttpResponse> HandleRequestAndEchoCookies(
-    const std::string& relative_url,
-    const net::test_server::HttpRequest& request) {
-  std::unique_ptr<net::test_server::BasicHttpResponse> response;
-  if (request.relative_url == relative_url) {
-    response.reset(new net::test_server::BasicHttpResponse);
-    response->AddCustomHeader("Content-Disposition", "attachment");
-    response->AddCustomHeader("Vary", "");
-    response->AddCustomHeader("Cache-Control", "no-cache");
-    response->set_content_type("text/plain");
-    response->set_content(request.headers.at("cookie"));
-  }
-  return std::move(response);
-}
-
-// Creates a request handler for an EmbeddedTestServer that echos the value
-// of the cookie header back as a body, and sends a Content-Disposition header.
-net::EmbeddedTestServer::HandleRequestCallback CreateEchoCookieHandler(
-    const std::string& relative_url) {
-  return base::BindRepeating(&HandleRequestAndEchoCookies, relative_url);
-}
-
 // Helper class to "flatten" handling of
 // TestDownloadHttpResponse::OnPauseHandler.
 class TestRequestPauseHandler {
@@ -2751,18 +2729,9 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeBlobURL) {
 
 IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeSameSiteCookie) {
   base::ThreadRestrictions::ScopedAllowIO allow_io_during_test;
-  net::EmbeddedTestServer test_server;
-  ASSERT_TRUE(test_server.InitializeAndListen());
 
-  test_server.ServeFilesFromDirectory(GetTestFilePath("download", ""));
-  test_server.RegisterRequestHandler(
-      CreateEchoCookieHandler("/downloadcookies"));
-
-  GURL echo_cookie_url = test_server.GetURL(kOriginOne, "/downloadcookies");
-  test_server.RegisterRequestHandler(
-      CreateRedirectHandler("/server-redirect", echo_cookie_url));
-
-  test_server.StartAcceptingConnections();
+  GURL echo_cookie_url =
+      embedded_test_server()->GetURL(kOriginOne, "/echoheader?cookie");
 
   // download-attribute-same-site-cookie sets two cookies. One "A=B" is set with
   // SameSite=Strict. The other one "B=C" doesn't have this flag. In general
@@ -2772,9 +2741,10 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeSameSiteCookie) {
   // /echoheader handler on the same origin.
   DownloadItem* download = StartDownloadAndReturnItem(
       shell(),
-      test_server.GetURL(
+      embedded_test_server()->GetURL(
           kOriginOne,
-          std::string("/download-attribute-same-site-cookie.html?target=") +
+          std::string(
+              "/download/download-attribute-same-site-cookie.html?target=") +
               echo_cookie_url.spec()));
   WaitForCompletion(download);
 
@@ -2795,9 +2765,10 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeSameSiteCookie) {
   //  Resource origin: kOriginOne
   //  First-party origin: kOriginOne
   download = StartDownloadAndReturnItem(
-      shell(), test_server.GetURL(
-                   kOriginTwo, std::string("/download-attribute.html?target=") +
-                                   echo_cookie_url.spec()));
+      shell(),
+      embedded_test_server()->GetURL(
+          kOriginTwo, std::string("/download/download-attribute.html?target=") +
+                          echo_cookie_url.spec()));
   WaitForCompletion(download);
 
   ASSERT_TRUE(
@@ -2812,11 +2783,13 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeSameSiteCookie) {
   //  Initiator origin: kOriginOne
   //  Resource origin: kOriginOne
   //  First-party origin: kOriginOne
-  GURL redirect_url = test_server.GetURL(kOriginTwo, "/server-redirect");
+  GURL redirect_url = embedded_test_server()->GetURL(
+      kOriginTwo, std::string("/server-redirect?") + echo_cookie_url.spec());
   download = StartDownloadAndReturnItem(
-      shell(), test_server.GetURL(
-                   kOriginOne, std::string("/download-attribute.html?target=") +
-                                   redirect_url.spec()));
+      shell(),
+      embedded_test_server()->GetURL(
+          kOriginOne, std::string("/download/download-attribute.html?target=") +
+                          redirect_url.spec()));
   WaitForCompletion(download);
 
   ASSERT_TRUE(

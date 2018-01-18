@@ -37,6 +37,7 @@
 
 -AsyncResourceHandlerBrowserTest/AsyncResourceHandlerBrowserTest.UploadProgress*
 -BrowserSideNavigationBrowserTest.FailedNavigation
+-ContentBrowserTest.AbortedRendererInitiatedNavigationDoNotCancelPendingXHR
 -CrossSiteResourceHandlerTest.NoDeliveryToDetachedFrame
 -CrossSiteTransferTest.NoLeakOnCrossSiteCancel
 -CrossSiteTransferTest.ReplaceEntryCrossProcessThenTransfer

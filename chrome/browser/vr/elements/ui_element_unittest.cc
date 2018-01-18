@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "cc/animation/animation.h"
 #include "cc/animation/keyframed_animation_curve.h"
 #include "cc/test/geometry_test_utils.h"
@@ -19,11 +20,11 @@
 namespace vr {
 
 TEST(UiElement, BoundsContainChildren) {
-  auto parent = std::make_unique<UiElement>();
+  auto parent = base::MakeUnique<UiElement>();
   parent->set_bounds_contain_children(true);
   parent->set_padding(0.1, 0.2);
 
-  auto c1 = std::make_unique<UiElement>();
+  auto c1 = base::MakeUnique<UiElement>();
   c1->SetSize(3.0f, 3.0f);
   c1->SetTranslate(2.5f, 2.5f, 0.0f);
   auto* c1_ptr = c1.get();
@@ -35,7 +36,7 @@ TEST(UiElement, BoundsContainChildren) {
                    kEpsilon);
   EXPECT_EQ(parent->GetCenter().ToString(), c1_ptr->GetCenter().ToString());
 
-  auto c2 = std::make_unique<UiElement>();
+  auto c2 = base::MakeUnique<UiElement>();
   c2->SetSize(4.0f, 4.0f);
   c2->SetTranslate(-3.0f, 0.0f, 0.0f);
   parent->AddChild(std::move(c2));
@@ -45,7 +46,7 @@ TEST(UiElement, BoundsContainChildren) {
                    gfx::RectF(parent->local_origin(), parent->size()),
                    kEpsilon);
 
-  auto c3 = std::make_unique<UiElement>();
+  auto c3 = base::MakeUnique<UiElement>();
   c3->SetSize(2.0f, 2.0f);
   c3->SetTranslate(0.0f, -2.0f, 0.0f);
   parent->AddChild(std::move(c3));
@@ -55,7 +56,7 @@ TEST(UiElement, BoundsContainChildren) {
                    gfx::RectF(parent->local_origin(), parent->size()),
                    kEpsilon);
 
-  auto c4 = std::make_unique<UiElement>();
+  auto c4 = base::MakeUnique<UiElement>();
   c4->SetSize(2.0f, 2.0f);
   c4->SetTranslate(20.0f, 20.0f, 0.0f);
   c4->SetVisible(false);
@@ -67,7 +68,7 @@ TEST(UiElement, BoundsContainChildren) {
                    gfx::RectF(parent->local_origin(), parent->size()),
                    kEpsilon);
 
-  auto grand_parent = std::make_unique<UiElement>();
+  auto grand_parent = base::MakeUnique<UiElement>();
   grand_parent->set_bounds_contain_children(true);
   grand_parent->set_padding(0.1, 0.2);
   grand_parent->AddChild(std::move(parent));
@@ -79,15 +80,15 @@ TEST(UiElement, BoundsContainChildren) {
 }
 
 TEST(UiElement, BoundsContainScaledChildren) {
-  auto a = std::make_unique<UiElement>();
+  auto a = base::MakeUnique<UiElement>();
   a->SetSize(0.4, 0.3);
 
-  auto b = std::make_unique<UiElement>();
+  auto b = base::MakeUnique<UiElement>();
   b->SetSize(0.2, 0.2);
   b->SetTranslate(0.6, 0.0, 0.0);
   b->SetScale(2.0, 3.0, 1.0);
 
-  auto c = std::make_unique<UiElement>();
+  auto c = base::MakeUnique<UiElement>();
   c->set_bounds_contain_children(true);
   c->set_padding(0.05, 0.05);
   c->AddChild(std::move(a));
@@ -100,7 +101,7 @@ TEST(UiElement, BoundsContainScaledChildren) {
 
 TEST(UiElement, AnimateSize) {
   UiScene scene;
-  auto rect = std::make_unique<UiElement>();
+  auto rect = base::MakeUnique<UiElement>();
   rect->SetSize(10, 100);
   rect->AddAnimation(CreateBoundsAnimation(1, 1, gfx::SizeF(10, 100),
                                            gfx::SizeF(20, 200),
@@ -117,7 +118,7 @@ TEST(UiElement, AnimateSize) {
 
 TEST(UiElement, AnimationAffectsInheritableTransform) {
   UiScene scene;
-  auto rect = std::make_unique<UiElement>();
+  auto rect = base::MakeUnique<UiElement>();
   UiElement* rect_ptr = rect.get();
   scene.AddUiElement(kRoot, std::move(rect));
 
@@ -252,9 +253,9 @@ class ElementEventHandlers {
 };
 
 TEST(UiElement, EventBubbling) {
-  auto element = std::make_unique<UiElement>();
-  auto child = std::make_unique<UiElement>();
-  auto grand_child = std::make_unique<UiElement>();
+  auto element = base::MakeUnique<UiElement>();
+  auto child = base::MakeUnique<UiElement>();
+  auto grand_child = base::MakeUnique<UiElement>();
   auto* child_ptr = child.get();
   auto* grand_child_ptr = grand_child.get();
   child->AddChild(std::move(grand_child));

@@ -254,14 +254,11 @@ int FtpNetworkTransaction::Stop(int error) {
   return OK;
 }
 
-int FtpNetworkTransaction::Start(
-    const FtpRequestInfo* request_info,
-    const CompletionCallback& callback,
-    const NetLogWithSource& net_log,
-    const NetworkTrafficAnnotationTag& traffic_annotation) {
+int FtpNetworkTransaction::Start(const FtpRequestInfo* request_info,
+                                 const CompletionCallback& callback,
+                                 const NetLogWithSource& net_log) {
   net_log_ = net_log;
   request_ = request_info;
-  traffic_annotation_ = MutableNetworkTrafficAnnotationTag(traffic_annotation);
 
   ctrl_response_buffer_ = std::make_unique<FtpCtrlResponseBuffer>(net_log_);
 
@@ -739,9 +736,8 @@ int FtpNetworkTransaction::DoCtrlReadComplete(int result) {
 int FtpNetworkTransaction::DoCtrlWrite() {
   next_state_ = STATE_CTRL_WRITE_COMPLETE;
 
-  return ctrl_socket_->Write(write_buf_.get(), write_buf_->BytesRemaining(),
-                             io_callback_,
-                             NetworkTrafficAnnotationTag(traffic_annotation_));
+  return ctrl_socket_->Write(
+      write_buf_.get(), write_buf_->BytesRemaining(), io_callback_);
 }
 
 int FtpNetworkTransaction::DoCtrlWriteComplete(int result) {

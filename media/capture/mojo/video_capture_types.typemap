@@ -22,11 +22,9 @@ sources = [
 
 deps = [
   "//media",
-  "//media/base/ipc",
   "//media/capture:capture_base",
   "//media/capture/ipc",
   "//media/mojo/interfaces",
-  "//ui/gfx/geometry/mojo:struct_traits",
 ]
 
 type_mappings = [

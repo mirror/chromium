@@ -97,7 +97,7 @@ bool ContactInfoEditorViewController::ValidateModelAndSave() {
     on_added_.Reset();
   } else {
     std::unique_ptr<autofill::AutofillProfile> profile =
-        std::make_unique<autofill::AutofillProfile>();
+        base::MakeUnique<autofill::AutofillProfile>();
     PopulateProfile(profile.get());
     state()->GetPersonalDataManager()->AddProfile(*profile);
     std::move(on_added_).Run(*profile);
@@ -109,7 +109,7 @@ bool ContactInfoEditorViewController::ValidateModelAndSave() {
 std::unique_ptr<ValidationDelegate>
 ContactInfoEditorViewController::CreateValidationDelegate(
     const EditorField& field) {
-  return std::make_unique<ContactInfoValidationDelegate>(
+  return base::MakeUnique<ContactInfoValidationDelegate>(
       field, state()->GetApplicationLocale(), this);
 }
 

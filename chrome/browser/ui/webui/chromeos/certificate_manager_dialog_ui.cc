@@ -4,8 +4,6 @@
 
 #include "chrome/browser/ui/webui/chromeos/certificate_manager_dialog_ui.h"
 
-#include <memory>
-
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/certificate_manager_localized_strings_provider.h"
 #include "chrome/browser/ui/webui/certificates_handler.h"
@@ -60,7 +58,7 @@ CertificateManagerDialogUI::CertificateManagerDialogUI(content::WebUI* web_ui)
   source->DisableContentSecurityPolicy();
 
   web_ui->AddMessageHandler(
-      std::make_unique<certificate_manager::CertificatesHandler>());
+      base::MakeUnique<certificate_manager::CertificatesHandler>());
 
   content::WebUIDataSource::Add(Profile::FromWebUI(web_ui), source);
 }

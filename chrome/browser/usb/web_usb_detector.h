@@ -13,6 +13,8 @@ namespace device {
 class UsbDevice;
 }
 
+class UsbDevice;
+
 class WebUsbDetector : public device::UsbService::Observer {
  public:
   WebUsbDetector();

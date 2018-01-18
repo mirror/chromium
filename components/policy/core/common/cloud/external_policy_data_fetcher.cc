@@ -244,8 +244,7 @@ void ExternalPolicyDataFetcherBackend::OnURLFetchComplete(
 
   const net::URLRequestStatus status = it->first->GetStatus();
   if (status.error() == net::ERR_CONNECTION_RESET ||
-      status.error() == net::ERR_TEMPORARILY_THROTTLED ||
-      status.error() == net::ERR_CONNECTION_CLOSED) {
+      status.error() == net::ERR_TEMPORARILY_THROTTLED) {
     // The connection was interrupted.
     result = ExternalPolicyDataFetcher::CONNECTION_INTERRUPTED;
   } else if (status.status() != net::URLRequestStatus::SUCCESS) {

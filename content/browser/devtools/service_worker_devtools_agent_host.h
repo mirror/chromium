@@ -14,13 +14,14 @@
 #include "base/unguessable_token.h"
 #include "content/browser/devtools/devtools_agent_host_impl.h"
 #include "content/browser/devtools/service_worker_devtools_manager.h"
-#include "third_party/WebKit/public/web/devtools_agent.mojom.h"
+#include "ipc/ipc_listener.h"
 
 namespace content {
 
 class BrowserContext;
 
-class ServiceWorkerDevToolsAgentHost : public DevToolsAgentHostImpl {
+class ServiceWorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
+                                       public IPC::Listener {
  public:
   using List = std::vector<scoped_refptr<ServiceWorkerDevToolsAgentHost>>;
   using Map = std::map<std::string,
@@ -52,9 +53,14 @@ class ServiceWorkerDevToolsAgentHost : public DevToolsAgentHostImpl {
   bool DispatchProtocolMessage(DevToolsSession* session,
                                const std::string& message) override;
 
+  // IPC::Listener implementation.
+  bool OnMessageReceived(const IPC::Message& msg) override;
+
+  void PauseForDebugOnStart();
+  bool IsPausedForDebugOnStart();
+  bool IsReadyForInspection();
+  void WorkerReadyForInspection();
   void WorkerRestarted(int worker_process_id, int worker_route_id);
-  void WorkerReadyForInspection(
-      blink::mojom::DevToolsAgentAssociatedPtrInfo devtools_agent_ptr_info);
   void WorkerDestroyed();
   void WorkerVersionInstalled();
   void WorkerVersionDoomed();
@@ -75,13 +81,21 @@ class ServiceWorkerDevToolsAgentHost : public DevToolsAgentHostImpl {
   bool Matches(const ServiceWorkerContextCore* context, int64_t version_id);
 
  private:
+  enum WorkerState {
+    WORKER_UNINSPECTED,
+    WORKER_INSPECTED,
+    WORKER_TERMINATED,
+    WORKER_PAUSED_FOR_DEBUG_ON_START,
+    WORKER_READY_FOR_DEBUG_ON_START,
+    WORKER_PAUSED_FOR_REATTACH,
+  };
+
   ~ServiceWorkerDevToolsAgentHost() override;
 
-  enum WorkerState {
-    WORKER_NOT_READY,
-    WORKER_READY,
-    WORKER_TERMINATED,
-  };
+  void AttachToWorker();
+  void DetachFromWorker();
+  void OnDispatchOnInspectorFrontend(const DevToolsMessageChunk& message);
+
   WorkerState state_;
   base::UnguessableToken devtools_worker_token_;
   int worker_process_id_;
@@ -93,7 +107,6 @@ class ServiceWorkerDevToolsAgentHost : public DevToolsAgentHostImpl {
   GURL scope_;
   base::Time version_installed_time_;
   base::Time version_doomed_time_;
-  blink::mojom::DevToolsAgentAssociatedPtr agent_ptr_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerDevToolsAgentHost);
 };

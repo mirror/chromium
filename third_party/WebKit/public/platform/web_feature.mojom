@@ -1575,6 +1575,7 @@ enum WebFeature {
   kPersistentClientHintHeader = 2065,
   kStyleSheetListNonNullAnonymousNamedGetter = 2066,
   kOffMainThreadFetch = 2067,
+  kHTMLOptionsCollectionNamedGetterReturnsNodeList = 2068,
   kARIAActiveDescendantAttribute = 2069,
   kARIAAtomicAttribute = 2070,
   kARIAAutocompleteAttribute = 2071,
@@ -1834,12 +1835,6 @@ enum WebFeature {
   kBasicShapeEllipseNoRadius = 2326,
   kBasicShapeEllipseOneRadius = 2327,
   kBasicShapeEllipseTwoRadius = 2328,
-  kTemporalInputTypeChooserByTrustedClick = 2329,
-  kTemporalInputTypeChooserByUntrustedClick = 2330,
-  kTemporalInputTypeIgnoreUntrustedClick = 2331,
-  kColorInputTypeChooserByTrustedClick = 2332,
-  kColorInputTypeChooserByUntrustedClick = 2333,
-  kCSSTypedOMStylePropertyMap = 2334,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.

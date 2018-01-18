@@ -106,7 +106,7 @@ void ConstrainedWebDialogUI::SetConstrainedDelegate(
     ConstrainedWebDialogDelegate* delegate) {
   web_contents->SetUserData(
       &kConstrainedWebDialogDelegateUserDataKey,
-      std::make_unique<ConstrainedWebDialogDelegateUserData>(delegate));
+      base::MakeUnique<ConstrainedWebDialogDelegateUserData>(delegate));
 }
 
 // static

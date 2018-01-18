@@ -68,11 +68,11 @@ class SelectionModifier {
                                  SelectionModifyVerticalDirection);
 
  private:
-  const LocalFrame& GetFrame() const { return *frame_; }
+  // TODO(editing-dev): We should make |GetFrame()| to return |LocalFrame&|
+  // since it can not be |nullptr|.
+  const LocalFrame* GetFrame() const { return frame_; }
 
-  static bool ShouldAlwaysUseDirectionalSelection(const LocalFrame&);
-  VisibleSelection PrepareToModifySelection(SelectionModifyAlteration,
-                                            SelectionModifyDirection) const;
+  static bool ShouldAlwaysUseDirectionalSelection(const LocalFrame*);
   TextDirection DirectionOfEnclosingBlock() const;
   TextDirection DirectionOfSelection() const;
   VisiblePosition PositionForPlatform(bool is_get_start) const;

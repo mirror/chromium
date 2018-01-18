@@ -256,7 +256,7 @@ class HandleContainer
   }
 
  private:
-  HandleContainer() = default;
+  HandleContainer() : handle_(this) {}
 
   TraceWrapperV8Reference<v8::String> handle_;
 };

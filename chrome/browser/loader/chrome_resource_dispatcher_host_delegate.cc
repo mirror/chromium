@@ -79,6 +79,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/previews_state.h"
+#include "content/public/common/resource_response.h"
 #include "extensions/features/features.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/ip_endpoint.h"
@@ -88,7 +89,6 @@
 #include "net/http/http_response_headers.h"
 #include "net/ssl/client_cert_store.h"
 #include "net/url_request/url_request.h"
-#include "services/network/public/cpp/resource_response.h"
 #include "third_party/protobuf/src/google/protobuf/repeated_field.h"
 
 #if BUILDFLAG(ENABLE_NACL)
@@ -769,7 +769,7 @@ void ChromeResourceDispatcherHostDelegate::OnStreamCreated(
 void ChromeResourceDispatcherHostDelegate::OnResponseStarted(
     net::URLRequest* request,
     content::ResourceContext* resource_context,
-    network::ResourceResponse* response) {
+    content::ResourceResponse* response) {
   const ResourceRequestInfo* info = ResourceRequestInfo::ForRequest(request);
   ProfileIOData* io_data = ProfileIOData::FromResourceContext(resource_context);
 
@@ -804,8 +804,7 @@ void ChromeResourceDispatcherHostDelegate::OnResponseStarted(
                                                     "no-transform")) {
       previews::PreviewsUserData* previews_user_data =
           previews::PreviewsUserData::GetData(*request);
-      if (previews_user_data)
-        previews_user_data->SetCacheControlNoTransformDirective();
+      previews_user_data->SetCacheControlNoTransformDirective();
     }
 
     // Determine effective PreviewsState for this committed main frame response.
@@ -831,8 +830,7 @@ void ChromeResourceDispatcherHostDelegate::OnResponseStarted(
     if (committed_type != previews::PreviewsType::NONE) {
       previews::PreviewsUserData* previews_user_data =
           previews::PreviewsUserData::GetData(*request);
-      if (previews_user_data)
-        previews_user_data->SetCommittedPreviewsType(committed_type);
+      previews_user_data->SetCommittedPreviewsType(committed_type);
     }
   }
 
@@ -844,7 +842,7 @@ void ChromeResourceDispatcherHostDelegate::OnRequestRedirected(
     const GURL& redirect_url,
     net::URLRequest* request,
     content::ResourceContext* resource_context,
-    network::ResourceResponse* response) {
+    content::ResourceResponse* response) {
   ProfileIOData* io_data = ProfileIOData::FromResourceContext(resource_context);
 
   // Chrome tries to ensure that the identity is consistent between Chrome and

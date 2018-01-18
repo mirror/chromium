@@ -23,10 +23,8 @@ class UtilityServiceFactory : public ServiceFactory {
   ~UtilityServiceFactory() override;
 
   // ServiceFactory overrides:
-  void CreateService(
-      service_manager::mojom::ServiceRequest request,
-      const std::string& name,
-      service_manager::mojom::PIDReceiverPtr pid_receiver) override;
+  void CreateService(service_manager::mojom::ServiceRequest request,
+                     const std::string& name) override;
   void RegisterServices(ServiceMap* services) override;
   void OnServiceQuit() override;
 

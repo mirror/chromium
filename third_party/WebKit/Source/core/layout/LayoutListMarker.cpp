@@ -47,7 +47,7 @@ LayoutListMarker::LayoutListMarker(LayoutListItem* item)
   SetIsAtomicInlineLevel(true);
 }
 
-LayoutListMarker::~LayoutListMarker() = default;
+LayoutListMarker::~LayoutListMarker() {}
 
 void LayoutListMarker::WillBeDestroyed() {
   if (image_)

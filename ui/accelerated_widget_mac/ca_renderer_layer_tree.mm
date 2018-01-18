@@ -80,25 +80,6 @@ bool AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(
                        kCFBooleanTrue);
 
   [av_layer enqueueSampleBuffer:sample_buffer];
-
-  if (@available(macOS 10.10, *)) {
-    AVQueuedSampleBufferRenderingStatus status = [av_layer status];
-    switch (status) {
-      case AVQueuedSampleBufferRenderingStatusUnknown:
-        LOG(ERROR)
-            << "AVSampleBufferDisplayLayer has status unknown, but should "
-               "be rendering.";
-        return false;
-      case AVQueuedSampleBufferRenderingStatusFailed:
-        LOG(ERROR) << "AVSampleBufferDisplayLayer has status failed, error: "
-                   << [[[av_layer error] description]
-                          cStringUsingEncoding:NSUTF8StringEncoding];
-        return false;
-      case AVQueuedSampleBufferRenderingStatusRendering:
-        break;
-    }
-  }
-
   return true;
 }
 
@@ -712,24 +693,12 @@ void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
                          update_ca_filter;
   if (use_av_layer) {
     if (update_contents) {
-      bool result = false;
       if (cv_pixel_buffer) {
-        result = AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(
-            av_layer, cv_pixel_buffer);
-        if (!result) {
-          LOG(ERROR) << "AVSampleBufferDisplayLayerEnqueueCVPixelBuffer failed";
-        }
+        AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(av_layer,
+                                                       cv_pixel_buffer);
       } else {
-        result =
-            AVSampleBufferDisplayLayerEnqueueIOSurface(av_layer, io_surface);
-        if (!result) {
-          LOG(ERROR) << "AVSampleBufferDisplayLayerEnqueueIOSurface failed";
-        }
+        AVSampleBufferDisplayLayerEnqueueIOSurface(av_layer, io_surface);
       }
-      // TODO(ccameron): Recreate the AVSampleBufferDisplayLayer on failure.
-      // This is not being done yet, to determine if this happens concurrently
-      // with video flickering.
-      // https://crbug.com/702369
     }
   } else {
     if (update_contents) {

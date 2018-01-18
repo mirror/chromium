@@ -1210,7 +1210,7 @@ void ContainerNode::SetFocused(bool received, WebFocusType focus_type) {
   // TODO(kochi): Handle UA shadows which marks multiple nodes as focused such
   // as <input type="date"> the same way as author shadow.
   if (ShadowRoot* root = ContainingShadowRoot()) {
-    if (!root->IsUserAgent())
+    if (root->GetType() != ShadowRootType::kUserAgent)
       OwnerShadowHost()->SetFocused(received, focus_type);
   }
 

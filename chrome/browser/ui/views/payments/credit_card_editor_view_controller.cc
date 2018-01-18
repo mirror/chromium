@@ -11,6 +11,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -183,7 +184,7 @@ CreditCardEditorViewController::~CreditCardEditorViewController() {}
 // +----------------------------------------------+
 std::unique_ptr<views::View>
 CreditCardEditorViewController::CreateHeaderView() {
-  std::unique_ptr<views::View> view = std::make_unique<views::View>();
+  std::unique_ptr<views::View> view = base::MakeUnique<views::View>();
 
   // 9dp is required between the first row (label) and second row (icons).
   constexpr int kRowVerticalSpacing = 9;
@@ -206,7 +207,7 @@ CreditCardEditorViewController::CreateHeaderView() {
 
   // 8dp padding is required between icons.
   constexpr int kPaddingBetweenCardIcons = 8;
-  std::unique_ptr<views::View> icons_row = std::make_unique<views::View>();
+  std::unique_ptr<views::View> icons_row = base::MakeUnique<views::View>();
   icons_row->SetLayoutManager(std::make_unique<views::BoxLayout>(
       views::BoxLayout::kHorizontal, gfx::Insets(), kPaddingBetweenCardIcons));
 
@@ -243,7 +244,7 @@ CreditCardEditorViewController::CreateHeaderView() {
   // If dealing with a server card, we add "From Google Payments" with an edit
   // link.
   if (IsEditingServerCard()) {
-    std::unique_ptr<views::View> data_source = std::make_unique<views::View>();
+    std::unique_ptr<views::View> data_source = base::MakeUnique<views::View>();
     data_source->SetLayoutManager(std::make_unique<views::BoxLayout>(
         views::BoxLayout::kHorizontal, gfx::Insets(),
         kPaddingBetweenCardIcons));
@@ -257,7 +258,7 @@ CreditCardEditorViewController::CreateHeaderView() {
     // "Edit" link.
     base::string16 link_text =
         l10n_util::GetStringUTF16(IDS_AUTOFILL_WALLET_MANAGEMENT_LINK_TEXT);
-    auto edit_link = std::make_unique<views::StyledLabel>(link_text, this);
+    auto edit_link = base::MakeUnique<views::StyledLabel>(link_text, this);
     edit_link->set_id(
         static_cast<int>(DialogViewID::GOOGLE_PAYMENTS_EDIT_LINK_LABEL));
     edit_link->AddStyleRange(
@@ -280,9 +281,9 @@ CreditCardEditorViewController::CreateCustomFieldView(
     base::string16* error_message) {
   DCHECK_EQ(type, autofill::CREDIT_CARD_EXP_DATE_4_DIGIT_YEAR);
 
-  std::unique_ptr<views::View> view = std::make_unique<views::View>();
+  std::unique_ptr<views::View> view = base::MakeUnique<views::View>();
   if (IsEditingServerCard()) {
-    std::unique_ptr<views::Label> exp_label = std::make_unique<views::Label>(
+    std::unique_ptr<views::Label> exp_label = base::MakeUnique<views::Label>(
         credit_card_to_edit_->ExpirationDateForDisplay());
     exp_label->set_id(
         GetInputFieldViewId(autofill::CREDIT_CARD_EXP_DATE_4_DIGIT_YEAR));
@@ -343,7 +344,7 @@ CreditCardEditorViewController::CreateExtraViewForField(
   if (type != kBillingAddressType)
     return nullptr;
 
-  std::unique_ptr<views::View> button_view = std::make_unique<views::View>();
+  std::unique_ptr<views::View> button_view = base::MakeUnique<views::View>();
   button_view->SetLayoutManager(std::make_unique<views::FillLayout>());
 
   // The button to add new billing addresses.
@@ -497,12 +498,12 @@ CreditCardEditorViewController::CreateValidationDelegate(
         credit_card_to_edit_
             ? !credit_card_to_edit_->IsExpired(autofill::AutofillClock::Now())
             : true;
-    return std::make_unique<ExpirationDateValidationDelegate>(
+    return base::MakeUnique<ExpirationDateValidationDelegate>(
         this, state()->GetApplicationLocale(), initially_valid);
   }
   // The supported card networks for non-cc-number types are not passed to avoid
   // the data copy in the delegate.
-  return std::make_unique<
+  return base::MakeUnique<
       CreditCardEditorViewController::CreditCardValidationDelegate>(field,
                                                                     this);
 }
@@ -512,16 +513,16 @@ CreditCardEditorViewController::GetComboboxModelForType(
     const autofill::ServerFieldType& type) {
   switch (type) {
     case autofill::CREDIT_CARD_EXP_MONTH: {
-      return std::make_unique<autofill::MonthComboboxModel>();
+      return base::MakeUnique<autofill::MonthComboboxModel>();
     }
     case autofill::CREDIT_CARD_EXP_4_DIGIT_YEAR:
-      return std::make_unique<autofill::YearComboboxModel>(
+      return base::MakeUnique<autofill::YearComboboxModel>(
           credit_card_to_edit_ ? credit_card_to_edit_->expiration_year() : 0);
     case kBillingAddressType:
       // The combobox filled with potential billing addresses. It's fine to pass
       // empty string as the default selected guid if there are no cards being
       // edited.
-      return std::make_unique<autofill::AddressComboboxModel>(
+      return base::MakeUnique<autofill::AddressComboboxModel>(
           *state()->GetPersonalDataManager(), state()->GetApplicationLocale(),
           credit_card_to_edit_ ? credit_card_to_edit_->billing_address_id()
                                : "");

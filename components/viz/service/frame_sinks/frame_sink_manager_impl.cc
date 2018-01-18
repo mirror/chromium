@@ -10,7 +10,6 @@
 #include "base/logging.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display_embedder/display_provider.h"
-#include "components/viz/service/display_embedder/external_begin_frame_controller_impl.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_impl.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/primary_begin_frame_source.h"
@@ -119,37 +118,29 @@ void FrameSinkManagerImpl::SetFrameSinkDebugLabel(
 }
 
 void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
-    mojom::RootCompositorFrameSinkParamsPtr params) {
+    const FrameSinkId& frame_sink_id,
+    gpu::SurfaceHandle surface_handle,
+    bool force_software_compositing,
+    const RendererSettings& renderer_settings,
+    mojom::CompositorFrameSinkAssociatedRequest request,
+    mojom::CompositorFrameSinkClientPtr client,
+    mojom::DisplayPrivateAssociatedRequest display_private_request,
+    mojom::DisplayClientPtr display_client) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DCHECK_EQ(0u, compositor_frame_sinks_.count(params->frame_sink_id));
+  DCHECK_NE(surface_handle, gpu::kNullSurfaceHandle);
+  DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
   DCHECK(display_provider_);
-
-  std::unique_ptr<ExternalBeginFrameControllerImpl>
-      external_begin_frame_controller;
-  if (params->external_begin_frame_controller.is_pending() &&
-      params->external_begin_frame_controller_client) {
-    external_begin_frame_controller =
-        std::make_unique<ExternalBeginFrameControllerImpl>(
-            std::move(params->external_begin_frame_controller),
-            mojom::ExternalBeginFrameControllerClientPtr(
-                std::move(params->external_begin_frame_controller_client)));
-  }
 
   std::unique_ptr<SyntheticBeginFrameSource> begin_frame_source;
   auto display = display_provider_->CreateDisplay(
-      params->frame_sink_id, params->widget, params->force_software_compositing,
-      external_begin_frame_controller.get(), params->renderer_settings,
-      &begin_frame_source);
+      frame_sink_id, surface_handle, force_software_compositing,
+      renderer_settings, &begin_frame_source);
 
   auto frame_sink = std::make_unique<RootCompositorFrameSinkImpl>(
-      this, params->frame_sink_id, std::move(display),
-      std::move(begin_frame_source), std::move(external_begin_frame_controller),
-      std::move(params->compositor_frame_sink),
-      mojom::CompositorFrameSinkClientPtr(
-          std::move(params->compositor_frame_sink_client)),
-      std::move(params->display_private),
-      mojom::DisplayClientPtr(std::move(params->display_client)));
-  SinkAndSupport& entry = compositor_frame_sinks_[params->frame_sink_id];
+      this, frame_sink_id, std::move(display), std::move(begin_frame_source),
+      std::move(request), std::move(client), std::move(display_private_request),
+      std::move(display_client));
+  SinkAndSupport& entry = compositor_frame_sinks_[frame_sink_id];
   DCHECK(entry.support);  // |entry| was created by RootCompositorFrameSinkImpl.
   entry.sink = std::move(frame_sink);
 }
@@ -393,14 +384,8 @@ bool FrameSinkManagerImpl::ChildContains(
 void FrameSinkManagerImpl::OnSurfaceCreated(const SurfaceId& surface_id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
-  if (client_) {
+  if (client_)
     client_->OnSurfaceCreated(surface_id);
-  } else {
-    // There is no client to assign an owner for the temporary reference, so we
-    // can drop the temporary reference safely.
-    if (surface_manager_.using_surface_references())
-      surface_manager_.DropTemporaryReference(surface_id);
-  }
 }
 
 void FrameSinkManagerImpl::OnFirstSurfaceActivation(
@@ -426,6 +411,9 @@ void FrameSinkManagerImpl::OnSurfaceDestroyed(const SurfaceId& surface_id) {}
 void FrameSinkManagerImpl::OnSurfaceDamageExpected(const SurfaceId& surface_id,
                                                    const BeginFrameArgs& args) {
 }
+
+void FrameSinkManagerImpl::OnSurfaceSubtreeDamaged(
+    const SurfaceId& surface_id) {}
 
 void FrameSinkManagerImpl::OnClientConnectionLost(
     const FrameSinkId& frame_sink_id) {

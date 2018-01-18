@@ -59,21 +59,6 @@ int ScrollableArea::MaxOverlapBetweenPages() const {
   return GetPageScrollbarTheme().MaxOverlapBetweenPages();
 }
 
-// static
-ScrollBehavior ScrollableArea::DetermineScrollBehavior(
-    ScrollBehavior behavior_from_param,
-    ScrollBehavior behavior_from_style) {
-  if (behavior_from_param == kScrollBehaviorSmooth)
-    return kScrollBehaviorSmooth;
-
-  if (behavior_from_param == kScrollBehaviorAuto &&
-      behavior_from_style == kScrollBehaviorSmooth) {
-    return kScrollBehaviorSmooth;
-  }
-
-  return kScrollBehaviorInstant;
-}
-
 ScrollableArea::ScrollableArea()
     : scrollbar_overlay_color_theme_(kScrollbarOverlayColorThemeDark),
       scroll_origin_changed_(false),
@@ -284,9 +269,12 @@ void ScrollableArea::UserScrollHelper(const ScrollOffset& offset,
   GetScrollAnimator().ScrollToOffsetWithoutAnimation(ScrollOffset(x, y));
 }
 
-LayoutRect ScrollableArea::ScrollIntoView(
-    const LayoutRect& rect_in_content,
-    const WebScrollIntoViewParams& params) {
+LayoutRect ScrollableArea::ScrollIntoView(const LayoutRect& rect_in_content,
+                                          const ScrollAlignment& align_x,
+                                          const ScrollAlignment& align_y,
+                                          bool is_smooth,
+                                          ScrollType,
+                                          bool is_for_scroll_sequence) {
   // TODO(bokan): This should really be implemented here but ScrollAlignment is
   // in Core which is a dependency violation.
   NOTREACHED();

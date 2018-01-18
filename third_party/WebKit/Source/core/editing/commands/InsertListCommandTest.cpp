@@ -15,7 +15,6 @@ namespace blink {
 class InsertListCommandTest : public EditingTestBase {};
 
 TEST_F(InsertListCommandTest, ShouldCleanlyRemoveSpuriousTextNode) {
-  GetDocument().SetCompatibilityMode(Document::kQuirksMode);
   // Needs to be editable to use InsertListCommand.
   GetDocument().setDesignMode("on");
   // Set up the condition:
@@ -91,42 +90,6 @@ TEST_F(InsertListCommandTest, CleanupNodeSameAsDestinationNode) {
       "<ul><li><br></li></ul>"
       "</col></colgroup></table>"
       "<button></button>",
-      GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
-}
-
-TEST_F(InsertListCommandTest, InsertListOnEmptyHiddenElements) {
-  GetDocument().setDesignMode("on");
-  InsertStyleElement("br { visibility:hidden; }");
-  Selection().SetSelection(SetSelectionTextToBody("^<button></button>|"));
-  InsertListCommand* command = InsertListCommand::Create(
-      GetDocument(), InsertListCommand::kUnorderedList);
-
-  // Crash happens here.
-  EXPECT_FALSE(command->Apply());
-  EXPECT_EQ(
-      "<button>"
-      "|<ul><li><br></li></ul>"
-      "</button>",
-      GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
-}
-
-// Refer https://crbug.com/797520
-TEST_F(InsertListCommandTest, InsertListWithCollapsedVisibility) {
-  GetDocument().setDesignMode("on");
-  InsertStyleElement(
-      "ul { visibility:collapse; }"
-      "dl { visibility:visible; }");
-
-  Selection().SetSelection(SetSelectionTextToBody("^<dl>a</dl>|"));
-  InsertListCommand* command =
-      InsertListCommand::Create(GetDocument(), InsertListCommand::kOrderedList);
-
-  // Crash happens here.
-  EXPECT_FALSE(command->Apply());
-  EXPECT_EQ(
-      "<dl>"
-      "<ol></ol><ul>^a|</ul>"
-      "</dl>",
       GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
 }
 }

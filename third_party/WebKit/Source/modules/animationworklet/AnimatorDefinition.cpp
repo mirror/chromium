@@ -15,7 +15,8 @@ namespace blink {
 AnimatorDefinition::AnimatorDefinition(v8::Isolate* isolate,
                                        v8::Local<v8::Function> constructor,
                                        v8::Local<v8::Function> animate)
-    : constructor_(isolate, constructor), animate_(isolate, animate) {}
+    : constructor_(isolate, this, constructor),
+      animate_(isolate, this, animate) {}
 
 AnimatorDefinition::~AnimatorDefinition() = default;
 

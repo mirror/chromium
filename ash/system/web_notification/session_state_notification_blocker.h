@@ -16,8 +16,7 @@ namespace ash {
 // session state and active user PrefService readiness reported by the
 // SessionController. Only active (logged in, unlocked) sessions with
 // initialized PrefService will show user notifications. Kiosk mode sessions
-// will never show even system notifications. System notifications with
-// elevated priority will be shown regardless of the login/lock state.
+// will never show even system notifications.
 class ASH_EXPORT SessionStateNotificationBlocker
     : public message_center::NotificationBlocker,
       public SessionObserver {

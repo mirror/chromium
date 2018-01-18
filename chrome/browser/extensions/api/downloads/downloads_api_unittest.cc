@@ -5,6 +5,7 @@
 #include "chrome/browser/extensions/api/downloads/downloads_api.h"
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/download/download_core_service_factory.h"
 #include "chrome/browser/download/download_core_service_impl.h"
 #include "chrome/browser/download/download_history.h"
@@ -116,7 +117,7 @@ class DownloadsApiUnitTest : public ExtensionApiUnittest {
 std::unique_ptr<KeyedService>
 DownloadsApiUnitTest::TestingDownloadCoreServiceFactory(
     content::BrowserContext* browser_context) {
-  return std::make_unique<TestDownloadCoreService>(
+  return base::MakeUnique<TestDownloadCoreService>(
       Profile::FromBrowserContext(browser_context));
 }
 

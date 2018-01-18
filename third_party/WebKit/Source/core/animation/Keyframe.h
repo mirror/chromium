@@ -64,7 +64,7 @@ class CORE_EXPORT Keyframe : public RefCounted<Keyframe> {
   USING_FAST_MALLOC(Keyframe);
 
  public:
-  virtual ~Keyframe() = default;
+  virtual ~Keyframe() {}
 
   // TODO(smcgruer): The keyframe offset should be immutable.
   void SetOffset(WTF::Optional<double> offset) { offset_ = offset; }
@@ -121,7 +121,7 @@ class CORE_EXPORT Keyframe : public RefCounted<Keyframe> {
     USING_FAST_MALLOC(PropertySpecificKeyframe);
 
    public:
-    virtual ~PropertySpecificKeyframe() = default;
+    virtual ~PropertySpecificKeyframe() {}
     double Offset() const { return offset_; }
     TimingFunction& Easing() const { return *easing_; }
     EffectModel::CompositeOperation Composite() const { return composite_; }

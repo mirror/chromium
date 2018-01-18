@@ -4,8 +4,6 @@
 
 #include "components/safe_browsing/db/whitelist_checker_client.h"
 
-#include <memory>
-
 #include "base/bind.h"
 
 namespace safe_browsing {
@@ -24,7 +22,7 @@ void WhitelistCheckerClient::StartCheckCsdWhitelist(
   // Make a client for each request. The caller could have several in
   // flight at once.
   std::unique_ptr<WhitelistCheckerClient> client =
-      std::make_unique<WhitelistCheckerClient>(callback_for_result,
+      base::MakeUnique<WhitelistCheckerClient>(callback_for_result,
                                                database_manager);
   AsyncMatch match = database_manager->CheckCsdWhitelistUrl(url, client.get());
 

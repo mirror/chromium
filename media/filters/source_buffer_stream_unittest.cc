@@ -873,9 +873,9 @@ TEST_P(SourceBufferStreamTest,
   NewCodedFrameGroupAppend("20K 50K 80K 110D10K");
 
   // Verify that the buffered ranges are updated properly and we don't crash.
-  CheckExpectedRangesByTimestamp("{ [0,150) }");
+  CheckExpectedRangesByTimestamp("{ [20,150) }");
 
-  SeekToTimestampMs(0);
+  SeekToTimestampMs(20);
   CheckExpectedBuffers("20K 50K 80K 110K 120K");
 }
 
@@ -941,27 +941,37 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Several) {
 
   // Check expected ranges: stream should not have kept buffers at DTS 13,14;
   // PTS 12,13 because the keyframe on which they depended (10, PTS=DTS) was
-  // overwritten. Note that partial second GOP of B includes PTS [10,14), DTS
-  // [10,12). In both ByDts and ByPts, these are continuous with the overlapped
-  // original range's next GOP at (15, PTS=DTS).
+  // overwritten. Note that partial second GOP of B includes PTS [10,14), so
+  // buffering by PTS results in a continuous single buffered range, unlike
+  // buffering by DTS in this case.
   // Unlike the rest of the position based test API used in this case, these
   // range expectation strings are the actual timestamps (divided by
   // frame_duration_), in DTS if ByDts, in PTS if ByPts.
-  CheckExpectedRanges("{ [5,19) }");
+  if (buffering_api_ == BufferingApi::kLegacyByDts)
+    CheckExpectedRanges("{ [5,12) [15,19) }");
+  else
+    CheckExpectedRanges("{ [5,19) }");
 
   // Check buffers in range.
   Seek(5);
-  CheckExpectedBuffers(5, 12, &kDataB);
-  // No seek is necessary (1 continuous range).
-  CheckExpectedBuffers(15, 19, &kDataA);
+  if (buffering_api_ == BufferingApi::kLegacyByDts) {
+    CheckExpectedBuffers(5, 12, &kDataB);
+    CheckNoNextBuffer();
+    Seek(19);
+    CheckExpectedBuffers(15, 19, &kDataA);
+  } else {
+    CheckExpectedBuffers(5, 12, &kDataB);
+    // No seek is necessary (1 continuous range).
+    CheckExpectedBuffers(15, 19, &kDataA);
+  }
   CheckNoNextBuffer();
 }
 
 // Test an end overlap edge case where a single buffer overlaps the
 // beginning of a range.
-// old  : 0K   30   60   90   120K  150
-// new  : 0K
-// after: 0K                  120K  150
+// old  : *0K*   30   60   90   120K  150
+// new  : *0K*
+// after: *0K*                 *120K* 150K
 // track:
 TEST_P(SourceBufferStreamTest, End_Overlap_SingleBuffer) {
   // Seek to start of stream.
@@ -971,9 +981,9 @@ TEST_P(SourceBufferStreamTest, End_Overlap_SingleBuffer) {
   CheckExpectedRangesByTimestamp("{ [0,180) }");
 
   NewCodedFrameGroupAppend("0D30K");
-  CheckExpectedRangesByTimestamp("{ [0,180) }");
+  CheckExpectedRangesByTimestamp("{ [0,30) [120,180) }");
 
-  CheckExpectedBuffers("0K 120K 150");
+  CheckExpectedBuffers("0K");
   CheckNoNextBuffer();
 }
 
@@ -1281,6 +1291,7 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected) {
 
 // This test covers the case where new buffers end-overlap an existing, selected
 // range, and the next buffer in the range is after the newly appended buffers.
+// In this particular case, the end overlap does not require a split.
 //
 // index:  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
 // old  :           |A a a a a A a a*a*a|
@@ -1312,6 +1323,8 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_AfterEndOfNew_1) {
 // Using position based test API:
 // This test covers the case where new buffers end-overlap an existing, selected
 // range, and the next buffer in the range is after the newly appended buffers.
+// In this particular case, the end overlap causes a split when buffering
+// ByDts, but not when buffering ByPts.
 //
 // DTS  :  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
 // PTS  :  0 4 1 2 3 5 9 6 7 8 0 4 1 2 3 5 9 6 7 8 0
@@ -1332,28 +1345,41 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_AfterEndOfNew_2) {
 
   // Check expected ranges: stream should not have kept buffers at DTS 8,9;
   // PTS 7,8 because the keyframe on which they depended (5, PTS=DTS) was
-  // overwritten. Note that partial second GOP of B includes PTS [5,9), DTS
-  // [5,7). In both ByDts and ByPts, these are continuous with the overlapped
-  // original range's next GOP at (10, PTS=DTS).
+  // overwritten. Note that partial second GOP of B includes PTS [5,9), so
+  // buffering by PTS results in a continuous single buffered range, unlike
+  // buffering by DTS in this case.
   // Unlike the rest of the position based test API used in this case, these
   // range expectation strings are the actual timestamps (divided by
   // frame_duration_), in DTS if ByDts, in PTS if ByPts.
-  CheckExpectedRanges("{ [0,14) }");
+  if (buffering_api_ == BufferingApi::kLegacyByDts)
+    CheckExpectedRanges("{ [0,7) [10,14) }");
+  else
+    CheckExpectedRanges("{ [0,14) }");
 
   // Make sure rest of data is as expected.
   CheckExpectedBuffers(13, 14, &kDataA);
 
   // Make sure all data is correct.
   Seek(0);
-  CheckExpectedBuffers(0, 7, &kDataB);
-  // No seek should be necessary (1 continuous range).
-  CheckExpectedBuffers(10, 14, &kDataA);
+  if (buffering_api_ == BufferingApi::kLegacyByDts) {
+    CheckExpectedBuffers(0, 7, &kDataB);
+    CheckNoNextBuffer();
+    Seek(10);
+    CheckExpectedBuffers(10, 14, &kDataA);
+  } else {
+    CheckExpectedBuffers(0, 7, &kDataB);
+    // No seek should be necessary (1 continuous range).
+    CheckExpectedBuffers(10, 14, &kDataA);
+  }
   CheckNoNextBuffer();
 }
 
 // Using position based test API:
 // This test covers the case where new buffers end-overlap an existing, selected
 // range, and the next buffer in the range is after the newly appended buffers.
+// In this particular case, the end overlap causes a split when buffering
+// ByDts (but not when ByPts), and the next buffer was in between the end of the
+// new data and the final GOP in the original range.
 //
 // DTS  :  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
 // PTS  :  0 4 1 2 3 5 9 6 7 8 0 4 1 2 3 5 9 6 7 8 0
@@ -1377,12 +1403,15 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_AfterEndOfNew_3) {
   // PTS 7,8 because the keyframe on which they depended (5, PTS=DTS) was
   // overwritten. However, they were in the GOP being read from, so were put
   // into the track buffer. Note that partial second GOP of B includes PTS
-  // [5,9), DTS [5,7). In both ByDts and ByPts, these are continuous with the
-  // overlapped original range's next GOP at (10, PTS=DTS).
+  // [5,9), so buffering by PTS results in a continuous single buffered range,
+  // unlike buffering by DTS in this case.
   // Unlike the rest of the position based test API used in this case, these
   // range expectation strings are the actual timestamps (divided by
   // frame_duration_), in DTS if ByDts, in PTS if ByPts.
-  CheckExpectedRanges("{ [0,14) }");
+  if (buffering_api_ == BufferingApi::kLegacyByDts)
+    CheckExpectedRanges("{ [0,7) [10,14) }");
+  else
+    CheckExpectedRanges("{ [0,14) }");
 
   // Check for data in the track buffer.
   CheckExpectedBuffers(8, 9, &kDataA);
@@ -1391,14 +1420,22 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_AfterEndOfNew_3) {
 
   // Make sure all data is correct.
   Seek(0);
-  CheckExpectedBuffers(0, 7, &kDataB);
-  // No seek should be necessary (1 continuous range).
-  CheckExpectedBuffers(10, 14, &kDataA);
+  if (buffering_api_ == BufferingApi::kLegacyByDts) {
+    CheckExpectedBuffers(0, 7, &kDataB);
+    CheckNoNextBuffer();
+    Seek(10);
+    CheckExpectedBuffers(10, 14, &kDataA);
+  } else {
+    CheckExpectedBuffers(0, 7, &kDataB);
+    // No seek should be necessary (1 continuous range).
+    CheckExpectedBuffers(10, 14, &kDataA);
+  }
   CheckNoNextBuffer();
 }
 
 // This test covers the case where new buffers end-overlap an existing, selected
 // range, and the next buffer in the range is overlapped by the new buffers.
+// In this particular case, the end overlap does not require a split.
 //
 // index:  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
 // old  :           |A a a*a*a A a a a a|
@@ -1433,6 +1470,9 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_OverlappedByNew_1) {
 // Using position based test API:
 // This test covers the case where new buffers end-overlap an existing, selected
 // range, and the next buffer in the range is overlapped by the new buffers.
+// In this particular case, the end overlap causes a split when buffering
+// ByDts (but not when ByPts), and the next keyframe after the track buffer
+// begins the final GOP in the original range.
 //
 // DTS  :  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
 // PTS  :  0 4 1 2 3 5 9 6 7 8 0 4 1 2 3 5 9 6 7 8 0
@@ -1456,12 +1496,15 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_OverlappedByNew_2) {
   // PTS 6,7,8 because the keyframe on which they depended (5, PTS=DTS) was
   // overwritten. However, they were in the GOP being read from, so were put
   // into the track buffer. Note that partial second GOP of B includes PTS
-  // [5,9), DTS [5,6). In both ByDts and ByPts, these are continuous with the
-  // overlapped original range's next GOP at (10, PTS=DTS).
+  // [5,9), so buffering by PTS results in a continuous single buffered range,
+  // unlike buffering by DTS in this case.
   // Unlike the rest of the position based test API used in this case, these
   // range expectation strings are the actual timestamps (divided by
   // frame_duration_), in DTS if ByDts, in PTS if ByPts.
-  CheckExpectedRanges("{ [0,14) }");
+  if (buffering_api_ == BufferingApi::kLegacyByDts)
+    CheckExpectedRanges("{ [0,6) [10,14) }");
+  else
+    CheckExpectedRanges("{ [0,14) }");
 
   // Check for data in the track buffer.
   CheckExpectedBuffers(6, 9, &kDataA);
@@ -1470,17 +1513,24 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_OverlappedByNew_2) {
 
   // Make sure all data is correct.
   Seek(0);
-  CheckExpectedBuffers(0, 6, &kDataB);
-  // No seek should be necessary (1 continuous range).
-  CheckExpectedBuffers(10, 14, &kDataA);
+  if (buffering_api_ == BufferingApi::kLegacyByDts) {
+    CheckExpectedBuffers(0, 6, &kDataB);
+    CheckNoNextBuffer();
+    Seek(10);
+    CheckExpectedBuffers(10, 14, &kDataA);
+  } else {
+    CheckExpectedBuffers(0, 6, &kDataB);
+    // No seek should be necessary (1 continuous range).
+    CheckExpectedBuffers(10, 14, &kDataA);
+  }
   CheckNoNextBuffer();
 }
 
 // Using position based test API:
 // This test covers the case where new buffers end-overlap an existing, selected
 // range, and the next buffer in the range is overlapped by the new buffers.
-// In this particular case, the next keyframe after the track buffer is in the
-// range with the new buffers.
+// In this particular case, the end overlap causes a split, and the next
+// keyframe after the track buffer is in the range with the new buffers.
 //
 // DTS  :  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
 // PTS  :  0 4 1 2 3 5 9 6 7 8 0 4 1 2 3 5 9 6 7 8 0
@@ -1503,13 +1553,11 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_OverlappedByNew_3) {
   // Check expected ranges: stream should not have kept buffers at 11-14 (DTS
   // and PTS) because the keyframe on which they depended (10, PTS=DTS) was
   // overwritten. The GOP being read from was overwritten, so track buffer
-  // should contain DTS 6-9 (PTS 9,6,7,8). Note that the partial third GOP of B
-  // includes (10, PTS=DTS). In both ByDts and ByPts, this partial GOP is
-  // continuous with the overlapped original range's next GOP at (15, PTS=DTS).
+  // should contain DTS 6-9 (PTS 9,6,7,8).
   // Unlike the rest of the position based test API used in this case, these
   // range expectation strings are the actual timestamps (divided by
   // frame_duration_), in DTS if ByDts, in PTS if ByPts.
-  CheckExpectedRanges("{ [0,19) }");
+  CheckExpectedRanges("{ [0,10) [15,19) }");
 
   // Check for data in the track buffer.
   CheckExpectedBuffers(6, 9, &kDataA);
@@ -1520,7 +1568,9 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_OverlappedByNew_3) {
   // Make sure all data is correct.
   Seek(0);
   CheckExpectedBuffers(0, 10, &kDataB);
-  // No seek should be necessary (1 continuous range).
+  CheckNoNextBuffer();
+
+  Seek(15);
   CheckExpectedBuffers(15, 19, &kDataA);
 }
 
@@ -1560,8 +1610,8 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_NoKeyframeAfterNew) {
 
 // Using position based test API:
 // This test covers the case where new buffers end-overlap an existing, selected
-// range, and there is no keyframe after the end of the new buffers, then more
-// buffers end-overlap the beginning.
+// range, and there is no keyframe after the end of the new buffers, then the
+// range gets split.
 // DTS  :  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
 // PTS :   0 4 1 2 3 5 9 6 7 8 0 4 1 2 3 5 9 6 7 8 0
 // old  :                      A a a a a A*a*
@@ -1570,8 +1620,6 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_NoKeyframeAfterNew) {
 // new  :  A a a a a A
 // after:  A a a a a A         B b b b b B
 // track:                                  a
-// new  :                                B b b b b B
-// after:  A a a a a A         B b b b b B b b b b B
 TEST_P(SourceBufferStreamTest, End_Overlap_Selected_NoKeyframeAfterNew2) {
   // Append 7 buffers at positions 10 through 16 (DTS); 10 through 19 (PTS) with
   // a partial second GOP.
@@ -1594,11 +1642,11 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_NoKeyframeAfterNew2) {
   // (divided by frame_duration_), in DTS if ByDts, in PTS if ByPts.
   CheckExpectedRanges("{ [5,15) }");
 
-  // Now do another end-overlap. Append one full GOP plus keyframe of 2nd.
-  // Note that this new keyframe at (5, PTS=DTS) is continuous in both ByPts and
-  // ByDts with the overlapped range's next GOP (B) at (10, PTS=DTS).
+  // Now do another end-overlap to split the range into two parts, where the
+  // 2nd range should have the next buffer position. Append one full GOP plus
+  // keyframe of 2nd.
   NewCodedFrameGroupAppend(0, 6, &kDataA);
-  CheckExpectedRanges("{ [0,15) }");
+  CheckExpectedRanges("{ [0,5) [10,15) }");
 
   // Check for data in the track buffer.
   CheckExpectedBuffers(16, 16, &kDataA);
@@ -1606,11 +1654,11 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_NoKeyframeAfterNew2) {
   // Now there's no data to fulfill the request.
   CheckNoNextBuffer();
 
-  // Add data to the end of the range in the position just read from the track
-  // buffer. The stream should not be able to fulfill the next read
-  // until we've added a keyframe continuous beyond this point.
+  // Add data to the 2nd range, should not be able to fulfill the next read
+  // until we've added a keyframe.
   NewCodedFrameGroupAppend(15, 1, &kDataB);
   CheckNoNextBuffer();
+
   for (int i = 16; i <= 19; i++) {
     AppendBuffers(i, 1, &kDataB);
     CheckNoNextBuffer();
@@ -1627,15 +1675,6 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_NoKeyframeAfterNew2) {
 
   // We should be able to get the next buffer (no longer from the track buffer).
   CheckExpectedBuffers(20, 20, &kDataB, true);
-  CheckNoNextBuffer();
-
-  // Make sure all data is correct.
-  CheckExpectedRanges("{ [0,20) }");
-  Seek(0);
-  CheckExpectedBuffers(0, 5, &kDataA);
-  // No seek should be necessary (1 continuous range).
-  CheckExpectedBuffers(10, 20, &kDataB);
-  CheckNoNextBuffer();
 }
 
 // This test covers the case where new buffers end-overlap an existing, selected
@@ -1685,8 +1724,8 @@ TEST_P(SourceBufferStreamTest, End_Overlap_Selected_NoKeyframeAfterNew3) {
 }
 
 // This test covers the case when new buffers overlap the middle of a selected
-// range. This tests the case when there is precise overlap of an existing GOP,
-// and the next buffer is a keyframe.
+// range. This tests the case when there is no split and the next buffer is a
+// keyframe.
 // index:  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
 // old  :  A a a a a*A*a a a a A a a a a
 // new  :            B b b b b
@@ -1712,12 +1751,11 @@ TEST_P(SourceBufferStreamTest, Middle_Overlap_Selected_1) {
   CheckExpectedBuffers(0, 4, &kDataA);
   CheckExpectedBuffers(5, 9, &kDataB);
   CheckExpectedBuffers(10, 14, &kDataA);
-  CheckNoNextBuffer();
 }
 
 // This test covers the case when new buffers overlap the middle of a selected
-// range. This tests the case when there is precise overlap of an existing GOP,
-// and the next buffer is a non-keyframe in a GOP after the new buffers.
+// range. This tests the case when there is no split and the next buffer is
+// after the new buffers.
 // index:  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
 // old  :  A a a a a A a a a a A*a*a a a
 // new  :            B b b b b
@@ -1738,22 +1776,19 @@ TEST_P(SourceBufferStreamTest, Middle_Overlap_Selected_2) {
 
   // Make sure data is correct.
   CheckExpectedBuffers(11, 14, &kDataA);
-  CheckNoNextBuffer();
   Seek(0);
   CheckExpectedBuffers(0, 4, &kDataA);
   CheckExpectedBuffers(5, 9, &kDataB);
   CheckExpectedBuffers(10, 14, &kDataA);
-  CheckNoNextBuffer();
 }
 
 // This test covers the case when new buffers overlap the middle of a selected
-// range. This tests the case when only a partial GOP is appended, that append
-// is merged into the overlapped range, and the next buffer is before the new
-// buffers.
+// range. This tests the case when there is a split and the next buffer is
+// before the new buffers.
 // index:  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
 // old  :  A a*a*a a A a a a a A a a a a
 // new  :            B
-// after:  A a*a*a a B         A a a a a
+// after:  A a*a*a a B|       |A a a a a
 TEST_P(SourceBufferStreamTest, Middle_Overlap_Selected_3) {
   // Append 15 buffers at positions 0 through 14.
   NewCodedFrameGroupAppend(0, 15, &kDataA);
@@ -1762,37 +1797,28 @@ TEST_P(SourceBufferStreamTest, Middle_Overlap_Selected_3) {
   Seek(0);
   CheckExpectedBuffers(0, 1, &kDataA);
 
-  // Now append 1 buffer at position 5 (just the keyframe of a GOP).
+  // Now append 1 buffer at position 5.
   NewCodedFrameGroupAppend(5, 1, &kDataB);
 
   // Check expected range.
-  CheckExpectedRanges("{ [0,14) }");
+  CheckExpectedRanges("{ [0,5) [10,14) }");
 
   // Make sure data is correct.
   CheckExpectedBuffers(2, 4, &kDataA);
   CheckExpectedBuffers(5, 5, &kDataB);
-  // No seek should be necessary (1 continuous range).
-  CheckExpectedBuffers(10, 14, &kDataA);
   CheckNoNextBuffer();
-
-  // Seek to the beginning and recheck data in case track buffer erroneously
-  // became involved.
-  Seek(0);
-  CheckExpectedBuffers(0, 4, &kDataA);
-  CheckExpectedBuffers(5, 5, &kDataB);
+  Seek(10);
   CheckExpectedBuffers(10, 14, &kDataA);
-  CheckNoNextBuffer();
 }
 
 // This test covers the case when new buffers overlap the middle of a selected
-// range. This tests the case when only a partial GOP is appended, and the next
-// buffer is after the new buffers, and comes from the track buffer until the
-// next GOP in the original buffers.
+// range. This tests the case when there is a split and the next buffer is after
+// the new buffers but before the split range.
 // index:  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
 // old  :  A a a a a A a a*a*a A a a a a
 // new  :            B
-// after:  A a a a a B         A a a a a
-// track:                  a a
+// after: |A a a a a B|       |A a a a a|
+// track:                 |a a|
 TEST_P(SourceBufferStreamTest, Middle_Overlap_Selected_4) {
   // Append 15 buffers at positions 0 through 14.
   NewCodedFrameGroupAppend(0, 15, &kDataA);
@@ -1805,7 +1831,7 @@ TEST_P(SourceBufferStreamTest, Middle_Overlap_Selected_4) {
   NewCodedFrameGroupAppend(5, 1, &kDataB);
 
   // Check expected range.
-  CheckExpectedRanges("{ [0,14) }");
+  CheckExpectedRanges("{ [0,5) [10,14) }");
 
   // Buffers 8 and 9 should be in the track buffer.
   CheckExpectedBuffers(8, 9, &kDataA);
@@ -1817,9 +1843,9 @@ TEST_P(SourceBufferStreamTest, Middle_Overlap_Selected_4) {
   Seek(0);
   CheckExpectedBuffers(0, 4, &kDataA);
   CheckExpectedBuffers(5, 5, &kDataB);
-  // No seek should be necessary (1 continuous range).
-  CheckExpectedBuffers(10, 14, &kDataA);
   CheckNoNextBuffer();
+  Seek(10);
+  CheckExpectedBuffers(10, 14, &kDataA);
 }
 
 TEST_P(SourceBufferStreamTest, Overlap_OneByOne) {
@@ -2259,18 +2285,13 @@ TEST_P(SourceBufferStreamTest, OldSeekPoint_MiddleOverlap) {
   // Now seek to the beginning of the stream.
   SeekToTimestampMs(0);
 
-  // Overlap the middle of the last range with a partial GOP, just a keyframe.
+  // Overlap the middle of the last range with a partial GOP, just a keyframe,
+  // such that there are now three ranges.
   NewCodedFrameGroupAppend("100D10K");
-  CheckExpectedRangesByTimestamp("{ [0,10) [50,200) }");
+  CheckExpectedRangesByTimestamp("{ [0,10) [50,110) [150,200) }");
 
   // The GetNextBuffer() call should respect the 2nd seek point.
   CheckExpectedBuffers("0K");
-  CheckNoNextBuffer();
-
-  // Check the data in the second range.
-  SeekToTimestampMs(50);
-  CheckExpectedBuffers(
-      "50K 90|60 60|70 70|80 80|90 100K 150K 190|160 160|170 170|180 180|190");
   CheckNoNextBuffer();
 }
 
@@ -2288,20 +2309,12 @@ TEST_P(SourceBufferStreamTest, OldSeekPoint_MiddleOverlap_Pending) {
   // Now seek to unbuffered time 20ms.
   SeekToTimestampMs(20);
 
-  // Overlap the middle of the last range with a partial GOP, just a keyframe.
+  // Overlap the middle of the last range with a partial GOP, just a keyframe,
+  // such that there are now three ranges.
   NewCodedFrameGroupAppend("100D10K");
-  CheckExpectedRangesByTimestamp("{ [0,10) [50,200) }");
+  CheckExpectedRangesByTimestamp("{ [0,10) [50,110) [150,200) }");
 
   // The seek to 20ms should still be pending.
-  CheckNoNextBuffer();
-
-  // Check the data in both ranges.
-  SeekToTimestampMs(0);
-  CheckExpectedBuffers("0K");
-  CheckNoNextBuffer();
-  SeekToTimestampMs(50);
-  CheckExpectedBuffers(
-      "50K 90|60 60|70 70|80 80|90 100K 150K 190|160 160|170 170|180 180|190");
   CheckNoNextBuffer();
 }
 
@@ -2373,7 +2386,7 @@ TEST_P(SourceBufferStreamTest, OldSeekPoint_EndOverlap_Pending) {
   // End overlap the old seek point.
   NewCodedFrameGroupAppend(10, 10);
 
-  // The seek at time 5 should still be pending.
+  // The seek at time 0 should still be pending.
   CheckNoNextBuffer();
 }
 
@@ -3824,8 +3837,9 @@ TEST_P(SourceBufferStreamTest, SetExplicitDuration_MarkEOS_IsSeekPending) {
 }
 
 // Test the case were the current playback position is at the end of the
-// buffered data and several overlaps occur.
-TEST_P(SourceBufferStreamTest, OverlapWhileWaitingForMoreData) {
+// buffered data and several overlaps occur that causes the selected
+// range to get split and then merged back into a single range.
+TEST_P(SourceBufferStreamTest, OverlapSplitAndMergeWhileWaitingForMoreData) {
   // Seek to start of stream.
   SeekToTimestampMs(0);
 
@@ -3841,12 +3855,13 @@ TEST_P(SourceBufferStreamTest, OverlapWhileWaitingForMoreData) {
   NewCodedFrameGroupAppend("120K 150");
   CheckExpectedRangesByTimestamp("{ [0,180) }");
 
-  // Append buffers that replace the first GOP with a partial GOP.
+  // Append buffers that cause the range to get split.
   NewCodedFrameGroupAppend("0K 30");
-  CheckExpectedRangesByTimestamp("{ [0,180) }");
+  CheckExpectedRangesByTimestamp("{ [0,60) [120,180) }");
 
-  // Append buffers that complete that partial GOP.
+  // Append buffers that cause the ranges to get merged.
   AppendBuffers("60 90");
+
   CheckExpectedRangesByTimestamp("{ [0,180) }");
 
   // Verify that we still don't have a next buffer.
@@ -3856,7 +3871,6 @@ TEST_P(SourceBufferStreamTest, OverlapWhileWaitingForMoreData) {
   NewCodedFrameGroupAppend("180K 210");
   CheckExpectedRangesByTimestamp("{ [0,240) }");
   CheckExpectedBuffers("180K 210");
-  CheckNoNextBuffer();
 }
 
 // Verify that a single coded frame at the current read position unblocks the
@@ -4202,25 +4216,25 @@ TEST_P(SourceBufferStreamTest, Remove_BeforeCurrentPosition) {
   CheckExpectedBuffers("150 180K 210 240 270K 300 330");
 }
 
-// Test removing the preliminary portion for the current coded frame group being
-// appended.
+// Test removing the entire range for the current coded frame group
+// being appended.
 TEST_P(SourceBufferStreamTest, Remove_MidGroup) {
   Seek(0);
   NewCodedFrameGroupAppend("0K 30 60 90 120K 150 180 210");
   CheckExpectedRangesByTimestamp("{ [0,240) }");
 
-  // Partially replace the first GOP, then read its keyframe.
   NewCodedFrameGroupAppend("0K 30");
+
   CheckExpectedBuffers("0K");
 
-  CheckExpectedRangesByTimestamp("{ [0,240) }");
+  CheckExpectedRangesByTimestamp("{ [0,60) [120,240) }");
 
-  // Remove the partial GOP that we're in the middle of reading.
+  // Remove the entire range that is being appended to.
   RemoveInMs(0, 60, 240);
 
-  // Verify that there is no next buffer since it was removed and the remaining
-  // buffered range is beyond the current position.
+  // Verify that there is no next buffer since it was removed.
   CheckNoNextBuffer();
+
   CheckExpectedRangesByTimestamp("{ [120,240) }");
 
   // Continue appending frames for the current GOP.
@@ -4232,8 +4246,9 @@ TEST_P(SourceBufferStreamTest, Remove_MidGroup) {
   // Finish the previous GOP and start the next one.
   AppendBuffers("120 150K 180");
 
-  // Verify that new GOP replaces the existing GOP.
+  // Verify that new GOP replaces the existing range.
   CheckExpectedRangesByTimestamp("{ [150,210) }");
+
   SeekToTimestampMs(150);
   CheckExpectedBuffers("150K 180");
   CheckNoNextBuffer();
@@ -5109,20 +5124,16 @@ TEST_P(SourceBufferStreamTest,
 TEST_P(SourceBufferStreamTest,
        StartCodedFrameGroup_InExisting_RemoveGOP_ThenAppend_2) {
   NewCodedFrameGroupAppend("0K 10 20 30K 40 50");
-  // Though we signal 45ms, it's adjusted internally (due to detected overlap)
-  // to be 40.001ms (which is just beyond the highest buffered timestamp at or
-  // before 45ms) to help prevent potential discontinuity across the front of
-  // the overlapping append.
   SignalStartOfCodedFrameGroup(base::TimeDelta::FromMilliseconds(45));
   RemoveInMs(30, 60, 60);
   CheckExpectedRangesByTimestamp("{ [0,30) }");
 
   AppendBuffers("2000K 2010");
-  CheckExpectedRangesByTimestamp("{ [0,30) [40,2020) }");
+  CheckExpectedRangesByTimestamp("{ [0,30) [45,2020) }");
   Seek(0);
   CheckExpectedBuffers("0K 10 20");
   CheckNoNextBuffer();
-  SeekToTimestampMs(40);
+  SeekToTimestampMs(45);
   CheckExpectedBuffers("2000K 2010");
   CheckNoNextBuffer();
   SeekToTimestampMs(1000);
@@ -5519,194 +5530,6 @@ TEST_P(SourceBufferStreamTest, RangeCoalescenceOnFudgeRoomIncrease_2) {
   CheckNoNextBuffer();
   SeekToTimestampMs(1000);
   CheckExpectedBuffers("1000K");
-  CheckNoNextBuffer();
-}
-
-TEST_P(SourceBufferStreamTest, NoRangeGapWhenIncrementallyOverlapped) {
-  // Append 2 SAP-Type-1 GOPs continuous in DTS and PTS interval and with frame
-  // durations and number of frames per GOP such that the first keyframe by
-  // itself would not be considered "adjacent" to the second GOP by our fudge
-  // room logic alone, but we now adjust the range start times occurring during
-  // an overlap to enable overlap appends to remain continuous with the
-  // remainder of the overlapped range, if any.  Then incrementally reappend
-  // each frame of the first GOP.
-  NewCodedFrameGroupAppend("0K 10 20 30 40 50K 60 70 80 90");
-  Seek(0);
-  CheckExpectedRangesByTimestamp("{ [0,100) }");
-  CheckExpectedRangeEndTimes("{ <90,100> }");
-  CheckExpectedBuffers("0K 10 20 30 40 50K 60 70 80 90");
-  CheckNoNextBuffer();
-
-  NewCodedFrameGroupAppend("0D10K");  // Replaces first GOP with 1 frame.
-  Seek(0);
-  CheckExpectedRangesByTimestamp("{ [0,100) }");
-  CheckExpectedRangeEndTimes("{ <90,100> }");
-  CheckExpectedBuffers("0K 50K 60 70 80 90");
-  CheckNoNextBuffer();
-
-  // Add more of the replacement GOP.
-  AppendBuffers("10 20");
-  Seek(0);
-  CheckExpectedRangesByTimestamp("{ [0,100) }");
-  CheckExpectedRangeEndTimes("{ <90,100> }");
-  CheckExpectedBuffers("0K 10 20 50K 60 70 80 90");
-  CheckNoNextBuffer();
-
-  // Add more of the replacement GOP.
-  AppendBuffers("30D10");
-  Seek(0);
-  CheckExpectedRangesByTimestamp("{ [0,100) }");
-  CheckExpectedRangeEndTimes("{ <90,100> }");
-  CheckExpectedBuffers("0K 10 20 30 50K 60 70 80 90");
-  CheckNoNextBuffer();
-
-  // Complete the replacement GOP.
-  AppendBuffers("40D10");
-  Seek(0);
-  CheckExpectedRangesByTimestamp("{ [0,100) }");
-  CheckExpectedRangeEndTimes("{ <90,100> }");
-  CheckExpectedBuffers("0K 10 20 30 40 50K 60 70 80 90");
-  CheckNoNextBuffer();
-}
-
-TEST_P(SourceBufferStreamTest, AllowIncrementalAppendsToCoalesceRangeGap) {
-  // Append a SAP-Type-1 GOP with a coded frame group start time far before the
-  // timestamp of the first GOP (beyond any fudge room possible in this test).
-  // This simulates one of multiple muxed tracks with jagged start times
-  // following a discontinuity.
-  // Then incrementally append a preceding SAP-Type-1 GOP with frames that
-  // eventually are adjacent within fudge room of the first appended GOP's group
-  // start time and observe the buffered range and demux gap coalesces. Finally,
-  // incrementally append more frames of that preceding GOP to fill in the
-  // timeline to abut the first appended GOP's keyframe timestamp and observe no
-  // further buffered range change or discontinuity.
-  NewCodedFrameGroupAppend(base::TimeDelta::FromMilliseconds(100), "150K 160");
-  SeekToTimestampMs(100);
-  CheckExpectedRangesByTimestamp("{ [100,170) }");
-  CheckExpectedRangeEndTimes("{ <160,170> }");
-  CheckExpectedBuffers("150K 160");
-  CheckNoNextBuffer();
-
-  NewCodedFrameGroupAppend("70D10K");
-  SeekToTimestampMs(70);
-  CheckExpectedRangesByTimestamp("{ [70,80) [100,170) }");
-  CheckExpectedRangeEndTimes("{ <70,80> <160,170> }");
-  CheckExpectedBuffers("70K");
-  CheckNoNextBuffer();
-  SeekToTimestampMs(100);
-  CheckExpectedBuffers("150K 160");
-  CheckNoNextBuffer();
-
-  AppendBuffers("80D10");  // 80ms is just close enough to 100ms to coalesce.
-  SeekToTimestampMs(70);
-  CheckExpectedRangesByTimestamp("{ [70,170) }");
-  CheckExpectedRangeEndTimes("{ <160,170> }");
-  CheckExpectedBuffers("70K 80 150K 160");
-  CheckNoNextBuffer();
-
-  AppendBuffers("90D10");
-  SeekToTimestampMs(70);
-  CheckExpectedRangesByTimestamp("{ [70,170) }");
-  CheckExpectedRangeEndTimes("{ <160,170> }");
-  CheckExpectedBuffers("70K 80 90 150K 160");
-  CheckNoNextBuffer();
-
-  AppendBuffers("100 110 120");
-  SeekToTimestampMs(70);
-  CheckExpectedRangesByTimestamp("{ [70,170) }");
-  CheckExpectedRangeEndTimes("{ <160,170> }");
-  CheckExpectedBuffers("70K 80 90 100 110 120 150K 160");
-  CheckNoNextBuffer();
-
-  AppendBuffers("130D10");
-  SeekToTimestampMs(70);
-  CheckExpectedRangesByTimestamp("{ [70,170) }");
-  CheckExpectedRangeEndTimes("{ <160,170> }");
-  CheckExpectedBuffers("70K 80 90 100 110 120 130 150K 160");
-  CheckNoNextBuffer();
-
-  AppendBuffers("140D10");
-  SeekToTimestampMs(70);
-  CheckExpectedRangesByTimestamp("{ [70,170) }");
-  CheckExpectedRangeEndTimes("{ <160,170> }");
-  CheckExpectedBuffers("70K 80 90 100 110 120 130 140 150K 160");
-  CheckNoNextBuffer();
-}
-
-TEST_P(SourceBufferStreamTest, PreciselyOverlapLastAudioFrameAppended_1) {
-  // Appends an audio frame, A, which is then immediately followed by a
-  // subsequent frame, B. Then appends a new frame, C, which precisely overlaps
-  // frame B, and verifies that there is exactly 1 buffered range resulting.
-  SetAudioStream();
-
-  // Frame A
-  NewCodedFrameGroupAppend("0D10K");
-  SeekToTimestampMs(0);
-  CheckExpectedRangesByTimestamp("{ [0,10) }");
-  CheckExpectedRangeEndTimes("{ <0,10> }");
-  CheckExpectedBuffers("0K");
-  CheckNoNextBuffer();
-
-  // Frame B
-  NewCodedFrameGroupAppend("10D10K");
-  SeekToTimestampMs(0);
-  CheckExpectedRangesByTimestamp("{ [0,20) }");
-  CheckExpectedRangeEndTimes("{ <10,20> }");
-  CheckExpectedBuffers("0K 10K");
-  CheckNoNextBuffer();
-
-  // Frame C. FrameProcessor won't signal a new CFG here when buffering by DTS,
-  // because the DTS remains continuous per MSE spec. When buffering by PTS,
-  // though, FrameProcessor signals new CFG more granularly, including in this
-  // case.
-  if (buffering_api_ == BufferingApi::kLegacyByDts) {
-    AppendBuffers("10D10K");
-  } else {
-    NewCodedFrameGroupAppend("10D10K");
-  }
-  SeekToTimestampMs(0);
-  CheckExpectedRangesByTimestamp("{ [0,20) }");
-  CheckExpectedRangeEndTimes("{ <10,20> }");
-  CheckExpectedBuffers("0K 10K");
-  CheckNoNextBuffer();
-}
-
-TEST_P(SourceBufferStreamTest, PreciselyOverlapLastAudioFrameAppended_2) {
-  // Appends an audio frame, A, which is then splice-trim-truncated by a
-  // subsequent frame, B. Then appends a new frame, C, which precisely overlaps
-  // frame B, and verifies that there is exactly 1 buffered range resulting.
-  SetAudioStream();
-
-  // Frame A
-  NewCodedFrameGroupAppend("0D100K");
-  SeekToTimestampMs(0);
-  CheckExpectedRangesByTimestamp("{ [0,100) }");
-  CheckExpectedRangeEndTimes("{ <0,100> }");
-  CheckExpectedBuffers("0K");
-  CheckNoNextBuffer();
-
-  // Frame B
-  EXPECT_MEDIA_LOG(TrimmedSpliceOverlap(60000, 0, 40000));
-  NewCodedFrameGroupAppend("60D10K");
-  SeekToTimestampMs(0);
-  CheckExpectedRangesByTimestamp("{ [0,70) }");
-  CheckExpectedRangeEndTimes("{ <60,70> }");
-  CheckExpectedBuffers("0K 60K");
-  CheckNoNextBuffer();
-
-  // Frame C. FrameProcessor won't signal a new CFG here when buffering by DTS,
-  // because the DTS remains continuous per MSE spec. When buffering by PTS,
-  // though, FrameProcessor signals new CFG more granularly, including in this
-  // case.
-  if (buffering_api_ == BufferingApi::kLegacyByDts) {
-    AppendBuffers("60D10K");
-  } else {
-    NewCodedFrameGroupAppend("60D10K");
-  }
-  SeekToTimestampMs(0);
-  CheckExpectedRangesByTimestamp("{ [0,70) }");
-  CheckExpectedRangeEndTimes("{ <60,70> }");
-  CheckExpectedBuffers("0K 60K");
   CheckNoNextBuffer();
 }
 

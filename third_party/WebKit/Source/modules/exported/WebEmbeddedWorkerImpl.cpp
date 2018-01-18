@@ -140,7 +140,7 @@ void WebEmbeddedWorkerImpl::StartWorkerContext(
       WebEmbeddedWorkerStartData::kPauseAfterDownload)
     pause_after_download_state_ = kDoPauseAfterDownload;
 
-  devtools_frame_token_ = data.devtools_frame_token;
+  instrumentation_token_ = data.instrumentation_token;
   shadow_page_ = std::make_unique<WorkerShadowPage>(this);
   WebSettings* settings = shadow_page_->GetSettings();
 
@@ -197,6 +197,39 @@ void WebEmbeddedWorkerImpl::ResumeAfterDownload() {
   StartWorkerThread();
 }
 
+void WebEmbeddedWorkerImpl::AttachDevTools(int session_id) {
+  WebDevToolsAgentImpl* devtools_agent = shadow_page_->DevToolsAgent();
+  if (devtools_agent)
+    devtools_agent->Attach(session_id);
+}
+
+void WebEmbeddedWorkerImpl::ReattachDevTools(int session_id,
+                                             const WebString& saved_state) {
+  WebDevToolsAgentImpl* devtools_agent = shadow_page_->DevToolsAgent();
+  if (devtools_agent)
+    devtools_agent->Reattach(session_id, saved_state);
+  ResumeStartup();
+}
+
+void WebEmbeddedWorkerImpl::DetachDevTools(int session_id) {
+  WebDevToolsAgentImpl* devtools_agent = shadow_page_->DevToolsAgent();
+  if (devtools_agent)
+    devtools_agent->Detach(session_id);
+}
+
+void WebEmbeddedWorkerImpl::DispatchDevToolsMessage(int session_id,
+                                                    int call_id,
+                                                    const WebString& method,
+                                                    const WebString& message) {
+  if (asked_to_terminate_)
+    return;
+  WebDevToolsAgentImpl* devtools_agent = shadow_page_->DevToolsAgent();
+  if (devtools_agent) {
+    devtools_agent->DispatchOnInspectorBackend(session_id, call_id, method,
+                                               message);
+  }
+}
+
 void WebEmbeddedWorkerImpl::AddMessageToConsole(
     const WebConsoleMessage& message) {
   MessageLevel web_core_message_level;
@@ -222,12 +255,6 @@ void WebEmbeddedWorkerImpl::AddMessageToConsole(
       kOtherMessageSource, web_core_message_level, message.text,
       SourceLocation::Create(message.url, message.line_number,
                              message.column_number, nullptr)));
-}
-
-void WebEmbeddedWorkerImpl::GetDevToolsAgent(
-    mojo::ScopedInterfaceEndpointHandle devtools_agent_request) {
-  shadow_page_->GetDevToolsAgent(mojom::blink::DevToolsAgentAssociatedRequest(
-      std::move(devtools_agent_request)));
 }
 
 void WebEmbeddedWorkerImpl::PostMessageToPageInspector(int session_id,
@@ -281,6 +308,14 @@ void WebEmbeddedWorkerImpl::OnShadowPageInitialized() {
   // invoked and |this| might have been deleted at this point.
 }
 
+void WebEmbeddedWorkerImpl::SendProtocolMessage(int session_id,
+                                                int call_id,
+                                                const String& message,
+                                                const String& state) {
+  worker_context_client_->SendDevToolsMessage(session_id, call_id, message,
+                                              state);
+}
+
 void WebEmbeddedWorkerImpl::ResumeStartup() {
   bool was_waiting = (waiting_for_debugger_state_ == kWaitingForDebugger);
   waiting_for_debugger_state_ = kNotWaitingForDebugger;
@@ -288,8 +323,8 @@ void WebEmbeddedWorkerImpl::ResumeStartup() {
     shadow_page_->Initialize(worker_start_data_.script_url);
 }
 
-const WebString& WebEmbeddedWorkerImpl::GetDevToolsFrameToken() {
-  return devtools_frame_token_;
+const WebString& WebEmbeddedWorkerImpl::GetInstrumentationToken() {
+  return instrumentation_token_;
 }
 
 void WebEmbeddedWorkerImpl::OnScriptLoaderFinished() {

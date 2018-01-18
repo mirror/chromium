@@ -4,9 +4,10 @@
 
 #include "chrome/browser/vr/elements/text.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "chrome/browser/vr/test/mock_render_text.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/gfx/render_text.h"
 
 namespace vr {
 
@@ -14,7 +15,7 @@ TEST(Text, MultiLine) {
   const float kInitialSize = 1.0f;
 
   // Create an initialize a text element with a long string.
-  auto text = std::make_unique<Text>(0.020);
+  auto text = base::MakeUnique<Text>(0.020);
   text->SetSize(kInitialSize, 0);
   text->SetText(base::UTF8ToUTF16(std::string(1000, 'x')));
 
@@ -34,28 +35,6 @@ TEST(Text, MultiLine) {
   text->SetLayoutMode(kSingleLineFixedWidth);
   EXPECT_EQ(text->LayOutTextForTest().size(), 1u);
   EXPECT_LT(text->GetTextureSizeForTest().height(), initial_size.height());
-}
-
-TEST(Text, Formatting) {
-  TextFormatting formatting;
-  formatting.push_back(
-      TextFormattingAttribute(SK_ColorGREEN, gfx::Range(1, 2)));
-  formatting.push_back(
-      TextFormattingAttribute(gfx::Font::Weight::BOLD, gfx::Range(3, 4)));
-  formatting.push_back(
-      TextFormattingAttribute(gfx::DirectionalityMode::DIRECTIONALITY_AS_URL));
-
-  testing::InSequence in_sequence;
-  testing::StrictMock<MockRenderText> render_text;
-  EXPECT_CALL(render_text, ApplyColor(SK_ColorGREEN, gfx::Range(1, 2)));
-  EXPECT_CALL(render_text,
-              ApplyWeight(gfx::Font::Weight::BOLD, gfx::Range(3, 4)));
-  EXPECT_CALL(render_text, SetDirectionalityMode(
-                               gfx::DirectionalityMode::DIRECTIONALITY_AS_URL));
-
-  for (const auto& attribute : formatting) {
-    attribute.Apply(&render_text);
-  }
 }
 
 }  // namespace vr

@@ -69,10 +69,6 @@ bool NavigationContextImpl::IsRendererInitiated() const {
   return is_renderer_initiated_;
 }
 
-void NavigationContextImpl::SetUrl(const GURL& url) {
-  url_ = url;
-}
-
 void NavigationContextImpl::SetIsSameDocument(bool is_same_document) {
   is_same_document_ = is_same_document;
 }

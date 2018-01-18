@@ -95,7 +95,6 @@ class TestManagePasswordsUIController : public ManagePasswordsUIController {
   ~TestManagePasswordsUIController() override;
 
   bool opened_bubble() const { return opened_bubble_; }
-  bool opened_automatic_bubble() const { return opened_automatic_bubble_; }
   bool are_passwords_revealed_in_opened_bubble() const {
     return are_passwords_revealed_in_opened_bubble_;
   }
@@ -117,7 +116,6 @@ class TestManagePasswordsUIController : public ManagePasswordsUIController {
   bool ShowAuthenticationDialog() override { return true; }
 
   bool opened_bubble_;
-  bool opened_automatic_bubble_;
   bool are_passwords_revealed_in_opened_bubble_;
 };
 
@@ -135,8 +133,7 @@ TestManagePasswordsUIController::TestManagePasswordsUIController(
 TestManagePasswordsUIController::~TestManagePasswordsUIController() {}
 
 void TestManagePasswordsUIController::UpdateBubbleAndIconVisibility() {
-  opened_bubble_ = ShouldBubblePopUp();
-  opened_automatic_bubble_ = IsAutomaticallyOpeningBubble();
+  opened_bubble_ = IsAutomaticallyOpeningBubble();
   ManagePasswordsUIController::UpdateBubbleAndIconVisibility();
   OnUpdateBubbleAndIconVisibility();
   TestManagePasswordsIconView view;
@@ -359,7 +356,7 @@ TEST_F(ManagePasswordsUIControllerTest, PasswordSubmitted) {
   controller()->OnPasswordSubmitted(std::move(test_form_manager));
   EXPECT_EQ(password_manager::ui::PENDING_PASSWORD_STATE,
             controller()->GetState());
-  EXPECT_TRUE(controller()->opened_automatic_bubble());
+  EXPECT_TRUE(controller()->opened_bubble());
   EXPECT_EQ(test_local_form().origin, controller()->GetOrigin());
 
   ExpectIconStateIs(password_manager::ui::PENDING_PASSWORD_STATE);
@@ -377,7 +374,7 @@ TEST_F(ManagePasswordsUIControllerTest, BlacklistedFormPasswordSubmitted) {
   controller()->OnPasswordSubmitted(std::move(test_form_manager));
   EXPECT_EQ(password_manager::ui::PENDING_PASSWORD_STATE,
             controller()->GetState());
-  EXPECT_FALSE(controller()->opened_automatic_bubble());
+  EXPECT_FALSE(controller()->opened_bubble());
 
   ExpectIconStateIs(password_manager::ui::PENDING_PASSWORD_STATE);
 }
@@ -398,7 +395,7 @@ TEST_F(ManagePasswordsUIControllerTest, PasswordSubmittedBubbleSuppressed) {
   controller()->OnPasswordSubmitted(std::move(test_form_manager));
   EXPECT_EQ(password_manager::ui::PENDING_PASSWORD_STATE,
             controller()->GetState());
-  EXPECT_FALSE(controller()->opened_automatic_bubble());
+  EXPECT_FALSE(controller()->opened_bubble());
   ASSERT_TRUE(controller()->GetCurrentInteractionStats());
   EXPECT_EQ(stats[0], *controller()->GetCurrentInteractionStats());
 
@@ -422,7 +419,7 @@ TEST_F(ManagePasswordsUIControllerTest, PasswordSubmittedBubbleNotSuppressed) {
   controller()->OnPasswordSubmitted(std::move(test_form_manager));
   EXPECT_EQ(password_manager::ui::PENDING_PASSWORD_STATE,
             controller()->GetState());
-  EXPECT_TRUE(controller()->opened_automatic_bubble());
+  EXPECT_TRUE(controller()->opened_bubble());
   EXPECT_FALSE(controller()->GetCurrentInteractionStats());
 
   ExpectIconStateIs(password_manager::ui::PENDING_PASSWORD_STATE);
@@ -964,7 +961,7 @@ TEST_F(ManagePasswordsUIControllerTest, ManualFallbackForSaving_UseFallback) {
     ExpectIconAndControllerStateIs(
         is_update ? password_manager::ui::PENDING_PASSWORD_UPDATE_STATE
                   : password_manager::ui::PENDING_PASSWORD_STATE);
-    EXPECT_FALSE(controller()->opened_automatic_bubble());
+    EXPECT_FALSE(controller()->opened_bubble());
 
     // A user clicks on omnibox icon, opens the bubble and press Save/Update.
     if (is_update) {
@@ -1034,7 +1031,7 @@ TEST_F(ManagePasswordsUIControllerTest,
         is_update ? password_manager::ui::PENDING_PASSWORD_UPDATE_STATE
                   : password_manager::ui::PENDING_PASSWORD_STATE);
     testing::Mock::VerifyAndClearExpectations(controller());
-    EXPECT_FALSE(controller()->opened_automatic_bubble());
+    EXPECT_FALSE(controller()->opened_bubble());
 
     // A user clears the password field. It hides the fallback.
     EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
@@ -1064,7 +1061,7 @@ TEST_F(ManagePasswordsUIControllerTest,
       false /* is_update */);
   ExpectIconAndControllerStateIs(password_manager::ui::PENDING_PASSWORD_STATE);
   testing::Mock::VerifyAndClearExpectations(controller());
-  EXPECT_FALSE(controller()->opened_automatic_bubble());
+  EXPECT_FALSE(controller()->opened_bubble());
 
   EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
   controller()->OnHideManualFallbackForSaving();
@@ -1108,7 +1105,7 @@ TEST_F(ManagePasswordsUIControllerTest,
     EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
     content::RunAllTasksUntilIdle();
 
-    EXPECT_FALSE(controller()->opened_automatic_bubble());
+    EXPECT_FALSE(controller()->opened_bubble());
     ExpectIconAndControllerStateIs(password_manager::ui::MANAGE_STATE);
     testing::Mock::VerifyAndClearExpectations(controller());
   }
@@ -1211,7 +1208,7 @@ TEST_F(ManagePasswordsUIControllerTest,
     controller()->OnShowManualFallbackForSaving(
         std::move(test_form_manager), true /* has_generated_password */, false);
     ExpectIconAndControllerStateIs(password_manager::ui::CONFIRMATION_STATE);
-    EXPECT_FALSE(controller()->opened_automatic_bubble());
+    EXPECT_FALSE(controller()->opened_bubble());
 
     EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
     if (user_closed_bubble) {
@@ -1262,7 +1259,7 @@ TEST_F(ManagePasswordsUIControllerTest, AuthenticateUserToRevealPasswords) {
   controller()->OnPasswordSubmitted(std::move(test_form_manager));
   EXPECT_EQ(password_manager::ui::PENDING_PASSWORD_STATE,
             controller()->GetState());
-  EXPECT_TRUE(controller()->opened_automatic_bubble());
+  EXPECT_TRUE(controller()->opened_bubble());
   ASSERT_TRUE(testing::Mock::VerifyAndClearExpectations(controller()));
 
   // Simulate that re-auth is need to reveal passwords in the bubble.
@@ -1273,7 +1270,6 @@ TEST_F(ManagePasswordsUIControllerTest, AuthenticateUserToRevealPasswords) {
   EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
   content::RunAllPendingInMessageLoop();
   EXPECT_TRUE(controller()->opened_bubble());
-  EXPECT_FALSE(controller()->opened_automatic_bubble());
   EXPECT_TRUE(controller()->are_passwords_revealed_in_opened_bubble());
   // Since the bubble is opened, this property is already cleared.
   EXPECT_FALSE(controller()->ArePasswordsRevealedWhenBubbleIsOpened());

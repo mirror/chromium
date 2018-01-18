@@ -10,6 +10,7 @@
 #include <utility>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chrome/common/extensions/api/permissions.h"
 #include "extensions/common/permissions/permission_set.h"
@@ -141,14 +142,14 @@ TEST(ExtensionPermissionsAPIHelpers, Unpack) {
   {
     Permissions permissions_object;
     value->Clear();
-    value->Set("origins", std::make_unique<base::Value>(2));
+    value->Set("origins", base::MakeUnique<base::Value>(2));
     EXPECT_FALSE(Permissions::Populate(*value, &permissions_object));
   }
 
   {
     Permissions permissions_object;
     value->Clear();
-    value->Set("permissions", std::make_unique<base::Value>(2));
+    value->Set("permissions", base::MakeUnique<base::Value>(2));
     EXPECT_FALSE(Permissions::Populate(*value, &permissions_object));
   }
 
@@ -157,7 +158,7 @@ TEST(ExtensionPermissionsAPIHelpers, Unpack) {
     Permissions permissions_object;
     value->Clear();
     value->Set("origins", origins->CreateDeepCopy());
-    value->Set("random", std::make_unique<base::Value>(3));
+    value->Set("random", base::MakeUnique<base::Value>(3));
     EXPECT_TRUE(Permissions::Populate(*value, &permissions_object));
     permissions = UnpackPermissionSet(permissions_object, true, &error);
     EXPECT_TRUE(permissions.get());

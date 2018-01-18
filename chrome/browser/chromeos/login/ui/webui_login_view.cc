@@ -4,8 +4,6 @@
 
 #include "chrome/browser/chromeos/login/ui/webui_login_view.h"
 
-#include <memory>
-
 #include "ash/accelerators/accelerator_controller.h"
 #include "ash/focus_cycler.h"
 #include "ash/root_window_controller.h"
@@ -24,6 +22,7 @@
 #include "base/trace_event/trace_event.h"
 #include "base/values.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/chromeos/accessibility/accessibility_util.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
 #include "chrome/browser/chromeos/lock_screen_apps/state_controller.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host_webui.h"
@@ -262,7 +261,7 @@ void WebUILoginView::Init() {
   }
 
   if (!webui_login_) {
-    webui_login_ = std::make_unique<views::WebView>(signin_profile);
+    webui_login_ = base::MakeUnique<views::WebView>(signin_profile);
     webui_login_->set_owned_by_client();
     is_reusing_webview_ = false;
   }

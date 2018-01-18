@@ -21,7 +21,6 @@
 namespace gpu {
 struct GpuFeatureInfo;
 class InProcessCommandBuffer;
-class ServiceTransferCache;
 struct SharedMemoryLimits;
 
 namespace gles2 {
@@ -79,7 +78,7 @@ class GL_IN_PROCESS_CONTEXT_EXPORT GLInProcessContext {
       const gpu::InProcessCommandBuffer::PresentationCallback& callback) = 0;
 
   // Test only functions.
-  virtual gpu::ServiceTransferCache* GetTransferCacheForTest() const = 0;
+  virtual gpu::gles2::ContextGroup* ContextGroupForTesting() const = 0;
 };
 
 }  // namespace gpu

@@ -18,6 +18,7 @@
 
 namespace content {
 
+class ServiceWorkerProviderHost;
 class ServiceWorkerRegistration;
 
 // This class manages all in-flight registration or unregistration jobs.
@@ -29,6 +30,7 @@ class CONTENT_EXPORT ServiceWorkerJobCoordinator {
 
   void Register(const GURL& script_url,
                 const blink::mojom::ServiceWorkerRegistrationOptions& options,
+                ServiceWorkerProviderHost* provider_host,
                 const ServiceWorkerRegisterJob::RegistrationCallback& callback);
 
   void Unregister(
@@ -40,6 +42,7 @@ class CONTENT_EXPORT ServiceWorkerJobCoordinator {
   void Update(ServiceWorkerRegistration* registration,
               bool force_bypass_cache,
               bool skip_script_comparison,
+              ServiceWorkerProviderHost* provider_host,
               const ServiceWorkerRegisterJob::RegistrationCallback& callback);
 
   // Calls ServiceWorkerRegisterJobBase::Abort() on all jobs and removes them.

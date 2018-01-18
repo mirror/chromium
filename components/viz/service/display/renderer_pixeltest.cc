@@ -2888,8 +2888,8 @@ TEST_F(GLRendererPixelTest, DISABLED_TrilinearFiltering) {
   std::unique_ptr<RenderPass> child_pass = RenderPass::Create();
   child_pass->SetAll(child_pass_id, child_pass_rect, child_pass_rect,
                      transform_to_root, cc::FilterOperations(),
-                     cc::FilterOperations(), gfx::ColorSpace::CreateSRGB(),
-                     false, false, false, generate_mipmap);
+                     cc::FilterOperations(), gfx::ColorSpace(), false, false,
+                     false, generate_mipmap);
 
   gfx::Rect red_rect(child_pass_rect);
   // Small enough red rect that linear filtering will miss it but large enough
@@ -3535,11 +3535,8 @@ TEST_F(GLRendererPixelTestWithFlippedOutputSurface, ExplicitFlipTest) {
   pass_list.push_back(std::move(child_pass));
   pass_list.push_back(std::move(root_pass));
 
-  // Note: RunPixelTest() will issue a CopyOutputRequest on the root pass. The
-  // implementation should realize the output surface is flipped, and return a
-  // right-side up result regardless (i.e., NOT blue_yellow_flipped.png).
   EXPECT_TRUE(this->RunPixelTest(
-      &pass_list, base::FilePath(FILE_PATH_LITERAL("blue_yellow.png")),
+      &pass_list, base::FilePath(FILE_PATH_LITERAL("blue_yellow_flipped.png")),
       cc::ExactPixelComparator(true)));
 }
 
@@ -3722,79 +3719,6 @@ TEST_F(GLRendererPixelTest, TextureQuadBatching) {
   EXPECT_TRUE(this->RunPixelTest(
       &pass_list, base::FilePath(FILE_PATH_LITERAL("spiral.png")),
       cc::FuzzyPixelOffByOneComparator(true)));
-}
-
-TEST_F(GLRendererPixelTest, TileQuadClamping) {
-  gfx::Rect viewport(this->device_viewport_size_);
-  bool swizzle_contents = true;
-  bool needs_blending = true;
-  bool nearest_neighbor = false;
-  bool use_aa = false;
-
-  gfx::Size layer_size(4, 4);
-  gfx::Size tile_size(20, 20);
-  gfx::Rect quad_rect(layer_size);
-  gfx::RectF tex_coord_rect(quad_rect);
-
-  // tile sized bitmap, with valid contents green and contents outside the
-  // layer rect red.
-  SkBitmap bitmap;
-  bitmap.allocN32Pixels(tile_size.width(), tile_size.height());
-  SkCanvas canvas(bitmap);
-  SkPaint red;
-  red.setColor(SK_ColorRED);
-  canvas.drawRect(SkRect::MakeWH(tile_size.width(), tile_size.height()), red);
-  SkPaint green;
-  green.setColor(SK_ColorGREEN);
-  canvas.drawRect(SkRect::MakeWH(layer_size.width(), layer_size.height()),
-                  green);
-
-  ResourceId resource;
-  if (this->use_gpu()) {
-    resource = this->child_resource_provider_->CreateGpuTextureResource(
-        tile_size, ResourceTextureHint::kDefault, RGBA_8888, gfx::ColorSpace());
-  } else {
-    resource = this->child_resource_provider_->CreateBitmapResource(
-        tile_size, gfx::ColorSpace());
-  }
-  this->child_resource_provider_->CopyToResource(
-      resource, static_cast<uint8_t*>(bitmap.getPixels()), tile_size);
-  // Return the mapped resource id.
-  cc::ResourceProvider::ResourceIdMap resource_map =
-      SendResourceAndGetChildToParentMap({resource},
-                                         this->resource_provider_.get(),
-                                         this->child_resource_provider_.get());
-  ResourceId mapped_resource = resource_map[resource];
-
-  int id = 1;
-  gfx::Transform transform_to_root;
-  std::unique_ptr<RenderPass> pass =
-      CreateTestRenderPass(id, viewport, transform_to_root);
-
-  // Green quad that should not show any red pixels from outside the
-  // tex coord rect.
-  gfx::Transform transform;
-  transform.Scale(40, 40);
-  SharedQuadState* quad_shared =
-      CreateTestSharedQuadState(transform, gfx::Rect(layer_size), pass.get());
-  auto* quad = pass->CreateAndAppendDrawQuad<TileDrawQuad>();
-  quad->SetNew(quad_shared, gfx::Rect(layer_size), gfx::Rect(layer_size),
-               needs_blending, mapped_resource, tex_coord_rect, tile_size,
-               swizzle_contents, nearest_neighbor, use_aa);
-
-  // Green background.
-  SharedQuadState* background_shared =
-      CreateTestSharedQuadState(gfx::Transform(), viewport, pass.get());
-  auto* color_quad = pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
-  color_quad->SetNew(background_shared, viewport, viewport, SK_ColorGREEN,
-                     false);
-
-  RenderPassList pass_list;
-  pass_list.push_back(std::move(pass));
-
-  EXPECT_TRUE(this->RunPixelTest(&pass_list,
-                                 base::FilePath(FILE_PATH_LITERAL("green.png")),
-                                 cc::ExactPixelComparator(true)));
 }
 
 class GLRendererPixelTestWithOverdrawFeedback : public GLRendererPixelTest {

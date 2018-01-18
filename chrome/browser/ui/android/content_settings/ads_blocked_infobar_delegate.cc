@@ -4,8 +4,6 @@
 
 #include "chrome/browser/ui/android/content_settings/ads_blocked_infobar_delegate.h"
 
-#include <memory>
-
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/android/android_theme_resources.h"
@@ -22,7 +20,7 @@
 
 // static
 void AdsBlockedInfobarDelegate::Create(InfoBarService* infobar_service) {
-  infobar_service->AddInfoBar(std::make_unique<AdsBlockedInfoBar>(
+  infobar_service->AddInfoBar(base::MakeUnique<AdsBlockedInfoBar>(
       base::WrapUnique(new AdsBlockedInfobarDelegate())));
 }
 

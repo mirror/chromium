@@ -65,7 +65,7 @@ class MultiColumnLayoutState {
 class CORE_EXPORT LayoutFlowThread : public LayoutBlockFlow {
  public:
   LayoutFlowThread();
-  ~LayoutFlowThread() override = default;
+  ~LayoutFlowThread() override {}
 
   bool IsLayoutFlowThread() const final { return true; }
   virtual bool IsLayoutMultiColumnFlowThread() const { return false; }

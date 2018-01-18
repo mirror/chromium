@@ -19,7 +19,6 @@
 
 namespace cc {
 class FilterOperations;
-class PaintFilter;
 }
 
 namespace IPC {
@@ -45,8 +44,8 @@ struct ParamTraits<cc::FilterOperations> {
 };
 
 template <>
-struct CC_IPC_EXPORT ParamTraits<sk_sp<cc::PaintFilter>> {
-  typedef sk_sp<cc::PaintFilter> param_type;
+struct CC_IPC_EXPORT ParamTraits<sk_sp<SkImageFilter>> {
+  typedef sk_sp<SkImageFilter> param_type;
   static void Write(base::Pickle* m, const param_type& p);
   static bool Read(const base::Pickle* m,
                    base::PickleIterator* iter,

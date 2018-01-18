@@ -30,9 +30,6 @@
 
 #include "modules/indexeddb/InspectorIndexedDBAgent.h"
 
-#include <memory>
-#include <utility>
-
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
@@ -399,7 +396,7 @@ static std::unique_ptr<KeyPath> KeyPathFromIDBKeyPath(
     case IDBKeyPath::kStringType:
       key_path = KeyPath::create()
                      .setType(KeyPath::TypeEnum::String)
-                     .setString(idb_key_path.String())
+                     .setString(idb_key_path.GetString())
                      .build();
       break;
     case IDBKeyPath::kArrayType: {
@@ -486,9 +483,8 @@ class DatabaseLoader final
   std::unique_ptr<RequestDatabaseCallback> request_callback_;
 };
 
-static std::unique_ptr<IDBKey> IdbKeyFromInspectorObject(
-    protocol::IndexedDB::Key* key) {
-  std::unique_ptr<IDBKey> idb_key;
+static IDBKey* IdbKeyFromInspectorObject(protocol::IndexedDB::Key* key) {
+  IDBKey* idb_key;
 
   if (!key)
     return nullptr;
@@ -516,7 +512,7 @@ static std::unique_ptr<IDBKey> IdbKeyFromInspectorObject(
     auto array = key->getArray(nullptr);
     for (size_t i = 0; array && i < array->length(); ++i)
       key_array.push_back(IdbKeyFromInspectorObject(array->get(i)));
-    idb_key = IDBKey::CreateArray(std::move(key_array));
+    idb_key = IDBKey::CreateArray(key_array);
   } else {
     return nullptr;
   }
@@ -526,13 +522,11 @@ static std::unique_ptr<IDBKey> IdbKeyFromInspectorObject(
 
 static IDBKeyRange* IdbKeyRangeFromKeyRange(
     protocol::IndexedDB::KeyRange* key_range) {
-  std::unique_ptr<IDBKey> idb_lower =
-      IdbKeyFromInspectorObject(key_range->getLower(nullptr));
+  IDBKey* idb_lower = IdbKeyFromInspectorObject(key_range->getLower(nullptr));
   if (key_range->hasLower() && !idb_lower)
     return nullptr;
 
-  std::unique_ptr<IDBKey> idb_upper =
-      IdbKeyFromInspectorObject(key_range->getUpper(nullptr));
+  IDBKey* idb_upper = IdbKeyFromInspectorObject(key_range->getUpper(nullptr));
   if (key_range->hasUpper() && !idb_upper)
     return nullptr;
 
@@ -542,8 +536,8 @@ static IDBKeyRange* IdbKeyRangeFromKeyRange(
   IDBKeyRange::UpperBoundType upper_bound_type =
       key_range->getUpperOpen() ? IDBKeyRange::kUpperBoundOpen
                                 : IDBKeyRange::kUpperBoundClosed;
-  return IDBKeyRange::Create(std::move(idb_lower), std::move(idb_upper),
-                             lower_bound_type, upper_bound_type);
+  return IDBKeyRange::Create(idb_lower, idb_upper, lower_bound_type,
+                             upper_bound_type);
 }
 
 class DataLoader;

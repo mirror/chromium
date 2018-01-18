@@ -4,8 +4,6 @@
 
 #include "chrome/browser/ui/location_bar/location_bar.h"
 
-#include <memory>
-
 #include "base/scoped_observer.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/extensions/manifest_handlers/ui_overrides_handler.h"
@@ -54,7 +52,7 @@ class LocationBar::ExtensionLoadObserver
 
 LocationBar::LocationBar(Profile* profile) : profile_(profile) {
   if (profile_) {  // profile_ can be null in tests.
-    extension_load_observer_ = std::make_unique<ExtensionLoadObserver>(
+    extension_load_observer_ = base::MakeUnique<ExtensionLoadObserver>(
         this, extensions::ExtensionRegistry::Get(profile_));
   }
 }

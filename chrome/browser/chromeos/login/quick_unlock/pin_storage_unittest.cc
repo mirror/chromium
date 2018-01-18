@@ -18,7 +18,7 @@ namespace {
 
 class PinStorageUnitTest : public testing::Test {
  protected:
-  PinStorageUnitTest() : profile_(std::make_unique<TestingProfile>()) {}
+  PinStorageUnitTest() : profile_(base::MakeUnique<TestingProfile>()) {}
   ~PinStorageUnitTest() override {}
 
   // testing::Test:

@@ -36,25 +36,24 @@ namespace {
 // Don't send a notification more than once per 3 seconds (chosen arbitrarily).
 const int kMinNotificationDelayInSeconds = 3;
 
-class GalleryWatchManagerShutdownNotifierFactory
+class ShutdownNotifierFactory
     : public BrowserContextKeyedServiceShutdownNotifierFactory {
  public:
-  static GalleryWatchManagerShutdownNotifierFactory* GetInstance() {
-    return base::Singleton<GalleryWatchManagerShutdownNotifierFactory>::get();
+  static ShutdownNotifierFactory* GetInstance() {
+    return base::Singleton<ShutdownNotifierFactory>::get();
   }
 
  private:
-  friend struct base::DefaultSingletonTraits<
-      GalleryWatchManagerShutdownNotifierFactory>;
+  friend struct base::DefaultSingletonTraits<ShutdownNotifierFactory>;
 
-  GalleryWatchManagerShutdownNotifierFactory()
+  ShutdownNotifierFactory()
       : BrowserContextKeyedServiceShutdownNotifierFactory(
             "GalleryWatchManager") {
     DependsOn(MediaGalleriesPreferencesFactory::GetInstance());
   }
-  ~GalleryWatchManagerShutdownNotifierFactory() override {}
+  ~ShutdownNotifierFactory() override {}
 
-  DISALLOW_COPY_AND_ASSIGN(GalleryWatchManagerShutdownNotifierFactory);
+  DISALLOW_COPY_AND_ASSIGN(ShutdownNotifierFactory);
 };
 
 }  // namespace.
@@ -367,7 +366,7 @@ void GalleryWatchManager::EnsureBrowserContextSubscription(
   auto it = browser_context_subscription_map_.find(browser_context);
   if (it == browser_context_subscription_map_.end()) {
     browser_context_subscription_map_[browser_context] =
-        GalleryWatchManagerShutdownNotifierFactory::GetInstance()
+        ShutdownNotifierFactory::GetInstance()
             ->Get(browser_context)
             ->Subscribe(base::Bind(&GalleryWatchManager::ShutdownBrowserContext,
                                    base::Unretained(this), browser_context));

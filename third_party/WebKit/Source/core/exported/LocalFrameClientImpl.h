@@ -32,10 +32,7 @@
 #ifndef LocalFrameClientImpl_h
 #define LocalFrameClientImpl_h
 
-#include <memory>
-
 #include "base/memory/scoped_refptr.h"
-
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "platform/heap/Handle.h"
@@ -43,12 +40,14 @@
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/WebScopedVirtualTimePauser.h"
 
+#include <memory>
+
 namespace blink {
 
 class WebDevToolsAgentImpl;
 class WebLocalFrameImpl;
 class WebSpellCheckPanelHostClient;
-struct WebScrollIntoViewParams;
+struct WebRemoteScrollProperties;
 
 class LocalFrameClientImpl final : public LocalFrameClient {
  public:
@@ -188,7 +187,6 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void FrameFocused() const override;
   void DidChangeName(const String&) override;
   void DidEnforceInsecureRequestPolicy(WebInsecureRequestPolicy) override;
-  void DidEnforceInsecureNavigationsSet(const std::vector<unsigned>&) override;
   void DidChangeFramePolicy(Frame* child_frame,
                             SandboxFlags,
                             const ParsedFeaturePolicy&) override;
@@ -253,11 +251,11 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   void DidBlockFramebust(const KURL&) override;
 
-  String GetDevToolsFrameToken() const override;
+  String GetInstrumentationToken() override;
 
   void ScrollRectToVisibleInParentFrame(
       const WebRect&,
-      const WebScrollIntoViewParams&) override;
+      const WebRemoteScrollProperties&) override;
 
   void SetVirtualTimePauser(WebScopedVirtualTimePauser) override;
 
@@ -268,8 +266,6 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void DidChangeSelection(bool is_selection_empty) override;
 
   void DidChangeContents() override;
-
-  Frame* FindFrame(const AtomicString& name) const override;
 
  private:
   explicit LocalFrameClientImpl(WebLocalFrameImpl*);

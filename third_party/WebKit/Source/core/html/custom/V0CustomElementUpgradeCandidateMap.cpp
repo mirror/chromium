@@ -39,8 +39,7 @@ V0CustomElementUpgradeCandidateMap::Create() {
   return new V0CustomElementUpgradeCandidateMap();
 }
 
-V0CustomElementUpgradeCandidateMap::~V0CustomElementUpgradeCandidateMap() =
-    default;
+V0CustomElementUpgradeCandidateMap::~V0CustomElementUpgradeCandidateMap() {}
 
 void V0CustomElementUpgradeCandidateMap::Add(
     const V0CustomElementDescriptor& descriptor,

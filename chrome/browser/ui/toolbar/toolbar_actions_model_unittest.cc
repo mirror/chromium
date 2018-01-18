@@ -225,7 +225,7 @@ void ToolbarActionsModelUnitTest::Init() {
       extensions::extension_action_test_util::CreateToolbarModelForProfile(
           profile());
   model_observer_ =
-      std::make_unique<ToolbarActionsModelTestObserver>(toolbar_model_);
+      base::MakeUnique<ToolbarActionsModelTestObserver>(toolbar_model_);
 }
 
 void ToolbarActionsModelUnitTest::InitWithMockActionsFactory() {
@@ -233,7 +233,7 @@ void ToolbarActionsModelUnitTest::InitWithMockActionsFactory() {
   toolbar_model_ = extensions::extension_action_test_util::
       CreateToolbarModelForProfileWithoutWaitingForReady(profile());
   toolbar_model_->SetMockActionsFactoryForTest(
-      std::make_unique<MockComponentToolbarActionsFactory>(profile()));
+      base::MakeUnique<MockComponentToolbarActionsFactory>(profile()));
 
   // Trigger ToolbarActionsModel::OnReady() after the actions factory has been
   // swapped out for a mock one.
@@ -243,7 +243,7 @@ void ToolbarActionsModelUnitTest::InitWithMockActionsFactory() {
   base::RunLoop().RunUntilIdle();
 
   model_observer_ =
-      std::make_unique<ToolbarActionsModelTestObserver>(toolbar_model_);
+      base::MakeUnique<ToolbarActionsModelTestObserver>(toolbar_model_);
 }
 
 void ToolbarActionsModelUnitTest::TearDown() {

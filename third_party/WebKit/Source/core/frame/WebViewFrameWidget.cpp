@@ -23,7 +23,7 @@ WebViewFrameWidget::WebViewFrameWidget(WebWidgetClient& client,
   web_view_->SetCompositorVisibility(true);
 }
 
-WebViewFrameWidget::~WebViewFrameWidget() = default;
+WebViewFrameWidget::~WebViewFrameWidget() {}
 
 void WebViewFrameWidget::Close() {
   // Note: it's important to use the captured main frame pointer here. During
@@ -70,8 +70,8 @@ void WebViewFrameWidget::BeginFrame(double last_frame_time_monotonic) {
   return web_view_->BeginFrame(last_frame_time_monotonic);
 }
 
-void WebViewFrameWidget::UpdateLifecycle(LifecycleUpdate requested_update) {
-  return web_view_->UpdateLifecycle(requested_update);
+void WebViewFrameWidget::UpdateAllLifecyclePhases() {
+  return web_view_->UpdateAllLifecyclePhases();
 }
 
 void WebViewFrameWidget::Paint(WebCanvas* canvas, const WebRect& view_port) {

@@ -260,11 +260,10 @@ class ServiceManager::Instance
     std::unique_ptr<ConnectParams> params(std::move(*in_params));
     Instance* source =
         service_manager_->GetExistingInstance(params->source());
-    if (!source)
-      return false;
+    const InterfaceProviderSpec& source_connection_spec =
+        source ? source->GetConnectionSpec() : GetEmptyInterfaceProviderSpec();
 
-    const InterfaceProviderSpec& source_spec = source->GetConnectionSpec();
-    if (!AllowsInterface(params->source(), source_spec, identity_,
+    if (!AllowsInterface(params->source(), source_connection_spec, identity_,
                          GetConnectionSpec(), params->interface_name())) {
       params->set_response_data(mojom::ConnectResult::ACCESS_DENIED, identity_);
       return false;
@@ -274,10 +273,11 @@ class ServiceManager::Instance
 
     pending_service_connections_++;
     service_->OnBindInterface(
-        BindSourceInfo(params->source(),
-                       GetRequestedCapabilities(source_spec, identity_)),
+        BindSourceInfo(
+            params->source(),
+            GetRequestedCapabilities(source_connection_spec, identity_)),
         params->interface_name(), params->TakeInterfaceRequestPipe(),
-        base::BindOnce(&Instance::OnConnectComplete, base::Unretained(this)));
+        base::Bind(&Instance::OnConnectComplete, base::Unretained(this)));
     return true;
   }
 
@@ -291,10 +291,10 @@ class ServiceManager::Instance
     state_ = State::STARTING;
     service_ = std::move(service);
     service_.set_connection_error_handler(
-        base::BindOnce(&Instance::OnServiceLost, base::Unretained(this),
-                       service_manager_->GetWeakPtr()));
-    service_->OnStart(identity_, base::BindOnce(&Instance::OnStartComplete,
-                                                base::Unretained(this)));
+        base::Bind(&Instance::OnServiceLost, base::Unretained(this),
+                   service_manager_->GetWeakPtr()));
+    service_->OnStart(identity_, base::Bind(&Instance::OnStartComplete,
+                                            base::Unretained(this)));
   }
 
   bool StartWithFilePath(const base::FilePath& path, SandboxType sandbox_type) {
@@ -311,7 +311,7 @@ class ServiceManager::Instance
     // TODO(tsepez): use actual sandbox type. https://crbug.com/788778
     mojom::ServicePtr service = runner_->Start(
         identity_, SANDBOX_TYPE_NO_SANDBOX,
-        base::BindOnce(&Instance::PIDAvailable, weak_factory_.GetWeakPtr()));
+        base::Bind(&Instance::PIDAvailable, weak_factory_.GetWeakPtr()));
     StartWithService(std::move(service));
     return true;
 #endif
@@ -392,9 +392,9 @@ class ServiceManager::Instance
           service_manager_(service_manager),
           target_(std::move(target)),
           source_binding_(this, std::move(source_request)) {
-      target_.set_connection_error_handler(base::BindOnce(
+      target_.set_connection_error_handler(base::Bind(
           &InterfaceProviderImpl::OnConnectionError, base::Unretained(this)));
-      source_binding_.set_connection_error_handler(base::BindOnce(
+      source_binding_.set_connection_error_handler(base::Bind(
           &InterfaceProviderImpl::OnConnectionError, base::Unretained(this)));
     }
     ~InterfaceProviderImpl() override {}
@@ -693,9 +693,9 @@ class ServiceManager::Instance
     state_ = State::STARTED;
     if (connector_request.is_pending()) {
       connectors_.AddBinding(this, std::move(connector_request));
-      connectors_.set_connection_error_handler(base::BindRepeating(
-          &Instance::OnConnectionLost, base::Unretained(this),
-          service_manager_->GetWeakPtr()));
+      connectors_.set_connection_error_handler(
+          base::Bind(&Instance::OnConnectionLost, base::Unretained(this),
+                     service_manager_->GetWeakPtr()));
     }
     if (control_request.is_pending())
       control_binding_.Bind(std::move(control_request));
@@ -1016,16 +1016,11 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
     packaged_service_target.set_user_id(original_target.user_id());
     instance->set_identity(packaged_service_target);
 
+    mojom::ServicePtr service;
     Identity factory(entry->parent()->name(), *target_user_id,
                      factory_instance_name);
-
-    mojom::PIDReceiverPtr pid_receiver;
-    instance->BindPIDReceiver(mojo::MakeRequest(&pid_receiver));
-
-    mojom::ServicePtr service;
     CreateServiceWithFactory(factory, target.name(),
-                             mojo::MakeRequest(&service),
-                             std::move(pid_receiver));
+                             mojo::MakeRequest(&service));
     instance->StartWithService(std::move(service));
   } else {
     base::FilePath package_path = entry->path();
@@ -1216,13 +1211,11 @@ void ServiceManager::AddListener(mojom::ServiceManagerListenerPtr listener) {
   listeners_.AddPtr(std::move(listener));
 }
 
-void ServiceManager::CreateServiceWithFactory(
-    const Identity& service_factory,
-    const std::string& name,
-    mojom::ServiceRequest request,
-    mojom::PIDReceiverPtr pid_receiver) {
+void ServiceManager::CreateServiceWithFactory(const Identity& service_factory,
+                                              const std::string& name,
+                                              mojom::ServiceRequest request) {
   mojom::ServiceFactory* factory = GetServiceFactory(service_factory);
-  factory->CreateService(std::move(request), name, std::move(pid_receiver));
+  factory->CreateService(std::move(request), name);
 }
 
 mojom::ServiceFactory* ServiceManager::GetServiceFactory(
@@ -1237,8 +1230,8 @@ mojom::ServiceFactory* ServiceManager::GetServiceFactory(
   BindInterface(this, source_identity, service_factory_identity, &factory);
   mojom::ServiceFactory* factory_interface = factory.get();
   factory.set_connection_error_handler(
-      base::BindOnce(&service_manager::ServiceManager::OnServiceFactoryLost,
-                     weak_ptr_factory_.GetWeakPtr(), service_factory_identity));
+      base::Bind(&service_manager::ServiceManager::OnServiceFactoryLost,
+                 weak_ptr_factory_.GetWeakPtr(), service_factory_identity));
   service_factories_[service_factory_identity] = std::move(factory);
   return factory_interface;
 }

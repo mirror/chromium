@@ -18,6 +18,7 @@
 #include "base/containers/flat_set.h"
 #include "base/containers/hash_tables.h"
 #include "base/containers/mru_cache.h"
+#include "base/feature_list.h"
 #include "base/files/file_path.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
@@ -61,6 +62,8 @@ class URLDatabase;
 // The maximum number of bitmaps for a single icon URL which can be stored in
 // the thumbnail database.
 static const size_t kMaxFaviconBitmapsPerIconURL = 8;
+
+extern const base::Feature kAvoidStrippingRefFromFaviconPageUrls;
 
 // Keeps track of a queued HistoryDBTask. This class lives solely on the
 // DB thread.
@@ -298,7 +301,6 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
       const GURL& page_url,
       const favicon_base::IconTypeSet& icon_types,
       const std::vector<int>& desired_sizes,
-      bool fallback_to_host,
       std::vector<favicon_base::FaviconRawBitmapResult>* bitmap_results);
 
   void GetFaviconForID(
@@ -578,7 +580,6 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
                            GetFaviconsFromDBSelectClosestMatch);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, GetFaviconsFromDBIconType);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, GetFaviconsFromDBExpired);
-  FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, GetFaviconsFromDBFallbackToHost);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest,
                            UpdateFaviconMappingsAndFetchNoDB);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, QueryFilteredURLs);
@@ -741,14 +742,12 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   // returned. If |icon_types| contains multiple icon types and there are
   // several matched icon types in the database, results will only be returned
   // for a single icon type in the priority of kTouchPrecomposedIcon,
-  // kTouchIcon, and kFavicon. If |fallback_to_host| is true, the host of
-  // |page_url| will be used to search the favicon database if an exact match
-  // cannot be found. See the comment for GetFaviconResultsForBestMatch() for
-  // more details on how |favicon_bitmap_results| is constructed.
+  // kTouchIcon, and kFavicon. See the comment for
+  // GetFaviconResultsForBestMatch() for more details on how
+  // |favicon_bitmap_results| is constructed.
   bool GetFaviconsFromDB(const GURL& page_url,
                          const favicon_base::IconTypeSet& icon_types,
                          const std::vector<int>& desired_sizes,
-                         bool fallback_to_host,
                          std::vector<favicon_base::FaviconRawBitmapResult>*
                              favicon_bitmap_results);
 

@@ -5,8 +5,6 @@
 #include "core/css/properties/longhands/AlignSelf.h"
 
 #include "core/css/properties/CSSParsingUtils.h"
-#include "core/css/properties/ComputedStyleUtils.h"
-#include "core/style/ComputedStyle.h"
 
 namespace blink {
 namespace CSSLonghand {
@@ -16,16 +14,6 @@ const CSSValue* AlignSelf::ParseSingleValue(
     const CSSParserContext& context,
     const CSSParserLocalContext&) const {
   return CSSParsingUtils::ConsumeSelfPositionOverflowPosition(range);
-}
-
-const CSSValue* AlignSelf::CSSValueFromComputedStyleInternal(
-    const ComputedStyle& style,
-    const SVGComputedStyle&,
-    const LayoutObject*,
-    Node* styled_node,
-    bool allow_visited_style) const {
-  return ComputedStyleUtils::ValueForItemPositionWithOverflowAlignment(
-      style.AlignSelf());
 }
 
 }  // namespace CSSLonghand

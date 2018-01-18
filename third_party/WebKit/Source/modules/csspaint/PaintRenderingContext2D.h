@@ -58,8 +58,6 @@ class MODULES_EXPORT PaintRenderingContext2D : public ScriptWrappable,
 
   void DidDraw(const SkIRect&) final;
 
-  void setShadowBlur(double) final;
-
   bool StateHasFilter() final;
   sk_sp<PaintFilter> StateGetFilter() final;
   void SnapshotStateForFilter() final {}
@@ -70,11 +68,6 @@ class MODULES_EXPORT PaintRenderingContext2D : public ScriptWrappable,
 
   // PaintRenderingContext2D cannot lose it's context.
   bool isContextLost() const final { return false; }
-
-  // PaintRenderingContext2D uses a recording canvas, so it should never
-  // allocate a pixel buffer and is not accelerated.
-  bool CanCreateCanvas2DBuffer() const final { return false; }
-  bool IsAccelerated() const final { return false; }
 
   sk_sp<PaintRecord> GetRecord();
 
@@ -97,7 +90,6 @@ class MODULES_EXPORT PaintRenderingContext2D : public ScriptWrappable,
   const CanvasColorParams& color_params_;
   PaintRenderingContext2DSettings context_settings_;
   bool did_record_draw_commands_in_paint_recorder_;
-  float effective_zoom_;
 };
 
 }  // namespace blink

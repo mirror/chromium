@@ -26,7 +26,7 @@ import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.PositionObserver;
 import org.chromium.content.browser.ViewPositionObserver;
-import org.chromium.content.browser.selection.HandleViewResources;
+import org.chromium.content.browser.input.HandleViewResources;
 import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.WebContents;
@@ -47,9 +47,7 @@ import java.lang.reflect.Method;
 @JNINamespace("android_webview")
 public class PopupTouchHandleDrawable extends View implements DisplayAndroidObserver {
     @Override
-    public void onRotationChanged(int rotation) {
-        mRotationChanged = true;
-    }
+    public void onRotationChanged(int rotation) {}
 
     @Override
     public void onDIPScaleChanged(float dipScale) {
@@ -105,7 +103,6 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
     private boolean mAttachedToWindow;
     // This should be set only from onVisibilityInputChanged.
     private boolean mWasShowingAllowed;
-    private boolean mRotationChanged;
 
     // Gesture accounting for handle hiding while scrolling.
     private final GestureStateListener mGestureStateListener;
@@ -581,15 +578,10 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
 
     @CalledByNative
     private void setOrigin(float originXDip, float originYDip) {
-        // If rotation has changed, then we always need to scheduleInvalidate() regardless of the
-        // current visibility.
-        if (mOriginXDip == originXDip && mOriginYDip == originYDip && !mRotationChanged) return;
+        if (mOriginXDip == originXDip && mOriginYDip == originYDip) return;
         mOriginXDip = originXDip;
         mOriginYDip = originYDip;
-        if (getVisibility() == VISIBLE || mRotationChanged) {
-            if (mRotationChanged) mRotationChanged = false;
-            scheduleInvalidate();
-        }
+        if (getVisibility() == VISIBLE) scheduleInvalidate();
     }
 
     @CalledByNative

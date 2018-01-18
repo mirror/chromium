@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/files/file_util.h"
+#include "base/memory/ptr_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_restrictions.h"
@@ -84,7 +85,7 @@ bool KioskAppDataBase::LoadFromDictionary(const base::DictionaryValue& dict) {
   }
   icon_path_ = base::FilePath(icon_path_string);
 
-  kiosk_app_icon_loader_ = std::make_unique<KioskAppIconLoader>(this);
+  kiosk_app_icon_loader_ = base::MakeUnique<KioskAppIconLoader>(this);
   kiosk_app_icon_loader_->Start(icon_path_);
   return true;
 }

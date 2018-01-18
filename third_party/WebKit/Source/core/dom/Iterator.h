@@ -18,8 +18,8 @@ class CORE_EXPORT Iterator : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  Iterator() = default;
-  virtual ~Iterator() = default;
+  Iterator() {}
+  virtual ~Iterator() {}
 
   virtual ScriptValue next(ScriptState*, ExceptionState&) = 0;
   virtual ScriptValue next(ScriptState*,

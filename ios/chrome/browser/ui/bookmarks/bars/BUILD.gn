@@ -7,6 +7,12 @@ source_set("bars") {
   sources = [
     "bookmark_context_bar.h",
     "bookmark_context_bar.mm",
+    "bookmark_editing_bar.h",
+    "bookmark_editing_bar.mm",
+    "bookmark_navigation_bar.h",
+    "bookmark_navigation_bar.mm",
+    "bookmark_top_bar.h",
+    "bookmark_top_bar.mm",
   ]
   deps = [
     "//base",
@@ -16,5 +22,8 @@ source_set("bars") {
     "//ios/third_party/material_components_ios",
     "//ui/base",
   ]
-  libs = [ "UIKit.framework" ]
+  libs = [
+    "QuartzCore.framework",
+    "UIKit.framework",
+  ]
 }

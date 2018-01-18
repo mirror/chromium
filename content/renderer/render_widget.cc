@@ -1033,16 +1033,11 @@ void RenderWidget::RequestScheduleAnimation() {
   ScheduleAnimation();
 }
 
-void RenderWidget::UpdateVisualState(VisualStateUpdate requested_update) {
-  bool pre_paint_only = requested_update == VisualStateUpdate::kPrePaint;
-  WebWidget::LifecycleUpdate lifecycle_update =
-      pre_paint_only ? WebWidget::LifecycleUpdate::kPrePaint
-                     : WebWidget::LifecycleUpdate::kAll;
-
-  GetWebWidget()->UpdateLifecycle(lifecycle_update);
+void RenderWidget::UpdateVisualState() {
+  GetWebWidget()->UpdateAllLifecyclePhases();
   GetWebWidget()->SetSuppressFrameRequestsWorkaroundFor704763Only(false);
 
-  if (first_update_visual_state_after_hidden_ && !pre_paint_only) {
+  if (first_update_visual_state_after_hidden_) {
     RecordTimeToFirstActivePaint();
     first_update_visual_state_after_hidden_ = false;
   }
@@ -1089,13 +1084,13 @@ std::unique_ptr<cc::SwapPromise> RenderWidget::RequestCopyOfOutputForLayoutTest(
 // RenderWidgetInputHandlerDelegate
 
 void RenderWidget::FocusChangeComplete() {
-  blink::WebFrameWidget* frame_widget = GetFrameWidget();
-  if (!frame_widget)
+  if (!GetWebWidget()->IsWebFrameWidget())
     return;
-
   blink::WebLocalFrame* focused =
-      frame_widget->LocalRoot()->View()->FocusedFrame();
-
+      static_cast<blink::WebFrameWidget*>(GetWebWidget())
+          ->LocalRoot()
+          ->View()
+          ->FocusedFrame();
   if (focused && focused->AutofillClient())
     focused->AutofillClient()->DidCompleteFocusChangeInFrame();
 }
@@ -1630,24 +1625,6 @@ void RenderWidget::Close() {
   }
 }
 
-blink::WebFrameWidget* RenderWidget::GetFrameWidget() const {
-  blink::WebWidget* web_widget = GetWebWidget();
-  if (!web_widget)
-    return nullptr;
-
-  if (!web_widget->IsWebFrameWidget()) {
-    // TODO(ekaramad): This should not happen. If we have a WebWidget and we
-    // need a WebFrameWidget then we should be getting a WebFrameWidget. But
-    // unfortunately this does not seem to be the case in some scenarios --
-    // specifically when a RenderViewImpl swaps out during navigation the
-    // WebViewImpl loses its WebViewFrameWidget but sometimes we receive IPCs
-    // which are destined for WebFrameWidget (https://crbug.com/669219).
-    return nullptr;
-  }
-
-  return static_cast<blink::WebFrameWidget*>(web_widget);
-}
-
 void RenderWidget::ScreenRectToEmulatedIfNeeded(WebRect* window_rect) const {
   DCHECK(window_rect);
   float scale = popup_origin_scale_for_emulation_;
@@ -2088,15 +2065,17 @@ void RenderWidget::OnRequestCompositionUpdates(bool immediate_request,
 }
 
 void RenderWidget::OnOrientationChange() {
-  if (auto* frame_widget = GetFrameWidget()) {
+  WebWidget* web_widget = GetWebWidget();
+  if (web_widget && web_widget->IsWebFrameWidget()) {
+    WebFrameWidget* web_frame_widget = static_cast<WebFrameWidget*>(web_widget);
     // LocalRoot() might return null for provisional main frames. In this case,
     // the frame hasn't committed a navigation and is not swapped into the tree
     // yet, so it doesn't make sense to send orientation change events to it.
     //
     // TODO(https://crbug.com/578349): This check should be cleaned up
     // once provisional frames are gone.
-    if (frame_widget->LocalRoot())
-      frame_widget->LocalRoot()->SendOrientationChangeEvent();
+    if (web_frame_widget->LocalRoot())
+      web_frame_widget->LocalRoot()->SendOrientationChangeEvent();
   }
 }
 
@@ -2563,10 +2542,16 @@ blink::WebWidget* RenderWidget::GetWebWidget() const {
 
 blink::WebInputMethodController* RenderWidget::GetInputMethodController()
     const {
-  if (auto* frame_widget = GetFrameWidget())
-    return frame_widget->GetActiveWebInputMethodController();
-
-  return nullptr;
+  if (!GetWebWidget()->IsWebFrameWidget()) {
+    // TODO(ekaramad): We should not get here in response to IME IPC or updates
+    // when the RenderWidget is swapped out. We should top sending IPCs from the
+    // browser side (https://crbug.com/669219).
+    // If there is no WebFrameWidget, then there will be no
+    // InputMethodControllers for a WebLocalFrame.
+    return nullptr;
+  }
+  return static_cast<blink::WebFrameWidget*>(GetWebWidget())
+      ->GetActiveWebInputMethodController();
 }
 
 void RenderWidget::SetupWidgetInputHandler(
@@ -2599,11 +2584,12 @@ void RenderWidget::DidResizeOrRepaintAck() {
 
 void RenderWidget::UpdateURLForCompositorUkm() {
   DCHECK(compositor_);
-  blink::WebFrameWidget* frame_widget = GetFrameWidget();
-  if (!frame_widget)
+
+  if (!GetWebWidget() || !GetWebWidget()->IsWebFrameWidget())
     return;
 
-  auto* render_frame = RenderFrameImpl::FromWebFrame(frame_widget->LocalRoot());
+  auto* render_frame = RenderFrameImpl::FromWebFrame(
+      static_cast<blink::WebFrameWidget*>(GetWebWidget())->LocalRoot());
   if (!render_frame->IsMainFrame())
     return;
 
@@ -2611,15 +2597,15 @@ void RenderWidget::UpdateURLForCompositorUkm() {
 }
 
 blink::WebLocalFrame* RenderWidget::GetFocusedWebLocalFrameInWidget() const {
-  if (auto* frame_widget = GetFrameWidget())
-    return frame_widget->FocusedWebLocalFrameInWidget();
-  return nullptr;
+  if (!GetWebWidget() || !GetWebWidget()->IsWebFrameWidget())
+    return nullptr;
+  return static_cast<blink::WebFrameWidget*>(GetWebWidget())
+      ->FocusedWebLocalFrameInWidget();
 }
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 PepperPluginInstanceImpl* RenderWidget::GetFocusedPepperPluginInsideWidget() {
-  blink::WebFrameWidget* frame_widget = GetFrameWidget();
-  if (!frame_widget)
+  if (!GetWebWidget() || !GetWebWidget()->IsWebFrameWidget())
     return nullptr;
 
   // Focused pepper instance might not always be in the focused frame. For
@@ -2630,7 +2616,8 @@ PepperPluginInstanceImpl* RenderWidget::GetFocusedPepperPluginInsideWidget() {
   // is fullscreen, clicking into the pepper will not refocus the embedder
   // frame. This is why we have to traverse the whole frame tree to find the
   // focused plugin.
-  blink::WebFrame* current_frame = frame_widget->LocalRoot();
+  blink::WebFrame* current_frame =
+      static_cast<blink::WebFrameWidget*>(GetWebWidget())->LocalRoot();
   while (current_frame) {
     RenderFrameImpl* render_frame =
         current_frame->IsWebLocalFrame()

@@ -22,7 +22,7 @@ class CORE_EXPORT CustomElementDefinitionBuilder {
   STACK_ALLOCATED();
 
  public:
-  CustomElementDefinitionBuilder() = default;
+  CustomElementDefinitionBuilder() {}
 
   // This API necessarily sounds JavaScript specific; this implements
   // some steps of the CustomElementRegistry.define process, which

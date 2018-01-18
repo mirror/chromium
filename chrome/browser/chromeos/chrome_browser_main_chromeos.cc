@@ -21,6 +21,7 @@
 #include "base/linux_util.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
 #include "base/path_service.h"
@@ -72,6 +73,7 @@
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/login/wizard_controller.h"
+#include "chrome/browser/chromeos/net/network_connect_delegate_chromeos.h"
 #include "chrome/browser/chromeos/net/network_portal_detector_impl.h"
 #include "chrome/browser/chromeos/net/network_pref_state_observer.h"
 #include "chrome/browser/chromeos/net/network_throttling_observer.h"
@@ -93,6 +95,7 @@
 #include "chrome/browser/chromeos/settings/device_oauth2_token_service_factory.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/chromeos/settings/shutdown_policy_forwarder.h"
+#include "chrome/browser/chromeos/status/data_promo_notification.h"
 #include "chrome/browser/chromeos/system/input_device_settings.h"
 #include "chrome/browser/chromeos/ui/low_disk_notification.h"
 #include "chrome/browser/chromeos/upgrade_detector_chromeos.h"
@@ -304,22 +307,22 @@ class DBusServices {
     if (GetAshConfig() == ash::Config::CLASSIC) {
       // TODO(lannm): This will eventually be served by mus-ws.
       display_service_providers.push_back(
-          std::make_unique<DisplayPowerServiceProvider>(
-              std::make_unique<ChromeDisplayPowerServiceProviderDelegate>()));
+          base::MakeUnique<DisplayPowerServiceProvider>(
+              base::MakeUnique<ChromeDisplayPowerServiceProviderDelegate>()));
     }
     // TODO(teravest): Remove this provider once all callers are using
     // |liveness_service_| instead: http://crbug.com/644322
     service_providers.push_back(
-        std::make_unique<LivenessServiceProvider>(kLibCrosServiceInterface));
-    service_providers.push_back(std::make_unique<ScreenLockServiceProvider>());
+        base::MakeUnique<LivenessServiceProvider>(kLibCrosServiceInterface));
+    service_providers.push_back(base::MakeUnique<ScreenLockServiceProvider>());
 
     display_service_providers.push_back(
-        std::make_unique<ConsoleServiceProvider>(
+        base::MakeUnique<ConsoleServiceProvider>(
             &console_service_provider_delegate_));
 
     // TODO(teravest): Remove this provider once all callers are using
     // |kiosk_info_service_| instead: http://crbug.com/703229
-    service_providers.push_back(std::make_unique<KioskInfoService>(
+    service_providers.push_back(base::MakeUnique<KioskInfoService>(
         kLibCrosServiceInterface, kGetKioskAppRequiredPlatforVersion));
     cros_dbus_service_ = CrosDBusService::Create(
         kLibCrosServiceName, dbus::ObjectPath(kLibCrosServicePath),
@@ -332,37 +335,37 @@ class DBusServices {
     proxy_resolution_service_ = CrosDBusService::Create(
         kNetworkProxyServiceName, dbus::ObjectPath(kNetworkProxyServicePath),
         CrosDBusService::CreateServiceProviderList(
-            std::make_unique<ProxyResolutionServiceProvider>(
-                std::make_unique<
+            base::MakeUnique<ProxyResolutionServiceProvider>(
+                base::MakeUnique<
                     ChromeProxyResolutionServiceProviderDelegate>())));
 
     kiosk_info_service_ = CrosDBusService::Create(
         kKioskAppServiceName, dbus::ObjectPath(kKioskAppServicePath),
         CrosDBusService::CreateServiceProviderList(
-            std::make_unique<KioskInfoService>(
+            base::MakeUnique<KioskInfoService>(
                 kKioskAppServiceInterface,
                 kKioskAppServiceGetRequiredPlatformVersionMethod)));
 
     liveness_service_ = CrosDBusService::Create(
         kLivenessServiceName, dbus::ObjectPath(kLivenessServicePath),
         CrosDBusService::CreateServiceProviderList(
-            std::make_unique<LivenessServiceProvider>(
+            base::MakeUnique<LivenessServiceProvider>(
                 kLivenessServiceInterface)));
 
     virtual_file_request_service_ = CrosDBusService::Create(
         kVirtualFileRequestServiceName,
         dbus::ObjectPath(kVirtualFileRequestServicePath),
         CrosDBusService::CreateServiceProviderList(
-            std::make_unique<VirtualFileRequestServiceProvider>(
-                std::make_unique<
+            base::MakeUnique<VirtualFileRequestServiceProvider>(
+                base::MakeUnique<
                     ChromeVirtualFileRequestServiceProviderDelegate>())));
 
     component_updater_service_ = CrosDBusService::Create(
         kComponentUpdaterServiceName,
         dbus::ObjectPath(kComponentUpdaterServicePath),
         CrosDBusService::CreateServiceProviderList(
-            std::make_unique<ComponentUpdaterServiceProvider>(
-                std::make_unique<
+            base::MakeUnique<ComponentUpdaterServiceProvider>(
+                base::MakeUnique<
                     ChromeComponentUpdaterServiceProviderDelegate>())));
 
     // Initialize PowerDataCollector after DBusThreadManager is initialized.
@@ -385,6 +388,10 @@ class DBusServices {
     // the network manager.
     NetworkChangeNotifierFactoryChromeos::GetInstance()->Initialize();
 
+    // Initialize the NetworkConnect handler.
+    network_connect_delegate_.reset(new NetworkConnectDelegateChromeOS);
+    NetworkConnect::Initialize(network_connect_delegate_.get());
+
     // Likewise, initialize the upgrade detector for Chrome OS. The upgrade
     // detector starts to monitor changes from the update engine.
     UpgradeDetectorChromeos::GetInstance()->Init();
@@ -399,6 +406,8 @@ class DBusServices {
   }
 
   ~DBusServices() {
+    NetworkConnect::Shutdown();
+    network_connect_delegate_.reset();
     CertLibrary::Shutdown();
     NetworkHandler::Shutdown();
     cryptohome::AsyncMethodCaller::Shutdown();
@@ -442,6 +451,8 @@ class DBusServices {
   std::unique_ptr<CrosDBusService> liveness_service_;
   std::unique_ptr<CrosDBusService> virtual_file_request_service_;
   std::unique_ptr<CrosDBusService> component_updater_service_;
+
+  std::unique_ptr<NetworkConnectDelegateChromeOS> network_connect_delegate_;
 
   ChromeConsoleServiceProviderDelegate console_service_provider_delegate_;
 
@@ -524,7 +535,7 @@ class SystemTokenCertDBInitializer {
     // (using PK11_ReferenceSlot).
     crypto::ScopedPK11Slot system_slot_copy =
         crypto::ScopedPK11Slot(PK11_ReferenceSlot(system_slot.get()));
-    auto database = std::make_unique<net::NSSCertDatabaseChromeOS>(
+    auto database = base::MakeUnique<net::NSSCertDatabaseChromeOS>(
         std::move(system_slot) /* public_slot */,
         crypto::ScopedPK11Slot() /* private_slot */);
     database->SetSystemSlot(std::move(system_slot_copy));
@@ -558,7 +569,7 @@ ChromeBrowserMainPartsChromeos::~ChromeBrowserMainPartsChromeos() {
 
 // content::BrowserMainParts and ChromeBrowserMainExtraParts overrides ---------
 
-int ChromeBrowserMainPartsChromeos::PreEarlyInitialization() {
+void ChromeBrowserMainPartsChromeos::PreEarlyInitialization() {
   base::CommandLine* singleton_command_line =
       base::CommandLine::ForCurrentProcess();
 
@@ -596,7 +607,7 @@ int ChromeBrowserMainPartsChromeos::PreEarlyInitialization() {
     chrome::SetChannel(channel);
 #endif
 
-  return ChromeBrowserMainPartsLinux::PreEarlyInitialization();
+  ChromeBrowserMainPartsLinux::PreEarlyInitialization();
 }
 
 void ChromeBrowserMainPartsChromeos::PreMainMessageLoopStart() {
@@ -645,7 +656,7 @@ void ChromeBrowserMainPartsChromeos::PreMainMessageLoopRun() {
 
   // Initialize NSS database for system token.
   system_token_certdb_initializer_ =
-      std::make_unique<internal::SystemTokenCertDBInitializer>();
+      base::MakeUnique<internal::SystemTokenCertDBInitializer>();
   system_token_certdb_initializer_->Initialize();
 
   CrasAudioHandler::Initialize(
@@ -676,7 +687,7 @@ void ChromeBrowserMainPartsChromeos::PreMainMessageLoopRun() {
   network_throttling_observer_.reset(
       new NetworkThrottlingObserver(g_browser_process->local_state()));
 
-  arc_service_launcher_ = std::make_unique<arc::ArcServiceLauncher>();
+  arc_service_launcher_ = base::MakeUnique<arc::ArcServiceLauncher>();
   arc_voice_interaction_controller_client_ =
       std::make_unique<arc::VoiceInteractionControllerClient>();
 
@@ -802,7 +813,7 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
 
   if (lock_screen_apps::StateController::IsEnabled()) {
     lock_screen_apps_state_controller_ =
-        std::make_unique<lock_screen_apps::StateController>();
+        base::MakeUnique<lock_screen_apps::StateController>();
     lock_screen_apps_state_controller_->Initialize();
   }
 
@@ -835,9 +846,9 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
             << " with hash: " << user_id_hash;
   }
 
-  // Set the system notification source display name ("Chrome OS" or "Chromium
-  // OS").
-  message_center::MessageCenter::Get()->SetSystemNotificationAppName(
+  // Set product name ("Chrome OS" or "Chromium OS") to be used in context
+  // header of new-style notification.
+  message_center::MessageCenter::Get()->SetProductOSName(
       l10n_util::GetStringUTF16(IDS_SHORT_PRODUCT_OS_NAME));
 
   g_browser_process->platform_part()->InitializeCrosComponentManager();
@@ -944,7 +955,7 @@ void ChromeBrowserMainPartsChromeos::PostProfileInit() {
   }
 
   // Initialize an observer to update NetworkHandler's pref based services.
-  network_pref_state_observer_ = std::make_unique<NetworkPrefStateObserver>();
+  network_pref_state_observer_ = base::MakeUnique<NetworkPrefStateObserver>();
 
   // Initialize input methods.
   input_method::InputMethodManager* manager =
@@ -965,10 +976,10 @@ void ChromeBrowserMainPartsChromeos::PostProfileInit() {
     SetGuestLocale(profile());
 
   // This observer uses the intialized profile to dispatch extension events.
-  extension_volume_observer_ = std::make_unique<ExtensionVolumeObserver>();
+  extension_volume_observer_ = base::MakeUnique<ExtensionVolumeObserver>();
 
-  renderer_freezer_ = std::make_unique<RendererFreezer>(
-      std::make_unique<FreezerCgroupProcessManager>());
+  renderer_freezer_ = base::MakeUnique<RendererFreezer>(
+      base::MakeUnique<FreezerCgroupProcessManager>());
 
   power_metrics_reporter_ = std::make_unique<PowerMetricsReporter>(
       DBusThreadManager::Get()->GetPowerManagerClient(),
@@ -979,12 +990,12 @@ void ChromeBrowserMainPartsChromeos::PostProfileInit() {
 
   // This observer cannot be created earlier because it requires the shell to be
   // available.
-  idle_action_warning_observer_ = std::make_unique<IdleActionWarningObserver>();
+  idle_action_warning_observer_ = base::MakeUnique<IdleActionWarningObserver>();
 
   // Start watching for low disk space events to notify the user if it is not a
   // guest profile.
   if (!user_manager::UserManager::Get()->IsLoggedInAsGuest())
-    low_disk_notification_ = std::make_unique<LowDiskNotification>();
+    low_disk_notification_ = base::MakeUnique<LowDiskNotification>();
 
   ChromeBrowserMainPartsLinux::PostProfileInit();
 }
@@ -1012,6 +1023,11 @@ void ChromeBrowserMainPartsChromeos::PreBrowserStart() {
 
 void ChromeBrowserMainPartsChromeos::PostBrowserStart() {
   if (chromeos::GetAshConfig() != ash::Config::MASH) {
+    // These are dependent on the ash::Shell singleton already having been
+    // initialized. Consequently, these cannot be used when running as a mus
+    // client.
+    data_promo_notification_.reset(new DataPromoNotification());
+
     // TODO(mash): Support EventRewriterController; see crbug.com/647781
     keyboard_event_rewriters_.reset(new EventRewriterController());
     keyboard_event_rewriters_->AddEventRewriter(
@@ -1023,9 +1039,9 @@ void ChromeBrowserMainPartsChromeos::PostBrowserStart() {
             ash::Shell::Get()
                 ->GetPrimaryRootWindowController()
                 ->GetRootWindow())));
-    event_rewriter_delegate_ = std::make_unique<EventRewriterDelegateImpl>();
+    event_rewriter_delegate_ = base::MakeUnique<EventRewriterDelegateImpl>();
     keyboard_event_rewriters_->AddEventRewriter(
-        std::make_unique<ui::EventRewriterChromeOS>(
+        base::MakeUnique<ui::EventRewriterChromeOS>(
             event_rewriter_delegate_.get(),
             ash::Shell::Get()->sticky_keys_controller()));
     keyboard_event_rewriters_->Init();
@@ -1033,7 +1049,7 @@ void ChromeBrowserMainPartsChromeos::PostBrowserStart() {
 
   // In classic ash must occur after ash::ShellPort is initialized. Triggers a
   // fetch of the initial CrosSettings DeviceRebootOnShutdown policy.
-  shutdown_policy_forwarder_ = std::make_unique<ShutdownPolicyForwarder>();
+  shutdown_policy_forwarder_ = base::MakeUnique<ShutdownPolicyForwarder>();
 
   if (base::FeatureList::IsEnabled(features::kUserActivityEventLogging)) {
     user_activity_logging_controller_ =
@@ -1075,6 +1091,10 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   // the network manager.
   if (NetworkChangeNotifierFactoryChromeos::GetInstance())
     NetworkChangeNotifierFactoryChromeos::GetInstance()->Shutdown();
+
+  // Destroy UI related classes before destroying services that they may
+  // depend on.
+  data_promo_notification_.reset();
 
   // Tell DeviceSettingsService to stop talking to session_manager. Do not
   // shutdown DeviceSettingsService yet, it might still be accessed by

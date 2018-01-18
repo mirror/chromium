@@ -246,8 +246,8 @@ TEST_F(ImageDocumentTest, MAYBE(ImageCenteredAtDeviceScaleFactor)) {
 
 class ImageDocumentViewportTest : public SimTest {
  public:
-  ImageDocumentViewportTest() = default;
-  ~ImageDocumentViewportTest() override = default;
+  ImageDocumentViewportTest() {}
+  ~ImageDocumentViewportTest() override {}
 
   void SetUp() override {
     SimTest::SetUp();

@@ -33,7 +33,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/SourceLocation.h"
-#include "bindings/core/v8/string_or_string_sequence.h"
+#include "bindings/modules/v8/string_or_string_sequence.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
@@ -698,7 +698,7 @@ void DOMWebSocket::DidReceiveBinaryMessage(
       scoped_refptr<RawData> raw_data = RawData::Create();
       binary_data->swap(*raw_data->MutableData());
       std::unique_ptr<BlobData> blob_data = BlobData::Create();
-      blob_data->AppendData(std::move(raw_data));
+      blob_data->AppendData(std::move(raw_data), 0, BlobDataItem::kToEndOfFile);
       Blob* blob =
           Blob::Create(BlobDataHandle::Create(std::move(blob_data), size));
       RecordReceiveTypeHistogram(kWebSocketReceiveTypeBlob);

@@ -4,7 +4,6 @@
 
 #include "chrome/browser/ui/webui/settings/chromeos/change_picture_handler.h"
 
-#include <memory>
 #include <utility>
 
 #include "base/base64.h"
@@ -302,7 +301,7 @@ void ChangePictureHandler::HandleSelectImage(const base::ListValue* args) {
     std::unique_ptr<user_manager::UserImage> user_image;
     if (previous_image_format_ == user_manager::UserImage::FORMAT_PNG &&
         previous_image_bytes_) {
-      user_image = std::make_unique<user_manager::UserImage>(
+      user_image = base::MakeUnique<user_manager::UserImage>(
           previous_image_, previous_image_bytes_, previous_image_format_);
       user_image->MarkAsSafe();
     } else {
@@ -382,7 +381,7 @@ void ChangePictureHandler::SetImageFromCamera(
     const gfx::ImageSkia& photo,
     base::RefCountedBytes* photo_bytes) {
   std::unique_ptr<user_manager::UserImage> user_image =
-      std::make_unique<user_manager::UserImage>(
+      base::MakeUnique<user_manager::UserImage>(
           photo, photo_bytes, user_manager::UserImage::FORMAT_PNG);
   user_image->MarkAsSafe();
   ChromeUserManager::Get()

@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/webui/media_router/media_router_web_ui_test.h"
 
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/ui/toolbar/mock_media_router_action_controller.h"
 #include "chrome/browser/ui/toolbar/toolbar_actions_model.h"
 #include "chrome/browser/ui/toolbar/toolbar_actions_model_factory.h"
@@ -28,13 +29,13 @@ class MockMediaRouterUIService : public media_router::MediaRouterUIService {
 
 std::unique_ptr<KeyedService> BuildMockMediaRouterUIService(
     content::BrowserContext* context) {
-  return std::make_unique<MockMediaRouterUIService>(
+  return base::MakeUnique<MockMediaRouterUIService>(
       static_cast<Profile*>(context));
 }
 
 std::unique_ptr<KeyedService> BuildToolbarActionsModel(
     content::BrowserContext* context) {
-  return std::make_unique<ToolbarActionsModel>(static_cast<Profile*>(context),
+  return base::MakeUnique<ToolbarActionsModel>(static_cast<Profile*>(context),
                                                nullptr);
 }
 

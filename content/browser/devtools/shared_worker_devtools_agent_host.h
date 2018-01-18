@@ -8,7 +8,7 @@
 #include "base/macros.h"
 #include "base/unguessable_token.h"
 #include "content/browser/devtools/devtools_agent_host_impl.h"
-#include "third_party/WebKit/public/web/devtools_agent.mojom.h"
+#include "ipc/ipc_listener.h"
 
 namespace content {
 
@@ -16,7 +16,8 @@ class SharedWorkerInstance;
 class SharedWorkerHost;
 class RenderProcessHost;
 
-class SharedWorkerDevToolsAgentHost : public DevToolsAgentHostImpl {
+class SharedWorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
+                                      public IPC::Listener {
  public:
   using List = std::vector<scoped_refptr<SharedWorkerDevToolsAgentHost>>;
 
@@ -39,9 +40,13 @@ class SharedWorkerDevToolsAgentHost : public DevToolsAgentHostImpl {
   bool DispatchProtocolMessage(DevToolsSession* session,
                                const std::string& message) override;
 
+  // IPC::Listener implementation.
+  bool OnMessageReceived(const IPC::Message& msg) override;
+
   bool Matches(SharedWorkerHost* worker_host);
   void WorkerReadyForInspection();
-  void WorkerRestarted(SharedWorkerHost* worker_host);
+  // Returns whether the worker should be paused for reattach.
+  bool WorkerRestarted(SharedWorkerHost* worker_host);
   void WorkerDestroyed();
 
   const base::UnguessableToken& devtools_worker_token() const {
@@ -49,20 +54,16 @@ class SharedWorkerDevToolsAgentHost : public DevToolsAgentHostImpl {
   }
 
  private:
+  friend class SharedWorkerDevToolsManagerTest;
+
   ~SharedWorkerDevToolsAgentHost() override;
   RenderProcessHost* GetProcess();
-  const blink::mojom::DevToolsAgentAssociatedPtr& EnsureAgent();
+  void OnDispatchOnInspectorFrontend(const DevToolsMessageChunk& message);
 
-  enum WorkerState {
-    WORKER_NOT_READY,
-    WORKER_READY,
-    WORKER_TERMINATED,
-  };
-  WorkerState state_;
   SharedWorkerHost* worker_host_;
-  blink::mojom::DevToolsAgentAssociatedPtr agent_ptr_;
   base::UnguessableToken devtools_worker_token_;
   std::unique_ptr<SharedWorkerInstance> instance_;
+  bool waiting_ready_for_reattach_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(SharedWorkerDevToolsAgentHost);
 };

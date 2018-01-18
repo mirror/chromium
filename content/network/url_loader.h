@@ -12,6 +12,7 @@
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
 #include "content/network/upload_progress_tracker.h"
+#include "content/public/common/resource_type.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
@@ -26,12 +27,12 @@ class HttpResponseHeaders;
 
 namespace network {
 class NetToMojoPendingBuffer;
-struct ResourceResponse;
 }
 
 namespace content {
 
 class NetworkContext;
+struct ResourceResponse;
 
 class CONTENT_EXPORT URLLoader : public mojom::URLLoader,
                                  public net::URLRequest::Delegate {
@@ -39,7 +40,7 @@ class CONTENT_EXPORT URLLoader : public mojom::URLLoader,
   URLLoader(NetworkContext* context,
             mojom::URLLoaderRequest url_loader_request,
             int32_t options,
-            const network::ResourceRequest& request,
+            const ResourceRequest& request,
             bool report_raw_headers,
             mojom::URLLoaderClientPtr url_loader_client,
             const net::NetworkTrafficAnnotationTag& traffic_annotation,
@@ -94,7 +95,7 @@ class CONTENT_EXPORT URLLoader : public mojom::URLLoader,
 
   NetworkContext* context_;
   int32_t options_;
-  int resource_type_;
+  ResourceType resource_type_;
   bool is_load_timing_enabled_;
   uint32_t process_id_;
   uint32_t render_frame_id_;
@@ -113,7 +114,7 @@ class CONTENT_EXPORT URLLoader : public mojom::URLLoader,
 
   // Used when deferring sending the data to the client until mime sniffing is
   // finished.
-  scoped_refptr<network::ResourceResponse> response_;
+  scoped_refptr<ResourceResponse> response_;
   mojo::ScopedDataPipeConsumerHandle consumer_handle_;
 
   bool report_raw_headers_;

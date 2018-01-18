@@ -10,17 +10,12 @@ package org.chromium.chrome.browser.contextualsearch;
  */
 public class ContextualSearchContextForTest extends ContextualSearchContext {
     private boolean mDidSelectionChange;
-    private String mDetectedLanguage;
 
     /**
      * @return Whether {@link #onSelectionChanged} was called.
      */
     boolean getDidSelectionChange() {
         return mDidSelectionChange;
-    }
-
-    void setLanguageToDetect(String language) {
-        mDetectedLanguage = language;
     }
 
     @Override
@@ -43,9 +38,4 @@ public class ContextualSearchContextForTest extends ContextualSearchContext {
     @Override
     protected void nativeAdjustSelection(
             long nativeContextualSearchContext, int startAdjust, int endAdjust) {}
-
-    @Override
-    protected String nativeDetectLanguage(long nativeContextualSearchContext) {
-        return mDetectedLanguage;
-    }
 }

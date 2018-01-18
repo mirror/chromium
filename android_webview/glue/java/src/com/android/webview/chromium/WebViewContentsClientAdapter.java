@@ -642,7 +642,6 @@ class WebViewContentsClientAdapter extends AwContentsClient {
         }
     }
 
-    @SuppressLint({"NewApi", "Override"})
     @Override
     public void onSafeBrowsingHit(AwWebResourceRequest request, int threatType,
             final Callback<AwSafeBrowsingResponse> callback) {

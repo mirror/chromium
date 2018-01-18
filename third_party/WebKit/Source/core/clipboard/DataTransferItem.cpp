@@ -120,7 +120,6 @@ void DataTransferItem::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
   for (auto callback : callbacks_)
     visitor->TraceWrappers(callback);
-  ScriptWrappable::TraceWrappers(visitor);
 }
 
 }  // namespace blink

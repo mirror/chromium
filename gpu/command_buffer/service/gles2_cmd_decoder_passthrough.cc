@@ -1275,10 +1275,6 @@ GLES2DecoderPassthroughImpl::GetImageManagerForTest() {
   return group_->image_manager();
 }
 
-ServiceTransferCache* GLES2DecoderPassthroughImpl::GetTransferCacheForTest() {
-  return nullptr;
-}
-
 bool GLES2DecoderPassthroughImpl::HasPendingQueries() const {
   return !pending_queries_.empty();
 }
@@ -2004,6 +2000,15 @@ void GLES2DecoderPassthroughImpl::VerifyServiceTextureObjectsExist() {
       [this](GLuint client_id, scoped_refptr<TexturePassthrough> texture) {
         DCHECK_EQ(GL_TRUE, api()->glIsTextureFn(texture->service_id()));
       });
+}
+
+error::Error GLES2DecoderPassthroughImpl::HandleRasterCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  // TODO(enne): Add CHROMIUM_raster_transport extension support to the
+  // passthrough command buffer.
+  NOTIMPLEMENTED();
+  return error::kNoError;
 }
 
 bool GLES2DecoderPassthroughImpl::IsEmulatedFramebufferBound(

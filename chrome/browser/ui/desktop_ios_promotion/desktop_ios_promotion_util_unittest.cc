@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/i18n/rtl.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/test/scoped_feature_list.h"
@@ -48,7 +49,7 @@ class TestSyncService : public browser_sync::TestProfileSyncService {
 
 std::unique_ptr<KeyedService> BuildFakeSyncService(
     content::BrowserContext* context) {
-  return std::make_unique<TestSyncService>(
+  return base::MakeUnique<TestSyncService>(
       static_cast<TestingProfile*>(context));
 }
 
@@ -72,7 +73,7 @@ class DesktopIOSPromotionUtilTest : public testing::Test {
     TestingBrowserProcess::GetGlobal()->SetLocalState(local_state_.get());
     desktop_ios_promotion::RegisterLocalPrefs(local_state_->registry());
     auto pref_service =
-        std::make_unique<sync_preferences::TestingPrefServiceSyncable>();
+        base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
     RegisterUserProfilePrefs(pref_service->registry());
     TestingProfile::Builder profile_builder;
     profile_builder.SetPrefService(std::move(pref_service));

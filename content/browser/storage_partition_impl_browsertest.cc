@@ -12,6 +12,8 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/network_service.mojom.h"
+#include "content/public/common/resource_response.h"
+#include "content/public/common/resource_response_info.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/test/content_browser_test.h"
@@ -21,7 +23,6 @@
 #include "net/http/http_response_headers.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
-#include "services/network/public/cpp/resource_response_info.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -58,7 +59,7 @@ IN_PROC_BROWSER_TEST_P(StoragePartititionImplBrowsertest, NetworkContext) {
       ->GetNetworkContext()
       ->CreateURLLoaderFactory(mojo::MakeRequest(&loader_factory), 0);
 
-  network::ResourceRequest request;
+  ResourceRequest request;
   TestURLLoaderClient client;
   request.url = embedded_test_server()->GetURL("/set-header?foo: bar");
   request.method = "GET";

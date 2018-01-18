@@ -84,7 +84,6 @@
 #include "platform/text/UnicodeUtilities.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/CString.h"
-#include "public/platform/WebScrollIntoViewParams.h"
 
 #define EDIT_DEBUG 0
 
@@ -106,7 +105,7 @@ FrameSelection::FrameSelection(LocalFrame& frame)
                frame.GetPage()->GetFocusController().FocusedFrame() == frame),
       frame_caret_(new FrameCaret(frame, *selection_editor_)) {}
 
-FrameSelection::~FrameSelection() = default;
+FrameSelection::~FrameSelection() {}
 
 const DisplayItemClient& FrameSelection::CaretDisplayItemClientForTesting()
     const {
@@ -135,6 +134,18 @@ Element* FrameSelection::RootEditableElementOrDocumentElement() const {
   Element* selection_root =
       ComputeVisibleSelectionInDOMTreeDeprecated().RootEditableElement();
   return selection_root ? selection_root : GetDocument().documentElement();
+}
+
+// TODO(yosin): We should move |rootEditableElementOrTreeScopeRootNodeOf()| to
+// "EditingUtilities.cpp"
+ContainerNode* RootEditableElementOrTreeScopeRootNodeOf(
+    const Position& position) {
+  Element* selection_root = RootEditableElementOf(position);
+  if (selection_root)
+    return selection_root;
+
+  Node* const node = position.ComputeContainerNode();
+  return node ? &node->GetTreeScope().RootNode() : nullptr;
 }
 
 VisibleSelection FrameSelection::ComputeVisibleSelectionInDOMTreeDeprecated()
@@ -972,11 +983,9 @@ void FrameSelection::RevealSelection(const ScrollAlignment& alignment,
   // This function is needed to make sure that ComputeRectToScroll below has the
   // sticky offset info available before the computation.
   GetDocument().EnsurePaintLocationDataValidForNode(start.AnchorNode());
-  LayoutRect selection_rect =
-      LayoutRect(ComputeRectToScroll(reveal_extent_option));
-  if (selection_rect == LayoutRect() ||
-      !start.AnchorNode()->GetLayoutObject()->ScrollRectToVisible(
-          selection_rect, WebScrollIntoViewParams(alignment, alignment)))
+  if (!start.AnchorNode()->GetLayoutObject()->ScrollRectToVisible(
+          LayoutRect(ComputeRectToScroll(reveal_extent_option)), alignment,
+          alignment))
     return;
 
   UpdateAppearance();

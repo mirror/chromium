@@ -32,13 +32,13 @@ class RendererURLLoaderThrottle : public content::URLLoaderThrottle,
  private:
   // content::URLLoaderThrottle implementation.
   void DetachFromCurrentSequence() override;
-  void WillStartRequest(network::ResourceRequest* request,
+  void WillStartRequest(content::ResourceRequest* request,
                         bool* defer) override;
   void WillRedirectRequest(const net::RedirectInfo& redirect_info,
-                           const network::ResourceResponseHead& response_head,
+                           const content::ResourceResponseHead& response_head,
                            bool* defer) override;
   void WillProcessResponse(const GURL& response_url,
-                           const network::ResourceResponseHead& response_head,
+                           const content::ResourceResponseHead& response_head,
                            bool* defer) override;
 
   // mojom::UrlCheckNotifier implementation.

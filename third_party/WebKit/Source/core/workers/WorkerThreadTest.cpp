@@ -67,7 +67,7 @@ void WaitForSignalTask(WorkerThread* worker_thread,
 
 class WorkerThreadTest : public ::testing::Test {
  public:
-  WorkerThreadTest() = default;
+  WorkerThreadTest() {}
 
   void SetUp() override {
     reporting_proxy_ = std::make_unique<MockWorkerReportingProxy>();

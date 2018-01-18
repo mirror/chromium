@@ -270,12 +270,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
     return curr;
   }
 
-  LayoutPoint Location() const {
-#if DCHECK_IS_ON()
-    DCHECK(!needs_position_update_);
-#endif
-    return LocationInternal();
-  }
+  LayoutPoint Location() const;
 
   // FIXME: size() should DCHECK(!needs_position_update_) as well, but that
   // fails in some tests, for example, fast/repaint/clipped-relative.html.
@@ -291,7 +286,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
 
   // For LayoutTreeAsText
   LayoutRect RectIgnoringNeedsPositionUpdate() const {
-    return LayoutRect(LocationInternal(), size_);
+    return LayoutRect(Location(), size_);
   }
 #if DCHECK_IS_ON()
   bool NeedsPositionUpdate() const { return needs_position_update_; }
@@ -892,6 +887,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
       PaintLayerFragments&,
       const PaintLayer* root_layer,
       const LayoutRect& dirty_rect,
+      ClipRectsCacheSlot,
       OverlayScrollbarClipBehavior = kIgnorePlatformOverlayScrollbarSize,
       ShouldRespectOverflowClipType = kRespectOverflowClip,
       const LayoutPoint* offset_from_root = nullptr,
@@ -901,6 +897,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
       PaintLayerFragments&,
       const PaintLayer* root_layer,
       const LayoutRect& dirty_rect,
+      ClipRectsCacheSlot,
       OverlayScrollbarClipBehavior = kIgnorePlatformOverlayScrollbarSize,
       ShouldRespectOverflowClipType = kRespectOverflowClip,
       const LayoutPoint* offset_from_root = nullptr,
@@ -1118,6 +1115,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
       const HitTestLocation&,
       const HitTestingTransformState*,
       double* z_offset,
+      ClipRectsCacheSlot,
       ShouldRespectOverflowClipType);
   bool HitTestClippedOutByClipPath(PaintLayer* root_layer,
                                    const HitTestLocation&) const;
@@ -1176,8 +1174,6 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
       CalculateBoundsOptions) const;
 
   FloatRect FilterReferenceBox(const FilterOperations&, float zoom) const;
-
-  LayoutPoint LocationInternal() const;
 
   // Self-painting layer is an optimization where we avoid the heavy Layer
   // painting machinery for a Layer allocated only to handle the overflow clip

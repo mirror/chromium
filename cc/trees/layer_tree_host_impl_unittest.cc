@@ -662,34 +662,6 @@ class LayerTreeHostImplTest : public testing::Test,
     EXPECT_EQ(kTouchActionPanX, touch_action);
   }
 
-  LayerImpl* CreateLayerForSnapping() {
-    LayerImpl* scroll_layer = SetupScrollAndContentsLayers(gfx::Size(200, 200));
-    host_impl_->SetViewportSize(gfx::Size(100, 100));
-
-    gfx::Size overflow_size(400, 400);
-    EXPECT_EQ(1u, scroll_layer->test_properties()->children.size());
-    LayerImpl* overflow = scroll_layer->test_properties()->children[0];
-    overflow->SetBounds(overflow_size);
-    overflow->SetScrollable(gfx::Size(100, 100));
-    overflow->SetElementId(LayerIdToElementIdForTesting(overflow->id()));
-    overflow->layer_tree_impl()
-        ->property_trees()
-        ->scroll_tree.UpdateScrollOffsetBaseForTesting(overflow->element_id(),
-                                                       gfx::ScrollOffset());
-    overflow->SetPosition(gfx::PointF(0, 0));
-
-    SnapContainerData container_data(
-        ScrollSnapType(false, SnapAxis::kBoth, SnapStrictness::kMandatory),
-        gfx::ScrollOffset(300, 300));
-    SnapAreaData area_data(SnapAxis::kBoth, gfx::ScrollOffset(50, 50), false);
-    container_data.AddSnapAreaData(area_data);
-    overflow->test_properties()->snap_container_data.emplace(container_data);
-    host_impl_->active_tree()->BuildPropertyTreesForTesting();
-    DrawFrame();
-
-    return overflow;
-  }
-
   void pinch_zoom_pan_viewport_forces_commit_redraw(float device_scale_factor);
   void pinch_zoom_pan_viewport_test(float device_scale_factor);
   void pinch_zoom_pan_viewport_and_scroll_test(float device_scale_factor);
@@ -1529,90 +1501,6 @@ TEST_F(LayerTreeHostImplTest, ScrollByReturnsCorrectValue) {
       host_impl_
           ->ScrollBy(UpdateState(gfx::Point(), gfx::Vector2d(5000, 5000)).get())
           .did_scroll);
-}
-
-TEST_F(LayerTreeHostImplTest, ScrollSnapOnX) {
-  LayerImpl* overflow = CreateLayerForSnapping();
-
-  gfx::Point scroll_position(10, 10);
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  gfx::Vector2dF x_delta(20, 0);
-  host_impl_->ScrollBy(UpdateState(scroll_position, x_delta).get());
-
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
-  host_impl_->ScrollEnd(EndState().get(), true);
-  base::TimeTicks start_time =
-      base::TimeTicks() + base::TimeDelta::FromMilliseconds(100);
-  BeginImplFrameAndAnimate(begin_frame_args, start_time);
-  BeginImplFrameAndAnimate(begin_frame_args,
-                           start_time + base::TimeDelta::FromMilliseconds(50));
-  BeginImplFrameAndAnimate(
-      begin_frame_args, start_time + base::TimeDelta::FromMilliseconds(1000));
-
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(50, 0), overflow->CurrentScrollOffset());
-}
-
-TEST_F(LayerTreeHostImplTest, ScrollSnapOnY) {
-  LayerImpl* overflow = CreateLayerForSnapping();
-
-  gfx::Point scroll_position(10, 10);
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  gfx::Vector2dF y_delta(0, 20);
-  host_impl_->ScrollBy(UpdateState(scroll_position, y_delta).get());
-
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
-  host_impl_->ScrollEnd(EndState().get(), true);
-  base::TimeTicks start_time =
-      base::TimeTicks() + base::TimeDelta::FromMilliseconds(100);
-  BeginImplFrameAndAnimate(begin_frame_args, start_time);
-  BeginImplFrameAndAnimate(begin_frame_args,
-                           start_time + base::TimeDelta::FromMilliseconds(50));
-  BeginImplFrameAndAnimate(
-      begin_frame_args, start_time + base::TimeDelta::FromMilliseconds(1000));
-
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 50), overflow->CurrentScrollOffset());
-}
-
-TEST_F(LayerTreeHostImplTest, ScrollSnapOnBoth) {
-  LayerImpl* overflow = CreateLayerForSnapping();
-
-  gfx::Point scroll_position(10, 10);
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  gfx::Vector2dF delta(20, 20);
-  host_impl_->ScrollBy(UpdateState(scroll_position, delta).get());
-
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
-  host_impl_->ScrollEnd(EndState().get(), true);
-  base::TimeTicks start_time =
-      base::TimeTicks() + base::TimeDelta::FromMilliseconds(100);
-  BeginImplFrameAndAnimate(begin_frame_args, start_time);
-  BeginImplFrameAndAnimate(begin_frame_args,
-                           start_time + base::TimeDelta::FromMilliseconds(50));
-  BeginImplFrameAndAnimate(
-      begin_frame_args, start_time + base::TimeDelta::FromMilliseconds(1000));
-
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(50, 50), overflow->CurrentScrollOffset());
 }
 
 TEST_F(LayerTreeHostImplTest, OverscrollBehaviorPreventsPropagation) {
@@ -4273,7 +4161,7 @@ TEST_F(LayerTreeHostImplTest, ActivationDependenciesInMetadata) {
     child->SetPosition(gfx::PointF(25.f * i, 0.f));
     child->SetBounds(gfx::Size(1, 1));
     child->SetDrawsContent(true);
-    child->SetPrimarySurfaceId(primary_surfaces[i], base::nullopt);
+    child->SetPrimarySurfaceId(primary_surfaces[i]);
     child->SetFallbackSurfaceId(fallback_surfaces[i]);
     root->test_properties()->AddChild(std::move(child));
   }
@@ -8978,20 +8866,6 @@ TEST_F(LayerTreeHostImplTest, HasTransparentBackground) {
 
   // Verify no quads are drawn when transparent background is set.
   host_impl_->active_tree()->set_background_color(SK_ColorTRANSPARENT);
-  host_impl_->SetFullViewportDamage();
-  EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
-  {
-    const auto& root_pass = frame.render_passes.back();
-    ASSERT_EQ(0u, root_pass->quad_list.size());
-  }
-  host_impl_->DrawLayers(&frame);
-  host_impl_->DidDrawAllLayers(frame);
-
-  // Cause damage so we would draw something if possible.
-  host_impl_->SetFullViewportDamage();
-
-  // Verify no quads are drawn when semi-transparent background is set.
-  host_impl_->active_tree()->set_background_color(SkColorSetARGB(5, 255, 0, 0));
   host_impl_->SetFullViewportDamage();
   EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
   {

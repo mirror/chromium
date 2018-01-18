@@ -6,8 +6,6 @@
 
 #include <stddef.h>
 
-#include <memory>
-
 #include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -395,7 +393,7 @@ void ShowBrowserSignin(Browser* browser,
   // a browser window from the original profile. The user cannot sign in
   // from an incognito window.
   auto displayer =
-      std::make_unique<ScopedTabbedBrowserDisplayer>(original_profile);
+      base::MakeUnique<ScopedTabbedBrowserDisplayer>(original_profile);
   browser = displayer->browser();
 
 #if defined(OS_CHROMEOS)

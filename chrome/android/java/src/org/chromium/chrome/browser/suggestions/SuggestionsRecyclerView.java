@@ -132,18 +132,10 @@ public class SuggestionsRecyclerView extends RecyclerView {
         mTouchEnabled = enabled;
     }
 
-    /**
-     * @return Whether the {@link SuggestionsRecyclerView} and its children should react to touch
-     * events.
-     */
-    protected boolean getTouchEnabled() {
-        return mTouchEnabled;
-    }
-
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         mGestureDetector.onTouchEvent(ev);
-        if (!getTouchEnabled()) return true;
+        if (!mTouchEnabled) return true;
         return super.onInterceptTouchEvent(ev);
     }
 
@@ -167,7 +159,7 @@ public class SuggestionsRecyclerView extends RecyclerView {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        if (!getTouchEnabled()) return false;
+        if (!mTouchEnabled) return false;
 
         // Action down would already have been handled in onInterceptTouchEvent
         if (ev.getActionMasked() != MotionEvent.ACTION_DOWN) {

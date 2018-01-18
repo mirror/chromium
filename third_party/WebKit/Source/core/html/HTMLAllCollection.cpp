@@ -24,8 +24,10 @@
  */
 
 #include "core/html/HTMLAllCollection.h"
-#include "bindings/core/v8/html_collection_or_element.h"
+
+#include "bindings/core/v8/node_list_or_element.h"
 #include "core/dom/Element.h"
+#include "core/dom/StaticNodeList.h"
 
 namespace blink {
 
@@ -38,7 +40,7 @@ HTMLAllCollection* HTMLAllCollection::Create(ContainerNode& node,
 HTMLAllCollection::HTMLAllCollection(ContainerNode& node)
     : HTMLCollection(node, kDocAll, kDoesNotOverrideItemAfter) {}
 
-HTMLAllCollection::~HTMLAllCollection() = default;
+HTMLAllCollection::~HTMLAllCollection() {}
 
 Element* HTMLAllCollection::NamedItemWithIndex(const AtomicString& name,
                                                unsigned index) const {
@@ -60,18 +62,21 @@ Element* HTMLAllCollection::NamedItemWithIndex(const AtomicString& name,
 }
 
 void HTMLAllCollection::namedGetter(const AtomicString& name,
-                                    HTMLCollectionOrElement& return_value) {
-  HTMLCollection* items = GetDocument().DocumentAllNamedItems(name);
+                                    NodeListOrElement& return_value) {
+  HeapVector<Member<Element>> named_items;
+  NamedItems(name, named_items);
 
-  if (!items->length())
+  if (!named_items.size())
     return;
 
-  if (items->length() == 1) {
-    return_value.SetElement(items->item(0));
+  if (named_items.size() == 1) {
+    return_value.SetElement(named_items.at(0));
     return;
   }
 
-  return_value.SetHTMLCollection(items);
+  // FIXME: HTML5 specification says this should be a HTMLCollection.
+  // http://www.whatwg.org/specs/web-apps/current-work/multipage/common-dom-interfaces.html#htmlallcollection
+  return_value.SetNodeList(StaticElementList::Adopt(named_items));
 }
 
 }  // namespace blink

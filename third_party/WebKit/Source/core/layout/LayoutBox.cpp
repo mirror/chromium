@@ -74,7 +74,7 @@
 #include "platform/geometry/FloatRoundedRect.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebRect.h"
-#include "public/platform/WebScrollIntoViewParams.h"
+#include "public/platform/WebRemoteScrollProperties.h"
 
 namespace blink {
 
@@ -658,9 +658,13 @@ static bool IsDisallowedAutoscroll(HTMLFrameOwnerElement* owner_element,
 
 void LayoutBox::ScrollRectToVisibleRecursive(
     const LayoutRect& rect,
-    const WebScrollIntoViewParams& params) {
-  DCHECK(params.GetScrollType() == kProgrammaticScroll ||
-         params.GetScrollType() == kUserScroll);
+    const ScrollAlignment& align_x,
+    const ScrollAlignment& align_y,
+    ScrollType scroll_type,
+    bool make_visible_in_visual_viewport,
+    ScrollBehavior scroll_behavior,
+    bool is_for_scroll_sequence) {
+  DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
   // Presumably the same issue as in setScrollTop. See crbug.com/343132.
   DisableCompositingQueryAsserts disabler;
 
@@ -680,18 +684,24 @@ void LayoutBox::ScrollRectToVisibleRecursive(
         !ContainingBlock()->Style()->LineClamp().IsNone();
   }
 
+  bool is_smooth = scroll_behavior == kScrollBehaviorSmooth ||
+                   (scroll_behavior == kScrollBehaviorAuto &&
+                    Style()->GetScrollBehavior() == kScrollBehaviorSmooth);
+
   if (!IsLayoutView() && HasOverflowClip() && !restricted_by_line_clamp) {
     // Don't scroll to reveal an overflow layer that is restricted by the
     // -webkit-line-clamp property. This will prevent us from revealing text
     // hidden by the slider in Safari RSS.
     // TODO(eae): We probably don't need this any more as we don't share any
     //            code with the Safari RSS reeder.
-    new_rect = GetScrollableArea()->ScrollIntoView(rect_to_scroll, params);
+    new_rect = GetScrollableArea()->ScrollIntoView(
+        rect_to_scroll, align_x, align_y, is_smooth, scroll_type,
+        is_for_scroll_sequence);
   } else if (!parent_box && CanBeProgramaticallyScrolled()) {
     if (LocalFrameView* frame_view = GetFrameView()) {
       HTMLFrameOwnerElement* owner_element = GetDocument().LocalOwner();
       if (!IsDisallowedAutoscroll(owner_element, frame_view)) {
-        if (params.make_visible_in_visual_viewport) {
+        if (make_visible_in_visual_viewport) {
           // RootFrameViewport::ScrollIntoView expects a rect in layout
           // viewport content coordinates.
           if (IsLayoutView() && GetFrame()->IsMainFrame() &&
@@ -700,13 +710,15 @@ void LayoutBox::ScrollRectToVisibleRecursive(
                 LayoutSize(GetScrollableArea()->GetScrollOffset()));
           }
           rect_to_scroll = frame_view->GetScrollableArea()->ScrollIntoView(
-              rect_to_scroll, params);
+              rect_to_scroll, align_x, align_y, is_smooth, scroll_type,
+              is_for_scroll_sequence);
         } else {
           rect_to_scroll =
               frame_view->LayoutViewportScrollableArea()->ScrollIntoView(
-                  rect_to_scroll, params);
+                  rect_to_scroll, align_x, align_y, is_smooth, scroll_type,
+                  is_for_scroll_sequence);
         }
-        if (params.is_for_scroll_sequence)
+        if (is_for_scroll_sequence)
           rect_to_scroll.Move(PendingOffsetToScroll());
         if (owner_element && owner_element->GetLayoutObject()) {
           if (frame_view->SafeToPropagateScrollToParent()) {
@@ -740,11 +752,17 @@ void LayoutBox::ScrollRectToVisibleRecursive(
     parent_box = EnclosingScrollableBox();
 
   if (parent_box) {
-    parent_box->ScrollRectToVisibleRecursive(new_rect, params);
+    parent_box->ScrollRectToVisibleRecursive(
+        new_rect, align_x, align_y, scroll_type,
+        make_visible_in_visual_viewport, scroll_behavior,
+        is_for_scroll_sequence);
   } else if (GetFrame()->IsLocalRoot() && !GetFrame()->IsMainFrame()) {
     LocalFrameView* frame_view = GetFrameView();
     if (frame_view && frame_view->SafeToPropagateScrollToParent()) {
-      frame_view->ScrollRectToVisibleInRemoteParent(new_rect, params);
+      frame_view->ScrollRectToVisibleInRemoteParent(
+          new_rect, align_x, align_y, scroll_type,
+          make_visible_in_visual_viewport, scroll_behavior,
+          is_for_scroll_sequence);
     }
   }
 }
@@ -1075,9 +1093,8 @@ void LayoutBox::Autoscroll(const IntPoint& position_in_root_frame) {
       frame_view->RootFrameToContents(position_in_root_frame);
   ScrollRectToVisibleRecursive(
       LayoutRect(position_in_content, LayoutSize(1, 1)),
-      WebScrollIntoViewParams(ScrollAlignment::kAlignToEdgeIfNeeded,
-                              ScrollAlignment::kAlignToEdgeIfNeeded,
-                              kUserScroll));
+      ScrollAlignment::kAlignToEdgeIfNeeded,
+      ScrollAlignment::kAlignToEdgeIfNeeded, kUserScroll);
 }
 
 // There are two kinds of layoutObject that can autoscroll.

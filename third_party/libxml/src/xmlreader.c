@@ -491,11 +491,6 @@ xmlTextReaderFreeNode(xmlTextReaderPtr reader, xmlNodePtr cur) {
     }
 }
 
-static void
-xmlTextReaderFreeIDTableEntry(void *id, const xmlChar *name ATTRIBUTE_UNUSED) {
-    xmlFreeID((xmlIDPtr) id);
-}
-
 /**
  * xmlTextReaderFreeIDTable:
  * @table:  An id table
@@ -504,7 +499,7 @@ xmlTextReaderFreeIDTableEntry(void *id, const xmlChar *name ATTRIBUTE_UNUSED) {
  */
 static void
 xmlTextReaderFreeIDTable(xmlIDTablePtr table) {
-    xmlHashFree(table, xmlTextReaderFreeIDTableEntry);
+    xmlHashFree(table, (xmlHashDeallocator) xmlFreeID);
 }
 
 /**

@@ -5218,12 +5218,6 @@
                             "type": "number"
                         },
                         {
-                            "name": "noDisplayUpdates",
-                            "description": "Whether updates should not be committed and drawn onto the display. False by default. If\ntrue, only side effects of the BeginFrame will be run, such as layout and animations, but\nany visual updates may not be visible on the display or in screenshots.",
-                            "optional": true,
-                            "type": "boolean"
-                        },
-                        {
                             "name": "screenshot",
                             "description": "If set, a screenshot of the frame will be captured and returned in the response. Otherwise,\nno screenshot will be captured.",
                             "optional": true,
@@ -7123,12 +7117,6 @@
                             "type": "string"
                         },
                         {
-                            "name": "hasPostData",
-                            "description": "True when the request has POST data. Note that postData might still be omitted when this flag is true when the data is too long.",
-                            "optional": true,
-                            "type": "boolean"
-                        },
-                        {
                             "name": "mixedContentType",
                             "description": "The mixed content type of the request.",
                             "optional": true,
@@ -7944,12 +7932,6 @@
                             "experimental": true,
                             "optional": true,
                             "type": "integer"
-                        },
-                        {
-                            "name": "maxPostDataSize",
-                            "description": "Longest post body size (in bytes) that would be included in requestWillBeSent notification",
-                            "optional": true,
-                            "type": "integer"
                         }
                     ]
                 },
@@ -8033,24 +8015,6 @@
                             "name": "base64Encoded",
                             "description": "True, if content was sent as base64.",
                             "type": "boolean"
-                        }
-                    ]
-                },
-                {
-                    "name": "getRequestPostData",
-                    "description": "Returns post data sent with the request. Returns an error when no data was sent with the request.",
-                    "parameters": [
-                        {
-                            "name": "requestId",
-                            "description": "Identifier of the network request to get content for.",
-                            "$ref": "RequestId"
-                        }
-                    ],
-                    "returns": [
-                        {
-                            "name": "postData",
-                            "description": "Base64-encoded request body.",
-                            "type": "string"
                         }
                     ]
                 },

@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/location.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
@@ -358,7 +359,7 @@ void ExtensionActionRunner::ShowBlockedActionBubble(
           base::BindOnce(callback, *default_bubble_close_action_for_testing_));
     } else {
       toolbar_actions_bar->ShowToolbarActionBubble(
-          std::make_unique<BlockedActionBubbleDelegate>(callback,
+          base::MakeUnique<BlockedActionBubbleDelegate>(callback,
                                                         extension->id()));
     }
   }

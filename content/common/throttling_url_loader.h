@@ -13,7 +13,6 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/common/content_export.h"
 #include "content/common/possibly_associated_interface_ptr.h"
-#include "content/public/common/shared_url_loader_factory.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/common/url_loader_throttle.h"
@@ -25,22 +24,26 @@ class SingleThreadTaskRunner;
 
 namespace content {
 
-// ThrottlingURLLoader is a wrapper around the mojom::URLLoader interfaces. It
-// applies a list of URLLoaderThrottle instances which could defer, resume or
-// cancel the URL loading. If the Mojo connection fails during the request it is
-// canceled with net::ERR_ABORTED.
+namespace mojom {
+class URLLoaderFactory;
+}
+
+// ThrottlingURLLoader is a wrapper around the mojom::URLLoader[Factory]
+// interfaces. It applies a list of URLLoaderThrottle instances which could
+// defer, resume or cancel the URL loading. If the Mojo connection fails during
+// the request it is canceled with net::ERR_FAILED.
 class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
  public:
-  // |client| must stay alive during the lifetime of the returned object. Please
-  // note that the request may not start immediately since it could be deferred
-  // by throttles.
+  // |factory| and |client| must stay alive during the lifetime of the returned
+  // object. Please note that the request may not start immediately since it
+  // could be deferred by throttles.
   static std::unique_ptr<ThrottlingURLLoader> CreateLoaderAndStart(
-      scoped_refptr<SharedURLLoaderFactory> factory,
+      mojom::URLLoaderFactory* factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
       int32_t routing_id,
       int32_t request_id,
       uint32_t options,
-      network::ResourceRequest* url_request,
+      ResourceRequest* url_request,
       mojom::URLLoaderClient* client,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
@@ -50,13 +53,13 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
                               mojom::URLLoaderClientPtr client)>;
 
   // Similar to the method above, but uses a |start_loader_callback| instead of
-  // a SharedURLLoaderFactory to start the loader. The callback must be safe
+  // a mojom::URLLoaderFactory to start the loader. The callback must be safe
   // to call during the lifetime of the returned object.
   static std::unique_ptr<ThrottlingURLLoader> CreateLoaderAndStart(
       StartLoaderCallback start_loader_callback,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
       int32_t routing_id,
-      network::ResourceRequest* url_request,
+      ResourceRequest* url_request,
       mojom::URLLoaderClient* client,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
@@ -89,20 +92,20 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
   // Either of the two sets of arguments below is valid but not both:
   // - |factory|, |routing_id|, |request_id| and |options|;
   // - |start_loader_callback|.
-  void Start(scoped_refptr<SharedURLLoaderFactory> factory,
+  void Start(mojom::URLLoaderFactory* factory,
              int32_t routing_id,
              int32_t request_id,
              uint32_t options,
              StartLoaderCallback start_loader_callback,
-             network::ResourceRequest* url_request,
+             ResourceRequest* url_request,
              scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
-  void StartNow(SharedURLLoaderFactory* factory,
+  void StartNow(mojom::URLLoaderFactory* factory,
                 int32_t routing_id,
                 int32_t request_id,
                 uint32_t options,
                 StartLoaderCallback start_loader_callback,
-                network::ResourceRequest* url_request,
+                ResourceRequest* url_request,
                 scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   // Processes the result of a URLLoaderThrottle call, adding the throttle to
@@ -119,12 +122,11 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
   void StopDeferringForThrottle(URLLoaderThrottle* throttle);
 
   // mojom::URLLoaderClient implementation:
-  void OnReceiveResponse(const network::ResourceResponseHead& response_head,
+  void OnReceiveResponse(const ResourceResponseHead& response_head,
                          const base::Optional<net::SSLInfo>& ssl_info,
                          mojom::DownloadedTempFilePtr downloaded_file) override;
-  void OnReceiveRedirect(
-      const net::RedirectInfo& redirect_info,
-      const network::ResourceResponseHead& response_head) override;
+  void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
+                         const ResourceResponseHead& response_head) override;
   void OnDataDownloaded(int64_t data_len, int64_t encoded_data_len) override;
   void OnUploadProgress(int64_t current_position,
                         int64_t total_size,
@@ -181,23 +183,23 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
   mojom::URLLoaderPtr url_loader_;
 
   struct StartInfo {
-    StartInfo(scoped_refptr<SharedURLLoaderFactory> in_url_loader_factory,
+    StartInfo(mojom::URLLoaderFactory* in_url_loader_factory,
               int32_t in_routing_id,
               int32_t in_request_id,
               uint32_t in_options,
               StartLoaderCallback in_start_loader_callback,
-              network::ResourceRequest* in_url_request,
+              ResourceRequest* in_url_request,
               scoped_refptr<base::SingleThreadTaskRunner> in_task_runner);
     ~StartInfo();
 
-    scoped_refptr<SharedURLLoaderFactory> url_loader_factory;
+    mojom::URLLoaderFactory* url_loader_factory;
     int32_t routing_id;
     int32_t request_id;
     uint32_t options;
 
     StartLoaderCallback start_loader_callback;
 
-    network::ResourceRequest url_request;
+    ResourceRequest url_request;
     // |task_runner_| is used to set up |client_binding_|.
     scoped_refptr<base::SingleThreadTaskRunner> task_runner;
   };
@@ -205,12 +207,12 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
   std::unique_ptr<StartInfo> start_info_;
 
   struct ResponseInfo {
-    ResponseInfo(const network::ResourceResponseHead& in_response_head,
+    ResponseInfo(const ResourceResponseHead& in_response_head,
                  const base::Optional<net::SSLInfo>& in_ssl_info,
                  mojom::DownloadedTempFilePtr in_downloaded_file);
     ~ResponseInfo();
 
-    network::ResourceResponseHead response_head;
+    ResourceResponseHead response_head;
     base::Optional<net::SSLInfo> ssl_info;
     mojom::DownloadedTempFilePtr downloaded_file;
   };
@@ -219,11 +221,11 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
 
   struct RedirectInfo {
     RedirectInfo(const net::RedirectInfo& in_redirect_info,
-                 const network::ResourceResponseHead& in_response_head);
+                 const ResourceResponseHead& in_response_head);
     ~RedirectInfo();
 
     net::RedirectInfo redirect_info;
-    network::ResourceResponseHead response_head;
+    ResourceResponseHead response_head;
   };
   // Set if redirect is deferred.
   std::unique_ptr<RedirectInfo> redirect_info_;

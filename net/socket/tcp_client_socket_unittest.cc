@@ -197,12 +197,14 @@ TEST(TCPClientSocketTest, Tag) {
   old_traffic = GetTaggedBytes(tag_val2);
   SocketTag tag2(getuid(), tag_val2);
   s.ApplySocketTag(tag2);
-  const char kRequest1[] = "GET / HTTP/1.0";
-  scoped_refptr<IOBuffer> write_buffer1(new StringIOBuffer(kRequest1));
+  const char kRequest1[] = "GET /";
+  scoped_refptr<IOBufferWithSize> write_buffer1(
+      new IOBufferWithSize(strlen(kRequest1)));
+  memmove(write_buffer1->data(), kRequest1, strlen(kRequest1));
   TestCompletionCallback write_callback1;
   EXPECT_EQ(s.Write(write_buffer1.get(), strlen(kRequest1),
                     write_callback1.callback(), TRAFFIC_ANNOTATION_FOR_TESTS),
-            static_cast<int>(strlen(kRequest1)));
+            (int)strlen(kRequest1));
   EXPECT_GT(GetTaggedBytes(tag_val2), old_traffic);
 
   // Verify socket can be retagged with a new value and the current process's
@@ -216,7 +218,7 @@ TEST(TCPClientSocketTest, Tag) {
   TestCompletionCallback write_callback2;
   EXPECT_EQ(s.Write(write_buffer2.get(), strlen(kRequest2),
                     write_callback2.callback(), TRAFFIC_ANNOTATION_FOR_TESTS),
-            static_cast<int>(strlen(kRequest2)));
+            (int)strlen(kRequest2));
   EXPECT_GT(GetTaggedBytes(tag_val1), old_traffic);
 
   s.Disconnect();
@@ -243,12 +245,14 @@ TEST(TCPClientSocketTest, TagAfterConnect) {
   uint64_t old_traffic = GetTaggedBytes(tag_val2);
   SocketTag tag2(getuid(), tag_val2);
   s.ApplySocketTag(tag2);
-  const char kRequest1[] = "GET / HTTP/1.0";
-  scoped_refptr<IOBuffer> write_buffer1(new StringIOBuffer(kRequest1));
+  const char kRequest1[] = "GET /";
+  scoped_refptr<IOBufferWithSize> write_buffer1(
+      new IOBufferWithSize(strlen(kRequest1)));
+  memmove(write_buffer1->data(), kRequest1, strlen(kRequest1));
   TestCompletionCallback write_callback1;
   EXPECT_EQ(s.Write(write_buffer1.get(), strlen(kRequest1),
                     write_callback1.callback(), TRAFFIC_ANNOTATION_FOR_TESTS),
-            static_cast<int>(strlen(kRequest1)));
+            (int)strlen(kRequest1));
   EXPECT_GT(GetTaggedBytes(tag_val2), old_traffic);
 
   // Verify socket can be retagged with a new value and the current process's
@@ -258,11 +262,13 @@ TEST(TCPClientSocketTest, TagAfterConnect) {
   SocketTag tag1(SocketTag::UNSET_UID, tag_val1);
   s.ApplySocketTag(tag1);
   const char kRequest2[] = "\n\n";
-  scoped_refptr<IOBuffer> write_buffer2(new StringIOBuffer(kRequest2));
+  scoped_refptr<IOBufferWithSize> write_buffer2(
+      new IOBufferWithSize(strlen(kRequest2)));
+  memmove(write_buffer2->data(), kRequest2, strlen(kRequest2));
   TestCompletionCallback write_callback2;
   EXPECT_EQ(s.Write(write_buffer2.get(), strlen(kRequest2),
                     write_callback2.callback(), TRAFFIC_ANNOTATION_FOR_TESTS),
-            static_cast<int>(strlen(kRequest2)));
+            (int)strlen(kRequest2));
   EXPECT_GT(GetTaggedBytes(tag_val1), old_traffic);
 
   s.Disconnect();

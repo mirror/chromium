@@ -17,6 +17,7 @@
 #include "base/feature_list.h"
 #include "base/hash.h"
 #include "base/location.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
@@ -861,7 +862,7 @@ InputMethodManagerImpl::InputMethodManagerImpl(
       is_ime_menu_activated_(false),
       features_enabled_state_(InputMethodManager::FEATURE_ALL) {
   if (IsRunningAsSystemCompositor()) {
-    keyboard_ = std::make_unique<ImeKeyboardMus>(
+    keyboard_ = base::MakeUnique<ImeKeyboardMus>(
         g_browser_process->platform_part()->GetInputDeviceControllerClient());
   } else {
     keyboard_.reset(new FakeImeKeyboard());

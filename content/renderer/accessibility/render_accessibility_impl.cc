@@ -244,9 +244,8 @@ void RenderAccessibilityImpl::DisableAccessibility() {
   settings->SetAccessibilityEnabled(false);
 }
 
-void RenderAccessibilityImpl::HandleAXEvent(const blink::WebAXObject& obj,
-                                            ui::AXEvent event,
-                                            int action_request_id) {
+void RenderAccessibilityImpl::HandleAXEvent(
+    const blink::WebAXObject& obj, ui::AXEvent event) {
   const WebDocument& document = GetMainDocument();
   if (document.IsNull())
     return;
@@ -302,15 +301,12 @@ void RenderAccessibilityImpl::HandleAXEvent(const blink::WebAXObject& obj,
   acc_event.event_type = event;
 
   if (blink::WebUserGestureIndicator::IsProcessingUserGesture(
-          render_frame_->GetWebFrame())) {
+          render_frame_->GetWebFrame()))
     acc_event.event_from = ui::AX_EVENT_FROM_USER;
-  } else if (during_action_) {
+  else if (during_action_)
     acc_event.event_from = ui::AX_EVENT_FROM_ACTION;
-  } else {
+  else
     acc_event.event_from = ui::AX_EVENT_FROM_PAGE;
-  }
-
-  acc_event.action_request_id = action_request_id;
 
   // Discard duplicate accessibility events.
   for (uint32_t i = 0; i < pending_events_.size(); ++i) {
@@ -446,7 +442,6 @@ void RenderAccessibilityImpl::SendPendingAccessibilityEvents() {
     event_msg.event_type = event.event_type;
     event_msg.id = event.id;
     event_msg.event_from = event.event_from;
-    event_msg.action_request_id = event.action_request_id;
     if (!serializer_.SerializeChanges(obj, &event_msg.update)) {
       VLOG(1) << "Failed to serialize one accessibility event.";
       continue;
@@ -570,8 +565,7 @@ void RenderAccessibilityImpl::OnPerformAction(
       break;
     case ui::AX_ACTION_HIT_TEST:
       DCHECK(data.hit_test_event_to_fire != ui::AX_EVENT_NONE);
-      OnHitTest(data.target_point, data.hit_test_event_to_fire,
-                data.request_id);
+      OnHitTest(data.target_point, data.hit_test_event_to_fire);
       break;
     case ui::AX_ACTION_INCREMENT:
       target.Increment();
@@ -638,8 +632,7 @@ void RenderAccessibilityImpl::OnFatalError() {
 }
 
 void RenderAccessibilityImpl::OnHitTest(const gfx::Point& point,
-                                        ui::AXEvent event_to_fire,
-                                        int action_request_id) {
+                                        ui::AXEvent event_to_fire) {
   const WebDocument& document = GetMainDocument();
   if (document.IsNull())
     return;
@@ -661,7 +654,7 @@ void RenderAccessibilityImpl::OnHitTest(const gfx::Point& point,
       data.HasContentIntAttribute(
           AX_CONTENT_ATTR_CHILD_BROWSER_PLUGIN_INSTANCE_ID)) {
     Send(new AccessibilityHostMsg_ChildFrameHitTestResult(
-        routing_id(), action_request_id, point,
+        routing_id(), point,
         data.GetContentIntAttribute(AX_CONTENT_ATTR_CHILD_ROUTING_ID),
         data.GetContentIntAttribute(
             AX_CONTENT_ATTR_CHILD_BROWSER_PLUGIN_INSTANCE_ID),
@@ -670,7 +663,7 @@ void RenderAccessibilityImpl::OnHitTest(const gfx::Point& point,
   }
 
   // Otherwise, send an event on the node that was hit.
-  HandleAXEvent(obj, event_to_fire, action_request_id);
+  HandleAXEvent(obj, event_to_fire);
 }
 
 void RenderAccessibilityImpl::OnLoadInlineTextBoxes(

@@ -11,8 +11,10 @@
 #include <utility>
 
 #include "base/callback_helpers.h"
+#include "base/format_macros.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/strings/stringprintf.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/timer/timer.h"
 #include "base/trace_event/trace_event.h"
@@ -44,7 +46,6 @@ class AudioOutputDevice::AudioThreadCallback
   bool CurrentThreadIsAudioDeviceThread();
 
  private:
-  const base::TimeTicks start_time_;
   AudioRendererSink::RenderCallback* render_callback_;
   std::unique_ptr<AudioBus> output_bus_;
   uint64_t callback_num_;
@@ -463,14 +464,10 @@ AudioOutputDevice::AudioThreadCallback::AudioThreadCallback(
           /*read only*/ false,
           ComputeAudioOutputBufferSize(audio_parameters),
           /*segment count*/ 1),
-      start_time_(base::TimeTicks::Now()),
       render_callback_(render_callback),
       callback_num_(0) {}
 
-AudioOutputDevice::AudioThreadCallback::~AudioThreadCallback() {
-  UMA_HISTOGRAM_LONG_TIMES("Media.Audio.Render.OutputStreamDuration",
-                           base::TimeTicks::Now() - start_time_);
-}
+AudioOutputDevice::AudioThreadCallback::~AudioThreadCallback() = default;
 
 void AudioOutputDevice::AudioThreadCallback::MapSharedMemory() {
   CHECK_EQ(total_segments_, 1u);
@@ -499,9 +496,13 @@ void AudioOutputDevice::AudioThreadCallback::Process(uint32_t control_signal) {
       base::TimeTicks() +
       base::TimeDelta::FromMicroseconds(buffer->params.delay_timestamp);
 
-  TRACE_EVENT_BEGIN2("audio", "AudioOutputDevice::FireRenderCallback",
-                     "callback_num", callback_num_, "frames skipped",
-                     frames_skipped);
+  TRACE_EVENT2(
+      "audio", "AudioOutputDevice::FireRenderCallback", "callback_num",
+      callback_num_, "delay_info",
+      base::StringPrintf("Timestamp: %" PRId64 "us, Delay: %" PRId64
+                         "us, Skip: %u frames",
+                         (delay_timestamp - base::TimeTicks()).InMicroseconds(),
+                         delay.InMicroseconds(), frames_skipped));
   DVLOG(4) << __func__ << " delay:" << delay << " delay_timestamp:" << delay
            << " frames_skipped:" << frames_skipped;
 
@@ -522,10 +523,6 @@ void AudioOutputDevice::AudioThreadCallback::Process(uint32_t control_signal) {
     buffer->params.bitstream_data_size = output_bus_->GetBitstreamDataSize();
     buffer->params.bitstream_frames = output_bus_->GetBitstreamFrames();
   }
-  TRACE_EVENT_END2("audio", "AudioOutputDevice::FireRenderCallback",
-                   "timestamp (ms)",
-                   (delay_timestamp - base::TimeTicks()).InMillisecondsF(),
-                   "delay (ms)", delay.InMillisecondsF());
 }
 
 bool AudioOutputDevice::AudioThreadCallback::

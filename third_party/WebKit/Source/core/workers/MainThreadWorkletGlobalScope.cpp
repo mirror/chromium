@@ -4,8 +4,6 @@
 
 #include "core/workers/MainThreadWorkletGlobalScope.h"
 
-#include "bindings/core/v8/V8BindingForCore.h"
-#include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/dom/Document.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/FrameConsole.h"
@@ -19,13 +17,12 @@ namespace blink {
 MainThreadWorkletGlobalScope::MainThreadWorkletGlobalScope(
     LocalFrame* frame,
     std::unique_ptr<GlobalScopeCreationParams> creation_params,
+    v8::Isolate* isolate,
     WorkerReportingProxy& reporting_proxy)
-    : WorkletGlobalScope(std::move(creation_params),
-                         ToIsolate(frame),
-                         reporting_proxy),
+    : WorkletGlobalScope(std::move(creation_params), isolate, reporting_proxy),
       ContextClient(frame) {}
 
-MainThreadWorkletGlobalScope::~MainThreadWorkletGlobalScope() = default;
+MainThreadWorkletGlobalScope::~MainThreadWorkletGlobalScope() {}
 
 WorkerThread* MainThreadWorkletGlobalScope::GetThread() const {
   NOTREACHED();

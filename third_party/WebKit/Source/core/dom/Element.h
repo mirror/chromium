@@ -118,7 +118,7 @@ enum class NamedItemType {
 struct FocusParams {
   STACK_ALLOCATED();
 
-  FocusParams() = default;
+  FocusParams() {}
   FocusParams(SelectionBehaviorOnFocus selection,
               WebFocusType focus_type,
               InputDeviceCapabilities* capabilities,
@@ -466,9 +466,6 @@ class CORE_EXPORT Element : public ContainerNode {
   void RecalcStyleForReattach();
   bool NeedsRebuildLayoutTree(
       const WhitespaceAttacher& whitespace_attacher) const {
-    // TODO(futhark@chromium.org): IsActiveSlotOrActiveV0InsertionPoint() can be
-    // replaced by IsActiveV0InsertionPoint() when slots are always part of the
-    // flat tree, and removed completely when Shadow DOM V0 support is removed.
     return NeedsReattachLayoutTree() || ChildNeedsReattachLayoutTree() ||
            IsActiveSlotOrActiveV0InsertionPoint() ||
            (whitespace_attacher.TraverseIntoDisplayContents() &&
@@ -497,8 +494,7 @@ class CORE_EXPORT Element : public ContainerNode {
                            const ShadowRootInit&,
                            ExceptionState&);
   ShadowRoot& CreateShadowRootInternal();
-  ShadowRoot& CreateLegacyUserAgentShadowRootV0();
-  ShadowRoot& CreateUserAgentShadowRootV1();
+  ShadowRoot& CreateUserAgentShadowRoot();
   ShadowRoot& AttachShadowRootInternal(ShadowRootType,
                                        bool delegates_focus = false);
 
@@ -511,8 +507,7 @@ class CORE_EXPORT Element : public ContainerNode {
 
   ShadowRoot* ShadowRootIfV1() const;
 
-  ShadowRoot& EnsureLegacyUserAgentShadowRootV0();
-  ShadowRoot& EnsureUserAgentShadowRootV1();
+  ShadowRoot& EnsureUserAgentShadowRoot();
 
   bool IsInDescendantTreeOf(const Element* shadow_host) const;
 
@@ -862,7 +857,7 @@ class CORE_EXPORT Element : public ContainerNode {
   void ChildrenChanged(const ChildrenChange&) override;
 
   virtual void WillRecalcStyle(StyleRecalcChange);
-  virtual void DidRecalcStyle(StyleRecalcChange);
+  virtual void DidRecalcStyle();
   virtual scoped_refptr<ComputedStyle> CustomStyleForLayoutObject();
 
   virtual NamedItemType GetNamedItemType() const {

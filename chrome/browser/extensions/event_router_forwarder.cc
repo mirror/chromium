@@ -5,7 +5,6 @@
 #include "chrome/browser/extensions/event_router_forwarder.h"
 
 #include <stddef.h>
-#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -133,7 +132,7 @@ void EventRouterForwarder::CallEventRouter(
     return;
 #endif
 
-  auto event = std::make_unique<Event>(
+  auto event = base::MakeUnique<Event>(
       histogram_value, event_name, std::move(event_args), restrict_to_profile);
   event->event_url = event_url;
   if (extension_id.empty()) {

@@ -18,6 +18,7 @@
 #include <utility>
 
 #include "base/base64.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_tokenizer.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -366,7 +367,7 @@ std::unique_ptr<base::DictionaryValue> CreateProxyRulesDict(
   ProxyPrefs::ProxyMode mode;
   CHECK(proxy_config.GetMode(&mode) && mode == ProxyPrefs::MODE_FIXED_SERVERS);
 
-  auto extension_proxy_rules = std::make_unique<base::DictionaryValue>();
+  auto extension_proxy_rules = base::MakeUnique<base::DictionaryValue>();
 
   std::string proxy_servers;
   if (!proxy_config.GetProxyServer(&proxy_servers)) {
@@ -433,7 +434,7 @@ std::unique_ptr<base::DictionaryValue> CreateProxyRulesDict(
 
 std::unique_ptr<base::DictionaryValue> CreateProxyServerDict(
     const net::ProxyServer& proxy) {
-  auto out = std::make_unique<base::DictionaryValue>();
+  auto out = base::MakeUnique<base::DictionaryValue>();
   switch (proxy.scheme()) {
     case net::ProxyServer::SCHEME_HTTP:
       out->SetString(keys::kProxyConfigRuleScheme, "http");
@@ -465,7 +466,7 @@ std::unique_ptr<base::DictionaryValue> CreatePacScriptDict(
   ProxyPrefs::ProxyMode mode;
   CHECK(proxy_config.GetMode(&mode) && mode == ProxyPrefs::MODE_PAC_SCRIPT);
 
-  auto pac_script_dict = std::make_unique<base::DictionaryValue>();
+  auto pac_script_dict = base::MakeUnique<base::DictionaryValue>();
   std::string pac_url;
   if (!proxy_config.GetPacUrl(&pac_url)) {
     LOG(ERROR) << "Invalid proxy configuration. Missing PAC URL.";
@@ -495,7 +496,7 @@ std::unique_ptr<base::DictionaryValue> CreatePacScriptDict(
 std::unique_ptr<base::ListValue> TokenizeToStringList(
     const std::string& in,
     const std::string& delims) {
-  auto out = std::make_unique<base::ListValue>();
+  auto out = base::MakeUnique<base::ListValue>();
   base::StringTokenizer entries(in, delims);
   while (entries.GetNext())
     out->AppendString(entries.token());

@@ -152,6 +152,8 @@ class HttpStreamFactoryImpl::Job {
     websocket_handshake_stream_create_helper() = 0;
 
     virtual void MaybeSetWaitTimeForMainJob(const base::TimeDelta& delay) = 0;
+
+    virtual bool for_websockets() = 0;
   };
 
   // Job is owned by |delegate|, hence |delegate| is valid for the lifetime of
@@ -190,7 +192,6 @@ class HttpStreamFactoryImpl::Job {
       NextProto alternative_protocol,
       QuicTransportVersion quic_version,
       const ProxyServer& alternative_proxy_server,
-      bool is_websocket,
       bool enable_ip_based_pooling,
       NetLog* net_log);
   virtual ~Job();
@@ -337,7 +338,7 @@ class HttpStreamFactoryImpl::Job {
   void ResumeInitConnection();
   // Creates a SpdyHttpStream or a BidirectionalStreamImpl from the given values
   // and sets to |stream_| or |bidirectional_stream_impl_| respectively. Does
-  // nothing if |stream_factory_| is for WebSocket.
+  // nothing if |stream_factory_| is for WebSockets.
   int SetSpdyHttpStreamOrBidirectionalStreamImpl(
       base::WeakPtr<SpdySession> session,
       bool direct);
@@ -428,9 +429,6 @@ class HttpStreamFactoryImpl::Job {
   // Alternative proxy server that should be used by |this| to fetch the
   // request.
   const ProxyServer alternative_proxy_server_;
-
-  // True if request is for Websocket.
-  const bool is_websocket_;
 
   // Enable pooling to a SpdySession with matching IP and certificate
   // even if the SpdySessionKey is different.
@@ -537,7 +535,6 @@ class HttpStreamFactoryImpl::JobFactory {
       const SSLConfig& proxy_ssl_config,
       HostPortPair destination,
       GURL origin_url,
-      bool is_websocket,
       bool enable_ip_based_pooling,
       NetLog* net_log);
 
@@ -554,7 +551,6 @@ class HttpStreamFactoryImpl::JobFactory {
       GURL origin_url,
       NextProto alternative_protocol,
       QuicTransportVersion quic_version,
-      bool is_websocket,
       bool enable_ip_based_pooling,
       NetLog* net_log);
 
@@ -570,7 +566,6 @@ class HttpStreamFactoryImpl::JobFactory {
       HostPortPair destination,
       GURL origin_url,
       const ProxyServer& alternative_proxy_server,
-      bool is_websocket,
       bool enable_ip_based_pooling,
       NetLog* net_log);
 };

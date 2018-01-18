@@ -4,6 +4,7 @@
 
 #include "chrome/browser/chromeos/policy/off_hours/off_hours_policy_applier.h"
 
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/chromeos/policy/device_policy_remover.h"
 #include "chrome/browser/chromeos/policy/off_hours/off_hours_proto_parser.h"
 
@@ -20,7 +21,7 @@ std::unique_ptr<em::ChromeDeviceSettingsProto> ApplyOffHoursPolicyToProto(
   std::vector<int> ignored_policy_proto_tags =
       ExtractIgnoredPolicyProtoTagsFromProto(container);
   std::unique_ptr<em::ChromeDeviceSettingsProto> policies =
-      std::make_unique<em::ChromeDeviceSettingsProto>(input_policies);
+      base::MakeUnique<em::ChromeDeviceSettingsProto>(input_policies);
   RemovePolicies(policies.get(), ignored_policy_proto_tags);
   return policies;
 }

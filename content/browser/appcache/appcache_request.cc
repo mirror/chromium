@@ -23,7 +23,7 @@ net::URLRequest* AppCacheRequest::GetURLRequest() {
   return nullptr;
 }
 
-network::ResourceRequest* AppCacheRequest::GetResourceRequest() {
+ResourceRequest* AppCacheRequest::GetResourceRequest() {
   return nullptr;
 }
 

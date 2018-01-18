@@ -51,7 +51,7 @@ class TestVirtualTimeController : public VirtualTimeController {
 
 class CompositorControllerTest : public ::testing::Test {
  protected:
-  CompositorControllerTest(bool update_display_for_animations = true) {
+  CompositorControllerTest() {
     task_runner_ = base::MakeRefCounted<base::TestSimpleTaskRunner>();
     client_.SetTaskRunnerForTests(task_runner_);
     mock_host_ = base::MakeRefCounted<MockDevToolsAgentHost>();
@@ -67,8 +67,7 @@ class CompositorControllerTest : public ::testing::Test {
     ExpectHeadlessExperimentalEnable();
     controller_ = std::make_unique<CompositorController>(
         task_runner_, &client_, virtual_time_controller_.get(),
-        kAnimationFrameInterval, kWaitForCompositorReadyFrameDelay,
-        update_display_for_animations);
+        kAnimationFrameInterval, kWaitForCompositorReadyFrameDelay);
     EXPECT_NE(nullptr, task_);
   }
 
@@ -103,16 +102,14 @@ class CompositorControllerTest : public ::testing::Test {
       next_begin_frame_time_ = virtual_time;
   }
 
-  void ExpectBeginFrame(bool no_display_updates = false,
-                        std::unique_ptr<headless_experimental::ScreenshotParams>
+  void ExpectBeginFrame(std::unique_ptr<headless_experimental::ScreenshotParams>
                             screenshot_params = nullptr) {
     last_command_id_ += 2;
     base::DictionaryValue params;
     auto builder =
         std::move(headless_experimental::BeginFrameParams::Builder()
                       .SetFrameTime(next_begin_frame_time_.ToJsTime())
-                      .SetInterval(kAnimationFrameInterval.InMillisecondsF())
-                      .SetNoDisplayUpdates(no_display_updates));
+                      .SetInterval(kAnimationFrameInterval.InMillisecondsF()));
     if (screenshot_params)
       builder.SetScreenshot(std::move(screenshot_params));
     // Subsequent BeginFrames should have a later timestamp.
@@ -187,7 +184,7 @@ TEST_F(CompositorControllerTest, WaitForCompositorReady) {
   // Shouldn't send any commands yet as no needsBeginFrames event was sent yet.
   bool ready = false;
   controller_->WaitForCompositorReady(
-      base::BindRepeating([](bool* ready) { *ready = true; }, &ready));
+      base::Bind([](bool* ready) { *ready = true; }, &ready));
   EXPECT_FALSE(ready);
 
   // Sends BeginFrames with delay while they are needed.
@@ -248,7 +245,7 @@ TEST_F(CompositorControllerTest, CaptureScreenshot) {
   bool done = false;
   controller_->CaptureScreenshot(
       headless_experimental::ScreenshotParamsFormat::PNG, 100,
-      base::BindRepeating(
+      base::Bind(
           [](bool* done, const std::string& screenshot_data) {
             *done = true;
             EXPECT_EQ("test", screenshot_data);
@@ -258,10 +255,10 @@ TEST_F(CompositorControllerTest, CaptureScreenshot) {
   EXPECT_TRUE(task_runner_->HasPendingTask());
   ExpectVirtualTime(0, 0);
   ExpectBeginFrame(
-      false, headless_experimental::ScreenshotParams::Builder()
-                 .SetFormat(headless_experimental::ScreenshotParamsFormat::PNG)
-                 .SetQuality(100)
-                 .Build());
+      headless_experimental::ScreenshotParams::Builder()
+          .SetFormat(headless_experimental::ScreenshotParamsFormat::PNG)
+          .SetQuality(100)
+          .Build());
   task_runner_->RunPendingTasks();
 
   std::string base64;
@@ -274,7 +271,7 @@ TEST_F(CompositorControllerTest, CaptureScreenshot) {
 TEST_F(CompositorControllerTest, WaitForMainFrameContentUpdate) {
   bool updated = false;
   controller_->WaitForMainFrameContentUpdate(
-      base::BindRepeating([](bool* updated) { *updated = true; }, &updated));
+      base::Bind([](bool* updated) { *updated = true; }, &updated));
   EXPECT_FALSE(updated);
 
   // Sends BeginFrames while they are needed.
@@ -328,7 +325,7 @@ TEST_F(CompositorControllerTest, WaitForMainFrameContentUpdate) {
 
 TEST_F(CompositorControllerTest, SendsAnimationFrames) {
   bool can_continue = false;
-  auto continue_callback = base::BindRepeating(
+  auto continue_callback = base::Bind(
       [](bool* can_continue) { *can_continue = true; }, &can_continue);
 
   // Task doesn't block virtual time request.
@@ -375,7 +372,7 @@ TEST_F(CompositorControllerTest, SendsAnimationFrames) {
 
 TEST_F(CompositorControllerTest, SkipsAnimationFrameForScreenshots) {
   bool can_continue = false;
-  auto continue_callback = base::BindRepeating(
+  auto continue_callback = base::Bind(
       [](bool* can_continue) { *can_continue = true; }, &can_continue);
 
   SendMainFrameReadyForScreenshotsEvent();
@@ -390,15 +387,15 @@ TEST_F(CompositorControllerTest, SkipsAnimationFrameForScreenshots) {
 
   controller_->CaptureScreenshot(
       headless_experimental::ScreenshotParamsFormat::PNG, 100,
-      base::BindRepeating([](const std::string&) {}));
+      base::Bind([](const std::string&) {}));
 
   EXPECT_TRUE(task_runner_->HasPendingTask());
   ExpectVirtualTime(0, 0);
   ExpectBeginFrame(
-      false, headless_experimental::ScreenshotParams::Builder()
-                 .SetFormat(headless_experimental::ScreenshotParamsFormat::PNG)
-                 .SetQuality(100)
-                 .Build());
+      headless_experimental::ScreenshotParams::Builder()
+          .SetFormat(headless_experimental::ScreenshotParamsFormat::PNG)
+          .SetQuality(100)
+          .Build());
   task_runner_->RunPendingTasks();
 
   EXPECT_TRUE(can_continue);
@@ -408,7 +405,7 @@ TEST_F(CompositorControllerTest, SkipsAnimationFrameForScreenshots) {
 TEST_F(CompositorControllerTest,
        PostponesAnimationFrameWhenBudgetExpired) {
   bool can_continue = false;
-  auto continue_callback = base::BindRepeating(
+  auto continue_callback = base::Bind(
       [](bool* can_continue) { *can_continue = true; }, &can_continue);
 
   SendNeedsBeginFramesEvent(true);
@@ -442,7 +439,7 @@ TEST_F(CompositorControllerTest,
 TEST_F(CompositorControllerTest,
        SkipsAnimationFrameWhenBudgetExpiredAndScreenshotWasTaken) {
   bool can_continue = false;
-  auto continue_callback = base::BindRepeating(
+  auto continue_callback = base::Bind(
       [](bool* can_continue) { *can_continue = true; }, &can_continue);
 
   SendMainFrameReadyForScreenshotsEvent();
@@ -463,15 +460,15 @@ TEST_F(CompositorControllerTest,
 
   controller_->CaptureScreenshot(
       headless_experimental::ScreenshotParamsFormat::PNG, 100,
-      base::BindRepeating([](const std::string&) {}));
+      base::Bind([](const std::string&) {}));
 
   EXPECT_TRUE(task_runner_->HasPendingTask());
   ExpectVirtualTime(0, 0);
   ExpectBeginFrame(
-      false, headless_experimental::ScreenshotParams::Builder()
-                 .SetFormat(headless_experimental::ScreenshotParamsFormat::PNG)
-                 .SetQuality(100)
-                 .Build());
+      headless_experimental::ScreenshotParams::Builder()
+          .SetFormat(headless_experimental::ScreenshotParamsFormat::PNG)
+          .SetQuality(100)
+          .Build());
   task_runner_->RunPendingTasks();
 
   // Sends a BeginFrame when more virtual time budget is requested.
@@ -484,8 +481,7 @@ TEST_F(CompositorControllerTest,
 
 TEST_F(CompositorControllerTest, WaitUntilIdle) {
   bool idle = false;
-  auto idle_callback =
-      base::BindRepeating([](bool* idle) { *idle = true; }, &idle);
+  auto idle_callback = base::Bind([](bool* idle) { *idle = true; }, &idle);
 
   SendNeedsBeginFramesEvent(true);
   EXPECT_FALSE(task_runner_->HasPendingTask());
@@ -496,7 +492,7 @@ TEST_F(CompositorControllerTest, WaitUntilIdle) {
   idle = false;
 
   // Send a BeginFrame.
-  task_->IntervalElapsed(kAnimationFrameInterval, base::BindRepeating([]() {}));
+  task_->IntervalElapsed(kAnimationFrameInterval, base::Bind([]() {}));
 
   EXPECT_TRUE(task_runner_->HasPendingTask());
   ExpectVirtualTime(0, 0);
@@ -511,69 +507,6 @@ TEST_F(CompositorControllerTest, WaitUntilIdle) {
   EXPECT_FALSE(task_runner_->HasPendingTask());
   EXPECT_TRUE(idle);
   idle = false;
-}
-
-class CompositorControllerNoDisplayUpdateTest
-    : public CompositorControllerTest {
- protected:
-  CompositorControllerNoDisplayUpdateTest() : CompositorControllerTest(false) {}
-};
-
-TEST_F(CompositorControllerNoDisplayUpdateTest,
-       SkipsDisplayUpdateOnlyForAnimationFrames) {
-  bool can_continue = false;
-  auto continue_callback = base::BindRepeating(
-      [](bool* can_continue) { *can_continue = true; }, &can_continue);
-
-  // Wait for update BeginFrames update display.
-  SendNeedsBeginFramesEvent(true);
-  controller_->WaitForMainFrameContentUpdate(base::BindRepeating([]() {}));
-  EXPECT_TRUE(task_runner_->HasPendingTask());
-  ExpectVirtualTime(1000, 0);
-  ExpectBeginFrame();
-  task_runner_->RunPendingTasks();
-
-  SendMainFrameReadyForScreenshotsEvent();
-  EXPECT_FALSE(task_runner_->HasPendingTask());
-
-  SendBeginFrameReply(true, true, std::string());
-  EXPECT_FALSE(task_runner_->HasPendingTask());
-
-  // Sends an animation BeginFrame without display update after interval
-  // elapsed.
-  task_->IntervalElapsed(kAnimationFrameInterval, continue_callback);
-  EXPECT_FALSE(can_continue);
-
-  EXPECT_TRUE(task_runner_->HasPendingTask());
-  ExpectVirtualTime(1000, kAnimationFrameInterval.InMillisecondsF());
-  ExpectBeginFrame(true);
-  task_runner_->RunPendingTasks();
-
-  // Lets virtual time continue after BeginFrame was completed.
-  SendBeginFrameReply(false, false, std::string());
-  EXPECT_FALSE(task_runner_->HasPendingTask());
-  EXPECT_TRUE(can_continue);
-  can_continue = false;
-
-  // Screenshots update display.
-  task_->IntervalElapsed(kAnimationFrameInterval, continue_callback);
-  EXPECT_FALSE(can_continue);
-
-  controller_->CaptureScreenshot(
-      headless_experimental::ScreenshotParamsFormat::PNG, 100,
-      base::BindRepeating([](const std::string&) {}));
-
-  EXPECT_TRUE(task_runner_->HasPendingTask());
-  ExpectVirtualTime(1000, kAnimationFrameInterval.InMillisecondsF() * 2);
-  ExpectBeginFrame(
-      false, headless_experimental::ScreenshotParams::Builder()
-                 .SetFormat(headless_experimental::ScreenshotParamsFormat::PNG)
-                 .SetQuality(100)
-                 .Build());
-  task_runner_->RunPendingTasks();
-
-  EXPECT_TRUE(can_continue);
-  can_continue = false;
 }
 
 }  // namespace headless

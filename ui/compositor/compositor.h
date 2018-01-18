@@ -268,9 +268,10 @@ class COMPOSITOR_EXPORT Compositor : public cc::LayerTreeHostClient,
   void SetLatencyInfo(const LatencyInfo& latency_info);
 
   // Sets the compositor's device scale factor and size.
-  void SetScaleAndSize(float scale,
-                       const gfx::Size& size_in_pixel,
-                       const viz::LocalSurfaceId& local_surface_id);
+  void SetScaleAndSize(
+      float scale,
+      const gfx::Size& size_in_pixel,
+      const viz::LocalSurfaceId& local_surface_id = viz::LocalSurfaceId());
 
   // Set the output color profile into which this compositor should render.
   void SetDisplayColorSpace(const gfx::ColorSpace& color_space);
@@ -385,7 +386,7 @@ class COMPOSITOR_EXPORT Compositor : public cc::LayerTreeHostClient,
   void BeginMainFrame(const viz::BeginFrameArgs& args) override;
   void BeginMainFrameNotExpectedSoon() override;
   void BeginMainFrameNotExpectedUntil(base::TimeTicks time) override;
-  void UpdateLayerTreeHost(VisualStateUpdate requested_update) override;
+  void UpdateLayerTreeHost() override;
   void ApplyViewportDeltas(const gfx::Vector2dF& inner_delta,
                            const gfx::Vector2dF& outer_delta,
                            const gfx::Vector2dF& elastic_overscroll_delta,

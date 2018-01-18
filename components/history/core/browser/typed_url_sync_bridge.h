@@ -24,7 +24,7 @@ class TypedURLSyncBridge : public syncer::ModelTypeSyncBridge,
                      const ChangeProcessorFactory& change_processor_factory);
   ~TypedURLSyncBridge() override;
 
-  // syncer::ModelTypeSyncBridge implementation.
+  // syncer::ModelTypeService implementation.
   std::unique_ptr<syncer::MetadataChangeList> CreateMetadataChangeList()
       override;
   base::Optional<syncer::ModelError> MergeSyncData(

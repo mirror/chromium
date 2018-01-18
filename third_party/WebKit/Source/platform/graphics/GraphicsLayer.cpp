@@ -53,7 +53,6 @@
 #include "platform/graphics/paint/RasterInvalidationTracking.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/json/JSONValues.h"
-#include "platform/scroll/ScrollSnapData.h"
 #include "platform/scroll/ScrollableArea.h"
 #include "platform/text/TextStream.h"
 #include "platform/wtf/HashMap.h"
@@ -136,12 +135,7 @@ GraphicsLayer::~GraphicsLayer() {
 
 LayoutRect GraphicsLayer::VisualRect() const {
   LayoutRect bounds = LayoutRect(FloatPoint(), Size());
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    DCHECK(layer_state_);
-    bounds.MoveBy(layer_state_->offset);
-  } else {
-    bounds.Move(OffsetFromLayoutObjectWithSubpixelAccumulation());
-  }
+  bounds.Move(OffsetFromLayoutObjectWithSubpixelAccumulation());
   return bounds;
 }
 
@@ -155,18 +149,10 @@ void GraphicsLayer::SetOverscrollBehavior(
   layer_->Layer()->SetOverscrollBehavior(behavior);
 }
 
-void GraphicsLayer::SetSnapContainerData(Optional<SnapContainerData> data) {
-  layer_->Layer()->SetSnapContainerData(std::move(data));
-}
-
 void GraphicsLayer::SetIsResizedByBrowserControls(
     bool is_resized_by_browser_controls) {
   PlatformLayer()->SetIsResizedByBrowserControls(
       is_resized_by_browser_controls);
-}
-
-void GraphicsLayer::SetIsContainerForFixedPositionLayers(bool is_container) {
-  PlatformLayer()->SetIsContainerForFixedPositionLayers(is_container);
 }
 
 void GraphicsLayer::SetParent(GraphicsLayer* layer) {
@@ -579,9 +565,6 @@ RasterInvalidationTracking* GraphicsLayer::GetRasterInvalidationTracking()
 void GraphicsLayer::TrackRasterInvalidation(const DisplayItemClient& client,
                                             const IntRect& rect,
                                             PaintInvalidationReason reason) {
-  if (FirstPaintInvalidationTracking::IsEnabled())
-    debug_info_.AppendAnnotatedInvalidateRect(rect, reason);
-
   if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled())
     EnsureRasterInvalidator().EnsureTracking();
 
@@ -1160,8 +1143,12 @@ void GraphicsLayer::SetNeedsDisplayInRect(
   if (!DrawsContent())
     return;
 
-  if (!ScopedSetNeedsDisplayInRectForTrackingOnly::s_enabled_)
+  if (!ScopedSetNeedsDisplayInRectForTrackingOnly::s_enabled_) {
     SetNeedsDisplayInRectInternal(rect);
+    // TODO(wangxianzhu): Need equivalence for SPv175/SPv2.
+    if (FirstPaintInvalidationTracking::IsEnabled())
+      debug_info_.AppendAnnotatedInvalidateRect(rect, invalidation_reason);
+  }
 
   TrackRasterInvalidation(client, rect, invalidation_reason);
 }

@@ -11,6 +11,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
@@ -180,7 +181,7 @@ TEST_F(PasswordsPrivateDelegateImplTest, GetSavedPasswordsList) {
   EXPECT_EQ(0u, tracker.call_count());
 
   PasswordFormList list;
-  list.push_back(std::make_unique<autofill::PasswordForm>());
+  list.push_back(base::MakeUnique<autofill::PasswordForm>());
   delegate.SetPasswordList(list);
   EXPECT_EQ(1u, tracker.call_count());
 
@@ -197,7 +198,7 @@ TEST_F(PasswordsPrivateDelegateImplTest, GetPasswordExceptionsList) {
   EXPECT_EQ(0u, tracker.call_count());
 
   PasswordFormList list;
-  list.push_back(std::make_unique<autofill::PasswordForm>());
+  list.push_back(base::MakeUnique<autofill::PasswordForm>());
   delegate.SetPasswordExceptionList(list);
   EXPECT_EQ(1u, tracker.call_count());
 
@@ -265,11 +266,6 @@ TEST_F(PasswordsPrivateDelegateImplTest, TestReauthOnExport) {
   delegate.SetOsReauthCallForTesting(base::BindRepeating(
       &FakeOsReauthCall, &reauth_called, ReauthResult::PASS));
 
-  delegate.ExportPasswords(nullptr);
-  EXPECT_TRUE(reauth_called);
-
-  // Export should ignore previous reauthentication results.
-  reauth_called = false;
   delegate.ExportPasswords(nullptr);
   EXPECT_TRUE(reauth_called);
 

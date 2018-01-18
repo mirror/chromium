@@ -181,7 +181,7 @@ PositionWithAffinityTemplate<Strategy> StartPositionForLine(
   if (c.IsNull())
     return PositionWithAffinityTemplate<Strategy>();
 
-  const RootInlineBox* root_box =
+  RootInlineBox* root_box =
       RenderedPosition(c.GetPosition(), c.Affinity()).RootBox();
   if (!root_box) {
     // There are VisiblePositions at offset 0 in blocks without
@@ -240,7 +240,7 @@ PositionInFlatTreeWithAffinity StartOfLine(
 }
 
 LayoutPoint AbsoluteLineDirectionPointToLocalPointInBlock(
-    const RootInlineBox* root,
+    RootInlineBox* root,
     LayoutUnit line_direction_point) {
   DCHECK(root);
   LineLayoutBlockFlow containing_block = root->Block();
@@ -403,7 +403,7 @@ static PositionWithAffinityTemplate<Strategy> EndPositionForLine(
   if (c.IsNull())
     return PositionWithAffinityTemplate<Strategy>();
 
-  const RootInlineBox* root_box =
+  RootInlineBox* root_box =
       RenderedPosition(c.GetPosition(), c.Affinity()).RootBox();
   if (!root_box) {
     // There are VisiblePositions at offset 0 in blocks without
@@ -678,7 +678,7 @@ VisiblePosition PreviousLinePosition(const VisiblePosition& visible_position,
   if (!layout_object)
     return VisiblePosition();
 
-  const RootInlineBox* root = nullptr;
+  RootInlineBox* root = nullptr;
   const InlineBox* box = ComputeInlineBoxPosition(visible_position).inline_box;
   if (box) {
     root = box->Root().PrevRootBox();
@@ -739,7 +739,7 @@ VisiblePosition NextLinePosition(const VisiblePosition& visible_position,
   if (!layout_object)
     return VisiblePosition();
 
-  const RootInlineBox* root = nullptr;
+  RootInlineBox* root = nullptr;
   const InlineBox* box = ComputeInlineBoxPosition(visible_position).inline_box;
   if (box) {
     root = box->Root().NextRootBox();

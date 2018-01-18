@@ -28,7 +28,6 @@ import org.chromium.base.StrictModeContext;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.download.DownloadUpdate.PendingState;
 import org.chromium.chrome.browser.notifications.NotificationUmaTracker;
 import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
 import org.chromium.chrome.browser.profiles.Profile;
@@ -164,8 +163,7 @@ public class DownloadNotificationService2 {
             long bytesReceived, long timeRemainingInMillis, long startTime, boolean isOffTheRecord,
             boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon) {
         updateActiveDownloadNotification(id, fileName, progress, timeRemainingInMillis, startTime,
-                isOffTheRecord, canDownloadWhileMetered, isTransient, icon, false,
-                PendingState.NOT_PENDING);
+                isOffTheRecord, canDownloadWhileMetered, false, isTransient, icon, false);
     }
 
     /**
@@ -177,14 +175,12 @@ public class DownloadNotificationService2 {
      * @param isTransient             Whether or not clicking on the download should launch
      *                                downloads home.
      * @param icon                    A {@link Bitmap} to be used as the large icon for display.
-     * @param pendingState            Reason download is pending.
      */
     void notifyDownloadPending(ContentId id, String fileName, boolean isOffTheRecord,
             boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon,
-            boolean hasUserGesture, PendingState pendingState) {
+            boolean hasUserGesture) {
         updateActiveDownloadNotification(id, fileName, Progress.createIndeterminateProgress(), 0, 0,
-                isOffTheRecord, canDownloadWhileMetered, isTransient, icon, hasUserGesture,
-                pendingState);
+                isOffTheRecord, canDownloadWhileMetered, true, isTransient, icon, hasUserGesture);
     }
 
     /**
@@ -198,15 +194,15 @@ public class DownloadNotificationService2 {
      * @param startTime               Time when download started.
      * @param isOffTheRecord          Whether the download is off the record.
      * @param canDownloadWhileMetered Whether the download can happen in metered network.
+     * @param isDownloadPending       Whether the download is pending.
      * @param isTransient             Whether or not clicking on the download should launch
      *                                downloads home.
      * @param icon                    A {@link Bitmap} to be used as the large icon for display.
-     * @param pendingState            Reason download is pending.
      */
     private void updateActiveDownloadNotification(ContentId id, String fileName, Progress progress,
             long timeRemainingInMillis, long startTime, boolean isOffTheRecord,
-            boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon,
-            boolean hasUserGesture, PendingState pendingState) {
+            boolean canDownloadWhileMetered, boolean isDownloadPending, boolean isTransient,
+            Bitmap icon, boolean hasUserGesture) {
         int notificationId = getNotificationId(id);
         Context context = ContextUtils.getApplicationContext();
 
@@ -217,10 +213,10 @@ public class DownloadNotificationService2 {
                                                 .setTimeRemainingInMillis(timeRemainingInMillis)
                                                 .setStartTime(startTime)
                                                 .setIsOffTheRecord(isOffTheRecord)
+                                                .setIsDownloadPending(isDownloadPending)
                                                 .setIsTransient(isTransient)
                                                 .setIcon(icon)
                                                 .setNotificationId(notificationId)
-                                                .setPendingState(pendingState)
                                                 .build();
         Notification notification = DownloadNotificationFactory.buildNotification(
                 context, DownloadNotificationFactory.DownloadStatus.IN_PROGRESS, downloadUpdate);
@@ -294,12 +290,11 @@ public class DownloadNotificationService2 {
      * @param isTransient     Whether or not clicking on the download should launch downloads home.
      * @param icon            A {@link Bitmap} to be used as the large icon for display.
      * @param forceRebuild    Whether the notification was forcibly relaunched.
-     * @param pendingState    Reason download is pending.
      */
     @VisibleForTesting
     void notifyDownloadPaused(ContentId id, String fileName, boolean isResumable,
             boolean isAutoResumable, boolean isOffTheRecord, boolean isTransient, Bitmap icon,
-            boolean hasUserGesture, boolean forceRebuild, PendingState pendingState) {
+            boolean hasUserGesture, boolean forceRebuild) {
         DownloadSharedPreferenceEntry entry =
                 mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id);
         if (!isResumable) {
@@ -312,7 +307,7 @@ public class DownloadNotificationService2 {
         // If download is interrupted due to network disconnection, show download pending state.
         if (isAutoResumable) {
             notifyDownloadPending(id, fileName, isOffTheRecord, canDownloadWhileMetered,
-                    isTransient, icon, hasUserGesture, pendingState);
+                    isTransient, icon, hasUserGesture);
             stopTrackingInProgressDownload(id);
             return;
         }
@@ -524,8 +519,7 @@ public class DownloadNotificationService2 {
             if (!canResumeDownload(context, entry)) continue;
             if (mDownloadsInProgress.contains(entry.id)) continue;
             notifyDownloadPending(entry.id, entry.fileName, entry.isOffTheRecord,
-                    entry.canDownloadWhileMetered, entry.isTransient, null, false,
-                    PendingState.PENDING_NETWORK);
+                    entry.canDownloadWhileMetered, entry.isTransient, null, false);
 
             Intent intent = new Intent();
             intent.setAction(ACTION_DOWNLOAD_RESUME);
@@ -643,8 +637,7 @@ public class DownloadNotificationService2 {
                 // paused notification, with the updated notification id..
                 notifyDownloadPaused(entry.id, entry.fileName, true /* isResumable */,
                         entry.isAutoResumable, entry.isOffTheRecord, entry.isTransient,
-                        null /* icon */, true /* hasUserGesture */, true /* forceRebuild */,
-                        PendingState.NOT_PENDING);
+                        null /* icon */, true /* hasUserGesture */, true /* forceRebuild */);
                 return;
             }
         }
@@ -659,7 +652,7 @@ public class DownloadNotificationService2 {
             // if native is still working and it triggers an update, then the service will be
             // restarted.
             notifyDownloadPaused(entry.id, entry.fileName, true, true, false, entry.isTransient,
-                    null, false, false, PendingState.PENDING_NETWORK);
+                    null, false, false);
         }
     }
 

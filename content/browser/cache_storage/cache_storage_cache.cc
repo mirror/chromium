@@ -762,12 +762,6 @@ CacheStorageCache::CacheStorageCache(
   DCHECK(quota_manager_proxy_.get());
   DCHECK(cache_padding_key_.get());
 
-  if (cache_size_ != CacheStorage::kSizeUnknown &&
-      cache_padding_ != CacheStorage::kSizeUnknown) {
-    // The size of this cache has already been reported to the QuotaManager.
-    last_reported_size_ = cache_size_ + cache_padding_;
-  }
-
   quota_manager_proxy_->NotifyOriginInUse(origin_);
 }
 
@@ -1242,7 +1236,7 @@ void CacheStorageCache::Put(const CacheStorageBatchOperation& operation,
   std::unique_ptr<storage::BlobDataHandle> side_data_blob_data_handle;
 
   if (!response->blob_uuid.empty()) {
-    DCHECK(response->blob);
+    DCHECK_EQ(response->blob != nullptr, features::IsMojoBlobsEnabled());
     if (!blob_storage_context_) {
       std::move(callback).Run(CacheStorageError::kErrorStorage);
       return;
@@ -1255,7 +1249,8 @@ void CacheStorageCache::Put(const CacheStorageBatchOperation& operation,
     }
   }
   if (!response->side_data_blob_uuid.empty()) {
-    DCHECK(response->side_data_blob);
+    DCHECK_EQ(response->side_data_blob != nullptr,
+              features::IsMojoBlobsEnabled());
     if (!blob_storage_context_) {
       std::move(callback).Run(CacheStorageError::kErrorStorage);
       return;
@@ -1873,11 +1868,14 @@ CacheStorageCache::PopulateResponseBody(disk_cache::ScopedEntryPtr entry,
       temp_entry, INDEX_RESPONSE_BODY, INDEX_SIDE_DATA);
   auto result = blob_storage_context_->AddFinishedBlob(&blob_data);
 
-  blink::mojom::BlobPtr blob_ptr;
-  storage::BlobImpl::Create(std::make_unique<storage::BlobDataHandle>(*result),
-                            MakeRequest(&blob_ptr));
-  response->blob =
-      base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
+  if (features::IsMojoBlobsEnabled()) {
+    blink::mojom::BlobPtr blob_ptr;
+    storage::BlobImpl::Create(
+        std::make_unique<storage::BlobDataHandle>(*result),
+        MakeRequest(&blob_ptr));
+    response->blob =
+        base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
+  }
 
   return result;
 }

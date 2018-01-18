@@ -22,6 +22,7 @@
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/popup_item_ids.h"
 #include "components/autofill/core/browser/test_autofill_client.h"
+#include "components/autofill/core/browser/test_autofill_external_delegate.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/web_contents.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -243,7 +244,7 @@ TEST_F(AutofillPopupControllerUnitTest, RemoveLine) {
   // Generate a popup, so it can be hidden later. It doesn't matter what the
   // external_delegate thinks is being shown in the process, since we are just
   // testing the popup here.
-  test::GenerateTestAutofillPopup(external_delegate_.get());
+  autofill::GenerateTestAutofillPopup(external_delegate_.get());
 
   // No line is selected so the removal should fail.
   EXPECT_FALSE(autofill_popup_controller_->RemoveSelectedLine());
@@ -282,7 +283,7 @@ TEST_F(AutofillPopupControllerUnitTest, RemoveOnlyLine) {
   autofill_popup_controller_->Show(suggestions);
 
   // Generate a popup.
-  test::GenerateTestAutofillPopup(external_delegate_.get());
+  autofill::GenerateTestAutofillPopup(external_delegate_.get());
 
   // No selection immediately after drawing popup.
   EXPECT_FALSE(autofill_popup_controller_->selected_line());

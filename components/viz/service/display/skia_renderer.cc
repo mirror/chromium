@@ -22,7 +22,6 @@
 #include "components/viz/common/resources/resource_format_utils.h"
 #include "components/viz/service/display/output_surface.h"
 #include "components/viz/service/display/output_surface_frame.h"
-#include "components/viz/service/display/renderer_utils.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "skia/ext/opacity_filter_canvas.h"
 #include "third_party/skia/include/core/SkCanvas.h"
@@ -55,6 +54,23 @@
 #endif
 
 namespace viz {
+namespace {
+
+static inline bool IsScalarNearlyInteger(SkScalar scalar) {
+  return SkScalarNearlyZero(scalar - SkScalarRoundToScalar(scalar));
+}
+
+bool IsScaleAndIntegerTranslate(const SkMatrix& matrix) {
+  return IsScalarNearlyInteger(matrix[SkMatrix::kMTransX]) &&
+         IsScalarNearlyInteger(matrix[SkMatrix::kMTransY]) &&
+         SkScalarNearlyZero(matrix[SkMatrix::kMSkewX]) &&
+         SkScalarNearlyZero(matrix[SkMatrix::kMSkewY]) &&
+         SkScalarNearlyZero(matrix[SkMatrix::kMPersp0]) &&
+         SkScalarNearlyZero(matrix[SkMatrix::kMPersp1]) &&
+         SkScalarNearlyZero(matrix[SkMatrix::kMPersp2] - 1.0f);
+}
+
+}  // anonymous namespace
 
 SkiaRenderer::SkiaRenderer(const RendererSettings* settings,
                            OutputSurface* output_surface,
@@ -104,7 +120,7 @@ void SkiaRenderer::BeginDrawingFrame() {
     NOTIMPLEMENTED();
   } else {
     read_lock_fence =
-        base::MakeRefCounted<cc::DisplayResourceProvider::SynchronousFence>(
+        base::MakeRefCounted<cc::ResourceProvider::SynchronousFence>(
             output_surface_->context_provider()->ContextGL());
   }
   resource_provider_->SetReadLockFence(read_lock_fence.get());

@@ -39,20 +39,20 @@ enum ChromeDownloadSource {
   // The download was initiated by invoking a context menu within a page.
   DOWNLOAD_INITIATED_BY_CONTEXT_MENU,
 
-  // Formerly DOWNLOAD_INITIATED_BY_WEBSTORE_INSTALLER.
-  CHROME_DOWNLOAD_SOURCE_UNUSED_2,
+  // The download was initiated by the WebStore installer.
+  DOWNLOAD_INITIATED_BY_WEBSTORE_INSTALLER,
 
-  // Formerly DOWNLOAD_INITIATED_BY_IMAGE_BURNER.
-  CHROME_DOWNLOAD_SOURCE_UNUSED_3,
+  // The download was initiated by the ImageBurner (cros).
+  DOWNLOAD_INITIATED_BY_IMAGE_BURNER,
 
-  // Formerly DOWNLOAD_INITIATED_BY_PLUGIN_INSTALLER.
-  CHROME_DOWNLOAD_SOURCE_UNUSED_4,
+  // The download was initiated by the plugin installer.
+  DOWNLOAD_INITIATED_BY_PLUGIN_INSTALLER,
 
-  // The download was initiated by the PDF plugin.
+  // The download was initiated by the PDF plugin..
   DOWNLOAD_INITIATED_BY_PDF_SAVE,
 
-  // Formerly DOWNLOAD_INITIATED_BY_EXTENSION.
-  CHROME_DOWNLOAD_SOURCE_UNUSED_6,
+  // The download was initiated by chrome.downloads.download().
+  DOWNLOAD_INITIATED_BY_EXTENSION,
 
   CHROME_DOWNLOAD_SOURCE_LAST_ENTRY
 };

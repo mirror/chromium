@@ -9,6 +9,7 @@
 #include "base/auto_reset.h"
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/extensions/extension_ui_util.h"
 #include "chrome/browser/extensions/install_tracker.h"
 #include "chrome/browser/profiles/profile.h"
@@ -175,7 +176,7 @@ std::unique_ptr<ExtensionAppItem> ExtensionAppModelBuilder::CreateAppItem(
     const std::string& extension_name,
     const gfx::ImageSkia& installing_icon,
     bool is_platform_app) {
-  return std::make_unique<ExtensionAppItem>(
+  return base::MakeUnique<ExtensionAppItem>(
       profile(), GetSyncItem(extension_id), extension_id, extension_name,
       installing_icon, is_platform_app);
 }

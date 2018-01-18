@@ -4,7 +4,7 @@
 
 #include "chrome/browser/extensions/webstore_startup_installer.h"
 
-#include <memory>
+#include "base/memory/ptr_util.h"
 
 namespace extensions {
 
@@ -24,7 +24,7 @@ WebstoreStartupInstaller::~WebstoreStartupInstaller() {}
 std::unique_ptr<ExtensionInstallPrompt::Prompt>
 WebstoreStartupInstaller::CreateInstallPrompt() const {
   if (show_prompt_) {
-    return std::make_unique<ExtensionInstallPrompt::Prompt>(
+    return base::MakeUnique<ExtensionInstallPrompt::Prompt>(
         ExtensionInstallPrompt::INSTALL_PROMPT);
   }
   return NULL;

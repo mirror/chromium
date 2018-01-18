@@ -826,8 +826,14 @@ void ChromeUserManagerImpl::RegularUserLoggedIn(
                                    owner_account_id.GetUserEmail());
     SetOwnerId(owner_account_id);
   }
-  WallpaperControllerClient::Get()->ShowUserWallpaper(account_id);
+
+  if (IsCurrentUserNew())
+    WallpaperManager::Get()->ShowUserWallpaper(account_id);
+
   GetUserImageManager(account_id)->UserLoggedIn(IsCurrentUserNew(), false);
+
+  WallpaperManager::Get()->EnsureLoggedInUserWallpaperLoaded();
+
   // Make sure that new data is persisted to Local State.
   GetLocalState()->CommitPendingWrite();
 }
@@ -853,11 +859,15 @@ void ChromeUserManagerImpl::SupervisedUserLoggedIn(
   if (!GetActiveUser()) {
     SetIsCurrentUserNew(true);
     active_user_ = user_manager::User::CreateSupervisedUser(account_id);
+    // Leaving OAuth token status at the default state = unknown.
+    WallpaperManager::Get()->ShowUserWallpaper(account_id);
   } else {
-    if (supervised_user_manager_->CheckForFirstRun(account_id.GetUserEmail()))
+    if (supervised_user_manager_->CheckForFirstRun(account_id.GetUserEmail())) {
       SetIsCurrentUserNew(true);
-    else
+      WallpaperManager::Get()->ShowUserWallpaper(account_id);
+    } else {
       SetIsCurrentUserNew(false);
+    }
   }
 
   // Add the user to the front of the user list.
@@ -873,7 +883,7 @@ void ChromeUserManagerImpl::SupervisedUserLoggedIn(
   }
 
   GetUserImageManager(account_id)->UserLoggedIn(IsCurrentUserNew(), true);
-  WallpaperControllerClient::Get()->ShowUserWallpaper(account_id);
+  WallpaperManager::Get()->EnsureLoggedInUserWallpaperLoaded();
 
   // Make sure that new data is persisted to Local State.
   GetLocalState()->CommitPendingWrite();
@@ -892,9 +902,10 @@ void ChromeUserManagerImpl::PublicAccountUserLoggedIn(
   // For public account, it's possible that the user-policy controlled wallpaper
   // was fetched/cleared at the login screen (while for a regular user it was
   // always fetched/cleared inside a user session), in the case the user-policy
-  // controlled wallpaper was fetched/cleared but not updated in the login
-  // screen, we need to update the wallpaper after the public user logged in.
-  WallpaperControllerClient::Get()->ShowUserWallpaper(user->GetAccountId());
+  // controlled wallpaper was cached/cleared by not updated in the login screen,
+  // so we need to update the wallpaper after the public user logged in.
+  WallpaperManager::Get()->ShowUserWallpaper(user->GetAccountId());
+  WallpaperManager::Get()->EnsureLoggedInUserWallpaperLoaded();
 
   SetPublicAccountDelegates();
 }
@@ -1013,8 +1024,8 @@ void ChromeUserManagerImpl::NotifyOnLogin() {
 
 void ChromeUserManagerImpl::RemoveNonCryptohomeData(
     const AccountId& account_id) {
-  // Wallpaper removal depends on user preference, so it must happen before
-  // |known_user::RemovePrefs|. See https://crbug.com/778077.
+  ChromeUserManager::RemoveNonCryptohomeData(account_id);
+
   WallpaperControllerClient::Get()->RemoveUserWallpaper(account_id);
   GetUserImageManager(account_id)->DeleteUserImage();
   ExternalPrintersFactory::Get()->RemoveForUserId(account_id);
@@ -1024,8 +1035,6 @@ void ChromeUserManagerImpl::RemoveNonCryptohomeData(
   multi_profile_user_controller_->RemoveCachedValues(account_id.GetUserEmail());
 
   EasyUnlockService::ResetLocalStateForUser(account_id);
-
-  ChromeUserManager::RemoveNonCryptohomeData(account_id);
 }
 
 void ChromeUserManagerImpl::
@@ -1203,25 +1212,55 @@ void ChromeUserManagerImpl::ResetUserFlow(const AccountId& account_id) {
 }
 
 bool ChromeUserManagerImpl::AreSupervisedUsersAllowed() const {
-  return chrome_user_manager_util::AreSupervisedUsersAllowed(cros_settings_);
+  bool supervised_users_allowed = false;
+  cros_settings_->GetBoolean(kAccountsPrefSupervisedUsersEnabled,
+                             &supervised_users_allowed);
+  return supervised_users_allowed;
 }
 
 bool ChromeUserManagerImpl::IsGuestSessionAllowed() const {
-  return chrome_user_manager_util::IsGuestSessionAllowed(cros_settings_);
+  bool is_guest_allowed = false;
+  cros_settings_->GetBoolean(kAccountsPrefAllowGuest, &is_guest_allowed);
+  return is_guest_allowed;
 }
 
 bool ChromeUserManagerImpl::IsGaiaUserAllowed(
     const user_manager::User& user) const {
-  return chrome_user_manager_util::IsGaiaUserAllowed(user, cros_settings_);
+  DCHECK(user.HasGaiaAccount());
+  return CrosSettings::IsWhitelisted(user.GetAccountId().GetUserEmail(),
+                                     nullptr);
 }
 
 void ChromeUserManagerImpl::OnMinimumVersionStateChanged() {
   NotifyUsersSignInConstraintsChanged();
 }
 
+bool ChromeUserManagerImpl::MinVersionConstraintsSatisfied() const {
+  return g_browser_process->platform_part()
+      ->browser_policy_connector_chromeos()
+      ->GetMinimumVersionPolicyHandler()
+      ->RequirementsAreSatisfied();
+}
+
 bool ChromeUserManagerImpl::IsUserAllowed(
     const user_manager::User& user) const {
-  return chrome_user_manager_util::IsUserAllowed(user, cros_settings_);
+  DCHECK(user.GetType() == user_manager::USER_TYPE_REGULAR ||
+         user.GetType() == user_manager::USER_TYPE_GUEST ||
+         user.GetType() == user_manager::USER_TYPE_SUPERVISED ||
+         user.GetType() == user_manager::USER_TYPE_CHILD);
+
+  if (user.GetType() == user_manager::USER_TYPE_GUEST &&
+      !IsGuestSessionAllowed())
+    return false;
+  if (user.GetType() == user_manager::USER_TYPE_SUPERVISED &&
+      !AreSupervisedUsersAllowed())
+    return false;
+  if (user.HasGaiaAccount() && !IsGaiaUserAllowed(user))
+    return false;
+  if (!MinVersionConstraintsSatisfied() &&
+      user.GetType() != user_manager::USER_TYPE_GUEST)
+    return false;
+  return true;
 }
 
 UserFlow* ChromeUserManagerImpl::GetDefaultUserFlow() const {

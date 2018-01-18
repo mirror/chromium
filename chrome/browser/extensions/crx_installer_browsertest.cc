@@ -189,7 +189,7 @@ std::unique_ptr<ExtensionInstallPrompt> MockPromptProxy::CreatePrompt() {
 
 std::unique_ptr<MockPromptProxy> CreateMockPromptProxyForBrowser(
     Browser* browser) {
-  return std::make_unique<MockPromptProxy>(
+  return base::MakeUnique<MockPromptProxy>(
       browser->tab_strip_model()->GetActiveWebContents());
 }
 

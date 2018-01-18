@@ -39,6 +39,7 @@
 
 namespace blink {
 
+class GraphicsLayer;
 class LayoutPoint;
 class LayoutUnit;
 class LayoutObject;
@@ -56,8 +57,10 @@ class CORE_EXPORT RenderedPosition {
   bool IsEquivalent(const RenderedPosition&) const;
 
   bool IsNull() const { return !layout_object_; }
-  const RootInlineBox* RootBox() const {
-    return inline_box_ ? &inline_box_->Root() : nullptr;
+  // TODO(crbug.com/766448): Change return type to |const RootInlineBox*|.
+  RootInlineBox* RootBox() const {
+    return const_cast<RootInlineBox*>(inline_box_ ? &inline_box_->Root()
+                                                  : nullptr);
   }
 
   unsigned char BidiLevelOnLeft() const;
@@ -86,8 +89,8 @@ class CORE_EXPORT RenderedPosition {
 
   IntRect AbsoluteRect(LayoutUnit* extra_width_to_end_of_line = nullptr) const;
 
-  CompositedSelectionBound PositionInGraphicsLayerBacking(
-      bool selection_start) const;
+  void PositionInGraphicsLayerBacking(CompositedSelectionBound&,
+                                      bool selection_start) const;
 
   // Returns whether this position is not visible on the screen (because
   // clipped out).
@@ -112,10 +115,12 @@ class CORE_EXPORT RenderedPosition {
 
   void GetLocalSelectionEndpoints(bool selection_start,
                                   LayoutPoint& edge_top_in_layer,
-                                  LayoutPoint& edge_bottom_in_layer) const;
+                                  LayoutPoint& edge_bottom_in_layer,
+                                  bool& is_text_direction_rtl) const;
 
   FloatPoint LocalToInvalidationBackingPoint(
-      const LayoutPoint& local_point) const;
+      const LayoutPoint& local_point,
+      GraphicsLayer** graphics_layer_backing) const;
 
   static LayoutPoint GetSamplePointForVisibility(
       const LayoutPoint& edge_top_in_layer,

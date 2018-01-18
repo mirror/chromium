@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "ash/shell.h"
+#include "ash/system/system_notifier.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
@@ -56,8 +57,6 @@
 namespace chromeos {
 
 namespace {
-
-const char kNotifierNetworkPortalDetector[] = "ash.network.portal-detector";
 
 bool IsPortalNotificationEnabled() {
   return !base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -328,7 +327,7 @@ NetworkPortalNotificationController::CreateDefaultCaptivePortalNotification(
           std::string(), network->guid(), weak_factory_.GetWeakPtr()));
   message_center::NotifierId notifier_id(
       message_center::NotifierId::SYSTEM_COMPONENT,
-      kNotifierNetworkPortalDetector);
+      ash::system_notifier::kNotifierNetworkPortalDetector);
   bool is_wifi = NetworkTypePattern::WiFi().MatchesType(network->type());
   std::unique_ptr<message_center::Notification> notification =
       message_center::Notification::CreateSystemNotification(
@@ -359,7 +358,7 @@ NetworkPortalNotificationController::
           extension->id(), network->guid(), weak_factory_.GetWeakPtr()));
   message_center::NotifierId notifier_id(
       message_center::NotifierId::SYSTEM_COMPONENT,
-      kNotifierNetworkPortalDetector);
+      ash::system_notifier::kNotifierNetworkPortalDetector);
 
   extensions::NetworkingConfigService::AuthenticationResult
       authentication_result =

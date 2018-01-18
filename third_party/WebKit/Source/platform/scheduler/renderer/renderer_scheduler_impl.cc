@@ -170,8 +170,6 @@ const char* TaskTypeToString(TaskType task_type) {
       return "Unthrottled";
     case TaskType::kInternalTest:
       return "InternalTest";
-    case TaskType::kInternalWebCrypto:
-      return "InternalWebCrypto";
     case TaskType::kCount:
       return "Count";
   }
@@ -220,11 +218,9 @@ RendererSchedulerImpl::RendererSchedulerImpl(
                         compositor_task_queue_,
                         helper_.GetClock(),
                         helper_.NowTicks()),
-      any_thread_(this),
       policy_may_need_update_(&any_thread_lock_),
       weak_factory_(this) {
-  task_queue_throttler_.reset(
-      new TaskQueueThrottler(this, &tracing_controller_));
+  task_queue_throttler_.reset(new TaskQueueThrottler(this));
   update_policy_closure_ = base::Bind(&RendererSchedulerImpl::UpdatePolicy,
                                       weak_factory_.GetWeakPtr());
   end_renderer_hidden_idle_period_closure_.Reset(base::Bind(
@@ -324,148 +320,121 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       current_use_case(UseCase::kNone,
                        "RendererScheduler.UseCase",
                        renderer_scheduler_impl,
-                       &renderer_scheduler_impl->tracing_controller_,
                        UseCaseToString),
       longest_jank_free_task_duration(
           base::TimeDelta(),
           "RendererScheduler.LongestJankFreeTaskDuration",
           renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
           TimeDeltaToMilliseconds),
       renderer_pause_count(0,
                            "RendererScheduler.PauseCount",
-                           renderer_scheduler_impl,
-                           &renderer_scheduler_impl->tracing_controller_),
+                           renderer_scheduler_impl),
       navigation_task_expected_count(
           0,
           "RendererScheduler.NavigationTaskExpectedCount",
-          renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_),
+          renderer_scheduler_impl),
       expensive_task_policy(ExpensiveTaskPolicy::kRun,
                             "RendererScheduler.ExpensiveTaskPolicy",
                             renderer_scheduler_impl,
-                            &renderer_scheduler_impl->tracing_controller_,
                             ExpensiveTaskPolicyToString),
       rail_mode_for_tracing(current_policy.rail_mode(),
                             "RendererScheduler.RAILMode",
                             renderer_scheduler_impl,
-                            &renderer_scheduler_impl->tracing_controller_,
                             RAILModeToString),
       renderer_hidden(false,
                       "RendererScheduler.Hidden",
                       renderer_scheduler_impl,
-                      &renderer_scheduler_impl->tracing_controller_,
                       HiddenStateToString),
       renderer_backgrounded(false,
                             "RendererScheduler.Backgrounded",
                             renderer_scheduler_impl,
-                            &renderer_scheduler_impl->tracing_controller_,
                             BackgroundStateToString),
       stopping_when_backgrounded_enabled(
           false,
           "RendererScheduler.StoppingWhenBackgroundedEnabled",
           renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
           YesNoStateToString),
       stopped_when_backgrounded(
           false,
           "RendererScheduler.StoppedWhenBackgrounded",
           renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
           YesNoStateToString),
       was_shutdown(false,
                    "RendererScheduler.WasShutdown",
                    renderer_scheduler_impl,
-                   &renderer_scheduler_impl->tracing_controller_,
                    YesNoStateToString),
       loading_task_estimated_cost(
           base::TimeDelta(),
           "RendererScheduler.LoadingTaskEstimatedCostMs",
           renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
           TimeDeltaToMilliseconds),
       timer_task_estimated_cost(
           base::TimeDelta(),
           "RendererScheduler.TimerTaskEstimatedCostMs",
           renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
           TimeDeltaToMilliseconds),
       loading_tasks_seem_expensive(
           false,
           "RendererScheduler.LoadingTasksSeemExpensive",
           renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
           YesNoStateToString),
       timer_tasks_seem_expensive(false,
                                  "RendererScheduler.TimerTasksSeemExpensive",
                                  renderer_scheduler_impl,
-                                 &renderer_scheduler_impl->tracing_controller_,
                                  YesNoStateToString),
       touchstart_expected_soon(false,
                                "RendererScheduler.TouchstartExpectedSoon",
                                renderer_scheduler_impl,
-                               &renderer_scheduler_impl->tracing_controller_,
                                YesNoStateToString),
       have_seen_a_begin_main_frame(
           false,
           "RendererScheduler.HasSeenBeginMainFrame",
           renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
           YesNoStateToString),
       have_reported_blocking_intervention_in_current_policy(
           false,
           "RendererScheduler.HasReportedBlockingInterventionInCurrentPolicy",
           renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
           YesNoStateToString),
       have_reported_blocking_intervention_since_navigation(
           false,
           "RendererScheduler.HasReportedBlockingInterventionSinceNavigation",
           renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
           YesNoStateToString),
       has_visible_render_widget_with_touch_handler(
           false,
           "RendererScheduler.HasVisibleRenderWidgetWithTouchHandler",
           renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
           YesNoStateToString),
       begin_frame_not_expected_soon(
           false,
           "RendererScheduler.BeginFrameNotExpectedSoon",
           renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
           YesNoStateToString),
       in_idle_period_for_testing(false,
                                  "RendererScheduler.InIdlePeriod",
                                  renderer_scheduler_impl,
-                                 &renderer_scheduler_impl->tracing_controller_,
                                  YesNoStateToString),
       use_virtual_time(false,
                        "RendererScheduler.UseVirtualTime",
                        renderer_scheduler_impl,
-                       &renderer_scheduler_impl->tracing_controller_,
                        YesNoStateToString),
       is_audio_playing(false,
                        "RendererScheduler.AudioPlaying",
                        renderer_scheduler_impl,
-                       &renderer_scheduler_impl->tracing_controller_,
                        AudioPlayingStateToString),
       compositor_will_send_main_frame_not_expected(
           false,
           "RendererScheduler.CompositorWillSendMainFrameNotExpected",
           renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
           YesNoStateToString),
       has_navigated(false,
                     "RendererScheduler.HasNavigated",
                     renderer_scheduler_impl,
-                    &renderer_scheduler_impl->tracing_controller_,
                     YesNoStateToString),
       pause_timers_for_webview(false,
                                "RendererScheduler.PauseTimersForWebview",
                                renderer_scheduler_impl,
-                               &renderer_scheduler_impl->tracing_controller_,
                                YesNoStateToString),
       background_status_changed_at(now),
       rail_mode_observer(nullptr),
@@ -474,14 +443,11 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       process_type(RendererProcessType::kRenderer,
                    "RendererScheduler.ProcessType",
                    renderer_scheduler_impl,
-                   &renderer_scheduler_impl->tracing_controller_,
                    RendererProcessTypeToString),
-      task_description_for_tracing(
-          base::nullopt,
-          "RendererScheduler.MainThreadTask",
-          renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
-          OptionalTaskDescriptionToString),
+      task_description_for_tracing(base::nullopt,
+                                   "RendererScheduler.MainThreadTask",
+                                   renderer_scheduler_impl,
+                                   OptionalTaskDescriptionToString),
       virtual_time_policy(VirtualTimePolicy::kAdvance),
       virtual_time_pause_count(0),
       max_virtual_time_task_starvation_count(0),
@@ -490,56 +456,15 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
 
 RendererSchedulerImpl::MainThreadOnly::~MainThreadOnly() = default;
 
-RendererSchedulerImpl::AnyThread::AnyThread(
-    RendererSchedulerImpl* renderer_scheduler_impl)
-    : awaiting_touch_start_response(
-          false,
-          "RendererScheduler.AwaitingTouchstartResponse",
-          renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
-          YesNoStateToString),
-      in_idle_period(
-          false,
-          "RendererScheduler.InIdlePeriod",
-          renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
-          YesNoStateToString),
-      begin_main_frame_on_critical_path(
-          false,
-          "RendererScheduler.BeginMainFrameOnCriticalPath",
-          renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
-          YesNoStateToString),
-      last_gesture_was_compositor_driven(
-          false,
-          "RendererScheduler.LastGestureWasCompositorDriven",
-          renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
-          YesNoStateToString),
-      default_gesture_prevented(
-          true,
-          "RendererScheduler.DefaultGesturePrevented",
-          renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
-          YesNoStateToString),
-      have_seen_a_potentially_blocking_gesture(
-          false,
-          "RendererScheduler.HaveSeenPotentiallyBlockingGesture",
-          renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
-          YesNoStateToString),
-      waiting_for_meaningful_paint(
-          false,
-          "RendererScheduler.WaitingForMeaningfulPaint",
-          renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
-          YesNoStateToString),
-      have_seen_input_since_navigation(
-          false,
-          "RendererScheduler.HaveSeenInputSinceNavigation",
-          renderer_scheduler_impl,
-          &renderer_scheduler_impl->tracing_controller_,
-          YesNoStateToString) {}
+RendererSchedulerImpl::AnyThread::AnyThread()
+    : awaiting_touch_start_response(false),
+      in_idle_period(false),
+      begin_main_frame_on_critical_path(false),
+      last_gesture_was_compositor_driven(false),
+      default_gesture_prevented(true),
+      have_seen_a_potentially_blocking_gesture(false),
+      waiting_for_meaningful_paint(false),
+      have_seen_input_since_navigation(false) {}
 
 RendererSchedulerImpl::AnyThread::~AnyThread() = default;
 
@@ -1770,10 +1695,6 @@ base::TimeTicks RendererSchedulerImpl::EnableVirtualTime() {
   return main_thread_only().initial_virtual_time;
 }
 
-bool RendererSchedulerImpl::IsVirualTimeEnabled() const {
-  return main_thread_only().use_virtual_time;
-}
-
 void RendererSchedulerImpl::DisableVirtualTimeForTesting() {
   if (!main_thread_only().use_virtual_time)
     return;
@@ -1840,13 +1761,9 @@ bool RendererSchedulerImpl::VirtualTimeAllowedToAdvance() const {
   return !main_thread_only().virtual_time_stopped;
 }
 
-base::TimeTicks RendererSchedulerImpl::IncrementVirtualTimePauseCount() {
+void RendererSchedulerImpl::IncrementVirtualTimePauseCount() {
   main_thread_only().virtual_time_pause_count++;
   ApplyVirtualTimePolicy();
-
-  if (virtual_time_domain_)
-    return virtual_time_domain_->Now();
-  return tick_clock()->NowTicks();
 }
 
 void RendererSchedulerImpl::DecrementVirtualTimePauseCount() {
@@ -1855,15 +1772,22 @@ void RendererSchedulerImpl::DecrementVirtualTimePauseCount() {
   ApplyVirtualTimePolicy();
 }
 
-void RendererSchedulerImpl::MaybeAdvanceVirtualTime(
-    base::TimeTicks new_virtual_time) {
-  if (virtual_time_domain_)
-    virtual_time_domain_->MaybeAdvanceVirtualTime(new_virtual_time);
-}
-
 void RendererSchedulerImpl::SetVirtualTimePolicy(VirtualTimePolicy policy) {
   main_thread_only().virtual_time_policy = policy;
-  ApplyVirtualTimePolicy();
+
+  switch (policy) {
+    case VirtualTimePolicy::kAdvance:
+      SetVirtualTimeStopped(false);
+      break;
+
+    case VirtualTimePolicy::kPause:
+      SetVirtualTimeStopped(true);
+      break;
+
+    case VirtualTimePolicy::kDeterministicLoading:
+      ApplyVirtualTimePolicy();
+      break;
+  }
 }
 
 void RendererSchedulerImpl::AddVirtualTimeObserver(
@@ -1877,6 +1801,8 @@ void RendererSchedulerImpl::RemoveVirtualTimeObserver(
 }
 
 void RendererSchedulerImpl::OnVirtualTimeAdvanced() {
+  DCHECK(!main_thread_only().virtual_time_stopped);
+
   for (auto& observer : main_thread_only().virtual_time_observers) {
     observer.OnVirtualTimeAdvanced(virtual_time_domain_->Now() -
                                    main_thread_only().initial_virtual_time);
@@ -1891,15 +1817,12 @@ void RendererSchedulerImpl::ApplyVirtualTimePolicy() {
             main_thread_only().nested_runloop
                 ? 0
                 : main_thread_only().max_virtual_time_task_starvation_count);
-        virtual_time_domain_->SetVirtualTimeFence(base::TimeTicks());
       }
       SetVirtualTimeStopped(false);
       break;
     case VirtualTimePolicy::kPause:
-      if (virtual_time_domain_) {
+      if (virtual_time_domain_)
         virtual_time_domain_->SetMaxVirtualTimeTaskStarvationCount(0);
-        virtual_time_domain_->SetVirtualTimeFence(virtual_time_domain_->Now());
-      }
       SetVirtualTimeStopped(true);
       break;
     case VirtualTimePolicy::kDeterministicLoading:
@@ -2427,12 +2350,10 @@ void RendererSchedulerImpl::OnTaskStarted(MainThreadTaskQueue* queue,
       TaskDescriptionForTracing{task.task_type(), queue->queue_type()};
 }
 
-void RendererSchedulerImpl::OnTaskCompleted(
-    MainThreadTaskQueue* queue,
-    const TaskQueue::Task& task,
-    base::TimeTicks start,
-    base::TimeTicks end,
-    base::Optional<base::TimeDelta> thread_time) {
+void RendererSchedulerImpl::OnTaskCompleted(MainThreadTaskQueue* queue,
+                                            const TaskQueue::Task& task,
+                                            base::TimeTicks start,
+                                            base::TimeTicks end) {
   DCHECK_LE(start, end);
   seqlock_queueing_time_estimator_.seqlock.WriteBegin();
   seqlock_queueing_time_estimator_.data.OnTopLevelTaskCompleted(end);
@@ -2441,8 +2362,7 @@ void RendererSchedulerImpl::OnTaskCompleted(
   task_queue_throttler()->OnTaskRunTimeReported(queue, start, end);
 
   // TODO(altimin): Per-page metrics should also be considered.
-  main_thread_only().metrics_helper.RecordTaskMetrics(queue, task, start, end,
-                                                      thread_time);
+  main_thread_only().metrics_helper.RecordTaskMetrics(queue, task, start, end);
   main_thread_only().task_description_for_tracing = base::nullopt;
 }
 
@@ -2555,9 +2475,44 @@ TimeDomain* RendererSchedulerImpl::GetActiveTimeDomain() {
 
 void RendererSchedulerImpl::OnTraceLogEnabled() {
   CreateTraceEventObjectSnapshot();
-  tracing_controller_.OnTraceLogEnabled();
+
+  // TODO(kraynov): Create auto-registration mechanism.
+  main_thread_only().current_use_case.OnTraceLogEnabled();
+  main_thread_only().longest_jank_free_task_duration.Trace();
+  main_thread_only().renderer_pause_count.Trace();
+  main_thread_only().navigation_task_expected_count.Trace();
+  main_thread_only().expensive_task_policy.OnTraceLogEnabled();
+  main_thread_only().rail_mode_for_tracing.OnTraceLogEnabled();
+  main_thread_only().renderer_hidden.OnTraceLogEnabled();
+  main_thread_only().renderer_backgrounded.OnTraceLogEnabled();
+  main_thread_only().stopping_when_backgrounded_enabled.OnTraceLogEnabled();
+  main_thread_only().stopped_when_backgrounded.OnTraceLogEnabled();
+  main_thread_only().was_shutdown.OnTraceLogEnabled();
+  main_thread_only().loading_task_estimated_cost.Trace();
+  main_thread_only().timer_task_estimated_cost.Trace();
+  main_thread_only().loading_tasks_seem_expensive.OnTraceLogEnabled();
+  main_thread_only().timer_tasks_seem_expensive.OnTraceLogEnabled();
+  main_thread_only().touchstart_expected_soon.OnTraceLogEnabled();
+  main_thread_only().have_seen_a_begin_main_frame.OnTraceLogEnabled();
+  main_thread_only().have_reported_blocking_intervention_in_current_policy.
+      OnTraceLogEnabled();
+  main_thread_only().have_reported_blocking_intervention_since_navigation.
+      OnTraceLogEnabled();
+  main_thread_only().has_visible_render_widget_with_touch_handler.
+      OnTraceLogEnabled();
+  main_thread_only().begin_frame_not_expected_soon.OnTraceLogEnabled();
+  main_thread_only().in_idle_period_for_testing.OnTraceLogEnabled();
+  main_thread_only().use_virtual_time.OnTraceLogEnabled();
+  main_thread_only().is_audio_playing.OnTraceLogEnabled();
+  main_thread_only().compositor_will_send_main_frame_not_expected.
+      OnTraceLogEnabled();
+  main_thread_only().has_navigated.OnTraceLogEnabled();
+  main_thread_only().pause_timers_for_webview.OnTraceLogEnabled();
+  main_thread_only().process_type.OnTraceLogEnabled();
+  main_thread_only().task_description_for_tracing.OnTraceLogEnabled();
+
   for (WebViewSchedulerImpl* web_view_scheduler :
-      main_thread_only().web_view_schedulers) {
+       main_thread_only().web_view_schedulers) {
     web_view_scheduler->OnTraceLogEnabled();
   }
 }

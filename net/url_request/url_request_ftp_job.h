@@ -81,7 +81,7 @@ class NET_EXPORT_PRIVATE URLRequestFtpJob : public URLRequestJob {
 
   ProxyService* proxy_service_;
   ProxyInfo proxy_info_;
-  ProxyService::Request* proxy_resolve_request_;
+  ProxyService::PacRequest* pac_request_;
 
   FtpRequestInfo ftp_request_info_;
   std::unique_ptr<FtpTransaction> ftp_transaction_;

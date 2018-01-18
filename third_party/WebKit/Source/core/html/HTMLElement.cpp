@@ -600,7 +600,7 @@ void HTMLElement::ParseAttribute(const AttributeModificationParams& params) {
   if (triggers->web_feature != kNoWebFeature) {
     // Count usage of attributes but ignore attributes in user agent shadow DOM.
     if (ShadowRoot* shadow = ContainingShadowRoot()) {
-      if (shadow->IsUserAgent())
+      if (shadow->GetType() != ShadowRootType::kUserAgent)
         UseCounter::Count(GetDocument(), triggers->web_feature);
     }
   }

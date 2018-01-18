@@ -116,7 +116,7 @@ void SocketAsyncApiFunction::OpenFirewallHole(const std::string& address,
                                               int socket_id,
                                               Socket* socket) {
 #if defined(OS_CHROMEOS)
-  if (!net::HostStringIsLocalhost(address)) {
+  if (!net::IsLocalhost(address)) {
     net::IPEndPoint local_address;
     if (!socket->GetLocalAddress(&local_address)) {
       NOTREACHED() << "Cannot get address of recently bound socket.";

@@ -177,13 +177,13 @@ bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
     }
   } else if (pixmap->AreDmaBufFdsValid()) {
     if (!ValidFormat(format)) {
-      LOG(ERROR) << "Invalid format: " << gfx::BufferFormatToString(format);
+      LOG(ERROR) << "Invalid format: " << static_cast<int>(format);
       return false;
     }
 
     if (!ValidInternalFormat(internalformat_, format)) {
       LOG(ERROR) << "Invalid internalformat: " << internalformat_
-                 << " for format: " << gfx::BufferFormatToString(format);
+                 << " for format: " << static_cast<int>(format);
       return false;
     }
 
@@ -250,9 +250,13 @@ bool GLImageNativePixmap::InitializeFromTexture(uint32_t texture_id) {
       reinterpret_cast<EGLContext>(current_context->GetHandle());
   DCHECK_NE(context_handle, EGL_NO_CONTEXT);
 
-  return GLImageEGL::Initialize(context_handle, EGL_GL_TEXTURE_2D_KHR,
-                                reinterpret_cast<EGLClientBuffer>(texture_id),
-                                nullptr);
+  if (!GLImageEGL::Initialize(context_handle, EGL_GL_TEXTURE_2D_KHR,
+                              reinterpret_cast<EGLClientBuffer>(texture_id),
+                              nullptr)) {
+    return false;
+  }
+
+  return true;
 }
 
 gfx::NativePixmapHandle GLImageNativePixmap::ExportHandle() {

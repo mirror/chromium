@@ -198,14 +198,4 @@ public class BackgroundTaskSchedulerUmaTest {
                 .cacheEvent(eq("Android.BackgroundTaskScheduler.TaskStopped"),
                         eq(BackgroundTaskSchedulerUma.BACKGROUND_TASK_GCM));
     }
-
-    @Test
-    @Feature({"BackgroundTaskScheduler"})
-    public void testReportTaskStartedNative() {
-        doNothing().when(mUmaSpy).cacheEvent(anyString(), anyInt());
-        BackgroundTaskSchedulerExternalUma.reportTaskStartedNative(TaskIds.DOWNLOAD_SERVICE_JOB_ID);
-        verify(mUmaSpy, times(1))
-                .cacheEvent(eq("Android.BackgroundTaskScheduler.TaskLoadedNative"),
-                        eq(BackgroundTaskSchedulerUma.BACKGROUND_TASK_DOWNLOAD_SERVICE));
-    }
 }

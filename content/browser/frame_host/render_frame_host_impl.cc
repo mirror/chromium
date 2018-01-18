@@ -11,6 +11,7 @@
 #include "base/command_line.h"
 #include "base/containers/hash_tables.h"
 #include "base/containers/queue.h"
+#include "base/debug/crash_logging.h"
 #include "base/feature_list.h"
 #include "base/lazy_instance.h"
 #include "base/memory/ptr_util.h"
@@ -53,7 +54,6 @@
 #include "content/browser/keyboard_lock/keyboard_lock_service_impl.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/loader/resource_scheduler_filter.h"
-#include "content/browser/media/capture/audio_mirroring_manager.h"
 #include "content/browser/media/media_interface_proxy.h"
 #include "content/browser/media/session/media_session_service_impl.h"
 #include "content/browser/payments/payment_app_context_impl.h"
@@ -63,7 +63,6 @@
 #include "content/browser/renderer_host/dip_util.h"
 #include "content/browser/renderer_host/input/input_router.h"
 #include "content/browser/renderer_host/input/timeout_monitor.h"
-#include "content/browser/renderer_host/media/audio_input_delegate_impl.h"
 #include "content/browser/renderer_host/media/media_devices_dispatcher_host.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/renderer_host/render_view_host_delegate.h"
@@ -128,9 +127,7 @@
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_utils.h"
 #include "device/vr/vr_service.mojom.h"
-#include "media/audio/audio_manager.h"
 #include "media/base/media_switches.h"
-#include "media/base/user_input_monitor.h"
 #include "media/media_features.h"
 #include "media/mojo/interfaces/remoting.mojom.h"
 #include "media/mojo/services/media_interface_provider.h"
@@ -303,15 +300,12 @@ void CreateFrameResourceCoordinator(
       std::move(request));
 }
 
-using FrameCallback =
-    base::RepeatingCallback<void(ResourceDispatcherHostImpl*,
-                                 const GlobalFrameRoutingId&)>;
-
 // The following functions simplify code paths where the UI thread notifies the
 // ResourceDispatcherHostImpl of information pertaining to loading behavior of
 // frame hosts.
 void NotifyRouteChangesOnIO(
-    const FrameCallback& frame_callback,
+    base::Callback<void(ResourceDispatcherHostImpl*,
+                        const GlobalFrameRoutingId&)> frame_callback,
     std::unique_ptr<std::set<GlobalFrameRoutingId>> routing_ids) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   ResourceDispatcherHostImpl* rdh = ResourceDispatcherHostImpl::Get();
@@ -321,8 +315,10 @@ void NotifyRouteChangesOnIO(
     frame_callback.Run(rdh, routing_id);
 }
 
-void NotifyForEachFrameFromUI(RenderFrameHost* root_frame_host,
-                              const FrameCallback& frame_callback) {
+void NotifyForEachFrameFromUI(
+    RenderFrameHost* root_frame_host,
+    base::Callback<void(ResourceDispatcherHostImpl*,
+                        const GlobalFrameRoutingId&)> frame_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   FrameTree* frame_tree = static_cast<RenderFrameHostImpl*>(root_frame_host)
@@ -330,7 +326,8 @@ void NotifyForEachFrameFromUI(RenderFrameHost* root_frame_host,
                               ->frame_tree();
   DCHECK_EQ(root_frame_host, frame_tree->GetMainFrame());
 
-  auto routing_ids = std::make_unique<std::set<GlobalFrameRoutingId>>();
+  std::unique_ptr<std::set<GlobalFrameRoutingId>> routing_ids(
+      new std::set<GlobalFrameRoutingId>());
   for (FrameTreeNode* node : frame_tree->Nodes()) {
     RenderFrameHostImpl* frame_host = node->current_frame_host();
     RenderFrameHostImpl* pending_frame_host =
@@ -1433,7 +1430,7 @@ void RenderFrameHostImpl::OnOpenURL(const FrameHostMsg_OpenURL_Params& params) {
       this, validated_url, params.uses_post, params.resource_request_body,
       params.extra_headers, params.referrer, params.disposition,
       params.should_replace_current_entry, params.user_gesture,
-      params.triggering_event_info, params.suggested_filename);
+      params.triggering_event_info);
 }
 
 void RenderFrameHostImpl::CancelInitialHistoryLoad() {
@@ -2208,21 +2205,20 @@ int RenderFrameHostImpl::GetEnabledBindings() const {
 void RenderFrameHostImpl::BlockRequestsForFrame() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   NotifyForEachFrameFromUI(
-      this,
-      base::BindRepeating(&ResourceDispatcherHostImpl::BlockRequestsForRoute));
+      this, base::Bind(&ResourceDispatcherHostImpl::BlockRequestsForRoute));
 }
 
 void RenderFrameHostImpl::ResumeBlockedRequestsForFrame() {
   NotifyForEachFrameFromUI(
-      this, base::BindRepeating(
-                &ResourceDispatcherHostImpl::ResumeBlockedRequestsForRoute));
+      this,
+      base::Bind(&ResourceDispatcherHostImpl::ResumeBlockedRequestsForRoute));
 }
 
 void RenderFrameHostImpl::CancelBlockedRequestsForFrame() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   NotifyForEachFrameFromUI(
-      this, base::BindRepeating(
-                &ResourceDispatcherHostImpl::CancelBlockedRequestsForRoute));
+      this,
+      base::Bind(&ResourceDispatcherHostImpl::CancelBlockedRequestsForRoute));
 }
 
 void RenderFrameHostImpl::DisableBeforeUnloadHangMonitorForTesting() {
@@ -2299,11 +2295,6 @@ void RenderFrameHostImpl::OnDidAddContentSecurityPolicies(
 void RenderFrameHostImpl::EnforceInsecureRequestPolicy(
     blink::WebInsecureRequestPolicy policy) {
   frame_tree_node()->SetInsecureRequestPolicy(policy);
-}
-
-void RenderFrameHostImpl::EnforceInsecureNavigationsSet(
-    const std::vector<uint32_t>& set) {
-  frame_tree_node()->SetInsecureNavigationsSet(set);
 }
 
 FrameTreeNode* RenderFrameHostImpl::FindAndVerifyChild(
@@ -2453,7 +2444,6 @@ void RenderFrameHostImpl::OnAccessibilityEvents(
       detail.id = param.id;
       detail.ax_tree_id = GetAXTreeID();
       detail.event_from = param.event_from;
-      detail.action_request_id = param.action_request_id;
       if (param.update.has_tree_data) {
         detail.update.has_tree_data = true;
         ax_content_tree_data_ = param.update.tree_data;
@@ -2551,7 +2541,6 @@ void RenderFrameHostImpl::OnAccessibilityFindInPageResult(
 }
 
 void RenderFrameHostImpl::OnAccessibilityChildFrameHitTestResult(
-    int action_request_id,
     const gfx::Point& point,
     int child_frame_routing_id,
     int child_frame_browser_plugin_instance_id,
@@ -2575,7 +2564,6 @@ void RenderFrameHostImpl::OnAccessibilityChildFrameHitTestResult(
     return;
 
   ui::AXActionData action_data;
-  action_data.request_id = action_request_id;
   action_data.target_point = point;
   action_data.action = ui::AX_ACTION_HIT_TEST;
   action_data.hit_test_event_to_fire = event_to_fire;
@@ -2764,12 +2752,12 @@ void RenderFrameHostImpl::OnSetHasReceivedUserGestureBeforeNavigation(
 
 void RenderFrameHostImpl::OnScrollRectToVisibleInParentFrame(
     const gfx::Rect& rect_to_scroll,
-    const blink::WebScrollIntoViewParams& params) {
+    const blink::WebRemoteScrollProperties& properties) {
   RenderFrameProxyHost* proxy =
       frame_tree_node_->render_manager()->GetProxyToParent();
   if (!proxy)
     return;
-  proxy->ScrollRectToVisible(rect_to_scroll, params);
+  proxy->ScrollRectToVisible(rect_to_scroll, properties);
 }
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
@@ -3139,12 +3127,6 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   registry_->AddInterface<device::mojom::VRService>(base::Bind(
       &WebvrServiceProvider::BindWebvrService, base::Unretained(this)));
 
-  if (RenderFrameAudioInputStreamFactory::UseMojoFactories()) {
-    registry_->AddInterface(
-        base::BindRepeating(&RenderFrameHostImpl::CreateAudioInputStreamFactory,
-                            base::Unretained(this)));
-  }
-
   if (RendererAudioOutputStreamFactoryContextImpl::UseMojoFactories()) {
     registry_->AddInterface(base::BindRepeating(
         &RenderFrameHostImpl::CreateAudioOutputStreamFactory,
@@ -3251,7 +3233,9 @@ bool RenderFrameHostImpl::CanCommitOrigin(
   }
 
   // It is safe to commit into a unique origin, regardless of the URL, as it is
-  // restricted from accessing other origins.
+  // restricted from accessing other origins.  Note that all error pages commit
+  // as a unique origin - this helps avoid renderer kills when
+  // ERR_BLOCKED_BY_CLIENT commits in an unexpected renderer process.
   if (origin.unique())
     return true;
 
@@ -3263,6 +3247,34 @@ bool RenderFrameHostImpl::CanCommitOrigin(
   // A non-unique origin must be a valid URL, which allows us to safely do a
   // conversion to GURL.
   GURL origin_url = origin.GetPhysicalOrigin().GetURL();
+
+  // Check the origin against the (potential) origin lock of the current
+  // process.
+  // TODO(lukasza): https://crbug.com/770239: Expand the check to cover other
+  // verifications from RenderProcessHostImpl::IsSuitableHost (e.g. WebUI
+  // bindings, extension process privilege level, etc.).  Avoid duplicating
+  // the code here and in IsSuitableHost.
+  BrowserContext* browser_context = GetSiteInstance()->GetBrowserContext();
+  GURL site_url = SiteInstance::GetSiteForURL(browser_context, origin_url);
+  auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
+  switch (policy->CheckOriginLock(GetProcess()->GetID(), site_url)) {
+    case ChildProcessSecurityPolicyImpl::CheckOriginLockResult::HAS_EQUAL_LOCK:
+      break;
+    case ChildProcessSecurityPolicyImpl::CheckOriginLockResult::HAS_WRONG_LOCK:
+      // If the process is locked to an origin, disallow reusing this process
+      // for a different origin.
+      base::debug::SetCrashKeyString(bad_message::GetRequestedSiteURLKey(),
+                                     site_url.possibly_invalid_spec());
+      return false;
+    case ChildProcessSecurityPolicyImpl::CheckOriginLockResult::NO_LOCK:
+      // TODO(lukasza): https://crbug.com/794315: Return false if
+      // ShouldLockToOrigin(site_url) returns true, similarily to how this is
+      // done by RenderProcessHostImpl::IsSuitableHost.  We don't do this here,
+      // because this breaks hosted apps (which can return
+      // !ShouldLockToOrigin(full_url_with_path, but here they would return
+      // ShouldLockToOrigin(origin_only_part_of_url)).
+      break;
+  }
 
   // Verify that the origin is allowed to commit in this process.
   // Note: This also handles non-standard cases for |url|, such as
@@ -3426,7 +3438,7 @@ void RenderFrameHostImpl::SendJavaScriptDialogReply(
 }
 
 void RenderFrameHostImpl::CommitNavigation(
-    network::ResourceResponse* response,
+    ResourceResponse* response,
     mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
     std::unique_ptr<StreamHandle> body,
     const CommonNavigationParams& common_params,
@@ -3455,10 +3467,10 @@ void RenderFrameHostImpl::CommitNavigation(
   if (common_params.url.SchemeIs(url::kJavaScriptScheme)) {
     DCHECK(!url_loader_client_endpoints && !body);
     GetNavigationControl()->CommitNavigation(
-        network::ResourceResponseHead(), GURL(), common_params, request_params,
+        ResourceResponseHead(), GURL(), common_params, request_params,
         mojom::URLLoaderClientEndpointsPtr(),
         /*subresource_loader_factories=*/base::nullopt,
-        /*controller_service_worker=*/nullptr, devtools_navigation_token);
+        devtools_navigation_token);
     return;
   }
 
@@ -3476,13 +3488,13 @@ void RenderFrameHostImpl::CommitNavigation(
   }
 
   const GURL body_url = body.get() ? body->GetURL() : GURL();
-  const network::ResourceResponseHead head =
-      response ? response->head : network::ResourceResponseHead();
+  const ResourceResponseHead head = response ?
+      response->head : ResourceResponseHead();
   const bool is_same_document =
       FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type);
 
+  // TODO(scottmg): Pass a factory for SW, etc. once we have one.
   base::Optional<URLLoaderFactoryBundle> subresource_loader_factories;
-  mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info;
   if (base::FeatureList::IsEnabled(features::kNetworkService) &&
       (!is_same_document || is_first_navigation)) {
     subresource_loader_factories.emplace();
@@ -3569,12 +3581,6 @@ void RenderFrameHostImpl::CommitNavigation(
       subresource_loader_factories->RegisterFactory(factory.first,
                                                     std::move(factory_proxy));
     }
-
-    // Pass the controller service worker info if we have one.
-    if (subresource_loader_params) {
-      controller_service_worker_info =
-          std::move(subresource_loader_params->controller_service_worker_info);
-    }
   }
 
   // It is imperative that cross-document navigations always provide a set of
@@ -3586,8 +3592,7 @@ void RenderFrameHostImpl::CommitNavigation(
   GetNavigationControl()->CommitNavigation(
       head, body_url, common_params, request_params,
       std::move(url_loader_client_endpoints),
-      std::move(subresource_loader_factories),
-      std::move(controller_service_worker_info), devtools_navigation_token);
+      std::move(subresource_loader_factories), devtools_navigation_token);
 
   // If a network request was made, update the Previews state.
   if (IsURLHandledByNetworkStack(common_params.url) &&
@@ -4046,7 +4051,7 @@ void RenderFrameHostImpl::GrantFileAccessFromPageState(const PageState& state) {
 }
 
 void RenderFrameHostImpl::GrantFileAccessFromResourceRequestBody(
-    const network::ResourceRequestBody& body) {
+    const ResourceRequestBody& body) {
   GrantFileAccess(GetProcess()->GetID(), body.GetReferencedFiles());
 }
 
@@ -4249,20 +4254,6 @@ void RenderFrameHostImpl::ResetFeaturePolicy() {
       frame_tree_node()->effective_frame_policy().container_policy;
   feature_policy_ = blink::FeaturePolicy::CreateFromParentPolicy(
       parent_policy, container_policy, last_committed_origin_);
-}
-
-void RenderFrameHostImpl::CreateAudioInputStreamFactory(
-    mojom::RendererAudioInputStreamFactoryRequest request) {
-  BrowserMainLoop* browser_main_loop = BrowserMainLoop::GetInstance();
-  DCHECK(browser_main_loop);
-  audio_input_stream_factory_ =
-      RenderFrameAudioInputStreamFactoryHandle::CreateFactory(
-          base::BindRepeating(&AudioInputDelegateImpl::Create,
-                              media::AudioManager::Get(),
-                              AudioMirroringManager::GetInstance(),
-                              browser_main_loop->user_input_monitor(),
-                              GetProcess()->GetID(), GetRoutingID()),
-          browser_main_loop->media_stream_manager(), std::move(request));
 }
 
 void RenderFrameHostImpl::CreateAudioOutputStreamFactory(

@@ -6,9 +6,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include <memory>
-
 #include "base/mac/foundation_util.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/extensions/extension_view_host.h"
 #import "chrome/browser/ui/cocoa/chrome_event_processing_window.h"
 #include "content/public/browser/render_view_host.h"
@@ -105,7 +104,7 @@ namespace extensions {
 std::unique_ptr<ExtensionView> ExtensionViewHost::CreateExtensionView(
     ExtensionViewHost* host,
     Browser* browser) {
-  return std::make_unique<ExtensionViewMac>(host, browser);
+  return base::MakeUnique<ExtensionViewMac>(host, browser);
 }
 
 }  // namespace extensions

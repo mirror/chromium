@@ -85,7 +85,7 @@ class InheritedScaleChecker
 
 class CSSScaleNonInterpolableValue : public NonInterpolableValue {
  public:
-  ~CSSScaleNonInterpolableValue() final = default;
+  ~CSSScaleNonInterpolableValue() final {}
 
   static scoped_refptr<CSSScaleNonInterpolableValue> Create(
       const Scale& scale) {

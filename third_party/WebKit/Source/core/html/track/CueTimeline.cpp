@@ -5,8 +5,8 @@
 #include "core/html/track/CueTimeline.h"
 
 #include "core/dom/events/Event.h"
+#include "core/html/HTMLTrackElement.h"
 #include "core/html/media/HTMLMediaElement.h"
-#include "core/html/track/HTMLTrackElement.h"
 #include "core/html/track/LoadableTextTrack.h"
 #include "core/html/track/TextTrack.h"
 #include "core/html/track/TextTrackCue.h"
@@ -141,10 +141,9 @@ void CueTimeline::UpdateActiveCues(double movie_time) {
   // whenever ... the media element's readyState is changed back to
   // kHaveNothing.
   if (media_element.getReadyState() != HTMLMediaElement::kHaveNothing &&
-      media_element.GetWebMediaPlayer()) {
+      media_element.GetWebMediaPlayer())
     current_cues =
         cue_tree_.AllOverlaps(cue_tree_.CreateInterval(movie_time, movie_time));
-  }
 
   CueList previous_cues;
   CueList missed_cues;

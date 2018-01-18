@@ -59,15 +59,12 @@ Options:
   --annotations-file  Optional path to a TSV output file with all annotations.
   --limit             Limit for the maximum number of returned errors.
                       Use 0 for unlimited.
-  --error-resilient   Optional flag, stating not to return error in exit code if
-                      auditor fails to perform the tests. This flag can be used
-                      for trybots to avoid spamming when tests cannot run.
   path_filters        Optional paths to filter which files the tool is run on.
                       It can also include deleted files names when auditor is
                       run on a partial repository.
 
 Example:
-  traffic_annotation_auditor --build-path=out/Release
+  traffic_annotation_auditor --build-dir=out/Debug summary-file=report.txt
 )";
 
 const base::FilePath kDownstreamUpdater =
@@ -316,8 +313,6 @@ int wmain(int argc, wchar_t* argv[]) {
 #else
 int main(int argc, char* argv[]) {
 #endif
-  printf("Starting traffic annotation auditor. This may take a few minutes.\n");
-
   // Parse switches.
   base::CommandLine command_line = base::CommandLine(argc, argv);
   if (command_line.HasSwitch("help") || command_line.HasSwitch("h") ||
@@ -347,15 +342,9 @@ int main(int argc, char* argv[]) {
         outputs_limit < 0) {
       LOG(ERROR)
           << "The value for 'limit' switch should be a positive integer.";
-
-      // This error is always enforced, as it is a commandline switch.
       return 1;
     }
   }
-
-  // If 'error-resilient' switch is provided, 0 will be returned in case of
-  // operational errors, otherwise 1.
-  int error_value = command_line.HasSwitch("error-resilient") ? 0 : 1;
 
 #if defined(OS_WIN)
   for (const auto& path : command_line.GetArgs()) {
@@ -386,8 +375,6 @@ int main(int argc, char* argv[]) {
   if (build_path.empty()) {
     LOG(ERROR)
         << "You must specify a compiled build directory to run the auditor.\n";
-
-    // This error is always enforced, as it is a commandline switch.
     return 1;
   }
 
@@ -397,7 +384,7 @@ int main(int argc, char* argv[]) {
   if (extractor_input.empty()) {
     if (!auditor.RunClangTool(path_filters, filter_files, all_files)) {
       LOG(ERROR) << "Failed to run clang tool.";
-      return error_value;
+      return 1;
     }
 
     // Write extractor output if requested.
@@ -411,7 +398,7 @@ int main(int argc, char* argv[]) {
     if (!base::ReadFileToString(extractor_input, &raw_output)) {
       LOG(ERROR) << "Could not read input file: "
                  << extractor_input.value().c_str();
-      return error_value;
+      return 1;
     } else {
       auditor.set_clang_tool_raw_output(raw_output);
     }
@@ -419,12 +406,12 @@ int main(int argc, char* argv[]) {
 
   // Process extractor output.
   if (!auditor.ParseClangToolRawOutput())
-    return error_value;
+    return 1;
 
   // Perform checks.
   if (!auditor.RunAllChecks(path_filters, test_only)) {
     LOG(ERROR) << "Running checks failed.";
-    return error_value;
+    return 1;
   }
 
   // Write the summary file.
@@ -432,7 +419,7 @@ int main(int argc, char* argv[]) {
       !WriteSummaryFile(summary_file, auditor.extracted_annotations(),
                         auditor.extracted_calls(), auditor.errors())) {
     LOG(ERROR) << "Could not write summary file.";
-    return error_value;
+    return 1;
   }
 
   // Write annotations TSV file.
@@ -442,7 +429,7 @@ int main(int argc, char* argv[]) {
         !WriteAnnotationsFile(annotations_file, auditor.extracted_annotations(),
                               missing_ids)) {
       LOG(ERROR) << "Could not write TSV file.";
-      return error_value;
+      return 1;
     }
   }
 
@@ -454,7 +441,7 @@ int main(int argc, char* argv[]) {
     if (!auditor.exporter().SaveAnnotationsXML() ||
         !RunAnnotationDownstreamUpdater(source_path)) {
       LOG(ERROR) << "Could not update annotations XML or downstream files.";
-      return error_value;
+      return 1;
     }
   }
 

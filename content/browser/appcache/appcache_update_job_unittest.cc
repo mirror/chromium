@@ -598,7 +598,7 @@ class MockURLLoaderFactory : public mojom::URLLoaderFactory {
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
-                            const network::ResourceRequest& url_request,
+                            const ResourceRequest& url_request,
                             mojom::URLLoaderClientPtr client,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override {
@@ -622,7 +622,7 @@ class MockURLLoaderFactory : public mojom::URLLoaderFactory {
     info.headers = new net::HttpResponseHeaders(
         net::HttpUtil::AssembleRawHeaders(headers.c_str(), headers.length()));
 
-    network::ResourceResponseHead response;
+    ResourceResponseHead response;
     response.headers = info.headers;
     response.headers->GetMimeType(&response.mime_type);
 

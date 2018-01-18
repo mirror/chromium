@@ -45,11 +45,10 @@ SK_API SkRect CGRectToSkRect(const CGRect& rect);
 CGRect SkIRectToCGRect(const SkIRect& rect);
 CGRect SkRectToCGRect(const SkRect& rect);
 
-// Converts CGColorRef to the ARGB layout Skia expects. The given CGColorRef
-// should be in the sRGB color space and include alpha.
+// Converts CGColorRef to the ARGB layout Skia expects.
 SK_API SkColor CGColorRefToSkColor(CGColorRef color);
 
-// Converts a Skia ARGB color to CGColorRef. Assumes sRGB color space.
+// Converts ARGB to CGColorRef.
 SK_API CGColorRef CGColorCreateFromSkColor(SkColor color);
 
 // Converts NSColor to ARGB. Returns raw rgb values and does no colorspace

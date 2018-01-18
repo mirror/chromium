@@ -153,7 +153,7 @@ const InlineTextBox* LogicallyPreviousBox(
       break;
 
     RenderedPosition rendered_position(position, TextAffinity::kDownstream);
-    const RootInlineBox* previous_root = rendered_position.RootBox();
+    RootInlineBox* previous_root = rendered_position.RootBox();
     if (!previous_root)
       break;
 
@@ -198,7 +198,7 @@ const InlineTextBox* LogicallyNextBox(
       break;
 
     RenderedPosition rendered_position(position, TextAffinity::kDownstream);
-    const RootInlineBox* next_root = rendered_position.RootBox();
+    RootInlineBox* next_root = rendered_position.RootBox();
     if (!next_root)
       break;
 

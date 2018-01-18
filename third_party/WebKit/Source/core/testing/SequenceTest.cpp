@@ -6,9 +6,9 @@
 
 namespace blink {
 
-SequenceTest::SequenceTest() = default;
+SequenceTest::SequenceTest() {}
 
-SequenceTest::~SequenceTest() = default;
+SequenceTest::~SequenceTest() {}
 
 Vector<Vector<String>> SequenceTest::identityByteStringSequenceSequence(
     const Vector<Vector<String>>& arg) const {

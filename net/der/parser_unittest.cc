@@ -90,16 +90,15 @@ TEST(ParserTest, SkipOptionalTagDoesntConsumePresentNonMatchingTLVs) {
   ASSERT_FALSE(parser.HasMore());
 }
 
-TEST(ParserTest, TagNumbersAboveThirtySupported) {
+TEST(ParserTest, TagNumbersAboveThirtyUnsupported) {
   // Context-specific class, tag number 31, length 0.
   const uint8_t der[] = {0x9f, 0x1f, 0x00};
   Parser parser((Input(der)));
 
   Tag tag;
   Input value;
-  ASSERT_TRUE(parser.ReadTagAndValue(&tag, &value));
-  EXPECT_EQ(kTagContextSpecific | 31u, tag);
-  ASSERT_FALSE(parser.HasMore());
+  ASSERT_FALSE(parser.ReadTagAndValue(&tag, &value));
+  ASSERT_TRUE(parser.HasMore());
 }
 
 TEST(ParserTest, ParseTags) {

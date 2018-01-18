@@ -30,20 +30,19 @@
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
-#include "content/public/common/zygote_features.h"
 #include "media/base/media_switches.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/gl/gl_switches.h"
 
+#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX)
+#include "content/public/browser/zygote_handle_linux.h"
+#endif  // defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX)
+
 #if defined(OS_WIN)
 #include "sandbox/win/src/sandbox_policy.h"
 #include "sandbox/win/src/sandbox_types.h"
-#endif
-
-#if BUILDFLAG(USE_ZYGOTE_HANDLE)
-#include "content/public/common/zygote_handle.h"
 #endif
 
 namespace content {
@@ -103,9 +102,10 @@ class UtilitySandboxedProcessLauncherDelegate
                              exposed_files.value().c_str());
     return result == sandbox::SBOX_ALL_OK;
   }
-#endif  // OS_WIN
 
-#if BUILDFLAG(USE_ZYGOTE_HANDLE)
+#elif defined(OS_POSIX)
+
+#if !defined(OS_MACOSX) && !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
   ZygoteHandle GetZygote() override {
     if (service_manager::IsUnsandboxedSandboxType(sandbox_type_) ||
         sandbox_type_ == service_manager::SANDBOX_TYPE_NETWORK ||
@@ -114,11 +114,9 @@ class UtilitySandboxedProcessLauncherDelegate
     }
     return GetGenericZygote();
   }
-#endif  // BUILDFLAG(USE_ZYGOTE_HANDLE)
-
-#if defined(OS_POSIX)
+#endif  // !defined(OS_MACOSX) && !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
   base::EnvironmentMap GetEnvironment() override { return env_; }
-#endif  // OS_POSIX
+#endif  // OS_WIN
 
   service_manager::SandboxType GetSandboxType() override {
     return sandbox_type_;
@@ -223,12 +221,6 @@ void UtilityProcessHostImpl::AddFilter(BrowserMessageFilter* filter) {
   process_->AddFilter(filter);
 }
 
-void UtilityProcessHostImpl::SetLaunchCallback(
-    base::OnceCallback<void(base::ProcessId)> callback) {
-  DCHECK(!launched_);
-  launch_callback_ = std::move(callback);
-}
-
 bool UtilityProcessHostImpl::StartProcess() {
   if (started_)
     return true;
@@ -308,7 +300,6 @@ bool UtilityProcessHostImpl::StartProcess() {
 #endif
 #if defined(USE_AURA)
       switches::kMus,
-      switches::kMusHostingViz,
 #endif
       switches::kUseFakeDeviceForMediaStream,
       switches::kUseFileForFakeVideoCapture,
@@ -365,12 +356,6 @@ bool UtilityProcessHostImpl::OnMessageReceived(const IPC::Message& message) {
           client_.get(), message));
 
   return true;
-}
-
-void UtilityProcessHostImpl::OnProcessLaunched() {
-  launched_ = true;
-  if (launch_callback_)
-    std::move(launch_callback_).Run(process_->GetProcess().Pid());
 }
 
 void UtilityProcessHostImpl::OnProcessLaunchFailed(int error_code) {

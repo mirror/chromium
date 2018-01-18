@@ -11,17 +11,18 @@
 #include "components/ntp_snippets/pref_names.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
+#include "components/signin/core/browser/signin_manager.h"
 #include "components/variations/variations_associated_data.h"
 
 namespace ntp_snippets {
 
 RemoteSuggestionsStatusServiceImpl::RemoteSuggestionsStatusServiceImpl(
-    bool is_signed_in,
+    SigninManagerBase* signin_manager,
     PrefService* pref_service,
     const std::string& additional_toggle_pref)
     : status_(RemoteSuggestionsStatus::EXPLICITLY_DISABLED),
       additional_toggle_pref_(additional_toggle_pref),
-      is_signed_in_(is_signed_in),
+      signin_manager_(signin_manager),
       pref_service_(pref_service) {
   ntp_snippets::metrics::RecordRemoteSuggestionsProviderState(
       !IsExplicitlyDisabled());
@@ -78,12 +79,12 @@ void RemoteSuggestionsStatusServiceImpl::OnStateChanged(
 }
 
 bool RemoteSuggestionsStatusServiceImpl::IsSignedIn() const {
-  return is_signed_in_;
+  // TODO(dgn): remove the SigninManager dependency. It should be possible to
+  // replace it by passing the new state via OnSignInStateChanged().
+  return signin_manager_ && signin_manager_->IsAuthenticated();
 }
 
-void RemoteSuggestionsStatusServiceImpl::OnSignInStateChanged(
-    bool has_signed_in) {
-  is_signed_in_ = has_signed_in;
+void RemoteSuggestionsStatusServiceImpl::OnSignInStateChanged() {
   OnStateChanged(GetStatusFromDeps());
 }
 

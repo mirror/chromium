@@ -322,7 +322,7 @@ void NetInternalsTest::MessageHandler::GetNetLogFileContents(
   base::ScopedAllowBlockingForTesting allow_blocking;
 
   std::unique_ptr<WriteNetLogState> state =
-      std::make_unique<WriteNetLogState>();
+      base::MakeUnique<WriteNetLogState>();
 
   ASSERT_TRUE(state->temp_directory.CreateUniqueTempDir());
   ASSERT_TRUE(base::CreateTemporaryFileInDir(state->temp_directory.GetPath(),

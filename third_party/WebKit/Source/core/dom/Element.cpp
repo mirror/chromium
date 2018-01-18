@@ -102,6 +102,7 @@
 #include "core/fullscreen/Fullscreen.h"
 #include "core/geometry/DOMRect.h"
 #include "core/geometry/DOMRectList.h"
+#include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLCollection.h"
 #include "core/html/HTMLDocument.h"
 #include "core/html/HTMLElement.h"
@@ -111,7 +112,6 @@
 #include "core/html/HTMLSlotElement.h"
 #include "core/html/HTMLTableRowsCollection.h"
 #include "core/html/HTMLTemplateElement.h"
-#include "core/html/canvas/HTMLCanvasElement.h"
 #include "core/html/custom/CustomElement.h"
 #include "core/html/custom/CustomElementRegistry.h"
 #include "core/html/custom/V0CustomElement.h"
@@ -155,7 +155,6 @@
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/TextPosition.h"
-#include "public/platform/WebScrollIntoViewParams.h"
 
 namespace blink {
 
@@ -530,8 +529,8 @@ void Element::scrollIntoViewWithOptions(const ScrollIntoViewOptions& options) {
       ToPhysicalAlignment(options, kVerticalScroll, is_horizontal_writing_mode);
 
   LayoutRect bounds = BoundingBox();
-  GetLayoutObject()->ScrollRectToVisible(
-      bounds, {align_x, align_y, kProgrammaticScroll, false, behavior});
+  GetLayoutObject()->ScrollRectToVisible(bounds, align_x, align_y,
+                                         kProgrammaticScroll, false, behavior);
 
   GetDocument().SetSequentialFocusNavigationStartingPoint(this);
 }
@@ -545,14 +544,12 @@ void Element::scrollIntoViewIfNeeded(bool center_if_needed) {
   LayoutRect bounds = BoundingBox();
   if (center_if_needed) {
     GetLayoutObject()->ScrollRectToVisible(
-        bounds,
-        {ScrollAlignment::kAlignCenterIfNeeded,
-         ScrollAlignment::kAlignCenterIfNeeded, kProgrammaticScroll, false});
+        bounds, ScrollAlignment::kAlignCenterIfNeeded,
+        ScrollAlignment::kAlignCenterIfNeeded, kProgrammaticScroll, false);
   } else {
     GetLayoutObject()->ScrollRectToVisible(
-        bounds,
-        {ScrollAlignment::kAlignToEdgeIfNeeded,
-         ScrollAlignment::kAlignToEdgeIfNeeded, kProgrammaticScroll, false});
+        bounds, ScrollAlignment::kAlignToEdgeIfNeeded,
+        ScrollAlignment::kAlignToEdgeIfNeeded, kProgrammaticScroll, false);
   }
 }
 
@@ -1843,7 +1840,7 @@ void Element::AttachLayoutTree(AttachContext& context) {
     data->ClearComputedStyle();
   }
 
-  if (CanParticipateInFlatTree()) {
+  if (!IsActiveSlotOrActiveV0InsertionPoint()) {
     LayoutTreeBuilderForElement builder(*this, GetNonAttachedStyle());
     builder.CreateLayoutObjectIfNeeded();
 
@@ -2080,7 +2077,7 @@ void Element::RecalcStyle(StyleRecalcChange change) {
   }
 
   if (HasCustomStyleCallbacks())
-    DidRecalcStyle(change);
+    DidRecalcStyle();
 }
 
 scoped_refptr<ComputedStyle> Element::PropagateInheritedProperties(
@@ -2411,7 +2408,7 @@ ShadowRoot* Element::createShadowRoot(const ScriptState* script_state,
       script_state, GetDocument(),
       HostsUsingFeatures::Feature::kElementCreateShadowRoot);
   if (ShadowRoot* root = GetShadowRoot()) {
-    if (root->IsUserAgent()) {
+    if (root->GetType() == ShadowRootType::kUserAgent) {
       exception_state.ThrowDOMException(
           kInvalidStateError,
           "Shadow root cannot be created on a host which already hosts a "
@@ -2499,20 +2496,14 @@ ShadowRoot& Element::CreateShadowRootInternal() {
   DCHECK(!ClosedShadowRoot());
   DCHECK(AreAuthorShadowsAllowed());
   if (AlwaysCreateUserAgentShadowRoot())
-    EnsureLegacyUserAgentShadowRootV0();
+    EnsureUserAgentShadowRoot();
   GetDocument().SetShadowCascadeOrder(ShadowCascadeOrder::kShadowCascadeV0);
   return EnsureShadow().AddShadowRoot(*this, ShadowRootType::V0);
 }
 
-ShadowRoot& Element::CreateLegacyUserAgentShadowRootV0() {
+ShadowRoot& Element::CreateUserAgentShadowRoot() {
   DCHECK(!GetShadowRoot());
-  return EnsureShadow().AddShadowRoot(*this,
-                                      ShadowRootType::kLegacyUserAgentV0);
-}
-
-ShadowRoot& Element::CreateUserAgentShadowRootV1() {
-  DCHECK(!GetShadowRoot());
-  return EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgentV1);
+  return EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgent);
 }
 
 ShadowRoot& Element::AttachShadowRootInternal(ShadowRootType type,
@@ -2557,37 +2548,24 @@ ShadowRoot* Element::AuthorShadowRoot() const {
   ShadowRoot* root = GetShadowRoot();
   if (!root)
     return nullptr;
-  return !root->IsUserAgent() ? root : nullptr;
+  return root->GetType() != ShadowRootType::kUserAgent ? root : nullptr;
 }
 
 ShadowRoot* Element::UserAgentShadowRoot() const {
   if (ElementShadow* element_shadow = Shadow()) {
     ShadowRoot& root = element_shadow->OldestShadowRoot();
-    DCHECK(root.IsUserAgent());
+    DCHECK(root.GetType() == ShadowRootType::kUserAgent);
     return &root;
   }
 
   return nullptr;
 }
 
-ShadowRoot& Element::EnsureLegacyUserAgentShadowRootV0() {
-  if (ShadowRoot* shadow_root = UserAgentShadowRoot()) {
-    DCHECK(shadow_root->GetType() == ShadowRootType::kLegacyUserAgentV0);
+ShadowRoot& Element::EnsureUserAgentShadowRoot() {
+  if (ShadowRoot* shadow_root = UserAgentShadowRoot())
     return *shadow_root;
-  }
   ShadowRoot& shadow_root =
-      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kLegacyUserAgentV0);
-  DidAddUserAgentShadowRoot(shadow_root);
-  return shadow_root;
-}
-
-ShadowRoot& Element::EnsureUserAgentShadowRootV1() {
-  if (ShadowRoot* shadow_root = UserAgentShadowRoot()) {
-    DCHECK(shadow_root->GetType() == ShadowRootType::kUserAgentV1);
-    return *shadow_root;
-  }
-  ShadowRoot& shadow_root =
-      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgentV1);
+      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgent);
   DidAddUserAgentShadowRoot(shadow_root);
   return shadow_root;
 }
@@ -2988,8 +2966,7 @@ void Element::UpdateFocusAppearanceWithOptions(
   } else if (GetLayoutObject() &&
              !GetLayoutObject()->IsLayoutEmbeddedContent()) {
     if (!options.preventScroll()) {
-      GetLayoutObject()->ScrollRectToVisible(BoundingBox(),
-                                             WebScrollIntoViewParams());
+      GetLayoutObject()->ScrollRectToVisible(BoundingBox());
     }
   }
 }
@@ -3467,7 +3444,7 @@ String Element::TextFromChildren() {
 
 const AtomicString& Element::ShadowPseudoId() const {
   if (ShadowRoot* root = ContainingShadowRoot()) {
-    if (root->IsUserAgent())
+    if (root->GetType() == ShadowRootType::kUserAgent)
       return FastGetAttribute(pseudoAttr);
   }
   return g_null_atom;
@@ -4313,7 +4290,7 @@ void Element::WillRecalcStyle(StyleRecalcChange) {
   DCHECK(HasCustomStyleCallbacks());
 }
 
-void Element::DidRecalcStyle(StyleRecalcChange) {
+void Element::DidRecalcStyle() {
   DCHECK(HasCustomStyleCallbacks());
 }
 
@@ -4479,8 +4456,8 @@ void Element::StyleAttributeChanged(
     EnsureUniqueElementData().inline_style_.Clear();
   } else if (modification_reason == AttributeModificationReason::kByCloning ||
              ContentSecurityPolicy::ShouldBypassMainWorld(&GetDocument()) ||
-             (ContainingShadowRoot() &&
-              ContainingShadowRoot()->IsUserAgent()) ||
+             (ContainingShadowRoot() && ContainingShadowRoot()->GetType() ==
+                                            ShadowRootType::kUserAgent) ||
              GetDocument().GetContentSecurityPolicy()->AllowInlineStyle(
                  this, GetDocument().Url(), String(), start_line_number,
                  new_style_string, ContentSecurityPolicy::InlineType::kBlock)) {

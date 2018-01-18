@@ -18,8 +18,6 @@ constexpr TaskService::InstanceId kInvalidInstanceId = -1;
 
 }  // namespace
 
-constexpr TaskService::RunnerId TaskService::kDefaultRunnerId;
-
 TaskService::TaskService()
     : no_tasks_in_flight_cv_(&tasks_in_flight_lock_),
       tasks_in_flight_(0),
@@ -69,7 +67,7 @@ bool TaskService::UnbindInstance() {
   // quitting this method, wait for all tasks to complete.
   base::AutoLock tasks_in_flight_auto_lock(tasks_in_flight_lock_);
   // TODO(https://crbug.com/796830): Remove sync operations on the I/O thread.
-  base::ScopedAllowBaseSyncPrimitivesOutsideBlockingScope allow_wait;
+  base::ScopedAllowBaseSyncPrimitives allow_wait;
   while (tasks_in_flight_ > 0)
     no_tasks_in_flight_cv_.Wait();
 
@@ -92,7 +90,14 @@ bool TaskService::IsOnTaskRunner(RunnerId runner_id) {
 }
 
 void TaskService::PostStaticTask(RunnerId runner_id, base::OnceClosure task) {
-  DCHECK_NE(kDefaultRunnerId, runner_id);
+  {
+    // Disallow to post a task when no instance is bound, so that new threads
+    // can not be created after the thread finalization in the destructor.
+    base::AutoLock lock(lock_);
+    if (bound_instance_id_ == kInvalidInstanceId)
+      return;
+  }
+  scoped_refptr<base::SingleThreadTaskRunner> runner;
   GetTaskRunner(runner_id)->PostTask(FROM_HERE, std::move(task));
 }
 

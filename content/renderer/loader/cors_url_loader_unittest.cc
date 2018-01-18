@@ -30,7 +30,7 @@ class TestURLLoaderFactory : public mojom::URLLoaderFactory {
 
   void NotifyClientOnReceiveResponse(const std::string& extra_header) {
     DCHECK(client_ptr_);
-    network::ResourceResponseHead response;
+    ResourceResponseHead response;
     response.headers = new net::HttpResponseHeaders(
         "HTTP/1.1 200 OK\n"
         "Content-Type: image/png\n");
@@ -54,7 +54,7 @@ class TestURLLoaderFactory : public mojom::URLLoaderFactory {
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
-                            const network::ResourceRequest& url_request,
+                            const ResourceRequest& url_request,
                             mojom::URLLoaderClientPtr client,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override {
@@ -85,7 +85,7 @@ class CORSURLLoaderTest : public testing::Test {
     CORSURLLoaderFactory::CreateAndBind(network_factory_ptr.PassInterface(),
                                         mojo::MakeRequest(&loader_factory_ptr));
 
-    network::ResourceRequest request;
+    ResourceRequest request;
     request.resource_type = RESOURCE_TYPE_IMAGE;
     request.fetch_request_context_type = REQUEST_CONTEXT_TYPE_IMAGE;
     request.fetch_request_mode = fetch_request_mode;

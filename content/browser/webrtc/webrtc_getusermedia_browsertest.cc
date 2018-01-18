@@ -798,12 +798,4 @@ IN_PROC_BROWSER_TEST_F(WebRtcGetUserMediaBrowserTest, DisabledTrackVideoSize) {
   ExecuteJavascriptAndWaitForOk("disabledTrackVideoSize()");
 }
 
-IN_PROC_BROWSER_TEST_F(WebRtcGetUserMediaBrowserTest,
-                       GetUserMediaAfterStopElementCapture) {
-  ASSERT_TRUE(embedded_test_server()->Start());
-  GURL url(embedded_test_server()->GetURL("/media/getusermedia.html"));
-  NavigateToURL(shell(), url);
-  ExecuteJavascriptAndWaitForOk("getUserMediaAfterStopCanvasCapture()");
-}
-
 }  // namespace content

@@ -61,7 +61,7 @@ class FilterInputKeywords {
 
 }  // namespace
 
-SVGFilterGraphNodeMap::SVGFilterGraphNodeMap() = default;
+SVGFilterGraphNodeMap::SVGFilterGraphNodeMap() {}
 
 void SVGFilterGraphNodeMap::AddBuiltinEffect(FilterEffect* effect) {
   effect_references_.insert(effect, FilterEffectSet());

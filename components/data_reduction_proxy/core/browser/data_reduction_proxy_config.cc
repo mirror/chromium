@@ -28,6 +28,7 @@
 #include "build/build_config.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_configurator.h"
 #include "components/data_reduction_proxy/core/browser/network_properties_manager.h"
+#include "components/data_reduction_proxy/core/browser/warmup_url_fetcher.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_config_values.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_event_creator.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
@@ -489,9 +490,8 @@ DataReductionProxyConfig::GetProxyConnectionToProbe() const {
 
 void DataReductionProxyConfig::HandleWarmupFetcherResponse(
     const net::ProxyServer& proxy_server,
-    WarmupURLFetcher::FetchResult success_response) {
+    bool success_response) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK(IsFetchInFlight());
 
   // Check the proxy server used, or disable all data saver proxies?
   if (!IsDataReductionProxy(proxy_server, nullptr)) {
@@ -512,22 +512,22 @@ void DataReductionProxyConfig::HandleWarmupFetcherResponse(
     UMA_HISTOGRAM_BOOLEAN(
         "DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch."
         "SecureProxy.Core",
-        success_response == WarmupURLFetcher::FetchResult::kSuccessful);
+        success_response);
   } else if (is_secure_proxy && !is_core_proxy) {
     UMA_HISTOGRAM_BOOLEAN(
         "DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch."
         "SecureProxy.NonCore",
-        success_response == WarmupURLFetcher::FetchResult::kSuccessful);
+        success_response);
   } else if (!is_secure_proxy && is_core_proxy) {
     UMA_HISTOGRAM_BOOLEAN(
         "DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch."
         "InsecureProxy.Core",
-        success_response == WarmupURLFetcher::FetchResult::kSuccessful);
+        success_response);
   } else {
     UMA_HISTOGRAM_BOOLEAN(
         "DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch."
         "InsecureProxy.NonCore",
-        success_response == WarmupURLFetcher::FetchResult::kSuccessful);
+        success_response);
   }
 
   bool warmup_url_failed_past =
@@ -535,9 +535,7 @@ void DataReductionProxyConfig::HandleWarmupFetcherResponse(
                                                            is_core_proxy);
 
   network_properties_manager_->SetHasWarmupURLProbeFailed(
-      is_secure_proxy, is_core_proxy,
-      success_response !=
-          WarmupURLFetcher::FetchResult::kSuccessful /* warmup failed */);
+      is_secure_proxy, is_core_proxy, !success_response /* warmup failed */);
 
   if (warmup_url_failed_past !=
       network_properties_manager_->HasWarmupURLProbeFailed(is_secure_proxy,
@@ -547,12 +545,8 @@ void DataReductionProxyConfig::HandleWarmupFetcherResponse(
 
   // May probe other proxy types that have not been probed yet, or may retry
   // probe of proxy types that has failed but the maximum probe limit has not
-  // been reached yet. This method may have been called by warmup URL fetcher.
-  // FetchWarmupProbeURL() may itself call warmup URL fetcher. Posting the call
-  // here avoids recursive calls to the warmup URL fetcher.
-  io_task_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&DataReductionProxyConfig::FetchWarmupProbeURL,
-                                weak_factory_.GetWeakPtr()));
+  // been reached yet.
+  FetchWarmupProbeURL();
 }
 
 void DataReductionProxyConfig::HandleSecureProxyCheckResponse(

@@ -97,12 +97,12 @@ class TestSyncService : public syncer::FakeSyncService {
 
 static std::unique_ptr<KeyedService> BuildTestSyncService(
     content::BrowserContext* context) {
-  return std::make_unique<TestSyncService>();
+  return base::MakeUnique<TestSyncService>();
 }
 
 static std::unique_ptr<KeyedService> BuildFakeUserEventService(
     content::BrowserContext* context) {
-  return std::make_unique<FakeUserEventService>();
+  return base::MakeUnique<FakeUserEventService>();
 }
 
 class SyncInternalsMessageHandlerTest : public ::testing::Test {
@@ -130,7 +130,7 @@ class SyncInternalsMessageHandlerTest : public ::testing::Test {
       version_info::Channel channel) {
     ++about_sync_data_delegate_call_count_;
     last_delegate_sync_service_ = service;
-    auto dictionary = std::make_unique<DictionaryValue>();
+    auto dictionary = base::MakeUnique<DictionaryValue>();
     dictionary->SetString("fake_key", "fake_value");
     return dictionary;
   }
@@ -294,7 +294,7 @@ TEST_F(SyncInternalsMessageHandlerTest, HandleGetAllNodes) {
   args.AppendInteger(0);
   handler()->HandleGetAllNodes(&args);
   test_sync_service()->get_all_nodes_callback().Run(
-      std::make_unique<ListValue>());
+      base::MakeUnique<ListValue>());
   EXPECT_EQ(1, CallCountWithName(syncer::sync_ui_util::kGetAllNodesCallback));
 
   handler()->HandleGetAllNodes(&args);
@@ -302,12 +302,12 @@ TEST_F(SyncInternalsMessageHandlerTest, HandleGetAllNodes) {
   // the call count not incrementing.
   handler()->DisallowJavascript();
   test_sync_service()->get_all_nodes_callback().Run(
-      std::make_unique<ListValue>());
+      base::MakeUnique<ListValue>());
   EXPECT_EQ(1, CallCountWithName(syncer::sync_ui_util::kGetAllNodesCallback));
 
   handler()->HandleGetAllNodes(&args);
   test_sync_service()->get_all_nodes_callback().Run(
-      std::make_unique<ListValue>());
+      base::MakeUnique<ListValue>());
   EXPECT_EQ(2, CallCountWithName(syncer::sync_ui_util::kGetAllNodesCallback));
 }
 

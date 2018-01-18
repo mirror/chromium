@@ -4,9 +4,8 @@
 
 #include "chrome/browser/extensions/api/image_writer_private/unzip_helper.h"
 
-#include <memory>
-
 #include "base/files/file_util.h"
+#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/extensions/api/image_writer_private/error_messages.h"
@@ -26,7 +25,7 @@ UnzipHelper::UnzipHelper(
       complete_callback_(complete_callback),
       failure_callback_(failure_callback),
       progress_callback_(progress_callback),
-      zip_reader_(std::make_unique<zip::ZipReader>()) {}
+      zip_reader_(base::MakeUnique<zip::ZipReader>()) {}
 
 UnzipHelper::~UnzipHelper() {}
 

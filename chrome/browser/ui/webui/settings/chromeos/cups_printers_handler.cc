@@ -11,6 +11,7 @@
 #include "base/files/file_util.h"
 #include "base/json/json_string_value_serializer.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "base/strings/string_util.h"
@@ -152,7 +153,7 @@ void QueryAutoconf(const std::string& printer_uri,
 // definition of CupsPrinterInfo.
 std::unique_ptr<base::DictionaryValue> CreateEmptyPrinterInfo() {
   std::unique_ptr<base::DictionaryValue> printer_info =
-      std::make_unique<base::DictionaryValue>();
+      base::MakeUnique<base::DictionaryValue>();
   printer_info->SetString("ppdManufacturer", "");
   printer_info->SetString("ppdModel", "");
   printer_info->SetString("printerAddress", "");
@@ -273,7 +274,7 @@ std::unique_ptr<chromeos::Printer> DictToPrinter(
     printer_uri += "/" + printer_queue;
   }
 
-  auto printer = std::make_unique<chromeos::Printer>(printer_id);
+  auto printer = base::MakeUnique<chromeos::Printer>(printer_id);
   printer->set_display_name(printer_name);
   printer->set_description(printer_description);
   printer->set_manufacturer(printer_manufacturer);
@@ -366,14 +367,14 @@ void CupsPrintersHandler::HandleGetCupsPrintersList(
   std::vector<Printer> printers =
       printers_manager_->GetPrinters(CupsPrintersManager::kConfigured);
 
-  auto printers_list = std::make_unique<base::ListValue>();
+  auto printers_list = base::MakeUnique<base::ListValue>();
   for (const Printer& printer : printers) {
     // Some of these printers could be invalid but we want to allow the user
     // to edit them. crbug.com/778383
     printers_list->Append(GetPrinterInfo(printer));
   }
 
-  auto response = std::make_unique<base::DictionaryValue>();
+  auto response = base::MakeUnique<base::DictionaryValue>();
   response->Set("printerList", std::move(printers_list));
   ResolveJavascriptCallback(base::Value(callback_id), *response);
 }
@@ -693,7 +694,7 @@ void CupsPrintersHandler::HandleGetCupsPrinterModels(
   if (manufacturer.empty()) {
     base::DictionaryValue response;
     response.SetBoolean("success", true);
-    response.Set("models", std::make_unique<base::ListValue>());
+    response.Set("models", base::MakeUnique<base::ListValue>());
     ResolveJavascriptCallback(base::Value(js_callback), response);
     return;
   }
@@ -729,7 +730,7 @@ void CupsPrintersHandler::ResolveManufacturersDone(
     const std::string& js_callback,
     PpdProvider::CallbackResultCode result_code,
     const std::vector<std::string>& manufacturers) {
-  auto manufacturers_value = std::make_unique<base::ListValue>();
+  auto manufacturers_value = base::MakeUnique<base::ListValue>();
   if (result_code == PpdProvider::SUCCESS) {
     manufacturers_value->AppendStrings(manufacturers);
   }
@@ -744,7 +745,7 @@ void CupsPrintersHandler::ResolvePrintersDone(
     const std::string& js_callback,
     PpdProvider::CallbackResultCode result_code,
     const PpdProvider::ResolvedPrintersList& printers) {
-  auto printers_value = std::make_unique<base::ListValue>();
+  auto printers_value = base::MakeUnique<base::ListValue>();
   if (result_code == PpdProvider::SUCCESS) {
     resolved_printers_[manufacturer] = printers;
     for (const auto& printer : printers) {
@@ -817,7 +818,7 @@ void CupsPrintersHandler::OnPrintersChanged(
       return;
   }
   std::unique_ptr<base::ListValue> printers_list =
-      std::make_unique<base::ListValue>();
+      base::MakeUnique<base::ListValue>();
   for (const Printer& printer : automatic_printers_) {
     printers_list->Append(GetPrinterInfo(printer));
   }

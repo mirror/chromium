@@ -9,6 +9,7 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
@@ -77,7 +78,7 @@ void DataUseMatcher::RegisterURLRegexes(
     if (expiration <= now_ticks)
       continue;  // skip expired matching rules.
     DCHECK(!labels.at(i).empty());
-    matching_rules_.push_back(std::make_unique<MatchingRule>(
+    matching_rules_.push_back(base::MakeUnique<MatchingRule>(
         app_package_name, std::move(pattern), labels.at(i), expiration));
 
     removed_matching_rule_labels.erase(labels.at(i));

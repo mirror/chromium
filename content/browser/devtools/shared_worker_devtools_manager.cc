@@ -45,8 +45,7 @@ void SharedWorkerDevToolsManager::WorkerCreated(
   SharedWorkerDevToolsAgentHost* agent_host = *it;
   terminated_hosts_.erase(it);
   live_hosts_[worker_host] = agent_host;
-  agent_host->WorkerRestarted(worker_host);
-  *pause_on_start = agent_host->IsAttached();
+  *pause_on_start = agent_host->WorkerRestarted(worker_host);
   *devtools_worker_token = agent_host->devtools_worker_token();
 }
 

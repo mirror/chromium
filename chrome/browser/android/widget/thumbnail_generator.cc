@@ -4,11 +4,10 @@
 
 #include "chrome/browser/android/widget/thumbnail_generator.h"
 
-#include <memory>
-
 #include "base/android/jni_string.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_restrictions.h"
@@ -178,7 +177,7 @@ void ThumbnailGenerator::RetrieveThumbnail(
   std::string file_path =
       base::android::ConvertJavaStringToUTF8(env, jfile_path);
 
-  auto request = std::make_unique<ImageThumbnailRequest>(
+  auto request = base::MakeUnique<ImageThumbnailRequest>(
       icon_size,
       base::BindOnce(
           &ThumbnailGenerator::OnThumbnailRetrieved, weak_factory_.GetWeakPtr(),

@@ -1945,9 +1945,7 @@ public class ChromeTabbedActivity
 
     @Override
     public boolean handleBackPressed() {
-        // BottomSheet can be opened before native is initialized.
-        if (!mUIInitialized) return getBottomSheet() != null && getBottomSheet().handleBackPress();
-
+        if (!mUIInitialized) return false;
         final Tab currentTab = getActivityTab();
 
         if (exitFullscreenIfShowing()) {

@@ -20,6 +20,7 @@
 #include "base/json/json_reader.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted_memory.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/values.h"
@@ -832,7 +833,7 @@ void PrintPreviewHandler::HandleGetAccessToken(const base::ListValue* args) {
   DCHECK(ok);
 
   if (!token_service_)
-    token_service_ = std::make_unique<AccessTokenService>(this);
+    token_service_ = base::MakeUnique<AccessTokenService>(this);
   token_service_->RequestToken(type, callback_id);
 }
 
@@ -1000,10 +1001,10 @@ void PrintPreviewHandler::SendPrinterSetup(
     const std::string& callback_id,
     const std::string& printer_name,
     std::unique_ptr<base::DictionaryValue> destination_info) {
-  auto response = std::make_unique<base::DictionaryValue>();
+  auto response = base::MakeUnique<base::DictionaryValue>();
   bool success = true;
-  auto caps_value = std::make_unique<base::Value>();
-  auto caps = std::make_unique<base::DictionaryValue>();
+  auto caps_value = base::MakeUnique<base::Value>();
+  auto caps = base::MakeUnique<base::DictionaryValue>();
   if (destination_info &&
       destination_info->Remove(printing::kSettingCapabilities, &caps_value) &&
       caps_value->is_dict()) {

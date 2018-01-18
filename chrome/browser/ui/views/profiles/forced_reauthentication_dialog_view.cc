@@ -280,5 +280,5 @@ void ForcedReauthenticationDialogImpl::ShowDialog(
 // static
 std::unique_ptr<ForcedReauthenticationDialog>
 ForcedReauthenticationDialog::Create() {
-  return std::make_unique<ForcedReauthenticationDialogImpl>();
+  return base::MakeUnique<ForcedReauthenticationDialogImpl>();
 }

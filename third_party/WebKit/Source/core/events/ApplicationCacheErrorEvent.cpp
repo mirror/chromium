@@ -64,7 +64,7 @@ ApplicationCacheErrorEvent::ApplicationCacheErrorEvent(
     message_ = initializer.message();
 }
 
-ApplicationCacheErrorEvent::~ApplicationCacheErrorEvent() = default;
+ApplicationCacheErrorEvent::~ApplicationCacheErrorEvent() {}
 
 void ApplicationCacheErrorEvent::Trace(blink::Visitor* visitor) {
   Event::Trace(visitor);

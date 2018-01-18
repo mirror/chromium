@@ -82,12 +82,9 @@ class CORE_EXPORT PageWidgetDelegate {
   // For the following methods, the |root| argument indicates a root localFrame
   // from which to start performing the specified operation.
 
-  // See comment of WebWidget::UpdateLifecycle.
-  static void UpdateLifecycle(Page&,
-                              LocalFrame& root,
-                              WebWidget::LifecycleUpdate requested_update);
-
   // See documents of methods with the same names in FrameView class.
+  static void UpdateAllLifecyclePhases(Page&, LocalFrame& root);
+
   static void Paint(Page&, WebCanvas*, const WebRect&, LocalFrame& root);
   static void PaintIgnoringCompositing(Page&,
                                        WebCanvas*,

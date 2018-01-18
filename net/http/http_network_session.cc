@@ -5,7 +5,7 @@
 #include "net/http/http_network_session.h"
 
 #include <inttypes.h>
-
+#include <memory>
 #include <utility>
 
 #include "base/atomic_sequence_num.h"
@@ -135,7 +135,6 @@ HttpNetworkSession::Params::Params()
       quic_force_hol_blocking(false),
       quic_race_cert_verification(false),
       quic_estimate_initial_rtt(false),
-      quic_headers_include_h2_stream_dependency(false),
       enable_token_binding(false),
       http_09_on_non_default_ports_enabled(false),
       disable_idle_sockets_close_on_memory_pressure(false) {
@@ -217,7 +216,6 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
           params.quic_allow_server_migration,
           params.quic_race_cert_verification,
           params.quic_estimate_initial_rtt,
-          params.quic_headers_include_h2_stream_dependency,
           params.quic_connection_options,
           params.quic_client_connection_options,
           params.enable_token_binding),
@@ -232,8 +230,9 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
                          AddDefaultHttp2Settings(params.http2_settings),
                          params.time_func,
                          context.proxy_delegate),
-      http_stream_factory_(std::make_unique<HttpStreamFactoryImpl>(this)),
-      network_stream_throttler_(std::make_unique<NetworkThrottleManagerImpl>()),
+      http_stream_factory_(new HttpStreamFactoryImpl(this, false)),
+      http_stream_factory_for_websocket_(new HttpStreamFactoryImpl(this, true)),
+      network_stream_throttler_(new NetworkThrottleManagerImpl()),
       params_(params),
       context_(context) {
   DCHECK(proxy_service_);

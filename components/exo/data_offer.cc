@@ -115,8 +115,7 @@ void DataOffer::SetDropData(FileHelper* file_helper,
       base::string16 url_list;
       for (const auto& info : files) {
         GURL url;
-        // TODO(hirono): Need to fill the corret app_id.
-        if (file_helper->GetUrlFromPath(/* app_id */ "", info.path, &url)) {
+        if (file_helper->ConvertPathToUrl(info.path, &url)) {
           if (!url_list.empty())
             url_list += base::UTF8ToUTF16(kUriListSeparator);
           url_list += base::UTF8ToUTF16(url.spec());

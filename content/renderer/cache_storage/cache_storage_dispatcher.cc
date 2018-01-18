@@ -646,7 +646,7 @@ void CacheStorageDispatcher::PopulateWebResponseFromResponse(
   }
 
   if (!response.blob_uuid.empty()) {
-    DCHECK(response.blob);
+    DCHECK_EQ(response.blob != nullptr, features::IsMojoBlobsEnabled());
     mojo::ScopedMessagePipeHandle blob_pipe;
     if (response.blob)
       blob_pipe = response.blob->Clone().PassInterface().PassHandle();

@@ -4,7 +4,6 @@
 
 #include <stdint.h>
 
-#include <memory>
 #include <set>
 #include <string>
 #include <vector>
@@ -134,7 +133,7 @@ class ExtensionStorageMonitorTest : public ExtensionBrowserTest {
   const Extension* CreateHostedApp(const std::string& name,
                                    GURL app_url,
                                    std::vector<std::string> permissions) {
-    auto dir = std::make_unique<TestExtensionDir>();
+    auto dir = base::MakeUnique<TestExtensionDir>();
 
     url::Replacements<char> clear_port;
     clear_port.ClearPort();

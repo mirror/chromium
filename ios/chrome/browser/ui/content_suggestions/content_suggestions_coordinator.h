@@ -16,7 +16,6 @@ class ChromeBrowserState;
 @protocol BrowserCommands;
 @class ContentSuggestionsHeaderViewController;
 @protocol OmniboxFocuser;
-@protocol FakeboxFocuser;
 @protocol SnackbarCommands;
 @protocol UrlLoader;
 class WebStateList;
@@ -34,7 +33,6 @@ class WebStateList;
 @property(nonatomic, weak) id<ApplicationCommands,
                               BrowserCommands,
                               OmniboxFocuser,
-                              FakeboxFocuser,
                               SnackbarCommands,
                               UrlLoader>
     dispatcher;

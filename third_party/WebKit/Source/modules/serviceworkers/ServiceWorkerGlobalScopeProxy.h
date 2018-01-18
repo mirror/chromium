@@ -173,8 +173,6 @@ class ServiceWorkerGlobalScopeProxy final
   // _after_ the worker thread using the proxy has been terminated.
   void Detach();
 
-  void TerminateWorkerContext();
-
  private:
   ServiceWorkerGlobalScopeProxy(WebEmbeddedWorkerImpl&,
                                 WebServiceWorkerContextClient&);

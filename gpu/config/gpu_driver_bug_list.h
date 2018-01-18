@@ -34,8 +34,6 @@ class GPU_EXPORT GpuDriverBugList : public GpuControlList {
   // the browser process to the GPU process.
   static void AppendAllWorkarounds(std::vector<const char*>* workarounds);
 
-  static bool AreEntryIndicesValid(const std::vector<uint32_t>& entry_indices);
-
  private:
   explicit GpuDriverBugList(const GpuControlListData& data);
 

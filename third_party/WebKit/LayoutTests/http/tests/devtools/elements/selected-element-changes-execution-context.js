@@ -7,7 +7,7 @@
   await TestRunner.loadModule('elements_test_runner');
   await TestRunner.showPanel('elements');
   await TestRunner.loadHTML(`
-      <iframe id="iframe-per-se" src="resources/set-outer-html-body-iframe.html""></iframe>
+      <iframe id="iframe-per-se" src="resources/set-outer-html-body-iframe.html" onload="runTest()"></iframe>
           <div id="element"></div>
     `);
 
@@ -35,9 +35,9 @@
       ElementsTestRunner.selectNodeWithId('iframe-per-se', dumpContextAndNext.bind(null, next));
     },
 
-    function selectIframeContentDocument(next) {
+    function selectIframeImmediateChild(next) {
       var iframe = UI.context.flavor(SDK.DOMNode);
-      var child = iframe.contentDocument();
+      var child = iframe.firstChild;
       ElementsTestRunner.selectNode(child).then(dumpContextAndNext.bind(null, next));
     },
   ]);

@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_util.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -28,6 +29,7 @@
 #include "content/public/browser/plugin_service.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/resource_dispatcher_host_delegate.h"
+#include "content/public/common/resource_response.h"
 #include "content/public/common/webplugininfo.h"
 #include "net/base/io_buffer.h"
 #include "net/base/mime_sniffer.h"
@@ -36,7 +38,6 @@
 #include "net/http/http_response_headers.h"
 #include "net/url_request/url_request.h"
 #include "ppapi/features/features.h"
-#include "services/network/public/cpp/resource_response.h"
 #include "third_party/WebKit/common/mime_util/mime_util.h"
 #include "url/origin.h"
 
@@ -130,11 +131,12 @@ void MimeSniffingResourceHandler::OnWillStart(
     std::unique_ptr<ResourceController> controller) {
   DCHECK(!has_controller());
 
+  AttachAcceptHeader(GetRequestInfo()->GetResourceType(), request());
   next_handler_->OnWillStart(url, std::move(controller));
 }
 
 void MimeSniffingResourceHandler::OnResponseStarted(
-    network::ResourceResponse* response,
+    ResourceResponse* response,
     std::unique_ptr<ResourceController> controller) {
   DCHECK_EQ(STATE_STARTING, state_);
   DCHECK(!has_controller());
@@ -513,22 +515,13 @@ bool MimeSniffingResourceHandler::MustDownload() {
 
   must_download_is_set_ = true;
 
-  bool is_cross_origin =
-      (request()->initiator().has_value() &&
-       !request()->url_chain().back().SchemeIsBlob() &&
-       !request()->url_chain().back().SchemeIsFileSystem() &&
-       !request()->url_chain().back().SchemeIs(url::kAboutScheme) &&
-       !request()->url_chain().back().SchemeIs(url::kDataScheme) &&
-       request()->initiator()->GetURL() !=
-           request()->url_chain().back().GetOrigin());
-
   std::string disposition;
   request()->GetResponseHeaderByName("content-disposition", &disposition);
-  if (!disposition.empty() &&
-      net::HttpContentDisposition(disposition, std::string()).is_attachment()) {
+  if (GetRequestInfo()->suggested_filename().has_value()) {
     must_download_ = true;
-  } else if (GetRequestInfo()->suggested_filename().has_value() &&
-             !is_cross_origin) {
+  } else if (!disposition.empty() &&
+             net::HttpContentDisposition(disposition, std::string())
+                 .is_attachment()) {
     must_download_ = true;
   } else if (GetContentClient()->browser()->ShouldForceDownloadResource(
                  request()->url(), response_->head.mime_type)) {
@@ -546,9 +539,6 @@ bool MimeSniffingResourceHandler::MustDownload() {
   } else {
     must_download_ = false;
   }
-
-  if (GetRequestInfo()->suggested_filename().has_value() && !must_download_)
-    RecordDownloadCount(CROSS_ORIGIN_DOWNLOAD_WITHOUT_CONTENT_DISPOSITION);
 
   return must_download_;
 }

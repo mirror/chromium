@@ -24,12 +24,10 @@ struct NetworkTrafficAnnotationTag;
 struct RedirectInfo;
 }  // namespace net
 
-namespace network {
+namespace content {
+
 struct ResourceRequest;
 struct ResourceResponseHead;
-}
-
-namespace content {
 
 namespace mojom {
 class URLLoaderFactory;
@@ -89,15 +87,15 @@ class CONTENT_EXPORT SimpleURLLoader {
 
   // Callback used when a redirect is being followed. It is safe to delete the
   // SimpleURLLoader during the callback.
-  using OnRedirectCallback = base::RepeatingCallback<void(
-      const net::RedirectInfo& redirect_info,
-      const network::ResourceResponseHead& response_head)>;
+  using OnRedirectCallback =
+      base::RepeatingCallback<void(const net::RedirectInfo& redirect_info,
+                                   const ResourceResponseHead& response_head)>;
 
   // Creates a SimpleURLLoader for |resource_request|. The request can be
   // started by calling any one of the Download methods once. The loader may not
   // be reused.
   static std::unique_ptr<SimpleURLLoader> Create(
-      std::unique_ptr<network::ResourceRequest> resource_request,
+      std::unique_ptr<ResourceRequest> resource_request,
       const net::NetworkTrafficAnnotationTag& annotation_tag);
 
   virtual ~SimpleURLLoader();
@@ -231,7 +229,7 @@ class CONTENT_EXPORT SimpleURLLoader {
   // The ResourceResponseHead for the request. Will be nullptr if ResponseInfo
   // was never received. May only be called once the loader has informed the
   // caller of completion.
-  virtual const network::ResourceResponseHead* ResponseInfo() const = 0;
+  virtual const ResourceResponseHead* ResponseInfo() const = 0;
 
  protected:
   SimpleURLLoader();

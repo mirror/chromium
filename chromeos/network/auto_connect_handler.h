@@ -18,8 +18,6 @@
 #include "chromeos/network/network_policy_observer.h"
 #include "chromeos/network/network_state_handler_observer.h"
 
-class AutoConnectNotifierTest;
-
 namespace chromeos {
 
 class CHROMEOS_EXPORT AutoConnectHandler : public LoginState::Observer,
@@ -68,7 +66,7 @@ class CHROMEOS_EXPORT AutoConnectHandler : public LoginState::Observer,
  private:
   friend class NetworkHandler;
   friend class AutoConnectHandlerTest;
-  friend class ::AutoConnectNotifierTest;
+  friend class AutoConnectNotifierTest;
 
   AutoConnectHandler();
 

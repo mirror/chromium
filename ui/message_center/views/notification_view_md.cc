@@ -710,17 +710,30 @@ void NotificationViewMD::CreateOrUpdateContextTitleView(
           : notification.accent_color());
   header_row_->SetTimestamp(notification.timestamp());
 
-  base::string16 app_name = notification.display_source();
+#if defined(OS_CHROMEOS)
+  // If |origin_url| and |display_source| are both empty, assume it is
+  // system notification, and use default |display_source| and
+  // |accent_color| for system notification.
+  // TODO(tetsui): Remove this after all system notification transition is
+  // completed.
+  // All system notification should use Notification::CreateSystemNotification()
+  if (notification.display_source().empty() &&
+      notification.origin_url().is_empty()) {
+    header_row_->SetAppName(l10n_util::GetStringFUTF16(
+        IDS_MESSAGE_CENTER_NOTIFICATION_CHROMEOS_SYSTEM,
+        MessageCenter::Get()->GetProductOSName()));
+    return;
+  }
+#endif
+
   if (notification.origin_url().is_valid() &&
       notification.origin_url().SchemeIsHTTPOrHTTPS()) {
-    app_name = url_formatter::FormatUrlForSecurityDisplay(
+    header_row_->SetAppName(url_formatter::FormatUrlForSecurityDisplay(
         notification.origin_url(),
-        url_formatter::SchemeDisplay::OMIT_HTTP_AND_HTTPS);
-  } else if (app_name.empty() &&
-             notification.notifier_id().type == NotifierId::SYSTEM_COMPONENT) {
-    app_name = MessageCenter::Get()->GetSystemNotificationAppName();
+        url_formatter::SchemeDisplay::OMIT_HTTP_AND_HTTPS));
+  } else {
+    header_row_->SetAppName(notification.display_source());
   }
-  header_row_->SetAppName(app_name);
 }
 
 void NotificationViewMD::CreateOrUpdateTitleView(
@@ -889,16 +902,18 @@ void NotificationViewMD::CreateOrUpdateIconView(
     right_content_->AddChildView(icon_view_);
   }
 
-  const bool use_image_for_icon = notification.icon().IsEmpty();
+  // If |use_image_as_icon| is set, use |image| as the icon on the right
+  // side, instead of |icon|.
   gfx::ImageSkia icon;
-  if (use_image_for_icon)
+  if (notification.use_image_as_icon())
     icon = notification.image().AsImageSkia();
   else
     icon = notification.icon().AsImageSkia();
   icon_view_->SetImage(icon, icon.size());
 
-  // Hide the icon on the right side when the notification is expanded.
-  hide_icon_on_expanded_ = use_image_for_icon;
+  // If |use_image_as_icon| is set, hide the icon on the right side when
+  // the notification is expanded.
+  hide_icon_on_expanded_ = notification.use_image_as_icon();
 }
 
 void NotificationViewMD::CreateOrUpdateSmallIconView(

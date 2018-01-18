@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "ash/session/test_session_controller_client.h"
+#include "ash/system/system_notifier.h"
 #include "ash/test/ash_test_base.h"
 #include "base/command_line.h"
 #include "base/macros.h"
@@ -20,8 +21,6 @@ using session_manager::SessionState;
 namespace ash {
 
 namespace {
-
-const char kNotifierSystemPriority[] = "ash.some-high-priority-component";
 
 class SessionStateNotificationBlockerTest
     : public NoSessionAshTestBase,
@@ -63,8 +62,6 @@ class SessionStateNotificationBlockerTest
         UTF8ToUTF16("chromeos-title"), UTF8ToUTF16("chromeos-message"),
         gfx::Image(), UTF8ToUTF16("chromeos-source"), GURL(), notifier_id,
         message_center::RichNotificationData(), NULL);
-    if (notifier_id.id == kNotifierSystemPriority)
-      notification.set_priority(message_center::SYSTEM_PRIORITY);
     return blocker_->ShouldShowNotificationAsPopup(notification);
   }
 
@@ -110,7 +107,8 @@ TEST_F(SessionStateNotificationBlockerTest, BaseTest) {
 TEST_F(SessionStateNotificationBlockerTest, AlwaysAllowedNotifier) {
   // NOTIFIER_DISPLAY is allowed to shown in the login screen.
   message_center::NotifierId notifier_id(
-      message_center::NotifierId::SYSTEM_COMPONENT, kNotifierSystemPriority);
+      message_center::NotifierId::SYSTEM_COMPONENT,
+      system_notifier::kNotifierDisplay);
 
   // Default status: OOBE.
   EXPECT_TRUE(ShouldShowNotificationAsPopup(notifier_id));
@@ -177,7 +175,8 @@ TEST_F(SessionStateNotificationBlockerTest, BlockOnPrefService) {
 
 TEST_F(SessionStateNotificationBlockerTest, BlockInKioskMode) {
   message_center::NotifierId notifier_id(
-      message_center::NotifierId::SYSTEM_COMPONENT, kNotifierSystemPriority);
+      message_center::NotifierId::SYSTEM_COMPONENT,
+      system_notifier::kNotifierDisplay);
   EXPECT_TRUE(ShouldShowNotificationAsPopup(notifier_id));
 
   SimulateKioskMode(user_manager::USER_TYPE_KIOSK_APP);

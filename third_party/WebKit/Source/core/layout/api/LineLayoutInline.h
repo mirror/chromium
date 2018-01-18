@@ -25,7 +25,7 @@ class LineLayoutInline : public LineLayoutBoxModel {
 
   explicit LineLayoutInline(std::nullptr_t) : LineLayoutBoxModel(nullptr) {}
 
-  LineLayoutInline() = default;
+  LineLayoutInline() {}
 
   LineLayoutItem FirstChild() const {
     return LineLayoutItem(ToInline()->FirstChild());

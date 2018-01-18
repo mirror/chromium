@@ -5,21 +5,21 @@
 cr.define('user_manager.create_profile_tests', function() {
   /** @return {!CreateProfileElement} */
   function createElement() {
-    const createProfileElement = document.createElement('create-profile');
+    var createProfileElement = document.createElement('create-profile');
     document.body.appendChild(createProfileElement);
     return createProfileElement;
   }
 
   function registerTests() {
     /** @type {?TestProfileBrowserProxy} */
-    let browserProxy = null;
+    var browserProxy = null;
 
     /** @type {?CreateProfileElement} */
-    let createProfileElement = null;
+    var createProfileElement = null;
 
     // Helper to select first signed in user from a dropdown menu.
-    const selectFirstSignedInUser = function(dropdownMenu) {
-      const option = dropdownMenu.querySelector('option:not([disabled])');
+    var selectFirstSignedInUser = function(dropdownMenu) {
+      var option = dropdownMenu.querySelector('option:not([disabled])');
       dropdownMenu.value = option.value;
       dropdownMenu.dispatchEvent(new Event('change'));
     };
@@ -78,9 +78,9 @@ cr.define('user_manager.create_profile_tests', function() {
           Polymer.dom.flush();
 
           // The dropdown menu is visible and is populated with signed in users.
-          const dropdownMenu = createProfileElement.$$('.md-select');
+          var dropdownMenu = createProfileElement.$$('.md-select');
           assertTrue(!!dropdownMenu);
-          const users = dropdownMenu.querySelectorAll('option:not([disabled])');
+          var users = dropdownMenu.querySelectorAll('option:not([disabled])');
           assertEquals(1, users.length);
         });
       });
@@ -104,7 +104,7 @@ cr.define('user_manager.create_profile_tests', function() {
 
       test('Create a profile', function() {
         // Create shortcut checkbox is invisible.
-        const createShortcutCheckbox =
+        var createShortcutCheckbox =
             createProfileElement.$.createShortcutCheckbox;
         assertTrue(createShortcutCheckbox.clientHeight == 0);
 
@@ -133,7 +133,7 @@ cr.define('user_manager.create_profile_tests', function() {
         // Create is not in progress.
         assertFalse(createProfileElement.createInProgress_);
         // Message container is visible.
-        const messageContainer =
+        var messageContainer =
             createProfileElement.$$('#message-container');
         assertTrue(messageContainer.clientHeight > 0);
         // Error message is set.
@@ -160,11 +160,11 @@ cr.define('user_manager.create_profile_tests', function() {
               // Create is not in progress.
               assertFalse(createProfileElement.createInProgress_);
               // Message container is visible.
-              const messageContainer =
+              var messageContainer =
                   createProfileElement.$$('#message-container');
               assertTrue(messageContainer.clientHeight > 0);
               // Error message is set.
-              const message = loadTimeData.getString(
+              var message = loadTimeData.getString(
                   'managedProfilesExistingLocalSupervisedUser');
               assertEquals(message, createProfileElement.$.message.innerHTML);
             });
@@ -188,11 +188,11 @@ cr.define('user_manager.create_profile_tests', function() {
               // Create is not in progress.
               assertFalse(createProfileElement.createInProgress_);
               // Message container is visible.
-              const messageContainer =
+              var messageContainer =
                   createProfileElement.$$('#message-container');
               assertTrue(messageContainer.clientHeight > 0);
               // Error message contains a link to import the supervised user.
-              const message = createProfileElement.$.message;
+              var message = createProfileElement.$.message;
               assertTrue(
                   !!message.querySelector('#supervised-user-import-existing'));
             });
@@ -216,11 +216,11 @@ cr.define('user_manager.create_profile_tests', function() {
               // Create is not in progress.
               assertFalse(createProfileElement.createInProgress_);
               // Message container is visible.
-              const messageContainer =
+              var messageContainer =
                   createProfileElement.$$('#message-container');
               assertTrue(messageContainer.clientHeight > 0);
               // Error message is set.
-              const message = loadTimeData.getString(
+              var message = loadTimeData.getString(
                   'noSupervisedUserImportText');
               assertEquals(message, createProfileElement.$.message.innerHTML);
             });
@@ -317,7 +317,7 @@ cr.define('user_manager.create_profile_tests', function() {
            * Profile Info of the successfully created supervised user.
            * @type {!ProfileInfo}
            */
-          const profileInfo = {name: 'profile name',
+          var profileInfo = {name: 'profile name',
                              filePath: 'path/to/profile',
                              showConfirmation: true};
 
@@ -463,7 +463,7 @@ cr.define('user_manager.create_profile_tests', function() {
 
       test('Create profile without shortcut', function() {
         // Create shortcut checkbox is visible.
-        const createShortcutCheckbox =
+        var createShortcutCheckbox =
             createProfileElement.$.createShortcutCheckbox;
         assertTrue(createShortcutCheckbox.clientHeight > 0);
 
@@ -488,7 +488,7 @@ cr.define('user_manager.create_profile_tests', function() {
 
       test('Create profile with shortcut', function() {
         // Create shortcut checkbox is visible.
-        const createShortcutCheckbox =
+        var createShortcutCheckbox =
             createProfileElement.$.createShortcutCheckbox;
         assertTrue(createShortcutCheckbox.clientHeight > 0);
 
@@ -530,7 +530,7 @@ cr.define('user_manager.create_profile_tests', function() {
         createProfileElement = createElement();
         Polymer.dom.flush();
 
-        const createSupervisedUserCheckbox =
+        var createSupervisedUserCheckbox =
           createProfileElement.$$("#makeSupervisedCheckbox");
         assertFalse(!!createSupervisedUserCheckbox);
       });
@@ -542,7 +542,7 @@ cr.define('user_manager.create_profile_tests', function() {
         createProfileElement = createElement();
         Polymer.dom.flush();
 
-        const createSupervisedUserCheckbox =
+        var createSupervisedUserCheckbox =
           createProfileElement.$$("#makeSupervisedCheckbox");
         assertTrue(createSupervisedUserCheckbox.clientHeight > 0);
       });

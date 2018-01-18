@@ -11,6 +11,7 @@
 #include "base/json/json_file_value_serializer.h"
 #include "base/json/json_string_value_serializer.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/sys_byteorder.h"
 #include "build/build_config.h"
@@ -50,7 +51,7 @@ std::unique_ptr<gltf::Asset> GltfParser::Parse(
     const base::FilePath& path) {
   DCHECK(buffers && buffers->size() <= 1);
   path_ = path;
-  asset_ = std::make_unique<gltf::Asset>();
+  asset_ = base::MakeUnique<gltf::Asset>();
 
   base::ScopedClosureRunner runner(
       base::Bind(&GltfParser::Clear, base::Unretained(this)));
@@ -155,13 +156,13 @@ std::unique_ptr<gltf::Buffer> GltfParser::ProcessUri(
   if (uri.SchemeIs(url::kDataScheme)) {
     std::string mime_type;
     std::string charset;
-    auto data = std::make_unique<gltf::Buffer>();
+    auto data = base::MakeUnique<gltf::Buffer>();
     if (!net::DataURL::Parse(uri, &mime_type, &charset, data.get()))
       return nullptr;
     return data;
   }
   if (uri.SchemeIsFile()) {
-    auto data = std::make_unique<gltf::Buffer>();
+    auto data = base::MakeUnique<gltf::Buffer>();
     base::FilePath path;
 #if defined(OS_WIN)
     // Windows uses UTF-16 for file paths, so we need to convert.
@@ -186,7 +187,7 @@ bool GltfParser::SetBufferViews(const base::DictionaryValue& dict) {
     if (!it.value().GetAsDictionary(&buffer_view_dict))
       return false;
 
-    auto buffer_view = std::make_unique<gltf::BufferView>();
+    auto buffer_view = base::MakeUnique<gltf::BufferView>();
     std::string buffer_key;
     if (!buffer_view_dict->GetString("buffer", &buffer_key))
       return false;
@@ -210,7 +211,7 @@ bool GltfParser::SetAccessors(const base::DictionaryValue& dict) {
     if (!it.value().GetAsDictionary(&accessor_dict))
       return false;
 
-    auto accessor = std::make_unique<gltf::Accessor>();
+    auto accessor = base::MakeUnique<gltf::Accessor>();
     std::string buffer_view_key;
     std::string type_str;
     if (!accessor_dict->GetString("bufferView", &buffer_view_key))
@@ -244,7 +245,7 @@ bool GltfParser::SetMeshes(const base::DictionaryValue& dict) {
     if (!it.value().GetAsDictionary(&mesh_dict))
       return false;
 
-    auto mesh = std::make_unique<gltf::Mesh>();
+    auto mesh = base::MakeUnique<gltf::Mesh>();
     const base::ListValue* list;
     if (mesh_dict->GetList("primitives", &list)) {
       for (const auto& primitive_value : *list) {
@@ -266,7 +267,7 @@ bool GltfParser::SetMeshes(const base::DictionaryValue& dict) {
 
 std::unique_ptr<gltf::Mesh::Primitive> GltfParser::ProcessPrimitive(
     const base::DictionaryValue& dict) {
-  auto primitive = std::make_unique<gltf::Mesh::Primitive>();
+  auto primitive = base::MakeUnique<gltf::Mesh::Primitive>();
   std::string indices_key;
   const base::DictionaryValue* attributes;
   if (dict.GetString("indices", &indices_key)) {
@@ -299,7 +300,7 @@ bool GltfParser::SetNodes(const base::DictionaryValue& dict) {
     if (!it.value().GetAsDictionary(&node_dict))
       return false;
 
-    auto node = std::make_unique<gltf::Node>();
+    auto node = base::MakeUnique<gltf::Node>();
     const base::ListValue* list;
     if (node_dict->GetList("meshes", &list)) {
       std::string mesh_key;
@@ -346,7 +347,7 @@ bool GltfParser::SetScenes(const base::DictionaryValue& dict) {
     if (!it.value().GetAsDictionary(&scene_dict))
       return false;
 
-    auto scene = std::make_unique<gltf::Scene>();
+    auto scene = base::MakeUnique<gltf::Scene>();
     const base::ListValue* list;
     if (scene_dict->GetList("nodes", &list)) {
       std::string node_key;
@@ -426,7 +427,7 @@ std::unique_ptr<gltf::Asset> BinaryGltfParser::Parse(
     return nullptr;
   }
 
-  auto glb_buffer = std::make_unique<gltf::Buffer>(
+  auto glb_buffer = base::MakeUnique<gltf::Buffer>(
       glb_content.substr(kContentStart + content_length));
   buffers->push_back(std::move(glb_buffer));
   GltfParser gltf_parser;

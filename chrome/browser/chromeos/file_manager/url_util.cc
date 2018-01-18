@@ -6,9 +6,8 @@
 
 #include <stddef.h>
 
-#include <memory>
-
 #include "base/json/json_writer.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/file_manager/app_id.h"
 #include "net/base/escape.h"
@@ -87,14 +86,14 @@ GURL GetFileManagerMainPageUrlWithParams(
   arg_value.SetString("defaultExtension", default_extension);
 
   if (file_types) {
-    auto types_list = std::make_unique<base::ListValue>();
+    auto types_list = base::MakeUnique<base::ListValue>();
     for (size_t i = 0; i < file_types->extensions.size(); ++i) {
-      auto extensions_list = std::make_unique<base::ListValue>();
+      auto extensions_list = base::MakeUnique<base::ListValue>();
       for (size_t j = 0; j < file_types->extensions[i].size(); ++j) {
         extensions_list->AppendString(file_types->extensions[i][j]);
       }
 
-      auto dict = std::make_unique<base::DictionaryValue>();
+      auto dict = base::MakeUnique<base::DictionaryValue>();
       dict->Set("extensions", std::move(extensions_list));
 
       if (i < file_types->extension_description_overrides.size()) {

@@ -6,16 +6,17 @@
 #define CHROME_BROWSER_CHROMEOS_ACCESSIBILITY_ACCESSIBILITY_MANAGER_H_
 
 #include <set>
-#include <string>
 
 #include "ash/public/cpp/accessibility_types.h"
 #include "ash/public/interfaces/accessibility_controller.mojom.h"
+#include "ash/shell_observer.h"
 #include "base/callback_forward.h"
 #include "base/callback_list.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/scoped_observer.h"
 #include "base/time/time.h"
+#include "chrome/browser/chromeos/accessibility/accessibility_util.h"
 #include "chrome/browser/chromeos/accessibility/chromevox_panel.h"
 #include "chrome/browser/extensions/api/braille_display_private/braille_controller.h"
 #include "components/prefs/pref_change_registrar.h"
@@ -27,8 +28,6 @@
 #include "extensions/browser/extension_system.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 
-class Browser;
-class DictationChromeos;
 class Profile;
 
 namespace gfx {
@@ -98,6 +97,7 @@ class AccessibilityManager
       public extensions::ExtensionRegistryObserver,
       public user_manager::UserManager::UserSessionStateObserver,
       public session_manager::SessionManagerObserver,
+      public ash::ShellObserver,
       public input_method::InputMethodManager::Observer {
  public:
   // Creates an instance of AccessibilityManager, this should be called once,
@@ -107,9 +107,6 @@ class AccessibilityManager
   static void Shutdown();
   // Returns the existing instance. If there is no instance, returns NULL.
   static AccessibilityManager* Get();
-
-  // Show the accessibility help as a tab in the browser.
-  static void ShowAccessibilityHelp(Browser* browser);
 
   // On a user's first login into a device, any a11y features enabled/disabled
   // by the user on the login screen are enabled/disabled in the user's profile.
@@ -152,6 +149,9 @@ class AccessibilityManager
 
   // Returns true if spoken feedback is enabled, or false if not.
   bool IsSpokenFeedbackEnabled() const;
+
+  // Toggles whether Chrome OS spoken feedback is on or off.
+  void ToggleSpokenFeedback(ash::AccessibilityNotificationVisibility notify);
 
   // Enables or disables the high contrast mode for Chrome.
   void EnableHighContrast(bool enabled);
@@ -226,6 +226,10 @@ class AccessibilityManager
 
   // user_manager::UserManager::UserSessionStateObserver overrides:
   void ActiveUserChanged(const user_manager::User* active_user) override;
+
+  // ShellObserver overrides:
+  void OnFullscreenStateChanged(bool is_fullscreen,
+                                aura::Window* root_window) override;
 
   void SetProfileForTest(Profile* profile);
 
@@ -302,9 +306,6 @@ class AccessibilityManager
   // Set the keys to be captured by Switch Access.
   void SetSwitchAccessKeys(const std::set<int>& key_codes);
 
-  // Starts or stops dictation (type what you speak).
-  void ToggleDictation();
-
  protected:
   AccessibilityManager();
   ~AccessibilityManager() override;
@@ -318,7 +319,7 @@ class AccessibilityManager
   void UpdateAlwaysShowMenuFromPref();
   void OnLargeCursorChanged();
   void UpdateStickyKeysFromPref();
-  void OnSpokenFeedbackChanged();
+  void UpdateSpokenFeedbackFromPref();
   void OnHighContrastChanged();
   void OnAutoclickChanged();
   void UpdateAutoclickDelayFromPref();
@@ -443,10 +444,6 @@ class AccessibilityManager
 
   // Ash's mojom::AccessibilityController used to SetDarkenScreen.
   ash::mojom::AccessibilityControllerPtr accessibility_controller_;
-
-  bool app_terminating_ = false;
-
-  std::unique_ptr<DictationChromeos> dictation_;
 
   base::WeakPtrFactory<AccessibilityManager> weak_ptr_factory_;
 

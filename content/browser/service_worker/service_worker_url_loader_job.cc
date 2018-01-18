@@ -59,7 +59,7 @@ class ServiceWorkerURLLoaderJob::StreamWaiter
 ServiceWorkerURLLoaderJob::ServiceWorkerURLLoaderJob(
     LoaderCallback callback,
     Delegate* delegate,
-    const network::ResourceRequest& resource_request,
+    const ResourceRequest& resource_request,
     scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter)
     : loader_callback_(std::move(callback)),
       delegate_(delegate),
@@ -73,8 +73,9 @@ ServiceWorkerURLLoaderJob::ServiceWorkerURLLoaderJob(
             resource_request_.fetch_request_mode);
   DCHECK_EQ(network::mojom::FetchCredentialsMode::kInclude,
             resource_request_.fetch_credentials_mode);
-  DCHECK_EQ(network::mojom::FetchRedirectMode::kManual,
-            resource_request_.fetch_redirect_mode);
+  DCHECK_EQ(
+      FetchRedirectMode::MANUAL_MODE,
+      static_cast<FetchRedirectMode>(resource_request_.fetch_redirect_mode));
   response_head_.load_timing.request_start = base::TimeTicks::Now();
   response_head_.load_timing.request_start_time = base::Time::Now();
 }
@@ -156,8 +157,8 @@ void ServiceWorkerURLLoaderJob::StartRequest() {
 
   // Dispatch the fetch event.
   fetch_dispatcher_ = std::make_unique<ServiceWorkerFetchDispatcher>(
-      std::make_unique<network::ResourceRequest>(resource_request_),
-      active_worker, base::nullopt /* timeout */,
+      std::make_unique<ResourceRequest>(resource_request_), active_worker,
+      base::nullopt /* timeout */,
       net::NetLogWithSource() /* TODO(scottmg): net log? */,
       base::BindOnce(&ServiceWorkerURLLoaderJob::DidPrepareFetchEvent,
                      weak_factory_.GetWeakPtr(),

@@ -4,9 +4,8 @@
 
 #include "chrome/browser/vr/testapp/vr_test_context.h"
 
-#include <memory>
-
 #include "base/i18n/icu_util.h"
+#include "base/memory/ptr_util.h"
 #include "base/numerics/ranges.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
@@ -53,7 +52,6 @@ constexpr float kDefaultViewScaleFactor = 1.2f;
 constexpr float kMinViewScaleFactor = 0.5f;
 constexpr float kMaxViewScaleFactor = 5.0f;
 constexpr float kViewScaleAdjustmentFactor = 0.2f;
-constexpr float kPageLoadTimeMilliseconds = 500;
 
 constexpr gfx::Point3F kLaserOrigin = {0.5f, -0.5f, 0.f};
 constexpr gfx::Vector3dF kLaserLocalOffset = {0.f, -0.0075f, -0.05f};
@@ -64,16 +62,14 @@ void RotateToward(const gfx::Vector3dF& fwd, gfx::Transform* transform) {
   transform->PreconcatTransform(gfx::Transform(quat));
 }
 
-#if defined(GOOGLE_CHROME_BUILD)
 bool LoadPng(int resource_id, std::unique_ptr<SkBitmap>* out_image) {
   base::StringPiece data =
       ui::ResourceBundle::GetSharedInstance().GetRawDataResource(resource_id);
-  *out_image = std::make_unique<SkBitmap>();
+  *out_image = base::MakeUnique<SkBitmap>();
   return gfx::PNGCodec::Decode(
       reinterpret_cast<const unsigned char*>(data.data()), data.size(),
       out_image->get());
 }
-#endif
 
 }  // namespace
 
@@ -88,10 +84,10 @@ VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
   // TODO(cjgrant): Remove this when the keyboard is enabled by default.
   base::FeatureList::InitializeInstance("VrBrowserKeyboard", "");
 
-  text_input_delegate_ = std::make_unique<TextInputDelegate>();
-  keyboard_delegate_ = std::make_unique<TestKeyboardDelegate>();
+  text_input_delegate_ = base::MakeUnique<TextInputDelegate>();
+  keyboard_delegate_ = base::MakeUnique<TestKeyboardDelegate>();
 
-  ui_ = std::make_unique<Ui>(this, nullptr, keyboard_delegate_.get(),
+  ui_ = base::MakeUnique<Ui>(this, nullptr, keyboard_delegate_.get(),
                              text_input_delegate_.get(), UiInitialState());
 
   text_input_delegate_->SetRequestFocusCallback(
@@ -142,11 +138,6 @@ void VrTestContext::DrawFrame() {
   if (model_->web_vr.has_produced_frames()) {
     ui_->ui_renderer()->DrawWebVrOverlayForeground(render_info);
   }
-
-  auto load_progress = (current_time - page_load_start_).InMilliseconds() /
-                       kPageLoadTimeMilliseconds;
-  ui_->SetLoading(load_progress < 1.0f);
-  ui_->SetLoadProgress(std::min(load_progress, 1.0f));
 }
 
 void VrTestContext::HandleInput(ui::Event* event) {
@@ -202,16 +193,12 @@ void VrTestContext::HandleInput(ui::Event* event) {
         break;
       case ui::DomCode::US_O:
         CycleOrigin();
-        model_->can_navigate_back = !model_->can_navigate_back;
         break;
       case ui::DomCode::US_C:
         model_->can_apply_new_background = true;
         break;
       case ui::DomCode::US_P:
         model_->toggle_mode(kModeRepositionWindow);
-        break;
-      case ui::DomCode::US_X:
-        ui_->OnAppButtonClicked();
         break;
       default:
         break;
@@ -464,13 +451,9 @@ void VrTestContext::Navigate(GURL gurl) {
   ToolbarState state(gurl, security_state::SecurityLevel::HTTP_SHOW_WARNING,
                      &toolbar::kHttpIcon, base::string16(), true, false);
   ui_->SetToolbarState(state);
-  page_load_start_ = base::TimeTicks::Now();
 }
 
-void VrTestContext::NavigateBack() {
-  page_load_start_ = base::TimeTicks::Now();
-}
-
+void VrTestContext::NavigateBack() {}
 void VrTestContext::ExitCct() {}
 
 void VrTestContext::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
@@ -492,38 +475,20 @@ void VrTestContext::OnExitVrPromptResult(vr::ExitVrPromptChoice choice,
 void VrTestContext::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {}
 
 void VrTestContext::StartAutocomplete(const base::string16& string) {
-  auto result = std::make_unique<OmniboxSuggestions>();
-  for (int i = 0; i < 4; i++) {
-    if (i == 0) {
-      result->suggestions.emplace_back(OmniboxSuggestion(
-          base::UTF8ToUTF16("Suggestion ") + base::IntToString16(i + 1),
-          base::UTF8ToUTF16("none url match dim invsible"),
-          ACMatchClassifications(),
-          {
-              ACMatchClassification(0, ACMatchClassification::NONE),
-              ACMatchClassification(5, ACMatchClassification::URL),
-              ACMatchClassification(9, ACMatchClassification::MATCH),
-              ACMatchClassification(15, ACMatchClassification::DIM),
-              ACMatchClassification(19, ACMatchClassification::INVISIBLE),
-          },
-          AutocompleteMatch::Type::VOICE_SUGGEST,
-          GURL("http://www.test.com/")));
-    } else {
-      result->suggestions.emplace_back(OmniboxSuggestion(
-          base::UTF8ToUTF16("Suggestion ") + base::IntToString16(i + 1),
-          base::UTF8ToUTF16(
-              "Very lengthy description of the suggestion that would wrap "
-              "if not truncated through some other means."),
-          ACMatchClassifications(), ACMatchClassifications(),
-          AutocompleteMatch::Type::VOICE_SUGGEST,
-          GURL("http://www.test.com/")));
-    }
+  auto result = base::MakeUnique<OmniboxSuggestions>();
+  for (int i = 0; i < 5; i++) {
+    result->suggestions.emplace_back(OmniboxSuggestion(
+        base::UTF8ToUTF16("Suggestion ") + base::IntToString16(i + 1),
+        base::UTF8ToUTF16(
+            "Very lengthy description of the suggestion that would wrap "
+            "if not truncated through some other means."),
+        AutocompleteMatch::Type::VOICE_SUGGEST, GURL("http://www.test.com/")));
   }
   ui_->SetOmniboxSuggestions(std::move(result));
 }
 
 void VrTestContext::StopAutocomplete() {
-  ui_->SetOmniboxSuggestions(std::make_unique<OmniboxSuggestions>());
+  ui_->SetOmniboxSuggestions(base::MakeUnique<OmniboxSuggestions>());
 }
 
 void VrTestContext::CycleOrigin() {
@@ -534,14 +499,11 @@ void VrTestContext::CycleOrigin() {
       {GURL("http://www.domain.com/"),
        security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
        base::string16(), true, false},
-      {GURL("http://subdomain.domain.com/"),
-       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
-       base::string16(), true, false},
       {GURL("https://www.domain.com/path/segment/directory/file.html"),
        security_state::SecurityLevel::SECURE, &toolbar::kHttpsValidIcon,
        base::UTF8ToUTF16("Secure"), true, false},
       {GURL("https://www.domain.com/path/segment/directory/file.html"),
-       security_state::SecurityLevel::DANGEROUS, &toolbar::kHttpsInvalidIcon,
+       security_state::SecurityLevel::DANGEROUS, &toolbar::kHttpsValidIcon,
        base::UTF8ToUTF16("Dangerous"), true, false},
       {GURL("https://www.domain.com/path/segment/directory/file.html"),
        security_state::SecurityLevel::HTTP_SHOW_WARNING,
@@ -556,7 +518,7 @@ void VrTestContext::CycleOrigin() {
 void VrTestContext::LoadAssets() {
   base::Version assets_component_version(VR_ASSETS_COMPONENT_VERSION);
 #if defined(GOOGLE_CHROME_BUILD)
-  auto assets = std::make_unique<Assets>();
+  auto assets = base::MakeUnique<Assets>();
   if (!(LoadPng(IDR_VR_BACKGROUND_IMAGE, &assets->background) &&
         LoadPng(IDR_VR_NORMAL_GRADIENT_IMAGE, &assets->normal_gradient) &&
         LoadPng(IDR_VR_INCOGNITO_GRADIENT_IMAGE, &assets->incognito_gradient) &&

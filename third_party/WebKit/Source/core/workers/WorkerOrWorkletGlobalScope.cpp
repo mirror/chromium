@@ -233,7 +233,6 @@ void WorkerOrWorkletGlobalScope::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
   visitor->TraceWrappers(modulator_);
   EventTargetWithInlineData::TraceWrappers(visitor);
-  ExecutionContext::TraceWrappers(visitor);
 }
 
 }  // namespace blink

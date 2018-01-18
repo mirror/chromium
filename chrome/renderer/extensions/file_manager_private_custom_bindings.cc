@@ -36,9 +36,8 @@ void FileManagerPrivateCustomBindings::GetFileSystem(
   DCHECK(args.Length() == 2);
   DCHECK(args[0]->IsString());
   DCHECK(args[1]->IsString());
-  v8::Isolate* isolate = args.GetIsolate();
-  std::string name(*v8::String::Utf8Value(isolate, args[0]));
-  std::string root_url(*v8::String::Utf8Value(isolate, args[1]));
+  std::string name(*v8::String::Utf8Value(args[0]));
+  std::string root_url(*v8::String::Utf8Value(args[1]));
 
   blink::WebLocalFrame* webframe =
       blink::WebLocalFrame::FrameForContext(context()->v8_context());
@@ -47,7 +46,7 @@ void FileManagerPrivateCustomBindings::GetFileSystem(
       blink::WebDOMFileSystem::Create(
           webframe, blink::kWebFileSystemTypeExternal,
           blink::WebString::FromUTF8(name), GURL(root_url))
-          .ToV8Value(context()->v8_context()->Global(), isolate));
+          .ToV8Value(context()->v8_context()->Global(), args.GetIsolate()));
 }
 
 void FileManagerPrivateCustomBindings::GetExternalFileEntry(

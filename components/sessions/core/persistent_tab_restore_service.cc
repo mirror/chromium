@@ -15,6 +15,7 @@
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/stl_util.h"
 #include "base/task/cancelable_task_tracker.h"
@@ -312,7 +313,7 @@ CreateWindowEntryFromCommand(const SessionCommand* command,
 
   // Create the Window entry.
   std::unique_ptr<sessions::TabRestoreService::Window> window =
-      std::make_unique<sessions::TabRestoreService::Window>();
+      base::MakeUnique<sessions::TabRestoreService::Window>();
   window->selected_tab_index = fields.selected_tab_index;
   window->timestamp = base::Time::FromInternalValue(fields.timestamp);
   *window_id = static_cast<SessionID::id_type>(fields.window_id);
@@ -601,7 +602,7 @@ void PersistentTabRestoreService::Delegate::CreateEntriesFromWindows(
     std::vector<std::unique_ptr<sessions::SessionWindow>>* windows,
     std::vector<std::unique_ptr<Entry>>* entries) {
   for (const auto& session_window : *windows) {
-    std::unique_ptr<Window> window = std::make_unique<Window>();
+    std::unique_ptr<Window> window = base::MakeUnique<Window>();
     if (ConvertSessionWindowToWindow(session_window.get(), window.get()))
       entries->push_back(std::move(window));
   }
@@ -880,13 +881,13 @@ void PersistentTabRestoreService::Delegate::CreateEntriesFromCommands(
             NOTREACHED();
             return;
           }
-          current_window->tabs.push_back(std::make_unique<Tab>());
+          current_window->tabs.push_back(base::MakeUnique<Tab>());
           current_tab = current_window->tabs.back().get();
           if (--pending_window_tabs == 0)
             current_window = nullptr;
         } else {
           RemoveEntryByID(payload.id, &entries);
-          entries.push_back(std::make_unique<Tab>());
+          entries.push_back(base::MakeUnique<Tab>());
           current_tab = static_cast<Tab*>(entries.back().get());
           current_tab->timestamp =
               base::Time::FromInternalValue(payload.timestamp);
@@ -1012,7 +1013,7 @@ bool PersistentTabRestoreService::Delegate::ConvertSessionWindowToWindow(
     Window* window) {
   for (size_t i = 0; i < session_window->tabs.size(); ++i) {
     if (!session_window->tabs[i]->navigations.empty()) {
-      window->tabs.push_back(std::make_unique<Tab>());
+      window->tabs.push_back(base::MakeUnique<Tab>());
       Tab& tab = *window->tabs.back();
       tab.pinned = session_window->tabs[i]->pinned;
       tab.navigations.swap(session_window->tabs[i]->navigations);

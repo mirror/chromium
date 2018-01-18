@@ -8,8 +8,7 @@ typedef (WebGLRenderingContext or WebGL2RenderingContext) XRWebGLRenderingContex
 [
     SecureContext,
     RuntimeEnabled=WebXR,
-    Constructor(XRSession session, XRWebGLRenderingContext context, optional XRWebGLLayerInit layerInit),
-    RaisesException=Constructor
+    Constructor(XRSession session, XRWebGLRenderingContext context, optional XRWebGLLayerInit layerInit)
 ] interface XRWebGLLayer : XRLayer {
   [ImplementedAs=getXRWebGLRenderingContext] readonly attribute XRWebGLRenderingContext context;
   readonly attribute boolean antialias;

@@ -13,6 +13,7 @@
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/optional.h"
@@ -733,8 +734,8 @@ bool ExistingUserController::IsUserWhitelisted(const AccountId& account_id) {
   if (login_performer_.get())
     return login_performer_->IsUserWhitelisted(account_id, &wildcard_match);
 
-  return cros_settings_->IsUserWhitelisted(account_id.GetUserEmail(),
-                                           &wildcard_match);
+  return chromeos::CrosSettings::IsWhitelisted(account_id.GetUserEmail(),
+                                               &wildcard_match);
 }
 
 void ExistingUserController::OnConsumerKioskAutoLaunchCheckCompleted(
@@ -1069,11 +1070,11 @@ void ExistingUserController::OnOldEncryptionDetected(
   // Use signin profile request context
   net::URLRequestContextGetter* const signin_profile_context =
       ProfileHelper::GetSigninProfile()->GetRequestContext();
-  auto cloud_policy_client = std::make_unique<policy::CloudPolicyClient>(
+  auto cloud_policy_client = base::MakeUnique<policy::CloudPolicyClient>(
       std::string() /* machine_id */, std::string() /* machine_model */,
       device_management_service, signin_profile_context,
       nullptr /* signing_service */);
-  pre_signin_policy_fetcher_ = std::make_unique<policy::PreSigninPolicyFetcher>(
+  pre_signin_policy_fetcher_ = base::MakeUnique<policy::PreSigninPolicyFetcher>(
       DBusThreadManager::Get()->GetCryptohomeClient(),
       DBusThreadManager::Get()->GetSessionManagerClient(),
       std::move(cloud_policy_client), IsActiveDirectoryManaged(),

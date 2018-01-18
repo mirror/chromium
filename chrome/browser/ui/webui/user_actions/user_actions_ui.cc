@@ -4,8 +4,7 @@
 
 #include "chrome/browser/ui/webui/user_actions/user_actions_ui.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/user_actions/user_actions_ui_handler.h"
 #include "chrome/common/url_constants.h"
@@ -27,7 +26,7 @@ UserActionsUI::UserActionsUI(content::WebUI* web_ui)
   Profile* profile = Profile::FromWebUI(web_ui);
   content::WebUIDataSource::Add(profile, html_source);
 
-  web_ui->AddMessageHandler(std::make_unique<UserActionsUIHandler>());
+  web_ui->AddMessageHandler(base::MakeUnique<UserActionsUIHandler>());
 }
 
 UserActionsUI::~UserActionsUI() {}

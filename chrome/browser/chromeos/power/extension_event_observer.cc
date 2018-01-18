@@ -133,7 +133,7 @@ void ExtensionEventObserver::OnBackgroundHostCreated(
     return;
 
   auto result = keepalive_sources_.insert(
-      std::make_pair(host, std::make_unique<KeepaliveSources>()));
+      std::make_pair(host, base::MakeUnique<KeepaliveSources>()));
 
   if (result.second)
     host->AddObserver(this);

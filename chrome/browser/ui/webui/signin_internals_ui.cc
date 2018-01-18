@@ -4,7 +4,6 @@
 
 #include "chrome/browser/ui/webui/signin_internals_ui.h"
 
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -49,7 +48,7 @@ SignInInternalsUI::SignInInternalsUI(content::WebUI* web_ui)
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
     if (signin::IsDiceEnabledForProfile(profile->GetPrefs())) {
       web_ui->AddMessageHandler(
-          std::make_unique<SigninDiceInternalsHandler>(profile));
+          base::MakeUnique<SigninDiceInternalsHandler>(profile));
     }
 #endif
   }

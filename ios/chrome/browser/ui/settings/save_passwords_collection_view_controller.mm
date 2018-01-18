@@ -217,6 +217,16 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
   [model addItem:savePasswordsItem_
       toSectionWithIdentifier:SectionIdentifierSavePasswordsSwitch];
 
+  if (base::FeatureList::IsEnabled(
+          password_manager::features::kPasswordExport)) {
+    // Export passwords button.
+    [model addSectionWithIdentifier:SectionIdentifierExportPasswordsButton];
+    exportPasswordsItem_ = [self exportPasswordsItem];
+    [model addItem:exportPasswordsItem_
+        toSectionWithIdentifier:SectionIdentifierExportPasswordsButton];
+    [self updateExportPasswordsItem];
+  }
+
   // Saved passwords.
   if (!savedForms_.empty()) {
     [model addSectionWithIdentifier:SectionIdentifierSavedPasswords];
@@ -247,25 +257,6 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
           toSectionWithIdentifier:SectionIdentifierBlacklist];
     }
   }
-
-  if (base::FeatureList::IsEnabled(
-          password_manager::features::kPasswordExport)) {
-    // Export passwords button.
-    [model addSectionWithIdentifier:SectionIdentifierExportPasswordsButton];
-    exportPasswordsItem_ = [self exportPasswordsItem];
-    [model addItem:exportPasswordsItem_
-        toSectionWithIdentifier:SectionIdentifierExportPasswordsButton];
-    [self updateExportPasswordsItem];
-  }
-}
-
-- (BOOL)shouldShowEditButton {
-  return YES;
-}
-
-- (BOOL)editButtonEnabled {
-  DCHECK([self shouldShowEditButton]);
-  return !savedForms_.empty() || !blacklistedForms_.empty();
 }
 
 #pragma mark - Items
@@ -419,6 +410,10 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
 
   // Update the cell.
   [self reconfigureCellsForItems:@[ savePasswordsItem_ ]];
+
+  // Update the edit button.
+  [self.editor setEditing:NO];
+  [self updateEditButton];
 }
 
 #pragma mark - Actions
@@ -429,6 +424,10 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
 
   // Update the item.
   savePasswordsItem_.on = [passwordManagerEnabled_ value];
+
+  // Update the edit button.
+  [self.editor setEditing:NO];
+  [self updateEditButton];
 }
 
 #pragma mark - Private methods
@@ -462,6 +461,15 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
 
   [self updateEditButton];
   [self reloadData];
+}
+
+- (BOOL)shouldShowEditButton {
+  return [passwordManagerEnabled_ value];
+}
+
+- (BOOL)editButtonEnabled {
+  DCHECK([self shouldShowEditButton]);
+  return !savedForms_.empty() || !blacklistedForms_.empty();
 }
 
 - (void)updateExportPasswordsItem {

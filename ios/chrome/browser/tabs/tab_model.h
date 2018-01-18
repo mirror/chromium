@@ -14,6 +14,7 @@
 #include "ui/base/page_transition_types.h"
 
 class GURL;
+class SessionID;
 @class SessionServiceIOS;
 @class SessionWindowIOS;
 @class Tab;
@@ -45,7 +46,7 @@ NSUInteger const kTabPositionAutomatically = NSNotFound;
 // The model knows about the currently selected tab in order to maintain
 // consistency between multiple views that need the current tab to be
 // synchronized.
-@interface TabModel : NSObject
+@interface TabModel : NSObject<NSFastEnumeration>
 
 // Currently active tab.
 @property(nonatomic, weak) Tab* currentTab;
@@ -56,6 +57,11 @@ NSUInteger const kTabPositionAutomatically = NSNotFound;
 
 // BrowserState associated with this TabModel.
 @property(nonatomic, readonly) ios::ChromeBrowserState* browserState;
+
+// Unique identifier of this browser for session restore. This ID is only
+// unique within the current session, and is not guaranteed to be unique
+// across sessions.
+@property(nonatomic, readonly) const SessionID& sessionID;
 
 // Records UMA metrics about Tab usage.
 @property(nonatomic, readonly) TabUsageRecorder* tabUsageRecorder;

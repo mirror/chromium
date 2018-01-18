@@ -11,7 +11,6 @@ Important information to include:
 * Metric owners: This the email of someone who can answer questions about how this metric is recorded, what it means, and how it should be used. Can include multiple people.
 * A description of the event about which you are recording details, including when the event will be recorded.
 * For each metric in the event: a description of the data and what it means.
-* The unit should be included in the description, along with possible output values.
 * If an event will only happen once per Navigation, it can be marked singular="true".
 
 ### Example
@@ -64,8 +63,7 @@ ukm::SourceId source_id = ukm::ConvertToSourceId(
     navigation_handle->GetNavigationId(), ukm::SourceIdType::NAVIGATION_ID);
 ```
 
-Currently, however, the code for passing these IDs around is incomplete so you may need to temporarily create your own IDs and associate the URL with them. However we currently prefer that this method is not used, and if you need to setup the URL yourself, please email us first at ukm-team@google.com.
-Example:
+Currently, however, the code for passing these IDs around is incomplete so you may need to temporarily create your own IDs and associate the URL with them.  Example:
 
 ```
 ukm::SourceId source_id = ukm::UkmRecorder::GetNewSourceId();

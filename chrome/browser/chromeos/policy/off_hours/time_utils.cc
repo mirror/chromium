@@ -5,7 +5,6 @@
 #include "chrome/browser/chromeos/policy/off_hours/time_utils.h"
 
 #include <algorithm>
-#include <memory>
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -37,7 +36,7 @@ bool GetOffsetFromTimezoneToGmt(const std::string& timezone,
   int dst_offset = zone->getDSTSavings();
   UErrorCode status = U_ZERO_ERROR;
   std::unique_ptr<icu::GregorianCalendar> gregorian_calendar =
-      std::make_unique<icu::GregorianCalendar>(*zone, status);
+      base::MakeUnique<icu::GregorianCalendar>(*zone, status);
   if (U_FAILURE(status)) {
     LOG(ERROR) << "Gregorian calendar error = " << u_errorName(status);
     return false;

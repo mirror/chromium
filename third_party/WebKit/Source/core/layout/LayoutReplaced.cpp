@@ -55,7 +55,7 @@ LayoutReplaced::LayoutReplaced(Element* element,
   SetIsAtomicInlineLevel(true);
 }
 
-LayoutReplaced::~LayoutReplaced() = default;
+LayoutReplaced::~LayoutReplaced() {}
 
 void LayoutReplaced::WillBeDestroyed() {
   if (!DocumentBeingDestroyed() && Parent())

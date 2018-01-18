@@ -57,10 +57,10 @@ class MediaRouterActionControllerUnitTest : public MediaRouterWebUITest {
   void SetUp() override {
     MediaRouterWebUITest::SetUp();
 
-    router_ = std::make_unique<media_router::MockMediaRouter>();
+    router_ = base::MakeUnique<media_router::MockMediaRouter>();
     component_action_delegate_ =
-        std::make_unique<FakeComponentActionDelegate>();
-    controller_ = std::make_unique<MediaRouterActionController>(
+        base::MakeUnique<FakeComponentActionDelegate>();
+    controller_ = base::MakeUnique<MediaRouterActionController>(
         profile(), router_.get(), component_action_delegate_.get());
 
     SetAlwaysShowActionPref(false);

@@ -65,11 +65,7 @@ public class WebApkSandboxedProcessService extends Service {
             assert hostBrowserUid >= 0;
             return (IBinder) bindMethod.invoke(
                     mWebApkChildProcessServiceImplInstance, intent, hostBrowserUid);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }

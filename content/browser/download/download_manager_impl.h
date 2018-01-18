@@ -137,16 +137,21 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
   // DownloadInterruptReason enum for information on possible return values.
   static DownloadInterruptReason BeginDownloadRequest(
       std::unique_ptr<net::URLRequest> url_request,
+      const Referrer& referrer,
       ResourceContext* resource_context,
-      DownloadUrlParameters* params);
+      bool is_content_initiated,
+      int render_process_id,
+      int render_view_route_id,
+      int render_frame_route_id,
+      bool do_not_prompt_for_login);
 
   // Continue a navigation that ends up to be a download after it reaches the
   // OnResponseStarted() step. It has to be called on the UI thread.
   void InterceptNavigation(
-      std::unique_ptr<network::ResourceRequest> resource_request,
+      std::unique_ptr<ResourceRequest> resource_request,
       std::vector<GURL> url_chain,
       const base::Optional<std::string>& suggested_filename,
-      scoped_refptr<network::ResourceResponse> response,
+      scoped_refptr<ResourceResponse> response,
       mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       net::CertStatus cert_status,
       int frame_tree_node_id);
@@ -218,10 +223,10 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
 
   void InterceptNavigationOnChecksComplete(
       ResourceRequestInfo::WebContentsGetter web_contents_getter,
-      std::unique_ptr<network::ResourceRequest> resource_request,
+      std::unique_ptr<ResourceRequest> resource_request,
       std::vector<GURL> url_chain,
       const base::Optional<std::string>& suggested_filename,
-      scoped_refptr<network::ResourceResponse> response,
+      scoped_refptr<ResourceResponse> response,
       net::CertStatus cert_status,
       mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       bool is_download_allowed);
@@ -232,10 +237,10 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
   static void CreateDownloadHandlerForNavigation(
       base::WeakPtr<DownloadManagerImpl> download_manager,
       ResourceRequestInfo::WebContentsGetter web_contents_getter,
-      std::unique_ptr<network::ResourceRequest> resource_request,
+      std::unique_ptr<ResourceRequest> resource_request,
       std::vector<GURL> url_chain,
       const base::Optional<std::string>& suggested_filename,
-      scoped_refptr<network::ResourceResponse> response,
+      scoped_refptr<ResourceResponse> response,
       net::CertStatus cert_status,
       mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints);
 

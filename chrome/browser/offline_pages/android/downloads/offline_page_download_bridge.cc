@@ -255,7 +255,6 @@ void OnAcquireFileAccessPermissionDone(
 
   dl_params->set_prefer_cache(true);
   dl_params->set_prompt(false);
-  dl_params->set_download_source(content::DownloadSource::OFFLINE_PAGE);
   dlm->DownloadUrl(std::move(dl_params));
 }
 

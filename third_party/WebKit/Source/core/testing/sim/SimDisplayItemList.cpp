@@ -11,7 +11,7 @@
 
 namespace blink {
 
-SimDisplayItemList::SimDisplayItemList() = default;
+SimDisplayItemList::SimDisplayItemList() {}
 
 void SimDisplayItemList::AppendDrawingItem(const WebRect& visual_rect,
                                            sk_sp<const PaintRecord> record) {

@@ -102,7 +102,7 @@ URLSearchParams* URLSearchParams::Create(
   return instance;
 }
 
-URLSearchParams::~URLSearchParams() = default;
+URLSearchParams::~URLSearchParams() {}
 
 void URLSearchParams::Trace(blink::Visitor* visitor) {
   visitor->Trace(url_object_);

@@ -153,7 +153,6 @@ TEST_F(LayoutBoxTest, TopLeftLocationFlipped) {
 }
 
 TEST_F(LayoutBoxTest, TableRowCellTopLeftLocationFlipped) {
-  GetDocument().SetCompatibilityMode(Document::kQuirksMode);
   SetBodyInnerHTML(R"HTML(
     <div style='writing-mode: vertical-rl'>
       <table style='border-spacing: 0'>

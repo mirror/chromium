@@ -10,10 +10,9 @@
 
 #include "chrome/browser/extensions/api/input_ime/input_ime_api.h"
 
-#include <memory>
-
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -115,7 +114,7 @@ class ImeObserverNonChromeOS : public ui::ImeObserver {
       return;
     }
 
-    auto event = std::make_unique<extensions::Event>(
+    auto event = base::MakeUnique<extensions::Event>(
         histogram_value, event_name, std::move(args), profile_);
     extensions::EventRouter::Get(profile_)
         ->DispatchEventToExtension(extension_id_, std::move(event));
@@ -151,7 +150,7 @@ void InputImeAPI::OnExtensionLoaded(content::BrowserContext* browser_context,
   Profile* profile = Profile::FromBrowserContext(browser_context);
   ExtensionPrefs::Get(profile)->UpdateExtensionPref(
       extension->id(), kPrefNeverActivatedSinceLoaded,
-      std::make_unique<base::Value>(true));
+      base::MakeUnique<base::Value>(true));
 }
 
 void InputImeAPI::OnExtensionUnloaded(content::BrowserContext* browser_context,
@@ -163,7 +162,7 @@ void InputImeAPI::OnExtensionUnloaded(content::BrowserContext* browser_context,
     // Records the extension is not the last active IME engine.
     ExtensionPrefs::Get(Profile::FromBrowserContext(browser_context))
         ->UpdateExtensionPref(extension->id(), kPrefLastActiveEngine,
-                              std::make_unique<base::Value>(false));
+                              base::MakeUnique<base::Value>(false));
     event_router->DeleteInputMethodEngine(extension->id());
   }
 }
@@ -191,7 +190,7 @@ void InputImeEventRouter::SetActiveEngine(const std::string& extension_id) {
   // Records the extension is the last active IME engine.
   ExtensionPrefs::Get(GetProfile())
       ->UpdateExtensionPref(extension_id, kPrefLastActiveEngine,
-                            std::make_unique<base::Value>(true));
+                            base::MakeUnique<base::Value>(true));
   if (active_engine_) {
     if (active_engine_->GetExtensionId() == extension_id) {
       active_engine_->Enable(std::string());
@@ -202,7 +201,7 @@ void InputImeEventRouter::SetActiveEngine(const std::string& extension_id) {
     ExtensionPrefs::Get(GetProfile())
         ->UpdateExtensionPref(active_engine_->GetExtensionId(),
                               kPrefLastActiveEngine,
-                              std::make_unique<base::Value>(false));
+                              base::MakeUnique<base::Value>(false));
     DeleteInputMethodEngine(active_engine_->GetExtensionId());
   }
 
@@ -254,13 +253,13 @@ ExtensionFunction::ResponseAction InputImeActivateFunction::Run() {
     event_router->SetActiveEngine(extension_id());
     ExtensionPrefs::Get(profile)->UpdateExtensionPref(
         extension_id(), kPrefNeverActivatedSinceLoaded,
-        std::make_unique<base::Value>(false));
+        base::MakeUnique<base::Value>(false));
     return RespondNow(NoArguments());
   }
   // The API has already been called at least once.
   ExtensionPrefs::Get(profile)->UpdateExtensionPref(
       extension_id(), kPrefNeverActivatedSinceLoaded,
-      std::make_unique<base::Value>(false));
+      base::MakeUnique<base::Value>(false));
 
   // Otherwise, this API is only allowed to be called from a user action.
   if (!user_gesture())
@@ -322,7 +321,7 @@ void InputImeActivateFunction::OnPermissionBubbleFinished(
     // again' check box. So we can activate the extension directly next time.
     ExtensionPrefs::Get(profile)->UpdateExtensionPref(
         extension_id(), kPrefWarningBubbleNeverShow,
-        std::make_unique<base::Value>(true));
+        base::MakeUnique<base::Value>(true));
   }
 
   Respond(NoArguments());
@@ -380,7 +379,7 @@ ExtensionFunction::ResponseAction InputImeCreateWindowFunction::Run() {
     return RespondNow(Error(error));
 
   std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue());
-  result->Set("frameId", std::make_unique<base::Value>(frame_id));
+  result->Set("frameId", base::MakeUnique<base::Value>(frame_id));
 
   return RespondNow(OneArgument(std::move(result)));
 }

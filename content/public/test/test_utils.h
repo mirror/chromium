@@ -329,7 +329,8 @@ class EffectiveURLContentBrowserClient : public ContentBrowserClient {
 
  private:
   GURL GetEffectiveURL(BrowserContext* browser_context,
-                       const GURL& url) override;
+                       const GURL& url,
+                       bool is_isolated_origin) override;
 
   GURL url_to_modify_;
   GURL url_to_return_;

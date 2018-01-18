@@ -51,7 +51,6 @@
 #include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/child/webthread_impl_for_worker_scheduler.h"
 #include "platform/scheduler/child/worker_global_scope_scheduler.h"
-#include "platform/scheduler/child/worker_scheduler.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
@@ -174,13 +173,6 @@ void WorkerThread::Terminate() {
                                  CrossThreadUnretained(this)));
 }
 
-void WorkerThread::TerminateForTesting() {
-  // Schedule a regular async worker thread termination task, and forcibly
-  // terminate the V8 script execution to ensure the task runs.
-  Terminate();
-  EnsureScriptExecutionTerminates(ExitCode::kSyncForciblyTerminated);
-}
-
 void WorkerThread::TerminateAllWorkersForTesting() {
   DCHECK(IsMainThread());
 
@@ -189,7 +181,10 @@ void WorkerThread::TerminateAllWorkersForTesting() {
   HashSet<WorkerThread*> threads = WorkerThreads();
 
   for (WorkerThread* thread : threads) {
-    thread->TerminateForTesting();
+    // Schedule a regular async worker thread termination task, and forcibly
+    // terminate the V8 script execution to ensure the task runs.
+    thread->Terminate();
+    thread->EnsureScriptExecutionTerminates(ExitCode::kSyncForciblyTerminated);
   }
 
   for (WorkerThread* thread : threads)
@@ -345,11 +340,14 @@ WorkerThread::WorkerThread(ThreadableLoadingContext* loading_context,
 
 void WorkerThread::ScheduleToTerminateScriptExecution() {
   DCHECK(!forcible_termination_task_handle_.IsActive());
-  forcible_termination_task_handle_ = PostDelayedCancellableTask(
-      *parent_frame_task_runners_->Get(TaskType::kUnspecedTimer), FROM_HERE,
-      WTF::Bind(&WorkerThread::EnsureScriptExecutionTerminates,
-                WTF::Unretained(this), ExitCode::kAsyncForciblyTerminated),
-      forcible_termination_delay_);
+  forcible_termination_task_handle_ =
+      parent_frame_task_runners_->Get(TaskType::kUnspecedTimer)
+          ->PostDelayedCancellableTask(
+              FROM_HERE,
+              WTF::Bind(&WorkerThread::EnsureScriptExecutionTerminates,
+                        WTF::Unretained(this),
+                        ExitCode::kAsyncForciblyTerminated),
+              forcible_termination_delay_);
 }
 
 bool WorkerThread::ShouldTerminateScriptExecution(const MutexLocker& lock) {
@@ -399,7 +397,6 @@ void WorkerThread::InitializeSchedulerOnWorkerThread(
   global_scope_scheduler_ =
       std::make_unique<scheduler::WorkerGlobalScopeScheduler>(
           web_thread_for_worker.GetWorkerScheduler());
-  web_thread_for_worker.GetWorkerScheduler()->SetThreadType(GetThreadType());
   waitable_event->Signal();
 }
 

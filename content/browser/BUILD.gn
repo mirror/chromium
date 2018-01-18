@@ -7,7 +7,6 @@ import("//build/config/features.gni")
 import("//build/config/jumbo.gni")
 import("//build/config/linux/pangocairo/pangocairo.gni")
 import("//build/config/ui.gni")
-import("//content/public/common/zygote_features.gni")
 import("//gpu/vulkan/features.gni")
 import("//media/media_options.gni")
 import("//ppapi/features/features.gni")
@@ -78,7 +77,6 @@ jumbo_source_set("browser") {
     "//content/common:mojo_bindings",
     "//content/network:network_sources",
     "//content/public/common:common_sources",
-    "//content/public/common:zygote_features",
     "//crypto",
     "//device/bluetooth",
     "//device/gamepad",
@@ -108,7 +106,6 @@ jumbo_source_set("browser") {
     "//media/mojo/interfaces:constants",
     "//media/mojo/services",
     "//mojo/common",
-    "//mojo/common:values_struct_traits",
     "//mojo/edk/system",
     "//mojo/public/cpp/bindings",
     "//mojo/public/js:resources",
@@ -1243,8 +1240,6 @@ jumbo_source_set("browser") {
     "renderer_host/input/mouse_wheel_phase_handler.h",
     "renderer_host/input/mouse_wheel_rails_filter_mac.cc",
     "renderer_host/input/mouse_wheel_rails_filter_mac.h",
-    "renderer_host/input/one_shot_timeout_monitor.cc",
-    "renderer_host/input/one_shot_timeout_monitor.h",
     "renderer_host/input/passthrough_touch_event_queue.cc",
     "renderer_host/input/passthrough_touch_event_queue.h",
     "renderer_host/input/render_widget_host_latency_tracker.cc",
@@ -1693,6 +1688,7 @@ jumbo_source_set("browser") {
     "webui/web_ui_url_loader_factory.h",
     "zygote_host/zygote_communication_linux.cc",
     "zygote_host/zygote_communication_linux.h",
+    "zygote_host/zygote_handle_linux.cc",
     "zygote_host/zygote_host_impl_linux.cc",
     "zygote_host/zygote_host_impl_linux.h",
   ]
@@ -1829,10 +1825,7 @@ jumbo_source_set("browser") {
         "media/capture/cursor_renderer_mac.h",
         "media/capture/cursor_renderer_mac.mm",
       ]
-      deps += [
-        "//sandbox/mac:seatbelt",
-        "//sandbox/mac:seatbelt_extension",
-      ]
+      deps += [ "//sandbox/mac:seatbelt" ]
     }
     if (enable_webrtc) {
       sources += [
@@ -2237,8 +2230,6 @@ jumbo_source_set("browser") {
     sources += [
       "compositor/browser_compositor_output_surface.cc",
       "compositor/browser_compositor_output_surface.h",
-      "compositor/external_begin_frame_controller_client_impl.cc",
-      "compositor/external_begin_frame_controller_client_impl.h",
       "compositor/gpu_browser_compositor_output_surface.cc",
       "compositor/gpu_browser_compositor_output_surface.h",
       "compositor/gpu_output_surface_mac.cc",
@@ -2312,10 +2303,6 @@ jumbo_source_set("browser") {
       "hyphenation/hyphenation_impl.cc",
       "hyphenation/hyphenation_impl.h",
     ]
-  }
-
-  if (use_zygote_handle) {
-    sources += [ "zygote_host/zygote_handle_linux.cc" ]
   }
 }
 

@@ -20,6 +20,8 @@ blink_modules_sources("websockets") {
     "WebSocketChannel.cpp",
     "WebSocketChannel.h",
     "WebSocketChannelClient.h",
+    "WebSocketFrame.cpp",
+    "WebSocketFrame.h",
     "WebSocketHandle.h",
     "WebSocketHandleClient.h",
     "WebSocketHandleImpl.cpp",

@@ -13,6 +13,7 @@
 #include "base/json/json_file_value_serializer.h"
 #include "base/json/json_string_value_serializer.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "base/scoped_observer.h"
@@ -220,7 +221,7 @@ ExternalPrefLoader::ExtractExtensionPrefs(base::ValueDeserializer* deserializer,
   if (!extensions) {
     LOG(WARNING) << "Unable to deserialize json data: " << error_msg
                  << " in file " << path.value() << ".";
-    return std::make_unique<base::DictionaryValue>();
+    return base::MakeUnique<base::DictionaryValue>();
   }
 
   std::unique_ptr<base::DictionaryValue> ext_dictionary =
@@ -229,13 +230,13 @@ ExternalPrefLoader::ExtractExtensionPrefs(base::ValueDeserializer* deserializer,
     return ext_dictionary;
 
   LOG(WARNING) << "Expected a JSON dictionary in file " << path.value() << ".";
-  return std::make_unique<base::DictionaryValue>();
+  return base::MakeUnique<base::DictionaryValue>();
 }
 
 void ExternalPrefLoader::LoadOnFileThread() {
   base::AssertBlockingAllowed();
 
-  auto prefs = std::make_unique<base::DictionaryValue>();
+  auto prefs = base::MakeUnique<base::DictionaryValue>();
 
   // TODO(skerner): Some values of base_path_id_ will cause
   // PathService::Get() to return false, because the path does

@@ -20,17 +20,17 @@ void URLLoaderThrottle::DetachFromCurrentSequence() {
   NOTREACHED();
 }
 
-void URLLoaderThrottle::WillStartRequest(network::ResourceRequest* request,
+void URLLoaderThrottle::WillStartRequest(ResourceRequest* request,
                                          bool* defer) {}
 
 void URLLoaderThrottle::WillRedirectRequest(
     const net::RedirectInfo& redirect_info,
-    const network::ResourceResponseHead& response_head,
+    const ResourceResponseHead& response_head,
     bool* defer) {}
 
 void URLLoaderThrottle::WillProcessResponse(
     const GURL& response_url,
-    const network::ResourceResponseHead& response_head,
+    const ResourceResponseHead& response_head,
     bool* defer) {}
 
 URLLoaderThrottle::URLLoaderThrottle() {}

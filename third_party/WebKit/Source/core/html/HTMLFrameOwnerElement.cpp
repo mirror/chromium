@@ -35,7 +35,6 @@
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
 #include "core/page/Page.h"
-#include "core/probe/CoreProbes.h"
 #include "platform/heap/HeapAllocator.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
@@ -105,12 +104,8 @@ void HTMLFrameOwnerElement::ClearContentFrame() {
   if (!content_frame_)
     return;
 
-  Frame* frame = content_frame_;
   DCHECK_EQ(content_frame_->Owner(), this);
   content_frame_ = nullptr;
-
-  if (frame->IsLocalFrame())
-    probe::frameDisconnected(ToLocalFrame(frame), this);
 
   for (ContainerNode* node = this; node; node = node->ParentOrShadowHostNode())
     node->DecrementConnectedSubframeCount();

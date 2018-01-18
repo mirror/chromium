@@ -32,10 +32,11 @@ test(function() {
 test(function() {
   testElement.style.color = '#00FF00';
 
-  assert_throws(new TypeError(), () => {
-    secondElement.attributeStyleMap.set('border-left-color', testElement.attributeStyleMap.get('color'));
-  });
+  secondElement.attributeStyleMap.set('border-left-color', testElement.attributeStyleMap.get('color'));
 
-}, 'Setting a different property using the result of getting an unknown value throws TypeError');
+  var result = secondElement.attributeStyleMap.get('border-left-color');
+  assert_equals(result.constructor, CSSStyleValue);
+  assert_equals(result.toString(), 'rgb(0, 255, 0)');
+}, 'Setting a different property using the result of getting an unknown value works');
 
 </script>

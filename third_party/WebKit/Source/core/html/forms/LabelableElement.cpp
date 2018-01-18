@@ -33,7 +33,7 @@ LabelableElement::LabelableElement(const QualifiedName& tag_name,
                                    Document& document)
     : HTMLElement(tag_name, document) {}
 
-LabelableElement::~LabelableElement() = default;
+LabelableElement::~LabelableElement() {}
 
 LabelsNodeList* LabelableElement::labels() {
   if (!SupportLabels())

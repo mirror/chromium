@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/debug/dump_without_crashing.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/test/scoped_task_environment.h"
 #include "chrome/browser/chromeos/printing/printers_sync_bridge.h"
@@ -26,7 +27,7 @@ constexpr char kUUID[] = "DEADBEEFDEADBEEFDEADBEEF";
 class PrintersSyncBridgeTest : public testing::Test {
  public:
   PrintersSyncBridgeTest() : scoped_task_environment_() {
-    bridge_ = std::make_unique<PrintersSyncBridge>(
+    bridge_ = base::MakeUnique<PrintersSyncBridge>(
         syncer::ModelTypeStoreTestUtil::FactoryForInMemoryStoreForTest(),
         base::BindRepeating(
             base::IgnoreResult(&base::debug::DumpWithoutCrashing)));
@@ -40,7 +41,7 @@ class PrintersSyncBridgeTest : public testing::Test {
 };
 
 std::unique_ptr<PrinterSpecifics> TestPrinter(const std::string& id) {
-  auto printer = std::make_unique<PrinterSpecifics>();
+  auto printer = base::MakeUnique<PrinterSpecifics>();
   printer->set_id(id);
 
   return printer;

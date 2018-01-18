@@ -26,7 +26,6 @@
 #include "core/dom/ClassCollection.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/NodeRareData.h"
-#include "core/html/DocumentAllNameCollection.h"
 #include "core/html/DocumentNameCollection.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/HTMLObjectElement.h"
@@ -58,7 +57,6 @@ static bool ShouldTypeOnlyIncludeDirectChildren(CollectionType type) {
     case kDocLinks:
     case kDocScripts:
     case kDocumentNamedItems:
-    case kDocumentAllNamedItems:
     case kMapAreas:
     case kTableRows:
     case kSelectOptions:
@@ -95,7 +93,6 @@ static NodeListRootType RootTypeFromCollectionType(const ContainerNode& owner,
     case kDocAll:
     case kWindowNamedItems:
     case kDocumentNamedItems:
-    case kDocumentAllNamedItems:
       return NodeListRootType::kTreeScope;
     case kClassCollectionType:
     case kTagCollectionType:
@@ -158,8 +155,6 @@ static NodeListInvalidationType InvalidationTypeExcludingIdAndNameAttributes(
       return kInvalidateOnIdNameAttrChange;
     case kDocumentNamedItems:
       return kInvalidateOnIdNameAttrChange;
-    case kDocumentAllNamedItems:
-      return kInvalidateOnIdNameAttrChange;
     case kFormControls:
       return kInvalidateForFormControls;
     case kClassCollectionType:
@@ -195,7 +190,7 @@ HTMLCollection* HTMLCollection::Create(ContainerNode& base,
   return new HTMLCollection(base, type, kDoesNotOverrideItemAfter);
 }
 
-HTMLCollection::~HTMLCollection() = default;
+HTMLCollection::~HTMLCollection() {}
 
 void HTMLCollection::InvalidateCache(Document* old_document) const {
   collection_items_cache_.Invalidate();
@@ -221,9 +216,6 @@ static inline bool IsMatchingHTMLElement(const HTMLCollection& html_collection,
       return element.HasTagName(formTag);
     case kDocumentNamedItems:
       return ToDocumentNameCollection(html_collection).ElementMatches(element);
-    case kDocumentAllNamedItems:
-      return ToDocumentAllNameCollection(html_collection)
-          .ElementMatches(element);
     case kTableTBodies:
       return element.HasTagName(tbodyTag);
     case kTRCells:
@@ -286,8 +278,6 @@ inline bool HTMLCollection::ElementMatches(const Element& element) const {
       return ToTagCollectionNS(*this).ElementMatches(element);
     case kWindowNamedItems:
       return ToWindowNameCollection(*this).ElementMatches(element);
-    case kDocumentAllNamedItems:
-      return ToDocumentAllNameCollection(*this).ElementMatches(element);
     default:
       break;
   }
@@ -532,7 +522,7 @@ void HTMLCollection::NamedItems(const AtomicString& name,
     result.AppendVector(*name_results);
 }
 
-HTMLCollection::NamedItemCache::NamedItemCache() = default;
+HTMLCollection::NamedItemCache::NamedItemCache() {}
 
 void HTMLCollection::Trace(blink::Visitor* visitor) {
   visitor->Trace(named_item_cache_);

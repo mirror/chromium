@@ -22,7 +22,7 @@ class MockPerformanceBase : public PerformanceBase {
       : PerformanceBase(0,
                         ExecutionContext::From(script_state)
                             ->GetTaskRunner(TaskType::kPerformanceTimeline)) {}
-  ~MockPerformanceBase() = default;
+  ~MockPerformanceBase() {}
 
   ExecutionContext* GetExecutionContext() const override { return nullptr; }
 };
@@ -65,9 +65,7 @@ TEST_F(PerformanceObserverTest, Enqueue) {
   V8TestingScope scope;
   Initialize(scope.GetScriptState());
 
-  ScriptValue empty_value;
-  Persistent<PerformanceEntry> entry =
-      PerformanceMark::Create(scope.GetScriptState(), "m", 1234, empty_value);
+  Persistent<PerformanceEntry> entry = PerformanceMark::Create("m", 1234);
   EXPECT_EQ(0, NumPerformanceEntries());
 
   observer_->EnqueuePerformanceEntry(*entry);
@@ -78,9 +76,7 @@ TEST_F(PerformanceObserverTest, Deliver) {
   V8TestingScope scope;
   Initialize(scope.GetScriptState());
 
-  ScriptValue empty_value;
-  Persistent<PerformanceEntry> entry =
-      PerformanceMark::Create(scope.GetScriptState(), "m", 1234, empty_value);
+  Persistent<PerformanceEntry> entry = PerformanceMark::Create("m", 1234);
   EXPECT_EQ(0, NumPerformanceEntries());
 
   observer_->EnqueuePerformanceEntry(*entry);
@@ -94,9 +90,7 @@ TEST_F(PerformanceObserverTest, Disconnect) {
   V8TestingScope scope;
   Initialize(scope.GetScriptState());
 
-  ScriptValue empty_value;
-  Persistent<PerformanceEntry> entry =
-      PerformanceMark::Create(scope.GetScriptState(), "m", 1234, empty_value);
+  Persistent<PerformanceEntry> entry = PerformanceMark::Create("m", 1234);
   EXPECT_EQ(0, NumPerformanceEntries());
 
   observer_->EnqueuePerformanceEntry(*entry);

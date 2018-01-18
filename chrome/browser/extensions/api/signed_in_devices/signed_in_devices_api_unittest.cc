@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/guid.h"
+#include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "chrome/browser/extensions/extension_api_unittest.h"
@@ -44,7 +45,7 @@ class MockDeviceInfoTracker : public DeviceInfoTracker {
 
   static std::unique_ptr<DeviceInfo> CloneDeviceInfo(
       const DeviceInfo& device_info) {
-    return std::make_unique<DeviceInfo>(
+    return base::MakeUnique<DeviceInfo>(
         device_info.guid(), device_info.client_name(),
         device_info.chrome_version(), device_info.sync_user_agent(),
         device_info.device_type(), device_info.signin_scoped_device_id());
@@ -149,7 +150,7 @@ class ProfileSyncServiceMockForExtensionTests
 
 std::unique_ptr<KeyedService> CreateProfileSyncServiceMock(
     content::BrowserContext* context) {
-  return std::make_unique<ProfileSyncServiceMockForExtensionTests>(
+  return base::MakeUnique<ProfileSyncServiceMockForExtensionTests>(
       Profile::FromBrowserContext(context));
 }
 

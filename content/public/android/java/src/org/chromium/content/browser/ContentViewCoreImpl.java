@@ -34,6 +34,7 @@ import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.NativeClassQualifiedName;
 import org.chromium.content.browser.ContentViewCore.InternalAccessDelegate;
 import org.chromium.content.browser.accessibility.WebContentsAccessibility;
 import org.chromium.content.browser.accessibility.captioning.CaptioningBridgeFactory;
@@ -46,11 +47,11 @@ import org.chromium.content.browser.input.SelectPopupDialog;
 import org.chromium.content.browser.input.SelectPopupDropdown;
 import org.chromium.content.browser.input.SelectPopupItem;
 import org.chromium.content.browser.input.TextSuggestionHost;
-import org.chromium.content.browser.selection.SelectionPopupControllerImpl;
 import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content_public.browser.AccessibilitySnapshotCallback;
 import org.chromium.content_public.browser.AccessibilitySnapshotNode;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
+import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.ImeEventObserver;
 import org.chromium.content_public.browser.WebContents;
@@ -166,6 +167,7 @@ public class ContentViewCoreImpl
     private long mNativeContentViewCore;
 
     private boolean mAttachedToWindow;
+    private GestureListenerManagerImpl mGestureListenerManager;
 
     private PopupZoomer mPopupZoomer;
     private SelectPopup mSelectPopup;
@@ -378,7 +380,9 @@ public class ContentViewCoreImpl
         mShouldRequestUnbufferedDispatch = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
                 && ContentFeatureList.isEnabled(ContentFeatureList.REQUEST_UNBUFFERED_DISPATCH)
                 && !nativeUsingSynchronousCompositing(mNativeContentViewCore);
-        getGestureListenerManager().addListener(new ContentGestureStateListener());
+        mGestureListenerManager =
+                (GestureListenerManagerImpl) GestureListenerManager.fromWebContents(mWebContents);
+        mGestureListenerManager.addListener(new ContentGestureStateListener());
     }
 
     @Override
@@ -440,10 +444,6 @@ public class ContentViewCoreImpl
 
     private SelectionPopupControllerImpl getSelectionPopupController() {
         return SelectionPopupControllerImpl.fromWebContents(mWebContents);
-    }
-
-    private GestureListenerManagerImpl getGestureListenerManager() {
-        return GestureListenerManagerImpl.fromWebContents(mWebContents);
     }
 
     @CalledByNative
@@ -702,7 +702,7 @@ public class ContentViewCoreImpl
     private void onTouchDown(MotionEvent event) {
         if (mShouldRequestUnbufferedDispatch) requestUnbufferedDispatch(event);
         cancelRequestToScrollFocusedEditableNodeIntoView();
-        getGestureListenerManager().updateOnTouchDown();
+        mGestureListenerManager.updateOnTouchDown();
     }
 
     private void updateAfterSizeChanged() {
@@ -745,10 +745,8 @@ public class ContentViewCoreImpl
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         mImeAdapter.onWindowFocusChanged(hasWindowFocus);
         if (!hasWindowFocus) resetGestureDetection();
-        if (isAlive()) {
-            getSelectionPopupController().onWindowFocusChanged(hasWindowFocus);
-            getGestureListenerManager().updateOnWindowFocusChanged(hasWindowFocus);
-        }
+        if (isAlive()) getSelectionPopupController().onWindowFocusChanged(hasWindowFocus);
+        mGestureListenerManager.updateOnWindowFocusChanged(hasWindowFocus);
     }
 
     @Override
@@ -1027,11 +1025,11 @@ public class ContentViewCoreImpl
                 maxPageScaleFactor, topBarShownPix);
 
         if (scrollChanged || topBarChanged) {
-            getGestureListenerManager().updateOnScrollChanged(
+            mGestureListenerManager.updateOnScrollChanged(
                     computeVerticalScrollOffset(), computeVerticalScrollExtent());
         }
         if (scaleLimitsChanged) {
-            getGestureListenerManager().updateOnScaleLimitsChanged(
+            mGestureListenerManager.updateOnScaleLimitsChanged(
                     minPageScaleFactor, maxPageScaleFactor);
         }
 
@@ -1327,15 +1325,15 @@ public class ContentViewCoreImpl
 
         mPotentiallyActiveFlingCount = 0;
         setTouchScrollInProgress(false);
-        if (touchScrollInProgress) getGestureListenerManager().updateOnScrollEnd();
-        if (potentiallyActiveFlingCount > 0) getGestureListenerManager().updateOnFlingEnd();
+        if (touchScrollInProgress) mGestureListenerManager.updateOnScrollEnd();
+        if (potentiallyActiveFlingCount > 0) mGestureListenerManager.updateOnFlingEnd();
     }
 
     @CalledByNative
     private void onNativeFlingStopped() {
         if (mPotentiallyActiveFlingCount > 0) {
             mPotentiallyActiveFlingCount--;
-            getGestureListenerManager().updateOnFlingEnd();
+            mGestureListenerManager.updateOnFlingEnd();
         }
         // Note that mTouchScrollInProgress should normally be false at this
         // point, but we reset it anyway as another failsafe.
@@ -1397,44 +1395,92 @@ public class ContentViewCoreImpl
         return mFullscreenRequiredForOrientationLock;
     }
 
+    @NativeClassQualifiedName("ContentViewCore")
     private native long nativeInit(WebContents webContents, ViewAndroidDelegate viewAndroidDelegate,
             WindowAndroid window, float dipScale);
+    @NativeClassQualifiedName("ContentViewCore")
     private static native ContentViewCore nativeFromWebContentsAndroid(WebContents webContents);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeUpdateWindowAndroid(long nativeContentViewCore, WindowAndroid window);
+    @NativeClassQualifiedName("ContentViewCore")
     private native WebContents nativeGetWebContentsAndroid(long nativeContentViewCore);
+    @NativeClassQualifiedName("ContentViewCore")
     private native WindowAndroid nativeGetJavaWindowAndroid(long nativeContentViewCore);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeOnJavaContentViewCoreDestroyed(long nativeContentViewCore);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeSetFocus(long nativeContentViewCore, boolean focused);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeSetDIPScale(long nativeContentViewCore, float dipScale);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native int nativeGetTopControlsShrinkBlinkHeightPixForTesting(
             long nativeContentViewCore);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeSendOrientationChangeEvent(
             long nativeContentViewCore, int orientation);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeScrollBegin(long nativeContentViewCore, long timeMs, float x, float y,
             float hintX, float hintY, boolean targetViewport, boolean fromGamepad);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeScrollEnd(long nativeContentViewCore, long timeMs);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeScrollBy(
             long nativeContentViewCore, long timeMs, float x, float y, float deltaX, float deltaY);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeFlingStart(long nativeContentViewCore, long timeMs, float x, float y,
             float vx, float vy, boolean targetViewport, boolean fromGamepad);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeFlingCancel(
             long nativeContentViewCore, long timeMs, boolean fromGamepad);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeDoubleTap(long nativeContentViewCore, long timeMs, float x, float y);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeSetTextHandlesTemporarilyHidden(
             long nativeContentViewCore, boolean hidden);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeResetGestureDetection(long nativeContentViewCore);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeSetDoubleTapSupportEnabled(
             long nativeContentViewCore, boolean enabled);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeSetMultiTouchZoomSupportEnabled(
             long nativeContentViewCore, boolean enabled);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeSelectPopupMenuItems(
             long nativeContentViewCore, long nativeSelectPopupSourceFrame, int[] indices);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native int nativeGetCurrentRenderProcessId(long nativeContentViewCore);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native boolean nativeUsingSynchronousCompositing(long nativeContentViewCore);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeWasResized(long nativeContentViewCore);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeSetTextTrackSettings(long nativeContentViewCore,
             boolean textTracksEnabled, String textTrackBackgroundColor, String textTrackFontFamily,
             String textTrackFontStyle, String textTrackFontVariant, String textTrackTextColor,
             String textTrackTextShadow, String textTrackTextSize);
+
+    @NativeClassQualifiedName("ContentViewCore")
     private native void nativeSetBackgroundOpaque(long nativeContentViewCore, boolean opaque);
 }

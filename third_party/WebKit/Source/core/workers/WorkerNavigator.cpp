@@ -31,7 +31,7 @@ namespace blink {
 WorkerNavigator::WorkerNavigator(const String& user_agent)
     : user_agent_(user_agent) {}
 
-WorkerNavigator::~WorkerNavigator() = default;
+WorkerNavigator::~WorkerNavigator() {}
 
 String WorkerNavigator::userAgent() const {
   return user_agent_;

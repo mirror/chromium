@@ -118,7 +118,7 @@ struct WebContextMenuData;
 struct WebPluginParams;
 struct WebPopupMenuInfo;
 struct WebRect;
-struct WebScrollIntoViewParams;
+struct WebRemoteScrollProperties;
 struct WebURLError;
 
 class BLINK_EXPORT WebFrameClient {
@@ -230,11 +230,6 @@ class BLINK_EXPORT WebFrameClient {
     return nullptr;
   }
 
-  // Called when Blink cannot find a frame with the given name in the frame's
-  // browsing instance.  This gives the embedder a chance to return a frame
-  // from outside of the browsing instance.
-  virtual WebFrame* FindFrame(const WebString& name) { return nullptr; }
-
   // This frame has set its opener to another frame, or disowned the opener
   // if opener is null. See http://html.spec.whatwg.org/#dom-opener.
   virtual void DidChangeOpener(WebFrame*) {}
@@ -259,9 +254,6 @@ class BLINK_EXPORT WebFrameClient {
 
   // This frame has set an insecure request policy.
   virtual void DidEnforceInsecureRequestPolicy(WebInsecureRequestPolicy) {}
-
-  // This frame has set an upgrade insecure navigations set.
-  virtual void DidEnforceInsecureNavigationsSet(const std::vector<unsigned>&) {}
 
   // The sandbox flags or container policy have changed for a child frame of
   // this frame.
@@ -344,6 +336,7 @@ class BLINK_EXPORT WebFrameClient {
     bool is_client_redirect;
     WebTriggeringEventInfo triggering_event_info;
     WebFormElement form;
+    bool is_cache_disabled;
     WebSourceLocation source_location;
     WebContentSecurityPolicyDisposition
         should_check_main_world_content_security_policy;
@@ -362,6 +355,7 @@ class BLINK_EXPORT WebFrameClient {
           is_history_navigation_in_new_child_frame(false),
           is_client_redirect(false),
           triggering_event_info(WebTriggeringEventInfo::kUnknown),
+          is_cache_disabled(false),
           should_check_main_world_content_security_policy(
               kWebContentSecurityPolicyDispositionCheck),
           archive_status(ArchiveStatus::Absent) {}
@@ -510,7 +504,7 @@ class BLINK_EXPORT WebFrameClient {
   // Returns string to be used as a frame id in the devtools protocol.
   // It is derived from the content's devtools_frame_token, is
   // defined by the browser and passed into Blink upon frame creation.
-  virtual WebString GetDevToolsFrameToken() { return WebString(); }
+  virtual WebString GetInstrumentationToken() { return WebString(); }
 
   // PlzNavigate
   // Called to abort a navigation that is being handled by the browser process.
@@ -688,7 +682,7 @@ class BLINK_EXPORT WebFrameClient {
   // of a local frame only.
   virtual void ScrollRectToVisibleInParentFrame(
       const WebRect&,
-      const WebScrollIntoViewParams&) {}
+      const WebRemoteScrollProperties&) {}
 
   // Find-in-page notifications ------------------------------------------
 

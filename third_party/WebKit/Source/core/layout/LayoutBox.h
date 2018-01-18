@@ -41,7 +41,6 @@ struct NGPhysicalBoxStrut;
 class ShapeOutsideInfo;
 
 struct PaintInfo;
-struct WebScrollIntoViewParams;
 
 enum SizeType { kMainOrPreferredSize, kMinSize, kMaxSize };
 enum AvailableLogicalHeightType {
@@ -600,7 +599,12 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   // If makeVisibleInVisualViewport is set, the visual viewport will be scrolled
   // if required to make the rect visible.
   void ScrollRectToVisibleRecursive(const LayoutRect&,
-                                    const WebScrollIntoViewParams&);
+                                    const ScrollAlignment& align_x,
+                                    const ScrollAlignment& align_y,
+                                    ScrollType = kProgrammaticScroll,
+                                    bool make_visible_in_visual_viewport = true,
+                                    ScrollBehavior = kScrollBehaviorAuto,
+                                    bool is_for_scroll_sequence = false);
 
   LayoutRectOutsets MarginBoxOutsets() const { return margin_box_outsets_; }
   LayoutUnit MarginTop() const override { return margin_box_outsets_.Top(); }
@@ -704,7 +708,7 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   // SYSTEMS in LayoutBoxModel) for use during layout.
   struct ComputedMarginValues {
     DISALLOW_NEW();
-    ComputedMarginValues() = default;
+    ComputedMarginValues() {}
 
     LayoutUnit before_;
     LayoutUnit after_;
@@ -716,7 +720,7 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   // block-flow and inline-direction axis.
   struct LogicalExtentComputedValues {
     STACK_ALLOCATED();
-    LogicalExtentComputedValues() = default;
+    LogicalExtentComputedValues() {}
 
     // This is the dimension in the measured direction
     // (logical height or logical width).

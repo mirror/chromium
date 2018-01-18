@@ -231,7 +231,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   virtual std::unique_ptr<ResourceHandler> MaybeInterceptAsStream(
       const base::FilePath& plugin_path,
       net::URLRequest* request,
-      network::ResourceResponse* response,
+      ResourceResponse* response,
       std::string* payload);
 
   ResourceScheduler* scheduler() { return scheduler_.get(); }
@@ -281,7 +281,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       int32_t routing_id,
       int32_t request_id,
       uint32_t options,
-      const network::ResourceRequest& request,
+      const ResourceRequest& request,
       mojom::URLLoaderRequest mojo_request,
       mojom::URLLoaderClientPtr url_loader_client,
       const net::NetworkTrafficAnnotationTag& traffic_annotation);
@@ -401,11 +401,10 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       net::AuthChallengeInfo* auth_info) override;
   bool HandleExternalProtocol(ResourceLoader* loader, const GURL& url) override;
   void DidStartRequest(ResourceLoader* loader) override;
-  void DidReceiveRedirect(ResourceLoader* loader,
-                          const GURL& new_url,
-                          network::ResourceResponse* response) override;
+  void DidReceiveRedirect(ResourceLoader* loader, const GURL& new_url,
+                          ResourceResponse* response) override;
   void DidReceiveResponse(ResourceLoader* loader,
-                          network::ResourceResponse* response) override;
+                          ResourceResponse* response) override;
   void DidFinishLoading(ResourceLoader* loader) override;
   std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
       ResourceLoader* loader) override;
@@ -531,7 +530,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       int routing_id,
       int request_id,
       bool is_sync_load,
-      const network::ResourceRequest& request_data,
+      const ResourceRequest& request_data,
       mojom::URLLoaderRequest mojo_request,
       mojom::URLLoaderClientPtr url_loader_client,
       const net::NetworkTrafficAnnotationTag& traffic_annotation);
@@ -543,7 +542,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   void UpdateRequestForTransfer(ResourceRequesterInfo* requester_info,
                                 int route_id,
                                 int request_id,
-                                const network::ResourceRequest& request_data,
+                                const ResourceRequest& request_data,
                                 LoaderMap::iterator iter,
                                 mojom::URLLoaderRequest mojo_request,
                                 mojom::URLLoaderClientPtr url_loader_client);
@@ -552,19 +551,20 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   // then CompleteTransfer method can be used to complete the transfer.
   void CompleteTransfer(ResourceRequesterInfo* requester_info,
                         int request_id,
-                        const network::ResourceRequest& request_data,
+                        const ResourceRequest& request_data,
                         int route_id,
                         mojom::URLLoaderRequest mojo_request,
                         mojom::URLLoaderClientPtr url_loader_client);
 
-  void BeginRequest(ResourceRequesterInfo* requester_info,
-                    int request_id,
-                    const network::ResourceRequest& request_data,
-                    bool is_sync_load,
-                    int route_id,
-                    mojom::URLLoaderRequest mojo_request,
-                    mojom::URLLoaderClientPtr url_loader_client,
-                    const net::NetworkTrafficAnnotationTag& traffic_annotation);
+  void BeginRequest(
+      ResourceRequesterInfo* requester_info,
+      int request_id,
+      const ResourceRequest& request_data,
+      bool is_sync_load,
+      int route_id,
+      mojom::URLLoaderRequest mojo_request,
+      mojom::URLLoaderClientPtr url_loader_client,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
   // There are requests which need decisions to be made like the following:
   // Whether the presence of certain HTTP headers like the Origin header are
@@ -577,7 +577,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   void ContinuePendingBeginRequest(
       scoped_refptr<ResourceRequesterInfo> requester_info,
       int request_id,
-      const network::ResourceRequest& request_data,
+      const ResourceRequest& request_data,
       bool is_sync_load,
       int route_id,
       const net::HttpRequestHeaders& headers,
@@ -592,7 +592,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   std::unique_ptr<ResourceHandler> CreateResourceHandler(
       ResourceRequesterInfo* requester_info,
       net::URLRequest* request,
-      const network::ResourceRequest& request_data,
+      const ResourceRequest& request_data,
       int route_id,
       int child_id,
       ResourceContext* resource_context,
@@ -662,7 +662,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   // be disallowed if the renderer is not authorized to retrieve the request
   // URL or if the renderer is attempting to upload an unauthorized file.
   bool ShouldServiceRequest(int child_id,
-                            const network::ResourceRequest& request_data,
+                            const ResourceRequest& request_data,
                             const net::HttpRequestHeaders& headers,
                             ResourceRequesterInfo* requester_info,
                             ResourceContext* resource_context);

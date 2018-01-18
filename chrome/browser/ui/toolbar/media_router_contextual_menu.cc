@@ -4,7 +4,6 @@
 
 #include "chrome/browser/ui/toolbar/media_router_contextual_menu.h"
 
-#include <memory>
 #include <string>
 
 #include "base/logging.h"
@@ -36,7 +35,7 @@
 // static
 std::unique_ptr<MediaRouterContextualMenu>
 MediaRouterContextualMenu::CreateForToolbar(Browser* browser) {
-  return std::make_unique<MediaRouterContextualMenu>(
+  return base::MakeUnique<MediaRouterContextualMenu>(
       browser, true,
       MediaRouterActionController::IsActionShownByPolicy(browser->profile()));
 }
@@ -44,7 +43,7 @@ MediaRouterContextualMenu::CreateForToolbar(Browser* browser) {
 // static
 std::unique_ptr<MediaRouterContextualMenu>
 MediaRouterContextualMenu::CreateForOverflowMenu(Browser* browser) {
-  return std::make_unique<MediaRouterContextualMenu>(
+  return base::MakeUnique<MediaRouterContextualMenu>(
       browser, false,
       MediaRouterActionController::IsActionShownByPolicy(browser->profile()));
 }

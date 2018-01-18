@@ -48,7 +48,7 @@ class ClipPathOperation : public RefCounted<ClipPathOperation> {
  public:
   enum OperationType { REFERENCE, SHAPE };
 
-  virtual ~ClipPathOperation() = default;
+  virtual ~ClipPathOperation() {}
 
   virtual bool operator==(const ClipPathOperation&) const = 0;
   bool operator!=(const ClipPathOperation& o) const { return !(*this == o); }
@@ -59,7 +59,7 @@ class ClipPathOperation : public RefCounted<ClipPathOperation> {
   }
 
  protected:
-  ClipPathOperation() = default;
+  ClipPathOperation() {}
 };
 
 class ReferenceClipPathOperation final : public ClipPathOperation {

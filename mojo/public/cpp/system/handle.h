@@ -121,8 +121,6 @@ class ScopedHandleBase {
 
   bool is_valid() const { return handle_.is_valid(); }
 
-  explicit operator bool() const { return handle_; }
-
   bool operator==(const ScopedHandleBase& other) const {
     return handle_.value() == other.get().value();
   }
@@ -161,8 +159,6 @@ class Handle {
   }
 
   bool is_valid() const { return value_ != kInvalidHandleValue; }
-
-  explicit operator bool() const { return value_ != kInvalidHandleValue; }
 
   const MojoHandle& value() const { return value_; }
   MojoHandle* mutable_value() { return &value_; }

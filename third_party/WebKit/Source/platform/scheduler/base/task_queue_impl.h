@@ -133,12 +133,9 @@ class PLATFORM_EXPORT TaskQueueImpl {
 
   using OnNextWakeUpChangedCallback = base::Callback<void(base::TimeTicks)>;
   using OnTaskStartedHandler =
-      base::RepeatingCallback<void(const TaskQueue::Task&, base::TimeTicks)>;
-  using OnTaskCompletedHandler =
-      base::RepeatingCallback<void(const TaskQueue::Task&,
-                                   base::TimeTicks,
-                                   base::TimeTicks,
-                                   base::Optional<base::TimeDelta>)>;
+      base::Callback<void(const TaskQueue::Task&, base::TimeTicks)>;
+  using OnTaskCompletedHandler = base::Callback<
+      void(const TaskQueue::Task&, base::TimeTicks, base::TimeTicks)>;
 
   // TaskQueue implementation.
   const char* GetName() const;
@@ -270,8 +267,7 @@ class PLATFORM_EXPORT TaskQueueImpl {
   void SetOnTaskCompletedHandler(OnTaskCompletedHandler handler);
   void OnTaskCompleted(const TaskQueue::Task& task,
                        base::TimeTicks start,
-                       base::TimeTicks end,
-                       base::Optional<base::TimeDelta> thread_time);
+                       base::TimeTicks end);
   bool RequiresTaskTiming() const;
 
   base::WeakPtr<TaskQueueManager> GetTaskQueueManagerWeakPtr();
@@ -384,6 +380,9 @@ class PLATFORM_EXPORT TaskQueueImpl {
 
   // Activate a delayed fence if a time has come.
   void ActivateDelayedFenceIfNeeded(base::TimeTicks now);
+
+  // Returns true if new work has been unblocked.
+  bool InsertFenceImpl(EnqueueOrder enqueue_order);
 
   const char* name_;
 

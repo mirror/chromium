@@ -4,7 +4,6 @@
 
 #include "chrome/browser/policy/managed_bookmarks_policy_handler.h"
 
-#include <memory>
 #include <utility>
 
 #include "base/json/json_reader.h"
@@ -185,7 +184,7 @@ TEST_F(ManagedBookmarksPolicyHandlerTest, WrongPolicyType) {
   // unparsed base::Value. Any type other than ListValue should fail.
   policy.Set(key::kManagedBookmarks, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
              POLICY_SOURCE_CLOUD,
-             std::make_unique<base::Value>("["
+             base::MakeUnique<base::Value>("["
                                            "  {"
                                            "    \"name\": \"Google\","
                                            "    \"url\": \"google.com\""

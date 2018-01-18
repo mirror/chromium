@@ -42,7 +42,7 @@ AnimationEvent::AnimationEvent(const AtomicString& type,
       animation_name_(animation_name),
       elapsed_time_(elapsed_time) {}
 
-AnimationEvent::~AnimationEvent() = default;
+AnimationEvent::~AnimationEvent() {}
 
 const String& AnimationEvent::animationName() const {
   return animation_name_;

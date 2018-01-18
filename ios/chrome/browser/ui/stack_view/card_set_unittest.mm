@@ -8,7 +8,6 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #import "ios/chrome/browser/snapshots/snapshot_tab_helper.h"
-#import "ios/chrome/browser/tabs/legacy_tab_helper.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/tabs/tab_model_observer.h"
@@ -18,9 +17,6 @@
 #import "ios/chrome/browser/ui/stack_view/card_stack_layout_manager.h"
 #import "ios/chrome/browser/ui/stack_view/stack_card.h"
 #import "ios/chrome/browser/web/tab_id_tab_helper.h"
-#import "ios/chrome/browser/web_state_list/fake_web_state_list_delegate.h"
-#import "ios/chrome/browser/web_state_list/web_state_list.h"
-#import "ios/chrome/browser/web_state_list/web_state_opener.h"
 #import "ios/testing/ocmock_complex_type_helper.h"
 #import "ios/web/public/test/fakes/test_navigation_manager.h"
 #import "ios/web/public/test/fakes/test_web_state.h"
@@ -35,61 +31,11 @@
 #error "This file requires ARC support."
 #endif
 
-@interface CardSetTestTabMock : NSObject
-
-@property(nonatomic, copy) NSString* title;
-
-- (instancetype)initWithWebState:(web::TestWebState*)webState
-    NS_DESIGNATED_INITIALIZER;
-
-- (instancetype)init NS_UNAVAILABLE;
-
-@end
-
-@implementation CardSetTestTabMock {
-  web::TestWebState* _webState;
+@interface MockTabModel : NSObject<NSFastEnumeration> {
+ @private
+  NSMutableArray* tabs_;
+  __weak id<TabModelObserver> observer_;
 }
-
-@synthesize title = _title;
-
-- (instancetype)initWithWebState:(web::TestWebState*)webState {
-  if ((self = [super init])) {
-    DCHECK(webState);
-    _webState = webState;
-  }
-  return self;
-}
-
-- (const GURL&)url {
-  if (!_webState->GetNavigationManager() ||
-      !_webState->GetNavigationManager()->GetLastCommittedItem()) {
-    return GURL::EmptyGURL();
-  }
-
-  return _webState->GetNavigationManager()->GetLastCommittedItem()->GetURL();
-}
-
-- (UIView*)view {
-  return _webState->GetView();
-}
-
-- (web::WebState*)webState {
-  return _webState;
-}
-
-- (BOOL)canGoBack {
-  return NO;
-}
-
-- (BOOL)canGoForward {
-  return NO;
-}
-
-@end
-
-@interface CardSetTestMockTabModel : NSObject
-
-- (instancetype)init NS_DESIGNATED_INITIALIZER;
 
 // Adds a new mock tab with the given properties.
 - (void)addTabWithTitle:(NSString*)title
@@ -105,19 +51,46 @@
 - (void)addObserver:(id<TabModelObserver>)observer;
 - (void)removeObserver:(id<TabModelObserver>)observer;
 - (id<TabModelObserver>)observer;
-- (WebStateList*)webStateList;
+@end
+
+@interface CardSetTestTabMock : OCMockComplexTypeHelper
+@end
+
+@implementation CardSetTestTabMock {
+  web::TestWebState _webState;
+}
+
+using CardSetTestTabMock_url = const GURL& (^)();
+
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
+  self =
+      [super initWithRepresentedObject:[OCMockObject mockForClass:[Tab class]]];
+  if (self) {
+    _webState.SetBrowserState(browserState);
+    _webState.SetNavigationManager(
+        std::make_unique<web::TestNavigationManager>());
+
+    SnapshotTabHelper::CreateForWebState(&_webState,
+                                         [[NSUUID UUID] UUIDString]);
+  }
+  return self;
+}
+
+- (const GURL&)url {
+  return static_cast<CardSetTestTabMock_url>([self blockForSelector:_cmd])();
+}
+
+- (web::WebState*)webState {
+  return &_webState;
+}
 
 @end
 
-@implementation CardSetTestMockTabModel {
-  FakeWebStateListDelegate _webStateListDelegate;
-  std::unique_ptr<WebStateList> _webStateList;
-  __weak id<TabModelObserver> _observer;
-}
+@implementation MockTabModel
 
-- (instancetype)init {
+- (id)init {
   if ((self = [super init])) {
-    _webStateList = std::make_unique<WebStateList>(&_webStateListDelegate);
+    tabs_ = [[NSMutableArray alloc] init];
   }
   return self;
 }
@@ -125,63 +98,40 @@
 - (void)addTabWithTitle:(NSString*)title
                location:(const GURL&)url
            browserState:(ios::ChromeBrowserState*)browserState {
-  auto testNavigationManager = std::make_unique<web::TestNavigationManager>();
-  testNavigationManager->AddItem(url, ui::PageTransition::PAGE_TRANSITION_LINK);
-  testNavigationManager->SetLastCommittedItem(
-      testNavigationManager->GetItemAtIndex(
-          testNavigationManager->GetLastCommittedItemIndex()));
+  id tab = [[CardSetTestTabMock alloc] initWithBrowserState:browserState];
+  UIView* dummyView = [[UIView alloc] initWithFrame:CGRectZero];
+  static int sCounter = 0;
+  NSString* sessionID = [NSString stringWithFormat:@"%d", sCounter++];
+  BOOL no = NO;
+  [[[tab stub] andReturn:dummyView] view];
+  id block = [^{
+    return (const GURL&)url;
+  } copy];
+  [tab onSelector:@selector(url) callBlockExpectation:block];
 
-  auto testWebState = std::make_unique<web::TestWebState>();
-  testWebState->SetBrowserState(browserState);
-  testWebState->SetNavigationManager(std::move(testNavigationManager));
-  testWebState->SetView([[UIView alloc] initWithFrame:CGRectZero]);
+  [[[tab stub] andReturn:nil] webController];
+  [[[tab stub] andReturnValue:OCMOCK_VALUE(no)] canGoBack];
+  [[[tab stub] andReturnValue:OCMOCK_VALUE(no)] canGoForward];
+  [[[tab stub] andReturn:title] title];
+  [[[tab stub] andReturn:sessionID] tabId];
 
-  TabIdTabHelper::CreateForWebState(testWebState.get());
-  NSString* tabId = TabIdTabHelper::FromWebState(testWebState.get())->tab_id();
-
-  SnapshotTabHelper::CreateForWebState(testWebState.get(), tabId);
-
-  CardSetTestTabMock* tab =
-      [[CardSetTestTabMock alloc] initWithWebState:testWebState.get()];
-  tab.title = title;
-
-  LegacyTabHelper::CreateForWebStateForTesting(testWebState.get(),
-                                               static_cast<Tab*>(tab));
-
-  const int insertion_index = _webStateList->InsertWebState(
-      0, std::move(testWebState), WebStateList::INSERT_NO_FLAGS,
-      WebStateOpener());
-
-  if (_webStateList->count() == 0) {
-    _webStateList->ActivateWebStateAt(0);
-  }
-
-  [_observer tabModel:static_cast<TabModel*>(self)
-         didInsertTab:static_cast<Tab*>(tab)
-              atIndex:insertion_index
+  [tabs_ addObject:tab];
+  [observer_ tabModel:(TabModel*)self
+         didInsertTab:tab
+              atIndex:([tabs_ count] - 1)
          inForeground:YES];
 }
 
 - (void)removeTabAtIndex:(NSUInteger)index {
-  DCHECK(index <= static_cast<NSUInteger>(INT_MAX));
-  DCHECK(static_cast<int>(index) < _webStateList->count());
-
-  // Use DetachWebStateAt to take ownership of the removed WebState. This is
-  // required to ensure that the Tab is valid while the observers are notified.
-  // The WebState will be deallocated when the function terminate, and the Tab
-  // reference released by LegacyTabHelper.
-  std::unique_ptr<web::WebState> webState =
-      _webStateList->DetachWebStateAt(static_cast<int>(index));
-  Tab* tab = LegacyTabHelper::GetTabForWebState(webState.get());
+  id tab = [tabs_ objectAtIndex:index];
+  [tabs_ removeObjectAtIndex:index];
 
   // A tab was removed at the given index.
-  [_observer tabModel:static_cast<TabModel*>(self)
-         didRemoveTab:tab
-              atIndex:index];
+  [observer_ tabModel:(TabModel*)self didRemoveTab:tab atIndex:index];
 }
 
 - (NSUInteger)count {
-  return static_cast<NSUInteger>(_webStateList->count());
+  return [tabs_ count];
 }
 
 - (BOOL)isOffTheRecord {
@@ -189,38 +139,35 @@
 }
 
 - (Tab*)currentTab {
-  web::WebState* activeWebState = _webStateList->GetActiveWebState();
-  return activeWebState ? LegacyTabHelper::GetTabForWebState(activeWebState)
-                        : nil;
+  if ([tabs_ count])
+    return [tabs_ objectAtIndex:0];
+  return nil;
 }
 
 - (NSUInteger)indexOfTab:(Tab*)tab {
-  const int index = _webStateList->GetIndexOfWebState(tab.webState);
-  return index == WebStateList::kInvalidIndex ? NSNotFound
-                                              : static_cast<NSUInteger>(index);
+  return [tabs_ indexOfObject:tab];
 }
 
 - (Tab*)tabAtIndex:(NSUInteger)tabIndex {
-  DCHECK(tabIndex <= static_cast<NSUInteger>(INT_MAX));
-  DCHECK(static_cast<int>(tabIndex) < _webStateList->count());
-  return LegacyTabHelper::GetTabForWebState(
-      _webStateList->GetWebStateAt(static_cast<int>(tabIndex)));
+  return [tabs_ objectAtIndex:tabIndex];
 }
 
 - (void)addObserver:(id<TabModelObserver>)observer {
-  _observer = observer;
+  observer_ = observer;
 }
 
 - (void)removeObserver:(id<TabModelObserver>)observer {
-  _observer = nil;
+  observer_ = nil;
+}
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState*)state
+                                  objects:(__unsafe_unretained id*)stackbuf
+                                    count:(NSUInteger)len {
+  return [tabs_ countByEnumeratingWithState:state objects:stackbuf count:len];
 }
 
 - (id<TabModelObserver>)observer {
-  return _observer;
-}
-
-- (WebStateList*)webStateList {
-  return _webStateList.get();
+  return observer_;
 }
 
 @end
@@ -250,7 +197,7 @@ class CardSetTest : public PlatformTest {
   CardSetTest() { browser_state_ = TestChromeBrowserState::Builder().Build(); }
 
   virtual void SetUpWithTabs(int nb_tabs) {
-    tab_model_ = [[CardSetTestMockTabModel alloc] init];
+    tab_model_ = [[MockTabModel alloc] init];
 
     for (int i = 0; i < nb_tabs; ++i) {
       std::string url = base::StringPrintf("http://%d.example.com", i);
@@ -277,7 +224,7 @@ class CardSetTest : public PlatformTest {
 
   web::TestWebThreadBundle thread_bundle_;
   std::unique_ptr<ios::ChromeBrowserState> browser_state_;
-  CardSetTestMockTabModel* tab_model_;
+  MockTabModel* tab_model_;
   UIView* display_view_;
   CardSet* card_set_;
 };

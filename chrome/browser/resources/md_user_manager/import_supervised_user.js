@@ -9,9 +9,9 @@
 (function() {
 /**
  * It means no supervised user is selected.
- * @type {number}
+ * @const {number}
  */
-const NO_USER_SELECTED = -1;
+var NO_USER_SELECTED = -1;
 
 Polymer({
   is: 'import-supervised-user',
@@ -85,7 +85,7 @@ Polymer({
    * @private
    */
   onImportTap_: function() {
-    const supervisedUser = this.supervisedUsers_[this.supervisedUserIndex_];
+    var supervisedUser = this.supervisedUsers_[this.supervisedUserIndex_];
     if (this.signedInUser_ && supervisedUser) {
       this.$.dialog.close();
       // Event is caught by create-profile.

@@ -53,8 +53,6 @@ ElementsTestRunner.findNode = function(matchFunction, callback) {
       var children = (node.children() || []).concat(node.shadowRoots()).concat(pseudoElements);
       if (node.templateContent())
         children.push(node.templateContent());
-      else if (node.contentDocument())
-        children.push(node.contentDocument());
       else if (node.importedDocument())
         children.push(node.importedDocument());
 
@@ -431,8 +429,6 @@ function printStyleSection(section, omitLonghands, includeSelectorGroupMarks) {
 
   TestRunner.addResult(selectorText);
   ElementsTestRunner.dumpStyleTreeOutline(section.propertiesTreeOutline, (omitLonghands ? 1 : 2));
-  if (!section._showAllButton.classList.contains('hidden'))
-    TestRunner.addResult(section._showAllButton.textContent);
   TestRunner.addResult('');
 }
 
@@ -796,9 +792,6 @@ ElementsTestRunner.dumpDOMAgentTree = function(node) {
 
     if (node.templateContent())
       dump(node.templateContent(), prefix);
-
-    if (node.contentDocument())
-      dump(node.contentDocument(), prefix);
 
     if (node.importedDocument())
       dump(node.importedDocument(), prefix);

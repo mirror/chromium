@@ -30,7 +30,6 @@
 #include "core/dom/Element.h"
 #include "core/dom/Range.h"
 #include "core/dom/Text.h"
-#include "core/dom/events/ScopedEventQueue.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
 #include "core/editing/EphemeralRange.h"
@@ -71,18 +70,13 @@ void DispatchCompositionUpdateEvent(LocalFrame& frame, const String& text) {
 }
 
 void DispatchCompositionEndEvent(LocalFrame& frame, const String& text) {
-  // Verify that the caller is using an EventQueueScope to suppress the input
-  // event from being fired until the proper time (e.g. after applying an IME
-  // selection update, if necesary).
-  DCHECK(ScopedEventQueue::Instance()->ShouldQueueEvents());
-
   Element* target = frame.GetDocument()->FocusedElement();
   if (!target)
     return;
 
   CompositionEvent* event = CompositionEvent::Create(
       EventTypeNames::compositionend, frame.DomWindow(), text);
-  EventDispatcher::DispatchScopedEvent(*target, event);
+  target->DispatchEvent(event);
 }
 
 bool NeedsIncrementalInsertion(const LocalFrame& frame,
@@ -119,16 +113,12 @@ void DispatchBeforeInputFromComposition(EventTarget* target,
 //      inserted text
 //   2. Fire 'compositionupdate' event
 //   3. Fire TextEvent and modify DOM
-//   4. Fire 'input' event; dispatched by Editor::AppliedEditing()
+//   TODO(chongz): 4. Fire 'input' event
 void InsertTextDuringCompositionWithEvents(
     LocalFrame& frame,
     const String& text,
     TypingCommand::Options options,
     TypingCommand::TextCompositionType composition_type) {
-  // Verify that the caller is using an EventQueueScope to suppress the input
-  // event from being fired until the proper time (e.g. after applying an IME
-  // selection update, if necesary).
-  DCHECK(ScopedEventQueue::Instance()->ShouldQueueEvents());
   DCHECK(composition_type ==
              TypingCommand::TextCompositionType::kTextCompositionUpdate ||
          composition_type ==
@@ -185,6 +175,7 @@ void InsertTextDuringCompositionWithEvents(
     default:
       NOTREACHED();
   }
+  // TODO(chongz): Fire 'input' event.
 }
 
 AtomicString GetInputModeAttribute(Element* element) {
@@ -319,8 +310,6 @@ StyleableMarker::Thickness BoolIsThickToStyleableMarkerThickness(
 
 }  // anonymous namespace
 
-enum class InputMethodController::TypingContinuation { kContinue, kEnd };
-
 InputMethodController* InputMethodController::Create(LocalFrame& frame) {
   return new InputMethodController(frame);
 }
@@ -400,11 +389,6 @@ bool InputMethodController::FinishComposingText(
 
   const String& composing = ComposingText();
 
-  // Suppress input event (if we hit the is_too_long case) and compositionend
-  // event until after we restore the original selection (to avoid clobbering a
-  // selection update applied by an event handler).
-  EventQueueScope scope;
-
   if (confirm_behavior == kKeepSelection) {
     // Do not dismiss handles even if we are moving selection, because we will
     // eventually move back to the old selection offsets.
@@ -414,7 +398,7 @@ bool InputMethodController::FinishComposingText(
     Editor::RevealSelectionScope reveal_selection_scope(&GetEditor());
 
     if (is_too_long) {
-      ignore_result(ReplaceComposition(ComposingText()));
+      ReplaceComposition(ComposingText());
     } else {
       Clear();
       DispatchCompositionEndEvent(GetFrame(), composing);
@@ -446,20 +430,16 @@ bool InputMethodController::FinishComposingText(
     return false;
 
   if (is_too_long) {
-    // Don't move caret or dispatch compositionend event if
-    // ReplaceComposition() fails.
-    if (!ReplaceComposition(ComposingText()))
-      return false;
+    ReplaceComposition(ComposingText());
   } else {
     Clear();
-    DispatchCompositionEndEvent(GetFrame(), composing);
   }
 
-  // Note: MoveCaret() occurs *before* the input and compositionend events are
-  // dispatched, due to the use of ScopedEventQueue. This allows input and
-  // compositionend event handlers to change the current selection without
-  // it getting overwritten again.
-  return MoveCaret(composition_range.End());
+  if (!MoveCaret(composition_range.End()))
+    return false;
+
+  DispatchCompositionEndEvent(GetFrame(), composing);
+  return true;
 }
 
 bool InputMethodController::CommitText(
@@ -475,11 +455,6 @@ bool InputMethodController::CommitText(
 }
 
 bool InputMethodController::ReplaceComposition(const String& text) {
-  // Verify that the caller is using an EventQueueScope to suppress the input
-  // event from being fired until the proper time (e.g. after applying an IME
-  // selection update, if necesary).
-  DCHECK(ScopedEventQueue::Instance()->ShouldQueueEvents());
-
   if (!HasComposition())
     return false;
 
@@ -500,9 +475,7 @@ bool InputMethodController::ReplaceComposition(const String& text) {
   InsertTextDuringCompositionWithEvents(
       GetFrame(), text, 0,
       TypingCommand::TextCompositionType::kTextCompositionConfirm);
-
-  // textInput event handler might destroy document (input event is queued
-  // until later).
+  // Event handler might destroy document.
   if (!IsAvailable())
     return false;
 
@@ -592,9 +565,6 @@ bool InputMethodController::ReplaceCompositionAndMoveCaret(
     return false;
   int text_start = composition_range.Start();
 
-  // Suppress input and compositionend events until after we move the caret to
-  // the new position.
-  EventQueueScope scope;
   if (!ReplaceComposition(text))
     return false;
 
@@ -626,15 +596,8 @@ bool InputMethodController::InsertTextAndMoveCaret(
     return false;
   int text_start = selection_range.Start();
 
-  // Suppress input event until after we move the caret to the new position.
-  EventQueueScope scope;
-
-  // Don't fire events for a no-op operation.
-  if (!text.IsEmpty() || selection_range.length() > 0) {
-    if (!InsertText(text))
-      return false;
-  }
-
+  if (!InsertText(text))
+    return false;
   Element* root_editable_element =
       GetFrame()
           .Selection()
@@ -676,18 +639,6 @@ void InputMethodController::CancelComposition() {
 
   // No DOM update after 'compositionend'.
   DispatchCompositionEndEvent(GetFrame(), g_empty_string);
-}
-
-bool InputMethodController::DispatchCompositionStartEvent(const String& text) {
-  Element* target = GetDocument().FocusedElement();
-  if (!target)
-    return IsAvailable();
-
-  CompositionEvent* event = CompositionEvent::Create(
-      EventTypeNames::compositionstart, GetFrame().DomWindow(), text);
-  target->DispatchEvent(event);
-
-  return IsAvailable();
 }
 
 void InputMethodController::SetComposition(
@@ -737,20 +688,15 @@ void InputMethodController::SetComposition(
   //    Send a compositionend event when function deletes the existing
   //    composition node, i.e. !hasComposition() && test.isEmpty().
   if (text.IsEmpty()) {
-    // Suppress input and compositionend events until after we move the caret
-    // to the new position.
-    EventQueueScope scope;
     if (HasComposition()) {
       Editor::RevealSelectionScope reveal_selection_scope(&GetEditor());
-      // Do not attempt to apply IME selection offsets if ReplaceComposition()
-      // fails (we compute the new range assuming the replacement will succeed).
-      if (!ReplaceComposition(g_empty_string))
-        return;
+      ReplaceComposition(g_empty_string);
     } else {
       // It's weird to call |setComposition()| with empty text outside
       // composition, however some IME (e.g. Japanese IBus-Anthy) did this, so
       // we simply delete selection without sending extra events.
-      TypingCommand::DeleteSelection(GetDocument());
+      TypingCommand::DeleteSelection(GetDocument(),
+                                     TypingCommand::kPreventSpellChecking);
     }
 
     // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
@@ -764,20 +710,22 @@ void InputMethodController::SetComposition(
   // We should send a 'compositionstart' event only when the given text is not
   // empty because this function doesn't create a composition node when the text
   // is empty.
-  if (!HasComposition() &&
-      !DispatchCompositionStartEvent(GetFrame().SelectedText())) {
-    return;
+  if (!HasComposition()) {
+    target->DispatchEvent(CompositionEvent::Create(
+        EventTypeNames::compositionstart, GetFrame().DomWindow(),
+        GetFrame().SelectedText()));
+    if (!IsAvailable())
+      return;
   }
 
   DCHECK(!text.IsEmpty());
 
   Clear();
 
-  // Suppress input event until after we move the caret to the new position.
-  EventQueueScope scope;
-  InsertTextDuringCompositionWithEvents(GetFrame(), text,
-                                        TypingCommand::kSelectInsertedText,
-                                        TypingCommand::kTextCompositionUpdate);
+  InsertTextDuringCompositionWithEvents(
+      GetFrame(), text,
+      TypingCommand::kSelectInsertedText | TypingCommand::kPreventSpellChecking,
+      TypingCommand::kTextCompositionUpdate);
   // Event handlers might destroy document.
   if (!IsAvailable())
     return;
@@ -881,13 +829,6 @@ void InputMethodController::SetCompositionFromExistingText(
     const Vector<ImeTextSpan>& ime_text_spans,
     unsigned composition_start,
     unsigned composition_end) {
-  Element* target = GetDocument().FocusedElement();
-  if (!target)
-    return;
-
-  if (!HasComposition() && !DispatchCompositionStartEvent(""))
-    return;
-
   Element* editable = GetFrame()
                           .Selection()
                           .ComputeVisibleSelectionInDOMTreeDeprecated()
@@ -919,14 +860,16 @@ void InputMethodController::SetCompositionFromExistingText(
     composition_range_ = Range::Create(GetDocument());
   composition_range_->setStart(range.StartPosition());
   composition_range_->setEnd(range.EndPosition());
-
-  DispatchCompositionUpdateEvent(GetFrame(), ComposingText());
 }
 
 EphemeralRange InputMethodController::CompositionEphemeralRange() const {
   if (!HasComposition())
     return EphemeralRange();
   return EphemeralRange(composition_range_.Get());
+}
+
+Range* InputMethodController::CompositionRange() const {
+  return HasComposition() ? composition_range_ : nullptr;
 }
 
 String InputMethodController::ComposingText() const {
@@ -1026,7 +969,7 @@ PlainTextRange InputMethodController::CreateRangeForSelection(
     right_boundary += it.length();
 
   if (HasComposition())
-    right_boundary -= composition_range_->GetText().length();
+    right_boundary -= CompositionRange()->GetText().length();
 
   right_boundary += text_length;
 

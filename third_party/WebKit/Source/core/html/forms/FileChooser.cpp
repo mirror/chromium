@@ -30,7 +30,7 @@
 
 namespace blink {
 
-FileChooserClient::~FileChooserClient() = default;
+FileChooserClient::~FileChooserClient() {}
 
 FileChooser* FileChooserClient::NewFileChooser(
     const WebFileChooserParams& params) {
@@ -51,7 +51,7 @@ scoped_refptr<FileChooser> FileChooser::Create(
   return base::AdoptRef(new FileChooser(client, params));
 }
 
-FileChooser::~FileChooser() = default;
+FileChooser::~FileChooser() {}
 
 void FileChooser::ChooseFiles(const Vector<FileChooserFileInfo>& files) {
   // FIXME: This is inelegant. We should not be looking at params_ here.

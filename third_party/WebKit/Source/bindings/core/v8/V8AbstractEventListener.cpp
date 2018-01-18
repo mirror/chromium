@@ -51,6 +51,7 @@ V8AbstractEventListener::V8AbstractEventListener(v8::Isolate* isolate,
                                                  bool is_attribute,
                                                  DOMWrapperWorld& world)
     : EventListener(kJSEventListenerType),
+      listener_(nullptr),
       is_attribute_(is_attribute),
       world_(&world),
       isolate_(isolate),
@@ -263,7 +264,6 @@ void V8AbstractEventListener::Trace(blink::Visitor* visitor) {
 void V8AbstractEventListener::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
   visitor->TraceWrappers(listener_.Cast<v8::Value>());
-  EventListener::TraceWrappers(visitor);
 }
 
 }  // namespace blink

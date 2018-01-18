@@ -27,10 +27,6 @@ class NetworkDelegate;
 class URLRequest;
 }  // namespace net
 
-namespace network {
-struct ResourceResponseHead;
-}
-
 namespace content {
 class AppCacheJob;
 class AppCacheNavigationHandleCore;
@@ -86,12 +82,12 @@ class CONTENT_EXPORT AppCacheRequestHandler
   // MaybeLoadResource and MaybeLoadFallbackForResponse.
   // Eventually one of the Deliver*Response() methods is called and the
   // LoaderCallback is invoked.
-  void MaybeCreateLoader(const network::ResourceRequest& resource_request,
+  void MaybeCreateLoader(const ResourceRequest& resource_request,
                          ResourceContext* resource_context,
                          LoaderCallback callback) override;
   // MaybeCreateLoaderForResponse always returns synchronously.
   bool MaybeCreateLoaderForResponse(
-      const network::ResourceResponseHead& response,
+      const ResourceResponseHead& response,
       mojom::URLLoaderPtr* loader,
       mojom::URLLoaderClientRequest* client_request) override;
   base::Optional<SubresourceLoaderParams> MaybeCreateSubresourceLoaderParams()
@@ -103,12 +99,10 @@ class CONTENT_EXPORT AppCacheRequestHandler
   // MaybeLoadResource, MaybeLoadFallbackForResponse, and
   // MaybeLoadFallbackForRedirect. Eventually one of the Deliver*Response()
   // methods is called and the LoaderCallback is invoked.
-  void MaybeCreateSubresourceLoader(
-      const network::ResourceRequest& resource_request,
-      LoaderCallback callback);
-  void MaybeFallbackForSubresourceResponse(
-      const network::ResourceResponseHead& response,
-      LoaderCallback callback);
+  void MaybeCreateSubresourceLoader(const ResourceRequest& resource_request,
+                                    LoaderCallback callback);
+  void MaybeFallbackForSubresourceResponse(const ResourceResponseHead& response,
+                                           LoaderCallback callback);
   void MaybeFallbackForSubresourceRedirect(
       const net::RedirectInfo& redirect_info,
       LoaderCallback callback);
@@ -117,7 +111,7 @@ class CONTENT_EXPORT AppCacheRequestHandler
 
   static std::unique_ptr<AppCacheRequestHandler>
   InitializeForNavigationNetworkService(
-      const network::ResourceRequest& request,
+      const ResourceRequest& request,
       AppCacheNavigationHandleCore* appcache_handle_core,
       URLLoaderFactoryGetter* url_loader_factory_getter);
 

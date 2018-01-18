@@ -483,18 +483,18 @@ cr.define('settings_sections_tests', function() {
       // Default is DEFAULT_MARGINS
       const marginsInput = marginsElement.$$('select');
       expectEquals(
-          print_preview.ticket_items.MarginsTypeValue.DEFAULT.toString(),
+          print_preview_new.MarginsTypeValue.DEFAULT.toString(),
           marginsInput.value);
       expectEquals(
-          print_preview.ticket_items.MarginsTypeValue.DEFAULT,
+          print_preview_new.MarginsTypeValue.DEFAULT,
           page.settings.margins.value);
 
       // Change to minimum.
       marginsInput.value =
-          print_preview.ticket_items.MarginsTypeValue.MINIMUM.toString();
+          print_preview_new.MarginsTypeValue.MINIMUM.toString();
       marginsInput.dispatchEvent(new CustomEvent('change'));
       expectEquals(
-          print_preview.ticket_items.MarginsTypeValue.MINIMUM,
+          print_preview_new.MarginsTypeValue.MINIMUM,
           page.settings.margins.value);
     });
 

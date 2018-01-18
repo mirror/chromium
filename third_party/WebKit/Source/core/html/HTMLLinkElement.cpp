@@ -62,7 +62,7 @@ HTMLLinkElement* HTMLLinkElement::Create(Document& document,
   return new HTMLLinkElement(document, created_by_parser);
 }
 
-HTMLLinkElement::~HTMLLinkElement() = default;
+HTMLLinkElement::~HTMLLinkElement() {}
 
 void HTMLLinkElement::ParseAttribute(
     const AttributeModificationParams& params) {

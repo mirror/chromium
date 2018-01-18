@@ -53,7 +53,7 @@ void CallOnError(mojom::URLLoaderClientPtrInfo client_info, int error_code) {
   client->OnComplete(status);
 }
 
-void ReadData(scoped_refptr<network::ResourceResponse> headers,
+void ReadData(scoped_refptr<ResourceResponse> headers,
               const ui::TemplateReplacements* replacements,
               bool gzipped,
               scoped_refptr<URLDataSourceImpl> data_source,
@@ -122,7 +122,7 @@ void ReadData(scoped_refptr<network::ResourceResponse> headers,
   client->OnComplete(status);
 }
 
-void DataAvailable(scoped_refptr<network::ResourceResponse> headers,
+void DataAvailable(scoped_refptr<ResourceResponse> headers,
                    const ui::TemplateReplacements* replacements,
                    bool gzipped,
                    scoped_refptr<URLDataSourceImpl> source,
@@ -139,7 +139,7 @@ void DataAvailable(scoped_refptr<network::ResourceResponse> headers,
                                 source, std::move(client_info), bytes));
 }
 
-void StartURLLoader(const network::ResourceRequest& request,
+void StartURLLoader(const ResourceRequest& request,
                     int frame_tree_node_id,
                     mojom::URLLoaderClientPtrInfo client_info,
                     ResourceContext* resource_context) {
@@ -172,8 +172,7 @@ void StartURLLoader(const network::ResourceRequest& request,
   scoped_refptr<net::HttpResponseHeaders> headers =
       URLDataManagerBackend::GetHeaders(source, path, origin_header);
 
-  scoped_refptr<network::ResourceResponse> resource_response(
-      new network::ResourceResponse);
+  scoped_refptr<ResourceResponse> resource_response(new ResourceResponse);
   resource_response->head.headers = headers;
   resource_response->head.mime_type = source->source()->GetMimeType(path);
   // TODO: fill all the time related field i.e. request_time response_time
@@ -233,7 +232,7 @@ class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
-                            const network::ResourceRequest& request,
+                            const ResourceRequest& request,
                             mojom::URLLoaderClientPtr client,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override {

@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <memory>
-
 #include "base/auto_reset.h"
 #include "base/optional.h"
 #include "base/test/scoped_feature_list.h"
@@ -77,7 +75,7 @@ ExtensionInstalledBubbleBrowserTest::MakeBubble(
     builder.MergeManifest(std::move(extra_keys));
   scoped_refptr<const extensions::Extension> extension = builder.Build();
   extension_service()->AddExtension(extension.get());
-  auto bubble = std::make_unique<ExtensionInstalledBubble>(
+  auto bubble = base::MakeUnique<ExtensionInstalledBubble>(
       extension.get(), browser(), SkBitmap());
   bubble->Initialize();
   return bubble;
@@ -99,7 +97,7 @@ void ExtensionInstalledBubbleBrowserTest::ShowUi(const std::string& name) {
   if (name == "SignInPromo" || name == "NoAction")
     location = Manifest::INTERNAL;
 
-  auto extra_keys = std::make_unique<base::DictionaryValue>();
+  auto extra_keys = base::MakeUnique<base::DictionaryValue>();
   if (name == "Omnibox")
     extra_keys->SetString(extensions::manifest_keys::kOmniboxKeyword, "foo");
 

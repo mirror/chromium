@@ -196,9 +196,6 @@ class NET_EXPORT HttpNetworkSession : public base::MemoryCoordinatorClient {
     bool quic_race_cert_verification;
     // If true, estimate the initial RTT for QUIC connections based on network.
     bool quic_estimate_initial_rtt;
-    // If true, client headers will include HTTP/2 stream dependency info
-    // derived from the request priority.
-    bool quic_headers_include_h2_stream_dependency;
     // If non-empty, QUIC will only be spoken to hosts in this list.
     base::flat_set<std::string> quic_host_whitelist;
 
@@ -290,6 +287,9 @@ class NET_EXPORT HttpNetworkSession : public base::MemoryCoordinatorClient {
   HttpStreamFactory* http_stream_factory() {
     return http_stream_factory_.get();
   }
+  HttpStreamFactory* http_stream_factory_for_websocket() {
+    return http_stream_factory_for_websocket_.get();
+  }
   NetworkThrottleManager* throttler() {
     return network_stream_throttler_.get();
   }
@@ -368,6 +368,7 @@ class NET_EXPORT HttpNetworkSession : public base::MemoryCoordinatorClient {
   QuicStreamFactory quic_stream_factory_;
   SpdySessionPool spdy_session_pool_;
   std::unique_ptr<HttpStreamFactory> http_stream_factory_;
+  std::unique_ptr<HttpStreamFactory> http_stream_factory_for_websocket_;
   std::map<HttpResponseBodyDrainer*, std::unique_ptr<HttpResponseBodyDrainer>>
       response_drainers_;
   std::unique_ptr<NetworkThrottleManager> network_stream_throttler_;

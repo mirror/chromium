@@ -409,7 +409,8 @@ void WebContentsDestroyedWatcher::WebContentsDestroyed() {
 
 GURL EffectiveURLContentBrowserClient::GetEffectiveURL(
     BrowserContext* browser_context,
-    const GURL& url) {
+    const GURL& url,
+    bool is_isolated_origin) {
   if (url == url_to_modify_)
     return url_to_return_;
   return url;

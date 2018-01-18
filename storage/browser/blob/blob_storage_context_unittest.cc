@@ -15,6 +15,7 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
@@ -29,8 +30,12 @@
 #include "storage/browser/blob/blob_data_handle.h"
 #include "storage/browser/blob/blob_data_item.h"
 #include "storage/browser/blob/blob_data_snapshot.h"
+#include "storage/browser/blob/blob_transport_host.h"
+#include "storage/common/blob_storage/blob_item_bytes_request.h"
+#include "storage/common/blob_storage/blob_item_bytes_response.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using RequestMemoryCallback = storage::BlobTransportHost::RequestMemoryCallback;
 using FileCreationInfo = storage::BlobMemoryController::FileCreationInfo;
 
 namespace storage {
@@ -112,7 +117,7 @@ class BlobStorageContextTest : public testing::Test {
 
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
-    context_ = std::make_unique<BlobStorageContext>();
+    context_ = base::MakeUnique<BlobStorageContext>();
   }
 
   void TearDown() override {
@@ -525,7 +530,7 @@ TEST_F(BlobStorageContextTest, BuildDiskCacheBlob) {
 TEST_F(BlobStorageContextTest, BuildFutureFileOnlyBlob) {
   const std::string kId1("id1");
   context_ =
-      std::make_unique<BlobStorageContext>(temp_dir_.GetPath(), file_runner_);
+      base::MakeUnique<BlobStorageContext>(temp_dir_.GetPath(), file_runner_);
   SetTestMemoryLimits();
 
   BlobDataBuilder builder(kId1);
@@ -791,7 +796,7 @@ TEST_F(BlobStorageContextTest, BuildBlobCombinations) {
   const std::string kId("id");
 
   context_ =
-      std::make_unique<BlobStorageContext>(temp_dir_.GetPath(), file_runner_);
+      base::MakeUnique<BlobStorageContext>(temp_dir_.GetPath(), file_runner_);
 
   SetTestMemoryLimits();
   std::unique_ptr<disk_cache::Backend> cache = CreateInMemoryDiskCache();

@@ -11,7 +11,7 @@
 
 namespace content {
 
-void StartNetworkErrorsURLLoader(const network::ResourceRequest& request,
+void StartNetworkErrorsURLLoader(const ResourceRequest& request,
                                  mojom::URLLoaderClientPtr client) {
   int net_error = net::ERR_INVALID_URL;
   if (request.url.host() == kChromeUIDinoHost) {

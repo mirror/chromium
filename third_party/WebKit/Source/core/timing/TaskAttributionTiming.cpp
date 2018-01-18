@@ -24,7 +24,7 @@ TaskAttributionTiming::TaskAttributionTiming(String name,
       container_name_(container_name),
       script_url_(script_url) {}
 
-TaskAttributionTiming::~TaskAttributionTiming() = default;
+TaskAttributionTiming::~TaskAttributionTiming() {}
 
 String TaskAttributionTiming::scriptURL() const {
   return script_url_;

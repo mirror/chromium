@@ -71,7 +71,7 @@ HTMLTokenizer::HTMLTokenizer(const HTMLParserOptions& options)
   Reset();
 }
 
-HTMLTokenizer::~HTMLTokenizer() = default;
+HTMLTokenizer::~HTMLTokenizer() {}
 
 void HTMLTokenizer::Reset() {
   state_ = HTMLTokenizer::kDataState;

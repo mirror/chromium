@@ -93,9 +93,8 @@ WindowServerTestBase::ReleaseMostRecentClient() {
 }
 
 void WindowServerTestBase::SetUp() {
-  base::CommandLine::ForCurrentProcess()->AppendSwitch(switches::kMus);
-  base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      switches::kMusHostingViz);
+  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+      switches::kMus, switches::kMusHostVizValue);
   WindowServerServiceTestBase::SetUp();
 
   env_ = aura::Env::CreateInstance(aura::Env::Mode::MUS);

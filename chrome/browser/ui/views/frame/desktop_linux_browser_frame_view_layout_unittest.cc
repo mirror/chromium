@@ -4,8 +4,6 @@
 
 #include "chrome/browser/ui/views/frame/desktop_linux_browser_frame_view_layout.h"
 
-#include <memory>
-
 #include "base/macros.h"
 #include "chrome/browser/ui/views/nav_button_provider.h"
 #include "chrome/browser/ui/views/tabs/tab.h"
@@ -140,7 +138,7 @@ class DesktopLinuxBrowserFrameViewLayoutTest : public views::ViewsTestBase {
     views::ViewsTestBase::SetUp();
 
     delegate_.reset(new TestLayoutDelegate);
-    nav_button_provider_ = std::make_unique<::TestNavButtonProvider>();
+    nav_button_provider_ = base::MakeUnique<::TestNavButtonProvider>();
     auto layout = std::make_unique<DesktopLinuxBrowserFrameViewLayout>(
         nav_button_provider_.get());
     layout->set_delegate(delegate_.get());

@@ -4,6 +4,7 @@
 
 #include "chrome/browser/android/background_tab_manager.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/history/core/browser/history_types.h"
@@ -54,7 +55,7 @@ void BackgroundTabManager::RegisterBackgroundTab(
   web_contents_ = web_contents;
   profile_ = profile;
   web_contents_observer_ =
-      std::make_unique<WebContentsDestroyedObserver>(this, web_contents);
+      base::MakeUnique<WebContentsDestroyedObserver>(this, web_contents);
 }
 
 void BackgroundTabManager::UnregisterBackgroundTab() {

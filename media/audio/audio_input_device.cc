@@ -16,7 +16,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_restrictions.h"
-#include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "media/audio/audio_manager_base.h"
 #include "media/base/audio_bus.h"
@@ -66,7 +65,6 @@ class AudioInputDevice::AudioThreadCallback
   void Process(uint32_t pending_data) override;
 
  private:
-  const base::TimeTicks start_time_;
   const double bytes_per_ms_;
   size_t current_segment_id_;
   uint32_t last_buffer_id_;
@@ -374,7 +372,6 @@ AudioInputDevice::AudioThreadCallback::AudioThreadCallback(
           /*read only*/ true,
           ComputeAudioInputBufferSize(audio_parameters, 1u),
           total_segments),
-      start_time_(base::TimeTicks::Now()),
       bytes_per_ms_(static_cast<double>(audio_parameters.GetBytesPerSecond()) /
                     base::Time::kMillisecondsPerSecond),
       current_segment_id_(0u),
@@ -385,10 +382,7 @@ AudioInputDevice::AudioThreadCallback::AudioThreadCallback(
       frames_since_last_got_data_callback_(0),
       got_data_callback_(std::move(got_data_callback_)) {}
 
-AudioInputDevice::AudioThreadCallback::~AudioThreadCallback() {
-  UMA_HISTOGRAM_LONG_TIMES("Media.Audio.Capture.InputStreamDuration",
-                           base::TimeTicks::Now() - start_time_);
-}
+AudioInputDevice::AudioThreadCallback::~AudioThreadCallback() = default;
 
 void AudioInputDevice::AudioThreadCallback::MapSharedMemory() {
   shared_memory_.Map(memory_length_);
@@ -411,7 +405,6 @@ void AudioInputDevice::AudioThreadCallback::MapSharedMemory() {
 }
 
 void AudioInputDevice::AudioThreadCallback::Process(uint32_t pending_data) {
-  TRACE_EVENT_BEGIN0("audio", "AudioInputDevice::AudioThreadCallback::Process");
   // The shared memory represents parameters, size of the data buffer and the
   // actual data buffer containing audio data. Map the memory into this
   // structure and parse out parameters and the data area.
@@ -459,20 +452,14 @@ void AudioInputDevice::AudioThreadCallback::Process(uint32_t pending_data) {
   const base::TimeTicks capture_time =
       base::TimeTicks() +
       base::TimeDelta::FromMicroseconds(buffer->params.capture_time);
-  const base::TimeTicks now_time = base::TimeTicks::Now();
-  DCHECK_GE(now_time, capture_time);
+  DCHECK_GE(base::TimeTicks::Now(), capture_time);
 
-  capture_callback_->Capture(audio_bus,
-                             (now_time - capture_time).InMilliseconds(),
-                             buffer->params.volume, buffer->params.key_pressed);
+  capture_callback_->Capture(
+      audio_bus, (base::TimeTicks::Now() - capture_time).InMilliseconds(),
+      buffer->params.volume, buffer->params.key_pressed);
 
   if (++current_segment_id_ >= total_segments_)
     current_segment_id_ = 0u;
-
-  TRACE_EVENT_END2(
-      "audio", "AudioInputDevice::AudioThreadCallback::Process",
-      "capture_time (ms)", (capture_time - base::TimeTicks()).InMillisecondsF(),
-      "now_time (ms)", (now_time - base::TimeTicks()).InMillisecondsF());
 }
 
 }  // namespace media

@@ -42,11 +42,9 @@
 #include "content/common/storage_partition_service.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/renderer/render_thread.h"
-#include "content/public/renderer/url_loader_throttle_provider.h"
 #include "content/renderer/gpu/compositor_dependencies.h"
 #include "content/renderer/layout_test_dependencies.h"
-#include "content/renderer/media/audio_input_ipc_factory.h"
-#include "content/renderer/media/audio_output_ipc_factory.h"
+#include "content/renderer/media/audio_ipc_factory.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "ipc/ipc_sync_channel.h"
 #include "media/media_features.h"
@@ -129,8 +127,10 @@ namespace content {
 
 class AppCacheDispatcher;
 class AecDumpMessageFilter;
+class AudioInputMessageFilter;
 class AudioMessageFilter;
 class AudioRendererMixerManager;
+class BlobMessageFilter;
 class BrowserPluginManager;
 class CacheStorageDispatcher;
 class CategorizedWorkerPool;
@@ -197,8 +197,7 @@ class CONTENT_EXPORT RenderThreadImpl
       RendererBlinkPlatformImpl* blink_platform_impl);
 
   // Returns the task runner for the main thread where the RenderThread lives.
-  static scoped_refptr<base::SingleThreadTaskRunner>
-  DeprecatedGetMainTaskRunner();
+  static scoped_refptr<base::SingleThreadTaskRunner> GetMainTaskRunner();
 
   ~RenderThreadImpl() override;
   void Shutdown() override;
@@ -339,6 +338,10 @@ class CONTENT_EXPORT RenderThreadImpl
     return dom_storage_dispatcher_.get();
   }
 
+  AudioInputMessageFilter* audio_input_message_filter() {
+    return audio_input_message_filter_.get();
+  }
+
   FileSystemDispatcher* file_system_dispatcher() const {
     return file_system_dispatcher_.get();
   }
@@ -353,10 +356,6 @@ class CONTENT_EXPORT RenderThreadImpl
 
   ResourceDispatcher* resource_dispatcher() const {
     return resource_dispatcher_.get();
-  }
-
-  URLLoaderThrottleProvider* url_loader_throttle_provider() const {
-    return url_loader_throttle_provider_.get();
   }
 
 #if defined(OS_ANDROID)
@@ -651,9 +650,10 @@ class CONTENT_EXPORT RenderThreadImpl
   std::unique_ptr<CacheStorageDispatcher> main_thread_cache_storage_dispatcher_;
   std::unique_ptr<FileSystemDispatcher> file_system_dispatcher_;
   std::unique_ptr<QuotaDispatcher> quota_dispatcher_;
-  std::unique_ptr<URLLoaderThrottleProvider> url_loader_throttle_provider_;
 
   // Used on the renderer and IPC threads.
+  scoped_refptr<BlobMessageFilter> blob_message_filter_;
+  scoped_refptr<AudioInputMessageFilter> audio_input_message_filter_;
   scoped_refptr<MidiMessageFilter> midi_message_filter_;
   scoped_refptr<ServiceWorkerMessageFilter> service_worker_message_filter_;
 
@@ -676,13 +676,10 @@ class CONTENT_EXPORT RenderThreadImpl
   scoped_refptr<AecDumpMessageFilter> aec_dump_message_filter_;
 #endif
 
-  // Provides AudioInputIPC objects for audio input devices. Initialized in
-  // Init.
-  base::Optional<AudioInputIPCFactory> audio_input_ipc_factory_;
   // Provides AudioOutputIPC objects for audio output devices. It either uses
   // an AudioMessageFilter for this or provides MojoAudioOutputIPC objects.
   // Initialized in Init.
-  base::Optional<AudioOutputIPCFactory> audio_output_ipc_factory_;
+  base::Optional<AudioIPCFactory> audio_ipc_factory_;
 
   // Used on the render thread.
   std::unique_ptr<VideoCaptureImplManager> vc_manager_;

@@ -128,12 +128,12 @@
 #include "core/frame/UseCounter.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/html/DocumentAllNameCollection.h"
 #include "core/html/DocumentNameCollection.h"
 #include "core/html/HTMLAllCollection.h"
 #include "core/html/HTMLAnchorElement.h"
 #include "core/html/HTMLBaseElement.h"
 #include "core/html/HTMLBodyElement.h"
+#include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLCollection.h"
 #include "core/html/HTMLDialogElement.h"
 #include "core/html/HTMLDocument.h"
@@ -151,7 +151,6 @@
 #include "core/html/canvas/CanvasContextCreationAttributes.h"
 #include "core/html/canvas/CanvasFontCache.h"
 #include "core/html/canvas/CanvasRenderingContext.h"
-#include "core/html/canvas/HTMLCanvasElement.h"
 #include "core/html/custom/CustomElement.h"
 #include "core/html/custom/CustomElementDefinition.h"
 #include "core/html/custom/CustomElementDescriptor.h"
@@ -667,7 +666,7 @@ Document::Document(const DocumentInit& initializer,
       logged_field_edit_(false),
       engagement_level_(mojom::blink::EngagementLevel::NONE),
       secure_context_state_(SecureContextState::kUnknown),
-      ukm_source_id_(ukm::UkmRecorder::GetNewSourceID()),
+      ukm_source_id_(ukm::kInvalidSourceId),
       needs_to_record_ukm_outlive_time_(false) {
   if (frame_) {
     DCHECK(frame_->GetPage());
@@ -738,20 +737,6 @@ Document::~Document() {
   DCHECK(!ax_object_cache_);
 
   InstanceCounters::DecrementCounter(InstanceCounters::kDocumentCounter);
-}
-
-Range* Document::CreateRangeAdjustedToTreeScope(const TreeScope& tree_scope,
-                                                const Position& position) {
-  DCHECK(position.IsNotNull());
-  // Note: Since |Position::ComputeContainerNode()| returns |nullptr| if
-  // |position| is |BeforeAnchor| or |AfterAnchor|.
-  Node* const anchor_node = position.AnchorNode();
-  if (anchor_node->GetTreeScope() == tree_scope)
-    return Range::Create(tree_scope.GetDocument(), position, position);
-  Node* const shadow_host = tree_scope.AncestorInThisScope(anchor_node);
-  return Range::Create(tree_scope.GetDocument(),
-                       Position::BeforeNode(*shadow_host),
-                       Position::BeforeNode(*shadow_host));
 }
 
 SelectorQueryCache& Document::GetSelectorQueryCache() {
@@ -1584,7 +1569,7 @@ Range* Document::caretRangeFromPoint(int x, int y) {
 
   Position range_compliant_position =
       position_with_affinity.GetPosition().ParentAnchoredEquivalent();
-  return CreateRangeAdjustedToTreeScope(*this, range_compliant_position);
+  return Range::CreateAdjustedToTreeScope(*this, range_compliant_position);
 }
 
 Element* Document::scrollingElement() {
@@ -3758,9 +3743,7 @@ void Document::SetURL(const KURL& url) {
   UpdateBaseURL();
   GetContextFeatures().UrlDidChange(this);
 
-  // TODO(crbug/795354): Move handling of URL recording out of the renderer.
-  // URL must only be recorded from the main frame.
-  if (ukm_recorder_ && IsInMainFrame())
+  if (ukm_recorder_)
     ukm_recorder_->UpdateSourceURL(ukm_source_id_, url_);
 }
 
@@ -3944,10 +3927,11 @@ void Document::DidRemoveAllPendingBodyStylesheets() {
 void Document::DidLoadAllScriptBlockingResources() {
   // Use wrapWeakPersistent because the task should not keep this Document alive
   // just for executing scripts.
-  execute_scripts_waiting_for_resources_task_handle_ = PostCancellableTask(
-      *GetTaskRunner(TaskType::kNetworking), FROM_HERE,
-      WTF::Bind(&Document::ExecuteScriptsWaitingForResources,
-                WrapWeakPersistent(this)));
+  execute_scripts_waiting_for_resources_task_handle_ =
+      GetTaskRunner(TaskType::kNetworking)
+          ->PostCancellableTask(
+              FROM_HERE, WTF::Bind(&Document::ExecuteScriptsWaitingForResources,
+                                   WrapWeakPersistent(this)));
 
   if (IsHTMLDocument() && body()) {
     // For HTML if we have no more stylesheets to load and we're past the body
@@ -4911,10 +4895,12 @@ void Document::SendSensitiveInputVisibility() {
   if (sensitive_input_visibility_task_.IsActive())
     return;
 
-  sensitive_input_visibility_task_ = PostCancellableTask(
-      *GetTaskRunner(TaskType::kUnspecedLoading), FROM_HERE,
-      WTF::Bind(&Document::SendSensitiveInputVisibilityInternal,
-                WrapWeakPersistent(this)));
+  sensitive_input_visibility_task_ =
+      GetTaskRunner(TaskType::kUnspecedLoading)
+          ->PostCancellableTask(
+              FROM_HERE,
+              WTF::Bind(&Document::SendSensitiveInputVisibilityInternal,
+                        WrapWeakPersistent(this)));
 }
 
 void Document::SendSensitiveInputVisibilityInternal() {
@@ -5390,7 +5376,7 @@ enum QualifiedNameStatus {
 struct ParseQualifiedNameResult {
   QualifiedNameStatus status;
   UChar32 character;
-  ParseQualifiedNameResult() = default;
+  ParseQualifiedNameResult() {}
   explicit ParseQualifiedNameResult(QualifiedNameStatus status)
       : status(status) {}
   ParseQualifiedNameResult(QualifiedNameStatus status, UChar32 character)
@@ -5766,11 +5752,6 @@ DocumentNameCollection* Document::DocumentNamedItems(const AtomicString& name) {
                                                         name);
 }
 
-HTMLCollection* Document::DocumentAllNamedItems(const AtomicString& name) {
-  return EnsureCachedCollection<DocumentAllNameCollection>(
-      kDocumentAllNamedItems, name);
-}
-
 LocalDOMWindow* Document::defaultView() const {
   // The HTML spec requires to return null if the document is detached from the
   // DOM.  However, |dom_window_| is not cleared on the detachment.  So, we need
@@ -6014,20 +5995,21 @@ void Document::ApplyFeaturePolicy(const ParsedFeaturePolicy& declared_policy) {
 }
 
 ukm::UkmRecorder* Document::UkmRecorder() {
+  // UKM must only be recorded using the main frame.
+  DCHECK(IsInMainFrame());
+
   if (ukm_recorder_)
     return ukm_recorder_.get();
 
   ukm_recorder_ =
       ukm::MojoUkmRecorder::Create(Platform::Current()->GetConnector());
-
-  // TODO(crbug/795354): Move handling of URL recording out of the renderer.
-  // URL must only be recorded from the main frame.
-  if (IsInMainFrame())
-    ukm_recorder_->UpdateSourceURL(ukm_source_id_, url_);
+  ukm_source_id_ = ukm_recorder_->GetNewSourceID();
+  ukm_recorder_->UpdateSourceURL(ukm_source_id_, url_);
   return ukm_recorder_.get();
 }
 
 int64_t Document::UkmSourceID() const {
+  DCHECK(ukm_recorder_);
   return ukm_source_id_;
 }
 
@@ -7110,19 +7092,16 @@ bool Document::IsSecureContext() const {
   return is_secure;
 }
 
-void Document::DidEnforceInsecureRequestPolicy() {
-  if (!GetFrame())
-    return;
-  GetFrame()->Client()->DidEnforceInsecureRequestPolicy(
-      GetInsecureRequestPolicy());
-}
-
-void Document::DidEnforceInsecureNavigationsSet() {
-  if (!GetFrame())
-    return;
-  GetFrame()->Client()->DidEnforceInsecureNavigationsSet(
-      SecurityContext::SerializeInsecureNavigationSet(
-          *InsecureNavigationsToUpgrade()));
+void Document::EnforceInsecureRequestPolicy(WebInsecureRequestPolicy policy) {
+  // Combine the new policy with the existing policy, as a base policy may be
+  // inherited from a remote parent before this page's policy is set. In other
+  // words, insecure requests should be upgraded or blocked if _either_ the
+  // existing policy or the newly enforced policy triggers upgrades or
+  // blockage.
+  SetInsecureRequestPolicy(GetInsecureRequestPolicy() | policy);
+  if (GetFrame())
+    GetFrame()->Client()->DidEnforceInsecureRequestPolicy(
+        GetInsecureRequestPolicy());
 }
 
 void Document::SetShadowCascadeOrder(ShadowCascadeOrder order) {
@@ -7200,10 +7179,11 @@ void Document::MaybeQueueSendDidEditFieldInInsecureContext() {
     return;
   }
   logged_field_edit_ = true;
-  sensitive_input_edited_task_ = PostCancellableTask(
-      *GetTaskRunner(TaskType::kUserInteraction), FROM_HERE,
-      WTF::Bind(&Document::SendDidEditFieldInInsecureContext,
-                WrapWeakPersistent(this)));
+  sensitive_input_edited_task_ =
+      GetTaskRunner(TaskType::kUserInteraction)
+          ->PostCancellableTask(
+              FROM_HERE, WTF::Bind(&Document::SendDidEditFieldInInsecureContext,
+                                   WrapWeakPersistent(this)));
 }
 
 CoreProbeSink* Document::GetProbeSink() {
@@ -7345,7 +7325,6 @@ void Document::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
   visitor->TraceWrappers(scripted_idle_task_controller_);
   visitor->TraceWrappers(intersection_observer_controller_);
   ContainerNode::TraceWrappers(visitor);
-  ExecutionContext::TraceWrappers(visitor);
   Supplementable<Document>::TraceWrappers(visitor);
 }
 

@@ -43,7 +43,7 @@ MojoWatcher* MojoWatcher::Create(mojo::Handle handle,
   return watcher;
 }
 
-MojoWatcher::~MojoWatcher() = default;
+MojoWatcher::~MojoWatcher() {}
 
 MojoResult MojoWatcher::cancel() {
   if (!watcher_handle_.is_valid())
@@ -60,7 +60,6 @@ void MojoWatcher::Trace(blink::Visitor* visitor) {
 }
 
 void MojoWatcher::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
-  ScriptWrappable::TraceWrappers(visitor);
   visitor->TraceWrappers(callback_);
 }
 

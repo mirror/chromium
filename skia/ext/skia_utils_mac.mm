@@ -10,7 +10,6 @@
 #include <memory>
 
 #include "base/logging.h"
-#include "base/mac/mac_util.h"
 #include "base/mac/scoped_cftyperef.h"
 #include "base/mac/scoped_nsobject.h"
 #include "skia/ext/platform_canvas.h"
@@ -126,10 +125,8 @@ CGRect SkRectToCGRect(const SkRect& rect) {
   return cg_rect;
 }
 
+// Converts CGColorRef to the ARGB layout Skia expects.
 SkColor CGColorRefToSkColor(CGColorRef color) {
-  // TODO(ccameron): This assumes that |color| is already in sRGB. Ideally we'd
-  // use something like CGColorCreateCopyByMatchingToColorSpace, but that's
-  // only available in macOS 10.11.
   DCHECK(CGColorGetNumberOfComponents(color) == 4);
   const CGFloat* components = CGColorGetComponents(color);
   return SkColorSetARGB(SkScalarRoundToInt(255.0 * components[3]), // alpha
@@ -138,12 +135,12 @@ SkColor CGColorRefToSkColor(CGColorRef color) {
                         SkScalarRoundToInt(255.0 * components[2])); // blue
 }
 
+// Converts ARGB to CGColorRef.
 CGColorRef CGColorCreateFromSkColor(SkColor color) {
-  double components[] = {SkColorGetR(color) / 255.0,
-                         SkColorGetG(color) / 255.0,
-                         SkColorGetB(color) / 255.0,
-                         SkColorGetA(color) / 255.0};
-  return CGColorCreate(base::mac::GetSRGBColorSpace(), components);
+  return CGColorCreateGenericRGB(SkColorGetR(color) / 255.0,
+                                 SkColorGetG(color) / 255.0,
+                                 SkColorGetB(color) / 255.0,
+                                 SkColorGetA(color) / 255.0);
 }
 
 // Converts NSColor to ARGB

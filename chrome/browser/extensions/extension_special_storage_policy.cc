@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
@@ -321,7 +322,7 @@ ExtensionSpecialStoragePolicy::SpecialCollection::ExtensionsContaining(
   if (result)
     return result.get();
 
-  result = std::make_unique<extensions::ExtensionSet>();
+  result = base::MakeUnique<extensions::ExtensionSet>();
   for (auto& extension : extensions_) {
     if (extension->OverlapsWithOrigin(origin))
       result->Insert(extension);

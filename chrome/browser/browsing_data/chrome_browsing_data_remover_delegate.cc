@@ -642,8 +642,7 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
         FROM_HERE, {base::TaskPriority::USER_VISIBLE, base::MayBlock()},
         base::BindOnce(
             &WebRtcLogUtil::DeleteOldAndRecentWebRtcLogFiles,
-            WebRtcLogList::GetWebRtcLogDirectoryForBrowserContextPath(
-                profile_->GetPath()),
+            WebRtcLogList::GetWebRtcLogDirectoryForProfile(profile_->GetPath()),
             delete_begin_),
         clear_webrtc_logs_.GetCompletionCallback());
 #endif
@@ -1015,8 +1014,7 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
           base::BindOnce(
               &ChromeBrowsingDataRemoverDelegate::OnWaitableEventSignaled,
               weak_ptr_factory_.GetWeakPtr());
-      watcher_.StartWatching(event, std::move(watcher_callback),
-                             base::SequencedTaskRunnerHandle::Get());
+      watcher_.StartWatching(event, std::move(watcher_callback));
     } else {
       // TODO(msramek): Store filters from the currently executed task on the
       // object to avoid having to copy them to callback methods.

@@ -410,7 +410,7 @@ Fullscreen::Fullscreen(Document& document)
   document.SetHasFullscreenSupplement();
 }
 
-Fullscreen::~Fullscreen() = default;
+Fullscreen::~Fullscreen() {}
 
 Document* Fullscreen::GetDocument() {
   return ToDocument(LifecycleContext());

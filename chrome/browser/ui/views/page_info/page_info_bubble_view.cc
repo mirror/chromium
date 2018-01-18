@@ -11,6 +11,7 @@
 
 #include "base/i18n/rtl.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -819,7 +820,7 @@ void PageInfoBubbleView::SetPermissionInfo(
 
   for (const auto& permission : permission_info_list) {
     std::unique_ptr<PermissionSelectorRow> selector =
-        std::make_unique<PermissionSelectorRow>(
+        base::MakeUnique<PermissionSelectorRow>(
             profile_,
             web_contents() ? web_contents()->GetVisibleURL()
                            : GURL::EmptyGURL(),

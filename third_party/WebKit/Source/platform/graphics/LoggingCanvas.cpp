@@ -33,6 +33,7 @@
 #include <unicode/unistr.h>
 #include "build/build_config.h"
 #include "platform/geometry/IntSize.h"
+#include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/skia/ImagePixelLocker.h"
 #include "platform/graphics/skia/SkiaUtils.h"
 #include "platform/image-encoders/ImageEncoder.h"

@@ -39,7 +39,7 @@ base::FilePath BlobDataBuilder::GetFutureFileItemPath(uint64_t file_id) {
 }
 
 /* static */
-bool BlobDataBuilder::IsFutureFileItem(const network::DataElement& element) {
+bool BlobDataBuilder::IsFutureFileItem(const DataElement& element) {
   const FilePath::StringType prefix(kFutureFileName);
   // The prefix shouldn't occur unless the user used "AppendFutureFile". We
   // DCHECK on AppendFile to make sure no one appends a future file.
@@ -48,7 +48,7 @@ bool BlobDataBuilder::IsFutureFileItem(const network::DataElement& element) {
 }
 
 /* static */
-uint64_t BlobDataBuilder::GetFutureFileID(const network::DataElement& element) {
+uint64_t BlobDataBuilder::GetFutureFileID(const DataElement& element) {
   DCHECK(IsFutureFileItem(element));
   uint64_t id = 0;
   bool success =
@@ -64,35 +64,34 @@ BlobDataBuilder& BlobDataBuilder::operator=(BlobDataBuilder&&) = default;
 BlobDataBuilder::~BlobDataBuilder() = default;
 
 void BlobDataBuilder::AppendIPCDataElement(
-    const network::DataElement& ipc_data,
+    const DataElement& ipc_data,
     const scoped_refptr<FileSystemContext>& file_system_context) {
   uint64_t length = ipc_data.length();
   switch (ipc_data.type()) {
-    case network::DataElement::TYPE_BYTES:
+    case DataElement::TYPE_BYTES:
       DCHECK(!ipc_data.offset());
       AppendData(ipc_data.bytes(),
                  base::checked_cast<size_t>(length));
       break;
-    case network::DataElement::TYPE_FILE:
+    case DataElement::TYPE_FILE:
       AppendFile(ipc_data.path(), ipc_data.offset(), length,
                  ipc_data.expected_modification_time());
       break;
-    case network::DataElement::TYPE_FILE_FILESYSTEM:
+    case DataElement::TYPE_FILE_FILESYSTEM:
       AppendFileSystemFile(ipc_data.filesystem_url(), ipc_data.offset(), length,
                            ipc_data.expected_modification_time(),
                            file_system_context);
       break;
-    case network::DataElement::TYPE_BLOB:
+    case DataElement::TYPE_BLOB:
       // This is a temporary item that will be deconstructed later in
       // BlobStorageContext.
       AppendBlob(ipc_data.blob_uuid(), ipc_data.offset(), ipc_data.length());
       break;
-    case network::DataElement::TYPE_RAW_FILE:
-    case network::DataElement::TYPE_BYTES_DESCRIPTION:
-    case network::DataElement::TYPE_UNKNOWN:
-    // This type can't be sent by IPC.
-    case network::DataElement::TYPE_DISK_CACHE_ENTRY:
-    case network::DataElement::TYPE_DATA_PIPE:
+    case DataElement::TYPE_RAW_FILE:
+    case DataElement::TYPE_BYTES_DESCRIPTION:
+    case DataElement::TYPE_UNKNOWN:
+    case DataElement::TYPE_DISK_CACHE_ENTRY:  // This type can't be sent by IPC.
+    case DataElement::TYPE_DATA_PIPE:
       NOTREACHED();
       break;
   }
@@ -101,14 +100,14 @@ void BlobDataBuilder::AppendIPCDataElement(
 void BlobDataBuilder::AppendData(const char* data, size_t length) {
   if (!length)
     return;
-  std::unique_ptr<network::DataElement> element(new network::DataElement());
+  std::unique_ptr<DataElement> element(new DataElement());
   element->SetToBytes(data, length);
   items_.push_back(new BlobDataItem(std::move(element)));
 }
 
 size_t BlobDataBuilder::AppendFutureData(size_t length) {
   CHECK_NE(length, 0u);
-  std::unique_ptr<network::DataElement> element(new network::DataElement());
+  std::unique_ptr<DataElement> element(new DataElement());
   element->SetToBytesDescription(length);
   items_.push_back(new BlobDataItem(std::move(element)));
   return items_.size() - 1;
@@ -131,7 +130,7 @@ char* BlobDataBuilder::GetFutureDataPointerToPopulate(size_t index,
                                                       size_t offset,
                                                       size_t length) {
   DCHECK_LT(index, items_.size());
-  network::DataElement* element = items_[index]->data_element_ptr();
+  DataElement* element = items_[index]->data_element_ptr();
 
   // We lazily allocate our data buffer by waiting until the first
   // PopulateFutureData call.
@@ -140,11 +139,11 @@ char* BlobDataBuilder::GetFutureDataPointerToPopulate(size_t index,
   // allocating the memory yet, as we might not have the quota yet. So we don't
   // want to allocate the memory until we're actually receiving the data (which
   // the browser process only does when it has quota).
-  if (element->type() == network::DataElement::TYPE_BYTES_DESCRIPTION) {
+  if (element->type() == DataElement::TYPE_BYTES_DESCRIPTION) {
     element->SetToAllocatedBytes(element->length());
     // The type of the element is now TYPE_BYTES.
   }
-  if (element->type() != network::DataElement::TYPE_BYTES) {
+  if (element->type() != DataElement::TYPE_BYTES) {
     DVLOG(1) << "Invalid item type.";
     return nullptr;
   }
@@ -161,7 +160,7 @@ size_t BlobDataBuilder::AppendFutureFile(uint64_t offset,
                                          uint64_t length,
                                          uint64_t file_id) {
   CHECK_NE(length, 0ull);
-  std::unique_ptr<network::DataElement> element(new network::DataElement());
+  std::unique_ptr<DataElement> element(new DataElement());
   element->SetToFilePathRange(GetFutureFileItemPath(file_id), offset, length,
                               base::Time());
   items_.push_back(new BlobDataItem(std::move(element)));
@@ -173,9 +172,9 @@ bool BlobDataBuilder::PopulateFutureFile(
     const scoped_refptr<ShareableFileReference>& file_reference,
     const base::Time& expected_modification_time) {
   DCHECK_LT(index, items_.size());
-  network::DataElement* element = items_[index]->data_element_ptr();
+  DataElement* element = items_[index]->data_element_ptr();
 
-  if (element->type() != network::DataElement::TYPE_FILE) {
+  if (element->type() != DataElement::TYPE_FILE) {
     DVLOG(1) << "Invalid item type.";
     return false;
   } else if (!IsFutureFileItem(*element)) {
@@ -194,7 +193,7 @@ void BlobDataBuilder::AppendFile(const FilePath& file_path,
                                  uint64_t offset,
                                  uint64_t length,
                                  const base::Time& expected_modification_time) {
-  std::unique_ptr<network::DataElement> element(new network::DataElement());
+  std::unique_ptr<DataElement> element(new DataElement());
   element->SetToFilePathRange(file_path, offset, length,
                               expected_modification_time);
   DCHECK(!IsFutureFileItem(*element)) << file_path.value();
@@ -206,13 +205,13 @@ void BlobDataBuilder::AppendBlob(const std::string& uuid,
                                  uint64_t offset,
                                  uint64_t length) {
   DCHECK_GT(length, 0ul);
-  std::unique_ptr<network::DataElement> element(new network::DataElement());
+  std::unique_ptr<DataElement> element(new DataElement());
   element->SetToBlobRange(uuid, offset, length);
   items_.push_back(new BlobDataItem(std::move(element)));
 }
 
 void BlobDataBuilder::AppendBlob(const std::string& uuid) {
-  std::unique_ptr<network::DataElement> element(new network::DataElement());
+  std::unique_ptr<DataElement> element(new DataElement());
   element->SetToBlob(uuid);
   items_.push_back(new BlobDataItem(std::move(element)));
 }
@@ -224,7 +223,7 @@ void BlobDataBuilder::AppendFileSystemFile(
     const base::Time& expected_modification_time,
     scoped_refptr<FileSystemContext> file_system_context) {
   DCHECK_GT(length, 0ul);
-  std::unique_ptr<network::DataElement> element(new network::DataElement());
+  std::unique_ptr<DataElement> element(new DataElement());
   element->SetToFileSystemUrlRange(url, offset, length,
                                    expected_modification_time);
   items_.push_back(
@@ -235,7 +234,7 @@ void BlobDataBuilder::AppendDiskCacheEntry(
     const scoped_refptr<DataHandle>& data_handle,
     disk_cache::Entry* disk_cache_entry,
     int disk_cache_stream_index) {
-  std::unique_ptr<network::DataElement> element(new network::DataElement());
+  std::unique_ptr<DataElement> element(new DataElement());
   element->SetToDiskCacheEntryRange(
       0U, disk_cache_entry->GetDataSize(disk_cache_stream_index));
   items_.push_back(new BlobDataItem(std::move(element), data_handle,
@@ -248,7 +247,7 @@ void BlobDataBuilder::AppendDiskCacheEntryWithSideData(
     disk_cache::Entry* disk_cache_entry,
     int disk_cache_stream_index,
     int disk_cache_side_stream_index) {
-  std::unique_ptr<network::DataElement> element(new network::DataElement());
+  std::unique_ptr<DataElement> element(new DataElement());
   element->SetToDiskCacheEntryRange(
       0U, disk_cache_entry->GetDataSize(disk_cache_stream_index));
   items_.push_back(new BlobDataItem(std::move(element), data_handle,

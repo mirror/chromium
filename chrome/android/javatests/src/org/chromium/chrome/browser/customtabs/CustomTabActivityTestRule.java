@@ -66,7 +66,6 @@ public class CustomTabActivityTestRule extends ChromeActivityTestRule<CustomTabA
      */
     public void startCustomTabActivityWithIntent(Intent intent) throws InterruptedException {
         startActivityCompletely(intent);
-        waitForActivityNativeInitializationComplete();
         CriteriaHelper.pollUiThread(new Criteria("Tab never selected/initialized.") {
             @Override
             public boolean isSatisfied() {

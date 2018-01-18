@@ -130,6 +130,7 @@ static const char* const kSwitchNames[] = {
     switches::kEnableHeapProfiling,
     switches::kEnableLogging,
     switches::kEnableOOPRasterization,
+    switches::kEnableViz,
     switches::kHeadless,
     switches::kLoggingLevel,
     switches::kEnableLowEndDeviceMode,
@@ -156,9 +157,12 @@ static const char* const kSwitchNames[] = {
 #if defined(USE_X11)
     switches::kX11Display,
 #endif
-    switches::kGpuBlacklistTestGroup,
-    switches::kGpuDriverBugListTestGroup,
+    switches::kGpuTestingGLVendor,
+    switches::kGpuTestingGLRenderer,
+    switches::kGpuTestingGLVersion,
+    switches::kDisableGpuDriverBugWorkarounds,
     switches::kUseCmdDecoder,
+    switches::kIgnoreGpuBlacklist,
     switches::kForceVideoOverlays,
 #if defined(OS_ANDROID)
     switches::kMadviseRandomExecutableCode,

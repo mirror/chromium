@@ -10,14 +10,13 @@
 #include "base/metrics/field_trial.h"
 #include "base/trace_event/trace_event.h"
 #include "media/base/media_switches.h"
-#include "media/media_features.h"
 #include "third_party/libyuv/include/libyuv.h"
 
 #if defined(OS_ANDROID)
 #include "base/android/build_info.h"
 #endif
 
-#if BUILDFLAG(ENABLE_FFMPEG)
+#if !defined(MEDIA_DISABLE_FFMPEG)
 #include "third_party/ffmpeg/ffmpeg_features.h"  // nogncheck
 extern "C" {
 #include <libavutil/cpu.h>
@@ -37,7 +36,7 @@ class MediaInitializer {
 
     libyuv::InitCpuFlags();
 
-#if BUILDFLAG(ENABLE_FFMPEG)
+#if !defined(MEDIA_DISABLE_FFMPEG)
     // Initialize CPU flags outside of the sandbox as this may query /proc for
     // details on the current CPU for NEON, VFP, etc optimizations.
     av_get_cpu_flags();
@@ -50,7 +49,7 @@ class MediaInitializer {
     av_max_alloc(0);
 #endif  // BUILDFLAG(USE_ALLOCATOR_SHIM)
 
-#endif  // BUILDFLAG(ENABLE_FFMPEG)
+#endif  // !defined(MEDIA_DISABLE_FFMPEG)
   }
 
 #if defined(OS_ANDROID)

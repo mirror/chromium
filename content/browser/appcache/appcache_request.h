@@ -15,13 +15,10 @@ namespace net {
 class URLRequest;
 }
 
-namespace network {
-struct ResourceRequest;
-}
-
 namespace content {
 class AppCacheURLLoaderRequest;
 class AppCacheURLRequest;
+struct ResourceRequest;
 
 // Interface for an AppCache request. Subclasses implement this interface to
 // wrap custom request objects like URLRequest, etc to ensure that these
@@ -83,7 +80,7 @@ class CONTENT_EXPORT AppCacheRequest {
 
   // Returns the underlying ResourceRequest. Please note that only one of
   // GetURLRequest() and GetResourceRequest() should return valid results.
-  virtual network::ResourceRequest* GetResourceRequest();
+  virtual ResourceRequest* GetResourceRequest();
 
   SEQUENCE_CHECKER(sequence_checker_);
 

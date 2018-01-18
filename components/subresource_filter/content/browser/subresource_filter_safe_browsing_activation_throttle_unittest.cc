@@ -11,6 +11,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/run_loop.h"
@@ -182,12 +183,12 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
     rules.push_back(testing::CreateSuffixRule("disallowed.html"));
     ASSERT_NO_FATAL_FAILURE(test_ruleset_creator_.CreateRulesetWithRules(
         rules, &test_ruleset_pair_));
-    auto ruleset_dealer = std::make_unique<VerifiedRulesetDealer::Handle>(
+    auto ruleset_dealer = base::MakeUnique<VerifiedRulesetDealer::Handle>(
         base::MessageLoop::current()->task_runner());
     ruleset_dealer->SetRulesetFile(
         testing::TestRuleset::Open(test_ruleset_pair_.indexed));
     client_ =
-        std::make_unique<::testing::NiceMock<MockSubresourceFilterClient>>();
+        base::MakeUnique<::testing::NiceMock<MockSubresourceFilterClient>>();
     client_->set_ruleset_dealer(std::move(ruleset_dealer));
     ContentSubresourceFilterDriverFactory::CreateForWebContents(
         RenderViewHostTestHarness::web_contents(), client_.get());
@@ -195,7 +196,7 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
     NavigateAndCommit(GURL("https://test.com"));
     Observe(RenderViewHostTestHarness::web_contents());
 
-    observer_ = std::make_unique<TestSubresourceFilterObserver>(
+    observer_ = base::MakeUnique<TestSubresourceFilterObserver>(
         RenderViewHostTestHarness::web_contents());
   }
 
@@ -233,7 +234,7 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
       content::NavigationHandle* navigation_handle) override {
     if (navigation_handle->IsInMainFrame()) {
       navigation_handle->RegisterThrottleForTesting(
-          std::make_unique<SubresourceFilterSafeBrowsingActivationThrottle>(
+          base::MakeUnique<SubresourceFilterSafeBrowsingActivationThrottle>(
               navigation_handle, client(), test_io_task_runner_,
               fake_safe_browsing_database_));
     }
@@ -419,7 +420,7 @@ class SubresourceFilterSafeBrowsingActivationThrottleTestWithCancelling
       override {}
 
   void DidStartNavigation(content::NavigationHandle* handle) override {
-    auto throttle = std::make_unique<content::TestNavigationThrottle>(handle);
+    auto throttle = base::MakeUnique<content::TestNavigationThrottle>(handle);
     throttle->SetResponse(throttle_method_, result_sync_,
                           content::NavigationThrottle::CANCEL);
     handle->RegisterThrottleForTesting(std::move(throttle));

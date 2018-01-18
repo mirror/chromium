@@ -23,13 +23,11 @@ class CC_PAINT_EXPORT PaintOpReader {
  public:
   PaintOpReader(const volatile void* memory,
                 size_t size,
-                TransferCacheDeserializeHelper* transfer_cache,
-                bool enable_security_constraints = false)
+                TransferCacheDeserializeHelper* transfer_cache)
       : memory_(static_cast<const volatile char*>(memory) +
                 PaintOpWriter::HeaderBytes()),
         remaining_bytes_(size - PaintOpWriter::HeaderBytes()),
-        transfer_cache_(transfer_cache),
-        enable_security_constraints_(enable_security_constraints) {
+        transfer_cache_(transfer_cache) {
     if (size < PaintOpWriter::HeaderBytes())
       valid_ = false;
   }
@@ -60,11 +58,9 @@ class CC_PAINT_EXPORT PaintOpReader {
   void Read(PaintImage* image);
   void Read(sk_sp<SkData>* data);
   void Read(scoped_refptr<PaintTextBlob>* blob);
-  void Read(sk_sp<PaintFilter>* filter);
   void Read(sk_sp<PaintShader>* shader);
   void Read(SkMatrix* matrix);
   void Read(SkColorType* color_type);
-  void Read(SkImageInfo* info);
 
   void Read(SkClipOp* op) {
     uint8_t value = 0u;
@@ -80,15 +76,6 @@ class CC_PAINT_EXPORT PaintOpReader {
     uint8_t value = 0u;
     Read(&value);
     *constraint = static_cast<PaintCanvas::SrcRectConstraint>(value);
-  }
-  void Read(SkFilterQuality* quality) {
-    uint8_t value = 0u;
-    Read(&value);
-    if (value > static_cast<uint8_t>(kLast_SkFilterQuality)) {
-      SetInvalid();
-      return;
-    }
-    *quality = static_cast<SkFilterQuality>(value);
   }
   void Read(bool* data) {
     uint8_t value = 0u;
@@ -113,6 +100,8 @@ class CC_PAINT_EXPORT PaintOpReader {
 
   void SetInvalid();
 
+  void Read(sk_sp<PaintFilter>* filter);
+
   // The main entry point is Read(sk_sp<PaintFilter>* filter) which calls one of
   // the following functions depending on read type.
   void ReadColorFilterPaintFilter(
@@ -131,6 +120,9 @@ class CC_PAINT_EXPORT PaintOpReader {
       sk_sp<PaintFilter>* filter,
       const base::Optional<PaintFilter::CropRect>& crop_rect);
   void ReadAlphaThresholdPaintFilter(
+      sk_sp<PaintFilter>* filter,
+      const base::Optional<PaintFilter::CropRect>& crop_rect);
+  void ReadImageFilterPaintFilter(
       sk_sp<PaintFilter>* filter,
       const base::Optional<PaintFilter::CropRect>& crop_rect);
   void ReadXfermodePaintFilter(
@@ -183,19 +175,11 @@ class CC_PAINT_EXPORT PaintOpReader {
       const base::Optional<PaintFilter::CropRect>& crop_rect);
 
   void Read(sk_sp<PaintRecord>* record);
-  void Read(SkRegion* region);
 
   const volatile char* memory_ = nullptr;
   size_t remaining_bytes_ = 0u;
   bool valid_ = true;
   TransferCacheDeserializeHelper* transfer_cache_;
-
-  // Indicates that the data was serialized with the following constraints:
-  // 1) PaintRecords and SkDrawLoopers are ignored.
-  // 2) Images are decoded and only the bitmap is serialized.
-  // If set to true, the above constraints are validated during deserialization
-  // and the data types specified above are ignored.
-  const bool enable_security_constraints_;
 };
 
 }  // namespace cc

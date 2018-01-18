@@ -512,7 +512,7 @@ DateTimeNumericFieldElement::Step DateTimeEditBuilder::CreateStep(
 
 // ----------------------------
 
-DateTimeEditElement::EditControlOwner::~EditControlOwner() = default;
+DateTimeEditElement::EditControlOwner::~EditControlOwner() {}
 
 DateTimeEditElement::DateTimeEditElement(Document& document,
                                          EditControlOwner& edit_control_owner)
@@ -520,7 +520,7 @@ DateTimeEditElement::DateTimeEditElement(Document& document,
   SetHasCustomStyleCallbacks();
 }
 
-DateTimeEditElement::~DateTimeEditElement() = default;
+DateTimeEditElement::~DateTimeEditElement() {}
 
 void DateTimeEditElement::Trace(blink::Visitor* visitor) {
   visitor->Trace(fields_);

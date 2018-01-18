@@ -57,7 +57,7 @@ TextCheckingParagraph::TextCheckingParagraph(Range* checking_range,
       checking_end_(-1),
       checking_length_(-1) {}
 
-TextCheckingParagraph::~TextCheckingParagraph() = default;
+TextCheckingParagraph::~TextCheckingParagraph() {}
 
 void TextCheckingParagraph::ExpandRangeToNextEnd() {
   DCHECK(checking_range_.IsNotNull());

@@ -83,6 +83,12 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+#ifdef HAVE_ZLIB_H
+#include <zlib.h>
+#endif
+#ifdef HAVE_LZMA_H
+#include <lzma.h>
+#endif
 
 #include "buf.h"
 #include "enc.h"
@@ -2086,8 +2092,7 @@ static void xmlGROW (xmlParserCtxtPtr ctxt) {
 
     if (((curEnd > (unsigned long) XML_MAX_LOOKUP_LIMIT) ||
          (curBase > (unsigned long) XML_MAX_LOOKUP_LIMIT)) &&
-         ((ctxt->input->buf) &&
-          (ctxt->input->buf->readcallback != xmlInputReadCallbackNop)) &&
+         ((ctxt->input->buf) && (ctxt->input->buf->readcallback != (xmlInputReadCallback) xmlNop)) &&
         ((ctxt->options & XML_PARSE_HUGE) == 0)) {
         xmlFatalErr(ctxt, XML_ERR_INTERNAL_ERROR, "Huge input lookup");
         xmlHaltParser(ctxt);
@@ -14887,7 +14892,7 @@ xmlCtxtReset(xmlParserCtxtPtr ctxt)
     xmlInitNodeInfoSeq(&ctxt->node_seq);
 
     if (ctxt->attsDefault != NULL) {
-        xmlHashFree(ctxt->attsDefault, xmlHashDefaultDeallocator);
+        xmlHashFree(ctxt->attsDefault, (xmlHashDeallocator) xmlFree);
         ctxt->attsDefault = NULL;
     }
     if (ctxt->attsSpecial != NULL) {

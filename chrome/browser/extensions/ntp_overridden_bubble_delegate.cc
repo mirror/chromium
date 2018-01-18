@@ -4,8 +4,6 @@
 
 #include "chrome/browser/extensions/ntp_overridden_bubble_delegate.h"
 
-#include <memory>
-
 #include "base/feature_list.h"
 #include "base/metrics/histogram_macros.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -81,7 +79,7 @@ void NtpOverriddenBubbleDelegate::MaybeAcknowledgeExistingNtpExtensions(
         URLOverrides::GetChromeURLOverrides(extension.get());
     if (overrides.find(chrome::kChromeUINewTabHost) != overrides.end()) {
       prefs->UpdateExtensionPref(extension->id(), kNtpBubbleAcknowledged,
-                                 std::make_unique<base::Value>(true));
+                                 base::MakeUnique<base::Value>(true));
     }
   }
 }

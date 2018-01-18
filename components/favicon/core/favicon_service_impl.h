@@ -66,7 +66,6 @@ class FaviconServiceImpl : public FaviconService {
       const GURL& page_url,
       const favicon_base::IconTypeSet& icon_types,
       int desired_size_in_pixel,
-      bool fallback_to_host,
       const favicon_base::FaviconRawBitmapCallback& callback,
       base::CancelableTaskTracker* tracker) override;
   base::CancelableTaskTracker::TaskId GetLargestRawFaviconForPageURL(
@@ -129,7 +128,6 @@ class FaviconServiceImpl : public FaviconService {
       const GURL& page_url,
       const favicon_base::IconTypeSet& icon_types,
       const std::vector<int>& desired_sizes_in_pixel,
-      bool fallback_to_host,
       const favicon_base::FaviconResultsCallback& callback,
       base::CancelableTaskTracker* tracker);
 

@@ -15,6 +15,7 @@
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
+#include "ash/system/system_notifier.h"
 #include "ash/system/tray/hover_highlight_view.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_controller.h"
@@ -39,7 +40,6 @@ namespace ash {
 namespace {
 
 const char kNotificationId[] = "chrome://settings/accessibility";
-const char kNotifierAccessibility[] = "ash.accessibility";
 
 enum AccessibilityState {
   A11Y_NONE = 0,
@@ -63,7 +63,7 @@ uint32_t GetAccessibilityState() {
   AccessibilityController* controller =
       Shell::Get()->accessibility_controller();
   uint32_t state = A11Y_NONE;
-  if (controller->IsSpokenFeedbackEnabled())
+  if (delegate->IsSpokenFeedbackEnabled())
     state |= A11Y_SPOKEN_FEEDBACK;
   if (controller->IsHighContrastEnabled())
     state |= A11Y_HIGH_CONTRAST;
@@ -153,7 +153,7 @@ void AccessibilityDetailedView::OnAccessibilityStatusChanged() {
   AccessibilityController* controller =
       Shell::Get()->accessibility_controller();
 
-  spoken_feedback_enabled_ = controller->IsSpokenFeedbackEnabled();
+  spoken_feedback_enabled_ = delegate->IsSpokenFeedbackEnabled();
   TrayPopupUtils::UpdateCheckMarkVisibility(spoken_feedback_view_,
                                             spoken_feedback_enabled_);
 
@@ -211,7 +211,7 @@ void AccessibilityDetailedView::AppendAccessibilityList() {
   AccessibilityController* controller =
       Shell::Get()->accessibility_controller();
 
-  spoken_feedback_enabled_ = controller->IsSpokenFeedbackEnabled();
+  spoken_feedback_enabled_ = delegate->IsSpokenFeedbackEnabled();
   spoken_feedback_view_ = AddScrollListCheckableItem(
       kSystemMenuAccessibilityChromevoxIcon,
       l10n_util::GetStringUTF16(
@@ -300,11 +300,10 @@ void AccessibilityDetailedView::HandleViewClicked(views::View* view) {
   using base::RecordAction;
   using base::UserMetricsAction;
   if (view == spoken_feedback_view_) {
-    bool new_state = !controller->IsSpokenFeedbackEnabled();
-    RecordAction(new_state
-                     ? UserMetricsAction("StatusArea_SpokenFeedbackEnabled")
-                     : UserMetricsAction("StatusArea_SpokenFeedbackDisabled"));
-    controller->SetSpokenFeedbackEnabled(new_state, A11Y_NOTIFICATION_NONE);
+    RecordAction(delegate->IsSpokenFeedbackEnabled()
+                     ? UserMetricsAction("StatusArea_SpokenFeedbackDisabled")
+                     : UserMetricsAction("StatusArea_SpokenFeedbackEnabled"));
+    delegate->ToggleSpokenFeedback(A11Y_NOTIFICATION_NONE);
   } else if (view == high_contrast_view_) {
     bool new_state = !controller->IsHighContrastEnabled();
     RecordAction(new_state
@@ -539,18 +538,16 @@ void TrayAccessibility::OnAccessibilityStatusChanged(
     text =
         l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_SPOKEN_FEEDBACK_ENABLED);
   }
-  message_center::RichNotificationData options;
-  options.should_make_spoken_feedback_for_popup_updates = false;
+
   std::unique_ptr<message_center::Notification> notification =
       message_center::Notification::CreateSystemNotification(
           message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId, title,
           text, gfx::Image(), base::string16(), GURL(),
-          message_center::NotifierId(
-              message_center::NotifierId::SYSTEM_COMPONENT,
-              kNotifierAccessibility),
-          options, nullptr, GetNotificationIcon(being_enabled),
+          message_center::NotifierId(message_center::NotifierId::APPLICATION,
+                                     system_notifier::kNotifierAccessibility),
+          message_center::RichNotificationData(), nullptr,
+          GetNotificationIcon(being_enabled),
           message_center::SystemNotificationWarningLevel::NORMAL);
-  notification->set_priority(message_center::SYSTEM_PRIORITY);
   message_center->AddNotification(std::move(notification));
 }
 

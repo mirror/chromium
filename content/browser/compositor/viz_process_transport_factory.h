@@ -38,13 +38,12 @@ class ContextProviderCommandBuffer;
 }
 
 namespace viz {
+class ClientSharedBitmapManager;
 class ForwardingCompositingModeReporterImpl;
 class RasterContextProvider;
 }
 
 namespace content {
-
-class ExternalBeginFrameControllerClientImpl;
 
 // A replacement for GpuProcessTransportFactory to be used when running viz. In
 // this configuration the display compositor is located in the viz process
@@ -130,11 +129,6 @@ class VizProcessTransportFactory : public ui::ContextFactory,
     viz::mojom::DisplayPrivateAssociatedPtr display_private;
     std::unique_ptr<InProcessDisplayClient> display_client;
 
-    // Controls external BeginFrames for the display. Only set if external
-    // BeginFrames are enabled for the compositor.
-    std::unique_ptr<ExternalBeginFrameControllerClientImpl>
-        external_begin_frame_controller_client;
-
    private:
     DISALLOW_COPY_AND_ASSIGN(CompositorData);
   };
@@ -169,6 +163,8 @@ class VizProcessTransportFactory : public ui::ContextFactory,
   bool is_gpu_compositing_disabled_ = false;
 
   base::ObserverList<ui::ContextFactoryObserver> observer_list_;
+
+  std::unique_ptr<viz::ClientSharedBitmapManager> shared_bitmap_manager_;
 
   // ContextProvider used on worker threads for rasterization.
   scoped_refptr<viz::RasterContextProvider> worker_context_provider_;

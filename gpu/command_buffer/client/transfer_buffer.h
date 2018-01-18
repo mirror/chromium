@@ -69,8 +69,6 @@ class GPU_EXPORT TransferBufferInterface {
 
   virtual unsigned int GetFreeSize() const = 0;
 
-  virtual unsigned int GetFragmentedFreeSize() const = 0;
-
   virtual void ShrinkLastBlock(unsigned int new_size) = 0;
 };
 
@@ -100,7 +98,6 @@ class GPU_EXPORT TransferBuffer : public TransferBufferInterface {
   void FreePendingToken(void* p, unsigned int token) override;
   unsigned int GetSize() const override;
   unsigned int GetFreeSize() const override;
-  unsigned int GetFragmentedFreeSize() const override;
   void ShrinkLastBlock(unsigned int new_size) override;
 
   // These are for testing.

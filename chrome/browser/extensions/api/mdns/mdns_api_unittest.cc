@@ -10,6 +10,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_service_test_base.h"
@@ -73,17 +74,17 @@ class MockedMDnsAPI : public MDnsAPI {
 
 std::unique_ptr<KeyedService> MockedMDnsAPITestingFactoryFunction(
     content::BrowserContext* context) {
-  return std::make_unique<MockedMDnsAPI>(context);
+  return base::MakeUnique<MockedMDnsAPI>(context);
 }
 
 std::unique_ptr<KeyedService> MDnsAPITestingFactoryFunction(
     content::BrowserContext* context) {
-  return std::make_unique<MDnsAPI>(context);
+  return base::MakeUnique<MDnsAPI>(context);
 }
 
 std::unique_ptr<KeyedService> BuildEventRouter(
     content::BrowserContext* context) {
-  return std::make_unique<extensions::EventRouter>(
+  return base::MakeUnique<extensions::EventRouter>(
       context, ExtensionPrefs::Get(context));
 }
 
@@ -108,7 +109,7 @@ class MockEventRouter : public EventRouter {
 
 std::unique_ptr<KeyedService> MockEventRouterFactoryFunction(
     content::BrowserContext* context) {
-  return std::make_unique<MockEventRouter>(context,
+  return base::MakeUnique<MockEventRouter>(context,
                                            ExtensionPrefs::Get(context));
 }
 
@@ -186,7 +187,7 @@ class MDnsAPITest : public extensions::ExtensionServiceTestBase {
     ASSERT_TRUE(EventRouter::Get(browser_context()));  // constructs EventRouter
 
     registry_ =
-        std::make_unique<MockDnsSdRegistry>(MDnsAPI::Get(browser_context()));
+        base::MakeUnique<MockDnsSdRegistry>(MDnsAPI::Get(browser_context()));
     EXPECT_CALL(*dns_sd_registry(),
                 AddObserver(MDnsAPI::Get(browser_context())))
         .Times(1);
@@ -224,7 +225,7 @@ class MDnsAPITest : public extensions::ExtensionServiceTestBase {
       // Setting app.background.page = "background.html" is sufficient to make
       // the extension type TYPE_PLATFORM_APP.
       manifest.Set(extensions::manifest_keys::kPlatformAppBackgroundPage,
-                   std::make_unique<base::Value>("background.html"));
+                   base::MakeUnique<base::Value>("background.html"));
     }
 
     std::string error;

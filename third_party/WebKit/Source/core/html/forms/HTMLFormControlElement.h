@@ -164,7 +164,7 @@ class CORE_EXPORT HTMLFormControlElement : public LabelableElement,
       InputDeviceCapabilities* source_capabilities) override;
   void WillCallDefaultEventHandler(const Event&) final;
 
-  void DidRecalcStyle(StyleRecalcChange) override;
+  void DidRecalcStyle() override;
 
   // This must be called any time the result of willValidate() has changed.
   void SetNeedsWillValidateCheck();

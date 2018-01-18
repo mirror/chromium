@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/command_line.h"
+#include "base/memory/ptr_util.h"
 #include "base/version.h"
 #include "build/build_config.h"
 #include "chrome/browser/app_mode/app_mode_utils.h"
@@ -331,7 +332,7 @@ ExtensionCache* ChromeExtensionsBrowserClient::GetExtensionCache() {
   if (!extension_cache_.get()) {
 #if defined(OS_CHROMEOS)
     extension_cache_.reset(new ExtensionCacheImpl(
-        std::make_unique<ChromeOSExtensionCacheDelegate>()));
+        base::MakeUnique<ChromeOSExtensionCacheDelegate>()));
 #else
     extension_cache_.reset(new NullExtensionCache());
 #endif
@@ -422,14 +423,14 @@ ChromeExtensionsBrowserClient::CreateUpdateClient(
 std::unique_ptr<ExtensionApiFrameIdMapHelper>
 ChromeExtensionsBrowserClient::CreateExtensionApiFrameIdMapHelper(
     ExtensionApiFrameIdMap* map) {
-  return std::make_unique<ChromeExtensionApiFrameIdMapHelper>(map);
+  return base::MakeUnique<ChromeExtensionApiFrameIdMapHelper>(map);
 }
 
 std::unique_ptr<content::BluetoothChooser>
 ChromeExtensionsBrowserClient::CreateBluetoothChooser(
     content::RenderFrameHost* frame,
     const content::BluetoothChooser::EventHandler& event_handler) {
-  return std::make_unique<ChromeExtensionBluetoothChooser>(frame,
+  return base::MakeUnique<ChromeExtensionBluetoothChooser>(frame,
                                                            event_handler);
 }
 

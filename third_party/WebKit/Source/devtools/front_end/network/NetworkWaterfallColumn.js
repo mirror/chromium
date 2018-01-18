@@ -287,8 +287,6 @@ Network.NetworkWaterfallColumn = class extends UI.VBox {
    * @return {?Network.NetworkNode}
    */
   getNodeFromPoint(x, y) {
-    if (y <= this._headerHeight)
-      return null;
     return this._nodes[Math.floor((this._scrollTop + y - this._headerHeight) / this._rowHeight)];
   }
 

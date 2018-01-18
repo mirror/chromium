@@ -12,6 +12,7 @@
 #include "ash/system/network/network_icon_animation_observer.h"
 #include "ash/system/network/network_list.h"
 #include "ash/system/network/tray_network_state_observer.h"
+#include "ash/system/system_notifier.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/system/tray/tray_constants.h"
@@ -46,7 +47,6 @@ namespace tray {
 namespace {
 
 constexpr char kWifiToggleNotificationId[] = "wifi-toggle";
-constexpr char kNotifierWifiToggle[] = "ash.wifi-toggle";
 
 // Returns the connected, non-virtual (aka VPN), network.
 const NetworkState* GetConnectedNetwork() {
@@ -64,7 +64,7 @@ std::unique_ptr<Notification> CreateNotification(bool wifi_enabled) {
       gfx::Image(network_icon::GetImageForWiFiEnabledState(wifi_enabled)),
       base::string16() /* display_source */, GURL(),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                 kNotifierWifiToggle),
+                                 system_notifier::kNotifierWifiToggle),
       message_center::RichNotificationData(), nullptr));
   return notification;
 }

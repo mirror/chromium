@@ -16,8 +16,8 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
+#include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLIFrameElement.h"
-#include "core/html/canvas/HTMLCanvasElement.h"
 #include "core/html/forms/HTMLInputElement.h"
 #include "core/layout/LayoutObject.h"
 #include "core/loader/EmptyClients.h"
@@ -768,7 +768,7 @@ TEST_F(EventHandlerTest, FakeMouseMoveNotStartDrag) {
 
 class TooltipCapturingChromeClient : public EmptyChromeClient {
  public:
-  TooltipCapturingChromeClient() = default;
+  TooltipCapturingChromeClient() {}
 
   void SetToolTip(LocalFrame&, const String& str, TextDirection) override {
     last_tool_tip_ = str;
@@ -782,7 +782,7 @@ class TooltipCapturingChromeClient : public EmptyChromeClient {
 
 class EventHandlerTooltipTest : public EventHandlerTest {
  public:
-  EventHandlerTooltipTest() = default;
+  EventHandlerTooltipTest() {}
 
   void SetUp() override {
     chrome_client_ = new TooltipCapturingChromeClient();
@@ -799,7 +799,6 @@ class EventHandlerTooltipTest : public EventHandlerTest {
 };
 
 TEST_F(EventHandlerTooltipTest, mouseLeaveClearsTooltip) {
-  GetDocument().SetCompatibilityMode(Document::kQuirksMode);
   SetHtmlInnerHTML(
       "<style>.box { width: 100%; height: 100%; }</style>"
       "<img src='image.png' class='box' title='tooltip'>link</img>");
@@ -829,7 +828,7 @@ TEST_F(EventHandlerTooltipTest, mouseLeaveClearsTooltip) {
 
 class UnbufferedInputEventsTrackingChromeClient : public EmptyChromeClient {
  public:
-  UnbufferedInputEventsTrackingChromeClient() = default;
+  UnbufferedInputEventsTrackingChromeClient() {}
 
   void RequestUnbufferedInputEvents(LocalFrame*) override {
     received_unbuffered_request_ = true;
@@ -898,7 +897,7 @@ TEST_F(EventHandlerLatencyTest, NeedsUnbufferedInput) {
 
 class NavigationCapturingFrameClient : public EmptyLocalFrameClient {
  public:
-  NavigationCapturingFrameClient() = default;
+  NavigationCapturingFrameClient() {}
 
   bool NavigateBackForward(int offset) const override {
     offset_ = offset;
@@ -913,7 +912,7 @@ class NavigationCapturingFrameClient : public EmptyLocalFrameClient {
 
 class EventHandlerNavigationTest : public EventHandlerTest {
  public:
-  EventHandlerNavigationTest() = default;
+  EventHandlerNavigationTest() {}
 
   void SetUp() override {
     frame_client_ = new NavigationCapturingFrameClient();

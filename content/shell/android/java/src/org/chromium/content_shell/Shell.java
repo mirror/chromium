@@ -4,7 +4,6 @@
 
 package org.chromium.content_shell;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ClipDrawable;
@@ -144,7 +143,6 @@ public class Shell extends LinearLayout {
     }
 
     @Override
-    @SuppressLint("WrongViewCast") // TODO(crbug.com/799070): File bug.
     protected void onFinishInflate() {
         super.onFinishInflate();
 

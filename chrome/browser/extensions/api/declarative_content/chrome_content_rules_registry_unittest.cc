@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/test/values_test_util.h"
 #include "chrome/browser/extensions/api/declarative_content/content_predicate.h"
 #include "chrome/browser/extensions/api/declarative_content/content_predicate_evaluator.h"
@@ -57,7 +58,7 @@ class TestPredicateEvaluator : public ContentPredicateEvaluator {
       const base::Value& value,
       std::string* error) override {
     RequestEvaluationIfSpecified();
-    return std::make_unique<TestPredicate>(this);
+    return base::MakeUnique<TestPredicate>(this);
   }
 
   void TrackPredicates(

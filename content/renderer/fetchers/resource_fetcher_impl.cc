@@ -11,6 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "content/common/possibly_associated_interface_ptr.h"
 #include "content/public/common/referrer.h"
+#include "content/public/common/resource_request_body.h"
 #include "content/public/renderer/child_url_loader_factory_getter.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/renderer/loader/resource_dispatcher.h"
@@ -19,7 +20,6 @@
 #include "net/base/net_errors.h"
 #include "net/http/http_request_headers.h"
 #include "net/url_request/url_request_context.h"
-#include "services/network/public/cpp/resource_request_body.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
@@ -64,7 +64,7 @@ class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
     Cancel();
   }
 
-  void Start(const network::ResourceRequest& request,
+  void Start(const ResourceRequest& request,
              mojom::URLLoaderFactory* url_loader_factory,
              const net::NetworkTrafficAnnotationTag& annotation_tag,
              scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
@@ -173,7 +173,7 @@ class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
 
   // mojom::URLLoaderClient overrides:
   void OnReceiveResponse(
-      const network::ResourceResponseHead& response_head,
+      const ResourceResponseHead& response_head,
       const base::Optional<net::SSLInfo>& ssl_info,
       mojom::DownloadedTempFilePtr downloaded_file) override {
     DCHECK_EQ(Status::kStarted, status_);
@@ -182,9 +182,8 @@ class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
     if (response_head.headers)
       response_.SetHTTPStatusCode(response_head.headers->response_code());
   }
-  void OnReceiveRedirect(
-      const net::RedirectInfo& redirect_info,
-      const network::ResourceResponseHead& response_head) override {
+  void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
+                         const ResourceResponseHead& response_head) override {
     DCHECK_EQ(Status::kStarted, status_);
     loader_->FollowRedirect();
     response_.SetURL(redirect_info.new_url);
@@ -270,7 +269,7 @@ void ResourceFetcherImpl::SetMethod(const std::string& method) {
 void ResourceFetcherImpl::SetBody(const std::string& body) {
   DCHECK(!client_);
   request_.request_body =
-      network::ResourceRequestBody::CreateFromBytes(body.data(), body.size());
+      ResourceRequestBody::CreateFromBytes(body.data(), body.size());
 }
 
 void ResourceFetcherImpl::SetHeader(const std::string& header,
@@ -322,7 +321,7 @@ void ResourceFetcherImpl::Start(
                  frame->GetTaskRunner(blink::TaskType::kNetworking));
 
   // No need to hold on to the request; reset it now.
-  request_ = network::ResourceRequest();
+  request_ = ResourceRequest();
 }
 
 void ResourceFetcherImpl::SetTimeout(const base::TimeDelta& timeout) {

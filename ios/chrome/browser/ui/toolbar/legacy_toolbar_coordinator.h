@@ -8,10 +8,10 @@
 #import <UIKit/UIKit.h>
 
 #import "ios/chrome/browser/ui/coordinators/chrome_coordinator.h"
+#import "ios/chrome/browser/ui/ntp/incognito_view_controller_delegate.h"
 #import "ios/chrome/browser/ui/toolbar/public/legacy_toolbar_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/public/primary_toolbar_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar.h"
-#import "ios/chrome/browser/ui/toolbar/public/toolbar_coordinating.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_snapshot_providing.h"
 #import "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_state_provider.h"
 
@@ -20,8 +20,8 @@
 
 @interface LegacyToolbarCoordinator
     : ChromeCoordinator<PrimaryToolbarCoordinator,
+                        IncognitoViewControllerDelegate,
                         LegacyToolbarCoordinator,
-                        ToolbarCoordinating,
                         ToolbarSnapshotProviding,
                         ToolsMenuPresentationStateProvider>
 
@@ -41,6 +41,9 @@
 
 // Sets the toolbarController for this coordinator.
 - (void)setToolbarController:(id<Toolbar>)toolbarController;
+
+// ToolbarController public interface.
+- (void)updateToolbarState;
 
 @end
 

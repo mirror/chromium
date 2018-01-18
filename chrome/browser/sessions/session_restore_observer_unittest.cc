@@ -12,8 +12,6 @@
 #include "chrome/browser/sessions/session_restore.h"
 #include "chrome/browser/sessions/tab_loader.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
-#include "content/public/browser/navigation_controller.h"
-#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/web_contents_tester.h"
 
@@ -77,7 +75,6 @@ class SessionRestoreObserverTest : public ChromeRenderViewHostTestHarness {
   // testing::Test:
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
-    SetContents(CreateRestoredWebContents().release());
     restored_tabs_.emplace_back(web_contents(), false, false, false);
   }
 
@@ -87,16 +84,6 @@ class SessionRestoreObserverTest : public ChromeRenderViewHostTestHarness {
   }
 
  protected:
-  std::unique_ptr<content::WebContents> CreateRestoredWebContents() {
-    std::unique_ptr<content::WebContents> test_contents(
-        WebContentsTester::CreateTestWebContents(browser_context(), nullptr));
-    std::vector<std::unique_ptr<content::NavigationEntry>> entries;
-    entries.push_back(content::NavigationEntry::Create());
-    test_contents->GetController().Restore(
-        0, content::RestoreType::LAST_SESSION_EXITED_CLEANLY, &entries);
-    return test_contents;
-  }
-
   void RestoreTabs() {
     TabLoader::RestoreTabs(restored_tabs_, base::TimeTicks());
   }
@@ -153,7 +140,8 @@ TEST_F(SessionRestoreObserverTest, SequentialSessionRestores) {
   std::vector<std::unique_ptr<content::WebContents>> different_test_contents;
 
   for (size_t i = 0; i < number_of_session_restores; ++i) {
-    different_test_contents.emplace_back(CreateRestoredWebContents());
+    different_test_contents.emplace_back(
+        WebContentsTester::CreateTestWebContents(browser_context(), nullptr));
     content::WebContents* test_contents = different_test_contents.back().get();
     std::vector<RestoredTab> restored_tabs{
         RestoredTab(test_contents, false, false, false)};
@@ -180,7 +168,8 @@ TEST_F(SessionRestoreObserverTest, SequentialSessionRestores) {
 
 TEST_F(SessionRestoreObserverTest, ConcurrentSessionRestores) {
   std::vector<RestoredTab> another_restored_tabs;
-  auto test_contents = CreateRestoredWebContents();
+  std::unique_ptr<content::WebContents> test_contents(
+      WebContentsTester::CreateTestWebContents(browser_context(), nullptr));
   another_restored_tabs.emplace_back(test_contents.get(), false, false, false);
 
   SessionRestore::NotifySessionRestoreStartedLoadingTabs();
@@ -206,7 +195,8 @@ TEST_F(SessionRestoreObserverTest, ConcurrentSessionRestores) {
 }
 
 TEST_F(SessionRestoreObserverTest, TabManagerShouldObserveSessionRestore) {
-  auto test_contents = CreateRestoredWebContents();
+  std::unique_ptr<content::WebContents> test_contents(
+      WebContentsTester::CreateTestWebContents(browser_context(), nullptr));
 
   std::vector<SessionRestoreDelegate::RestoredTab> restored_tabs{
       SessionRestoreDelegate::RestoredTab(test_contents.get(), false, false,

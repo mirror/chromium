@@ -40,14 +40,14 @@ SaveFileResourceHandler::~SaveFileResourceHandler() {
 
 void SaveFileResourceHandler::OnRequestRedirected(
     const net::RedirectInfo& redirect_info,
-    network::ResourceResponse* response,
+    ResourceResponse* response,
     std::unique_ptr<ResourceController> controller) {
   final_url_ = redirect_info.new_url;
   controller->Resume();
 }
 
 void SaveFileResourceHandler::OnResponseStarted(
-    network::ResourceResponse* response,
+    ResourceResponse* response,
     std::unique_ptr<ResourceController> controller) {
   // |save_manager_| consumes (deletes):
   SaveFileCreateInfo* info = new SaveFileCreateInfo(

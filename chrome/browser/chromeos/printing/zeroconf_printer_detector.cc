@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/md5.h"
+#include "base/memory/ptr_util.h"
 #include "base/observer_list_threadsafe.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/lock.h"
@@ -223,7 +224,7 @@ class ZeroconfPrinterDetectorImpl
     // constructor.
     for (const char* service : services) {
       device_listers_.emplace_back(
-          std::make_unique<ServiceDiscoveryDeviceLister>(
+          base::MakeUnique<ServiceDiscoveryDeviceLister>(
               this, discovery_client_.get(), service));
       device_listers_.back()->Start();
       device_listers_.back()->DiscoverNewDevices();
@@ -326,7 +327,7 @@ class ZeroconfPrinterDetectorImpl
 //
 std::unique_ptr<ZeroconfPrinterDetector> ZeroconfPrinterDetector::Create(
     Profile* profile) {
-  return std::make_unique<ZeroconfPrinterDetectorImpl>(profile);
+  return base::MakeUnique<ZeroconfPrinterDetectorImpl>(profile);
 }
 
 }  // namespace chromeos

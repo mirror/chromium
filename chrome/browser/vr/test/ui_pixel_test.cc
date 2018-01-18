@@ -4,6 +4,7 @@
 
 #include "chrome/browser/vr/test/ui_pixel_test.h"
 
+#include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/vr/browser_ui_interface.h"
 #include "chrome/browser/vr/model/model.h"
@@ -31,7 +32,7 @@ void UiPixelTest::SetUp() {
 // on trybots. Fix before enabling Windows support.
 #ifndef OS_WIN
   gl_test_environment_ =
-      std::make_unique<GlTestEnvironment>(frame_buffer_size_);
+      base::MakeUnique<GlTestEnvironment>(frame_buffer_size_);
 
   // Make content texture.
   content_texture_ = gl::GLTestHelper::CreateTexture(GL_TEXTURE_2D);
@@ -39,7 +40,7 @@ void UiPixelTest::SetUp() {
   // with fake content.
   ASSERT_EQ(glGetError(), (GLenum)GL_NO_ERROR);
 
-  browser_ = std::make_unique<MockUiBrowserInterface>();
+  browser_ = base::MakeUnique<MockUiBrowserInterface>();
 #endif
 }
 
@@ -55,7 +56,7 @@ void UiPixelTest::TearDown() {
 
 void UiPixelTest::MakeUi(const UiInitialState& ui_initial_state,
                          const ToolbarState& toolbar_state) {
-  ui_ = std::make_unique<Ui>(browser_.get(), nullptr, nullptr, nullptr,
+  ui_ = base::MakeUnique<Ui>(browser_.get(), nullptr, nullptr, nullptr,
                              ui_initial_state);
   ui_->OnGlInitialized(content_texture_,
                        vr::UiElementRenderer::kTextureLocationLocal, true);
@@ -106,7 +107,7 @@ void UiPixelTest::DrawUi(const gfx::Vector3dF& laser_direction,
 
 std::unique_ptr<SkBitmap> UiPixelTest::SaveCurrentFrameBufferToSkBitmap() {
   // Create buffer.
-  std::unique_ptr<SkBitmap> bitmap = std::make_unique<SkBitmap>();
+  std::unique_ptr<SkBitmap> bitmap = base::MakeUnique<SkBitmap>();
   if (!bitmap->tryAllocN32Pixels(frame_buffer_size_.width(),
                                  frame_buffer_size_.height(), false)) {
     return nullptr;

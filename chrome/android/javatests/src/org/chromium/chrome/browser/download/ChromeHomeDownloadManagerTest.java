@@ -181,14 +181,6 @@ public class ChromeHomeDownloadManagerTest {
         ThreadUtils.runOnUiThreadBlocking(
                 () -> { mBottomSheetTestRule.getBottomSheet().endAnimations(); });
 
-        CriteriaHelper.pollUiThread(new Criteria("Animations sould be finished.") {
-            @Override
-            public boolean isSatisfied() {
-                return !mBottomSheetTestRule.getBottomSheet().isRunningSettleAnimation()
-                        && !mBottomSheetTestRule.getBottomSheet().isRunningContentSwapAnimation();
-            }
-        });
-
         Assert.assertEquals("Bottom sheet should be at full height", BottomSheet.SHEET_STATE_FULL,
                 mBottomSheetTestRule.getBottomSheet().getSheetState());
     }

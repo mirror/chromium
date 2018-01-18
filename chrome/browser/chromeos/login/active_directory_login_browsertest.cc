@@ -182,7 +182,7 @@ class ActiveDirectoryLoginTest : public LoginManagerTest {
   }
 
   void SetupTestAuthPolicyClient() {
-    auto test_client = std::make_unique<TestAuthPolicyClient>();
+    auto test_client = base::MakeUnique<TestAuthPolicyClient>();
     fake_auth_policy_client_ = test_client.get();
     DBusThreadManager::GetSetterForTesting()->SetAuthPolicyClient(
         std::move(test_client));

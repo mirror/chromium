@@ -108,8 +108,6 @@ class ContextSupport {
   virtual void DeleteTransferCacheEntry(cc::TransferCacheEntryType type,
                                         uint32_t id) = 0;
 
-  virtual unsigned int GetTransferBufferFreeSize() const = 0;
-
  protected:
   ContextSupport() = default;
   virtual ~ContextSupport() = default;

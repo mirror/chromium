@@ -103,7 +103,6 @@
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
-#include "extensions/browser/disable_reason.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
@@ -113,10 +112,10 @@
 #include "extensions/browser/install_flag.h"
 #include "extensions/browser/management_policy.h"
 #include "extensions/browser/mock_external_provider.h"
-#include "extensions/browser/pref_names.h"
 #include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/browser/test_management_policy.h"
 #include "extensions/browser/uninstall_reason.h"
+#include "extensions/common/disable_reason.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_builder.h"
 #include "extensions/common/extension_l10n_util.h"
@@ -281,7 +280,7 @@ std::unique_ptr<ExternalInstallInfoFile> CreateExternalExtension(
     const base::FilePath& path,
     Manifest::Location location,
     Extension::InitFromValueFlags flags) {
-  return std::make_unique<ExternalInstallInfoFile>(
+  return base::MakeUnique<ExternalInstallInfoFile>(
       extension_id, base::Version(version_str), path, location, flags, false,
       false);
 }
@@ -630,7 +629,7 @@ class ExtensionServiceTest
   ExtensionServiceTest() = default;
 
   MockExternalProvider* AddMockExternalProvider(Manifest::Location location) {
-    auto provider = std::make_unique<MockExternalProvider>(service(), location);
+    auto provider = base::MakeUnique<MockExternalProvider>(service(), location);
     MockExternalProvider* provider_ptr = provider.get();
     service()->AddProviderForTesting(std::move(provider));
     return provider_ptr;
@@ -694,8 +693,8 @@ class ExtensionServiceTest
 
   bool IsPrefExist(const std::string& extension_id,
                    const std::string& pref_path) {
-    const base::DictionaryValue* dict = profile()->GetPrefs()->GetDictionary(
-        extensions::pref_names::kExtensions);
+    const base::DictionaryValue* dict =
+        profile()->GetPrefs()->GetDictionary("extensions.settings");
     if (dict == NULL) return false;
     const base::DictionaryValue* pref = NULL;
     if (!dict->GetDictionary(extension_id, &pref)) {
@@ -715,8 +714,7 @@ class ExtensionServiceTest
                const std::string& pref_path,
                std::unique_ptr<base::Value> value,
                const std::string& msg) {
-    DictionaryPrefUpdate update(profile()->GetPrefs(),
-                                extensions::pref_names::kExtensions);
+    DictionaryPrefUpdate update(profile()->GetPrefs(), "extensions.settings");
     base::DictionaryValue* dict = update.Get();
     ASSERT_TRUE(dict != NULL) << msg;
     base::DictionaryValue* pref = NULL;
@@ -735,7 +733,7 @@ class ExtensionServiceTest
     msg += " = ";
     msg += base::IntToString(value);
 
-    SetPref(extension_id, pref_path, std::make_unique<base::Value>(value), msg);
+    SetPref(extension_id, pref_path, base::MakeUnique<base::Value>(value), msg);
   }
 
   void SetPrefBool(const std::string& extension_id,
@@ -746,7 +744,7 @@ class ExtensionServiceTest
     msg += " = ";
     msg += (value ? "true" : "false");
 
-    SetPref(extension_id, pref_path, std::make_unique<base::Value>(value), msg);
+    SetPref(extension_id, pref_path, base::MakeUnique<base::Value>(value), msg);
   }
 
   void ClearPref(const std::string& extension_id,
@@ -754,8 +752,7 @@ class ExtensionServiceTest
     std::string msg = " while clearing: ";
     msg += extension_id + " " + pref_path;
 
-    DictionaryPrefUpdate update(profile()->GetPrefs(),
-                                extensions::pref_names::kExtensions);
+    DictionaryPrefUpdate update(profile()->GetPrefs(), "extensions.settings");
     base::DictionaryValue* dict = update.Get();
     ASSERT_TRUE(dict != NULL) << msg;
     base::DictionaryValue* pref = NULL;
@@ -770,7 +767,7 @@ class ExtensionServiceTest
     std::string msg = " while setting: ";
     msg += extension_id + " " + pref_path;
 
-    auto list_value = std::make_unique<base::ListValue>();
+    auto list_value = base::MakeUnique<base::ListValue>();
     for (std::set<std::string>::const_iterator iter = value.begin();
          iter != value.end(); ++iter)
       list_value->AppendString(*iter);
@@ -1834,7 +1831,7 @@ TEST_F(ExtensionServiceTest, GrantedAPIAndHostPermissions) {
   // the extension's granted api permissions preference. (This simulates
   // updating the browser to a version which recognizes a new API permission).
   SetPref(extension_id, "granted_permissions.api",
-          std::make_unique<base::ListValue>(), "granted_permissions.api");
+          base::MakeUnique<base::ListValue>(), "granted_permissions.api");
   service()->ReloadExtensionsForTest();
 
   EXPECT_EQ(1u, registry()->disabled_extensions().size());
@@ -1869,7 +1866,7 @@ TEST_F(ExtensionServiceTest, GrantedAPIAndHostPermissions) {
   host_permissions.insert("https://*.google.com/*");
   host_permissions.insert("http://*.google.com.hk/*");
 
-  auto api_permissions = std::make_unique<base::ListValue>();
+  auto api_permissions = base::MakeUnique<base::ListValue>();
   api_permissions->AppendString("tabs");
   SetPref(extension_id, "granted_permissions.api", std::move(api_permissions),
           "granted_permissions.api");
@@ -4380,7 +4377,7 @@ TEST_F(ExtensionServiceTest, ExternalExtensionDisabledOnInstallation) {
 // enabled, the extension is not disabled.
 TEST_F(ExtensionServiceTest, ExternalExtensionIsNotDisabledOnUpdate) {
   auto external_prompt_override =
-      std::make_unique<FeatureSwitch::ScopedOverride>(
+      base::MakeUnique<FeatureSwitch::ScopedOverride>(
           FeatureSwitch::prompt_for_external_extensions(), false);
   InitializeEmptyExtensionService();
 
@@ -4407,7 +4404,7 @@ TEST_F(ExtensionServiceTest, ExternalExtensionIsNotDisabledOnUpdate) {
   // before the old is destructed (which will immediately reset to the
   // original).
   external_prompt_override.reset();
-  external_prompt_override = std::make_unique<FeatureSwitch::ScopedOverride>(
+  external_prompt_override = base::MakeUnique<FeatureSwitch::ScopedOverride>(
       FeatureSwitch::prompt_for_external_extensions(), true);
   WaitForExternalExtensionInstalled();
 
@@ -7056,7 +7053,7 @@ TEST_F(ExtensionServiceTest, ExternalInstallClickToKeep) {
 TEST_F(ExtensionServiceTest,
        ExternalInstallBubbleDoesntShowForEnabledExtensions) {
   auto external_prompt_override =
-      std::make_unique<FeatureSwitch::ScopedOverride>(
+      base::MakeUnique<FeatureSwitch::ScopedOverride>(
           FeatureSwitch::prompt_for_external_extensions(), false);
   InitializeEmptyExtensionService();
 
@@ -7080,7 +7077,7 @@ TEST_F(ExtensionServiceTest,
   // before the old is destructed (which will immediately reset to the
   // original).
   external_prompt_override.reset();
-  external_prompt_override = std::make_unique<FeatureSwitch::ScopedOverride>(
+  external_prompt_override = base::MakeUnique<FeatureSwitch::ScopedOverride>(
       FeatureSwitch::prompt_for_external_extensions(), true);
 
   extensions::ExternalInstallManager* external_manager =

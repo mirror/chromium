@@ -128,11 +128,11 @@ void FakeMessageCenter::RestartPopupTimers() {}
 
 void FakeMessageCenter::PausePopupTimers() {}
 
-const base::string16& FakeMessageCenter::GetSystemNotificationAppName() const {
+const base::string16& FakeMessageCenter::GetProductOSName() const {
   return base::EmptyString16();
 }
 
-void FakeMessageCenter::SetSystemNotificationAppName(
+void FakeMessageCenter::SetProductOSName(
     const base::string16& product_os_name) {}
 
 void FakeMessageCenter::DisableTimersForTest() {}

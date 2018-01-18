@@ -8,6 +8,7 @@
 
 #include "base/base_switches.h"
 #include "base/feature_list.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/test/scoped_feature_list.h"
 #include "components/variations/field_trial_config/field_trial_util.h"
@@ -90,7 +91,7 @@ void VariationParamsManager::ClearAllVariationParams() {
   scoped_feature_list_.reset(new base::test::ScopedFeatureList());
   // Ensure the destructor is called properly, so it can be freshly recreated.
   field_trial_list_.reset();
-  field_trial_list_ = std::make_unique<base::FieldTrialList>(nullptr);
+  field_trial_list_ = base::MakeUnique<base::FieldTrialList>(nullptr);
 }
 
 // static

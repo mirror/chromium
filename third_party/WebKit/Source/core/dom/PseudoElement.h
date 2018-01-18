@@ -58,7 +58,7 @@ class CORE_EXPORT PseudoElement : public Element {
   PseudoElement(Element*, PseudoId);
 
  private:
-  void DidRecalcStyle(StyleRecalcChange) override;
+  void DidRecalcStyle() override;
 
   PseudoId pseudo_id_;
 };

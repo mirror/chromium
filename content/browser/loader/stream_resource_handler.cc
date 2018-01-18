@@ -29,13 +29,13 @@ StreamResourceHandler::~StreamResourceHandler() {
 
 void StreamResourceHandler::OnRequestRedirected(
     const net::RedirectInfo& redirect_info,
-    network::ResourceResponse* resp,
+    ResourceResponse* resp,
     std::unique_ptr<ResourceController> controller) {
   controller->Resume();
 }
 
 void StreamResourceHandler::OnResponseStarted(
-    network::ResourceResponse* resp,
+    ResourceResponse* resp,
     std::unique_ptr<ResourceController> controller) {
   writer_.OnResponseStarted(request()->response_info());
   controller->Resume();

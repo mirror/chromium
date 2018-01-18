@@ -42,7 +42,7 @@ LayoutFrameSet::LayoutFrameSet(HTMLFrameSetElement* frame_set)
   SetInline(false);
 }
 
-LayoutFrameSet::~LayoutFrameSet() = default;
+LayoutFrameSet::~LayoutFrameSet() {}
 
 LayoutFrameSet::GridAxis::GridAxis() : split_being_resized_(kNoSplit) {}
 

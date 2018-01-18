@@ -240,7 +240,7 @@ TextAutosizer::TextAutosizer(const Document* document)
       update_page_info_deferred_(false) {
 }
 
-TextAutosizer::~TextAutosizer() = default;
+TextAutosizer::~TextAutosizer() {}
 
 void TextAutosizer::Record(LayoutBlock* block) {
   if (!page_info_.setting_enabled_)

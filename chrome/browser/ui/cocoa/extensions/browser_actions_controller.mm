@@ -270,7 +270,7 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
                               mainBar));
     if (chrome::ShowAllDialogsWithViewsToolkit()) {
       viewsBubblePresenter_ =
-          std::make_unique<ToolbarActionsBarBubbleViewsPresenter>(self);
+          base::MakeUnique<ToolbarActionsBarBubbleViewsPresenter>(self);
     }
 
     containerView_ = container;

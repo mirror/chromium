@@ -22,6 +22,7 @@ class ContentSuggestionsService;
 @class ContentSuggestionsMetricsRecorder;
 @class ContentSuggestionsViewController;
 @protocol LogoVendor;
+@protocol OmniboxFocuser;
 @protocol NTPHomeConsumer;
 @class NTPHomeMetrics;
 class TemplateURLService;

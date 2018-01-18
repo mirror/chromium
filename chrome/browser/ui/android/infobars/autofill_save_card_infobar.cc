@@ -8,6 +8,7 @@
 
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/android/resource_mapper.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "components/autofill/core/browser/autofill_save_card_infobar_delegate_mobile.h"
@@ -24,7 +25,7 @@ namespace autofill {
 
 std::unique_ptr<infobars::InfoBar> CreateSaveCardInfoBarMobile(
     std::unique_ptr<AutofillSaveCardInfoBarDelegateMobile> delegate) {
-  return std::make_unique<AutofillSaveCardInfoBar>(std::move(delegate));
+  return base::MakeUnique<AutofillSaveCardInfoBar>(std::move(delegate));
 }
 
 }  // namespace autofill

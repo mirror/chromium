@@ -15,6 +15,7 @@
 #include "base/i18n/break_iterator.h"
 #include "base/i18n/rtl.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_util.h"
@@ -529,7 +530,7 @@ std::unique_ptr<views::InkDrop> DownloadItemView::CreateInkDrop() {
 
 std::unique_ptr<views::InkDropRipple> DownloadItemView::CreateInkDropRipple()
     const {
-  return std::make_unique<views::FloodFillInkDropRipple>(
+  return base::MakeUnique<views::FloodFillInkDropRipple>(
       size(), GetInkDropCenterBasedOnLastEvent(),
       color_utils::DeriveDefaultIconColor(GetTextColor()),
       ink_drop_visible_opacity());
@@ -538,7 +539,7 @@ std::unique_ptr<views::InkDropRipple> DownloadItemView::CreateInkDropRipple()
 std::unique_ptr<views::InkDropHighlight>
 DownloadItemView::CreateInkDropHighlight() const {
   gfx::Size size = GetPreferredSize();
-  return std::make_unique<views::InkDropHighlight>(
+  return base::MakeUnique<views::InkDropHighlight>(
       size, kInkDropSmallCornerRadius,
       gfx::RectF(gfx::SizeF(size)).CenterPoint(),
       color_utils::DeriveDefaultIconColor(GetTextColor()));
@@ -823,7 +824,7 @@ void DownloadItemView::UpdateColorsFromTheme() {
   if (!GetThemeProvider())
     return;
 
-  SetBorder(std::make_unique<SeparatorBorder>(GetThemeProvider()->GetColor(
+  SetBorder(base::MakeUnique<SeparatorBorder>(GetThemeProvider()->GetColor(
       ThemeProperties::COLOR_TOOLBAR_VERTICAL_SEPARATOR)));
 
   if (dangerous_download_label_)

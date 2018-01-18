@@ -296,6 +296,8 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
       base::FeatureList::IsEnabled(
           features::kServiceWorkerScriptFullCodeCache));
 
+  WebRuntimeFeatures::EnableMojoBlobs(features::IsMojoBlobsEnabled());
+
   WebRuntimeFeatures::EnableNetworkService(
       base::FeatureList::IsEnabled(features::kNetworkService));
 
@@ -311,6 +313,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
                                                 false);
   if (base::FeatureList::IsEnabled(features::kCompositorTouchAction))
     WebRuntimeFeatures::EnableCompositorTouchAction(true);
+
+  WebRuntimeFeatures::EnablePreventLayerSquashing(
+      base::FeatureList::IsEnabled(features::kEnablePreventLayerSquashing));
 
   if (base::FeatureList::IsEnabled(features::kGenericSensor)) {
     WebRuntimeFeatures::EnableGenericSensor(true);

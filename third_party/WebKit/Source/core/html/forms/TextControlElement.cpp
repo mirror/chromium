@@ -77,7 +77,7 @@ TextControlElement::TextControlElement(const QualifiedName& tag_name,
           : kSelectionHasNoDirection;
 }
 
-TextControlElement::~TextControlElement() = default;
+TextControlElement::~TextControlElement() {}
 
 void TextControlElement::DispatchFocusEvent(
     Element* old_focused_element,
@@ -944,7 +944,8 @@ TextControlElement* EnclosingTextControl(const Node* container) {
     return nullptr;
   Element* ancestor = container->OwnerShadowHost();
   return ancestor && IsTextControlElement(*ancestor) &&
-                 container->ContainingShadowRoot()->IsUserAgent()
+                 container->ContainingShadowRoot()->GetType() ==
+                     ShadowRootType::kUserAgent
              ? ToTextControlElement(ancestor)
              : nullptr;
 }

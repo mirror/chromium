@@ -89,10 +89,8 @@ class Embedder : public service_manager::Service,
   }
 
   // mojom::ServiceFactory:
-  void CreateService(
-      service_manager::mojom::ServiceRequest request,
-      const std::string& name,
-      service_manager::mojom::PIDReceiverPtr pid_receiver) override {
+  void CreateService(service_manager::mojom::ServiceRequest request,
+                     const std::string& name) override {
     if (name == "service_manager_unittest_all_users") {
       context_.reset(new service_manager::ServiceContext(
           std::make_unique<AllUsersService>(), std::move(request)));

@@ -3268,12 +3268,12 @@ void BeginRasterCHROMIUM(GLuint texture_id,
   }
 }
 
-void RasterCHROMIUM(GLsizeiptr size,
-                    uint32_t list_shm_id,
-                    uint32_t list_shm_offset) {
+void RasterCHROMIUM(uint32_t list_shm_id,
+                    uint32_t list_shm_offset,
+                    uint32_t data_size) {
   gles2::cmds::RasterCHROMIUM* c = GetCmdSpace<gles2::cmds::RasterCHROMIUM>();
   if (c) {
-    c->Init(size, list_shm_id, list_shm_offset);
+    c->Init(list_shm_id, list_shm_offset, data_size);
   }
 }
 

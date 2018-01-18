@@ -25,6 +25,7 @@
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "components/viz/common/frame_sinks/copy_output_result.h"
 #include "components/viz/common/gl_helper.h"
+#include "components/viz/common/switches.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/accessibility/browser_accessibility_state_impl.h"
 #include "content/browser/bad_message.h"
@@ -627,11 +628,6 @@ void RenderWidgetHostViewAura::SetNeedsBeginFrames(bool needs_begin_frames) {
   UpdateNeedsBeginFramesInternal();
 }
 
-void RenderWidgetHostViewAura::SetWantsAnimateOnlyBeginFrames() {
-  if (delegated_frame_host_)
-    delegated_frame_host_->SetWantsAnimateOnlyBeginFrames();
-}
-
 void RenderWidgetHostViewAura::OnBeginFrame(base::TimeTicks frame_time) {
   host_->ProgressFling(frame_time);
   UpdateNeedsBeginFramesInternal();
@@ -793,7 +789,7 @@ gfx::Size RenderWidgetHostViewAura::GetVisibleViewportSize() const {
 void RenderWidgetHostViewAura::SetInsets(const gfx::Insets& insets) {
   if (insets != insets_) {
     insets_ = insets;
-    host_->WasResized(!insets_.IsEmpty());
+    host_->WasResized();
   }
 }
 
@@ -1057,19 +1053,6 @@ void RenderWidgetHostViewAura::GestureEventAck(
   if (overscroll_controller_) {
     overscroll_controller_->ReceivedEventACK(
         event, (INPUT_EVENT_ACK_STATE_CONSUMED == ack_result));
-    // Terminate an active fling when the ACK for a GSU generated from the fling
-    // progress (GSU with inertial state) is consumed and the overscrolling mode
-    // is not |OVERSCROLL_NONE|. The early fling termination generates a GSE
-    // which completes the overscroll action. Without this change the overscroll
-    // action would complete at the end of the active fling progress which
-    // causes noticeable delay in cases that the fling velocity is large.
-    // https://crbug.com/797855
-    if (event.GetType() == blink::WebInputEvent::kGestureScrollUpdate &&
-        event.data.scroll_update.inertial_phase ==
-            blink::WebGestureEvent::kMomentumPhase &&
-        overscroll_controller_->overscroll_mode() != OVERSCROLL_NONE) {
-      host_->StopFling();
-    }
   }
 }
 
@@ -1592,10 +1575,6 @@ void RenderWidgetHostViewAura::OnDeviceScaleFactorChanged(
   host_->WasResized();
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized();
-  if (host_->auto_resize_enabled()) {
-    host_->DidAllocateLocalSurfaceIdForAutoResize(
-        host_->last_auto_resize_request_number());
-  }
 
   device_scale_factor_ = new_device_scale_factor;
   const display::Display display =
@@ -1957,7 +1936,7 @@ void RenderWidgetHostViewAura::CreateDelegatedFrameHostClient() {
   }
 
   const bool enable_viz =
-      base::FeatureList::IsEnabled(features::kVizDisplayCompositor);
+      base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableViz);
   delegated_frame_host_ = std::make_unique<DelegatedFrameHost>(
       frame_sink_id_, delegated_frame_host_client_.get(),
       features::IsSurfaceSynchronizationEnabled(), enable_viz);
@@ -2189,10 +2168,6 @@ void RenderWidgetHostViewAura::InternalSetBounds(const gfx::Rect& rect) {
   host_->WasResized();
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized();
-  if (host_->auto_resize_enabled()) {
-    host_->DidAllocateLocalSurfaceIdForAutoResize(
-        host_->last_auto_resize_request_number());
-  }
 #if defined(OS_WIN)
   UpdateLegacyWin();
 

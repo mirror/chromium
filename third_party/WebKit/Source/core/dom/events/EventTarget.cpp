@@ -153,9 +153,9 @@ bool CheckTypeThenUseCount(const Event* event,
 
 }  // namespace
 
-EventTargetData::EventTargetData() = default;
+EventTargetData::EventTargetData() {}
 
-EventTargetData::~EventTargetData() = default;
+EventTargetData::~EventTargetData() {}
 
 void EventTargetData::Trace(blink::Visitor* visitor) {
   visitor->Trace(event_listener_map);
@@ -166,9 +166,9 @@ void EventTargetData::TraceWrappers(
   visitor->TraceWrappers(event_listener_map);
 }
 
-EventTarget::EventTarget() = default;
+EventTarget::EventTarget() {}
 
-EventTarget::~EventTarget() = default;
+EventTarget::~EventTarget() {}
 
 Node* EventTarget::ToNode() {
   return nullptr;
@@ -266,7 +266,6 @@ void EventTarget::SetDefaultAddEventListenerOptions(
       if (function->IsFunction() &&
           strcmp("ssc_wheel",
                  *v8::String::Utf8Value(
-                     v8::Isolate::GetCurrent(),
                      v8::Local<v8::Function>::Cast(function)->GetName())) ==
               0) {
         options.setPassive(true);

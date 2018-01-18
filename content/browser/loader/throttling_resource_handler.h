@@ -22,11 +22,9 @@ namespace net {
 class URLRequest;
 }
 
-namespace network {
-struct ResourceResponse;
-}
-
 namespace content {
+
+struct ResourceResponse;
 
 // Used to apply a list of ResourceThrottle instances to an URLRequest.
 class CONTENT_EXPORT ThrottlingResourceHandler
@@ -42,10 +40,10 @@ class CONTENT_EXPORT ThrottlingResourceHandler
   // LayeredResourceHandler overrides:
   void OnRequestRedirected(
       const net::RedirectInfo& redirect_info,
-      network::ResourceResponse* response,
+      ResourceResponse* response,
       std::unique_ptr<ResourceController> controller) override;
   void OnResponseStarted(
-      network::ResourceResponse* response,
+      ResourceResponse* response,
       std::unique_ptr<ResourceController> controller) override;
   void OnWillStart(const GURL& url,
                    std::unique_ptr<ResourceController> controller) override;
@@ -77,7 +75,7 @@ class CONTENT_EXPORT ThrottlingResourceHandler
 
   GURL deferred_url_;
   net::RedirectInfo deferred_redirect_;
-  scoped_refptr<network::ResourceResponse> deferred_response_;
+  scoped_refptr<ResourceResponse> deferred_response_;
 
   bool cancelled_by_resource_throttle_;
 

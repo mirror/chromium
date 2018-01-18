@@ -62,7 +62,7 @@ class MockLinkLoaderClient final
 
 class NetworkHintsMock : public NetworkHintsInterface {
  public:
-  NetworkHintsMock() = default;
+  NetworkHintsMock() {}
 
   void DnsPrefetchHost(const String& host) const override {
     did_dns_prefetch_ = true;

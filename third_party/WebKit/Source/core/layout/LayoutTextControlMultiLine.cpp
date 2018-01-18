@@ -34,7 +34,7 @@ LayoutTextControlMultiLine::LayoutTextControlMultiLine(
   DCHECK(element);
 }
 
-LayoutTextControlMultiLine::~LayoutTextControlMultiLine() = default;
+LayoutTextControlMultiLine::~LayoutTextControlMultiLine() {}
 
 bool LayoutTextControlMultiLine::NodeAtPoint(
     HitTestResult& result,

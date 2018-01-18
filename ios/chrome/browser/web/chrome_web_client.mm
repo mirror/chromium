@@ -181,7 +181,7 @@ void ChromeWebClient::PostBrowserURLRewriterCreation(
   rewriter->AddURLRewriter(&WillHandleWebBrowserAboutURL);
 }
 
-NSString* ChromeWebClient::GetDocumentStartScriptForMainFrame(
+NSString* ChromeWebClient::GetEarlyPageScriptForMainFrame(
     web::BrowserState* browser_state) const {
   NSMutableArray* scripts = [NSMutableArray array];
   [scripts addObject:GetPageScript(@"chrome_bundle")];

@@ -13,37 +13,35 @@
 namespace blink {
 
 class KeyframeEffectModelBase;
+class DictionarySequenceOrDictionary;
 class Dictionary;
-class DictionaryIterator;
 class Element;
 class ExceptionState;
-class ScriptState;
-class ScriptValue;
+class ExecutionContext;
 
 class CORE_EXPORT EffectInput {
   STATIC_ONLY(EffectInput);
 
  public:
   // TODO(alancutter): Replace Element* parameter with Document&.
-  static KeyframeEffectModelBase* Convert(
-      Element*,
-      const ScriptValue& keyframes,
-      EffectModel::CompositeOperation effect_composite,
-      ScriptState*,
-      ExceptionState&);
+  static KeyframeEffectModelBase* Convert(Element*,
+                                          const DictionarySequenceOrDictionary&,
+                                          EffectModel::CompositeOperation,
+                                          ExecutionContext*,
+                                          ExceptionState&);
 
  private:
   static KeyframeEffectModelBase* ConvertArrayForm(
       Element&,
-      DictionaryIterator keyframes,
-      EffectModel::CompositeOperation effect_composite,
-      ScriptState*,
+      const Vector<Dictionary>& keyframes,
+      EffectModel::CompositeOperation,
+      ExecutionContext*,
       ExceptionState&);
   static KeyframeEffectModelBase* ConvertObjectForm(
       Element&,
       const Dictionary& keyframe,
-      EffectModel::CompositeOperation effect_composite,
-      ScriptState*,
+      EffectModel::CompositeOperation,
+      ExecutionContext*,
       ExceptionState&);
 };
 

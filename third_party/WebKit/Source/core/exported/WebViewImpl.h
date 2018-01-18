@@ -100,9 +100,7 @@ class CORE_EXPORT WebViewImpl final
       public WebScheduler::InterventionReporter,
       public WebViewScheduler::WebViewSchedulerDelegate {
  public:
-  static WebViewImpl* Create(WebViewClient*,
-                             mojom::PageVisibilityState,
-                             WebViewImpl* opener);
+  static WebViewImpl* Create(WebViewClient*, mojom::PageVisibilityState);
   static HashSet<WebViewImpl*>& AllInstances();
   static const WebInputEvent* CurrentInputEvent();
   // Returns true if popup menus should be rendered by the browser, false if
@@ -120,7 +118,7 @@ class CORE_EXPORT WebViewImpl final
   void SetSuppressFrameRequestsWorkaroundFor704763Only(bool) override;
   void BeginFrame(double last_frame_time_monotonic) override;
 
-  void UpdateLifecycle(LifecycleUpdate requested_update) override;
+  void UpdateAllLifecyclePhases() override;
   void Paint(WebCanvas*, const WebRect&) override;
 #if defined(OS_ANDROID)
   void PaintIgnoringCompositing(WebCanvas*, const WebRect&) override;
@@ -506,7 +504,7 @@ class CORE_EXPORT WebViewImpl final
   friend class WebViewFrameWidget;
   friend class WTF::RefCounted<WebViewImpl>;
 
-  WebViewImpl(WebViewClient*, mojom::PageVisibilityState, WebViewImpl* opener);
+  explicit WebViewImpl(WebViewClient*, mojom::PageVisibilityState);
   ~WebViewImpl() override;
 
   void HideSelectPopup();

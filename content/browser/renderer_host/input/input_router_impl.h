@@ -80,7 +80,6 @@ class CONTENT_EXPORT InputRouterImpl
   void BindHost(mojom::WidgetInputHandlerHostRequest request,
                 bool frame_handler) override;
   void ProgressFling(base::TimeTicks current_time) override;
-  void StopFling() override;
 
   // InputHandlerHost impl
   void CancelTouchTimeout() override;

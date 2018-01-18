@@ -12,6 +12,7 @@
 #include "base/cancelable_callback.h"
 #include "base/command_line.h"
 #include "base/location.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
@@ -378,14 +379,14 @@ TEST_F(FullStreamUIPolicyTest, LogAndFetchActions) {
                                                 base::Time::Now(),
                                                 Action::ACTION_API_CALL,
                                                 "tabs.testMethod");
-  action_api->set_args(std::make_unique<base::ListValue>());
+  action_api->set_args(base::MakeUnique<base::ListValue>());
   policy->ProcessAction(action_api);
 
   scoped_refptr<Action> action_dom = new Action(extension->id(),
                                                 base::Time::Now(),
                                                 Action::ACTION_DOM_ACCESS,
                                                 "document.write");
-  action_dom->set_args(std::make_unique<base::ListValue>());
+  action_dom->set_args(base::MakeUnique<base::ListValue>());
   action_dom->set_page_url(gurl);
   policy->ProcessAction(action_dom);
 
@@ -417,14 +418,14 @@ TEST_F(FullStreamUIPolicyTest, LogAndFetchFilteredActions) {
                                                 base::Time::Now(),
                                                 Action::ACTION_API_CALL,
                                                 "tabs.testMethod");
-  action_api->set_args(std::make_unique<base::ListValue>());
+  action_api->set_args(base::MakeUnique<base::ListValue>());
   policy->ProcessAction(action_api);
 
   scoped_refptr<Action> action_dom = new Action(extension->id(),
                                                 base::Time::Now(),
                                                 Action::ACTION_DOM_ACCESS,
                                                 "document.write");
-  action_dom->set_args(std::make_unique<base::ListValue>());
+  action_dom->set_args(base::MakeUnique<base::ListValue>());
   action_dom->set_page_url(gurl);
   policy->ProcessAction(action_dom);
 
@@ -511,8 +512,8 @@ TEST_F(FullStreamUIPolicyTest, LogWithArguments) {
   extension_service_->AddExtension(extension.get());
 
   std::unique_ptr<base::ListValue> args(new base::ListValue());
-  args->Set(0, std::make_unique<base::Value>("hello"));
-  args->Set(1, std::make_unique<base::Value>("world"));
+  args->Set(0, base::MakeUnique<base::Value>("hello"));
+  args->Set(1, base::MakeUnique<base::Value>("world"));
   scoped_refptr<Action> action = new Action(extension->id(),
                                             base::Time::Now(),
                                             Action::ACTION_API_CALL,
@@ -858,14 +859,14 @@ TEST_F(FullStreamUIPolicyTest, DeleteDatabase) {
                                                 base::Time::Now(),
                                                 Action::ACTION_API_CALL,
                                                 "tabs.testMethod");
-  action_api->set_args(std::make_unique<base::ListValue>());
+  action_api->set_args(base::MakeUnique<base::ListValue>());
   policy->ProcessAction(action_api);
 
   scoped_refptr<Action> action_dom = new Action(extension->id(),
                                                 base::Time::Now(),
                                                 Action::ACTION_DOM_ACCESS,
                                                 "document.write");
-  action_dom->set_args(std::make_unique<base::ListValue>());
+  action_dom->set_args(base::MakeUnique<base::ListValue>());
   action_dom->set_page_url(gurl);
   policy->ProcessAction(action_dom);
 

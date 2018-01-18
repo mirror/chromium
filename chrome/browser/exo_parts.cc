@@ -37,15 +37,8 @@ class ChromeFileHelper : public exo::FileHelper {
   std::string GetMimeTypeForUriList() const override {
     return kMimeTypeArcUriList;
   }
-  bool GetUrlFromPath(const std::string& app_id,
-                      const base::FilePath& path,
-                      GURL* out) override {
+  bool ConvertPathToUrl(const base::FilePath& path, GURL* out) override {
     return file_manager::util::ConvertPathToArcUrl(path, out);
-  }
-  bool GetUrlFromFileSystemUrl(const std::string& app_id,
-                               const GURL& url,
-                               GURL* out) override {
-    return false;
   }
 };
 

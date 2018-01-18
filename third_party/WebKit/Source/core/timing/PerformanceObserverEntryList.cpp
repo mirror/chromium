@@ -14,7 +14,7 @@ PerformanceObserverEntryList::PerformanceObserverEntryList(
     const PerformanceEntryVector& entry_vector)
     : performance_entries_(entry_vector) {}
 
-PerformanceObserverEntryList::~PerformanceObserverEntryList() = default;
+PerformanceObserverEntryList::~PerformanceObserverEntryList() {}
 
 PerformanceEntryVector PerformanceObserverEntryList::getEntries() const {
   PerformanceEntryVector entries;

@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -143,7 +144,7 @@ void ComponentsDOMHandler::HandleCheckUpdate(const base::ListValue* args) {
 ///////////////////////////////////////////////////////////////////////////////
 
 ComponentsUI::ComponentsUI(content::WebUI* web_ui) : WebUIController(web_ui) {
-  web_ui->AddMessageHandler(std::make_unique<ComponentsDOMHandler>());
+  web_ui->AddMessageHandler(base::MakeUnique<ComponentsDOMHandler>());
 
   // Set up the chrome://components/ source.
   Profile* profile = Profile::FromWebUI(web_ui);
@@ -176,7 +177,7 @@ std::unique_ptr<base::ListValue> ComponentsUI::LoadComponents() {
   component_ids = cus->GetComponentIDs();
 
   // Construct DictionaryValues to return to UI.
-  auto component_list = std::make_unique<base::ListValue>();
+  auto component_list = base::MakeUnique<base::ListValue>();
   for (size_t j = 0; j < component_ids.size(); ++j) {
     update_client::CrxUpdateItem item;
     if (cus->GetComponentDetails(component_ids[j], &item)) {

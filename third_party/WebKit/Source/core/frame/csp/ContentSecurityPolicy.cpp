@@ -174,9 +174,8 @@ void ContentSecurityPolicy::SetupSelf(const SecurityOrigin& security_origin) {
 void ContentSecurityPolicy::ApplyPolicySideEffectsToExecutionContext() {
   DCHECK(execution_context_ &&
          execution_context_->GetSecurityContext().GetSecurityOrigin());
-  SecurityContext& security_context = execution_context_->GetSecurityContext();
 
-  SetupSelf(*security_context.GetSecurityOrigin());
+  SetupSelf(*execution_context_->GetSecurityContext().GetSecurityOrigin());
 
   // Set mixed content checking and sandbox flags, then dump all the parsing
   // error messages, then poke at histograms.
@@ -186,29 +185,28 @@ void ContentSecurityPolicy::ApplyPolicySideEffectsToExecutionContext() {
     if (document)
       document->EnforceSandboxFlags(sandbox_mask_);
     else
-      security_context.ApplySandboxFlags(sandbox_mask_);
+      execution_context_->GetSecurityContext().ApplySandboxFlags(sandbox_mask_);
   }
   if (treat_as_public_address_) {
-    security_context.SetAddressSpace(mojom::IPAddressSpace::kPublic);
+    execution_context_->GetSecurityContext().SetAddressSpace(
+        mojom::IPAddressSpace::kPublic);
   }
   if (require_safe_types_)
-    security_context.SetRequireTrustedTypes();
+    execution_context_->GetSecurityContext().SetRequireTrustedTypes();
 
-  // Upgrade Insecure Requests: Update the policy.
-  security_context.SetInsecureRequestPolicy(
-      security_context.GetInsecureRequestPolicy() | insecure_request_policy_);
-  if (document)
-    document->DidEnforceInsecureRequestPolicy();
+  if (document) {
+    document->EnforceInsecureRequestPolicy(insecure_request_policy_);
+  } else {
+    execution_context_->GetSecurityContext().SetInsecureRequestPolicy(
+        insecure_request_policy_);
+  }
 
-  // Upgrade Insecure Requests: Update the set of insecure URLs to upgrade.
   if (insecure_request_policy_ & kUpgradeInsecureRequests) {
     UseCounter::Count(execution_context_,
                       WebFeature::kUpgradeInsecureRequestsEnabled);
     if (!execution_context_->Url().Host().IsEmpty()) {
-      uint32_t hash = execution_context_->Url().Host().Impl()->GetHash();
-      security_context.AddInsecureNavigationUpgrade(hash);
-      if (document)
-        document->DidEnforceInsecureNavigationsSet();
+      execution_context_->GetSecurityContext().AddInsecureNavigationUpgrade(
+          execution_context_->Url().Host().Impl()->GetHash());
     }
   }
 
@@ -235,7 +233,7 @@ void ContentSecurityPolicy::ApplyPolicySideEffectsToExecutionContext() {
     execution_context_->DisableEval(disable_eval_error_message_);
 }
 
-ContentSecurityPolicy::~ContentSecurityPolicy() = default;
+ContentSecurityPolicy::~ContentSecurityPolicy() {}
 
 void ContentSecurityPolicy::Trace(blink::Visitor* visitor) {
   visitor->Trace(execution_context_);
@@ -756,9 +754,6 @@ bool ContentSecurityPolicy::AllowRequest(
     case WebURLRequest::kRequestContextObject:
       return AllowObjectFromSource(url, redirect_status, reporting_policy,
                                    check_header_type);
-    case WebURLRequest::kRequestContextPrefetch:
-      return AllowPrefetchFromSource(url, redirect_status, reporting_policy,
-                                     check_header_type);
     case WebURLRequest::kRequestContextFavicon:
     case WebURLRequest::kRequestContextImage:
     case WebURLRequest::kRequestContextImageSet:
@@ -797,6 +792,7 @@ bool ContentSecurityPolicy::AllowRequest(
     case WebURLRequest::kRequestContextInternal:
     case WebURLRequest::kRequestContextLocation:
     case WebURLRequest::kRequestContextPlugin:
+    case WebURLRequest::kRequestContextPrefetch:
     case WebURLRequest::kRequestContextUnspecified:
       return true;
   }
@@ -826,25 +822,6 @@ bool ContentSecurityPolicy::AllowObjectFromSource(
       continue;
     is_allowed &=
         policy->AllowObjectFromSource(url, redirect_status, reporting_policy);
-  }
-
-  return is_allowed;
-}
-
-bool ContentSecurityPolicy::AllowPrefetchFromSource(
-    const KURL& url,
-    RedirectStatus redirect_status,
-    SecurityViolationReportingPolicy reporting_policy,
-    CheckHeaderType check_header_type) const {
-  if (ShouldBypassContentSecurityPolicy(url, execution_context_))
-    return true;
-
-  bool is_allowed = true;
-  for (const auto& policy : policies_) {
-    if (!CheckHeaderTypeMatches(check_header_type, policy->HeaderType()))
-      continue;
-    is_allowed &=
-        policy->AllowPrefetchFromSource(url, redirect_status, reporting_policy);
   }
 
   return is_allowed;
@@ -1701,8 +1678,6 @@ const char* ContentSecurityPolicy::GetDirectiveName(const DirectiveType& type) {
       return "media-src";
     case DirectiveType::kObjectSrc:
       return "object-src";
-    case DirectiveType::kPrefetchSrc:
-      return "prefetch-src";
     case DirectiveType::kPluginTypes:
       return "plugin-types";
     case DirectiveType::kReportURI:
@@ -1764,8 +1739,6 @@ ContentSecurityPolicy::DirectiveType ContentSecurityPolicy::GetDirectiveType(
     return DirectiveType::kObjectSrc;
   if (name == "plugin-types")
     return DirectiveType::kPluginTypes;
-  if (name == "prefetch-src")
-    return DirectiveType::kPrefetchSrc;
   if (name == "report-uri")
     return DirectiveType::kReportURI;
   if (name == "require-sri-for")

@@ -20,11 +20,9 @@
 #include "base/containers/queue.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/optional.h"
 #include "base/trace_event/memory_dump_provider.h"
 #include "gpu/command_buffer/client/buffer_tracker.h"
 #include "gpu/command_buffer/client/client_context_state.h"
-#include "gpu/command_buffer/client/client_transfer_cache.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_impl_export.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
@@ -32,7 +30,6 @@
 #include "gpu/command_buffer/client/mapped_memory.h"
 #include "gpu/command_buffer/client/ref_counted.h"
 #include "gpu/command_buffer/client/share_group.h"
-#include "gpu/command_buffer/client/transfer_buffer.h"
 #include "gpu/command_buffer/common/capabilities.h"
 #include "gpu/command_buffer/common/context_creation_attribs.h"
 #include "gpu/command_buffer/common/context_result.h"
@@ -108,7 +105,9 @@ namespace gpu {
 
 class GpuControl;
 class IdAllocator;
+class ScopedTransferBufferPtr;
 struct SharedMemoryLimits;
+class TransferBufferInterface;
 
 namespace gles2 {
 
@@ -227,7 +226,6 @@ class GLES2_IMPL_EXPORT GLES2Implementation
           entries) override;
   void DeleteTransferCacheEntry(cc::TransferCacheEntryType type,
                                 uint32_t id) override;
-  unsigned int GetTransferBufferFreeSize() const override;
 
   // TODO(danakj): Move to ContextSupport once ContextProvider doesn't need to
   // intercept it.
@@ -830,9 +828,6 @@ class GLES2_IMPL_EXPORT GLES2Implementation
       id_allocators_[static_cast<int>(IdNamespaces::kNumIdNamespaces)];
 
   std::unique_ptr<BufferTracker> buffer_tracker_;
-  ClientTransferCache transfer_cache_;
-
-  base::Optional<ScopedTransferBufferPtr> raster_mapped_buffer_;
 
   base::Callback<void(const char*, int32_t)> error_message_callback_;
   base::Closure lost_context_callback_;

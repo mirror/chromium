@@ -6,6 +6,7 @@
 
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
+#include "ash/system/system_notifier.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "ui/message_center/message_center.h"
 
@@ -23,9 +24,14 @@ bool InactiveUserNotificationBlocker::ShouldShowNotification(
   if (Shell::Get()->session_controller()->NumberOfLoggedInUsers() < 2)
     return true;
 
-  // All non-system notifications should be tied to a user profile.
-  if (notification.notifier_id().profile_id.empty())
+  if (system_notifier::IsAshSystemNotifier(notification.notifier_id()))
     return true;
+
+  // All non-system notifications should be tied to a user profile.
+  if (notification.notifier_id().profile_id.empty()) {
+    NOTREACHED();
+    return true;
+  }
 
   return AccountId::FromUserEmail(notification.notifier_id().profile_id) ==
          active_account_id_;

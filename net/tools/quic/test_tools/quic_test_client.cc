@@ -728,15 +728,8 @@ void QuicTestClient::UseConnectionId(QuicConnectionId connection_id) {
   client_->UseConnectionId(connection_id);
 }
 
-bool QuicTestClient::MigrateSocket(const QuicIpAddress& new_host) {
-  return client_->MigrateSocket(new_host);
-}
-
-bool QuicTestClient::MigrateSocketWithSpecifiedPort(
-    const QuicIpAddress& new_host,
-    int port) {
-  client_->set_local_port(port);
-  return client_->MigrateSocket(new_host);
+void QuicTestClient::MigrateSocket(const QuicIpAddress& new_host) {
+  client_->MigrateSocket(new_host);
 }
 
 QuicIpAddress QuicTestClient::bind_to_address() const {

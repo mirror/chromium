@@ -263,13 +263,14 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // Starts an update now.
   void StartUpdate();
 
-  // Starts the worker if it isn't already running. Calls |callback| with
-  // SERVICE_WORKER_OK when the worker started up successfully or if it is
-  // already running. Otherwise, calls |callback| with an error code.
-  // If the worker is already running, |callback| is executed synchronously
-  // (before this method returns). |purpose| is used for UMA.
+  // Starts the worker if it isn't already running, and calls |task| when the
+  // worker is running, or |error_callback| if starting the worker failed.
+  // If the worker is already running, |task| is executed synchronously (before
+  // this method returns).
+  // |purpose| is used for UMA.
   void RunAfterStartWorker(ServiceWorkerMetrics::EventType purpose,
-                           StatusCallback callback);
+                           base::OnceClosure task,
+                           StatusCallback error_callback);
 
   // Call this while the worker is running before dispatching an event to the
   // worker. This informs ServiceWorkerVersion about the event in progress. The
@@ -327,18 +328,10 @@ class CONTENT_EXPORT ServiceWorkerVersion
     return event_dispatcher_.get();
   }
 
-  // S13nServiceWorker:
-  // Returns the 'controller' interface ptr of this worker. It is expected
-  // that the worker is already starting or running, or is going to be started
-  // soon.
-  // TODO(kinuko): Relying on the callsites to start the worker when it's
-  // not running is a bit sketchy, maybe this should queue a task to check
-  // if the pending request is pending too long? https://crbug.com/797222
+  // This must be called when the worker is running.
+  // Returns the 'controller' interface of this worker.
   mojom::ControllerServiceWorker* controller() {
-    if (!controller_ptr_.is_bound()) {
-      DCHECK(!controller_request_.is_pending());
-      controller_request_ = mojo::MakeRequest(&controller_ptr_);
-    }
+    DCHECK(controller_ptr_.is_bound());
     return controller_ptr_.get();
   }
 
@@ -644,7 +637,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
   void OnOpenNewTab(int request_id, const GURL& url);
 
   // Currently used for PaymentRequestEvent.openWindow() only.
-  void OnOpenPaymentHandlerWindow(int request_id, const GURL& url);
+  void OnOpenNewPopup(int request_id, const GURL& url);
 
   void OnOpenWindow(int request_id,
                     GURL url,
@@ -693,7 +686,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
 
   void OnGetClientFinished(
       int request_id,
-      blink::mojom::ServiceWorkerClientInfoPtr client_info);
+      const blink::mojom::ServiceWorkerClientInfo& client_info);
 
   void OnGetClientsFinished(GetClientsCallback callback,
                             std::unique_ptr<ServiceWorkerClientPtrs> clients);
@@ -786,13 +779,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
 
   // Connected to ServiceWorkerContextClient while the worker is running.
   mojom::ServiceWorkerEventDispatcherPtr event_dispatcher_;
-
-  // S13nServiceWorker: connected to the controller service worker.
-  // |controller_request_| is non-null only when the |controller_ptr_| is
-  // requested before the worker is started, it is passed to the worker (and
-  // becomes null) once it's started.
   mojom::ControllerServiceWorkerPtr controller_ptr_;
-  mojom::ControllerServiceWorkerRequest controller_request_;
 
   std::unique_ptr<ServiceWorkerInstalledScriptsSender>
       installed_scripts_sender_;

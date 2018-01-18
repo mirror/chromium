@@ -4,8 +4,6 @@
 
 #include "chrome/browser/extensions/launch_util.h"
 
-#include <memory>
-
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/extension_sync_service.h"
@@ -85,7 +83,7 @@ void SetLaunchType(content::BrowserContext* context,
 
   ExtensionPrefs::Get(context)->UpdateExtensionPref(
       extension_id, kPrefLaunchType,
-      std::make_unique<base::Value>(static_cast<int>(launch_type)));
+      base::MakeUnique<base::Value>(static_cast<int>(launch_type)));
 
   // Sync the launch type.
   const Extension* extension =

@@ -263,13 +263,6 @@ void MirrorWindowController::UpdateWindow(
       }
     }
   }
-
-  if (mirroring_host_info_map_.empty() && reflector_) {
-    // Close the mirror window if all displays are disconnected.
-    aura::Env::GetInstance()->context_factory_private()->RemoveReflector(
-        reflector_.get());
-    reflector_.reset();
-  }
 }
 
 void MirrorWindowController::UpdateWindow() {
@@ -416,7 +409,7 @@ void MirrorWindowController::CloseAndDeleteHost(MirroringHostInfo* host_info,
   host_info->ash_host->PrepareForShutdown();
   // TODO: |reflector_| should always be non-null here, but isn't in MUS yet
   // because of http://crbug.com/601869.
-  if (reflector_ && host_info->mirror_window->layer()->GetCompositor())
+  if (reflector_)
     reflector_->RemoveMirroringLayer(host_info->mirror_window->layer());
 
   // EventProcessor may be accessed after this call if the mirroring window

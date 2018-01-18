@@ -4,10 +4,9 @@
 
 #include "chrome/browser/ui/webui/version_ui.h"
 
-#include <memory>
-
 #include "base/command_line.h"
 #include "base/i18n/message_formatter.h"
+#include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
@@ -187,9 +186,9 @@ VersionUI::VersionUI(content::WebUI* web_ui)
   Profile* profile = Profile::FromWebUI(web_ui);
 
 #if defined(OS_CHROMEOS)
-  web_ui->AddMessageHandler(std::make_unique<VersionHandlerChromeOS>());
+  web_ui->AddMessageHandler(base::MakeUnique<VersionHandlerChromeOS>());
 #else
-  web_ui->AddMessageHandler(std::make_unique<VersionHandler>());
+  web_ui->AddMessageHandler(base::MakeUnique<VersionHandler>());
 #endif
 
 #if !defined(OS_ANDROID)

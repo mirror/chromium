@@ -7,7 +7,6 @@
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
-#include "content/common/weak_wrapper_shared_url_loader_factory.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -26,19 +25,12 @@ class TestURLLoaderFactory : public mojom::URLLoaderFactory,
  public:
   TestURLLoaderFactory() : binding_(this), url_loader_binding_(this) {
     binding_.Bind(mojo::MakeRequest(&factory_ptr_));
-    shared_factory_ = base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
-        factory_ptr_.get());
   }
-
-  ~TestURLLoaderFactory() override { shared_factory_->Detach(); }
 
   mojom::URLLoaderFactoryPtr& factory_ptr() { return factory_ptr_; }
   mojom::URLLoaderClientPtr& client_ptr() { return client_ptr_; }
   mojo::Binding<mojom::URLLoader>& url_loader_binding() {
     return url_loader_binding_;
-  }
-  scoped_refptr<SharedURLLoaderFactory> shared_factory() {
-    return shared_factory_;
   }
 
   size_t create_loader_and_start_called() const {
@@ -54,14 +46,14 @@ class TestURLLoaderFactory : public mojom::URLLoaderFactory,
   }
 
   void NotifyClientOnReceiveResponse() {
-    client_ptr_->OnReceiveResponse(network::ResourceResponseHead(),
-                                   base::nullopt, nullptr);
+    client_ptr_->OnReceiveResponse(ResourceResponseHead(), base::nullopt,
+                                   nullptr);
   }
 
   void NotifyClientOnReceiveRedirect() {
     net::RedirectInfo info;
     info.new_url = redirect_url;
-    client_ptr_->OnReceiveRedirect(info, network::ResourceResponseHead());
+    client_ptr_->OnReceiveRedirect(info, ResourceResponseHead());
   }
 
   void NotifyClientOnComplete(int error_code) {
@@ -78,7 +70,7 @@ class TestURLLoaderFactory : public mojom::URLLoaderFactory,
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
-                            const network::ResourceRequest& url_request,
+                            const ResourceRequest& url_request,
                             mojom::URLLoaderClientPtr client,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override {
@@ -115,7 +107,6 @@ class TestURLLoaderFactory : public mojom::URLLoaderFactory,
   mojo::Binding<mojom::URLLoader> url_loader_binding_;
   mojom::URLLoaderFactoryPtr factory_ptr_;
   mojom::URLLoaderClientPtr client_ptr_;
-  scoped_refptr<WeakWrapperSharedURLLoaderFactory> shared_factory_;
   DISALLOW_COPY_AND_ASSIGN(TestURLLoaderFactory);
 };
 
@@ -145,16 +136,15 @@ class TestURLLoaderClient : public mojom::URLLoaderClient {
  private:
   // mojom::URLLoaderClient implementation:
   void OnReceiveResponse(
-      const network::ResourceResponseHead& response_head,
+      const ResourceResponseHead& response_head,
       const base::Optional<net::SSLInfo>& ssl_info,
       mojom::DownloadedTempFilePtr downloaded_file) override {
     on_received_response_called_++;
     if (on_received_response_callback_)
       on_received_response_callback_.Run();
   }
-  void OnReceiveRedirect(
-      const net::RedirectInfo& redirect_info,
-      const network::ResourceResponseHead& response_head) override {
+  void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
+                         const ResourceResponseHead& response_head) override {
     on_received_redirect_called_++;
   }
   void OnDataDownloaded(int64_t data_len, int64_t encoded_data_len) override {}
@@ -223,15 +213,14 @@ class TestURLLoaderThrottle : public URLLoaderThrottle {
 
  private:
   // URLLoaderThrottle implementation.
-  void WillStartRequest(network::ResourceRequest* request,
-                        bool* defer) override {
+  void WillStartRequest(ResourceRequest* request, bool* defer) override {
     will_start_request_called_++;
     if (will_start_request_callback_)
       will_start_request_callback_.Run(delegate_, defer);
   }
 
   void WillRedirectRequest(const net::RedirectInfo& redirect_info,
-                           const network::ResourceResponseHead& response_head,
+                           const content::ResourceResponseHead& response_head,
                            bool* defer) override {
     will_redirect_request_called_++;
     if (will_redirect_request_callback_)
@@ -239,7 +228,7 @@ class TestURLLoaderThrottle : public URLLoaderThrottle {
   }
 
   void WillProcessResponse(const GURL& response_url,
-                           const network::ResourceResponseHead& response_head,
+                           const ResourceResponseHead& response_head,
                            bool* defer) override {
     will_process_response_called_++;
     if (will_process_response_callback_)
@@ -285,10 +274,10 @@ class ThrottlingURLLoaderTest : public testing::Test {
     uint32_t options = 0;
     if (sync)
       options |= mojom::kURLLoadOptionSynchronous;
-    network::ResourceRequest request;
+    ResourceRequest request;
     request.url = request_url;
     loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
-        factory_.shared_factory(), std::move(throttles_), 0, 0, options,
+        factory_.factory_ptr().get(), std::move(throttles_), 0, 0, options,
         &request, &client_, TRAFFIC_ANNOTATION_FOR_TESTS,
         base::ThreadTaskRunnerHandle::Get());
     factory_.factory_ptr().FlushForTesting();
@@ -558,7 +547,7 @@ TEST_F(ThrottlingURLLoaderTest, PipeClosureBeforeSyncResponse) {
   base::RunLoop run_loop;
   client_.set_on_complete_callback(base::Bind(
       [](const base::Closure& quit_closure, int error) {
-        EXPECT_EQ(net::ERR_ABORTED, error);
+        EXPECT_EQ(net::ERR_FAILED, error);
         quit_closure.Run();
       },
       run_loop.QuitClosure()));
@@ -589,7 +578,7 @@ TEST_F(ThrottlingURLLoaderTest, PipeClosureBeforeAsyncResponse) {
   base::RunLoop run_loop;
   client_.set_on_complete_callback(base::Bind(
       [](const base::Closure& quit_closure, int error) {
-        EXPECT_EQ(net::ERR_ABORTED, error);
+        EXPECT_EQ(net::ERR_FAILED, error);
         quit_closure.Run();
       },
       run_loop.QuitClosure()));

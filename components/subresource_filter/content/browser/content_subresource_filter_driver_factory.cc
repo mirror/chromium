@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/rand_util.h"
 #include "base/time/time.h"
 #include "components/subresource_filter/content/browser/page_load_statistics.h"
@@ -48,7 +49,7 @@ void ContentSubresourceFilterDriverFactory::CreateForWebContents(
   if (FromWebContents(web_contents))
     return;
   web_contents->SetUserData(
-      UserDataKey(), std::make_unique<ContentSubresourceFilterDriverFactory>(
+      UserDataKey(), base::MakeUnique<ContentSubresourceFilterDriverFactory>(
                          web_contents, client));
 }
 
@@ -59,7 +60,7 @@ ContentSubresourceFilterDriverFactory::ContentSubresourceFilterDriverFactory(
     : content::WebContentsObserver(web_contents),
       client_(client),
       throttle_manager_(
-          std::make_unique<ContentSubresourceFilterThrottleManager>(
+          base::MakeUnique<ContentSubresourceFilterThrottleManager>(
               this,
               client_->GetRulesetDealer(),
               web_contents)) {}

@@ -31,13 +31,16 @@
 #include "content/public/common/process_type.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/service_names.mojom.h"
-#include "content/public/common/zygote_features.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "net/base/network_change_notifier.h"
 #include "ppapi/proxy/ppapi_messages.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "services/service_manager/sandbox/switches.h"
 #include "ui/base/ui_base_switches.h"
+
+#if defined(OS_POSIX)
+#include "content/public/browser/zygote_handle_linux.h"
+#endif  // defined(OS_POSIX)
 
 #if defined(OS_WIN)
 #include "base/win/windows_version.h"
@@ -46,10 +49,6 @@
 #include "services/service_manager/sandbox/win/sandbox_win.h"
 #include "ui/display/win/dpi.h"
 #include "ui/gfx/font_render_params.h"
-#endif
-
-#if BUILDFLAG(USE_ZYGOTE_HANDLE)
-#include "content/public/common/zygote_handle.h"
 #endif
 
 namespace content {
@@ -94,7 +93,7 @@ class PpapiPluginSandboxedProcessLauncherDelegate
       if (result != sandbox::SBOX_ALL_OK)
         return false;
     }
-#endif  // !defined(NACL_WIN64)
+#endif
     const base::string16& sid =
         browser_client->GetAppContainerSidForSandboxType(GetSandboxType());
     if (!sid.empty())
@@ -102,9 +101,8 @@ class PpapiPluginSandboxedProcessLauncherDelegate
 
     return true;
   }
-#endif  // OS_WIN
 
-#if BUILDFLAG(USE_ZYGOTE_HANDLE)
+#elif defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
   ZygoteHandle GetZygote() override {
     const base::CommandLine& browser_command_line =
         *base::CommandLine::ForCurrentProcess();
@@ -114,7 +112,7 @@ class PpapiPluginSandboxedProcessLauncherDelegate
       return nullptr;
     return GetGenericZygote();
   }
-#endif  // BUILDFLAG(USE_ZYGOTE_HANDLE)
+#endif  // OS_WIN
 
   service_manager::SandboxType GetSandboxType() override {
 #if defined(OS_WIN)
@@ -373,7 +371,6 @@ bool PpapiPluginProcessHost::Init(const PepperPluginInfo& info) {
 #endif
 #if defined(USE_AURA)
       switches::kMus,
-      switches::kMusHostingViz,
 #endif
       switches::kNoSandbox,
       switches::kPpapiStartupDialog,

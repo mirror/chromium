@@ -143,8 +143,7 @@ void ShellBrowserMainParts::PostMainMessageLoopStart() {
 #endif
 }
 
-int ShellBrowserMainParts::PreEarlyInitialization() {
-  return content::RESULT_CODE_NORMAL_EXIT;
+void ShellBrowserMainParts::PreEarlyInitialization() {
 }
 
 int ShellBrowserMainParts::PreCreateThreads() {

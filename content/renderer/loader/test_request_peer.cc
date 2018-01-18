@@ -20,9 +20,8 @@ void TestRequestPeer::OnUploadProgress(uint64_t position, uint64_t size) {
   EXPECT_FALSE(context_->complete);
 }
 
-bool TestRequestPeer::OnReceivedRedirect(
-    const net::RedirectInfo& redirect_info,
-    const network::ResourceResponseInfo& info) {
+bool TestRequestPeer::OnReceivedRedirect(const net::RedirectInfo& redirect_info,
+                                         const ResourceResponseInfo& info) {
   EXPECT_FALSE(context_->cancelled);
   EXPECT_FALSE(context_->complete);
   ++context_->seen_redirects;
@@ -31,8 +30,7 @@ bool TestRequestPeer::OnReceivedRedirect(
   return context_->follow_redirects;
 }
 
-void TestRequestPeer::OnReceivedResponse(
-    const network::ResourceResponseInfo& info) {
+void TestRequestPeer::OnReceivedResponse(const ResourceResponseInfo& info) {
   EXPECT_FALSE(context_->cancelled);
   EXPECT_FALSE(context_->received_response);
   EXPECT_FALSE(context_->complete);

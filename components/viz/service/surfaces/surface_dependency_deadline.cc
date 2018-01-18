@@ -23,7 +23,7 @@ SurfaceDependencyDeadline::~SurfaceDependencyDeadline() {
 
 void SurfaceDependencyDeadline::Set(uint32_t number_of_frames_to_deadline) {
   DCHECK_GT(number_of_frames_to_deadline, 0u);
-  CancelInternal(false);
+  DCHECK(!number_of_frames_to_deadline_);
   number_of_frames_to_deadline_ = number_of_frames_to_deadline;
   start_time_ = base::TimeTicks::Now();
   begin_frame_source_->AddObserver(this);
@@ -74,10 +74,6 @@ void SurfaceDependencyDeadline::OnBeginFrame(const BeginFrameArgs& args) {
 const BeginFrameArgs& SurfaceDependencyDeadline::LastUsedBeginFrameArgs()
     const {
   return last_begin_frame_args_;
-}
-
-bool SurfaceDependencyDeadline::WantsAnimateOnlyBeginFrames() const {
-  return false;
 }
 
 void SurfaceDependencyDeadline::OnBeginFrameSourcePausedChanged(bool paused) {}

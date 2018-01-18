@@ -14,6 +14,7 @@
 #include "base/i18n/string_compare.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "components/bookmarks/browser/bookmark_expanded_state_tracker.h"
@@ -595,7 +596,7 @@ const BookmarkNode* BookmarkModel::AddFolderWithMetaInfo(
   }
 
   std::unique_ptr<BookmarkNode> new_node =
-      std::make_unique<BookmarkNode>(generate_next_node_id(), GURL());
+      base::MakeUnique<BookmarkNode>(generate_next_node_id(), GURL());
   new_node->set_date_folder_modified(Time::Now());
   // Folders shouldn't have line breaks in their titles.
   new_node->SetTitle(title);
@@ -632,7 +633,7 @@ const BookmarkNode* BookmarkModel::AddURLWithCreationTimeAndMetaInfo(
     SetDateFolderModified(parent, creation_time);
 
   std::unique_ptr<BookmarkNode> new_node =
-      std::make_unique<BookmarkNode>(generate_next_node_id(), url);
+      base::MakeUnique<BookmarkNode>(generate_next_node_id(), url);
   new_node->SetTitle(title);
   new_node->set_date_added(creation_time);
   new_node->set_type(BookmarkNode::URL);
@@ -1087,7 +1088,7 @@ std::unique_ptr<BookmarkLoadDetails> BookmarkModel::CreateLoadDetails() {
   BookmarkPermanentNode* mobile_node =
       CreatePermanentNode(BookmarkNode::MOBILE);
   std::unique_ptr<TitledUrlNodeSorter> node_sorter =
-      std::make_unique<TypedCountSorter>(client_.get());
+      base::MakeUnique<TypedCountSorter>(client_.get());
   return std::unique_ptr<BookmarkLoadDetails>(new BookmarkLoadDetails(
       bb_node, other_node, mobile_node, client_->GetLoadExtraNodesCallback(),
       new TitledUrlIndex(std::move(node_sorter)), next_node_id_));

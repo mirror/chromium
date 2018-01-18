@@ -20,6 +20,20 @@
 
 namespace optimization_guide {
 
+// Encapsulates information about a version of optimization hints data received
+// from the components server.
+struct ComponentInfo {
+  ComponentInfo(const base::Version& hints_version,
+                const base::FilePath& hints_path);
+  ~ComponentInfo();
+
+  // The version of the hints content.
+  const base::Version hints_version;
+
+  // The path to the file containing the hints protobuf file.
+  const base::FilePath hints_path;
+};
+
 // Processes the hints downloaded from the Component Updater as part of the
 // Optimization Hints component.
 class OptimizationGuideService {
@@ -69,8 +83,7 @@ class OptimizationGuideService {
   void RemoveObserverOnIOThread(OptimizationGuideServiceObserver* observer);
 
   // Dispatches hints to listeners on IO thread.
-  void DispatchHintsOnIOThread(const proto::Configuration& config,
-                               const ComponentInfo& component_info);
+  void DispatchHintsOnIOThread(const proto::Configuration& config);
 
   // Runner for indexing tasks.
   scoped_refptr<base::SequencedTaskRunner> background_task_runner_;

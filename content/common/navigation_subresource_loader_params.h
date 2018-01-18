@@ -26,9 +26,7 @@ struct CONTENT_EXPORT SubresourceLoaderParams {
   // subresource loader in the renderer.
   mojom::URLLoaderFactoryPtrInfo loader_factory_info;
 
-  // The controller service worker, non-null if the frame is to be
-  // controlled by the service worker.
-  mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info;
+  // TODO(kinuko): Add the controller interface ptr for the service worker.
 };
 
 }  // namespace content

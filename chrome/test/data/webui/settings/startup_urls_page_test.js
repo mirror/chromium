@@ -130,7 +130,6 @@ cr.define('settings_startup_urls_page', function() {
       return browserProxy.whenCalled('validateStartupPage').then(function(url) {
         assertEquals(expectedUrl, url);
         assertTrue(actionButton.disabled);
-        assertTrue(!!inputElement.invalid);
 
         browserProxy.setUrlValidity(true);
         browserProxy.resetResolver('validateStartupPage');
@@ -139,7 +138,6 @@ cr.define('settings_startup_urls_page', function() {
         return browserProxy.whenCalled('validateStartupPage');
       }).then(function() {
         assertFalse(actionButton.disabled);
-        assertFalse(!!inputElement.invalid);
       });
     });
 

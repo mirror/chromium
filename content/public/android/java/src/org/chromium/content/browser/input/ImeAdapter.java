@@ -897,11 +897,7 @@ public class ImeAdapter {
         try {
             Method getUnderlineColorMethod = SuggestionSpan.class.getMethod("getUnderlineColor");
             return (int) getUnderlineColorMethod.invoke(suggestionSpan);
-        } catch (IllegalAccessException e) {
-            return DEFAULT_SUGGESTION_SPAN_COLOR;
-        } catch (InvocationTargetException e) {
-            return DEFAULT_SUGGESTION_SPAN_COLOR;
-        } catch (NoSuchMethodException e) {
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             return DEFAULT_SUGGESTION_SPAN_COLOR;
         }
     }

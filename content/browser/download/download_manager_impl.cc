@@ -49,7 +49,6 @@
 #include "content/public/browser/download_url_parameters.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
-#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/web_contents_delegate.h"
@@ -72,6 +71,19 @@
 
 namespace content {
 namespace {
+
+WebContents* GetWebContents(int render_process_id,
+                            int render_frame_id,
+                            int frame_tree_node_id) {
+  DCHECK(IsBrowserSideNavigationEnabled());
+
+  WebContents* web_contents = WebContents::FromRenderFrameHost(
+      RenderFrameHost::FromID(render_process_id, render_frame_id));
+  if (web_contents)
+    return web_contents;
+
+  return WebContents::FromFrameTreeNodeId(frame_tree_node_id);
+}
 
 StoragePartitionImpl* GetStoragePartition(BrowserContext* context,
                                           int render_process_id,
@@ -121,16 +133,14 @@ void CreateInterruptedDownload(
                      params->callback()));
 }
 
-download::DownloadEntry CreateDownloadEntryFromItem(
-    const DownloadItemImpl& item) {
+download::DownloadEntry CreateDownloadEntryFromItem(const DownloadItem& item) {
   // Get a new UKM download_id that is not 0.
   uint64_t download_id = 0;
   do {
     download_id = base::RandUint64();
   } while (download_id == 0);
 
-  return download::DownloadEntry(
-      item.GetGuid(), ToDownloadSource(item.download_source()), download_id);
+  return download::DownloadEntry(item.GetGuid(), download_id);
 }
 
 DownloadManagerImpl::UniqueUrlDownloadHandlerPtr BeginDownload(
@@ -155,7 +165,11 @@ DownloadManagerImpl::UniqueUrlDownloadHandlerPtr BeginDownload(
   // ResourceLoader.
   if (params->render_process_host_id() >= 0) {
     DownloadInterruptReason reason = DownloadManagerImpl::BeginDownloadRequest(
-        std::move(url_request), resource_context, params.get());
+        std::move(url_request), params->referrer(), resource_context,
+        params->content_initiated(), params->render_process_host_id(),
+        params->render_view_host_routing_id(),
+        params->render_frame_host_routing_id(),
+        params->do_not_prompt_for_login());
 
     // If the download was accepted, the DownloadResourceHandler is now
     // responsible for driving the request to completion.
@@ -169,20 +183,17 @@ DownloadManagerImpl::UniqueUrlDownloadHandlerPtr BeginDownload(
 
   return DownloadManagerImpl::UniqueUrlDownloadHandlerPtr(
       UrlDownloader::BeginDownload(download_manager, std::move(url_request),
-                                   params.get(), false)
+                                   params->referrer(), false)
           .release());
 }
 
 DownloadManagerImpl::UniqueUrlDownloadHandlerPtr BeginResourceDownload(
     std::unique_ptr<DownloadUrlParameters> params,
-    std::unique_ptr<network::ResourceRequest> request,
+    std::unique_ptr<ResourceRequest> request,
     scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter,
     scoped_refptr<storage::FileSystemContext> file_system_context,
     uint32_t download_id,
-    base::WeakPtr<DownloadManagerImpl> download_manager,
-    const GURL& site_url,
-    const GURL& tab_url,
-    const GURL& tab_referrer_url) {
+    base::WeakPtr<DownloadManagerImpl> download_manager) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   // Check if the renderer is permitted to request the requested URL.
@@ -195,18 +206,17 @@ DownloadManagerImpl::UniqueUrlDownloadHandlerPtr BeginResourceDownload(
     return nullptr;
   }
 
-  ResourceRequestInfo::WebContentsGetter getter = base::BindRepeating(
-      WebContentsImpl::FromRenderFrameHostID, params->render_process_host_id(),
-      params->render_frame_host_routing_id());
-
+  ResourceRequestInfo::WebContentsGetter getter =
+      base::Bind(&GetWebContents, params->render_process_host_id(),
+                 params->render_frame_host_routing_id(), -1);
   // TODO(qinmin): Check the storage permission before creating the URLLoader.
   // This is already done for context menu download, but it is missing for
   // download service and download resumption.
   return DownloadManagerImpl::UniqueUrlDownloadHandlerPtr(
       ResourceDownloader::BeginDownload(
           download_manager, std::move(params), std::move(request),
-          url_loader_factory_getter, file_system_context, getter, site_url,
-          tab_url, tab_referrer_url, download_id, false)
+          url_loader_factory_getter, file_system_context, getter, download_id,
+          false)
           .release());
 }
 
@@ -730,18 +740,23 @@ void DownloadManagerImpl::AddUrlDownloadHandler(
 // static
 DownloadInterruptReason DownloadManagerImpl::BeginDownloadRequest(
     std::unique_ptr<net::URLRequest> url_request,
+    const Referrer& referrer,
     ResourceContext* resource_context,
-    DownloadUrlParameters* params) {
+    bool is_content_initiated,
+    int render_process_id,
+    int render_view_route_id,
+    int render_frame_route_id,
+    bool do_not_prompt_for_login) {
   if (ResourceDispatcherHostImpl::Get()->is_shutdown())
     return DOWNLOAD_INTERRUPT_REASON_USER_SHUTDOWN;
 
   // The URLRequest needs to be initialized with the referrer and other
   // information prior to issuing it.
   ResourceDispatcherHostImpl::Get()->InitializeURLRequest(
-      url_request.get(), params->referrer(),
+      url_request.get(), referrer,
       true,  // download.
-      params->render_process_host_id(), params->render_view_host_routing_id(),
-      params->render_frame_host_routing_id(), PREVIEWS_OFF, resource_context);
+      render_process_id, render_view_route_id, render_frame_route_id,
+      PREVIEWS_OFF, resource_context);
 
   // We treat a download as a main frame load, and thus update the policy URL on
   // redirects.
@@ -755,7 +770,7 @@ DownloadInterruptReason DownloadManagerImpl::BeginDownloadRequest(
   const GURL& url = url_request->original_url();
 
   // Check if the renderer is permitted to request the requested URL.
-  if (!CanRequestURLFromRenderer(params->render_process_host_id(), url))
+  if (!CanRequestURLFromRenderer(render_process_id, url))
     return DOWNLOAD_INTERRUPT_REASON_NETWORK_INVALID_REQUEST;
 
   const net::URLRequestContext* request_context = url_request->context();
@@ -770,21 +785,19 @@ DownloadInterruptReason DownloadManagerImpl::BeginDownloadRequest(
   // TODO(ananta)
   // Find a better way to create the DownloadResourceHandler instance.
   std::unique_ptr<ResourceHandler> handler(
-      DownloadResourceHandler::CreateForNewRequest(url_request.get(),
-                                                   params->download_source()));
+      DownloadResourceHandler::Create(url_request.get()));
 
   ResourceDispatcherHostImpl::Get()->BeginURLRequest(
       std::move(url_request), std::move(handler), true,  // download
-      params->content_initiated(), params->do_not_prompt_for_login(),
-      resource_context);
+      is_content_initiated, do_not_prompt_for_login, resource_context);
   return DOWNLOAD_INTERRUPT_REASON_NONE;
 }
 
 void DownloadManagerImpl::InterceptNavigation(
-    std::unique_ptr<network::ResourceRequest> resource_request,
+    std::unique_ptr<ResourceRequest> resource_request,
     std::vector<GURL> url_chain,
     const base::Optional<std::string>& suggested_filename,
-    scoped_refptr<network::ResourceResponse> response,
+    scoped_refptr<ResourceResponse> response,
     mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
     net::CertStatus cert_status,
     int frame_tree_node_id) {
@@ -795,7 +808,8 @@ void DownloadManagerImpl::InterceptNavigation(
   const GURL& url = resource_request->url;
   const std::string& method = resource_request->method;
   ResourceRequestInfo::WebContentsGetter web_contents_getter =
-      base::BindRepeating(WebContents::FromFrameTreeNodeId, frame_tree_node_id);
+      base::BindRepeating(&GetWebContents, ChildProcessHost::kInvalidUniqueID,
+                          MSG_ROUTING_NONE, frame_tree_node_id);
 
   base::OnceCallback<void(bool /* download allowed */)>
       on_download_checks_done = base::BindOnce(
@@ -840,8 +854,6 @@ void DownloadManagerImpl::DownloadUrl(
     DCHECK_EQ("POST", params->method());
   }
 
-  RecordDownloadCountWithSource(DownloadCountTypes::DOWNLOAD_TRIGGERED_COUNT,
-                                params->download_source());
   BeginDownloadInternal(std::move(params), content::DownloadItem::kInvalidId);
 }
 
@@ -1016,10 +1028,10 @@ void DownloadManagerImpl::ShowDownloadInShell(DownloadItemImpl* download) {
 
 void DownloadManagerImpl::InterceptNavigationOnChecksComplete(
     ResourceRequestInfo::WebContentsGetter web_contents_getter,
-    std::unique_ptr<network::ResourceRequest> resource_request,
+    std::unique_ptr<ResourceRequest> resource_request,
     std::vector<GURL> url_chain,
     const base::Optional<std::string>& suggested_filename,
-    scoped_refptr<network::ResourceResponse> response,
+    scoped_refptr<ResourceResponse> response,
     net::CertStatus cert_status,
     mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
     bool is_download_allowed) {
@@ -1040,10 +1052,10 @@ void DownloadManagerImpl::InterceptNavigationOnChecksComplete(
 void DownloadManagerImpl::CreateDownloadHandlerForNavigation(
     base::WeakPtr<DownloadManagerImpl> download_manager,
     ResourceRequestInfo::WebContentsGetter web_contents_getter,
-    std::unique_ptr<network::ResourceRequest> resource_request,
+    std::unique_ptr<ResourceRequest> resource_request,
     std::vector<GURL> url_chain,
     const base::Optional<std::string>& suggested_filename,
-    scoped_refptr<network::ResourceResponse> response,
+    scoped_refptr<ResourceResponse> response,
     net::CertStatus cert_status,
     mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -1067,32 +1079,18 @@ void DownloadManagerImpl::BeginDownloadInternal(
     std::unique_ptr<content::DownloadUrlParameters> params,
     uint32_t id) {
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    std::unique_ptr<network::ResourceRequest> request =
-        CreateResourceRequest(params.get());
+    std::unique_ptr<ResourceRequest> request = CreateResourceRequest(
+        params.get());
     StoragePartitionImpl* storage_partition =
         GetStoragePartition(browser_context_, params->render_process_host_id(),
                             params->render_frame_host_routing_id());
-
-    GURL site_url, tab_url, tab_referrer_url;
-    auto* rfh = RenderFrameHost::FromID(params->render_process_host_id(),
-                                        params->render_frame_host_routing_id());
-    if (rfh) {
-      site_url = rfh->GetSiteInstance()->GetSiteURL();
-      auto* web_contents = WebContents::FromRenderFrameHost(rfh);
-      NavigationEntry* entry = web_contents->GetController().GetVisibleEntry();
-      if (entry) {
-        tab_url = entry->GetURL();
-        tab_referrer_url = entry->GetReferrer().url;
-      }
-    }
-
     BrowserThread::PostTaskAndReplyWithResult(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(
             &BeginResourceDownload, std::move(params), std::move(request),
             storage_partition->url_loader_factory_getter(),
-            base::WrapRefCounted(storage_partition->GetFileSystemContext()), id,
-            weak_factory_.GetWeakPtr(), site_url, tab_url, tab_referrer_url),
+             base::WrapRefCounted(storage_partition->GetFileSystemContext()),
+             id, weak_factory_.GetWeakPtr()),
         base::BindOnce(&DownloadManagerImpl::AddUrlDownloadHandler,
                        weak_factory_.GetWeakPtr()));
   } else {

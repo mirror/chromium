@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include "extensions/browser/extension_function.h"
+#include "chrome/browser/extensions/chrome_extension_function.h"
 
 namespace net {
 class X509Certificate;
@@ -33,7 +33,7 @@ std::string PlatformKeysTokenIdToApiId(
 }  // namespace platform_keys
 
 class PlatformKeysInternalSelectClientCertificatesFunction
-    : public UIThreadExtensionFunction {
+    : public ChromeUIThreadExtensionFunction {
  private:
   ~PlatformKeysInternalSelectClientCertificatesFunction() override;
   ResponseAction Run() override;
@@ -48,7 +48,7 @@ class PlatformKeysInternalSelectClientCertificatesFunction
 };
 
 class PlatformKeysInternalGetPublicKeyFunction
-    : public UIThreadExtensionFunction {
+    : public ChromeUIThreadExtensionFunction {
  private:
   ~PlatformKeysInternalGetPublicKeyFunction() override;
   ResponseAction Run() override;
@@ -57,7 +57,8 @@ class PlatformKeysInternalGetPublicKeyFunction
                              PLATFORMKEYSINTERNAL_GETPUBLICKEY);
 };
 
-class PlatformKeysInternalSignFunction : public UIThreadExtensionFunction {
+class PlatformKeysInternalSignFunction
+    : public ChromeUIThreadExtensionFunction {
  private:
   ~PlatformKeysInternalSignFunction() override;
   ResponseAction Run() override;

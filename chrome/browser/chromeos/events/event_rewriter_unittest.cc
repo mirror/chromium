@@ -120,10 +120,10 @@ class EventRewriterTest : public ash::AshTestBase {
     input_method_manager_mock_ = new input_method::MockInputMethodManagerImpl;
     chromeos::input_method::InitializeForTesting(
         input_method_manager_mock_);  // pass ownership
-    delegate_ = std::make_unique<EventRewriterDelegateImpl>();
+    delegate_ = base::MakeUnique<EventRewriterDelegateImpl>();
     delegate_->set_pref_service_for_testing(prefs());
     rewriter_ =
-        std::make_unique<ui::EventRewriterChromeOS>(delegate_.get(), nullptr);
+        base::MakeUnique<ui::EventRewriterChromeOS>(delegate_.get(), nullptr);
     AshTestBase::SetUp();
   }
 
@@ -2177,9 +2177,9 @@ class EventRewriterAshTest : public ash::AshTestBase {
   void SetUp() override {
     AshTestBase::SetUp();
     sticky_keys_controller_ = ash::Shell::Get()->sticky_keys_controller();
-    delegate_ = std::make_unique<EventRewriterDelegateImpl>();
+    delegate_ = base::MakeUnique<EventRewriterDelegateImpl>();
     delegate_->set_pref_service_for_testing(prefs());
-    rewriter_ = std::make_unique<ui::EventRewriterChromeOS>(
+    rewriter_ = base::MakeUnique<ui::EventRewriterChromeOS>(
         delegate_.get(), sticky_keys_controller_);
     chromeos::Preferences::RegisterProfilePrefs(prefs_.registry());
     source_.AddEventRewriter(rewriter_.get());

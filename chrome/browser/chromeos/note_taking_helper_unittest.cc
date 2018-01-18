@@ -11,6 +11,7 @@
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -420,7 +421,7 @@ class NoteTakingHelperTest : public BrowserWithTestWindowTest,
   // BrowserWithTestWindowTest:
   TestingProfile* CreateProfile() override {
     auto prefs =
-        std::make_unique<sync_preferences::TestingPrefServiceSyncable>();
+        base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
     RegisterUserProfilePrefs(prefs->registry());
     profile_prefs_ = prefs.get();
     return profile_manager()->CreateTestingProfile(
@@ -471,7 +472,7 @@ class NoteTakingHelperTest : public BrowserWithTestWindowTest,
       std::string actual = GetAppString(actual_apps[i]);
       if (expected != actual) {
         if (!failure) {
-          failure = std::make_unique<::testing::AssertionResult>(
+          failure = base::MakeUnique<::testing::AssertionResult>(
               ::testing::AssertionFailure());
         }
         *failure << "Error at index " << i << ": "
@@ -947,7 +948,7 @@ TEST_P(NoteTakingHelperTest, AddProfileWithPlayStoreEnabled) {
   // notified, since OnArcPlayStoreEnabledChanged() apparently isn't called in
   // this case: http://crbug.com/700554
   const char kSecondProfileName[] = "second-profile";
-  auto prefs = std::make_unique<sync_preferences::TestingPrefServiceSyncable>();
+  auto prefs = base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
   RegisterUserProfilePrefs(prefs->registry());
   prefs->SetBoolean(arc::prefs::kArcEnabled, true);
   profile_manager()->CreateTestingProfile(
@@ -1403,7 +1404,7 @@ TEST_P(NoteTakingHelperTest, SetAppEnabledOnLockScreen) {
   // Policy with an empty whitelist - this should disallow all apps from the
   // lock screen.
   profile_prefs_->SetManagedPref(prefs::kNoteTakingAppsLockScreenWhitelist,
-                                 std::make_unique<base::ListValue>());
+                                 base::MakeUnique<base::ListValue>());
 
   // Preferred app changed notification is not expected if the preferred app is
   // not supported on lock screen.
@@ -1446,7 +1447,7 @@ TEST_P(NoteTakingHelperTest,
   // Policy with an empty whitelist - this should disallow test app from running
   // on lock screen.
   profile_prefs_->SetManagedPref(prefs::kNoteTakingAppsLockScreenWhitelist,
-                                 std::make_unique<base::ListValue>());
+                                 base::MakeUnique<base::ListValue>());
 
   // Preferred app settings changed - observers should be notified.
   EXPECT_EQ(std::vector<Profile*>{profile()}, observer.preferred_app_updates());
@@ -1481,7 +1482,7 @@ TEST_P(NoteTakingHelperTest,
                                     kDevKeepAppName, profile());
 
   profile_prefs_->SetManagedPref(prefs::kNoteTakingAppsLockScreenWhitelist,
-                                 std::make_unique<base::ListValue>());
+                                 base::MakeUnique<base::ListValue>());
   // Verify that observers are not notified of preferred app change if preferred
   // app is not set when whitelist policy changes.
   EXPECT_TRUE(observer.preferred_app_updates().empty());
@@ -1509,7 +1510,7 @@ TEST_P(NoteTakingHelperTest, LockScreenSupportInSecondaryProfile) {
   TestObserver observer;
 
   // Initialize secondary profile.
-  auto prefs = std::make_unique<sync_preferences::TestingPrefServiceSyncable>();
+  auto prefs = base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
   RegisterUserProfilePrefs(prefs->registry());
   sync_preferences::TestingPrefServiceSyncable* profile_prefs = prefs.get();
   const std::string kSecondProfileName = "second-profile";
@@ -1550,7 +1551,7 @@ TEST_P(NoteTakingHelperTest, LockScreenSupportInSecondaryProfile) {
 
   // Policy with an empty whitelist.
   profile_prefs->SetManagedPref(prefs::kNoteTakingAppsLockScreenWhitelist,
-                                std::make_unique<base::ListValue>());
+                                base::MakeUnique<base::ListValue>());
 
   // Changing policy should not notify observers in secondary profile.
   EXPECT_TRUE(observer.preferred_app_updates().empty());

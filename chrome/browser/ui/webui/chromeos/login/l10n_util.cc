@@ -16,6 +16,7 @@
 #include "base/i18n/rtl.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner.h"
 #include "base/stl_util.h"
@@ -88,7 +89,7 @@ std::unique_ptr<base::DictionaryValue> CreateLanguageEntry(
       base::i18n::StringContainsStrongRTLChars(display_name);
   const std::string directionality = has_rtl_chars ? "rtl" : "ltr";
 
-  auto dictionary = std::make_unique<base::DictionaryValue>();
+  auto dictionary = base::MakeUnique<base::DictionaryValue>();
   dictionary->SetString("code", language_code);
   dictionary->SetString("displayName", language_display_name);
   dictionary->SetString("textDirection", directionality);
@@ -267,7 +268,7 @@ std::unique_ptr<base::ListValue> GetLanguageList(
     base::string16 display_name(out_display_names[i]);
     if (insert_divider && display_name == divider16) {
       // Insert divider.
-      auto dictionary = std::make_unique<base::DictionaryValue>();
+      auto dictionary = base::MakeUnique<base::DictionaryValue>();
       dictionary->SetString("code", kMostRelevantLanguagesDivider);
       language_list->Append(std::move(dictionary));
       continue;

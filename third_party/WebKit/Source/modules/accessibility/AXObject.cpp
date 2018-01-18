@@ -52,12 +52,10 @@
 #include "core/page/Page.h"
 #include "modules/accessibility/AXObjectCacheImpl.h"
 #include "modules/accessibility/AXSparseAttributeSetter.h"
-#include "platform/scroll/ScrollAlignment.h"
 #include "platform/text/PlatformLocale.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/platform/WebScrollIntoViewParams.h"
 
 using blink::WebLocalizedString;
 
@@ -2050,17 +2048,7 @@ void AXObject::GetRelativeBounds(AXObject** out_container,
   // If the container has a scroll offset, subtract that out because we want our
   // bounds to be relative to the *unscrolled* position of the container object.
   ScrollableArea* scrollable_area = container->GetScrollableAreaIfScrollable();
-
-  // Without RLS, LayoutView (i.e. "WebArea") is scrolled by the FrameView and
-  // those scrolls aren't accounted for at all in the layout tree. The
-  // scrollable_area returned above returns the FrameView in that case though
-  // so we avoid making the adjustment below. Once RLS ships, the LayoutView
-  // scroll will be accounted for by the layout tree so this condition can be
-  // removed.
-  bool is_self_scrolling = !container->IsWebArea() ||
-                           RuntimeEnabledFeatures::RootLayerScrollingEnabled();
-
-  if (scrollable_area && is_self_scrolling) {
+  if (scrollable_area && !container->IsWebArea()) {
     ScrollOffset scroll_offset = scrollable_area->GetScrollOffset();
     out_bounds_in_container.Move(scroll_offset);
   }
@@ -2230,10 +2218,9 @@ bool AXObject::OnNativeScrollToMakeVisibleAction() const {
     return false;
   LayoutRect target_rect(layout_object->AbsoluteBoundingBoxRect());
   layout_object->ScrollRectToVisible(
-      target_rect,
-      WebScrollIntoViewParams(ScrollAlignment::kAlignCenterIfNeeded,
-                              ScrollAlignment::kAlignCenterIfNeeded,
-                              kProgrammaticScroll, false, kScrollBehaviorAuto));
+      target_rect, ScrollAlignment::kAlignCenterIfNeeded,
+      ScrollAlignment::kAlignCenterIfNeeded, kProgrammaticScroll, false,
+      kScrollBehaviorAuto);
   AXObjectCache().PostNotification(
       AXObjectCache().GetOrCreate(GetDocument()->GetLayoutView()),
       AXObjectCacheImpl::kAXLocationChanged);
@@ -2256,10 +2243,9 @@ bool AXObject::OnNativeScrollToMakeVisibleWithSubFocusAction(
   // is the default behavior of element.scrollIntoView.
   ScrollAlignment scroll_alignment = {
       kScrollAlignmentNoScroll, kScrollAlignmentCenter, kScrollAlignmentCenter};
-  layout_object->ScrollRectToVisible(
-      target_rect,
-      WebScrollIntoViewParams(scroll_alignment, scroll_alignment,
-                              kProgrammaticScroll, false, kScrollBehaviorAuto));
+  layout_object->ScrollRectToVisible(target_rect, scroll_alignment,
+                                     scroll_alignment, kProgrammaticScroll,
+                                     false, kScrollBehaviorAuto);
   AXObjectCache().PostNotification(
       AXObjectCache().GetOrCreate(GetDocument()->GetLayoutView()),
       AXObjectCacheImpl::kAXLocationChanged);
@@ -2275,10 +2261,9 @@ bool AXObject::OnNativeScrollToGlobalPointAction(
   LayoutRect target_rect(layout_object->AbsoluteBoundingBoxRect());
   target_rect.MoveBy(-global_point);
   layout_object->ScrollRectToVisible(
-      target_rect,
-      WebScrollIntoViewParams(ScrollAlignment::kAlignLeftAlways,
-                              ScrollAlignment::kAlignTopAlways,
-                              kProgrammaticScroll, false, kScrollBehaviorAuto));
+      target_rect, ScrollAlignment::kAlignLeftAlways,
+      ScrollAlignment::kAlignTopAlways, kProgrammaticScroll, false,
+      kScrollBehaviorAuto);
   AXObjectCache().PostNotification(
       AXObjectCache().GetOrCreate(GetDocument()->GetLayoutView()),
       AXObjectCacheImpl::kAXLocationChanged);

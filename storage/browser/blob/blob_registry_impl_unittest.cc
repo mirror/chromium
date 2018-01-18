@@ -5,8 +5,6 @@
 #include "storage/browser/blob/blob_registry_impl.h"
 
 #include <limits>
-#include <memory>
-
 #include "base/files/scoped_temp_dir.h"
 #include "base/rand_util.h"
 #include "base/run_loop.h"
@@ -41,7 +39,7 @@ class MockBlob : public blink::mojom::Blob {
   explicit MockBlob(const std::string& uuid) : uuid_(uuid) {}
 
   void Clone(blink::mojom::BlobRequest request) override {
-    mojo::MakeStrongBinding(std::make_unique<MockBlob>(uuid_),
+    mojo::MakeStrongBinding(base::MakeUnique<MockBlob>(uuid_),
                             std::move(request));
   }
 
@@ -76,7 +74,7 @@ class BlobRegistryImplTest : public testing::Test {
  public:
   void SetUp() override {
     ASSERT_TRUE(data_dir_.CreateUniqueTempDir());
-    context_ = std::make_unique<BlobStorageContext>(
+    context_ = base::MakeUnique<BlobStorageContext>(
         data_dir_.GetPath(),
         base::CreateTaskRunnerWithTraits({base::MayBlock()}));
     auto storage_policy =
@@ -90,9 +88,9 @@ class BlobRegistryImplTest : public testing::Test {
         std::vector<URLRequestAutoMountHandler>(), data_dir_.GetPath(),
         FileSystemOptions(FileSystemOptions::PROFILE_MODE_INCOGNITO,
                           std::vector<std::string>(), nullptr));
-    registry_impl_ = std::make_unique<BlobRegistryImpl>(context_->AsWeakPtr(),
+    registry_impl_ = base::MakeUnique<BlobRegistryImpl>(context_->AsWeakPtr(),
                                                         file_system_context_);
-    auto delegate = std::make_unique<MockBlobRegistryDelegate>();
+    auto delegate = base::MakeUnique<MockBlobRegistryDelegate>();
     delegate_ptr_ = delegate.get();
     registry_impl_->Bind(MakeRequest(&registry_), std::move(delegate));
 
@@ -163,7 +161,7 @@ class BlobRegistryImplTest : public testing::Test {
           base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()});
     }
     blink::mojom::BytesProviderPtrInfo result;
-    auto provider = std::make_unique<MockBytesProvider>(
+    auto provider = base::MakeUnique<MockBytesProvider>(
         std::vector<uint8_t>(bytes.begin(), bytes.end()), &reply_request_count_,
         &stream_request_count_, &file_request_count_);
     bytes_provider_runner_->PostTask(
@@ -178,7 +176,7 @@ class BlobRegistryImplTest : public testing::Test {
       bytes_provider_runner_ =
           base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()});
     }
-    auto provider = std::make_unique<MockBytesProvider>(
+    auto provider = base::MakeUnique<MockBytesProvider>(
         std::vector<uint8_t>(bytes.begin(), bytes.end()), &reply_request_count_,
         &stream_request_count_, &file_request_count_);
     bytes_provider_runner_->PostTask(
@@ -418,7 +416,7 @@ TEST_F(BlobRegistryImplTest, Register_NonExistentBlob) {
 
   std::vector<blink::mojom::DataElementPtr> elements;
   blink::mojom::BlobPtrInfo referenced_blob_info;
-  mojo::MakeStrongBinding(std::make_unique<MockBlob>("mock blob"),
+  mojo::MakeStrongBinding(base::MakeUnique<MockBlob>("mock blob"),
                           MakeRequest(&referenced_blob_info));
   elements.push_back(
       blink::mojom::DataElement::NewBlob(blink::mojom::DataElementBlob::New(
@@ -448,7 +446,7 @@ TEST_F(BlobRegistryImplTest, Register_ValidBlobReferences) {
   std::unique_ptr<BlobDataHandle> handle =
       CreateBlobFromString(kId1, "hello world");
   blink::mojom::BlobPtrInfo blob1_info;
-  mojo::MakeStrongBinding(std::make_unique<MockBlob>(kId1),
+  mojo::MakeStrongBinding(base::MakeUnique<MockBlob>(kId1),
                           MakeRequest(&blob1_info));
 
   const std::string kId2 = "id2";
@@ -839,7 +837,7 @@ TEST_F(BlobRegistryImplTest, Register_ValidBytesAsFile) {
   EXPECT_EQ(expected_file_count, snapshot->items().size());
   size_t remaining_size = kData.size();
   for (const auto& item : snapshot->items()) {
-    EXPECT_EQ(network::DataElement::TYPE_FILE, item->type());
+    EXPECT_EQ(DataElement::TYPE_FILE, item->type());
     EXPECT_EQ(0u, item->offset());
     if (remaining_size > kTestBlobStorageMaxFileSizeBytes)
       EXPECT_EQ(kTestBlobStorageMaxFileSizeBytes, item->length());
@@ -917,7 +915,7 @@ TEST_F(BlobRegistryImplTest,
   // Create future blob.
   auto blob_handle = context_->AddFutureBlob(kDepId, "", "");
   blink::mojom::BlobPtrInfo referenced_blob_info;
-  mojo::MakeStrongBinding(std::make_unique<MockBlob>(kDepId),
+  mojo::MakeStrongBinding(base::MakeUnique<MockBlob>(kDepId),
                           MakeRequest(&referenced_blob_info));
 
   // Create mojo blob depending on future blob.

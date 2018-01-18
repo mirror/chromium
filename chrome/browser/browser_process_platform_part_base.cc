@@ -2,10 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/browser_process_platform_part_base.h"
-
 #include "base/logging.h"
 #include "build/build_config.h"
+#include "chrome/browser/browser_process_platform_part_base.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/policy/chrome_browser_policy_connector.h"
 #include "components/policy/core/browser/browser_policy_connector.h"
@@ -37,9 +36,10 @@ void BrowserProcessPlatformPartBase::AttemptExit() {
 void BrowserProcessPlatformPartBase::PreMainMessageLoopRun() {
 }
 
-std::unique_ptr<policy::ChromeBrowserPolicyConnector>
+std::unique_ptr<policy::BrowserPolicyConnector>
 BrowserProcessPlatformPartBase::CreateBrowserPolicyConnector() {
-  return std::make_unique<policy::ChromeBrowserPolicyConnector>();
+  return std::unique_ptr<policy::BrowserPolicyConnector>(
+      new policy::ChromeBrowserPolicyConnector());
 }
 
 void BrowserProcessPlatformPartBase::RegisterInProcessServices(

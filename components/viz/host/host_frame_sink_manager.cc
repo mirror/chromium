@@ -91,18 +91,18 @@ void HostFrameSinkManager::InvalidateFrameSinkId(
 void HostFrameSinkManager::SetFrameSinkDebugLabel(
     const FrameSinkId& frame_sink_id,
     const std::string& debug_label) {
-  DCHECK(frame_sink_id.is_valid());
-
-  FrameSinkData& data = frame_sink_data_map_[frame_sink_id];
-  DCHECK(data.IsFrameSinkRegistered());
-
-  data.debug_label = debug_label;
   frame_sink_manager_->SetFrameSinkDebugLabel(frame_sink_id, debug_label);
 }
 
 void HostFrameSinkManager::CreateRootCompositorFrameSink(
-    mojom::RootCompositorFrameSinkParamsPtr params) {
-  FrameSinkId frame_sink_id = params->frame_sink_id;
+    const FrameSinkId& frame_sink_id,
+    gpu::SurfaceHandle surface_handle,
+    bool force_software_compositing,
+    const RendererSettings& renderer_settings,
+    mojom::CompositorFrameSinkAssociatedRequest request,
+    mojom::CompositorFrameSinkClientPtr client,
+    mojom::DisplayPrivateAssociatedRequest display_private_request,
+    mojom::DisplayClientPtr display_client) {
   FrameSinkData& data = frame_sink_data_map_[frame_sink_id];
   DCHECK(data.IsFrameSinkRegistered());
   DCHECK(!data.HasCompositorFrameSinkData());
@@ -110,7 +110,10 @@ void HostFrameSinkManager::CreateRootCompositorFrameSink(
   data.is_root = true;
   data.has_created_compositor_frame_sink = true;
 
-  frame_sink_manager_->CreateRootCompositorFrameSink(std::move(params));
+  frame_sink_manager_->CreateRootCompositorFrameSink(
+      frame_sink_id, surface_handle, force_software_compositing,
+      renderer_settings, std::move(request), std::move(client),
+      std::move(display_private_request), std::move(display_client));
   display_hit_test_query_[frame_sink_id] = std::make_unique<HitTestQuery>();
 }
 
@@ -309,10 +312,6 @@ void HostFrameSinkManager::RegisterAfterConnectionLoss() {
     FrameSinkData& data = map_entry.second;
     if (data.client)
       frame_sink_manager_->RegisterFrameSinkId(frame_sink_id);
-    if (!data.debug_label.empty()) {
-      frame_sink_manager_->SetFrameSinkDebugLabel(frame_sink_id,
-                                                  data.debug_label);
-    }
   }
 
   // Register FrameSink hierarchy second.

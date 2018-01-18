@@ -7,10 +7,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <memory>
-
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
@@ -221,7 +220,7 @@ std::string IsolatedContext::RegisterDraggedFileSystem(
   base::AutoLock locker(lock_);
   std::string filesystem_id = GetNewFileSystemId();
   instance_map_[filesystem_id] =
-      std::make_unique<Instance>(kFileSystemTypeDragged, files.fileset());
+      base::MakeUnique<Instance>(kFileSystemTypeDragged, files.fileset());
   return filesystem_id;
 }
 
@@ -244,7 +243,7 @@ std::string IsolatedContext::RegisterFileSystemForPath(
 
   base::AutoLock locker(lock_);
   std::string new_id = GetNewFileSystemId();
-  instance_map_[new_id] = std::make_unique<Instance>(
+  instance_map_[new_id] = base::MakeUnique<Instance>(
       type, filesystem_id, MountPointInfo(name, path), Instance::PLATFORM_PATH);
   path_to_id_map_[path].insert(new_id);
   return new_id;
@@ -259,7 +258,7 @@ std::string IsolatedContext::RegisterFileSystemForVirtualPath(
   if (path.ReferencesParent())
     return std::string();
   std::string filesystem_id = GetNewFileSystemId();
-  instance_map_[filesystem_id] = std::make_unique<Instance>(
+  instance_map_[filesystem_id] = base::MakeUnique<Instance>(
       type,
       std::string(),  // filesystem_id
       MountPointInfo(register_name, cracked_path_prefix),

@@ -26,6 +26,8 @@
 #include "base/strings/stringprintf.h"
 #include "base/test/scoped_task_environment.h"
 #include "content/public/common/network_service.mojom.h"
+#include "content/public/common/resource_request.h"
+#include "content/public/common/resource_response.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -43,8 +45,6 @@
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/redirect_info.h"
-#include "services/network/public/cpp/resource_request.h"
-#include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -93,7 +93,7 @@ class SimpleLoaderTestHelper {
   enum class DownloadType { TO_STRING, TO_FILE, TO_TEMP_FILE };
 
   explicit SimpleLoaderTestHelper(
-      std::unique_ptr<network::ResourceRequest> resource_request,
+      std::unique_ptr<ResourceRequest> resource_request,
       DownloadType download_type)
       : download_type_(download_type),
         simple_url_loader_(
@@ -446,7 +446,7 @@ class SimpleURLLoaderTest
   ~SimpleURLLoaderTest() override {}
 
   std::unique_ptr<SimpleLoaderTestHelper> CreateHelper(
-      std::unique_ptr<network::ResourceRequest> resource_request) {
+      std::unique_ptr<ResourceRequest> resource_request) {
     EXPECT_TRUE(resource_request);
     return std::make_unique<SimpleLoaderTestHelper>(std::move(resource_request),
                                                     GetParam());
@@ -455,8 +455,8 @@ class SimpleURLLoaderTest
   std::unique_ptr<SimpleLoaderTestHelper> CreateHelperForURL(
       const GURL& url,
       const char* method = "GET") {
-    std::unique_ptr<network::ResourceRequest> resource_request =
-        std::make_unique<network::ResourceRequest>();
+    std::unique_ptr<ResourceRequest> resource_request =
+        std::make_unique<ResourceRequest>();
     resource_request->url = url;
     resource_request->method = method;
     return std::make_unique<SimpleLoaderTestHelper>(std::move(resource_request),
@@ -465,8 +465,8 @@ class SimpleURLLoaderTest
 };
 
 TEST_P(SimpleURLLoaderTest, BasicRequest) {
-  std::unique_ptr<network::ResourceRequest> resource_request =
-      std::make_unique<network::ResourceRequest>();
+  std::unique_ptr<ResourceRequest> resource_request =
+      std::make_unique<ResourceRequest>();
   // Use a more interesting request than "/echo", just to verify more than the
   // request URL is hooked up.
   resource_request->url = test_server_.GetURL("/echoheader?foo");
@@ -528,12 +528,12 @@ TEST_P(SimpleURLLoaderTest, OnRedirectCallback) {
 
   int num_redirects = 0;
   net::RedirectInfo redirect_info;
-  network::ResourceResponseHead response_head;
+  ResourceResponseHead response_head;
   test_helper->simple_url_loader()->SetOnRedirectCallback(base::BindRepeating(
       [](int* num_redirects, net::RedirectInfo* redirect_info_ptr,
-         network::ResourceResponseHead* response_head_ptr,
+         ResourceResponseHead* response_head_ptr,
          const net::RedirectInfo& redirect_info,
-         const network::ResourceResponseHead& response_head) {
+         const ResourceResponseHead& response_head) {
         ++*num_redirects;
         *redirect_info_ptr = redirect_info;
         *response_head_ptr = response_head;
@@ -562,9 +562,7 @@ TEST_P(SimpleURLLoaderTest, OnRedirectCallbackTwoRedirects) {
   int num_redirects = 0;
   test_helper->simple_url_loader()->SetOnRedirectCallback(base::BindRepeating(
       [](int* num_redirects, const net::RedirectInfo& redirect_info,
-         const network::ResourceResponseHead& response_head) {
-        ++*num_redirects;
-      },
+         const ResourceResponseHead& response_head) { ++*num_redirects; },
       base::Unretained(&num_redirects)));
 
   test_helper->StartSimpleLoaderAndWait(url_loader_factory_.get());
@@ -586,9 +584,7 @@ TEST_P(SimpleURLLoaderTest, DeleteInOnRedirectCallback) {
       base::BindRepeating(
           [](std::unique_ptr<SimpleLoaderTestHelper> test_helper,
              base::RunLoop* run_loop, const net::RedirectInfo& redirect_info,
-             const network::ResourceResponseHead& response_head) {
-            run_loop->Quit();
-          },
+             const ResourceResponseHead& response_head) { run_loop->Quit(); },
           base::Passed(std::move(test_helper)), &run_loop));
 
   unowned_test_helper->StartSimpleLoader(url_loader_factory_.get());
@@ -608,9 +604,7 @@ TEST_P(SimpleURLLoaderTest, UploadShortStringWithRedirect) {
   int num_redirects = 0;
   test_helper->simple_url_loader()->SetOnRedirectCallback(base::BindRepeating(
       [](int* num_redirects, const net::RedirectInfo& redirect_info,
-         const network::ResourceResponseHead& response_head) {
-        ++*num_redirects;
-      },
+         const ResourceResponseHead& response_head) { ++*num_redirects; },
       base::Unretained(&num_redirects)));
 
   test_helper->StartSimpleLoaderAndWait(url_loader_factory_.get());
@@ -633,9 +627,7 @@ TEST_P(SimpleURLLoaderTest, UploadLongStringWithRedirect) {
   int num_redirects = 0;
   test_helper->simple_url_loader()->SetOnRedirectCallback(base::BindRepeating(
       [](int* num_redirects, const net::RedirectInfo& redirect_info,
-         const network::ResourceResponseHead& response_head) {
-        ++*num_redirects;
-      },
+         const ResourceResponseHead& response_head) { ++*num_redirects; },
       base::Unretained(&num_redirects)));
 
   test_helper->StartSimpleLoaderAndWait(url_loader_factory_.get());
@@ -654,8 +646,8 @@ TEST_P(SimpleURLLoaderTest, DisconnectedURLLoader) {
   network_context_.reset();
   base::RunLoop().RunUntilIdle();
 
-  std::unique_ptr<network::ResourceRequest> resource_request =
-      std::make_unique<network::ResourceRequest>();
+  std::unique_ptr<ResourceRequest> resource_request =
+      std::make_unique<ResourceRequest>();
   resource_request->url = test_server_.GetURL("/echoheader?foo");
   resource_request->headers.SetHeader("foo", "Expected Response");
   std::unique_ptr<SimpleLoaderTestHelper> test_helper =
@@ -1162,7 +1154,7 @@ class MockURLLoader : public mojom::URLLoader {
                 mojom::URLLoaderRequest url_loader_request,
                 mojom::URLLoaderClientPtr client,
                 std::vector<TestLoaderEvent> test_events,
-                scoped_refptr<network::ResourceRequestBody> request_body)
+                scoped_refptr<content::ResourceRequestBody> request_body)
       : scoped_task_environment_(scoped_task_environment),
         binding_(this, std::move(url_loader_request)),
         client_(std::move(client)),
@@ -1170,10 +1162,10 @@ class MockURLLoader : public mojom::URLLoader {
         weak_factory_for_data_pipe_callbacks_(this) {
     if (request_body && request_body->elements()->size() == 1 &&
         (*request_body->elements())[0].type() ==
-            network::DataElement::TYPE_DATA_PIPE) {
+            storage::DataElement::TYPE_DATA_PIPE) {
       // The const_cast is weird, but it's how the current API works.
       data_pipe_getter_ =
-          const_cast<network::DataElement*>(&(*request_body->elements())[0])
+          const_cast<storage::DataElement*>(&(*request_body->elements())[0])
               ->ReleaseDataPipeGetter();
       DCHECK(data_pipe_getter_);
     }
@@ -1252,7 +1244,7 @@ class MockURLLoader : public mojom::URLLoader {
           redirect_info.new_url = GURL("bar://foo/");
           redirect_info.status_code = 301;
 
-          network::ResourceResponseHead response_info;
+          ResourceResponseHead response_info;
           std::string headers(
               "HTTP/1.0 301 The Response Has Moved to Another Server\n"
               "Location: bar://foo/");
@@ -1263,7 +1255,7 @@ class MockURLLoader : public mojom::URLLoader {
           break;
         }
         case TestLoaderEvent::kReceivedResponse: {
-          network::ResourceResponseHead response_info;
+          ResourceResponseHead response_info;
           std::string headers("HTTP/1.0 200 OK");
           response_info.headers =
               new net::HttpResponseHeaders(net::HttpUtil::AssembleRawHeaders(
@@ -1273,7 +1265,7 @@ class MockURLLoader : public mojom::URLLoader {
           break;
         }
         case TestLoaderEvent::kReceived401Response: {
-          network::ResourceResponseHead response_info;
+          ResourceResponseHead response_info;
           std::string headers("HTTP/1.0 401 Client Borkage");
           response_info.headers =
               new net::HttpResponseHeaders(net::HttpUtil::AssembleRawHeaders(
@@ -1283,7 +1275,7 @@ class MockURLLoader : public mojom::URLLoader {
           break;
         }
         case TestLoaderEvent::kReceived501Response: {
-          network::ResourceResponseHead response_info;
+          ResourceResponseHead response_info;
           std::string headers("HTTP/1.0 501 Server Borkage");
           response_info.headers =
               new net::HttpResponseHeaders(net::HttpUtil::AssembleRawHeaders(
@@ -1427,7 +1419,7 @@ class MockURLLoaderFactory : public mojom::URLLoaderFactory {
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
-                            const network::ResourceRequest& url_request,
+                            const ResourceRequest& url_request,
                             mojom::URLLoaderClientPtr client,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override {
@@ -1908,9 +1900,7 @@ TEST_P(SimpleURLLoaderTest, RetryAfterRedirect) {
       1, SimpleURLLoader::RETRY_ON_5XX);
   test_helper->simple_url_loader()->SetOnRedirectCallback(base::BindRepeating(
       [](int* num_redirects, const net::RedirectInfo& redirect_info,
-         const network::ResourceResponseHead& response_head) {
-        ++*num_redirects;
-      },
+         const ResourceResponseHead& response_head) { ++*num_redirects; },
       base::Unretained(&num_redirects)));
   loader_factory.RunTest(test_helper.get());
 
@@ -2136,8 +2126,8 @@ class SimpleURLLoaderFileTest : public SimpleURLLoaderTestBase,
   ~SimpleURLLoaderFileTest() override {}
 
   std::unique_ptr<SimpleLoaderTestHelper> CreateHelperForURL(const GURL& url) {
-    std::unique_ptr<network::ResourceRequest> resource_request =
-        std::make_unique<network::ResourceRequest>();
+    std::unique_ptr<ResourceRequest> resource_request =
+        std::make_unique<ResourceRequest>();
     resource_request->url = url;
     return std::make_unique<SimpleLoaderTestHelper>(
         std::move(resource_request),

@@ -705,9 +705,4 @@ void WebSettingsImpl::SetMediaDownloadInProductHelpEnabled(bool enabled) {
   settings_->SetMediaDownloadInProductHelpEnabled(enabled);
 }
 
-void WebSettingsImpl::SetLowPriorityIframesThreshold(
-    WebEffectiveConnectionType effective_connection_type) {
-  settings_->SetLowPriorityIframesThreshold(effective_connection_type);
-}
-
 }  // namespace blink

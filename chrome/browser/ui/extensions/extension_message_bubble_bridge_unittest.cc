@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/extensions/extension_message_bubble_bridge.h"
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/values.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -26,9 +27,9 @@
 #include "components/strings/grit/components_strings.h"
 #include "components/vector_icons/vector_icons.h"
 #include "content/public/browser/browser_context.h"
-#include "extensions/browser/disable_reason.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
+#include "extensions/common/disable_reason.h"
 #include "extensions/common/extension_builder.h"
 #include "extensions/common/manifest.h"
 #include "extensions/common/value_builder.h"
@@ -39,12 +40,12 @@ namespace {
 
 std::unique_ptr<KeyedService> BuildOverrideRegistrar(
     content::BrowserContext* context) {
-  return std::make_unique<extensions::ExtensionWebUIOverrideRegistrar>(context);
+  return base::MakeUnique<extensions::ExtensionWebUIOverrideRegistrar>(context);
 }
 
 std::unique_ptr<KeyedService> BuildToolbarModel(
     content::BrowserContext* context) {
-  return std::make_unique<ToolbarActionsModel>(
+  return base::MakeUnique<ToolbarActionsModel>(
       Profile::FromBrowserContext(context),
       extensions::ExtensionPrefs::Get(context));
 }
@@ -173,7 +174,7 @@ TEST_F(ExtensionMessageBubbleBridgeUnitTest, SuspiciousExtensionBubble) {
   // extension. (Note: The bubble logic itself is tested more thoroughly in
   // extension_message_bubble_controller_unittest.cc.)
   auto suspicious_bubble_controller =
-      std::make_unique<extensions::ExtensionMessageBubbleController>(
+      base::MakeUnique<extensions::ExtensionMessageBubbleController>(
           new extensions::SuspiciousExtensionBubbleDelegate(profile()),
           browser());
   EXPECT_TRUE(suspicious_bubble_controller->ShouldShow());
@@ -183,7 +184,7 @@ TEST_F(ExtensionMessageBubbleBridgeUnitTest, SuspiciousExtensionBubble) {
   // Create a new bridge and poke at a few of the methods to verify they are
   // correct and that nothing crashes.
   std::unique_ptr<ToolbarActionsBarBubbleDelegate> bridge =
-      std::make_unique<ExtensionMessageBubbleBridge>(
+      base::MakeUnique<ExtensionMessageBubbleBridge>(
           std::move(suspicious_bubble_controller));
   EXPECT_TRUE(bridge->ShouldShow());
   EXPECT_FALSE(bridge->ShouldCloseOnDeactivate());

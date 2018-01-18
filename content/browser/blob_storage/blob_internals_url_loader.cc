@@ -11,12 +11,12 @@
 namespace content {
 
 void StartBlobInternalsURLLoader(
-    const network::ResourceRequest& request,
+    const ResourceRequest& request,
     mojom::URLLoaderClientPtrInfo client_info,
     ChromeBlobStorageContext* blob_storage_context) {
   scoped_refptr<net::HttpResponseHeaders> headers(
       new net::HttpResponseHeaders("HTTP/1.1 200 OK"));
-  network::ResourceResponseHead resource_response;
+  ResourceResponseHead resource_response;
   resource_response.headers = headers;
   resource_response.mime_type = "text/html";
 

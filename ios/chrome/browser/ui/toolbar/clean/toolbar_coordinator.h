@@ -8,7 +8,6 @@
 #import <UIKit/UIKit.h>
 
 #include "ios/chrome/browser/ui/qr_scanner/requirements/qr_scanner_result_loading.h"
-#import "ios/chrome/browser/ui/toolbar/public/fakebox_focuser.h"
 #import "ios/chrome/browser/ui/toolbar/public/omnibox_focuser.h"
 #import "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_provider.h"
 #include "ios/public/provider/chrome/browser/voice/voice_search_controller_delegate.h"
@@ -30,7 +29,6 @@ class WebState;
 
 // Coordinator to run a toolbar -- a UI element housing controls.
 @interface ToolbarCoordinator : NSObject<OmniboxFocuser,
-                                         FakeboxFocuser,
                                          QRScannerResultLoading,
                                          ToolsMenuPresentationProvider,
                                          VoiceSearchControllerDelegate>
@@ -93,6 +91,9 @@ class WebState;
 - (void)activateFakeSafeAreaInsets:(UIEdgeInsets)fakeSafeAreaInsets;
 // Deactivates the constraints used to create a fake safe area.
 - (void)deactivateFakeSafeAreaInsets;
+// Navigates to the Memex tab switcher.
+// TODO(crbug.com/799601): Delete this once its not needed.
+- (void)navigateToMemexTabSwitcher;
 
 @end
 

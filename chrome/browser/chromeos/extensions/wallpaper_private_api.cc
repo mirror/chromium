@@ -18,6 +18,7 @@
 #include "base/files/file_enumerator.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted_memory.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
@@ -181,14 +182,12 @@ ExtensionFunction::ResponseAction WallpaperPrivateGetStringsFunction::Run() {
   const std::string& app_locale = g_browser_process->GetApplicationLocale();
   webui::SetLoadTimeDataDefaults(app_locale, dict.get());
 
-  // TODO(crbug.com/777293, 776464): Make it work under mash (most likely by
-  // creating a mojo callback).
-  dict->SetString("currentWallpaper",
-                  ash::Shell::HasInstance()
-                      ? ash::Shell::Get()
-                            ->wallpaper_controller()
-                            ->GetActiveUserWallpaperLocation()
-                      : std::string());
+  chromeos::WallpaperManager* wallpaper_manager =
+      chromeos::WallpaperManager::Get();
+  wallpaper::WallpaperInfo info;
+
+  if (wallpaper_manager->GetLoggedInUserWallpaperInfo(&info))
+    dict->SetString("currentWallpaper", info.location);
 
 #if defined(GOOGLE_CHROME_BUILD)
   dict->SetString("manifestBaseURL", kWallpaperManifestBaseURL);
@@ -203,9 +202,6 @@ ExtensionFunction::ResponseAction WallpaperPrivateGetStringsFunction::Run() {
   dict->SetBoolean("isOEMDefaultWallpaper", IsOEMDefaultWallpaper());
   dict->SetString("canceledWallpaper",
                   wallpaper_api_util::kCancelWallpaperMessage);
-  dict->SetBoolean("useNewWallpaperPicker",
-                   base::CommandLine::ForCurrentProcess()->HasSwitch(
-                       chromeos::switches::kNewWallpaperPicker));
 
   return RespondNow(OneArgument(std::move(dict)));
 }
@@ -348,7 +344,7 @@ void WallpaperPrivateSetWallpaperIfExistsFunction::OnWallpaperDecoded(
       user_manager::UserManager::Get()->GetActiveUser()->GetAccountId();
   WallpaperControllerClient::Get()->SetOnlineWallpaper(
       account_id_, image, params->url, layout, update_wallpaper);
-  SetResult(std::make_unique<base::Value>(true));
+  SetResult(base::MakeUnique<base::Value>(true));
   Profile* profile = Profile::FromBrowserContext(browser_context());
   // This API is only available to the component wallpaper picker. We do not
   // need to show the app's name if it is the component wallpaper picker. So set
@@ -360,7 +356,7 @@ void WallpaperPrivateSetWallpaperIfExistsFunction::OnWallpaperDecoded(
 
 void WallpaperPrivateSetWallpaperIfExistsFunction::OnFileNotExists(
     const std::string& error) {
-  SetResult(std::make_unique<base::Value>(false));
+  SetResult(base::MakeUnique<base::Value>(false));
   OnFailure(error);
 }
 

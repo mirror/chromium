@@ -93,7 +93,7 @@ class DelegatingURLLoader final : public mojom::URLLoader {
 };
 
 void NotifyNavigationPreloadRequestSentOnUI(
-    const network::ResourceRequest& request,
+    const ResourceRequest& request,
     const std::pair<int, int>& worker_id,
     const std::string& request_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -103,7 +103,7 @@ void NotifyNavigationPreloadRequestSentOnUI(
 
 void NotifyNavigationPreloadResponseReceivedOnUI(
     const GURL& url,
-    const network::ResourceResponseHead& head,
+    const ResourceResponseHead& head,
     const std::pair<int, int>& worker_id,
     const std::string& request_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -130,7 +130,7 @@ class DelegatingURLLoaderClient final : public mojom::URLLoaderClient {
   using WorkerId = std::pair<int, int>;
   explicit DelegatingURLLoaderClient(mojom::URLLoaderClientPtr client,
                                      base::OnceClosure on_response,
-                                     const network::ResourceRequest& request)
+                                     const ResourceRequest& request)
       : binding_(this),
         client_(std::move(client)),
         on_response_(std::move(on_response)),
@@ -171,7 +171,7 @@ class DelegatingURLLoaderClient final : public mojom::URLLoaderClient {
     client_->OnTransferSizeUpdated(transfer_size_diff);
   }
   void OnReceiveResponse(
-      const network::ResourceResponseHead& head,
+      const ResourceResponseHead& head,
       const base::Optional<net::SSLInfo>& ssl_info,
       mojom::DownloadedTempFilePtr downloaded_file) override {
     client_->OnReceiveResponse(head, ssl_info, std::move(downloaded_file));
@@ -181,7 +181,7 @@ class DelegatingURLLoaderClient final : public mojom::URLLoaderClient {
         base::Bind(&NotifyNavigationPreloadResponseReceivedOnUI, url_, head));
   }
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
-                         const network::ResourceResponseHead& head) override {
+                         const ResourceResponseHead& head) override {
     completed_ = true;
     // When the server returns a redirect response, we only send
     // OnReceiveRedirect IPC and don't send OnComplete IPC. The service worker
@@ -455,7 +455,7 @@ class ServiceWorkerFetchDispatcher::URLLoaderAssets
 
 // S13nServiceWorker
 ServiceWorkerFetchDispatcher::ServiceWorkerFetchDispatcher(
-    std::unique_ptr<network::ResourceRequest> request,
+    std::unique_ptr<ResourceRequest> request,
     scoped_refptr<ServiceWorkerVersion> version,
     const base::Optional<base::TimeDelta>& timeout,
     const net::NetLogWithSource& net_log,
@@ -545,19 +545,21 @@ void ServiceWorkerFetchDispatcher::StartWorker() {
   version_->RunAfterStartWorker(
       GetEventType(),
       base::BindOnce(&ServiceWorkerFetchDispatcher::DidStartWorker,
+                     weak_factory_.GetWeakPtr()),
+      base::BindOnce(&ServiceWorkerFetchDispatcher::DidFailToStartWorker,
                      weak_factory_.GetWeakPtr()));
 }
 
-void ServiceWorkerFetchDispatcher::DidStartWorker(
-    ServiceWorkerStatusCode status) {
-  if (status != SERVICE_WORKER_OK) {
-    EndNetLogEventWithServiceWorkerStatus(
-        net_log_, net::NetLogEventType::SERVICE_WORKER_START_WORKER, status);
-    DidFail(status);
-    return;
-  }
+void ServiceWorkerFetchDispatcher::DidStartWorker() {
   net_log_.EndEvent(net::NetLogEventType::SERVICE_WORKER_START_WORKER);
   DispatchFetchEvent();
+}
+
+void ServiceWorkerFetchDispatcher::DidFailToStartWorker(
+    ServiceWorkerStatusCode status) {
+  EndNetLogEventWithServiceWorkerStatus(
+      net_log_, net::NetLogEventType::SERVICE_WORKER_START_WORKER, status);
+  DidFail(status);
 }
 
 void ServiceWorkerFetchDispatcher::DispatchFetchEvent() {
@@ -711,7 +713,7 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreload(
       mojo::MakeRequest(&url_loader_factory),
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 
-  network::ResourceRequest request;
+  ResourceRequest request;
   request.method = original_request->method();
   request.url = original_request->url();
   // TODO(horo): Set site_for_cookies to support Same-site Cookies.
@@ -775,7 +777,7 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreload(
 
 // S13nServiceWorker
 bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreloadWithURLLoader(
-    const network::ResourceRequest& original_request,
+    const ResourceRequest& original_request,
     URLLoaderFactoryGetter* url_loader_factory_getter,
     base::OnceClosure on_response) {
   if (resource_type_ != RESOURCE_TYPE_MAIN_FRAME &&
@@ -788,7 +790,7 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreloadWithURLLoader(
   if (request_->request_body)
     return false;
 
-  network::ResourceRequest resource_request(original_request);
+  ResourceRequest resource_request(original_request);
   // Set to SUB_RESOURCE because we shouldn't trigger NavigationResourceThrottle
   // for the service worker navigation preload request.
   resource_request.resource_type = RESOURCE_TYPE_SUB_RESOURCE;

@@ -6,8 +6,6 @@
 
 #include <stddef.h>
 
-#include <utility>
-
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "chrome/common/prerender_messages.h"
@@ -53,7 +51,7 @@ void PrerenderDispatcher::DecrementPrefetchCount() {
   }
 }
 
-void PrerenderDispatcher::PrerenderStart(int prerender_id) {
+void PrerenderDispatcher::OnPrerenderStart(int prerender_id) {
   std::map<int, WebPrerender>::iterator it = prerenders_.find(prerender_id);
   if (it == prerenders_.end())
     return;
@@ -67,7 +65,7 @@ void PrerenderDispatcher::PrerenderStart(int prerender_id) {
   prerender.DidStartPrerender();
 }
 
-void PrerenderDispatcher::PrerenderStopLoading(int prerender_id) {
+void PrerenderDispatcher::OnPrerenderStopLoading(int prerender_id) {
   std::map<int, WebPrerender>::iterator it = prerenders_.find(prerender_id);
   if (it == prerenders_.end())
     return;
@@ -80,7 +78,7 @@ void PrerenderDispatcher::PrerenderStopLoading(int prerender_id) {
   prerender.DidSendLoadForPrerender();
 }
 
-void PrerenderDispatcher::PrerenderDomContentLoaded(int prerender_id) {
+void PrerenderDispatcher::OnPrerenderDomContentLoaded(int prerender_id) {
   std::map<int, WebPrerender>::iterator it = prerenders_.find(prerender_id);
   if (it == prerenders_.end())
     return;
@@ -94,11 +92,11 @@ void PrerenderDispatcher::PrerenderDomContentLoaded(int prerender_id) {
   prerender.DidSendDOMContentLoadedForPrerender();
 }
 
-void PrerenderDispatcher::PrerenderAddAlias(const GURL& alias) {
+void PrerenderDispatcher::OnPrerenderAddAlias(const GURL& alias) {
   running_prerender_urls_.insert(alias);
 }
 
-void PrerenderDispatcher::PrerenderRemoveAliases(
+void PrerenderDispatcher::OnPrerenderRemoveAliases(
     const std::vector<GURL>& aliases) {
   for (size_t i = 0; i < aliases.size(); ++i) {
     std::multiset<GURL>::iterator it = running_prerender_urls_.find(aliases[i]);
@@ -108,7 +106,7 @@ void PrerenderDispatcher::PrerenderRemoveAliases(
   }
 }
 
-void PrerenderDispatcher::PrerenderStop(int prerender_id) {
+void PrerenderDispatcher::OnPrerenderStop(int prerender_id) {
   std::map<int, WebPrerender>::iterator it = prerenders_.find(prerender_id);
   if (it == prerenders_.end())
     return;
@@ -125,22 +123,23 @@ void PrerenderDispatcher::PrerenderStop(int prerender_id) {
   prerenders_.erase(prerender_id);
 }
 
-void PrerenderDispatcher::OnPrerenderDispatcherRequest(
-    chrome::mojom::PrerenderDispatcherAssociatedRequest request) {
-  bindings_.AddBinding(this, std::move(request));
-}
+bool PrerenderDispatcher::OnControlMessageReceived(
+    const IPC::Message& message) {
+  bool handled = true;
+  IPC_BEGIN_MESSAGE_MAP(PrerenderDispatcher, message)
+    IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderStart, OnPrerenderStart)
+    IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderStopLoading,
+                        OnPrerenderStopLoading)
+    IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderDomContentLoaded,
+                        OnPrerenderDomContentLoaded)
+    IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderAddAlias, OnPrerenderAddAlias)
+    IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderRemoveAliases,
+                        OnPrerenderRemoveAliases)
+    IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderStop, OnPrerenderStop)
+    IPC_MESSAGE_UNHANDLED(handled = false)
+  IPC_END_MESSAGE_MAP()
 
-void PrerenderDispatcher::RegisterMojoInterfaces(
-    blink::AssociatedInterfaceRegistry* associated_interfaces) {
-  associated_interfaces->AddInterface(
-      base::Bind(&PrerenderDispatcher::OnPrerenderDispatcherRequest,
-                 base::Unretained(this)));
-}
-
-void PrerenderDispatcher::UnregisterMojoInterfaces(
-    blink::AssociatedInterfaceRegistry* associated_interfaces) {
-  associated_interfaces->RemoveInterface(
-      chrome::mojom::PrerenderDispatcher::Name_);
+  return handled;
 }
 
 void PrerenderDispatcher::Add(const WebPrerender& prerender) {

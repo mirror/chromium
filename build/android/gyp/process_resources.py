@@ -27,15 +27,10 @@ import generate_v14_compatible_resources
 
 from util import build_utils
 
-_SOURCE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
-    __file__))))
 # Import jinja2 from third_party/jinja2
-sys.path.insert(1, os.path.join(_SOURCE_ROOT, 'third_party'))
+sys.path.insert(1,
+    os.path.join(os.path.dirname(__file__), '../../../third_party'))
 from jinja2 import Template # pylint: disable=F0401
-
-
-_EMPTY_ANDROID_MANIFEST_PATH = os.path.join(
-    _SOURCE_ROOT, 'build', 'android', 'AndroidManifest.xml')
 
 
 # Represents a line from a R.txt file.
@@ -229,10 +224,6 @@ def _ParseArgs(args):
                     help='Convert png files to webp format.')
   parser.add_option('--webp-binary', default='',
                     help='Path to the cwebp binary.')
-  parser.add_option('--no-xml-namespaces',
-                    action='store_true',
-                    help='Whether to strip xml namespaces from processed xml '
-                    'resources')
 
   options, positional_args = parser.parse_args(args)
 
@@ -243,6 +234,7 @@ def _ParseArgs(args):
   required_options = (
       'android_sdk_jar',
       'aapt_path',
+      'android_manifest',
       'dependencies_res_zips',
       )
   build_utils.CheckOptions(options, parser, required=required_options)
@@ -670,9 +662,6 @@ def _CreateLinkApkArgs(options):
         options.locale_whitelist, options.support_zh_hk)
     link_command += ['-c', ','.join(aapt_locales)]
 
-  if options.no_xml_namespaces:
-    link_command.append('--no-xml-namespaces')
-
   return link_command
 
 
@@ -840,7 +829,7 @@ def _PackageLibrary(options, dep_subdirs, temp_dir, gen_dir):
   package_command = [options.aapt_path,
                      'package',
                      '-m',
-                     '-M', _EMPTY_ANDROID_MANIFEST_PATH,
+                     '-M', options.android_manifest,
                      '--no-crunch',
                      '--auto-add-overlay',
                      '--no-version-vectors',
@@ -905,7 +894,7 @@ def _CreateRTxtAndSrcJar(options, r_txt_path, srcjar_dir):
   r_txt_files = list(options.extra_r_text_files)
 
   cur_package = options.custom_package
-  if not options.custom_package and options.android_manifest:
+  if not options.custom_package:
     cur_package = _ExtractPackageFromManifest(options.android_manifest)
 
   # Don't create a .java file for the current resource target when:
@@ -913,7 +902,7 @@ def _CreateRTxtAndSrcJar(options, r_txt_path, srcjar_dir):
   # - there was already a dependent android_resources() with the same
   #   package (occurs mostly when an apk target and resources target share
   #   an AndroidManifest.xml)
-  if cur_package and cur_package not in packages:
+  if cur_package != 'org.dummy' and cur_package not in packages:
     packages.append(cur_package)
     r_txt_files.append(r_txt_path)
 
@@ -997,7 +986,6 @@ def main(args):
     str(options.debuggable),
     str(options.png_to_webp),
     str(options.support_zh_hk),
-    str(options.no_xml_namespaces),
   ]
 
   if options.apk_path:

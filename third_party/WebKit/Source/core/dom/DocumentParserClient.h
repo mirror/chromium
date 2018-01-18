@@ -17,7 +17,7 @@ class DocumentParserClient : public GarbageCollectedMixin {
   virtual void Trace(blink::Visitor* visitor) {}
 
  protected:
-  DocumentParserClient() = default;
+  DocumentParserClient() {}
 };
 
 }  // namespace blink

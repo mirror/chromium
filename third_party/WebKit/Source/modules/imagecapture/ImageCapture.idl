@@ -9,8 +9,7 @@
     ConstructorCallWith=ExecutionContext,
     Constructor(MediaStreamTrack track),
     MeasureAs=ImageCaptureConstructor,
-    RaisesException=Constructor,
-    Exposed=Window
+    RaisesException=Constructor
 ] interface ImageCapture {
     [ImplementedAs=videoStreamTrack] readonly attribute MediaStreamTrack track;
 

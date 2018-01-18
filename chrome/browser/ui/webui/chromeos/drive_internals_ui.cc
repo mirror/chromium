@@ -15,6 +15,7 @@
 #include "base/files/file_util.h"
 #include "base/format_macros.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/path_service.h"
 #include "base/strings/stringprintf.h"
@@ -86,7 +87,7 @@ void GetGCacheContents(const base::FilePath& root_path,
     const bool is_symbolic_link = base::IsLink(info.GetName());
     const base::Time last_modified = info.GetLastModifiedTime();
 
-    auto entry = std::make_unique<base::DictionaryValue>();
+    auto entry = base::MakeUnique<base::DictionaryValue>();
     entry->SetString("path", current.value());
     // Use double instead of integer for large files.
     entry->SetDouble("size", size);
@@ -207,7 +208,7 @@ std::string SeverityToString(logging::LogSeverity severity) {
 void AppendKeyValue(base::ListValue* list,
                     const std::string& key,
                     const std::string& value) {
-  auto dict = std::make_unique<base::DictionaryValue>();
+  auto dict = base::MakeUnique<base::DictionaryValue>();
   dict->SetString("key", key);
   dict->SetString("value", value);
   list->Append(std::move(dict));
@@ -356,10 +357,10 @@ void DriveInternalsWebUIHandler::OnGetAppList(
   base::DictionaryValue app_list;
   app_list.SetString("etag", parsed_app_list->etag());
 
-  auto items = std::make_unique<base::ListValue>();
+  auto items = base::MakeUnique<base::ListValue>();
   for (size_t i = 0; i < parsed_app_list->items().size(); ++i) {
     const google_apis::AppResource* app = parsed_app_list->items()[i].get();
-    auto app_data = std::make_unique<base::DictionaryValue>();
+    auto app_data = base::MakeUnique<base::DictionaryValue>();
     app_data->SetString("name", app->name());
     app_data->SetString("application_id", app->application_id());
     app_data->SetString("object_type", app->object_type());
@@ -653,7 +654,7 @@ void DriveInternalsWebUIHandler::UpdateInFlightOperationsSection(
   for (size_t i = 0; i < info_list.size(); ++i) {
     const drive::JobInfo& info = info_list[i];
 
-    auto dict = std::make_unique<base::DictionaryValue>();
+    auto dict = base::MakeUnique<base::DictionaryValue>();
     dict->SetInteger("id", info.job_id);
     dict->SetString("type", drive::JobTypeToString(info.job_type));
     dict->SetString("file_path", info.file_path.AsUTF8Unsafe());
@@ -755,7 +756,7 @@ void DriveInternalsWebUIHandler::UpdateEventLogSection() {
 
     std::string severity = SeverityToString(log[i].severity);
 
-    auto dict = std::make_unique<base::DictionaryValue>();
+    auto dict = base::MakeUnique<base::DictionaryValue>();
     dict->SetString("key",
         google_apis::util::FormatTimeAsStringLocaltime(log[i].when));
     dict->SetString("value", "[" + severity + "] " + log[i].what);
@@ -896,7 +897,7 @@ void DriveInternalsWebUIHandler::OnPeriodicUpdate(const base::ListValue* args) {
 
 DriveInternalsUI::DriveInternalsUI(content::WebUI* web_ui)
     : WebUIController(web_ui) {
-  web_ui->AddMessageHandler(std::make_unique<DriveInternalsWebUIHandler>());
+  web_ui->AddMessageHandler(base::MakeUnique<DriveInternalsWebUIHandler>());
 
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUIDriveInternalsHost);

@@ -17,16 +17,12 @@
 #include "google_apis/gaia/oauth2_token_service.h"
 #include "ios/public/provider/chrome/browser/signin/chrome_identity_service.h"
 
-namespace browser_sync {
-class ProfileSyncService;
+namespace ios {
+class ChromeBrowserState;
 }
 
-class AccountTrackerService;
-class AuthenticationServiceDelegate;
 @class ChromeIdentity;
-class PrefService;
 class ProfileOAuth2TokenService;
-class SigninManager;
 class SyncSetupService;
 
 // AuthenticationService is the Chrome interface to the iOS shared
@@ -35,24 +31,16 @@ class AuthenticationService : public KeyedService,
                               public OAuth2TokenService::Observer,
                               public ios::ChromeIdentityService::Observer {
  public:
-  AuthenticationService(PrefService* pref_service,
+  AuthenticationService(ios::ChromeBrowserState* browser_state,
                         ProfileOAuth2TokenService* token_service,
-                        SyncSetupService* sync_setup_service,
-                        AccountTrackerService* account_tracker,
-                        SigninManager* signin_manager,
-                        browser_sync::ProfileSyncService* sync_service);
+                        SyncSetupService* sync_setup_service);
   ~AuthenticationService() override;
 
   // Registers the preferences used by AuthenticationService;
   static void RegisterPrefs(user_prefs::PrefRegistrySyncable* registry);
 
-  // Returns whether the AuthenticationService has been initialized. It is
-  // a fatal error to invoke any method on this object except Initialize()
-  // if this method returns false.
-  bool initialized() const { return initialized_; }
-
   // Initializes the AuthenticationService.
-  void Initialize(std::unique_ptr<AuthenticationServiceDelegate> delegate);
+  void Initialize();
 
   // KeyedService
   void Shutdown() override;
@@ -188,41 +176,29 @@ class AuthenticationService : public KeyedService,
                                   NSDictionary* user_info) override;
   void OnChromeIdentityServiceWillBeDestroyed() override;
 
-  // The delegate for this AuthenticationService. It is invalid to call any
-  // method on this object except Initialize() or Shutdown() if this pointer
-  // is null.
-  std::unique_ptr<AuthenticationServiceDelegate> delegate_;
-
-  // Pointer to the KeyedServices used by AuthenticationService.
-  PrefService* pref_service_ = nullptr;
-  ProfileOAuth2TokenService* token_service_ = nullptr;
-  SyncSetupService* sync_setup_service_ = nullptr;
-  AccountTrackerService* account_tracker_ = nullptr;
-  SigninManager* signin_manager_ = nullptr;
-  browser_sync::ProfileSyncService* sync_service_ = nullptr;
-
-  // Whether Initialized has been called.
-  bool initialized_ = false;
+  ios::ChromeBrowserState* browser_state_;    // Weak.
+  ProfileOAuth2TokenService* token_service_;  // Weak.
+  SyncSetupService* sync_setup_service_;      // Weak.
 
   // Whether the accounts have changed while the AuthenticationService was in
   // background. When the AuthenticationService is in background, this value
   // cannot be trusted.
-  bool have_accounts_changed_ = false;
+  bool have_accounts_changed_;
 
   // Whether the AuthenticationService behaves as being in foreground. In
   // background, identities changes aren't always notified and can't be
   // initiated by the user.
-  bool is_in_foreground_ = false;
+  bool is_in_foreground_;
 
   // Whether the AuthenticationService is currently reloading credentials, used
   // to avoid an infinite reloading loop.
-  bool is_reloading_credentials_ = false;
+  bool is_reloading_credentials_;
 
   // Map between account IDs and their associated MDM error.
   std::map<std::string, NSDictionary*> cached_mdm_infos_;
 
-  id foreground_observer_ = nil;
-  id background_observer_ = nil;
+  id foreground_observer_;
+  id background_observer_;
 
   ScopedObserver<ios::ChromeIdentityService,
                  ios::ChromeIdentityService::Observer>

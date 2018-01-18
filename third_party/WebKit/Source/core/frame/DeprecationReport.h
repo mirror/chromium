@@ -22,7 +22,7 @@ class CORE_EXPORT DeprecationReport : public MessageReport {
         id_(id),
         anticipatedRemoval_(anticipatedRemoval) {}
 
-  ~DeprecationReport() override = default;
+  ~DeprecationReport() override {}
 
   String id() const { return id_; }
   double anticipatedRemoval(bool& is_null) const {

@@ -28,8 +28,8 @@
 
 #include "base/macros.h"
 #include "core/CoreExport.h"
+#include "core/html/HTMLCanvasElement.h"
 #include "core/html/canvas/CanvasContextCreationAttributes.h"
-#include "core/html/canvas/HTMLCanvasElement.h"
 #include "core/layout/HitTestCanvasResult.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
 #include "platform/graphics/CanvasColorParams.h"
@@ -61,7 +61,7 @@ class CORE_EXPORT CanvasRenderingContext : public ScriptWrappable,
   USING_PRE_FINALIZER(CanvasRenderingContext, Dispose);
 
  public:
-  virtual ~CanvasRenderingContext() = default;
+  virtual ~CanvasRenderingContext() {}
 
   // A Canvas can either be "2D" or "webgl" but never both. If you request a 2D
   // canvas and the existing context is already 2D, just return that. If the

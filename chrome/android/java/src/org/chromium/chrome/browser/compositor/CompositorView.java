@@ -167,9 +167,7 @@ public class CompositorView
      */
     public void initNativeCompositor(boolean lowMemDevice, WindowAndroid windowAndroid,
             LayerTitleCache layerTitleCache, TabContentManager tabContentManager) {
-        // https://crbug.com/802160. We can't call setWindowAndroid here because updating the window
-        // visibility here breaks exiting Reader Mode somehow.
-        mWindowAndroid = windowAndroid;
+        setWindowAndroid(windowAndroid);
         mLayerTitleCache = layerTitleCache;
         mTabContentManager = tabContentManager;
 

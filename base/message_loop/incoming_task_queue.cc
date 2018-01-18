@@ -104,12 +104,11 @@ void IncomingTaskQueue::StartScheduling() {
     DCHECK(!message_loop_scheduled_);
     is_ready_for_scheduling_ = true;
     schedule_work = !incoming_queue_.empty();
-    if (schedule_work)
-      message_loop_scheduled_ = true;
   }
   if (schedule_work) {
     DCHECK(message_loop_);
-    AutoLock auto_lock(message_loop_lock_);
+    // Don't need to lock |message_loop_lock_| here because this function is
+    // called by MessageLoop on its thread.
     message_loop_->ScheduleWork();
   }
 }

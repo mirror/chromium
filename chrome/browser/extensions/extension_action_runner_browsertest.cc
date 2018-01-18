@@ -12,6 +12,7 @@
 
 #include "base/files/file_path.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/extensions/extension_action.h"
@@ -318,17 +319,17 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
   // The extensions that operate on explicit hosts have permission; the ones
   // that request all hosts require user consent.
   std::vector<std::unique_ptr<ActiveScriptTester>> testers;
-  testers.push_back(std::make_unique<ActiveScriptTester>(
+  testers.push_back(base::MakeUnique<ActiveScriptTester>(
       "inject_scripts_all_hosts", CreateExtension(ALL_HOSTS, EXECUTE_SCRIPT),
       browser(), REQUIRES_CONSENT, EXECUTE_SCRIPT));
-  testers.push_back(std::make_unique<ActiveScriptTester>(
+  testers.push_back(base::MakeUnique<ActiveScriptTester>(
       "inject_scripts_explicit_hosts",
       CreateExtension(EXPLICIT_HOSTS, EXECUTE_SCRIPT), browser(),
       DOES_NOT_REQUIRE_CONSENT, EXECUTE_SCRIPT));
-  testers.push_back(std::make_unique<ActiveScriptTester>(
+  testers.push_back(base::MakeUnique<ActiveScriptTester>(
       "content_scripts_all_hosts", CreateExtension(ALL_HOSTS, CONTENT_SCRIPT),
       browser(), REQUIRES_CONSENT, CONTENT_SCRIPT));
-  testers.push_back(std::make_unique<ActiveScriptTester>(
+  testers.push_back(base::MakeUnique<ActiveScriptTester>(
       "content_scripts_explicit_hosts",
       CreateExtension(EXPLICIT_HOSTS, CONTENT_SCRIPT), browser(),
       DOES_NOT_REQUIRE_CONSENT, CONTENT_SCRIPT));
@@ -469,7 +470,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
   // Wire up the runner to automatically accept the bubble to prompt for page
   // refresh.
   runner->set_default_bubble_close_action_for_testing(
-      std::make_unique<ToolbarActionsBarBubbleDelegate::CloseAction>(
+      base::MakeUnique<ToolbarActionsBarBubbleDelegate::CloseAction>(
           ToolbarActionsBarBubbleDelegate::CLOSE_EXECUTE));
 
   content::NavigationEntry* entry =
@@ -505,7 +506,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
   const int next_nav_id =
       web_contents->GetController().GetLastCommittedEntry()->GetUniqueID();
   runner->set_default_bubble_close_action_for_testing(
-      std::make_unique<ToolbarActionsBarBubbleDelegate::CloseAction>(
+      base::MakeUnique<ToolbarActionsBarBubbleDelegate::CloseAction>(
           ToolbarActionsBarBubbleDelegate::CLOSE_DISMISS_USER_ACTION));
 
   // Try running the extension. Nothing should happen, because the user
@@ -520,7 +521,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
 
   // Repeat with a dismissal from bubble deactivation - same story.
   runner->set_default_bubble_close_action_for_testing(
-      std::make_unique<ToolbarActionsBarBubbleDelegate::CloseAction>(
+      base::MakeUnique<ToolbarActionsBarBubbleDelegate::CloseAction>(
           ToolbarActionsBarBubbleDelegate::CLOSE_DISMISS_DEACTIVATION));
   runner->RunAction(extension, true);
   base::RunLoop().RunUntilIdle();
@@ -545,10 +546,10 @@ class FlagOffExtensionActionRunnerBrowserTest
 IN_PROC_BROWSER_TEST_F(FlagOffExtensionActionRunnerBrowserTest,
                        ScriptsExecuteWhenFlagAbsent) {
   std::vector<std::unique_ptr<ActiveScriptTester>> testers;
-  testers.push_back(std::make_unique<ActiveScriptTester>(
+  testers.push_back(base::MakeUnique<ActiveScriptTester>(
       "content_scripts_all_hosts", CreateExtension(ALL_HOSTS, CONTENT_SCRIPT),
       browser(), DOES_NOT_REQUIRE_CONSENT, CONTENT_SCRIPT));
-  testers.push_back(std::make_unique<ActiveScriptTester>(
+  testers.push_back(base::MakeUnique<ActiveScriptTester>(
       "inject_scripts_all_hosts", CreateExtension(ALL_HOSTS, EXECUTE_SCRIPT),
       browser(), DOES_NOT_REQUIRE_CONSENT, EXECUTE_SCRIPT));
 

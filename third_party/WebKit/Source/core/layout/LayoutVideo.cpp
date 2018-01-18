@@ -41,7 +41,7 @@ LayoutVideo::LayoutVideo(HTMLVideoElement* video) : LayoutMedia(video) {
   SetIntrinsicSize(CalculateIntrinsicSize());
 }
 
-LayoutVideo::~LayoutVideo() = default;
+LayoutVideo::~LayoutVideo() {}
 
 LayoutSize LayoutVideo::DefaultSize() {
   return LayoutSize(kDefaultWidth, kDefaultHeight);

@@ -9,7 +9,6 @@ import static org.chromium.chrome.browser.crash.MinidumpUploadService.GPU;
 import static org.chromium.chrome.browser.crash.MinidumpUploadService.OTHER;
 import static org.chromium.chrome.browser.crash.MinidumpUploadService.RENDERER;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
@@ -667,7 +666,6 @@ public class MinidumpUploadServiceTest {
         public void cancelAll() {}
 
         @Override
-        @SuppressLint("WrongConstant")
         public int enqueue(JobInfo job, JobWorkItem work) {
             return 0;
         }

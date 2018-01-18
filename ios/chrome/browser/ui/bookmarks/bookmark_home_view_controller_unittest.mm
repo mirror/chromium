@@ -6,7 +6,9 @@
 
 #include "base/test/scoped_feature_list.h"
 #include "components/bookmarks/browser/bookmark_model.h"
+#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #import "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
+#import "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller_protected.h"
 #include "ios/chrome/browser/ui/bookmarks/bookmark_ios_unittest.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -19,6 +21,11 @@ using BookmarkHomeViewControllerTest = BookmarkIOSUnitTest;
 
 TEST_F(BookmarkHomeViewControllerTest, LoadBookmarks) {
   @autoreleasepool {
+    // TODO(crbug.com/753599): Remove scoped feature list when clean up old
+    // bookmarks.
+    base::test::ScopedFeatureList scoped_feature_list;
+    scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
+
     BookmarkHomeViewController* controller = [[BookmarkHomeViewController alloc]
         initWithLoader:nil
           browserState:chrome_browser_state_.get()
@@ -28,8 +35,8 @@ TEST_F(BookmarkHomeViewControllerTest, LoadBookmarks) {
     EXPECT_EQ(nil, controller.contextBar);
     EXPECT_EQ(nil, controller.bookmarksTableView);
 
-    [controller setRootNode:_bookmarkModel->mobile_node()];
     [controller view];
+    [controller setRootNode:_bookmarkModel->mobile_node()];
     [controller loadBookmarkViews];
 
     EXPECT_NE(nil, controller);
@@ -48,7 +55,6 @@ TEST_F(BookmarkHomeViewControllerTest, LoadWaitingView) {
 
     EXPECT_TRUE(controller.waitForModelView == nil);
 
-    [controller setRootNode:_bookmarkModel->mobile_node()];
     [controller view];
     [controller loadWaitingView];
 

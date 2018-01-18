@@ -47,9 +47,6 @@ class APP_LIST_EXPORT SearchResultTileItemView
   // color.
   void SetParentBackgroundColor(SkColor color);
 
-  // Records the context menu user journey time.
-  void OnContextMenuClosed(const base::TimeTicks& open_time);
-
   // Overridden from views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
@@ -114,8 +111,6 @@ class APP_LIST_EXPORT SearchResultTileItemView
   std::unique_ptr<views::MenuRunner> context_menu_runner_;
 
   const bool is_play_store_app_search_enabled_;
-
-  base::WeakPtrFactory<SearchResultTileItemView> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(SearchResultTileItemView);
 };

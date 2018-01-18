@@ -16,18 +16,17 @@
 #include "base/observer_list.h"
 #include "base/unguessable_token.h"
 #include "content/common/content_export.h"
-#include "third_party/WebKit/public/web/devtools_agent.mojom.h"
 #include "url/gurl.h"
 
 namespace network {
-struct ResourceRequest;
-struct ResourceResponseHead;
 struct URLLoaderCompletionStatus;
 }
 
 namespace content {
 
 class BrowserContext;
+struct ResourceRequest;
+struct ResourceResponseHead;
 class ServiceWorkerDevToolsAgentHost;
 class ServiceWorkerContextCore;
 
@@ -36,8 +35,9 @@ class CONTENT_EXPORT ServiceWorkerDevToolsManager {
  public:
   class Observer {
    public:
-    virtual void WorkerCreated(ServiceWorkerDevToolsAgentHost* host,
-                               bool* should_pause_on_start) {}
+    virtual void WorkerCreated(ServiceWorkerDevToolsAgentHost* host) {}
+    virtual void WorkerReadyForInspection(
+        ServiceWorkerDevToolsAgentHost* host) {}
     virtual void WorkerVersionInstalled(ServiceWorkerDevToolsAgentHost* host) {}
     virtual void WorkerVersionDoomed(ServiceWorkerDevToolsAgentHost* host) {}
     virtual void WorkerDestroyed(ServiceWorkerDevToolsAgentHost* host) {}
@@ -68,23 +68,19 @@ class CONTENT_EXPORT ServiceWorkerDevToolsManager {
                      bool is_installed_version,
                      base::UnguessableToken* devtools_worker_token,
                      bool* pause_on_start);
-  void WorkerReadyForInspection(
-      int worker_process_id,
-      int worker_route_id,
-      blink::mojom::DevToolsAgentAssociatedPtrInfo devtools_agent_ptr_info);
+  void WorkerReadyForInspection(int worker_process_id, int worker_route_id);
   void WorkerVersionInstalled(int worker_process_id, int worker_route_id);
   void WorkerVersionDoomed(int worker_process_id, int worker_route_id);
   void WorkerDestroyed(int worker_process_id, int worker_route_id);
   void NavigationPreloadRequestSent(int worker_process_id,
                                     int worker_route_id,
                                     const std::string& request_id,
-                                    const network::ResourceRequest& request);
-  void NavigationPreloadResponseReceived(
-      int worker_process_id,
-      int worker_route_id,
-      const std::string& request_id,
-      const GURL& url,
-      const network::ResourceResponseHead& head);
+                                    const ResourceRequest& request);
+  void NavigationPreloadResponseReceived(int worker_process_id,
+                                         int worker_route_id,
+                                         const std::string& request_id,
+                                         const GURL& url,
+                                         const ResourceResponseHead& head);
   void NavigationPreloadCompleted(
       int worker_process_id,
       int worker_route_id,

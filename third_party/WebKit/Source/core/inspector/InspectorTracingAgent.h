@@ -24,7 +24,7 @@ class CORE_EXPORT InspectorTracingAgent final
  public:
   class Client {
    public:
-    virtual ~Client() = default;
+    virtual ~Client() {}
 
     virtual void ShowReloadingBlanket() = 0;
     virtual void HideReloadingBlanket() = 0;

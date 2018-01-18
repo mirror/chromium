@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/android/application_status_listener.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/simple_test_clock.h"
@@ -51,7 +52,7 @@ namespace {
 
 std::unique_ptr<sync_preferences::TestingPrefServiceSyncable>
 RegisteredPrefs() {
-  auto prefs = std::make_unique<sync_preferences::TestingPrefServiceSyncable>();
+  auto prefs = base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
   ContentSuggestionsService::RegisterProfilePrefs(prefs->registry());
   UserClassifier::RegisterProfilePrefs(prefs->registry());
   ContentSuggestionsNotifierService::RegisterProfilePrefs(prefs->registry());
@@ -67,10 +68,10 @@ class FakeContentSuggestionsService : public ContentSuggestionsService {
             /*history_service=*/nullptr,
             /*large_icon_cache=*/nullptr,
             prefs,
-            std::make_unique<FakeCategoryRanker>(),
-            std::make_unique<UserClassifier>(nullptr, clock),
+            base::MakeUnique<FakeCategoryRanker>(),
+            base::MakeUnique<UserClassifier>(nullptr, clock),
             /*remote_suggestions_scheduler=*/nullptr,
-            std::make_unique<ntp_snippets::Logger>()) {}
+            base::MakeUnique<ntp_snippets::Logger>()) {}
 };
 
 class FakeArticleProvider : public ContentSuggestionsProvider {

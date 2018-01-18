@@ -59,7 +59,7 @@ class SmbProviderClientImpl : public SmbProviderClient {
                &SmbProviderClientImpl::HandleMountCallback, &callback);
   }
 
-  void Unmount(int32_t mount_id, StatusCallback callback) override {
+  void Unmount(int32_t mount_id, UnmountCallback callback) override {
     smbprovider::UnmountOptions options;
     options.set_mount_id(mount_id);
     CallMethod(smbprovider::kUnmountMethod, options,
@@ -104,7 +104,7 @@ class SmbProviderClientImpl : public SmbProviderClient {
 
   void CloseFile(int32_t mount_id,
                  int32_t file_id,
-                 StatusCallback callback) override {
+                 CloseFileCallback callback) override {
     smbprovider::CloseFileOptions options;
     options.set_mount_id(mount_id);
     options.set_file_id(file_id);
@@ -161,7 +161,7 @@ class SmbProviderClientImpl : public SmbProviderClient {
   }
 
   // Handles D-Bus callback for unmount.
-  void HandleUnmountCallback(StatusCallback callback,
+  void HandleUnmountCallback(UnmountCallback callback,
                              dbus::Response* response) {
     if (!response) {
       DLOG(ERROR) << "Unmount: failed to call smbprovider";
@@ -195,7 +195,7 @@ class SmbProviderClientImpl : public SmbProviderClient {
   }
 
   // Handles D-Bus callback for CloseFile.
-  void HandleCloseFileCallback(StatusCallback callback,
+  void HandleCloseFileCallback(CloseFileCallback callback,
                                dbus::Response* response) {
     if (!response) {
       DLOG(ERROR) << "CloseFile: failed to call smbprovider";

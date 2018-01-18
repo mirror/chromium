@@ -12,6 +12,7 @@ traits_headers = [
   "//third_party/WebKit/Source/platform/mojo/FetchAPIRequestStructTraits.h",
 ]
 type_mappings = [
+  "blink.mojom.FetchRedirectMode=::blink::WebURLRequest::FetchRedirectMode",
   "blink.mojom.FetchAPIRequest=::blink::WebServiceWorkerRequest",
   "blink.mojom.RequestContextType=::blink::WebURLRequest::RequestContext",
 ]

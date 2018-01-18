@@ -66,8 +66,11 @@ WatchTimeReporter::WatchTimeReporter(
 WatchTimeReporter::~WatchTimeReporter() {
   background_reporter_.reset();
 
-  // This is our last chance, so finalize now if there's anything remaining.
-  MaybeFinalizeWatchTime(FinalizeTime::IMMEDIATELY);
+  // If the timer is still running, finalize immediately, this is our last
+  // chance to capture metrics.
+  if (reporting_timer_.IsRunning())
+    MaybeFinalizeWatchTime(FinalizeTime::IMMEDIATELY);
+
   if (base::PowerMonitor* pm = base::PowerMonitor::Get())
     pm->RemoveObserver(this);
 }
@@ -92,9 +95,16 @@ void WatchTimeReporter::OnSeeking() {
   if (background_reporter_)
     background_reporter_->OnSeeking();
 
+  if (!reporting_timer_.IsRunning())
+    return;
+
   // Seek is a special case that does not have hysteresis, when this is called
   // the seek is imminent, so finalize the previous playback immediately.
-  MaybeFinalizeWatchTime(FinalizeTime::IMMEDIATELY);
+
+  // Don't trample an existing end timestamp.
+  if (end_timestamp_ == kNoTimestamp)
+    end_timestamp_ = get_media_time_cb_.Run();
+  UpdateWatchTime();
 }
 
 void WatchTimeReporter::OnVolumeChange(double volume) {
@@ -193,20 +203,6 @@ void WatchTimeReporter::OnDisplayTypePictureInPicture() {
   OnDisplayTypeChanged(blink::WebMediaPlayer::DisplayType::kPictureInPicture);
 }
 
-void WatchTimeReporter::SetAudioDecoderName(const std::string& name) {
-  DCHECK(properties_->has_audio);
-  recorder_->SetAudioDecoderName(name);
-  if (background_reporter_)
-    background_reporter_->SetAudioDecoderName(name);
-}
-
-void WatchTimeReporter::SetVideoDecoderName(const std::string& name) {
-  DCHECK(properties_->has_video);
-  recorder_->SetVideoDecoderName(name);
-  if (background_reporter_)
-    background_reporter_->SetVideoDecoderName(name);
-}
-
 void WatchTimeReporter::OnPowerStateChange(bool on_battery_power) {
   if (!reporting_timer_.IsRunning())
     return;
@@ -262,7 +258,6 @@ void WatchTimeReporter::MaybeStartReportingTimer(
     return;
 
   underflow_count_ = 0;
-  pending_underflow_events_.clear();
   last_media_timestamp_ = last_media_power_timestamp_ =
       last_media_controls_timestamp_ = end_timestamp_for_power_ =
           last_media_display_type_timestamp_ = end_timestamp_for_display_type_ =

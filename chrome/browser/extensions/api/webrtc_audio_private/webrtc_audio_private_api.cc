@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/lazy_instance.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/task_runner_util.h"
@@ -92,9 +93,9 @@ void WebrtcAudioPrivateEventService::SignalEvent() {
     const std::string& extension_id = extension->id();
     if (router->ExtensionHasEventListener(extension_id, kEventName) &&
         extension->permissions_data()->HasAPIPermission("webrtcAudioPrivate")) {
-      std::unique_ptr<Event> event = std::make_unique<Event>(
+      std::unique_ptr<Event> event = base::MakeUnique<Event>(
           events::WEBRTC_AUDIO_PRIVATE_ON_SINKS_CHANGED, kEventName,
-          std::make_unique<base::ListValue>());
+          base::MakeUnique<base::ListValue>());
       router->DispatchEventToExtension(extension_id, std::move(event));
     }
   }
@@ -197,7 +198,7 @@ void WebrtcAudioPrivateGetSinksFunction::
     ReceiveOutputDeviceDescriptionsOnIOThread(
         media::AudioDeviceDescriptions sink_devices) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  auto results = std::make_unique<SinkInfoVector>();
+  auto results = base::MakeUnique<SinkInfoVector>();
   for (const media::AudioDeviceDescription& description : sink_devices) {
     wap::SinkInfo info;
     info.sink_id = CalculateHMAC(description.unique_id);

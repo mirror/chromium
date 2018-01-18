@@ -140,26 +140,17 @@ void CompositorFrameSinkSupport::SetNeedsBeginFrame(bool needs_begin_frame) {
   UpdateNeedsBeginFramesInternal();
 }
 
-void CompositorFrameSinkSupport::SetWantsAnimateOnlyBeginFrames() {
-  wants_animate_only_begin_frames_ = true;
-}
-
-bool CompositorFrameSinkSupport::WantsAnimateOnlyBeginFrames() const {
-  return wants_animate_only_begin_frames_;
-}
-
 void CompositorFrameSinkSupport::DidNotProduceFrame(const BeginFrameAck& ack) {
   TRACE_EVENT2("viz", "CompositorFrameSinkSupport::DidNotProduceFrame",
                "ack.source_id", ack.source_id, "ack.sequence_number",
                ack.sequence_number);
   DCHECK_GE(ack.sequence_number, BeginFrameArgs::kStartingFrameNumber);
 
-  // Override the has_damage flag (ignoring invalid data from clients).
-  BeginFrameAck modified_ack(ack);
-  modified_ack.has_damage = false;
+  // |has_damage| is not transmitted, but false by default.
+  DCHECK(!ack.has_damage);
 
   if (current_surface_id_.is_valid())
-    surface_manager_->SurfaceModified(current_surface_id_, modified_ack);
+    surface_manager_->SurfaceModified(current_surface_id_, ack);
 
   if (begin_frame_source_)
     begin_frame_source_->DidFinishFrame(this);
@@ -186,7 +177,7 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
   uint64_t frame_index = ++last_frame_index_;
   ++ack_pending_count_;
 
-  // Override the has_damage flag (ignoring invalid data from clients).
+  // |has_damage| is not transmitted.
   frame.metadata.begin_frame_ack.has_damage = true;
   BeginFrameAck ack = frame.metadata.begin_frame_ack;
   DCHECK_LE(BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
@@ -215,23 +206,14 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
 
     // LocalSurfaceIds should be monotonically increasing. This ID is used
     // to determine the freshness of a surface at aggregation time.
-    const LocalSurfaceId& current_local_surface_id =
-        current_surface_id_.local_surface_id();
-    // Neither sequence numbers of the LocalSurfaceId can decrease and at least
-    // one must increase.
     bool monotonically_increasing_id =
-        (local_surface_id.parent_sequence_number() >=
-             current_local_surface_id.parent_sequence_number() &&
-         local_surface_id.child_sequence_number() >=
-             current_local_surface_id.child_sequence_number()) &&
-        (local_surface_id.parent_sequence_number() >
-             current_local_surface_id.parent_sequence_number() ||
-         local_surface_id.child_sequence_number() >
-             current_local_surface_id.child_sequence_number());
+        local_surface_id.parent_sequence_number() >
+        current_surface_id_.local_surface_id().parent_sequence_number();
 
     if (!surface_info.is_valid() || !monotonically_increasing_id) {
       TRACE_EVENT_INSTANT0("viz", "Surface Invariants Violation",
                            TRACE_EVENT_SCOPE_THREAD);
+      EvictCurrentSurface();
       std::vector<ReturnedResource> resources =
           TransferableResource::ReturnResources(frame.resource_list);
       ReturnResources(resources);
@@ -240,7 +222,7 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
         DidPresentCompositorFrame(frame.metadata.presentation_token,
                                   base::TimeTicks(), base::TimeDelta(), 0);
       }
-      return false;
+      return true;
     }
 
     current_surface = CreateSurface(surface_info);

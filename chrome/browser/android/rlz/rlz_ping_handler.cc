@@ -11,7 +11,6 @@
 #include "chrome/browser/profiles/profile_android.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "jni/RlzPingHandler_jni.h"
-#include "net/base/load_flags.h"
 #include "net/base/url_util.h"
 #include "net/http/http_status_code.h"
 #include "net/http/http_util.h"
@@ -93,7 +92,7 @@ void RlzPingHandler::Ping(
             destination: WEBSITE
           }
           policy {
-            cookies_allowed: NO
+            cookies_allowed: YES
             cookies_store: "user"
             setting: "Not user controlled. But it uses a trusted web end point"
                      "that doesn't use user data"
@@ -108,9 +107,6 @@ void RlzPingHandler::Ping(
   url_fetcher_->SetAutomaticallyRetryOnNetworkChanges(kMaxRetries);
   url_fetcher_->SetAutomaticallyRetryOn5xx(true);
   url_fetcher_->SetRequestContext(request_context_.get());
-  url_fetcher_->SetLoadFlags(
-      net::LOAD_DISABLE_CACHE | net::LOAD_DO_NOT_SEND_AUTH_DATA |
-      net::LOAD_DO_NOT_SEND_COOKIES | net::LOAD_DO_NOT_SAVE_COOKIES);
   url_fetcher_->Start();
 }
 

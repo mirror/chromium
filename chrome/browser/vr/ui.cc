@@ -7,6 +7,7 @@
 
 #include "chrome/browser/vr/ui.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/vr/content_input_delegate.h"
@@ -34,7 +35,7 @@ Ui::Ui(UiBrowserInterface* browser,
        vr::TextInputDelegate* text_input_delegate,
        const UiInitialState& ui_initial_state)
     : Ui(browser,
-         std::make_unique<ContentInputDelegate>(content_input_forwarder),
+         base::MakeUnique<ContentInputDelegate>(content_input_forwarder),
          keyboard_delegate,
          text_input_delegate,
          ui_initial_state) {}
@@ -45,10 +46,10 @@ Ui::Ui(UiBrowserInterface* browser,
        vr::TextInputDelegate* text_input_delegate,
        const UiInitialState& ui_initial_state)
     : browser_(browser),
-      scene_(std::make_unique<UiScene>()),
-      model_(std::make_unique<Model>()),
+      scene_(base::MakeUnique<UiScene>()),
+      model_(base::MakeUnique<Model>()),
       content_input_delegate_(std::move(content_input_delegate)),
-      input_manager_(std::make_unique<UiInputManager>(scene_.get())),
+      input_manager_(base::MakeUnique<UiInputManager>(scene_.get())),
       weak_ptr_factory_(this) {
   InitializeModel(ui_initial_state);
   UiSceneCreator(browser, scene_.get(), this, content_input_delegate_.get(),
@@ -167,6 +168,14 @@ void Ui::OnUiRequestedNavigation() {
   model_->pop_mode(kModeEditingOmnibox);
 }
 
+void Ui::SetOmniboxEditingEnabled(bool enabled) {
+  if (enabled) {
+    model_->push_mode(kModeEditingOmnibox);
+  } else {
+    model_->pop_mode(kModeEditingOmnibox);
+  }
+}
+
 void Ui::SetSpeechRecognitionEnabled(bool enabled) {
   if (enabled) {
     model_->push_mode(kModeVoiceSearch);
@@ -204,13 +213,13 @@ bool Ui::ShouldRenderWebVr() {
 void Ui::OnGlInitialized(unsigned int content_texture_id,
                          UiElementRenderer::TextureLocation content_location,
                          bool use_ganesh) {
-  ui_element_renderer_ = std::make_unique<UiElementRenderer>();
+  ui_element_renderer_ = base::MakeUnique<UiElementRenderer>();
   ui_renderer_ =
-      std::make_unique<UiRenderer>(scene_.get(), ui_element_renderer_.get());
+      base::MakeUnique<UiRenderer>(scene_.get(), ui_element_renderer_.get());
   if (use_ganesh) {
-    provider_ = std::make_unique<GaneshSurfaceProvider>();
+    provider_ = base::MakeUnique<GaneshSurfaceProvider>();
   } else {
-    provider_ = std::make_unique<CpuSurfaceProvider>();
+    provider_ = base::MakeUnique<CpuSurfaceProvider>();
   }
   scene_->OnGlInitialized(provider_.get());
   model_->content_texture_id = content_texture_id;
@@ -251,17 +260,6 @@ void Ui::OnAppButtonClicked() {
   // App button click exits the WebVR presentation and fullscreen.
   browser_->ExitPresent();
   browser_->ExitFullscreen();
-
-  switch (model_->get_last_opaque_mode()) {
-    case kModeVoiceSearch:
-      browser_->SetVoiceSearchActive(false);
-      break;
-    case kModeEditingOmnibox:
-      model_->pop_mode(kModeEditingOmnibox);
-      break;
-    default:
-      break;
-  }
 }
 
 void Ui::OnAppButtonGesturePerformed(

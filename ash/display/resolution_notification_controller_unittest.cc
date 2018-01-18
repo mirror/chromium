@@ -7,7 +7,6 @@
 #include "ash/screen_util.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
-#include "ash/system/screen_layout_observer.h"
 #include "ash/test/ash_test_base.h"
 #include "base/bind.h"
 #include "base/strings/utf_string_conversions.h"
@@ -125,11 +124,6 @@ class ResolutionNotificationControllerTest : public AshTestBase {
         ResolutionNotificationController::kNotificationId);
   }
 
-  static bool IsScreenLayoutObserverNotificationVisible() {
-    return !!message_center::MessageCenter::Get()->FindVisibleNotificationById(
-        ScreenLayoutObserver::kNotificationId);
-  }
-
   static void TickTimer() { controller()->OnTimerTick(); }
 
   static ResolutionNotificationController* controller() {
@@ -160,7 +154,6 @@ TEST_F(ResolutionNotificationControllerTest, Basic) {
   SetDisplayResolutionAndNotify(display_manager()->GetSecondaryDisplay(),
                                 gfx::Size(200, 200));
   EXPECT_TRUE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
   EXPECT_FALSE(controller()->DoesNotificationTimeout());
   EXPECT_EQ(ExpectedNotificationMessage(id2, gfx::Size(200, 200)),
             GetNotificationMessage());
@@ -173,7 +166,6 @@ TEST_F(ResolutionNotificationControllerTest, Basic) {
   ClickOnNotificationButton(0);
   RunAllPendingInMessageLoop();
   EXPECT_FALSE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
   EXPECT_EQ(0, accept_count());
   EXPECT_TRUE(display_manager()->GetSelectedModeForDisplayId(id2, &mode));
   EXPECT_EQ("250x250", mode.size().ToString());
@@ -190,7 +182,6 @@ TEST_F(ResolutionNotificationControllerTest, ClickMeansAccept) {
   SetDisplayResolutionAndNotify(display_manager()->GetSecondaryDisplay(),
                                 gfx::Size(200, 200));
   EXPECT_TRUE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
   EXPECT_FALSE(controller()->DoesNotificationTimeout());
   display::ManagedDisplayMode mode;
   EXPECT_TRUE(display_manager()->GetSelectedModeForDisplayId(id2, &mode));
@@ -201,7 +192,6 @@ TEST_F(ResolutionNotificationControllerTest, ClickMeansAccept) {
   ClickOnNotification();
   RunAllPendingInMessageLoop();
   EXPECT_FALSE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
   EXPECT_EQ(1, accept_count());
   EXPECT_TRUE(display_manager()->GetSelectedModeForDisplayId(id2, &mode));
   EXPECT_EQ("200x200", mode.size().ToString());
@@ -214,7 +204,6 @@ TEST_F(ResolutionNotificationControllerTest, AcceptButton) {
       display::Screen::GetScreen()->GetPrimaryDisplay();
   SetDisplayResolutionAndNotify(display, gfx::Size(200, 200));
   EXPECT_TRUE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
 
   // If there's a single display only, it will have timeout and the first button
   // becomes accept.
@@ -234,12 +223,10 @@ TEST_F(ResolutionNotificationControllerTest, AcceptButton) {
   UpdateDisplay("300x300#300x300%59|200x200%60");
   SetDisplayResolutionAndNotify(display, gfx::Size(200, 200));
   EXPECT_TRUE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
 
   EXPECT_TRUE(controller()->DoesNotificationTimeout());
   ClickOnNotificationButton(1);
   EXPECT_FALSE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
   EXPECT_EQ(1, accept_count());
   EXPECT_TRUE(
       display_manager()->GetSelectedModeForDisplayId(display.id(), &mode));
@@ -258,7 +245,6 @@ TEST_F(ResolutionNotificationControllerTest, Close) {
   SetDisplayResolutionAndNotify(display_manager()->GetSecondaryDisplay(),
                                 gfx::Size(200, 200));
   EXPECT_TRUE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
   EXPECT_FALSE(controller()->DoesNotificationTimeout());
   display::ManagedDisplayMode mode;
   EXPECT_TRUE(display_manager()->GetSelectedModeForDisplayId(id2, &mode));
@@ -270,7 +256,6 @@ TEST_F(ResolutionNotificationControllerTest, Close) {
   CloseNotification();
   RunAllPendingInMessageLoop();
   EXPECT_FALSE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
   EXPECT_EQ(1, accept_count());
 }
 
@@ -287,7 +272,6 @@ TEST_F(ResolutionNotificationControllerTest, Timeout) {
     RunAllPendingInMessageLoop();
   }
   EXPECT_FALSE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
   EXPECT_EQ(0, accept_count());
   display::ManagedDisplayMode mode;
   EXPECT_TRUE(
@@ -304,7 +288,6 @@ TEST_F(ResolutionNotificationControllerTest, DisplayDisconnected) {
   SetDisplayResolutionAndNotify(display_manager()->GetSecondaryDisplay(),
                                 gfx::Size(100, 100));
   ASSERT_TRUE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
 
   // Disconnects the secondary display and verifies it doesn't cause crashes.
   UpdateDisplay("300x300#300x300%56|200x200%57");
@@ -326,7 +309,6 @@ TEST_F(ResolutionNotificationControllerTest, MultipleResolutionChange) {
   SetDisplayResolutionAndNotify(display_manager()->GetSecondaryDisplay(),
                                 gfx::Size(200, 200));
   EXPECT_TRUE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
   EXPECT_FALSE(controller()->DoesNotificationTimeout());
   display::ManagedDisplayMode mode;
   EXPECT_TRUE(display_manager()->GetSelectedModeForDisplayId(id2, &mode));
@@ -337,7 +319,6 @@ TEST_F(ResolutionNotificationControllerTest, MultipleResolutionChange) {
   // visible.
   SetDisplayResolutionAndNotify(display_manager()->GetSecondaryDisplay(),
                                 gfx::Size(250, 250));
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
   EXPECT_TRUE(display_manager()->GetSelectedModeForDisplayId(id2, &mode));
   EXPECT_EQ("250x250", mode.size().ToString());
   EXPECT_EQ(58.0f, mode.refresh_rate());
@@ -348,7 +329,6 @@ TEST_F(ResolutionNotificationControllerTest, MultipleResolutionChange) {
   ClickOnNotificationButton(0);
   RunAllPendingInMessageLoop();
   EXPECT_FALSE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
   EXPECT_EQ(0, accept_count());
   EXPECT_TRUE(display_manager()->GetSelectedModeForDisplayId(id2, &mode));
   EXPECT_EQ("250x250", mode.size().ToString());
@@ -368,7 +348,6 @@ TEST_F(ResolutionNotificationControllerTest, Fallback) {
       display_manager()->GetSecondaryDisplay(), gfx::Size(220, 220),
       gfx::Size(200, 200));
   EXPECT_TRUE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
   EXPECT_FALSE(controller()->DoesNotificationTimeout());
   EXPECT_EQ(ExpectedFallbackNotificationMessage(id2, gfx::Size(220, 220),
                                                 gfx::Size(200, 200)),
@@ -382,7 +361,6 @@ TEST_F(ResolutionNotificationControllerTest, Fallback) {
   ClickOnNotificationButton(0);
   RunAllPendingInMessageLoop();
   EXPECT_FALSE(IsNotificationVisible());
-  EXPECT_FALSE(IsScreenLayoutObserverNotificationVisible());
   EXPECT_EQ(0, accept_count());
 
   EXPECT_TRUE(display_manager()->GetSelectedModeForDisplayId(id2, &mode));

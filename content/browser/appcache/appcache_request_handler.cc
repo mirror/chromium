@@ -256,7 +256,7 @@ void AppCacheRequestHandler::MaybeCompleteCrossSiteTransferInOldProcess(
 // static
 std::unique_ptr<AppCacheRequestHandler>
 AppCacheRequestHandler::InitializeForNavigationNetworkService(
-    const network::ResourceRequest& request,
+    const ResourceRequest& request,
     AppCacheNavigationHandleCore* appcache_handle_core,
     URLLoaderFactoryGetter* url_loader_factory_getter) {
   std::unique_ptr<AppCacheRequestHandler> handler =
@@ -581,7 +581,7 @@ void AppCacheRequestHandler::OnCacheSelectionComplete(AppCacheHost* host) {
 }
 
 void AppCacheRequestHandler::MaybeCreateLoader(
-    const network::ResourceRequest& resource_request,
+    const ResourceRequest& resource_request,
     ResourceContext* resource_context,
     LoaderCallback callback) {
   loader_callback_ =
@@ -598,7 +598,7 @@ void AppCacheRequestHandler::MaybeCreateLoader(
 }
 
 bool AppCacheRequestHandler::MaybeCreateLoaderForResponse(
-    const network::ResourceResponseHead& response,
+    const ResourceResponseHead& response,
     mojom::URLLoaderPtr* loader,
     mojom::URLLoaderClientRequest* client_request) {
   // The sync interface of this method is inherited from the
@@ -643,7 +643,7 @@ AppCacheRequestHandler::MaybeCreateSubresourceLoaderParams() {
 }
 
 void AppCacheRequestHandler::MaybeCreateSubresourceLoader(
-    const network::ResourceRequest& resource_request,
+    const ResourceRequest& resource_request,
     LoaderCallback loader_callback) {
   DCHECK(!job_);
   DCHECK(!is_main_resource());
@@ -653,7 +653,7 @@ void AppCacheRequestHandler::MaybeCreateSubresourceLoader(
 }
 
 void AppCacheRequestHandler::MaybeFallbackForSubresourceResponse(
-    const network::ResourceResponseHead& response,
+    const ResourceResponseHead& response,
     LoaderCallback loader_callback) {
   DCHECK(!job_);
   DCHECK(!is_main_resource());

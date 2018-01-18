@@ -32,9 +32,7 @@ class CORE_EXPORT FrameClient : public GarbageCollectedFinalized<FrameClient> {
 
   virtual void FrameFocused() const = 0;
 
-  virtual String GetDevToolsFrameToken() const = 0;
-
-  virtual ~FrameClient() = default;
+  virtual ~FrameClient() {}
 
   virtual void Trace(blink::Visitor* visitor) {}
 };

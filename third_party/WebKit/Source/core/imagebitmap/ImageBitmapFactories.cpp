@@ -39,9 +39,9 @@
 #include "core/fileapi/Blob.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/UseCounter.h"
+#include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLImageElement.h"
-#include "core/html/canvas/HTMLCanvasElement.h"
-#include "core/html/canvas/ImageData.h"
+#include "core/html/ImageData.h"
 #include "core/html/media/HTMLVideoElement.h"
 #include "core/imagebitmap/ImageBitmap.h"
 #include "core/imagebitmap/ImageBitmapOptions.h"
@@ -262,12 +262,6 @@ void ImageBitmapFactories::Trace(blink::Visitor* visitor) {
   visitor->Trace(pending_loaders_);
   Supplement<LocalDOMWindow>::Trace(visitor);
   Supplement<WorkerGlobalScope>::Trace(visitor);
-}
-
-void ImageBitmapFactories::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
-  Supplement<LocalDOMWindow>::TraceWrappers(visitor);
-  Supplement<WorkerGlobalScope>::TraceWrappers(visitor);
 }
 
 void ImageBitmapFactories::ImageBitmapLoader::RejectPromise(

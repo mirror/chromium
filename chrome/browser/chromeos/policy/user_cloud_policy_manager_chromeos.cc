@@ -11,6 +11,7 @@
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/sequenced_task_runner.h"
@@ -149,7 +150,7 @@ void UserCloudPolicyManagerChromeOS::Connect(
   // from the Profile because Connect() is called before the profile is
   // fully initialized (required so we can perform the initial policy load).
   std::unique_ptr<CloudPolicyClient> cloud_policy_client =
-      std::make_unique<CloudPolicyClient>(
+      base::MakeUnique<CloudPolicyClient>(
           std::string() /* machine_id */, std::string() /* machine_model */,
           device_management_service, system_request_context,
           nullptr /* signing_service */);

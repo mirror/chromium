@@ -96,7 +96,7 @@ const char kWindowOpen[] = "window.open";
 std::unique_ptr<base::DictionaryValue> SinksAndIdentityToValue(
     const std::vector<MediaSinkWithCastModes>& sinks,
     const AccountInfo& account_info) {
-  auto sink_list_and_identity = std::make_unique<base::DictionaryValue>();
+  auto sink_list_and_identity = base::MakeUnique<base::DictionaryValue>();
   bool show_email = false;
   bool show_domain = false;
   std::string user_domain;
@@ -105,10 +105,10 @@ std::unique_ptr<base::DictionaryValue> SinksAndIdentityToValue(
     sink_list_and_identity->SetString("userEmail", account_info.email);
   }
 
-  auto sinks_val = std::make_unique<base::ListValue>();
+  auto sinks_val = base::MakeUnique<base::ListValue>();
 
   for (const MediaSinkWithCastModes& sink_with_cast_modes : sinks) {
-    auto sink_val = std::make_unique<base::DictionaryValue>();
+    auto sink_val = base::MakeUnique<base::DictionaryValue>();
 
     const MediaSink& sink = sink_with_cast_modes.sink;
     sink_val->SetString("id", sink.id());
@@ -156,9 +156,10 @@ std::unique_ptr<base::DictionaryValue> SinksAndIdentityToValue(
 std::unique_ptr<base::DictionaryValue> RouteToValue(
     const MediaRoute& route,
     bool can_join,
+    const std::string& extension_id,
     bool incognito,
     int current_cast_mode) {
-  auto dictionary = std::make_unique<base::DictionaryValue>();
+  auto dictionary = base::MakeUnique<base::DictionaryValue>();
   dictionary->SetString("id", route.media_route_id());
   dictionary->SetString("sinkId", route.media_sink_id());
   dictionary->SetString("description", route.description());
@@ -177,10 +178,10 @@ std::unique_ptr<base::ListValue> CastModesToValue(
     const CastModeSet& cast_modes,
     const std::string& source_host,
     base::Optional<MediaCastMode> forced_cast_mode) {
-  auto value = std::make_unique<base::ListValue>();
+  auto value = base::MakeUnique<base::ListValue>();
 
   for (const MediaCastMode& cast_mode : cast_modes) {
-    auto cast_mode_val = std::make_unique<base::DictionaryValue>();
+    auto cast_mode_val = base::MakeUnique<base::DictionaryValue>();
     cast_mode_val->SetInteger("type", cast_mode);
     cast_mode_val->SetString(
         "description", MediaCastModeToDescription(cast_mode, source_host));
@@ -196,7 +197,7 @@ std::unique_ptr<base::ListValue> CastModesToValue(
 // Returns an Issue dictionary created from |issue| that can be used in WebUI.
 std::unique_ptr<base::DictionaryValue> IssueToValue(const Issue& issue) {
   const IssueInfo& issue_info = issue.info();
-  auto dictionary = std::make_unique<base::DictionaryValue>();
+  auto dictionary = base::MakeUnique<base::DictionaryValue>();
   dictionary->SetInteger("id", issue.id());
   dictionary->SetString("title", issue_info.title);
   dictionary->SetString("message", issue_info.message);
@@ -288,8 +289,9 @@ void MediaRouterWebUIMessageHandler::OnCreateRouteResponseReceived(
   if (route) {
     int current_cast_mode = CurrentCastModeForRouteId(
         route->media_route_id(), media_router_ui_->routes_and_cast_modes());
-    std::unique_ptr<base::DictionaryValue> route_value(
-        RouteToValue(*route, false, incognito_, current_cast_mode));
+    std::unique_ptr<base::DictionaryValue> route_value(RouteToValue(
+        *route, false, media_router_ui_->GetRouteProviderExtensionId(),
+        incognito_, current_cast_mode));
     web_ui()->CallJavascriptFunctionUnsafe(kOnCreateRouteResponseReceived,
                                            base::Value(sink_id), *route_value,
                                            base::Value(route->for_display()));
@@ -1024,7 +1026,7 @@ bool MediaRouterWebUIMessageHandler::ActOnIssueType(
     std::string learn_more_url = GetLearnMoreUrl(args);
     if (learn_more_url.empty())
       return false;
-    auto open_args = std::make_unique<base::ListValue>();
+    auto open_args = base::MakeUnique<base::ListValue>();
     open_args->AppendString(learn_more_url);
     web_ui()->CallJavascriptFunctionUnsafe(kWindowOpen, *open_args);
     return true;
@@ -1107,15 +1109,17 @@ std::unique_ptr<base::ListValue> MediaRouterWebUIMessageHandler::RoutesToValue(
     const std::vector<MediaRoute::Id>& joinable_route_ids,
     const std::unordered_map<MediaRoute::Id, MediaCastMode>& current_cast_modes)
     const {
-  auto value = std::make_unique<base::ListValue>();
+  auto value = base::MakeUnique<base::ListValue>();
+  const std::string& extension_id =
+      media_router_ui_->GetRouteProviderExtensionId();
 
   for (const MediaRoute& route : routes) {
     bool can_join =
         base::ContainsValue(joinable_route_ids, route.media_route_id());
     int current_cast_mode =
         CurrentCastModeForRouteId(route.media_route_id(), current_cast_modes);
-    std::unique_ptr<base::DictionaryValue> route_val(
-        RouteToValue(route, can_join, incognito_, current_cast_mode));
+    std::unique_ptr<base::DictionaryValue> route_val(RouteToValue(
+        route, can_join, extension_id, incognito_, current_cast_mode));
     value->Append(std::move(route_val));
   }
 

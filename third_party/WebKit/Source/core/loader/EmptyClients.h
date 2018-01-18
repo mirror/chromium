@@ -79,7 +79,7 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
  public:
   static EmptyChromeClient* Create() { return new EmptyChromeClient; }
 
-  ~EmptyChromeClient() override = default;
+  ~EmptyChromeClient() override {}
   void ChromeDestroyed() override {}
 
   WebViewImpl* GetWebView() const override { return nullptr; }
@@ -371,12 +371,10 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   }
 
   void AnnotatedRegionsChanged() override {}
-  String GetDevToolsFrameToken() const override { return g_empty_string; };
+  String GetInstrumentationToken() override { return g_empty_string; };
   String evaluateInInspectorOverlayForTesting(const String& script) override {
     return g_empty_string;
   }
-
-  Frame* FindFrame(const AtomicString& name) const override;
 
  protected:
   EmptyLocalFrameClient() = default;
@@ -394,7 +392,7 @@ class EmptySpellCheckPanelHostClient : public WebSpellCheckPanelHostClient {
   USING_FAST_MALLOC(EmptySpellCheckPanelHostClient);
 
  public:
-  EmptySpellCheckPanelHostClient() = default;
+  EmptySpellCheckPanelHostClient() {}
 
   void ShowSpellingUI(bool) override {}
   bool IsShowingSpellingUI() override { return false; }
@@ -434,7 +432,6 @@ class CORE_EXPORT EmptyRemoteFrameClient : public RemoteFrameClient {
   Frame* NextSibling() const override { return nullptr; }
   Frame* FirstChild() const override { return nullptr; }
   void FrameFocused() const override {}
-  String GetDevToolsFrameToken() const override { return g_empty_string; };
 
   DISALLOW_COPY_AND_ASSIGN(EmptyRemoteFrameClient);
 };

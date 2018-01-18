@@ -13,6 +13,7 @@
 #include "base/bind.h"
 #include "base/json/json_writer.h"
 #include "base/lazy_instance.h"
+#include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -185,7 +186,7 @@ void CookiesEventRouter::DispatchEvent(
   EventRouter* router = context ? EventRouter::Get(context) : NULL;
   if (!router)
     return;
-  auto event = std::make_unique<Event>(histogram_value, event_name,
+  auto event = base::MakeUnique<Event>(histogram_value, event_name,
                                        std::move(event_args), context);
   event->event_url = cookie_domain;
   router->BroadcastEvent(std::move(event));
@@ -240,7 +241,7 @@ void CookiesGetFunction::GetCookieCallback(const net::CookieList& cookie_list) {
 
   // The cookie doesn't exist; return null.
   if (!results_)
-    SetResult(std::make_unique<base::Value>());
+    SetResult(base::MakeUnique<base::Value>());
 
   SendResponse(true);
 }

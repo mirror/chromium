@@ -20,6 +20,7 @@ class AccountInfoFetcher;
 class AccountTrackerService;
 class ChildAccountInfoFetcher;
 class OAuth2TokenService;
+class RefreshTokenAnnotationRequest;
 class SigninClient;
 
 namespace invalidation {
@@ -107,6 +108,10 @@ class AccountFetcherService : public KeyedService,
   void RefreshAccountInfo(const std::string& account_id,
                           bool only_fetch_if_invalid);
 
+  // Virtual so that tests can override the network fetching behaviour.
+  virtual void SendRefreshTokenAnnotationRequest(const std::string& account_id);
+  void RefreshTokenAnnotationRequestDone(const std::string& account_id);
+
   // Called by AccountInfoFetcher.
   void OnUserInfoFetchSuccess(const std::string& account_id,
                               std::unique_ptr<base::DictionaryValue> user_info);
@@ -131,6 +136,10 @@ class AccountFetcherService : public KeyedService,
   // Holds references to account info fetchers keyed by account_id.
   std::unordered_map<std::string, std::unique_ptr<AccountInfoFetcher>>
       user_info_requests_;
+  // Holds references to refresh token annotation requests keyed by account_id.
+  std::unordered_map<std::string,
+                     std::unique_ptr<RefreshTokenAnnotationRequest>>
+      refresh_token_annotation_requests_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

@@ -154,7 +154,7 @@ void DetachableResourceHandler::Detach() {
 
 void DetachableResourceHandler::OnRequestRedirected(
     const net::RedirectInfo& redirect_info,
-    network::ResourceResponse* response,
+    ResourceResponse* response,
     std::unique_ptr<ResourceController> controller) {
   DCHECK(!has_controller());
 
@@ -169,7 +169,7 @@ void DetachableResourceHandler::OnRequestRedirected(
 }
 
 void DetachableResourceHandler::OnResponseStarted(
-    network::ResourceResponse* response,
+    ResourceResponse* response,
     std::unique_ptr<ResourceController> controller) {
   DCHECK(!has_controller());
 

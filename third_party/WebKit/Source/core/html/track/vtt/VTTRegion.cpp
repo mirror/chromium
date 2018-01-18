@@ -98,7 +98,7 @@ VTTRegion::VTTRegion()
                     this,
                     &VTTRegion::ScrollTimerFired) {}
 
-VTTRegion::~VTTRegion() = default;
+VTTRegion::~VTTRegion() {}
 
 void VTTRegion::setId(const String& id) {
   id_ = id;

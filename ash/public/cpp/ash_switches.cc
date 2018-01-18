@@ -37,15 +37,18 @@ const char kAshDisableSmoothScreenRotation[] =
 const char kAshDisableTabletAutohideTitlebars[] =
     "ash-disable-tablet-autohide-titlebars";
 
+// Disables the split view on tablet mode.
+const char kAshDisableTabletSplitView[] = "disable-tablet-splitview";
+
 // Disable the Touch Exploration Mode. Touch Exploration Mode will no longer be
 // turned on automatically when spoken feedback is enabled when this flag is
 // set.
 const char kAshDisableTouchExplorationMode[] =
     "ash-disable-touch-exploration-mode";
 
-// Disables Backbutton on frame for v1 apps.
+// Enables Backbutton on frame for v1 apps.
 // TODO(oshima): Remove this once the feature is launched. crbug.com/749713.
-const char kAshDisableV1AppBackButton[] = "ash-disable-v1-app-back-button";
+const char kAshEnableV1AppBackButton[] = "ash-enable-v1-app-back-button";
 
 // Enables move window between displays accelerators.
 // TODO(warx): Remove this once the feature is launched. crbug.com/773749.
@@ -90,9 +93,6 @@ const char kAshEnableMirroredScreen[] = "ash-enable-mirrored-screen";
 // Enables display scale tray settings. This uses force-device-scale-factor flag
 // to modify the dsf of the device to any non discrete value.
 const char kAshEnableScaleSettingsTray[] = "ash-enable-scale-settings-tray";
-
-// Enables the split view on tablet mode.
-const char kAshEnableTabletSplitView[] = "enable-tablet-splitview";
 
 // Specifies the estimated time (in milliseconds) from VSYNC event until when
 // visible light can be noticed by the user.

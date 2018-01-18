@@ -137,7 +137,7 @@ void UserImageScreen::OnImageAccepted() {
         return;
       }
       std::unique_ptr<user_manager::UserImage> user_image =
-          std::make_unique<user_manager::UserImage>(
+          base::MakeUnique<user_manager::UserImage>(
               user_photo_, user_photo_data_.get(),
               user_manager::UserImage::FORMAT_PNG);
       user_image->MarkAsSafe();

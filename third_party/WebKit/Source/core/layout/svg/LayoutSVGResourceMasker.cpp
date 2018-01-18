@@ -32,7 +32,7 @@ namespace blink {
 LayoutSVGResourceMasker::LayoutSVGResourceMasker(SVGMaskElement* node)
     : LayoutSVGResourceContainer(node) {}
 
-LayoutSVGResourceMasker::~LayoutSVGResourceMasker() = default;
+LayoutSVGResourceMasker::~LayoutSVGResourceMasker() {}
 
 void LayoutSVGResourceMasker::RemoveAllClientsFromCache(
     bool mark_for_invalidation) {

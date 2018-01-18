@@ -6,7 +6,6 @@
 
 #include <stddef.h>
 #include <algorithm>
-#include <memory>
 #include <utility>
 #include <vector>
 
@@ -281,7 +280,7 @@ SafeBrowsingUI::SafeBrowsingUI(content::WebUI* web_ui)
   // Register callback handler.
   // Handles messages from JavaScript to C++ via chrome.send().
   web_ui->AddMessageHandler(
-      std::make_unique<SafeBrowsingUIHandler>(browser_context));
+      base::MakeUnique<SafeBrowsingUIHandler>(browser_context));
 
   // Add localized string resources.
   html_source->AddLocalizedString("sbUnderConstruction",

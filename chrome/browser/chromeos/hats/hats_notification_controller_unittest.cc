@@ -7,8 +7,6 @@
 #include "base/run_loop.h"
 #include "base/strings/string_split.h"
 #include "chrome/browser/notifications/message_center_notification_manager.h"
-#include "chrome/browser/notifications/notification_display_service_tester.h"
-#include "chrome/browser/notifications/notification_handler.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
@@ -24,6 +22,8 @@
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/message_center/fake_ui_delegate.h"
+#include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
 
 using testing::_;
@@ -43,8 +43,11 @@ class HatsNotificationControllerTest : public BrowserWithTestWindowTest {
   void SetUp() override {
     BrowserWithTestWindowTest::SetUp();
 
-    display_service_ =
-        std::make_unique<NotificationDisplayServiceTester>(profile());
+    MessageCenterNotificationManager* manager =
+        static_cast<MessageCenterNotificationManager*>(
+            g_browser_process->notification_ui_manager());
+    manager->SetUiDelegateForTest(new message_center::FakeUiDelegate());
+
     network_portal_detector::InitializeForTesting(
         &mock_network_portal_detector_);
   }
@@ -86,8 +89,6 @@ class HatsNotificationControllerTest : public BrowserWithTestWindowTest {
 
   NiceMock<MockNetworkPortalDetector> mock_network_portal_detector_;
 
-  std::unique_ptr<NotificationDisplayServiceTester> display_service_;
-
  private:
   DISALLOW_COPY_AND_ASSIGN(HatsNotificationControllerTest);
 };
@@ -114,8 +115,10 @@ TEST_F(HatsNotificationControllerTest, NewDevice_ShouldNotShowNotification) {
               RemoveObserver(hats_notification_controller.get()))
       .Times(1);
 
-  EXPECT_FALSE(display_service_->GetNotification(
-      HatsNotificationController::kNotificationId));
+  const message_center::Notification* notification =
+      g_browser_process->notification_ui_manager()->FindById(
+          HatsNotificationController::kNotificationId, profile());
+  EXPECT_FALSE(notification);
 }
 
 TEST_F(HatsNotificationControllerTest, OldDevice_ShouldShowNotification) {
@@ -135,11 +138,10 @@ TEST_F(HatsNotificationControllerTest, OldDevice_ShouldShowNotification) {
   hats_notification_controller->Initialize(false);
 
   // Finally check if notification was launched to confirm initialization.
-  EXPECT_TRUE(display_service_->GetNotification(
-      HatsNotificationController::kNotificationId));
-  display_service_->RemoveNotification(
-      NotificationHandler::Type::TRANSIENT,
-      HatsNotificationController::kNotificationId, false);
+  const message_center::Notification* notification =
+      g_browser_process->notification_ui_manager()->FindById(
+          HatsNotificationController::kNotificationId, profile());
+  EXPECT_TRUE(notification != nullptr);
 }
 
 TEST_F(HatsNotificationControllerTest, NoInternet_DoNotShowNotification) {
@@ -169,8 +171,10 @@ TEST_F(HatsNotificationControllerTest, NoInternet_DoNotShowNotification) {
   hats_notification_controller->OnPortalDetectionCompleted(&network_state,
                                                            online_state);
 
-  EXPECT_FALSE(display_service_->GetNotification(
-      HatsNotificationController::kNotificationId));
+  const message_center::Notification* notification =
+      g_browser_process->notification_ui_manager()->FindById(
+          HatsNotificationController::kNotificationId, profile());
+  EXPECT_FALSE(notification);
 }
 
 TEST_F(HatsNotificationControllerTest, DismissNotification_ShouldUpdatePref) {

@@ -8,6 +8,9 @@
 -AppBackgroundPageNaClTest.BackgroundKeepaliveActive
 -BackgroundXhrTest.HttpAuth
 -BackgroundXhrTest.TlsClientAuth
+-BrowserNavigatorTest.CloseSingletonTab
+-BrowserNavigatorTest.Disposition_CurrentTab
+-BrowserNavigatorTest.NavigateFromPageToOptionsInNewTab
 -BrowserTest.InterstitialCancelsGuestViewDialogs
 -BrowsingDataRemoverBrowserTest.Cache
 -BrowsingDataRemoverBrowserTest.CookieDeletion
@@ -45,6 +48,8 @@
 -DomainReliabilityBrowserTest.Upload
 -DoNotTrackTest.Redirect
 -DoNotTrackTest.Simple
+-DownloadExtensionTest.DownloadExtensionTest_Download_Basic
+-DownloadExtensionTest.DownloadExtensionTest_Download_Redirect
 -EnabledSignInIsolationBrowserTest.SyntheticTrial
 -ExpectCTBrowserTest.TestDynamicExpectCTHeaderProcessing
 -ExpectCTBrowserTest.TestDynamicExpectCTReporting
@@ -65,11 +70,13 @@
 -ExtensionIconSourceTest.IconsLoadedIncognito
 -ExtensionModuleTest.TestModulesAvailable
 -ExtensionResourceRequestPolicyTest.WebAccessibleResources
+-ExtensionTabUtilBrowserTest.OpenSpanningModeExtensionOptionsPageIncognito
 -ExtensionUnloadBrowserTest.UnloadWithContentScripts
 -FeedbackTest.AnonymousUser
 -FeedbackTest.ExtraDiagnostics
 -FeedbackTest.ShowFeedback
 -FeedbackTest.ShowLoginFeedback
+-InProcessBrowserTest.ExternalConnectionFail
 -InstantThemeTest.ThemeBackgroundAccess
 -IsolatedAppTest.CookieIsolation
 -IsolatedAppTest.SubresourceCookieIsolation
@@ -95,6 +102,7 @@
 -NewlibPackagedAppTest.NoSocketPermissions
 -NewlibPackagedAppTest.SocketPermissions
 -NewlibPackagedAppTest.SuccessfulLoad
+-PageInfoBubbleViewBrowserTest.SiteSettingsLinkWithNonDefaultPort
 -PageLoadMetricsBrowserTest.ChromeErrorPage
 -PageLoadMetricsBrowserTest.LoadingMetrics
 -PageLoadMetricsBrowserTest.LoadingMetricsFailed
@@ -105,6 +113,7 @@
 -PKPModelClientTest.PKPEnforced
 -PlatformAppBrowserTest.AppWindowAdjustBoundsToBeVisibleOnScreen
 -PlatformAppBrowserTest.CreateAndCloseAppWindow
+-PlatformAppBrowserTest.DisallowBackgroundPageNavigation
 -PlatformAppBrowserTest.Isolation
 -PlatformAppDevToolsBrowserTest.ReOpenedWithID
 -PlatformAppDevToolsBrowserTest.ReOpenedWithURL
@@ -122,6 +131,8 @@
 -SafeBrowsingTriggeredPopupBlockerBrowserTest.NoFeature_AllowCreatingNewWindows
 -SafeBrowsingTriggeredPopupBlockerBrowserTest.NoFeature_NoMessages
 -SecurityStateTabHelperTest.PasswordSecurityLevelDowngradedOnFilesystemUrl
+-ShowPageActionWithoutPageActionTest/ShowPageActionWithoutPageActionTest.Test/0
+-ShowPageActionWithoutPageActionTest/ShowPageActionWithoutPageActionTest.Test/1
 -SiteDetailsBrowserTest.PlatformAppsNotIsolated
 -SSLUICaptivePortalListResourceBundleTest.Enabled/0
 -SSLUICaptivePortalListResourceBundleTest.Enabled/1
@@ -172,6 +183,8 @@
 -WebViewTests/WebViewTest.DownloadCookieIsolation/1
 -WebViewTests/WebViewTest.DownloadCookieIsolation_CrossSession/0
 -WebViewTests/WebViewTest.DownloadCookieIsolation_CrossSession/1
+-WebViewTests/WebViewTest.OpenURLFromTab_CurrentTab_Succeed/0
+-WebViewTests/WebViewTest.OpenURLFromTab_CurrentTab_Succeed/1
 -WebViewTests/WebViewTest.Shim_TestNavigationToExternalProtocol/0
 -WebViewTests/WebViewTest.Shim_TestNavigationToExternalProtocol/1
 -WebViewTests/WebViewTest.StoragePersistence/0
@@ -201,6 +214,21 @@
 -DnsProbeBrowserTest.OtherErrorWithCorrectionsFailure
 -DnsProbeBrowserTest.OtherErrorWithCorrectionsSuccess
 -DownloadExtensionTest.DownloadExtensionTest_Download_FileSystemURL
+-DownloadExtensionTest.DownloadExtensionTest_Download_InterruptAndResume
+-DownloadExtensionTest.DownloadExtensionTest_Download_InvalidURLs
+-DownloadExtensionTest.DownloadExtensionTest_Download_Post_Get
+-DownloadExtensionTest.DownloadExtensionTest_Download_Post_NoBody
+-DownloadExtensionTest.DownloadExtensionTest_Open
+-DownloadExtensionTest.DownloadExtensionTest_PauseResumeCancelErase
+-DownloadExtensionTest.DownloadExtensionTest_SearchEmptyQuery
+-DownloadExtensionTest.DownloadExtensionTest_SearchId
+-DownloadExtensionTest.DownloadExtensionTest_SearchIdAndFilename
+-DownloadExtensionTest.DownloadExtensionTest_SearchLimit
+-DownloadExtensionTest.DownloadExtensionTest_SearchPauseResumeCancelGetFileIconIncognito
+-DownloadExtensionTest.DownloadExtensionTest_SearchState
+-DownloadExtensionTest.DownloadsDragFunction
+-DownloadExtensionTest.DownloadsShowDefaultFolderFunction
+-DownloadExtensionTest.DownloadsShowFunction
 -LoadImageBrowserTest.LoadImage
 -MimeHandlerViewTests/MimeHandlerViewTest.SingleRequest/0
 # Test flakes, don't renable without debugging.
@@ -366,7 +394,6 @@
 
 # http://crbug.com/705114
 # Remove streams concept from code and replace with data pipe passing.
--ChromeAcceptHeaderTest.Check
 -ChromeFindRequestManagerTest.FindInPDF
 -ChromeNavigationBrowserTest.CrossSiteRedirectionToPDF
 -ChromeSitePerProcessPDFTest.EmbeddedPDFInsideCrossOriginFrame
@@ -496,6 +523,7 @@
 # to using a test URLLoaderFactory via SetNetworkFactoryForTesting.
 -LoadTimingBrowserTest.Basic
 -LoadTimingBrowserTest.EverythingAtOnce
+-LoadTimingBrowserTest.NoTimes
 -LoadTimingBrowserTest.Preconnect
 -LoadTimingBrowserTest.PreconnectProxySsl
 -LoadTimingBrowserTest.ReuseSocket
@@ -543,6 +571,10 @@
 -ResourcePrefetchPredictorBrowserTest.Simple
 -ResourcePrefetchPredictorBrowserTest.SubresourceFcpOrder
 -ResourcePrefetchPredictorBrowserTest.TabIdBehavingAsExpected
+
+# If prerender is completely turned down before we plan on canary, no need to
+# convert. See http://crbug.com/678332 and http://crbug.com/683142
+-PrerenderBrowserTestWithExtensions.WebNavigation
 
 # Finish ServiceWorker networking glue rewrite.
 # http://crbug.com/715640
@@ -602,6 +634,26 @@
 -ServiceWorkerTestWithNativeBindings/ServiceWorkerTest.WebAccessibleResourcesFetch/0
 -ServiceWorkerTestWithNativeBindings/ServiceWorkerTest.WebAccessibleResourcesIframeSrc/0
 -ServiceWorkerTestWithNativeBindings/ServiceWorkerTest.WorkerRefCount/0
+
+# WebNavigation API seems to work, but the browser tests' harness uses a
+# ResourceThrottle which doesn't work with network service. Rewrite to use
+# NavigationThrottle instead.
+-WebNavigationApiTest.ClientRedirect
+-WebNavigationApiTest.Crash
+-WebNavigationApiTest.CrossProcess
+-WebNavigationApiTest.CrossProcessIframe
+-WebNavigationApiTest.Download
+-WebNavigationApiTest.History
+-WebNavigationApiTest.IFrame
+-WebNavigationApiTest.OpenTab
+-WebNavigationApiTest.ReferenceFragment
+-WebNavigationApiTest.RequestOpenTab
+-WebNavigationApiTest.ServerRedirectSingleProcess
+-WebNavigationApiTest.SimpleLoad
+-WebNavigationApiTest.SrcDoc
+-WebNavigationApiTest.TargetBlank
+-WebNavigationApiTest.TargetBlankIncognito
+-WebNavigationApiTest.UserAction
 
 # http://crbug.com/787614
 -ChromeResourceDispatcherHostDelegateBrowserTest.PolicyHeader
@@ -669,6 +721,10 @@
 -PPAPINaClPNaClNonSfiTest.FileRef2
 -PPAPINaClPNaClNonSfiTest.URLLoader1
 
+# Prevent tests from making real network requests.
+# https://crbug.com/793899
+-ExtensionApiTest.DoNotOpenUninstallUrlForBlacklistedExtensions
+
 # Session cookies tests are flaky.
 # https://crbug.com/795417
 -ContinueWhereILeftOffTest.SessionCookies
@@ -681,7 +737,6 @@
 # Fails because of missing support to navigate to filesystem: URLs.
 # https://crbug.com/797292
 -SBNavigationObserverBrowserTest.DownloadViaHTML5FileApi
--ProcessManagerBrowserTest.NestedURLNavigationsToExtensionBlocked
 
 # Flakes https://logs.chromium.org/v/?s=chromium%2Fbb%2Fchromium.linux%2FLinux_Tests%2F65822%2F%2B%2Frecipes%2Fsteps%2Fnetwork_service_browser_tests%2F0%2Flogs%2FNoSessionRestoreTest.PRE_CookiesClearedOnExit%2F0
 -NoSessionRestoreTest.CookiesClearedOnExit

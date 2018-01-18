@@ -34,6 +34,10 @@ class ASH_EXPORT MessageCenterController
   void SetNotifierEnabled(const message_center::NotifierId& notifier_id,
                           bool enabled);
 
+  // Called upon request for more information about a particular notifier.
+  void OnNotifierAdvancedSettingsRequested(
+      const message_center::NotifierId& notifier_id);
+
   // mojom::AshMessageCenterController:
   void SetClient(
       mojom::AshMessageCenterClientAssociatedPtrInfo client) override;

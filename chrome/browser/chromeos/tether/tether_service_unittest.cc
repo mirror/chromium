@@ -15,7 +15,7 @@
 #include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/timer/mock_timer.h"
-#include "chrome/browser/ui/ash/network/tether_notification_presenter.h"
+#include "chrome/browser/chromeos/net/tether_notification_presenter.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/testing_profile.h"
@@ -52,6 +52,7 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/cros_system_api/dbus/shill/dbus-constants.h"
+#include "ui/message_center/message_center.h"
 
 using testing::Invoke;
 using testing::NiceMock;
@@ -183,26 +184,13 @@ class TestTetherComponentFactory final
     active_tether_component_ = new FakeTetherComponentWithDestructorCallback(
         base::Bind(&TestTetherComponentFactory::OnActiveTetherComponentDeleted,
                    base::Unretained(this)));
-    was_tether_component_active_ = true;
     return base::WrapUnique(active_tether_component_);
   }
 
-  bool was_tether_component_active() { return was_tether_component_active_; }
-
-  const chromeos::tether::TetherComponent::ShutdownReason&
-  last_shutdown_reason() {
-    return last_shutdown_reason_;
-  }
-
  private:
-  void OnActiveTetherComponentDeleted() {
-    last_shutdown_reason_ = *active_tether_component_->last_shutdown_reason();
-    active_tether_component_ = nullptr;
-  }
+  void OnActiveTetherComponentDeleted() { active_tether_component_ = nullptr; }
 
   FakeTetherComponentWithDestructorCallback* active_tether_component_ = nullptr;
-  bool was_tether_component_active_ = false;
-  chromeos::tether::TetherComponent::ShutdownReason last_shutdown_reason_;
 };
 
 class FakeRemoteDeviceProviderFactory
@@ -218,7 +206,7 @@ class FakeRemoteDeviceProviderFactory
       const std::string& user_private_key,
       cryptauth::SecureMessageDelegate::Factory*
           secure_message_delegate_factory) override {
-    return std::make_unique<cryptauth::FakeRemoteDeviceProvider>();
+    return base::MakeUnique<cryptauth::FakeRemoteDeviceProvider>();
   }
 };
 
@@ -264,6 +252,7 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
     chromeos::DBusThreadManager::Initialize();
     chromeos::NetworkStateTest::SetUp();
 
+    message_center::MessageCenter::Initialize();
     chromeos::NetworkConnect::Initialize(nullptr);
     chromeos::NetworkHandler::Initialize();
 
@@ -271,12 +260,12 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
     profile_ = builder.Build();
 
     fake_power_manager_client_ =
-        std::make_unique<chromeos::FakePowerManagerClient>();
+        base::MakeUnique<chromeos::FakePowerManagerClient>();
 
     fake_cryptauth_service_ =
-        std::make_unique<cryptauth::FakeCryptAuthService>();
+        base::MakeUnique<cryptauth::FakeCryptAuthService>();
     fake_cryptauth_gcm_manager_ =
-        std::make_unique<cryptauth::FakeCryptAuthGCMManager>("registrationId");
+        base::MakeUnique<cryptauth::FakeCryptAuthGCMManager>("registrationId");
     mock_enrollment_manager_ =
         base::WrapUnique(new NiceMock<MockCryptAuthEnrollmentManager>(
             fake_cryptauth_gcm_manager_.get()));
@@ -299,7 +288,6 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
         base::WrapUnique(new TestTetherComponentFactory());
     chromeos::tether::TetherComponentImpl::Factory::SetInstanceForTesting(
         test_tether_component_factory_.get());
-    shutdown_reason_verified_ = false;
 
     fake_remote_device_provider_factory_ =
         base::WrapUnique(new FakeRemoteDeviceProviderFactory());
@@ -324,9 +312,7 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
       tether_service_.reset();
     }
 
-    EXPECT_EQ(test_tether_component_factory_->was_tether_component_active(),
-              shutdown_reason_verified_);
-
+    message_center::MessageCenter::Shutdown();
     chromeos::NetworkConnect::Shutdown();
     chromeos::NetworkHandler::Shutdown();
 
@@ -420,14 +406,6 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
         test_tether_component_factory_->active_tether_component() != nullptr);
   }
 
-  void VerifyLastShutdownReason(
-      const chromeos::tether::TetherComponent::ShutdownReason&
-          expected_shutdown_reason) {
-    EXPECT_EQ(expected_shutdown_reason,
-              test_tether_component_factory_->last_shutdown_reason());
-    shutdown_reason_verified_ = true;
-  }
-
   const cryptauth::RemoteDeviceList test_devices_;
   const content::TestBrowserThreadBundle thread_bundle_;
 
@@ -451,7 +429,6 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
   scoped_refptr<MockExtendedBluetoothAdapter> mock_adapter_;
   bool is_adapter_present_;
   bool is_adapter_powered_;
-  bool shutdown_reason_verified_;
 
   std::unique_ptr<TestTetherService> tether_service_;
 
@@ -474,8 +451,6 @@ TEST_F(TetherServiceTest, TestShutdown) {
             network_state_handler()->GetTechnologyState(
                 chromeos::NetworkTypePattern::Tether()));
   VerifyTetherActiveStatus(false /* expected_active */);
-  VerifyLastShutdownReason(
-      chromeos::tether::TetherComponent::ShutdownReason::USER_LOGGED_OUT);
 }
 
 TEST_F(TetherServiceTest, TestAsyncTetherShutdown) {
@@ -512,8 +487,6 @@ TEST_F(TetherServiceTest, TestAsyncTetherShutdown) {
   test_tether_component_factory_->active_tether_component()
       ->FinishAsynchronousShutdown();
   VerifyTetherActiveStatus(false /* expected_active */);
-  VerifyLastShutdownReason(
-      chromeos::tether::TetherComponent::ShutdownReason::PREF_DISABLED);
 }
 
 TEST_F(TetherServiceTest, TestSuspend) {
@@ -541,8 +514,6 @@ TEST_F(TetherServiceTest, TestSuspend) {
 
   VerifyTetherFeatureStateRecorded(TetherService::TetherFeatureState::SUSPENDED,
                                    2 /* expected_count */);
-  VerifyLastShutdownReason(
-      chromeos::tether::TetherComponent::ShutdownReason::USER_CLOSED_LID);
 }
 
 TEST_F(TetherServiceTest, TestBleAdvertisingNotSupported) {
@@ -559,8 +530,6 @@ TEST_F(TetherServiceTest, TestBleAdvertisingNotSupported) {
   VerifyTetherFeatureStateRecorded(
       TetherService::TetherFeatureState::BLE_ADVERTISING_NOT_SUPPORTED,
       1 /* expected_count */);
-  VerifyLastShutdownReason(
-      chromeos::tether::TetherComponent::ShutdownReason::OTHER);
 }
 
 TEST_F(TetherServiceTest,
@@ -647,10 +616,6 @@ TEST_F(TetherServiceTest, TestBleAdvertisingSupportedButIncorrectlyRecorded) {
 
   VerifyTetherFeatureStateRecorded(TetherService::TetherFeatureState::ENABLED,
                                    1 /* expected_count */);
-
-  ShutdownTetherService();
-  VerifyLastShutdownReason(
-      chromeos::tether::TetherComponent::ShutdownReason::USER_LOGGED_OUT);
 }
 
 TEST_F(TetherServiceTest, TestFeatureFlagDisabled) {
@@ -666,9 +631,6 @@ TEST_F(TetherServiceTest, TestFeatureFlagEnabled) {
 
   base::RunLoop().RunUntilIdle();
   tether_service->Shutdown();
-
-  VerifyLastShutdownReason(
-      chromeos::tether::TetherComponent::ShutdownReason::USER_LOGGED_OUT);
 }
 
 TEST_F(TetherServiceTest, TestNoTetherHosts) {
@@ -759,10 +721,6 @@ TEST_F(TetherServiceTest, TestMetricsFalsePositives) {
 
   // Ensure that the pending state recording has been canceled.
   ASSERT_FALSE(mock_timer_->IsRunning());
-
-  ShutdownTetherService();
-  VerifyLastShutdownReason(
-      chromeos::tether::TetherComponent::ShutdownReason::USER_LOGGED_OUT);
 }
 
 TEST_F(TetherServiceTest, TestWifiNotPresent) {
@@ -809,8 +767,6 @@ TEST_F(TetherServiceTest, TestIsBluetoothPowered) {
   VerifyTetherFeatureStateRecorded(
       TetherService::TetherFeatureState::BLUETOOTH_DISABLED,
       2 /* expected_count */);
-  VerifyLastShutdownReason(
-      chromeos::tether::TetherComponent::ShutdownReason::BLUETOOTH_DISABLED);
 }
 
 TEST_F(TetherServiceTest, TestCellularIsUnavailable) {
@@ -828,8 +784,6 @@ TEST_F(TetherServiceTest, TestCellularIsUnavailable) {
       network_state_handler()->GetTechnologyState(
           chromeos::NetworkTypePattern::Tether()));
   VerifyTetherActiveStatus(false /* expected_active */);
-  VerifyLastShutdownReason(
-      chromeos::tether::TetherComponent::ShutdownReason::PREF_DISABLED);
 
   SetTetherTechnologyStateEnabled(true);
   EXPECT_EQ(chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_ENABLED,
@@ -896,8 +850,6 @@ TEST_F(TetherServiceTest, TestCellularIsAvailable) {
   VerifyTetherFeatureStateRecorded(
       TetherService::TetherFeatureState::CELLULAR_DISABLED,
       2 /* expected_count */);
-  VerifyLastShutdownReason(
-      chromeos::tether::TetherComponent::ShutdownReason::CELLULAR_DISABLED);
 }
 
 TEST_F(TetherServiceTest, TestDisabled) {
@@ -951,8 +903,6 @@ TEST_F(TetherServiceTest, TestEnabled) {
 
   VerifyTetherFeatureStateRecorded(TetherService::TetherFeatureState::ENABLED,
                                    2 /* expected_count */);
-  VerifyLastShutdownReason(
-      chromeos::tether::TetherComponent::ShutdownReason::PREF_DISABLED);
 }
 
 // Test against a past defect that made TetherService and NetworkStateHandler
@@ -982,7 +932,4 @@ TEST_F(TetherServiceTest, TestEnabledMultipleChanges) {
   updated_technology_state_count++;
   EXPECT_EQ(updated_technology_state_count,
             tether_service_->updated_technology_state_count());
-
-  VerifyLastShutdownReason(
-      chromeos::tether::TetherComponent::ShutdownReason::PREF_DISABLED);
 }

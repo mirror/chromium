@@ -4,7 +4,6 @@
 
 package org.chromium.content.browser;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -62,7 +61,6 @@ public class ChildProcessLauncherHelper {
             sSandboxedChildConnectionAllocatorMap = new HashMap<>();
 
     // Map from PID to ChildProcessLauncherHelper.
-    @SuppressLint("UseSparseArrays") // TODO(crbug.com/799070): Fix this.
     private static final Map<Integer, ChildProcessLauncherHelper> sLauncherByPid = new HashMap<>();
 
     // Allocator used for non-sandboxed services.

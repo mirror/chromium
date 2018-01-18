@@ -155,12 +155,6 @@ WebInsecureRequestPolicy WebFrame::GetInsecureRequestPolicy() const {
   return ToCoreFrame(*this)->GetSecurityContext()->GetInsecureRequestPolicy();
 }
 
-std::vector<unsigned> WebFrame::GetInsecureRequestToUpgrade() const {
-  SecurityContext::InsecureNavigationsSet* set =
-      ToCoreFrame(*this)->GetSecurityContext()->InsecureNavigationsToUpgrade();
-  return SecurityContext::SerializeInsecureNavigationSet(*set);
-}
-
 void WebFrame::SetFrameOwnerProperties(
     const WebFrameOwnerProperties& properties) {
   // At the moment, this is only used to replicate frame owner properties

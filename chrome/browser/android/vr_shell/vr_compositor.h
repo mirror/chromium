@@ -29,11 +29,9 @@ class WindowAndroid;
 
 namespace vr_shell {
 
-class VrShell;
-
 class VrCompositor : public content::CompositorClient {
  public:
-  explicit VrCompositor(ui::WindowAndroid* window, VrShell* vr_shell);
+  explicit VrCompositor(ui::WindowAndroid* window);
   ~VrCompositor() override;
 
   void SurfaceDestroyed();
@@ -42,16 +40,12 @@ class VrCompositor : public content::CompositorClient {
   void SetLayer(content::WebContents* web_contents);
 
  private:
-  // CompositorClient
-  void DidSwapBuffers() override;
-
   void RestoreLayer();
 
   std::unique_ptr<content::Compositor> compositor_;
 
   cc::Layer* layer_ = nullptr;
   cc::Layer* layer_parent_ = nullptr;
-  VrShell* vr_shell_;
 
   DISALLOW_COPY_AND_ASSIGN(VrCompositor);
 };

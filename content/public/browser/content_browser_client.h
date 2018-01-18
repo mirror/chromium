@@ -217,8 +217,12 @@ class CONTENT_EXPORT ContentBrowserClient {
 
   // Get the effective URL for the given actual URL, to allow an embedder to
   // group different url schemes in the same SiteInstance.
+  // |is_isolated_origin| specifies whether |url| corresponds to an origin that
+  // requires process isolation.  Certain kinds of effective URLs should be
+  // ignored for such origins.
   virtual GURL GetEffectiveURL(BrowserContext* browser_context,
-                               const GURL& url);
+                               const GURL& url,
+                               bool is_isolated_origin);
 
   // Returns whether all instances of the specified effective URL should be
   // rendered by the same process, rather than using process-per-site-instance.
@@ -1007,16 +1011,6 @@ class CONTENT_EXPORT ContentBrowserClient {
   virtual void CreateUsbChooserService(
       RenderFrameHost* render_frame_host,
       device::mojom::UsbChooserServiceRequest request);
-
-  // Attempt to open the Payment Handler window inside its corresponding
-  // PaymentRequest UI surface. Returns true if the ContentBrowserClient
-  // implementation supports this operation (desktop Chrome) or false otherwise.
-  // |callback| is invoked with true if the window opened successfully, false if
-  // the attempt failed.
-  virtual bool ShowPaymentHandlerWindow(
-      content::BrowserContext* browser_context,
-      const GURL& url,
-      base::OnceCallback<void(bool)> callback);
 };
 
 }  // namespace content

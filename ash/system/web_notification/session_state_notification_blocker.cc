@@ -6,6 +6,7 @@
 
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
+#include "ash/system/system_notifier.h"
 #include "ui/message_center/message_center.h"
 
 using session_manager::SessionState;
@@ -61,14 +62,12 @@ bool SessionStateNotificationBlocker::ShouldShowNotificationAsPopup(
   SessionController* const session_controller =
       Shell::Get()->session_controller();
 
-  // Never show notifications in kiosk mode.
+  // Kiosk/app state overrides ShouldAlwaysShowPopup().
   if (session_controller->IsRunningInAppMode())
     return false;
 
-  if (notification.notifier_id().profile_id.empty() &&
-      notification.priority() >= message_center::SYSTEM_PRIORITY) {
+  if (ash::system_notifier::ShouldAlwaysShowPopups(notification.notifier_id()))
     return true;
-  }
 
   return should_show_popup_;
 }

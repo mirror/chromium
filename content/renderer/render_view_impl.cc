@@ -104,7 +104,6 @@
 #include "net/base/net_errors.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/http/http_util.h"
-#include "net/nqe/effective_connection_type.h"
 #include "ppapi/features/features.h"
 #include "skia/ext/platform_canvas.h"
 #include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
@@ -112,7 +111,6 @@
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebConnectionType.h"
-#include "third_party/WebKit/public/platform/WebEffectiveConnectionType.h"
 #include "third_party/WebKit/public/platform/WebHTTPBody.h"
 #include "third_party/WebKit/public/platform/WebImage.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
@@ -453,10 +451,9 @@ class AlwaysDrawSwapPromise : public cc::SwapPromise {
 
   void DidActivate() override {}
 
-  void WillSwap(viz::CompositorFrameMetadata* compositor_frame_metadata,
-                cc::RenderFrameMetadata* render_frame_metadata) override {
+  void WillSwap(viz::CompositorFrameMetadata* metadata) override {
     DCHECK(!latency_info_.terminated());
-    compositor_frame_metadata->latency_info.push_back(latency_info_);
+    metadata->latency_info.push_back(latency_info_);
   }
 
   void DidSwap() override {}
@@ -526,7 +523,6 @@ RenderViewImpl::RenderViewImpl(
 #endif
       enumeration_completion_id_(0),
       session_storage_namespace_id_(params.session_storage_namespace_id),
-      renderer_wide_named_frame_lookup_(false),
       weak_ptr_factory_(this) {
   GetWidget()->set_owner_delegate(this);
 }
@@ -540,17 +536,11 @@ void RenderViewImpl::Initialize(
   // HandleNavigation codepath.
   was_created_by_renderer_ = was_created_by_renderer;
 #endif
-  renderer_wide_named_frame_lookup_ = params->renderer_wide_named_frame_lookup;
   display_mode_ = params->initial_size.display_mode;
 
-  WebFrame* opener_frame =
-      RenderFrameImpl::ResolveOpener(params->opener_frame_route_id);
-
-  webview_ =
-      WebView::Create(this,
-                      is_hidden() ? blink::mojom::PageVisibilityState::kHidden
-                                  : blink::mojom::PageVisibilityState::kVisible,
-                      opener_frame ? opener_frame->View() : nullptr);
+  webview_ = WebView::Create(
+      this, is_hidden() ? blink::mojom::PageVisibilityState::kHidden
+                        : blink::mojom::PageVisibilityState::kVisible);
   RenderWidget::Init(show_callback, webview_->GetWidget());
 
   g_view_map.Get().insert(std::make_pair(webview(), this));
@@ -600,6 +590,9 @@ void RenderViewImpl::Initialize(
   }
 
   ApplyBlinkSettings(command_line, webview()->GetSettings());
+
+  WebFrame* opener_frame =
+      RenderFrameImpl::ResolveOpener(params->opener_frame_route_id);
 
   if (params->main_frame_routing_id != MSG_ROUTING_NONE) {
     CHECK(params->main_frame_interface_provider.is_valid());
@@ -996,10 +989,6 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
   settings->SetPresentationReceiver(prefs.presentation_receiver);
 
   settings->SetMediaControlsEnabled(prefs.media_controls_enabled);
-
-  settings->SetLowPriorityIframesThreshold(
-      static_cast<blink::WebEffectiveConnectionType>(
-          prefs.low_priority_iframes_threshold));
 
 #if defined(OS_MACOSX)
   settings->SetDoubleTapToZoomEnabled(true);
@@ -2089,9 +2078,6 @@ void RenderViewImpl::OnResize(const ResizeParams& params) {
   bottom_controls_height_ = params.bottom_controls_height;
 
   RenderWidget::OnResize(params);
-
-  if (params.scroll_focused_node_into_view)
-    webview()->ScrollFocusedEditableElementIntoView();
 }
 
 void RenderViewImpl::OnSetBackgroundOpaque(bool opaque) {

@@ -26,7 +26,7 @@ void LayeredResourceHandler::SetDelegate(Delegate* delegate) {
 
 void LayeredResourceHandler::OnRequestRedirected(
     const net::RedirectInfo& redirect_info,
-    network::ResourceResponse* response,
+    ResourceResponse* response,
     std::unique_ptr<ResourceController> controller) {
   DCHECK(next_handler_.get());
   next_handler_->OnRequestRedirected(redirect_info, response,
@@ -34,7 +34,7 @@ void LayeredResourceHandler::OnRequestRedirected(
 }
 
 void LayeredResourceHandler::OnResponseStarted(
-    network::ResourceResponse* response,
+    ResourceResponse* response,
     std::unique_ptr<ResourceController> controller) {
   DCHECK(next_handler_.get());
   next_handler_->OnResponseStarted(response, std::move(controller));

@@ -33,8 +33,7 @@ HTMLNameCollection::HTMLNameCollection(ContainerNode& document,
     : HTMLCollection(document, type, kDoesNotOverrideItemAfter), name_(name) {}
 
 HTMLNameCollection::~HTMLNameCollection() {
-  DCHECK(GetType() == kWindowNamedItems || GetType() == kDocumentNamedItems ||
-         GetType() == kDocumentAllNamedItems);
+  DCHECK(GetType() == kWindowNamedItems || GetType() == kDocumentNamedItems);
 }
 
 }  // namespace blink

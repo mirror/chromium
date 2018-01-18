@@ -69,7 +69,7 @@ class TestEncryptionMigrationScreenHandler
     SetFreeDiskSpaceFetcherForTesting(base::BindRepeating(
         &TestEncryptionMigrationScreenHandler::FreeDiskSpaceFetcher,
         base::Unretained(this)));
-    auto tick_clock = std::make_unique<base::SimpleTestTickClock>();
+    auto tick_clock = base::MakeUnique<base::SimpleTestTickClock>();
     testing_tick_clock_ = tick_clock.get();
     SetTickClockForTesting(std::move(tick_clock));
   }
@@ -118,7 +118,7 @@ class EncryptionMigrationScreenHandlerTest : public testing::Test {
     // Set up a MockUserManager.
     MockUserManager* mock_user_manager = new NiceMock<MockUserManager>();
     scoped_user_manager_enabler_ =
-        std::make_unique<user_manager::ScopedUserManager>(
+        base::MakeUnique<user_manager::ScopedUserManager>(
             base::WrapUnique(mock_user_manager));
 
     // This is used by EncryptionMigrationScreenHandler to remove the existing
@@ -134,7 +134,7 @@ class EncryptionMigrationScreenHandlerTest : public testing::Test {
         base::WrapUnique<CryptohomeClient>(fake_cryptohome_client_));
 
     DBusThreadManager::GetSetterForTesting()->SetPowerManagerClient(
-        std::make_unique<FakePowerManagerClient>());
+        base::MakeUnique<FakePowerManagerClient>());
 
     DBusThreadManager::Initialize();
 
@@ -147,7 +147,7 @@ class EncryptionMigrationScreenHandlerTest : public testing::Test {
         Key(Key::KeyType::KEY_TYPE_SALTED_SHA256, "salt", "secret"));
 
     encryption_migration_screen_handler_ =
-        std::make_unique<TestEncryptionMigrationScreenHandler>();
+        base::MakeUnique<TestEncryptionMigrationScreenHandler>();
     encryption_migration_screen_handler_->set_test_web_ui(&test_web_ui_);
     encryption_migration_screen_handler_->SetContinueLoginCallback(
         base::BindOnce(&EncryptionMigrationScreenHandlerTest::OnContinueLogin,

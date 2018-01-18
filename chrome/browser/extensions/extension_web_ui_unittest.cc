@@ -5,6 +5,7 @@
 #include "chrome/browser/extensions/extension_web_ui.h"
 
 #include "base/command_line.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -30,7 +31,7 @@ namespace {
 
 std::unique_ptr<KeyedService> BuildOverrideRegistrar(
     content::BrowserContext* context) {
-  return std::make_unique<ExtensionWebUIOverrideRegistrar>(context);
+  return base::MakeUnique<ExtensionWebUIOverrideRegistrar>(context);
 }
 
 }  // namespace

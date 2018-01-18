@@ -112,9 +112,9 @@ class CORE_EXPORT HTMLLinkElement final : public HTMLElement,
   }
   bool IsCreatedByParser() const { return created_by_parser_; }
 
-  void Trace(blink::Visitor*) override;
+  virtual void Trace(blink::Visitor*);
 
-  void TraceWrappers(const ScriptWrappableVisitor*) const override;
+  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
 
  private:
   HTMLLinkElement(Document&, bool created_by_parser);

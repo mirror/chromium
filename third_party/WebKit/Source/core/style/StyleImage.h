@@ -45,7 +45,7 @@ typedef void* WrappedImagePtr;
 // value.
 class CORE_EXPORT StyleImage : public GarbageCollectedFinalized<StyleImage> {
  public:
-  virtual ~StyleImage() = default;
+  virtual ~StyleImage() {}
 
   bool operator==(const StyleImage& other) const {
     return Data() == other.Data();

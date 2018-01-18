@@ -25,6 +25,7 @@
 #include "content/network/network_context.h"
 #include "content/network/network_service_impl.h"
 #include "content/public/common/network_service.mojom.h"
+#include "content/public/common/proxy_config.mojom.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "net/base/cache_type.h"
 #include "net/base/net_errors.h"
@@ -44,7 +45,6 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "net/url_request/url_request_job_factory.h"
-#include "services/network/public/interfaces/proxy_config.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 #include "url/scheme_host_port.h"
@@ -557,7 +557,7 @@ TEST_F(NetworkContextTest, ProxyConfig) {
   for (const auto& initial_proxy_config : proxy_configs) {
     mojom::NetworkContextParamsPtr context_params = CreateContextParams();
     context_params->initial_proxy_config = initial_proxy_config;
-    network::mojom::ProxyConfigClientPtr config_client;
+    mojom::ProxyConfigClientPtr config_client;
     context_params->proxy_config_client_request =
         mojo::MakeRequest(&config_client);
     std::unique_ptr<NetworkContext> network_context =
@@ -605,7 +605,7 @@ TEST_F(NetworkContextTest, StaticProxyConfig) {
 TEST_F(NetworkContextTest, NoInitialProxyConfig) {
   mojom::NetworkContextParamsPtr context_params = CreateContextParams();
   context_params->initial_proxy_config.reset();
-  network::mojom::ProxyConfigClientPtr config_client;
+  mojom::ProxyConfigClientPtr config_client;
   context_params->proxy_config_client_request =
       mojo::MakeRequest(&config_client);
   std::unique_ptr<NetworkContext> network_context =
@@ -619,10 +619,10 @@ TEST_F(NetworkContextTest, NoInitialProxyConfig) {
   // Before there's a proxy configuration, proxy requests should hang.
   net::ProxyInfo proxy_info;
   net::TestCompletionCallback test_callback;
-  net::ProxyService::Request* request = nullptr;
+  net::ProxyService::PacRequest* pac_request = nullptr;
   ASSERT_EQ(net::ERR_IO_PENDING,
             proxy_service->ResolveProxy(GURL("http://bar/"), "GET", &proxy_info,
-                                        test_callback.callback(), &request,
+                                        test_callback.callback(), &pac_request,
                                         nullptr, net::NetLogWithSource()));
   scoped_task_environment_.RunUntilIdle();
   EXPECT_FALSE(proxy_service->config().is_valid());
@@ -638,16 +638,15 @@ TEST_F(NetworkContextTest, NoInitialProxyConfig) {
   EXPECT_EQ("foopy", proxy_info.proxy_server().host_port_pair().host());
 }
 
-class TestProxyConfigLazyPoller
-    : public network::mojom::ProxyConfigPollerClient {
+class TestProxyConfigLazyPoller : public mojom::ProxyConfigPollerClient {
  public:
   TestProxyConfigLazyPoller() : binding_(this) {}
   ~TestProxyConfigLazyPoller() override {}
 
   void OnLazyProxyConfigPoll() override { ++times_polled_; }
 
-  network::mojom::ProxyConfigPollerClientPtr BindInterface() {
-    network::mojom::ProxyConfigPollerClientPtr interface;
+  mojom::ProxyConfigPollerClientPtr BindInterface() {
+    mojom::ProxyConfigPollerClientPtr interface;
     binding_.Bind(MakeRequest(&interface));
     return interface;
   }

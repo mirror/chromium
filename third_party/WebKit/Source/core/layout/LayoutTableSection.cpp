@@ -102,7 +102,7 @@ LayoutTableSection::LayoutTableSection(Element* element)
   SetInline(false);  // our object is not Inline
 }
 
-LayoutTableSection::~LayoutTableSection() = default;
+LayoutTableSection::~LayoutTableSection() {}
 
 void LayoutTableSection::StyleDidChange(StyleDifference diff,
                                         const ComputedStyle* old_style) {
@@ -2043,6 +2043,7 @@ void LayoutTableSection::AdjustRowForPagination(LayoutTableRow& row_object,
 
 bool LayoutTableSection::GroupShouldRepeat() const {
   DCHECK(Table()->Header() == this || Table()->Footer() == this);
+  LOG(ERROR) << "PaginationBreakability=" << GetPaginationBreakability();
   if (GetPaginationBreakability() == kAllowAnyBreaks)
     return false;
 

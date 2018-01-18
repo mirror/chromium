@@ -11,8 +11,8 @@
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/common/service_worker/service_worker_utils.h"
+#include "content/public/common/resource_response.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
-#include "services/network/public/cpp/resource_response.h"
 
 namespace content {
 
@@ -34,7 +34,7 @@ void ServiceWorkerScriptURLLoaderFactory::CreateLoaderAndStart(
     int32_t routing_id,
     int32_t request_id,
     uint32_t options,
-    const network::ResourceRequest& resource_request,
+    const ResourceRequest& resource_request,
     mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
   if (!ShouldHandleScriptRequest(resource_request)) {
@@ -64,7 +64,7 @@ void ServiceWorkerScriptURLLoaderFactory::Clone(
 }
 
 bool ServiceWorkerScriptURLLoaderFactory::ShouldHandleScriptRequest(
-    const network::ResourceRequest& resource_request) {
+    const ResourceRequest& resource_request) {
   if (!context_ || !provider_host_)
     return false;
 

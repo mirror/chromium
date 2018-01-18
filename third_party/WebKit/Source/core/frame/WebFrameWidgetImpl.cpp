@@ -33,6 +33,7 @@
 #include <memory>
 
 #include "build/build_config.h"
+#include "core/animation/CompositorMutatorImpl.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
@@ -70,9 +71,7 @@
 #include "platform/animation/CompositorAnimationHost.h"
 #include "platform/graphics/Color.h"
 #include "platform/graphics/CompositorMutatorClient.h"
-#include "platform/graphics/CompositorMutatorImpl.h"
 #include "platform/wtf/AutoReset.h"
-#include "platform/wtf/Optional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/web/WebAutofillClient.h"
 #include "public/web/WebPlugin.h"
@@ -138,7 +137,7 @@ WebFrameWidgetImpl::WebFrameWidgetImpl(WebWidgetClient* client,
     SetBackgroundColorOverride(Color::kTransparent);
 }
 
-WebFrameWidgetImpl::~WebFrameWidgetImpl() = default;
+WebFrameWidgetImpl::~WebFrameWidgetImpl() {}
 
 void WebFrameWidgetImpl::Trace(blink::Visitor* visitor) {
   visitor->Trace(local_root_);
@@ -213,12 +212,6 @@ void WebFrameWidgetImpl::SendResizeEventAndRepaint() {
 }
 
 void WebFrameWidgetImpl::ResizeVisualViewport(const WebSize& new_size) {
-  if (!local_root_) {
-    // We should figure out why we get here when there is no local root
-    // (https://crbug.com/792345).
-    return;
-  }
-
   // TODO(alexmos, kenrb): resizing behavior such as this should be changed
   // to use Page messages.  This uses the visual viewport size to set size on
   // both the WebViewImpl size and the Page's VisualViewport. If there are
@@ -273,21 +266,18 @@ void WebFrameWidgetImpl::BeginFrame(double last_frame_time_monotonic) {
     GetPage()->GetValidationMessageClient().LayoutOverlay();
 }
 
-void WebFrameWidgetImpl::UpdateLifecycle(LifecycleUpdate requested_update) {
+void WebFrameWidgetImpl::UpdateAllLifecyclePhases() {
   TRACE_EVENT0("blink", "WebFrameWidgetImpl::updateAllLifecyclePhases");
   if (!local_root_)
     return;
 
-  bool pre_paint_only = requested_update == LifecycleUpdate::kPrePaint;
-
-  WebDevToolsAgentImpl* devtools = local_root_->DevToolsAgentImpl();
-  if (devtools && !pre_paint_only)
+  if (WebDevToolsAgentImpl* devtools = local_root_->DevToolsAgentImpl())
     devtools->PaintOverlay();
 
   DocumentLifecycle::AllowThrottlingScope throttling_scope(
       local_root_->GetFrame()->GetDocument()->Lifecycle());
-  PageWidgetDelegate::UpdateLifecycle(*GetPage(), *local_root_->GetFrame(),
-                                      requested_update);
+  PageWidgetDelegate::UpdateAllLifecyclePhases(*GetPage(),
+                                               *local_root_->GetFrame());
   UpdateLayerTreeBackgroundColor();
 }
 
@@ -836,7 +826,6 @@ WebInputEventResult WebFrameWidgetImpl::HandleGestureEvent(
   DCHECK(client_);
   WebInputEventResult event_result = WebInputEventResult::kNotHandled;
   bool event_cancelled = false;
-  WTF::Optional<ContextMenuAllowedScope> maybe_context_menu_scope;
 
   WebViewImpl* view_impl = View();
   switch (event.GetType()) {
@@ -858,12 +847,9 @@ WebInputEventResult WebFrameWidgetImpl::HandleGestureEvent(
       View()->SetLastHiddenPagePopup(nullptr);
     case WebInputEvent::kGestureShowPress:
     case WebInputEvent::kGestureDoubleTap:
-      break;
     case WebInputEvent::kGestureTwoFingerTap:
     case WebInputEvent::kGestureLongPress:
     case WebInputEvent::kGestureLongTap:
-      GetPage()->GetContextMenuController().ClearContextMenu();
-      maybe_context_menu_scope.emplace();
       break;
     case WebInputEvent::kGestureFlingStart:
     case WebInputEvent::kGestureFlingCancel:

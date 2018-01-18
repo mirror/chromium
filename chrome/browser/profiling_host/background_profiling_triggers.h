@@ -9,7 +9,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/process/process_handle.h"
 #include "base/timer/timer.h"
-#include "services/resource_coordinator/public/cpp/memory_instrumentation/global_memory_dump.h"
+#include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 
 namespace profiling {
 
@@ -55,7 +55,7 @@ class BackgroundProfilingTriggers {
   void OnReceivedMemoryDump(
       std::vector<base::ProcessId> profiled_pids,
       bool success,
-      std::unique_ptr<memory_instrumentation::GlobalMemoryDump> dump);
+      memory_instrumentation::mojom::GlobalMemoryDumpPtr ptr);
 
   // Virtual for testing. Called when a memory report needs to be send.
   virtual void TriggerMemoryReport();

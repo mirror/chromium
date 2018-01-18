@@ -47,8 +47,7 @@ class PLATFORM_EXPORT WorkerSchedulerImpl : public WorkerScheduler,
   void OnTaskCompleted(WorkerTaskQueue* worker_task_queue,
                        const TaskQueue::Task& task,
                        base::TimeTicks start,
-                       base::TimeTicks end,
-                       base::Optional<base::TimeDelta> thread_time) override;
+                       base::TimeTicks end) override;
 
   // TaskTimeObserver implementation:
   void WillProcessTask(double start_time) override;
@@ -56,8 +55,6 @@ class PLATFORM_EXPORT WorkerSchedulerImpl : public WorkerScheduler,
 
   SchedulerHelper* GetSchedulerHelperForTesting();
   base::TimeTicks CurrentIdleTaskDeadlineForTesting() const;
-
-  void SetThreadType(ThreadType thread_type) override;
 
  protected:
   // IdleHelper::Delegate implementation:

@@ -96,8 +96,8 @@
 #import "ios/chrome/browser/signin/account_consistency_service_factory.h"
 #include "ios/chrome/browser/signin/account_reconcilor_factory.h"
 #import "ios/chrome/browser/snapshots/snapshot_cache.h"
-#import "ios/chrome/browser/snapshots/snapshot_generator_delegate.h"
 #import "ios/chrome/browser/snapshots/snapshot_overlay.h"
+#import "ios/chrome/browser/snapshots/snapshot_overlay_provider.h"
 #import "ios/chrome/browser/snapshots/snapshot_tab_helper.h"
 #import "ios/chrome/browser/ssl/captive_portal_detector_tab_helper.h"
 #import "ios/chrome/browser/ssl/captive_portal_detector_tab_helper_delegate.h"
@@ -109,6 +109,7 @@
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/tabs/tab_model_observer.h"
 #import "ios/chrome/browser/tabs/tab_private.h"
+#import "ios/chrome/browser/tabs/tab_snapshotting_delegate.h"
 #import "ios/chrome/browser/translate/chrome_ios_translate_client.h"
 #import "ios/chrome/browser/translate/language_selection_handler.h"
 #import "ios/chrome/browser/ui/activity_services/activity_service_legacy_coordinator.h"
@@ -162,6 +163,7 @@
 #import "ios/chrome/browser/ui/main_content/main_content_ui_broadcasting_util.h"
 #import "ios/chrome/browser/ui/main_content/main_content_ui_state.h"
 #import "ios/chrome/browser/ui/main_content/web_scroll_view_main_content_ui_forwarder.h"
+#import "ios/chrome/browser/ui/ntp/modal_ntp.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
 #import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_handset_coordinator.h"
 #import "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h"
@@ -189,11 +191,8 @@
 #import "ios/chrome/browser/ui/tabs/requirements/tab_strip_constants.h"
 #import "ios/chrome/browser/ui/tabs/requirements/tab_strip_presentation.h"
 #import "ios/chrome/browser/ui/tabs/tab_strip_legacy_coordinator.h"
-#import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator.h"
-#import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/secondary_toolbar_coordinator.h"
-#import "ios/chrome/browser/ui/toolbar/adaptive/toolbar_coordinator_adaptor.h"
 #include "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/legacy_toolbar_ui_updater.h"
 #import "ios/chrome/browser/ui/toolbar/public/primary_toolbar_coordinator.h"
@@ -224,7 +223,6 @@
 #import "ios/chrome/browser/web/repost_form_tab_helper.h"
 #import "ios/chrome/browser/web/repost_form_tab_helper_delegate.h"
 #import "ios/chrome/browser/web/sad_tab_tab_helper.h"
-#import "ios/chrome/browser/web/tab_id_tab_helper.h"
 #include "ios/chrome/browser/web/web_state_printer.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/chrome/browser/web_state_list/web_state_opener.h"
@@ -418,6 +416,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     ManageAccountsDelegate,
                                     MFMailComposeViewControllerDelegate,
                                     NetExportTabHelperDelegate,
+                                    NewTabPageControllerObserver,
                                     OverscrollActionsControllerDelegate,
                                     PageInfoPresentation,
                                     PassKitDialogProvider,
@@ -428,12 +427,13 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     SideSwipeControllerDelegate,
                                     SigninPresenter,
                                     SKStoreProductViewControllerDelegate,
-                                    SnapshotGeneratorDelegate,
+                                    SnapshotOverlayProvider,
                                     StoreKitLauncher,
                                     TabDialogDelegate,
                                     TabHeadersDelegate,
                                     TabHistoryPresentation,
                                     TabModelObserver,
+                                    TabSnapshottingDelegate,
                                     TabStripPresentation,
                                     ToolsMenuConfigurationProvider,
                                     UIGestureRecognizerDelegate,
@@ -535,6 +535,9 @@ NSString* const kBrowserViewControllerSnackbarCategory =
   // The image fetcher used to save images and perform image-based searches.
   std::unique_ptr<image_fetcher::IOSImageDataFetcherWrapper> _imageFetcher;
 
+  // Dominant color cache. Key: (NSString*)url, val: (UIColor*)dominantColor.
+  NSMutableDictionary* _dominantColorCache;
+
   // Bridge to register for bookmark changes.
   std::unique_ptr<bookmarks::BookmarkModelBridge> _bookmarkModelBridge;
 
@@ -583,6 +586,12 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
   // Coordinator for the toolbar.
   LegacyToolbarCoordinator* _toolbarCoordinator;
+
+  // Coordinator for the primary toolbar, displayed on top.
+  PrimaryToolbarCoordinator* _topToolbarCoordinator;
+
+  // Coordinator for the secondary toolbar, displayed on bottom.
+  SecondaryToolbarCoordinator* _bottomToolbarCoordinator;
 
   // The toolbar UI updater for the toolbar managed by |_toolbarCoordinator|.
   LegacyToolbarUIUpdater* _toolbarUIUpdater;
@@ -683,15 +692,11 @@ NSString* const kBrowserViewControllerSnackbarCategory =
     BubbleViewControllerPresenter* incognitoTabTipBubblePresenter;
 
 // Primary toolbar.
-@property(nonatomic, strong) id<PrimaryToolbarCoordinator>
+@property(nonatomic, readonly) id<PrimaryToolbarCoordinator>
     primaryToolbarCoordinator;
 // Secondary toolbar.
-@property(nonatomic, strong)
-    AdaptiveToolbarCoordinator* secondaryToolbarCoordinator;
-// Interface object with the toolbars.
-@property(nonatomic, strong)
-    id<ToolbarCoordinating, ToolsMenuPresentationStateProvider>
-        toolbarInterface;
+@property(nonatomic, readonly)
+    SecondaryToolbarCoordinator* secondaryToolbarCoordinator;
 // TODO(crbug.com/788705): Removes this property and associated calls.
 // Returns the LegacyToolbarCoordinator. This property is here to separate
 // methods which will be removed during cleanup to other methods. Uses this
@@ -782,6 +787,10 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
 // Showing and Dismissing child UI
 // -------------------------------
+// Show the bookmarks page.
+- (void)showAllBookmarks;
+// Shows a panel within the New Tab Page.
+- (void)showNTPPanel:(ntp_home::PanelIdentifier)panel;
 // Dismisses the "rate this app" dialog.
 - (void)dismissRateThisAppDialog;
 
@@ -933,10 +942,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 @synthesize tabStripView = _tabStripView;
 @synthesize tabTipBubblePresenter = _tabTipBubblePresenter;
 @synthesize incognitoTabTipBubblePresenter = _incognitoTabTipBubblePresenter;
-@synthesize primaryToolbarCoordinator = _primaryToolbarCoordinator;
-@synthesize secondaryToolbarCoordinator = _secondaryToolbarCoordinator;
 @synthesize primaryToolbarOffsetConstraint = _primaryToolbarOffsetConstraint;
-@synthesize toolbarInterface = _toolbarInterface;
 @synthesize imageSaver = _imageSaver;
 // DialogPresenterDelegate property
 @synthesize dialogPresenterDelegateIsPresenting =
@@ -1021,15 +1027,13 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 - (id<ApplicationCommands,
       BrowserCommands,
       OmniboxFocuser,
-      FakeboxFocuser,
       SnackbarCommands,
       ToolbarCommands,
       UrlLoader,
       WebToolbarDelegate>)dispatcher {
   return static_cast<
-      id<ApplicationCommands, BrowserCommands, OmniboxFocuser, FakeboxFocuser,
-         SnackbarCommands, ToolbarCommands, UrlLoader, WebToolbarDelegate>>(
-      _dispatcher);
+      id<ApplicationCommands, BrowserCommands, OmniboxFocuser, SnackbarCommands,
+         ToolbarCommands, UrlLoader, WebToolbarDelegate>>(_dispatcher);
 }
 
 - (void)setActive:(BOOL)active {
@@ -1304,6 +1308,18 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   return [self headerHeightForTab:[_model currentTab]];
 }
 
+- (id<PrimaryToolbarCoordinator>)primaryToolbarCoordinator {
+  if (base::FeatureList::IsEnabled(kAdaptiveToolbar)) {
+    return _topToolbarCoordinator;
+  } else {
+    return _toolbarCoordinator;
+  }
+}
+
+- (SecondaryToolbarCoordinator*)secondaryToolbarCoordinator {
+  return _bottomToolbarCoordinator;
+}
+
 - (LegacyToolbarCoordinator*)legacyToolbarCoordinator {
   return _toolbarCoordinator;
 }
@@ -1493,11 +1509,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   self.tabStripCoordinator = nil;
   [_toolbarCoordinator stop];
   _toolbarCoordinator = nil;
-  [self.primaryToolbarCoordinator stop];
-  self.primaryToolbarCoordinator = nil;
-  [self.secondaryToolbarCoordinator stop];
-  self.secondaryToolbarCoordinator = nil;
-  self.toolbarInterface = nil;
+  [_topToolbarCoordinator stop];
+  _topToolbarCoordinator = nil;
   self.tabStripView = nil;
   _infoBarContainer = nil;
   _readingListMenuNotifier = nil;
@@ -1673,11 +1686,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 
 - (BOOL)prefersStatusBarHidden {
-  BOOL defaultValue = NO;
-  if (IsAdaptiveToolbarEnabled()) {
-    defaultValue = [super prefersStatusBarHidden];
-  }
-  return self.hideStatusBar || defaultValue;
+  return self.hideStatusBar;
 }
 
 // Called when in the foreground and the OS needs more memory. Release as much
@@ -1708,9 +1717,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     _readingListCoordinator = nil;
     self.recentTabsCoordinator = nil;
     _toolbarCoordinator = nil;
-    self.primaryToolbarCoordinator = nil;
-    self.secondaryToolbarCoordinator = nil;
-    self.toolbarInterface = nil;
+    _topToolbarCoordinator = nil;
     [_toolbarUIUpdater stopUpdating];
     _toolbarUIUpdater = nil;
     _toolbarModelDelegate = nil;
@@ -1880,6 +1887,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _imageFetcher = base::MakeUnique<image_fetcher::IOSImageDataFetcherWrapper>(
       _browserState->GetRequestContext());
   self.imageSaver = [[ImageSaver alloc] initWithBaseViewController:self];
+  _dominantColorCache = [[NSMutableDictionary alloc] init];
 
   // Register for bookmark changed notification (BookmarkModel may be null
   // during testing, so explicitly support this).
@@ -1926,37 +1934,26 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _toolbarModelIOS.reset([_dependencyFactory
       newToolbarModelIOSWithDelegate:_toolbarModelDelegate.get()]);
 
-  if (IsAdaptiveToolbarEnabled()) {
-    PrimaryToolbarCoordinator* topToolbarCoordinator =
-        [[PrimaryToolbarCoordinator alloc] initWithBrowserState:_browserState];
-    self.primaryToolbarCoordinator = topToolbarCoordinator;
-    topToolbarCoordinator.delegate = self;
-    topToolbarCoordinator.URLLoader = self;
-    topToolbarCoordinator.webStateList = [_model webStateList];
-    topToolbarCoordinator.dispatcher = self.dispatcher;
-    [topToolbarCoordinator start];
-
-    SecondaryToolbarCoordinator* bottomToolbarCoordinator = [
-        [SecondaryToolbarCoordinator alloc] initWithBrowserState:_browserState];
-    self.secondaryToolbarCoordinator = bottomToolbarCoordinator;
-    bottomToolbarCoordinator.webStateList = [_model webStateList];
-    bottomToolbarCoordinator.dispatcher = self.dispatcher;
-    [bottomToolbarCoordinator start];
-
-    ToolbarCoordinatorAdaptor* adaptor = [[ToolbarCoordinatorAdaptor alloc]
+  if (base::FeatureList::IsEnabled(kAdaptiveToolbar)) {
+    _topToolbarCoordinator = [[PrimaryToolbarCoordinator alloc]
         initWithToolsMenuConfigurationProvider:self
-                                    dispatcher:self.dispatcher];
-    self.toolbarInterface = adaptor;
-    [adaptor addToolbarCoordinator:topToolbarCoordinator];
-    // TODO(crbug.com/800330): Add secondary toolbar.
+                                    dispatcher:self.dispatcher
+                                  browserState:_browserState];
+    _topToolbarCoordinator.delegate = self;
+    _topToolbarCoordinator.URLLoader = self;
+    _topToolbarCoordinator.webStateList = [_model webStateList];
+    [_topToolbarCoordinator start];
+    _bottomToolbarCoordinator = [[SecondaryToolbarCoordinator alloc]
+        initWithBaseViewController:nil
+                      browserState:_browserState];
+    _bottomToolbarCoordinator.dispatcher = self.dispatcher;
+    [_bottomToolbarCoordinator start];
   } else {
     _toolbarCoordinator = [[LegacyToolbarCoordinator alloc]
             initWithBaseViewController:self
         toolsMenuConfigurationProvider:self
                             dispatcher:self.dispatcher
                           browserState:_browserState];
-    self.primaryToolbarCoordinator = _toolbarCoordinator;
-    self.toolbarInterface = _toolbarCoordinator;
     [_toolbarCoordinator
         setToolbarController:
             [_dependencyFactory
@@ -1972,8 +1969,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
   [_dispatcher startDispatchingToTarget:self.primaryToolbarCoordinator
                             forProtocol:@protocol(OmniboxFocuser)];
-  [_dispatcher startDispatchingToTarget:self.primaryToolbarCoordinator
-                            forProtocol:@protocol(FakeboxFocuser)];
   [self.legacyToolbarCoordinator setTabCount:[_model count]];
   [self updateBroadcastState];
   if (_voiceSearchController)
@@ -2075,7 +2070,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                     browserState:_browserState];
   _tabHistoryCoordinator.dispatcher = _dispatcher;
   _tabHistoryCoordinator.positionProvider =
-      [self.legacyToolbarCoordinator tabHistoryPositioner];
+      [self.primaryToolbarCoordinator tabHistoryPositioner];
   _tabHistoryCoordinator.tabModel = _model;
   _tabHistoryCoordinator.presentationProvider = self;
   _tabHistoryCoordinator.tabHistoryUIUpdater =
@@ -2261,7 +2256,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   Tab* tab = [_model currentTab];
   if (![tab navigationManager])
     return;
-  [self.toolbarInterface updateToolbarState];
+  [_toolbarCoordinator updateToolbarState];
   [self.legacyToolbarCoordinator setShareButtonEnabled:self.canShowShareMenu];
 
   if (_insertedTabWasPrerenderedTab && !_toolbarModelIOS->IsLoading())
@@ -2396,6 +2391,30 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 
 #pragma mark - Private Methods: Showing and Dismissing Child UI
+
+- (void)showAllBookmarks {
+  DCHECK(self.visible || self.dismissingModal);
+  GURL URL(kChromeUIBookmarksURL);
+  Tab* tab = [_model currentTab];
+  web::NavigationManager::WebLoadParams params(URL);
+  params.transition_type = ui::PAGE_TRANSITION_AUTO_BOOKMARK;
+  [tab navigationManager]->LoadURLWithParams(params);
+}
+
+- (void)showNTPPanel:(ntp_home::PanelIdentifier)panel {
+  DCHECK(self.visible || self.dismissingModal);
+  GURL url(kChromeUINewTabURL);
+  std::string fragment(NewTabPage::FragmentFromIdentifier(panel));
+  if (fragment != "") {
+    GURL::Replacements replacement;
+    replacement.SetRefStr(fragment);
+    url = url.ReplaceComponents(replacement);
+  }
+  Tab* tab = [_model currentTab];
+  web::NavigationManager::WebLoadParams params(url);
+  params.transition_type = ui::PAGE_TRANSITION_AUTO_BOOKMARK;
+  [tab navigationManager]->LoadURLWithParams(params);
+}
 
 - (void)dismissRateThisAppDialog {
   if (_rateThisAppDialog) {
@@ -2823,7 +2842,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   DCHECK(!prerenderService ||
          !prerenderService->IsWebStatePrerendered(tab.webState));
 
-  SnapshotTabHelper::FromWebState(tab.webState)->SetDelegate(self);
+  SnapshotTabHelper::FromWebState(tab.webState)->SetDelegate(tab);
 
   // TODO(crbug.com/777557): do not pass the dispatcher to PasswordTabHelper.
   if (PasswordTabHelper* passwordTabHelper =
@@ -2834,6 +2853,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 
   tab.dialogDelegate = self;
+  tab.snapshotOverlayProvider = self;
   tab.passKitDialogProvider = self;
   if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     tab.legacyFullscreenControllerDelegate = self;
@@ -2842,6 +2862,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     tab.overscrollActionsControllerDelegate = self;
   }
   tab.tabHeadersDelegate = self;
+  tab.tabSnapshottingDelegate = self;
   // Install the proper CRWWebController delegates.
   tab.webController.nativeProvider = self;
   tab.webController.swipeRecognizerProvider = self.sideSwipeController;
@@ -2895,6 +2916,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 
   tab.dialogDelegate = nil;
+  tab.snapshotOverlayProvider = nil;
   tab.passKitDialogProvider = nil;
   if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     tab.legacyFullscreenControllerDelegate = nil;
@@ -2903,6 +2925,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     tab.overscrollActionsControllerDelegate = nil;
   }
   tab.tabHeadersDelegate = nil;
+  tab.tabSnapshottingDelegate = nil;
   tab.webController.nativeProvider = nil;
   tab.webController.swipeRecognizerProvider = nil;
   StoreKitTabHelper* tabHelper = StoreKitTabHelper::FromWebState(tab.webState);
@@ -2933,11 +2956,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
     // keep a reference to the previous tab, just turn off preview mode for all
     // tabs (since doing so is a no-op for the tabs that don't have it set).
     _expectingForegroundTab = NO;
-
-    WebStateList* webStateList = _model.webStateList;
-    for (int index = 0; index < webStateList->count(); ++index) {
-      web::WebState* webState = webStateList->GetWebStateAt(index);
-      PagePlaceholderTabHelper::FromWebState(webState)
+    for (Tab* tab in _model) {
+      PagePlaceholderTabHelper::FromWebState(tab.webState)
           ->CancelPlaceholderForNextNavigation();
     }
   }
@@ -3014,38 +3034,13 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 #pragma mark - ** Protocol Implementations and Helpers **
 
-#pragma mark - SnapshotGeneratorDelegate methods
+#pragma mark - SnapshotOverlayProvider methods
 
-- (BOOL)canTakeSnapshotForWebState:(web::WebState*)webState {
-  DCHECK(webState);
-  Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
-  DCHECK([self.tabModel indexOfTab:tab] != NSNotFound);
-  return !PagePlaceholderTabHelper::FromWebState(webState)
-              ->displaying_placeholder();
-}
-
-- (UIEdgeInsets)snapshotEdgeInsetsForWebState:(web::WebState*)webState {
-  DCHECK(webState);
-  Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
-  DCHECK([self.tabModel indexOfTab:tab] != NSNotFound);
-
-  CGFloat headerHeight = [self headerHeightForTab:tab];
-  id nativeController = [self nativeControllerForTab:tab];
-  if ([nativeController respondsToSelector:@selector(toolbarHeight)])
-    headerHeight += [nativeController toolbarHeight];
-  return UIEdgeInsetsMake(headerHeight, 0.0, 0.0, 0.0);
-}
-
-- (NSArray<SnapshotOverlay*>*)snapshotOverlaysForWebState:
-    (web::WebState*)webState {
-  DCHECK(webState);
-  Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
-  DCHECK([self.tabModel indexOfTab:tab] != NSNotFound);
-  if (!self.tabModel.webUsageEnabled) {
-    return @[];
-  }
-
+- (NSArray*)snapshotOverlaysForTab:(Tab*)tab {
   NSMutableArray* overlays = [NSMutableArray array];
+  if (![_model webUsageEnabled]) {
+    return overlays;
+  }
   UIView* voiceSearchView = [self voiceSearchOverlayViewForTab:tab];
   if (voiceSearchView) {
     CGFloat voiceSearchYOffset = [self voiceSearchOverlayYOffsetForTab:tab];
@@ -3065,26 +3060,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   return overlays;
 }
 
-- (void)willUpdateSnapshotForWebState:(web::WebState*)webState {
-  DCHECK(webState);
-  Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
-  DCHECK([self.tabModel indexOfTab:tab] != NSNotFound);
-  id<CRWNativeContent> nativeController = [self nativeControllerForTab:tab];
-  if ([nativeController respondsToSelector:@selector(willUpdateSnapshot)]) {
-    [nativeController willUpdateSnapshot];
-  }
-  [tab willUpdateSnapshot];
-}
-
-- (void)didUpdateSnapshotForWebState:(web::WebState*)webState
-                           withImage:(UIImage*)snapshot {
-  DCHECK(webState);
-  Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
-  DCHECK([self.tabModel indexOfTab:tab] != NSNotFound);
-  [self.tabModel notifyTabSnapshotChanged:tab withImage:snapshot];
-}
-
-#pragma mark - SnapshotGeneratorDelegate helpers
+#pragma mark - SnapshotOverlayProvider helpers
 
 // Provides a view that encompasses currently displayed infobar(s) or nil
 // if no infobar is presented.
@@ -3738,6 +3714,22 @@ bubblePresenterForFeature:(const base::Feature&)feature
   return self.headerHeight + StatusBarHeight();
 }
 
+#pragma mark - TabSnapshottingDelegate methods.
+
+- (UIEdgeInsets)snapshotEdgeInsetsForTab:(Tab*)tab {
+  CGFloat headerHeight = [self headerHeightForTab:tab];
+  id nativeController = [self nativeControllerForTab:tab];
+  if ([nativeController respondsToSelector:@selector(toolbarHeight)])
+    headerHeight += [nativeController toolbarHeight];
+  return UIEdgeInsetsMake(headerHeight, 0.0, 0.0, 0.0);
+}
+
+#pragma mark - NewTabPageControllerObserver methods.
+
+- (void)selectedPanelDidChange {
+  [self updateToolbar];
+}
+
 #pragma mark - CRWNativeContentProvider methods
 
 // TODO(crbug.com/725241): This method is deprecated and should be removed by
@@ -3763,6 +3755,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
     return reading_list::IsOfflineURLValid(
         url, ReadingListModelFactory::GetForBrowserState(_browserState));
   }
+
+  if (host == kChromeUIBookmarksHost) {
+    return IsBookmarksHostEnabled();
+  }
+
   return host == kChromeUINewTabHost;
 }
 
@@ -3772,7 +3769,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
   id<CRWNativeContent> nativeController = nil;
   base::StringPiece url_host = url.host_piece();
-  if (url_host == kChromeUINewTabHost) {
+  if (url_host == kChromeUINewTabHost ||
+      (url_host == kChromeUIBookmarksHost && IsBookmarksHostEnabled())) {
     CGFloat fakeStatusBarHeight = _fakeStatusBarView.frame.size.height;
     UIEdgeInsets safeAreaInset = UIEdgeInsetsZero;
     if (@available(iOS 11.0, *)) {
@@ -3784,13 +3782,35 @@ bubblePresenterForFeature:(const base::Feature&)feature
         [[NewTabPageController alloc] initWithUrl:url
                                            loader:self
                                           focuser:self.primaryToolbarCoordinator
+                                      ntpObserver:self
                                      browserState:_browserState
-                                  toolbarDelegate:self.toolbarInterface
+                                       colorCache:_dominantColorCache
+                                  toolbarDelegate:_toolbarCoordinator
                                          tabModel:_model
                              parentViewController:self
                                        dispatcher:self.dispatcher
                                     safeAreaInset:safeAreaInset];
     pageController.swipeRecognizerProvider = self.sideSwipeController;
+
+    // Panel is always NTP for iPhone.
+    ntp_home::PanelIdentifier panelType = ntp_home::HOME_PANEL;
+
+    if (IsBookmarksHostEnabled()) {
+      // New Tab Page can have multiple panels. Each panel is addressable
+      // by a #fragment, e.g. chrome://newtab/#most_visited takes user to
+      // the Most Visited page, chrome://newtab/#bookmarks takes user to
+      // the Bookmark Manager, etc.
+      // The utility functions NewTabPage::IdentifierFromFragment() and
+      // FragmentFromIdentifier() map an identifier to/from a #fragment.
+      // If the URL is chrome://bookmarks, pre-select the #bookmarks panel
+      // without changing the URL since the URL may be chrome://bookmarks/#123.
+      // If the URL is chrome://newtab/, pre-select the panel based on the
+      // #fragment.
+      panelType = url_host == kChromeUIBookmarksHost
+                      ? ntp_home::BOOKMARKS_PANEL
+                      : NewTabPage::IdentifierFromFragment(url.ref());
+    }
+    [pageController selectPanel:panelType];
     nativeController = pageController;
   } else if (url_host == kChromeUIOfflineHost &&
              [self hasControllerForURL:url]) {
@@ -3863,11 +3883,12 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (void)dialogPresenter:(DialogPresenter*)presenter
     willShowDialogForWebState:(web::WebState*)webState {
-  WebStateList* webStateList = self.tabModel.webStateList;
-  int indexOfWebState = webStateList->GetIndexOfWebState(webState);
-  if (indexOfWebState != WebStateList::kInvalidIndex) {
-    webStateList->ActivateWebStateAt(indexOfWebState);
-    DCHECK([webState->GetView() isDescendantOfView:self.contentArea]);
+  for (Tab* iteratedTab in self.tabModel) {
+    if ([iteratedTab webState] == webState) {
+      self.tabModel.currentTab = iteratedTab;
+      DCHECK([[iteratedTab view] isDescendantOfView:self.contentArea]);
+      break;
+    }
   }
 }
 
@@ -4642,19 +4663,27 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (void)showBookmarksManager {
-  [self initializeBookmarkInteractionController];
-  [_bookmarkInteractionController presentBookmarks];
+  if (!PresentNTPPanelModally()) {
+    [self showAllBookmarks];
+  } else {
+    [self initializeBookmarkInteractionController];
+    [_bookmarkInteractionController presentBookmarks];
+  }
 }
 
 - (void)showRecentTabs {
-  if (!self.recentTabsCoordinator) {
-    self.recentTabsCoordinator =
-        [[RecentTabsHandsetCoordinator alloc] initWithBaseViewController:self];
-    self.recentTabsCoordinator.loader = self;
-    self.recentTabsCoordinator.dispatcher = self.dispatcher;
-    self.recentTabsCoordinator.browserState = _browserState;
+  if (!PresentNTPPanelModally()) {
+    [self showNTPPanel:ntp_home::RECENT_TABS_PANEL];
+  } else {
+    if (!self.recentTabsCoordinator) {
+      self.recentTabsCoordinator = [[RecentTabsHandsetCoordinator alloc]
+          initWithBaseViewController:self];
+      self.recentTabsCoordinator.loader = self;
+      self.recentTabsCoordinator.dispatcher = self.dispatcher;
+      self.recentTabsCoordinator.browserState = _browserState;
+    }
+    [self.recentTabsCoordinator start];
   }
-  [self.recentTabsCoordinator start];
 }
 
 - (void)requestDesktopSite {
@@ -4689,15 +4718,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
           [exitingPage removeFromSuperview];
         });
   }
-}
-
-- (void)navigateToMemexTabSwitcher {
-  // TODO(crbug.com/799601): Delete this once its not needed.
-  const GURL memexURL("https://chrome-memex.appspot.com");
-  [self loadURL:memexURL
-               referrer:web::Referrer()
-             transition:ui::PAGE_TRANSITION_LINK
-      rendererInitiated:NO];
 }
 
 #pragma mark - ToolbarOwner (Public)
@@ -4930,8 +4950,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     CGRect imageFrame = CGRectZero;
     if (self.isToolbarOnScreen) {
       imageFrame = UIEdgeInsetsInsetRect(
-          _contentArea.bounds,
-          [self snapshotEdgeInsetsForWebState:topTab.webState]);
+          _contentArea.bounds, [self snapshotEdgeInsetsForTab:topTab]);
     } else {
       imageFrame = [topTab.webState->GetView() bounds];
     }
@@ -5056,12 +5075,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (void)showUpgrade:(UpgradeCenter*)center {
   // Add an infobar on all the open tabs.
-  WebStateList* webStateList = _model.webStateList;
-  for (int index = 0; index < webStateList->count(); ++index) {
-    web::WebState* webState = webStateList->GetWebStateAt(index);
-    NSString* tabId = TabIdTabHelper::FromWebState(webState)->tab_id();
+  for (Tab* tab in _model) {
+    NSString* tabId = tab.tabId;
+    DCHECK(tab.webState);
     infobars::InfoBarManager* infoBarManager =
-        InfoBarManagerImpl::FromWebState(webState);
+        InfoBarManagerImpl::FromWebState(tab.webState);
     DCHECK(infoBarManager);
     [center addInfoBarToManager:infoBarManager forTabId:tabId];
   }
@@ -5136,7 +5154,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (BOOL)preventSideSwipe {
-  if ([self.toolbarInterface isShowingToolsMenu])
+  if ([_toolbarCoordinator isShowingToolsMenu])
     return YES;
 
   if (_voiceSearchController && _voiceSearchController->IsVisible())

@@ -45,6 +45,7 @@
 #include "gpu/config/gpu_feature_info.h"
 #include "platform/graphics/AcceleratedStaticBitmapImage.h"
 #include "platform/graphics/GraphicsLayer.h"
+#include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/UnacceleratedStaticBitmapImage.h"
 #include "platform/graphics/WebGraphicsContext3DProviderWrapper.h"
 #include "platform/graphics/gpu/Extensions3DUtil.h"
@@ -217,11 +218,6 @@ gpu::gles2::GLES2Interface* DrawingBuffer::ContextGL() {
 
 WebGraphicsContext3DProvider* DrawingBuffer::ContextProvider() {
   return context_provider_->ContextProvider();
-}
-
-base::WeakPtr<WebGraphicsContext3DProviderWrapper>
-DrawingBuffer::ContextProviderWeakPtr() {
-  return context_provider_->GetWeakPtr();
 }
 
 void DrawingBuffer::SetIsHidden(bool hidden) {
@@ -873,8 +869,6 @@ void DrawingBuffer::BeginDestruction() {
   ClearPlatformLayer();
   recycled_color_buffer_queue_.clear();
 
-  // If the drawing buffer is being destroyed due to a real context loss these
-  // calls will be ineffective, but won't be harmful.
   if (multisample_fbo_)
     gl_->DeleteFramebuffers(1, &multisample_fbo_);
 

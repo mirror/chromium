@@ -36,7 +36,6 @@
     expanded_changed,          // Web
     focus,
     hide,                      // Remove: http://crbug.com/392502
-    hit_test_result,
     hover,
     image_frame_updated,       // Web
     invalid_status_changed,    // Implicit

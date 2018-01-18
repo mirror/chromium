@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/views/location_bar/location_bar_layout.h"
 
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/themes/theme_properties.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/views/view.h"
@@ -85,7 +86,7 @@ void LocationBarLayout::AddDecoration(int y,
                                       int edge_item_padding,
                                       int item_padding,
                                       views::View* view) {
-  decorations_.push_back(std::make_unique<LocationBarDecoration>(
+  decorations_.push_back(base::MakeUnique<LocationBarDecoration>(
       y, height, auto_collapse, max_fraction, edge_item_padding, item_padding,
       view));
 }
@@ -93,7 +94,7 @@ void LocationBarLayout::AddDecoration(int y,
 void LocationBarLayout::AddDecoration(int y,
                                       int height,
                                       views::View* view) {
-  decorations_.push_back(std::make_unique<LocationBarDecoration>(
+  decorations_.push_back(base::MakeUnique<LocationBarDecoration>(
       y, height, false, 0, item_padding_, item_padding_, view));
 }
 

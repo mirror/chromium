@@ -56,13 +56,13 @@ inline HTMLObjectElement::HTMLObjectElement(Document& document,
                         kShouldNotPreferPlugInsForImages),
       use_fallback_content_(false) {}
 
-inline HTMLObjectElement::~HTMLObjectElement() = default;
+inline HTMLObjectElement::~HTMLObjectElement() {}
 
 HTMLObjectElement* HTMLObjectElement::Create(Document& document,
                                              bool created_by_parser) {
   HTMLObjectElement* element =
       new HTMLObjectElement(document, created_by_parser);
-  element->EnsureUserAgentShadowRootV1();
+  element->EnsureUserAgentShadowRoot();
   return element;
 }
 

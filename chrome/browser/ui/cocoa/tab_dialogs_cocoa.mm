@@ -4,8 +4,7 @@
 
 #include "chrome/browser/ui/cocoa/tab_dialogs_cocoa.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h"
 #import "chrome/browser/ui/cocoa/content_settings/collected_cookies_mac.h"
 #import "chrome/browser/ui/cocoa/hung_renderer_controller.h"
@@ -22,8 +21,8 @@ void TabDialogs::CreateForWebContents(content::WebContents* contents) {
   if (!FromWebContents(contents)) {
     std::unique_ptr<TabDialogs> tab_dialogs =
         chrome::ShowAllDialogsWithViewsToolkit()
-            ? std::make_unique<TabDialogsViewsMac>(contents)
-            : std::make_unique<TabDialogsCocoa>(contents);
+            ? base::MakeUnique<TabDialogsViewsMac>(contents)
+            : base::MakeUnique<TabDialogsCocoa>(contents);
     contents->SetUserData(UserDataKey(), std::move(tab_dialogs));
   }
 }

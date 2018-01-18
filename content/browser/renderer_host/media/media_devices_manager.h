@@ -23,7 +23,6 @@ class AudioSystem;
 
 namespace content {
 
-class MediaDevicesPermissionChecker;
 class MediaStreamManager;
 class VideoCaptureManager;
 
@@ -113,12 +112,6 @@ class CONTENT_EXPORT MediaDevicesManager
   // See http://crbug.com/648155.
   MediaDeviceInfoArray GetCachedDeviceInfo(MediaDeviceType type);
 
-  MediaDevicesPermissionChecker* media_devices_permission_checker();
-
-  // Used for testing only.
-  void SetPermissionChecker(
-      std::unique_ptr<MediaDevicesPermissionChecker> permission_checker);
-
  private:
   friend class MediaDevicesManagerTest;
   struct EnumerationRequest;
@@ -173,8 +166,6 @@ class CONTENT_EXPORT MediaDevicesManager
   media::AudioSystem* const audio_system_;  // not owned
   scoped_refptr<VideoCaptureManager> video_capture_manager_;
   MediaStreamManager* const media_stream_manager_;  // not owned
-
-  std::unique_ptr<MediaDevicesPermissionChecker> permission_checker_;
 
   using CachePolicies = std::array<CachePolicy, NUM_MEDIA_DEVICE_TYPES>;
   CachePolicies cache_policies_;

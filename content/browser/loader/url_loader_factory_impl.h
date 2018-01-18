@@ -19,7 +19,7 @@ class ResourceRequesterInfo;
 
 // This class is an implementation of mojom::URLLoaderFactory that creates
 // a mojom::URLLoader. This class is instantiated only for Service Worker
-// navigation preload or test cases.
+// navigation preload or test caseses.
 class URLLoaderFactoryImpl final : public mojom::URLLoaderFactory {
  public:
   ~URLLoaderFactoryImpl() override;
@@ -28,7 +28,7 @@ class URLLoaderFactoryImpl final : public mojom::URLLoaderFactory {
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
-                            const network::ResourceRequest& url_request,
+                            const ResourceRequest& url_request,
                             mojom::URLLoaderClientPtr client,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override;
@@ -40,7 +40,7 @@ class URLLoaderFactoryImpl final : public mojom::URLLoaderFactory {
       int32_t routing_id,
       int32_t request_id,
       uint32_t options,
-      const network::ResourceRequest& url_request,
+      const ResourceRequest& url_request,
       mojom::URLLoaderClientPtr client,
       const net::NetworkTrafficAnnotationTag& traffic_annotation);
 

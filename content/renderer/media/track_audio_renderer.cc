@@ -43,9 +43,7 @@ int TrackAudioRenderer::Render(base::TimeDelta delay,
                                base::TimeTicks delay_timestamp,
                                int prior_frames_skipped,
                                media::AudioBus* audio_bus) {
-  TRACE_EVENT2("audio", "TrackAudioRenderer::Render", "delay (ms)",
-               delay.InMillisecondsF(), "delay_timestamp (ms)",
-               (delay_timestamp - base::TimeTicks()).InMillisecondsF());
+  TRACE_EVENT0("audio", "TrackAudioRenderer::Render");
   base::AutoLock auto_lock(thread_lock_);
 
   if (!audio_shifter_) {
@@ -75,8 +73,7 @@ void TrackAudioRenderer::OnData(const media::AudioBus& audio_bus,
   DCHECK(audio_thread_checker_.CalledOnValidThread());
   DCHECK(!reference_time.is_null());
 
-  TRACE_EVENT1("audio", "TrackAudioRenderer::OnData", "reference time (ms)",
-               (reference_time - base::TimeTicks()).InMillisecondsF());
+  TRACE_EVENT0("audio", "TrackAudioRenderer::CaptureData");
 
   base::AutoLock auto_lock(thread_lock_);
   if (!audio_shifter_)

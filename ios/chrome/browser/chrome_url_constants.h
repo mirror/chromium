@@ -20,6 +20,7 @@ extern const char kChromeUIScheme[];
 
 // chrome: URLs (including schemes). Should be kept in sync with the
 // URL components below.
+extern const char kChromeUIBookmarksURL[];
 extern const char kChromeUIChromeURLsURL[];
 extern const char kChromeUICreditsURL[];
 extern const char kChromeUIFlagsURL[];
@@ -34,6 +35,7 @@ extern const char kChromeUITermsURL[];
 extern const char kChromeUIVersionURL[];
 
 // URL components for Chrome on iOS.
+extern const char kChromeUIBookmarksHost[];
 extern const char kChromeUIBrowserCrashHost[];
 extern const char kChromeUIChromeURLsHost[];
 extern const char kChromeUICrashesHost[];

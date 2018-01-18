@@ -25,7 +25,7 @@ class ModuleScript;
 class CORE_EXPORT ScriptModuleResolver
     : public GarbageCollectedFinalized<ScriptModuleResolver> {
  public:
-  virtual ~ScriptModuleResolver() = default;
+  virtual ~ScriptModuleResolver() {}
   virtual void Trace(blink::Visitor* visitor) {}
 
   // Notifies the ScriptModuleResolver that a ModuleScript exists.

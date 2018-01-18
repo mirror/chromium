@@ -52,13 +52,13 @@ gfx::ImageSkia CreateEnclosedFaviconImage(gfx::Size size,
 }
 
 // Update the list once per second.
-const int kDefaultTabDesktopMediaListUpdatePeriod = 1000;
+const int kDefaultUpdatePeriod = 1000;
 
 }  // namespace
 
 TabDesktopMediaList::TabDesktopMediaList()
-    : DesktopMediaListBase(base::TimeDelta::FromMilliseconds(
-          kDefaultTabDesktopMediaListUpdatePeriod)),
+    : DesktopMediaListBase(
+          base::TimeDelta::FromMilliseconds(kDefaultUpdatePeriod)),
       weak_factory_(this) {
   type_ = DesktopMediaID::TYPE_WEB_CONTENTS;
   thumbnail_task_runner_ = base::CreateSequencedTaskRunnerWithTraits(

@@ -50,8 +50,7 @@ class SynchronousLayerTreeFrameSink : public viz::TestLayerTreeFrameSink {
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       const viz::RendererSettings& renderer_settings,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-      double refresh_rate,
-      viz::BeginFrameSource* begin_frame_source)
+      double refresh_rate)
       : viz::TestLayerTreeFrameSink(std::move(compositor_context_provider),
                                     std::move(worker_context_provider),
                                     shared_bitmap_manager,
@@ -60,8 +59,7 @@ class SynchronousLayerTreeFrameSink : public viz::TestLayerTreeFrameSink {
                                     task_runner,
                                     false,
                                     false,
-                                    refresh_rate,
-                                    begin_frame_source),
+                                    refresh_rate),
         task_runner_(std::move(task_runner)),
         weak_factory_(this) {}
   ~SynchronousLayerTreeFrameSink() override = default;
@@ -412,9 +410,7 @@ class LayerTreeHostClientForTesting : public LayerTreeHostClient,
     test_hooks_->BeginMainFrame(args);
   }
 
-  void UpdateLayerTreeHost(VisualStateUpdate requested_update) override {
-    test_hooks_->UpdateLayerTreeHost(requested_update);
-  }
+  void UpdateLayerTreeHost() override { test_hooks_->UpdateLayerTreeHost(); }
 
   void ApplyViewportDeltas(const gfx::Vector2dF& inner_delta,
                            const gfx::Vector2dF& outer_delta,
@@ -983,14 +979,14 @@ LayerTreeTest::CreateLayerTreeFrameSink(
     return std::make_unique<SynchronousLayerTreeFrameSink>(
         compositor_context_provider, std::move(worker_context_provider),
         shared_bitmap_manager(), gpu_memory_buffer_manager(), renderer_settings,
-        impl_task_runner_, refresh_rate, begin_frame_source_);
+        impl_task_runner_, refresh_rate);
   }
 
   return std::make_unique<viz::TestLayerTreeFrameSink>(
       compositor_context_provider, std::move(worker_context_provider),
       shared_bitmap_manager(), gpu_memory_buffer_manager(), renderer_settings,
       impl_task_runner_, synchronous_composite, disable_display_vsync,
-      refresh_rate, begin_frame_source_);
+      refresh_rate);
 }
 
 std::unique_ptr<viz::OutputSurface>

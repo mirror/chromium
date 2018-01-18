@@ -453,11 +453,15 @@ class ContextualSearchPolicy {
         return simCountryIso;
     }
 
+    // --------------------------------------------------------------------------------------------
+    // Private helpers.
+    // --------------------------------------------------------------------------------------------
+
     /**
      * @return Whether a promo is needed because the user is still undecided
      *         on enabling or disabling the feature.
      */
-    boolean isUserUndecided() {
+    private boolean isUserUndecided() {
         // TODO(donnd) use dependency injection for the PrefServiceBridge instead!
         if (mDidOverrideDecidedStateForTesting) return !mDecidedStateForTesting;
 
@@ -468,7 +472,7 @@ class ContextualSearchPolicy {
      * @param url The URL of the base page.
      * @return Whether the given content view is for an HTTP page.
      */
-    boolean isBasePageHTTP(@Nullable URL url) {
+    private boolean isBasePageHTTP(@Nullable URL url) {
         return url != null && UrlConstants.HTTP_SCHEME.equals(url.getProtocol());
     }
 

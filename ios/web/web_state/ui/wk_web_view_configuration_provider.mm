@@ -25,31 +25,21 @@ const char kWKWebViewConfigProviderKeyName[] = "wk_web_view_config_provider";
 
 // Returns an autoreleased instance of WKUserScript to be added to
 // configuration's userContentController.
-WKUserScript* InternalGetDocumentStartScriptForMainFrame(
+WKUserScript* InternalGetEarlyPageScriptForMainFrame(
     BrowserState* browser_state) {
   return [[WKUserScript alloc]
-        initWithSource:GetDocumentStartScriptForMainFrame(browser_state)
+        initWithSource:GetEarlyPageScriptForMainFrame(browser_state)
          injectionTime:WKUserScriptInjectionTimeAtDocumentStart
       forMainFrameOnly:YES];
 }
 
 // Returns an autoreleased instance of WKUserScript to be added to
 // configuration's userContentController.
-WKUserScript* InternalGetDocumentStartScriptForAllFrames(
+WKUserScript* InternalGetEarlyPageScriptForAllFrames(
     BrowserState* browser_state) {
   return [[WKUserScript alloc]
-        initWithSource:GetDocumentStartScriptForAllFrames(browser_state)
+        initWithSource:GetEarlyPageScriptForAllFrames(browser_state)
          injectionTime:WKUserScriptInjectionTimeAtDocumentStart
-      forMainFrameOnly:NO];
-}
-
-// Returns an autoreleased instance of WKUserScript to be added to
-// configuration's userContentController.
-WKUserScript* InternalGetDocumentEndScriptForAllFrames(
-    BrowserState* browser_state) {
-  return [[WKUserScript alloc]
-        initWithSource:GetDocumentEndScriptForAllFrames(browser_state)
-         injectionTime:WKUserScriptInjectionTimeAtDocumentEnd
       forMainFrameOnly:NO];
 }
 
@@ -90,16 +80,10 @@ WKWebViewConfigurationProvider::GetWebViewConfiguration() {
     [configuration_ setAllowsInlineMediaPlayback:YES];
     // setJavaScriptCanOpenWindowsAutomatically is required to support popups.
     [[configuration_ preferences] setJavaScriptCanOpenWindowsAutomatically:YES];
-    // Main frame script depends upon scripts injected into all frames, so the
-    // "AllFrames" scripts must be injected first.
     [[configuration_ userContentController]
-        addUserScript:InternalGetDocumentStartScriptForAllFrames(
-                          browser_state_)];
+        addUserScript:InternalGetEarlyPageScriptForMainFrame(browser_state_)];
     [[configuration_ userContentController]
-        addUserScript:InternalGetDocumentStartScriptForMainFrame(
-                          browser_state_)];
-    [[configuration_ userContentController]
-        addUserScript:InternalGetDocumentEndScriptForAllFrames(browser_state_)];
+        addUserScript:InternalGetEarlyPageScriptForAllFrames(browser_state_)];
   }
   // Prevent callers from changing the internals of configuration.
   return [configuration_ copy];

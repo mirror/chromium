@@ -7,7 +7,6 @@
 #include "core/CSSValueKeywords.h"
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
-#include "core/style/ComputedStyle.h"
 #include "platform/runtime_enabled_features.h"
 
 namespace blink {
@@ -27,17 +26,6 @@ const CSSValue* ImageOrientation::ParseSingleValue(
       return angle;
   }
   return nullptr;
-}
-
-const CSSValue* ImageOrientation::CSSValueFromComputedStyleInternal(
-    const ComputedStyle& style,
-    const SVGComputedStyle&,
-    const LayoutObject*,
-    Node* styled_node,
-    bool allow_visited_style) const {
-  if (style.RespectImageOrientation() == kRespectImageOrientation)
-    return CSSIdentifierValue::Create(CSSValueFromImage);
-  return CSSPrimitiveValue::Create(0, CSSPrimitiveValue::UnitType::kDegrees);
 }
 
 }  // namespace CSSLonghand

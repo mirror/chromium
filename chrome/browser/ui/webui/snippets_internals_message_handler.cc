@@ -16,6 +16,7 @@
 #include "base/i18n/time_formatting.h"
 #include "base/json/json_reader.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/optional.h"
 #include "base/strings/string_number_conversions.h"
@@ -67,7 +68,7 @@ namespace {
 std::unique_ptr<base::DictionaryValue> PrepareSuggestion(
     const ContentSuggestion& suggestion,
     int index) {
-  auto entry = std::make_unique<base::DictionaryValue>();
+  auto entry = base::MakeUnique<base::DictionaryValue>();
   entry->SetString("idWithinCategory", suggestion.id().id_within_category());
   entry->SetString("url", suggestion.url().spec());
   entry->SetString("urlWithFavicon", suggestion.url_with_favicon().spec());
@@ -83,7 +84,7 @@ std::unique_ptr<base::DictionaryValue> PrepareSuggestion(
 
   if (suggestion.download_suggestion_extra()) {
     const auto& extra = *suggestion.download_suggestion_extra();
-    auto value = std::make_unique<base::DictionaryValue>();
+    auto value = base::MakeUnique<base::DictionaryValue>();
     value->SetString("downloadGUID", extra.download_guid);
     value->SetString("targetFilePath",
                      extra.target_file_path.LossyDisplayName());
@@ -98,7 +99,7 @@ std::unique_ptr<base::DictionaryValue> PrepareSuggestion(
 
   if (suggestion.recent_tab_suggestion_extra()) {
     const auto& extra = *suggestion.recent_tab_suggestion_extra();
-    auto value = std::make_unique<base::DictionaryValue>();
+    auto value = base::MakeUnique<base::DictionaryValue>();
     value->SetInteger("tabID", extra.tab_id);
     value->SetString(
         "offlinePageID",
@@ -109,7 +110,7 @@ std::unique_ptr<base::DictionaryValue> PrepareSuggestion(
 
   if (suggestion.notification_extra()) {
     const auto& extra = *suggestion.notification_extra();
-    auto value = std::make_unique<base::DictionaryValue>();
+    auto value = base::MakeUnique<base::DictionaryValue>();
     value->SetString("deadline", TimeFormatShortDateAndTime(extra.deadline));
     entry->Set("notificationExtra", std::move(value));
   }
@@ -441,7 +442,7 @@ void SnippetsInternalsMessageHandler::OnContextualSuggestionsFetched(
     std::vector<ntp_snippets::ContentSuggestion> suggestions) {
   // Ids start in a range distinct from those created by SendContentSuggestions.
   int id = 10000;
-  auto suggestions_list = std::make_unique<base::ListValue>();
+  auto suggestions_list = base::MakeUnique<base::ListValue>();
   for (const ContentSuggestion& suggestion : suggestions) {
     suggestions_list->Append(PrepareSuggestion(suggestion, id++));
   }
@@ -537,7 +538,7 @@ void SnippetsInternalsMessageHandler::SendRankerDebugData() {
 
   std::unique_ptr<base::ListValue> items_list(new base::ListValue);
   for (const auto& item : data) {
-    auto entry = std::make_unique<base::DictionaryValue>();
+    auto entry = base::MakeUnique<base::DictionaryValue>();
     entry->SetString("label", item.label);
     entry->SetString("content", item.content);
     items_list->Append(std::move(entry));

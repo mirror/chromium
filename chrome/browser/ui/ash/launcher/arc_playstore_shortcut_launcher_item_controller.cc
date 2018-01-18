@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_launcher.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
@@ -27,7 +28,7 @@ void ArcPlaystoreShortcutLauncherItemController::ItemSelected(
   if (!playstore_launcher_) {
     // Play Store launch request has never been scheduled.
     std::unique_ptr<ArcAppLauncher> playstore_launcher =
-        std::make_unique<ArcAppLauncher>(
+        base::MakeUnique<ArcAppLauncher>(
             ChromeLauncherController::instance()->profile(),
             arc::kPlayStoreAppId,
             base::Optional<std::string>() /* launch_intent */,

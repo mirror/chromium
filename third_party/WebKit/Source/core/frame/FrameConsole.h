@@ -67,9 +67,7 @@ class CORE_EXPORT FrameConsole final
                                       unsigned long request_identifier,
                                       const ResourceResponse&);
 
-  void DidFailLoading(DocumentLoader*,
-                      unsigned long request_identifier,
-                      const ResourceError&);
+  void DidFailLoading(unsigned long request_identifier, const ResourceError&);
 
   void Trace(blink::Visitor*);
 

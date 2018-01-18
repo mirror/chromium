@@ -21,10 +21,8 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/ash_config.h"
 #include "chrome/browser/chromeos/night_light/night_light_client.h"
-#include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h"
 #include "chrome/browser/ui/ash/ash_shell_init.h"
-#include "chrome/browser/ui/ash/auto_connect_notifier.h"
 #include "chrome/browser/ui/ash/cast_config_client_media_router.h"
 #include "chrome/browser/ui/ash/chrome_new_window_client.h"
 #include "chrome/browser/ui/ash/chrome_shell_content_state.h"
@@ -32,8 +30,6 @@
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/login_screen_client.h"
 #include "chrome/browser/ui/ash/media_client.h"
-#include "chrome/browser/ui/ash/network/data_promo_notification.h"
-#include "chrome/browser/ui/ash/network/network_connect_delegate_chromeos.h"
 #include "chrome/browser/ui/ash/session_controller_client.h"
 #include "chrome/browser/ui/ash/system_tray_client.h"
 #include "chrome/browser/ui/ash/tab_scrubber.h"
@@ -45,8 +41,6 @@
 #include "chrome/browser/ui/views/frame/immersive_handler_factory_mus.h"
 #include "chrome/browser/ui/views/select_file_dialog_extension.h"
 #include "chrome/browser/ui/views/select_file_dialog_extension_factory.h"
-#include "chromeos/network/network_connect.h"
-#include "chromeos/network/network_handler.h"
 #include "components/session_manager/core/session_manager.h"
 #include "components/session_manager/core/session_manager_observer.h"
 #include "components/startup_metric_utils/browser/startup_metric_utils.h"
@@ -184,11 +178,6 @@ void ChromeBrowserMainExtraPartsAsh::ServiceManagerConnectionStarted(
 }
 
 void ChromeBrowserMainExtraPartsAsh::PreProfileInit() {
-  // NetworkConnect handles the network connection state machine for the UI.
-  network_connect_delegate_ =
-      std::make_unique<NetworkConnectDelegateChromeOS>();
-  chromeos::NetworkConnect::Initialize(network_connect_delegate_.get());
-
   if (chromeos::GetAshConfig() != ash::Config::MASH) {
     ash_shell_init_ = std::make_unique<AshShellInit>();
   } else {
@@ -259,20 +248,9 @@ void ChromeBrowserMainExtraPartsAsh::PostProfileInit() {
     // Initialize TabScrubber after the Ash Shell has been initialized.
     TabScrubber::GetInstance();
   }
-
-  if (chromeos::NetworkHandler::IsInitialized() &&
-      chromeos::NetworkHandler::Get()->auto_connect_handler()) {
-    auto_connect_notifier_ = std::make_unique<AutoConnectNotifier>(
-        ProfileManager::GetActiveUserProfile(),
-        chromeos::NetworkHandler::Get()->network_connection_handler(),
-        chromeos::NetworkHandler::Get()->network_state_handler(),
-        chromeos::NetworkHandler::Get()->auto_connect_handler());
-  }
 }
 
 void ChromeBrowserMainExtraPartsAsh::PostBrowserStart() {
-  data_promo_notification_ = std::make_unique<DataPromoNotification>();
-
   if (ash::switches::IsNightLightEnabled()) {
     night_light_client_ = std::make_unique<NightLightClient>(
         g_browser_process->system_request_context());
@@ -288,7 +266,6 @@ void ChromeBrowserMainExtraPartsAsh::PostMainMessageLoopRun() {
 #endif
 
   night_light_client_.reset();
-  data_promo_notification_.reset();
 
   chrome_launcher_controller_initializer_.reset();
 
@@ -302,14 +279,10 @@ void ChromeBrowserMainExtraPartsAsh::PostMainMessageLoopRun() {
   media_client_.reset();
   login_screen_client_.reset();
   ime_controller_client_.reset();
-  auto_connect_notifier_.reset();
   cast_config_client_media_router_.reset();
   accessibility_controller_client_.reset();
 
   ash_shell_init_.reset();
-
-  chromeos::NetworkConnect::Shutdown();
-  network_connect_delegate_.reset();
 
   // Views code observes TabletModeClient and may not be destroyed until
   // ash::Shell is so destroy |tablet_mode_client_| after ash::Shell.

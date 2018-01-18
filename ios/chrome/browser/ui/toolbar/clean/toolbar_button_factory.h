@@ -14,7 +14,6 @@
 @class ToolbarButton;
 @class ToolbarButtonVisibilityConfiguration;
 @protocol ToolbarCommands;
-@class ToolbarTabGridButton;
 @class ToolbarToolsMenuButton;
 @class ToolbarConfiguration;
 
@@ -41,12 +40,8 @@
 
 // Back ToolbarButton.
 - (ToolbarButton*)backButton;
-// Forward ToolbarButton to be displayed on the leading side of the toolbar.
-- (ToolbarButton*)leadingForwardButton;
-// Forward ToolbarButton to be displayed on the trailing side of the toolbar.
-- (ToolbarButton*)trailingForwardButton;
-// Tab Grid ToolbarButton.
-- (ToolbarTabGridButton*)tabGridButton;
+// Forward ToolbarButton.
+- (ToolbarButton*)forwardButton;
 // Tab Switcher Strip ToolbarButton.
 - (ToolbarButton*)tabSwitcherStripButton;
 // Tab Switcher Grid ToolbarButton.

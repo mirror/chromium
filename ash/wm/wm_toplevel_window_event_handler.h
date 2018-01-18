@@ -11,7 +11,6 @@
 #include "ash/display/window_tree_host_manager.h"
 #include "base/callback.h"
 #include "base/macros.h"
-#include "ui/aura/window_observer.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/wm/public/window_move_client.h"
 
@@ -37,8 +36,7 @@ namespace wm {
 // windows. WmToplevelWindowEventHandler is forwarded events, such as from an
 // EventHandler.
 class ASH_EXPORT WmToplevelWindowEventHandler
-    : public WindowTreeHostManager::Observer,
-      public aura::WindowObserver {
+    : public WindowTreeHostManager::Observer {
  public:
   // Describes what triggered ending the drag.
   enum class DragResult {
@@ -74,9 +72,6 @@ class ASH_EXPORT WmToplevelWindowEventHandler
   // Returns true if there is a drag in progress.
   bool is_drag_in_progress() const { return window_resizer_.get() != nullptr; }
 
-  // Returns the window that is currently handling gesture events.
-  aura::Window* gesture_target() { return gesture_target_; }
-
  private:
   class ScopedWindowResizer;
 
@@ -110,12 +105,6 @@ class ASH_EXPORT WmToplevelWindowEventHandler
   // WindowTreeHostManager::Observer:
   void OnDisplayConfigurationChanging() override;
 
-  // aura::WindowObserver:
-  void OnWindowDestroying(aura::Window* window) override;
-
-  // Update the gesture target.
-  void UpdateGestureTarget(aura::Window* window);
-
   // The hittest result for the first finger at the time that it initially
   // touched the screen. |first_finger_hittest_| is one of ui/base/hit_test.h
   int first_finger_hittest_;
@@ -131,8 +120,6 @@ class ASH_EXPORT WmToplevelWindowEventHandler
 
   // Is a window move/resize in progress because of gesture events?
   bool in_gesture_drag_ = false;
-
-  aura::Window* gesture_target_ = nullptr;
 
   std::unique_ptr<ScopedWindowResizer> window_resizer_;
 

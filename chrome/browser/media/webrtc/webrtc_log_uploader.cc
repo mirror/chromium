@@ -25,7 +25,6 @@
 #include "content/public/browser/browser_thread.h"
 #include "net/base/load_flags.h"
 #include "net/base/mime_util.h"
-#include "net/http/http_status_code.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "third_party/zlib/zlib.h"
@@ -38,15 +37,17 @@ const int kLogCountLimit = 5;
 const uint32_t kIntermediateCompressionBufferBytes = 256 * 1024;  // 256 KB
 const int kLogListLimitLines = 50;
 
-const char kWebrtcLogUploadContentType[] = "multipart/form-data";
-const char kWebrtcLogMultipartBoundary[] =
+const char kUploadContentType[] = "multipart/form-data";
+const char kMultipartBoundary[] =
     "----**--yradnuoBgoLtrapitluMklaTelgooG--**----";
+
+const int kHttpResponseOk = 200;
 
 // Adds the header section for a gzip file to the multipart |post_data|.
 void AddMultipartFileContentHeader(std::string* post_data,
                                    const std::string& content_name) {
   post_data->append("--");
-  post_data->append(kWebrtcLogMultipartBoundary);
+  post_data->append(kMultipartBoundary);
   post_data->append("\r\nContent-Disposition: form-data; name=\"");
   post_data->append(content_name);
   post_data->append("\"; filename=\"");
@@ -163,7 +164,7 @@ void WebRtcLogUploader::PrepareMultipartPostData(
   // implemented according to the test plan. http://crbug.com/257329.
   if (post_data_) {
     *post_data_ = *post_data;
-    NotifyUploadDone(net::HTTP_OK, "", upload_done_data);
+    NotifyUploadDone(kHttpResponseOk, "", upload_done_data);
     return;
   }
 
@@ -301,7 +302,7 @@ void WebRtcLogUploader::OnURLFetchComplete(
     // The log path can be empty here if we failed getting it before. We still
     // upload the log if that's the case.
     std::string report_id;
-    if (response_code == net::HTTP_OK &&
+    if (response_code == kHttpResponseOk &&
         source->GetResponseAsString(&report_id) &&
         !it->second.log_path.empty()) {
       // TODO(jiayl): Add the RTP dump records to chrome://webrtc-logs.
@@ -346,20 +347,20 @@ void WebRtcLogUploader::SetupMultipart(
 #else
 #error Platform not supported.
 #endif
-  net::AddMultipartValueForUpload("prod", product, kWebrtcLogMultipartBoundary,
+  net::AddMultipartValueForUpload("prod", product, kMultipartBoundary,
                                   "", post_data);
   net::AddMultipartValueForUpload("ver",
                                   version_info::GetVersionNumber() + "-webrtc",
-                                  kWebrtcLogMultipartBoundary, "", post_data);
-  net::AddMultipartValueForUpload("guid", "0", kWebrtcLogMultipartBoundary, "",
-                                  post_data);
-  net::AddMultipartValueForUpload("type", "webrtc_log",
-                                  kWebrtcLogMultipartBoundary, "", post_data);
+                                  kMultipartBoundary, "", post_data);
+  net::AddMultipartValueForUpload("guid", "0", kMultipartBoundary,
+                                  "", post_data);
+  net::AddMultipartValueForUpload("type", "webrtc_log", kMultipartBoundary,
+                                  "", post_data);
 
   // Add custom meta data.
   for (const auto& it : meta_data) {
-    net::AddMultipartValueForUpload(it.first, it.second,
-                                    kWebrtcLogMultipartBoundary, "", post_data);
+    net::AddMultipartValueForUpload(it.first, it.second, kMultipartBoundary, "",
+                                    post_data);
   }
 
   AddLogData(post_data, compressed_log);
@@ -376,8 +377,7 @@ void WebRtcLogUploader::SetupMultipart(
     }
   }
 
-  net::AddMultipartFinalDelimiterForUpload(kWebrtcLogMultipartBoundary,
-                                           post_data);
+  net::AddMultipartFinalDelimiterForUpload(kMultipartBoundary, post_data);
 }
 
 void WebRtcLogUploader::CompressLog(std::string* compressed_log,
@@ -443,9 +443,9 @@ void WebRtcLogUploader::UploadCompressedLog(
   if (shutting_down_)
     return;
 
-  std::string content_type = kWebrtcLogUploadContentType;
+  std::string content_type = kUploadContentType;
   content_type.append("; boundary=");
-  content_type.append(kWebrtcLogMultipartBoundary);
+  content_type.append(kMultipartBoundary);
 
   // Create traffic annotation tag.
   net::NetworkTrafficAnnotationTag traffic_annotation =
@@ -620,7 +620,7 @@ void WebRtcLogUploader::NotifyUploadDone(
       base::BindOnce(&WebRtcLoggingHandlerHost::UploadLogDone,
                      upload_done_data.host));
   if (!upload_done_data.callback.is_null()) {
-    bool success = response_code == net::HTTP_OK;
+    bool success = response_code == kHttpResponseOk;
     std::string error_message;
     if (!success) {
       error_message = "Uploading failed, response code: " +

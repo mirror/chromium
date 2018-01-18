@@ -28,7 +28,7 @@ class MockInsecureInputService : public mojom::blink::InsecureInputService {
                            WTF::Unretained(this)));
   }
 
-  ~MockInsecureInputService() override = default;
+  ~MockInsecureInputService() override {}
 
   void BindRequest(mojo::ScopedMessagePipeHandle handle) {
     binding_set_.AddBinding(

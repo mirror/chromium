@@ -8,12 +8,8 @@
 
 #include "base/memory/ptr_util.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
-#include "ios/chrome/browser/signin/account_tracker_service_factory.h"
-#import "ios/chrome/browser/signin/authentication_service_delegate_fake.h"
 #import "ios/chrome/browser/signin/authentication_service_factory.h"
 #include "ios/chrome/browser/signin/oauth2_token_service_factory.h"
-#include "ios/chrome/browser/signin/signin_manager_factory.h"
-#include "ios/chrome/browser/sync/ios_chrome_profile_sync_service_factory.h"
 #include "ios/chrome/browser/sync/sync_setup_service_factory.h"
 #import "ios/public/provider/chrome/browser/signin/chrome_identity.h"
 
@@ -22,18 +18,11 @@
 #endif
 
 AuthenticationServiceFake::AuthenticationServiceFake(
-    PrefService* pref_service,
-    ProfileOAuth2TokenService* token_service,
-    SyncSetupService* sync_setup_service,
-    AccountTrackerService* account_tracker,
-    SigninManager* signin_manager,
-    browser_sync::ProfileSyncService* sync_service)
-    : AuthenticationService(pref_service,
-                            token_service,
-                            sync_setup_service,
-                            account_tracker,
-                            signin_manager,
-                            sync_service),
+    ios::ChromeBrowserState* browser_state)
+    : AuthenticationService(
+          browser_state,
+          OAuth2TokenServiceFactory::GetForBrowserState(browser_state),
+          SyncSetupServiceFactory::GetForBrowserState(browser_state)),
       have_accounts_changed_(false) {}
 
 AuthenticationServiceFake::~AuthenticationServiceFake() {}
@@ -73,16 +62,7 @@ NSString* AuthenticationServiceFake::GetAuthenticatedUserEmail() {
 
 std::unique_ptr<KeyedService>
 AuthenticationServiceFake::CreateAuthenticationService(
-    web::BrowserState* context) {
-  ios::ChromeBrowserState* browser_state =
-      ios::ChromeBrowserState::FromBrowserState(context);
-  auto service = base::WrapUnique(new AuthenticationServiceFake(
-      browser_state->GetPrefs(),
-      OAuth2TokenServiceFactory::GetForBrowserState(browser_state),
-      SyncSetupServiceFactory::GetForBrowserState(browser_state),
-      ios::AccountTrackerServiceFactory::GetForBrowserState(browser_state),
-      ios::SigninManagerFactory::GetForBrowserState(browser_state),
-      IOSChromeProfileSyncServiceFactory::GetForBrowserState(browser_state)));
-  service->Initialize(std::make_unique<AuthenticationServiceDelegateFake>());
-  return service;
+    web::BrowserState* browser_state) {
+  return base::WrapUnique(new AuthenticationServiceFake(
+      ios::ChromeBrowserState::FromBrowserState(browser_state)));
 }

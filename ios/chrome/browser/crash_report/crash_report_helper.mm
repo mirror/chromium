@@ -23,8 +23,6 @@
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/tabs/tab_model_observer.h"
-#import "ios/chrome/browser/web/tab_id_tab_helper.h"
-#import "ios/chrome/browser/web_state_list/web_state_list.h"
 #include "ios/web/public/browser_state.h"
 #import "ios/web/public/navigation_item.h"
 #include "ios/web/public/web_state/web_state.h"
@@ -349,11 +347,8 @@ void StopMonitoringTabStateForTabModel(TabModel* tab_model) {
 void ClearStateForTabModel(TabModel* tab_model) {
   CrashReporterURLObserver* observer =
       [CrashReporterURLObserver uniqueInstance];
-
-  WebStateList* web_state_list = tab_model.webStateList;
-  for (int index = 0; index < web_state_list->count(); ++index) {
-    web::WebState* web_state = web_state_list->GetWebStateAt(index);
-    [observer removeTabId:TabIdTabHelper::FromWebState(web_state)->tab_id()];
+  for (Tab* tab in tab_model) {
+    [observer removeTabId:tab.tabId];
   }
 }
 

@@ -36,9 +36,6 @@
 #include "core/html/forms/HTMLOptionElement.h"
 #include "core/html/forms/HTMLSelectElement.h"
 #include "core/paint/PaintLayer.h"
-#include "platform/scroll/ScrollAlignment.h"
-#include "platform/scroll/ScrollTypes.h"
-#include "public/platform/WebScrollIntoViewParams.h"
 
 namespace blink {
 
@@ -54,7 +51,7 @@ LayoutListBox::LayoutListBox(Element* element) : LayoutBlockFlow(element) {
   DCHECK(IsHTMLSelectElement(element));
 }
 
-LayoutListBox::~LayoutListBox() = default;
+LayoutListBox::~LayoutListBox() {}
 
 inline HTMLSelectElement* LayoutListBox::SelectElement() const {
   return ToHTMLSelectElement(GetNode());
@@ -135,10 +132,8 @@ void LayoutListBox::ScrollToRect(const LayoutRect& rect) {
     DCHECK(Layer());
     DCHECK(Layer()->GetScrollableArea());
     Layer()->GetScrollableArea()->ScrollIntoView(
-        rect, WebScrollIntoViewParams(ScrollAlignment::kAlignToEdgeIfNeeded,
-                                      ScrollAlignment::kAlignToEdgeIfNeeded,
-                                      kProgrammaticScroll, false,
-                                      kScrollBehaviorInstant));
+        rect, ScrollAlignment::kAlignToEdgeIfNeeded,
+        ScrollAlignment::kAlignToEdgeIfNeeded, false);
   }
 }
 

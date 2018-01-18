@@ -361,18 +361,6 @@ xmlHashFree(xmlHashTablePtr table, xmlHashDeallocator f) {
 }
 
 /**
- * xmlHashDefaultDeallocator:
- * @entry: the hash table entry
- * @name: the entry's name
- *
- * Free a hash table entry with xmlFree.
- */
-void
-xmlHashDefaultDeallocator(void *entry, const xmlChar *name ATTRIBUTE_UNUSED) {
-    xmlFree(entry);
-}
-
-/**
  * xmlHashAddEntry:
  * @table: the hash table
  * @name: the name of the userdata
@@ -924,11 +912,8 @@ void
 xmlHashScan3(xmlHashTablePtr table, const xmlChar *name,
 	     const xmlChar *name2, const xmlChar *name3,
 	     xmlHashScanner f, void *data) {
-    stubData stubdata;
-    stubdata.data = data;
-    stubdata.hashscanner = f;
-    xmlHashScanFull3(table, name, name2, name3, stubHashScannerFull,
-                     &stubdata);
+    xmlHashScanFull3 (table, name, name2, name3,
+		      (xmlHashScannerFull) f, data);
 }
 
 /**

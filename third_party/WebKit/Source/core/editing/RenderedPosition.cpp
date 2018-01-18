@@ -259,7 +259,8 @@ IntRect RenderedPosition::AbsoluteRect(
 // Convert a local point into the coordinate system of backing coordinates.
 // Also returns the backing layer if needed.
 FloatPoint RenderedPosition::LocalToInvalidationBackingPoint(
-    const LayoutPoint& local_point) const {
+    const LayoutPoint& local_point,
+    GraphicsLayer** graphics_layer_backing) const {
   const LayoutBoxModelObject& paint_invalidation_container =
       layout_object_->ContainerForPaintInvalidation();
   DCHECK(paint_invalidation_container.Layer());
@@ -281,28 +282,21 @@ FloatPoint RenderedPosition::LocalToInvalidationBackingPoint(
   // |paintInvalidationContainer|.
   if (GraphicsLayer* graphics_layer =
           paint_invalidation_container.Layer()->GraphicsLayerBacking(
-              &paint_invalidation_container))
+              &paint_invalidation_container)) {
+    if (graphics_layer_backing)
+      *graphics_layer_backing = graphics_layer;
+
     container_point.Move(-graphics_layer->OffsetFromLayoutObject());
+  }
 
   return container_point;
-}
-
-static GraphicsLayer* GetGraphicsLayerBacking(
-    const LayoutObject& layout_object) {
-  const LayoutBoxModelObject& paint_invalidation_container =
-      layout_object.ContainerForPaintInvalidation();
-  DCHECK(paint_invalidation_container.Layer());
-  if (paint_invalidation_container.Layer()->GetCompositingState() ==
-      kNotComposited)
-    return nullptr;
-  return paint_invalidation_container.Layer()->GraphicsLayerBacking(
-      &paint_invalidation_container);
 }
 
 void RenderedPosition::GetLocalSelectionEndpoints(
     bool selection_start,
     LayoutPoint& edge_top_in_layer,
-    LayoutPoint& edge_bottom_in_layer) const {
+    LayoutPoint& edge_bottom_in_layer,
+    bool& is_text_direction_rtl) const {
   const LayoutRect rect = layout_object_->LocalCaretRect(inline_box_, offset_);
   if (layout_object_->Style()->IsHorizontalWritingMode()) {
     edge_top_in_layer = rect.MinXMinYCorner();
@@ -320,28 +314,29 @@ void RenderedPosition::GetLocalSelectionEndpoints(
     edge_bottom_in_layer.SetX(edge_top_in_layer.X());
     edge_top_in_layer.SetX(x_swap);
   }
+
+  // Flipped blocks writing mode is not only vertical but also right to left.
+  is_text_direction_rtl = layout_object_->HasFlippedBlocksWritingMode();
 }
 
-CompositedSelectionBound RenderedPosition::PositionInGraphicsLayerBacking(
+void RenderedPosition::PositionInGraphicsLayerBacking(
+    CompositedSelectionBound& bound,
     bool selection_start) const {
+  bound.layer = nullptr;
+  bound.edge_top_in_layer = bound.edge_bottom_in_layer = FloatPoint();
+
   if (IsNull())
-    return CompositedSelectionBound();
+    return;
 
   LayoutPoint edge_top_in_layer;
   LayoutPoint edge_bottom_in_layer;
   GetLocalSelectionEndpoints(selection_start, edge_top_in_layer,
-                             edge_bottom_in_layer);
-  CompositedSelectionBound bound;
-  // Flipped blocks writing mode is not only vertical but also right to left.
-  if (!layout_object_->Style()->IsHorizontalWritingMode()) {
-    bound.is_text_direction_rtl = layout_object_->HasFlippedBlocksWritingMode();
-  }
+                             edge_bottom_in_layer, bound.is_text_direction_rtl);
 
-  bound.edge_top_in_layer = LocalToInvalidationBackingPoint(edge_top_in_layer);
+  bound.edge_top_in_layer =
+      LocalToInvalidationBackingPoint(edge_top_in_layer, &bound.layer);
   bound.edge_bottom_in_layer =
-      LocalToInvalidationBackingPoint(edge_bottom_in_layer);
-  bound.layer = GetGraphicsLayerBacking(*layout_object_);
-  return bound;
+      LocalToInvalidationBackingPoint(edge_bottom_in_layer, nullptr);
 }
 
 LayoutPoint RenderedPosition::GetSamplePointForVisibility(
@@ -375,8 +370,9 @@ bool RenderedPosition::IsVisible(bool selection_start) {
 
   LayoutPoint edge_top_in_layer;
   LayoutPoint edge_bottom_in_layer;
+  bool ignored2;
   GetLocalSelectionEndpoints(selection_start, edge_top_in_layer,
-                             edge_bottom_in_layer);
+                             edge_bottom_in_layer, ignored2);
   LayoutPoint sample_point =
       GetSamplePointForVisibility(edge_top_in_layer, edge_bottom_in_layer);
 

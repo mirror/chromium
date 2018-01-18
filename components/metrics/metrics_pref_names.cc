@@ -84,11 +84,6 @@ const char kStabilityChildProcessCrashCount[] =
 const char kStabilityCrashCount[] =
     "user_experience_metrics.stability.crash_count";
 
-// Number of times the application exited uncleanly since the last report
-// without gms core update.
-const char kStabilityCrashCountWithoutGmsCoreUpdate[] =
-    "user_experience_metrics.stability.crash_count_without_gms_core_update";
-
 // Number of times the initial stability log upload was deferred to the next
 // startup.
 const char kStabilityDeferredCount[] =
@@ -128,10 +123,6 @@ const char kStabilityExtensionRendererFailedLaunchCount[] =
 // last report.
 const char kStabilityExtensionRendererLaunchCount[] =
     "user_experience_metrics.stability.extension_renderer_launch_count";
-
-// The GMS core version used in Chrome.
-const char kStabilityGmsCoreVersion[] =
-    "user_experience_metrics.stability.gms_core_version";
 
 // Number of times the session end did not complete.
 const char kStabilityIncompleteSessionEndCount[] =

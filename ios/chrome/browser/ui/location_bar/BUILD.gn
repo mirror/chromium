@@ -9,7 +9,6 @@ source_set("location_bar") {
     "location_bar_coordinator.mm",
     "location_bar_mediator.h",
     "location_bar_mediator.mm",
-    "location_bar_url_loader.h",
     "location_bar_view.h",
     "location_bar_view.mm",
     "location_bar_view_controller.h",
@@ -17,7 +16,6 @@ source_set("location_bar") {
   ]
   deps = [
     "//base",
-    "//components/google/core/browser",
     "//components/omnibox/browser",
     "//components/strings",
     "//components/toolbar",
@@ -36,7 +34,6 @@ source_set("location_bar") {
     "//ios/chrome/common:timing",
     "//ios/third_party/material_components_ios",
     "//ios/third_party/material_roboto_font_loader_ios",
-    "//ios/web/public:public",
     "//skia",
     "//third_party/google_toolbox_for_mac",
     "//ui/base",

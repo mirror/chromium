@@ -4,10 +4,9 @@
 
 #include "chrome/browser/android/service_tab_launcher.h"
 
-#include <memory>
-
 #include "base/android/jni_string.h"
 #include "base/callback.h"
+#include "base/memory/ptr_util.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/web_contents.h"
@@ -63,7 +62,7 @@ void ServiceTabLauncher::LaunchTab(content::BrowserContext* browser_context,
   ScopedJavaLocalRef<jobject> post_data;
 
   int request_id = tab_launched_callbacks_.Add(
-      std::make_unique<TabLaunchedCallback>(callback));
+      base::MakeUnique<TabLaunchedCallback>(callback));
   DCHECK_GE(request_id, 1);
 
   Java_ServiceTabLauncher_launchTab(env, request_id,

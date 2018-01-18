@@ -47,8 +47,7 @@ TEST_F(ArgumentsTest, TestArgumentsHolderCreationContext) {
         v8::Script::Compile(context, StringToV8(isolate, kCallFunction))
             .ToLocalChecked();
     v8::Local<v8::Function> function;
-    ASSERT_TRUE(ConvertFromV8(isolate, script->Run(context).ToLocalChecked(),
-                              &function));
+    ASSERT_TRUE(ConvertFromV8(isolate, script->Run(), &function));
     v8::Local<v8::Value> args[] = {object};
     function->Call(v8::Undefined(isolate), arraysize(args), args);
   };

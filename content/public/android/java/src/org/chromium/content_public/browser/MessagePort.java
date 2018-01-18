@@ -26,6 +26,12 @@ public interface MessagePort {
     }
 
     /**
+     * @return Whether the message port is ready for receiving
+     *         {@link MessagePort#postMessage(String, MessagePort[])} calls.
+     */
+    boolean isReady();
+
+    /**
      * Close the port for use.
      */
     void close();

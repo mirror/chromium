@@ -19,11 +19,9 @@
 #include "ui/base/page_transition_types.h"
 #include "url/origin.h"
 
-namespace network {
-struct ResourceRequest;
-}
-
 namespace content {
+
+struct ResourceRequest;
 
 // Can be used by callers to store extra data on every ResourceRequest
 // which will be incorporated into the ResourceHostMsg_RequestResource message
@@ -140,7 +138,7 @@ class CONTENT_EXPORT RequestExtraData : public blink::WebURLRequest::ExtraData {
     url_loader_throttles_ = std::move(throttles);
   }
 
-  void CopyToResourceRequest(network::ResourceRequest* request) const;
+  void CopyToResourceRequest(ResourceRequest* request) const;
 
  private:
   blink::mojom::PageVisibilityState visibility_state_;

@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "chrome/browser/ui/sync/one_click_signin_links_delegate.h"
 #include "chrome/browser/ui/views/chrome_constrained_window_views_client.h"
@@ -49,7 +50,7 @@ class OneClickSigninDialogViewTest : public ChromeViewsTestBase,
   OneClickSigninDialogView* ShowOneClickSigninDialog() {
     OneClickSigninDialogView::ShowDialog(
         base::string16(),
-        std::make_unique<TestOneClickSigninLinksDelegate>(this),
+        base::MakeUnique<TestOneClickSigninLinksDelegate>(this),
         anchor_widget_->GetNativeWindow(),
         base::Bind(&OneClickSigninDialogViewTest::OnStartSync,
                    base::Unretained(this)));

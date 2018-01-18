@@ -40,33 +40,26 @@ class CONTENT_EXPORT DownloadResourceHandler
 
   // started_cb will be called exactly once on the UI thread.
   // |id| should be invalid if the id should be automatically assigned.
-  DownloadResourceHandler(net::URLRequest* request,
-                          DownloadSource download_source);
+  DownloadResourceHandler(net::URLRequest* request);
 
   // static
   // This function is passed into ResourceDispatcherHostImpl during its
-  // creation and is used to create instances of DownloadResourceHandler when
-  // intercepting navigation request to download system.
+  // creation and is used to create instances of DownloadResourceHandler as
+  // needed.
   // TODO(ananta)
   // Find a better way to achieve this. Ideally we want to move the logic of
   // creating DownloadResourceHandler instances out of
   // ResourceDispatcherHostImpl.
   static std::unique_ptr<ResourceHandler> Create(net::URLRequest* request);
 
-  // Create the resource handler when the request is not intercepted from
-  // navigation.
-  static std::unique_ptr<ResourceHandler> CreateForNewRequest(
-      net::URLRequest* request,
-      DownloadSource download_source);
-
   void OnRequestRedirected(
       const net::RedirectInfo& redirect_info,
-      network::ResourceResponse* response,
+      ResourceResponse* response,
       std::unique_ptr<ResourceController> controller) override;
 
   // Send the download creation information to the download thread.
   void OnResponseStarted(
-      network::ResourceResponse* response,
+      ResourceResponse* response,
       std::unique_ptr<ResourceController> controller) override;
 
   // Pass-through implementation.

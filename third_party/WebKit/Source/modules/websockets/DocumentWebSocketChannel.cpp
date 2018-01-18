@@ -52,6 +52,7 @@
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "modules/websockets/InspectorWebSocketEvents.h"
 #include "modules/websockets/WebSocketChannelClient.h"
+#include "modules/websockets/WebSocketFrame.h"
 #include "modules/websockets/WebSocketHandleImpl.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "platform/WebFrameScheduler.h"
@@ -68,15 +69,6 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
-
-namespace {
-
-enum WebSocketOpCode {
-  kOpCodeText = 0x1,
-  kOpCodeBinary = 0x2,
-};
-
-}  // namespace
 
 class DocumentWebSocketChannel::BlobLoader final
     : public GarbageCollectedFinalized<DocumentWebSocketChannel::BlobLoader>,
@@ -306,7 +298,7 @@ void DocumentWebSocketChannel::Send(const CString& message) {
   // FIXME: Change the inspector API to show the entire message instead
   // of individual frames.
   probe::didSendWebSocketFrame(GetDocument(), identifier_,
-                               WebSocketOpCode::kOpCodeText, true,
+                               WebSocketFrame::kOpCodeText, true,
                                message.data(), message.length());
   messages_.push_back(new Message(message));
   ProcessSendQueue();
@@ -324,7 +316,7 @@ void DocumentWebSocketChannel::Send(
   // Since Binary data are not displayed in Inspector, this does not
   // affect actual behavior.
   probe::didSendWebSocketFrame(GetDocument(), identifier_,
-                               WebSocketOpCode::kOpCodeBinary, true, "", 0);
+                               WebSocketFrame::kOpCodeBinary, true, "", 0);
   messages_.push_back(new Message(std::move(blob_data_handle)));
   ProcessSendQueue();
 }
@@ -338,7 +330,7 @@ void DocumentWebSocketChannel::Send(const DOMArrayBuffer& buffer,
   // FIXME: Change the inspector API to show the entire message instead
   // of individual frames.
   probe::didSendWebSocketFrame(
-      GetDocument(), identifier_, WebSocketOpCode::kOpCodeBinary, true,
+      GetDocument(), identifier_, WebSocketFrame::kOpCodeBinary, true,
       static_cast<const char*>(buffer.Data()) + byte_offset, byte_length);
   // buffer.slice copies its contents.
   // FIXME: Reduce copy by sending the data immediately when we don't need to
@@ -356,7 +348,7 @@ void DocumentWebSocketChannel::SendTextAsCharVector(
   // FIXME: Change the inspector API to show the entire message instead
   // of individual frames.
   probe::didSendWebSocketFrame(GetDocument(), identifier_,
-                               WebSocketOpCode::kOpCodeText, true, data->data(),
+                               WebSocketFrame::kOpCodeText, true, data->data(),
                                data->size());
   messages_.push_back(
       new Message(std::move(data), kMessageTypeTextAsCharVector));
@@ -371,7 +363,7 @@ void DocumentWebSocketChannel::SendBinaryAsCharVector(
   // FIXME: Change the inspector API to show the entire message instead
   // of individual frames.
   probe::didSendWebSocketFrame(GetDocument(), identifier_,
-                               WebSocketOpCode::kOpCodeBinary, true,
+                               WebSocketFrame::kOpCodeBinary, true,
                                data->data(), data->size());
   messages_.push_back(
       new Message(std::move(data), kMessageTypeBinaryAsCharVector));
@@ -674,15 +666,17 @@ void DocumentWebSocketChannel::DidReceiveData(WebSocketHandle* handle,
   if (!fin) {
     return;
   }
+  // FIXME: Change the inspector API to show the entire message instead
+  // of individual frames.
+  WebSocketFrame::OpCode opcode = receiving_message_type_is_text_
+                                      ? WebSocketFrame::kOpCodeText
+                                      : WebSocketFrame::kOpCodeBinary;
+  WebSocketFrame frame(opcode, receiving_message_data_.data(),
+                       receiving_message_data_.size(), WebSocketFrame::kFinal);
   if (GetDocument()) {
-    // FIXME: Change the inspector API to show the entire message instead
-    // of individual frames.
-    auto opcode = receiving_message_type_is_text_
-                      ? WebSocketOpCode::kOpCodeText
-                      : WebSocketOpCode::kOpCodeBinary;
-    probe::didReceiveWebSocketFrame(GetDocument(), identifier_, opcode, false,
-                                    receiving_message_data_.data(),
-                                    receiving_message_data_.size());
+    probe::didReceiveWebSocketFrame(GetDocument(), identifier_, frame.op_code,
+                                    frame.masked, frame.payload,
+                                    frame.payload_length);
   }
   if (receiving_message_type_is_text_) {
     String message = receiving_message_data_.IsEmpty()

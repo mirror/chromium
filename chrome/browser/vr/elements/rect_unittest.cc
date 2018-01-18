@@ -4,8 +4,7 @@
 
 #include "chrome/browser/vr/elements/rect.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/vr/target_property.h"
 #include "chrome/browser/vr/test/animation_utils.h"
 #include "chrome/browser/vr/test/constants.h"
@@ -16,7 +15,7 @@
 namespace vr {
 
 TEST(Rect, SetColorCorrectly) {
-  auto rect = std::make_unique<Rect>();
+  auto rect = base::MakeUnique<Rect>();
 
   EXPECT_NE(SK_ColorCYAN, rect->edge_color());
   EXPECT_NE(SK_ColorCYAN, rect->center_color());
@@ -34,7 +33,7 @@ TEST(Rect, SetColorCorrectly) {
 
 TEST(Rect, AnimateColorCorrectly) {
   UiScene scene;
-  auto element = std::make_unique<Rect>();
+  auto element = base::MakeUnique<Rect>();
   Rect* rect = element.get();
   scene.AddUiElement(kRoot, std::move(element));
 

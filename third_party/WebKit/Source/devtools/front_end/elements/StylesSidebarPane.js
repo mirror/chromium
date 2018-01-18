@@ -750,8 +750,6 @@ Elements.StylePropertiesSection = class {
     /** @type {?function(!Elements.StylePropertiesSection)} */
     this._afterUpdate = null;
     this._willCauseCancelEditing = false;
-    this._forceShowAll = false;
-    this._originalPropertiesCount = style.leadingProperties().length;
 
     var rule = style.parentRule;
     this.element = createElementWithClass('div', 'styles-section matched-styles monospace');
@@ -770,9 +768,6 @@ Elements.StylePropertiesSection = class {
     this.propertiesTreeOutline.element.classList.add('style-properties', 'matched-styles', 'monospace');
     this.propertiesTreeOutline.section = this;
     this._innerElement.appendChild(this.propertiesTreeOutline.element);
-
-    this._showAllButton = UI.createTextButton('', this._showAllItems.bind(this), 'styles-show-all');
-    this._innerElement.appendChild(this._showAllButton);
 
     var selectorContainer = createElement('div');
     this._selectorElement = createElementWithClass('span', 'selector');
@@ -1266,6 +1261,7 @@ Elements.StylePropertiesSection = class {
     this._selectorElement.textContent = this._headerText();
     this._markSelectorMatches();
     if (full) {
+      this.propertiesTreeOutline.removeChildren();
       this.onpopulate();
     } else {
       var child = this.propertiesTreeOutline.firstChild();
@@ -1288,43 +1284,15 @@ Elements.StylePropertiesSection = class {
   _afterUpdateFinishedForTest() {
   }
 
-  /**
-   * @param {!Event=} event
-   */
-  _showAllItems(event) {
-    if (event)
-      event.consume();
-    if (this._forceShowAll)
-      return;
-    this._forceShowAll = true;
-    this.onpopulate();
-  }
-
   onpopulate() {
-    this.propertiesTreeOutline.removeChildren();
     var style = this._style;
-    var count = 0;
-    var properties = style.leadingProperties();
-    var maxProperties =
-        Elements.StylePropertiesSection.MaxProperties + properties.length - this._originalPropertiesCount;
-
-    for (var property of properties) {
-      if (!this._forceShowAll && count >= maxProperties)
-        break;
-      count++;
+    for (var property of style.leadingProperties()) {
       var isShorthand = !!style.longhandProperties(property.name).length;
       var inherited = this.isPropertyInherited(property.name);
       var overloaded = this._isPropertyOverloaded(property);
       var item = new Elements.StylePropertyTreeElement(
           this._parentPane, this._matchedStyles, property, isShorthand, inherited, overloaded);
       this.propertiesTreeOutline.appendChild(item);
-    }
-
-    if (count < properties.length) {
-      this._showAllButton.classList.remove('hidden');
-      this._showAllButton.textContent = ls`Show All Properties (${properties.length - count} more)`;
-    } else {
-      this._showAllButton.classList.add('hidden');
     }
   }
 
@@ -1341,7 +1309,6 @@ Elements.StylePropertiesSection = class {
    */
   _updateFilter() {
     var hasMatchingChild = false;
-    this._showAllItems();
     for (var child of this.propertiesTreeOutline.rootElement().children())
       hasMatchingChild |= child._updateFilter();
 
@@ -1462,7 +1429,7 @@ Elements.StylePropertiesSection = class {
    * @param {number=} index
    * @return {!Elements.StylePropertyTreeElement}
    */
-  addNewBlankProperty(index = this.propertiesTreeOutline.rootElement().childCount()) {
+  addNewBlankProperty(index) {
     var property = this._style.newBlankProperty(index);
     var item =
         new Elements.StylePropertyTreeElement(this._parentPane, this._matchedStyles, property, false, false, false);
@@ -1942,7 +1909,6 @@ Elements.BlankStylePropertiesSection = class extends Elements.StylePropertiesSec
     this._normal = true;
   }
 };
-Elements.StylePropertiesSection.MaxProperties = 50;
 
 Elements.KeyframePropertiesSection = class extends Elements.StylePropertiesSection {
   /**

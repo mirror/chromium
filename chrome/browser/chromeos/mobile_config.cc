@@ -13,6 +13,7 @@
 #include "base/files/file_util.h"
 #include "base/json/json_reader.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_restrictions.h"
@@ -282,7 +283,7 @@ bool MobileConfig::LoadManifestFromString(const std::string& manifest) {
           inner_iter->second->InitFromDictionary(carrier_dict, initial_locale_);
         } else {
           std::unique_ptr<Carrier> carrier =
-              std::make_unique<Carrier>(carrier_dict, initial_locale_);
+              base::MakeUnique<Carrier>(carrier_dict, initial_locale_);
           if (!carrier->external_ids().empty()) {
             // Map all external IDs to a single internal one.
             for (auto i = carrier->external_ids().begin();

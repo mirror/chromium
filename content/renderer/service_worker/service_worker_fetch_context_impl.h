@@ -16,15 +16,13 @@ class SingleThreadTaskRunner;
 
 namespace content {
 class ResourceDispatcher;
-class URLLoaderThrottleProvider;
 
 class ServiceWorkerFetchContextImpl : public blink::WebWorkerFetchContext {
  public:
   ServiceWorkerFetchContextImpl(
       const GURL& worker_script_url,
       ChildURLLoaderFactoryGetter::Info url_loader_factory_getter_info,
-      int service_worker_provider_id,
-      std::unique_ptr<URLLoaderThrottleProvider> throttle_provider);
+      int service_worker_provider_id);
   ~ServiceWorkerFetchContextImpl() override;
 
   // blink::WebWorkerFetchContext implementation:
@@ -44,8 +42,6 @@ class ServiceWorkerFetchContextImpl : public blink::WebWorkerFetchContext {
   // Initialized on the worker thread when InitializeOnWorkerThread() is called.
   std::unique_ptr<ResourceDispatcher> resource_dispatcher_;
   scoped_refptr<ChildURLLoaderFactoryGetter> url_loader_factory_getter_;
-
-  std::unique_ptr<URLLoaderThrottleProvider> throttle_provider_;
 };
 
 }  // namespace content

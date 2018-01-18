@@ -29,7 +29,7 @@ BlinkLeakDetector::BlinkLeakDetector(BlinkLeakDetectorClient* client)
       number_of_gc_needed_(0),
       client_(client) {}
 
-BlinkLeakDetector::~BlinkLeakDetector() = default;
+BlinkLeakDetector::~BlinkLeakDetector() {}
 
 void BlinkLeakDetector::PrepareForLeakDetection(WebFrame* frame) {
   v8::Isolate* isolate = v8::Isolate::GetCurrent();

@@ -70,7 +70,7 @@ bool IsContentSecure(content::WebContents* web_contents) {
 
   // Whitelist localhost. Check the VisibleURL to match what the
   // SecurityStateTabHelper looks at.
-  if (net::IsLocalhost(web_contents->GetVisibleURL()))
+  if (net::IsLocalhost(web_contents->GetVisibleURL().HostNoBracketsPiece()))
     return true;
 
   security_state::SecurityInfo security_info;
@@ -334,7 +334,6 @@ void InstallableManager::Reset() {
   has_pwa_check_ = false;
 
   metrics_ = base::MakeUnique<InstallableMetrics>();
-  eligibility_ = base::MakeUnique<EligiblityProperty>();
   manifest_ = base::MakeUnique<ManifestProperty>();
   valid_manifest_ = base::MakeUnique<ValidManifestProperty>();
   worker_ = base::MakeUnique<ServiceWorkerProperty>();

@@ -52,7 +52,7 @@ class CORE_EXPORT TouchEventManager
    public:
     void Trace(blink::Visitor* visitor) { visitor->Trace(target_); }
 
-    TouchPointAttributes() = default;
+    TouchPointAttributes() {}
     explicit TouchPointAttributes(WebPointerEvent event)
         : event_(event), stale_(false) {}
 

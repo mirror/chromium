@@ -15,6 +15,7 @@
 #include "base/command_line.h"
 #include "base/json/json_writer.h"
 #include "base/lazy_instance.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -303,9 +304,9 @@ bool FontSettingsGetFontListFunction::CopyFontsToResult(
 
     std::unique_ptr<base::DictionaryValue> font_name(
         new base::DictionaryValue());
-    font_name->Set(kFontIdKey, std::make_unique<base::Value>(name));
+    font_name->Set(kFontIdKey, base::MakeUnique<base::Value>(name));
     font_name->Set(kDisplayNameKey,
-                   std::make_unique<base::Value>(localized_name));
+                   base::MakeUnique<base::Value>(localized_name));
     result->Append(std::move(font_name));
   }
 

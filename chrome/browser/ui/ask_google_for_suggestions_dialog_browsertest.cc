@@ -2,8 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/renderer_context_menu/spelling_bubble_model.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -18,7 +17,7 @@ class AskGoogleForSuggestionsDialogTest : public DialogBrowserTest {
   // DialogBrowserTest:
   void ShowUi(const std::string& name) override {
     std::unique_ptr<SpellingBubbleModel> model =
-        std::make_unique<SpellingBubbleModel>(
+        base::MakeUnique<SpellingBubbleModel>(
             browser()->profile(),
             browser()->tab_strip_model()->GetActiveWebContents());
 

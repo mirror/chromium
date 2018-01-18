@@ -36,7 +36,7 @@ bool IsOriginSecure(const GURL& url) {
     return true;
   }
 
-  if (net::IsLocalhost(url))
+  if (net::IsLocalhost(url.HostNoBracketsPiece()))
     return true;
 
   if (base::ContainsValue(url::GetSecureSchemes(), url.scheme()))
@@ -77,7 +77,7 @@ bool IsPotentiallyTrustworthyOrigin(const url::Origin& origin) {
 
   if (base::ContainsValue(url::GetSecureSchemes(), origin.scheme()) ||
       base::ContainsValue(url::GetLocalSchemes(), origin.scheme()) ||
-      net::IsLocalhost(origin.GetURL())) {
+      net::IsLocalhost(origin.GetURL().HostNoBracketsPiece())) {
     return true;
   }
 

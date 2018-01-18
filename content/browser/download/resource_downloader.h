@@ -10,9 +10,9 @@
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/ssl_status.h"
+#include "content/public/common/resource_request.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
-#include "services/network/public/cpp/resource_request.h"
 
 namespace storage {
 class FileSystemContext;
@@ -28,13 +28,10 @@ class ResourceDownloader : public UrlDownloadHandler,
   static std::unique_ptr<ResourceDownloader> BeginDownload(
       base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
       std::unique_ptr<DownloadUrlParameters> download_url_parameters,
-      std::unique_ptr<network::ResourceRequest> request,
+      std::unique_ptr<ResourceRequest> request,
       scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter,
       scoped_refptr<storage::FileSystemContext> file_system_context,
       const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
-      const GURL& site_url,
-      const GURL& tab_url,
-      const GURL& tab_referrer_url,
       uint32_t download_id,
       bool is_parallel_request);
 
@@ -43,21 +40,18 @@ class ResourceDownloader : public UrlDownloadHandler,
   // transferred.
   static std::unique_ptr<ResourceDownloader> InterceptNavigationResponse(
       base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
-      std::unique_ptr<network::ResourceRequest> resource_request,
+      std::unique_ptr<ResourceRequest> resource_request,
       const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
       std::vector<GURL> url_chain,
       const base::Optional<std::string>& suggested_filename,
-      const scoped_refptr<network::ResourceResponse>& response,
+      const scoped_refptr<ResourceResponse>& response,
       net::CertStatus cert_status,
       mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints);
 
   ResourceDownloader(
       base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
-      std::unique_ptr<network::ResourceRequest> resource_request,
+      std::unique_ptr<ResourceRequest> resource_request,
       const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
-      const GURL& site_url,
-      const GURL& tab_url,
-      const GURL& tab_referrer_url,
       uint32_t download_id);
   ~ResourceDownloader() override;
 
@@ -76,7 +70,7 @@ class ResourceDownloader : public UrlDownloadHandler,
 
   // Intercepts the navigation response.
   void InterceptResponse(
-      const scoped_refptr<network::ResourceResponse>& response,
+      const scoped_refptr<ResourceResponse>& response,
       std::vector<GURL> url_chain,
       const base::Optional<std::string>& suggested_filename,
       net::CertStatus cert_status,
@@ -85,7 +79,7 @@ class ResourceDownloader : public UrlDownloadHandler,
   base::WeakPtr<UrlDownloadHandler::Delegate> delegate_;
 
   // The ResourceRequest for this object.
-  std::unique_ptr<network::ResourceRequest> resource_request_;
+  std::unique_ptr<ResourceRequest> resource_request_;
 
   // Object that will handle the response.
   std::unique_ptr<mojom::URLLoaderClient> url_loader_client_;
@@ -109,15 +103,6 @@ class ResourceDownloader : public UrlDownloadHandler,
 
   // Used to get WebContents in browser process.
   ResourceRequestInfo::WebContentsGetter web_contents_getter_;
-
-  // Site URL for the site instance that initiated the download.
-  GURL site_url_;
-
-  // The URL of the tab that started us.
-  GURL tab_url_;
-
-  // The referrer URL of the tab that started us.
-  GURL tab_referrer_url_;
 
   // URLLoader status when intercepting the navigation request.
   base::Optional<network::URLLoaderCompletionStatus> url_loader_status_;

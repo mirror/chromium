@@ -231,7 +231,7 @@ DataTransfer* DataTransfer::Create(DataTransferType type,
   return new DataTransfer(type, policy, data_object);
 }
 
-DataTransfer::~DataTransfer() = default;
+DataTransfer::~DataTransfer() {}
 
 void DataTransfer::setDropEffect(const String& effect) {
   if (!IsForDragAndDrop())

@@ -52,7 +52,6 @@
 #include "components/tracing/common/trace_config_file.h"
 #include "components/tracing/common/trace_to_console.h"
 #include "components/tracing/common/tracing_switches.h"
-#include "components/viz/common/features.h"
 #include "components/viz/common/switches.h"
 #include "components/viz/host/forwarding_compositing_mode_reporter_impl.h"
 #include "components/viz/host/host_frame_sink_manager.h"
@@ -107,7 +106,6 @@
 #include "content/public/common/main_function_params.h"
 #include "content/public/common/result_codes.h"
 #include "content/public/common/service_names.mojom.h"
-#include "content/public/common/zygote_features.h"
 #include "device/gamepad/gamepad_service.h"
 #include "gpu/vulkan/features.h"
 #include "media/audio/audio_manager.h"
@@ -144,10 +142,6 @@
 #if defined(USE_AURA)
 #include "content/public/browser/context_factory.h"
 #include "ui/aura/env.h"
-#endif
-
-#if BUILDFLAG(USE_ZYGOTE_HANDLE)
-#include "content/public/common/zygote_handle.h"
 #endif
 
 #if defined(OS_ANDROID)
@@ -217,6 +211,7 @@
 
 #if !defined(OS_ANDROID)
 #include "content/browser/zygote_host/zygote_communication_linux.h"
+#include "content/public/browser/zygote_handle_linux.h"
 #endif  // !defined(OS_ANDROID)
 #endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
 
@@ -227,11 +222,6 @@
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
 #include "content/browser/media/cdm_registry_impl.h"
-#endif
-
-#if BUILDFLAG(ENABLE_WEBRTC)
-#include "content/browser/webrtc/webrtc_event_log_manager.h"
-#include "content/browser/webrtc/webrtc_internals.h"
 #endif
 
 #if defined(USE_X11)
@@ -261,13 +251,8 @@
 namespace content {
 namespace {
 
-#if BUILDFLAG(USE_ZYGOTE_HANDLE)
-pid_t LaunchZygoteHelper(base::CommandLine* cmd_line,
-                         base::ScopedFD* control_fd) {
-  GetContentClient()->browser()->AppendExtraCommandLineSwitches(cmd_line, -1);
-  return ZygoteHostImpl::GetInstance()->LaunchZygote(cmd_line, control_fd);
-}
-
+#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
+    !defined(OS_FUCHSIA)
 void SetupSandbox(const base::CommandLine& parsed_command_line) {
   TRACE_EVENT0("startup", "SetupSandbox");
   // SandboxHostLinux needs to be initialized even if the sandbox and
@@ -283,7 +268,10 @@ void SetupSandbox(const base::CommandLine& parsed_command_line) {
   // Tickle the zygote host so it forks now.
   ZygoteHostImpl::GetInstance()->Init(parsed_command_line);
   ZygoteHandle generic_zygote =
-      CreateGenericZygote(base::BindOnce(LaunchZygoteHelper));
+      CreateGenericZygote(base::BindOnce([](base::CommandLine* cmd_line) {
+        GetContentClient()->browser()->AppendExtraCommandLineSwitches(cmd_line,
+                                                                      -1);
+      }));
 
   // TODO(kerrnel): Investigate doing this without the ZygoteHostImpl as a
   // proxy. It is currently done this way due to concerns about race
@@ -291,7 +279,8 @@ void SetupSandbox(const base::CommandLine& parsed_command_line) {
   ZygoteHostImpl::GetInstance()->SetRendererSandboxStatus(
       generic_zygote->GetSandboxStatus());
 }
-#endif  // BUILDFLAG(USE_ZYGOTE_HANDLE)
+#endif  // defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
+        // !defined(OS_FUCHSIA)
 
 #if defined(USE_GLIB)
 static void GLibLogHandler(const gchar* log_domain,
@@ -630,7 +619,7 @@ void BrowserMainLoop::Init() {
 
 // BrowserMainLoop stages ==================================================
 
-int BrowserMainLoop::EarlyInitialization() {
+void BrowserMainLoop::EarlyInitialization() {
   TRACE_EVENT0("startup", "BrowserMainLoop::EarlyInitialization");
 
 #if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
@@ -665,11 +654,8 @@ int BrowserMainLoop::EarlyInitialization() {
   SetUpGLibLogHandler();
 #endif  // defined(USE_GLIB)
 
-  if (parts_) {
-    const int pre_early_init_error_code = parts_->PreEarlyInitialization();
-    if (pre_early_init_error_code != content::RESULT_CODE_NORMAL_EXIT)
-      return pre_early_init_error_code;
-  }
+  if (parts_)
+    parts_->PreEarlyInitialization();
 
 #if defined(OS_MACOSX) || defined(OS_LINUX) || defined(OS_CHROMEOS)
   // We use quite a few file descriptors for our IPC as well as disk the disk
@@ -706,8 +692,6 @@ int BrowserMainLoop::EarlyInitialization() {
 
   if (parts_)
     parts_->PostEarlyInitialization();
-
-  return content::RESULT_CODE_NORMAL_EXIT;
 }
 
 void BrowserMainLoop::PreMainMessageLoopStart() {
@@ -1447,7 +1431,7 @@ void BrowserMainLoop::GetCompositingModeReporter(
     return;
   }
 
-  if (base::FeatureList::IsEnabled(features::kVizDisplayCompositor))
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableViz))
     forwarding_compositing_mode_reporter_impl_->BindRequest(std::move(request));
   else
     compositing_mode_reporter_impl_->BindRequest(std::move(request));
@@ -1521,7 +1505,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   if (browser_is_viz_host) {
     host_frame_sink_manager_ = std::make_unique<viz::HostFrameSinkManager>();
     BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
-    if (base::FeatureList::IsEnabled(features::kVizDisplayCompositor)) {
+    if (parsed_command_line_.HasSwitch(switches::kEnableViz)) {
       forwarding_compositing_mode_reporter_impl_ =
           std::make_unique<viz::ForwardingCompositingModeReporterImpl>();
 
@@ -1582,12 +1566,6 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 #elif defined(OS_MACOSX)
   device_monitor_mac_.reset(
       new media::DeviceMonitorMac(audio_manager_->GetTaskRunner()));
-#endif
-
-#if BUILDFLAG(ENABLE_WEBRTC)
-  webrtc_event_log_manager_.reset(
-      WebRtcEventLogManager::CreateSingletonInstance());
-  webrtc_internals_.reset(WebRTCInternals::CreateSingletonInstance());
 #endif
 
   // RDH needs the IO thread to be created

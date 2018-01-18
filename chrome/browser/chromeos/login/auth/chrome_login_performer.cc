@@ -83,8 +83,7 @@ void ChromeLoginPerformer::DidRunTrustedCheck(const base::Closure& callback) {
 
 bool ChromeLoginPerformer::IsUserWhitelisted(const AccountId& account_id,
                                              bool* wildcard_match) {
-  return CrosSettings::Get()->IsUserWhitelisted(account_id.GetUserEmail(),
-                                                wildcard_match);
+  return CrosSettings::IsWhitelisted(account_id.GetUserEmail(), wildcard_match);
 }
 
 void ChromeLoginPerformer::RunOnlineWhitelistCheck(

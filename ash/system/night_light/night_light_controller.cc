@@ -119,9 +119,10 @@ void ApplyTemperatureToCompositors(float temperature) {
     matrix.set(2, 2, blue_scale);
   }
 
-  for (auto* controller : RootWindowController::root_window_controllers()) {
-    if (controller->GetHost()->compositor())
-      controller->GetHost()->compositor()->SetDisplayColorMatrix(matrix);
+  for (auto* root_window_controller :
+       RootWindowController::root_window_controllers()) {
+    root_window_controller->GetHost()->compositor()->SetDisplayColorMatrix(
+        matrix);
   }
 }
 

@@ -31,7 +31,6 @@ class ExternalProtocolDialog : public views::DialogDelegateView {
 
   // views::DialogDelegateView:
   gfx::Size CalculatePreferredSize() const override;
-  bool ShouldShowCloseButton() const override;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   base::string16 GetWindowTitle() const override;
   bool Cancel() override;

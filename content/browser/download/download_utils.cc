@@ -8,25 +8,21 @@
 #include "base/memory/ptr_util.h"
 #include "base/process/process_handle.h"
 #include "base/strings/stringprintf.h"
-#include "components/download/downloader/in_progress/download_entry.h"
-#include "components/download/downloader/in_progress/in_progress_cache.h"
 #include "content/browser/download/download_create_info.h"
 #include "content/browser/download/download_interrupt_reasons_impl.h"
 #include "content/browser/download/download_stats.h"
-#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/download_manager_delegate.h"
 #include "content/public/browser/download_save_info.h"
 #include "content/public/browser/download_url_parameters.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/common/resource_request.h"
 #include "net/base/elements_upload_data_stream.h"
 #include "net/base/load_flags.h"
 #include "net/base/upload_bytes_element_reader.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_status_code.h"
 #include "net/url_request/url_request_context.h"
-#include "services/network/public/cpp/resource_request.h"
 
 namespace content {
 
@@ -162,12 +158,11 @@ DownloadInterruptReason HandleRequestCompletionStatus(
       error_code, DOWNLOAD_INTERRUPT_FROM_NETWORK);
 }
 
-std::unique_ptr<network::ResourceRequest> CreateResourceRequest(
+std::unique_ptr<ResourceRequest> CreateResourceRequest(
     DownloadUrlParameters* params) {
   DCHECK(params->offset() >= 0);
 
-  std::unique_ptr<network::ResourceRequest> request(
-      new network::ResourceRequest);
+  std::unique_ptr<ResourceRequest> request(new ResourceRequest);
   request->method = params->method();
   request->url = params->url();
   request->request_initiator = params->initiator();
@@ -185,7 +180,7 @@ std::unique_ptr<network::ResourceRequest> CreateResourceRequest(
 
   bool has_upload_data = false;
   if (!params->post_body().empty()) {
-    request->request_body = network::ResourceRequestBody::CreateFromBytes(
+    request->request_body = ResourceRequestBody::CreateFromBytes(
         params->post_body().data(), params->post_body().size());
     has_upload_data = true;
   }
@@ -197,7 +192,7 @@ std::unique_ptr<network::ResourceRequest> CreateResourceRequest(
     // plan on how to display the UI for that.
     DCHECK(params->prefer_cache());
     DCHECK_EQ("POST", params->method());
-    request->request_body = new network::ResourceRequestBody();
+    request->request_body = new ResourceRequestBody();
     request->request_body->set_identifier(params->post_id());
     has_upload_data = true;
   }
@@ -420,67 +415,31 @@ download::DownloadSource ToDownloadSource(
       return download::DownloadSource::NAVIGATION;
     case DownloadSource::DRAG_AND_DROP:
       return download::DownloadSource::DRAG_AND_DROP;
+    case DownloadSource::MANUAL_RESUMPTION:
+      return download::DownloadSource::MANUAL_RESUMPTION;
+    case DownloadSource::AUTO_RESUMPTION:
+      return download::DownloadSource::AUTO_RESUMPTION;
     case DownloadSource::FROM_RENDERER:
       return download::DownloadSource::FROM_RENDERER;
     case DownloadSource::EXTENSION_API:
       return download::DownloadSource::EXTENSION_API;
     case DownloadSource::EXTENSION_INSTALLER:
       return download::DownloadSource::EXTENSION_INSTALLER;
+    case DownloadSource::PLUGIN:
+      return download::DownloadSource::PLUGIN;
+    case DownloadSource::PLUGIN_INSTALLER:
+      return download::DownloadSource::PLUGIN_INSTALLER;
     case DownloadSource::INTERNAL_API:
       return download::DownloadSource::INTERNAL_API;
-    case DownloadSource::WEB_CONTENTS_API:
-      return download::DownloadSource::WEB_CONTENTS_API;
+    case DownloadSource::SAVE_PACKAGE:
+      return download::DownloadSource::SAVE_PACKAGE;
     case DownloadSource::OFFLINE_PAGE:
       return download::DownloadSource::OFFLINE_PAGE;
-    case DownloadSource::CONTEXT_MENU:
-      return download::DownloadSource::CONTEXT_MENU;
+    case DownloadSource::COUNT:
+      break;
   }
   NOTREACHED();
   return download::DownloadSource::UNKNOWN;
-}
-
-DownloadSource ToDownloadSource(download::DownloadSource download_source) {
-  switch (download_source) {
-    case download::DownloadSource::UNKNOWN:
-      return DownloadSource::UNKNOWN;
-    case download::DownloadSource::NAVIGATION:
-      return DownloadSource::NAVIGATION;
-    case download::DownloadSource::DRAG_AND_DROP:
-      return DownloadSource::DRAG_AND_DROP;
-    case download::DownloadSource::FROM_RENDERER:
-      return DownloadSource::FROM_RENDERER;
-    case download::DownloadSource::EXTENSION_API:
-      return DownloadSource::EXTENSION_API;
-    case download::DownloadSource::EXTENSION_INSTALLER:
-      return DownloadSource::EXTENSION_INSTALLER;
-    case download::DownloadSource::INTERNAL_API:
-      return DownloadSource::INTERNAL_API;
-    case download::DownloadSource::WEB_CONTENTS_API:
-      return DownloadSource::WEB_CONTENTS_API;
-    case download::DownloadSource::OFFLINE_PAGE:
-      return DownloadSource::OFFLINE_PAGE;
-    case download::DownloadSource::CONTEXT_MENU:
-      return DownloadSource::CONTEXT_MENU;
-  }
-  NOTREACHED();
-  return DownloadSource::UNKNOWN;
-}
-
-base::Optional<download::DownloadEntry> GetInProgressEntry(
-    const std::string& guid,
-    BrowserContext* browser_context) {
-  base::Optional<download::DownloadEntry> entry;
-  if (!browser_context || guid.empty())
-    return entry;
-
-  auto* manager_delegate = browser_context->GetDownloadManagerDelegate();
-  if (manager_delegate) {
-    download::InProgressCache* in_progress_cache =
-        manager_delegate->GetInProgressCache();
-    if (in_progress_cache)
-      entry = in_progress_cache->RetrieveEntry(guid);
-  }
-  return entry;
 }
 
 }  // namespace content

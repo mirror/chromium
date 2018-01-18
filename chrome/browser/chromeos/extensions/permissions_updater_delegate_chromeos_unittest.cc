@@ -7,6 +7,7 @@
 #include <string>
 
 #include "base/files/file_path.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chromeos/login/login_state.h"
 #include "chromeos/login/scoped_test_public_session_login_state.h"
@@ -59,7 +60,7 @@ std::unique_ptr<const PermissionSet> CreatePermissions(
       URLPattern(URLPattern::SCHEME_ALL, "<all_urls>")});
   URLPatternSet scriptable_hosts({
     URLPattern(URLPattern::SCHEME_ALL, "http://www.wikipedia.com/*")});
-  auto permissions = std::make_unique<const PermissionSet>(
+  auto permissions = base::MakeUnique<const PermissionSet>(
       apis, manifest, explicit_hosts, scriptable_hosts);
   return permissions;
 }

@@ -42,8 +42,7 @@ V0CustomElementMicrotaskImportStep::V0CustomElementMicrotaskImportStep(
     HTMLImportChild* import)
     : import_(import), queue_(import->Loader()->MicrotaskQueue()) {}
 
-V0CustomElementMicrotaskImportStep::~V0CustomElementMicrotaskImportStep() =
-    default;
+V0CustomElementMicrotaskImportStep::~V0CustomElementMicrotaskImportStep() {}
 
 void V0CustomElementMicrotaskImportStep::Invalidate() {
   queue_ = V0CustomElementSyncMicrotaskQueue::Create();

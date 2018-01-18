@@ -10,12 +10,9 @@
 #include "base/metrics/histogram_macros.h"
 #include "build/build_config.h"
 #include "content/common/content_constants_internal.h"
-#include "content/common/media/renderer_audio_input_stream_factory.mojom.h"
-#include "content/renderer/media/audio_input_ipc_factory.h"
-#include "content/renderer/media/audio_output_ipc_factory.h"
+#include "content/renderer/media/audio_input_message_filter.h"
+#include "content/renderer/media/audio_ipc_factory.h"
 #include "content/renderer/media/audio_renderer_mixer_manager.h"
-#include "content/renderer/media/mojo_audio_input_ipc.h"
-#include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_thread_impl.h"
 #include "media/audio/audio_input_device.h"
 #include "media/audio/audio_output_device.h"
@@ -47,8 +44,8 @@ scoped_refptr<media::AudioOutputDevice> NewOutputDevice(
     const std::string& device_id,
     const url::Origin& security_origin) {
   auto device = base::MakeRefCounted<media::AudioOutputDevice>(
-      AudioOutputIPCFactory::get()->CreateAudioOutputIPC(render_frame_id),
-      AudioOutputIPCFactory::get()->io_task_runner(), session_id, device_id,
+      AudioIPCFactory::get()->CreateAudioOutputIPC(render_frame_id),
+      AudioIPCFactory::get()->io_task_runner(), session_id, device_id,
       security_origin,
       // Set authorization request timeout at 80% of renderer hung timeout,
       // but no more than kMaxAuthorizationTimeout.
@@ -178,9 +175,9 @@ AudioDeviceFactory::NewAudioCapturerSource(int render_frame_id) {
       return source;
   }
 
-  return base::MakeRefCounted<media::AudioInputDevice>(
-      AudioInputIPCFactory::get()->CreateAudioInputIPC(render_frame_id),
-      AudioInputIPCFactory::get()->io_task_runner());
+  AudioInputMessageFilter* const filter = AudioInputMessageFilter::Get();
+  return new media::AudioInputDevice(
+      filter->CreateAudioInputIPC(render_frame_id), filter->io_task_runner());
 }
 
 // static

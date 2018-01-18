@@ -32,6 +32,6 @@
 
 namespace blink {
 
-DateTimeChooser::~DateTimeChooser() = default;
+DateTimeChooser::~DateTimeChooser() {}
 
 }  // namespace blink

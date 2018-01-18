@@ -10,12 +10,13 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/chromeos/enrollment_dialog_view.h"
 #include "chrome/browser/chromeos/net/shill_error.h"
 #include "chrome/browser/profiles/profile_manager.h"
-#include "chrome/browser/ui/ash/network/enrollment_dialog_view.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/login/login_state.h"
 #include "chromeos/network/network_configuration_handler.h"
@@ -855,7 +856,7 @@ void VPNConfigView::SetConfigProperties(
     case PROVIDER_TYPE_INDEX_L2TP_IPSEC_USER_CERT: {
       if (server_ca_cert_combobox_) {
         std::string ca_cert_pem = GetServerCACertPEM();
-        auto pem_list = std::make_unique<base::ListValue>();
+        auto pem_list = base::MakeUnique<base::ListValue>();
         if (!ca_cert_pem.empty())
           pem_list->AppendString(ca_cert_pem);
         properties->SetWithoutPathExpansion(shill::kL2tpIpsecCaCertPemProperty,
@@ -879,7 +880,7 @@ void VPNConfigView::SetConfigProperties(
     case PROVIDER_TYPE_INDEX_OPEN_VPN: {
       if (server_ca_cert_combobox_) {
         std::string ca_cert_pem = GetServerCACertPEM();
-        auto pem_list = std::make_unique<base::ListValue>();
+        auto pem_list = base::MakeUnique<base::ListValue>();
         if (!ca_cert_pem.empty())
           pem_list->AppendString(ca_cert_pem);
         properties->SetWithoutPathExpansion(shill::kOpenVPNCaCertPemProperty,

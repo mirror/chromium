@@ -5,11 +5,6 @@
     "args": ["--force-color-profile=srgb"]
   },
   {
-    "prefix": "custom-user-timing",
-    "base": "http/tests/performance-timing/custom-user-timing",
-    "args": ["--enable-blink-features=CustomUserTiming"]
-  },
-  {
     "prefix": "gpu",
     "base": "fast/canvas",
     "args": ["--enable-accelerated-2d-canvas",
@@ -148,7 +143,7 @@
   },
   {
     "prefix": "media-gpu-accelerated",
-    "base": "external/wpt/media-source",
+    "base": "http/tests/media/media-source",
     "args": ["--use-gpu-in-tests"]
   },
   {
@@ -574,6 +569,36 @@
     "args": ["--force-presentation-receiver-for-testing"]
   },
   {
+    "prefix": "mojo-blobs",
+    "base": "external/wpt/FileAPI",
+    "args": ["--disable-features=MojoBlobs"]
+  },
+  {
+    "prefix": "mojo-blobs",
+    "base": "external/wpt/IndexedDB",
+    "args": ["--disable-features=MojoBlobs"]
+  },
+  {
+    "prefix": "mojo-blobs",
+    "base": "external/wpt/fetch",
+    "args": ["--disable-features=MojoBlobs"]
+  },
+  {
+    "prefix": "mojo-blobs",
+    "base": "external/wpt/service-workers",
+    "args": ["--disable-features=MojoBlobs"]
+  },
+  {
+    "prefix": "mojo-blobs",
+    "base": "external/wpt/webmessaging",
+    "args": ["--disable-features=MojoBlobs"]
+  },
+  {
+    "prefix": "mojo-blobs",
+    "base": "fast/files",
+    "args": ["--disable-features=MojoBlobs"]
+  },
+  {
     "prefix": "longtask-v2",
     "base": "http/tests/performance-timing/longtask-v2",
     "args": ["--enable-blink-features=LongTaskV2"]
@@ -599,8 +624,8 @@
     "args": ["--enable-features=ModuleScriptsImportMetaUrl"]
   },
   {
-    "prefix": "reporting-api",
-    "base": "external/wpt/content-security-policy/reporting-api",
+    "prefix": "reporting",
+    "base": "external/wpt/content-security-policy/reporting",
     "args": ["--enable-features=Reporting"]
   },
   {
@@ -621,11 +646,6 @@
   {
     "prefix": "incremental-shadow-dom",
     "base": "shadow-dom",
-    "args": ["--enable-blink-features=IncrementalShadowDOM"]
-  },
-  {
-    "prefix": "incremental-shadow-dom",
-    "base": "external/wpt/css/css-scoping",
     "args": ["--enable-blink-features=IncrementalShadowDOM"]
   },
   {

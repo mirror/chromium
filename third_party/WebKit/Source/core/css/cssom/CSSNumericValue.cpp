@@ -55,30 +55,6 @@ CSSUnitValue* MaybeSimplifyAsUnitValue(const CSSNumericValueVector& values,
   return CSSUnitValue::Create(final_value, first_unit_value->GetInternalUnit());
 }
 
-CSSUnitValue* MaybeMultiplyAsUnitValue(const CSSNumericValueVector& values) {
-  DCHECK(!values.IsEmpty());
-
-  // We are allowed one unit value with type other than kNumber.
-  auto unit_other_than_number = CSSPrimitiveValue::UnitType::kNumber;
-
-  double final_value = 1.0;
-  for (size_t i = 0; i < values.size(); i++) {
-    CSSUnitValue* unit_value = ToCSSUnitValueOrNull(values[i]);
-    if (!unit_value)
-      return nullptr;
-
-    if (unit_value->GetInternalUnit() != CSSPrimitiveValue::UnitType::kNumber) {
-      if (unit_other_than_number != CSSPrimitiveValue::UnitType::kNumber)
-        return nullptr;
-      unit_other_than_number = unit_value->GetInternalUnit();
-    }
-
-    final_value *= unit_value->value();
-  }
-
-  return CSSUnitValue::Create(final_value, unit_other_than_number);
-}
-
 CalcOperator CanonicalOperator(CalcOperator op) {
   if (op == kCalcAdd || op == kCalcSubtract)
     return kCalcAdd;
@@ -251,8 +227,8 @@ CSSNumericValue* CSSNumericValue::FromNumberish(const CSSNumberish& value) {
   return value.GetAsCSSNumericValue();
 }
 
-CSSUnitValue* CSSNumericValue::to(const String& unit_string,
-                                  ExceptionState& exception_state) {
+CSSNumericValue* CSSNumericValue::to(const String& unit_string,
+                                     ExceptionState& exception_state) {
   CSSPrimitiveValue::UnitType target_unit = UnitFromName(unit_string);
   if (!IsValidUnit(target_unit)) {
     exception_state.ThrowDOMException(kSyntaxError,
@@ -260,7 +236,7 @@ CSSUnitValue* CSSNumericValue::to(const String& unit_string,
     return nullptr;
   }
 
-  CSSUnitValue* result = to(target_unit);
+  CSSNumericValue* result = to(target_unit);
   if (!result) {
     exception_state.ThrowTypeError("Cannot convert to " + unit_string);
     return nullptr;
@@ -391,8 +367,10 @@ CSSNumericValue* CSSNumericValue::mul(
   auto values = CSSNumberishesToNumericValues(numberishes);
   PrependValueForArithmetic<kProductType>(values, this);
 
-  if (CSSUnitValue* unit_value = MaybeMultiplyAsUnitValue(values))
+  if (CSSUnitValue* unit_value =
+          MaybeSimplifyAsUnitValue(values, std::multiplies<double>())) {
     return unit_value;
+  }
   return CSSMathProduct::Create(std::move(values));
 }
 
@@ -404,8 +382,10 @@ CSSNumericValue* CSSNumericValue::div(
                  [](CSSNumericValue* v) { return v->Invert(); });
   PrependValueForArithmetic<kProductType>(values, this);
 
-  if (CSSUnitValue* unit_value = MaybeMultiplyAsUnitValue(values))
+  if (CSSUnitValue* unit_value =
+          MaybeSimplifyAsUnitValue(values, std::multiplies<double>())) {
     return unit_value;
+  }
   return CSSMathProduct::Create(std::move(values));
 }
 

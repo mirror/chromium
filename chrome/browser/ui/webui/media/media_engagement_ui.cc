@@ -4,8 +4,6 @@
 
 #include "chrome/browser/ui/webui/media/media_engagement_ui.h"
 
-#include <memory>
-
 #include "base/macros.h"
 #include "chrome/browser/media/media_engagement_score.h"
 #include "chrome/browser/media/media_engagement_service.h"
@@ -83,6 +81,6 @@ MediaEngagementUI::~MediaEngagementUI() = default;
 
 void MediaEngagementUI::BindUIHandler(
     media::mojom::MediaEngagementScoreDetailsProviderRequest request) {
-  ui_handler_ = std::make_unique<MediaEngagementScoreDetailsProviderImpl>(
+  ui_handler_ = base::MakeUnique<MediaEngagementScoreDetailsProviderImpl>(
       Profile::FromWebUI(web_ui()), std::move(request));
 }

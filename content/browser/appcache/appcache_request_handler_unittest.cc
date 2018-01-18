@@ -36,6 +36,7 @@
 #include "content/browser/appcache/mock_appcache_policy.h"
 #include "content/browser/appcache/mock_appcache_service.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/resource_request.h"
 #include "net/base/net_errors.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
@@ -45,7 +46,6 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_error_job.h"
 #include "net/url_request/url_request_job_factory.h"
-#include "services/network/public/cpp/resource_request.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
@@ -448,7 +448,7 @@ class AppCacheRequestHandlerTest
       // status and the response code.
       DCHECK_EQ(net::OK, delegate_.request_status());
     } else {
-      network::ResourceResponseHead response;
+      ResourceResponseHead response;
       response.headers = info.headers;
       request_->AsURLLoaderRequest()->set_response(response);
     }
@@ -461,7 +461,7 @@ class AppCacheRequestHandlerTest
           url_request_.get(), nullptr, info));
       request_->AsURLRequest()->GetURLRequest()->Start();
     } else {
-      network::ResourceResponseHead response;
+      ResourceResponseHead response;
       response.headers = info.headers;
       request_->AsURLLoaderRequest()->set_response(response);
     }
@@ -961,7 +961,7 @@ class AppCacheRequestHandlerTest
           host->CreateRequestHandler(std::move(request), resource_type, false);
       return true;
     } else if (request_handler_type_ == URLLOADER) {
-      network::ResourceRequest resource_request;
+      ResourceRequest resource_request;
       resource_request.url = url;
       resource_request.method = "GET";
       std::unique_ptr<AppCacheRequest> request =

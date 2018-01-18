@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "ash/shell.h"
+#include "ash/system/system_notifier.h"
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/callback.h"
@@ -51,7 +52,6 @@
 namespace {
 
 const char kNotificationId[] = "screenshot";
-const char kNotifierScreenshot[] = "ash.screenshot";
 
 const char kNotificationOriginUrl[] = "chrome://screenshot";
 
@@ -585,6 +585,10 @@ void ChromeScreenshotGrabber::OnReadScreenshotFileForPreviewCompleted(
 
     // Assign image for notification preview. It might be empty.
     optional_field.image = image;
+
+    // Screenshot notification has different representation in new style
+    // notification. This has no effect on old style notification.
+    optional_field.use_image_as_icon = true;
   }
 
   std::unique_ptr<message_center::Notification> notification =
@@ -599,7 +603,7 @@ void ChromeScreenshotGrabber::OnReadScreenshotFileForPreviewCompleted(
           GURL(kNotificationOriginUrl),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              kNotifierScreenshot),
+              ash::system_notifier::kNotifierScreenshot),
           optional_field,
           new ScreenshotGrabberNotificationDelegate(success, GetProfile(),
                                                     screenshot_path),

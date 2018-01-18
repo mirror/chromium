@@ -61,7 +61,6 @@ TEST_F(NavigationContextImplTest, Setters) {
           false);
   ASSERT_TRUE(context);
 
-  EXPECT_EQ(url_, context->GetUrl());
   ASSERT_FALSE(context->IsSameDocument());
   ASSERT_FALSE(context->IsPost());
   ASSERT_FALSE(context->GetError());
@@ -69,21 +68,8 @@ TEST_F(NavigationContextImplTest, Setters) {
   ASSERT_NE(response_headers_.get(), context->GetResponseHeaders());
   EXPECT_EQ(WKNavigationTypeOther, context->GetWKNavigationType());
 
-  // SetUrl
-  GURL new_url("https://new.test");
-  context->SetUrl(new_url);
-  EXPECT_EQ(new_url, context->GetUrl());
-  EXPECT_FALSE(context->IsSameDocument());
-  ASSERT_FALSE(context->IsPost());
-  EXPECT_FALSE(context->GetError());
-  EXPECT_FALSE(context->IsRendererInitiated());
-  EXPECT_NE(response_headers_.get(), context->GetResponseHeaders());
-  EXPECT_EQ(WKNavigationTypeOther, context->GetWKNavigationType());
-  EXPECT_EQ(WKNavigationTypeOther, context->GetWKNavigationType());
-
   // SetSameDocument
   context->SetIsSameDocument(true);
-  EXPECT_EQ(new_url, context->GetUrl());
   EXPECT_TRUE(context->IsSameDocument());
   ASSERT_FALSE(context->IsPost());
   EXPECT_FALSE(context->GetError());
@@ -94,7 +80,6 @@ TEST_F(NavigationContextImplTest, Setters) {
 
   // SetPost
   context->SetIsPost(true);
-  EXPECT_EQ(new_url, context->GetUrl());
   EXPECT_TRUE(context->IsSameDocument());
   ASSERT_TRUE(context->IsPost());
   EXPECT_FALSE(context->GetError());
@@ -105,7 +90,6 @@ TEST_F(NavigationContextImplTest, Setters) {
   // SetErrorPage
   NSError* error = [[NSError alloc] init];
   context->SetError(error);
-  EXPECT_EQ(new_url, context->GetUrl());
   EXPECT_TRUE(context->IsSameDocument());
   ASSERT_TRUE(context->IsPost());
   EXPECT_EQ(error, context->GetError());
@@ -115,7 +99,6 @@ TEST_F(NavigationContextImplTest, Setters) {
 
   // SetResponseHeaders
   context->SetResponseHeaders(response_headers_);
-  EXPECT_EQ(new_url, context->GetUrl());
   EXPECT_TRUE(context->IsSameDocument());
   ASSERT_TRUE(context->IsPost());
   EXPECT_EQ(error, context->GetError());
@@ -125,7 +108,6 @@ TEST_F(NavigationContextImplTest, Setters) {
 
   // SetIsRendererInitiated
   context->SetIsRendererInitiated(true);
-  EXPECT_EQ(new_url, context->GetUrl());
   EXPECT_TRUE(context->IsSameDocument());
   ASSERT_TRUE(context->IsPost());
   EXPECT_EQ(error, context->GetError());
@@ -135,7 +117,6 @@ TEST_F(NavigationContextImplTest, Setters) {
 
   // SetWKNavigationType
   context->SetWKNavigationType(WKNavigationTypeBackForward);
-  EXPECT_EQ(new_url, context->GetUrl());
   EXPECT_TRUE(context->IsSameDocument());
   ASSERT_TRUE(context->IsPost());
   EXPECT_EQ(error, context->GetError());

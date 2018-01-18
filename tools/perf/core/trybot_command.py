@@ -74,11 +74,6 @@ _MILO_MASTER_ENDPOINT = ('https://luci-milo.appspot.com/prpc/milo.Buildbot/'
 
 _MILO_RESPONSE_PREFIX = ')]}\'\n'
 
-_DEPRECATED_MESSAGE = ('\nWARNING: This command is deprecated and will be '
-  'REMOVED shortly.\n\nPlease visit https://chromium.googlesource.com/chromium/'
-  'src/+/master/docs/speed/perf_trybots.md for up-to-date information on '
-  'running perf try jobs.\n\n')
-
 
 def _IsPerfBisectBot(builder):
   return (
@@ -358,8 +353,6 @@ E.g.,
     if extra_args is None:
       extra_args = []
     self._InitializeBuilderNames(options.trybot)
-
-    print _DEPRECATED_MESSAGE
 
     return self._AttemptTryjob(options, extra_args)
 

@@ -99,10 +99,8 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
     registry_.BindInterface(interface_name, std::move(interface_pipe));
   }
 
-  void CreateService(
-      service_manager::mojom::ServiceRequest request,
-      const std::string& name,
-      service_manager::mojom::PIDReceiverPtr pid_receiver) override {
+  void CreateService(service_manager::mojom::ServiceRequest request,
+                     const std::string& name) override {
     if (name == mojom::kNetworkServiceName) {
       service_context_.reset(new service_manager::ServiceContext(
           NetworkServiceImpl::CreateForTesting(), std::move(request)));
@@ -133,7 +131,7 @@ class NetworkServiceTestWithService
   ~NetworkServiceTestWithService() override {}
 
   void LoadURL(const GURL& url) {
-    network::ResourceRequest request;
+    ResourceRequest request;
     request.url = url;
     request.method = "GET";
     request.request_initiator = url::Origin();
@@ -141,8 +139,7 @@ class NetworkServiceTestWithService
     client_->RunUntilComplete();
   }
 
-  void StartLoadingURL(const network::ResourceRequest& request,
-                       uint32_t process_id) {
+  void StartLoadingURL(const ResourceRequest& request, uint32_t process_id) {
     client_.reset(new TestURLLoaderClient());
     mojom::URLLoaderFactoryPtr loader_factory;
     network_context_->CreateURLLoaderFactory(mojo::MakeRequest(&loader_factory),
@@ -195,7 +192,7 @@ TEST_F(NetworkServiceTestWithService, Basic) {
 
 // Verifies that raw headers are only reported if requested.
 TEST_F(NetworkServiceTestWithService, RawRequestHeadersAbsent) {
-  network::ResourceRequest request;
+  ResourceRequest request;
   request.url = test_server()->GetURL("/server-redirect?/echo");
   request.method = "GET";
   request.request_initiator = url::Origin();
@@ -209,7 +206,7 @@ TEST_F(NetworkServiceTestWithService, RawRequestHeadersAbsent) {
 }
 
 TEST_F(NetworkServiceTestWithService, RawRequestHeadersPresent) {
-  network::ResourceRequest request;
+  ResourceRequest request;
   request.url = test_server()->GetURL("/server-redirect?/echo");
   request.method = "GET";
   request.report_raw_headers = true;
@@ -252,7 +249,7 @@ TEST_F(NetworkServiceTestWithService, RawRequestHeadersPresent) {
 
 TEST_F(NetworkServiceTestWithService, RawRequestAccessControl) {
   const uint32_t process_id = 42;
-  network::ResourceRequest request;
+  ResourceRequest request;
   request.url = test_server()->GetURL("/nocache.html");
   request.method = "GET";
   request.report_raw_headers = true;
@@ -284,7 +281,7 @@ TEST_F(NetworkServiceTestWithService, SetNetworkConditions) {
   network_conditions->offline = true;
   context()->SetNetworkConditions("42", std::move(network_conditions));
 
-  network::ResourceRequest request;
+  ResourceRequest request;
   request.url = test_server()->GetURL("/nocache.html");
   request.method = "GET";
 
@@ -427,10 +424,8 @@ class NetworkServiceNetworkChangeTest
     ~ServiceTestClientWithNetworkChange() override {}
 
    protected:
-    void CreateService(
-        service_manager::mojom::ServiceRequest request,
-        const std::string& name,
-        service_manager::mojom::PIDReceiverPtr pid_receiver) override {
+    void CreateService(service_manager::mojom::ServiceRequest request,
+                       const std::string& name) override {
       if (name == mojom::kNetworkServiceName) {
         service_context_.reset(new service_manager::ServiceContext(
             NetworkServiceImpl::CreateForTesting(), std::move(request)));

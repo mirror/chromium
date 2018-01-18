@@ -88,7 +88,6 @@ WebElement WebElementTest::TestElement() {
 }
 
 TEST_F(WebElementTest, HasNonEmptyLayoutSize) {
-  GetDocument().SetCompatibilityMode(Document::kQuirksMode);
   InsertHTML(kEmptyBlock);
   EXPECT_FALSE(TestElement().HasNonEmptyLayoutSize());
 

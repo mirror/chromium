@@ -409,11 +409,11 @@ void WebPagePopupImpl::WillCloseLayerTreeView() {
   animation_host_ = nullptr;
 }
 
-void WebPagePopupImpl::UpdateLifecycle(LifecycleUpdate requested_update) {
+void WebPagePopupImpl::UpdateAllLifecyclePhases() {
   if (!page_)
     return;
-  PageWidgetDelegate::UpdateLifecycle(
-      *page_, *page_->DeprecatedLocalMainFrame(), requested_update);
+  PageWidgetDelegate::UpdateAllLifecyclePhases(
+      *page_, *page_->DeprecatedLocalMainFrame());
 }
 
 void WebPagePopupImpl::Paint(WebCanvas* canvas, const WebRect& rect) {

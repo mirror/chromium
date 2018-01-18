@@ -43,7 +43,6 @@ WebScopedWindowFocusAllowedIndicator::WebScopedWindowFocusAllowedIndicator(
   private_.reset(new ScopedWindowFocusAllowedIndicator(document));
 }
 
-WebScopedWindowFocusAllowedIndicator::~WebScopedWindowFocusAllowedIndicator() =
-    default;
+WebScopedWindowFocusAllowedIndicator::~WebScopedWindowFocusAllowedIndicator() {}
 
 }  // namespace blink

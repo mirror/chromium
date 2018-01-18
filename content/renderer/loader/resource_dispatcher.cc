@@ -25,6 +25,8 @@
 #include "content/common/navigation_params.h"
 #include "content/common/throttling_url_loader.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/resource_request.h"
+#include "content/public/common/resource_response.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/renderer/fixed_received_data.h"
 #include "content/public/renderer/request_peer.h"
@@ -39,8 +41,6 @@
 #include "net/base/net_errors.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
-#include "services/network/public/cpp/resource_request.h"
-#include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
 
 namespace content {
@@ -56,7 +56,7 @@ void RemoteToLocalTimeTicks(
   *time = converter.ToLocalTimeTicks(remote_time).ToTimeTicks();
 }
 
-void CheckSchemeForReferrerPolicy(const network::ResourceRequest& request) {
+void CheckSchemeForReferrerPolicy(const ResourceRequest& request) {
   if ((request.referrer_policy == Referrer::GetDefaultReferrerPolicy() ||
        request.referrer_policy ==
            net::URLRequest::
@@ -140,8 +140,7 @@ void ResourceDispatcher::OnUploadProgress(int request_id,
 }
 
 void ResourceDispatcher::OnReceivedResponse(
-    int request_id,
-    const network::ResourceResponseHead& response_head) {
+    int request_id, const ResourceResponseHead& response_head) {
   TRACE_EVENT0("loader", "ResourceDispatcher::OnReceivedResponse");
   PendingRequestInfo* request_info = GetPendingRequestInfo(request_id);
   if (!request_info)
@@ -158,14 +157,13 @@ void ResourceDispatcher::OnReceivedResponse(
 
   if (!IsResourceTypeFrame(request_info->resource_type)) {
     NotifySubresourceStarted(
-        RenderThreadImpl::DeprecatedGetMainTaskRunner(),
-        request_info->render_frame_id, request_info->response_url,
-        request_info->response_referrer, request_info->response_method,
-        request_info->resource_type, response_head.socket_address.host(),
-        response_head.cert_status);
+        RenderThreadImpl::GetMainTaskRunner(), request_info->render_frame_id,
+        request_info->response_url, request_info->response_referrer,
+        request_info->response_method, request_info->resource_type,
+        response_head.socket_address.host(), response_head.cert_status);
   }
 
-  network::ResourceResponseInfo renderer_response_info;
+  ResourceResponseInfo renderer_response_info;
   ToResourceResponseInfo(*request_info, response_head, &renderer_response_info);
   request_info->site_isolation_metadata =
       SiteIsolationStatsGatherer::OnReceivedResponse(
@@ -200,14 +198,14 @@ void ResourceDispatcher::OnDownloadedData(int request_id,
 void ResourceDispatcher::OnReceivedRedirect(
     int request_id,
     const net::RedirectInfo& redirect_info,
-    const network::ResourceResponseHead& response_head) {
+    const ResourceResponseHead& response_head) {
   TRACE_EVENT0("loader", "ResourceDispatcher::OnReceivedRedirect");
   PendingRequestInfo* request_info = GetPendingRequestInfo(request_id);
   if (!request_info)
     return;
   request_info->response_start = base::TimeTicks::Now();
 
-  network::ResourceResponseInfo renderer_response_info;
+  ResourceResponseInfo renderer_response_info;
   ToResourceResponseInfo(*request_info, response_head, &renderer_response_info);
   if (request_info->peer->OnReceivedRedirect(redirect_info,
                                              renderer_response_info)) {
@@ -365,50 +363,48 @@ ResourceDispatcher::PendingRequestInfo::~PendingRequestInfo() {
 }
 
 void ResourceDispatcher::StartSync(
-    std::unique_ptr<network::ResourceRequest> request,
+    std::unique_ptr<ResourceRequest> request,
     int routing_id,
     const url::Origin& frame_origin,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     SyncLoadResponse* response,
-    scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
+    mojom::URLLoaderFactory* url_loader_factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles) {
   CheckSchemeForReferrerPolicy(*request);
 
-  std::unique_ptr<SharedURLLoaderFactoryInfo> factory_info =
-      url_loader_factory->Clone();
-  base::WaitableEvent event(base::WaitableEvent::ResetPolicy::MANUAL,
-                            base::WaitableEvent::InitialState::NOT_SIGNALED);
+    mojom::URLLoaderFactoryPtrInfo url_loader_factory_copy;
+    url_loader_factory->Clone(mojo::MakeRequest(&url_loader_factory_copy));
+    base::WaitableEvent event(base::WaitableEvent::ResetPolicy::MANUAL,
+                              base::WaitableEvent::InitialState::NOT_SIGNALED);
 
-  // Prepare the configured throttles for use on a separate thread.
-  for (const auto& throttle : throttles)
-    throttle->DetachFromCurrentSequence();
+    // Prepare the configured throttles for use on a separate thread.
+    for (const auto& throttle : throttles)
+      throttle->DetachFromCurrentSequence();
 
-  // A task is posted to a separate thread to execute the request so that
-  // this thread may block on a waitable event. It is safe to pass raw
-  // pointers to |sync_load_response| and |event| as this stack frame will
-  // survive until the request is complete.
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner =
-      base::CreateSingleThreadTaskRunnerWithTraits({});
-  task_runner->PostTask(
-      FROM_HERE,
-      base::BindOnce(&SyncLoadContext::StartAsyncWithWaitableEvent,
-                     std::move(request), routing_id, task_runner, frame_origin,
-                     traffic_annotation, std::move(factory_info),
-                     std::move(throttles), base::Unretained(response),
-                     base::Unretained(&event)));
+    // A task is posted to a separate thread to execute the request so that
+    // this thread may block on a waitable event. It is safe to pass raw
+    // pointers to |sync_load_response| and |event| as this stack frame will
+    // survive until the request is complete.
+    base::CreateSingleThreadTaskRunnerWithTraits({})->PostTask(
+        FROM_HERE,
+        base::BindOnce(&SyncLoadContext::StartAsyncWithWaitableEvent,
+                       std::move(request), routing_id, frame_origin,
+                       traffic_annotation, std::move(url_loader_factory_copy),
+                       std::move(throttles), base::Unretained(response),
+                       base::Unretained(&event)));
 
-  event.Wait();
+    event.Wait();
 }
 
 int ResourceDispatcher::StartAsync(
-    std::unique_ptr<network::ResourceRequest> request,
+    std::unique_ptr<ResourceRequest> request,
     int routing_id,
     scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner,
     const url::Origin& frame_origin,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     bool is_sync,
     std::unique_ptr<RequestPeer> peer,
-    scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
+    mojom::URLLoaderFactory* url_loader_factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
     mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints) {
   CheckSchemeForReferrerPolicy(*request);
@@ -420,12 +416,14 @@ int ResourceDispatcher::StartAsync(
       request->render_frame_id, frame_origin, request->url, request->method,
       request->referrer, request->download_to_file);
 
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner =
+      loading_task_runner ? loading_task_runner : thread_task_runner_;
+
   if (url_loader_client_endpoints) {
     pending_requests_[request_id]->url_loader_client =
-        std::make_unique<URLLoaderClientImpl>(request_id, this,
-                                              loading_task_runner);
+        std::make_unique<URLLoaderClientImpl>(request_id, this, task_runner);
 
-    loading_task_runner->PostTask(
+    task_runner->PostTask(
         FROM_HERE, base::BindOnce(&ResourceDispatcher::ContinueForNavigation,
                                   weak_factory_.GetWeakPtr(), request_id,
                                   std::move(url_loader_client_endpoints)));
@@ -434,7 +432,7 @@ int ResourceDispatcher::StartAsync(
   }
 
   std::unique_ptr<URLLoaderClientImpl> client(
-      new URLLoaderClientImpl(request_id, this, loading_task_runner));
+      new URLLoaderClientImpl(request_id, this, task_runner));
 
   uint32_t options = mojom::kURLLoadOptionNone;
   // TODO(jam): use this flag for ResourceDispatcherHost code path once
@@ -451,9 +449,9 @@ int ResourceDispatcher::StartAsync(
 
   std::unique_ptr<ThrottlingURLLoader> url_loader =
       ThrottlingURLLoader::CreateLoaderAndStart(
-          std::move(url_loader_factory), std::move(throttles), routing_id,
-          request_id, options, request.get(), client.get(), traffic_annotation,
-          std::move(loading_task_runner));
+          url_loader_factory, std::move(throttles), routing_id, request_id,
+          options, request.get(), client.get(), traffic_annotation,
+          std::move(task_runner));
   pending_requests_[request_id]->url_loader = std::move(url_loader);
   pending_requests_[request_id]->url_loader_client = std::move(client);
 
@@ -462,8 +460,8 @@ int ResourceDispatcher::StartAsync(
 
 void ResourceDispatcher::ToResourceResponseInfo(
     const PendingRequestInfo& request_info,
-    const network::ResourceResponseHead& browser_info,
-    network::ResourceResponseInfo* renderer_info) const {
+    const ResourceResponseHead& browser_info,
+    ResourceResponseInfo* renderer_info) const {
   *renderer_info = browser_info;
   if (base::TimeTicks::IsConsistentAcrossProcesses() ||
       request_info.request_start.is_null() ||
@@ -529,7 +527,7 @@ void ResourceDispatcher::ContinueForNavigation(
   // the request. ResourceResponseHead can be empty here because we
   // pull the StreamOverride's one in
   // WebURLLoaderImpl::Context::OnReceivedResponse.
-  client_ptr->OnReceiveResponse(network::ResourceResponseHead(), base::nullopt,
+  client_ptr->OnReceiveResponse(ResourceResponseHead(), base::nullopt,
                                 mojom::DownloadedTempFilePtr());
   // TODO(clamy): Move the replaying of redirects from WebURLLoaderImpl here.
 

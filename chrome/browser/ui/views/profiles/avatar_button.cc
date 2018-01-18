@@ -4,7 +4,6 @@
 
 #include "chrome/browser/ui/views/profiles/avatar_button.h"
 
-#include <memory>
 #include <utility>
 
 #include "build/build_config.h"
@@ -136,7 +135,7 @@ class AvatarButtonThemedBorder : public views::Border {
 
   static std::unique_ptr<views::InkDropMask> CreateInkDropMask(
       const gfx::Size& size) {
-    return std::make_unique<views::RoundRectInkDropMask>(
+    return base::MakeUnique<views::RoundRectInkDropMask>(
         size, kBorderStrokeInsets, kCornerRadius);
   }
 
@@ -156,25 +155,24 @@ constexpr int AvatarButtonThemedBorder::kStrokeWidth;
 constexpr gfx::Insets AvatarButtonThemedBorder::kBorderStrokeInsets;
 constexpr float AvatarButtonThemedBorder::kCornerRadius;
 
-class AvatarButtonShutdownNotifierFactory
+class ShutdownNotifierFactory
     : public BrowserContextKeyedServiceShutdownNotifierFactory {
  public:
-  static AvatarButtonShutdownNotifierFactory* GetInstance() {
-    return base::Singleton<AvatarButtonShutdownNotifierFactory>::get();
+  static ShutdownNotifierFactory* GetInstance() {
+    return base::Singleton<ShutdownNotifierFactory>::get();
   }
 
  private:
-  friend struct base::DefaultSingletonTraits<
-      AvatarButtonShutdownNotifierFactory>;
+  friend struct base::DefaultSingletonTraits<ShutdownNotifierFactory>;
 
-  AvatarButtonShutdownNotifierFactory()
+  ShutdownNotifierFactory()
       : BrowserContextKeyedServiceShutdownNotifierFactory(
             "AvatarButtonShutdownNotifierFactory") {
     DependsOn(SigninManagerFactory::GetInstance());
   }
-  ~AvatarButtonShutdownNotifierFactory() override {}
+  ~ShutdownNotifierFactory() override {}
 
-  DISALLOW_COPY_AND_ASSIGN(AvatarButtonShutdownNotifierFactory);
+  DISALLOW_COPY_AND_ASSIGN(ShutdownNotifierFactory);
 };
 
 }  // namespace
@@ -233,7 +231,7 @@ AvatarButton::AvatarButton(views::MenuButtonListener* listener,
     SetFocusPainter(nullptr);
 #if defined(OS_LINUX)
     set_ink_drop_base_color(SK_ColorWHITE);
-    SetBorder(std::make_unique<AvatarButtonThemedBorder>());
+    SetBorder(base::MakeUnique<AvatarButtonThemedBorder>());
     generic_avatar_ =
         gfx::CreateVectorIcon(kProfileSwitcherOutlineIcon,
                               kGenericAvatarIconSize, gfx::kPlaceholderColor);
@@ -265,10 +263,8 @@ AvatarButton::AvatarButton(views::MenuButtonListener* listener,
   }
 
   profile_shutdown_notifier_ =
-      AvatarButtonShutdownNotifierFactory::GetInstance()
-          ->Get(profile_)
-          ->Subscribe(base::Bind(&AvatarButton::OnProfileShutdown,
-                                 base::Unretained(this)));
+      ShutdownNotifierFactory::GetInstance()->Get(profile_)->Subscribe(
+          base::Bind(&AvatarButton::OnProfileShutdown, base::Unretained(this)));
 }
 
 AvatarButton::~AvatarButton() {}
@@ -359,7 +355,7 @@ std::unique_ptr<views::InkDropHighlight> AvatarButton::CreateInkDropHighlight()
   if (button_style_ == AvatarButtonStyle::THEMED)
     return MenuButton::CreateInkDropHighlight();
 
-  auto ink_drop_highlight = std::make_unique<views::InkDropHighlight>(
+  auto ink_drop_highlight = base::MakeUnique<views::InkDropHighlight>(
       size(), 0, gfx::RectF(GetLocalBounds()).CenterPoint(),
       GetInkDropBaseColor());
   constexpr float kInkDropHighlightOpacity = 0.08f;

@@ -379,36 +379,10 @@ be describing additional metrics about the same event.
       and punctuation.
     </summary>
   </metric>
-  <metric name="IsEntityEligible">
-    <summary>
-      Emits a 1 or 0 to indicate whether the IsEntity boolean ever had a chance
-      of being true or not.  When we're dealing with languages other than ones
-      where our simple entity-detection can work this signal is false.
-    </summary>
-  </metric>
-  <metric name="IsHttp">
-    <summary>
-      Emits a 1 or 0 to indicate whether the base page is HTTP (insecure).
-    </summary>
-  </metric>
-  <metric name="IsLanguageMismatch">
-    <summary>
-      Emits a 1 or 0 to indicate whether the language of the base page is a
-      mismatch from the list of languages the user knows, so they might want
-      translation.
-    </summary>
-  </metric>
   <metric name="IsLongWord">
     <summary>
       Emits a 1 or 0 to indicate whether the word tapped was considered long (at
       least 10 chars in length).
-    </summary>
-  </metric>
-  <metric name="IsSecondTapOverride">
-    <summary>
-      Emits a 1 or 0 to indicate whether the tap was an override of normal tap
-      suppression because it was considered a second tap on a word after the
-      first tap was suppressed.
     </summary>
   </metric>
   <metric name="IsShortWord">
@@ -477,7 +451,7 @@ be describing additional metrics about the same event.
       DPs.
     </summary>
   </metric>
-  <metric name="TapDurationMs">
+  <metric name="TapDuration">
     <summary>
       The duration of the tap gesture expressed in milliseconds.
     </summary>
@@ -741,11 +715,6 @@ be describing additional metrics about the same event.
       Whether the element had an audio track when autoplay was attempted.
     </summary>
   </metric>
-  <metric name="HighMediaEngagement">
-    <summary>
-      Whether the document has a high media engagement.
-    </summary>
-  </metric>
   <metric name="Muted">
     <summary>
       Whether the element was muted when autoplay was attempted.
@@ -761,15 +730,6 @@ be describing additional metrics about the same event.
       Whether a user gesture was required per autoplay rules at the time of
       attempt. By definition there is no user gesture on the stack when the
       attempt is registered.
-    </summary>
-  </metric>
-  <metric name="UserGestureStatus">
-    <summary>
-      Reflects the current status of user gesture/activation. This is a bit
-      field with the following values: - 0b0001 if there is a user gesture on
-      the stack; - 0b0010 if there was a user gesture on the page (ie. was
-      activated); - 0b0100 if there was a user gesture propogated after a
-      navigation.
     </summary>
   </metric>
   <metric name="VideoTrack">
@@ -920,13 +880,6 @@ be describing additional metrics about the same event.
       other values indicate the playback ended in an error.
     </summary>
   </metric>
-  <metric name="IsEME">
-    <summary>
-      Boolean value indicating if this event is for an EME playback. Note: EME
-      can be attached anytime during the lifecycle of a WebMediaPlayerImpl, but
-      once attached can't be removed.
-    </summary>
-  </metric>
   <metric name="IsMSE">
     <summary>
       Boolean value indicating if this event is for an MSE playback. If false it
@@ -947,24 +900,6 @@ be describing additional metrics about the same event.
       with Media.BasicPlayback events to understand a playback more deeply.
     </summary>
   </metric>
-  <metric name="TimeToFirstFrame">
-    <summary>
-      Time in milliseconds from when WebMediaPlayerImpl starts loading until the
-      first video frame has been shown.
-    </summary>
-  </metric>
-  <metric name="TimeToMetadata">
-    <summary>
-      Time in milliseconds from when WebMediaPlayerImpl starts loading until
-      metadata is known.
-    </summary>
-  </metric>
-  <metric name="TimeToPlayReady">
-    <summary>
-      Time in milliseconds from when WebMediaPlayerImpl starts loading until it
-      has buffered enough to start playback.
-    </summary>
-  </metric>
 </event>
 
 <event name="Media.BasicPlayback">
@@ -982,12 +917,6 @@ be describing additional metrics about the same event.
     <summary>
       media::AudioCodec enum value. Can be kUnknownAudioCodec even with HasAudio
       is true because we don't always know the codec.
-    </summary>
-  </metric>
-  <metric name="AudioDecoderName">
-    <summary>
-      Enumeration of audio decoder names, zero if none or unknown (Cast, HLS,
-      etc). See WatchTimeRecorder::AudioDecoderName enum for expected values.
     </summary>
   </metric>
   <metric name="HasAudio">
@@ -1052,12 +981,6 @@ be describing additional metrics about the same event.
     <summary>
       media::VideoCodec enum value. Can be kUnknownVideoCodec even with HasVideo
       is true because we don't always know the codec.
-    </summary>
-  </metric>
-  <metric name="VideoDecoderName">
-    <summary>
-      Enumeration of video decoder names, zero if none or unknown (Cast, HLS,
-      etc). See WatchTimeRecorder::VideoDecoderName enum for expected values.
     </summary>
   </metric>
   <metric name="VideoNaturalHeight">
@@ -2271,12 +2194,6 @@ be describing additional metrics about the same event.
       0, [5%, 10%) is mapped to 5 etc.
     </summary>
   </metric>
-  <metric name="DeviceManagement">
-    <summary>
-      An enum representing whether the device is managed, defined in
-      |chromeos::power::ml::UserActivityEvent::Features::ManagementType|.
-    </summary>
-  </metric>
   <metric name="DeviceMode">
     <summary>
       An enum representing the mode of the device, defined in
@@ -2287,13 +2204,6 @@ be describing additional metrics about the same event.
     <summary>
       An enum representing the type of the device, defined in
       |chromeos::power::ml::UserActivityEvent::Feature::DeviceType|
-    </summary>
-  </metric>
-  <metric name="EventLogDuration">
-    <summary>
-      Time taken in seconds from when we start logging the features to the
-      moment when the event type is known and we finish logging the complete
-      event.
     </summary>
   </metric>
   <metric name="EventReason">
@@ -2357,28 +2267,6 @@ be describing additional metrics about the same event.
       The ID of the activity that happened while a page was open.
     </summary>
   </metric>
-  <metric name="IsActive">
-    <summary>
-      Boolean value representing whether this tab is selected in its containing
-      browser.
-    </summary>
-  </metric>
-  <metric name="IsBrowserFocused">
-    <summary>
-      Boolean value representing whether the containing browser is in focus.
-    </summary>
-  </metric>
-  <metric name="IsBrowserVisible">
-    <summary>
-      Boolean value representing whether the containing browser is visible.
-    </summary>
-  </metric>
-  <metric name="IsTopmostBrowser">
-    <summary>
-      Boolean value representing whether the containing browser is the topmost
-      one on the screen.
-    </summary>
-  </metric>
 </event>
 
 <event name="TabManager.TabMetrics">
@@ -2390,7 +2278,7 @@ be describing additional metrics about the same event.
   <metric name="ContentType">
     <summary>
       Enumeration for the MIME type of the page. Values are enumerated in
-      metrics::TabMetricsEvent::ContentType.
+      metrics::TabEvent::ContentType.
     </summary>
   </metric>
   <metric name="DefaultProtocolHandler">
@@ -2431,30 +2319,6 @@ be describing additional metrics about the same event.
   <metric name="MouseEventCount">
     <summary>
       Number of mouse events that were sent to the page.
-    </summary>
-  </metric>
-  <metric name="NavigationEntryCount">
-    <summary>
-      Number of navigation entries in the tab's NavigationController.
-      Corresponds to the size of the tab's back/forward list.
-    </summary>
-  </metric>
-  <metric name="PageTransitionCoreType">
-    <summary>
-      Type of the page transition for this navigation. Uses the core values from
-      ui::PageTransition.
-    </summary>
-  </metric>
-  <metric name="PageTransitionFromAddressBar">
-    <summary>
-      True if the page transition came from interacting with the address bar,
-      such as by typing a URL or performing a search.
-    </summary>
-  </metric>
-  <metric name="PageTransitionIsRedirect">
-    <summary>
-      True if the page transition type is a redirect, in which case the
-      PageTransition type may not be accurate.
     </summary>
   </metric>
   <metric name="SequenceId">

@@ -8,8 +8,6 @@
 #include "base/memory/ref_counted.h"
 #include "content/public/common/resource_type.h"
 
-class GURL;
-
 namespace net {
 class HttpRawRequestHeaders;
 class HttpResponseHeaders;
@@ -18,20 +16,11 @@ class URLRequest;
 
 namespace network {
 struct HttpRawRequestResponseInfo;
-struct ResourceRequest;
-struct ResourceResponse;
 }
 
 namespace content {
-
-// The name of the "Accept" header.
-extern const char kAcceptHeader[];
-
-// Accept header used for frame requests.
-extern const char kFrameAcceptHeader[];
-
-// The default Accept header value to use if none were specified.
-extern const char kDefaultAcceptHeader[];
+struct ResourceRequest;
+struct ResourceResponse;
 
 // Helper utilities shared between network service and ResourceDispatcherHost
 // code paths.
@@ -39,7 +28,7 @@ extern const char kDefaultAcceptHeader[];
 // Whether the response body should be sniffed in order to determine the MIME
 // type of the response.
 bool ShouldSniffContent(net::URLRequest* url_request,
-                        network::ResourceResponse* response);
+                        ResourceResponse* response);
 
 // Fill HttpRawRequestResponseInfo based on raw headers.
 scoped_refptr<network::HttpRawRequestResponseInfo> BuildRawRequestResponseInfo(
@@ -47,10 +36,9 @@ scoped_refptr<network::HttpRawRequestResponseInfo> BuildRawRequestResponseInfo(
     const net::HttpRawRequestHeaders& raw_request_headers,
     const net::HttpResponseHeaders* raw_response_headers);
 
-int BuildLoadFlagsForRequest(const network::ResourceRequest& request_data);
+void AttachAcceptHeader(ResourceType type, net::URLRequest* request);
 
-// Returns the referrer based on the validity of the URL and command line flags.
-std::string ComputeReferrer(const GURL& referrer);
+int BuildLoadFlagsForRequest(const ResourceRequest& request_data);
 
 }  // namespace content
 

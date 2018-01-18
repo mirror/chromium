@@ -39,7 +39,7 @@ MutableCSSPropertyValueSet::SetResult StringKeyframe::SetCSSPropertyValue(
     SecureContextMode secure_context_mode,
     StyleSheetContents* style_sheet_contents) {
   DCHECK_NE(property, CSSPropertyInvalid);
-  if (CSSAnimations::IsAnimationAffectingProperty(CSSProperty::Get(property))) {
+  if (CSSAnimations::IsAnimationAffectingProperty(property)) {
     bool did_parse = true;
     bool did_change = false;
     return MutableCSSPropertyValueSet::SetResult{did_parse, did_change};
@@ -48,23 +48,22 @@ MutableCSSPropertyValueSet::SetResult StringKeyframe::SetCSSPropertyValue(
       property, value, false, secure_context_mode, style_sheet_contents);
 }
 
-void StringKeyframe::SetCSSPropertyValue(const CSSProperty& property,
+void StringKeyframe::SetCSSPropertyValue(CSSPropertyID property,
                                          const CSSValue& value) {
-  DCHECK_NE(property.PropertyID(), CSSPropertyInvalid);
+  DCHECK_NE(property, CSSPropertyInvalid);
   DCHECK(!CSSAnimations::IsAnimationAffectingProperty(property));
-  css_property_map_->SetProperty(property.PropertyID(), value, false);
+  css_property_map_->SetProperty(property, value, false);
 }
 
 void StringKeyframe::SetPresentationAttributeValue(
-    const CSSProperty& property,
+    CSSPropertyID property,
     const String& value,
     SecureContextMode secure_context_mode,
     StyleSheetContents* style_sheet_contents) {
-  DCHECK_NE(property.PropertyID(), CSSPropertyInvalid);
+  DCHECK_NE(property, CSSPropertyInvalid);
   if (!CSSAnimations::IsAnimationAffectingProperty(property)) {
-    presentation_attribute_map_->SetProperty(property.PropertyID(), value,
-                                             false, secure_context_mode,
-                                             style_sheet_contents);
+    presentation_attribute_map_->SetProperty(
+        property, value, false, secure_context_mode, style_sheet_contents);
   }
 }
 
@@ -115,7 +114,7 @@ void StringKeyframe::AddKeyframePropertiesToV8Object(
       value = CssPropertyValue(property).CssText();
     } else if (property.IsPresentationAttribute()) {
       const auto& attribute = property.PresentationAttribute();
-      value = PresentationAttributeValue(attribute).CssText();
+      value = PresentationAttributeValue(attribute.PropertyID()).CssText();
     } else {
       DCHECK(property.IsSVGAttribute());
       value = SvgPropertyValue(property.SvgAttribute());
@@ -144,7 +143,8 @@ StringKeyframe::CreatePropertySpecificKeyframe(
   if (property.IsPresentationAttribute()) {
     return CSSPropertySpecificKeyframe::Create(
         offset, &Easing(),
-        &PresentationAttributeValue(property.PresentationAttribute()),
+        &PresentationAttributeValue(
+            property.PresentationAttribute().PropertyID()),
         composite);
   }
 

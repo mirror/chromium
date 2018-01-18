@@ -36,7 +36,7 @@ class URLLoaderInterceptor::Interceptor : public mojom::URLLoaderFactory {
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
-                            const network::ResourceRequest& url_request,
+                            const ResourceRequest& url_request,
                             mojom::URLLoaderClientPtr client,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override {
@@ -200,7 +200,7 @@ void URLLoaderInterceptor::WriteResponse(const std::string& headers,
   net::HttpResponseInfo info;
   info.headers = new net::HttpResponseHeaders(
       net::HttpUtil::AssembleRawHeaders(headers.c_str(), headers.length()));
-  network::ResourceResponseHead response;
+  content::ResourceResponseHead response;
   response.headers = info.headers;
   response.headers->GetMimeType(&response.mime_type);
   client->OnReceiveResponse(response, base::nullopt, nullptr);

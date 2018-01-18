@@ -49,32 +49,22 @@ String IdentifiersFactory::CreateIdentifier() {
 }
 
 // static
-String IdentifiersFactory::RequestId(DocumentLoader* loader,
-                                     unsigned long identifier) {
-  if (!identifier)
-    return String();
-  if (loader && loader->MainResourceIdentifier() == identifier)
-    return LoaderId(loader);
-  return AddProcessIdPrefixTo(identifier);
+String IdentifiersFactory::RequestId(unsigned long identifier) {
+  return identifier ? AddProcessIdPrefixTo(identifier) : String();
 }
 
 // static
-String IdentifiersFactory::SubresourceRequestId(unsigned long identifier) {
-  return RequestId(nullptr, identifier);
-}
-
-// static
-String IdentifiersFactory::FrameId(Frame* frame) {
+String IdentifiersFactory::FrameId(LocalFrame* frame) {
   if (!frame)
     return g_empty_string;
-  return frame->GetDevToolsFrameToken();
+  return frame->GetInstrumentationToken();
 }
 
 // static
 LocalFrame* IdentifiersFactory::FrameById(InspectedFrames* inspected_frames,
                                           const String& frame_id) {
   for (auto* frame : *inspected_frames) {
-    if (frame->Client() && frame->GetDevToolsFrameToken() == frame_id)
+    if (frame->Client() && frame->GetInstrumentationToken() == frame_id)
       return frame;
   }
   return nullptr;

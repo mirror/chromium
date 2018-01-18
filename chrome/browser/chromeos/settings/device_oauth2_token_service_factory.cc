@@ -4,8 +4,7 @@
 
 #include "chrome/browser/chromeos/settings/device_oauth2_token_service_factory.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/settings/device_oauth2_token_service.h"
 #include "chrome/browser/chromeos/settings/device_oauth2_token_service_delegate.h"
@@ -32,7 +31,7 @@ void DeviceOAuth2TokenServiceFactory::Initialize() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(!g_device_oauth2_token_service_);
   g_device_oauth2_token_service_ = new DeviceOAuth2TokenService(
-      std::make_unique<DeviceOAuth2TokenServiceDelegate>(
+      base::MakeUnique<DeviceOAuth2TokenServiceDelegate>(
           g_browser_process->system_request_context(),
           g_browser_process->local_state()));
 }

@@ -61,7 +61,7 @@ class SitePerProcessPolicyBrowserTest : public SiteIsolationPolicyBrowserTest {
     policy::PolicyMap values;
     values.Set(policy::key::kSitePerProcess, policy::POLICY_LEVEL_MANDATORY,
                policy::POLICY_SCOPE_USER, policy::POLICY_SOURCE_CLOUD,
-               std::make_unique<base::Value>(true), nullptr);
+               base::MakeUnique<base::Value>(true), nullptr);
     provider_.UpdateChromePolicy(values);
   }
 
@@ -86,7 +86,7 @@ class IsolateOriginsPolicyBrowserTest : public SiteIsolationPolicyBrowserTest {
     policy::PolicyMap values;
     values.Set(policy::key::kIsolateOrigins, policy::POLICY_LEVEL_MANDATORY,
                policy::POLICY_SCOPE_USER, policy::POLICY_SOURCE_CLOUD,
-               std::make_unique<base::Value>(
+               base::MakeUnique<base::Value>(
                    "https://example.org/,http://example.com"),
                nullptr);
     provider_.UpdateChromePolicy(values);

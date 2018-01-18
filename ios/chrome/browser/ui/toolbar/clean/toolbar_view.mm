@@ -130,7 +130,7 @@
 
 - (void)setUpToolbarButtons {
   self.backButton = [self.buttonFactory backButton];
-  self.forwardButton = [self.buttonFactory leadingForwardButton];
+  self.forwardButton = [self.buttonFactory forwardButton];
   self.tabSwitchStripButton = [self.buttonFactory tabSwitcherStripButton];
   self.toolsMenuButton = [self.buttonFactory toolsMenuButton];
   self.shareButton = [self.buttonFactory shareButton];
@@ -315,7 +315,7 @@
   locationBarContainer.backgroundColor =
       [self.buttonFactory.toolbarConfiguration omniboxBackgroundColor];
   locationBarContainer.layer.borderWidth = kLocationBarBorderWidth;
-  locationBarContainer.layer.cornerRadius = kLocationBarCornerRadius;
+  locationBarContainer.layer.cornerRadius = kLocationBarShadowHeight;
   locationBarContainer.layer.borderColor =
       [self.buttonFactory.toolbarConfiguration omniboxBorderColor].CGColor;
 

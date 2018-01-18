@@ -210,7 +210,7 @@ DOMMatrixReadOnly* DOMMatrixReadOnly::fromMatrix(
   return new DOMMatrixReadOnly(args, 16);
 }
 
-DOMMatrixReadOnly::~DOMMatrixReadOnly() = default;
+DOMMatrixReadOnly::~DOMMatrixReadOnly() {}
 
 bool DOMMatrixReadOnly::is2D() const {
   return is2d_;

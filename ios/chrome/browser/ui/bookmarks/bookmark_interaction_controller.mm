@@ -16,9 +16,11 @@
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/bookmark_utils.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
+#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/metrics/new_tab_page_uma.h"
 #import "ios/chrome/browser/tabs/tab.h"
+#import "ios/chrome/browser/ui/bookmarks/bookmark_controller_factory.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_edit_view_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_mediator.h"
@@ -170,34 +172,43 @@ using bookmarks::BookmarkNode;
 
 - (void)presentBookmarks {
   DCHECK(!self.bookmarkBrowser && !self.bookmarkEditor);
-  self.bookmarkBrowser =
-      [[BookmarkHomeViewController alloc] initWithLoader:_loader
-                                            browserState:_currentBrowserState
-                                              dispatcher:self.dispatcher];
+  BookmarkControllerFactory* bookmarkControllerFactory =
+      [[BookmarkControllerFactory alloc] init];
+  self.bookmarkBrowser = [bookmarkControllerFactory
+      bookmarkControllerWithBrowserState:_currentBrowserState
+                                  loader:_loader
+                              dispatcher:self.dispatcher];
   self.bookmarkBrowser.homeDelegate = self;
 
-  [self.bookmarkBrowser setRootNode:self.bookmarkModel->root_node()];
-  int64_t unusedFolderId;
-  double unusedScrollPosition;
-  // If cache is present then reconstruct the last visited bookmark from
-  // cache.  If bookmarkModel is not loaded yet, the following checking will
-  // be done again at bookmarkModelLoaded in BookmarkHomeViewController to
-  // prevent http://crbug.com/765503.
-  if ([BookmarkPathCache
-          getBookmarkUIPositionCacheWithPrefService:_currentBrowserState
-                                                        ->GetPrefs()
-                                              model:self.bookmarkModel
-                                           folderId:&unusedFolderId
-                                     scrollPosition:&unusedScrollPosition]) {
-    self.bookmarkBrowser.isReconstructingFromCache = YES;
+  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
+    [self.bookmarkBrowser setRootNode:self.bookmarkModel->root_node()];
+    int64_t unusedFolderId;
+    double unusedScrollPosition;
+    // If cache is present then reconstruct the last visited bookmark from
+    // cache.  If bookmarkModel is not loaded yet, the following checking will
+    // be done again at bookmarkModelLoaded in BookmarkHomeViewController to
+    // prevent crbug.com/765503.
+    if ([BookmarkPathCache
+            getBookmarkUIPositionCacheWithPrefService:_currentBrowserState
+                                                          ->GetPrefs()
+                                                model:self.bookmarkModel
+                                             folderId:&unusedFolderId
+                                       scrollPosition:&unusedScrollPosition]) {
+      self.bookmarkBrowser.isReconstructingFromCache = YES;
+    }
+    FormSheetNavigationController* navController =
+        [[FormSheetNavigationController alloc]
+            initWithRootViewController:self.bookmarkBrowser];
+    [navController setModalPresentationStyle:UIModalPresentationFormSheet];
+    [_parentController presentViewController:navController
+                                    animated:YES
+                                  completion:nil];
+  } else {
+    self.bookmarkBrowser.modalPresentationStyle = UIModalPresentationFormSheet;
+    [_parentController presentViewController:self.bookmarkBrowser
+                                    animated:YES
+                                  completion:nil];
   }
-  FormSheetNavigationController* navController =
-      [[FormSheetNavigationController alloc]
-          initWithRootViewController:self.bookmarkBrowser];
-  [navController setModalPresentationStyle:UIModalPresentationFormSheet];
-  [_parentController presentViewController:navController
-                                  animated:YES
-                                completion:nil];
 }
 
 - (void)dismissBookmarkBrowserAnimated:(BOOL)animated
@@ -223,6 +234,8 @@ using bookmarks::BookmarkNode;
     // open urls now.
     [self openUrls:urlsToOpen inIncognito:inIncognito newTab:newTab];
   }
+
+  [self.bookmarkBrowser dismissModals];
 
   [_parentController
       dismissViewControllerAnimated:animated

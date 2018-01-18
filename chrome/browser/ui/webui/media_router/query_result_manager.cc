@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/containers/hash_tables.h"
+#include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "chrome/browser/media/router/media_router.h"
 #include "chrome/browser/media/router/media_sinks_observer.h"
@@ -204,7 +205,7 @@ QueryResultManager::GetHighestPrioritySourceForCastModeAndSink(
 
   for (const MediaSource& source : cast_mode_it->second) {
     if (sources_for_sink.HasSource(cast_mode, source))
-      return std::make_unique<MediaSource>(source.id());
+      return base::MakeUnique<MediaSource>(source.id());
   }
   return std::unique_ptr<MediaSource>();
 }

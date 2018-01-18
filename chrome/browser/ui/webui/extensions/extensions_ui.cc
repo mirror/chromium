@@ -8,6 +8,7 @@
 #include <string>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/timer/elapsed_timer.h"
@@ -128,8 +129,6 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
   source->AddLocalizedString("confirm", IDS_CONFIRM);
   source->AddLocalizedString("done", IDS_DONE);
   source->AddLocalizedString("ok", IDS_OK);
-  source->AddLocalizedString("controlledSettingPolicy",
-                             IDS_CONTROLLED_SETTING_POLICY);
 
   // Add extension-specific strings.
   source->AddLocalizedString("title",
@@ -167,12 +166,8 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
                              IDS_MD_EXTENSIONS_ERROR_CONTEXT_UNKNOWN);
   source->AddLocalizedString("openInDevtool",
                              IDS_MD_EXTENSIONS_ERROR_LAUNCH_DEVTOOLS);
-  source->AddString("errorLinesNotShownSingular",
-                    l10n_util::GetPluralStringFUTF16(
-                        IDS_MD_EXTENSIONS_ERROR_LINES_NOT_SHOWN, 1));
-  source->AddString("errorLinesNotShownPlural",
-                    l10n_util::GetPluralStringFUTF16(
-                        IDS_MD_EXTENSIONS_ERROR_LINES_NOT_SHOWN, 2));
+  source->AddLocalizedString("errorLinesNotShown",
+                             IDS_MD_EXTENSIONS_ERROR_LINES_NOT_SHOWN);
   source->AddLocalizedString("stackTrace", IDS_MD_EXTENSIONS_ERROR_STACK_TRACE);
   // TODO(dpapad): Unify with Settings' IDS_SETTINGS_WEB_STORE.
   source->AddLocalizedString("openChromeWebStore",
@@ -263,6 +258,8 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
                              IDS_MD_EXTENSIONS_LOAD_ERROR_FILE_LABEL);
   source->AddLocalizedString("loadErrorErrorLabel",
                              IDS_MD_EXTENSIONS_LOAD_ERROR_ERROR_LABEL);
+  source->AddLocalizedString("loadErrorCancel",
+                             IDS_MD_EXTENSIONS_LOAD_ERROR_CANCEL);
   source->AddLocalizedString("loadErrorRetry",
                              IDS_MD_EXTENSIONS_LOAD_ERROR_RETRY);
   source->AddLocalizedString("noErrorsToShow",
@@ -284,6 +281,8 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
                              IDS_MD_EXTENSIONS_PACK_DIALOG_KEY_FILE_LABEL);
   source->AddLocalizedString("packDialogContent",
                              IDS_EXTENSION_PACK_DIALOG_HEADING);
+  source->AddLocalizedString("packDialogCancel",
+                             IDS_MD_EXTENSIONS_PACK_DIALOG_CANCEL_BUTTON);
   source->AddLocalizedString("packDialogConfirm",
                              IDS_MD_EXTENSIONS_PACK_DIALOG_CONFIRM_BUTTON);
   source->AddLocalizedString("shortcutNotSet",
@@ -424,7 +423,7 @@ ExtensionsUI::ExtensionsUI(content::WebUI* web_ui) : WebUIController(web_ui) {
 #endif
 
     auto install_extension_handler =
-        std::make_unique<InstallExtensionHandler>();
+        base::MakeUnique<InstallExtensionHandler>();
     InstallExtensionHandler* handler = install_extension_handler.get();
     web_ui->AddMessageHandler(std::move(install_extension_handler));
     handler->GetLocalizedValues(source);
@@ -432,29 +431,29 @@ ExtensionsUI::ExtensionsUI(content::WebUI* web_ui) : WebUIController(web_ui) {
     source = CreateExtensionsHTMLSource();
 
     auto extension_settings_handler =
-        std::make_unique<ExtensionSettingsHandler>();
+        base::MakeUnique<ExtensionSettingsHandler>();
     ExtensionSettingsHandler* settings_handler =
         extension_settings_handler.get();
     web_ui->AddMessageHandler(std::move(extension_settings_handler));
     settings_handler->GetLocalizedValues(source);
 
     auto extension_loader_handler =
-        std::make_unique<ExtensionLoaderHandler>(profile);
+        base::MakeUnique<ExtensionLoaderHandler>(profile);
     ExtensionLoaderHandler* loader_handler = extension_loader_handler.get();
     web_ui->AddMessageHandler(std::move(extension_loader_handler));
     loader_handler->GetLocalizedValues(source);
 
     auto install_extension_handler =
-        std::make_unique<InstallExtensionHandler>();
+        base::MakeUnique<InstallExtensionHandler>();
     InstallExtensionHandler* install_handler = install_extension_handler.get();
     web_ui->AddMessageHandler(std::move(install_extension_handler));
     install_handler->GetLocalizedValues(source);
 
-    web_ui->AddMessageHandler(std::make_unique<MetricsHandler>());
+    web_ui->AddMessageHandler(base::MakeUnique<MetricsHandler>());
   }
 
 #if defined(OS_CHROMEOS)
-  auto kiosk_app_handler = std::make_unique<chromeos::KioskAppsHandler>(
+  auto kiosk_app_handler = base::MakeUnique<chromeos::KioskAppsHandler>(
       chromeos::OwnerSettingsServiceChromeOSFactory::GetForBrowserContext(
           profile));
   chromeos::KioskAppsHandler* kiosk_handler = kiosk_app_handler.get();

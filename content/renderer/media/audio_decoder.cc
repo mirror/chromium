@@ -14,7 +14,6 @@
 #include "media/base/limits.h"
 #include "media/filters/audio_file_reader.h"
 #include "media/filters/in_memory_url_protocol.h"
-#include "media/media_features.h"
 #include "third_party/WebKit/public/platform/WebAudioBus.h"
 
 using media::AudioBus;
@@ -33,7 +32,9 @@ bool DecodeAudioFileData(
   if (!destination_bus)
     return false;
 
-#if BUILDFLAG(ENABLE_FFMPEG)
+#if defined(MEDIA_DISABLE_FFMPEG)
+  return false;
+#else
   // Uses the FFmpeg library for audio file reading.
   InMemoryUrlProtocol url_protocol(reinterpret_cast<const uint8_t*>(data),
                                    data_size, false);
@@ -87,9 +88,7 @@ bool DecodeAudioFileData(
            << ", number of channels: " << number_of_channels;
 
   return number_of_frames > 0;
-#else
-  return false;
-#endif  // BUILDFLAG(ENABLE_FFMPEG)
+#endif  // defined(MEDIA_DISABLE_FFMPEG)
 }
 
 }  // namespace content

@@ -90,16 +90,6 @@ Page::PageSet& Page::OrdinaryPages() {
   return pages;
 }
 
-HeapVector<Member<Page>> Page::RelatedPages() {
-  HeapVector<Member<Page>> result;
-  Page* ptr = this->next_related_page_;
-  while (ptr != this) {
-    result.push_back(ptr);
-    ptr = ptr->next_related_page_;
-  }
-  return result;
-}
-
 float DeviceScaleFactorDeprecated(LocalFrame* frame) {
   if (!frame)
     return 1;
@@ -109,19 +99,8 @@ float DeviceScaleFactorDeprecated(LocalFrame* frame) {
   return page->DeviceScaleFactorDeprecated();
 }
 
-Page* Page::CreateOrdinary(PageClients& page_clients, Page* opener) {
+Page* Page::CreateOrdinary(PageClients& page_clients) {
   Page* page = Create(page_clients);
-
-  if (opener) {
-    // Before: ... -> opener -> next -> ...
-    // After: ... -> opener -> page -> next -> ...
-    Page* next = opener->next_related_page_;
-    opener->next_related_page_ = page;
-    page->prev_related_page_ = opener;
-    page->next_related_page_ = next;
-    next->prev_related_page_ = page;
-  }
-
   OrdinaryPages().insert(page);
   if (ScopedPagePauser::IsActive())
     page->SetPaused(true);
@@ -160,9 +139,7 @@ Page::Page(PageClients& page_clients)
       visibility_state_(mojom::PageVisibilityState::kVisible),
       page_lifecycle_state_(PageLifecycleState::kUnknown),
       is_cursor_visible_(true),
-      subframe_count_(0),
-      next_related_page_(this),
-      prev_related_page_(this) {
+      subframe_count_(0) {
   DCHECK(!AllPages().Contains(this));
   AllPages().insert(this);
 }
@@ -710,8 +687,6 @@ void Page::Trace(blink::Visitor* visitor) {
   visitor->Trace(validation_message_client_);
   visitor->Trace(use_counter_);
   visitor->Trace(plugins_changed_observers_);
-  visitor->Trace(next_related_page_);
-  visitor->Trace(prev_related_page_);
   Supplementable<Page>::Trace(visitor);
   PageVisibilityNotifier::Trace(visitor);
 }
@@ -740,18 +715,6 @@ void Page::WillBeDestroyed() {
   AllPages().erase(this);
   OrdinaryPages().erase(this);
 
-  {
-    // Before: ... -> prev -> this -> next -> ...
-    // After: ... -> prev -> next -> ...
-    // (this is ok even if |this| is the only element on the list).
-    Page* prev = this->prev_related_page_;
-    Page* next = this->next_related_page_;
-    next->prev_related_page_ = prev;
-    prev->next_related_page_ = next;
-    this->prev_related_page_ = nullptr;
-    this->next_related_page_ = nullptr;
-  }
-
   if (scrolling_coordinator_)
     scrolling_coordinator_->WillBeDestroyed();
 
@@ -775,7 +738,7 @@ ScrollbarTheme& Page::GetScrollbarTheme() const {
 
 Page::PageClients::PageClients() : chrome_client(nullptr) {}
 
-Page::PageClients::~PageClients() = default;
+Page::PageClients::~PageClients() {}
 
 template class CORE_TEMPLATE_EXPORT Supplement<Page>;
 

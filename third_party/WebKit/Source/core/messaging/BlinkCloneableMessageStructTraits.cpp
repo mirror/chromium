@@ -5,6 +5,7 @@
 #include "core/messaging/BlinkCloneableMessageStructTraits.h"
 
 #include "platform/blob/BlobData.h"
+#include "platform/runtime_enabled_features.h"
 
 namespace mojo {
 
@@ -12,11 +13,13 @@ Vector<blink::mojom::blink::SerializedBlobPtr> StructTraits<
     blink::mojom::blink::CloneableMessage::DataView,
     blink::BlinkCloneableMessage>::blobs(blink::BlinkCloneableMessage& input) {
   Vector<blink::mojom::blink::SerializedBlobPtr> result;
-  result.ReserveInitialCapacity(input.message->BlobDataHandles().size());
-  for (const auto& blob : input.message->BlobDataHandles()) {
-    result.push_back(blink::mojom::blink::SerializedBlob::New(
-        blob.value->Uuid(), blob.value->GetType(), blob.value->size(),
-        blob.value->CloneBlobPtr().PassInterface()));
+  if (blink::RuntimeEnabledFeatures::MojoBlobsEnabled()) {
+    result.ReserveInitialCapacity(input.message->BlobDataHandles().size());
+    for (const auto& blob : input.message->BlobDataHandles()) {
+      result.push_back(blink::mojom::blink::SerializedBlob::New(
+          blob.value->Uuid(), blob.value->GetType(), blob.value->size(),
+          blob.value->CloneBlobPtr().PassInterface()));
+    }
   }
   return result;
 }
@@ -39,10 +42,6 @@ bool StructTraits<blink::mojom::blink::CloneableMessage::DataView,
         blink::BlobDataHandle::Create(blob->uuid, blob->content_type,
                                       blob->size, std::move(blob->blob)));
   }
-  out->sender_stack_trace_id = v8_inspector::V8StackTraceId(
-      static_cast<uintptr_t>(data.stack_trace_id()),
-      std::make_pair(data.stack_trace_debugger_id_first(),
-                     data.stack_trace_debugger_id_second()));
 
   return true;
 }

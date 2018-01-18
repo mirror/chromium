@@ -37,12 +37,12 @@ namespace {
 
 std::unique_ptr<KeyedService> BuildManagementApi(
     content::BrowserContext* context) {
-  return std::make_unique<ManagementAPI>(context);
+  return base::MakeUnique<ManagementAPI>(context);
 }
 
 std::unique_ptr<KeyedService> BuildEventRouter(
     content::BrowserContext* profile) {
-  return std::make_unique<extensions::EventRouter>(
+  return base::MakeUnique<extensions::EventRouter>(
       profile, ExtensionPrefs::Get(profile));
 }
 

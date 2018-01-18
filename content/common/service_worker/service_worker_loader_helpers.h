@@ -11,35 +11,33 @@
 #include "net/url_request/redirect_info.h"
 #include "third_party/WebKit/common/blob/blob.mojom.h"
 
-namespace network {
+namespace content {
+
 struct ResourceRequest;
 struct ResourceResponseHead;
-}
-
-namespace content {
 
 // Helper functions for service worker classes that use URLLoader
 //(e.g., ServiceWorkerURLLoaderJob and ServiceWorkerSubresourceLoader).
 class ServiceWorkerLoaderHelpers {
  public:
   static std::unique_ptr<ServiceWorkerFetchRequest> CreateFetchRequest(
-      const network::ResourceRequest& request);
+      const ResourceRequest& request);
 
   // Populates |out_head->headers| with the given |status_code|, |status_text|,
   // and |headers|.
   static void SaveResponseHeaders(const int status_code,
                                   const std::string& status_text,
                                   const ServiceWorkerHeaderMap& headers,
-                                  network::ResourceResponseHead* out_head);
+                                  ResourceResponseHead* out_head);
   // Populates |out_head| (except for headers) with given |response|.
   static void SaveResponseInfo(const ServiceWorkerResponse& response,
-                               network::ResourceResponseHead* out_head);
+                               ResourceResponseHead* out_head);
 
   // Returns a redirect info if |response_head| is an redirect response.
   // Otherwise returns base::nullopt.
   static base::Optional<net::RedirectInfo> ComputeRedirectInfo(
-      const network::ResourceRequest& original_request,
-      const network::ResourceResponseHead& response_head,
+      const ResourceRequest& original_request,
+      const ResourceResponseHead& response_head,
       bool token_binding_negotiated);
 
   // Reads |blob| using the range in |headers| (if any), writing into

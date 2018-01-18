@@ -4,7 +4,6 @@
 
 #include "chrome/browser/android/contextualsearch/contextual_search_manager.h"
 
-#include <memory>
 #include <set>
 
 #include "base/android/jni_string.h"
@@ -55,7 +54,7 @@ class ContextualSearchObserver : public content::WebContentsObserver,
     // Clobber any prior registered observer.
     contents->SetUserData(
         kContextualSearchObserverKey,
-        std::make_unique<ContextualSearchObserver>(contents, api_handler));
+        base::MakeUnique<ContextualSearchObserver>(contents, api_handler));
   }
 
  private:

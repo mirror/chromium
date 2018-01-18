@@ -20,7 +20,6 @@
 #include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
@@ -63,7 +62,6 @@
 #include "chrome/browser/page_load_metrics/metrics_navigation_throttle.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
-#include "chrome/browser/payments/payment_request_display_manager_factory.h"
 #include "chrome/browser/permissions/permission_context_base.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/plugins/pdf_iframe_navigation_throttle.h"
@@ -161,7 +159,6 @@
 #include "components/net_log/chrome_net_log.h"
 #include "components/password_manager/content/browser/content_password_manager_driver_factory.h"
 #include "components/patch_service/public/interfaces/constants.mojom.h"
-#include "components/payments/content/payment_request_display_manager.h"
 #include "components/policy/content/policy_blacklist_navigation_throttle.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -1121,7 +1118,8 @@ void ChromeContentBrowserClient::RenderProcessWillLaunch(
 
 GURL ChromeContentBrowserClient::GetEffectiveURL(
     content::BrowserContext* browser_context,
-    const GURL& url) {
+    const GURL& url,
+    bool is_isolated_origin) {
   Profile* profile = Profile::FromBrowserContext(browser_context);
   if (!profile)
     return url;
@@ -1136,8 +1134,8 @@ GURL ChromeContentBrowserClient::GetEffectiveURL(
 #endif
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-  return ChromeContentBrowserClientExtensionsPart::GetEffectiveURL(profile,
-                                                                   url);
+  return ChromeContentBrowserClientExtensionsPart::GetEffectiveURL(
+      profile, url, is_isolated_origin);
 #else
   return url;
 #endif
@@ -1494,6 +1492,13 @@ bool ChromeContentBrowserClient::IsFileAccessAllowed(
 namespace {
 
 bool IsAutoReloadEnabled() {
+  // Fetch the field trial, even though we don't use it. Calling FindFullName()
+  // causes the field-trial mechanism to report which group we're in, which
+  // might reflect a hard disable or hard enable via flag, both of which have
+  // their own field trial groups. This lets us know what percentage of users
+  // manually enable or disable auto-reload.
+  std::string group = base::FieldTrialList::FindFullName(
+      "AutoReloadExperiment");
   const base::CommandLine& browser_command_line =
       *base::CommandLine::ForCurrentProcess();
   if (browser_command_line.HasSwitch(switches::kEnableOfflineAutoReload))
@@ -1504,6 +1509,9 @@ bool IsAutoReloadEnabled() {
 }
 
 bool IsAutoReloadVisibleOnlyEnabled() {
+  // See the block comment in IsAutoReloadEnabled().
+  std::string group = base::FieldTrialList::FindFullName(
+      "AutoReloadVisibleOnlyExperiment");
   const base::CommandLine& browser_command_line =
       *base::CommandLine::ForCurrentProcess();
   if (browser_command_line.HasSwitch(
@@ -1743,11 +1751,12 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
     }
 
     {
-      // Enable showing a saved copy if the user explicitly enabled it.
-      // Note that as far as the renderer is concerned, the feature is
-      // enabled if-and-only-if one of the kEnableShowSavedCopy* switches
-      // is on the command line; the yes/no/default behavior is only at
-      // the browser command line level.
+      // Enable showing a saved copy if this session is in the field trial
+      // or the user explicitly enabled it.  Note that as far as the
+      // renderer is concerned, the feature is enabled if-and-only-if
+      // one of the kEnableShowSavedCopy* switches is on the command
+      // line; the yes/no/default behavior is only at the browser
+      // command line level.
 
       // Command line switches override
       const std::string& show_saved_copy_value =
@@ -1761,8 +1770,22 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
               error_page::switches::kDisableShowSavedCopy) {
         command_line->AppendSwitchASCII(error_page::switches::kShowSavedCopy,
                                         show_saved_copy_value);
+      } else {
+        std::string group =
+            base::FieldTrialList::FindFullName("LoadStaleCacheExperiment");
+
+        if (group == "Primary") {
+          command_line->AppendSwitchASCII(
+              error_page::switches::kShowSavedCopy,
+              error_page::switches::kEnableShowSavedCopyPrimary);
+        } else if (group == "Secondary") {
+          command_line->AppendSwitchASCII(
+              error_page::switches::kShowSavedCopy,
+              error_page::switches::kEnableShowSavedCopySecondary);
+        }
       }
     }
+
     MaybeAppendBlinkSettingsSwitchForFieldTrial(
         browser_command_line, command_line);
 
@@ -1818,6 +1841,7 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
       switches::kProfilingFile,
       switches::kProfilingFlush,
       switches::kReaderModeHeuristics,
+      switches::kSitePerProcess,
       translate::switches::kTranslateSecurityOrigin,
     };
 
@@ -1858,6 +1882,12 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
         !command_line->HasSwitch(switches::kDisableBreakpad))
       command_line->AppendSwitch(switches::kDisableBreakpad);
   }
+
+  // The command line switch kEnableBenchmarking needs to be specified along
+  // with the kEnableStatsTable switch to ensure that the stats table global
+  // is initialized correctly.
+  if (command_line->HasSwitch(variations::switches::kEnableBenchmarking))
+    DCHECK(command_line->HasSwitch(switches::kEnableStatsTable));
 
   StackSamplingConfiguration::Get()->AppendCommandLineSwitchForChildProcess(
       process_type,
@@ -2700,22 +2730,6 @@ void ChromeContentBrowserClient::OverrideWebkitPrefs(
       base::FeatureList::IsEnabled(
           feature_engagement::kIPHMediaDownloadFeature);
 #endif  // defined(OS_ANDROID)
-
-  if (base::FeatureList::IsEnabled(features::kLowPriorityIframes)) {
-    // Obtain the maximum effective connection type at which the feature is
-    // enabled.
-    std::string effective_connection_type_param =
-        base::GetFieldTrialParamValueByFeature(
-            features::kLowPriorityIframes,
-            "max_effective_connection_type_threshold");
-
-    base::Optional<net::EffectiveConnectionType> effective_connection_type =
-        net::GetEffectiveConnectionTypeForName(effective_connection_type_param);
-    if (effective_connection_type) {
-      web_prefs->low_priority_iframes_threshold =
-          effective_connection_type.value();
-    }
-  }
 
   for (size_t i = 0; i < extra_parts_.size(); ++i)
     extra_parts_[i]->OverrideWebkitPrefs(rvh, web_prefs);
@@ -3838,20 +3852,6 @@ bool ChromeContentBrowserClient::HandleWebUI(
 #endif
 
   return true;
-}
-
-bool ChromeContentBrowserClient::ShowPaymentHandlerWindow(
-    content::BrowserContext* browser_context,
-    const GURL& url,
-    base::OnceCallback<void(bool)> callback) {
-#if defined(OS_ANDROID)
-  return false;
-#else
-  payments::PaymentRequestDisplayManagerFactory::GetInstance()
-      ->GetForBrowserContext(browser_context)
-      ->ShowPaymentHandlerWindow(url, std::move(callback));
-  return true;
-#endif
 }
 
 // Static; reverse URL handler for Web UI. Maps "chrome://chrome/foo/" to

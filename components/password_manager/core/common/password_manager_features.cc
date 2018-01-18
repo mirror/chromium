@@ -44,8 +44,8 @@ const base::Feature kEnableManualSaving = {"EnableManualSaving",
 
 // Enable a context menu item in the password field that allows the user
 // to manually enforce saving of their password.
-const base::Feature kPasswordForceSaving = {
-    "PasswordForceSaving", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kEnablePasswordForceSaving = {
+    "enable-password-force-saving", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Enable the user to trigger password generation manually.
 const base::Feature kEnableManualPasswordGeneration = {
@@ -63,7 +63,7 @@ const base::Feature kProtectSyncCredential = {
 // Disallow autofilling of the sync credential only for transactional reauth
 // pages.
 const base::Feature kProtectSyncCredentialOnReauth = {
-    "ProtectSyncCredentialOnReauth", base::FEATURE_DISABLED_BY_DEFAULT};
+    "protect-sync-credential-on-reauth", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Controls the ability to export passwords from Chrome's settings page.
 const base::Feature kPasswordExport = {"PasswordExport",

@@ -10,6 +10,7 @@
 #include <utility>
 
 #include "base/files/file_util.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
@@ -508,7 +509,7 @@ std::unique_ptr<ArcAppListPrefs::PackageInfo> ArcAppListPrefs::GetPackage(
   package->GetBoolean(kSystem, &system);
   package->GetBoolean(kVPNProvider, &vpn_provider);
 
-  return std::make_unique<PackageInfo>(package_name, package_version,
+  return base::MakeUnique<PackageInfo>(package_name, package_version,
                                        last_backup_android_id, last_backup_time,
                                        should_sync, system, vpn_provider);
 }
@@ -599,7 +600,7 @@ std::unique_ptr<ArcAppListPrefs::AppInfo> ArcAppListPrefs::GetApp(
   arc::mojom::OrientationLock orientation_lock =
       static_cast<arc::mojom::OrientationLock>(orientation_lock_value);
 
-  return std::make_unique<AppInfo>(
+  return base::MakeUnique<AppInfo>(
       name, package_name, activity, intent_uri, icon_resource_id,
       last_launch_time, GetInstallTime(app_id), sticky, notifications_enabled,
       ready_apps_.count(app_id) > 0,

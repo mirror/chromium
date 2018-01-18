@@ -24,11 +24,12 @@ FakePictureLayerTilingClient::FakePictureLayerTilingClient()
 FakePictureLayerTilingClient::FakePictureLayerTilingClient(
     LayerTreeResourceProvider* resource_provider)
     : resource_pool_(
-          std::make_unique<ResourcePool>(resource_provider,
-                                         base::ThreadTaskRunnerHandle::Get(),
-                                         viz::ResourceTextureHint::kDefault,
-                                         ResourcePool::kDefaultExpirationDelay,
-                                         false)),
+          ResourcePool::Create(resource_provider,
+                               true,
+                               base::ThreadTaskRunnerHandle::Get().get(),
+                               viz::ResourceTextureHint::kDefault,
+                               ResourcePool::kDefaultExpirationDelay,
+                               false)),
       tile_manager_(
           new FakeTileManager(&tile_manager_client_, resource_pool_.get())),
       raster_source_(FakeRasterSource::CreateInfiniteFilled()),

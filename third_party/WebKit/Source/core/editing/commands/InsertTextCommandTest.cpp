@@ -191,7 +191,6 @@ TEST_F(InsertTextCommandTest, WhitespaceFixupAfterParagraph) {
 
 // http://crbug.com/779376
 TEST_F(InsertTextCommandTest, NoVisibleSelectionAfterDeletingSelection) {
-  GetDocument().SetCompatibilityMode(Document::kQuirksMode);
   InsertStyleElement(
       "ruby {display: inline-block; height: 100%}"
       "navi {float: left}");

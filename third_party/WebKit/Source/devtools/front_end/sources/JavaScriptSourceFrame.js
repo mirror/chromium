@@ -723,12 +723,7 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
           previousCallLine = lineNumber;
 
         var isAsyncCall = (line[token.startColumn - 1] === '.' && tokenContent === 'then') ||
-            tokenContent === 'setTimeout' || tokenContent === 'setInterval' || tokenContent === 'postMessage';
-        if (tokenContent === 'new') {
-          token = this.textEditor.tokenAtTextPosition(lineNumber, token.endColumn + 1);
-          tokenContent = line.substring(token.startColumn, token.endColumn);
-          isAsyncCall = tokenContent === 'Worker';
-        }
+            tokenContent === 'setTimeout' || tokenContent === 'setInterval';
         var isCurrentPosition = this._executionLocation && lineNumber === this._executionLocation.lineNumber &&
             location.columnNumber === this._executionLocation.columnNumber;
         if (location.type === Protocol.Debugger.BreakLocationType.Call && isAsyncCall) {
@@ -764,7 +759,6 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
     var to = line.length;
 
     var position = line.indexOf('(', column);
-    var argumentsStart = position;
     if (position === -1)
       return null;
     position++;
@@ -789,9 +783,6 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
 
     if (token.type === 'js-keyword' && tokenText === 'function')
       return {from: from, to: to};
-
-    if (token.type === 'js-string')
-      return {from: argumentsStart, to: to};
 
     if (token.type && this._isIdentifier(token.type))
       return {from: from, to: to};
@@ -1239,7 +1230,7 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
     }
     this._decorationByBreakpoint.set(breakpoint, decoration);
     this._updateBreakpointDecoration(decoration);
-    if (breakpoint.enabled() && !lineDecorations.length) {
+    if (!lineDecorations.length) {
       this._possibleBreakpointsRequested.add(uiLocation.lineNumber);
       this._breakpointManager
           .possibleBreakpoints(

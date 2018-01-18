@@ -17,6 +17,7 @@
 #include "content/browser/loader/resource_controller.h"
 #include "content/browser/loader/test_resource_handler.h"
 #include "content/public/browser/resource_request_info.h"
+#include "content/public/common/resource_response.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "net/base/net_errors.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
@@ -24,7 +25,6 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_status.h"
 #include "net/url_request/url_request_test_util.h"
-#include "services/network/public/cpp/resource_response.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -157,8 +157,7 @@ TEST_P(DetachableResourceHandlerTest, Sync) {
   MaybeSyncDetachAtPhase(DetachPhase::REQUEST_REDIRECTED);
   ASSERT_EQ(MockResourceLoader::Status::IDLE,
             mock_loader_->OnRequestRedirected(
-                net::RedirectInfo(),
-                base::MakeRefCounted<network::ResourceResponse>()));
+                net::RedirectInfo(), base::MakeRefCounted<ResourceResponse>()));
   if (!WasDetachedBy(DetachPhase::REQUEST_REDIRECTED)) {
     EXPECT_EQ(1, test_handler_->on_request_redirected_called());
     EXPECT_EQ(0, test_handler_->on_response_started_called());
@@ -167,7 +166,7 @@ TEST_P(DetachableResourceHandlerTest, Sync) {
   MaybeSyncDetachAtPhase(DetachPhase::ON_RESPONSE_STARTED);
   ASSERT_EQ(MockResourceLoader::Status::IDLE,
             mock_loader_->OnResponseStarted(
-                base::MakeRefCounted<network::ResourceResponse>()));
+                base::MakeRefCounted<ResourceResponse>()));
   if (!WasDetachedBy(DetachPhase::ON_RESPONSE_STARTED)) {
     EXPECT_EQ(1, test_handler_->on_request_redirected_called());
     EXPECT_EQ(1, test_handler_->on_response_started_called());
@@ -258,16 +257,15 @@ TEST_P(DetachableResourceHandlerTest, Async) {
   }
   MaybeAsyncDetachAt(DetachPhase::ON_WILL_START);
 
-  mock_loader_->OnRequestRedirected(
-      net::RedirectInfo(), base::MakeRefCounted<network::ResourceResponse>());
+  mock_loader_->OnRequestRedirected(net::RedirectInfo(),
+                                    base::MakeRefCounted<ResourceResponse>());
   if (test_handler_) {
     EXPECT_EQ(1, test_handler_->on_request_redirected_called());
     EXPECT_EQ(0, test_handler_->on_response_started_called());
   }
   MaybeAsyncDetachAt(DetachPhase::REQUEST_REDIRECTED);
 
-  mock_loader_->OnResponseStarted(
-      base::MakeRefCounted<network::ResourceResponse>());
+  mock_loader_->OnResponseStarted(base::MakeRefCounted<ResourceResponse>());
   if (test_handler_) {
     EXPECT_EQ(1, test_handler_->on_request_redirected_called());
     EXPECT_EQ(1, test_handler_->on_response_started_called());

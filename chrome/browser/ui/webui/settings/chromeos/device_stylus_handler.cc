@@ -4,7 +4,6 @@
 
 #include "chrome/browser/ui/webui/settings/chromeos/device_stylus_handler.h"
 
-#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -95,7 +94,7 @@ void StylusHandler::UpdateNoteTakingApps() {
     std::vector<NoteTakingAppInfo> available_apps =
         helper->GetAvailableApps(Profile::FromWebUI(web_ui()));
     for (const NoteTakingAppInfo& info : available_apps) {
-      auto dict = std::make_unique<base::DictionaryValue>();
+      auto dict = base::MakeUnique<base::DictionaryValue>();
       dict->SetString(kAppNameKey, info.name);
       dict->SetString(kAppIdKey, info.app_id);
       dict->SetBoolean(kAppPreferredKey, info.preferred);

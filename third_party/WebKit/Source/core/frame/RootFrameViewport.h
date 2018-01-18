@@ -12,7 +12,6 @@ namespace blink {
 
 class LocalFrameView;
 class LayoutRect;
-struct WebScrollIntoViewParams;
 
 // ScrollableArea for the root frame's viewport. This class ties together the
 // concepts of layout and visual viewports, used in pinch-to-zoom. This class
@@ -60,7 +59,11 @@ class CORE_EXPORT RootFrameViewport final
                        ScrollType,
                        ScrollBehavior = kScrollBehaviorInstant) override;
   LayoutRect ScrollIntoView(const LayoutRect& rect_in_content,
-                            const WebScrollIntoViewParams& params) override;
+                            const ScrollAlignment& align_x,
+                            const ScrollAlignment& align_y,
+                            bool is_smooth,
+                            ScrollType = kProgrammaticScroll,
+                            bool is_for_scroll_sequence = false) override;
   IntRect VisibleContentRect(
       IncludeScrollbarsInRect = kExcludeScrollbars) const override;
   bool ShouldUseIntegerScrollOffset() const override;

@@ -191,7 +191,7 @@
 #include "ui/base/resource/resource_bundle_android.h"
 #else
 #include "chrome/browser/feedback/feedback_profile_observer.h"
-#include "chrome/browser/resource_coordinator/tab_activity_watcher.h"
+#include "chrome/browser/ui/tabs/tab_activity_watcher.h"
 #include "chrome/browser/usb/web_usb_detector.h"
 #endif  // defined(OS_ANDROID)
 
@@ -851,11 +851,10 @@ DLLEXPORT void __cdecl RelaunchChromeBrowserWithNewCommandLineIfNeeded() {
 
 // content::BrowserMainParts implementation ------------------------------------
 
-int ChromeBrowserMainParts::PreEarlyInitialization() {
+void ChromeBrowserMainParts::PreEarlyInitialization() {
   TRACE_EVENT0("startup", "ChromeBrowserMainParts::PreEarlyInitialization");
   for (size_t i = 0; i < chrome_extra_parts_.size(); ++i)
     chrome_extra_parts_[i]->PreEarlyInitialization();
-  return content::RESULT_CODE_NORMAL_EXIT;
 }
 
 void ChromeBrowserMainParts::PostEarlyInitialization() {
@@ -1372,7 +1371,7 @@ void ChromeBrowserMainParts::PostBrowserStart() {
   }
   if (base::FeatureList::IsEnabled(features::kTabMetricsLogging)) {
     // Initialize the TabActivityWatcher to begin logging tab activity events.
-    resource_coordinator::TabActivityWatcher::GetInstance();
+    TabActivityWatcher::GetInstance();
   }
 #endif
 

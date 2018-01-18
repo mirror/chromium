@@ -16,7 +16,6 @@
 #include "extensions/renderer/bindings/api_bindings_system.h"
 #include "extensions/renderer/bindings/api_event_handler.h"
 #include "extensions/renderer/bindings/api_request_handler.h"
-#include "extensions/renderer/bindings/get_per_context_data.h"
 #include "extensions/renderer/gc_callback.h"
 #include "extensions/renderer/ipc_message_sender.h"
 #include "extensions/renderer/messaging_util.h"
@@ -48,15 +47,31 @@ struct OneTimeReceiver {
 using OneTimeMessageCallback =
     base::OnceCallback<void(gin::Arguments* arguments)>;
 struct OneTimeMessageContextData : public base::SupportsUserData::Data {
-  static constexpr char kPerContextDataKey[] =
-      "extension_one_time_message_context_data";
-
   std::map<PortId, OneTimeOpener> openers;
   std::map<PortId, OneTimeReceiver> receivers;
   std::vector<std::unique_ptr<OneTimeMessageCallback>> pending_callbacks;
 };
 
-constexpr char OneTimeMessageContextData::kPerContextDataKey[];
+constexpr char kExtensionOneTimeMessageContextData[] =
+    "extension_one_time_message_context_data";
+
+OneTimeMessageContextData* GetPerContextData(v8::Local<v8::Context> context,
+                                             bool should_create) {
+  gin::PerContextData* per_context_data = gin::PerContextData::From(context);
+  if (!per_context_data)
+    return nullptr;
+  auto* data = static_cast<OneTimeMessageContextData*>(
+      per_context_data->GetUserData(kExtensionOneTimeMessageContextData));
+
+  if (!data && should_create) {
+    auto messaging_data = std::make_unique<OneTimeMessageContextData>();
+    data = messaging_data.get();
+    per_context_data->SetUserData(kExtensionOneTimeMessageContextData,
+                                  std::move(messaging_data));
+  }
+
+  return data;
+}
 
 int RoutingIdForScriptContext(ScriptContext* script_context) {
   content::RenderFrame* render_frame = script_context->GetRenderFrame();
@@ -72,9 +87,7 @@ void OneTimeMessageResponseHelper(
   v8::HandleScope handle_scope(isolate);
   v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
-  OneTimeMessageContextData* data =
-      GetPerContextData<OneTimeMessageContextData>(context,
-                                                   kDontCreateIfMissing);
+  OneTimeMessageContextData* data = GetPerContextData(context, false);
   if (!data)
     return;
 
@@ -143,8 +156,7 @@ bool OneTimeMessageHandler::HasPort(ScriptContext* script_context,
   v8::HandleScope handle_scope(isolate);
 
   OneTimeMessageContextData* data =
-      GetPerContextData<OneTimeMessageContextData>(script_context->v8_context(),
-                                                   kDontCreateIfMissing);
+      GetPerContextData(script_context->v8_context(), false);
   if (!data)
     return false;
   return port_id.is_opener ? base::ContainsKey(data->openers, port_id)
@@ -166,8 +178,7 @@ void OneTimeMessageHandler::SendMessage(
   DCHECK_EQ(script_context->context_id(), new_port_id.context_id);
 
   OneTimeMessageContextData* data =
-      GetPerContextData<OneTimeMessageContextData>(script_context->v8_context(),
-                                                   kCreateIfMissing);
+      GetPerContextData(script_context->v8_context(), true);
   DCHECK(data);
 
   bool wants_response = !response_callback.IsEmpty();
@@ -203,8 +214,7 @@ void OneTimeMessageHandler::AddReceiver(ScriptContext* script_context,
   v8::HandleScope handle_scope(isolate);
   v8::Local<v8::Context> context = script_context->v8_context();
 
-  OneTimeMessageContextData* data =
-      GetPerContextData<OneTimeMessageContextData>(context, kCreateIfMissing);
+  OneTimeMessageContextData* data = GetPerContextData(context, true);
   DCHECK(data);
   DCHECK(!base::ContainsKey(data->receivers, target_port_id));
   OneTimeReceiver& receiver = data->receivers[target_port_id];
@@ -247,9 +257,7 @@ bool OneTimeMessageHandler::DeliverMessageToReceiver(
 
   bool handled = false;
 
-  OneTimeMessageContextData* data =
-      GetPerContextData<OneTimeMessageContextData>(context,
-                                                   kDontCreateIfMissing);
+  OneTimeMessageContextData* data = GetPerContextData(context, false);
   if (!data)
     return handled;
 
@@ -321,9 +329,7 @@ bool OneTimeMessageHandler::DeliverReplyToOpener(ScriptContext* script_context,
   v8::Local<v8::Context> context = script_context->v8_context();
   bool handled = false;
 
-  OneTimeMessageContextData* data =
-      GetPerContextData<OneTimeMessageContextData>(context,
-                                                   kDontCreateIfMissing);
+  OneTimeMessageContextData* data = GetPerContextData(context, false);
   if (!data)
     return handled;
 
@@ -357,9 +363,7 @@ bool OneTimeMessageHandler::DisconnectReceiver(ScriptContext* script_context,
   v8::Local<v8::Context> context = script_context->v8_context();
   bool handled = false;
 
-  OneTimeMessageContextData* data =
-      GetPerContextData<OneTimeMessageContextData>(context,
-                                                   kDontCreateIfMissing);
+  OneTimeMessageContextData* data = GetPerContextData(context, false);
   if (!data)
     return handled;
 
@@ -378,8 +382,7 @@ bool OneTimeMessageHandler::DisconnectOpener(ScriptContext* script_context,
   bool handled = false;
 
   OneTimeMessageContextData* data =
-      GetPerContextData<OneTimeMessageContextData>(script_context->v8_context(),
-                                                   kDontCreateIfMissing);
+      GetPerContextData(script_context->v8_context(), false);
   if (!data)
     return handled;
 
@@ -409,9 +412,7 @@ void OneTimeMessageHandler::OnOneTimeMessageResponse(
   // TODO(devlin): At least in the case of the channel being closed (e.g.
   // because the listener did not return `true`), it might be good to surface an
   // error.
-  OneTimeMessageContextData* data =
-      GetPerContextData<OneTimeMessageContextData>(context,
-                                                   kDontCreateIfMissing);
+  OneTimeMessageContextData* data = GetPerContextData(context, false);
   if (!data)
     return;
 
@@ -449,8 +450,7 @@ void OneTimeMessageHandler::OnResponseCallbackCollected(
   // be called after context invalidation.
   v8::HandleScope handle_scope(script_context->isolate());
   OneTimeMessageContextData* data =
-      GetPerContextData<OneTimeMessageContextData>(script_context->v8_context(),
-                                                   kDontCreateIfMissing);
+      GetPerContextData(script_context->v8_context(), false);
   // ScriptContext invalidation and PerContextData cleanup happen "around" the
   // same time, but there aren't strict guarantees about ordering. It's possible
   // the data was collected.
@@ -478,9 +478,7 @@ void OneTimeMessageHandler::OnEventFired(const PortId& port_id,
                                          v8::MaybeLocal<v8::Value> result) {
   // The context could be tearing down by the time the event is fully
   // dispatched.
-  OneTimeMessageContextData* data =
-      GetPerContextData<OneTimeMessageContextData>(context,
-                                                   kDontCreateIfMissing);
+  OneTimeMessageContextData* data = GetPerContextData(context, false);
   if (!data)
     return;
 

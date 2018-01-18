@@ -82,6 +82,7 @@
 #include "content/public/renderer/render_view_visitor.h"
 #include "content/renderer/appcache/appcache_dispatcher.h"
 #include "content/renderer/appcache/appcache_frontend_impl.h"
+#include "content/renderer/blob_storage/blob_message_filter.h"
 #include "content/renderer/browser_plugin/browser_plugin_manager.h"
 #include "content/renderer/cache_storage/cache_storage_dispatcher.h"
 #include "content/renderer/cache_storage/cache_storage_message_filter.h"
@@ -610,7 +611,7 @@ void RenderThreadImpl::SetRendererBlinkPlatformImplForTesting(
 
 // static
 scoped_refptr<base::SingleThreadTaskRunner>
-RenderThreadImpl::DeprecatedGetMainTaskRunner() {
+RenderThreadImpl::GetMainTaskRunner() {
   return g_main_task_runner.Get();
 }
 
@@ -708,9 +709,6 @@ void RenderThreadImpl::Init(
   resource_dispatcher_.reset(
       new ResourceDispatcher(message_loop()->task_runner()));
   quota_dispatcher_.reset(new QuotaDispatcher(message_loop()->task_runner()));
-  url_loader_throttle_provider_ =
-      GetContentClient()->renderer()->CreateURLLoaderThrottleProvider(
-          URLLoaderThrottleProviderType::kFrame);
 
   auto registry = std::make_unique<service_manager::BinderRegistry>();
   InitializeWebKit(resource_task_queue, registry.get());
@@ -728,13 +726,15 @@ void RenderThreadImpl::Init(
   registry->AddInterface(
       base::BindRepeating(&AppCacheDispatcher::Bind,
                           base::Unretained(appcache_dispatcher())),
-      GetRendererScheduler()->IPCTaskRunner());
+      GetMainTaskRunner());
   dom_storage_dispatcher_.reset(new DomStorageDispatcher());
   main_thread_indexed_db_dispatcher_.reset(new IndexedDBDispatcher());
   main_thread_cache_storage_dispatcher_.reset(
       new CacheStorageDispatcher(thread_safe_sender()));
   file_system_dispatcher_.reset(new FileSystemDispatcher());
 
+  blob_message_filter_ = new BlobMessageFilter(GetFileThreadTaskRunner());
+  AddFilter(blob_message_filter_.get());
   vc_manager_.reset(new VideoCaptureImplManager());
 
   browser_plugin_manager_.reset(new BrowserPluginManager());
@@ -756,37 +756,22 @@ void RenderThreadImpl::Init(
   AddFilter(aec_dump_message_filter_.get());
 
 #endif  // BUILDFLAG(ENABLE_WEBRTC)
-  {
-    scoped_refptr<AudioInputMessageFilter> audio_input_message_filter;
-    if (!base::FeatureList::IsEnabled(
-            features::kUseMojoAudioInputStreamFactory)) {
-      // In case we shouldn't use mojo factories, we need to create an
-      // AudioInputMessageFilter which |audio_input_ipc_factory_| can use for
-      // IPC.
-      audio_input_message_filter =
-          base::MakeRefCounted<AudioInputMessageFilter>(GetIOTaskRunner());
-      AddFilter(audio_input_message_filter.get());
-    }
 
-    audio_input_ipc_factory_.emplace(std::move(audio_input_message_filter),
-                                     message_loop()->task_runner(),
-                                     GetIOTaskRunner());
+  audio_input_message_filter_ = new AudioInputMessageFilter(GetIOTaskRunner());
+  AddFilter(audio_input_message_filter_.get());
+
+  scoped_refptr<AudioMessageFilter> audio_message_filter;
+  if (!base::FeatureList::IsEnabled(
+          features::kUseMojoAudioOutputStreamFactory)) {
+    // In case we shouldn't use mojo factories, we need to create an
+    // AudioMessageFilter which |audio_ipc_factory_| can use for IPC.
+    audio_message_filter =
+        base::MakeRefCounted<AudioMessageFilter>(GetIOTaskRunner());
+    AddFilter(audio_message_filter.get());
   }
 
-  {
-    scoped_refptr<AudioMessageFilter> audio_output_message_filter;
-    if (!base::FeatureList::IsEnabled(
-            features::kUseMojoAudioOutputStreamFactory)) {
-      // In case we shouldn't use mojo factories, we need to create an
-      // AudioMessageFilter which |audio_output_ipc_factory_| can use for IPC.
-      audio_output_message_filter =
-          base::MakeRefCounted<AudioMessageFilter>(GetIOTaskRunner());
-      AddFilter(audio_output_message_filter.get());
-    }
-
-    audio_output_ipc_factory_.emplace(std::move(audio_output_message_filter),
-                                      GetIOTaskRunner());
-  }
+  audio_ipc_factory_.emplace(std::move(audio_message_filter),
+                             GetIOTaskRunner());
 
   midi_message_filter_ = new MidiMessageFilter(GetIOTaskRunner());
   AddFilter(midi_message_filter_.get());
@@ -1994,9 +1979,6 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       features::IsSurfaceSynchronizationEnabled();
   params.local_surface_id_provider =
       std::make_unique<RendererLocalSurfaceIdProvider>();
-
-  // The renderer runs animations and layout for animate_only BeginFrames.
-  params.wants_animate_only_begin_frames = true;
 
   // In disable gpu vsync mode, also let the renderer tick as fast as it
   // can. The top level begin frame source will also be running as a back

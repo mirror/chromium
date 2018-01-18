@@ -250,6 +250,8 @@ class ScheduledReload final : public ScheduledNavigation {
     if (resource_request.IsNull())
       return;
     FrameLoadRequest request = FrameLoadRequest(nullptr, resource_request);
+    request.GetResourceRequest().SetRequestorOrigin(
+        SecurityOrigin::Create(resource_request.Url()));
     request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
     MaybeLogScheduledNavigationClobber(
         ScheduledNavigationType::kScheduledReload, frame);
@@ -542,11 +544,13 @@ void NavigationScheduler::StartTimer() {
 
   // wrapWeakPersistent(this) is safe because a posted task is canceled when the
   // task handle is destroyed on the dtor of this NavigationScheduler.
-  navigate_task_handle_ = PostDelayedCancellableTask(
-      *frame_->FrameScheduler()->GetTaskRunner(TaskType::kUnspecedLoading),
-      FROM_HERE,
-      WTF::Bind(&NavigationScheduler::NavigateTask, WrapWeakPersistent(this)),
-      TimeDelta::FromSecondsD(redirect_->Delay()));
+  navigate_task_handle_ = frame_->FrameScheduler()
+                              ->GetTaskRunner(TaskType::kUnspecedLoading)
+                              ->PostDelayedCancellableTask(
+                                  FROM_HERE,
+                                  WTF::Bind(&NavigationScheduler::NavigateTask,
+                                            WrapWeakPersistent(this)),
+                                  TimeDelta::FromSecondsD(redirect_->Delay()));
 
   probe::frameScheduledNavigation(frame_, redirect_.Get());
 }

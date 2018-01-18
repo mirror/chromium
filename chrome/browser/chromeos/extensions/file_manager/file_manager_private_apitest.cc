@@ -6,6 +6,7 @@
 #include <stdint.h>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "chrome/browser/chromeos/extensions/file_manager/event_router.h"
 #include "chrome/browser/chromeos/file_manager/file_watcher.h"
@@ -271,7 +272,7 @@ class FileManagerPrivateApiTest : public ExtensionApiTest {
 
         volumes_.insert(DiskMountManager::DiskMap::value_type(
             kTestMountPoints[i].source_path,
-            std::make_unique<DiskMountManager::Disk>(
+            base::MakeUnique<DiskMountManager::Disk>(
                 kTestMountPoints[i].source_path, kTestMountPoints[i].mount_path,
                 kTestDisks[disk_info_index].write_disabled_by_policy,
                 kTestDisks[disk_info_index].system_path,

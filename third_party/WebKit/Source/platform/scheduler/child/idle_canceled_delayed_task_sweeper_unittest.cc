@@ -33,7 +33,9 @@ class IdleCanceledDelayedTaskSweeperTest : public ::testing::Test,
   IdleCanceledDelayedTaskSweeperTest()
       : mock_task_runner_(new cc::OrderedSimpleTaskRunner(&clock_, true)),
         scheduler_helper_(new MainThreadSchedulerHelper(
-            CreateTaskQueueManagerForTest(nullptr, mock_task_runner_, &clock_),
+            CreateTaskQueueManagerWithUnownedClockForTest(nullptr,
+                                                          mock_task_runner_,
+                                                          &clock_),
             nullptr)),
         idle_helper_(
             new IdleHelper(scheduler_helper_.get(),

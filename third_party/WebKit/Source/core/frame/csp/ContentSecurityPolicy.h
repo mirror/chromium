@@ -101,7 +101,6 @@ class CORE_EXPORT ContentSecurityPolicy
     kMediaSrc,
     kObjectSrc,
     kPluginTypes,
-    kPrefetchSrc,
     kReportTo,
     kReportURI,
     kRequireSRIFor,
@@ -202,12 +201,6 @@ class CORE_EXPORT ContentSecurityPolicy
           SecurityViolationReportingPolicy::kReport) const;
 
   bool AllowObjectFromSource(
-      const KURL&,
-      RedirectStatus = RedirectStatus::kNoRedirect,
-      SecurityViolationReportingPolicy =
-          SecurityViolationReportingPolicy::kReport,
-      CheckHeaderType = CheckHeaderType::kCheckAll) const;
-  bool AllowPrefetchFromSource(
       const KURL&,
       RedirectStatus = RedirectStatus::kNoRedirect,
       SecurityViolationReportingPolicy =

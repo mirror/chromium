@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view.h"
@@ -151,7 +152,7 @@ bool ShippingAddressEditorViewController::ValidateModelAndSave() {
 std::unique_ptr<ValidationDelegate>
 ShippingAddressEditorViewController::CreateValidationDelegate(
     const EditorField& field) {
-  return std::make_unique<
+  return base::MakeUnique<
       ShippingAddressEditorViewController::ShippingAddressValidationDelegate>(
       this, field);
 }
@@ -162,7 +163,7 @@ ShippingAddressEditorViewController::GetComboboxModelForType(
   switch (type) {
     case autofill::ADDRESS_HOME_COUNTRY: {
       std::unique_ptr<autofill::CountryComboboxModel> model =
-          std::make_unique<autofill::CountryComboboxModel>();
+          base::MakeUnique<autofill::CountryComboboxModel>();
       model->SetCountries(*state()->GetPersonalDataManager(),
                           base::Callback<bool(const std::string&)>(),
                           state()->GetApplicationLocale());
@@ -172,7 +173,7 @@ ShippingAddressEditorViewController::GetComboboxModelForType(
     }
     case autofill::ADDRESS_HOME_STATE: {
       std::unique_ptr<autofill::RegionComboboxModel> model =
-          std::make_unique<autofill::RegionComboboxModel>();
+          base::MakeUnique<autofill::RegionComboboxModel>();
       region_model_ = model.get();
       if (chosen_country_index_ < countries_.size()) {
         model->LoadRegionData(countries_[chosen_country_index_].first,

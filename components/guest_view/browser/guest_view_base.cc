@@ -516,16 +516,7 @@ void GuestViewBase::SetGuestHost(content::GuestHost* guest_host) {
 void GuestViewBase::WillAttach(WebContents* embedder_web_contents,
                                int element_instance_id,
                                bool is_full_page_plugin,
-                               const base::Closure& completion_callback) {
-  WillAttach(embedder_web_contents, element_instance_id, is_full_page_plugin,
-             base::OnceClosure(), completion_callback);
-}
-
-void GuestViewBase::WillAttach(WebContents* embedder_web_contents,
-                               int element_instance_id,
-                               bool is_full_page_plugin,
-                               base::OnceClosure perform_attach,
-                               const base::Closure& completion_callback) {
+                               const base::Closure& callback) {
   // Stop tracking the old embedder's zoom level.
   if (owner_web_contents())
     StopTrackingEmbedderZoomLevel();
@@ -546,12 +537,9 @@ void GuestViewBase::WillAttach(WebContents* embedder_web_contents,
 
   WillAttachToEmbedder();
 
-  if (perform_attach)
-    std::move(perform_attach).Run();
-
   // Completing attachment will resume suspended resource loads and then send
   // queued events.
-  SignalWhenReady(completion_callback);
+  SignalWhenReady(callback);
 }
 
 void GuestViewBase::SignalWhenReady(const base::Closure& callback) {

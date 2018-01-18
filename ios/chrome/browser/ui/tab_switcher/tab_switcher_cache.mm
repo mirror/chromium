@@ -99,15 +99,16 @@ const CGFloat kMaxFloatDelta = 0.01;
       return currentRequest;
     }
 
-    CGSize newSnapshotSize =
-        SnapshotTabHelper::FromWebState(tab.webState)->GetSnapshotSize();
-    CGFloat newSnapshotAreaRatio =
-        newSnapshotSize.width / newSnapshotSize.height;
+    CGRect tabContentArea =
+        UIEdgeInsetsInsetRect([tab.webState->GetView() bounds],
+                              [tab snapshotEdgeInsetsForWebState:tab.webState]);
+    CGFloat tabContentAreaRatio =
+        tabContentArea.size.width / tabContentArea.size.height;
     CGFloat cachedSnapshotRatio =
         [snapshot size].width / [snapshot size].height;
 
     // Check that the cached snapshot's ratio matches the content area ratio.
-    if (std::abs(newSnapshotAreaRatio - cachedSnapshotRatio) < kMaxFloatDelta) {
+    if (std::abs(tabContentAreaRatio - cachedSnapshotRatio) < kMaxFloatDelta) {
       // Cache hit.
       completionBlock(snapshot);
       return currentRequest;

@@ -9,7 +9,6 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "components/viz/common/surfaces/local_surface_id.h"
 #include "ui/compositor/compositor.h"
 #include "ui/gfx/native_widget_types.h"
 
@@ -29,8 +28,7 @@ class TestCompositorHostAndroid : public TestCompositorHost {
     // TODO(sievers): Support onscreen here.
     compositor_->SetAcceleratedWidget(gfx::kNullAcceleratedWidget);
     compositor_->SetScaleAndSize(1.0f,
-                                 gfx::Size(bounds.width(), bounds.height()),
-                                 viz::LocalSurfaceId());
+                                 gfx::Size(bounds.width(), bounds.height()));
   }
 
   // Overridden from TestCompositorHost:

@@ -4,8 +4,7 @@
 
 #include "chrome/browser/ui/search_engines/search_engine_tab_helper.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search_engines/template_url_fetcher_factory.h"
@@ -212,5 +211,5 @@ void SearchEngineTabHelper::GenerateKeywordIfNecessary(
   }
   data.safe_for_autoreplace = true;
   data.input_encodings.push_back(handle->GetSearchableFormEncoding());
-  url_service->Add(std::make_unique<TemplateURL>(data));
+  url_service->Add(base::MakeUnique<TemplateURL>(data));
 }

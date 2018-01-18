@@ -10,6 +10,7 @@
 #include <set>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/task_scheduler/task_scheduler.h"
 #include "base/threading/sequenced_worker_pool.h"
@@ -136,7 +137,7 @@ class DeviceOAuth2TokenServiceTest : public testing::Test {
   }
 
   void CreateService() {
-    auto delegate = std::make_unique<DeviceOAuth2TokenServiceDelegate>(
+    auto delegate = base::MakeUnique<DeviceOAuth2TokenServiceDelegate>(
         request_context_getter_.get(), scoped_testing_local_state_.Get());
     delegate->max_refresh_token_validation_retries_ = 0;
     oauth2_service_.reset(new DeviceOAuth2TokenService(std::move(delegate)));
@@ -148,7 +149,7 @@ class DeviceOAuth2TokenServiceTest : public testing::Test {
   void SetDeviceRefreshTokenInLocalState(const std::string& refresh_token) {
     scoped_testing_local_state_.Get()->SetUserPref(
         prefs::kDeviceRobotAnyApiRefreshToken,
-        std::make_unique<base::Value>(refresh_token));
+        base::MakeUnique<base::Value>(refresh_token));
   }
 
   std::string GetValidTokenInfoResponse(const std::string& email) {

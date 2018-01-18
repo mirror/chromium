@@ -8,7 +8,6 @@
 
 #include <memory>
 #include <string>
-#include <utility>
 
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
@@ -78,7 +77,6 @@ class LocalWebRtcMediaStreamAdapterTest : public WebRtcMediaStreamAdapterTest {
                           media::AudioParameters::kAudioCDSampleRate,
                           media::CHANNEL_LAYOUT_STEREO,
                           media::AudioParameters::kAudioCDSampleRate / 50),
-        false /* hotword_enabled */, false /* disable_local_echo */,
         AudioProcessingProperties(),
         base::Bind(&LocalWebRtcMediaStreamAdapterTest::OnAudioSourceStarted),
         dependency_factory_.get());

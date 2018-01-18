@@ -120,13 +120,11 @@ void MainThreadTaskQueue::OnTaskStarted(const TaskQueue::Task& task,
     renderer_scheduler_->OnTaskStarted(this, task, start);
 }
 
-void MainThreadTaskQueue::OnTaskCompleted(
-    const TaskQueue::Task& task,
-    base::TimeTicks start,
-    base::TimeTicks end,
-    base::Optional<base::TimeDelta> thread_time) {
+void MainThreadTaskQueue::OnTaskCompleted(const TaskQueue::Task& task,
+                                          base::TimeTicks start,
+                                          base::TimeTicks end) {
   if (renderer_scheduler_)
-    renderer_scheduler_->OnTaskCompleted(this, task, start, end, thread_time);
+    renderer_scheduler_->OnTaskCompleted(this, task, start, end);
 }
 
 void MainThreadTaskQueue::DetachFromRendererScheduler() {

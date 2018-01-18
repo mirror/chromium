@@ -8,7 +8,6 @@ from common import IntegrationTest
 from decorators import AndroidOnly
 from decorators import NotAndroid
 
-from selenium.common.exceptions import TimeoutException
 
 class SafeBrowsing(IntegrationTest):
 
@@ -16,15 +15,9 @@ class SafeBrowsing(IntegrationTest):
   def testSafeBrowsingOn(self):
     with TestDriver() as t:
       t.AddChromeArg('--enable-spdy-proxy-auth')
-
-      # Starting in M63 LoadURL will timeout when the safebrowsing
-      # interstitial appears.
-      try:
-        t.LoadURL('http://testsafebrowsing.appspot.com/s/malware.html')
-        responses = t.GetHTTPResponses()
-        self.assertEqual(0, len(responses))
-      except TimeoutException:
-        pass
+      t.LoadURL('http://testsafebrowsing.appspot.com/s/malware.html')
+      responses = t.GetHTTPResponses()
+      self.assertEqual(0, len(responses))
 
   @NotAndroid
   def testSafeBrowsingOff(self):

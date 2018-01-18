@@ -280,7 +280,7 @@ class RendererSchedulerImplTest : public ::testing::Test {
           base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(&clock_, false);
     }
     Initialize(std::make_unique<RendererSchedulerImplForTest>(
-        CreateTaskQueueManagerForTest(
+        CreateTaskQueueManagerWithUnownedClockForTest(
             message_loop_.get(),
             message_loop_ ? message_loop_->task_runner() : mock_task_runner_,
             &clock_)));
@@ -570,8 +570,7 @@ class RendererSchedulerImplTest : public ::testing::Test {
     scheduler_->OnTaskStarted(fake_queue_.get(), fake_task_, start);
     clock_.Advance(base::TimeDelta::FromSecondsD(duration));
     base::TimeTicks end = clock_.NowTicks();
-    scheduler_->OnTaskCompleted(fake_queue_.get(), fake_task_, start, end,
-                                base::nullopt);
+    scheduler_->OnTaskCompleted(fake_queue_.get(), fake_task_, start, end);
   }
 
   void GetQueueingTimeEstimatorLock() {
@@ -1855,7 +1854,8 @@ class RendererSchedulerImplWithMockSchedulerTest
     mock_task_runner_ =
         base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(&clock_, false);
     mock_scheduler_ = new RendererSchedulerImplForTest(
-        CreateTaskQueueManagerForTest(nullptr, mock_task_runner_, &clock_));
+        CreateTaskQueueManagerWithUnownedClockForTest(
+            nullptr, mock_task_runner_, &clock_));
     Initialize(base::WrapUnique(mock_scheduler_));
   }
 

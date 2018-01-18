@@ -45,8 +45,8 @@ class LocalFrame;
 class CORE_EXPORT InspectorAgent
     : public GarbageCollectedFinalized<InspectorAgent> {
  public:
-  InspectorAgent() = default;
-  virtual ~InspectorAgent() = default;
+  InspectorAgent() {}
+  virtual ~InspectorAgent() {}
   virtual void Trace(blink::Visitor* visitor) {}
 
   virtual void Restore() {}
@@ -63,7 +63,7 @@ template <typename DomainMetainfo>
 class InspectorBaseAgent : public InspectorAgent,
                            public DomainMetainfo::BackendClass {
  public:
-  ~InspectorBaseAgent() override = default;
+  ~InspectorBaseAgent() override {}
 
   void Init(CoreProbeSink* instrumenting_agents,
             protocol::UberDispatcher* dispatcher,
@@ -97,7 +97,7 @@ class InspectorBaseAgent : public InspectorAgent,
   }
 
  protected:
-  InspectorBaseAgent() = default;
+  InspectorBaseAgent() {}
 
   typename DomainMetainfo::FrontendClass* GetFrontend() const {
     return frontend_.get();

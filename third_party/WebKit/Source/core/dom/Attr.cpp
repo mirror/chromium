@@ -58,7 +58,7 @@ Attr* Attr::Create(Document& document,
   return new Attr(document, name, value);
 }
 
-Attr::~Attr() = default;
+Attr::~Attr() {}
 
 const QualifiedName Attr::GetQualifiedName() const {
   if (element_ && !standalone_value_or_attached_local_name_.IsNull()) {

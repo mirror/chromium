@@ -12,6 +12,7 @@
 
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
@@ -206,7 +207,7 @@ class InvertBooleanTransformer : public PrefTransformerInterface {
     bool bool_value = false;
     bool result = value->GetAsBoolean(&bool_value);
     DCHECK(result);
-    return std::make_unique<base::Value>(!bool_value);
+    return base::MakeUnique<base::Value>(!bool_value);
   }
 };
 
@@ -220,10 +221,10 @@ class NetworkPredictionTransformer : public PrefTransformerInterface {
     const bool pref_found = extension_pref->GetAsBoolean(&bool_value);
     DCHECK(pref_found) << "Preference not found.";
     if (bool_value) {
-      return std::make_unique<base::Value>(
+      return base::MakeUnique<base::Value>(
           chrome_browser_net::NETWORK_PREDICTION_DEFAULT);
     }
-    return std::make_unique<base::Value>(
+    return base::MakeUnique<base::Value>(
         chrome_browser_net::NETWORK_PREDICTION_NEVER);
   }
 
@@ -232,7 +233,7 @@ class NetworkPredictionTransformer : public PrefTransformerInterface {
     int int_value = chrome_browser_net::NETWORK_PREDICTION_DEFAULT;
     const bool pref_found = browser_pref->GetAsInteger(&int_value);
     DCHECK(pref_found) << "Preference not found.";
-    return std::make_unique<base::Value>(
+    return base::MakeUnique<base::Value>(
         int_value != chrome_browser_net::NETWORK_PREDICTION_NEVER);
   }
 };
@@ -293,11 +294,11 @@ class PrefMapping {
     DCHECK_EQ(arraysize(kPrefMapping), mapping_.size());
     DCHECK_EQ(arraysize(kPrefMapping), event_mapping_.size());
     RegisterPrefTransformer(proxy_config::prefs::kProxy,
-                            std::make_unique<ProxyPrefTransformer>());
+                            base::MakeUnique<ProxyPrefTransformer>());
     RegisterPrefTransformer(prefs::kBlockThirdPartyCookies,
-                            std::make_unique<InvertBooleanTransformer>());
+                            base::MakeUnique<InvertBooleanTransformer>());
     RegisterPrefTransformer(prefs::kNetworkPredictionOptions,
-                            std::make_unique<NetworkPredictionTransformer>());
+                            base::MakeUnique<NetworkPredictionTransformer>());
   }
 
   ~PrefMapping() {

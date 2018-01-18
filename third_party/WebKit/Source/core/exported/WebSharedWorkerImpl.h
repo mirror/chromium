@@ -73,8 +73,12 @@ class CORE_EXPORT WebSharedWorkerImpl final : public WebSharedWorker,
   void OnShadowPageInitialized() override;
 
   // WebDevToolsAgentImpl::Client overrides.
+  void SendProtocolMessage(int session_id,
+                           int call_id,
+                           const String&,
+                           const String&) override;
   void ResumeStartup() override;
-  const WebString& GetDevToolsFrameToken() override;
+  const WebString& GetInstrumentationToken() override;
 
   // WebSharedWorker methods:
   void StartWorkerContext(
@@ -83,15 +87,20 @@ class CORE_EXPORT WebSharedWorkerImpl final : public WebSharedWorker,
       const WebString& content_security_policy,
       WebContentSecurityPolicyType,
       mojom::IPAddressSpace,
-      const WebString& devtools_frame_token,
+      const WebString& instrumentation_token,
       mojo::ScopedMessagePipeHandle content_settings_handle,
       mojo::ScopedMessagePipeHandle interface_provider) override;
   void Connect(MessagePortChannel) override;
   void TerminateWorkerContext() override;
 
   void PauseWorkerContextOnStart() override;
-  void GetDevToolsAgent(
-      mojo::ScopedInterfaceEndpointHandle devtools_agent_request) override;
+  void AttachDevTools(int session_id) override;
+  void ReattachDevTools(int sesion_id, const WebString& saved_state) override;
+  void DetachDevTools(int session_id) override;
+  void DispatchDevToolsMessage(int session_id,
+                               int call_id,
+                               const WebString& method,
+                               const WebString& message) override;
 
   // Callback methods for SharedWorkerReportingProxy.
   void CountFeature(WebFeature);
@@ -115,7 +124,7 @@ class CORE_EXPORT WebSharedWorkerImpl final : public WebSharedWorker,
   std::unique_ptr<WorkerShadowPage> shadow_page_;
   // Unique worker token used by DevTools to attribute different instrumentation
   // to the same worker.
-  WebString devtools_frame_token_;
+  WebString instrumentation_token_;
 
   std::unique_ptr<WebServiceWorkerNetworkProvider> network_provider_;
 

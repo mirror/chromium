@@ -11,6 +11,7 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
@@ -59,7 +60,7 @@ class PopupOpenerTabHelperTest : public ChromeRenderViewHostTestHarness {
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
-    auto tick_clock = std::make_unique<base::SimpleTestTickClock>();
+    auto tick_clock = base::MakeUnique<base::SimpleTestTickClock>();
     raw_clock_ = tick_clock.get();
     PopupOpenerTabHelper::CreateForWebContents(web_contents(),
                                                std::move(tick_clock));
@@ -332,7 +333,7 @@ class BlockTabUnderTest : public PopupOpenerTabHelperTest {
 
   void SetUp() override {
     PopupOpenerTabHelperTest::SetUp();
-    scoped_feature_list_ = std::make_unique<base::test::ScopedFeatureList>();
+    scoped_feature_list_ = base::MakeUnique<base::test::ScopedFeatureList>();
     scoped_feature_list_->InitAndEnableFeature(
         TabUnderNavigationThrottle::kBlockTabUnders);
   }
@@ -367,7 +368,7 @@ class BlockTabUnderTest : public PopupOpenerTabHelperTest {
   }
 
   void DisableFeature() {
-    scoped_feature_list_ = std::make_unique<base::test::ScopedFeatureList>();
+    scoped_feature_list_ = base::MakeUnique<base::test::ScopedFeatureList>();
     scoped_feature_list_->InitAndDisableFeature(
         TabUnderNavigationThrottle::kBlockTabUnders);
   }

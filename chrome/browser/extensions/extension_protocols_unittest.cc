@@ -11,6 +11,7 @@
 #include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
@@ -104,7 +105,7 @@ scoped_refptr<Extension> CreateTestResponseHeaderExtension() {
   manifest.SetString("name", "An extension with web-accessible resources");
   manifest.SetString("version", "2");
 
-  auto web_accessible_list = std::make_unique<base::ListValue>();
+  auto web_accessible_list = base::MakeUnique<base::ListValue>();
   web_accessible_list->AppendString("test.dat");
   manifest.Set("web_accessible_resources", std::move(web_accessible_list));
 
@@ -159,7 +160,7 @@ class JobDelegate : public ContentVerifyJob::TestDelegate {
     read_contents_.clear();
     waiting_for_extension_id_.reset();
     seen_done_reading_extension_ids_.clear();
-    run_loop_ = std::make_unique<base::RunLoop>();
+    run_loop_ = base::MakeUnique<base::RunLoop>();
   }
 
  private:
@@ -198,7 +199,7 @@ class ExtensionProtocolsTest : public testing::Test {
         switches::kExtensionContentVerification,
         switches::kExtensionContentVerificationEnforce);
     content_verifier_ = new ContentVerifier(
-        testing_profile_.get(), std::make_unique<ChromeContentVerifierDelegate>(
+        testing_profile_.get(), base::MakeUnique<ChromeContentVerifierDelegate>(
                                     testing_profile_.get()));
     extension_info_map_->SetContentVerifier(content_verifier_.get());
   }

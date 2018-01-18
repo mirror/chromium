@@ -1587,13 +1587,8 @@ IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, DISABLED_Focus_InputMethod) {
 }
 #endif
 
-#if defined(OS_LINUX)  // TODO(https://crbug.com/801552): Flaky.
-#define MAYBE_LongPressSelection DISABLED_LongPressSelection
-#else
-#define MAYBE_LongPressSelection LongPressSelection
-#endif
 #if !defined(OS_MACOSX)
-IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, MAYBE_LongPressSelection) {
+IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, LongPressSelection) {
   if (!base::FeatureList::IsEnabled(::features::kGuestViewCrossProcessFrames))
     return;
 

@@ -416,7 +416,7 @@ public class ScreenCapture extends Fragment {
 
     // Method for ScreenCapture implementations to call back native code.
     private native void nativeOnRGBAFrameAvailable(long nativeScreenCaptureMachineAndroid,
-            ByteBuffer buf, int rowStride, int left, int top, int width, int height,
+            ByteBuffer buf, int left, int top, int width, int height, int rowStride,
             long timestamp);
 
     private native void nativeOnI420FrameAvailable(long nativeScreenCaptureMachineAndroid,

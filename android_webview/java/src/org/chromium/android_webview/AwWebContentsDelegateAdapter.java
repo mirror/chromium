@@ -4,7 +4,6 @@
 
 package org.chromium.android_webview;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.media.AudioManager;
@@ -336,7 +335,6 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
         final int mRenderId;
         final int mModeFlags;
         final String[] mFilePaths;
-        @SuppressLint("StaticFieldLeak")
         final Context mContext;
 
         public GetDisplayNameTask(

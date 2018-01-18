@@ -39,7 +39,6 @@
 #include "components/payments/core/payment_response.h"
 #include "components/payments/core/payment_shipping_option.h"
 #include "components/payments/core/web_payment_request.h"
-#include "components/payments/mojom/payment_request_data.mojom.h"
 #include "components/prefs/pref_service.h"
 #include "components/url_formatter/elide_url.h"
 #include "ios/chrome/browser/autofill/personal_data_manager_factory.h"
@@ -776,8 +775,9 @@ paymentRequestFromMessage:(const base::DictionaryValue&)message
 }
 
 - (BOOL)handleResponseComplete:(const base::DictionaryValue&)message {
-  if (!_pendingPaymentRequest)
-    return YES;
+  DCHECK(_pendingPaymentRequest);
+
+  // TODO(crbug.com/602666): Check that there *is* a pending response here.
 
   [_unblockEventQueueTimer invalidate];
   [_paymentResponseTimeoutTimer invalidate];
@@ -1026,10 +1026,10 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
     return;
   }
 
-  payments::mojom::PaymentAddressPtr address =
+  payments::PaymentAddress address =
       payments::data_util::GetPaymentAddressFromAutofillProfile(
           shippingAddress, coordinator.paymentRequest->GetApplicationLocale());
-  [_paymentRequestJsManager updateShippingAddress:*address
+  [_paymentRequestJsManager updateShippingAddress:address
                                 completionHandler:nil];
   [self setUnblockEventQueueTimer];
   [self setUpdateEventTimeoutTimer];
@@ -1094,10 +1094,6 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 
 - (void)webState:(web::WebState*)webState
     didStartNavigation:(web::NavigationContext*)navigation {
-  // Ignore navigations within the same document, e.g., history.pushState().
-  if (navigation->IsSameDocument())
-    return;
-
   DCHECK_EQ(_activeWebState, webState);
   payments::JourneyLogger::AbortReason abortReason =
       navigation->IsRendererInitiated()

@@ -7,6 +7,7 @@
 #include <map>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
@@ -182,7 +183,7 @@ scoped_refptr<DevToolsAgentHost> DevToolsAgentHostForTab(TabAndroid* tab) {
     return result;
 
   result = DevToolsAgentHost::Forward(base::IntToString(tab->GetAndroidId()),
-                                      std::make_unique<TabProxyDelegate>(tab));
+                                      base::MakeUnique<TabProxyDelegate>(tab));
   tab->SetDevToolsAgentHost(result);
   return result;
 }

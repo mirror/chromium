@@ -8,6 +8,7 @@
 
 #include "base/feature_list.h"
 #include "base/json/json_reader.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/strings/strcat.h"
@@ -111,14 +112,14 @@ PreviewsAMPConverter::PreviewsAMPConverter() {
            scheme_amp != url::kHttpScheme);
 
     std::unique_ptr<re2::RE2> matching_path_pattern_re2(
-        std::make_unique<re2::RE2>(matching_path_pattern_str, options));
+        base::MakeUnique<re2::RE2>(matching_path_pattern_str, options));
     if (host.empty() || !matching_path_pattern_re2->ok() ||
         (scheme_amp != "" && scheme_amp != url::kHttpScheme &&
          scheme_amp != url::kHttpsScheme)) {
       continue;
     }
     amp_converter_.insert(std::make_pair(
-        host, std::make_unique<AMPConverterEntry>(
+        host, base::MakeUnique<AMPConverterEntry>(
                   matching_scheme, std::move(matching_path_pattern_re2),
                   host_amp, scheme_amp, prefix, suffix, suffix_html)));
   }

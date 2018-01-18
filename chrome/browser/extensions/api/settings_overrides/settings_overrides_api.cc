@@ -9,6 +9,7 @@
 #include <utility>
 
 #include "base/lazy_instance.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/extensions/api/preference/preference_api.h"
 #include "chrome/browser/prefs/session_startup_pref.h"
@@ -60,7 +61,7 @@ std::unique_ptr<TemplateURLData> ConvertSearchProvider(
   }
 
   if (!data)
-    data = std::make_unique<TemplateURLData>();
+    data = base::MakeUnique<TemplateURLData>();
 
   if (search_provider.name)
     data->SetShortName(base::UTF8ToUTF16(*search_provider.name));
@@ -153,15 +154,15 @@ void SettingsOverridesAPI::OnExtensionLoaded(
         ExtensionPrefs::Get(profile_)->GetInstallParam(extension->id());
     if (settings->homepage) {
       SetPref(extension->id(), prefs::kHomePage,
-              std::make_unique<base::Value>(SubstituteInstallParam(
+              base::MakeUnique<base::Value>(SubstituteInstallParam(
                   settings->homepage->spec(), install_parameter)));
       SetPref(extension->id(), prefs::kHomePageIsNewTabPage,
-              std::make_unique<base::Value>(false));
+              base::MakeUnique<base::Value>(false));
     }
     if (!settings->startup_pages.empty()) {
       SetPref(
           extension->id(), prefs::kRestoreOnStartup,
-          std::make_unique<base::Value>(SessionStartupPref::kPrefValueURLs));
+          base::MakeUnique<base::Value>(SessionStartupPref::kPrefValueURLs));
       if (settings->startup_pages.size() > 1) {
         VLOG(1) << extensions::ErrorUtils::FormatErrorMessage(
                        kManyStartupPagesWarning,
@@ -179,7 +180,7 @@ void SettingsOverridesAPI::OnExtensionLoaded(
       // all search engines.
       if (settings->search_engine->is_default) {
         SetPref(extension->id(), prefs::kDefaultSearchProviderEnabled,
-                std::make_unique<base::Value>(true));
+                base::MakeUnique<base::Value>(true));
       } else {
         UnsetPref(extension->id(), prefs::kDefaultSearchProviderEnabled);
       }
@@ -227,7 +228,7 @@ void SettingsOverridesAPI::RegisterSearchProvider(
   std::string install_parameter = prefs->GetInstallParam(extension->id());
   std::unique_ptr<TemplateURLData> data = ConvertSearchProvider(
       profile_->GetPrefs(), *settings->search_engine, install_parameter);
-  auto turl = std::make_unique<TemplateURL>(
+  auto turl = base::MakeUnique<TemplateURL>(
       *data, TemplateURL::NORMAL_CONTROLLED_BY_EXTENSION, extension->id(),
       prefs->GetInstallTime(extension->id()),
       settings->search_engine->is_default);

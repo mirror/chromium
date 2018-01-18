@@ -2203,14 +2203,4 @@ bool EditingIgnoresContent(const Node& node) {
          IsEmptyNonEditableNodeInEditable(node);
 }
 
-ContainerNode* RootEditableElementOrTreeScopeRootNodeOf(
-    const Position& position) {
-  Element* const selection_root = RootEditableElementOf(position);
-  if (selection_root)
-    return selection_root;
-
-  Node* const node = position.ComputeContainerNode();
-  return node ? &node->GetTreeScope().RootNode() : nullptr;
-}
-
 }  // namespace blink

@@ -11,7 +11,6 @@
 @protocol BrowserCommands;
 @protocol GoogleLandingDataSource;
 @protocol OmniboxFocuser;
-@protocol FakeboxFocuser;
 @protocol UrlLoader;
 @protocol WebToolbarDelegate;
 
@@ -26,7 +25,6 @@
 - (instancetype)initWithDispatcher:(id<ApplicationCommands,
                                        BrowserCommands,
                                        OmniboxFocuser,
-                                       FakeboxFocuser,
                                        ToolbarCommands,
                                        UrlLoader,
                                        WebToolbarDelegate>)dispatcher;
@@ -34,7 +32,6 @@
 @property(nonatomic, readonly, weak) id<ApplicationCommands,
                                         BrowserCommands,
                                         OmniboxFocuser,
-                                        FakeboxFocuser,
                                         ToolbarCommands,
                                         UrlLoader,
                                         WebToolbarDelegate>

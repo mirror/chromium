@@ -16,8 +16,8 @@ public interface VrShell {
     /**
      * Performs native VrShell initialization.
      */
-    void initializeNative(Tab currentTab, boolean forWebVr, boolean webVrAutopresentationExpected,
-            boolean inCct, boolean browsingDisabled);
+    void initializeNative(
+            Tab currentTab, boolean forWebVr, boolean webVrAutopresentationExpected, boolean inCct);
 
     /**
      * Pauses VrShell.
@@ -37,8 +37,7 @@ public interface VrShell {
     /**
      * Sets whether we're presenting WebVR content or not.
      */
-    // TODO(bshe): Refactor needed. See https://crbug.com/735169.
-    // TODO(mthiesse, https://crbug.com/803236): Remove this showToast parameter.
+    // TODO: Refactor needed. See crbug.com/735169.
     void setWebVrModeEnabled(boolean enabled, boolean showToast);
 
     /**

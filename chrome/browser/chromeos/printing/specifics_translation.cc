@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
 #include "base/time/time.h"
@@ -63,7 +64,7 @@ std::unique_ptr<Printer> SpecificsToPrinter(
     const sync_pb::PrinterSpecifics& specifics) {
   DCHECK(!specifics.id().empty());
 
-  auto printer = std::make_unique<Printer>(specifics.id());
+  auto printer = base::MakeUnique<Printer>(specifics.id());
   printer->set_display_name(specifics.display_name());
   printer->set_description(specifics.description());
   printer->set_manufacturer(specifics.manufacturer());
@@ -86,7 +87,7 @@ std::unique_ptr<sync_pb::PrinterSpecifics> PrinterToSpecifics(
     const Printer& printer) {
   DCHECK(!printer.id().empty());
 
-  auto specifics = std::make_unique<sync_pb::PrinterSpecifics>();
+  auto specifics = base::MakeUnique<sync_pb::PrinterSpecifics>();
   specifics->set_id(printer.id());
   MergePrinterToSpecifics(printer, specifics.get());
   return specifics;

@@ -8,11 +8,11 @@
 #include "base/macros.h"
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/common/content_export.h"
+#include "content/public/common/resource_request.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "services/network/public/cpp/net_adapters.h"
-#include "services/network/public/cpp/resource_request.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -52,7 +52,7 @@ class CONTENT_EXPORT ServiceWorkerScriptURLLoader
       int32_t routing_id,
       int32_t request_id,
       uint32_t options,
-      const network::ResourceRequest& resource_request,
+      const ResourceRequest& resource_request,
       mojom::URLLoaderClientPtr client,
       scoped_refptr<ServiceWorkerVersion> version,
       scoped_refptr<URLLoaderFactoryGetter> loader_factory_getter,
@@ -68,12 +68,11 @@ class CONTENT_EXPORT ServiceWorkerScriptURLLoader
   void ResumeReadingBodyFromNet() override;
 
   // mojom::URLLoaderClient for the network load:
-  void OnReceiveResponse(const network::ResourceResponseHead& response_head,
+  void OnReceiveResponse(const ResourceResponseHead& response_head,
                          const base::Optional<net::SSLInfo>& ssl_info,
                          mojom::DownloadedTempFilePtr downloaded_file) override;
-  void OnReceiveRedirect(
-      const net::RedirectInfo& redirect_info,
-      const network::ResourceResponseHead& response_head) override;
+  void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
+                         const ResourceResponseHead& response_head) override;
   void OnDataDownloaded(int64_t data_len, int64_t encoded_data_len) override;
   void OnUploadProgress(int64_t current_position,
                         int64_t total_size,

@@ -24,8 +24,8 @@
 #include "core/dom/FlatTreeTraversal.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/events/KeyboardEvent.h"
+#include "core/html/HTMLContentElement.h"
 #include "core/html/HTMLDetailsElement.h"
-#include "core/html/HTMLSlotElement.h"
 #include "core/html/shadow/DetailsMarkerControl.h"
 #include "core/html/shadow/ShadowElementNames.h"
 #include "core/html_names.h"
@@ -37,7 +37,7 @@ using namespace HTMLNames;
 
 HTMLSummaryElement* HTMLSummaryElement::Create(Document& document) {
   HTMLSummaryElement* summary = new HTMLSummaryElement(document);
-  summary->EnsureUserAgentShadowRootV1();
+  summary->EnsureUserAgentShadowRoot();
   return summary;
 }
 
@@ -58,7 +58,7 @@ void HTMLSummaryElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
       DetailsMarkerControl::Create(GetDocument());
   marker_control->SetIdAttribute(ShadowElementNames::DetailsMarker());
   root.AppendChild(marker_control);
-  root.AppendChild(HTMLSlotElement::CreateUserAgentDefaultSlot(GetDocument()));
+  root.AppendChild(HTMLContentElement::Create(GetDocument()));
 }
 
 HTMLDetailsElement* HTMLSummaryElement::DetailsElement() const {
@@ -70,7 +70,7 @@ HTMLDetailsElement* HTMLSummaryElement::DetailsElement() const {
 }
 
 Element* HTMLSummaryElement::MarkerControl() {
-  return EnsureUserAgentShadowRootV1().getElementById(
+  return EnsureUserAgentShadowRoot().getElementById(
       ShadowElementNames::DetailsMarker());
 }
 

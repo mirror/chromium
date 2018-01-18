@@ -50,6 +50,16 @@
 #include "gpu/command_buffer/client/gpu_switches.h"
 #endif
 
+#if !defined(OS_NACL)
+#include "cc/paint/decode_stashing_image_provider.h"
+#include "cc/paint/display_item_list.h"  // nogncheck
+#include "cc/paint/paint_op_buffer_serializer.h"
+#include "cc/paint/transfer_cache_entry.h"
+#include "cc/paint/transfer_cache_serialize_helper.h"
+#include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/skia_util.h"
+#endif
+
 #if !defined(__native_client__)
 #include "ui/gfx/color_space.h"
 #include "ui/gfx/ipc/color/gfx_param_traits.h"
@@ -92,6 +102,32 @@ static base::AtomicSequenceNumber g_flush_id;
 uint32_t GenerateNextFlushId() {
   return static_cast<uint32_t>(g_flush_id.GetNext());
 }
+
+#if !defined(OS_NACL)
+class TransferCacheSerializeHelperImpl
+    : public cc::TransferCacheSerializeHelper {
+ public:
+  TransferCacheSerializeHelperImpl(GLES2Implementation* gl) : gl_(gl) {}
+  ~TransferCacheSerializeHelperImpl() final = default;
+
+ private:
+  bool LockEntryInternal(cc::TransferCacheEntryType type, uint32_t id) final {
+    return gl_->ThreadsafeLockTransferCacheEntry(type, id);
+  }
+
+  void CreateEntryInternal(const cc::ClientTransferCacheEntry& entry) final {
+    gl_->CreateTransferCacheEntry(entry);
+  }
+
+  void FlushEntriesInternal(
+      const std::vector<std::pair<cc::TransferCacheEntryType, uint32_t>>&
+          entries) final {
+    gl_->UnlockTransferCacheEntries(entries);
+  }
+
+  GLES2Implementation* gl_;
+};
+#endif  // defined(OS_NACL)
 
 }  // anonymous namespace
 
@@ -501,7 +537,7 @@ bool GLES2Implementation::OnMemoryDump(
 
   if (args.level_of_detail != MemoryDumpLevelOfDetail::BACKGROUND) {
     dump->AddScalar("free_size", MemoryAllocatorDump::kUnitsBytes,
-                    transfer_buffer_->GetFragmentedFreeSize());
+                    transfer_buffer_->GetFreeSize());
     auto shared_memory_guid =
         transfer_buffer_->shared_memory_handle().GetGUID();
     const int kImportance = 2;
@@ -6150,29 +6186,26 @@ bool GLES2Implementation::ThreadsafeDiscardableTextureIsDeletedForTracing(
 
 void GLES2Implementation::CreateTransferCacheEntry(
     const cc::ClientTransferCacheEntry& entry) {
-  transfer_cache_.CreateCacheEntry(helper_, mapped_memory_.get(), entry);
+  share_group()->transfer_cache()->CreateCacheEntry(
+      helper_, mapped_memory_.get(), entry);
 }
 
 bool GLES2Implementation::ThreadsafeLockTransferCacheEntry(
     cc::TransferCacheEntryType type,
     uint32_t id) {
-  return transfer_cache_.LockTransferCacheEntry(type, id);
+  return share_group()->transfer_cache()->LockTransferCacheEntry(type, id);
 }
 
 void GLES2Implementation::UnlockTransferCacheEntries(
     const std::vector<std::pair<cc::TransferCacheEntryType, uint32_t>>&
         entries) {
-  transfer_cache_.UnlockTransferCacheEntries(helper_, entries);
+  share_group()->transfer_cache()->UnlockTransferCacheEntries(helper_, entries);
 }
 
 void GLES2Implementation::DeleteTransferCacheEntry(
     cc::TransferCacheEntryType type,
     uint32_t id) {
-  transfer_cache_.DeleteTransferCacheEntry(helper_, type, id);
-}
-
-unsigned int GLES2Implementation::GetTransferBufferFreeSize() const {
-  return transfer_buffer_->GetFreeSize();
+  share_group()->transfer_cache()->DeleteTransferCacheEntry(helper_, type, id);
 }
 
 void GLES2Implementation::SetLostContextCallback(
@@ -7189,45 +7222,131 @@ void GLES2Implementation::Viewport(GLint x,
   CheckGLError();
 }
 
-void* GLES2Implementation::MapRasterCHROMIUM(GLsizeiptr size) {
-  if (size < 0) {
-    SetGLError(GL_INVALID_VALUE, "glMapRasterCHROMIUM", "negative size");
-    return nullptr;
+#if !defined(OS_NACL)
+struct PaintOpSerializer {
+ public:
+  PaintOpSerializer(size_t initial_size,
+                    TransferBufferInterface* transfer_buffer,
+                    GLES2CmdHelper* helper,
+                    cc::DecodeStashingImageProvider* stashing_image_provider,
+                    cc::TransferCacheSerializeHelper* transfer_cache_helper)
+      : transfer_buffer_(initial_size, helper, transfer_buffer),
+        helper_(helper),
+        stashing_image_provider_(stashing_image_provider),
+        transfer_cache_helper_(transfer_cache_helper),
+        free_bytes_(initial_size) {
+    DCHECK(transfer_buffer_.valid());
   }
-  if (raster_mapped_buffer_) {
-    SetGLError(GL_INVALID_OPERATION, "glMapRasterCHROMIUM", "already mapped");
-    return nullptr;
-  }
-  raster_mapped_buffer_.emplace(size, helper_, transfer_buffer_);
-  if (!raster_mapped_buffer_->valid()) {
-    SetGLError(GL_INVALID_OPERATION, "glMapRasterCHROMIUM", "size too big");
-    raster_mapped_buffer_ = base::nullopt;
-    return nullptr;
-  }
-  return raster_mapped_buffer_->address();
-}
 
-void GLES2Implementation::UnmapRasterCHROMIUM(GLsizeiptr written_size) {
-  if (written_size < 0) {
-    SetGLError(GL_INVALID_VALUE, "glUnmapRasterCHROMIUM",
-               "negative written_size");
-    return;
+  ~PaintOpSerializer() {
+    // Need to call SendSerializedData;
+    DCHECK(!written_bytes_);
   }
-  if (!raster_mapped_buffer_) {
-    SetGLError(GL_INVALID_OPERATION, "glUnmapRasterCHROMIUM", "not mapped");
-    return;
+
+  size_t Serialize(const cc::PaintOp* op,
+                   const cc::PaintOp::SerializeOptions& options) {
+    char* memory = static_cast<char*>(transfer_buffer_.address());
+    size_t size = op->Serialize(memory + written_bytes_, free_bytes_, options);
+    if (!size) {
+      SendSerializedData();
+      transfer_buffer_.Reset(kBlockAlloc);
+      memory = static_cast<char*>(transfer_buffer_.address());
+      free_bytes_ = transfer_buffer_.size();
+      size = op->Serialize(memory + written_bytes_, free_bytes_, options);
+    }
+    DCHECK_LE(size, free_bytes_);
+    DCHECK_EQ(free_bytes_ + written_bytes_, transfer_buffer_.size());
+
+    written_bytes_ += size;
+    free_bytes_ -= size;
+    return size;
   }
-  DCHECK(raster_mapped_buffer_->valid());
-  if (written_size == 0) {
-    raster_mapped_buffer_->Discard();
-    raster_mapped_buffer_ = base::nullopt;
-    return;
+
+  void SendSerializedData() {
+    if (!written_bytes_)
+      return;
+    transfer_buffer_.Shrink(written_bytes_);
+    helper_->RasterCHROMIUM(transfer_buffer_.shm_id(),
+                            transfer_buffer_.offset(), written_bytes_);
+    // Now that we've issued the RasterCHROMIUM referencing the stashed
+    // images, Reset the |stashing_image_provider_|, causing us to issue
+    // unlock commands for these images.
+    stashing_image_provider_->Reset();
+    transfer_cache_helper_->FlushEntries();
+    written_bytes_ = 0;
   }
-  raster_mapped_buffer_->Shrink(written_size);
-  helper_->RasterCHROMIUM(written_size, raster_mapped_buffer_->shm_id(),
-                          raster_mapped_buffer_->offset());
-  raster_mapped_buffer_ = base::nullopt;
+
+ private:
+  static constexpr unsigned int kBlockAlloc = 512 * 1024;
+
+  ScopedTransferBufferPtr transfer_buffer_;
+  GLES2CmdHelper* helper_;
+  cc::DecodeStashingImageProvider* stashing_image_provider_;
+  cc::TransferCacheSerializeHelper* transfer_cache_helper_;
+
+  size_t written_bytes_ = 0;
+  size_t free_bytes_ = 0;
+};
+#endif
+
+void GLES2Implementation::RasterCHROMIUM(const cc::DisplayItemList* list,
+                                         cc::ImageProvider* provider,
+                                         const gfx::Vector2d& translate,
+                                         const gfx::Rect& playback_rect,
+                                         const gfx::Vector2dF& post_translate,
+                                         GLfloat post_scale) {
+#if defined(OS_NACL)
+  NOTREACHED();
+#else
+  GPU_CLIENT_SINGLE_THREAD_CHECK();
+  GPU_CLIENT_LOG("[" << GetLogPrefix() << "] glRasterChromium(" << list << ", "
+                     << translate.ToString() << ", " << playback_rect.ToString()
+                     << ", " << post_translate.ToString() << ", " << post_scale
+                     << ")");
+
+  if (std::abs(post_scale) < std::numeric_limits<float>::epsilon())
+    return;
+
+  gfx::Rect query_rect =
+      gfx::ScaleToEnclosingRect(playback_rect, 1.f / post_scale);
+  std::vector<size_t> offsets = list->rtree_.Search(query_rect);
+  if (offsets.empty())
+    return;
+
+  // TODO(enne): tune these numbers
+  // TODO(enne): convert these types here and in transfer buffer to be size_t.
+  static constexpr unsigned int kMinAlloc = 16 * 1024;
+  unsigned int free_size = std::max(transfer_buffer_->GetFreeSize(), kMinAlloc);
+
+  // This section duplicates RasterSource::PlaybackToCanvas setup preamble.
+  cc::PaintOpBufferSerializer::Preamble preamble;
+  preamble.translation = translate;
+  preamble.playback_rect = playback_rect;
+  preamble.post_translation = post_translate;
+  preamble.post_scale = post_scale;
+
+  // Wrap the provided provider in a stashing provider so that we can delay
+  // unrefing images until we have serialized dependent commands.
+  provider->BeginRaster();
+  cc::DecodeStashingImageProvider stashing_image_provider(provider);
+
+  // TODO(enne): need to implement alpha folding optimization from POB.
+  // TODO(enne): don't access private members of DisplayItemList.
+  TransferCacheSerializeHelperImpl transfer_cache_serialize_helper(this);
+  PaintOpSerializer op_serializer(free_size, transfer_buffer_, helper_,
+                                  &stashing_image_provider,
+                                  &transfer_cache_serialize_helper);
+  cc::PaintOpBufferSerializer::SerializeCallback serialize_cb = base::Bind(
+      &PaintOpSerializer::Serialize, base::Unretained(&op_serializer));
+  cc::PaintOpBufferSerializer serializer(serialize_cb, &stashing_image_provider,
+                                         &transfer_cache_serialize_helper);
+  serializer.Serialize(&list->paint_op_buffer_, &offsets, preamble);
+  DCHECK(serializer.valid());
+  op_serializer.SendSerializedData();
+  provider->EndRaster();
+
   CheckGLError();
+#endif
 }
 
 // Include the auto-generated part of this file. We split this because it means

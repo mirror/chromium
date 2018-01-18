@@ -194,9 +194,8 @@ class WindowTreeClientWmTestSurfaceSync
 
   // WindowTreeClientWmTest:
   void SetUp() override {
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(switches::kMus);
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kMusHostingViz);
+    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+        switches::kMus, switches::kMusHostVizValue);
     if (GetParam()) {
       base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
           switches::kForceDeviceScaleFactor, "2");
@@ -2908,8 +2907,8 @@ TEST_F(WindowTreeClientWmTest, ObservedPointerEvents) {
   gfx::Transform scale_transform;
   scale_transform.Scale(ui_scale_factor, ui_scale_factor);
   window_tree_host.window()->SetTransform(scale_transform);
-  window_tree_host.compositor()->SetScaleAndSize(
-      device_scale_factor, bounds.size(), viz::LocalSurfaceId());
+  window_tree_host.compositor()->SetScaleAndSize(device_scale_factor,
+                                                 bounds.size());
 
   // Start a pointer watcher for all events excluding move events.
   window_tree_client_impl()->StartPointerWatcher(false /* want_moves */);

@@ -15,8 +15,6 @@ import org.chromium.chrome.browser.vr_shell.VrDaydreamApi;
  */
 public class MockVrDaydreamApi implements VrDaydreamApi {
     private boolean mLaunchInVrCalled;
-    private boolean mExitFromVrCalled;
-    private boolean mLaunchVrHomescreenCalled;
 
     @Override
     public boolean isDaydreamReadyDevice() {
@@ -51,7 +49,6 @@ public class MockVrDaydreamApi implements VrDaydreamApi {
 
     @Override
     public boolean exitFromVr(int requestCode, final Intent intent) {
-        mExitFromVrCalled = true;
         return true;
     }
 
@@ -62,20 +59,11 @@ public class MockVrDaydreamApi implements VrDaydreamApi {
 
     @Override
     public boolean launchVrHomescreen() {
-        mLaunchVrHomescreenCalled = true;
         return true;
     }
 
     public boolean getLaunchInVrCalled() {
         return mLaunchInVrCalled;
-    }
-
-    public boolean getExitFromVrCalled() {
-        return mExitFromVrCalled;
-    }
-
-    public boolean getLaunchVrHomescreenCalled() {
-        return mLaunchVrHomescreenCalled;
     }
 
     @Override

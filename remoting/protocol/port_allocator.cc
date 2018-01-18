@@ -55,8 +55,7 @@ PortAllocator::PortAllocator(
   // fragment is shared between all candidates.
   int flags = cricket::PORTALLOCATOR_DISABLE_TCP |
               cricket::PORTALLOCATOR_ENABLE_SHARED_UFRAG |
-              cricket::PORTALLOCATOR_ENABLE_IPV6 |
-              cricket::PORTALLOCATOR_ENABLE_IPV6_ON_WIFI;
+              cricket::PORTALLOCATOR_ENABLE_IPV6;
 
   NetworkSettings network_settings = transport_context_->network_settings();
 

@@ -65,6 +65,11 @@ void MessageCenterController::SetNotifierEnabled(const NotifierId& notifier_id,
   client_->SetNotifierEnabled(notifier_id, enabled);
 }
 
+void MessageCenterController::OnNotifierAdvancedSettingsRequested(
+    const NotifierId& notifier_id) {
+  client_->HandleNotifierAdvancedSettingsRequested(notifier_id);
+}
+
 void MessageCenterController::SetClient(
     mojom::AshMessageCenterClientAssociatedPtrInfo client) {
   DCHECK(!client_.is_bound());

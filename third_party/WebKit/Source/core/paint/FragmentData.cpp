@@ -13,7 +13,7 @@ FragmentData::RareData::RareData(const LayoutPoint& location_in_backing)
     : unique_id(NewUniqueObjectId()),
       location_in_backing(location_in_backing) {}
 
-FragmentData::RareData::~RareData() = default;
+FragmentData::RareData::~RareData() {}
 
 FragmentData& FragmentData::EnsureNextFragment() {
   if (!next_fragment_)

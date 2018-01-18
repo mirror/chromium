@@ -11,7 +11,6 @@
 #include "chromeos/components/tether/fake_tether_connector.h"
 #include "chromeos/components/tether/fake_tether_disconnector.h"
 #include "chromeos/components/tether/tether_disconnector.h"
-#include "chromeos/components/tether/tether_session_completion_logger.h"
 #include "chromeos/network/network_connection_handler.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -40,9 +39,7 @@ class DummyTetherDisconnector : public FakeTetherDisconnector {
   void DisconnectFromNetwork(
       const std::string& tether_network_guid,
       const base::Closure& success_callback,
-      const network_handler::StringResultCallback& error_callback,
-      const TetherSessionCompletionLogger::SessionCompletionReason&
-          session_completion_reason) override {}
+      const network_handler::StringResultCallback& error_callback) override {}
 };
 
 class TestNetworkConnectionHandler : public NetworkConnectionHandler {
@@ -197,9 +194,6 @@ TEST_F(NetworkConnectionHandlerTetherDelegateTest, TestDisconnect) {
   CallTetherDisconnect("tetherNetworkGuid");
   EXPECT_EQ("tetherNetworkGuid",
             fake_tether_disconnector_->last_disconnected_tether_network_guid());
-  EXPECT_EQ(
-      TetherSessionCompletionLogger::SessionCompletionReason::USER_DISCONNECTED,
-      *fake_tether_disconnector_->last_session_completion_reason());
   EXPECT_EQ(kSuccessResult, GetResultAndReset());
 }
 

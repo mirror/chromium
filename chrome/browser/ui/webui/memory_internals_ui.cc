@@ -12,6 +12,7 @@
 
 #include "base/allocator/features.h"
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/path_service.h"
 #include "base/process/process_handle.h"
@@ -373,7 +374,7 @@ void MemoryInternalsDOMHandler::SaveTraceFinished(bool success) {
 MemoryInternalsUI::MemoryInternalsUI(content::WebUI* web_ui)
     : WebUIController(web_ui) {
   web_ui->AddMessageHandler(
-      std::make_unique<MemoryInternalsDOMHandler>(web_ui));
+      base::MakeUnique<MemoryInternalsDOMHandler>(web_ui));
 
   Profile* profile = Profile::FromWebUI(web_ui);
   content::WebUIDataSource::Add(profile, CreateMemoryInternalsUIHTMLSource());

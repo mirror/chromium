@@ -713,7 +713,7 @@ TEST_F(NotificationViewMDTest, UseImageAsIcon) {
   EXPECT_FALSE(notification_view()->expanded_);
 
   // Test notification with use_image_as_icon e.g. screenshot preview.
-  notification()->set_icon(gfx::Image());
+  notification()->set_use_image_as_icon(true);
   UpdateNotificationViews();
   EXPECT_TRUE(notification_view()->icon_view_->visible());
 

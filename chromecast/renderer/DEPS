@@ -6,8 +6,6 @@ include_rules = [
   "+components/network_hints/renderer",
   "+content/public/common",
   "+content/public/renderer",
-  "+extensions/common",
-  "+extensions/renderer",
   "+media/base",
   "+media/media_features.h",
   "+media/renderers",

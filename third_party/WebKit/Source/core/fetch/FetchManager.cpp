@@ -463,10 +463,10 @@ void FetchManager::Loader::DidReceiveResponse(
 
   DCHECK(!(NetworkUtils::IsRedirectResponseCode(response_http_status_code_) &&
            response_data->HeaderList()->Has(HTTPNames::Location) &&
-           request_->Redirect() != network::mojom::FetchRedirectMode::kManual));
+           request_->Redirect() != WebURLRequest::kFetchRedirectModeManual));
 
   if (NetworkUtils::IsRedirectResponseCode(response_http_status_code_) &&
-      request_->Redirect() == network::mojom::FetchRedirectMode::kManual) {
+      request_->Redirect() == WebURLRequest::kFetchRedirectModeManual) {
     tainted_response = response_data->CreateOpaqueRedirectFilteredResponse();
   } else {
     switch (tainting) {
@@ -801,7 +801,7 @@ void FetchManager::Loader::PerformDataFetch() {
   request.SetUseStreamOnResponse(true);
   request.SetHTTPMethod(request_->Method());
   request.SetFetchCredentialsMode(network::mojom::FetchCredentialsMode::kOmit);
-  request.SetFetchRedirectMode(network::mojom::FetchRedirectMode::kError);
+  request.SetFetchRedirectMode(WebURLRequest::kFetchRedirectModeError);
   // We intentionally skip 'setExternalRequestStateFromRequestorAddressSpace',
   // as 'data:' can never be external.
 

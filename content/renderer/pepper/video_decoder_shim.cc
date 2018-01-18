@@ -31,13 +31,11 @@
 #include "media/base/video_decoder.h"
 #include "media/filters/ffmpeg_video_decoder.h"
 #include "media/filters/vpx_video_decoder.h"
-#include "media/media_features.h"
 #include "media/video/picture.h"
 #include "media/video/video_decode_accelerator.h"
 #include "ppapi/c/pp_errors.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "third_party/skia/include/gpu/GrTypes.h"
-#include "ui/gfx/color_transform.h"
 
 namespace content {
 
@@ -49,12 +47,12 @@ static const uint32_t kGrInvalidateState =
 namespace {
 
 bool IsCodecSupported(media::VideoCodec codec) {
-#if BUILDFLAG(ENABLE_LIBVPX)
+#if !defined(MEDIA_DISABLE_LIBVPX)
   if (codec == media::kCodecVP9)
     return true;
 #endif
 
-#if BUILDFLAG(ENABLE_FFMPEG_VIDEO_DECODERS)
+#if !defined(MEDIA_DISABLE_FFMPEG) && !defined(DISABLE_FFMPEG_VIDEO_DECODERS)
   return media::FFmpegVideoDecoder::IsCodecSupported(codec);
 #else
   return false;
@@ -72,8 +70,7 @@ class VideoDecoderShim::YUVConverter {
   void Convert(const scoped_refptr<media::VideoFrame>& frame, GLuint tex_out);
 
  private:
-  GLuint CreateShader(const gfx::ColorSpace& from_colorspace,
-                      const gfx::ColorSpace& to_colorspace);
+  GLuint CreateShader();
   GLuint CompileShader(const char* name, GLuint type, const char* code);
   GLuint CreateProgram(const char* name, GLuint vshader, GLuint fshader);
   GLuint CreateTexture();
@@ -83,7 +80,6 @@ class VideoDecoderShim::YUVConverter {
   GLuint frame_buffer_;
   GLuint vertex_buffer_;
   GLuint program_;
-  gfx::ColorSpace last_color_space_;
 
   GLuint y_texture_;
   GLuint u_texture_;
@@ -101,6 +97,9 @@ class VideoDecoderShim::YUVConverter {
   GLuint uv_height_;
   uint32_t uv_height_divisor_;
   uint32_t uv_width_divisor_;
+
+  GLint yuv_matrix_loc_;
+  GLint yuv_adjust_loc_;
 
   DISALLOW_COPY_AND_ASSIGN(YUVConverter);
 };
@@ -124,7 +123,9 @@ VideoDecoderShim::YUVConverter::YUVConverter(
       uv_width_(2),
       uv_height_(2),
       uv_height_divisor_(1),
-      uv_width_divisor_(1) {
+      uv_width_divisor_(1),
+      yuv_matrix_loc_(0),
+      yuv_adjust_loc_(0) {
   DCHECK(gl_);
 }
 
@@ -233,9 +234,7 @@ GLuint VideoDecoderShim::YUVConverter::CreateProgram(const char* name,
   return program;
 }
 
-GLuint VideoDecoderShim::YUVConverter::CreateShader(
-    const gfx::ColorSpace& from_colorspace,
-    const gfx::ColorSpace& to_colorspace) {
+GLuint VideoDecoderShim::YUVConverter::CreateShader() {
   const char* vert_shader =
       "precision mediump float;\n"
       "attribute vec2 position;\n"
@@ -246,32 +245,22 @@ GLuint VideoDecoderShim::YUVConverter::CreateShader(
       "    texcoord = position*0.5+0.5;\n"
       "}";
 
-  std::string frag_shader =
+  const char* frag_shader =
       "precision mediump float;\n"
       "varying vec2 texcoord;\n"
       "uniform sampler2D y_sampler;\n"
       "uniform sampler2D u_sampler;\n"
       "uniform sampler2D v_sampler;\n"
-      "uniform sampler2D a_sampler;\n";
-
-  std::unique_ptr<gfx::ColorTransform> transform(
-      gfx::ColorTransform::NewColorTransform(
-          from_colorspace, to_colorspace,
-          gfx::ColorTransform::Intent::INTENT_PERCEPTUAL));
-  if (!transform->CanGetShaderSource()) {
-    transform = gfx::ColorTransform::NewColorTransform(
-        gfx::ColorSpace::CreateREC709(), gfx::ColorSpace::CreateSRGB(),
-        gfx::ColorTransform::Intent::INTENT_PERCEPTUAL);
-  }
-  frag_shader += transform->GetShaderSource();
-  frag_shader +=
+      "uniform sampler2D a_sampler;\n"
+      "uniform mat3 yuv_matrix;\n"
+      "uniform vec3 yuv_adjust;\n"
       "void main()\n"
       "{\n"
       "  vec3 yuv = vec3(texture2D(y_sampler, texcoord).x,\n"
       "                  texture2D(u_sampler, texcoord).x,\n"
       "                  texture2D(v_sampler, texcoord).x) +\n"
       "                  yuv_adjust;\n"
-      "  gl_FragColor = vec4(DoColorConversion(yuv), texture2D(a_sampler, "
+      "  gl_FragColor = vec4(yuv_matrix * yuv, texture2D(a_sampler, "
       "texcoord).x);\n"
       "}";
 
@@ -282,7 +271,7 @@ GLuint VideoDecoderShim::YUVConverter::CreateShader(
   }
 
   GLuint fragment_shader =
-      CompileShader("Fragment Shader", GL_FRAGMENT_SHADER, frag_shader.c_str());
+      CompileShader("Fragment Shader", GL_FRAGMENT_SHADER, frag_shader);
   if (!fragment_shader) {
     gl_->DeleteShader(vertex_shader);
     return 0;
@@ -318,6 +307,12 @@ GLuint VideoDecoderShim::YUVConverter::CreateShader(
   gl_->Uniform1i(uniform_location, 3);
 
   gl_->UseProgram(0);
+
+  yuv_matrix_loc_ = gl_->GetUniformLocation(program, "yuv_matrix");
+  DCHECK(yuv_matrix_loc_ != -1);
+
+  yuv_adjust_loc_ = gl_->GetUniformLocation(program, "yuv_adjust");
+  DCHECK(yuv_adjust_loc_ != -1);
 
   return program;
 }
@@ -355,24 +350,65 @@ bool VideoDecoderShim::YUVConverter::Initialize() {
                   GL_STATIC_DRAW);
   gl_->BindBuffer(GL_ARRAY_BUFFER, 0);
 
+  program_ = CreateShader();
+
   gl_->TraceEndCHROMIUM();
 
   context_provider_->InvalidateGrContext(kGrInvalidateState);
 
-  return true;
+  return (program_ != 0);
 }
 
 void VideoDecoderShim::YUVConverter::Convert(
     const scoped_refptr<media::VideoFrame>& frame,
     GLuint tex_out) {
-  if (frame->ColorSpace() != last_color_space_ || !program_) {
-    last_color_space_ = frame->ColorSpace();
-    if (program_)
-      gl_->DeleteProgram(program_);
-    program_ = CreateShader(last_color_space_, gfx::ColorSpace::CreateSRGB());
-  }
+  const float* yuv_matrix = nullptr;
+  const float* yuv_adjust = nullptr;
 
   if (video_format_ != frame->format()) {
+    // The constants below were taken from
+    // components/viz/service/display/gl_renderer.cc. These values are magic
+    // numbers that are used in the transformation from YUV to RGB color values.
+    // They are taken from the following webpage:
+    // http://www.fourcc.org/fccyvrgb.php
+    const float yuv_to_rgb_rec601[9] = {
+        1.164f, 1.164f, 1.164f, 0.0f, -.391f, 2.018f, 1.596f, -.813f, 0.0f,
+    };
+    const float yuv_to_rgb_jpeg[9] = {
+        1.f, 1.f, 1.f, 0.0f, -.34414f, 1.772f, 1.402f, -.71414f, 0.0f,
+    };
+    const float yuv_to_rgb_rec709[9] = {
+        1.164f, 1.164f, 1.164f, 0.0f, -0.213f, 2.112f, 1.793f, -0.533f, 0.0f,
+    };
+
+    // These values map to 16, 128, and 128 respectively, and are computed
+    // as a fraction over 256 (e.g. 16 / 256 = 0.0625).
+    // They are used in the YUV to RGBA conversion formula:
+    //   Y - 16   : Gives 16 values of head and footroom for overshooting
+    //   U - 128  : Turns unsigned U into signed U [-128,127]
+    //   V - 128  : Turns unsigned V into signed V [-128,127]
+    const float yuv_adjust_constrained[3] = {
+        -0.0625f, -0.5f, -0.5f,
+    };
+    // Same as above, but without the head and footroom.
+    const float yuv_adjust_full[3] = {
+        0.0f, -0.5f, -0.5f,
+    };
+
+    yuv_adjust = yuv_adjust_constrained;
+    yuv_matrix = yuv_to_rgb_rec601;
+
+    int result;
+    if (frame->metadata()->GetInteger(media::VideoFrameMetadata::COLOR_SPACE,
+                                      &result)) {
+      if (result == media::COLOR_SPACE_JPEG) {
+        yuv_matrix = yuv_to_rgb_jpeg;
+        yuv_adjust = yuv_adjust_full;
+      } else if (result == media::COLOR_SPACE_HD_REC709) {
+        yuv_matrix = yuv_to_rgb_rec709;
+      }
+    }
+
     switch (frame->format()) {
       case media::PIXEL_FORMAT_I420A:
       case media::PIXEL_FORMAT_I420:
@@ -512,6 +548,11 @@ void VideoDecoderShim::YUVConverter::Convert(
 
   gl_->UseProgram(program_);
 
+  if (yuv_matrix) {
+    gl_->UniformMatrix3fv(yuv_matrix_loc_, 1, 0, yuv_matrix);
+    gl_->Uniform3fv(yuv_adjust_loc_, 1, yuv_adjust);
+  }
+
   gl_->BindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
   gl_->EnableVertexAttribArray(0);
   gl_->VertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat),
@@ -639,7 +680,8 @@ VideoDecoderShim::DecoderImpl::DecoderImpl(
     const base::WeakPtr<VideoDecoderShim>& proxy)
     : shim_(proxy),
       main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+}
 
 VideoDecoderShim::DecoderImpl::~DecoderImpl() {
   DCHECK(pending_decodes_.empty());
@@ -648,20 +690,24 @@ VideoDecoderShim::DecoderImpl::~DecoderImpl() {
 void VideoDecoderShim::DecoderImpl::Initialize(
     media::VideoDecoderConfig config) {
   DCHECK(!decoder_);
-#if BUILDFLAG(ENABLE_LIBVPX) || BUILDFLAG(ENABLE_FFMPEG_VIDEO_DECODERS)
-#if BUILDFLAG(ENABLE_LIBVPX)
+#if !defined(MEDIA_DISABLE_LIBVPX)
   if (config.codec() == media::kCodecVP9) {
     decoder_.reset(new media::VpxVideoDecoder());
   } else
-#endif  // BUILDFLAG(ENABLE_LIBVPX)
-#if BUILDFLAG(ENABLE_FFMPEG_VIDEO_DECODERS)
+#endif
+
+#if !defined(MEDIA_DISABLE_FFMPEG) && !defined(DISABLE_FFMPEG_VIDEO_DECODERS)
   {
     std::unique_ptr<media::FFmpegVideoDecoder> ffmpeg_video_decoder(
         new media::FFmpegVideoDecoder(&media_log_));
     ffmpeg_video_decoder->set_decode_nalus(true);
     decoder_ = std::move(ffmpeg_video_decoder);
   }
-#endif  //  BUILDFLAG(ENABLE_FFMPEG_VIDEO_DECODERS)
+#elif defined(MEDIA_DISABLE_LIBVPX)
+  OnInitDone(false);
+  return;
+#endif
+
   // VpxVideoDecoder and FFmpegVideoDecoder support only one pending Decode()
   // request.
   DCHECK_EQ(decoder_->GetMaxDecodeRequests(), 1);
@@ -672,9 +718,6 @@ void VideoDecoderShim::DecoderImpl::Initialize(
                  weak_ptr_factory_.GetWeakPtr()),
       base::Bind(&VideoDecoderShim::DecoderImpl::OnOutputComplete,
                  weak_ptr_factory_.GetWeakPtr()));
-#else
-  OnInitDone(false);
-#endif  // BUILDFLAG(ENABLE_LIBVPX) || BUILDFLAG(ENABLE_FFMPEG_VIDEO_DECODERS)
 }
 
 void VideoDecoderShim::DecoderImpl::Decode(

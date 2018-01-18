@@ -92,7 +92,9 @@ class WorkerSchedulerImplTest : public ::testing::Test {
   WorkerSchedulerImplTest()
       : mock_task_runner_(new cc::OrderedSimpleTaskRunner(&clock_, true)),
         scheduler_(new WorkerSchedulerImplForTest(
-            CreateTaskQueueManagerForTest(nullptr, mock_task_runner_, &clock_),
+            CreateTaskQueueManagerWithUnownedClockForTest(nullptr,
+                                                          mock_task_runner_,
+                                                          &clock_),
             &clock_)),
         timeline_(nullptr) {
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));

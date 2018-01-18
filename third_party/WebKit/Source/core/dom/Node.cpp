@@ -837,11 +837,7 @@ static ContainerNode* GetReattachParent(Node& node) {
   if (node.IsPseudoElement())
     return node.ParentOrShadowHostNode();
   if (node.IsChildOfV1ShadowHost()) {
-    HTMLSlotElement* slot =
-        RuntimeEnabledFeatures::IncrementalShadowDOMEnabled()
-            ? node.AssignedSlot()
-            : node.FinalDestinationSlot();
-    if (slot)
+    if (HTMLSlotElement* slot = node.FinalDestinationSlot())
       return slot;
   }
   if (node.IsInV0ShadowTree() || node.IsChildOfV0ShadowHost()) {

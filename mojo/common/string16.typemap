@@ -4,15 +4,9 @@
 
 mojom = "//mojo/common/string16.mojom"
 public_headers = [ "//base/strings/string16.h" ]
-traits_headers = [ "//mojo/common/string16_struct_traits.h" ]
-sources = [
-  "//mojo/common/string16_struct_traits.cc",
-]
+traits_headers = [ "//mojo/common/common_custom_types_struct_traits.h" ]
 public_deps = [
-  "//mojo/public/cpp/base",
+  "//mojo/common:struct_traits",
 ]
 
-type_mappings = [
-  "mojo.common.mojom.BigString16=base::string16",
-  "mojo.common.mojom.String16=base::string16",
-]
+type_mappings = [ "mojo.common.mojom.String16=base::string16" ]

@@ -28,8 +28,6 @@
 
 namespace net {
 
-class SocketTag;
-
 // A container for a StreamSocket.
 //
 // The handle's |group_name| uniquely identifies the origin and type of the
@@ -82,7 +80,6 @@ class NET_EXPORT ClientSocketHandle {
   int Init(const std::string& group_name,
            const scoped_refptr<typename PoolType::SocketParams>& socket_params,
            RequestPriority priority,
-           const SocketTag& socket_tag,
            ClientSocketPool::RespectLimits respect_limits,
            const CompletionCallback& callback,
            PoolType* pool,
@@ -243,7 +240,6 @@ int ClientSocketHandle::Init(
     const std::string& group_name,
     const scoped_refptr<typename PoolType::SocketParams>& socket_params,
     RequestPriority priority,
-    const SocketTag& socket_tag,
     ClientSocketPool::RespectLimits respect_limits,
     const CompletionCallback& callback,
     PoolType* pool,
@@ -255,9 +251,8 @@ int ClientSocketHandle::Init(
   ResetErrorState();
   pool_ = pool;
   group_name_ = group_name;
-  int rv =
-      pool_->RequestSocket(group_name, &socket_params, priority, socket_tag,
-                           respect_limits, this, callback_, net_log);
+  int rv = pool_->RequestSocket(group_name, &socket_params, priority,
+                                respect_limits, this, callback_, net_log);
   if (rv == ERR_IO_PENDING) {
     user_callback_ = callback;
   } else {

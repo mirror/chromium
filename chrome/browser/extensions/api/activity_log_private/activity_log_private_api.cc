@@ -96,7 +96,7 @@ void ActivityLogAPI::OnExtensionActivity(scoped_refptr<Action> activity) {
   std::unique_ptr<base::ListValue> value(new base::ListValue());
   ExtensionActivity activity_arg = activity->ConvertToExtensionActivity();
   value->Append(activity_arg.ToValue());
-  auto event = std::make_unique<Event>(
+  auto event = base::MakeUnique<Event>(
       events::ACTIVITY_LOG_PRIVATE_ON_EXTENSION_ACTIVITY,
       activity_log_private::OnExtensionActivity::kEventName, std::move(value),
       browser_context_);

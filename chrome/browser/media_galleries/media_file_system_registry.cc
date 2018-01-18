@@ -59,26 +59,24 @@ using storage_monitor::StorageMonitor;
 
 namespace {
 
-class MediaFileSystemRegistryShutdownNotifierFactory
+class ShutdownNotifierFactory
     : public BrowserContextKeyedServiceShutdownNotifierFactory {
  public:
-  static MediaFileSystemRegistryShutdownNotifierFactory* GetInstance() {
-    return base::Singleton<
-        MediaFileSystemRegistryShutdownNotifierFactory>::get();
+  static ShutdownNotifierFactory* GetInstance() {
+    return base::Singleton<ShutdownNotifierFactory>::get();
   }
 
  private:
-  friend struct base::DefaultSingletonTraits<
-      MediaFileSystemRegistryShutdownNotifierFactory>;
+  friend struct base::DefaultSingletonTraits<ShutdownNotifierFactory>;
 
-  MediaFileSystemRegistryShutdownNotifierFactory()
+  ShutdownNotifierFactory()
       : BrowserContextKeyedServiceShutdownNotifierFactory(
             "MediaFileSystemRegistry") {
     DependsOn(MediaGalleriesPreferencesFactory::GetInstance());
   }
-  ~MediaFileSystemRegistryShutdownNotifierFactory() override {}
+  ~ShutdownNotifierFactory() override {}
 
-  DISALLOW_COPY_AND_ASSIGN(MediaFileSystemRegistryShutdownNotifierFactory);
+  DISALLOW_COPY_AND_ASSIGN(ShutdownNotifierFactory);
 };
 
 struct InvalidatedGalleriesInfo {
@@ -585,10 +583,9 @@ MediaGalleriesPreferences* MediaFileSystemRegistry::GetPreferences(
     extension_hosts_map_[profile] = ExtensionHostMap();
     DCHECK(!base::ContainsKey(profile_subscription_map_, profile));
     profile_subscription_map_[profile] =
-        MediaFileSystemRegistryShutdownNotifierFactory::GetInstance()
-            ->Get(profile)
-            ->Subscribe(base::Bind(&MediaFileSystemRegistry::OnProfileShutdown,
-                                   base::Unretained(this), profile));
+        ShutdownNotifierFactory::GetInstance()->Get(profile)->Subscribe(
+            base::Bind(&MediaFileSystemRegistry::OnProfileShutdown,
+                       base::Unretained(this), profile));
     media_galleries::UsageCount(media_galleries::PROFILES_WITH_USAGE);
   }
 

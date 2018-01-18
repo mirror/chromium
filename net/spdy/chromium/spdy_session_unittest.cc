@@ -22,7 +22,6 @@
 #include "net/base/test_data_stream.h"
 #include "net/base/test_proxy_delegate.h"
 #include "net/cert/ct_policy_status.h"
-#include "net/http/http_request_info.h"
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_source.h"
 #include "net/log/test_net_log.h"
@@ -30,7 +29,6 @@
 #include "net/log/test_net_log_util.h"
 #include "net/proxy/proxy_server.h"
 #include "net/socket/client_socket_pool_manager.h"
-#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/spdy_http_utils.h"
 #include "net/spdy/chromium/spdy_session_pool.h"
@@ -1520,7 +1518,7 @@ TEST_F(SpdySessionTest, CancelPushAfterExpired) {
       transport_params, nullptr, nullptr, key_.host_port_pair(), SSLConfig(),
       key_.privacy_mode(), 0, false);
   int rv = connection->Init(
-      key_.host_port_pair().ToString(), ssl_params, MEDIUM, SocketTag(),
+      key_.host_port_pair().ToString(), ssl_params, MEDIUM,
       ClientSocketPool::RespectLimits::ENABLED, callback.callback(),
       http_session_->GetSSLSocketPool(HttpNetworkSession::NORMAL_SOCKET_POOL),
       log_.bound());
@@ -1628,7 +1626,7 @@ TEST_F(SpdySessionTest, ClaimPushedStreamBeforeExpires) {
       transport_params, nullptr, nullptr, key_.host_port_pair(), SSLConfig(),
       key_.privacy_mode(), 0, false);
   int rv = connection->Init(
-      key_.host_port_pair().ToString(), ssl_params, MEDIUM, SocketTag(),
+      key_.host_port_pair().ToString(), ssl_params, MEDIUM,
       ClientSocketPool::RespectLimits::ENABLED, callback.callback(),
       http_session_->GetSSLSocketPool(HttpNetworkSession::NORMAL_SOCKET_POOL),
       log_.bound());
@@ -1669,14 +1667,10 @@ TEST_F(SpdySessionTest, ClaimPushedStreamBeforeExpires) {
   EXPECT_EQ(0, session_unacked_recv_window_bytes());
 
   // Claim pushed stream from Http2PushPromiseIndex.
-  HttpRequestInfo push_request;
-  push_request.url = pushed_url;
-  push_request.method = "GET";
   base::WeakPtr<SpdySession> session_with_pushed_stream;
   SpdyStreamId pushed_stream_id;
   spdy_session_pool_->push_promise_index()->ClaimPushedStream(
-      key_, pushed_url, push_request, &session_with_pushed_stream,
-      &pushed_stream_id);
+      key_, pushed_url, &session_with_pushed_stream, &pushed_stream_id);
   EXPECT_EQ(session_.get(), session_with_pushed_stream.get());
   EXPECT_EQ(2u, pushed_stream_id);
 
@@ -3459,11 +3453,10 @@ TEST_F(SpdySessionTest, CloseOneIdleConnection) {
       host_port2, false, OnHostResolutionCallback(),
       TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
   auto connection2 = std::make_unique<ClientSocketHandle>();
-  EXPECT_EQ(
-      ERR_IO_PENDING,
-      connection2->Init(host_port2.ToString(), params2, DEFAULT_PRIORITY,
-                        SocketTag(), ClientSocketPool::RespectLimits::ENABLED,
-                        callback2.callback(), pool, NetLogWithSource()));
+  EXPECT_EQ(ERR_IO_PENDING,
+            connection2->Init(host_port2.ToString(), params2, DEFAULT_PRIORITY,
+                              ClientSocketPool::RespectLimits::ENABLED,
+                              callback2.callback(), pool, NetLogWithSource()));
   EXPECT_TRUE(pool->IsStalled());
 
   // The socket pool should close the connection asynchronously and establish a
@@ -3539,11 +3532,10 @@ TEST_F(SpdySessionTest, CloseOneIdleConnectionWithAlias) {
       host_port3, false, OnHostResolutionCallback(),
       TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
   auto connection3 = std::make_unique<ClientSocketHandle>();
-  EXPECT_EQ(
-      ERR_IO_PENDING,
-      connection3->Init(host_port3.ToString(), params3, DEFAULT_PRIORITY,
-                        SocketTag(), ClientSocketPool::RespectLimits::ENABLED,
-                        callback3.callback(), pool, NetLogWithSource()));
+  EXPECT_EQ(ERR_IO_PENDING,
+            connection3->Init(host_port3.ToString(), params3, DEFAULT_PRIORITY,
+                              ClientSocketPool::RespectLimits::ENABLED,
+                              callback3.callback(), pool, NetLogWithSource()));
   EXPECT_TRUE(pool->IsStalled());
 
   // The socket pool should close the connection asynchronously and establish a
@@ -3619,11 +3611,10 @@ TEST_F(SpdySessionTest, CloseSessionOnIdleWhenPoolStalled) {
       host_port2, false, OnHostResolutionCallback(),
       TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
   auto connection2 = std::make_unique<ClientSocketHandle>();
-  EXPECT_EQ(
-      ERR_IO_PENDING,
-      connection2->Init(host_port2.ToString(), params2, DEFAULT_PRIORITY,
-                        SocketTag(), ClientSocketPool::RespectLimits::ENABLED,
-                        callback2.callback(), pool, NetLogWithSource()));
+  EXPECT_EQ(ERR_IO_PENDING,
+            connection2->Init(host_port2.ToString(), params2, DEFAULT_PRIORITY,
+                              ClientSocketPool::RespectLimits::ENABLED,
+                              callback2.callback(), pool, NetLogWithSource()));
   EXPECT_TRUE(pool->IsStalled());
 
   // Running the message loop should cause the socket pool to ask the SPDY
@@ -5588,14 +5579,10 @@ TEST_F(SpdySessionTest, CancelReservedStreamOnHeadersReceived) {
 
   // Claim pushed stream from Http2PushPromiseIndex.
   const GURL pushed_url(kPushedUrl);
-  HttpRequestInfo push_request;
-  push_request.url = pushed_url;
-  push_request.method = "GET";
   base::WeakPtr<SpdySession> session_with_pushed_stream;
   SpdyStreamId pushed_stream_id;
   spdy_session_pool_->push_promise_index()->ClaimPushedStream(
-      key_, pushed_url, push_request, &session_with_pushed_stream,
-      &pushed_stream_id);
+      key_, pushed_url, &session_with_pushed_stream, &pushed_stream_id);
   EXPECT_EQ(session_.get(), session_with_pushed_stream.get());
   EXPECT_EQ(2u, pushed_stream_id);
   EXPECT_EQ(0u, num_unclaimed_pushed_streams());
@@ -5699,14 +5686,10 @@ TEST_F(SpdySessionTest, GetPushedStream) {
 
   // Claim pushed stream from Http2PushPromiseIndex so that GetPushedStream()
   // can be called.
-  HttpRequestInfo push_request;
-  push_request.url = pushed_url;
-  push_request.method = "GET";
   base::WeakPtr<SpdySession> session_with_pushed_stream;
   SpdyStreamId pushed_stream_id;
   spdy_session_pool_->push_promise_index()->ClaimPushedStream(
-      key_, pushed_url, push_request, &session_with_pushed_stream,
-      &pushed_stream_id);
+      key_, pushed_url, &session_with_pushed_stream, &pushed_stream_id);
   EXPECT_EQ(session_.get(), session_with_pushed_stream.get());
   EXPECT_EQ(2u, pushed_stream_id);
 

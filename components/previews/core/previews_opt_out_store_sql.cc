@@ -14,6 +14,7 @@
 #include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/sequenced_task_runner.h"
@@ -449,9 +450,9 @@ void PreviewsOptOutStoreSQL::ClearBlackList(base::Time begin_time,
 void PreviewsOptOutStoreSQL::LoadBlackList(LoadBlackListCallback callback) {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
   if (!db_)
-    db_ = std::make_unique<sql::Connection>();
+    db_ = base::MakeUnique<sql::Connection>();
   std::unique_ptr<PreviewsTypeList> enabled_previews =
-      std::make_unique<PreviewsTypeList>(*enabled_previews_);
+      base::MakeUnique<PreviewsTypeList>(*enabled_previews_);
   background_task_runner_->PostTask(
       FROM_HERE, base::Bind(&LoadBlackListSync, db_.get(), db_file_path_,
                             base::Passed(std::move(enabled_previews)),

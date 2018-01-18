@@ -23,12 +23,8 @@
 
 // Configuration for the different buttons.
 @property(nonatomic, readonly) ToolbarComponentVisibility backButtonVisibility;
-// Configuration for the forward button displayed in the leading part of the
-// toolbar.
 @property(nonatomic, readonly)
-    ToolbarComponentVisibility leadingForwardButtonVisibility;
-@property(nonatomic, readonly)
-    ToolbarComponentVisibility trailingForwardButtonVisibility;
+    ToolbarComponentVisibility forwardButtonVisibility;
 @property(nonatomic, readonly)
     ToolbarComponentVisibility tabGridButtonVisibility;
 @property(nonatomic, readonly)

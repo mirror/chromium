@@ -12,18 +12,16 @@ bindings_core_output_dir = "$bindings_output_dir/core"
 
 # Global constructors
 core_global_constructors_original_interfaces = [
-  "DedicatedWorkerGlobalScope",
-  "LayoutWorkletGlobalScope",
-  "SharedWorkerGlobalScope",
   "Window",
+  "SharedWorkerGlobalScope",
+  "DedicatedWorkerGlobalScope",
 ]
 
 # The size and the order in the following list must match to the previous one.
 core_global_constructors_original_interface_basenames = [
-  "dedicated_worker_global_scope",
-  "layout_worklet_global_scope",
-  "shared_worker_global_scope",
   "window",
+  "shared_worker_global_scope",
+  "dedicated_worker_global_scope",
 ]
 
 # The interfaces aren't technically files, but we can treat them as file names
@@ -250,12 +248,13 @@ core_idl_files =
                     "html/HTMLTemplateElement.idl",
                     "html/HTMLTimeElement.idl",
                     "html/HTMLTitleElement.idl",
+                    "html/HTMLTrackElement.idl",
                     "html/HTMLUListElement.idl",
                     "html/HTMLUnknownElement.idl",
+                    "html/ImageData.idl",
+                    "html/TextMetrics.idl",
                     "html/TimeRanges.idl",
                     "html/VoidCallback.idl",
-                    "html/canvas/ImageData.idl",
-                    "html/canvas/TextMetrics.idl",
                     "html/custom/CustomElementRegistry.idl",
                     "html/forms/FormData.idl",
                     "html/forms/HTMLButtonElement.idl",
@@ -276,7 +275,6 @@ core_idl_files =
                     "html/media/HTMLAudioElement.idl",
                     "html/media/MediaError.idl",
                     "html/track/AudioTrackList.idl",
-                    "html/track/HTMLTrackElement.idl",
                     "html/track/TextTrack.idl",
                     "html/track/TextTrackCue.idl",
                     "html/track/TextTrackCueList.idl",
@@ -292,7 +290,6 @@ core_idl_files =
                     "inspector/InspectorOverlayHost.idl",
                     "intersection_observer/IntersectionObserver.idl",
                     "intersection_observer/IntersectionObserverEntry.idl",
-                    "layout/custom/LayoutWorkletGlobalScope.idl",
                     "loader/appcache/ApplicationCache.idl",
                     "messaging/MessageChannel.idl",
                     "messaging/MessagePort.idl",
@@ -461,8 +458,8 @@ core_idl_with_modules_dependency_files =
                     "frame/Navigator.idl",
                     "frame/Screen.idl",
                     "frame/Window.idl",
+                    "html/HTMLCanvasElement.idl",
                     "html/HTMLIFrameElement.idl",
-                    "html/canvas/HTMLCanvasElement.idl",
                     "html/forms/HTMLInputElement.idl",
                     "html/media/HTMLMediaElement.idl",
                     "html/media/HTMLVideoElement.idl",
@@ -514,7 +511,6 @@ core_dependency_idl_files =
                     "fullscreen/ElementFullscreen.idl",
                     "html/HTMLHyperlinkElementUtils.idl",
                     "imagebitmap/ImageBitmapFactories.idl",
-                    "layout/custom/CSSLayoutWorklet.idl",
                     "svg/SVGDocument.idl",
                     "svg/SVGFilterPrimitiveStandardAttributes.idl",
                     "svg/SVGFitToViewBox.idl",
@@ -550,8 +546,6 @@ core_callback_function_idl_files =
 core_dictionary_idl_files =
     get_path_info([
                     "animation/AnimationEffectTimingProperties.idl",
-                    "animation/BaseKeyframe.idl",
-                    "animation/BasePropertyIndexedKeyframe.idl",
                     "animation/ComputedTimingProperties.idl",
                     "animation/DocumentTimelineOptions.idl",
                     "animation/KeyframeAnimationOptions.idl",
@@ -610,8 +604,8 @@ core_dictionary_idl_files =
                     "geometry/DOMRectInit.idl",
                     "html/FocusOptions.idl",
                     "html/AssignedNodesOptions.idl",
+                    "html/ImageDataColorSettings.idl",
                     "html/canvas/CanvasContextCreationAttributes.idl",
-                    "html/canvas/ImageDataColorSettings.idl",
                     "html/track/TrackEventInit.idl",
                     "imagebitmap/ImageBitmapOptions.idl",
                     "input/InputDeviceCapabilitiesInit.idl",
@@ -634,7 +628,6 @@ core_dictionary_idl_files =
                     "mojo/test/MojoInterfaceRequestEventInit.idl",
                     "offscreencanvas/ImageEncodeOptions.idl",
                     "page/scrolling/ScrollStateInit.idl",
-                    "timing/PerformanceMarkOptions.idl",
                     "timing/PerformanceObserverInit.idl",
                     "workers/WorkerOptions.idl",
                     "workers/WorkletOptions.idl",

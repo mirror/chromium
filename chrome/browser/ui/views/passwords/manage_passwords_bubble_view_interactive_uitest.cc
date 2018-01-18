@@ -4,11 +4,11 @@
 
 #include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
 
-#include <memory>
 #include <utility>
 
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_samples.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
@@ -19,7 +19,6 @@
 #include "chrome/browser/ui/tab_dialogs.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
-#include "chrome/browser/ui/views/passwords/manage_password_auto_sign_in_view.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_icon_views.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/common/chrome_features.h"
@@ -372,7 +371,7 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest, AutoSignin) {
   test_form()->icon_url = embedded_test_server()->GetURL("/icon.png");
   std::vector<std::unique_ptr<autofill::PasswordForm>> local_credentials;
   local_credentials.push_back(
-      std::make_unique<autofill::PasswordForm>(*test_form()));
+      base::MakeUnique<autofill::PasswordForm>(*test_form()));
 
   // Prepare to capture the network request.
   EXPECT_CALL(*this, OnIconRequestDone());
@@ -397,13 +396,13 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest, AutoSigninNoFocus) {
   test_form()->username_value = base::ASCIIToUTF16("pet12@gmail.com");
   std::vector<std::unique_ptr<autofill::PasswordForm>> local_credentials;
   local_credentials.push_back(
-      std::make_unique<autofill::PasswordForm>(*test_form()));
+      base::MakeUnique<autofill::PasswordForm>(*test_form()));
 
   // Open another window with focus.
   Browser* focused_window = CreateBrowser(browser()->profile());
   ASSERT_TRUE(ui_test_utils::BringBrowserWindowToFront(focused_window));
 
-  ManagePasswordAutoSignInView::set_auto_signin_toast_timeout(0);
+  ManagePasswordsBubbleView::set_auto_signin_toast_timeout(0);
   SetupAutoSignin(std::move(local_credentials));
   EXPECT_TRUE(IsBubbleShowing());
 

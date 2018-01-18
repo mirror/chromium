@@ -84,6 +84,7 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
+#include "public/platform/InterfaceRegistry.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebFloatRect.h"
 #include "public/platform/WebLayerTreeView.h"
@@ -187,8 +188,8 @@ class ClientMessageLoopAdapter : public MainThreadDebugger::ClientMessageLoop {
   void RunIfWaitingForDebugger(LocalFrame* frame) override {
     WebDevToolsAgentImpl* agent =
         WebLocalFrameImpl::FromFrame(frame)->DevToolsAgentImpl();
-    if (agent && agent->worker_client_)
-      agent->worker_client_->ResumeStartup();
+    if (agent && agent->GetClient())
+      agent->GetClient()->ResumeStartup();
   }
 
   bool running_for_debug_break_;
@@ -292,55 +293,45 @@ class WebDevToolsAgentImpl::Session : public GarbageCollectedFinalized<Session>,
 };
 
 // static
-WebDevToolsAgentImpl* WebDevToolsAgentImpl::CreateForFrame(
-    WebLocalFrameImpl* frame) {
+WebDevToolsAgentImpl* WebDevToolsAgentImpl::Create(WebLocalFrameImpl* frame) {
   if (!IsMainFrame(frame)) {
-    WebDevToolsAgentImpl* agent =
-        new WebDevToolsAgentImpl(frame, false, nullptr);
+    WebDevToolsAgentImpl* agent = new WebDevToolsAgentImpl(frame, false);
     if (frame->FrameWidget())
       agent->LayerTreeViewChanged(frame->FrameWidget()->GetLayerTreeView());
     return agent;
   }
 
   WebViewImpl* view = frame->ViewImpl();
-  WebDevToolsAgentImpl* agent = new WebDevToolsAgentImpl(frame, true, nullptr);
-  agent->LayerTreeViewChanged(view->LayerTreeView());
-  return agent;
-}
-
-// static
-WebDevToolsAgentImpl* WebDevToolsAgentImpl::CreateForWorker(
-    WebLocalFrameImpl* frame,
-    WorkerClient* worker_client) {
-  WebViewImpl* view = frame->ViewImpl();
-  WebDevToolsAgentImpl* agent =
-      new WebDevToolsAgentImpl(frame, true, worker_client);
+  WebDevToolsAgentImpl* agent = new WebDevToolsAgentImpl(frame, true);
   agent->LayerTreeViewChanged(view->LayerTreeView());
   return agent;
 }
 
 WebDevToolsAgentImpl::WebDevToolsAgentImpl(
     WebLocalFrameImpl* web_local_frame_impl,
-    bool include_view_agents,
-    WorkerClient* worker_client)
+    bool include_view_agents)
     : binding_(this),
-      worker_client_(worker_client),
+      client_(nullptr),
       web_local_frame_impl_(web_local_frame_impl),
       probe_sink_(web_local_frame_impl_->GetFrame()->GetProbeSink()),
       resource_content_loader_(InspectorResourceContentLoader::Create(
           web_local_frame_impl_->GetFrame())),
       inspected_frames_(new InspectedFrames(
           web_local_frame_impl_->GetFrame(),
-          web_local_frame_impl_->GetFrame()->GetDevToolsFrameToken())),
+          web_local_frame_impl_->GetFrame()->GetInstrumentationToken())),
       resource_container_(new InspectorResourceContainer(inspected_frames_)),
       include_view_agents_(include_view_agents),
       layer_tree_id_(0) {
   DCHECK(IsMainThread());
   DCHECK(web_local_frame_impl_->GetFrame());
+  web_local_frame_impl_->GetFrame()
+      ->GetInterfaceRegistry()
+      ->AddAssociatedInterface(WTF::BindRepeating(
+          &WebDevToolsAgentImpl::BindRequest, WrapWeakPersistent(this)));
 }
 
 WebDevToolsAgentImpl::~WebDevToolsAgentImpl() {
-  DCHECK(!worker_client_);
+  DCHECK(!client_);
 }
 
 void WebDevToolsAgentImpl::Trace(blink::Visitor* visitor) {
@@ -368,7 +359,7 @@ void WebDevToolsAgentImpl::WillBeDestroyed() {
     Detach(session_id);
 
   resource_content_loader_->Dispose();
-  worker_client_ = nullptr;
+  client_ = nullptr;
   binding_.Close();
 }
 
@@ -521,6 +512,10 @@ void WebDevToolsAgentImpl::DestroySession(int session_id) {
     Platform::Current()->CurrentThread()->RemoveTaskObserver(this);
 }
 
+void WebDevToolsAgentImpl::SetClient(WebDevToolsAgentImpl::Client* client) {
+  client_ = client;
+}
+
 void WebDevToolsAgentImpl::Attach(int session_id) {
   if (!session_id || sessions_.find(session_id) != sessions_.end())
     return;
@@ -533,9 +528,6 @@ void WebDevToolsAgentImpl::Reattach(int session_id, const String& saved_state) {
   String state = saved_state;
   InspectorSession* session = InitializeSession(session_id, &state);
   session->Restore();
-  // TODO(dgozman): use the optional instead of checking for empty.
-  if (worker_client_ && !state.IsEmpty())
-    worker_client_->ResumeStartup();
 }
 
 void WebDevToolsAgentImpl::Detach(int session_id) {
@@ -672,6 +664,11 @@ void WebDevToolsAgentImpl::SendProtocolMessage(int session_id,
   if (LayoutTestSupport::IsRunningLayoutTest() && call_id)
     FlushProtocolNotifications();
 
+  if (client_) {
+    client_->SendProtocolMessage(session_id, call_id, response, state);
+    return;
+  }
+
   auto it = hosts_.find(session_id);
   if (it == hosts_.end())
     return;
@@ -731,6 +728,14 @@ void WebDevToolsAgentImpl::DispatchBufferedTouchEvents() {
 bool WebDevToolsAgentImpl::HandleInputEvent(const WebInputEvent& event) {
   for (auto& it : overlay_agents_) {
     if (it.value->HandleInputEvent(event))
+      return true;
+  }
+  return false;
+}
+
+bool WebDevToolsAgentImpl::CacheDisabled() {
+  for (auto& it : network_agents_) {
+    if (it.value->CacheDisabled())
       return true;
   }
   return false;

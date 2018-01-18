@@ -32,7 +32,7 @@ class CanvasFontCacheTest : public PageTestBase {
   Persistent<HTMLCanvasElement> canvas_element_;
 };
 
-CanvasFontCacheTest::CanvasFontCacheTest() = default;
+CanvasFontCacheTest::CanvasFontCacheTest() {}
 
 CanvasRenderingContext* CanvasFontCacheTest::Context2d() const {
   // If the following check fails, perhaps you forgot to call createContext

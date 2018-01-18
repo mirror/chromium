@@ -6,7 +6,6 @@
 
 #include <stddef.h>
 
-#include <memory>
 #include <set>
 #include <string>
 
@@ -140,7 +139,7 @@ Provider::Provider(Profile* profile,
 
 void Provider::VisitRegisteredExtension() {
   if (!profile_ || !ShouldInstallInProfile()) {
-    SetPrefs(std::make_unique<base::DictionaryValue>());
+    SetPrefs(base::MakeUnique<base::DictionaryValue>());
     return;
   }
 

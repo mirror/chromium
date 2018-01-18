@@ -4,13 +4,7 @@
 
 #include "content/public/browser/browser_main_parts.h"
 
-#include "content/public/common/result_codes.h"
-
 namespace content {
-
-int BrowserMainParts::PreEarlyInitialization() {
-  return RESULT_CODE_NORMAL_EXIT;
-}
 
 int BrowserMainParts::PreCreateThreads() {
   return 0;

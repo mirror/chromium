@@ -14,7 +14,6 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_visibility_configuration.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.h"
-#import "ios/chrome/browser/ui/toolbar/clean/toolbar_tab_grid_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_resource_macros.h"
@@ -89,61 +88,73 @@ const int styleCount = 2;
   return backButton;
 }
 
-- (ToolbarButton*)leadingForwardButton {
-  ToolbarButton* forwardButton = self.forwardButton;
-  forwardButton.visibilityMask =
-      self.visibilityConfiguration.leadingForwardButtonVisibility;
-  return forwardButton;
-}
-
-- (ToolbarButton*)trailingForwardButton {
-  ToolbarButton* forwardButton = self.forwardButton;
-  forwardButton.visibilityMask =
-      self.visibilityConfiguration.trailingForwardButtonVisibility;
-  return forwardButton;
-}
-
-- (ToolbarTabGridButton*)tabGridButton {
-  int tabGridButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
-      TOOLBAR_IDR_THREE_STATE(OVERVIEW);
-  ToolbarTabGridButton* tabGridButton = [ToolbarTabGridButton
-      toolbarButtonWithImageForNormalState:NativeImage(
-                                               tabGridButtonImages[self.style]
-                                                                  [DEFAULT])
-                  imageForHighlightedState:NativeImage(
-                                               tabGridButtonImages[self.style]
-                                                                  [PRESSED])
-                     imageForDisabledState:NativeImage(
-                                               tabGridButtonImages[self.style]
-                                                                  [DISABLED])];
-  SetA11yLabelAndUiAutomationName(tabGridButton, IDS_IOS_TOOLBAR_SHOW_TABS,
-                                  kToolbarStackButtonIdentifier);
-  [tabGridButton
-      setTitleColor:[self.toolbarConfiguration buttonTitleNormalColor]
-           forState:UIControlStateNormal];
-  [tabGridButton
-      setTitleColor:[self.toolbarConfiguration buttonTitleHighlightedColor]
-           forState:UIControlStateHighlighted];
-  [self configureButton:tabGridButton width:kToolbarButtonWidth];
-
-  // TODO(crbug.com/799601): Delete this once its not needed.
-  if (base::FeatureList::IsEnabled(kMemexTabSwitcher)) {
-    [tabGridButton addTarget:self.dispatcher
-                      action:@selector(navigateToMemexTabSwitcher)
-            forControlEvents:UIControlEventTouchUpInside];
-  } else {
-    [tabGridButton addTarget:self.dispatcher
-                      action:@selector(displayTabSwitcher)
-            forControlEvents:UIControlEventTouchUpInside];
+- (ToolbarButton*)forwardButton {
+  int forwardButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
+      TOOLBAR_IDR_THREE_STATE(FORWARD);
+  ToolbarButton* forwardButton = [ToolbarButton
+      toolbarButtonWithImageForNormalState:NativeReversableImage(
+                                               forwardButtonImages[self.style]
+                                                                  [DEFAULT],
+                                               YES)
+                  imageForHighlightedState:NativeReversableImage(
+                                               forwardButtonImages[self.style]
+                                                                  [PRESSED],
+                                               YES)
+                     imageForDisabledState:NativeReversableImage(
+                                               forwardButtonImages[self.style]
+                                                                  [DISABLED],
+                                               YES)];
+  forwardButton.accessibilityLabel =
+      l10n_util::GetNSString(IDS_ACCNAME_FORWARD);
+  if (!IsIPadIdiom()) {
+    forwardButton.imageEdgeInsets =
+        UIEdgeInsetsMakeDirected(0, kForwardButtonImageInset, 0, 0);
   }
-
-  tabGridButton.visibilityMask =
-      self.visibilityConfiguration.tabGridButtonVisibility;
-  return tabGridButton;
+  [self configureButton:forwardButton width:kToolbarButtonWidth];
+  [forwardButton addTarget:self.dispatcher
+                    action:@selector(goForward)
+          forControlEvents:UIControlEventTouchUpInside];
+  forwardButton.visibilityMask =
+      self.visibilityConfiguration.forwardButtonVisibility;
+  return forwardButton;
 }
 
 - (ToolbarButton*)tabSwitcherStripButton {
-  return [self tabGridButton];
+  int tabSwitcherButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
+      TOOLBAR_IDR_THREE_STATE(OVERVIEW);
+  ToolbarButton* tabSwitcherStripButton = [ToolbarButton
+      toolbarButtonWithImageForNormalState:
+          NativeImage(tabSwitcherButtonImages[self.style][DEFAULT])
+                  imageForHighlightedState:
+                      NativeImage(tabSwitcherButtonImages[self.style][PRESSED])
+                     imageForDisabledState:
+                         NativeImage(
+                             tabSwitcherButtonImages[self.style][DISABLED])];
+  SetA11yLabelAndUiAutomationName(tabSwitcherStripButton,
+                                  IDS_IOS_TOOLBAR_SHOW_TABS,
+                                  kToolbarStackButtonIdentifier);
+  [tabSwitcherStripButton
+      setTitleColor:[self.toolbarConfiguration buttonTitleNormalColor]
+           forState:UIControlStateNormal];
+  [tabSwitcherStripButton
+      setTitleColor:[self.toolbarConfiguration buttonTitleHighlightedColor]
+           forState:UIControlStateHighlighted];
+  [self configureButton:tabSwitcherStripButton width:kToolbarButtonWidth];
+
+  // TODO(crbug.com/799601): Delete this once its not needed.
+  if (base::FeatureList::IsEnabled(kMemexTabSwitcher)) {
+    [tabSwitcherStripButton addTarget:self.dispatcher
+                               action:@selector(navigateToMemexTabSwitcher)
+                     forControlEvents:UIControlEventTouchUpInside];
+  } else {
+    [tabSwitcherStripButton addTarget:self.dispatcher
+                               action:@selector(displayTabSwitcher)
+                     forControlEvents:UIControlEventTouchUpInside];
+  }
+
+  tabSwitcherStripButton.visibilityMask =
+      self.visibilityConfiguration.tabGridButtonVisibility;
+  return tabSwitcherStripButton;
 }
 
 - (ToolbarButton*)tabSwitcherGridButton {
@@ -318,8 +329,6 @@ const int styleCount = 2;
                   imageForHighlightedState:NativeImage(IDR_IOS_OMNIBOX_SEARCH)
                      imageForDisabledState:nil];
   [self configureButton:omniboxButton width:kToolbarButtonWidth];
-  omniboxButton.visibilityMask =
-      self.visibilityConfiguration.omniboxButtonVisibility;
   return omniboxButton;
 }
 
@@ -380,36 +389,6 @@ const int styleCount = 2;
   return [NSArray arrayWithObjects:NativeImage(TTSImages[self.style][DEFAULT]),
                                    NativeImage(TTSImages[self.style][PRESSED]),
                                    nil];
-}
-
-// Returns a forward button without visibility mask configured.
-- (ToolbarButton*)forwardButton {
-  int forwardButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
-      TOOLBAR_IDR_THREE_STATE(FORWARD);
-  ToolbarButton* forwardButton = [ToolbarButton
-      toolbarButtonWithImageForNormalState:NativeReversableImage(
-                                               forwardButtonImages[self.style]
-                                                                  [DEFAULT],
-                                               YES)
-                  imageForHighlightedState:NativeReversableImage(
-                                               forwardButtonImages[self.style]
-                                                                  [PRESSED],
-                                               YES)
-                     imageForDisabledState:NativeReversableImage(
-                                               forwardButtonImages[self.style]
-                                                                  [DISABLED],
-                                               YES)];
-  forwardButton.accessibilityLabel =
-      l10n_util::GetNSString(IDS_ACCNAME_FORWARD);
-  if (!IsIPadIdiom()) {
-    forwardButton.imageEdgeInsets =
-        UIEdgeInsetsMakeDirected(0, kForwardButtonImageInset, 0, 0);
-  }
-  [self configureButton:forwardButton width:kToolbarButtonWidth];
-  [forwardButton addTarget:self.dispatcher
-                    action:@selector(goForward)
-          forControlEvents:UIControlEventTouchUpInside];
-  return forwardButton;
 }
 
 @end

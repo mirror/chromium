@@ -42,9 +42,16 @@
 #include "imports.h"
 #include "transform.h"
 
-#if defined(_WIN32) && !defined(__CYGWIN__)
+/* gettimeofday on Windows ??? */
+#if defined(WIN32) && !defined(__CYGWIN__)
+#ifdef _MSC_VER
+#include <winsock2.h>
+#pragma comment(lib, "ws2_32.lib")
+#define gettimeofday(p1,p2)
+#define HAVE_GETTIMEOFDAY
 #define XSLT_WIN32_PERFORMANCE_COUNTER
-#endif
+#endif /* _MS_VER */
+#endif /* WIN32 */
 
 /************************************************************************
  *									*
@@ -1242,8 +1249,6 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 			if (res[j] == NULL) {
 			    if (res[j+incr] != NULL)
 				tst = 1;
-			} else if (res[j+incr] == NULL) {
-			    tst = -1;
 			} else {
 			    if (numb) {
 				/* We make NaN smaller than number in
@@ -1462,7 +1467,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	((style->method == NULL) ||
 	 (!xmlStrEqual(style->method, (const xmlChar *) "xhtml")))) {
         xsltGenericError(xsltGenericErrorContext,
-		"xsltSaveResultTo : unknown output method\n");
+		"xsltSaveResultTo : unknown ouput method\n");
         return(-1);
     }
 
@@ -1790,7 +1795,7 @@ xsltSaveResultToString(xmlChar **doc_txt_ptr, int * doc_txt_len,
 
 /************************************************************************
  *									*
- *		Generating profiling information			*
+ *		Generating profiling informations			*
  *									*
  ************************************************************************/
 
@@ -1804,8 +1809,6 @@ static long calibration = -1;
  *
  * Returns the number of milliseconds used by xsltTimestamp()
  */
-#if !defined(XSLT_WIN32_PERFORMANCE_COUNTER) && \
-    (defined(HAVE_CLOCK_GETTIME) || defined(HAVE_GETTIMEOFDAY))
 static long
 xsltCalibrateTimestamps(void) {
     register int i;
@@ -1814,7 +1817,6 @@ xsltCalibrateTimestamps(void) {
 	xsltTimestamp();
     return(xsltTimestamp() / 1000);
 }
-#endif
 
 /**
  * xsltCalibrateAdjust:
@@ -1953,9 +1955,9 @@ pretty_templ_match(xsltTemplatePtr templ) {
 /**
  * xsltSaveProfiling:
  * @ctxt:  an XSLT context
- * @output:  a FILE * for saving the information
+ * @output:  a FILE * for saving the informations
  *
- * Save the profiling information on @output
+ * Save the profiling informations on @output
  */
 void
 xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
@@ -2152,7 +2154,7 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
 
 /************************************************************************
  *									*
- *		Fetching profiling information				*
+ *		Fetching profiling informations				*
  *									*
  ************************************************************************/
 
@@ -2161,8 +2163,8 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
  * @ctxt:  a transformation context
  *
  * This function should be called after the transformation completed
- * to extract template processing profiling information if available.
- * The information is returned as an XML document tree like
+ * to extract template processing profiling informations if availble.
+ * The informations are returned as an XML document tree like
  * <?xml version="1.0"?>
  * <profile>
  * <template rank="1" match="*" name=""

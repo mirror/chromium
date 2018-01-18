@@ -168,13 +168,4 @@ ChromePaymentRequestDelegate::GetDisplayManager() {
       web_contents_->GetBrowserContext());
 }
 
-void ChromePaymentRequestDelegate::EmbedPaymentHandlerWindow(
-    const GURL& url,
-    PaymentHandlerOpenWindowCallback callback) {
-  if (dialog_)
-    dialog_->ShowPaymentHandlerScreen(url, std::move(callback));
-  else
-    std::move(callback).Run(false);
-}
-
 }  // namespace payments

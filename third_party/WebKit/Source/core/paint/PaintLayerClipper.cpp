@@ -343,8 +343,6 @@ void PaintLayerClipper::CalculateRects(
     ClipRect& background_rect,
     ClipRect& foreground_rect,
     const LayoutPoint* offset_from_root) const {
-  // This feature is not supported for this method.
-  DCHECK(context.respect_overflow_clip != kIgnoreOverflowClipAndScroll);
   if (use_geometry_mapper_) {
     DCHECK(fragment_data);
     auto* local_borderbox = fragment_data->LocalBorderBoxProperties();
@@ -447,16 +445,10 @@ void PaintLayerClipper::CalculateClipRects(const ClipRectsContext& context,
     // rootLayer may be across some transformed layer boundary, for example, in
     // the PaintLayerCompositor overlapMap, where clipRects are needed in view
     // space.
-    LayoutPoint offset(layout_object.LocalToAncestorPoint(
-        FloatPoint(), &context.root_layer->GetLayoutObject()));
-    if (context.respect_overflow_clip == kIgnoreOverflowClipAndScroll &&
-        context.root_layer->ScrollsOverflow() &&
-        layer_.ScrollsWithRespectTo(context.root_layer)) {
-      offset.Move(LayoutSize(
-          context.root_layer->GetScrollableArea()->GetScrollOffset()));
-    }
-
-    ApplyClipRects(context, layout_object, offset, clip_rects);
+    ApplyClipRects(context, layout_object,
+                   LayoutPoint(layout_object.LocalToAncestorPoint(
+                       FloatPoint(), &context.root_layer->GetLayoutObject())),
+                   clip_rects);
   }
 }
 
@@ -502,32 +494,31 @@ void PaintLayerClipper::CalculateBackgroundClipRectWithGeometryMapper(
   // rects, so we should add methods to GeometryMapper that guarantee there
   // are tight results, or else signal an error.
   if (HasOverflowClip(layer_)) {
-    // Implement the following special case: if computing clip rects with
-    // respect to the root, don't exclude overlay scrollbars for the background
-    // rect if layer_ is the same as the root.
-    OverlayScrollbarClipBehavior clip_behavior =
-        context.overlay_scrollbar_clip_behavior;
-    if (&layer_ == context.root_layer)
-      clip_behavior = kIgnorePlatformOverlayScrollbarSize;
-
     FloatClipRect clip_rect((FloatRect(LocalVisualRect(context))));
       clip_rect.MoveBy(FloatPoint(fragment_data.PaintOffset()));
 
-      GeometryMapper::LocalToAncestorVisualRect(source_property_tree_state,
-                                                destination_property_tree_state,
-                                                clip_rect, clip_behavior);
-      output.SetRect(clip_rect);
+    GeometryMapper::LocalToAncestorVisualRect(
+        source_property_tree_state, destination_property_tree_state, clip_rect);
+    output.SetRect(clip_rect);
   } else {
     const FloatClipRect& clipped_rect_in_root_layer_space =
         GeometryMapper::LocalToAncestorClipRect(
-            source_property_tree_state, destination_property_tree_state,
-            context.overlay_scrollbar_clip_behavior);
+            source_property_tree_state, destination_property_tree_state);
     output.SetRect(clipped_rect_in_root_layer_space);
   }
 
   // TODO(chrishtr): generalize to multiple fragments.
   output.MoveBy(
       -context.root_layer->GetLayoutObject().FirstFragment().PaintOffset());
+
+  if (layer_ != *context.root_layer &&
+      context.overlay_scrollbar_clip_behavior ==
+          kExcludeOverlayScrollbarSizeForHitTesting &&
+      context.root_layer->GetLayoutBox() &&
+      context.root_layer->GetLayoutBox()->ShouldClipOverflow()) {
+    output.Intersect(context.root_layer->GetLayoutBox()->OverflowClipRect(
+        LayoutPoint(), kExcludeOverlayScrollbarSizeForHitTesting));
+  }
 
   output.Move(context.sub_pixel_accumulation);
 }

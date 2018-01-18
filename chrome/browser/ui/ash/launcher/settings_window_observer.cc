@@ -7,6 +7,7 @@
 #include "ash/public/cpp/shelf_item.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/resources/grit/ash_resources.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/settings_window_manager_chromeos.h"
@@ -40,7 +41,7 @@ class AuraWindowSettingsTitleTracker : public aura::WindowTracker {
 }  // namespace
 
 SettingsWindowObserver::SettingsWindowObserver() {
-  aura_window_tracker_ = std::make_unique<AuraWindowSettingsTitleTracker>();
+  aura_window_tracker_ = base::MakeUnique<AuraWindowSettingsTitleTracker>();
   chrome::SettingsWindowManager::GetInstance()->AddObserver(this);
 }
 

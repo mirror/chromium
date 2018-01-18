@@ -82,6 +82,13 @@ class VariationsService
   // in cases where an HTTPS connection fails.
   enum HttpOptions { USE_HTTP, USE_HTTPS };
 
+  // Creates field trials based on the variations seed loaded from local state.
+  // If there is a problem loading the seed data, all trials specified by the
+  // seed may not be created. Some field trials are configured to override or
+  // associate with (for reporting) specific features. These associations are
+  // registered with |feature_list|.
+  bool CreateTrialsFromSeed(base::FeatureList* feature_list);
+
   // Should be called before startup of the main message loop.
   void PerformPreMainMessageLoopStartup();
 
@@ -103,6 +110,9 @@ class VariationsService
   // value coming from policy prefs. This should be called prior to any calls
   // to |StartRepeatedVariationsSeedFetch|.
   void SetRestrictMode(const std::string& restrict_mode);
+
+  // Exposed for testing.
+  void SetCreateTrialsFromSeedCalledForTesting(bool called);
 
   // Returns the variations server URL, which can vary if a command-line flag is
   // set and/or the variations restrict pref is set in |local_prefs|. Declared
@@ -246,7 +256,8 @@ class VariationsService
   bool DoFetchFromURL(const GURL& url);
 
   // Calls FetchVariationsSeed once and repeats this periodically. See
-  // implementation for details on the period.
+  // implementation for details on the period. Must be called after
+  // |CreateTrialsFromSeed|.
   void StartRepeatedVariationsSeedFetch();
 
   // Checks if prerequisites for fetching the Variations seed are met, and if
@@ -276,8 +287,7 @@ class VariationsService
 
   // Encrypts a string using the encrypted_messages component, input is passed
   // in as |plaintext|, outputs a serialized EncryptedMessage protobuf as
-  // |encrypted|. Returns true on success, false on failure. The encryption can
-  // be done in-place.
+  // |encrypted|. Returns true on success, false on failure.
   bool EncryptString(const std::string& plaintext, std::string* encrypted);
 
   // Loads the country code to use for filtering permanent consistency studies,

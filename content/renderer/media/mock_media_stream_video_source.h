@@ -53,13 +53,10 @@ class MockMediaStreamVideoSource : public MediaStreamVideoSource {
   void EnableRestart() { can_restart_ = true; }
   void DisableRestart() { can_restart_ = false; }
 
-  bool is_suspended() { return is_suspended_; }
-
   // Implements MediaStreamVideoSource.
   void RequestRefreshFrame() override;
   base::Optional<media::VideoCaptureParams> GetCurrentCaptureParams()
       const override;
-  void OnHasConsumers(bool has_consumers) override;
 
  protected:
   // Implements MediaStreamVideoSource.
@@ -80,7 +77,6 @@ class MockMediaStreamVideoSource : public MediaStreamVideoSource {
   bool is_stopped_for_restart_ = false;
   bool can_stop_for_restart_ = true;
   bool can_restart_ = true;
-  bool is_suspended_ = false;
   VideoCaptureDeliverFrameCB frame_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(MockMediaStreamVideoSource);

@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -253,9 +254,9 @@ void WindowsEventRouter::OnActiveWindowChanged(
   if (!HasEventListener(windows::OnFocusChanged::kEventName))
     return;
 
-  std::unique_ptr<Event> event = std::make_unique<Event>(
+  std::unique_ptr<Event> event = base::MakeUnique<Event>(
       events::WINDOWS_ON_FOCUS_CHANGED, windows::OnFocusChanged::kEventName,
-      std::make_unique<base::ListValue>());
+      base::MakeUnique<base::ListValue>());
   event->will_dispatch_callback =
       base::Bind(&WillDispatchWindowFocusedEvent, window_controller);
   EventRouter::Get(profile_)->BroadcastEvent(std::move(event));
@@ -266,7 +267,7 @@ void WindowsEventRouter::DispatchEvent(events::HistogramValue histogram_value,
                                        WindowController* window_controller,
                                        std::unique_ptr<base::ListValue> args) {
   auto event =
-      std::make_unique<Event>(histogram_value, event_name, std::move(args),
+      base::MakeUnique<Event>(histogram_value, event_name, std::move(args),
                               window_controller->profile());
   event->will_dispatch_callback =
       base::Bind(&WillDispatchWindowEvent, window_controller);
@@ -279,7 +280,7 @@ bool WindowsEventRouter::HasEventListener(const std::string& event_name) {
 
 void WindowsEventRouter::AddAppWindow(extensions::AppWindow* app_window) {
   std::unique_ptr<AppWindowController> controller(new AppWindowController(
-      app_window, std::make_unique<AppBaseWindow>(app_window), profile_));
+      app_window, base::MakeUnique<AppBaseWindow>(app_window), profile_));
   app_windows_[app_window->session_id().id()] = std::move(controller);
 }
 

@@ -6,7 +6,6 @@
 
 #include <stddef.h>
 
-#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -14,6 +13,7 @@
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
@@ -620,7 +620,7 @@ void UserSelectionScreen::CheckUserStatus(const AccountId& account_id) {
       ShouldCheckNeedDircryptoMigration()) {
     if (!dircrypto_migration_checker_) {
       dircrypto_migration_checker_ =
-          std::make_unique<DircryptoMigrationChecker>(this);
+          base::MakeUnique<DircryptoMigrationChecker>(this);
     }
     dircrypto_migration_checker_->Check(account_id);
   }
@@ -746,7 +746,7 @@ void UserSelectionScreen::RecordClickOnLockIcon(const AccountId& account_id) {
 std::unique_ptr<base::ListValue>
 UserSelectionScreen::UpdateAndReturnUserListForWebUI() {
   std::unique_ptr<base::ListValue> users_list =
-      std::make_unique<base::ListValue>();
+      base::MakeUnique<base::ListValue>();
 
   // TODO(nkostylev): Move to a separate method in UserManager.
   // http://crbug.com/230852
@@ -773,7 +773,7 @@ UserSelectionScreen::UpdateAndReturnUserListForWebUI() {
                    : proximity_auth::mojom::AuthType::OFFLINE_PASSWORD);
     user_auth_type_map_[account_id] = initial_auth_type;
 
-    auto user_dict = std::make_unique<base::DictionaryValue>();
+    auto user_dict = base::MakeUnique<base::DictionaryValue>();
     const std::vector<std::string>* public_session_recommended_locales =
         public_session_recommended_locales_.find(account_id) ==
                 public_session_recommended_locales_.end()

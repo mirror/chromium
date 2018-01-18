@@ -637,7 +637,8 @@ TEST(TextEliderTest, ElideString) {
 TEST(TextEliderTest, MAYBE_ElideRectangleText) {
   const FontList font_list;
   const int line_height = font_list.GetHeight();
-  const float test_width = GetStringWidthF(ASCIIToUTF16("Test"), font_list);
+  const float test_width =
+      GetStringWidthF(ASCIIToUTF16("Test"), font_list, Typesetter::HARFBUZZ);
 
   struct TestData {
     const char* input;
@@ -693,8 +694,7 @@ TEST(TextEliderTest, MAYBE_ElideRectangleText) {
 }
 
 // TODO(crbug.com/338784): Enable this on android.
-// Disabled on Mac: fails on 10.11. http://crbug.com/801029
-#if defined(OS_ANDROID) || defined(OS_MACOSX)
+#if defined(OS_ANDROID)
 #define MAYBE_ElideRectangleTextPunctuation \
     DISABLED_ElideRectangleTextPunctuation
 #else
@@ -703,8 +703,10 @@ TEST(TextEliderTest, MAYBE_ElideRectangleText) {
 TEST(TextEliderTest, MAYBE_ElideRectangleTextPunctuation) {
   const FontList font_list;
   const int line_height = font_list.GetHeight();
-  const float test_width = GetStringWidthF(ASCIIToUTF16("Test"), font_list);
-  const float test_t_width = GetStringWidthF(ASCIIToUTF16("Test T"), font_list);
+  const float test_width =
+      GetStringWidthF(ASCIIToUTF16("Test"), font_list, Typesetter::HARFBUZZ);
+  const float test_t_width =
+      GetStringWidthF(ASCIIToUTF16("Test T"), font_list, Typesetter::HARFBUZZ);
 
   struct TestData {
     const char* input;
@@ -742,8 +744,7 @@ TEST(TextEliderTest, MAYBE_ElideRectangleTextPunctuation) {
 }
 
 // TODO(crbug.com/338784): Enable this on android.
-// Disabled on Mac: fails on 10.11. http://crbug.com/801029
-#if defined(OS_ANDROID) || defined(OS_MACOSX)
+#if defined(OS_ANDROID)
 #define MAYBE_ElideRectangleTextLongWords DISABLED_ElideRectangleTextLongWords
 #else
 #define MAYBE_ElideRectangleTextLongWords ElideRectangleTextLongWords
@@ -753,8 +754,10 @@ TEST(TextEliderTest, MAYBE_ElideRectangleTextLongWords) {
   const int kAvailableHeight = 1000;
   const base::string16 kElidedTesting =
       UTF8ToUTF16(std::string("Tes") + kEllipsis);
-  const float elided_width = GetStringWidthF(kElidedTesting, font_list);
-  const float test_width = GetStringWidthF(ASCIIToUTF16("Test"), font_list);
+  const float elided_width =
+      GetStringWidthF(kElidedTesting, font_list, Typesetter::HARFBUZZ);
+  const float test_width =
+      GetStringWidthF(ASCIIToUTF16("Test"), font_list, Typesetter::HARFBUZZ);
 
   struct TestData {
     const char* input;
@@ -838,8 +841,10 @@ TEST(TextEliderTest, MAYBE_ElideRectangleTextCheckLineWidth) {
                                   WRAP_LONG_WORDS,
                                   &lines));
   ASSERT_EQ(2u, lines.size());
-  EXPECT_LE(GetStringWidthF(lines[0], font_list), kAvailableWidth);
-  EXPECT_LE(GetStringWidthF(lines[1], font_list), kAvailableWidth);
+  EXPECT_LE(GetStringWidthF(lines[0], font_list, Typesetter::HARFBUZZ),
+            kAvailableWidth);
+  EXPECT_LE(GetStringWidthF(lines[1], font_list, Typesetter::HARFBUZZ),
+            kAvailableWidth);
 }
 
 #if defined(OS_CHROMEOS)

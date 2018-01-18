@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -172,7 +173,6 @@ class AutomationWebContentsObserver
       params.event_type = event.event_type;
       params.update = event.update;
       params.event_from = event.event_from;
-      params.action_request_id = event.action_request_id;
 #if defined(USE_AURA)
       params.mouse_location = aura::Env::GetInstance()->last_mouse_location();
 #endif
@@ -548,7 +548,7 @@ void AutomationInternalQuerySelectorFunction::OnResponse(
     return;
   }
 
-  Respond(OneArgument(std::make_unique<base::Value>(result_acc_obj_id)));
+  Respond(OneArgument(base::MakeUnique<base::Value>(result_acc_obj_id)));
 }
 
 }  // namespace extensions

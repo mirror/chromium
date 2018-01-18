@@ -12,7 +12,10 @@ PromiseRejectionEvent::PromiseRejectionEvent(
     ScriptState* state,
     const AtomicString& type,
     const PromiseRejectionEventInit& initializer)
-    : Event(type, initializer), world_(&state->World()) {
+    : Event(type, initializer),
+      world_(&state->World()),
+      promise_(this),
+      reason_(this) {
   DCHECK(initializer.hasPromise());
   promise_.Set(initializer.promise().GetIsolate(),
                initializer.promise().V8Value());
@@ -22,7 +25,7 @@ PromiseRejectionEvent::PromiseRejectionEvent(
   }
 }
 
-PromiseRejectionEvent::~PromiseRejectionEvent() = default;
+PromiseRejectionEvent::~PromiseRejectionEvent() {}
 
 void PromiseRejectionEvent::Dispose() {
   // Clear ScopedPersistents so that V8 doesn't call phantom callbacks
@@ -67,7 +70,6 @@ void PromiseRejectionEvent::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
   visitor->TraceWrappers(promise_);
   visitor->TraceWrappers(reason_);
-  Event::TraceWrappers(visitor);
 }
 
 }  // namespace blink

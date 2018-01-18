@@ -47,14 +47,14 @@
  * @ctxt:  an XSLT processing context
  * @node:  The current node
  * @inst:  the instruction in the stylesheet
- * @comp:  precomputed information
+ * @comp:  precomputed informations
  *
  * Process an debug node
  */
 void
 xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
           xmlNodePtr inst ATTRIBUTE_UNUSED,
-          xsltElemPreCompPtr comp ATTRIBUTE_UNUSED)
+          xsltStylePreCompPtr comp ATTRIBUTE_UNUSED)
 {
     int i, j;
 
@@ -96,10 +96,7 @@ xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
                 xsltGenericError(xsltGenericErrorContext, "noname !!!!");
 #ifdef LIBXML_DEBUG_ENABLED
             if (cur->value != NULL) {
-                if ((xsltGenericDebugContext == stdout) ||
-                    (xsltGenericDebugContext == stderr))
-                    xmlXPathDebugDumpObject((FILE*)xsltGenericDebugContext,
-                                            cur->value, 1);
+                xmlXPathDebugDumpObject(stdout, cur->value, 1);
             } else {
                 xsltGenericError(xsltGenericErrorContext, "NULL !!!!");
             }
@@ -179,21 +176,21 @@ xsltRegisterAllExtras (void) {
     xsltRegisterExtModuleElement((const xmlChar *) "debug",
 				 XSLT_LIBXSLT_NAMESPACE,
 				 NULL,
-				 xsltDebug);
+				 (xsltTransformFunction) xsltDebug);
     xsltRegisterExtModuleElement((const xmlChar *) "output",
 				 XSLT_SAXON_NAMESPACE,
 				 xsltDocumentComp,
-				 xsltDocumentElem);
+				 (xsltTransformFunction) xsltDocumentElem);
     xsltRegisterExtModuleElement((const xmlChar *) "write",
 				 XSLT_XALAN_NAMESPACE,
 				 xsltDocumentComp,
-				 xsltDocumentElem);
+				 (xsltTransformFunction) xsltDocumentElem);
     xsltRegisterExtModuleElement((const xmlChar *) "document",
 				 XSLT_XT_NAMESPACE,
 				 xsltDocumentComp,
-				 xsltDocumentElem);
+				 (xsltTransformFunction) xsltDocumentElem);
     xsltRegisterExtModuleElement((const xmlChar *) "document",
 				 XSLT_NAMESPACE,
 				 xsltDocumentComp,
-				 xsltDocumentElem);
+				 (xsltTransformFunction) xsltDocumentElem);
 }

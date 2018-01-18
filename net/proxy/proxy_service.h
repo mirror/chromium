@@ -119,8 +119,9 @@ class NET_EXPORT ProxyService : public NetworkChangeNotifier::IPAddressObserver,
 
   ~ProxyService() override;
 
-  // Used to track proxy resolution requests that complete asynchronously.
-  class Request;
+  // Used internally to handle PAC queries.
+  // TODO(eroman): consider naming this simply "Request".
+  class PacRequest;
 
   // Determines the appropriate proxy for |url| for a |method| request and
   // stores the result in |results|. If |method| is empty, the caller can expect
@@ -132,9 +133,9 @@ class NET_EXPORT ProxyService : public NetworkChangeNotifier::IPAddressObserver,
   // ResolveProxy.
   //
   // The caller is responsible for ensuring that |results| and |callback|
-  // remain valid until the callback is run or until |request| is cancelled
-  // via CancelRequest.  |request| is only valid while the completion
-  // callback is still pending. NULL can be passed for |request| if
+  // remain valid until the callback is run or until |pac_request| is cancelled
+  // via CancelPacRequest.  |pac_request| is only valid while the completion
+  // callback is still pending. NULL can be passed for |pac_request| if
   // the caller will not need to cancel the request.
   //
   // We use the three possible proxy access types in the following order,
@@ -149,7 +150,7 @@ class NET_EXPORT ProxyService : public NetworkChangeNotifier::IPAddressObserver,
                    const std::string& method,
                    ProxyInfo* results,
                    const CompletionCallback& callback,
-                   Request** request,
+                   PacRequest** pac_request,
                    ProxyDelegate* proxy_delegate,
                    const NetLogWithSource& net_log);
 
@@ -169,7 +170,7 @@ class NET_EXPORT ProxyService : public NetworkChangeNotifier::IPAddressObserver,
   // list of possible values. The semantics of this call are otherwise
   // similar to ResolveProxy.
   //
-  // NULL can be passed for |request| if the caller will not need to
+  // NULL can be passed for |pac_request| if the caller will not need to
   // cancel the request.
   //
   // Returns ERR_FAILED if there is not another proxy config to try.
@@ -180,7 +181,7 @@ class NET_EXPORT ProxyService : public NetworkChangeNotifier::IPAddressObserver,
                                 int net_error,
                                 ProxyInfo* results,
                                 const CompletionCallback& callback,
-                                Request** request,
+                                PacRequest** pac_request,
                                 ProxyDelegate* proxy_delegate,
                                 const NetLogWithSource& net_log);
 
@@ -207,11 +208,11 @@ class NET_EXPORT ProxyService : public NetworkChangeNotifier::IPAddressObserver,
   void ReportSuccess(const ProxyInfo& proxy_info,
                      ProxyDelegate* proxy_delegate);
 
-  // Call this method with a non-null |request| to cancel the PAC request.
-  void CancelRequest(Request* request);
+  // Call this method with a non-null |pac_request| to cancel the PAC request.
+  void CancelPacRequest(PacRequest* pac_request);
 
-  // Returns the LoadState for this |request| which must be non-NULL.
-  LoadState GetLoadState(const Request* request) const;
+  // Returns the LoadState for this |pac_request| which must be non-NULL.
+  LoadState GetLoadState(const PacRequest* pac_request) const;
 
   // Sets the ProxyScriptFetcher and DhcpProxyScriptFetcher dependencies. This
   // is needed if the ProxyResolver is of type ProxyResolverWithoutFetch.
@@ -317,11 +318,11 @@ class NET_EXPORT ProxyService : public NetworkChangeNotifier::IPAddressObserver,
  private:
   FRIEND_TEST_ALL_PREFIXES(ProxyServiceTest, UpdateConfigAfterFailedAutodetect);
   FRIEND_TEST_ALL_PREFIXES(ProxyServiceTest, UpdateConfigFromPACToDirect);
-  friend class Request;
+  friend class PacRequest;
   class InitProxyResolver;
   class ProxyScriptDeciderPoller;
 
-  typedef std::set<scoped_refptr<Request>> PendingRequests;
+  typedef std::set<scoped_refptr<PacRequest>> PendingRequests;
 
   enum State {
     STATE_NONE,
@@ -360,7 +361,7 @@ class NET_EXPORT ProxyService : public NetworkChangeNotifier::IPAddressObserver,
                          const std::string& method,
                          ProxyInfo* results,
                          const CompletionCallback& callback,
-                         Request** request,
+                         PacRequest** pac_request,
                          ProxyDelegate* proxy_delegate,
                          const NetLogWithSource& net_log);
 
@@ -373,10 +374,10 @@ class NET_EXPORT ProxyService : public NetworkChangeNotifier::IPAddressObserver,
   void SetReady();
 
   // Returns true if |pending_requests_| contains |req|.
-  bool ContainsPendingRequest(Request* req);
+  bool ContainsPendingRequest(PacRequest* req);
 
   // Removes |req| from the list of pending requests.
-  void RemovePendingRequest(Request* req);
+  void RemovePendingRequest(PacRequest* req);
 
   // Called when proxy resolution has completed (either synchronously or
   // asynchronously). Handles logging the result, and cleaning out

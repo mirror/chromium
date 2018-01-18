@@ -37,6 +37,26 @@ using chrome_test_util::OmniboxText;
 @interface ToolbarTestCase : ChromeTestCase
 @end
 
+namespace {
+
+// Displays the |panel_type| new tab page.  On a phone this will send a command
+// to display a dialog, on tablet this calls -selectPanel to slide the NTP.
+void SelectNewTabPagePanel(ntp_home::PanelIdentifier panel_type) {
+  NewTabPageController* ntp_controller =
+      chrome_test_util::GetCurrentNewTabPageController();
+  if (IsIPadIdiom()) {
+    [ntp_controller selectPanel:panel_type];
+  } else if (panel_type == ntp_home::BOOKMARKS_PANEL) {
+    [chrome_test_util::BrowserCommandDispatcherForMainBVC()
+        showBookmarksManager];
+  } else if (panel_type == ntp_home::RECENT_TABS_PANEL) {
+    [chrome_test_util::BrowserCommandDispatcherForMainBVC() showRecentTabs];
+  }
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+}
+
+}  // namespace
+
 @implementation ToolbarTestCase
 
 #pragma mark Tests
@@ -379,6 +399,7 @@ using chrome_test_util::OmniboxText;
   if (IsIPadIdiom()) {
     EARL_GREY_TEST_DISABLED(@"Disabled for iPad due to a simulator bug.");
   }
+  SelectNewTabPagePanel(ntp_home::HOME_PANEL);
 
   id<GREYMatcher> locationbarButton = grey_allOf(
       grey_accessibilityLabel(l10n_util::GetNSString(IDS_OMNIBOX_EMPTY_HINT)),
@@ -462,6 +483,8 @@ using chrome_test_util::OmniboxText;
       performAction:grey_tap()];
   [[EarlGrey selectElementWithMatcher:chrome_test_util::Omnibox()]
       assertWithMatcher:chrome_test_util::OmniboxText("")];
+
+  SelectNewTabPagePanel(ntp_home::HOME_PANEL);
 }
 
 // Tests typing in the omnibox using the keyboard accessory view.

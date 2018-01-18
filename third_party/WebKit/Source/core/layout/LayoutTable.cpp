@@ -81,7 +81,7 @@ LayoutTable::LayoutTable(Element* element)
   effective_column_positions_.Fill(0, 1);
 }
 
-LayoutTable::~LayoutTable() = default;
+LayoutTable::~LayoutTable() {}
 
 void LayoutTable::StyleDidChange(StyleDifference diff,
                                  const ComputedStyle* old_style) {

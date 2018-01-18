@@ -27,11 +27,10 @@ namespace blink {
 namespace {
 
 LockInfo ToLockInfo(const mojom::blink::LockInfoPtr& record) {
-  LockInfo info;
-  info.setMode(Lock::ModeToString(record->mode));
-  info.setName(record->name);
-  info.setClientId(record->client_id);
-  return info;
+  LockInfo request;
+  request.setMode(Lock::ModeToString(record->mode));
+  request.setName(record->name);
+  return request;
 }
 
 HeapVector<LockInfo> ToLockInfos(
@@ -279,7 +278,6 @@ void LockManager::Trace(blink::Visitor* visitor) {
 void LockManager::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
   for (auto request : pending_requests_)
     visitor->TraceWrappers(request);
-  ScriptWrappable::TraceWrappers(visitor);
 }
 
 void LockManager::ContextDestroyed(ExecutionContext*) {

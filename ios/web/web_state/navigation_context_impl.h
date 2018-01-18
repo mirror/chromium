@@ -44,7 +44,6 @@ class NavigationContextImpl : public NavigationContext {
   ~NavigationContextImpl() override;
 
   // Setters for navigation context data members.
-  void SetUrl(const GURL& url);
   void SetIsSameDocument(bool is_same_document);
   void SetIsPost(bool is_post);
   void SetError(NSError* error);

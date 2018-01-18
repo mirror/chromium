@@ -4,10 +4,10 @@
 
 #include "chrome/browser/ui/webui/task_scheduler_internals/task_scheduler_internals_ui.h"
 
-#include <memory>
 #include <utility>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_base.h"
 #include "base/metrics/histogram_samples.h"
 #include "base/numerics/safe_conversions.h"
@@ -23,7 +23,8 @@ namespace {
 
 std::unique_ptr<base::Value> SnapshotHistogramToValue(
     const base::HistogramBase* histogram) {
-  std::unique_ptr<base::ListValue> values = std::make_unique<base::ListValue>();
+  std::unique_ptr<base::ListValue> values =
+      base::MakeUnique<base::ListValue>();
 
   std::unique_ptr<base::HistogramSamples> samples =
       histogram->SnapshotSamples();
@@ -35,7 +36,7 @@ std::unique_ptr<base::Value> SnapshotHistogramToValue(
     iterator->Get(&min, &max, &count);
 
     std::unique_ptr<base::DictionaryValue> bucket =
-        std::make_unique<base::DictionaryValue>();
+        base::MakeUnique<base::DictionaryValue>();
     bucket->SetInteger("min", min);
     // Note: DictionaryValue does not support 64-bit integer values. The checked
     // cast below is OK in this case because none of the histograms passed to
@@ -71,13 +72,13 @@ class TaskSchedulerDataHandler : public content::WebUIMessageHandler {
 
     if (task_scheduler) {
       std::unique_ptr<base::ListValue> histogram_value =
-          std::make_unique<base::ListValue>();
+          base::MakeUnique<base::ListValue>();
       std::vector<const base::HistogramBase*> histograms =
           task_scheduler->GetHistograms();
 
       for (const base::HistogramBase* const histogram : histograms) {
         std::unique_ptr<base::DictionaryValue> buckets =
-            std::make_unique<base::DictionaryValue>();
+            base::MakeUnique<base::DictionaryValue>();
         buckets->SetString("name", histogram->histogram_name());
         buckets->Set("buckets", SnapshotHistogramToValue(histogram));
         histogram_value->Append(std::move(buckets));
@@ -98,7 +99,7 @@ class TaskSchedulerDataHandler : public content::WebUIMessageHandler {
 
 TaskSchedulerInternalsUI::TaskSchedulerInternalsUI(content::WebUI* web_ui)
     : content::WebUIController(web_ui) {
-  web_ui->AddMessageHandler(std::make_unique<TaskSchedulerDataHandler>());
+  web_ui->AddMessageHandler(base::MakeUnique<TaskSchedulerDataHandler>());
 
   content::WebUIDataSource* html_source =
       content::WebUIDataSource::Create(

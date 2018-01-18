@@ -12,19 +12,11 @@
 
 namespace language {
 
-TEST(LanguageCodeLocatorTest, LocatedLanguageOne) {
+TEST(LanguageCodeLocatorTest, LocatedLanguage) {
   LanguageCodeLocator locator;
   std::vector<std::string> expected_langs = {"hi", "mr", "ur"};
   // Random place in Madhya Pradesh, expected langs should be hi;mr;ur.
   const auto& result = locator.GetLanguageCode(23.0, 80.0);
-  EXPECT_EQ(expected_langs, result);
-}
-
-TEST(LanguageCodeLocatorTest, LocatedLanguageTwo) {
-  LanguageCodeLocator locator;
-  std::vector<std::string> expected_langs = {"bn"};
-  // Random place in Tripura, expected langs should be bn.
-  const auto& result = locator.GetLanguageCode(23.7f, 91.7f);
   EXPECT_EQ(expected_langs, result);
 }
 

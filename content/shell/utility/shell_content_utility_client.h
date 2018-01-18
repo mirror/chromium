@@ -23,7 +23,7 @@ class ShellContentUtilityClient : public ContentUtilityClient {
       service_manager::BinderRegistry* registry) override;
 
  private:
-  std::unique_ptr<NetworkServiceTestHelper> network_service_test_helper_;
+  NetworkServiceTestHelper network_service_test_helper_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellContentUtilityClient);
 };

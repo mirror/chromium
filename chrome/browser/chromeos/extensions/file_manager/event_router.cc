@@ -13,6 +13,7 @@
 #include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
@@ -106,7 +107,7 @@ void BroadcastEvent(Profile* profile,
                     const std::string& event_name,
                     std::unique_ptr<base::ListValue> event_args) {
   extensions::EventRouter::Get(profile)->BroadcastEvent(
-      std::make_unique<extensions::Event>(histogram_value, event_name,
+      base::MakeUnique<extensions::Event>(histogram_value, event_name,
                                           std::move(event_args)));
 }
 
@@ -119,7 +120,7 @@ void DispatchEventToExtension(
     const std::string& event_name,
     std::unique_ptr<base::ListValue> event_args) {
   extensions::EventRouter::Get(profile)->DispatchEventToExtension(
-      extension_id, std::make_unique<extensions::Event>(
+      extension_id, base::MakeUnique<extensions::Event>(
                         histogram_value, event_name, std::move(event_args)));
 }
 

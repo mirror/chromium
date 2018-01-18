@@ -45,6 +45,7 @@
 #include "content/public/common/previews_state.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/request_context_type.h"
+#include "content/public/common/resource_response.h"
 #include "content/public/common/screen_info.h"
 #include "content/public/common/stop_find_action.h"
 #include "content/public/common/three_d_api_types.h"
@@ -57,7 +58,7 @@
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
-#include "third_party/WebKit/public/platform/WebScrollIntoViewParams.h"
+#include "third_party/WebKit/public/platform/WebRemoteScrollProperties.h"
 #include "third_party/WebKit/public/platform/WebSuddenTerminationDisablerType.h"
 #include "third_party/WebKit/public/web/WebFindOptions.h"
 #include "third_party/WebKit/public/web/WebFrameOwnerProperties.h"
@@ -94,13 +95,12 @@ using FrameMsg_SerializeAsMHTML_FrameRoutingIdToContentIdMap =
 #define IPC_MESSAGE_EXPORT CONTENT_EXPORT
 
 #define IPC_MESSAGE_START FrameMsgStart
-IPC_ENUM_TRAITS_MAX_VALUE(
-    blink::WebScrollIntoViewParams::AlignmentBehavior,
-    blink::WebScrollIntoViewParams::kLastAlignmentBehavior)
-IPC_ENUM_TRAITS_MAX_VALUE(blink::WebScrollIntoViewParams::Type,
-                          blink::WebScrollIntoViewParams::kLastType)
-IPC_ENUM_TRAITS_MAX_VALUE(blink::WebScrollIntoViewParams::Behavior,
-                          blink::WebScrollIntoViewParams::kLastBehavior)
+IPC_ENUM_TRAITS_MAX_VALUE(blink::WebRemoteScrollProperties::Alignment,
+                          blink::WebRemoteScrollProperties::kLastAlignment)
+IPC_ENUM_TRAITS_MAX_VALUE(blink::WebRemoteScrollProperties::Type,
+                          blink::WebRemoteScrollProperties::kLastType)
+IPC_ENUM_TRAITS_MAX_VALUE(blink::WebRemoteScrollProperties::Behavior,
+                          blink::WebRemoteScrollProperties::kLastBehavior)
 IPC_ENUM_TRAITS_MIN_MAX_VALUE(content::JavaScriptDialogType,
                               content::JAVASCRIPT_DIALOG_TYPE_ALERT,
                               content::JAVASCRIPT_DIALOG_TYPE_PROMPT)
@@ -141,13 +141,7 @@ IPC_STRUCT_TRAITS_BEGIN(blink::WebFindOptions)
   IPC_STRUCT_TRAITS_MEMBER(force)
 IPC_STRUCT_TRAITS_END()
 
-IPC_STRUCT_TRAITS_BEGIN(blink::WebScrollIntoViewParams::Alignment)
-  IPC_STRUCT_TRAITS_MEMBER(rect_visible)
-  IPC_STRUCT_TRAITS_MEMBER(rect_hidden)
-  IPC_STRUCT_TRAITS_MEMBER(rect_partial)
-IPC_STRUCT_TRAITS_END()
-
-IPC_STRUCT_TRAITS_BEGIN(blink::WebScrollIntoViewParams)
+IPC_STRUCT_TRAITS_BEGIN(blink::WebRemoteScrollProperties)
   IPC_STRUCT_TRAITS_MEMBER(align_x)
   IPC_STRUCT_TRAITS_MEMBER(align_y)
   IPC_STRUCT_TRAITS_MEMBER(type)
@@ -340,10 +334,6 @@ IPC_STRUCT_BEGIN_WITH_PARENT(FrameHostMsg_DidCommitProvisionalLoad_Params,
   // The insecure request policy the document for the load is enforcing.
   IPC_STRUCT_MEMBER(blink::WebInsecureRequestPolicy, insecure_request_policy)
 
-  // The upgrade insecure navigations set the document for the load is
-  // enforcing.
-  IPC_STRUCT_MEMBER(std::vector<uint32_t>, insecure_navigations_set)
-
   // True if the document for the load is a unique origin that should be
   // considered potentially trustworthy.
   IPC_STRUCT_MEMBER(bool, has_potentially_trustworthy_unique_origin)
@@ -460,7 +450,6 @@ IPC_STRUCT_TRAITS_BEGIN(content::FrameReplicationState)
   IPC_STRUCT_TRAITS_MEMBER(accumulated_csp_headers)
   IPC_STRUCT_TRAITS_MEMBER(scope)
   IPC_STRUCT_TRAITS_MEMBER(insecure_request_policy)
-  IPC_STRUCT_TRAITS_MEMBER(insecure_navigations_set)
   IPC_STRUCT_TRAITS_MEMBER(has_potentially_trustworthy_unique_origin)
   IPC_STRUCT_TRAITS_MEMBER(has_received_user_gesture_before_nav)
 IPC_STRUCT_TRAITS_END()
@@ -471,7 +460,7 @@ IPC_STRUCT_TRAITS_END()
 IPC_STRUCT_BEGIN(FrameHostMsg_OpenURL_Params)
   IPC_STRUCT_MEMBER(GURL, url)
   IPC_STRUCT_MEMBER(bool, uses_post)
-  IPC_STRUCT_MEMBER(scoped_refptr<network::ResourceRequestBody>,
+  IPC_STRUCT_MEMBER(scoped_refptr<content::ResourceRequestBody>,
                     resource_request_body)
   IPC_STRUCT_MEMBER(std::string, extra_headers)
   IPC_STRUCT_MEMBER(content::Referrer, referrer)
@@ -480,7 +469,6 @@ IPC_STRUCT_BEGIN(FrameHostMsg_OpenURL_Params)
   IPC_STRUCT_MEMBER(bool, user_gesture)
   IPC_STRUCT_MEMBER(bool, is_history_navigation_in_new_child)
   IPC_STRUCT_MEMBER(blink::WebTriggeringEventInfo, triggering_event_info)
-  IPC_STRUCT_MEMBER(base::Optional<std::string>, suggested_filename)
 IPC_STRUCT_END()
 
 IPC_STRUCT_BEGIN(FrameHostMsg_DownloadUrl_Params)
@@ -870,11 +858,6 @@ IPC_MESSAGE_ROUTED0(FrameMsg_ResetContentSecurityPolicy)
 IPC_MESSAGE_ROUTED1(FrameMsg_EnforceInsecureRequestPolicy,
                     blink::WebInsecureRequestPolicy)
 
-// Update a proxy's replicated set for enforcement of insecure navigations.
-// Used when the frame's set is changed in another process.
-IPC_MESSAGE_ROUTED1(FrameMsg_EnforceInsecureNavigationsSet,
-                    std::vector<uint32_t> /* set */)
-
 // Update a proxy's replicated origin.  Used when the frame is navigated to a
 // new origin.
 IPC_MESSAGE_ROUTED2(FrameMsg_DidUpdateOrigin,
@@ -1072,7 +1055,7 @@ IPC_MESSAGE_ROUTED1(FrameMsg_MixedContentFound,
 // Sent to the parent process of a cross-process frame to request scrolling.
 IPC_MESSAGE_ROUTED2(FrameMsg_ScrollRectToVisible,
                     gfx::Rect /* rect_to_scroll */,
-                    blink::WebScrollIntoViewParams /* properties */)
+                    blink::WebRemoteScrollProperties /* properties */)
 
 // -----------------------------------------------------------------------------
 // Messages sent from the renderer to the browser.
@@ -1646,7 +1629,7 @@ IPC_MESSAGE_ROUTED3(FrameHostMsg_WebUISend,
 // Sent by a local root to request scrolling in its parent process.
 IPC_MESSAGE_ROUTED2(FrameHostMsg_ScrollRectToVisibleInParentFrame,
                     gfx::Rect /* rect_to_scroll */,
-                    blink::WebScrollIntoViewParams /* properties */)
+                    blink::WebRemoteScrollProperties /* properties */)
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 

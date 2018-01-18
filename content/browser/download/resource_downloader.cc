@@ -13,10 +13,6 @@
 #include "content/public/browser/web_contents.h"
 #include "storage/browser/fileapi/file_system_context.h"
 
-namespace network {
-struct ResourceResponseHead;
-}
-
 namespace content {
 
 // This object monitors the URLLoaderCompletionStatus change when
@@ -30,11 +26,11 @@ class URLLoaderStatusMonitor : public mojom::URLLoaderClient {
 
   // mojom::URLLoaderClient
   void OnReceiveResponse(
-      const network::ResourceResponseHead& head,
+      const ResourceResponseHead& head,
       const base::Optional<net::SSLInfo>& ssl_info,
       mojom::DownloadedTempFilePtr downloaded_file) override {}
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
-                         const network::ResourceResponseHead& head) override {}
+                         const ResourceResponseHead& head) override {}
   void OnDataDownloaded(int64_t data_length, int64_t encoded_length) override {}
   void OnUploadProgress(int64_t current_position,
                         int64_t total_size,
@@ -87,18 +83,14 @@ class RequestHandle : public DownloadRequestHandleInterface {
 std::unique_ptr<ResourceDownloader> ResourceDownloader::BeginDownload(
     base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
     std::unique_ptr<DownloadUrlParameters> params,
-    std::unique_ptr<network::ResourceRequest> request,
+    std::unique_ptr<ResourceRequest> request,
     scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter,
     scoped_refptr<storage::FileSystemContext> file_system_context,
     const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
-    const GURL& site_url,
-    const GURL& tab_url,
-    const GURL& tab_referrer_url,
     uint32_t download_id,
     bool is_parallel_request) {
   auto downloader = std::make_unique<ResourceDownloader>(
-      delegate, std::move(request), web_contents_getter, site_url, tab_url,
-      tab_referrer_url, download_id);
+      delegate, std::move(request), web_contents_getter, download_id);
 
   downloader->Start(url_loader_factory_getter, file_system_context,
                     std::move(params), is_parallel_request);
@@ -109,16 +101,16 @@ std::unique_ptr<ResourceDownloader> ResourceDownloader::BeginDownload(
 std::unique_ptr<ResourceDownloader>
 ResourceDownloader::InterceptNavigationResponse(
     base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
-    std::unique_ptr<network::ResourceRequest> resource_request,
+    std::unique_ptr<ResourceRequest> resource_request,
     const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
     std::vector<GURL> url_chain,
     const base::Optional<std::string>& suggested_filename,
-    const scoped_refptr<network::ResourceResponse>& response,
+    const scoped_refptr<ResourceResponse>& response,
     net::CertStatus cert_status,
     mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints) {
   auto downloader = std::make_unique<ResourceDownloader>(
-      delegate, std::move(resource_request), web_contents_getter, GURL(),
-      GURL(), GURL(), DownloadItem::kInvalidId);
+      delegate, std::move(resource_request), web_contents_getter,
+      DownloadItem::kInvalidId);
   downloader->InterceptResponse(std::move(response), std::move(url_chain),
                                 suggested_filename, cert_status,
                                 std::move(url_loader_client_endpoints));
@@ -127,19 +119,13 @@ ResourceDownloader::InterceptNavigationResponse(
 
 ResourceDownloader::ResourceDownloader(
     base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
-    std::unique_ptr<network::ResourceRequest> resource_request,
+    std::unique_ptr<ResourceRequest> resource_request,
     const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
-    const GURL& site_url,
-    const GURL& tab_url,
-    const GURL& tab_referrer_url,
     uint32_t download_id)
     : delegate_(delegate),
       resource_request_(std::move(resource_request)),
       download_id_(download_id),
       web_contents_getter_(web_contents_getter),
-      site_url_(site_url),
-      tab_url_(tab_url),
-      tab_referrer_url_(tab_referrer_url),
       weak_ptr_factory_(this) {}
 
 ResourceDownloader::~ResourceDownloader() = default;
@@ -159,7 +145,6 @@ void ResourceDownloader::Start(
           download_url_parameters->GetSaveInfo()),
       is_parallel_request, download_url_parameters->is_transient(),
       download_url_parameters->fetch_error_body(),
-      download_url_parameters->download_source(),
       std::vector<GURL>(1, resource_request_->url));
   mojom::URLLoaderClientPtr url_loader_client_ptr;
   url_loader_client_binding_ =
@@ -188,7 +173,7 @@ void ResourceDownloader::Start(
 }
 
 void ResourceDownloader::InterceptResponse(
-    const scoped_refptr<network::ResourceResponse>& response,
+    const scoped_refptr<ResourceResponse>& response,
     std::vector<GURL> url_chain,
     const base::Optional<std::string>& suggested_filename,
     net::CertStatus cert_status,
@@ -202,7 +187,7 @@ void ResourceDownloader::InterceptResponse(
     save_info->suggested_name = base::UTF8ToUTF16(suggested_filename.value());
   url_loader_client_ = std::make_unique<DownloadResponseHandler>(
       resource_request_.get(), this, std::move(save_info), false, false, false,
-      DownloadSource::NAVIGATION, std::move(url_chain));
+      std::move(url_chain));
 
   // Simulate on the new URLLoaderClient calls that happened on the old client.
   net::SSLInfo info;
@@ -222,9 +207,6 @@ void ResourceDownloader::OnResponseStarted(
     mojom::DownloadStreamHandlePtr stream_handle) {
   download_create_info->download_id = download_id_;
   download_create_info->guid = guid_;
-  download_create_info->site_url = site_url_;
-  download_create_info->tab_url = tab_url_;
-  download_create_info->tab_referrer_url = tab_referrer_url_;
   download_create_info->request_handle.reset(
       new RequestHandle(web_contents_getter_));
 

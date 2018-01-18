@@ -188,6 +188,10 @@ void WebRuntimeFeatures::EnableModuleScriptsImportMetaUrl(bool enable) {
   RuntimeEnabledFeatures::SetModuleScriptsImportMetaUrlEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableMojoBlobs(bool enable) {
+  RuntimeEnabledFeatures::SetMojoBlobsEnabled(enable);
+}
+
 void WebRuntimeFeatures::EnableNotificationConstructor(bool enable) {
   RuntimeEnabledFeatures::SetNotificationConstructorEnabled(enable);
 }
@@ -292,6 +296,10 @@ void WebRuntimeFeatures::EnableTurnOff2DAndOpacityCompositorAnimations(
     bool enable) {
   RuntimeEnabledFeatures::SetTurnOff2DAndOpacityCompositorAnimationsEnabled(
       enable);
+}
+
+void WebRuntimeFeatures::EnablePreventLayerSquashing(bool enable) {
+  RuntimeEnabledFeatures::SetPreventLayerSquashingEnabled(enable);
 }
 
 void WebRuntimeFeatures::EnableWebGLDraftExtensions(bool enable) {

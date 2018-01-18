@@ -39,7 +39,6 @@ class SuggestionsContainerView : public SearchResultContainerView {
   views::View* GetSelectedView() const override;
   views::View* GetFirstResultView() override;
   void SetFirstResultSelected(bool selected) override;
-  const char* GetClassName() const override;
 
  private:
   void CreateAppsGrid(int apps_num);

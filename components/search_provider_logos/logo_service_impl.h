@@ -12,7 +12,6 @@
 #include "components/search_provider_logos/logo_common.h"
 #include "components/search_provider_logos/logo_service.h"
 
-class GaiaCookieManagerService;
 class TemplateURLService;
 
 namespace base {
@@ -37,7 +36,6 @@ class LogoServiceImpl : public LogoService {
  public:
   LogoServiceImpl(
       const base::FilePath& cache_directory,
-      GaiaCookieManagerService* cookie_service,
       TemplateURLService* template_url_service,
       std::unique_ptr<image_fetcher::ImageDecoder> image_decoder,
       scoped_refptr<net::URLRequestContextGetter> request_context_getter,
@@ -45,10 +43,7 @@ class LogoServiceImpl : public LogoService {
 
   ~LogoServiceImpl() override;
 
-  // KeyedService implementation.
-  void Shutdown() override;
-
-  // LogoService implementation.
+  // LogoService
   void GetLogo(LogoCallbacks callbacks) override;
   void GetLogo(LogoObserver* observer) override;
 
@@ -59,12 +54,6 @@ class LogoServiceImpl : public LogoService {
   void SetClockForTests(std::unique_ptr<base::Clock> clock);
 
  private:
-  class SigninObserver;
-
-  void InitializeLogoTrackerIfNecessary();
-
-  void SigninStatusChanged();
-
   // Constructor arguments.
   const base::FilePath cache_directory_;
   TemplateURLService* const template_url_service_;
@@ -76,8 +65,6 @@ class LogoServiceImpl : public LogoService {
 
   // logo_tracker_ takes ownership if/when it is initialized.
   std::unique_ptr<image_fetcher::ImageDecoder> image_decoder_;
-
-  std::unique_ptr<SigninObserver> signin_observer_;
 
   // For testing. logo_tracker_ takes ownership if/when it is initialized.
   std::unique_ptr<base::Clock> clock_for_test_;

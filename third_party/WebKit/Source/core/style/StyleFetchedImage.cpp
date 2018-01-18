@@ -44,7 +44,7 @@ StyleFetchedImage::StyleFetchedImage(ImageResourceContent* image,
   image_->SetNotRefetchableDataFromDiskCache();
 }
 
-StyleFetchedImage::~StyleFetchedImage() = default;
+StyleFetchedImage::~StyleFetchedImage() {}
 
 void StyleFetchedImage::Dispose() {
   image_->RemoveObserver(this);

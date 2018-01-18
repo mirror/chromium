@@ -317,7 +317,7 @@ class FormKeyGenerator final
   void WillDeleteForm(HTMLFormElement*);
 
  private:
-  FormKeyGenerator() = default;
+  FormKeyGenerator() {}
 
   using FormToKeyMap = HeapHashMap<Member<HTMLFormElement>, AtomicString>;
   using FormSignatureToNextIndexMap = HashMap<String, unsigned>;
@@ -463,7 +463,7 @@ Vector<String> DocumentState::ToStateVector() {
 
 FormController::FormController() : document_state_(DocumentState::Create()) {}
 
-FormController::~FormController() = default;
+FormController::~FormController() {}
 
 void FormController::Trace(blink::Visitor* visitor) {
   visitor->Trace(document_state_);

@@ -248,7 +248,7 @@ TEST_F(MediaStreamAudioProcessorTest, MAYBE_WithAudioProcessing) {
 TEST_F(MediaStreamAudioProcessorTest, TurnOffDefaultConstraints) {
   AudioProcessingProperties properties;
   // Turn off the default constraints and pass it to MediaStreamAudioProcessor.
-  properties.DisableDefaultProperties();
+  properties.DisableDefaultPropertiesForTesting();
   scoped_refptr<WebRtcAudioDeviceImpl> webrtc_audio_device(
       new rtc::RefCountedObject<WebRtcAudioDeviceImpl>());
   scoped_refptr<MediaStreamAudioProcessor> audio_processor(
@@ -367,7 +367,7 @@ TEST_F(MediaStreamAudioProcessorTest, TestStereoAudio) {
       new rtc::RefCountedObject<WebRtcAudioDeviceImpl>());
   AudioProcessingProperties properties;
   // Turn off the audio processing and turn on the stereo channels mirroring.
-  properties.DisableDefaultProperties();
+  properties.DisableDefaultPropertiesForTesting();
   properties.goog_audio_mirroring = true;
   scoped_refptr<MediaStreamAudioProcessor> audio_processor(
       new rtc::RefCountedObject<MediaStreamAudioProcessor>(

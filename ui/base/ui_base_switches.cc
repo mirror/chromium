@@ -123,11 +123,10 @@ const char kTintGlCompositedContent[] = "tint-gl-composited-content";
 #if defined(USE_AURA)
 // Used to enable the mus service (aka the UI service). This makes mus run in
 // process. It is also used to notify the clients that the UI service is being
-// used.
+// used. If the value of this flag is set to kMusHostVizValue, then that means
+// the UI service is hosting the viz service.
 const char kMus[] = "mus";
-
-// If set mus is hosting Viz. Only applicable is kMus if specified.
-const char kMusHostingViz[] = "mus-hosting-viz";
+const char kMusHostVizValue[] = "viz";
 #endif
 
 }  // namespace switches

@@ -263,7 +263,7 @@ LayoutBlockFlow::LayoutBlockFlow(ContainerNode* node) : LayoutBlock(node) {
   SetChildrenInline(true);
 }
 
-LayoutBlockFlow::~LayoutBlockFlow() = default;
+LayoutBlockFlow::~LayoutBlockFlow() {}
 
 LayoutBlockFlow* LayoutBlockFlow::CreateAnonymous(Document* document) {
   LayoutBlockFlow* layout_block_flow = RuntimeEnabledFeatures::LayoutNGEnabled()
@@ -2533,11 +2533,6 @@ void LayoutBlockFlow::SetCachedLayoutResult(const NGConstraintSpace&,
 void LayoutBlockFlow::SetPaintFragment(
     scoped_refptr<const NGPhysicalFragment>) {}
 
-Vector<NGPaintFragment*> LayoutBlockFlow::GetPaintFragments(
-    const LayoutObject&) const {
-  return Vector<NGPaintFragment*>();
-}
-
 void LayoutBlockFlow::ComputeOverflow(LayoutUnit old_client_after_edge,
                                       bool recompute_floats) {
   LayoutBlock::ComputeOverflow(old_client_after_edge, recompute_floats);
@@ -4400,13 +4395,6 @@ bool LayoutBlockFlow::CreatesNewFormattingContext() const {
     // to our ancestors.
     return true;
   }
-
-  // Non-container appearances (checkboxes and radio) behave as if it creates
-  // BFC. LayoutNG requires when empty non-NG LayoutObject has intrinsic sizes,
-  // it must create a new BFC.
-  if (StyleRef().HasAppearance() &&
-      !LayoutTheme::GetTheme().IsControlContainer(StyleRef().Appearance()))
-    return true;
 
   // NGBlockNode cannot compute margin collapsing across NG/non-NG boundary.
   // Create a new formatting context for non-NG node to prevent margin

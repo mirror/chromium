@@ -18,7 +18,7 @@ using content::BrowserThread;
 
 namespace {
 
-void OnAppCacheInfoFetchComplete(
+void OnFetchComplete(
     const BrowsingDataAppCacheHelper::FetchCallback& callback,
     scoped_refptr<content::AppCacheInfoCollection> info_collection,
     int /*rv*/) {
@@ -79,7 +79,7 @@ void BrowsingDataAppCacheHelper::StartFetchingOnIOThread(
 
   appcache_service_->GetAllAppCacheInfo(
       info_collection.get(),
-      base::Bind(&OnAppCacheInfoFetchComplete, callback, info_collection));
+      base::Bind(&OnFetchComplete, callback, info_collection));
 }
 
 void BrowsingDataAppCacheHelper::DeleteAppCacheGroupOnIOThread(

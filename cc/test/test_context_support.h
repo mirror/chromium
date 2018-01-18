@@ -63,7 +63,6 @@ class TestContextSupport : public gpu::ContextSupport {
       override;
   void DeleteTransferCacheEntry(TransferCacheEntryType entry_type,
                                 uint32_t entry_id) override;
-  unsigned int GetTransferBufferFreeSize() const override;
 
   void CallAllSyncPointCallbacks();
 

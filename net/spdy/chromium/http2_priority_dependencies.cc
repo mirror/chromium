@@ -16,8 +16,7 @@ void Http2PriorityDependencies::OnStreamCreation(
     SpdyPriority priority,
     SpdyStreamId* dependent_stream_id,
     bool* exclusive) {
-  if (entry_by_stream_id_.find(id) != entry_by_stream_id_.end())
-    return;
+  DCHECK(entry_by_stream_id_.find(id) == entry_by_stream_id_.end());
 
   *dependent_stream_id = 0ul;
   *exclusive = true;
@@ -98,10 +97,6 @@ Http2PriorityDependencies::OnStreamUpdate(SpdyStreamId id,
   result.reserve(2);
 
   EntryMap::iterator curr_entry = entry_by_stream_id_.find(id);
-  if (curr_entry == entry_by_stream_id_.end()) {
-    return result;
-  }
-
   SpdyPriority old_priority = curr_entry->second->second;
   if (old_priority == new_priority) {
     return result;
@@ -156,8 +151,7 @@ Http2PriorityDependencies::OnStreamUpdate(SpdyStreamId id,
 
 void Http2PriorityDependencies::OnStreamDestruction(SpdyStreamId id) {
   EntryMap::iterator emit = entry_by_stream_id_.find(id);
-  if (emit == entry_by_stream_id_.end())
-    return;
+  DCHECK(emit != entry_by_stream_id_.end());
 
   IdList::iterator it = emit->second;
   id_priority_lists_[it->second].erase(it);

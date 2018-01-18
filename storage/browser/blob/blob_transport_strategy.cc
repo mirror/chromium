@@ -4,8 +4,6 @@
 
 #include "storage/browser/blob/blob_transport_strategy.h"
 
-#include <memory>
-
 #include "base/containers/circular_deque.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "storage/browser/blob/blob_data_builder.h"
@@ -363,16 +361,16 @@ std::unique_ptr<BlobTransportStrategy> BlobTransportStrategy::Create(
     const BlobStorageLimits& limits) {
   switch (strategy) {
     case MemoryStrategy::NONE_NEEDED:
-      return std::make_unique<NoneNeededTransportStrategy>(
+      return base::MakeUnique<NoneNeededTransportStrategy>(
           builder, std::move(result_callback));
     case MemoryStrategy::IPC:
-      return std::make_unique<ReplyTransportStrategy>(
+      return base::MakeUnique<ReplyTransportStrategy>(
           builder, std::move(result_callback));
     case MemoryStrategy::SHARED_MEMORY:
-      return std::make_unique<DataPipeTransportStrategy>(
+      return base::MakeUnique<DataPipeTransportStrategy>(
           builder, std::move(result_callback), limits);
     case MemoryStrategy::FILE:
-      return std::make_unique<FileTransportStrategy>(
+      return base::MakeUnique<FileTransportStrategy>(
           builder, std::move(result_callback), limits);
     case MemoryStrategy::TOO_LARGE:
       NOTREACHED();

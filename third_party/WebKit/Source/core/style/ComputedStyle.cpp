@@ -1003,11 +1003,9 @@ void ComputedStyle::ApplyMotionPathTransform(
     point.SetX(float_distance * cos(deg2rad(angle)));
     point.SetY(float_distance * sin(deg2rad(angle)));
   } else {
-    float zoom = EffectiveZoom();
     const StylePath& motion_path = ToStylePath(*path);
     float path_length = motion_path.length();
-    float float_distance =
-        FloatValueForLength(distance, path_length * zoom) / zoom;
+    float float_distance = FloatValueForLength(distance, path_length);
     float computed_distance;
     if (motion_path.IsClosed() && path_length > 0) {
       computed_distance = fmod(float_distance, path_length);
@@ -1019,8 +1017,6 @@ void ComputedStyle::ApplyMotionPathTransform(
 
     motion_path.GetPath().PointAndNormalAtLength(computed_distance, point,
                                                  angle);
-
-    point.Scale(zoom, zoom);
   }
 
   if (rotate.type == OffsetRotationType::kFixed)
@@ -1030,18 +1026,18 @@ void ComputedStyle::ApplyMotionPathTransform(
   float origin_shift_y = 0;
   // If the offset-position and offset-anchor properties are not yet enabled,
   // they will have the default value, auto.
-  FloatPoint anchor_point(origin_x, origin_y);
   if (!position.X().IsAuto() || !anchor.X().IsAuto()) {
-    anchor_point = FloatPointForLengthPoint(anchor, bounding_box.Size());
-    anchor_point += bounding_box.Location();
-
     // Shift the origin from transform-origin to offset-anchor.
-    origin_shift_x = anchor_point.X() - origin_x;
-    origin_shift_y = anchor_point.Y() - origin_y;
+    origin_shift_x =
+        FloatValueForLength(anchor.X(), bounding_box.Width()) -
+        FloatValueForLength(TransformOriginX(), bounding_box.Width());
+    origin_shift_y =
+        FloatValueForLength(anchor.Y(), bounding_box.Height()) -
+        FloatValueForLength(TransformOriginY(), bounding_box.Height());
   }
 
-  transform.Translate(point.X() - anchor_point.X() + origin_shift_x,
-                      point.Y() - anchor_point.Y() + origin_shift_y);
+  transform.Translate(point.X() - origin_x + origin_shift_x,
+                      point.Y() - origin_y + origin_shift_y);
   transform.Rotate(angle + rotate.angle);
 
   if (!position.X().IsAuto() || !anchor.X().IsAuto())

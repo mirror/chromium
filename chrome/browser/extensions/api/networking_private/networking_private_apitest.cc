@@ -14,6 +14,7 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/api/networking_cast_private/chrome_networking_cast_private_delegate.h"
 #include "chrome/browser/extensions/extension_apitest.h"
@@ -196,11 +197,11 @@ class TestNetworkingPrivateDelegate : public NetworkingPrivateDelegate {
   }
 
   std::unique_ptr<base::DictionaryValue> GetGlobalPolicy() override {
-    return std::make_unique<base::DictionaryValue>();
+    return base::MakeUnique<base::DictionaryValue>();
   }
 
   std::unique_ptr<base::DictionaryValue> GetCertificateLists() override {
-    return std::make_unique<base::DictionaryValue>();
+    return base::MakeUnique<base::DictionaryValue>();
   }
 
   bool EnableNetworkType(const std::string& type) override {
@@ -394,14 +395,14 @@ class NetworkingPrivateApiTest : public ExtensionApiTest {
  private:
   std::unique_ptr<ChromeNetworkingCastPrivateDelegate>
   CreateTestNetworkingCastPrivateDelegate(bool test_failure) {
-    return std::make_unique<TestNetworkingCastPrivateDelegate>(test_failure);
+    return base::MakeUnique<TestNetworkingCastPrivateDelegate>(test_failure);
   }
 
   std::unique_ptr<KeyedService> CreateTestNetworkingPrivateDelegate(
       bool test_failure) {
     CHECK(!networking_private_delegate_);
     auto delegate =
-        std::make_unique<TestNetworkingPrivateDelegate>(test_failure);
+        base::MakeUnique<TestNetworkingPrivateDelegate>(test_failure);
     networking_private_delegate_ = delegate.get();
     return delegate;
   }

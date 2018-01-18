@@ -34,6 +34,8 @@ blink_modules_sources("xr") {
     "XRView.cpp",
     "XRView.h",
     "XRViewport.h",
+    "XRWebGLDrawingBuffer.cpp",
+    "XRWebGLDrawingBuffer.h",
     "XRWebGLLayer.cpp",
     "XRWebGLLayer.h",
   ]

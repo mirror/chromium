@@ -26,7 +26,7 @@ namespace blink {
 
 class DragMockChromeClient : public EmptyChromeClient {
  public:
-  DragMockChromeClient() = default;
+  DragMockChromeClient() {}
 
   void StartDragging(LocalFrame*,
                      const WebDragData&,

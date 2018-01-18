@@ -36,7 +36,7 @@ ScrollAnchor::ScrollAnchor(ScrollableArea* scroller) : ScrollAnchor() {
   SetScroller(scroller);
 }
 
-ScrollAnchor::~ScrollAnchor() = default;
+ScrollAnchor::~ScrollAnchor() {}
 
 void ScrollAnchor::SetScroller(ScrollableArea* scroller) {
   DCHECK_NE(scroller_, scroller);

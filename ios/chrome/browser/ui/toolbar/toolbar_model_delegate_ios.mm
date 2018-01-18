@@ -14,6 +14,7 @@
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/pref_names.h"
 #include "ios/chrome/browser/ssl/ios_security_state_tab_helper.h"
+#import "ios/chrome/browser/ui/ntp/modal_ntp.h"
 #include "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
@@ -66,7 +67,9 @@ bool ToolbarModelDelegateIOS::ShouldDisplayURL() const {
       if (!url.SchemeIs(kChromeUIScheme))
         url = virtual_url;
       base::StringPiece host = url.host_piece();
-      return host != kChromeUINewTabHost;
+      // Checking for Bookmarks Host is skipped if it is not enabled.
+      return (!IsBookmarksHostEnabled() || host != kChromeUIBookmarksHost) &&
+             host != kChromeUINewTabHost;
     }
   }
   return true;

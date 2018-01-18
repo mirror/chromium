@@ -4,9 +4,8 @@
 
 #include "chrome/browser/ui/webui/offline/offline_internals_ui.h"
 
-#include <memory>
-
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.h"
 #include "chrome/common/url_constants.h"
@@ -38,7 +37,7 @@ OfflineInternalsUI::OfflineInternalsUI(content::WebUI* web_ui)
   content::WebUIDataSource::Add(profile, html_source);
 
   web_ui->AddMessageHandler(
-      std::make_unique<offline_internals::OfflineInternalsUIMessageHandler>());
+      base::MakeUnique<offline_internals::OfflineInternalsUIMessageHandler>());
 }
 
 OfflineInternalsUI::~OfflineInternalsUI() {}

@@ -71,7 +71,6 @@ RenderFrameProxy* RenderFrameProxy::CreateProxyToReplaceFrame(
 
   std::unique_ptr<RenderFrameProxy> proxy(new RenderFrameProxy(routing_id));
   proxy->unique_name_ = frame_to_replace->unique_name();
-  proxy->devtools_frame_token_ = frame_to_replace->GetDevToolsFrameToken();
 
   // When a RenderFrame is replaced by a RenderProxy, the WebRemoteFrame should
   // always come from WebRemoteFrame::create and a call to WebFrame::swap must
@@ -291,8 +290,6 @@ void RenderFrameProxy::SetReplicatedState(const FrameReplicationState& state) {
 
   web_frame_->SetReplicatedName(blink::WebString::FromUTF8(state.name));
   web_frame_->SetReplicatedInsecureRequestPolicy(state.insecure_request_policy);
-  web_frame_->SetReplicatedInsecureNavigationsSet(
-      state.insecure_navigations_set);
   web_frame_->SetReplicatedFeaturePolicyHeader(state.feature_policy_header);
   if (state.has_received_user_gesture)
     web_frame_->SetHasReceivedUserGesture();
@@ -385,8 +382,6 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
                         OnResetContentSecurityPolicy)
     IPC_MESSAGE_HANDLER(FrameMsg_EnforceInsecureRequestPolicy,
                         OnEnforceInsecureRequestPolicy)
-    IPC_MESSAGE_HANDLER(FrameMsg_EnforceInsecureNavigationsSet,
-                        OnEnforceInsecureNavigationsSet)
     IPC_MESSAGE_HANDLER(FrameMsg_SetFrameOwnerProperties,
                         OnSetFrameOwnerProperties)
     IPC_MESSAGE_HANDLER(FrameMsg_DidUpdateOrigin, OnDidUpdateOrigin)
@@ -480,11 +475,6 @@ void RenderFrameProxy::OnEnforceInsecureRequestPolicy(
   web_frame_->SetReplicatedInsecureRequestPolicy(policy);
 }
 
-void RenderFrameProxy::OnEnforceInsecureNavigationsSet(
-    const std::vector<uint32_t>& set) {
-  web_frame_->SetReplicatedInsecureNavigationsSet(set);
-}
-
 void RenderFrameProxy::OnSetFrameOwnerProperties(
     const FrameOwnerProperties& properties) {
   web_frame_->SetFrameOwnerProperties(
@@ -518,8 +508,8 @@ void RenderFrameProxy::OnSetHasReceivedUserGesture() {
 
 void RenderFrameProxy::OnScrollRectToVisible(
     const gfx::Rect& rect_to_scroll,
-    const blink::WebScrollIntoViewParams& params) {
-  web_frame_->ScrollRectToVisible(rect_to_scroll, params);
+    const blink::WebRemoteScrollProperties& properties) {
+  web_frame_->ScrollRectToVisible(rect_to_scroll, properties);
 }
 
 void RenderFrameProxy::OnResizeDueToAutoResize(uint64_t sequence_number) {
@@ -659,11 +649,6 @@ void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
   params.should_replace_current_entry = should_replace_current_entry;
   params.user_gesture = request.HasUserGesture();
   params.triggering_event_info = blink::WebTriggeringEventInfo::kUnknown;
-  params.suggested_filename =
-      request.GetSuggestedFilename().has_value()
-          ? base::Optional<std::string>(request.GetSuggestedFilename()->Utf8())
-          : base::nullopt;
-
   Send(new FrameHostMsg_OpenURL(routing_id_, params));
 }
 
@@ -717,10 +702,6 @@ void RenderFrameProxy::AdvanceFocus(blink::WebFocusType type,
 
 void RenderFrameProxy::FrameFocused() {
   Send(new FrameHostMsg_FrameFocused(routing_id_));
-}
-
-blink::WebString RenderFrameProxy::GetDevToolsFrameToken() {
-  return devtools_frame_token_;
 }
 
 #if defined(USE_AURA)

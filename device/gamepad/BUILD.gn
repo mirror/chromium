@@ -29,8 +29,6 @@ component("gamepad") {
     "gamepad_data_fetcher_manager.h",
     "gamepad_device_linux.cc",
     "gamepad_device_linux.h",
-    "gamepad_device_mac.h",
-    "gamepad_device_mac.mm",
     "gamepad_export.h",
     "gamepad_haptics_manager.cc",
     "gamepad_haptics_manager.h",
@@ -108,7 +106,6 @@ component("gamepad") {
     libs = [
       "CoreFoundation.framework",
       "Foundation.framework",
-      "ForceFeedback.framework",
       "GameController.framework",
       "IOKit.framework",
     ]

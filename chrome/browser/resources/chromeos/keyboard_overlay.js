@@ -611,11 +611,6 @@ function update(modifiers, normModifiers) {
       continue;
     }
 
-    // Currently hidden behind experimental accessibility features flag. The
-    // accelerator is not yet approved and a placeholder.
-    if (shortcutId == 'keyboardOverlayToggleDictation')
-      continue;
-
     if ((shortcutId == 'keyboardOverlayMoveWindowToBelowDisplay' ||
          shortcutId == 'keyboardOverlayMoveWindowToLeftDisplay' ||
          shortcutId == 'keyboardOverlayMoveWindowToRightDisplay' ||

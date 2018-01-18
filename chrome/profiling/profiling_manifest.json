@@ -8,8 +8,7 @@
         "profiling": [ "profiling::mojom::ProfilingService" ]
       },
       "requires": {
-        "*": [ "app" ],
-        "resource_coordinator": [ "heap_profiling" ],
+         "*": [ "app" ],
         "service_manager": [ "service_manager:all_users" ]
       }
     }

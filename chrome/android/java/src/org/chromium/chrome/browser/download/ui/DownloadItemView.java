@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.metrics.RecordHistogram;
-import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.download.DownloadUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
@@ -142,7 +141,6 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
         } else if (item.getTextId() == R.string.delete) {
             recordViewActionHistogram(VIEW_ACTION_MENU_DELETE);
             mItem.startRemove();
-            RecordUserAction.record("Android.DownloadManager.RemoveItem");
         }
     }
 

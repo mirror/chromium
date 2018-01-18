@@ -15,13 +15,6 @@ MemoryInstrumentation* g_instance = nullptr;
 void DestroyCoordinatorTLS(void* tls_object) {
   delete reinterpret_cast<mojom::CoordinatorPtr*>(tls_object);
 };
-
-void WrapGlobalMemoryDump(
-    MemoryInstrumentation::RequestGlobalDumpCallback callback,
-    bool success,
-    mojom::GlobalMemoryDumpPtr dump) {
-  callback.Run(success, GlobalMemoryDump::MoveFrom(std::move(dump)));
-}
 }  // namespace
 
 // static
@@ -53,25 +46,17 @@ MemoryInstrumentation::~MemoryInstrumentation() {
 
 void MemoryInstrumentation::RequestGlobalDump(
     RequestGlobalDumpCallback callback) {
-  RequestGlobalDump({}, callback);
-}
-
-void MemoryInstrumentation::RequestGlobalDump(
-    const std::vector<std::string>& allocator_dump_names,
-    RequestGlobalDumpCallback callback) {
   const auto& coordinator = GetCoordinatorBindingForCurrentThread();
-  coordinator->RequestGlobalMemoryDump(
-      MemoryDumpType::SUMMARY_ONLY, MemoryDumpLevelOfDetail::BACKGROUND,
-      allocator_dump_names,
-      base::BindRepeating(&WrapGlobalMemoryDump, callback));
+  coordinator->RequestGlobalMemoryDump(MemoryDumpType::SUMMARY_ONLY,
+                                       MemoryDumpLevelOfDetail::BACKGROUND,
+                                       callback);
 }
 
 void MemoryInstrumentation::RequestGlobalDumpForPid(
     base::ProcessId pid,
     RequestGlobalDumpCallback callback) {
   const auto& coordinator = GetCoordinatorBindingForCurrentThread();
-  coordinator->RequestGlobalMemoryDumpForPid(
-      pid, base::BindRepeating(&WrapGlobalMemoryDump, callback));
+  coordinator->RequestGlobalMemoryDumpForPid(pid, callback);
 }
 
 void MemoryInstrumentation::RequestGlobalDumpAndAppendToTrace(
@@ -81,6 +66,12 @@ void MemoryInstrumentation::RequestGlobalDumpAndAppendToTrace(
   const auto& coordinator = GetCoordinatorBindingForCurrentThread();
   coordinator->RequestGlobalMemoryDumpAndAppendToTrace(
       dump_type, level_of_detail, callback);
+}
+
+void MemoryInstrumentation::GetVmRegionsForHeapProfiler(
+    RequestGlobalDumpCallback callback) {
+  const auto& coordinator = GetCoordinatorBindingForCurrentThread();
+  coordinator->GetVmRegionsForHeapProfiler(callback);
 }
 
 const mojom::CoordinatorPtr&

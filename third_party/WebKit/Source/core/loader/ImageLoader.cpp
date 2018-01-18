@@ -151,7 +151,7 @@ ImageLoader::ImageLoader(Element* element)
   RESOURCE_LOADING_DVLOG(1) << "new ImageLoader " << this;
 }
 
-ImageLoader::~ImageLoader() = default;
+ImageLoader::~ImageLoader() {}
 
 void ImageLoader::Dispose() {
   RESOURCE_LOADING_DVLOG(1)
@@ -316,12 +316,16 @@ inline void ImageLoader::DispatchErrorEvent() {
   // In such cases we cancel the previous event (by overwriting
   // |pending_error_event_|) and then re-schedule a new error event here.
   // crbug.com/722500
-  pending_error_event_ = PostCancellableTask(
-      *GetElement()->GetDocument().GetTaskRunner(TaskType::kDOMManipulation),
-      FROM_HERE,
-      WTF::Bind(&ImageLoader::DispatchPendingErrorEvent, WrapPersistent(this),
-                WTF::Passed(IncrementLoadEventDelayCount::Create(
-                    GetElement()->GetDocument()))));
+  pending_error_event_ =
+      GetElement()
+          ->GetDocument()
+          .GetTaskRunner(TaskType::kDOMManipulation)
+          ->PostCancellableTask(
+              FROM_HERE,
+              WTF::Bind(&ImageLoader::DispatchPendingErrorEvent,
+                        WrapPersistent(this),
+                        WTF::Passed(IncrementLoadEventDelayCount::Create(
+                            GetElement()->GetDocument()))));
 }
 
 inline void ImageLoader::CrossSiteOrCSPViolationOccurred(
@@ -653,12 +657,16 @@ void ImageLoader::ImageNotifyFinished(ImageResourceContent* resource) {
   }
 
   CHECK(!pending_load_event_.IsActive());
-  pending_load_event_ = PostCancellableTask(
-      *GetElement()->GetDocument().GetTaskRunner(TaskType::kDOMManipulation),
-      FROM_HERE,
-      WTF::Bind(&ImageLoader::DispatchPendingLoadEvent, WrapPersistent(this),
-                WTF::Passed(IncrementLoadEventDelayCount::Create(
-                    GetElement()->GetDocument()))));
+  pending_load_event_ =
+      GetElement()
+          ->GetDocument()
+          .GetTaskRunner(TaskType::kDOMManipulation)
+          ->PostCancellableTask(
+              FROM_HERE,
+              WTF::Bind(&ImageLoader::DispatchPendingLoadEvent,
+                        WrapPersistent(this),
+                        WTF::Passed(IncrementLoadEventDelayCount::Create(
+                            GetElement()->GetDocument()))));
 }
 
 LayoutImageResource* ImageLoader::GetLayoutImageResource() {

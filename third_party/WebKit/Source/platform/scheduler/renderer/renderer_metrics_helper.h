@@ -56,8 +56,7 @@ class PLATFORM_EXPORT RendererMetricsHelper : public MetricsHelper {
   void RecordTaskMetrics(MainThreadTaskQueue* queue,
                          const TaskQueue::Task& task,
                          base::TimeTicks start_time,
-                         base::TimeTicks end_time,
-                         base::Optional<base::TimeDelta> thread_time);
+                         base::TimeTicks end_time);
 
   void OnRendererForegrounded(base::TimeTicks now);
   void OnRendererBackgrounded(base::TimeTicks now);

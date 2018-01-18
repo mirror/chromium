@@ -32,11 +32,11 @@
 #include "content/public/browser/site_instance.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/resource_request_body.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_utils.h"
 #include "net/base/net_errors.h"
 #include "net/url_request/redirect_info.h"
-#include "services/network/public/cpp/resource_request_body.h"
 #include "url/gurl.h"
 #include "url/url_constants.h"
 
@@ -73,7 +73,7 @@ std::unique_ptr<NavigationHandleImpl> NavigationHandleImpl::Create(
     bool is_form_submission,
     const base::Optional<std::string>& suggested_filename,
     const std::string& method,
-    scoped_refptr<network::ResourceRequestBody> resource_request_body,
+    scoped_refptr<content::ResourceRequestBody> resource_request_body,
     const Referrer& sanitized_referrer,
     bool has_user_gesture,
     ui::PageTransition transition,
@@ -102,7 +102,7 @@ NavigationHandleImpl::NavigationHandleImpl(
     bool is_form_submission,
     const base::Optional<std::string>& suggested_filename,
     const std::string& method,
-    scoped_refptr<network::ResourceRequestBody> resource_request_body,
+    scoped_refptr<content::ResourceRequestBody> resource_request_body,
     const Referrer& sanitized_referrer,
     bool has_user_gesture,
     ui::PageTransition transition,
@@ -299,7 +299,7 @@ bool NavigationHandleImpl::IsPost() {
   return method_ == "POST";
 }
 
-const scoped_refptr<network::ResourceRequestBody>&
+const scoped_refptr<ResourceRequestBody>&
 NavigationHandleImpl::GetResourceRequestBody() {
   return resource_request_body_;
 }
@@ -731,16 +731,8 @@ void NavigationHandleImpl::WillProcessResponse(
   // If the navigation is done processing the response, then it's ready to
   // commit. Inform observers that the navigation is now ready to commit, unless
   // it is not set to commit (204/205s/downloads).
-  if (result.action() == NavigationThrottle::PROCEED && render_frame_host_) {
-    CHECK(!suggested_filename_.has_value() ||
-          !(url_.SchemeIsBlob() || url_.SchemeIsFileSystem() ||
-            url_.SchemeIs(url::kAboutScheme) ||
-            url_.SchemeIs(url::kDataScheme)))
-        << "Blob, filesystem, data, and about URLs with a suggested filename "
-           "should always result in a download, so we should never process a "
-           "navigation response here.";
+  if (result.action() == NavigationThrottle::PROCEED && render_frame_host_)
     ReadyToCommitNavigation(render_frame_host_);
-  }
 
   TRACE_EVENT_ASYNC_STEP_INTO1("navigation", "NavigationHandle", this,
                                "ProcessResponse", "result", result.action());

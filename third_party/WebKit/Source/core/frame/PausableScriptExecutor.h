@@ -53,7 +53,7 @@ class CORE_EXPORT PausableScriptExecutor final
 
   class Executor : public GarbageCollectedFinalized<Executor> {
    public:
-    virtual ~Executor() = default;
+    virtual ~Executor() {}
 
     virtual Vector<v8::Local<v8::Value>> Execute(LocalFrame*) = 0;
 

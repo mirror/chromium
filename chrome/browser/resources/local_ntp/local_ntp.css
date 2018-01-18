@@ -23,7 +23,7 @@ html {
    * the same.
    */
   --logo-iframe-initial-height: var(--logo-height);
-  --logo-iframe-height: var(--logo-height);
+  --logo-iframe-height: var(--logo-iframe-initial-height);
   --logo-iframe-resize-duration: 150ms;
   --logo-iframe-width: 500px;
 
@@ -321,7 +321,7 @@ html[dir=rtl] #fakebox > input {
 
 #fakebox-text {
   bottom: 4px;
-  color: rgba(0, 0, 0, 0.42);
+  color: rgba(0, 0, 0, 0.38);
   font-family: arial, sans-serif;
   font-size: 16px;
   left: 13px;

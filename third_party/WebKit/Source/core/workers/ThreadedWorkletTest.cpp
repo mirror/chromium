@@ -55,7 +55,7 @@ class ThreadedWorkletThreadForTest : public WorkerThread {
   explicit ThreadedWorkletThreadForTest(
       WorkerReportingProxy& worker_reporting_proxy)
       : WorkerThread(nullptr, worker_reporting_proxy) {}
-  ~ThreadedWorkletThreadForTest() override = default;
+  ~ThreadedWorkletThreadForTest() override {}
 
   WorkerBackingThread& GetWorkerBackingThread() override {
     auto* worklet_thread_holder =
@@ -154,10 +154,6 @@ class ThreadedWorkletThreadForTest : public WorkerThread {
   }
 
   bool IsOwningBackingThread() const final { return false; }
-
-  scheduler::ThreadType GetThreadType() const override {
-    return scheduler::ThreadType::kUnspecifiedWorkerThread;
-  }
 };
 
 class ThreadedWorkletMessagingProxyForTest
@@ -170,7 +166,7 @@ class ThreadedWorkletMessagingProxyForTest
         this, GetParentFrameTaskRunners());
   }
 
-  ~ThreadedWorkletMessagingProxyForTest() override = default;
+  ~ThreadedWorkletMessagingProxyForTest() override {}
 
   void Start() {
     Document* document = ToDocument(GetExecutionContext());

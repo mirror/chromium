@@ -4,8 +4,7 @@
 
 #include "chrome/browser/extensions/extension_garbage_collector_factory.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/extension_garbage_collector.h"
@@ -49,9 +48,9 @@ std::unique_ptr<KeyedService>
 ExtensionGarbageCollectorFactory::BuildInstanceFor(
     content::BrowserContext* context) {
 #if defined(OS_CHROMEOS)
-  return std::make_unique<ExtensionGarbageCollectorChromeOS>(context);
+  return base::MakeUnique<ExtensionGarbageCollectorChromeOS>(context);
 #else
-  return std::make_unique<ExtensionGarbageCollector>(context);
+  return base::MakeUnique<ExtensionGarbageCollector>(context);
 #endif
 }
 

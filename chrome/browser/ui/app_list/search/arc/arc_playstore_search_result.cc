@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/image_decoder.h"
@@ -130,7 +131,7 @@ class ArcPlayStoreSearchResult::IconDecodeRequest
     const gfx::Size resource_size(app_list::kGridIconDimension,
                                   app_list::kGridIconDimension);
     auto icon_source =
-        std::make_unique<IconSource>(app_list::kGridIconDimension);
+        base::MakeUnique<IconSource>(app_list::kGridIconDimension);
     icon_source->SetDecodedImage(bitmap);
     const gfx::ImageSkia icon =
         gfx::ImageSkia(std::move(icon_source), resource_size);
@@ -146,7 +147,7 @@ class ArcPlayStoreSearchResult::IconDecodeRequest
     const gfx::Size resource_size(app_list::kGridIconDimension,
                                   app_list::kGridIconDimension);
     auto icon_source =
-        std::make_unique<IconSource>(app_list::kGridIconDimension);
+        base::MakeUnique<IconSource>(app_list::kGridIconDimension);
     const gfx::ImageSkia icon =
         gfx::ImageSkia(std::move(icon_source), resource_size);
     icon.EnsureRepsForSupportedScales();
@@ -187,7 +188,7 @@ ArcPlayStoreSearchResult::ArcPlayStoreSearchResult(
   SetRating(review_score());
   set_result_type(is_instant_app() ? RESULT_INSTANT_APP : RESULT_PLAYSTORE_APP);
 
-  icon_decode_request_ = std::make_unique<IconDecodeRequest>(this);
+  icon_decode_request_ = base::MakeUnique<IconDecodeRequest>(this);
   if (disable_safe_decoding_for_testing) {
     SkBitmap bitmap;
     if (!icon_png_data().empty() &&
@@ -209,7 +210,7 @@ ArcPlayStoreSearchResult::~ArcPlayStoreSearchResult() = default;
 
 std::unique_ptr<SearchResult> ArcPlayStoreSearchResult::Duplicate() const {
   std::unique_ptr<ArcPlayStoreSearchResult> result =
-      std::make_unique<ArcPlayStoreSearchResult>(data_.Clone(), profile_,
+      base::MakeUnique<ArcPlayStoreSearchResult>(data_.Clone(), profile_,
                                                  list_controller_);
   result->SetIcon(icon());
   return result;
@@ -227,7 +228,7 @@ void ArcPlayStoreSearchResult::Open(int event_flags) {
 }
 
 ui::MenuModel* ArcPlayStoreSearchResult::GetContextMenuModel() {
-  context_menu_ = std::make_unique<ArcPlayStoreAppContextMenu>(
+  context_menu_ = base::MakeUnique<ArcPlayStoreAppContextMenu>(
       this, profile_, list_controller_);
   // TODO(755701): Enable context menu once Play Store API starts returning both
   // install and launch intents.

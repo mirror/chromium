@@ -53,10 +53,6 @@ gfx::Size ExternalProtocolDialog::CalculatePreferredSize() const {
   return gfx::Size(kDialogContentWidth, GetHeightForWidth(kDialogContentWidth));
 }
 
-bool ExternalProtocolDialog::ShouldShowCloseButton() const {
-  return false;
-}
-
 base::string16 ExternalProtocolDialog::GetDialogButtonLabel(
     ui::DialogButton button) const {
   return delegate_->GetDialogButtonLabel(button);

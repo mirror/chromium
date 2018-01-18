@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "base/files/file_path.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -308,7 +309,7 @@ bool FileManagerPrivateInternalZipSelectionFunction::RunAsync() {
 }
 
 void FileManagerPrivateInternalZipSelectionFunction::OnZipDone(bool success) {
-  SetResult(std::make_unique<base::Value>(success));
+  SetResult(base::MakeUnique<base::Value>(success));
   SendResponse(true);
 }
 
@@ -360,7 +361,7 @@ bool FileManagerPrivateRequestWebStoreAccessTokenFunction::RunAsync() {
                   "CWS OAuth token fetch failed. OAuth2TokenService can't "
                   "be retrieved.");
     }
-    SetResult(std::make_unique<base::Value>());
+    SetResult(base::MakeUnique<base::Value>());
     return false;
   }
 
@@ -389,7 +390,7 @@ void FileManagerPrivateRequestWebStoreAccessTokenFunction::OnAccessTokenFetched(
     DCHECK(access_token == auth_service_->access_token());
     if (logger)
       logger->Log(logging::LOG_INFO, "CWS OAuth token fetch succeeded.");
-    SetResult(std::make_unique<base::Value>(access_token));
+    SetResult(base::MakeUnique<base::Value>(access_token));
     SendResponse(true);
   } else {
     if (logger) {
@@ -397,7 +398,7 @@ void FileManagerPrivateRequestWebStoreAccessTokenFunction::OnAccessTokenFetched(
                   "CWS OAuth token fetch failed. (DriveApiErrorCode: %s)",
                   google_apis::DriveApiErrorCodeToString(code).c_str());
     }
-    SetResult(std::make_unique<base::Value>());
+    SetResult(base::MakeUnique<base::Value>());
     SendResponse(false);
   }
 }
@@ -490,16 +491,16 @@ bool FileManagerPrivateInternalGetMimeTypeFunction::RunAsync() {
 
 void FileManagerPrivateInternalGetMimeTypeFunction::OnGetMimeType(
     const std::string& mimeType) {
-  SetResult(std::make_unique<base::Value>(mimeType));
+  SetResult(base::MakeUnique<base::Value>(mimeType));
   SendResponse(true);
 }
 
 ExtensionFunction::ResponseAction
 FileManagerPrivateIsPiexLoaderEnabledFunction::Run() {
 #if defined(OFFICIAL_BUILD)
-  return RespondNow(OneArgument(std::make_unique<base::Value>(true)));
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(true)));
 #else
-  return RespondNow(OneArgument(std::make_unique<base::Value>(false)));
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(false)));
 #endif
 }
 
@@ -794,12 +795,12 @@ void FileManagerPrivateInternalGetRecentFilesFunction::
             entry_definition_list) {
   DCHECK(entry_definition_list);
 
-  auto entries = std::make_unique<base::ListValue>();
+  auto entries = base::MakeUnique<base::ListValue>();
 
   for (const auto& definition : *entry_definition_list) {
     if (definition.error != base::File::FILE_OK)
       continue;
-    auto entry = std::make_unique<base::DictionaryValue>();
+    auto entry = base::MakeUnique<base::DictionaryValue>();
     entry->SetString("fileSystemName", definition.file_system_name);
     entry->SetString("fileSystemRoot", definition.file_system_root_url);
     entry->SetString("fileFullPath", "/" + definition.full_path.AsUTF8Unsafe());

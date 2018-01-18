@@ -88,11 +88,10 @@ class SVGLength final : public SVGPropertyBase {
                                const SVGLengthContext&);
 
   // Helper functions
-  bool IsRelative() const {
+  inline bool IsRelative() const {
     return CSSPrimitiveValue::IsRelativeUnit(value_->TypeWithCalcResolved());
   }
-  bool IsFontRelative() const { return value_->IsFontRelativeLength(); }
-  bool IsCalculated() const { return value_->IsCalculated(); }
+  inline bool IsCalculated() const { return value_->IsCalculated(); }
 
   bool IsZero() const { return value_->GetFloatValue() == 0; }
 

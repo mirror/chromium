@@ -5,6 +5,7 @@
 #include "chrome/browser/vr/elements/button.h"
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/vr/elements/invisible_hit_target.h"
 #include "chrome/browser/vr/elements/rect.h"
 #include "chrome/browser/vr/elements/ui_element.h"
@@ -27,7 +28,7 @@ Button::Button(base::RepeatingCallback<void()> click_handler)
     : click_handler_(click_handler), hover_offset_(kDefaultHoverOffsetDMM) {
   set_hit_testable(false);
 
-  auto background = std::make_unique<Rect>();
+  auto background = base::MakeUnique<Rect>();
   background->SetType(kTypeButtonBackground);
   background->set_bubble_events(true);
   background->set_contributes_to_parent_bounds(false);
@@ -36,7 +37,7 @@ Button::Button(base::RepeatingCallback<void()> click_handler)
   background_ = background.get();
   AddChild(std::move(background));
 
-  auto hit_plane = std::make_unique<InvisibleHitTarget>();
+  auto hit_plane = base::MakeUnique<InvisibleHitTarget>();
   hit_plane->SetType(kTypeButtonHitTarget);
   hit_plane->set_bubble_events(true);
   hit_plane->set_contributes_to_parent_bounds(false);
@@ -68,12 +69,12 @@ void Button::SetButtonColors(const ButtonColors& colors) {
 }
 
 void Button::HandleHoverEnter() {
-  hovered_ = enabled_;
+  hovered_ = true;
   OnStateUpdated();
 }
 
 void Button::HandleHoverMove(const gfx::PointF& position) {
-  hovered_ = hit_plane_->LocalHitTest(position) && enabled_;
+  hovered_ = hit_plane_->LocalHitTest(position);
   OnStateUpdated();
 }
 
@@ -83,7 +84,7 @@ void Button::HandleHoverLeave() {
 }
 
 void Button::HandleButtonDown() {
-  down_ = enabled_;
+  down_ = true;
   OnStateUpdated();
 }
 

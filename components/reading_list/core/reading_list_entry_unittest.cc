@@ -4,8 +4,7 @@
 
 #include "components/reading_list/core/reading_list_entry.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "components/reading_list/core/proto/reading_list.pb.h"
 #include "components/sync/protocol/reading_list_specifics.pb.h"
@@ -125,7 +124,7 @@ TEST(ReadingListEntry, DistilledState) {
 TEST(ReadingListEntry, TimeUntilNextTry) {
   base::SimpleTestTickClock clock;
   std::unique_ptr<net::BackoffEntry> backoff =
-      std::make_unique<net::BackoffEntry>(&ReadingListEntry::kBackoffPolicy,
+      base::MakeUnique<net::BackoffEntry>(&ReadingListEntry::kBackoffPolicy,
                                           &clock);
 
   ReadingListEntry e(GURL("http://example.com"), "bar",
@@ -179,7 +178,7 @@ TEST(ReadingListEntry, TimeUntilNextTryInThePast) {
   // Setup.
   base::SimpleTestTickClock clock;
   std::unique_ptr<net::BackoffEntry> backoff =
-      std::make_unique<net::BackoffEntry>(&ReadingListEntry::kBackoffPolicy,
+      base::MakeUnique<net::BackoffEntry>(&ReadingListEntry::kBackoffPolicy,
                                           &clock);
   ReadingListEntry e(GURL("http://example.com"), "bar",
                      base::Time::FromTimeT(10), std::move(backoff));
@@ -201,7 +200,7 @@ TEST(ReadingListEntry, ResetTimeUntilNextTry) {
   // Setup.
   base::SimpleTestTickClock clock;
   std::unique_ptr<net::BackoffEntry> backoff =
-      std::make_unique<net::BackoffEntry>(&ReadingListEntry::kBackoffPolicy,
+      base::MakeUnique<net::BackoffEntry>(&ReadingListEntry::kBackoffPolicy,
                                           &clock);
   ReadingListEntry e(GURL("http://example.com"), "bar",
                      base::Time::FromTimeT(10), std::move(backoff));
@@ -277,7 +276,7 @@ TEST(ReadingListEntry, AsReadingListSpecifics) {
 // sync_pb::ReadingListSpecifics.
 TEST(ReadingListEntry, FromReadingListSpecifics) {
   std::unique_ptr<sync_pb::ReadingListSpecifics> pb_entry =
-      std::make_unique<sync_pb::ReadingListSpecifics>();
+      base::MakeUnique<sync_pb::ReadingListSpecifics>();
   pb_entry->set_entry_id("http://example.com/");
   pb_entry->set_url("http://example.com/");
   pb_entry->set_title("title");

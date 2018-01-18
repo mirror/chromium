@@ -35,7 +35,7 @@ LayoutTextControl::LayoutTextControl(TextControlElement* element)
   DCHECK(element);
 }
 
-LayoutTextControl::~LayoutTextControl() = default;
+LayoutTextControl::~LayoutTextControl() {}
 
 TextControlElement* LayoutTextControl::GetTextControlElement() const {
   return ToTextControlElement(GetNode());

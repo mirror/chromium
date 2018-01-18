@@ -23,7 +23,6 @@
 #include "base/time/time.h"
 #include "content/common/content_export.h"
 #include "content/public/common/resource_type.h"
-#include "content/public/common/shared_url_loader_factory.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "content/public/common/url_loader_throttle.h"
 #include "mojo/public/cpp/system/data_pipe.h"
@@ -38,19 +37,23 @@ struct RedirectInfo;
 }
 
 namespace network {
-struct ResourceResponseInfo;
-struct ResourceRequest;
-struct ResourceResponseHead;
 struct URLLoaderCompletionStatus;
 }
 
 namespace content {
 class RequestPeer;
 class ResourceDispatcherDelegate;
+struct ResourceResponseInfo;
+struct ResourceRequest;
+struct ResourceResponseHead;
 struct SiteIsolationResponseMetaData;
 struct SyncLoadResponse;
 class ThrottlingURLLoader;
 class URLLoaderClientImpl;
+
+namespace mojom {
+class URLLoaderFactory;
+}  // namespace mojom
 
 // This class serves as a communication interface to the ResourceDispatcherHost
 // in the browser process. It can be used from any child process.
@@ -81,12 +84,12 @@ class CONTENT_EXPORT ResourceDispatcher {
   // |routing_id| is used to associated the bridge with a frame's network
   // context.
   virtual void StartSync(
-      std::unique_ptr<network::ResourceRequest> request,
+      std::unique_ptr<ResourceRequest> request,
       int routing_id,
       const url::Origin& frame_origin,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       SyncLoadResponse* response,
-      scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
+      mojom::URLLoaderFactory* url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles);
 
   // Call this method to initiate the request. If this method succeeds, then
@@ -96,17 +99,17 @@ class CONTENT_EXPORT ResourceDispatcher {
   // |routing_id| is used to associated the bridge with a frame's network
   // context.
   //
-  // You need to pass a non-null |loading_task_runner| to specify task queue to
-  // execute loading tasks on.
+  // You can pass an optional argument |loading_task_runner| to specify task
+  // queue to execute loading tasks on.
   virtual int StartAsync(
-      std::unique_ptr<network::ResourceRequest> request,
+      std::unique_ptr<ResourceRequest> request,
       int routing_id,
       scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner,
       const url::Origin& frame_origin,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       bool is_sync,
       std::unique_ptr<RequestPeer> peer,
-      scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
+      mojom::URLLoaderFactory* url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
       mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints);
 
@@ -197,20 +200,19 @@ class CONTENT_EXPORT ResourceDispatcher {
 
   // Message response handlers, called by the message handler for this process.
   void OnUploadProgress(int request_id, int64_t position, int64_t size);
-  void OnReceivedResponse(int request_id, const network::ResourceResponseHead&);
+  void OnReceivedResponse(int request_id, const ResourceResponseHead&);
   void OnReceivedCachedMetadata(int request_id,
                                 const std::vector<uint8_t>& data);
   void OnReceivedRedirect(int request_id,
                           const net::RedirectInfo& redirect_info,
-                          const network::ResourceResponseHead& response_head);
+                          const ResourceResponseHead& response_head);
   void OnDownloadedData(int request_id, int data_len, int encoded_data_length);
   void OnRequestComplete(int request_id,
                          const network::URLLoaderCompletionStatus& status);
 
-  void ToResourceResponseInfo(
-      const PendingRequestInfo& request_info,
-      const network::ResourceResponseHead& browser_info,
-      network::ResourceResponseInfo* renderer_info) const;
+  void ToResourceResponseInfo(const PendingRequestInfo& request_info,
+                              const ResourceResponseHead& browser_info,
+                              ResourceResponseInfo* renderer_info) const;
 
   base::TimeTicks ToRendererCompletionTime(
       const PendingRequestInfo& request_info,

@@ -28,8 +28,8 @@
 #include "core/dom/Text.h"
 #include "core/dom/events/Event.h"
 #include "core/frame/UseCounter.h"
+#include "core/html/HTMLContentElement.h"
 #include "core/html/HTMLDivElement.h"
-#include "core/html/HTMLSlotElement.h"
 #include "core/html/HTMLSummaryElement.h"
 #include "core/html/shadow/DetailsMarkerControl.h"
 #include "core/html/shadow/ShadowElementNames.h"
@@ -42,9 +42,36 @@ namespace blink {
 
 using namespace HTMLNames;
 
+class FirstSummarySelectFilter final : public HTMLContentSelectFilter {
+ public:
+  virtual ~FirstSummarySelectFilter() {}
+
+  static FirstSummarySelectFilter* Create() {
+    return new FirstSummarySelectFilter();
+  }
+
+  bool CanSelectNode(const HeapVector<Member<Node>, 32>& siblings,
+                     int nth) const override {
+    if (!siblings[nth]->HasTagName(HTMLNames::summaryTag))
+      return false;
+    for (int i = nth - 1; i >= 0; --i) {
+      if (siblings[i]->HasTagName(HTMLNames::summaryTag))
+        return false;
+    }
+    return true;
+  }
+
+  virtual void Trace(blink::Visitor* visitor) {
+    HTMLContentSelectFilter::Trace(visitor);
+  }
+
+ private:
+  FirstSummarySelectFilter() {}
+};
+
 HTMLDetailsElement* HTMLDetailsElement::Create(Document& document) {
   HTMLDetailsElement* details = new HTMLDetailsElement(document);
-  details->EnsureUserAgentShadowRootV1();
+  details->EnsureUserAgentShadowRoot();
   return details;
 }
 
@@ -53,17 +80,7 @@ HTMLDetailsElement::HTMLDetailsElement(Document& document)
   UseCounter::Count(document, WebFeature::kDetailsElement);
 }
 
-HTMLDetailsElement::~HTMLDetailsElement() = default;
-
-// static
-bool HTMLDetailsElement::IsFirstSummary(const Node& node) {
-  DCHECK(IsHTMLDetailsElement(node.parentElement()));
-  if (!IsHTMLSummaryElement(node))
-    return false;
-  return node.parentElement() &&
-         &node ==
-             Traversal<HTMLSummaryElement>::FirstChild(*node.parentElement());
-}
+HTMLDetailsElement::~HTMLDetailsElement() {}
 
 void HTMLDetailsElement::DispatchPendingEvent() {
   DispatchEvent(Event::Create(EventTypeNames::toggle));
@@ -80,16 +97,15 @@ void HTMLDetailsElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
       Text::Create(GetDocument(),
                    GetLocale().QueryString(WebLocalizedString::kDetailsLabel)));
 
-  HTMLSlotElement* summary_slot =
-      HTMLSlotElement::CreateUserAgentCustomAssignSlot(GetDocument());
-  summary_slot->SetIdAttribute(ShadowElementNames::DetailsSummary());
-  summary_slot->AppendChild(default_summary);
-  root.AppendChild(summary_slot);
+  HTMLContentElement* summary = HTMLContentElement::Create(
+      GetDocument(), FirstSummarySelectFilter::Create());
+  summary->SetIdAttribute(ShadowElementNames::DetailsSummary());
+  summary->AppendChild(default_summary);
+  root.AppendChild(summary);
 
   HTMLDivElement* content = HTMLDivElement::Create(GetDocument());
   content->SetIdAttribute(ShadowElementNames::DetailsContent());
-  content->AppendChild(
-      HTMLSlotElement::CreateUserAgentDefaultSlot(GetDocument()));
+  content->AppendChild(HTMLContentElement::Create(GetDocument()));
   content->SetInlineStyleProperty(CSSPropertyDisplay, CSSValueNone);
   root.AppendChild(content);
 }
@@ -99,11 +115,11 @@ Element* HTMLDetailsElement::FindMainSummary() const {
           Traversal<HTMLSummaryElement>::FirstChild(*this))
     return summary;
 
-  HTMLSlotElement* slot =
-      ToHTMLSlotElementOrDie(UserAgentShadowRoot()->firstChild());
-  DCHECK(slot->firstChild());
-  CHECK(IsHTMLSummaryElement(*slot->firstChild()));
-  return ToElement(slot->firstChild());
+  HTMLContentElement* content =
+      ToHTMLContentElementOrDie(UserAgentShadowRoot()->firstChild());
+  DCHECK(content->firstChild());
+  CHECK(IsHTMLSummaryElement(*content->firstChild()));
+  return ToElement(content->firstChild());
 }
 
 void HTMLDetailsElement::ParseAttribute(
@@ -115,12 +131,14 @@ void HTMLDetailsElement::ParseAttribute(
       return;
 
     // Dispatch toggle event asynchronously.
-    pending_event_ = PostCancellableTask(
-        *GetDocument().GetTaskRunner(TaskType::kDOMManipulation), FROM_HERE,
-        WTF::Bind(&HTMLDetailsElement::DispatchPendingEvent,
-                  WrapPersistent(this)));
+    pending_event_ =
+        GetDocument()
+            .GetTaskRunner(TaskType::kDOMManipulation)
+            ->PostCancellableTask(
+                FROM_HERE, WTF::Bind(&HTMLDetailsElement::DispatchPendingEvent,
+                                     WrapPersistent(this)));
 
-    Element* content = EnsureUserAgentShadowRootV1().getElementById(
+    Element* content = EnsureUserAgentShadowRoot().getElementById(
         ShadowElementNames::DetailsContent());
     DCHECK(content);
     if (is_open_)

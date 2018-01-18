@@ -4,7 +4,7 @@
 
 #include "core/html/canvas/CanvasAsyncBlobCreator.h"
 
-#include "core/html/canvas/ImageData.h"
+#include "core/html/ImageData.h"
 #include "core/testing/PageTestBase.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/Functional.h"
@@ -127,7 +127,8 @@ class CanvasAsyncBlobCreatorTest : public PageTestBase {
   Persistent<MockCanvasAsyncBlobCreator> async_blob_creator_;
 };
 
-CanvasAsyncBlobCreatorTest::CanvasAsyncBlobCreatorTest() = default;
+CanvasAsyncBlobCreatorTest::CanvasAsyncBlobCreatorTest() {
+}
 
 scoped_refptr<StaticBitmapImage> CreateTransparentImage(int width, int height) {
   sk_sp<SkSurface> surface = SkSurface::MakeRasterN32Premul(width, height);

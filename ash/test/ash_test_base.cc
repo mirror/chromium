@@ -10,7 +10,6 @@
 
 #include "ash/display/extended_mouse_warp_controller.h"
 #include "ash/display/mouse_cursor_event_filter.h"
-#include "ash/display/screen_orientation_controller_test_api.h"
 #include "ash/display/unified_mouse_warp_controller.h"
 #include "ash/display/window_tree_host_manager.h"
 #include "ash/public/cpp/config.h"
@@ -223,9 +222,6 @@ display::Display::Rotation AshTestBase::GetCurrentInternalDisplayRotation() {
 void AshTestBase::UpdateDisplay(const std::string& display_specs) {
   display::test::DisplayManagerTestApi(Shell::Get()->display_manager())
       .UpdateDisplay(display_specs);
-  ScreenOrientationControllerTestApi(
-      Shell::Get()->screen_orientation_controller())
-      .UpdateNaturalOrientation();
   ash_test_helper_->NotifyClientAboutAcceleratedWidgets();
 }
 

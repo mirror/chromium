@@ -481,21 +481,12 @@ AutomationNodeImpl.prototype = {
   },
 
   hitTest: function(x, y, eventToFire) {
-    this.hitTestInternal(x, y, eventToFire);
-  },
-
-  hitTestWithReply: function(x, y, opt_callback) {
-    this.hitTestInternal(x, y, 'hitTestResult', opt_callback);
-  },
-
-  hitTestInternal: function(x, y, eventToFire, opt_callback) {
     // Convert from global to tree-relative coordinates.
     var location = GetLocation(this.treeID, GetRootID(this.treeID));
     this.performAction_('hitTest',
                         { x: Math.floor(x - location.left),
                           y: Math.floor(y - location.top),
-                          eventToFire: eventToFire },
-                        opt_callback);
+                          eventToFire: eventToFire });
   },
 
   makeVisible: function() {
@@ -1206,10 +1197,6 @@ AutomationRootNodeImpl.prototype = {
       targetNodeImpl.dispatchEvent(
           eventParams.eventType, eventParams.eventFrom,
           eventParams.mouseX, eventParams.mouseY);
-
-      if (eventParams.actionRequestID != -1) {
-        this.onActionResult(eventParams.actionRequestID, targetNode);
-      }
     } else {
       logging.WARNING('Got ' + eventParams.eventType +
                       ' event on unknown node: ' + eventParams.targetID +
@@ -1260,7 +1247,6 @@ utils.expose(AutomationNode, AutomationNodeImpl, {
     'focus',
     'getImageData',
     'hitTest',
-    'hitTestWithReply',
     'makeVisible',
     'matches',
     'performCustomAction',

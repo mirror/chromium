@@ -35,13 +35,10 @@ class IOBufferWithSize;
 class URLRequest;
 }
 
-namespace network {
-struct ResourceResponse;
-}
-
 namespace content {
 class ResourceController;
 class ResourceDispatcherHostImpl;
+struct ResourceResponse;
 
 // Used to complete an asynchronous resource request in response to resource
 // load events from the resource dispatcher host. This class is used only
@@ -65,10 +62,10 @@ class CONTENT_EXPORT MojoAsyncResourceHandler : public ResourceHandler,
   // ResourceHandler implementation:
   void OnRequestRedirected(
       const net::RedirectInfo& redirect_info,
-      network::ResourceResponse* response,
+      ResourceResponse* response,
       std::unique_ptr<ResourceController> controller) override;
   void OnResponseStarted(
-      network::ResourceResponse* response,
+      ResourceResponse* response,
       std::unique_ptr<ResourceController> controller) override;
   void OnWillStart(const GURL& url,
                    std::unique_ptr<ResourceController> controller) override;

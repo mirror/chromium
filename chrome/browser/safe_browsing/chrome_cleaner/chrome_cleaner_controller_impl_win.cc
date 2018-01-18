@@ -131,11 +131,6 @@ ChromeCleanerController::IdleReason IdleReasonWhenConnectionClosedTooSoon(
              : ChromeCleanerController::IdleReason::kConnectionLost;
 }
 
-void RecordScannerLogsAcceptanceHistogram(bool logs_accepted) {
-  UMA_HISTOGRAM_BOOLEAN("SoftwareReporter.ScannerLogsAcceptance",
-                        logs_accepted);
-}
-
 void RecordCleanerLogsAcceptanceHistogram(bool logs_accepted) {
   UMA_HISTOGRAM_BOOLEAN("SoftwareReporter.CleanerLogsAcceptance",
                         logs_accepted);
@@ -149,33 +144,6 @@ void RecordCleanupResultHistogram(CleanupResultHistogramValue result) {
 void RecordIPCDisconnectedHistogram(IPCDisconnectedHistogramValue error) {
   UMA_HISTOGRAM_ENUMERATION("SoftwareReporter.IPCDisconnected", error,
                             IPC_DISCONNECTED_MAX);
-}
-
-void RecordReporterSequenceTypeHistogram(
-    SwReporterInvocationType invocation_type) {
-  UMA_HISTOGRAM_ENUMERATION("SoftwareReporter.ReporterSequenceType",
-                            static_cast<int>(invocation_type),
-                            static_cast<int>(SwReporterInvocationType::kMax));
-}
-
-void RecordReporterSequenceResultHistogram(
-    SwReporterInvocationType invocation_type,
-    SwReporterInvocationResult result) {
-  if (invocation_type == SwReporterInvocationType::kPeriodicRun) {
-    UMA_HISTOGRAM_ENUMERATION(
-        "SoftwareReporter.ReporterSequenceResult_Periodic",
-        static_cast<int>(result),
-        static_cast<int>(SwReporterInvocationResult::kMax));
-  } else {
-    UMA_HISTOGRAM_ENUMERATION(
-        "SoftwareReporter.ReporterSequenceResult_UserInitiated",
-        static_cast<int>(result),
-        static_cast<int>(SwReporterInvocationResult::kMax));
-  }
-}
-
-void RecordOnDemandUpdateRequiredHistogram(bool value) {
-  UMA_HISTOGRAM_BOOLEAN("SoftwareReporter.OnDemandUpdateRequired", value);
 }
 
 }  // namespace
@@ -330,8 +298,6 @@ void ChromeCleanerControllerImpl::RemoveObserver(Observer* observer) {
 
 void ChromeCleanerControllerImpl::OnReporterSequenceStarted() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-
-  RecordReporterSequenceTypeHistogram(pending_invocation_type_);
   if (!delegate_->UserInitiatedCleanupsFeatureEnabled())
     return;
 
@@ -343,8 +309,6 @@ void ChromeCleanerControllerImpl::OnReporterSequenceDone(
     SwReporterInvocationResult result) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_NE(SwReporterInvocationResult::kUnspecified, result);
-
-  RecordReporterSequenceResultHistogram(pending_invocation_type_, result);
 
   if (!delegate_->UserInitiatedCleanupsFeatureEnabled())
     return;
@@ -423,8 +387,6 @@ void ChromeCleanerControllerImpl::RequestUserInitiatedScan() {
          pending_invocation_type_ !=
              SwReporterInvocationType::kUserInitiatedWithLogsDisallowed);
 
-  RecordScannerLogsAcceptanceHistogram(logs_enabled_);
-
   SwReporterInvocationType invocation_type =
       logs_enabled_
           ? SwReporterInvocationType::kUserInitiatedWithLogsAllowed
@@ -440,8 +402,6 @@ void ChromeCleanerControllerImpl::RequestUserInitiatedScan() {
             // The invocations will be modified by the |ReporterRunner|.
             // Give it a copy to keep the cached invocations pristine.
             base::Passed(&copied_sequence)));
-
-    RecordOnDemandUpdateRequiredHistogram(false);
   } else {
     pending_invocation_type_ = invocation_type;
     OnReporterSequenceStarted();
@@ -456,8 +416,6 @@ void ChromeCleanerControllerImpl::RequestUserInitiatedScan() {
             base::BindOnce(&ChromeCleanerController::OnReporterSequenceDone,
                            base::Unretained(this),
                            SwReporterInvocationResult::kComponentNotAvailable));
-
-    RecordOnDemandUpdateRequiredHistogram(true);
   }
 }
 

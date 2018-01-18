@@ -7,7 +7,6 @@
 #include <memory>
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/scheduler/child/web_scheduler.h"
-#include "public/platform/scheduler/test/renderer_scheduler_test_support.h"
 
 namespace blink {
 
@@ -58,7 +57,7 @@ void DataConsumerHandleTestUtil::Thread::Initialize() {
   DCHECK(thread_->IsCurrentThread());
   if (initialization_policy_ >= kScriptExecution) {
     isolate_holder_ = std::make_unique<gin::IsolateHolder>(
-        scheduler::GetSingleThreadTaskRunnerForTesting());
+        Platform::Current()->CurrentThread()->Scheduler()->LoadingTaskRunner());
     GetIsolate()->Enter();
   }
   thread_->InitializeOnThread();

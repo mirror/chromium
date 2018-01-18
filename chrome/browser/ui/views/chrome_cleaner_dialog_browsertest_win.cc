@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/mock_chrome_cleaner_controller_win.h"
@@ -39,9 +40,9 @@ class ChromeCleanerDialogTest : public DialogBrowserTest {
  public:
   ChromeCleanerDialogTest()
       : mock_dialog_controller_(
-            std::make_unique<NiceMock<MockChromeCleanerDialogController>>()),
+            base::MakeUnique<NiceMock<MockChromeCleanerDialogController>>()),
         mock_cleaner_controller_(
-            std::make_unique<
+            base::MakeUnique<
                 NiceMock<safe_browsing::MockChromeCleanerController>>()) {
     ON_CALL(*mock_dialog_controller_, LogsEnabled())
         .WillByDefault(Return(true));

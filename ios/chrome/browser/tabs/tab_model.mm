@@ -49,6 +49,7 @@
 #import "ios/chrome/browser/tabs/tab_parenting_observer.h"
 #import "ios/chrome/browser/web/page_placeholder_tab_helper.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
+#import "ios/chrome/browser/web_state_list/web_state_list_fast_enumeration_helper.h"
 #import "ios/chrome/browser/web_state_list/web_state_list_metrics_observer.h"
 #import "ios/chrome/browser/web_state_list/web_state_list_observer.h"
 #import "ios/chrome/browser/web_state_list/web_state_list_serialization.h"
@@ -110,12 +111,26 @@ void CleanCertificatePolicyCache(
 
 }  // anonymous namespace
 
+@interface TabModelWebStateProxyFactory : NSObject<WebStateProxyFactory>
+@end
+
+@implementation TabModelWebStateProxyFactory
+
+- (id)proxyForWebState:(web::WebState*)webState {
+  return LegacyTabHelper::GetTabForWebState(webState);
+}
+
+@end
+
 @interface TabModel () {
   // Delegate for the WebStateList.
   std::unique_ptr<WebStateListDelegate> _webStateListDelegate;
 
   // Underlying shared model implementation.
   std::unique_ptr<WebStateList> _webStateList;
+
+  // Helper providing NSFastEnumeration implementation over the WebStateList.
+  std::unique_ptr<WebStateListFastEnumerationHelper> _fastEnumerationHelper;
 
   // WebStateListObservers reacting to modifications of the model (may send
   // notification, translate and forward events, update metrics, ...).
@@ -136,6 +151,8 @@ void CleanCertificatePolicyCache(
 
   // Backs up property with the same name.
   std::unique_ptr<TabUsageRecorder> _tabUsageRecorder;
+  // Backs up property with the same name.
+  const SessionID _sessionID;
   // Saves session's state.
   SessionServiceIOS* _sessionService;
   // List of TabModelObservers.
@@ -159,6 +176,7 @@ void CleanCertificatePolicyCache(
 @implementation TabModel
 
 @synthesize browserState = _browserState;
+@synthesize sessionID = _sessionID;
 @synthesize webUsageEnabled = _webUsageEnabled;
 
 #pragma mark - Overriden
@@ -219,6 +237,10 @@ void CleanCertificatePolicyCache(
         base::MakeUnique<TabModelWebStateListDelegate>(self);
     _webStateList = base::MakeUnique<WebStateList>(_webStateListDelegate.get());
 
+    _fastEnumerationHelper =
+        base::MakeUnique<WebStateListFastEnumerationHelper>(
+            _webStateList.get(), [[TabModelWebStateProxyFactory alloc] init]);
+
     _browserState = browserState;
     DCHECK(_browserState);
 
@@ -231,8 +253,8 @@ void CleanCertificatePolicyCache(
           _webStateList.get(),
           PrerenderServiceFactory::GetForBrowserState(browserState));
     }
-    _syncedWindowDelegate =
-        base::MakeUnique<TabModelSyncedWindowDelegate>(_webStateList.get());
+    _syncedWindowDelegate = base::MakeUnique<TabModelSyncedWindowDelegate>(
+        _webStateList.get(), _sessionID);
 
     // There must be a valid session service defined to consume session windows.
     DCHECK(service);
@@ -449,9 +471,7 @@ void CleanCertificatePolicyCache(
 }
 
 - (void)haltAllTabs {
-  for (int index = 0; index < _webStateList->count(); ++index) {
-    web::WebState* webState = _webStateList->GetWebStateAt(index);
-    Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
+  for (Tab* tab in self) {
     [tab terminateNetworkActivity];
   }
 }
@@ -524,15 +544,14 @@ void CleanCertificatePolicyCache(
   if (!_browserState)
     return referencedFiles;
   // Check the currently open tabs for external files.
-  for (int index = 0; index < _webStateList->count(); ++index) {
-    web::WebState* webState = _webStateList->GetWebStateAt(index);
-    const GURL& lastCommittedURL = webState->GetLastCommittedURL();
+  for (Tab* tab in self) {
+    const GURL& lastCommittedURL = tab.webState->GetLastCommittedURL();
     if (UrlIsExternalFileReference(lastCommittedURL)) {
       [referencedFiles addObject:base::SysUTF8ToNSString(
                                      lastCommittedURL.ExtractFileName())];
     }
     web::NavigationItem* pendingItem =
-        webState->GetNavigationManager()->GetPendingItem();
+        tab.webState->GetNavigationManager()->GetPendingItem();
     if (pendingItem && UrlIsExternalFileReference(pendingItem->GetURL())) {
       [referencedFiles addObject:base::SysUTF8ToNSString(
                                      pendingItem->GetURL().ExtractFileName())];
@@ -612,6 +631,17 @@ void CleanCertificatePolicyCache(
 
   int tabCount = static_cast<int>(self.count);
   UMA_HISTOGRAM_CUSTOM_COUNTS("Tabs.TabCountPerLoad", tabCount, 1, 200, 50);
+}
+
+#pragma mark - NSFastEnumeration
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState*)state
+                                  objects:(id __unsafe_unretained*)objects
+                                    count:(NSUInteger)count {
+  return [_fastEnumerationHelper->GetFastEnumeration()
+      countByEnumeratingWithState:state
+                          objects:objects
+                            count:count];
 }
 
 #pragma mark - Private methods

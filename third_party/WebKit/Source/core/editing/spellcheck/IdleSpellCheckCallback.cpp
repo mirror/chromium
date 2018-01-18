@@ -38,7 +38,7 @@ const double kForcedInvocationDeadlineSeconds = 10;
 
 }  // namespace
 
-IdleSpellCheckCallback::~IdleSpellCheckCallback() = default;
+IdleSpellCheckCallback::~IdleSpellCheckCallback() {}
 
 void IdleSpellCheckCallback::Trace(blink::Visitor* visitor) {
   visitor->Trace(frame_);

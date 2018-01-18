@@ -1,6 +1,4 @@
 include_rules = [
-  "+components/crash/content/browser",
-  "+components/data_use_measurement/core",
-  "+components/previews/core",
   "+net",
+  "+components/previews/core:core",
 ]

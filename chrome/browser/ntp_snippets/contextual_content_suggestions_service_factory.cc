@@ -39,9 +39,7 @@ namespace {
 bool IsContextualContentSuggestionsEnabled() {
 #if defined(OS_ANDROID)
   return base::FeatureList::IsEnabled(
-             chrome::android::kContextualSuggestionsCarousel) ||
-         base::FeatureList::IsEnabled(
-             chrome::android::kContextualSuggestionsAboveArticles);
+      chrome::android::kContextualSuggestionsCarousel);
 #else
   return false;
 #endif  // OS_ANDROID

@@ -6,7 +6,6 @@
 
 #include <stddef.h>
 
-#include <memory>
 #include <utility>
 
 #include "base/memory/ptr_util.h"
@@ -49,7 +48,7 @@ const int kClickSuppressionInMS = 1000;
 std::unique_ptr<AppShortcutLauncherItemController>
 AppShortcutLauncherItemController::Create(const ash::ShelfID& shelf_id) {
   if (shelf_id.app_id == arc::kPlayStoreAppId)
-    return std::make_unique<ArcPlaystoreShortcutLauncherItemController>();
+    return base::MakeUnique<ArcPlaystoreShortcutLauncherItemController>();
   return base::WrapUnique<AppShortcutLauncherItemController>(
       new AppShortcutLauncherItemController(shelf_id));
 }

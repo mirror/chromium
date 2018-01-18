@@ -329,7 +329,8 @@ void TextIteratorAlgorithm<Strategy>::Advance() {
         if (EntersTextControls() && layout_object->IsTextControl()) {
           ShadowRoot* user_agent_shadow_root =
               ToElement(node_)->UserAgentShadowRoot();
-          DCHECK(user_agent_shadow_root->IsUserAgent());
+          DCHECK(user_agent_shadow_root->GetType() ==
+                 ShadowRootType::kUserAgent);
           node_ = user_agent_shadow_root;
           iteration_progress_ = kHandledNone;
           ++shadow_depth_;
@@ -437,7 +438,7 @@ void TextIteratorAlgorithm<Strategy>::Advance() {
             // TODO(kochi): Make sure we treat closed shadow as user agent
             // shadow here.
             DCHECK(shadow_root->GetType() == ShadowRootType::kClosed ||
-                   shadow_root->IsUserAgent());
+                   shadow_root->GetType() == ShadowRootType::kUserAgent);
             node_ = &shadow_root->host();
             iteration_progress_ = kHandledUserAgentShadowRoot;
             --shadow_depth_;

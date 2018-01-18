@@ -70,6 +70,7 @@
 #include "core/layout/LayoutScrollbar.h"
 #include "core/layout/LayoutScrollbarPart.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/ScrollAlignment.h"
 #include "core/layout/TextAutosizer.h"
 #include "core/layout/TracedLayoutObject.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
@@ -120,7 +121,6 @@
 #include "platform/json/JSONValues.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/runtime_enabled_features.h"
-#include "platform/scroll/ScrollAlignment.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/text/TextStream.h"
@@ -130,7 +130,7 @@
 #include "public/platform/TaskType.h"
 #include "public/platform/WebDisplayItemList.h"
 #include "public/platform/WebRect.h"
-#include "public/platform/WebScrollIntoViewParams.h"
+#include "public/platform/WebRemoteScrollProperties.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
 
 // Used to check for dirty layouts violating document lifecycle rules.
@@ -156,6 +156,28 @@ constexpr int kLetterPortraitPageHeight = 792;
 }  // namespace
 
 namespace blink {
+namespace {
+using WebRemoteScrollAlignment = WebRemoteScrollProperties::Alignment;
+WebRemoteScrollAlignment ToWebRemoteScrollAlignment(
+    const ScrollAlignment& alignment) {
+  if (alignment == ScrollAlignment::kAlignCenterIfNeeded)
+    return WebRemoteScrollAlignment::kCenterIfNeeded;
+  if (alignment == ScrollAlignment::kAlignToEdgeIfNeeded)
+    return WebRemoteScrollAlignment::kToEdgeIfNeeded;
+  if (alignment == ScrollAlignment::kAlignTopAlways)
+    return WebRemoteScrollAlignment::kTopAlways;
+  if (alignment == ScrollAlignment::kAlignBottomAlways)
+    return WebRemoteScrollAlignment::kBottomAlways;
+  if (alignment == ScrollAlignment::kAlignLeftAlways)
+    return WebRemoteScrollAlignment::kLeftAlways;
+  if (alignment == ScrollAlignment::kAlignRightAlways)
+    return WebRemoteScrollAlignment::kRightAlways;
+  NOTREACHED();
+  return WebRemoteScrollAlignment::kCenterIfNeeded;
+}
+
+}  // namespace
+
 using namespace HTMLNames;
 
 // The maximum number of updatePlugins iterations that should be done before
@@ -889,6 +911,43 @@ void LocalFrameView::CountObjectsNeedingLayout(unsigned& needs_layout_objects,
   }
 }
 
+inline void LocalFrameView::ForceLayoutParentViewIfNeeded() {
+  AutoReset<bool> prevent_update_layout(&forcing_layout_parent_view_, true);
+  auto* owner_layout_object = frame_->OwnerLayoutObject();
+  if (!owner_layout_object || !owner_layout_object->GetFrame())
+    return;
+
+  LayoutReplaced* content_box = EmbeddedReplacedContent();
+  if (!content_box)
+    return;
+
+  LayoutSVGRoot* svg_root = ToLayoutSVGRoot(content_box);
+  if (svg_root->EverHadLayout() && !svg_root->NeedsLayout())
+    return;
+
+  // If the embedded SVG document appears the first time, the ownerLayoutObject
+  // has already finished layout without knowing about the existence of the
+  // embedded SVG document, because LayoutReplaced embeddedReplacedContent()
+  // returns 0, as long as the embedded document isn't loaded yet. Before
+  // bothering to lay out the SVG document, mark the ownerLayoutObject needing
+  // layout and ask its LocalFrameView for a layout. After that the
+  // LayoutEmbeddedObject (ownerLayoutObject) carries the correct size, which
+  // LayoutSVGRoot::computeReplacedLogicalWidth/Height rely on, when laying out
+  // for the first time, or when the LayoutSVGRoot size has changed dynamically
+  // (eg. via <script>).
+  LocalFrameView* frame_view = owner_layout_object->GetFrame()->View();
+
+  // Mark the owner layoutObject as needing layout.
+  owner_layout_object
+      ->SetNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(
+          LayoutInvalidationReason::kUnknown);
+
+  // Synchronously enter layout, to layout the view containing the host
+  // object/embed/iframe.
+  DCHECK(frame_view);
+  frame_view->UpdateLayout();
+}
+
 void LocalFrameView::PerformPreLayoutTasks() {
   TRACE_EVENT0("blink,benchmark", "LocalFrameView::performPreLayoutTasks");
   Lifecycle().AdvanceTo(DocumentLifecycle::kInPreLayout);
@@ -992,7 +1051,7 @@ std::unique_ptr<TracedValue> LocalFrameView::AnalyzerCounters() {
 #define PERFORM_LAYOUT_TRACE_CATEGORIES \
   "blink,benchmark,rail," TRACE_DISABLED_BY_DEFAULT("blink.debug.layout")
 
-void LocalFrameView::PerformLayout(bool in_subtree_layout) {
+bool LocalFrameView::PerformLayout(bool in_subtree_layout) {
   DCHECK(in_subtree_layout || layout_subtree_root_list_.IsEmpty());
 
   int contents_height_before_layout = GetLayoutView()->DocumentRect().Height();
@@ -1013,6 +1072,12 @@ void LocalFrameView::PerformLayout(bool in_subtree_layout) {
     ScheduleOrthogonalWritingModeRootsForLayout();
   }
 
+  // ForceLayoutParentViewIfNeeded can cause this view to become detached.  If
+  // that happens, abandon layout.
+  bool was_attached = is_attached_;
+  ForceLayoutParentViewIfNeeded();
+  if (was_attached && !is_attached_)
+    return false;
 
   DCHECK(!IsInPerformLayout());
   Lifecycle().AdvanceTo(DocumentLifecycle::kInPerformLayout);
@@ -1057,6 +1122,7 @@ void LocalFrameView::PerformLayout(bool in_subtree_layout) {
       .MarkNextPaintAsMeaningfulIfNeeded(
           layout_object_counter_, contents_height_before_layout,
           GetLayoutView()->DocumentRect().Height(), VisibleHeight());
+  return true;
 }
 
 void LocalFrameView::ScheduleOrPerformPostLayoutTasks() {
@@ -1228,7 +1294,12 @@ void LocalFrameView::UpdateLayout() {
 
     IntSize old_size(Size());
 
-    PerformLayout(in_subtree_layout);
+    if (!PerformLayout(in_subtree_layout)) {
+      TRACE_EVENT_END0("devtools.timeline", "Layout");
+      DCHECK(nested_layout_count_);
+      nested_layout_count_--;
+      return;
+    }
 
     UpdateScrollbars();
     UpdateParentScrollableAreaSet();
@@ -1831,10 +1902,12 @@ void LocalFrameView::ProcessUrlFragment(const KURL& url,
     return;
   }
 
-  // Try again after decoding the fragment.
+  // Try again after decoding the ref, based on the document's encoding.
   if (frame_->GetDocument()->Encoding().IsValid()) {
-    ProcessUrlFragmentHelper(DecodeURLEscapeSequences(fragment_identifier),
-                             behavior);
+    ProcessUrlFragmentHelper(
+        DecodeURLEscapeSequences(fragment_identifier,
+                                 frame_->GetDocument()->Encoding()),
+        behavior);
   }
 }
 
@@ -2038,16 +2111,14 @@ bool LocalFrameView::ComputeCompositedSelection(
 
   VisiblePosition visible_start(visible_selection.VisibleStart());
   RenderedPosition rendered_start(visible_start);
-  selection.start = rendered_start.PositionInGraphicsLayerBacking(true);
-  // TODO(yoichio): Assign hidden in PositionInGraphicsLayerBacking();
+  rendered_start.PositionInGraphicsLayerBacking(selection.start, true);
   selection.start.hidden = !rendered_start.IsVisible(true);
   if (!selection.start.layer)
     return false;
 
   VisiblePosition visible_end(visible_selection.VisibleEnd());
   RenderedPosition rendered_end(visible_end);
-  selection.end = rendered_end.PositionInGraphicsLayerBacking(false);
-  // TODO(yoichio): Assign hidden in PositionInGraphicsLayerBacking();
+  rendered_end.PositionInGraphicsLayerBacking(selection.end, false);
   selection.end.hidden = !rendered_end.IsVisible(false);
   if (!selection.end.layer)
     return false;
@@ -2422,8 +2493,8 @@ void LocalFrameView::ScrollToFragmentAnchor() {
     // Scroll nested layers and frames to reveal the anchor.
     // Align to the top and to the closest side (this matches other browsers).
     anchor_node->GetLayoutObject()->ScrollRectToVisible(
-        rect, WebScrollIntoViewParams(ScrollAlignment::kAlignToEdgeIfNeeded,
-                                      ScrollAlignment::kAlignTopAlways));
+        rect, ScrollAlignment::kAlignToEdgeIfNeeded,
+        ScrollAlignment::kAlignTopAlways);
 
     if (boundary_frame && boundary_frame->IsLocalFrame()) {
       ToLocalFrame(boundary_frame)
@@ -3404,15 +3475,6 @@ void LocalFrameView::UpdateStyleAndLayoutIfNeededRecursiveInternal() {
   // out.
 
   frame_->GetDocument()->UpdateStyleAndLayoutTree();
-
-  // Update style for all embedded replaced content under this frame, so
-  // that intrinsic size computation for any embedded objects has up-to-date
-  // information.
-  // TODO(chrishtr): generalize this to fully separate style from layout.
-  ForAllChildLocalFrameViews([](LocalFrameView& view) {
-    if (view.EmbeddedReplacedContent())
-      view.GetLayoutView()->GetDocument().UpdateStyleAndLayoutTree();
-  });
 
   CHECK(!ShouldThrottleRendering());
   CHECK(frame_->GetDocument()->IsActive());
@@ -4547,7 +4609,12 @@ ScrollableArea* LocalFrameView::ScrollableAreaWithElementId(
 
 void LocalFrameView::ScrollRectToVisibleInRemoteParent(
     const LayoutRect& rect_to_scroll,
-    const WebScrollIntoViewParams& params) {
+    const ScrollAlignment& align_x,
+    const ScrollAlignment& align_y,
+    ScrollType scroll_type,
+    bool make_visible_in_visual_viewport,
+    ScrollBehavior scroll_behavior,
+    bool is_for_scroll_sequence) {
   DCHECK(GetFrame().IsLocalRoot() && !GetFrame().IsMainFrame() &&
          safe_to_propagate_scroll_to_parent_);
   // Find the coordinates of the |rect_to_scroll| after removing all transforms
@@ -4564,7 +4631,10 @@ void LocalFrameView::ScrollRectToVisibleInRemoteParent(
   GetFrame().Client()->ScrollRectToVisibleInParentFrame(
       WebRect(new_rect.X().ToInt(), new_rect.Y().ToInt(),
               new_rect.Width().ToInt(), new_rect.Height().ToInt()),
-      params);
+      WebRemoteScrollProperties(ToWebRemoteScrollAlignment(align_x),
+                                ToWebRemoteScrollAlignment(align_y),
+                                scroll_type, make_visible_in_visual_viewport,
+                                scroll_behavior, is_for_scroll_sequence));
 }
 
 void LocalFrameView::ScrollContentsIfNeeded() {
@@ -4822,15 +4892,17 @@ bool LocalFrameView::ShouldPlaceVerticalScrollbarOnLeft() const {
   return false;
 }
 
-LayoutRect LocalFrameView::ScrollIntoView(
-    const LayoutRect& rect_in_content,
-    const WebScrollIntoViewParams& params) {
+LayoutRect LocalFrameView::ScrollIntoView(const LayoutRect& rect_in_content,
+                                          const ScrollAlignment& align_x,
+                                          const ScrollAlignment& align_y,
+                                          bool is_smooth,
+                                          ScrollType scroll_type,
+                                          bool is_for_scroll_sequence) {
   GetLayoutBox()->SetPendingOffsetToScroll(LayoutSize());
 
   LayoutRect view_rect(VisibleContentRect());
   LayoutRect expose_rect = ScrollAlignment::GetRectToExpose(
-      view_rect, rect_in_content, params.GetScrollAlignmentX(),
-      params.GetScrollAlignmentY());
+      view_rect, rect_in_content, align_x, align_y);
   ScrollOffset old_scroll_offset = GetScrollOffset();
   if (expose_rect != view_rect) {
     ScrollOffset target_offset(expose_rect.X().ToFloat(),
@@ -4839,18 +4911,17 @@ LayoutRect LocalFrameView::ScrollIntoView(
                         ? ScrollOffset(FlooredIntSize(target_offset))
                         : target_offset;
 
-    if (params.is_for_scroll_sequence) {
-      DCHECK(params.GetScrollType() == kProgrammaticScroll);
+    if (is_for_scroll_sequence) {
+      DCHECK(scroll_type == kProgrammaticScroll);
       ScrollBehavior behavior =
-          DetermineScrollBehavior(params.GetScrollBehavior(),
-                                  GetLayoutBox()->Style()->GetScrollBehavior());
+          is_smooth ? kScrollBehaviorSmooth : kScrollBehaviorInstant;
       GetSmoothScrollSequencer()->QueueAnimation(this, target_offset, behavior);
       ScrollOffset scroll_offset_difference =
           ClampScrollOffset(target_offset) - old_scroll_offset;
       GetLayoutBox()->SetPendingOffsetToScroll(
           -LayoutSize(scroll_offset_difference));
     } else {
-      SetScrollOffset(target_offset, params.GetScrollType());
+      SetScrollOffset(target_offset, scroll_type);
     }
   }
 

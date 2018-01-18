@@ -19,12 +19,9 @@ public interface SurveyInfoBarDelegate {
     void onSurveyInfoBarTabInteractabilityChanged(boolean isInteractable);
 
     /**
-     * Notified when the survey infobar is closed.
-     * @param viaCloseButton If the infobar's close button was tapped to close the infobar.
-     * @param visibleWhenClosed If the infobar was visible when closed (i.e. not hidden behind
-     *                          another infobar).
+     * Notified when the survey infobar's close button is clicked.
      */
-    void onSurveyInfoBarClosed(boolean viaCloseButton, boolean visibleWhenClosed);
+    void onSurveyInfoBarCloseButtonClicked();
 
     /**
      * Notified when the survey is triggered via the infobar.

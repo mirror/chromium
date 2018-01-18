@@ -54,7 +54,8 @@ class CORE_EXPORT TypingCommand final : public CompositeEditCommand {
     kSelectInsertedText = 1 << 0,
     kKillRing = 1 << 1,
     kRetainAutocorrectionIndicator = 1 << 2,
-    kSmartDelete = 1 << 3
+    kPreventSpellChecking = 1 << 3,
+    kSmartDelete = 1 << 4
   };
   typedef unsigned Options;
 
@@ -148,6 +149,12 @@ class CORE_EXPORT TypingCommand final : public CompositeEditCommand {
   InputEvent::InputType GetInputType() const override;
   bool IsTypingCommand() const override;
   bool PreservesTypingStyle() const override { return preserves_typing_style_; }
+  void SetShouldRetainAutocorrectionIndicator(bool retain) override {
+    should_retain_autocorrection_indicator_ = retain;
+  }
+  void SetShouldPreventSpellChecking(bool prevent) {
+    should_prevent_spell_checking_ = prevent;
+  }
 
   void UpdatePreservesTypingStyle(ETypingCommand);
   void TypingAddedToOpenCommand(ETypingCommand);
@@ -192,6 +199,9 @@ class CORE_EXPORT TypingCommand final : public CompositeEditCommand {
   // the characters that were deleted, but only if the typing command being
   // undone was opened with a backward delete.
   bool opened_by_backward_delete_;
+
+  bool should_retain_autocorrection_indicator_;
+  bool should_prevent_spell_checking_;
 
   bool is_incremental_insertion_;
   size_t selection_start_;

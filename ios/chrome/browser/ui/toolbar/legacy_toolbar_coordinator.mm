@@ -44,10 +44,11 @@
   if (self = [super initWithBaseViewController:viewController
                                   browserState:browserState]) {
     DCHECK(browserState);
-    _toolsMenuCoordinator = [[ToolsMenuCoordinator alloc] init];
+    _toolsMenuCoordinator = [[ToolsMenuCoordinator alloc]
+        initWithBaseViewController:viewController
+                      browserState:self.browserState];
     _toolsMenuCoordinator.dispatcher = dispatcher;
     _toolsMenuCoordinator.configurationProvider = configurationProvider;
-    [_toolsMenuCoordinator start];
 
     [dispatcher startDispatchingToTarget:self
                              forProtocol:@protocol(ToolbarCommands)];
@@ -174,8 +175,6 @@
   [self.toolbarController cancelOmniboxEdit];
 }
 
-#pragma mark - FakeboxFocuser
-
 - (void)focusFakebox {
   [self.toolbarController focusFakebox];
 }
@@ -290,6 +289,10 @@
 
 - (void)contractToolbar {
   [self cancelOmniboxEdit];
+}
+
+- (void)navigateToMemexTabSwitcher {
+  [self.toolbarController navigateToMemexTabSwitcher];
 }
 
 #pragma mark - Fullscreen helpers

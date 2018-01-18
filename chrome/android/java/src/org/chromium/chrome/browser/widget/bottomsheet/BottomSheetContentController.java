@@ -154,9 +154,7 @@ public class BottomSheetContentController
 
             if (ChromeFeatureList.isInitialized()
                     && ChromeFeatureList.isEnabled(
-                               ChromeFeatureList.CHROME_HOME_DESTROY_SUGGESTIONS)
-                    && !ChromeFeatureList.isEnabled(
-                               ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_ABOVE_ARTICLES)) {
+                               ChromeFeatureList.CHROME_HOME_DESTROY_SUGGESTIONS)) {
                 // TODO(bauerb): Implement support for destroying the home sheet after a delay.
                 mSelectedItemId = NO_CONTENT_ID;
                 mBottomSheet.showContent(null);
@@ -363,8 +361,7 @@ public class BottomSheetContentController
         mLabelsEnabled =
                 ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_BOTTOM_NAV_LABELS);
         if (mLabelsEnabled) {
-            ImageView bottomNavShadow = (ImageView) findViewById(R.id.bottom_nav_shadow);
-            if (bottomNavShadow != null) bottomNavShadow.setVisibility(View.VISIBLE);
+            ((ImageView) findViewById(R.id.bottom_nav_shadow)).setVisibility(View.VISIBLE);
         } else {
             hideMenuLabels();
         }

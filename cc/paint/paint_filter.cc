@@ -56,6 +56,8 @@ std::string PaintFilter::TypeToString(Type type) {
       return "kCompose";
     case Type::kAlphaThreshold:
       return "kAlphaThreshold";
+    case Type::kSkImageFilter:
+      return "kSkImageFilter";
     case Type::kXfermode:
       return "kXfermode";
     case Type::kArithmetic:
@@ -100,8 +102,7 @@ bool PaintFilter::operator==(const PaintFilter& other) const {
     return false;
   if (crop_rect_) {
     if (crop_rect_->flags() != other.crop_rect_->flags() ||
-        !PaintOp::AreSkRectsEqual(crop_rect_->rect(),
-                                  other.crop_rect_->rect())) {
+        crop_rect_->rect() != other.crop_rect_->rect()) {
       return false;
     }
   }
@@ -127,6 +128,9 @@ bool PaintFilter::operator==(const PaintFilter& other) const {
     case Type::kAlphaThreshold:
       return *static_cast<const AlphaThresholdPaintFilter*>(this) ==
              static_cast<const AlphaThresholdPaintFilter&>(other);
+    case Type::kSkImageFilter:
+      return *static_cast<const ImageFilterPaintFilter*>(this) ==
+             static_cast<const ImageFilterPaintFilter&>(other);
     case Type::kXfermode:
       return *static_cast<const XfermodePaintFilter*>(this) ==
              static_cast<const XfermodePaintFilter&>(other);
@@ -140,8 +144,8 @@ bool PaintFilter::operator==(const PaintFilter& other) const {
       return *static_cast<const DisplacementMapEffectPaintFilter*>(this) ==
              static_cast<const DisplacementMapEffectPaintFilter&>(other);
     case Type::kImage:
-      return *static_cast<const ImagePaintFilter*>(this) ==
-             static_cast<const ImagePaintFilter&>(other);
+      return *static_cast<const ImageFilterPaintFilter*>(this) ==
+             static_cast<const ImageFilterPaintFilter&>(other);
     case Type::kPaintRecord:
       return *static_cast<const RecordPaintFilter*>(this) ==
              static_cast<const RecordPaintFilter&>(other);
@@ -317,6 +321,18 @@ bool AlphaThresholdPaintFilter::operator==(
          AreFiltersEqual(input_.get(), other.input_.get());
 }
 
+ImageFilterPaintFilter::ImageFilterPaintFilter(sk_sp<SkImageFilter> sk_filter)
+    : PaintFilter(kType, nullptr), sk_filter_(std::move(sk_filter)) {
+  cached_sk_filter_ = sk_filter_;
+}
+
+ImageFilterPaintFilter::~ImageFilterPaintFilter() = default;
+
+bool ImageFilterPaintFilter::operator==(
+    const ImageFilterPaintFilter& other) const {
+  return !!sk_filter_ == !!other.sk_filter_;
+}
+
 XfermodePaintFilter::XfermodePaintFilter(SkBlendMode blend_mode,
                                          sk_sp<PaintFilter> background,
                                          sk_sp<PaintFilter> foreground,
@@ -390,10 +406,8 @@ MatrixConvolutionPaintFilter::MatrixConvolutionPaintFilter(
       tile_mode_(tile_mode),
       convolve_alpha_(convolve_alpha),
       input_(std::move(input)) {
-  auto len = static_cast<size_t>(
-      sk_64_mul(kernel_size_.width(), kernel_size_.height()));
-  kernel_->reserve(len);
-  for (size_t i = 0; i < len; ++i)
+  auto len = sk_64_mul(kernel_size_.width(), kernel_size_.height());
+  for (int i = 0; i < len; ++i)
     kernel_->push_back(kernel[i]);
 
   cached_sk_filter_ = SkMatrixConvolutionImageFilter::Make(

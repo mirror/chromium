@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <memory>
-
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -50,7 +48,7 @@ std::string GetActiveUrl(Browser* browser) {
 void SetUninstallURL(extensions::ExtensionPrefs* prefs,
                      const std::string& extension_id) {
   prefs->UpdateExtensionPref(extension_id, kUninstallUrlPrefKey,
-                             std::make_unique<base::Value>(kUninstallUrl));
+                             base::MakeUnique<base::Value>(kUninstallUrl));
 }
 
 class TestExtensionUninstallDialogDelegate

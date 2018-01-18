@@ -8,6 +8,7 @@
 
 #include "base/callback.h"
 #include "base/command_line.h"
+#include "base/memory/ptr_util.h"
 #include "base/sys_info.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
@@ -79,7 +80,7 @@ const user_manager::User* FakeChromeUserManager::AddUserWithAffiliation(
   user->set_username_hash(ProfileHelper::GetUserIdHashByUserIdForTesting(
       account_id.GetUserEmail()));
   user->SetStubImage(
-      std::make_unique<user_manager::UserImage>(
+      base::MakeUnique<user_manager::UserImage>(
           *ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
               IDR_LOGIN_DEFAULT_USER)),
       user_manager::User::USER_IMAGE_PROFILE, false);
@@ -117,15 +118,6 @@ user_manager::User* FakeChromeUserManager::AddSupervisedUser(
   return user;
 }
 
-user_manager::User* FakeChromeUserManager::AddGuestUser() {
-  user_manager::User* user =
-      user_manager::User::CreateGuestUser(GetGuestAccountId());
-  user->set_username_hash(ProfileHelper::GetUserIdHashByUserIdForTesting(
-      GetGuestAccountId().GetUserEmail()));
-  users_.push_back(user);
-  return user;
-}
-
 const user_manager::User* FakeChromeUserManager::AddPublicAccountUser(
     const AccountId& account_id) {
   user_manager::User* user =
@@ -133,7 +125,7 @@ const user_manager::User* FakeChromeUserManager::AddPublicAccountUser(
   user->set_username_hash(ProfileHelper::GetUserIdHashByUserIdForTesting(
       account_id.GetUserEmail()));
   user->SetStubImage(
-      std::make_unique<user_manager::UserImage>(
+      base::MakeUnique<user_manager::UserImage>(
           *ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
               IDR_LOGIN_DEFAULT_USER)),
       user_manager::User::USER_IMAGE_PROFILE, false);
@@ -584,8 +576,8 @@ bool FakeChromeUserManager::IsGuestSessionAllowed() const {
 bool FakeChromeUserManager::IsGaiaUserAllowed(
     const user_manager::User& user) const {
   DCHECK(user.HasGaiaAccount());
-  return CrosSettings::Get()->IsUserWhitelisted(
-      user.GetAccountId().GetUserEmail(), nullptr);
+  return CrosSettings::IsWhitelisted(user.GetAccountId().GetUserEmail(),
+                                     nullptr);
 }
 
 bool FakeChromeUserManager::IsUserAllowed(
@@ -607,7 +599,7 @@ bool FakeChromeUserManager::IsUserAllowed(
 }
 
 void FakeChromeUserManager::CreateLocalState() {
-  local_state_ = std::make_unique<TestingPrefServiceSimple>();
+  local_state_ = base::MakeUnique<TestingPrefServiceSimple>();
   user_manager::known_user::RegisterPrefs(local_state_->registry());
 }
 
@@ -636,7 +628,7 @@ void FakeChromeUserManager::LoadDeviceLocalAccounts(
 }
 
 bool FakeChromeUserManager::IsEnterpriseManaged() const {
-  return is_enterprise_managed_;
+  return false;
 }
 
 void FakeChromeUserManager::PerformPreUserListLoadingActions() {

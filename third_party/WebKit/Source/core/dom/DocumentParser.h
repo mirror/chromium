@@ -43,7 +43,6 @@ class CORE_EXPORT DocumentParser
  public:
   virtual ~DocumentParser();
   virtual void Trace(blink::Visitor*);
-  void TraceWrappers(const ScriptWrappableVisitor*) const override {}
 
   virtual ScriptableDocumentParser* AsScriptableDocumentParser() {
     return nullptr;

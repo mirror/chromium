@@ -6,8 +6,6 @@
 
 #include "core/css/CSSValueList.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
-#include "core/css/properties/ComputedStyleUtils.h"
-#include "core/style/ComputedStyle.h"
 
 namespace blink {
 namespace CSSLonghand {
@@ -21,25 +19,6 @@ const CSSValue* BaselineShift::ParseSingleValue(
     return CSSPropertyParserHelpers::ConsumeIdent(range);
   return CSSPropertyParserHelpers::ConsumeLengthOrPercent(
       range, kSVGAttributeMode, kValueRangeAll);
-}
-
-const CSSValue* BaselineShift::CSSValueFromComputedStyleInternal(
-    const ComputedStyle& style,
-    const SVGComputedStyle& svg_style,
-    const LayoutObject*,
-    Node* styled_node,
-    bool allow_visited_style) const {
-  switch (svg_style.BaselineShift()) {
-    case BS_SUPER:
-      return CSSIdentifierValue::Create(CSSValueSuper);
-    case BS_SUB:
-      return CSSIdentifierValue::Create(CSSValueSub);
-    case BS_LENGTH:
-      return ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
-          svg_style.BaselineShiftValue(), style);
-  }
-  NOTREACHED();
-  return nullptr;
 }
 
 }  // namespace CSSLonghand

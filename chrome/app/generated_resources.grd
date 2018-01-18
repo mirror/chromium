@@ -763,7 +763,7 @@ are declared in build/common.gypi.
             Save Password
           </message>
           <message name="IDS_CONTENT_CONTEXT_GENERATEPASSWORD" desc="In Title Case: The name of the Generate Password command in the content area context menu">
-            Generate Password...
+            Generate Password
           </message>
         </if>
       </if>
@@ -5321,37 +5321,13 @@ the Bookmarks menu.">
 
       <!-- Clipboard permission -->
       <message name="IDS_CLIPBOARD_PERMISSION_FRAGMENT" desc="Permission request shown if the user is visiting a site that wants to read data from the system clipboard. Follows a prompt: 'This site would like to:'">
-        See text and images copied to the clipboard
+        See text and images you copy to the clipboard
       </message>
       <if expr="is_android">
         <message name="IDS_CLIPBOARD_INFOBAR_TEXT" desc="Text requesting permission for a site to read data from the system clipboard">
-          <ph name="URL">$1<ex>maps.google.com</ex></ph> wants to see text and images copied to the clipboard.
+          <ph name="URL">$1<ex>maps.google.com</ex></ph> wants to see text and images you copy to the clipboard.
         </message>
       </if>
-      <message name="IDS_ALLOWED_CLIPBOARD_TITLE" desc="Bubble info title for when a page has been granted clipboard read access.">
-        Clipboard read access allowed
-      </message>
-      <message name="IDS_ALLOWED_CLIPBOARD_MESSAGE" desc="Bubble info message and location bar icon tooltip text when a page has been granted clipboard read access.">
-        This page can see text and images copied to the clipboard.
-      </message>
-      <message name="IDS_ALLOWED_CLIPBOARD_BLOCK" desc="Radio button to block read access to the clipboard">
-        Always block <ph name="HOST">$1<ex>example.com</ex></ph> from seeing the clipboard
-      </message>
-      <message name="IDS_ALLOWED_CLIPBOARD_NO_ACTION" desc="Radio button to keep allowing access to the clipboard">
-        Continue allowing this site to see the clipboard
-      </message>
-      <message name="IDS_BLOCKED_CLIPBOARD_TITLE" desc="Bubble info title for when a page has been denied clipboard read access.">
-        Clipboard read access denied
-      </message>
-      <message name="IDS_BLOCKED_CLIPBOARD_MESSAGE" desc="Bubble info message and location bar icon tooltip text when a page had been denied clipboard read access.">
-        This page has been blocked from seeing text and images copied to the clipboard
-      </message>
-      <message name="IDS_BLOCKED_CLIPBOARD_UNBLOCK" desc="Radio button choice to unblock a site from accessing the clipboard.">
-        Always allow <ph name="HOST">$1<ex>mail.google.com</ex></ph> to see the clipboard
-      </message>
-      <message name="IDS_BLOCKED_CLIPBOARD_NO_ACTION" desc="Radio button choice to continue blocking a site from accessing the clipboard API.">
-        Continue blocking this site from seeing the clipboard
-      </message>
 
       <!-- Feature Engagement Tracker strings -->
       <message name="IDS_BOOKMARK_PROMO_0" desc="Text shown on promotional UI appearing next to the Bookmarks button, which encourages users to use it.">
@@ -5412,18 +5388,15 @@ the Bookmarks menu.">
       <message name="IDS_BROWSER_HANGMONITOR_RENDERER_WAIT" desc="The label of the 'wait' button, which exits the dialog without doing anything and continues to wait for the page to become responsive.">
         Wait
       </message>
+
       <if expr="use_titlecase">
-        <message name="IDS_BROWSER_HANGMONITOR_RENDERER_END" desc="The label of the 'exit' button, which stops the unresponsive page. If having no explicit # makes the phrasing awkward, feel free to add a # as necessary. [ICU Syntax]">
-          {NUM_PAGES, plural,
-          =1 {Exit Page}
-          other {Exit Pages}}
+        <message name="IDS_BROWSER_HANGMONITOR_RENDERER_END" desc="The label of the 'exit' button, which stops the unresponsive page.">
+          Exit Page
         </message>
       </if>
       <if expr="not use_titlecase">
-        <message name="IDS_BROWSER_HANGMONITOR_RENDERER_END" desc="The label of the 'exit' button, which stops the unresponsive page. If having no explicit # makes the phrasing awkward, feel free to add a # as necessary. [ICU Syntax]">
-          {NUM_PAGES, plural,
-          =1 {Exit page}
-          other {Exit pages}}
+        <message name="IDS_BROWSER_HANGMONITOR_RENDERER_END" desc="The label of the 'exit' button, which stops the unresponsive page.">
+          Exit page
         </message>
       </if>
       <message name="IDS_BROWSER_HANGMONITOR_PLUGIN_INFOBAR" desc="The text of the infobar notifying the user that a plugin has hung">
@@ -5956,14 +5929,26 @@ I don't think this site should be blocked!
       <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_SEARCH_ENGINE_NO_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their search engine has been modified, for example by unwanted software or extension, to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default if the user clicks the Restore button.">
         Your search engine was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>.
       </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_SEARCH_ENGINE_WITH_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their search engine has been modified by an extension to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
+        Your search engine was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>. To disable extensions that change your search engine, click Restore.
+      </message>
       <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_STARTUP_PAGE_SINGLE_NO_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their startup page setting has been modified, for example by unwanted software or extension, to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
         Your startup page was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>.
+      </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_STARTUP_PAGE_SINGLE_WITH_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their startup page has been modified by an extension to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
+        Your startup page was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>. To disable extensions that change your startup page, click Restore.
       </message>
       <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_STARTUP_PAGE_MULTIPLE_NO_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their startup page setting has been modified, for example by unwanted software or extension, to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default if the user clicks the Restore button.">
         Your startup pages were changed to include <ph name="URL">$1<ex>www.some-domain.com</ex></ph>.
       </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_STARTUP_PAGE_MULTIPLE_WITH_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their startup page has been modified by an extension to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default if the user clicks the Restore button.">
+        Your startup pages were changed to include <ph name="URL">$1<ex>www.some-domain.com</ex></ph>. To disable extensions that change your startup page, click Restore.
+      </message>
       <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_HOMEPAGE_NO_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their homepage setting has been modified, for example by unwanted software or extension, to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
         Your homepage was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>.
+      </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_HOMEPAGE_WITH_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their homepagesetting has been modified by an extension to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
+        Your homepage page was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>. To disable extensions that change your homepage, click Restore.
       </message>
 
       <!-- Upgrade bubble messages -->
@@ -6900,8 +6885,8 @@ I don't think this site should be blocked!
       <message name="IDS_AUTOFILL_DIALOG_PLACEHOLDER_EXPIRY_YEAR" desc="The placeholder/label text for credit card expiration year in the card unmask dialog.">
         Year
       </message>
-      <message name="IDS_AUTOFILL_FROM_GOOGLE_ACCOUNT" desc="The name of the Google product that stores user addresses or credit cards in the cloud. This should not be translated." formatter_data="android_java">
-        Google Pay
+      <message name="IDS_AUTOFILL_FROM_GOOGLE_ACCOUNT" desc="The name of the Google product that stores user addresses or credit cards in the cloud." formatter_data="android_java">
+        Google Payments
       </message>
 
       <if expr="not is_linux or chromeos">
@@ -7804,21 +7789,6 @@ I don't think this site should be blocked!
       </message>
       <message name="IDS_USER_NOT_ALLOWED_BY_POLICY" desc="The error message shown when the user tries to use a profile that is blocked by policy">
         This user has been disabled by your administrator.
-      </message>
-      <message name="IDS_OLD_PROFILES_DISABLED_TITLE" desc="The title of the error page shown when the user tries to use an old profile that is disabled by policy">
-        Can't use this profile
-      </message>
-      <message name="IDS_OLD_PROFILES_DISABLED_MESSAGE" desc="The error message shown when the user tries to use an old profile that is disabled by policy">
-        Your administrator has made a system-wide change that disables some old profiles.
-      </message>
-      <message name="IDS_OLD_PROFILES_DISABLED_ADD_PERSON_SUGGESTION" desc="The suggestion that tells the user to create a new profile when the user tries to use an old profile that is disabled by policy">
-        To continue, click OK, then click Add Person to create a new profile for your email address.
-      </message>
-      <message name="IDS_OLD_PROFILES_DISABLED_ADD_PERSON_SUGGESTION_WITH_DOMAIN" desc="The suggestion that tells the user to create a new profile with the domain when the user tries to use an old profile that is disabled by policy">
-        To continue, click OK, then click Add Person to create a new profile for your <ph name="DOMAIN">$1<ex>example.com</ex></ph> email address.
-      </message>
-      <message name="IDS_OLD_PROFILES_DISABLED_REMOVED_OLD_PROFILE" desc="The suggestion that tells the user to delete old profile when the user tries to use an old profile that is disabled by policy">
-        Although you can no longer access your old profile, you can remove it.
       </message>
       <if expr="is_android">
         <message name="IDS_SYNC_USER_NAME_IN_USE_ERROR" desc="Mobile: An error message shown when a user tries to sign in to sync using a user name that's already in use by another profile.">
@@ -10753,6 +10723,14 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
         Communications
       </message>
     </if>
+    <if expr="chromeos">
+      <message name="IDS_BEAMFORMING_ON_DEFAULT_AUDIO_INPUT_DEVICE_NAME" desc="Default audio input device (microphone) with a narrow angle coverage. Only the user in front of the device (i.e. you) will be listened to. This is typically presented to users in a drop-down list of device choices.">
+        Default (pick up just you)
+      </message>
+      <message name="IDS_BEAMFORMING_OFF_DEFAULT_AUDIO_INPUT_DEVICE_NAME" desc="Default audio input device (microphone) with a wide angle coverage. All the sounds in the vicinity will be listend to. This is typically presented to users in a drop-down list of device choices.">
+        Default (pick up everything)
+      </message>
+    </if>
 
     <if expr="is_android">
       <!-- Data Use -->
@@ -10878,7 +10856,7 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
     <message name="IDS_BLOCKED_ADS_INFOBAR_MESSAGE" desc="The mini infobar message shown to users on Android when Chrome has blocked ads on the site because the site tends to show intrusive ads. Will be presented as a sentence, next to a Details link to expand the infobar.">
       Ads blocked.
     </message>
-    <message name="IDS_BLOCKED_ADS_PROMPT_TITLE" desc="Title of the prompt shown to users in the omnibox or infobar when Chrome has blocked ads on the site because the site tends to show intrusive ads. The title will stand alone next to an icon so there is no need for a period." formatter_data="android_java">
+    <message name="IDS_BLOCKED_ADS_PROMPT_TITLE" desc="Title of the prompt shown to users on Desktop in the omnibox when Chrome has blocked ads on the site because the site tends to show intrusive ads. The title will stand alone next to an icon so there is no need for a period.">
       Ads blocked
     </message>
     <message name="IDS_BLOCKED_ADS_PROMPT_EXPLANATION" desc="Longer explanation that Chrome has blocked ads on the site. To be shown in an expanded infobar / bubble">

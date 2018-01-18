@@ -5,7 +5,6 @@
 #include "chrome/browser/ui/toolbar/toolbar_actions_model.h"
 
 #include <algorithm>
-#include <memory>
 #include <string>
 
 #include "base/location.h"
@@ -51,7 +50,7 @@ ToolbarActionsModel::ToolbarActionsModel(
       extension_action_manager_(
           extensions::ExtensionActionManager::Get(profile_)),
       component_actions_factory_(
-          std::make_unique<ComponentToolbarActionsFactory>(profile_)),
+          base::MakeUnique<ComponentToolbarActionsFactory>(profile_)),
       actions_initialized_(false),
       highlight_type_(HIGHLIGHT_NONE),
       has_active_bubble_(false),
@@ -184,7 +183,7 @@ ToolbarActionsModel::CreateActionForItem(Browser* browser,
       DCHECK(extension);
 
       // Create and add an ExtensionActionViewController for the extension.
-      result = std::make_unique<ExtensionActionViewController>(
+      result = base::MakeUnique<ExtensionActionViewController>(
           extension, browser,
           extension_action_manager_->GetExtensionAction(*extension), bar);
       break;

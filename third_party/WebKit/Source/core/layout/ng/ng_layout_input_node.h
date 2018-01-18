@@ -20,7 +20,6 @@ class NGConstraintSpace;
 class NGLayoutResult;
 struct MinMaxSize;
 struct NGLogicalSize;
-struct NGPhysicalSize;
 
 // Represents the input to a layout algorithm for a given node. The layout
 // engine should use the style, node type to determine which type of layout
@@ -74,8 +73,6 @@ class CORE_EXPORT NGLayoutInputNode {
   NGLayoutInputNode NextSibling();
 
   Document& GetDocument() const;
-
-  NGPhysicalSize InitialContainingBlockSize() const;
 
   // Returns the LayoutObject which is associated with this node.
   LayoutObject* GetLayoutObject() const;

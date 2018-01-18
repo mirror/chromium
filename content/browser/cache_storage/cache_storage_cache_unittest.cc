@@ -162,11 +162,11 @@ void CopyBody(const storage::BlobDataHandle& blob_handle, std::string* output) {
   const auto& items = data->items();
   for (const auto& item : items) {
     switch (item->type()) {
-      case network::DataElement::TYPE_BYTES: {
+      case storage::DataElement::TYPE_BYTES: {
         output->append(item->bytes(), item->length());
         break;
       }
-      case network::DataElement::TYPE_DISK_CACHE_ENTRY: {
+      case storage::DataElement::TYPE_DISK_CACHE_ENTRY: {
         disk_cache::Entry* entry = item->disk_cache_entry();
         int32_t body_size = entry->GetDataSize(item->disk_cache_stream_index());
 
@@ -195,7 +195,7 @@ void CopySideData(const storage::BlobDataHandle& blob_handle,
   const auto& items = data->items();
   ASSERT_EQ(1u, items.size());
   const auto& item = items[0];
-  ASSERT_EQ(network::DataElement::TYPE_DISK_CACHE_ENTRY, item->type());
+  ASSERT_EQ(storage::DataElement::TYPE_DISK_CACHE_ENTRY, item->type());
   ASSERT_EQ(CacheStorageCache::INDEX_SIDE_DATA,
             item->disk_cache_side_stream_index());
 
@@ -434,11 +434,13 @@ class CacheStorageCacheTest : public testing::Test {
     blob_handle_ = BuildBlobHandle("blob-id:myblob", expected_blob_data_);
 
     scoped_refptr<storage::BlobHandle> blob;
-    blink::mojom::BlobPtr blob_ptr;
-    storage::BlobImpl::Create(
-        std::make_unique<storage::BlobDataHandle>(*blob_handle_),
-        MakeRequest(&blob_ptr));
-    blob = base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
+    if (features::IsMojoBlobsEnabled()) {
+      blink::mojom::BlobPtr blob_ptr;
+      storage::BlobImpl::Create(
+          std::make_unique<storage::BlobDataHandle>(*blob_handle_),
+          MakeRequest(&blob_ptr));
+      blob = base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
+    }
 
     body_response_ = CreateResponse(
         "http://example.com/body.html",
@@ -491,12 +493,14 @@ class CacheStorageCacheTest : public testing::Test {
                               ServiceWorkerResponse* response) {
     response->side_data_blob_uuid = side_data_blob_handle->uuid();
     response->side_data_blob_size = side_data_blob_handle->size();
-    blink::mojom::BlobPtr blob_ptr;
-    storage::BlobImpl::Create(
-        std::make_unique<storage::BlobDataHandle>(*side_data_blob_handle),
-        MakeRequest(&blob_ptr));
-    response->side_data_blob =
-        base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
+    if (features::IsMojoBlobsEnabled()) {
+      blink::mojom::BlobPtr blob_ptr;
+      storage::BlobImpl::Create(
+          std::make_unique<storage::BlobDataHandle>(*side_data_blob_handle),
+          MakeRequest(&blob_ptr));
+      response->side_data_blob =
+          base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
+    }
   }
 
   std::unique_ptr<ServiceWorkerFetchRequest> CopyFetchRequest(

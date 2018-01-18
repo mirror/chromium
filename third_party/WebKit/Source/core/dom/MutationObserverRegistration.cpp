@@ -56,7 +56,7 @@ MutationObserverRegistration::MutationObserverRegistration(
   observer_->ObservationStarted(this);
 }
 
-MutationObserverRegistration::~MutationObserverRegistration() = default;
+MutationObserverRegistration::~MutationObserverRegistration() {}
 
 void MutationObserverRegistration::Dispose() {
   ClearTransientRegistrations();

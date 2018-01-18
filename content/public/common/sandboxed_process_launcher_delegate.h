@@ -10,13 +10,9 @@
 #include "base/process/process.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
-#include "content/public/common/zygote_features.h"
+#include "content/public/common/zygote_handle.h"
 #include "services/service_manager/sandbox/sandbox_delegate.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
-
-#if BUILDFLAG(USE_ZYGOTE_HANDLE)
-#include "content/public/common/zygote_handle.h"
-#endif  // BUILDFLAG(USE_ZYGOTE_HANDLE)
 
 namespace content {
 
@@ -38,16 +34,16 @@ class CONTENT_EXPORT SandboxedProcessLauncherDelegate
   // Override to return true if the process should be launched as an elevated
   // process (which implies no sandbox).
   virtual bool ShouldLaunchElevated();
-#endif  // defined(OS_WIN)
 
-#if BUILDFLAG(USE_ZYGOTE_HANDLE)
+#elif defined(OS_POSIX)
+
+#if !defined(OS_MACOSX) && !defined(OS_ANDROID)
   // Returns the zygote used to launch the process.
   // NOTE: For now Chrome always uses the same zygote for performance reasons.
   // http://crbug.com/569191
   virtual ZygoteHandle GetZygote();
-#endif  // BUILDFLAG(USE_ZYGOTE_HANDLE)
+#endif  // !defined(OS_MACOSX) && !defined(OS_ANDROID)
 
-#if defined(OS_POSIX)
   // Override this if the process needs a non-empty environment map.
   virtual base::EnvironmentMap GetEnvironment();
 #endif  // defined(OS_POSIX)

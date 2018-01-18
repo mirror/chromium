@@ -1514,19 +1514,19 @@ template <>
 inline CSSIdentifierValue::CSSIdentifierValue(CSSBoxType css_box)
     : CSSValue(kIdentifierClass) {
   switch (css_box) {
-    case CSSBoxType::kMargin:
+    case kMarginBox:
       value_id_ = CSSValueMarginBox;
       break;
-    case CSSBoxType::kBorder:
+    case kBorderBox:
       value_id_ = CSSValueBorderBox;
       break;
-    case CSSBoxType::kPadding:
+    case kPaddingBox:
       value_id_ = CSSValuePaddingBox;
       break;
-    case CSSBoxType::kContent:
+    case kContentBox:
       value_id_ = CSSValueContentBox;
       break;
-    case CSSBoxType::kMissing:
+    case kBoxMissing:
       // The missing box should convert to a null primitive value.
       NOTREACHED();
   }
@@ -1536,18 +1536,18 @@ template <>
 inline CSSBoxType CSSIdentifierValue::ConvertTo() const {
   switch (GetValueID()) {
     case CSSValueMarginBox:
-      return CSSBoxType::kMargin;
+      return kMarginBox;
     case CSSValueBorderBox:
-      return CSSBoxType::kBorder;
+      return kBorderBox;
     case CSSValuePaddingBox:
-      return CSSBoxType::kPadding;
+      return kPaddingBox;
     case CSSValueContentBox:
-      return CSSBoxType::kContent;
+      return kContentBox;
     default:
       break;
   }
   NOTREACHED();
-  return CSSBoxType::kContent;
+  return kContentBox;
 }
 
 template <>

@@ -42,8 +42,8 @@
 namespace blink {
 
 CSSBoxType ReferenceBox(const ShapeValue& shape_value) {
-  if (shape_value.CssBox() == CSSBoxType::kMissing)
-    return CSSBoxType::kMargin;
+  if (shape_value.CssBox() == kBoxMissing)
+    return kMarginBox;
   return shape_value.CssBox();
 }
 
@@ -52,7 +52,7 @@ void ShapeOutsideInfo::SetReferenceBoxLogicalSize(
   bool is_horizontal_writing_mode =
       layout_box_.ContainingBlock()->Style()->IsHorizontalWritingMode();
   switch (ReferenceBox(*layout_box_.Style()->ShapeOutside())) {
-    case CSSBoxType::kMargin:
+    case kMarginBox:
       if (is_horizontal_writing_mode)
         new_reference_box_logical_size.Expand(layout_box_.MarginWidth(),
                                               layout_box_.MarginHeight());
@@ -60,9 +60,9 @@ void ShapeOutsideInfo::SetReferenceBoxLogicalSize(
         new_reference_box_logical_size.Expand(layout_box_.MarginHeight(),
                                               layout_box_.MarginWidth());
       break;
-    case CSSBoxType::kBorder:
+    case kBorderBox:
       break;
-    case CSSBoxType::kPadding:
+    case kPaddingBox:
       if (is_horizontal_writing_mode)
         new_reference_box_logical_size.Shrink(layout_box_.BorderWidth(),
                                               layout_box_.BorderHeight());
@@ -70,7 +70,7 @@ void ShapeOutsideInfo::SetReferenceBoxLogicalSize(
         new_reference_box_logical_size.Shrink(layout_box_.BorderHeight(),
                                               layout_box_.BorderWidth());
       break;
-    case CSSBoxType::kContent:
+    case kContentBox:
       if (is_horizontal_writing_mode)
         new_reference_box_logical_size.Shrink(
             layout_box_.BorderAndPaddingWidth(),
@@ -80,7 +80,7 @@ void ShapeOutsideInfo::SetReferenceBoxLogicalSize(
             layout_box_.BorderAndPaddingHeight(),
             layout_box_.BorderAndPaddingWidth());
       break;
-    case CSSBoxType::kMissing:
+    case kBoxMissing:
       NOTREACHED();
       break;
   }
@@ -247,19 +247,19 @@ inline LayoutUnit BorderAndPaddingBeforeInWritingMode(
 
 LayoutUnit ShapeOutsideInfo::LogicalTopOffset() const {
   switch (ReferenceBox(*layout_box_.Style()->ShapeOutside())) {
-    case CSSBoxType::kMargin:
+    case kMarginBox:
       return -layout_box_.MarginBefore(layout_box_.ContainingBlock()->Style());
-    case CSSBoxType::kBorder:
+    case kBorderBox:
       return LayoutUnit();
-    case CSSBoxType::kPadding:
+    case kPaddingBox:
       return BorderBeforeInWritingMode(
           layout_box_,
           layout_box_.ContainingBlock()->Style()->GetWritingMode());
-    case CSSBoxType::kContent:
+    case kContentBox:
       return BorderAndPaddingBeforeInWritingMode(
           layout_box_,
           layout_box_.ContainingBlock()->Style()->GetWritingMode());
-    case CSSBoxType::kMissing:
+    case kBoxMissing:
       break;
   }
 
@@ -299,17 +299,17 @@ inline LayoutUnit BorderAndPaddingStartWithStyleForWritingMode(
 
 LayoutUnit ShapeOutsideInfo::LogicalLeftOffset() const {
   switch (ReferenceBox(*layout_box_.Style()->ShapeOutside())) {
-    case CSSBoxType::kMargin:
+    case kMarginBox:
       return -layout_box_.MarginStart(layout_box_.ContainingBlock()->Style());
-    case CSSBoxType::kBorder:
+    case kBorderBox:
       return LayoutUnit();
-    case CSSBoxType::kPadding:
+    case kPaddingBox:
       return BorderStartWithStyleForWritingMode(
           layout_box_, layout_box_.ContainingBlock()->Style());
-    case CSSBoxType::kContent:
+    case kContentBox:
       return BorderAndPaddingStartWithStyleForWritingMode(
           layout_box_, layout_box_.ContainingBlock()->Style());
-    case CSSBoxType::kMissing:
+    case kBoxMissing:
       break;
   }
 

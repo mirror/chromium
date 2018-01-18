@@ -616,12 +616,6 @@ xsltFreeStackElem(xsltStackElemPtr elem) {
     xmlFree(elem);
 }
 
-static void
-xsltFreeStackElemEntry(void *payload, const xmlChar *name ATTRIBUTE_UNUSED) {
-    xsltFreeStackElem((xsltStackElemPtr) payload);
-}
-
-
 /**
  * xsltFreeStackElemList:
  * @elem:  an XSLT stack element
@@ -1261,13 +1255,6 @@ error:
     return(result);
 }
 
-static void
-xsltEvalGlobalVariableWrapper(void *payload, void *data,
-                              const xmlChar *name ATTRIBUTE_UNUSED) {
-    xsltEvalGlobalVariable((xsltStackElemPtr) payload,
-                           (xsltTransformContextPtr) data);
-}
-
 /**
  * xsltEvalGlobalVariables:
  * @ctxt:  the XSLT transformation context
@@ -1342,7 +1329,8 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
     /*
      * This part does the actual evaluation
      */
-    xmlHashScan(ctxt->globalVars, xsltEvalGlobalVariableWrapper, ctxt);
+    xmlHashScan(ctxt->globalVars,
+	        (xmlHashScanner) xsltEvalGlobalVariable, ctxt);
 
     return(0);
 }
@@ -2246,7 +2234,7 @@ xsltParseStylesheetParam(xsltTransformContextPtr ctxt, xmlNodePtr cur)
 
 void
 xsltFreeGlobalVariables(xsltTransformContextPtr ctxt) {
-    xmlHashFree(ctxt->globalVars, xsltFreeStackElemEntry);
+    xmlHashFree(ctxt->globalVars, (xmlHashDeallocator) xsltFreeStackElem);
 }
 
 /**

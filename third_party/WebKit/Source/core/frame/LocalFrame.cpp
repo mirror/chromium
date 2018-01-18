@@ -274,9 +274,10 @@ void LocalFrame::Reload(FrameLoadType load_type,
   if (client_redirect_policy == ClientRedirectPolicy::kNotClientRedirect) {
     if (!loader_.GetDocumentLoader()->GetHistoryItem())
       return;
+    DCHECK(GetDocument());
     FrameLoadRequest request = FrameLoadRequest(
-        nullptr, loader_.ResourceRequestForReload(load_type, NullURL(),
-                                                  client_redirect_policy));
+        GetDocument(), loader_.ResourceRequestForReload(
+                           load_type, NullURL(), client_redirect_policy));
     request.SetClientRedirect(client_redirect_policy);
     loader_.Load(request, load_type);
   } else {
@@ -817,7 +818,8 @@ inline LocalFrame::LocalFrame(LocalFrameClient* client,
       page_zoom_factor_(ParentPageZoomFactor(this)),
       text_zoom_factor_(ParentTextZoomFactor(this)),
       in_view_source_mode_(false),
-      interface_registry_(interface_registry) {
+      interface_registry_(interface_registry),
+      instrumentation_token_(client->GetInstrumentationToken()) {
   if (IsLocalRoot()) {
     probe_sink_ = new CoreProbeSink();
     performance_monitor_ = new PerformanceMonitor(this);

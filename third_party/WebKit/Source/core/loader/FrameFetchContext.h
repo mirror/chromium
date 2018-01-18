@@ -171,9 +171,6 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   void Trace(blink::Visitor*) override;
 
-  ResourceLoadPriority ModifyPriorityForExperiments(
-      ResourceLoadPriority) const override;
-
  private:
   struct FrozenState;
 
@@ -191,7 +188,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   LocalFrame* FrameOfImportsController() const;
 
   // FetchContext overrides:
-  WebFrameScheduler* GetFrameScheduler() const override;
+  WebFrameScheduler* GetFrameScheduler() override;
   scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() override;
 
   // BaseFetchContext overrides:

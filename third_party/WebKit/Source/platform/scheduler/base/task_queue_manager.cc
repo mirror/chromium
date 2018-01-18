@@ -9,8 +9,6 @@
 #include <set>
 
 #include "base/bind.h"
-#include "base/bit_cast.h"
-#include "base/rand_util.h"
 #include "base/time/default_tick_clock.h"
 #include "base/time/tick_clock.h"
 #include "base/trace_event/trace_event.h"
@@ -29,15 +27,10 @@ namespace scheduler {
 namespace {
 
 const double kLongTaskTraceEventThreshold = 0.05;
-const double kSamplingRateForRecordingCPUTime = 0.01;
 
 double MonotonicTimeInSeconds(base::TimeTicks time_ticks) {
   return (time_ticks - base::TimeTicks()).InSecondsF();
 }
-
-// Magic value to protect against memory corruption and bail out
-// early when detected.
-constexpr int kMemoryCorruptionSentinelValue = 0xdeadbeef;
 
 void SweepCanceledDelayedTasksInQueue(
     internal::TaskQueueImpl* queue,
@@ -55,9 +48,6 @@ TaskQueueManager::TaskQueueManager(
     : real_time_domain_(new RealTimeDomain()),
       graceful_shutdown_helper_(new internal::GracefulQueueShutdownHelper()),
       controller_(std::move(controller)),
-      random_generator_(base::RandUint64()),
-      uniform_distribution_(0.0, 1.0),
-      memory_corruption_sentinel_(kMemoryCorruptionSentinelValue),
       weak_factory_(this) {
   // TODO(altimin): Create a sequence checker here.
   DCHECK(controller_->RunsTasksInCurrentSequence());
@@ -298,8 +288,6 @@ void TaskQueueManager::CancelDelayedWork(TimeDomain* requesting_time_domain,
 }
 
 void TaskQueueManager::DoWork(WorkType work_type) {
-  CHECK(Validate());
-
   DCHECK_CALLED_ON_VALID_THREAD(main_thread_checker_);
   TRACE_EVENT1("renderer.scheduler", "TaskQueueManager::DoWork", "delayed",
                work_type == WorkType::kDelayed);
@@ -348,8 +336,6 @@ void TaskQueueManager::DoWork(WorkType work_type) {
       case ProcessTaskResult::kTaskQueueManagerDeleted:
         return;  // The TaskQueueManager got deleted, we must bail out.
     }
-
-    CHECK(Validate());
 
     lazy_now = time_after_task.is_null() ? real_time_domain()->CreateLazyNow()
                                          : LazyNow(time_after_task);
@@ -488,7 +474,6 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
   base::WeakPtr<TaskQueueManager> protect = GetWeakPtr();
   internal::TaskQueueImpl::Task pending_task =
       work_queue->TakeTaskFromWorkQueue();
-  bool should_record_thread_time = ShouldRecordCPUTimeForTask();
 
   // It's possible the task was canceled, if so bail out.
   // The task should be non-null, but it seems to be possible to due
@@ -522,10 +507,6 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
   NotifyWillProcessTaskObservers(pending_task, queue, time_before_task,
                                  &task_start_time);
 
-  base::ThreadTicks task_start_thread_time;
-  if (should_record_thread_time)
-    task_start_thread_time = base::ThreadTicks::Now();
-
   {
     TRACE_EVENT1("renderer.scheduler", "TaskQueueManager::RunTask", "queue",
                  queue->GetName());
@@ -544,17 +525,8 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
     currently_executing_task_queue_ = prev_executing_task_queue;
   }
 
-  base::ThreadTicks task_end_thread_time;
-  if (should_record_thread_time)
-    task_end_thread_time = base::ThreadTicks::Now();
-
-  NotifyDidProcessTaskObservers(
-      pending_task, queue,
-      should_record_thread_time
-          ? base::Optional<base::TimeDelta>(task_end_thread_time -
-                                            task_start_thread_time)
-          : base::nullopt,
-      task_start_time, time_after_task);
+  NotifyDidProcessTaskObservers(pending_task, queue, task_start_time,
+                                time_after_task);
 
   return ProcessTaskResult::kExecuted;
 }
@@ -607,7 +579,6 @@ void TaskQueueManager::NotifyWillProcessTaskObservers(
 void TaskQueueManager::NotifyDidProcessTaskObservers(
     const internal::TaskQueueImpl::Task& pending_task,
     internal::TaskQueueImpl* queue,
-    base::Optional<base::TimeDelta> thread_time,
     base::TimeTicks task_start_time,
     base::TimeTicks* time_after_task) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
@@ -646,8 +617,7 @@ void TaskQueueManager::NotifyDidProcessTaskObservers(
     TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                  "TaskQueueManager.QueueOnTaskCompleted");
     if (task_start_time_sec && task_end_time_sec)
-      queue->OnTaskCompleted(pending_task, task_start_time, *time_after_task,
-                             thread_time);
+      queue->OnTaskCompleted(pending_task, task_start_time, *time_after_task);
   }
 
   if (task_start_time_sec && task_end_time_sec &&
@@ -841,19 +811,6 @@ base::TickClock* TaskQueueManager::GetClock() const {
 
 base::TimeTicks TaskQueueManager::NowTicks() const {
   return controller_->GetClock()->NowTicks();
-}
-
-bool TaskQueueManager::ShouldRecordCPUTimeForTask() {
-  return uniform_distribution_(random_generator_) <
-         kSamplingRateForRecordingCPUTime;
-}
-
-void TaskQueueManager::SetRandomSeed(uint64_t value) {
-  random_generator_.seed(value);
-}
-
-bool TaskQueueManager::Validate() {
-  return memory_corruption_sentinel_ == kMemoryCorruptionSentinelValue;
 }
 
 }  // namespace scheduler

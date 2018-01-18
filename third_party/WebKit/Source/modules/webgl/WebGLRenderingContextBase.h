@@ -575,7 +575,6 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   // Returns the drawing buffer size after it is, probably, has scaled down
   // to the maximum supported canvas size.
   IntSize DrawingBufferSize() const override;
-  DrawingBuffer* GetDrawingBuffer() const;
 
   class TextureUnitState {
     DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
@@ -696,6 +695,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   // Structure for rendering to a DrawingBuffer, instead of directly
   // to the back-buffer of m_context.
   scoped_refptr<DrawingBuffer> drawing_buffer_;
+  DrawingBuffer* GetDrawingBuffer() const;
 
   TraceWrapperMember<WebGLContextGroup> context_group_;
 
@@ -710,7 +710,6 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   TaskRunnerTimer<WebGLRenderingContextBase> dispatch_context_lost_event_timer_;
   bool restore_allowed_;
   TaskRunnerTimer<WebGLRenderingContextBase> restore_timer_;
-  scoped_refptr<WebTaskRunner> task_runner_;
 
   bool marked_canvas_dirty_;
   bool animation_frame_in_progress_;
@@ -835,7 +834,6 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
     virtual WebGLExtension* GetExtensionObjectIfAlreadyEnabled() = 0;
 
     virtual void Trace(blink::Visitor* visitor) {}
-    void TraceWrappers(const ScriptWrappableVisitor*) const override {}
 
    private:
     bool draft_;
@@ -1696,9 +1694,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   const unsigned version_;
 
   bool IsPaintable() const final { return GetDrawingBuffer(); }
-  bool CopyRenderingResultsFromDrawingBuffer(CanvasResourceProvider*,
+  bool CopyRenderingResultsFromDrawingBuffer(AcceleratedImageBufferSurface*,
                                              SourceDrawingBuffer) const;
-  void HoldReferenceToDrawingBuffer(DrawingBuffer*);
 };
 
 // TODO(fserb): remove this.

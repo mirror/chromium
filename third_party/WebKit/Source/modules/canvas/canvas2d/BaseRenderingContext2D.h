@@ -7,7 +7,7 @@
 
 #include "bindings/modules/v8/canvas_image_source.h"
 #include "bindings/modules/v8/string_or_canvas_gradient_or_canvas_pattern.h"
-#include "core/html/canvas/ImageData.h"
+#include "core/html/ImageData.h"
 #include "modules/ModulesExport.h"
 #include "modules/canvas/canvas2d/CanvasGradient.h"
 #include "modules/canvas/canvas2d/CanvasPath.h"
@@ -70,7 +70,7 @@ class MODULES_EXPORT BaseRenderingContext2D : public GarbageCollectedMixin,
   void setShadowOffsetY(double);
 
   double shadowBlur() const;
-  virtual void setShadowBlur(double);
+  void setShadowBlur(double);
 
   String shadowColor() const;
   void setShadowColor(const String&);

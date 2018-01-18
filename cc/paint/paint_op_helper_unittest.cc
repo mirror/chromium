@@ -14,8 +14,9 @@ TEST(PaintOpHelper, AnnotateToString) {
   AnnotateOp op(PaintCanvas::AnnotationType::URL, SkRect::MakeXYWH(1, 2, 3, 4),
                 nullptr);
   std::string str = PaintOpHelper::ToString(&op);
-  EXPECT_EQ(str,
-            "AnnotateOp(type=URL, rect=[1.000,2.000 3.000x4.000], data=(nil))");
+  EXPECT_EQ(
+      str,
+      "AnnotateOp(type=URL, rect=[1.000,2.000 3.000x4.000], data=<SkData>)");
 }
 
 TEST(PaintOpHelper, ClipPathToString) {
@@ -61,38 +62,15 @@ TEST(PaintOpHelper, DrawDRRectToString) {
                   SkRRect::MakeRect(SkRect::MakeXYWH(5, 6, 7, 8)),
                   PaintFlags());
   std::string str = PaintOpHelper::ToString(&op);
-  EXPECT_EQ(
-      str,
-      "DrawDRRectOp(outer=[bounded by 1.000,2.000 3.000x4.000], inner=[bounded "
-      "by 5.000,6.000 7.000x8.000], flags=[color=rgba(0, 0, 0, 255), "
-      "blendMode=kSrcOver, isAntiAlias=false, isVerticalText=false, "
-      "isSubpixelText=false, isLCDRenderText=false, hinting=kNormal_Hinting, "
-      "isAutohinted=false, isDither=false, textEncoding=kUTF8_TextEncoding, "
-      "textSize=12.000, filterQuality=kNone_SkFilterQuality, "
-      "strokeWidth=0.000, strokeMiter=4.000, strokeCap=kButt_Cap, "
-      "strokeJoin=kMiter_Join, typeface=(nil), colorFilter=(nil), "
-      "maskFilter=(nil), shader=(nil), hasShader=false, shaderIsOpaque=false, "
-      "pathEffect=(nil), imageFilter=(nil), drawLooper=(nil), "
-      "isSimpleOpacity=true, supportsFoldingAlpha=true, isValid=true, "
-      "hasDiscardableImages=false])");
+  EXPECT_EQ(str,
+            "DrawDRRectOp(outer=[bounded by 1.000,2.000 3.000x4.000], "
+            "inner=[bounded by 5.000,6.000 7.000x8.000])");
 }
 
 TEST(PaintOpHelper, DrawImageToString) {
   DrawImageOp op(PaintImage(), 10.5f, 20.3f, nullptr);
   std::string str = PaintOpHelper::ToString(&op);
-  EXPECT_EQ(
-      str,
-      "DrawImageOp(image=<paint image>, left=10.500, top=20.300, "
-      "flags=[color=rgba(0, 0, 0, 255), blendMode=kSrcOver, isAntiAlias=false, "
-      "isVerticalText=false, isSubpixelText=false, isLCDRenderText=false, "
-      "hinting=kNormal_Hinting, isAutohinted=false, isDither=false, "
-      "textEncoding=kUTF8_TextEncoding, textSize=12.000, "
-      "filterQuality=kNone_SkFilterQuality, strokeWidth=0.000, "
-      "strokeMiter=4.000, strokeCap=kButt_Cap, strokeJoin=kMiter_Join, "
-      "typeface=(nil), colorFilter=(nil), maskFilter=(nil), shader=(nil), "
-      "hasShader=false, shaderIsOpaque=false, pathEffect=(nil), "
-      "imageFilter=(nil), drawLooper=(nil), isSimpleOpacity=true, "
-      "supportsFoldingAlpha=true, isValid=true, hasDiscardableImages=false])");
+  EXPECT_EQ(str, "DrawImageOp(image=<paint image>, left=10.500, top=20.300)");
 }
 
 TEST(PaintOpHelper, DrawImageRectToString) {
@@ -100,154 +78,61 @@ TEST(PaintOpHelper, DrawImageRectToString) {
                      SkRect::MakeXYWH(5, 6, 7, 8), nullptr,
                      PaintCanvas::kStrict_SrcRectConstraint);
   std::string str = PaintOpHelper::ToString(&op);
-  EXPECT_EQ(
-      str,
-      "DrawImageRectOp(image=<paint image>, src=[1.000,2.000 3.000x4.000], "
-      "dst=[5.000,6.000 7.000x8.000], constraint=kStrict_SrcRectConstraint, "
-      "flags=[color=rgba(0, 0, 0, 255), blendMode=kSrcOver, isAntiAlias=false, "
-      "isVerticalText=false, isSubpixelText=false, isLCDRenderText=false, "
-      "hinting=kNormal_Hinting, isAutohinted=false, isDither=false, "
-      "textEncoding=kUTF8_TextEncoding, textSize=12.000, "
-      "filterQuality=kNone_SkFilterQuality, strokeWidth=0.000, "
-      "strokeMiter=4.000, strokeCap=kButt_Cap, strokeJoin=kMiter_Join, "
-      "typeface=(nil), colorFilter=(nil), maskFilter=(nil), shader=(nil), "
-      "hasShader=false, shaderIsOpaque=false, pathEffect=(nil), "
-      "imageFilter=(nil), drawLooper=(nil), isSimpleOpacity=true, "
-      "supportsFoldingAlpha=true, isValid=true, hasDiscardableImages=false])");
+  EXPECT_EQ(str,
+            "DrawImageRectOp(image=<paint image>, src=[1.000,2.000 "
+            "3.000x4.000], dst=[5.000,6.000 7.000x8.000], "
+            "constraint=kStrict_SrcRectConstraint)");
 }
 
 TEST(PaintOpHelper, DrawIRectToString) {
   DrawIRectOp op(SkIRect::MakeXYWH(1, 2, 3, 4), PaintFlags());
   std::string str = PaintOpHelper::ToString(&op);
-  EXPECT_EQ(str,
-            "DrawIRectOp(rect=[1,2 3x4], flags=[color=rgba(0, 0, 0, 255), "
-            "blendMode=kSrcOver, isAntiAlias=false, isVerticalText=false, "
-            "isSubpixelText=false, isLCDRenderText=false, "
-            "hinting=kNormal_Hinting, isAutohinted=false, isDither=false, "
-            "textEncoding=kUTF8_TextEncoding, textSize=12.000, "
-            "filterQuality=kNone_SkFilterQuality, strokeWidth=0.000, "
-            "strokeMiter=4.000, strokeCap=kButt_Cap, strokeJoin=kMiter_Join, "
-            "typeface=(nil), colorFilter=(nil), maskFilter=(nil), "
-            "shader=(nil), hasShader=false, shaderIsOpaque=false, "
-            "pathEffect=(nil), imageFilter=(nil), drawLooper=(nil), "
-            "isSimpleOpacity=true, supportsFoldingAlpha=true, isValid=true, "
-            "hasDiscardableImages=false])");
+  EXPECT_EQ(str, "DrawIRectOp(rect=[1,2 3x4])");
 }
 
 TEST(PaintOpHelper, DrawLineToString) {
   DrawLineOp op(1.1f, 2.2f, 3.3f, 4.4f, PaintFlags());
   std::string str = PaintOpHelper::ToString(&op);
-  EXPECT_EQ(
-      str,
-      "DrawLineOp(x0=1.100, y0=2.200, x1=3.300, y1=4.400, flags=[color=rgba(0, "
-      "0, 0, 255), blendMode=kSrcOver, isAntiAlias=false, "
-      "isVerticalText=false, isSubpixelText=false, isLCDRenderText=false, "
-      "hinting=kNormal_Hinting, isAutohinted=false, isDither=false, "
-      "textEncoding=kUTF8_TextEncoding, textSize=12.000, "
-      "filterQuality=kNone_SkFilterQuality, strokeWidth=0.000, "
-      "strokeMiter=4.000, strokeCap=kButt_Cap, strokeJoin=kMiter_Join, "
-      "typeface=(nil), colorFilter=(nil), maskFilter=(nil), shader=(nil), "
-      "hasShader=false, shaderIsOpaque=false, pathEffect=(nil), "
-      "imageFilter=(nil), drawLooper=(nil), isSimpleOpacity=true, "
-      "supportsFoldingAlpha=true, isValid=true, hasDiscardableImages=false])");
+  EXPECT_EQ(str, "DrawLineOp(x0=1.100, y0=2.200, x1=3.300, y1=4.400)");
 }
 
 TEST(PaintOpHelper, DrawOvalToString) {
   DrawOvalOp op(SkRect::MakeXYWH(100, 200, 300, 400), PaintFlags());
   std::string str = PaintOpHelper::ToString(&op);
-  EXPECT_EQ(
-      str,
-      "DrawOvalOp(oval=[100.000,200.000 300.000x400.000], flags=[color=rgba(0, "
-      "0, 0, 255), blendMode=kSrcOver, isAntiAlias=false, "
-      "isVerticalText=false, isSubpixelText=false, isLCDRenderText=false, "
-      "hinting=kNormal_Hinting, isAutohinted=false, isDither=false, "
-      "textEncoding=kUTF8_TextEncoding, textSize=12.000, "
-      "filterQuality=kNone_SkFilterQuality, strokeWidth=0.000, "
-      "strokeMiter=4.000, strokeCap=kButt_Cap, strokeJoin=kMiter_Join, "
-      "typeface=(nil), colorFilter=(nil), maskFilter=(nil), shader=(nil), "
-      "hasShader=false, shaderIsOpaque=false, pathEffect=(nil), "
-      "imageFilter=(nil), drawLooper=(nil), isSimpleOpacity=true, "
-      "supportsFoldingAlpha=true, isValid=true, hasDiscardableImages=false])");
+  EXPECT_EQ(str, "DrawOvalOp(oval=[100.000,200.000 300.000x400.000])");
 }
 
 TEST(PaintOpHelper, DrawPathToString) {
   SkPath path;
   DrawPathOp op(path, PaintFlags());
   std::string str = PaintOpHelper::ToString(&op);
-  EXPECT_EQ(str,
-            "DrawPathOp(path=<SkPath>, flags=[color=rgba(0, 0, 0, 255), "
-            "blendMode=kSrcOver, isAntiAlias=false, isVerticalText=false, "
-            "isSubpixelText=false, isLCDRenderText=false, "
-            "hinting=kNormal_Hinting, isAutohinted=false, isDither=false, "
-            "textEncoding=kUTF8_TextEncoding, textSize=12.000, "
-            "filterQuality=kNone_SkFilterQuality, strokeWidth=0.000, "
-            "strokeMiter=4.000, strokeCap=kButt_Cap, strokeJoin=kMiter_Join, "
-            "typeface=(nil), colorFilter=(nil), maskFilter=(nil), "
-            "shader=(nil), hasShader=false, shaderIsOpaque=false, "
-            "pathEffect=(nil), imageFilter=(nil), drawLooper=(nil), "
-            "isSimpleOpacity=true, supportsFoldingAlpha=true, isValid=true, "
-            "hasDiscardableImages=false])");
+  EXPECT_EQ(str, "DrawPathOp(path=<SkPath>)");
 }
 
 TEST(PaintOpHelper, DrawRecordToString) {
   DrawRecordOp op(nullptr);
   std::string str = PaintOpHelper::ToString(&op);
-  EXPECT_EQ(str, "DrawRecordOp(record=(nil))");
+  EXPECT_EQ(str, "DrawRecordOp(record=<paint record>)");
 }
 
 TEST(PaintOpHelper, DrawRectToString) {
   DrawRectOp op(SkRect::MakeXYWH(-1, -2, -3, -4), PaintFlags());
   std::string str = PaintOpHelper::ToString(&op);
-  EXPECT_EQ(
-      str,
-      "DrawRectOp(rect=[-1.000,-2.000 -3.000x-4.000], flags=[color=rgba(0, 0, "
-      "0, 255), blendMode=kSrcOver, isAntiAlias=false, isVerticalText=false, "
-      "isSubpixelText=false, isLCDRenderText=false, hinting=kNormal_Hinting, "
-      "isAutohinted=false, isDither=false, textEncoding=kUTF8_TextEncoding, "
-      "textSize=12.000, filterQuality=kNone_SkFilterQuality, "
-      "strokeWidth=0.000, strokeMiter=4.000, strokeCap=kButt_Cap, "
-      "strokeJoin=kMiter_Join, typeface=(nil), colorFilter=(nil), "
-      "maskFilter=(nil), shader=(nil), hasShader=false, shaderIsOpaque=false, "
-      "pathEffect=(nil), imageFilter=(nil), drawLooper=(nil), "
-      "isSimpleOpacity=true, supportsFoldingAlpha=true, isValid=true, "
-      "hasDiscardableImages=false])");
+  EXPECT_EQ(str, "DrawRectOp(rect=[-1.000,-2.000 -3.000x-4.000])");
 }
 
 TEST(PaintOpHelper, DrawRRectToString) {
   DrawRRectOp op(SkRRect::MakeRect(SkRect::MakeXYWH(-1, -2, 3, 4)),
                  PaintFlags());
   std::string str = PaintOpHelper::ToString(&op);
-  EXPECT_EQ(
-      str,
-      "DrawRRectOp(rrect=[bounded by -1.000,-2.000 3.000x4.000], "
-      "flags=[color=rgba(0, 0, 0, 255), blendMode=kSrcOver, isAntiAlias=false, "
-      "isVerticalText=false, isSubpixelText=false, isLCDRenderText=false, "
-      "hinting=kNormal_Hinting, isAutohinted=false, isDither=false, "
-      "textEncoding=kUTF8_TextEncoding, textSize=12.000, "
-      "filterQuality=kNone_SkFilterQuality, strokeWidth=0.000, "
-      "strokeMiter=4.000, strokeCap=kButt_Cap, strokeJoin=kMiter_Join, "
-      "typeface=(nil), colorFilter=(nil), maskFilter=(nil), shader=(nil), "
-      "hasShader=false, shaderIsOpaque=false, pathEffect=(nil), "
-      "imageFilter=(nil), drawLooper=(nil), isSimpleOpacity=true, "
-      "supportsFoldingAlpha=true, isValid=true, hasDiscardableImages=false])");
+  EXPECT_EQ(str, "DrawRRectOp(rrect=[bounded by -1.000,-2.000 3.000x4.000])");
 }
 
 TEST(PaintOpHelper, DrawTextBlobToString) {
   DrawTextBlobOp op(nullptr, 100, -222, PaintFlags());
   std::string str = PaintOpHelper::ToString(&op);
-  EXPECT_EQ(
-      str,
-      "DrawTextBlobOp(blob=(nil), x=100.000, y=-222.000, flags=[color=rgba(0, "
-      "0, 0, 255), blendMode=kSrcOver, isAntiAlias=false, "
-      "isVerticalText=false, isSubpixelText=false, isLCDRenderText=false, "
-      "hinting=kNormal_Hinting, isAutohinted=false, isDither=false, "
-      "textEncoding=kUTF8_TextEncoding, textSize=12.000, "
-      "filterQuality=kNone_SkFilterQuality, strokeWidth=0.000, "
-      "strokeMiter=4.000, strokeCap=kButt_Cap, strokeJoin=kMiter_Join, "
-      "typeface=(nil), colorFilter=(nil), maskFilter=(nil), shader=(nil), "
-      "hasShader=false, shaderIsOpaque=false, pathEffect=(nil), "
-      "imageFilter=(nil), drawLooper=(nil), isSimpleOpacity=true, "
-      "supportsFoldingAlpha=true, isValid=true, hasDiscardableImages=false])");
+  EXPECT_EQ(str,
+            "DrawTextBlobOp(blob=<paint text blob>, x=100.000, y=-222.000)");
 }
 
 TEST(PaintOpHelper, NoopToString) {
@@ -278,19 +163,7 @@ TEST(PaintOpHelper, SaveLayerToString) {
   SkRect bounds = SkRect::MakeXYWH(1, 2, 3, 4);
   SaveLayerOp op(&bounds, nullptr);
   std::string str = PaintOpHelper::ToString(&op);
-  EXPECT_EQ(
-      str,
-      "SaveLayerOp(bounds=[1.000,2.000 3.000x4.000], flags=[color=rgba(0, 0, "
-      "0, 255), blendMode=kSrcOver, isAntiAlias=false, isVerticalText=false, "
-      "isSubpixelText=false, isLCDRenderText=false, hinting=kNormal_Hinting, "
-      "isAutohinted=false, isDither=false, textEncoding=kUTF8_TextEncoding, "
-      "textSize=12.000, filterQuality=kNone_SkFilterQuality, "
-      "strokeWidth=0.000, strokeMiter=4.000, strokeCap=kButt_Cap, "
-      "strokeJoin=kMiter_Join, typeface=(nil), colorFilter=(nil), "
-      "maskFilter=(nil), shader=(nil), hasShader=false, shaderIsOpaque=false, "
-      "pathEffect=(nil), imageFilter=(nil), drawLooper=(nil), "
-      "isSimpleOpacity=true, supportsFoldingAlpha=true, isValid=true, "
-      "hasDiscardableImages=false])");
+  EXPECT_EQ(str, "SaveLayerOp(bounds=[1.000,2.000 3.000x4.000])");
 }
 
 TEST(PaintOpHelper, SaveLayerAlphaToString) {

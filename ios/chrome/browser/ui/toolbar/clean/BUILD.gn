@@ -54,8 +54,6 @@ source_set("toolbar") {
     "//ios/third_party/material_components_ios",
     "//ios/web",
   ]
-
-  allow_circular_includes_from = [ "//ios/chrome/browser/ui/location_bar" ]
 }
 
 source_set("toolbar_ui") {
@@ -104,8 +102,6 @@ source_set("toolbar_components_ui") {
     "toolbar_constants.h",
     "toolbar_constants.mm",
     "toolbar_style.h",
-    "toolbar_tab_grid_button.h",
-    "toolbar_tab_grid_button.mm",
     "toolbar_tools_menu_button.h",
     "toolbar_tools_menu_button.mm",
     "toolbar_type.h",
@@ -122,7 +118,6 @@ source_set("toolbar_components_ui") {
     "//ios/chrome/browser/ui/toolbar/public:toolbar_base_feature",
     "//ios/public/provider/chrome/browser",
     "//ios/public/provider/chrome/browser/images",
-    "//ios/third_party/material_components_ios",
     "//ui/base",
   ]
   libs = [ "UIKit.framework" ]

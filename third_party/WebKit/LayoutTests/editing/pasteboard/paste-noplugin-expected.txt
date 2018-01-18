@@ -10,8 +10,7 @@ Original contents:
 | <embed>
 |   src="http://localhost:8000/evil.swf"
 |   <shadow:root>
-|     <slot>
-|       name="user-agent-default-slot"
+|     <content>
 | "
 "
 | <object>
@@ -22,11 +21,9 @@ Original contents:
 |   <embed>
 |     src="http://localhost:8000/evil.swf"
 |     <shadow:root>
-|       <slot>
-|         name="user-agent-default-slot"
+|       <content>
 |   <shadow:root>
-|     <slot>
-|       name="user-agent-default-slot"
+|     <content>
 | "
 "
 

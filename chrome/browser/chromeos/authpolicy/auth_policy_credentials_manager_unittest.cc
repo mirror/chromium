@@ -4,8 +4,6 @@
 
 #include "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.h"
 
-#include <memory>
-
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
@@ -53,7 +51,7 @@ class AuthPolicyCredentialsManagerTest : public testing::Test {
     fake_auth_policy_client()->DisableOperationDelayForTesting();
 
     TestingBrowserProcess::GetGlobal()->SetNotificationUIManager(
-        std::make_unique<StubNotificationUIManager>());
+        base::MakeUnique<StubNotificationUIManager>());
 
     TestingProfile::Builder profile_builder;
     profile_builder.SetProfileName("user@gmail.com");

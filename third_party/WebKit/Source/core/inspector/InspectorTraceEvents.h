@@ -72,7 +72,7 @@ class ParseHTML;
 class CORE_EXPORT InspectorTraceEvents
     : public GarbageCollected<InspectorTraceEvents> {
  public:
-  InspectorTraceEvents() = default;
+  InspectorTraceEvents() {}
 
   void WillSendRequest(ExecutionContext*,
                        unsigned long identifier,
@@ -243,7 +243,8 @@ Data(const LayoutObject*, LayoutInvalidationReasonForTracing);
 }
 
 namespace InspectorPaintInvalidationTrackingEvent {
-std::unique_ptr<TracedValue> Data(const LayoutObject&);
+std::unique_ptr<TracedValue> Data(const LayoutObject*,
+                                  const LayoutObject& paint_container);
 }
 
 namespace InspectorScrollInvalidationTrackingEvent {
@@ -251,35 +252,30 @@ std::unique_ptr<TracedValue> Data(const LayoutObject&);
 }
 
 namespace InspectorChangeResourcePriorityEvent {
-std::unique_ptr<TracedValue> Data(DocumentLoader*,
-                                  unsigned long identifier,
+std::unique_ptr<TracedValue> Data(unsigned long identifier,
                                   const ResourceLoadPriority&);
 }
 
 namespace InspectorSendRequestEvent {
-std::unique_ptr<TracedValue> Data(DocumentLoader*,
-                                  unsigned long identifier,
+std::unique_ptr<TracedValue> Data(unsigned long identifier,
                                   LocalFrame*,
                                   const ResourceRequest&);
 }
 
 namespace InspectorReceiveResponseEvent {
-std::unique_ptr<TracedValue> Data(DocumentLoader*,
-                                  unsigned long identifier,
+std::unique_ptr<TracedValue> Data(unsigned long identifier,
                                   LocalFrame*,
                                   const ResourceResponse&);
 }
 
 namespace InspectorReceiveDataEvent {
-std::unique_ptr<TracedValue> Data(DocumentLoader*,
-                                  unsigned long identifier,
+std::unique_ptr<TracedValue> Data(unsigned long identifier,
                                   LocalFrame*,
                                   int encoded_data_length);
 }
 
 namespace InspectorResourceFinishEvent {
-std::unique_ptr<TracedValue> Data(DocumentLoader*,
-                                  unsigned long identifier,
+std::unique_ptr<TracedValue> Data(unsigned long identifier,
                                   double finish_time,
                                   bool did_fail,
                                   int64_t encoded_data_length,
@@ -410,7 +406,7 @@ struct V8CacheResult {
     int cache_size;
     bool rejected;
   };
-  V8CacheResult() = default;
+  V8CacheResult() {}
   V8CacheResult(Optional<ProduceResult>, Optional<ConsumeResult>);
 
   Optional<ProduceResult> produce_result;

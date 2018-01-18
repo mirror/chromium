@@ -16,6 +16,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -247,7 +248,7 @@ class DraggedFileUtilTest : public testing::Test {
   }
 
   std::unique_ptr<storage::FileSystemOperationContext> GetOperationContext() {
-    return std::make_unique<storage::FileSystemOperationContext>(
+    return base::MakeUnique<storage::FileSystemOperationContext>(
         file_system_context());
   }
 

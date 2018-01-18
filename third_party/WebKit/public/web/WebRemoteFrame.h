@@ -22,7 +22,7 @@ class WebRemoteFrameClient;
 class WebString;
 class WebView;
 struct WebRect;
-struct WebScrollIntoViewParams;
+struct WebRemoteScrollProperties;
 
 class WebRemoteFrame : public WebFrame {
  public:
@@ -87,8 +87,6 @@ class WebRemoteFrame : public WebFrame {
   // Set frame enforcement of insecure request policy replicated from another
   // process.
   virtual void SetReplicatedInsecureRequestPolicy(WebInsecureRequestPolicy) = 0;
-  virtual void SetReplicatedInsecureNavigationsSet(
-      const std::vector<unsigned>&) = 0;
 
   virtual void DispatchLoadEventOnFrameOwner() = 0;
 
@@ -114,7 +112,7 @@ class WebRemoteFrame : public WebFrame {
   // OOPIF process. The parameters are sent by the OOPIF local root and can be
   // used to properly chain the recursive scrolling between the two processes.
   virtual void ScrollRectToVisible(const WebRect&,
-                                   const WebScrollIntoViewParams&) = 0;
+                                   const WebRemoteScrollProperties&) = 0;
 
  protected:
   explicit WebRemoteFrame(WebTreeScopeType scope) : WebFrame(scope) {}

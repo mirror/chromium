@@ -4,8 +4,7 @@
 
 #include "chrome/browser/ui/extensions/extension_enable_flow.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_util.h"
@@ -126,7 +125,7 @@ void ExtensionEnableFlow::CheckPermissionAndMaybePromptUser() {
   prompt_->ShowDialog(base::Bind(&ExtensionEnableFlow::InstallPromptDone,
                                  weak_ptr_factory_.GetWeakPtr()),
                       extension, nullptr,
-                      std::make_unique<ExtensionInstallPrompt::Prompt>(type),
+                      base::MakeUnique<ExtensionInstallPrompt::Prompt>(type),
                       ExtensionInstallPrompt::GetDefaultShowDialogCallback());
 }
 

@@ -38,26 +38,11 @@ class WebIDBCursor {
  public:
   virtual ~WebIDBCursor() = default;
 
-  // Used to implement IDBCursor.advance().
-  virtual void Advance(unsigned long count, WebIDBCallbacks*) = 0;
-
-  // Used to implement IDBCursor.continue() and IDBCursor.continuePrimaryKey().
-  //
-  // The key and primary key are null when they are not supplied by the
-  // application. When both arguments are null, the cursor advances by one
-  // entry.
-  //
-  // The keys pointed to by WebIDBKeyView are only guaranteed to be alive for
-  // the duration of the call.
-  virtual void Continue(WebIDBKeyView,
-                        WebIDBKeyView primary_key,
+  virtual void Advance(unsigned long, WebIDBCallbacks*) = 0;
+  virtual void Continue(const WebIDBKey&,
+                        const WebIDBKey& primary_key,
                         WebIDBCallbacks*) = 0;
-
-  // Called after a cursor request's success handler is executed.
-  //
-  // This is only used by the cursor prefetching logic, and does not result in
-  // an IPC.
-  virtual void PostSuccessHandlerCallback() = 0;
+  virtual void PostSuccessHandlerCallback() {}  // Only used in frontend.
 
  protected:
   WebIDBCursor() = default;

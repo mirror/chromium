@@ -4,7 +4,6 @@
 
 #include "chrome/browser/ui/ash/launcher/launcher_context_menu.h"
 
-#include <memory>
 #include <string>
 
 #include "ash/public/cpp/shelf_model.h"
@@ -29,12 +28,12 @@ std::unique_ptr<LauncherContextMenu> LauncherContextMenu::Create(
   DCHECK(!item->id.IsNull());
   // Create an ArcLauncherContextMenu if the item is an ARC app.
   if (arc::IsArcItem(controller->profile(), item->id.app_id)) {
-    return std::make_unique<ArcLauncherContextMenu>(controller, item,
+    return base::MakeUnique<ArcLauncherContextMenu>(controller, item,
                                                     display_id);
   }
 
   // Create an ExtensionLauncherContextMenu for other items.
-  return std::make_unique<ExtensionLauncherContextMenu>(controller, item,
+  return base::MakeUnique<ExtensionLauncherContextMenu>(controller, item,
                                                         display_id);
 }
 

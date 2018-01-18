@@ -9,6 +9,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chrome/browser/predictors/autocomplete_action_predictor.h"
 #include "chrome/browser/predictors/autocomplete_action_predictor_factory.h"
@@ -68,7 +69,7 @@ void PredictorsHandler::RequestAutocompleteActionPredictorDb(
   base::DictionaryValue dict;
   dict.SetBoolean("enabled", enabled);
   if (enabled) {
-    auto db = std::make_unique<base::ListValue>();
+    auto db = base::MakeUnique<base::ListValue>();
     for (AutocompleteActionPredictor::DBCacheMap::const_iterator it =
              autocomplete_action_predictor_->db_cache_.begin();
          it != autocomplete_action_predictor_->db_cache_.end();
@@ -104,21 +105,21 @@ void PredictorsHandler::RequestResourcePrefetchPredictorDb(
 
     if (initialized) {
       // URL table cache.
-      auto db = std::make_unique<base::ListValue>();
+      auto db = base::MakeUnique<base::ListValue>();
       AddPrefetchDataMapToListValue(
           *resource_prefetch_predictor->url_resource_data_->data_cache_,
           db.get());
       dict.Set("url_db", std::move(db));
 
       // Host table cache.
-      db = std::make_unique<base::ListValue>();
+      db = base::MakeUnique<base::ListValue>();
       AddPrefetchDataMapToListValue(
           *resource_prefetch_predictor->host_resource_data_->data_cache_,
           db.get());
       dict.Set("host_db", std::move(db));
 
       // Origin table cache.
-      db = std::make_unique<base::ListValue>();
+      db = base::MakeUnique<base::ListValue>();
       AddOriginDataMapToListValue(
           *resource_prefetch_predictor->origin_data_->data_cache_, db.get());
       dict.Set("origin_db", std::move(db));
@@ -133,11 +134,11 @@ void PredictorsHandler::AddPrefetchDataMapToListValue(
     const std::map<std::string, predictors::PrefetchData>& data_map,
     base::ListValue* db) const {
   for (const auto& p : data_map) {
-    auto main = std::make_unique<base::DictionaryValue>();
+    auto main = base::MakeUnique<base::DictionaryValue>();
     main->SetString("main_frame_url", p.first);
-    auto resources = std::make_unique<base::ListValue>();
+    auto resources = base::MakeUnique<base::ListValue>();
     for (const predictors::ResourceData& r : p.second.resources()) {
-      auto resource = std::make_unique<base::DictionaryValue>();
+      auto resource = base::MakeUnique<base::DictionaryValue>();
       resource->SetString("resource_url", r.resource_url());
       resource->SetString("resource_type",
                           ConvertResourceType(r.resource_type()));
@@ -165,11 +166,11 @@ void PredictorsHandler::AddOriginDataMapToListValue(
     const std::map<std::string, predictors::OriginData>& data_map,
     base::ListValue* db) const {
   for (const auto& p : data_map) {
-    auto main = std::make_unique<base::DictionaryValue>();
+    auto main = base::MakeUnique<base::DictionaryValue>();
     main->SetString("main_frame_host", p.first);
-    auto origins = std::make_unique<base::ListValue>();
+    auto origins = base::MakeUnique<base::ListValue>();
     for (const predictors::OriginStat& o : p.second.origins()) {
-      auto origin = std::make_unique<base::DictionaryValue>();
+      auto origin = base::MakeUnique<base::DictionaryValue>();
       origin->SetString("origin", o.origin());
       origin->SetInteger("number_of_hits", o.number_of_hits());
       origin->SetInteger("number_of_misses", o.number_of_misses());

@@ -38,7 +38,6 @@ class CORE_EXPORT LayoutSVGRoot final : public LayoutReplaced {
   bool IsEmbeddedThroughSVGImage() const;
   bool IsEmbeddedThroughFrameContainingSVGDocument() const;
 
-  void IntrinsicDimensionsChanged() const;
   void ComputeIntrinsicSizingInfo(IntrinsicSizingInfo&) const override;
 
   // If you have a LayoutSVGRoot, use firstChild or lastChild instead.
@@ -156,9 +155,6 @@ class CORE_EXPORT LayoutSVGRoot final : public LayoutReplaced {
   bool CanHaveChildren() const override { return true; }
 
   void DescendantIsolationRequirementsChanged(DescendantIsolationState) final;
-
-  bool IntrinsicSizeIsFontMetricsDependent() const;
-  bool StyleChangeAffectsIntrinsicSize(const ComputedStyle& old_style) const;
 
   void UpdateCachedBoundaries();
   SVGTransformChange BuildLocalToBorderBoxTransform();

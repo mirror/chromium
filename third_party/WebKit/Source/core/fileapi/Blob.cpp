@@ -43,6 +43,8 @@
 
 namespace blink {
 
+namespace {
+
 class BlobURLRegistry final : public URLRegistry {
  public:
   // SecurityOrigin is passed together with KURL so that the registry can
@@ -76,10 +78,12 @@ URLRegistry& BlobURLRegistry::Registry() {
   return instance;
 }
 
-Blob::Blob(scoped_refptr<BlobDataHandle> data_handle)
-    : blob_data_handle_(std::move(data_handle)) {}
+}  // namespace
 
-Blob::~Blob() = default;
+Blob::Blob(scoped_refptr<BlobDataHandle> data_handle)
+    : blob_data_handle_(std::move(data_handle)), is_closed_(false) {}
+
+Blob::~Blob() {}
 
 // static
 Blob* Blob::Create(

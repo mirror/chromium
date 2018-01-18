@@ -364,7 +364,7 @@ ChromeSSLHostStateDelegate::QueryPolicy(const std::string& host,
   // are unlikely to indicate actual security problems.
   bool allow_localhost = base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kAllowInsecureLocalhost);
-  if (allow_localhost && net::IsLocalhost(url))
+  if (allow_localhost && net::IsLocalhost(url.host()))
     return ALLOWED;
 
   if (!value.get() || !value->is_dict())

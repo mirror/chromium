@@ -37,7 +37,7 @@ PaintWorkletGlobalScopeProxy::PaintWorkletGlobalScopeProxy(
       OriginTrialContext::GetTokens(document).get(),
       nullptr /* worker_settings */, kV8CacheOptionsDefault);
   global_scope_ = PaintWorkletGlobalScope::Create(
-      frame, std::move(creation_params), *reporting_proxy_,
+      frame, std::move(creation_params), ToIsolate(document), *reporting_proxy_,
       pending_generator_registry, global_scope_number);
 }
 

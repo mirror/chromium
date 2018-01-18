@@ -164,7 +164,7 @@ DocumentThreadableLoader::DocumentThreadableLoader(
           &DocumentThreadableLoader::DidTimeout),
       request_started_seconds_(0.0),
       cors_redirect_limit_(0),
-      redirect_mode_(network::mojom::FetchRedirectMode::kFollow),
+      redirect_mode_(WebURLRequest::kFetchRedirectModeFollow),
       override_referrer_(false) {
   DCHECK(client);
 }
@@ -640,7 +640,7 @@ bool DocumentThreadableLoader::RedirectReceivedBlinkCORS(
     return false;
   }
 
-  if (redirect_mode_ == network::mojom::FetchRedirectMode::kManual) {
+  if (redirect_mode_ == WebURLRequest::kFetchRedirectModeManual) {
     // We use |redirect_mode_| to check the original redirect mode.
     // |new_request| is a new request for redirect. So we don't set the
     // redirect mode of it in WebURLLoaderImpl::Context::OnReceivedRedirect().
@@ -662,7 +662,7 @@ bool DocumentThreadableLoader::RedirectReceivedBlinkCORS(
     return false;
   }
 
-  if (redirect_mode_ == network::mojom::FetchRedirectMode::kError) {
+  if (redirect_mode_ == WebURLRequest::kFetchRedirectModeError) {
     ThreadableLoaderClient* client = client_;
     Clear();
     client->DidFailRedirectCheck();

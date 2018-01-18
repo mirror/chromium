@@ -65,7 +65,7 @@ class CONTENT_EXPORT WebServiceWorkerProviderImpl
   // Posts a message to the ServiceWorkerContainer for this provider.
   // Corresponds to Client#postMessage().
   void PostMessageToClient(
-      std::unique_ptr<ServiceWorkerHandleReference> source_handle,
+      blink::mojom::ServiceWorkerObjectInfoPtr source,
       const base::string16& message,
       std::vector<mojo::ScopedMessagePipeHandle> message_pipes);
   // For UseCounter purposes. Called when the controller service worker used a

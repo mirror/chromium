@@ -6,10 +6,9 @@
 
 #include <stddef.h>
 
-#include <memory>
-
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted_memory.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
@@ -223,7 +222,6 @@ void ExtensionIconSource::LoadFaviconImage(int request_id) {
       AppLaunchInfo::GetFullLaunchURL(GetData(request_id)->extension.get());
   favicon_service->GetRawFaviconForPageURL(
       favicon_url, {favicon_base::IconType::kFavicon}, gfx::kFaviconSize,
-      /*fallback_to_host=*/false,
       base::Bind(&ExtensionIconSource::OnFaviconDataAvailable,
                  base::Unretained(this), request_id),
       &cancelable_task_tracker_);
@@ -322,7 +320,7 @@ void ExtensionIconSource::SetData(
     int size,
     ExtensionIconSet::MatchType match) {
   std::unique_ptr<ExtensionIconRequest> request =
-      std::make_unique<ExtensionIconRequest>();
+      base::MakeUnique<ExtensionIconRequest>();
   request->callback = callback;
   request->extension = extension;
   request->grayscale = grayscale;

@@ -19,7 +19,7 @@
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/test/web_contents_tester.h"
+#include "content/test/test_web_contents.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -58,10 +58,9 @@ class TabLifecycleUnitTest : public ChromeRenderViewHostTestHarness {
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
 
-    web_contents_.reset(CreateTestWebContents());
+    web_contents_.reset(content::TestWebContents::Create(profile(), nullptr));
     // Commit an URL to allow discarding.
-    content::WebContentsTester::For(web_contents_.get())
-        ->SetLastCommittedURL(GURL("https://www.example.com"));
+    web_contents_->SetLastCommittedURL(GURL("https://www.example.com"));
 
     tab_strip_model_ =
         std::make_unique<TabStripModel>(&tab_strip_model_delegate_, profile());
@@ -79,7 +78,7 @@ class TabLifecycleUnitTest : public ChromeRenderViewHostTestHarness {
 
   testing::StrictMock<MockTabLifecycleObserver> observer_;
   base::ObserverList<TabLifecycleObserver> observers_;
-  std::unique_ptr<content::WebContents> web_contents_;
+  std::unique_ptr<content::TestWebContents> web_contents_;
   std::unique_ptr<TabStripModel> tab_strip_model_;
   base::SimpleTestTickClock test_clock_;
 
@@ -206,8 +205,7 @@ TEST_F(TabLifecycleUnitTest, CannotDiscardInvalidURL) {
   TabLifecycleUnit tab_lifecycle_unit(&observers_, web_contents_.get(),
                                       tab_strip_model_.get());
   test_clock_.Advance(kTabFocusedProtectionTime);
-  content::WebContentsTester::For(web_contents_.get())
-      ->SetLastCommittedURL(GURL("invalid :)"));
+  web_contents_->SetLastCommittedURL(GURL("invalid :)"));
 
   EXPECT_FALSE(tab_lifecycle_unit.CanDiscard(DiscardReason::kExternal));
   EXPECT_FALSE(tab_lifecycle_unit.CanDiscard(DiscardReason::kProactive));
@@ -219,8 +217,7 @@ TEST_F(TabLifecycleUnitTest, CannotDiscardEmptyURL) {
                                       tab_strip_model_.get());
   test_clock_.Advance(kTabFocusedProtectionTime);
 
-  content::WebContentsTester::For(web_contents_.get())
-      ->SetLastCommittedURL(GURL());
+  web_contents_->SetLastCommittedURL(GURL());
   EXPECT_FALSE(tab_lifecycle_unit.CanDiscard(DiscardReason::kExternal));
   EXPECT_FALSE(tab_lifecycle_unit.CanDiscard(DiscardReason::kProactive));
   EXPECT_FALSE(tab_lifecycle_unit.CanDiscard(DiscardReason::kUrgent));
@@ -311,8 +308,7 @@ TEST_F(TabLifecycleUnitTest, CannotDiscardPDF) {
                                       tab_strip_model_.get());
   test_clock_.Advance(kTabFocusedProtectionTime);
 
-  content::WebContentsTester::For(web_contents_.get())
-      ->SetMainFrameMimeType("application/pdf");
+  web_contents_->SetMainFrameMimeType("application/pdf");
   EXPECT_FALSE(tab_lifecycle_unit.CanDiscard(DiscardReason::kExternal));
   EXPECT_FALSE(tab_lifecycle_unit.CanDiscard(DiscardReason::kProactive));
   EXPECT_FALSE(tab_lifecycle_unit.CanDiscard(DiscardReason::kUrgent));

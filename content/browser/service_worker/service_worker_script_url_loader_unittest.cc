@@ -75,7 +75,7 @@ class MockNetworkURLLoaderFactory final : public mojom::URLLoaderFactory {
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
-                            const network::ResourceRequest& url_request,
+                            const ResourceRequest& url_request,
                             mojom::URLLoaderClientPtr client,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override {
@@ -87,7 +87,7 @@ class MockNetworkURLLoaderFactory final : public mojom::URLLoaderFactory {
     info.headers = base::MakeRefCounted<net::HttpResponseHeaders>(
         net::HttpUtil::AssembleRawHeaders(response.headers.c_str(),
                                           response.headers.size()));
-    network::ResourceResponseHead response_head;
+    ResourceResponseHead response_head;
     response_head.headers = info.headers;
     response_head.headers->GetMimeType(&response_head.mime_type);
     if (response.has_certificate_error) {
@@ -188,7 +188,7 @@ class ServiceWorkerScriptURLLoaderTest : public testing::Test {
     int request_id = 10;
     uint32_t options = 0;
 
-    network::ResourceRequest request;
+    ResourceRequest request;
     request.url = version_->script_url();
     request.method = "GET";
     // TODO(nhiroki): Test importScripts() cases.

@@ -4,8 +4,6 @@
 
 #include "chrome/browser/ui/views/collected_cookies_views.h"
 
-#include <memory>
-
 #include "base/macros.h"
 #include "chrome/browser/browsing_data/browsing_data_appcache_helper.h"
 #include "chrome/browser/browsing_data/browsing_data_channel_id_helper.h"
@@ -459,7 +457,7 @@ views::View* CollectedCookiesViews::CreateAllowedPane() {
   allowed_cookies_tree_model_ =
       content_settings->allowed_local_shared_objects().CreateCookiesTreeModel();
   std::unique_ptr<CookiesTreeViewDrawingProvider> allowed_drawing_provider =
-      std::make_unique<CookiesTreeViewDrawingProvider>();
+      base::MakeUnique<CookiesTreeViewDrawingProvider>();
   allowed_cookies_drawing_provider_ = allowed_drawing_provider.get();
   allowed_cookies_tree_ = new views::TreeView();
   allowed_cookies_tree_->SetModel(allowed_cookies_tree_model_.get());
@@ -524,7 +522,7 @@ views::View* CollectedCookiesViews::CreateBlockedPane() {
   blocked_cookies_tree_model_ =
       content_settings->blocked_local_shared_objects().CreateCookiesTreeModel();
   std::unique_ptr<CookiesTreeViewDrawingProvider> blocked_drawing_provider =
-      std::make_unique<CookiesTreeViewDrawingProvider>();
+      base::MakeUnique<CookiesTreeViewDrawingProvider>();
   blocked_cookies_drawing_provider_ = blocked_drawing_provider.get();
   blocked_cookies_tree_ = new views::TreeView();
   blocked_cookies_tree_->SetModel(blocked_cookies_tree_model_.get());

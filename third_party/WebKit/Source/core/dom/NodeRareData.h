@@ -81,7 +81,7 @@ class NodeMutationObserverData final
   }
 
  private:
-  NodeMutationObserverData() = default;
+  NodeMutationObserverData() {}
 
   HeapVector<TraceWrapperMember<MutationObserverRegistration>> registry_;
   HeapHashSet<TraceWrapperMember<MutationObserverRegistration>>

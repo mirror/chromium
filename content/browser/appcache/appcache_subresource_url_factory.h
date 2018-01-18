@@ -43,7 +43,7 @@ class CONTENT_EXPORT AppCacheSubresourceURLFactory
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
-                            const network::ResourceRequest& request,
+                            const ResourceRequest& request,
                             mojom::URLLoaderClientPtr client,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override;

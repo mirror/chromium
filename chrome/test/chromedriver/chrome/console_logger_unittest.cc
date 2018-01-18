@@ -5,11 +5,9 @@
 #include "chrome/test/chromedriver/chrome/console_logger.h"
 
 #include <memory>
-#include <string>
 #include <vector>
 
 #include "base/compiler_specific.h"
-#include "base/containers/queue.h"
 #include "base/format_macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
@@ -24,14 +22,14 @@ namespace {
 class FakeDevToolsClient : public StubDevToolsClient {
  public:
   explicit FakeDevToolsClient(const std::string& id)
-      : id_(id), listener_(nullptr) {}
+      : id_(id), listener_(NULL) {}
   ~FakeDevToolsClient() override {}
 
   std::string PopSentCommand() {
     std::string command;
     if (!sent_command_queue_.empty()) {
       command = sent_command_queue_.front();
-      sent_command_queue_.pop();
+      sent_command_queue_.pop_front();
     }
     return command;
   }
@@ -55,7 +53,7 @@ class FakeDevToolsClient : public StubDevToolsClient {
       return Status(kUnknownError, "unhandled inspector error: "
           "{\"code\":-32601,\"message\":\"'Log.enable' wasn't found\"}");
     }
-    sent_command_queue_.push(method);
+    sent_command_queue_.push_back(method);
     return Status(kOk);
   }
 
@@ -68,7 +66,7 @@ class FakeDevToolsClient : public StubDevToolsClient {
 
  private:
   const std::string id_;  // WebView id.
-  base::queue<std::string> sent_command_queue_;  // Commands that were sent.
+  std::list<std::string> sent_command_queue_;  // Commands that were sent.
   DevToolsEventListener* listener_;  // The fake allows only one event listener.
 };
 
@@ -131,17 +129,17 @@ void ConsoleLogParams(base::DictionaryValue* out_params,
                       int line,
                       int column,
                       const char* text) {
-  if (source)
+  if (source != NULL)
     out_params->SetString("message.source", source);
-  if (url)
+  if (url != NULL)
     out_params->SetString("message.url", url);
-  if (level)
+  if (level != NULL)
     out_params->SetString("message.level", level);
   if (line != -1)
     out_params->SetInteger("message.line", line);
   if (column != -1)
     out_params->SetInteger("message.column", column);
-  if (text)
+  if (text != NULL)
     out_params->SetString("message.text", text);
 }
 
@@ -158,17 +156,17 @@ TEST(ConsoleLogger, ConsoleMessages) {
   EXPECT_TRUE(client.PopSentCommand().empty());
 
   base::DictionaryValue params1;  // All fields are set.
-  ConsoleLogParams(&params1, "source1", "url1", "verbose", 10, 1, "text1");
+  ConsoleLogParams(&params1, "source1", "url1", "debug", 10, 1, "text1");
   ASSERT_EQ(kOk, client.TriggerEvent("Console.messageAdded", params1).code());
   // Ignored -- wrong method.
   ASSERT_EQ(kOk, client.TriggerEvent("Console.gaga", params1).code());
 
   base::DictionaryValue params2;  // All optionals are not set.
-  ConsoleLogParams(&params2, "source2", nullptr, "log", -1, -1, "text2");
+  ConsoleLogParams(&params2, "source2", NULL, "log", -1, -1, "text2");
   ASSERT_EQ(kOk, client.TriggerEvent("Console.messageAdded", params2).code());
 
   base::DictionaryValue params3;  // Line without column, no source.
-  ConsoleLogParams(&params3, nullptr, "url3", "warning", 30, -1, "text3");
+  ConsoleLogParams(&params3, NULL, "url3", "warning", 30, -1, "text3");
   ASSERT_EQ(kOk, client.TriggerEvent("Console.messageAdded", params3).code());
 
   base::DictionaryValue params4;  // Column without line.
@@ -180,11 +178,11 @@ TEST(ConsoleLogger, ConsoleMessages) {
   ASSERT_EQ(kOk, client.TriggerEvent("Console.messageAdded", params5).code());
 
   base::DictionaryValue params6;  // Unset level.
-  ConsoleLogParams(&params6, "source6", "url6", nullptr, 60, 6, nullptr);
+  ConsoleLogParams(&params6, "source6", "url6", NULL, 60, 6, NULL);
   ASSERT_EQ(kOk, client.TriggerEvent("Console.messageAdded", params6).code());
 
   base::DictionaryValue params7;  // No text.
-  ConsoleLogParams(&params7, "source7", "url7", "log", -1, -1, nullptr);
+  ConsoleLogParams(&params7, "source7", "url7", "log", -1, -1, NULL);
   ASSERT_EQ(kOk, client.TriggerEvent("Console.messageAdded", params7).code());
 
   base::DictionaryValue params8;  // No message object.

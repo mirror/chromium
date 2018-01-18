@@ -42,7 +42,6 @@
 #include "preproc.h"
 #include "extra.h"
 #include "security.h"
-#include "xsltlocale.h"
 
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_PARSING
@@ -1241,7 +1240,6 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
 		xsltTransformError(NULL, style, cur,
                                  "invalid value for method: %s\n", prop);
                 if (style != NULL) style->warnings++;
-                xmlFree(prop);
             }
 	} else {
 	    style->method = prop;
@@ -3725,7 +3723,7 @@ xsltGatherNamespaces(xsltStylesheetPtr style) {
 			style->warnings++;
 		    } else if (URI == NULL) {
 			xmlHashUpdateEntry(style->nsHash, ns->prefix,
-			    (void *) ns->href, NULL);
+			    (void *) ns->href, (xmlHashDeallocator)xmlFree);
 
 #ifdef WITH_XSLT_DEBUG_PARSING
 			xsltGenericDebug(xsltGenericDebugContext,
@@ -5448,7 +5446,6 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 	        xsltTransformError(NULL, style, template,
 	            "xsl:template : error invalid name '%s'\n", prop);
 		if (style != NULL) style->errors++;
-                xmlFree(prop);
 		goto error;
 	    }
 	    ret->name = xmlDictLookup(style->dict, BAD_CAST prop, -1);

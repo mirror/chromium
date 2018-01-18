@@ -30,7 +30,7 @@ namespace views {
 class DesktopDropTargetWin : public ui::DropTargetWin,
                              public aura::WindowObserver {
  public:
-  explicit DesktopDropTargetWin(aura::Window* root_window);
+  DesktopDropTargetWin(aura::Window* root_window, HWND window);
   ~DesktopDropTargetWin() override;
 
  private:

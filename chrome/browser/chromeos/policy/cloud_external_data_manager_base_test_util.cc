@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/callback.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
@@ -48,7 +49,7 @@ void SetExternalDataReference(CloudPolicyCore* core,
   PolicyMap policy_map;
   policy_map.Set(policy, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                  POLICY_SOURCE_CLOUD, std::move(metadata),
-                 std::make_unique<ExternalDataFetcher>(
+                 base::MakeUnique<ExternalDataFetcher>(
                      store->external_data_manager(), policy));
   store->SetPolicyMapForTesting(policy_map);
 }

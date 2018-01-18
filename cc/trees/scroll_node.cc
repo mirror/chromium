@@ -29,8 +29,6 @@ ScrollNode::ScrollNode()
 
 ScrollNode::ScrollNode(const ScrollNode& other) = default;
 
-ScrollNode::~ScrollNode() = default;
-
 bool ScrollNode::operator==(const ScrollNode& other) const {
   return id == other.id && parent_id == other.parent_id &&
          scrollable == other.scrollable &&
@@ -46,8 +44,7 @@ bool ScrollNode::operator==(const ScrollNode& other) const {
          user_scrollable_horizontal == other.user_scrollable_horizontal &&
          user_scrollable_vertical == other.user_scrollable_vertical &&
          element_id == other.element_id && transform_id == other.transform_id &&
-         overscroll_behavior == other.overscroll_behavior &&
-         snap_container_data == other.snap_container_data;
+         overscroll_behavior == other.overscroll_behavior;
 }
 
 void ScrollNode::AsValueInto(base::trace_event::TracedValue* value) const {

@@ -555,8 +555,7 @@ TestRunner.addStylesheetTag = function(path) {
       var resolve;
       var promise = new Promise(r => resolve = r);
       function onload() {
-        // TODO(chenwilliam): It shouldn't be necessary to force
-        // style recalc here but some tests rely on it.
+        // Force style recalc
         window.getComputedStyle(document.body).color;
         resolve();
       }

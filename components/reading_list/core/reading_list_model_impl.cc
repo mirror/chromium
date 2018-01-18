@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/time/clock.h"
 #include "components/prefs/pref_service.h"
@@ -17,7 +18,7 @@ ReadingListModelImpl::ReadingListModelImpl(
     std::unique_ptr<ReadingListModelStorage> storage,
     PrefService* pref_service,
     std::unique_ptr<base::Clock> clock)
-    : entries_(std::make_unique<ReadingListEntries>()),
+    : entries_(base::MakeUnique<ReadingListEntries>()),
       unread_entry_count_(0),
       read_entry_count_(0),
       unseen_entry_count_(0),
@@ -489,7 +490,7 @@ void ReadingListModelImpl::SetContentSuggestionsExtra(
 
 std::unique_ptr<ReadingListModel::ScopedReadingListBatchUpdate>
 ReadingListModelImpl::CreateBatchToken() {
-  return std::make_unique<ReadingListModelImpl::ScopedReadingListBatchUpdate>(
+  return base::MakeUnique<ReadingListModelImpl::ScopedReadingListBatchUpdate>(
       this);
 }
 

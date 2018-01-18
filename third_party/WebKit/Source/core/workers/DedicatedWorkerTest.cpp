@@ -171,7 +171,7 @@ class DedicatedWorkerMessagingProxyForTest
 
 class DedicatedWorkerTest : public PageTestBase {
  public:
-  DedicatedWorkerTest() = default;
+  DedicatedWorkerTest() {}
 
   void SetUp() override {
     PageTestBase::SetUp(IntSize());

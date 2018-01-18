@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <memory>
-
 #include "base/logging.h"
 #include "chrome/browser/extensions/extension_action_runner.h"
 #include "chrome/browser/extensions/extension_apitest.h"
@@ -72,7 +70,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, MAYBE_ActiveTab) {
   {
     // Setup state.
     chromeos::ScopedTestPublicSessionLoginState login_state;
-    auto delegate = std::make_unique<ExtensionTabUtilDelegateChromeOS>();
+    auto delegate = base::MakeUnique<ExtensionTabUtilDelegateChromeOS>();
     ExtensionTabUtil::SetPlatformDelegate(delegate.get());
 
     ExtensionTestMessageListener listener(false);

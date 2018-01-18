@@ -2,7 +2,25 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import sys
+import collections
+
+
+def ParseVersion(lines):
+  version_keys = ['MAJOR', 'MINOR']
+  version_vals = {}
+  for line in lines:
+    key, val = line.strip().split('=', 1)
+    if key in version_keys:
+      if key in version_vals or not val.isdigit():
+        return None
+      version_vals[key] = int(val)
+
+  if set(version_keys) != set(version_vals):
+    # We didn't see all parts of the version.
+    return None
+
+  return collections.namedtuple('Version', ['major', 'minor'])(
+      major=version_vals['MAJOR'], minor=version_vals['MINOR'])
 
 
 def IsNewer(old_version, new_version):
@@ -17,9 +35,6 @@ def CheckVersion(input_api, output_api):
   - the version was upraded if assets files were changed,
   - the version was not downgraded.
   """
-  sys.path.append(input_api.PresubmitLocalPath())
-  import parse_version
-
   old_version = None
   new_version = None
   changed_assets = False
@@ -27,12 +42,12 @@ def CheckVersion(input_api, output_api):
   for file in input_api.AffectedFiles():
     basename = input_api.os_path.basename(file.LocalPath())
     extension = input_api.os_path.splitext(basename)[1][1:].strip().lower()
-    if (extension == 'sha1' or basename == 'vr_assets_component_files.json'):
+    if (extension == 'sha1'):
       changed_assets = True
     if (basename == 'VERSION'):
       changed_version = True
-      old_version = parse_version.ParseVersion(file.OldContents())
-      new_version = parse_version.ParseVersion(file.NewContents())
+      old_version = ParseVersion(file.OldContents())
+      new_version = ParseVersion(file.NewContents())
 
   local_version_filename = input_api.os_path.join(
       input_api.os_path.dirname(input_api.AffectedFiles()[0].LocalPath()),

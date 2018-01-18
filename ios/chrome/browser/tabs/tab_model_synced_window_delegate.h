@@ -8,7 +8,6 @@
 #include "base/macros.h"
 #include "components/sessions/core/session_id.h"
 #include "components/sync_sessions/synced_window_delegate.h"
-#include "ios/chrome/browser/web_state_list/web_state_list_observer.h"
 
 class WebStateList;
 
@@ -18,16 +17,12 @@ class SyncedTabDelegate;
 
 // A TabModelSyncedWindowDelegate is the iOS-based implementation of
 // SyncedWindowDelegate.
-class TabModelSyncedWindowDelegate : public sync_sessions::SyncedWindowDelegate,
-                                     public WebStateListObserver {
+class TabModelSyncedWindowDelegate
+    : public sync_sessions::SyncedWindowDelegate {
  public:
-  explicit TabModelSyncedWindowDelegate(WebStateList* web_state_list);
+  TabModelSyncedWindowDelegate(WebStateList* web_state_list,
+                               SessionID session_id);
   ~TabModelSyncedWindowDelegate() override;
-
-  // Return the tab id for the tab at |index|.
-  SessionID::id_type GetTabIdAt(int index) const override;
-  bool IsSessionRestoreInProgress() const override;
-  bool ShouldSync() const override;
 
   // SyncedWindowDelegate:
   bool HasWindow() const override;
@@ -39,21 +34,12 @@ class TabModelSyncedWindowDelegate : public sync_sessions::SyncedWindowDelegate,
   bool IsTypePopup() const override;
   bool IsTabPinned(const sync_sessions::SyncedTabDelegate* tab) const override;
   sync_sessions::SyncedTabDelegate* GetTabAt(int index) const override;
-
-  // WebStateListObserver:
-  void WebStateInsertedAt(WebStateList* web_state_list,
-                          web::WebState* web_state,
-                          int index,
-                          bool activating) override;
-  void WebStateReplacedAt(WebStateList* web_state_list,
-                          web::WebState* old_web_state,
-                          web::WebState* new_web_state,
-                          int index) override;
+  // Return the tab id for the tab at |index|.
+  SessionID::id_type GetTabIdAt(int index) const override;
+  bool IsSessionRestoreInProgress() const override;
+  bool ShouldSync() const override;
 
  private:
-  // Sets the window id of |web_state| to |session_id_|.
-  void SetWindowIdForWebState(web::WebState* web_state);
-
   WebStateList* web_state_list_;
   SessionID session_id_;
 

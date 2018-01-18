@@ -4,6 +4,7 @@
 
 #include <memory>
 
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/extensions/api/socket/mock_tcp_client_socket.h"
 #include "extensions/browser/api/socket/socket.h"
 #include "extensions/browser/api/socket/tcp_socket.h"
@@ -23,14 +24,14 @@ std::unique_ptr<T> CreateTestSocket(
 template <>
 std::unique_ptr<TCPSocket> CreateTestSocket(
     std::unique_ptr<MockTCPClientSocket> stream) {
-  return std::make_unique<TCPSocket>(std::move(stream), "fake id",
+  return base::MakeUnique<TCPSocket>(std::move(stream), "fake id",
                                      true /* is_connected */);
 }
 
 template <>
 std::unique_ptr<TLSSocket> CreateTestSocket(
     std::unique_ptr<MockTCPClientSocket> stream) {
-  return std::make_unique<TLSSocket>(std::move(stream), "fake id");
+  return base::MakeUnique<TLSSocket>(std::move(stream), "fake id");
 }
 
 class CombinedSocketTest : public testing::Test {

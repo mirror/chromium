@@ -218,12 +218,6 @@ xsltFreeCompMatchList(xsltCompMatchPtr comp) {
     }
 }
 
-static void
-xsltFreeCompMatchListEntry(void *payload,
-                           const xmlChar *name ATTRIBUTE_UNUSED) {
-    xsltFreeCompMatchList((xsltCompMatchPtr) payload);
-}
-
 /**
  * xsltNormalizeCompSteps:
  * @payload: pointer to template hash table entry
@@ -519,11 +513,6 @@ xsltPatPushState(xsltTransformContextPtr ctxt, xsltStepStates *states,
     return(0);
 }
 
-static void
-xmlXPathFreeObjectWrapper(void *obj) {
-    xmlXPathFreeObject((xmlXPathObjectPtr) obj);
-}
-
 /**
  * xsltTestCompMatchDirect:
  * @ctxt:  a XSLT process context
@@ -609,7 +598,7 @@ xsltTestCompMatchDirect(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 	    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival) =
 		0;
 	    XSLT_RUNTIME_EXTRA_FREE(ctxt, sel->lenExtra) =
-		xmlXPathFreeObjectWrapper;
+		(xmlFreeFunc) xmlXPathFreeObject;
 	} else
 	    list = newlist;
     }
@@ -1491,7 +1480,6 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name,
 		xsltTransformError(NULL, NULL, NULL,
 			"xsltCompileIdKeyPattern : ) expected\n");
 		ctxt->error = 1;
-                xmlFree(lit);
 		return;
 	    }
 	}
@@ -1654,7 +1642,6 @@ parse_node_test:
 		    xsltTransformError(NULL, NULL, NULL,
 			    "xsltCompileStepPattern : Name expected\n");
 		    ctxt->error = 1;
-                    xmlFree(URL);
 		    goto error;
 		}
 	    } else {
@@ -2589,7 +2576,7 @@ void
 xsltFreeTemplateHashes(xsltStylesheetPtr style) {
     if (style->templatesHash != NULL)
 	xmlHashFree((xmlHashTablePtr) style->templatesHash,
-		    xsltFreeCompMatchListEntry);
+		    (xmlHashDeallocator) xsltFreeCompMatchList);
     if (style->rootMatch != NULL)
         xsltFreeCompMatchList(style->rootMatch);
     if (style->keyMatch != NULL)

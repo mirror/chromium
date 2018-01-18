@@ -693,6 +693,14 @@ void XMLHttpRequest::open(const AtomicString& method,
   upload_complete_ = false;
 
   if (!async && GetExecutionContext()->IsDocument()) {
+    if (IsSupportedInFeaturePolicy(FeaturePolicyFeature::kSyncXHR) &&
+        !GetDocument()->GetFrame()->IsFeatureEnabled(
+            FeaturePolicyFeature::kSyncXHR)) {
+      exception_state.ThrowDOMException(
+          kInvalidAccessError,
+          "Synchronous requests are disabled by Feature Policy.");
+      return;
+    }
     if (GetDocument()->GetSettings() &&
         !GetDocument()->GetSettings()->GetSyncXHRInDocumentsEnabled()) {
       exception_state.ThrowDOMException(
@@ -765,16 +773,6 @@ bool XMLHttpRequest::InitSend(ExceptionState& exception_state) {
   }
 
   if (!async_) {
-    if (GetExecutionContext()->IsDocument() &&
-        IsSupportedInFeaturePolicy(FeaturePolicyFeature::kSyncXHR) &&
-        !GetDocument()->GetFrame()->IsFeatureEnabled(
-            FeaturePolicyFeature::kSyncXHR)) {
-      LogConsoleError(GetExecutionContext(),
-                      "Synchronous requests are disabled by Feature Policy.");
-      HandleNetworkError();
-      ThrowForLoadFailureIfNeeded(exception_state, String());
-      return false;
-    }
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
     if (isolate && v8::MicrotasksScope::IsRunningMicrotasks(isolate)) {
       UseCounter::Count(GetExecutionContext(),
@@ -1083,6 +1081,7 @@ void XMLHttpRequest::CreateRequest(scoped_refptr<EncodedFormData> http_body,
       execution_context.GetSecurityContext().AddressSpace());
 
   probe::willLoadXHR(&execution_context, this, this, method_, url_, async_,
+                     http_body ? http_body->DeepCopy() : nullptr,
                      request_headers_, with_credentials_);
 
   if (http_body) {

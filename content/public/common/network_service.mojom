@@ -6,12 +6,13 @@ module content.mojom;
 
 import "mojo/common/file_path.mojom";
 import "mojo/common/time.mojom";
+import "proxy_config.mojom";
+import "resource_type.mojom";
 import "url_loader.mojom";
 import "url_loader_factory.mojom";
 import "url/mojo/url.mojom";
 import "services/network/public/interfaces/cookie_manager.mojom";
 import "services/network/public/interfaces/network_change_manager.mojom";
-import "services/network/public/interfaces/proxy_config.mojom";
 import "services/network/public/interfaces/restricted_cookie_manager.mojom";
 import "services/proxy_resolver/public/interfaces/proxy_resolver.mojom";
 
@@ -85,8 +86,8 @@ struct NetworkContextParams {
   // |proxy_config_client_request|.
   //
   // If both are null, the NetworkContext will not use a proxy.
-  network.mojom.ProxyConfig? initial_proxy_config;
-  network.mojom.ProxyConfigClient&? proxy_config_client_request;
+  ProxyConfig? initial_proxy_config;
+  ProxyConfigClient&? proxy_config_client_request;
 
   // If |proxy_config_client_request| is non-null, this is called during
   // periods of network activity, and can be used as a signal for polling-based
@@ -95,7 +96,7 @@ struct NetworkContextParams {
   // TODO(mmenke): Can the consumer piggy back on other network events through
   // other channels (navigation, issuing requests, etc)? Or can
   // ProxyConfigServices be modified not to need this notification?
-  network.mojom.ProxyConfigPollerClient? proxy_config_poller_client;
+  ProxyConfigPollerClient? proxy_config_poller_client;
 };
 
 struct NetworkConditions {
@@ -165,7 +166,7 @@ interface NetworkServiceClient {
   // Called when an SSL certificate is encountered.
   // The callback argument is a net::ERROR value. If it's net::OK, then the
   // request is resumed. Otherwise it's cancelled with the given error.
-  OnSSLCertificateError(int32 resource_type,
+  OnSSLCertificateError(ResourceType resource_type,
                         url.mojom.Url url,
                         uint32 process_id,
                         uint32 routing_id,

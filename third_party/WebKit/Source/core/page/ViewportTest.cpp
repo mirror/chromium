@@ -3368,7 +3368,7 @@ TEST_F(ViewportTest, viewportUseZoomForDSF4) {
 
 class ViewportHistogramsTest : public SimTest {
  public:
-  ViewportHistogramsTest() = default;
+  ViewportHistogramsTest() {}
 
   void SetUp() override {
     SimTest::SetUp();

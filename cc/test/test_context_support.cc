@@ -132,9 +132,5 @@ void TestContextSupport::DeleteTransferCacheEntry(
     uint32_t entry_id) {
   NOTIMPLEMENTED();
 }
-unsigned int TestContextSupport::GetTransferBufferFreeSize() const {
-  NOTIMPLEMENTED();
-  return 0;
-}
 
 }  // namespace cc

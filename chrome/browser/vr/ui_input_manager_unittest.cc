@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "cc/test/geometry_test_utils.h"
@@ -71,12 +72,12 @@ class MockTextInput : public TextInput {
 class UiInputManagerTest : public testing::Test {
  public:
   void SetUp() override {
-    scene_ = std::make_unique<UiScene>();
-    input_manager_ = std::make_unique<UiInputManager>(scene_.get());
+    scene_ = base::MakeUnique<UiScene>();
+    input_manager_ = base::MakeUnique<UiInputManager>(scene_.get());
   }
 
   StrictMock<MockRect>* CreateAndAddMockElement(float z_position) {
-    auto element = std::make_unique<StrictMock<MockRect>>();
+    auto element = base::MakeUnique<StrictMock<MockRect>>();
     StrictMock<MockRect>* p_element = element.get();
     element->SetTranslate(0, 0, z_position);
     scene_->AddUiElement(kRoot, std::move(element));
@@ -85,7 +86,7 @@ class UiInputManagerTest : public testing::Test {
   }
 
   StrictMock<MockTextInput>* CreateAndAddMockInputElement(float z_position) {
-    auto element = std::make_unique<StrictMock<MockTextInput>>();
+    auto element = base::MakeUnique<StrictMock<MockTextInput>>();
     StrictMock<MockTextInput>* p_element = element.get();
     element->SetTranslate(0, 0, z_position);
     scene_->AddUiElement(kRoot, std::move(element));
@@ -159,7 +160,7 @@ TEST_F(UiInputManagerTest, FocusedElement) {
 TEST_F(UiInputManagerTest, FocusableChildStealsFocus) {
   StrictMock<MockRect>* p_element = CreateAndAddMockElement(-5.f);
 
-  auto child = std::make_unique<StrictMock<MockRect>>();
+  auto child = base::MakeUnique<StrictMock<MockRect>>();
   auto* p_child = child.get();
   child->set_hit_testable(true);
   child->set_focusable(true);
@@ -185,7 +186,7 @@ TEST_F(UiInputManagerTest, FocusableChildStealsFocus) {
 TEST_F(UiInputManagerTest, NonFocusableChildDoestNotStealFocus) {
   StrictMock<MockRect>* p_element = CreateAndAddMockElement(-5.f);
 
-  auto child = std::make_unique<StrictMock<MockRect>>();
+  auto child = base::MakeUnique<StrictMock<MockRect>>();
   auto* p_child = child.get();
   child->set_hit_testable(true);
   child->set_focusable(false);
@@ -205,7 +206,7 @@ TEST_F(UiInputManagerTest, NonFocusableChildDoestNotStealFocus) {
 }
 
 TEST_F(UiInputManagerTest, ReticleRenderTarget) {
-  auto element = std::make_unique<Rect>();
+  auto element = base::MakeUnique<Rect>();
   UiElement* p_element = element.get();
   element->SetTranslate(0, 0, -1.f);
   scene_->AddUiElement(kRoot, std::move(element));
@@ -339,7 +340,7 @@ TEST_F(UiInputManagerTest, ElementDeletion) {
 // testing along the laser's ray as well as the ray from the world origin to a
 // point far along the laser.
 TEST_F(UiInputManagerTest, HitTestStrategy) {
-  auto element = std::make_unique<Rect>();
+  auto element = base::MakeUnique<Rect>();
   auto* p_element = element.get();
   element->SetTranslate(0, 0, -2.5);
   element->SetSize(1000.0f, 1000.0f);

@@ -5,17 +5,17 @@
 cr.define('user_manager.control_bar_tests', function() {
   /** @return {!ControlBarElement} */
   function createElement() {
-    const controlBarElement = document.createElement('control-bar');
+    var controlBarElement = document.createElement('control-bar');
     document.body.appendChild(controlBarElement);
     return controlBarElement;
   }
 
   function registerTests() {
     /** @type {?TestProfileBrowserProxy} */
-    let browserProxy = null;
+    var browserProxy = null;
 
     /** @type {?ControlBarElement} */
-    let controlBarElement = null;
+    var controlBarElement = null;
 
     suite('ControlBarTests', function() {
       setup(function() {
@@ -66,7 +66,7 @@ cr.define('user_manager.control_bar_tests', function() {
 
     suite('ControlBarTestsAllProfilesAreLocked', function() {
       /** @type {?ErrorDialogElement} */
-      let errorDialogElement = null;
+      var errorDialogElement = null;
 
       setup(function() {
         browserProxy = new TestProfileBrowserProxy();

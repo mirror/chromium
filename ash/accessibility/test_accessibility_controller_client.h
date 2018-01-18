@@ -31,7 +31,6 @@ class TestAccessibilityControllerClient
   void PlayEarcon(int32_t sound_key) override;
   void PlayShutdownSound(PlayShutdownSoundCallback callback) override;
   void HandleAccessibilityGesture(const std::string& gesture) override;
-  void ToggleDictation() override;
 
   int32_t GetPlayedEarconAndReset();
 

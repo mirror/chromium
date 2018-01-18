@@ -127,7 +127,7 @@ class RadialGradientAttributesWrapper
   void Trace(blink::Visitor* visitor) { visitor->Trace(attributes_); }
 
  private:
-  RadialGradientAttributesWrapper() = default;
+  RadialGradientAttributesWrapper() {}
 
   RadialGradientAttributes attributes_;
 };

@@ -28,8 +28,8 @@ crbug.com/765779 http/tests/loading/bad-server-subframe.html [ Failure ]
 # https://crbug.com/393285: Text-autosizing doesn't support OOPIFs.
 # https://crbug.com/667551: Pixel dumps don't support OOPIFs.
 # Both of the bugs above need to be fixed, before enabling the tests below.
-crbug.com/393285 http/tests/text-autosizing/narrow-iframe.html [ Failure Crash ]
-crbug.com/393285 http/tests/text-autosizing/wide-iframe.html [ Failure Crash ]
+crbug.com/393285 http/tests/text-autosizing/narrow-iframe.html [ Failure ]
+crbug.com/393285 http/tests/text-autosizing/wide-iframe.html [ Failure ]
 
 # https://crbug.com/697111: assert failures in test added in r451938.
 crbug.com/697111 svg/dom/getScreenCTM-ancestor-transform.html [ Failure ]
@@ -258,14 +258,3 @@ Bug(none) virtual/mojo-blobs/external/wpt/fetch/api/basic/keepalive.html [ Timeo
 Bug(none) virtual/mojo-blobs/external/wpt/webmessaging/event.origin.sub.htm [ Failure ]
 Bug(none) virtual/mojo-blobs/external/wpt/webmessaging/postMessage_asterisk_xorigin.sub.htm [ Failure ]
 Bug(none) virtual/outofblink-cors/external/wpt/fetch/api/basic/keepalive.html [ Timeout ]
-
-crbug.com/801992 external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-cross-in-cross-url-allow.html [ Pass Timeout ]
-crbug.com/801992 external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-cross-in-same-none-block.html [ Pass Timeout ]
-crbug.com/801992 external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-cross-in-same-url-allow.html [ Pass Timeout ]
-crbug.com/801992 external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-cross-in-sandboxed-cross-url-block.html [ Pass Timeout ]
-crbug.com/801992 external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-same-in-cross-star-allow.html [ Pass Timeout ]
-crbug.com/801992 external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-same-in-cross-url-allow.html [ Pass Timeout ]
-crbug.com/801992 external/wpt/content-security-policy/frame-ancestors/frame-ancestors-star-allow-crossorigin.html [ Pass Timeout ]
-crbug.com/801992 external/wpt/html/browsers/the-window-object/apis-for-creating-and-navigating-browsing-contexts-by-name/open-features-non-integer-width.html [ Crash ]
-crbug.com/801992 external/wpt/html/browsers/the-window-object/security-window/window-security.html [ Pass Timeout ]
-crbug.com/801992 http/tests/misc/iframe-script-modify-attr.html [ Pass Crash ]

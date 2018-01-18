@@ -23,7 +23,6 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import org.chromium.base.ContextUtils;
-import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
@@ -52,7 +51,6 @@ public class ChromeHomeSurveyControllerTest {
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        RecordHistogram.setDisabledForTests(true);
 
         ContextUtils.initApplicationContextForTests(RuntimeEnvironment.application);
         mTestController = new TestChromeHomeSurveyController();
@@ -65,7 +63,6 @@ public class ChromeHomeSurveyControllerTest {
     @After
     public void after() {
         mSharedPreferences.edit().clear().apply();
-        RecordHistogram.setDisabledForTests(false);
     }
 
     @Test

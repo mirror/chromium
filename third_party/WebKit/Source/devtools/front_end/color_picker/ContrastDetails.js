@@ -39,9 +39,18 @@ ColorPicker.ContrastDetails = class {
     var contrastValueRow = this._element.createChild('div');
     contrastValueRow.addEventListener('click', this._topRowClicked.bind(this));
     var contrastValueRowContents = contrastValueRow.createChild('div', 'container');
-    contrastValueRowContents.createTextChild(Common.UIString('Contrast ratio'));
+    contrastValueRowContents.createTextChild(Common.UIString('Contrast Ratio'));
+
+    /** @type {!Element} */
+    this._contrastLink = /** @type {!Element} */ (contrastValueRowContents.appendChild(UI.XLink.create(
+        'https://developers.google.com/web/fundamentals/accessibility/accessible-styles#color_and_contrast',
+        'Color and contrast on Web Fundamentals', 'contrast-link')));
+    this._contrastLink.textContent = '';
+    this._contrastLink.appendChild(UI.Icon.create('mediumicon-info'));
+    this._contrastLink.appendChild(UI.Icon.create('mediumicon-warning'));
 
     this._contrastValueBubble = contrastValueRowContents.createChild('span', 'contrast-details-value');
+    this._contrastValueBubble.title = Common.UIString('Copy contrast ratio to clipboard');
     this._contrastValue = this._contrastValueBubble.createChild('span');
     this._contrastValueBubbleIcons = [];
     this._contrastValueBubbleIcons.push(
@@ -49,10 +58,7 @@ ColorPicker.ContrastDetails = class {
     this._contrastValueBubbleIcons.push(
         this._contrastValueBubble.appendChild(UI.Icon.create('smallicon-checkmark-behind')));
     this._contrastValueBubbleIcons.push(this._contrastValueBubble.appendChild(UI.Icon.create('smallicon-no')));
-    this._contrastValueBubbleIcons.forEach(button => button.addEventListener('click', event => {
-      ColorPicker.ContrastDetails._showHelp();
-      event.consume(false);
-    }));
+    this._contrastValueBubble.addEventListener('click', this._onContrastValueBubbleClick.bind(this));
 
     var expandToolbar = new UI.Toolbar('expand', contrastValueRowContents);
     this._expandButton = new UI.ToolbarButton(Common.UIString('Show more'), 'smallicon-expand-more');
@@ -60,20 +66,24 @@ ColorPicker.ContrastDetails = class {
     UI.ARIAUtils.setExpanded(this._expandButton.element, false);
     expandToolbar.appendToolbarItem(this._expandButton);
 
-    this._expandedDetails = this._element.createChild('div', 'expanded-details');
+    this._expandedDetails = this._element.createChild('div', 'container expanded-details');
     this._expandedDetails.id = 'expanded-contrast-details';
     UI.ARIAUtils.setControls(this._expandButton.element, this._expandedDetails);
 
     this._contrastThresholds = this._expandedDetails.createChild('div', 'contrast-thresholds');
 
     this._contrastAA = this._contrastThresholds.createChild('div', 'contrast-threshold');
+    this._contrastAA.appendChild(UI.Icon.create('smallicon-checkmark-square'));
+    this._contrastAA.appendChild(UI.Icon.create('smallicon-no'));
     this._contrastPassFailAA = this._contrastAA.createChild('span', 'contrast-pass-fail');
 
     this._contrastAAA = this._contrastThresholds.createChild('div', 'contrast-threshold');
+    this._contrastAAA.appendChild(UI.Icon.create('smallicon-checkmark-square'));
+    this._contrastAAA.appendChild(UI.Icon.create('smallicon-no'));
     this._contrastPassFailAAA = this._contrastAAA.createChild('span', 'contrast-pass-fail');
 
     this._chooseBgColor = this._expandedDetails.createChild('div', 'contrast-choose-bg-color');
-    this._chooseBgColor.textContent = Common.UIString('Pick background color');
+    this._chooseBgColor.textContent = Common.UIString('Please select background color.');
 
     var bgColorContainer = this._expandedDetails.createChild('div', 'background-color');
 
@@ -102,7 +112,7 @@ ColorPicker.ContrastDetails = class {
     var bgColor = this._contrastInfo.bgColor();
     if (!contrastRatio || !bgColor) {
       this._contrastUnknown = true;
-      this._contrastValue.textContent = '';
+      this._contrastValue.textContent = '?';
       this._contrastValueBubble.classList.add('contrast-unknown');
       this._chooseBgColor.classList.remove('hidden');
       this._contrastThresholds.classList.add('hidden');
@@ -120,36 +130,23 @@ ColorPicker.ContrastDetails = class {
 
     var aa = this._contrastInfo.contrastRatioThreshold('aa');
     this._passesAA = this._contrastInfo.contrastRatio() >= aa;
-    this._contrastPassFailAA.removeChildren();
-    var labelAA = this._contrastPassFailAA.createChild('span', 'contrast-link-label');
-    labelAA.textContent = Common.UIString('AA');
-    this._contrastPassFailAA.createChild('span').textContent = Common.UIString(': %s', aa.toFixed(1));
-    if (this._passesAA)
-      this._contrastPassFailAA.appendChild(UI.Icon.create('smallicon-checkmark-square'));
-    else
-      this._contrastPassFailAA.appendChild(UI.Icon.create('smallicon-no'));
+    this._contrastPassFailAA.textContent = '';
+    this._contrastPassFailAA.createTextChild(this._passesAA ? Common.UIString('Passes ') : Common.UIString('Fails '));
+    this._contrastPassFailAA.createChild('strong').textContent = Common.UIString('AA (%s)', aa.toFixed(1));
+    this._contrastAA.classList.toggle('pass', this._passesAA);
+    this._contrastAA.classList.toggle('fail', !this._passesAA);
 
     var aaa = this._contrastInfo.contrastRatioThreshold('aaa');
     var passesAAA = this._contrastInfo.contrastRatio() >= aaa;
-    this._contrastPassFailAAA.removeChildren();
-    var labelAAA = this._contrastPassFailAAA.createChild('span', 'contrast-link-label');
-    labelAAA.textContent = Common.UIString('AAA');
-    this._contrastPassFailAAA.createChild('span').textContent = Common.UIString(': %s', aaa.toFixed(1));
-    if (passesAAA)
-      this._contrastPassFailAAA.appendChild(UI.Icon.create('smallicon-checkmark-square'));
-    else
-      this._contrastPassFailAAA.appendChild(UI.Icon.create('smallicon-no'));
-
-    [labelAA, labelAAA].forEach(e => e.addEventListener('click', event => ColorPicker.ContrastDetails._showHelp()));
+    this._contrastPassFailAAA.textContent = '';
+    this._contrastPassFailAAA.createTextChild(passesAAA ? Common.UIString('Passes ') : Common.UIString('Fails '));
+    this._contrastPassFailAAA.createChild('strong').textContent = Common.UIString('AAA (%s)', aaa.toFixed(1));
+    this._contrastAAA.classList.toggle('pass', passesAAA);
+    this._contrastAAA.classList.toggle('fail', !passesAAA);
 
     this._element.classList.toggle('contrast-fail', !this._passesAA);
     this._contrastValueBubble.classList.toggle('contrast-aa', this._passesAA);
     this._contrastValueBubble.classList.toggle('contrast-aaa', passesAAA);
-  }
-
-  static _showHelp() {
-    InspectorFrontendHost.openInNewTab(
-        'https://developers.google.com/web/fundamentals/accessibility/accessible-styles#color_and_contrast');
   }
 
   /**
@@ -186,6 +183,8 @@ ColorPicker.ContrastDetails = class {
    * @param {!Event} event
    */
   _topRowClicked(event) {
+    if (event.path.includes(this._contrastLink) || event.path.includes(this._contrastValueBubble))
+      return;
     this._contrastValueBubble.getComponentSelection().empty();
     this._toggleExpanded();
     event.consume(true);
@@ -220,6 +219,14 @@ ColorPicker.ContrastDetails = class {
    */
   expanded() {
     return this._expanded;
+  }
+
+  /**
+   * @param {!Event} event
+   */
+  _onContrastValueBubbleClick(event) {
+    InspectorFrontendHost.copyText(this._contrastValueBubble.textContent);
+    this._contrastValueBubble.getComponentSelection().selectAllChildren(this._contrastValueBubble);
   }
 
   /**

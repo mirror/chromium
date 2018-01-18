@@ -4,7 +4,6 @@
 
 #include "chrome/browser/chromeos/login/lock/views_screen_locker.h"
 
-#include <memory>
 #include <utility>
 
 #include "base/i18n/time_formatting.h"
@@ -42,9 +41,9 @@ ViewsScreenLocker::ViewsScreenLocker(ScreenLocker* screen_locker)
       version_info_updater_(this),
       weak_factory_(this) {
   LoginScreenClient::Get()->SetDelegate(this);
-  user_selection_screen_proxy_ = std::make_unique<UserSelectionScreenProxy>();
+  user_selection_screen_proxy_ = base::MakeUnique<UserSelectionScreenProxy>();
   user_selection_screen_ =
-      std::make_unique<ChromeUserSelectionScreen>(kLockDisplay);
+      base::MakeUnique<ChromeUserSelectionScreen>(kLockDisplay);
   user_selection_screen_->SetView(user_selection_screen_proxy_.get());
 
   allowed_input_methods_subscription_ =
@@ -156,7 +155,6 @@ content::WebContents* ViewsScreenLocker::GetWebContents() {
 void ViewsScreenLocker::HandleAuthenticateUser(
     const AccountId& account_id,
     const std::string& hashed_password,
-    const password_manager::SyncPasswordData& sync_password_data,
     bool authenticated_by_pin,
     AuthenticateUserCallback callback) {
   DCHECK_EQ(account_id.GetUserEmail(),
@@ -174,7 +172,6 @@ void ViewsScreenLocker::HandleAuthenticateUser(
                            : chromeos::Key::KEY_TYPE_SALTED_SHA256_TOP_HALF;
   user_context.SetKey(Key(key_type, std::string(), hashed_password));
   user_context.SetIsUsingPin(authenticated_by_pin);
-  user_context.SetSyncPasswordData(sync_password_data);
   if (account_id.GetAccountType() == AccountType::ACTIVE_DIRECTORY)
     user_context.SetUserType(user_manager::USER_TYPE_ACTIVE_DIRECTORY);
   ScreenLocker::default_screen_locker()->Authenticate(user_context,

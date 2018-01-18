@@ -4296,7 +4296,6 @@ var keyboardOverlayData = {
     'x<>CTRL': 'keyboardOverlayCut',
     'z<>ALT<>CTRL': 'keyboardOverlayToggleChromevoxSpokenFeedback',
     'z<>CTRL': 'keyboardOverlayUndo',
-    'a<>SEARCH': 'keyboardOverlayVoiceInteraction',
-    's<>SEARCH<>SHIFT': 'keyboardOverlayToggleDictation'
+    'a<>SEARCH': 'keyboardOverlayVoiceInteraction'
   }
 };

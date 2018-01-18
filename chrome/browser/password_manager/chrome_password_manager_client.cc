@@ -67,7 +67,6 @@
 #include "extensions/features/features.h"
 #include "google_apis/gaia/gaia_urls.h"
 #include "net/base/url_util.h"
-#include "net/cert/cert_status_flags.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "third_party/re2/src/re2/re2.h"
 #include "url/url_constants.h"
@@ -264,15 +263,8 @@ bool ChromePasswordManagerClient::IsSavingAndFillingEnabledForCurrentPage()
 }
 
 bool ChromePasswordManagerClient::IsFillingEnabledForCurrentPage() const {
-  const bool ssl_errors = net::IsCertStatusError(GetMainFrameCertStatus());
-
-  if (log_manager_->IsLoggingActive()) {
-    password_manager::BrowserSavePasswordProgressLogger logger(
-        log_manager_.get());
-    logger.LogBoolean(Logger::STRING_SSL_ERRORS_PRESENT, ssl_errors);
-  }
-
-  return !ssl_errors && IsPasswordManagementEnabledForCurrentPage();
+  return !DidLastPageLoadEncounterSSLErrors() &&
+         IsPasswordManagementEnabledForCurrentPage();
 }
 
 bool ChromePasswordManagerClient::IsFillingFallbackEnabledForCurrentPage()
@@ -595,12 +587,21 @@ bool ChromePasswordManagerClient::WasLastNavigationHTTPError() const {
   return false;
 }
 
-net::CertStatus ChromePasswordManagerClient::GetMainFrameCertStatus() const {
+bool ChromePasswordManagerClient::DidLastPageLoadEncounterSSLErrors() const {
   content::NavigationEntry* entry =
       web_contents()->GetController().GetLastCommittedEntry();
-  if (!entry)
-    return 0;
-  return entry->GetSSL().cert_status;
+  bool ssl_errors = true;
+  if (!entry) {
+    ssl_errors = false;
+  } else {
+    ssl_errors = net::IsCertStatusError(entry->GetSSL().cert_status);
+  }
+  if (log_manager_->IsLoggingActive()) {
+    password_manager::BrowserSavePasswordProgressLogger logger(
+        log_manager_.get());
+    logger.LogBoolean(Logger::STRING_SSL_ERRORS_PRESENT, ssl_errors);
+  }
+  return ssl_errors;
 }
 
 bool ChromePasswordManagerClient::IsIncognito() const {

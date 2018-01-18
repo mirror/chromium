@@ -100,10 +100,7 @@ static void ClearPeformanceEntries(PerformanceEntryMap& performance_entry_map,
     performance_entry_map.erase(name);
 }
 
-PerformanceEntry* UserTiming::Mark(ScriptState* script_state,
-                                   const String& mark_name,
-                                   const DOMHighResTimeStamp& start_time,
-                                   const ScriptValue& detail,
+PerformanceEntry* UserTiming::Mark(const String& mark_name,
                                    ExceptionState& exception_state) {
   if (GetRestrictedKeyMap().Contains(mark_name)) {
     exception_state.ThrowDOMException(
@@ -114,8 +111,8 @@ PerformanceEntry* UserTiming::Mark(ScriptState* script_state,
   }
 
   TRACE_EVENT_COPY_MARK("blink.user_timing", mark_name.Utf8().data());
-  PerformanceEntry* entry =
-      PerformanceMark::Create(script_state, mark_name, start_time, detail);
+  double start_time = performance_->now();
+  PerformanceEntry* entry = PerformanceMark::Create(mark_name, start_time);
   InsertPerformanceEntry(marks_map_, *entry);
   DEFINE_THREAD_SAFE_STATIC_LOCAL(CustomCountHistogram,
                                   user_timing_mark_histogram,

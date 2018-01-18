@@ -4,7 +4,6 @@
 
 #include "ash/metrics/pointer_metrics_recorder.h"
 
-#include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/public/cpp/app_types.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
@@ -19,6 +18,24 @@ namespace ash {
 
 namespace {
 
+// Form factor of the down event. This enum is used to back an UMA histogram
+// and new values should be inserted immediately above FORM_FACTOR_COUNT.
+enum class DownEventFormFactor {
+  CLAMSHELL = 0,
+  TABLET_MODE,
+  FORM_FACTOR_COUNT,
+};
+
+// Input type of the down event. This enum is used to back an UMA
+// histogram and new values should be inserted immediately above SOURCE_COUNT.
+enum class DownEventSource {
+  UNKNOWN = 0,
+  MOUSE,
+  STYLUS,
+  TOUCH,
+  SOURCE_COUNT,
+};
+
 int GetDestination(views::Widget* target) {
   if (!target)
     return static_cast<int>(AppType::OTHERS);
@@ -28,60 +45,45 @@ int GetDestination(views::Widget* target) {
   return window->GetProperty(aura::client::kAppType);
 }
 
-// Find the input type, form factor and destination combination of the down
-// event. Used to get the UMA histogram bucket.
-DownEventMetric FindCombination(DownEventSource input_type,
-                                DownEventFormFactor form_factor,
-                                int destination) {
-  int num_combination_per_input =
-      kAppCount * static_cast<int>(DownEventFormFactor::kFormFactorCount);
-  int result = static_cast<int>(input_type) * num_combination_per_input +
-               static_cast<int>(form_factor) * kAppCount + destination;
-  DCHECK(result >= 0 &&
-         result < static_cast<int>(DownEventMetric::kCombinationCount));
-  return static_cast<DownEventMetric>(result);
-}
-
 void RecordUMA(ui::EventPointerType type, views::Widget* target) {
-  DownEventFormFactor form_factor = DownEventFormFactor::kClamshell;
+  DownEventFormFactor form_factor = DownEventFormFactor::CLAMSHELL;
   if (Shell::Get()
           ->tablet_mode_controller()
           ->IsTabletModeWindowManagerEnabled()) {
-    blink::WebScreenOrientationLockType screen_orientation =
-        Shell::Get()->screen_orientation_controller()->GetCurrentOrientation();
-    if (screen_orientation ==
-            blink::kWebScreenOrientationLockLandscapePrimary ||
-        screen_orientation ==
-            blink::kWebScreenOrientationLockLandscapeSecondary) {
-      form_factor = DownEventFormFactor::kTabletModeLandscape;
-    } else {
-      form_factor = DownEventFormFactor::kTabletModePortrait;
-    }
+    form_factor = DownEventFormFactor::TABLET_MODE;
   }
+  UMA_HISTOGRAM_ENUMERATION(
+      "Event.DownEventCount.PerFormFactor",
+      static_cast<base::HistogramBase::Sample>(form_factor),
+      static_cast<base::HistogramBase::Sample>(
+          DownEventFormFactor::FORM_FACTOR_COUNT));
 
-  DownEventSource input_type = DownEventSource::kUnknown;
+  DownEventSource input_type = DownEventSource::UNKNOWN;
   switch (type) {
     case ui::EventPointerType::POINTER_TYPE_UNKNOWN:
-      input_type = DownEventSource::kUnknown;
+      input_type = DownEventSource::UNKNOWN;
       break;
     case ui::EventPointerType::POINTER_TYPE_MOUSE:
-      input_type = DownEventSource::kMouse;
+      input_type = DownEventSource::MOUSE;
       break;
     case ui::EventPointerType::POINTER_TYPE_PEN:
-      input_type = DownEventSource::kStylus;
+      input_type = DownEventSource::STYLUS;
       break;
     case ui::EventPointerType::POINTER_TYPE_TOUCH:
-      input_type = DownEventSource::kTouch;
+      input_type = DownEventSource::TOUCH;
       break;
     case ui::EventPointerType::POINTER_TYPE_ERASER:
-      input_type = DownEventSource::kStylus;
+      input_type = DownEventSource::STYLUS;
       break;
   }
 
   UMA_HISTOGRAM_ENUMERATION(
-      "Event.DownEventCount.PerInputFormFactorDestinationCombination",
-      FindCombination(input_type, form_factor, GetDestination(target)),
-      DownEventMetric::kCombinationCount);
+      "Event.DownEventCount.PerInput",
+      static_cast<base::HistogramBase::Sample>(input_type),
+      static_cast<base::HistogramBase::Sample>(DownEventSource::SOURCE_COUNT));
+
+  UMA_HISTOGRAM_ENUMERATION("Event.DownEventCount.PerDestination",
+                            GetDestination(target), kAppCount);
 }
 
 }  // namespace

@@ -9,6 +9,7 @@
 
 #include "base/json/json_reader.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "base/values.h"
@@ -35,7 +36,7 @@ class TestSaveCardBubbleControllerImpl : public SaveCardBubbleControllerImpl {
   static void CreateForTesting(content::WebContents* web_contents) {
     web_contents->SetUserData(
         UserDataKey(),
-        std::make_unique<TestSaveCardBubbleControllerImpl>(web_contents));
+        base::MakeUnique<TestSaveCardBubbleControllerImpl>(web_contents));
   }
 
   explicit TestSaveCardBubbleControllerImpl(content::WebContents* web_contents)

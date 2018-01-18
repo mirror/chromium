@@ -9,6 +9,7 @@
 #include <utility>
 
 #include "base/files/file_path.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/file_system_provider/mount_path_util.h"
 #include "chrome/browser/chromeos/file_system_provider/observer.h"
@@ -272,7 +273,7 @@ bool Service::RequestMount(const ProviderId& provider_id) {
 
   event_router->DispatchEventToExtension(
       provider_id.GetExtensionId(),
-      std::make_unique<extensions::Event>(
+      base::MakeUnique<extensions::Event>(
           extensions::events::FILE_SYSTEM_PROVIDER_ON_MOUNT_REQUESTED,
           extensions::api::file_system_provider::OnMountRequested::kEventName,
           std::unique_ptr<base::ListValue>(new base::ListValue())));

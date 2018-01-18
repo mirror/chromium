@@ -105,15 +105,12 @@ cr.define('extensions', function() {
 
     /**
      * @param {number} lineCount
-     * @param {string} stringSingular
-     * @param {string} stringPluralTemplate
+     * @param {string} stringTemplate
      * @return {string}
      * @private
      */
-    getLinesNotShownLabel_(lineCount, stringSingular, stringPluralTemplate) {
-      return lineCount == 1 ?
-          stringSingular :
-          loadTimeData.substituteString(stringPluralTemplate, lineCount);
+    getLinesNotShownLabel_(lineCount, stringTemplate) {
+      return loadTimeData.substituteString(stringTemplate, lineCount);
     },
 
     /**

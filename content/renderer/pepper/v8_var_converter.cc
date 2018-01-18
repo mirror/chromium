@@ -230,7 +230,7 @@ bool GetOrCreateVar(v8::Local<v8::Value> val,
   } else if (val->IsNumber() || val->IsNumberObject()) {
     *result = PP_MakeDouble(val->ToNumber(isolate)->Value());
   } else if (val->IsString() || val->IsStringObject()) {
-    v8::String::Utf8Value utf8(isolate, val->ToString(isolate));
+    v8::String::Utf8Value utf8(val->ToString(isolate));
     *result = StringVar::StringToPPVar(std::string(*utf8, utf8.length()));
   } else if (val->IsObject()) {
     // For any other v8 objects, the conversion happens as follows:
@@ -565,8 +565,7 @@ bool V8VarConverter::FromV8ValueInternal(
 
         // Extend this test to cover more types as necessary and if sensible.
         if (!key->IsString() && !key->IsNumber()) {
-          NOTREACHED() << "Key \""
-                       << *v8::String::Utf8Value(context->GetIsolate(), key)
+          NOTREACHED() << "Key \"" << *v8::String::Utf8Value(key)
                        << "\" "
                           "is neither a string nor a number";
           return false;
@@ -578,7 +577,7 @@ bool V8VarConverter::FromV8ValueInternal(
         if (v8_object->HasRealNamedCallbackProperty(key_string))
           continue;
 
-        v8::String::Utf8Value name_utf8(context->GetIsolate(), key_string);
+        v8::String::Utf8Value name_utf8(key_string);
 
         v8::TryCatch try_catch(context->GetIsolate());
         v8::Local<v8::Value> child_v8 = v8_object->Get(key);

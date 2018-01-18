@@ -860,7 +860,6 @@ html element select
 html element shadow
     property getDistributedNodes
 html element slot
-    property assignedElements
     property assignedNodes
     property name
 html element small

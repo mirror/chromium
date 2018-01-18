@@ -16,6 +16,7 @@
 @synthesize backgroundView = _backgroundView;
 @synthesize toolbarCoordinator = _toolbarCoordinator;
 @synthesize delegate = _delegate;
+@synthesize toolsPopupController = _toolsPopupController;
 @synthesize URLLoader = _URLLoader;
 
 - (instancetype)initWithDispatcher:
@@ -92,6 +93,10 @@
   [self.toolbarCoordinator resetToolbarAfterSideSwipeSnapshot];
 }
 
+- (void)navigateToMemexTabSwitcher {
+  [self.toolbarCoordinator navigateToMemexTabSwitcher];
+}
+
 #pragma mark - Abstract Toolbar
 
 - (void)setShareButtonEnabled:(BOOL)enabled {
@@ -143,8 +148,6 @@
 - (void)cancelOmniboxEdit {
   [self.toolbarCoordinator cancelOmniboxEdit];
 }
-
-#pragma mark - FakeboxFocuser
 
 - (void)focusFakebox {
   [self.toolbarCoordinator focusFakebox];

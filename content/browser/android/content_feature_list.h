@@ -11,7 +11,6 @@ namespace content {
 namespace android {
 
 // Alphabetical:
-extern const base::Feature kEnhancedSelectionInsertionHandle;
 extern const base::Feature kRequestUnbufferedDispatch;
 
 }  // namespace android

@@ -128,8 +128,7 @@ void WebstoreBindings::Install(
   std::string preferred_store_link_url;
   if (!args[2]->IsUndefined()) {
     CHECK(args[2]->IsString());
-    preferred_store_link_url =
-        std::string(*v8::String::Utf8Value(args.GetIsolate(), args[2]));
+    preferred_store_link_url = std::string(*v8::String::Utf8Value(args[2]));
   }
 
   std::string webstore_item_id;

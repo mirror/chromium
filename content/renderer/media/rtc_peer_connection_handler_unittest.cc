@@ -10,7 +10,6 @@
 #include <memory>
 #include <set>
 #include <string>
-#include <utility>
 #include <vector>
 
 #include "base/location.h"
@@ -310,7 +309,6 @@ class RTCPeerConnectionHandlerTest : public ::testing::Test {
                               media::AudioParameters::kAudioCDSampleRate,
                               media::CHANNEL_LAYOUT_STEREO,
                               media::AudioParameters::kAudioCDSampleRate / 100),
-            false /* hotword_enabled */, false /* disable_local_echo */,
             AudioProcessingProperties(),
             base::Bind(&RTCPeerConnectionHandlerTest::OnAudioSourceStarted),
             mock_dependency_factory_.get());

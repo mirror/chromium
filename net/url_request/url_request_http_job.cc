@@ -593,7 +593,7 @@ void URLRequestHttpJob::AddExtraHeaders() {
     bool advertise_brotli = false;
     if (request()->context()->enable_brotli()) {
       if (request()->url().SchemeIsCryptographic() ||
-          IsLocalhost(request()->url())) {
+          IsLocalhost(request()->url().HostNoBracketsPiece())) {
         advertise_brotli = true;
       }
     }

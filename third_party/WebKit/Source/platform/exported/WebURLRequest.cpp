@@ -329,12 +329,12 @@ void WebURLRequest::SetFetchCredentialsMode(
   return resource_request_->SetFetchCredentialsMode(mode);
 }
 
-network::mojom::FetchRedirectMode WebURLRequest::GetFetchRedirectMode() const {
+WebURLRequest::FetchRedirectMode WebURLRequest::GetFetchRedirectMode() const {
   return resource_request_->GetFetchRedirectMode();
 }
 
 void WebURLRequest::SetFetchRedirectMode(
-    network::mojom::FetchRedirectMode redirect) {
+    WebURLRequest::FetchRedirectMode redirect) {
   return resource_request_->SetFetchRedirectMode(redirect);
 }
 

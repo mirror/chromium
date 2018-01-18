@@ -58,7 +58,6 @@ xsltDebugDumpExtensions
 xsltDebugGetDefaultTrace
 xsltDebugSetDefaultTrace
 xsltDecimalFormatGetByName
-xsltDecimalFormatGetByQName
 xsltDefaultSortFunction
 xsltDoSortFunction
 xsltDocumentComp
@@ -87,7 +86,6 @@ xsltExtensionInstructionResultRegister
 xsltFindDocument
 xsltFindElemSpaceHandling
 xsltFindTemplate
-xsltFlagRVTs
 xsltForEach
 xsltFormatNumberConversion
 xsltFormatNumberFunction

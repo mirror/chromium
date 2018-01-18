@@ -6,7 +6,6 @@
 
 #include <stddef.h>
 
-#include <memory>
 #include <vector>
 
 #include "base/macros.h"
@@ -52,7 +51,7 @@ KeywordHintView::KeywordHintView(views::ButtonListener* listener,
 
   chip_container_->SetBorder(views::CreateEmptyBorder(
       gfx::Insets(GetLayoutConstant(LOCATION_BAR_BUBBLE_VERTICAL_PADDING), 0)));
-  chip_container_->SetBackground(std::make_unique<BackgroundWith1PxBorder>(
+  chip_container_->SetBackground(base::MakeUnique<BackgroundWith1PxBorder>(
       tab_bg_color, tab_border_color));
   chip_container_->AddChildView(chip_label_);
   chip_container_->SetLayoutManager(std::make_unique<views::FillLayout>());

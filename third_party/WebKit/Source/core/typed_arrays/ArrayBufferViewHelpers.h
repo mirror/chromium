@@ -32,7 +32,7 @@ class NotShared {
  public:
   using TypedArrayType = T;
 
-  NotShared() = default;
+  NotShared() {}
 
   explicit NotShared(T* typedArray) : typed_array_(typedArray) {
     DCHECK(!(typedArray && typedArray->View()->IsShared()));
@@ -88,7 +88,7 @@ class MaybeShared {
  public:
   using TypedArrayType = T;
 
-  MaybeShared() = default;
+  MaybeShared() {}
 
   explicit MaybeShared(T* typedArray) : typed_array_(typedArray) {}
   MaybeShared(const MaybeShared& other) = default;

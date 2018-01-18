@@ -57,19 +57,11 @@ void RecordInterventionStateOnCrash(bool accepted) {
       "Memory.Experimental.OomIntervention.InterventionStateOnCrash", accepted);
 }
 
-// Field trial parameter names.
 const char kRendererPauseParamName[] = "pause_renderer";
-const char kShouldDetectInRenderer[] = "detect_in_renderer";
 
 bool RendererPauseIsEnabled() {
   static bool enabled = base::GetFieldTrialParamByFeatureAsBool(
       features::kOomIntervention, kRendererPauseParamName, false);
-  return enabled;
-}
-
-bool ShouldDetectInRenderer() {
-  static bool enabled = base::GetFieldTrialParamByFeatureAsBool(
-      features::kOomIntervention, kShouldDetectInRenderer, true);
   return enabled;
 }
 
@@ -245,24 +237,19 @@ void OomInterventionTabHelper::StartMonitoringIfNeeded() {
   if (near_oom_detected_time_)
     return;
 
-  if (ShouldDetectInRenderer()) {
-    StartDetectionInRenderer();
-  } else {
-    subscription_ = NearOomMonitor::GetInstance()->RegisterCallback(
-        base::BindRepeating(&OomInterventionTabHelper::OnNearOomDetected,
-                            base::Unretained(this)));
-  }
+  subscription_ = NearOomMonitor::GetInstance()->RegisterCallback(base::Bind(
+      &OomInterventionTabHelper::OnNearOomDetected, base::Unretained(this)));
 }
 
 void OomInterventionTabHelper::StopMonitoring() {
-  if (ShouldDetectInRenderer()) {
-    intervention_.reset();
-  } else {
-    subscription_.reset();
-  }
+  subscription_.reset();
 }
 
-void OomInterventionTabHelper::StartDetectionInRenderer() {
+void OomInterventionTabHelper::OnNearOomDetected() {
+  DCHECK(web_contents()->IsVisible());
+  DCHECK(!near_oom_detected_time_);
+  subscription_.reset();
+
   bool trigger_intervention = RendererPauseIsEnabled();
   if (trigger_intervention && decider_) {
     DCHECK(!web_contents()->GetBrowserContext()->IsOffTheRecord());
@@ -279,15 +266,7 @@ void OomInterventionTabHelper::StartDetectionInRenderer() {
   blink::mojom::OomInterventionHostPtr host;
   binding_.Bind(mojo::MakeRequest(&host));
   intervention_->StartDetection(std::move(host), trigger_intervention);
-}
 
-void OomInterventionTabHelper::OnNearOomDetected() {
-  DCHECK(!ShouldDetectInRenderer());
-  DCHECK(web_contents()->IsVisible());
-  DCHECK(!near_oom_detected_time_);
-  subscription_.reset();
-
-  StartDetectionInRenderer();
   DCHECK(!renderer_detection_timer_.IsRunning());
   renderer_detection_timer_.Start(
       FROM_HERE, kRendererHighMemoryUsageDetectionWindow,

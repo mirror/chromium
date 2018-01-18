@@ -94,7 +94,7 @@ inline SearchBuffer::SearchBuffer(const String& target, FindOptions options)
                                    normalized_target_);
 }
 
-inline SearchBuffer::~SearchBuffer() = default;
+inline SearchBuffer::~SearchBuffer() {}
 
 template <typename CharType>
 inline void SearchBuffer::Append(const CharType* characters, size_t length) {

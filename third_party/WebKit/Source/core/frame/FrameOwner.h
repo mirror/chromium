@@ -20,7 +20,7 @@ class Frame;
 // be kept (e.g., Frame::m_owner.)
 class CORE_EXPORT FrameOwner : public GarbageCollectedMixin {
  public:
-  virtual ~FrameOwner() = default;
+  virtual ~FrameOwner() {}
   virtual void Trace(blink::Visitor* visitor) {}
 
   virtual bool IsLocal() const = 0;
@@ -37,10 +37,6 @@ class CORE_EXPORT FrameOwner : public GarbageCollectedMixin {
   // which replaces the frame contents.
   virtual bool CanRenderFallbackContent() const = 0;
   virtual void RenderFallbackContent() = 0;
-
-  // The intrinsic dimensions of the embedded object changed. This is relevant
-  // for SVG documents that are embedded via <object> or <embed>.
-  virtual void IntrinsicDimensionsChanged() = 0;
 
   // Returns the 'name' content attribute value of the browsing context
   // container.
@@ -77,7 +73,6 @@ class CORE_EXPORT DummyFrameOwner
   void DispatchLoad() override {}
   bool CanRenderFallbackContent() const override { return false; }
   void RenderFallbackContent() override {}
-  void IntrinsicDimensionsChanged() override {}
   AtomicString BrowsingContextContainerName() const override {
     return AtomicString();
   }

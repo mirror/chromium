@@ -220,9 +220,6 @@ ResourceRequest FrameLoader::ResourceRequestForReload(
   ResourceRequest request =
       document_loader_->GetHistoryItem()->GenerateResourceRequest(cache_mode);
 
-  // Set requestor origin to be the current URL's origin.
-  request.SetRequestorOrigin(SecurityOrigin::Create(request.Url()));
-
   // ClientRedirectPolicy is an indication that this load was triggered by some
   // direct interaction with the page. If this reload is not a client redirect,
   // we should reuse the referrer from the original load of the current
@@ -1474,7 +1471,7 @@ NavigationPolicy FrameLoader::CheckLoadCanStart(
           kCheckContentSecurityPolicy,
       settings && settings->GetBrowserSideNavigationEnabled(),
       ContentSecurityPolicy::CheckHeaderType::kCheckReportOnly);
-  ModifyRequestForCSP(resource_request, frame_load_request.OriginDocument());
+  ModifyRequestForCSP(resource_request, nullptr);
 
   WebTriggeringEventInfo triggering_event_info =
       WebTriggeringEventInfo::kNotFromEvent;
@@ -1680,11 +1677,19 @@ FrameLoader::InsecureNavigationsToUpgrade() const {
   if (!parent_frame)
     return nullptr;
 
-  return parent_frame->GetSecurityContext()->InsecureNavigationsToUpgrade();
+  // FIXME: We need a way to propagate insecure requests policy flags to
+  // out-of-process frames. For now, we'll always use default behavior.
+  if (!parent_frame->IsLocalFrame())
+    return nullptr;
+
+  DCHECK(ToLocalFrame(parent_frame)->GetDocument());
+  return ToLocalFrame(parent_frame)
+      ->GetDocument()
+      ->InsecureNavigationsToUpgrade();
 }
 
 void FrameLoader::ModifyRequestForCSP(ResourceRequest& resource_request,
-                                      Document* origin_document) const {
+                                      Document* document) const {
   if (RuntimeEnabledFeatures::EmbedderCSPEnforcementEnabled() &&
       !RequiredCSP().IsEmpty()) {
     DCHECK(ContentSecurityPolicy::IsValidCSPAttr(RequiredCSP().GetString()));
@@ -1707,52 +1712,50 @@ void FrameLoader::ModifyRequestForCSP(ResourceRequest& resource_request,
                                         "1");
   }
 
-  UpgradeInsecureRequest(resource_request, origin_document);
-}
-
-// static
-void FrameLoader::UpgradeInsecureRequest(ResourceRequest& resource_request,
-                                         Document* origin_document) {
-  // We always upgrade requests that meet any of the following criteria:
-  //  1. Are for subresources.
-  //  2. Are for nested frames.
-  //  3. Are form submissions.
-  //  4. Whose hosts are contained in the origin_document's upgrade insecure
-  //     navigations set.
-
-  // This happens for:
-  // * Browser initiated main document loading. No upgrade required.
-  // * Navigation initiated by a frame in another process. URL should have
-  //   already been upgraded in the initiator's process.
-  if (!origin_document)
-    return;
-
-  if (!(origin_document->GetInsecureRequestPolicy() & kUpgradeInsecureRequests))
-    return;
-
-  // Nested frames are always upgraded on the browser process.
+  // PlzNavigate: Upgrading subframe requests is handled by the browser process.
+  Settings* settings = frame_->GetSettings();
   if (resource_request.GetFrameType() ==
-      network::mojom::RequestContextFrameType::kNested) {
+          network::mojom::RequestContextFrameType::kNested &&
+      settings && settings->GetBrowserSideNavigationEnabled()) {
     return;
   }
+  UpgradeInsecureRequest(resource_request, document);
+}
 
+void FrameLoader::UpgradeInsecureRequest(ResourceRequest& resource_request,
+                                         Document* document) const {
   KURL url = resource_request.Url();
-  if (!url.ProtocolIs("http"))
-    return;
 
-  if (resource_request.GetFrameType() ==
-          network::mojom::RequestContextFrameType::kNone ||
-      resource_request.GetRequestContext() ==
-          WebURLRequest::kRequestContextForm ||
-      (!url.Host().IsNull() &&
-       origin_document->InsecureNavigationsToUpgrade()->Contains(
-           url.Host().Impl()->GetHash()))) {
-    UseCounter::Count(origin_document,
-                      WebFeature::kUpgradeInsecureRequestsUpgradedRequest);
-    url.SetProtocol("https");
-    if (url.Port() == 80)
-      url.SetPort(443);
-    resource_request.SetURL(url);
+  // If we don't yet have an |m_document| (because we're loading an iframe, for
+  // instance), check the FrameLoader's policy.
+  WebInsecureRequestPolicy relevant_policy =
+      document ? document->GetInsecureRequestPolicy()
+               : GetInsecureRequestPolicy();
+  SecurityContext::InsecureNavigationsSet* relevant_navigation_set =
+      document ? document->InsecureNavigationsToUpgrade()
+               : InsecureNavigationsToUpgrade();
+
+  if (url.ProtocolIs("http") && relevant_policy & kUpgradeInsecureRequests) {
+    // We always upgrade requests that meet any of the following criteria:
+    //
+    // 1. Are for subresources (including nested frames).
+    // 2. Are form submissions.
+    // 3. Whose hosts are contained in the document's InsecureNavigationSet.
+    if (resource_request.GetFrameType() ==
+            network::mojom::RequestContextFrameType::kNone ||
+        resource_request.GetFrameType() ==
+            network::mojom::RequestContextFrameType::kNested ||
+        resource_request.GetRequestContext() ==
+            WebURLRequest::kRequestContextForm ||
+        (!url.Host().IsNull() &&
+         relevant_navigation_set->Contains(url.Host().Impl()->GetHash()))) {
+      UseCounter::Count(document,
+                        WebFeature::kUpgradeInsecureRequestsUpgradedRequest);
+      url.SetProtocol("https");
+      if (url.Port() == 80)
+        url.SetPort(443);
+      resource_request.SetURL(url);
+    }
   }
 }
 

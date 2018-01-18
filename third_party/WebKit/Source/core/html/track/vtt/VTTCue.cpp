@@ -243,7 +243,7 @@ VTTCue::VTTCue(Document& document,
   cue_background_box_->SetShadowPseudoId(CueShadowPseudoId());
 }
 
-VTTCue::~VTTCue() = default;
+VTTCue::~VTTCue() {}
 
 #ifndef NDEBUG
 String VTTCue::ToString() const {
@@ -590,7 +590,7 @@ double VTTCue::CalculateComputedLine() const {
 
 class VTTTextRunIterator : public TextRunIterator {
  public:
-  VTTTextRunIterator() = default;
+  VTTTextRunIterator() {}
   VTTTextRunIterator(const TextRun* text_run, unsigned offset)
       : TextRunIterator(text_run, offset) {}
 

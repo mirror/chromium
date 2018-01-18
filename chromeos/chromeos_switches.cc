@@ -80,12 +80,6 @@ const char kArcAvailability[] = "arc-availability";
 // Signals the availability of the ARC instance on this device.
 const char kArcAvailable[] = "arc-available";
 
-// Used in autotest to specifies how to handle packages cache. Can be
-// copy - copy resulting packages.xml to the temporary directory.
-// skip-copy - skip initial packages cache setup and copy resulting packages.xml
-//             to the temporary directory.
-const char kArcPackagesCacheMode[] = "arc-packages-cache-mode";
-
 // Defines how to start ARC. This can take one of the following values:
 // - always-start automatically start with Play Store UI support.
 // - always-start-with-no-play-store automatically start without Play Store UI.
@@ -481,9 +475,6 @@ const char kNaturalScrollDefault[] = "enable-natural-scroll-default";
 // devices in other categories this flag must be missing.
 const char kNeedArcMigrationPolicyCheck[] = "need-arc-migration-policy-check";
 
-// Uses the redesigned wallpaper picker.
-const char kNewWallpaperPicker[] = "new-wallpaper-picker";
-
 // An optional comma-separated list of IDs of apps that can be used to take
 // notes. If unset, a hardcoded list is used instead.
 const char kNoteTakingAppIds[] = "note-taking-app-ids";
@@ -680,11 +671,6 @@ bool IsSigninFrameClientCertUserSelectionEnabled() {
 bool IsNetworkSettingsConfigEnabled() {
   return !base::CommandLine::ForCurrentProcess()->HasSwitch(
       chromeos::switches::kDisableNetworkSettingsConfig);
-}
-
-bool AreExperimentalAccessibilityFeaturesEnabled() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      chromeos::switches::kEnableExperimentalAccessibilityFeatures);
 }
 
 }  // namespace switches

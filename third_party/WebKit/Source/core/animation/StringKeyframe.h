@@ -42,8 +42,8 @@ class CORE_EXPORT StringKeyframe : public Keyframe {
       const String& value,
       SecureContextMode,
       StyleSheetContents*);
-  void SetCSSPropertyValue(const CSSProperty&, const CSSValue&);
-  void SetPresentationAttributeValue(const CSSProperty&,
+  void SetCSSPropertyValue(CSSPropertyID, const CSSValue&);
+  void SetPresentationAttributeValue(CSSPropertyID,
                                      const String& value,
                                      SecureContextMode,
                                      StyleSheetContents*);
@@ -61,10 +61,8 @@ class CORE_EXPORT StringKeyframe : public Keyframe {
     return css_property_map_->PropertyAt(static_cast<unsigned>(index)).Value();
   }
 
-  const CSSValue& PresentationAttributeValue(
-      const CSSProperty& property) const {
-    int index =
-        presentation_attribute_map_->FindPropertyIndex(property.PropertyID());
+  const CSSValue& PresentationAttributeValue(CSSPropertyID property) const {
+    int index = presentation_attribute_map_->FindPropertyIndex(property);
     CHECK_GE(index, 0);
     return presentation_attribute_map_->PropertyAt(static_cast<unsigned>(index))
         .Value();
@@ -113,13 +111,14 @@ class CORE_EXPORT StringKeyframe : public Keyframe {
         : Keyframe::PropertySpecificKeyframe(offset,
                                              std::move(easing),
                                              composite),
-          value_(value) {}
+          value_(const_cast<CSSValue*>(value)) {}
 
     scoped_refptr<Keyframe::PropertySpecificKeyframe> CloneWithOffset(
         double offset) const override;
     bool IsCSSPropertySpecificKeyframe() const override { return true; }
 
-    Persistent<const CSSValue> value_;
+    // TODO(sashab): Make this a const CSSValue.
+    Persistent<CSSValue> value_;
     mutable scoped_refptr<AnimatableValue> animatable_value_cache_;
   };
 

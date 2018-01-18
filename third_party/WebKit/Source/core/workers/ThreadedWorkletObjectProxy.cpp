@@ -20,7 +20,7 @@ std::unique_ptr<ThreadedWorkletObjectProxy> ThreadedWorkletObjectProxy::Create(
       messaging_proxy_weak_ptr, parent_frame_task_runners));
 }
 
-ThreadedWorkletObjectProxy::~ThreadedWorkletObjectProxy() = default;
+ThreadedWorkletObjectProxy::~ThreadedWorkletObjectProxy() {}
 
 void ThreadedWorkletObjectProxy::FetchAndInvokeScript(
     const KURL& module_url_record,

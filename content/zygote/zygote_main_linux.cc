@@ -37,7 +37,6 @@
 #include "content/common/font_config_ipc_linux.h"
 #include "content/common/zygote_commands_linux.h"
 #include "content/public/common/common_sandbox_support_linux.h"
-#include "content/public/common/content_descriptors.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
 #include "content/public/common/zygote_fork_delegate_linux.h"
@@ -618,20 +617,23 @@ bool ZygoteMain(
   EnterLayerOneSandbox(linux_sandbox, using_layer1_sandbox,
                        &post_fork_parent_callback);
 
+  // Extra children and file descriptors created that the Zygote must have
+  // knowledge of.
+  std::vector<pid_t> extra_children;
+  std::vector<int> extra_fds;
+
   const int sandbox_flags = linux_sandbox->GetStatus();
 
   const bool setuid_sandbox_engaged =
-      !!(sandbox_flags & service_manager::SandboxLinux::kSUID);
+      sandbox_flags & service_manager::SandboxLinux::kSUID;
   CHECK_EQ(using_setuid_sandbox, setuid_sandbox_engaged);
 
   const bool namespace_sandbox_engaged =
-      !!(sandbox_flags & service_manager::SandboxLinux::kUserNS);
+      sandbox_flags & service_manager::SandboxLinux::kUserNS;
   CHECK_EQ(using_namespace_sandbox, namespace_sandbox_engaged);
 
-  Zygote zygote(sandbox_flags, std::move(fork_delegates),
-                base::GlobalDescriptors::Descriptor(
-                    static_cast<uint32_t>(kSandboxIPCChannel), GetSandboxFD()));
-
+  Zygote zygote(sandbox_flags, std::move(fork_delegates), extra_children,
+                extra_fds);
   // This function call can return multiple times, once per fork().
   return zygote.ProcessRequests();
 }

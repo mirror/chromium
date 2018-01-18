@@ -99,7 +99,6 @@
 #include "platform/wtf/allocator/Partitions.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/platform/WebScrollIntoViewParams.h"
 #ifndef NDEBUG
 #include <stdio.h>
 #endif
@@ -135,7 +134,7 @@ LayoutObject::SetLayoutNeededForbiddenScope::~SetLayoutNeededForbiddenScope() {
 #endif
 
 struct SameSizeAsLayoutObject : DisplayItemClient {
-  ~SameSizeAsLayoutObject() override = default;  // Allocate vtable pointer.
+  ~SameSizeAsLayoutObject() override {}  // Allocate vtable pointer.
   void* pointers[5];
   Member<void*> members[1];
 #if DCHECK_IS_ON()
@@ -659,16 +658,19 @@ bool LayoutObject::IsFixedPositionObjectInPagedMedia() const {
 }
 
 bool LayoutObject::ScrollRectToVisible(const LayoutRect& rect,
-                                       const WebScrollIntoViewParams& params) {
+                                       const ScrollAlignment& align_x,
+                                       const ScrollAlignment& align_y,
+                                       ScrollType scroll_type,
+                                       bool make_visible_in_visual_viewport,
+                                       ScrollBehavior scroll_behavior) {
   LayoutBox* enclosing_box = EnclosingBox();
   if (!enclosing_box)
     return false;
 
   GetDocument().GetPage()->GetSmoothScrollSequencer()->AbortAnimations();
-  WebScrollIntoViewParams new_params(params);
-  new_params.is_for_scroll_sequence =
-      params.GetScrollType() == kProgrammaticScroll;
-  enclosing_box->ScrollRectToVisibleRecursive(rect, new_params);
+  enclosing_box->ScrollRectToVisibleRecursive(
+      rect, align_x, align_y, scroll_type, make_visible_in_visual_viewport,
+      scroll_behavior, scroll_type == kProgrammaticScroll);
   GetDocument().GetPage()->GetSmoothScrollSequencer()->RunQueuedAnimations();
 
   return true;
@@ -3246,9 +3248,10 @@ Element* LayoutObject::OffsetParent(const Element* base) const {
     // TODO(kochi): If |base| or |node| is nested deep in shadow roots, this
     // loop may get expensive, as isUnclosedNodeOf() can take up to O(N+M) time
     // (N and M are depths).
-    if (base && (node->IsClosedShadowHiddenFrom(*base) ||
-                 (node->IsInShadowTree() &&
-                  node->ContainingShadowRoot()->IsUserAgent()))) {
+    if (base &&
+        (node->IsClosedShadowHiddenFrom(*base) ||
+         (node->IsInShadowTree() && node->ContainingShadowRoot()->GetType() ==
+                                        ShadowRootType::kUserAgent))) {
       // If 'position: fixed' node is found while traversing up, terminate the
       // loop and return null.
       if (ancestor->IsFixedPositioned())

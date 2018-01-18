@@ -157,8 +157,7 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   // Return true if a break was inserted, false otherwise.
   bool BreakBeforeChild(NGLayoutInputNode child,
                         const NGLayoutResult&,
-                        LayoutUnit block_offset,
-                        bool is_pushed_by_floats);
+                        LayoutUnit block_offset);
 
   enum BreakType { NoBreak, SoftBreak, ForcedBreak };
 
@@ -166,8 +165,7 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   // type of break we should insert in front of it, if any.
   BreakType BreakTypeBeforeChild(NGLayoutInputNode child,
                                  const NGLayoutResult&,
-                                 LayoutUnit block_offset,
-                                 bool is_pushed_by_floats) const;
+                                 LayoutUnit block_offset) const;
 
   // Final adjustments before fragment creation. We need to prevent the
   // fragment from crossing fragmentainer boundaries, and rather create a break

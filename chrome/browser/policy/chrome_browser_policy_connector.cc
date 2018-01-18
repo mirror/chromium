@@ -11,6 +11,7 @@
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "base/files/file_path.h"
+#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
@@ -92,14 +93,14 @@ ChromeBrowserPolicyConnector::CreatePlatformProvider() {
       base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND}),
       kRegistryChromePolicyKey));
-  return std::make_unique<AsyncPolicyProvider>(GetSchemaRegistry(),
+  return base::MakeUnique<AsyncPolicyProvider>(GetSchemaRegistry(),
                                                std::move(loader));
 #elif defined(OS_MACOSX)
   std::unique_ptr<AsyncPolicyLoader> loader(new PolicyLoaderMac(
       base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND}),
       GetManagedPolicyPath(), new MacPreferences()));
-  return std::make_unique<AsyncPolicyProvider>(GetSchemaRegistry(),
+  return base::MakeUnique<AsyncPolicyProvider>(GetSchemaRegistry(),
                                                std::move(loader));
 #elif defined(OS_POSIX) && !defined(OS_ANDROID)
   base::FilePath config_dir_path;
@@ -108,13 +109,13 @@ ChromeBrowserPolicyConnector::CreatePlatformProvider() {
         base::CreateSequencedTaskRunnerWithTraits(
             {base::MayBlock(), base::TaskPriority::BACKGROUND}),
         config_dir_path, POLICY_SCOPE_MACHINE));
-    return std::make_unique<AsyncPolicyProvider>(GetSchemaRegistry(),
+    return base::MakeUnique<AsyncPolicyProvider>(GetSchemaRegistry(),
                                                  std::move(loader));
   } else {
     return nullptr;
   }
 #elif defined(OS_ANDROID)
-  return std::make_unique<policy::android::AndroidCombinedPolicyProvider>(
+  return base::MakeUnique<policy::android::AndroidCombinedPolicyProvider>(
       GetSchemaRegistry());
 #else
   return nullptr;

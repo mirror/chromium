@@ -11,6 +11,7 @@
 #include <string>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
@@ -72,7 +73,7 @@ bool SigninScreenPolicyProvider::UserMayLoad(
 
 std::unique_ptr<base::AutoReset<bool>>
 GetScopedSigninScreenPolicyProviderDisablerForTesting() {
-  return std::make_unique<base::AutoReset<bool>>(&g_bypass_checks_for_testing,
+  return base::MakeUnique<base::AutoReset<bool>>(&g_bypass_checks_for_testing,
                                                  true);
 }
 

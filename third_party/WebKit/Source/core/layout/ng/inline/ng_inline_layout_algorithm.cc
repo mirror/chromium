@@ -138,10 +138,6 @@ void NGInlineLayoutAlgorithm::CreateLine(NGLineInfo* line_info,
     const NGInlineItem& item = *item_result.item;
     if (item.Type() == NGInlineItem::kText ||
         item.Type() == NGInlineItem::kControl) {
-      if (!item.GetLayoutObject()) {
-        // TODO(kojii): Add a flag to NGInlineItem for this case.
-        continue;
-      }
       DCHECK(item.GetLayoutObject()->IsText() ||
              item.GetLayoutObject()->IsLayoutNGListItem());
       DCHECK(!box->text_metrics.IsEmpty());
@@ -640,10 +636,6 @@ scoped_refptr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
     LayoutUnit block_size = container_builder_.ComputeBlockSize();
     if (block_size > opportunity.rect.BlockSize())
       continue;
-
-    if (opportunity.rect.BlockStartOffset() >
-        ConstraintSpace().BfcOffset().block_offset)
-      container_builder_.SetIsPushedByFloats();
 
     LayoutUnit line_height =
         container_builder_.Metrics().LineHeight().ClampNegativeToZero();

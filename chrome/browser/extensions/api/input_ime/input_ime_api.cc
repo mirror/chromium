@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/lazy_instance.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/common/extensions/api/input_ime.h"
 #include "content/public/browser/notification_registrar.h"
@@ -331,12 +332,12 @@ ExtensionFunction::ResponseAction InputImeSetCompositionFunction::Run() {
                                 selection_start, selection_end, params.cursor,
                                 segments, &error)) {
       std::unique_ptr<base::ListValue> results =
-          std::make_unique<base::ListValue>();
-      results->Append(std::make_unique<base::Value>(false));
+          base::MakeUnique<base::ListValue>();
+      results->Append(base::MakeUnique<base::Value>(false));
       return RespondNow(ErrorWithArguments(std::move(results), error));
     }
   }
-  return RespondNow(OneArgument(std::make_unique<base::Value>(true)));
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(true)));
 }
 
 ExtensionFunction::ResponseAction InputImeCommitTextFunction::Run() {
@@ -351,12 +352,12 @@ ExtensionFunction::ResponseAction InputImeCommitTextFunction::Run() {
     std::string error;
     if (!engine->CommitText(params.context_id, params.text.c_str(), &error)) {
       std::unique_ptr<base::ListValue> results =
-          std::make_unique<base::ListValue>();
-      results->Append(std::make_unique<base::Value>(false));
+          base::MakeUnique<base::ListValue>();
+      results->Append(base::MakeUnique<base::Value>(false));
       return RespondNow(ErrorWithArguments(std::move(results), error));
     }
   }
-  return RespondNow(OneArgument(std::make_unique<base::Value>(true)));
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(true)));
 }
 
 ExtensionFunction::ResponseAction InputImeSendKeyEventsFunction::Run() {

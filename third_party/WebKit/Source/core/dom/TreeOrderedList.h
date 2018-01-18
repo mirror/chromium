@@ -42,7 +42,7 @@ class TreeOrderedList final {
   DISALLOW_NEW();
 
  public:
-  TreeOrderedList() = default;
+  TreeOrderedList() {}
 
   void Add(Node*);
   void Remove(const Node*);

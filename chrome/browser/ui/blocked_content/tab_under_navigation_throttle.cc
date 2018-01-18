@@ -196,7 +196,7 @@ void TabUnderNavigationThrottle::ShowUI() {
 #if defined(OS_ANDROID)
   FramebustBlockInfoBar::Show(
       web_contents,
-      std::make_unique<FramebustBlockMessageDelegate>(
+      base::MakeUnique<FramebustBlockMessageDelegate>(
           web_contents, url, base::BindOnce(&LogOutcome, off_the_record)));
 #else
   TabSpecificContentSettings* content_settings =

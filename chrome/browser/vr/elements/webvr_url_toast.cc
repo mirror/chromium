@@ -4,6 +4,7 @@
 
 #include "chrome/browser/vr/elements/webvr_url_toast.h"
 
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/vr/elements/webvr_url_toast_texture.h"
 #include "chrome/browser/vr/target_property.h"
 
@@ -13,7 +14,7 @@ WebVrUrlToast::WebVrUrlToast(
     int preferred_width,
     const base::Callback<void(UiUnsupportedMode)>& failure_callback)
     : TexturedElement(preferred_width),
-      texture_(std::make_unique<WebVrUrlToastTexture>(failure_callback)) {}
+      texture_(base::MakeUnique<WebVrUrlToastTexture>(failure_callback)) {}
 
 WebVrUrlToast::~WebVrUrlToast() = default;
 

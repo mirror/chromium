@@ -71,7 +71,6 @@
 #include "cc/trees/layer_tree_host_common.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/mutator_host.h"
-#include "cc/trees/render_frame_metadata.h"
 #include "cc/trees/scroll_node.h"
 #include "cc/trees/single_thread_proxy.h"
 #include "cc/trees/transform_node.h"
@@ -1033,13 +1032,6 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
         frame->activation_dependencies.end(),
         append_quads_data.activation_dependencies.begin(),
         append_quads_data.activation_dependencies.end());
-    if (append_quads_data.deadline_in_frames) {
-      if (!frame->deadline_in_frames)
-        frame->deadline_in_frames = 0u;
-
-      frame->deadline_in_frames = std::max(
-          *frame->deadline_in_frames, *append_quads_data.deadline_in_frames);
-    }
   }
 
   // If CommitToActiveTree() is true, then we wait to draw until
@@ -1073,7 +1065,7 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
   DCHECK(frame->render_passes.back()->output_rect.origin().IsOrigin());
 #endif
   bool has_transparent_background =
-      SkColorGetA(active_tree_->background_color()) != SK_AlphaOPAQUE;
+      active_tree_->background_color() == SK_ColorTRANSPARENT;
   if (!has_transparent_background) {
     frame->render_passes.back()->has_transparent_background = false;
     AppendQuadsToFillScreen(
@@ -1809,13 +1801,6 @@ viz::CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata() {
   return metadata;
 }
 
-RenderFrameMetadata LayerTreeHostImpl::MakeRenderFrameMetadata() {
-  RenderFrameMetadata metadata;
-  metadata.root_scroll_offset =
-      gfx::ScrollOffsetToVector2dF(active_tree_->TotalScrollOffset());
-  return metadata;
-}
-
 bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
   DCHECK(CanDraw());
   DCHECK_EQ(frame->has_no_damage, frame->render_passes.empty());
@@ -1879,12 +1864,9 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
 
   viz::CompositorFrameMetadata metadata = MakeCompositorFrameMetadata();
   metadata.may_contain_video = frame->may_contain_video;
-  metadata.deadline_in_frames = frame->deadline_in_frames;
   metadata.activation_dependencies = std::move(frame->activation_dependencies);
 
-  RenderFrameMetadata render_frame_metadata = MakeRenderFrameMetadata();
-
-  active_tree()->FinishSwapPromises(&metadata, &render_frame_metadata);
+  active_tree()->FinishSwapPromises(&metadata);
 
   metadata.latency_info.emplace_back(ui::SourceEventType::FRAME);
   ui::LatencyInfo& new_latency_info = metadata.latency_info.back();
@@ -2548,11 +2530,11 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
   viz::ContextProvider* compositor_context_provider =
       layer_tree_frame_sink_->context_provider();
   if (!compositor_context_provider) {
-    // This ResourcePool will vend software resources.
-    *resource_pool = std::make_unique<ResourcePool>(
-        resource_provider_.get(), GetTaskRunner(),
-        ResourcePool::kDefaultExpirationDelay,
-        settings_.disallow_non_exact_resource_reuse);
+    *resource_pool =
+        ResourcePool::Create(resource_provider_.get(), false, GetTaskRunner(),
+                             viz::ResourceTextureHint::kDefault,
+                             ResourcePool::kDefaultExpirationDelay,
+                             settings_.disallow_non_exact_resource_reuse);
 
     *raster_buffer_provider =
         BitmapRasterBufferProvider::Create(resource_provider_.get());
@@ -2564,13 +2546,11 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
   if (use_gpu_rasterization_) {
     DCHECK(worker_context_provider);
 
-    // This ResourcePool will vend gpu resources optimized for binding as a
-    // framebuffer for gpu raster.
-    *resource_pool = std::make_unique<ResourcePool>(
-        resource_provider_.get(), GetTaskRunner(),
-        viz::ResourceTextureHint::kFramebuffer,
-        ResourcePool::kDefaultExpirationDelay,
-        settings_.disallow_non_exact_resource_reuse);
+    *resource_pool =
+        ResourcePool::Create(resource_provider_.get(), true, GetTaskRunner(),
+                             viz::ResourceTextureHint::kFramebuffer,
+                             ResourcePool::kDefaultExpirationDelay,
+                             settings_.disallow_non_exact_resource_reuse);
 
     int msaa_sample_count = use_msaa_ ? RequestedMSAASampleCount() : 0;
 
@@ -2600,8 +2580,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
   }
 
   if (use_zero_copy) {
-    // This ResourcePool will vend gpu resources backed by gpu memory buffers.
-    *resource_pool = std::make_unique<ResourcePool>(
+    *resource_pool = ResourcePool::CreateForGpuMemoryBufferResources(
         resource_provider_.get(), GetTaskRunner(),
         gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
         ResourcePool::kDefaultExpirationDelay,
@@ -2612,9 +2591,8 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
     return;
   }
 
-  // This ResourcePool will vend gpu texture resources.
-  *resource_pool = std::make_unique<ResourcePool>(
-      resource_provider_.get(), GetTaskRunner(),
+  *resource_pool = ResourcePool::Create(
+      resource_provider_.get(), true, GetTaskRunner(),
       viz::ResourceTextureHint::kDefault, ResourcePool::kDefaultExpirationDelay,
       settings_.disallow_non_exact_resource_reuse);
 
@@ -3205,7 +3183,7 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollAnimatedBegin(
     ScrollStateData scroll_state_end_data;
     scroll_state_end_data.is_ending = true;
     ScrollState scroll_state_end(scroll_state_end_data);
-    ScrollEndImpl(&scroll_state_end);
+    ScrollEnd(&scroll_state_end);
   }
   return scroll_status;
 }
@@ -3378,7 +3356,7 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollAnimated(
     }
   }
   scroll_state.set_is_ending(true);
-  ScrollEndImpl(&scroll_state);
+  ScrollEnd(&scroll_state);
   if (settings_.is_layer_tree_for_subframe &&
       scroll_status.thread == SCROLL_ON_IMPL_THREAD) {
     // If we get to here, we shouldn't return SCROLL_ON_IMPL_THREAD as otherwise
@@ -3735,8 +3713,6 @@ InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
 
   bool did_scroll_x = scroll_state->caused_scroll_x();
   bool did_scroll_y = scroll_state->caused_scroll_y();
-  did_scroll_x_for_scroll_gesture_ |= did_scroll_x;
-  did_scroll_y_for_scroll_gesture_ |= did_scroll_y;
   bool did_scroll_content = did_scroll_x || did_scroll_y;
   if (did_scroll_content) {
     ShowScrollbarsForImplScroll(current_scrolling_node->element_id);
@@ -3817,51 +3793,20 @@ void LayerTreeHostImpl::SetSynchronousInputHandlerRootScrollOffset(
   SetNeedsRedraw();
 }
 
-bool LayerTreeHostImpl::SnapAtScrollEnd() {
-  ScrollNode* scroll_node = CurrentlyScrollingNode();
-  if (!scroll_node || !scroll_node->snap_container_data.has_value())
-    return false;
-
-  const SnapContainerData& data = scroll_node->snap_container_data.value();
-  ScrollTree& scroll_tree = active_tree()->property_trees()->scroll_tree;
-  gfx::ScrollOffset current_position =
-      scroll_tree.current_scroll_offset(scroll_node->element_id);
-
-  gfx::ScrollOffset snap_position =
-      data.FindSnapPosition(current_position, did_scroll_x_for_scroll_gesture_,
-                            did_scroll_y_for_scroll_gesture_);
-  if (snap_position == current_position)
-    return false;
-
-  ScrollAnimationCreate(
-      scroll_node, ScrollOffsetToVector2dF(snap_position - current_position),
-      base::TimeDelta());
-  return true;
-}
-
 void LayerTreeHostImpl::ClearCurrentlyScrollingNode() {
   active_tree_->ClearCurrentlyScrollingNode();
   did_lock_scrolling_layer_ = false;
   scroll_affects_scroll_handler_ = false;
   accumulated_root_overscroll_ = gfx::Vector2dF();
-  did_scroll_x_for_scroll_gesture_ = false;
-  did_scroll_y_for_scroll_gesture_ = false;
 }
 
-void LayerTreeHostImpl::ScrollEndImpl(ScrollState* scroll_state) {
+void LayerTreeHostImpl::ScrollEnd(ScrollState* scroll_state) {
   DCHECK(scroll_state);
   DCHECK(scroll_state->delta_x() == 0 && scroll_state->delta_y() == 0);
 
   DistributeScrollDelta(scroll_state);
   browser_controls_offset_manager_->ScrollEnd();
   ClearCurrentlyScrollingNode();
-}
-
-void LayerTreeHostImpl::ScrollEnd(ScrollState* scroll_state, bool should_snap) {
-  if (should_snap && SnapAtScrollEnd())
-    return;
-
-  ScrollEndImpl(scroll_state);
 }
 
 InputHandler::ScrollStatus LayerTreeHostImpl::FlingScrollBegin() {
@@ -4670,7 +4615,7 @@ void LayerTreeHostImpl::ScrollOffsetAnimationFinished() {
   // TODO(majidvp): We should pass in the original starting scroll position here
   ScrollStateData scroll_state_data;
   ScrollState scroll_state(scroll_state_data);
-  ScrollEndImpl(&scroll_state);
+  ScrollEnd(&scroll_state);
 }
 
 gfx::ScrollOffset LayerTreeHostImpl::GetScrollOffsetForAnimation(

@@ -17,10 +17,7 @@
 #include "third_party/WebKit/public/platform/modules/webshare/webshare.mojom.h"
 #include "third_party/WebKit/public/platform/site_engagement.mojom.h"
 
-namespace base {
 class DictionaryValue;
-}  // namespace base
-
 class GURL;
 class WebShareTarget;
 

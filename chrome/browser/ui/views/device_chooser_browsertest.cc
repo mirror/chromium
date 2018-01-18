@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <memory>
 #include <string>
 
 #include "base/macros.h"
@@ -52,7 +51,7 @@ class UsbChooserBrowserTest : public DialogBrowserTest {
   // DialogBrowserTest:
   void ShowUi(const std::string& name) override {
     ShowChooser(name, browser(),
-                std::make_unique<FakeUsbChooserController>(device_count_));
+                base::MakeUnique<FakeUsbChooserController>(device_count_));
   }
 
  protected:

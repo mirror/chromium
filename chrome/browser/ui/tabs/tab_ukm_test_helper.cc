@@ -6,32 +6,10 @@
 
 #include "chrome/test/base/testing_profile.h"
 #include "components/ukm/ukm_source.h"
-#include "content/public/test/navigation_simulator.h"
 #include "content/public/test/web_contents_tester.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
 
 using content::WebContentsTester;
-
-namespace {
-
-// Verifies each expected metric's value. Metrics not in |expected_metrics| are
-// ignored. A metric value of |nullopt| implies the metric shouldn't exist.
-void ExpectEntryMetrics(const ukm::mojom::UkmEntry& entry,
-                        const UkmMetricMap& expected_metrics) {
-  // Each expected metric should match a named value in the UKM entry.
-  for (const UkmMetricMap::value_type pair : expected_metrics) {
-    if (pair.second.has_value()) {
-      ukm::TestUkmRecorder::ExpectEntryMetric(&entry, pair.first,
-                                              pair.second.value());
-    } else {
-      // The metric shouldn't exist.
-      EXPECT_FALSE(ukm::TestUkmRecorder::EntryHasMetric(&entry, pair.first))
-          << " for metric: " << pair.first;
-    }
-  }
-}
-
-}  // namespace
 
 // Helper class to respond to WebContents lifecycle events we can't
 // trigger/simulate.
@@ -59,20 +37,9 @@ void TestWebContentsObserver::WebContentsDestroyed() {
 TabActivityTestBase::TabActivityTestBase() = default;
 TabActivityTestBase::~TabActivityTestBase() = default;
 
-void TabActivityTestBase::Navigate(
-    content::WebContents* web_contents,
-    const GURL& url,
-    ui::PageTransition page_transition = ui::PAGE_TRANSITION_LINK) {
-  std::unique_ptr<content::NavigationSimulator> navigation =
-      content::NavigationSimulator::CreateBrowserInitiated(url, web_contents);
-  navigation->SetTransition(page_transition);
-  navigation->Commit();
-}
-
 content::WebContents* TabActivityTestBase::AddWebContentsAndNavigate(
     TabStripModel* tab_strip_model,
-    const GURL& initial_url,
-    ui::PageTransition page_transition) {
+    const GURL& initial_url) {
   content::WebContents::CreateParams params(profile(), nullptr);
   // Create as a background tab if there are other tabs in the tab strip.
   params.initially_hidden = tab_strip_model->count() > 0;
@@ -85,7 +52,7 @@ content::WebContents* TabActivityTestBase::AddWebContentsAndNavigate(
       std::make_unique<TestWebContentsObserver>(test_contents));
 
   tab_strip_model->AppendWebContents(test_contents, false);
-  Navigate(test_contents, initial_url, page_transition);
+  WebContentsTester::For(test_contents)->NavigateAndCommit(initial_url);
   return test_contents;
 }
 
@@ -126,7 +93,9 @@ void UkmEntryChecker::ExpectNewEntry(const std::string& entry_name,
   if (!source_url.is_empty())
     ukm_recorder_.ExpectEntrySourceHasUrl(entry, source_url);
 
-  ExpectEntryMetrics(*entry, expected_metrics);
+  // Each expected metric should match a named value in the UKM entry.
+  for (const std::pair<const char*, uint64_t>& pair : expected_metrics)
+    ukm::TestUkmRecorder::ExpectEntryMetric(entry, pair.first, pair.second);
 }
 
 void UkmEntryChecker::ExpectNewEntries(
@@ -160,7 +129,8 @@ void UkmEntryChecker::ExpectNewEntries(
       ukm_recorder_.ExpectEntrySourceHasUrl(entry, source_url);
 
     // Each expected metric should match a named value in the UKM entry.
-    ExpectEntryMetrics(*entry, expected_metrics);
+    for (const std::pair<const char*, uint64_t>& pair : expected_metrics)
+      ukm::TestUkmRecorder::ExpectEntryMetric(entry, pair.first, pair.second);
   }
 }
 

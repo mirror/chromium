@@ -48,7 +48,7 @@ LayoutMultiColumnFlowThread::LayoutMultiColumnFlowThread()
   SetIsInsideFlowThread(true);
 }
 
-LayoutMultiColumnFlowThread::~LayoutMultiColumnFlowThread() = default;
+LayoutMultiColumnFlowThread::~LayoutMultiColumnFlowThread() {}
 
 LayoutMultiColumnFlowThread* LayoutMultiColumnFlowThread::CreateAnonymous(
     Document& document,

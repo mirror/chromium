@@ -13,6 +13,7 @@
 #include "content/common/service_worker/embedded_worker_messages.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/common/content_client.h"
+#include "content/renderer/service_worker/embedded_worker_devtools_agent.h"
 #include "content/renderer/service_worker/service_worker_context_client.h"
 #include "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h"
 #include "third_party/WebKit/public/platform/WebContentSettingsClient.h"
@@ -25,8 +26,12 @@
 namespace content {
 
 EmbeddedWorkerInstanceClientImpl::WorkerWrapper::WorkerWrapper(
-    std::unique_ptr<blink::WebEmbeddedWorker> worker)
-    : worker_(std::move(worker)) {}
+    std::unique_ptr<blink::WebEmbeddedWorker> worker,
+    int devtools_agent_route_id)
+    : worker_(std::move(worker)),
+      devtools_agent_(std::make_unique<EmbeddedWorkerDevToolsAgent>(
+          worker_.get(),
+          devtools_agent_route_id)) {}
 
 EmbeddedWorkerInstanceClientImpl::WorkerWrapper::~WorkerWrapper() = default;
 
@@ -100,13 +105,6 @@ void EmbeddedWorkerInstanceClientImpl::AddMessageToConsole(
       blink::WebConsoleMessage(level, blink::WebString::FromUTF8(message)));
 }
 
-void EmbeddedWorkerInstanceClientImpl::GetDevToolsAgent(
-    blink::mojom::DevToolsAgentAssociatedRequest request) {
-  DCHECK(wrapper_);
-  DCHECK(wrapper_->worker());
-  wrapper_->worker()->GetDevToolsAgent(request.PassHandle());
-}
-
 EmbeddedWorkerInstanceClientImpl::EmbeddedWorkerInstanceClientImpl(
     scoped_refptr<base::SingleThreadTaskRunner> io_thread_runner,
     mojom::EmbeddedWorkerInstanceClientAssociatedRequest request)
@@ -140,11 +138,12 @@ EmbeddedWorkerInstanceClientImpl::StartWorkerContext(
         std::move(params->installed_scripts_info), io_thread_runner_);
   }
 
-  auto wrapper =
-      std::make_unique<WorkerWrapper>(blink::WebEmbeddedWorker::Create(
+  auto wrapper = std::make_unique<WorkerWrapper>(
+      blink::WebEmbeddedWorker::Create(
           std::move(context_client), std::move(manager),
           params->content_settings_proxy.PassHandle(),
-          interface_provider.PassInterface().PassHandle()));
+          interface_provider.PassInterface().PassHandle()),
+      params->worker_devtools_agent_route_id);
 
   blink::WebEmbeddedWorkerStartData start_data;
   start_data.script_url = params->script_url;
@@ -154,7 +153,7 @@ EmbeddedWorkerInstanceClientImpl::StartWorkerContext(
       params->wait_for_debugger
           ? blink::WebEmbeddedWorkerStartData::kWaitForDebugger
           : blink::WebEmbeddedWorkerStartData::kDontWaitForDebugger;
-  start_data.devtools_frame_token =
+  start_data.instrumentation_token =
       blink::WebString::FromUTF8(params->devtools_worker_token.ToString());
   start_data.v8_cache_options =
       static_cast<blink::WebSettings::V8CacheOptions>(params->v8_cache_options);

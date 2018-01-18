@@ -363,16 +363,13 @@ TEST_F(FrameFetchContextModifyRequestTest, UpgradeInsecureResourceRequests) {
   for (const auto& test : tests) {
     document->InsecureNavigationsToUpgrade()->clear();
 
-    // We always upgrade for FrameTypeNone.
+    // We always upgrade for FrameTypeNone and FrameTypeNested.
     ExpectUpgrade(test.original, WebURLRequest::kRequestContextScript,
                   network::mojom::RequestContextFrameType::kNone,
                   test.upgraded);
-
-    // We never upgrade for FrameTypeNested. This is done on the browser
-    // process.
     ExpectUpgrade(test.original, WebURLRequest::kRequestContextScript,
                   network::mojom::RequestContextFrameType::kNested,
-                  test.original);
+                  test.upgraded);
 
     // We do not upgrade for FrameTypeTopLevel or FrameTypeAuxiliary...
     ExpectUpgrade(test.original, WebURLRequest::kRequestContextScript,
@@ -515,7 +512,7 @@ TEST_F(FrameFetchContextModifyRequestTest, SendRequiredCSPHeader) {
 
 class FrameFetchContextHintsTest : public FrameFetchContextTest {
  public:
-  FrameFetchContextHintsTest() = default;
+  FrameFetchContextHintsTest() {}
 
  protected:
   void ExpectHeader(const char* input,
@@ -882,55 +879,6 @@ TEST_F(FrameFetchContextTest, SetFirstPartyCookieAndRequestorOrigin) {
 
     EXPECT_EQ(document->SiteForCookies(), request.SiteForCookies());
   }
-}
-
-TEST_F(FrameFetchContextTest, ModifyPriorityForLowPriorityIframes) {
-  Settings* settings = document->GetSettings();
-  FrameFetchContext* childFetchContext = CreateChildFrame();
-  GetNetworkStateNotifier().SetNetworkQualityInfoOverride(
-      WebEffectiveConnectionType::kType3G, 1 /* transport_rtt_msec */,
-      10000 /* downlink_throughput_mbps */);
-
-  // Experiment is not enabled, expect default values.
-  EXPECT_EQ(ResourceLoadPriority::kVeryHigh,
-            fetch_context->ModifyPriorityForExperiments(
-                ResourceLoadPriority::kVeryHigh));
-  EXPECT_EQ(ResourceLoadPriority::kVeryHigh,
-            childFetchContext->ModifyPriorityForExperiments(
-                ResourceLoadPriority::kVeryHigh));
-  EXPECT_EQ(ResourceLoadPriority::kMedium,
-            childFetchContext->ModifyPriorityForExperiments(
-                ResourceLoadPriority::kMedium));
-
-  // Low priority iframes enabled but network is not slow enough. Expect default
-  // values.
-  settings->SetLowPriorityIframesThreshold(WebEffectiveConnectionType::kType2G);
-  EXPECT_EQ(ResourceLoadPriority::kVeryHigh,
-            fetch_context->ModifyPriorityForExperiments(
-                ResourceLoadPriority::kVeryHigh));
-  EXPECT_EQ(ResourceLoadPriority::kVeryHigh,
-            childFetchContext->ModifyPriorityForExperiments(
-                ResourceLoadPriority::kVeryHigh));
-  EXPECT_EQ(ResourceLoadPriority::kMedium,
-            childFetchContext->ModifyPriorityForExperiments(
-                ResourceLoadPriority::kMedium));
-
-  // Low priority iframes enabled and network is slow, main frame request's
-  // priorities should not change.
-  GetNetworkStateNotifier().SetNetworkQualityInfoOverride(
-      WebEffectiveConnectionType::kType2G, 1 /* transport_rtt_msec */,
-      10000 /* downlink_throughput_mbps */);
-  EXPECT_EQ(ResourceLoadPriority::kVeryHigh,
-            fetch_context->ModifyPriorityForExperiments(
-                ResourceLoadPriority::kVeryHigh));
-  // Low priority iframes enabled, everything in child frame should be low
-  // priority.
-  EXPECT_EQ(ResourceLoadPriority::kVeryLow,
-            childFetchContext->ModifyPriorityForExperiments(
-                ResourceLoadPriority::kVeryHigh));
-  EXPECT_EQ(ResourceLoadPriority::kVeryLow,
-            childFetchContext->ModifyPriorityForExperiments(
-                ResourceLoadPriority::kMedium));
 }
 
 // Tests if "Save-Data" header is correctly added on the first load and reload.
@@ -1479,40 +1427,6 @@ TEST_F(FrameFetchContextMockedLocalFrameClientTest,
   EXPECT_EQ(
       "<https://otherintervention.org>, "
       "<https://www.chromestatus.com/features/6072546726248448>; "
-      "level=\"warning\"",
-      resource_request2.HttpHeaderField("Intervention"));
-}
-
-// Tests if "Intervention" header is added for frame with NoScript enabled.
-TEST_F(FrameFetchContextMockedLocalFrameClientTest,
-       NoScriptInterventionHeader) {
-  // Verify header not added if NoScript not active.
-  EXPECT_CALL(*client, GetPreviewsStateForFrame())
-      .WillRepeatedly(::testing::Return(WebURLRequest::kPreviewsOff));
-  ResourceRequest resource_request("http://www.example.com/style.css");
-  fetch_context->AddAdditionalRequestHeaders(resource_request,
-                                             kFetchMainResource);
-  EXPECT_EQ(g_null_atom, resource_request.HttpHeaderField("Intervention"));
-
-  // Verify header is added if NoScript is active.
-  EXPECT_CALL(*client, GetPreviewsStateForFrame())
-      .WillRepeatedly(::testing::Return(WebURLRequest::kNoScriptOn));
-  fetch_context->AddAdditionalRequestHeaders(resource_request,
-                                             kFetchSubresource);
-  EXPECT_EQ(
-      "<https://www.chromestatus.com/features/4775088607985664>; "
-      "level=\"warning\"",
-      resource_request.HttpHeaderField("Intervention"));
-
-  // Verify appended to an existing "Intervention" header value.
-  ResourceRequest resource_request2("http://www.example.com/getad.js");
-  resource_request2.SetHTTPHeaderField("Intervention",
-                                       "<https://otherintervention.org>");
-  fetch_context->AddAdditionalRequestHeaders(resource_request2,
-                                             kFetchSubresource);
-  EXPECT_EQ(
-      "<https://otherintervention.org>, "
-      "<https://www.chromestatus.com/features/4775088607985664>; "
       "level=\"warning\"",
       resource_request2.HttpHeaderField("Intervention"));
 }

@@ -716,7 +716,7 @@ void SingleThreadProxy::BeginMainFrame(
 
   // At this point the main frame may have deferred commits to avoid committing
   // right now.
-  if (defer_commits_ || begin_frame_args.animate_only) {
+  if (defer_commits_) {
     TRACE_EVENT_INSTANT0("cc", "EarlyOut_DeferCommit_InsideBeginMainFrame",
                          TRACE_EVENT_SCOPE_THREAD);
     BeginMainFrameAbortedOnImplThread(
@@ -750,10 +750,7 @@ void SingleThreadProxy::DoBeginMainFrame(
   layer_tree_host_->WillBeginMainFrame();
   layer_tree_host_->BeginMainFrame(begin_frame_args);
   layer_tree_host_->AnimateLayers(begin_frame_args.frame_time);
-  layer_tree_host_->RequestMainFrameUpdate(
-      begin_frame_args.animate_only
-          ? LayerTreeHost::VisualStateUpdate::kPrePaint
-          : LayerTreeHost::VisualStateUpdate::kAll);
+  layer_tree_host_->RequestMainFrameUpdate();
 }
 
 void SingleThreadProxy::DoPainting() {

@@ -74,8 +74,6 @@ class CC_EXPORT LayerTreeResourceProvider : public ResourceProvider {
   viz::ResourceId CreateBitmapResource(const gfx::Size& size,
                                        const gfx::ColorSpace& color_space);
 
-  void DeleteResource(viz::ResourceId id);
-
   // Receives a resource from an external client that can be used in compositor
   // frames, via the returned ResourceId.
   viz::ResourceId ImportResource(const viz::TransferableResource&,
@@ -99,9 +97,6 @@ class CC_EXPORT LayerTreeResourceProvider : public ResourceProvider {
   // Verify that the ResourceId is valid and is known to this class, for debug
   // checks.
   void ValidateResource(viz::ResourceId id) const;
-
-  // Checks whether a resource is in use by a consumer.
-  bool InUseByConsumer(viz::ResourceId id);
 
   // Indicates if we can currently lock this resource for write.
   bool CanLockForWrite(viz::ResourceId id);

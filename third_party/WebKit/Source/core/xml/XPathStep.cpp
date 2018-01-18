@@ -48,7 +48,7 @@ Step::Step(Axis axis,
   predicates_.swap(predicates);
 }
 
-Step::~Step() = default;
+Step::~Step() {}
 
 void Step::Trace(blink::Visitor* visitor) {
   visitor->Trace(node_test_);

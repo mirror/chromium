@@ -11,7 +11,7 @@ namespace content {
 class ChromeBlobStorageContext;
 
 void StartBlobInternalsURLLoader(
-    const network::ResourceRequest& request,
+    const ResourceRequest& request,
     mojom::URLLoaderClientPtrInfo client_info,
     ChromeBlobStorageContext* blob_storage_context);
 }  // namespace content

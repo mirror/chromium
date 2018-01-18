@@ -15,7 +15,6 @@
 namespace content {
 
 class PlatformNotificationContextImpl;
-struct PlatformNotificationData;
 class ResourceContext;
 
 // Implementation of the NotificationService used for Web Notifications. Is
@@ -34,8 +33,7 @@ class BlinkNotificationServiceImpl : public blink::mojom::NotificationService {
 
   // blink::mojom::NotificationService implementation.
   void GetPermissionStatus(GetPermissionStatusCallback callback) override;
-  void DisplayNonPersistentNotification(
-      const PlatformNotificationData& platform_notification_data) override;
+  void DisplayNonPersistentNotification(const base::string16& title) override;
 
  private:
   // Called when an error is detected on binding_.

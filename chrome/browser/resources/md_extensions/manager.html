@@ -55,11 +55,7 @@
       }
     </style>
     <extensions-drop-overlay></extensions-drop-overlay>
-    <extensions-toolbar is-guest="[[isGuest_]]"
-        in-dev-mode="[[inDevMode]]"
-        can-load-unpacked="[[canLoadUnpacked]]"
-        is-supervised="[[isSupervised_]]"
-        dev-mode-controlled-by-policy="[[devModeControlledByPolicy]]"
+    <extensions-toolbar is-guest="[[isGuest_]]" in-dev-mode="[[inDevMode]]"
         on-pack-tap="onPackTap_" delegate="[[delegate]]"
         on-cr-toolbar-menu-tap="onMenuButtonTap_"
         on-search-changed="onFilterChanged_"
@@ -73,8 +69,7 @@
       <dialog id="drawer" is="cr-drawer" heading="$i18n{toolbarTitle}"
           align="$i18n{textdirection}" on-close="onDrawerClose_">
         <div class="drawer-content">
-          <extensions-sidebar id="sidebar" is-supervised="[[isSupervised_]]"
-              on-close-drawer="onCloseDrawer_">
+          <extensions-sidebar id="sidebar" on-close-drawer="onCloseDrawer_">
           </extensions-sidebar>
         </div>
       </dialog>
@@ -88,9 +83,7 @@
       </extensions-item-list>
       <template id="details-view" is="cr-lazy-render">
         <extensions-detail-view delegate="[[delegate]]" slot="view"
-            in-dev-mode="[[inDevMode]]"
-            incognito-available="[[incognitoAvailable_]]"
-            data="[[detailViewItem_]]">
+            in-dev-mode="[[inDevMode]]" data="[[detailViewItem_]]">
         </extensions-detail-view>
       </template>
       <template id="keyboard-shortcuts" is="cr-lazy-render">

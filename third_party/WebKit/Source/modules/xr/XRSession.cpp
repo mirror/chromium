@@ -85,7 +85,7 @@ ScriptPromise XRSession::requestFrameOfReference(
     ScriptState* script_state,
     const String& type,
     const XRFrameOfReferenceOptions& options) {
-  if (ended_) {
+  if (detached_) {
     return ScriptPromise::RejectWithDOMException(
         script_state, DOMException::Create(kInvalidStateError, kSessionEnded));
   }
@@ -124,7 +124,7 @@ ScriptPromise XRSession::requestFrameOfReference(
 
 int XRSession::requestAnimationFrame(V8XRFrameRequestCallback* callback) {
   // Don't allow any new frame requests once the session is ended.
-  if (ended_)
+  if (detached_)
     return 0;
 
   // Don't allow frames to be scheduled if there's no layers attached to the
@@ -147,7 +147,7 @@ void XRSession::cancelAnimationFrame(int id) {
 
 ScriptPromise XRSession::end(ScriptState* script_state) {
   // Don't allow a session to end twice.
-  if (ended_) {
+  if (detached_) {
     return ScriptPromise::RejectWithDOMException(
         script_state, DOMException::Create(kInvalidStateError, kSessionEnded));
   }
@@ -166,7 +166,7 @@ ScriptPromise XRSession::end(ScriptState* script_state) {
 
 void XRSession::ForceEnd() {
   // Detach this session from the device.
-  ended_ = true;
+  detached_ = true;
 
   // If this session is the active exclusive session for the device, notify the
   // frameProvider that it's ended.
@@ -205,7 +205,7 @@ void XRSession::OnFrame(
     std::unique_ptr<TransformationMatrix> base_pose_matrix) {
   DVLOG(2) << __FUNCTION__;
   // Don't process any outstanding frames once the session is ended.
-  if (ended_)
+  if (detached_)
     return;
 
   // Don't allow frames to be processed if there's no layers attached to the
@@ -269,7 +269,6 @@ void XRSession::Trace(blink::Visitor* visitor) {
 void XRSession::TraceWrappers(
     const blink::ScriptWrappableVisitor* visitor) const {
   visitor->TraceWrappers(callback_collection_);
-  EventTargetWithInlineData::TraceWrappers(visitor);
 }
 
 }  // namespace blink

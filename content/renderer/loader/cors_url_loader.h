@@ -27,7 +27,7 @@ class CONTENT_EXPORT CORSURLLoader : public mojom::URLLoader,
       int32_t routing_id,
       int32_t request_id,
       uint32_t options,
-      const network::ResourceRequest& resource_request,
+      const ResourceRequest& resource_request,
       mojom::URLLoaderClientPtr client,
       const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
       mojom::URLLoaderFactory* network_loader_factory);
@@ -43,11 +43,11 @@ class CONTENT_EXPORT CORSURLLoader : public mojom::URLLoader,
   void ResumeReadingBodyFromNet() override;
 
   // mojom::URLLoaderClient overrides:
-  void OnReceiveResponse(const network::ResourceResponseHead& head,
+  void OnReceiveResponse(const ResourceResponseHead& head,
                          const base::Optional<net::SSLInfo>& ssl_info,
                          mojom::DownloadedTempFilePtr downloaded_file) override;
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
-                         const network::ResourceResponseHead& head) override;
+                         const ResourceResponseHead& head) override;
   void OnDataDownloaded(int64_t data_length, int64_t encoded_length) override;
   void OnUploadProgress(int64_t current_position,
                         int64_t total_size,

@@ -14,7 +14,6 @@ namespace web {
 class BrowserState;
 }
 
-// Fake implementation of AuthenticationService that can be used by tests.
 class AuthenticationServiceFake : public AuthenticationService {
  public:
   static std::unique_ptr<KeyedService> CreateAuthenticationService(
@@ -39,12 +38,7 @@ class AuthenticationServiceFake : public AuthenticationService {
   NSString* GetAuthenticatedUserEmail() override;
 
  private:
-  AuthenticationServiceFake(PrefService* pref_service,
-                            ProfileOAuth2TokenService* token_service,
-                            SyncSetupService* sync_setup_service,
-                            AccountTrackerService* account_tracker,
-                            SigninManager* signin_manager,
-                            browser_sync::ProfileSyncService* sync_service);
+  explicit AuthenticationServiceFake(ios::ChromeBrowserState* browser_state);
 
   __strong ChromeIdentity* authenticated_identity_;
   bool have_accounts_changed_;

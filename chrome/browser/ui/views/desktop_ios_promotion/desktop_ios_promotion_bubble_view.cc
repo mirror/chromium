@@ -4,8 +4,6 @@
 
 #include "chrome/browser/ui/views/desktop_ios_promotion/desktop_ios_promotion_bubble_view.h"
 
-#include <memory>
-
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/desktop_ios_promotion/desktop_ios_promotion_bubble_controller.h"
@@ -39,7 +37,7 @@ DesktopIOSPromotionBubbleView::DesktopIOSPromotionBubbleView(
     : promotion_text_label_(
           new views::Label(desktop_ios_promotion::GetPromoText(entry_point))),
       promotion_controller_(
-          std::make_unique<DesktopIOSPromotionBubbleController>(profile,
+          base::MakeUnique<DesktopIOSPromotionBubbleController>(profile,
                                                                 this,
                                                                 entry_point)) {
   views::GridLayout* layout =

@@ -32,7 +32,7 @@ class CORE_EXPORT ImageBitmapSource {
   static ScriptPromise FulfillImageBitmap(ScriptState*, ImageBitmap*);
 
  protected:
-  virtual ~ImageBitmapSource() = default;
+  virtual ~ImageBitmapSource() {}
 };
 
 }  // namespace blink

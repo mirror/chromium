@@ -28,11 +28,11 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/prefs/pref_service.h"
 #include "extensions/browser/app_sorting.h"
-#include "extensions/browser/disable_reason.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/uninstall_reason.h"
+#include "extensions/common/disable_reason.h"
 #include "extensions/common/extension_set.h"
 #include "extensions/common/manifest.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -269,7 +269,7 @@ TEST_F(ExtensionAppModelBuilderTest, InvalidOrdinal) {
       extensions::ExtensionPrefs::Get(profile_.get());
   scoped_prefs->UpdateExtensionPref(
       kHostedAppId, "page_ordinal",
-      std::make_unique<base::Value>("a corrupted ordinal"));
+      base::MakeUnique<base::Value>("a corrupted ordinal"));
 
   // This should not assert or crash.
   CreateBuilder();
