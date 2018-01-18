@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98abae85_9b0c30e9",
+        "filename": "components/cast_channel/cast_message_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-18T06:30:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6149b0d4_01f85929",
+      "range": {
+        "startLine": 78,
+        "startChar": 25,
+        "endLine": 78,
+        "endChar": 74
+      },
+      "revId": "f08be617dccb116de9db74e76337a20f1438da9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc8693e6_ec5f873b",
         "filename": "components/cast_channel/cast_message_util.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bf14cbb8_5887b174",
+        "filename": "components/cast_channel/cast_message_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-18T06:30:46Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "bc8693e6_ec5f873b",
+      "range": {
+        "startLine": 190,
+        "startChar": 12,
+        "endLine": 190,
+        "endChar": 42
+      },
+      "revId": "f08be617dccb116de9db74e76337a20f1438da9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22053cb3_9c95abd0",
         "filename": "components/cast_channel/cast_message_util.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "f08be617dccb116de9db74e76337a20f1438da9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4513060c_1e498fff",
+        "filename": "components/cast_channel/cast_message_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-18T06:30:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22053cb3_9c95abd0",
+      "range": {
+        "startLine": 230,
+        "startChar": 9,
+        "endLine": 230,
+        "endChar": 50
+      },
+      "revId": "f08be617dccb116de9db74e76337a20f1438da9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
