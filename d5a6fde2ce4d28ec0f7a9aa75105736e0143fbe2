@@ -16,6 +16,24 @@
       "revId": "d5a6fde2ce4d28ec0f7a9aa75105736e0143fbe2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5edc41a0_9c3b5ff9",
+        "filename": "net/proxy/proxy_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-18T15:50:09Z",
+      "side": 1,
+      "message": "Good catch, thanks.",
+      "parentUuid": "14fe7267_51bc54e1",
+      "revId": "d5a6fde2ce4d28ec0f7a9aa75105736e0143fbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
