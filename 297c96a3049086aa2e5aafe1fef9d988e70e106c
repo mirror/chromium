@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92aa6d2c_36f22811",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-18T20:13:07Z",
+      "side": 1,
+      "message": "not needed?",
+      "revId": "297c96a3049086aa2e5aafe1fef9d988e70e106c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
