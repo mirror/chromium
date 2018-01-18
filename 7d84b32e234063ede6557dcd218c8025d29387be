@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a27201f_574adaf7",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-18T15:17:46Z",
+      "side": 1,
+      "message": "nit: will only be \u003d is only",
+      "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce1da54a_a3ef65ea",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-18T15:17:46Z",
+      "side": 1,
+      "message": "nit: wording is a bit confusing here. maybe something \"The new bundle contains replacement factories for a subset of the receiver\u0027s existing bundle.\" would be clearer?",
+      "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd94df8b_da5580ac",
+        "filename": "content/common/url_loader_factory_bundle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-18T15:17:46Z",
+      "side": 1,
+      "message": "How about just Update(). And maybe reword the documentation similar to the mojom comment above?",
+      "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5b7268_d2271d00",
+        "filename": "content/public/browser/render_frame_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-18T15:17:46Z",
+      "side": 1,
+      "message": "I don\u0027t think anyone could possibly ever see the documentation for this or the method below and have any idea when they could/should want to call these in their tests. Can you elaborate on why you would use them? Or is there some way we can accomplish the same testing logic with a different API?",
+      "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f805aa17_06ad76b2",
         "filename": "content/renderer/fetchers/resource_fetcher_browsertest.cc",
         "patchSetId": 9
@@ -13,6 +81,30 @@
       "writtenOn": "2018-01-17T23:14:15Z",
       "side": 1,
       "message": "It seems that we have to set |kSingleProcess| switch to be able to test the renderer, but I have to force an out-of-process Network Service to be able to crash and restart it...\n\nDo we have a better way of implementing it other than the |kForceOutOfProcessNetworkService| switch?",
+      "range": {
+        "startLine": 424,
+        "startChar": 41,
+        "endLine": 424,
+        "endChar": 73
+      },
+      "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b475b0db_db96b5e5",
+        "filename": "content/renderer/fetchers/resource_fetcher_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-18T15:17:46Z",
+      "side": 1,
+      "message": "Hmm. You could always have the service\u0027s \"crash\" implementation instead call QuitNow() on its service_context() if kSingleProcess is set. This would cause the actual Service instance (and therefore anything it owns) to be destroyed, which might be sufficient to simulate a network service crash.\n\nAny interfaces implemented by the Service without ultimately being *owned* by the Service may however remain functional. e.g. anything using a StrongBinding on the Network Service side, we\u0027d have no way of tearing down.\n\nThis may or may not really be an issue, so it might be worth trying?",
+      "parentUuid": "f805aa17_06ad76b2",
       "range": {
         "startLine": 424,
         "startChar": 41,
