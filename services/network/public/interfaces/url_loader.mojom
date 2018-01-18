@@ -11,6 +11,9 @@ struct URLRequest;
 struct URLResponseHead;
 
 [Native]
+struct SSLCertRequestInfo;
+
+[Native]
 struct SSLInfo;
 
 [Native]
