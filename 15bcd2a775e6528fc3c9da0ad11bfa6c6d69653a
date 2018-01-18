@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32f6e72d_ab0ce5de",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-18T16:36:41Z",
+      "side": 1,
+      "message": "As discussed offline, removing rfh as param and duplicating  RenderFrameDevToolsAgentHost::OnResetNavigationRequest to TransferNav...\nkeep_state has to remain for 2 specific usage (createdNavRequest in the frame tree node and in the web contents destructor).",
+      "parentUuid": "e7bcdcc1_6b256e05",
+      "revId": "15bcd2a775e6528fc3c9da0ad11bfa6c6d69653a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6efc4274_debf5386",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "15bcd2a775e6528fc3c9da0ad11bfa6c6d69653a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89420960_27c557a6",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-18T16:36:41Z",
+      "side": 1,
+      "message": "Clumsy attempt to manage navigation request lifetime for early returns. Much better in TakeNavigationHandleForCommit.",
+      "parentUuid": "6efc4274_debf5386",
+      "revId": "15bcd2a775e6528fc3c9da0ad11bfa6c6d69653a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "916f8dd0_78cd2505",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-18T16:36:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6749777d_522614d8",
+      "revId": "15bcd2a775e6528fc3c9da0ad11bfa6c6d69653a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed00583d_7d89cc88",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 20
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f384e7c2_a97b3baf",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 3648,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-18T16:36:41Z",
+      "side": 1,
+      "message": "Done. GetNavigationHandle() already does the null check so that\u0027s even simpler.",
+      "parentUuid": "ed00583d_7d89cc88",
+      "revId": "15bcd2a775e6528fc3c9da0ad11bfa6c6d69653a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "391f5915_bf008dfe",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 20
@@ -84,6 +156,24 @@
       "revId": "15bcd2a775e6528fc3c9da0ad11bfa6c6d69653a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de086431_3919488d",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 4320,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-18T16:36:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "391f5915_bf008dfe",
+      "revId": "15bcd2a775e6528fc3c9da0ad11bfa6c6d69653a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
