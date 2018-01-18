@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c500b1e_37a85018",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLFramebuffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-18T00:18:28Z",
+      "side": 1,
+      "message": "Suggest something a little more descriptive like SetContentsChanged / HaveContentsChanged.",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 17
+      },
+      "revId": "23a49cf2dd870b03f085779ffd0982519193aed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
