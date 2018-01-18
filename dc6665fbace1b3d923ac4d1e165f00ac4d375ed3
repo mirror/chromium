@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c60ee13d_24aa5356",
+        "filename": "content/network/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-18T00:37:29Z",
+      "side": 1,
+      "message": "ScheduledResourceRequestAdapter want to take ScheduledResourceRequest as a constructor parameter while ScheduledResourceRequest want to take ScheduledResourceRequestAdapter::Resume as a constructor parameter. We need to give up one of these, or we need to decouple ScheduledResourceRequestAdapter and ScheduledResourceRequestAdapter::Resume. That\u0027s why I have this setter function.",
+      "parentUuid": "3fc40850_610d15bf",
+      "range": {
+        "startLine": 77,
+        "startChar": 6,
+        "endLine": 77,
+        "endChar": 22
+      },
+      "revId": "dc6665fbace1b3d923ac4d1e165f00ac4d375ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b4ffeee_e55f8036",
         "filename": "content/network/resource_scheduler.h",
         "patchSetId": 15
