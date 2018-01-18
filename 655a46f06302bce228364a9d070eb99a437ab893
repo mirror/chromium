@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "aec4d2e0_0c1410e5",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2018-01-18T15:18:28Z",
+      "side": 1,
+      "message": "Oh, right, what I meant was: isn\u0027t convert_bus_-\u003eframes() supposed to be referenced to output_format_.nSamplesPerSec? It\u0027s created from the output format, above.",
+      "parentUuid": "c88d67b4_4f7dec7a",
+      "revId": "655a46f06302bce228364a9d070eb99a437ab893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e39448a_0047d7ce",
         "filename": "media/audio/win/audio_low_latency_input_win.cc",
         "patchSetId": 4
