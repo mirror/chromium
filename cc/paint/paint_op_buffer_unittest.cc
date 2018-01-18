@@ -19,7 +19,6 @@
 #include "cc/test/test_skcanvas.h"
 #include "cc/test/transfer_cache_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/skia/include/core/SkFlattenableSerialization.h"
 #include "third_party/skia/include/effects/SkBlurMaskFilter.h"
 #include "third_party/skia/include/effects/SkColorMatrixFilter.h"
 #include "third_party/skia/include/effects/SkDashPathEffect.h"
@@ -3035,6 +3034,27 @@ TEST(PaintOpBufferTest, CustomData) {
                                                 &MockCanvas::onCustomCallback,
                                                 base::Unretained(&canvas))));
   }
+}
+
+TEST(PaintOpBufferTest, SecurityConstrainedImageSerialization) {
+  auto image = CreateDiscardablePaintImage(gfx::Size(10, 10));
+  sk_sp<PaintFilter> filter = sk_make_sp<ImagePaintFilter>(
+      image, SkRect::MakeWH(10, 10), SkRect::MakeWH(10, 10),
+      kLow_SkFilterQuality);
+  const bool enable_security_constraints = true;
+
+  std::unique_ptr<char, base::AlignedFreeDeleter> memory(
+      static_cast<char*>(base::AlignedAlloc(PaintOpBuffer::kInitialBufferSize,
+                                            PaintOpBuffer::PaintOpAlign)));
+  PaintOpWriter writer(memory.get(), PaintOpBuffer::kInitialBufferSize, nullptr,
+                       nullptr, enable_security_constraints);
+  writer.Write(filter.get());
+
+  sk_sp<PaintFilter> out_filter;
+  PaintOpReader reader(memory.get(), writer.size(), nullptr,
+                       enable_security_constraints);
+  reader.Read(&out_filter);
+  EXPECT_TRUE(*filter == *out_filter);
 }
 
 }  // namespace cc

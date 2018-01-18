@@ -677,6 +677,7 @@ void DOMWebSocket::DidReceiveTextMessage(const String& msg) {
   NETWORK_DVLOG(1) << "WebSocket " << this
                    << " DidReceiveTextMessage() Text message " << msg;
 
+  DCHECK_NE(state_, kConnecting);
   if (state_ != kOpen)
     return;
   RecordReceiveTypeHistogram(kWebSocketReceiveTypeString);
@@ -692,13 +693,17 @@ void DOMWebSocket::DidReceiveBinaryMessage(
 
   DCHECK(!origin_string_.IsNull());
 
+  DCHECK_NE(state_, kConnecting);
+  if (state_ != kOpen)
+    return;
+
   switch (binary_type_) {
     case kBinaryTypeBlob: {
       size_t size = binary_data->size();
       scoped_refptr<RawData> raw_data = RawData::Create();
       binary_data->swap(*raw_data->MutableData());
       std::unique_ptr<BlobData> blob_data = BlobData::Create();
-      blob_data->AppendData(std::move(raw_data), 0, BlobDataItem::kToEndOfFile);
+      blob_data->AppendData(std::move(raw_data));
       Blob* blob =
           Blob::Create(BlobDataHandle::Create(std::move(blob_data), size));
       RecordReceiveTypeHistogram(kWebSocketReceiveTypeBlob);

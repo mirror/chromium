@@ -27,6 +27,7 @@
 #include "chrome/browser/vr/elements/keyboard.h"
 #include "chrome/browser/vr/elements/laser.h"
 #include "chrome/browser/vr/elements/linear_layout.h"
+#include "chrome/browser/vr/elements/omnibox_formatting.h"
 #include "chrome/browser/vr/elements/rect.h"
 #include "chrome/browser/vr/elements/repositioner.h"
 #include "chrome/browser/vr/elements/reticle.h"
@@ -151,8 +152,6 @@ void OnSuggestionModelAdded(UiScene* scene,
   content_text->SetLayoutMode(TextLayoutMode::kSingleLineFixedWidth);
   content_text->SetSize(kSuggestionTextFieldWidthDMM, 0);
   content_text->SetAlignment(UiTexture::kTextAlignmentLeft);
-  VR_BIND_COLOR(model, content_text.get(),
-                &ColorScheme::omnibox_suggestion_content, &Text::SetColor);
   Text* p_content_text = content_text.get();
 
   auto description_text =
@@ -163,8 +162,6 @@ void OnSuggestionModelAdded(UiScene* scene,
   description_text->SetLayoutMode(TextLayoutMode::kSingleLineFixedWidth);
   description_text->SetSize(kSuggestionTextFieldWidthDMM, 0);
   description_text->SetAlignment(UiTexture::kTextAlignmentLeft);
-  VR_BIND_COLOR(model, description_text.get(),
-                &ColorScheme::omnibox_suggestion_description, &Text::SetColor);
   Text* p_description_text = description_text.get();
 
   auto text_layout = std::make_unique<LinearLayout>(LinearLayout::kDown);
@@ -207,7 +204,22 @@ void OnSuggestionModelAdded(UiScene* scene,
 
   element_binding->bindings().push_back(
       VR_BIND_FUNC(base::string16, SuggestionBinding, element_binding,
-                   model->model()->content, Text, p_content_text, SetText));
+                   model->model()->contents, Text, p_content_text, SetText));
+  element_binding->bindings().push_back(
+      std::make_unique<Binding<TextFormatting>>(
+          VR_BIND_LAMBDA(
+              [](SuggestionBinding* suggestion, Model* model) {
+                return ConvertClassification(
+                    suggestion->model()->contents_classifications,
+                    suggestion->model()->contents.size(),
+                    model->color_scheme());
+              },
+              base::Unretained(element_binding), base::Unretained(model)),
+          VR_BIND_LAMBDA(
+              [](Text* v, const TextFormatting& formatting) {
+                v->SetFormatting(formatting);
+              },
+              base::Unretained(p_content_text))));
   element_binding->bindings().push_back(
       std::make_unique<Binding<base::string16>>(
           VR_BIND_LAMBDA(
@@ -220,6 +232,21 @@ void OnSuggestionModelAdded(UiScene* scene,
                 if (!text.empty()) {
                   v->SetText(text);
                 }
+              },
+              base::Unretained(p_description_text))));
+  element_binding->bindings().push_back(
+      std::make_unique<Binding<TextFormatting>>(
+          VR_BIND_LAMBDA(
+              [](SuggestionBinding* suggestion, Model* model) {
+                return ConvertClassification(
+                    suggestion->model()->description_classifications,
+                    suggestion->model()->description.size(),
+                    model->color_scheme());
+              },
+              base::Unretained(element_binding), base::Unretained(model)),
+          VR_BIND_LAMBDA(
+              [](Text* v, const TextFormatting& formatting) {
+                v->SetFormatting(formatting);
               },
               base::Unretained(p_description_text))));
   element_binding->bindings().push_back(
@@ -251,6 +278,7 @@ std::unique_ptr<Rect> CreateOmniboxSpacer(Model* model) {
   auto spacer = Create<Rect>(kNone, kPhaseForeground);
   spacer->SetType(kTypeOmniboxSuggestionSpacer);
   spacer->SetSize(kOmniboxWidthDMM, kSuggestionVerticalPaddingDMM);
+  spacer->set_focusable(false);
   spacer->AddBinding(std::make_unique<Binding<bool>>(
       VR_BIND_LAMBDA([](Model* m) { return !m->omnibox_suggestions.empty(); },
                      base::Unretained(model)),
@@ -568,7 +596,7 @@ void UiSceneCreator::CreateSystemIndicators() {
     bool PermissionsModel::*signal;
   };
   const std::vector<Indicator> indicators = {
-      {kAudioCaptureIndicator, vector_icons::kMicrophoneIcon,
+      {kAudioCaptureIndicator, vector_icons::kMicIcon,
        IDS_AUDIO_CALL_NOTIFICATION_TEXT_2,
        &PermissionsModel::audio_capture_enabled},
       {kVideoCaptureIndicator, vector_icons::kVideocamIcon,
@@ -976,7 +1004,7 @@ void UiSceneCreator::CreateVoiceSearchUiGroup() {
       kVoiceSearchButton, kPhaseForeground,
       base::BindRepeating(&UiBrowserInterface::SetVoiceSearchActive,
                           base::Unretained(browser_), true),
-      vector_icons::kMicrophoneIcon);
+      vector_icons::kMicIcon);
   voice_search_button->SetSize(kVoiceSearchButtonDiameterDMM,
                                kVoiceSearchButtonDiameterDMM);
   voice_search_button->set_hover_offset(kButtonZOffsetHoverDMM);
@@ -1017,7 +1045,7 @@ void UiSceneCreator::CreateVoiceSearchUiGroup() {
   scene_->AddUiElement(kSpeechRecognitionRoot, std::move(inner_circle));
 
   auto microphone_icon = std::make_unique<VectorIcon>(512);
-  microphone_icon->SetIcon(vector_icons::kMicrophoneIcon);
+  microphone_icon->SetIcon(vector_icons::kMicIcon);
   microphone_icon->SetName(kSpeechRecognitionMicrophoneIcon);
   microphone_icon->SetDrawPhase(kPhaseForeground);
   microphone_icon->set_hit_testable(false);
@@ -1310,8 +1338,7 @@ void UiSceneCreator::CreateUrlBar() {
       Create<VectorIcon>(kUrlBarBackButtonIcon, kPhaseForeground, 128);
   back_icon->set_hit_testable(false);
   back_icon->SetIcon(vector_icons::kBackArrowIcon);
-  back_icon->SetSize(kUrlBarBackButtonIconSizeDMM,
-                     kUrlBarBackButtonIconSizeDMM);
+  back_icon->SetSize(kUrlBarIconSizeDMM, kUrlBarIconSizeDMM);
   back_icon->SetTranslate(kUrlBarBackButtonIconOffsetDMM, 0, 0);
   back_icon->AddBinding(VR_BIND_FUNC(
       SkColor, Model, model_,
@@ -1469,7 +1496,7 @@ void UiSceneCreator::CreateOmnibox() {
   omnibox_outer_layout->SetName(kOmniboxOuterLayout);
   omnibox_outer_layout->set_margin(kSuggestionGapDMM);
   omnibox_outer_layout->SetTranslate(
-      0, kUrlBarVerticalOffsetDMM - 0.5 * kOmniboxHeightDMM,
+      0, kUrlBarVerticalOffsetDMM - 0.5f * kOmniboxHeightDMM,
       kOmniboxShadowOffset);
   omnibox_outer_layout->AddBinding(std::make_unique<Binding<bool>>(
       VR_BIND_LAMBDA([](Model* m) { return m->omnibox_editing_enabled(); },
@@ -1534,8 +1561,12 @@ void UiSceneCreator::CreateOmnibox() {
   omnibox_text_field->set_x_anchoring(LEFT);
   omnibox_text_field->SetTranslate(kOmniboxTextMarginDMM, 0, 0);
   omnibox_text_field->AddBinding(std::make_unique<Binding<bool>>(
-      VR_BIND_LAMBDA([](Model* m) { return m->omnibox_editing_enabled(); },
-                     base::Unretained(model_)),
+      VR_BIND_LAMBDA(
+          [](Model* m) {
+            return m->omnibox_editing_enabled() &&
+                   m->active_modal_prompt_type == kModalPromptTypeNone;
+          },
+          base::Unretained(model_)),
       VR_BIND_LAMBDA(
           [](TextInput* e, Model* m, const bool& v) {
             if (v) {
@@ -1583,7 +1614,7 @@ void UiSceneCreator::CreateOmnibox() {
 
   auto mic_icon = Create<VectorIcon>(kNone, kPhaseForeground, 100);
   mic_icon->set_hit_testable(false);
-  mic_icon->SetIcon(vector_icons::kMicrophoneIcon);
+  mic_icon->SetIcon(vector_icons::kMicIcon);
   mic_icon->SetSize(kOmniboxTextFieldIconSizeDMM, kOmniboxTextFieldIconSizeDMM);
   VR_BIND_COLOR(model_, mic_icon.get(), &ColorScheme::omnibox_text,
                 &VectorIcon::SetColor);

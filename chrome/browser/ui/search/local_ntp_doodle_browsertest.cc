@@ -46,6 +46,7 @@ namespace {
 
 const char kCachedB64[] = "\161\247\041\171\337\276";  // b64decode("cached++")
 const char kFreshB64[] = "\176\267\254\207\357\276";   // b64decode("fresh+++")
+const int kFakeboxTopPx = 56 + 200 + 29;  // top margin + height + bottom margin
 
 // A base64 encoding of a tiny but valid gif file.
 const char kTinyGifData[] =
@@ -84,6 +85,22 @@ class LocalNTPDoodleTest : public InProcessBrowserTest {
   MockLogoService* logo_service() {
     return static_cast<MockLogoService*>(
         LogoServiceFactory::GetForProfile(browser()->profile()));
+  }
+
+  base::Optional<int> GetDimension(content::WebContents* tab,
+                                   const std::string& id,
+                                   const std::string& dimension) {
+    double value = 0.0;
+    if (instant_test_utils::GetDoubleFromJS(
+            tab,
+            base::StringPrintf(
+                "document.getElementById(%s).getBoundingClientRect()[%s]",
+                base::GetQuotedJSONString(id).c_str(),
+                base::GetQuotedJSONString(dimension).c_str()),
+            &value)) {
+      return value;
+    }
+    return base::nullopt;
   }
 
   base::Optional<std::string> GetComputedStyle(content::WebContents* tab,
@@ -192,7 +209,7 @@ class LocalNTPDoodleTest : public InProcessBrowserTest {
 
   static std::unique_ptr<KeyedService> CreateLogoService(
       content::BrowserContext* context) {
-    return base::MakeUnique<MockLogoService>();
+    return std::make_unique<MockLogoService>();
   }
 
   void OnWillCreateBrowserContextServices(content::BrowserContext* context) {
@@ -222,6 +239,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
   base::HistogramTester histograms;
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
 
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-default"), Eq(1.0));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(0.0));
   EXPECT_THAT(console_observer.message(), IsEmpty());
@@ -247,6 +265,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
   base::HistogramTester histograms;
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
 
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-default"), Eq(1.0));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(0.0));
   EXPECT_THAT(console_observer.message(), IsEmpty());
@@ -277,6 +296,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldShowDoodleWhenCached) {
   base::HistogramTester histograms;
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
 
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-default"), Eq(0.0));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(1.0));
   EXPECT_THAT(GetComputedDisplay(active_tab, "logo-doodle-button"),
@@ -306,6 +326,8 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldShowInteractiveLogo) {
   cached_logo.metadata.full_page_url =
       GURL("https://www.chromium.org/interactive");
   cached_logo.metadata.alt_text = "alt text";
+  cached_logo.metadata.iframe_width_px = 500;
+  cached_logo.metadata.iframe_height_px = 200;
 
   EXPECT_CALL(*logo_service(), GetLogoPtr(_))
       .WillRepeatedly(DoAll(
@@ -318,6 +340,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldShowInteractiveLogo) {
   base::HistogramTester histograms;
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
 
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-default"), Eq(0.0));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(1.0));
   EXPECT_THAT(GetComputedDisplay(active_tab, "logo-doodle-button"),
@@ -355,6 +378,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
 
   WaitForFadeIn(active_tab, "logo-default");
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-default"), Eq(1.0));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(0.0));
 
@@ -391,6 +415,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
 
   WaitForFadeIn(active_tab, "logo-doodle");
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-default"), Eq(0.0));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(1.0));
   EXPECT_THAT(GetComputedDisplay(active_tab, "logo-doodle-button"),
@@ -420,6 +445,8 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
   fresh_logo.metadata.full_page_url =
       GURL("https://www.chromium.org/interactive");
   fresh_logo.metadata.alt_text = "alt text";
+  fresh_logo.metadata.iframe_width_px = 500;
+  fresh_logo.metadata.iframe_height_px = 200;
 
   EXPECT_CALL(*logo_service(), GetLogoPtr(_))
       .WillOnce(
@@ -435,6 +462,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
 
   WaitForFadeIn(active_tab, "logo-doodle");
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-default"), Eq(0.0));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(1.0));
   EXPECT_THAT(GetComputedDisplay(active_tab, "logo-doodle-button"),
@@ -454,6 +482,8 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldNotFadeFromInteractiveDoodle) {
   cached_logo.metadata.full_page_url =
       GURL("https://www.chromium.org/interactive");
   cached_logo.metadata.alt_text = "alt text";
+  cached_logo.metadata.iframe_width_px = 500;
+  cached_logo.metadata.iframe_height_px = 200;
 
   EXPECT_CALL(*logo_service(), GetLogoPtr(_))
       .WillOnce(
@@ -468,6 +498,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldNotFadeFromInteractiveDoodle) {
       local_ntp_test_utils::OpenNewTab(browser(), GURL("about:blank"));
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
 
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-default"), Eq(0.0));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(1.0));
   EXPECT_THAT(GetComputedDisplay(active_tab, "logo-doodle-button"),
@@ -508,6 +539,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
 
   WaitForFadeIn(active_tab, "logo-doodle");
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-default"), Eq(0.0));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(1.0));
   EXPECT_THAT(GetComputedDisplay(active_tab, "logo-doodle-button"),
@@ -561,6 +593,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldUpdateMetadataWhenChanged) {
   base::HistogramTester histograms;
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
 
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-default"), Eq(0.0));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(1.0));
   EXPECT_THAT(GetComputedDisplay(active_tab, "logo-doodle-button"),
@@ -603,6 +636,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldAnimateLogoWhenClicked) {
   base::HistogramTester histograms;
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
 
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-default"), Eq(0.0));
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(1.0));
   EXPECT_THAT(GetComputedDisplay(active_tab, "logo-doodle-button"),
@@ -619,6 +653,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldAnimateLogoWhenClicked) {
   ASSERT_TRUE(content::ExecuteScript(
       active_tab, "document.getElementById('logo-doodle-button').click();"));
 
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx));
   EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-image", "src"),
               Eq(cached_logo.metadata.animated_url.spec()));
   // TODO(sfiera): check href by clicking on button.
@@ -773,4 +808,99 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldLogForAnimatedDoodle) {
   EXPECT_EQ(on_click_url.spec() + "?a=b&c=d", target_url);
 
   EXPECT_THAT(console_observer.message(), IsEmpty());
+}
+
+IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldNotMoveFakeboxForIframeSizes) {
+  for (int height : {0, 150, 229, 500}) {
+    EncodedLogo cached_logo;
+    cached_logo.encoded_image = MakeRefPtr(std::string());
+    cached_logo.metadata.mime_type = "image/png";
+    cached_logo.metadata.type = LogoType::INTERACTIVE;
+    cached_logo.metadata.full_page_url =
+        GURL("https://www.chromium.org/interactive");
+    cached_logo.metadata.alt_text = "alt text";
+    cached_logo.metadata.iframe_width_px = 500;
+    cached_logo.metadata.iframe_height_px = height;
+
+    EXPECT_CALL(*logo_service(), GetLogoPtr(_))
+        .WillRepeatedly(DoAll(
+            ReturnCachedLogo(LogoCallbackReason::DETERMINED, cached_logo),
+            ReturnFreshLogo(LogoCallbackReason::REVALIDATED, base::nullopt)));
+
+    // Open a new blank tab, then go to NTP.
+    content::WebContents* active_tab =
+        local_ntp_test_utils::OpenNewTab(browser(), GURL("about:blank"));
+    base::HistogramTester histograms;
+    ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
+
+    EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx))
+        << "iframe_height_px = " << height;
+  }
+}
+
+IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldMoveFakeboxWhenIframeResized) {
+  EncodedLogo cached_logo;
+  cached_logo.encoded_image = MakeRefPtr(std::string());
+  cached_logo.metadata.mime_type = "image/png";
+  cached_logo.metadata.type = LogoType::INTERACTIVE;
+  cached_logo.metadata.full_page_url =
+      GURL("https://www.chromium.org/interactive");
+  cached_logo.metadata.alt_text = "alt text";
+  cached_logo.metadata.iframe_width_px = 400;
+  cached_logo.metadata.iframe_height_px = 220;  // > 200, so smaller margin
+
+  EXPECT_CALL(*logo_service(), GetLogoPtr(_))
+      .WillRepeatedly(DoAll(
+          ReturnCachedLogo(LogoCallbackReason::DETERMINED, cached_logo),
+          ReturnFreshLogo(LogoCallbackReason::REVALIDATED, base::nullopt)));
+
+  // Open a new blank tab, then go to NTP.
+  content::WebContents* active_tab =
+      local_ntp_test_utils::OpenNewTab(browser(), GURL("about:blank"));
+  base::HistogramTester histograms;
+  ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
+
+  // Initial dimensions are correct:
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx));
+  EXPECT_THAT(GetDimension(active_tab, "logo-doodle-iframe", "width"), Eq(400));
+  EXPECT_THAT(GetDimension(active_tab, "logo-doodle-iframe", "height"),
+              Eq(220));
+
+  // Trigger resize. The duration parameter is left untested, since that would
+  // require introducing a potentially-flaky sleep in the test. Additionally,
+  // this would really be a cross-origin postMessage, from the Doodle iframe,
+  // origin google.com.
+  ASSERT_TRUE(content::ExecuteScript(active_tab,
+                                     R"js(
+                                         window.postMessage({
+                                             cmd: "resizeDoodle",
+                                             width: "100%",
+                                             height: "400px",  // 180px more
+                                             duration: "0s",
+                                         }, "chrome-search://local-ntp");
+                                     )js"));
+
+  // Fakebox is now 180px lower, with the iframe larger, as requested.
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"),
+              Eq(kFakeboxTopPx + 180));
+  EXPECT_THAT(GetDimension(active_tab, "logo-doodle-iframe", "width"),
+              Eq(GetDimension(active_tab, "logo", "width")));
+  EXPECT_THAT(GetDimension(active_tab, "logo-doodle-iframe", "height"),
+              Eq(400));
+
+  ASSERT_TRUE(content::ExecuteScript(active_tab,
+                                     R"js(
+                                         window.postMessage({
+                                             cmd: "resizeDoodle",
+                                             width: "400px",
+                                             height: "220px",
+                                             duration: "0s",
+                                         }, "chrome-search://local-ntp");
+                                     )js"));
+
+  // Back to the original dimensions now.
+  EXPECT_THAT(GetDimension(active_tab, "fakebox", "top"), Eq(kFakeboxTopPx));
+  EXPECT_THAT(GetDimension(active_tab, "logo-doodle-iframe", "width"), Eq(400));
+  EXPECT_THAT(GetDimension(active_tab, "logo-doodle-iframe", "height"),
+              Eq(220));
 }

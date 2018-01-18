@@ -477,7 +477,7 @@ be describing additional metrics about the same event.
       DPs.
     </summary>
   </metric>
-  <metric name="TapDuration">
+  <metric name="TapDurationMs">
     <summary>
       The duration of the tap gesture expressed in milliseconds.
     </summary>
@@ -2289,6 +2289,13 @@ be describing additional metrics about the same event.
       |chromeos::power::ml::UserActivityEvent::Feature::DeviceType|
     </summary>
   </metric>
+  <metric name="EventLogDuration">
+    <summary>
+      Time taken in seconds from when we start logging the features to the
+      moment when the event type is known and we finish logging the complete
+      event.
+    </summary>
+  </metric>
   <metric name="EventReason">
     <summary>
       An enum representing the reason of the event, defined in
@@ -2326,6 +2333,18 @@ be describing additional metrics about the same event.
   <metric name="RecentTimeActive">
     <summary>
       Duration of activity in seconds up to last activity.
+    </summary>
+  </metric>
+  <metric name="ScreenDimDelay">
+    <summary>
+      Delay after which the screen will be dimmed in seconds.
+    </summary>
+  </metric>
+  <metric name="ScreenDimToOffDelay">
+    <summary>
+      Delay after which the screen will be turned off in seconds, as measured
+      from screen is dimmed. If dim is diabled, it is the delay from the start
+      of inactivity.
     </summary>
   </metric>
   <metric name="TimeSinceLastKey">

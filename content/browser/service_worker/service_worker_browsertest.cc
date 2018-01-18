@@ -880,17 +880,16 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
       request->method = "GET";
       request->resource_type = resource_type;
       fetch_dispatcher_ = std::make_unique<ServiceWorkerFetchDispatcher>(
-          std::move(request), version_, base::nullopt /* timeout */,
-          net::NetLogWithSource(), std::move(prepare_callback),
-          std::move(fetch_callback));
+          std::move(request), version_, net::NetLogWithSource(),
+          std::move(prepare_callback), std::move(fetch_callback));
     } else {
       auto legacy_request = std::make_unique<ServiceWorkerFetchRequest>(
           url, "GET", ServiceWorkerHeaderMap(), Referrer(),
           false /* is_reload */);
       fetch_dispatcher_ = std::make_unique<ServiceWorkerFetchDispatcher>(
           std::move(legacy_request), version_, resource_type,
-          base::nullopt /* timeout */, net::NetLogWithSource(),
-          std::move(prepare_callback), std::move(fetch_callback));
+          net::NetLogWithSource(), std::move(prepare_callback),
+          std::move(fetch_callback));
     }
     fetch_dispatcher_->Run();
   }
@@ -2253,10 +2252,11 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerNavigationPreloadTest,
 }
 
 // When the content type of the page is not correctly set,
-// OnStartLoadingResponseBody() of mojom::URLLoaderClient is called before
-// OnReceiveResponse(). This behavior is caused by MimeSniffingResourceHandler.
-// This test checks that even if the MimeSniffingResourceHandler is triggered
-// navigation preload must be handled correctly.
+// OnStartLoadingResponseBody() of network::mojom::URLLoaderClient is called
+// before OnReceiveResponse(). This behavior is caused by
+// MimeSniffingResourceHandler. This test checks that even if the
+// MimeSniffingResourceHandler is triggered navigation preload must be handled
+// correctly.
 IN_PROC_BROWSER_TEST_F(ServiceWorkerNavigationPreloadTest,
                        RespondWithNavigationPreloadWithMimeSniffing) {
   const char kPageUrl[] = "/service_worker/navigation_preload.html";

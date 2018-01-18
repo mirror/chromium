@@ -9,9 +9,10 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/optional.h"
-#include "content/public/common/url_loader.mojom.h"
-#include "content/public/common/url_loader_factory.mojom.h"
+#include "content/common/content_export.h"
 #include "net/url_request/redirect_info.h"
+#include "services/network/public/interfaces/url_loader.mojom.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 
 namespace content {
 
@@ -20,8 +21,8 @@ struct ResourceRequest;
 struct SubresourceLoaderParams;
 
 using StartLoaderCallback =
-    base::OnceCallback<void(mojom::URLLoaderRequest request,
-                            mojom::URLLoaderClientPtr client)>;
+    base::OnceCallback<void(network::mojom::URLLoaderRequest request,
+                            network::mojom::URLLoaderClientPtr client)>;
 
 using LoaderCallback = base::OnceCallback<void(StartLoaderCallback)>;
 
@@ -56,9 +57,9 @@ class CONTENT_EXPORT URLLoaderRequestHandler {
   // The interface request for the URLLoaderClient is returned in the
   // |client_request| parameter.
   virtual bool MaybeCreateLoaderForResponse(
-      const ResourceResponseHead& response,
-      mojom::URLLoaderPtr* loader,
-      mojom::URLLoaderClientRequest* client_request);
+      const network::ResourceResponseHead& response,
+      network::mojom::URLLoaderPtr* loader,
+      network::mojom::URLLoaderClientRequest* client_request);
 };
 
 }  // namespace content

@@ -18,7 +18,7 @@ const DropPosition = {
 /**
  * Commands which can be handled by the CommandManager. This enum is also used
  * for metrics and should be kept in sync with BookmarkManagerCommand in
- * enums.xml.
+ * enums.xml. Values must never be renumbered or reused.
  * @enum {number}
  * @const
  */
@@ -44,12 +44,16 @@ const Command = {
   ADD_FOLDER: 17,
   IMPORT: 18,
   EXPORT: 19,
+  HELP_CENTER: 20,
 
   // Append new values to the end of the enum.
-  MAX_VALUE: 20,
+  MAX_VALUE: 21,
 };
 
 /**
+ * Where the menu was opened from. This enum is also used for metrics and should
+ * be kept in sync with BookmarkManagerMenuSource in enums.xml. Values must
+ * never be renumbered or reused.
  * @enum {number}
  * @const
  */
@@ -59,6 +63,9 @@ const MenuSource = {
   TREE: 2,
   TOOLBAR: 3,
   LIST: 4,
+
+  // Append new values to the end of the enum.
+  NUM_VALUES: 5,
 };
 
 /**

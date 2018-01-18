@@ -37,9 +37,6 @@ const char kAshDisableSmoothScreenRotation[] =
 const char kAshDisableTabletAutohideTitlebars[] =
     "ash-disable-tablet-autohide-titlebars";
 
-// Disables the split view on tablet mode.
-const char kAshDisableTabletSplitView[] = "disable-tablet-splitview";
-
 // Disable the Touch Exploration Mode. Touch Exploration Mode will no longer be
 // turned on automatically when spoken feedback is enabled when this flag is
 // set.
@@ -94,6 +91,9 @@ const char kAshEnableMirroredScreen[] = "ash-enable-mirrored-screen";
 // to modify the dsf of the device to any non discrete value.
 const char kAshEnableScaleSettingsTray[] = "ash-enable-scale-settings-tray";
 
+// Enables the split view on tablet mode.
+const char kAshEnableTabletSplitView[] = "enable-tablet-splitview";
+
 // Specifies the estimated time (in milliseconds) from VSYNC event until when
 // visible light can be noticed by the user.
 const char kAshEstimatedPresentationDelay[] =
@@ -145,6 +145,10 @@ const char kForceClamshellPowerButton[] = "force-clamshell-power-button";
 
 // Whether this device has an internal stylus.
 const char kHasInternalStylus[] = "has-internal-stylus";
+
+// If true, a long press of the power button in tablet mode will show the power
+// button menu.
+const char kShowPowerButtonMenu[] = "show-power-button-menu";
 
 // Draws a circle at each touch point, similar to the Android OS developer
 // option "Show taps".

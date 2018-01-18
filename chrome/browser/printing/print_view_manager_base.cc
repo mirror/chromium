@@ -160,20 +160,12 @@ void PrintViewManagerBase::PrintForPrintPreview(
 }
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
-bool PrintViewManagerBase::PrintDocument(
+void PrintViewManagerBase::PrintDocument(
     PrintedDocument* document,
     const scoped_refptr<base::RefCountedBytes>& print_data,
     const gfx::Size& page_size,
     const gfx::Rect& content_area,
     const gfx::Point& offsets) {
-  std::unique_ptr<PdfMetafileSkia> metafile =
-      std::make_unique<PdfMetafileSkia>(SkiaDocumentType::PDF);
-  if (!metafile->InitFromData(print_data->front(), print_data->size())) {
-    NOTREACHED() << "Invalid metafile";
-    web_contents()->Stop();
-    return false;
-  }
-
 #if defined(OS_WIN)
   if (PrintedDocument::HasDebugDumpPath())
     document->DebugDumpData(print_data.get(), FILE_PATH_LITERAL(".pdf"));
@@ -199,11 +191,14 @@ bool PrintViewManagerBase::PrintDocument(
                                         print_text_with_gdi);
   }
 #else
+  std::unique_ptr<PdfMetafileSkia> metafile =
+      std::make_unique<PdfMetafileSkia>(SkiaDocumentType::PDF);
+  CHECK(metafile->InitFromData(print_data->front(), print_data->size()));
+
   // Update the rendered document. It will send notifications to the listener.
   document->SetDocument(std::move(metafile), page_size, content_area);
   ShouldQuitFromInnerMessageLoop();
 #endif
-  return true;
 }
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
@@ -252,23 +247,25 @@ void PrintViewManagerBase::StartLocalPrintJob(
     scoped_refptr<printing::PrinterQuery> printer_query,
     PrinterHandler::PrintCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  const printing::PrintSettings& settings = printer_query->settings();
+
   OnDidGetPrintedPagesCount(printer_query->cookie(), page_count);
 
+  PrintedDocument* document = GetDocument(printer_query->cookie());
+  if (!document) {
+    std::move(callback).Run(base::Value("Failed to print"));
+    return;
+  }
+
+  const printing::PrintSettings& settings = printer_query->settings();
   gfx::Size page_size = settings.page_setup_device_units().physical_size();
   gfx::Rect content_area =
       gfx::Rect(0, 0, page_size.width(), page_size.height());
   gfx::Point offsets =
       gfx::Point(settings.page_setup_device_units().content_area().x(),
                  settings.page_setup_device_units().content_area().y());
-  // Print
-  PrintedDocument* document = GetDocument(printer_query->cookie());
-  if (!document ||
-      !PrintDocument(document, print_data, page_size, content_area, offsets)) {
-    std::move(callback).Run(base::Value("Failed to print"));
-  } else {
-    std::move(callback).Run(base::Value());
-  }
+
+  PrintDocument(document, print_data, page_size, content_area, offsets);
+  std::move(callback).Run(base::Value());
 }
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
 

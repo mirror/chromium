@@ -581,6 +581,7 @@ test("browser_tests") {
       "../browser/metrics/tab_reactivation_tracker_browsertest.cc",
       "../browser/metrics/tab_stats_tracker_browsertest.cc",
       "../browser/metrics/ukm_browsertest.cc",
+      "../browser/net/chrome_accept_header_browsertest.cc",
       "../browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
       "../browser/net/chrome_network_delegate_browsertest.cc",
       "../browser/net/cookie_policy_browsertest.cc",
@@ -687,6 +688,7 @@ test("browser_tests") {
       # files will probably not be applicable.
       "../browser/speech/extension_api/tts_extension_apitest.cc",
       "../browser/speech/speech_recognition_browsertest.cc",
+      "../browser/speech/speech_recognizer_browsertest.cc",
       "../browser/spellchecker/spellcheck_mac_view_browsertest.mm",
       "../browser/spellchecker/spellcheck_service_browsertest.cc",
       "../browser/ssl/cert_verifier_browser_test.cc",
@@ -1160,6 +1162,7 @@ test("browser_tests") {
         "../browser/extensions/api/processes/processes_apitest.cc",
         "../browser/extensions/api/proxy/proxy_apitest.cc",
         "../browser/extensions/api/resources_private/resources_private_apitest.cc",
+        "../browser/extensions/api/runtime/runtime_apitest.cc",
         "../browser/extensions/api/screenlock_private/screenlock_private_apitest.cc",
         "../browser/extensions/api/sessions/sessions_apitest.cc",
         "../browser/extensions/api/settings_overrides/settings_overrides_browsertest.cc",
@@ -1423,6 +1426,7 @@ test("browser_tests") {
           "../browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
           "../browser/ui/views/frame/browser_non_client_frame_view_browsertest.cc",
           "../browser/ui/views/frame/browser_view_browsertest.cc",
+          "../browser/ui/views/hung_renderer_view_browsertest.cc",
           "../browser/ui/views/location_bar/location_bar_view_browsertest.cc",
           "../browser/ui/views/location_bar/location_icon_view_browsertest.cc",
           "../browser/ui/views/media_router/media_router_ui_browsertest.cc",
@@ -1455,6 +1459,7 @@ test("browser_tests") {
         "../browser/chromeos/app_mode/kiosk_app_manager_browsertest.cc",
         "../browser/chromeos/app_mode/kiosk_app_update_service_browsertest.cc",
         "../browser/chromeos/app_mode/kiosk_crash_restore_browsertest.cc",
+        "../browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_browsertest.cc",
         "../browser/chromeos/arc/arc_session_manager_browsertest.cc",
         "../browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
         "../browser/chromeos/arc/auth/arc_auth_service_browsertest.cc",
@@ -1664,6 +1669,7 @@ test("browser_tests") {
         "//chrome/browser/chromeos:arc_test_support",
         "//chrome/services/file_util/public/cpp:browser_tests",
         "//components/arc:arc_test_support",
+        "//components/exo:test_support",
         "//components/prefs",
         "//components/user_manager:test_support",
         "//services/network/public/interfaces",
@@ -1846,7 +1852,7 @@ test("browser_tests") {
           "../browser/ui/cocoa/one_click_signin_dialog_controller_browsertest.mm",
           "../browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
           "../browser/ui/cocoa/passwords/passwords_bubble_browsertest.mm",
-          "../browser/ui/cocoa/permission_bubble/permission_bubble_cocoa_browser_test.mm",
+          "../browser/ui/cocoa/permission_bubble/permission_bubble_views_cocoa_browsertest.mm",
           "../browser/ui/cocoa/profiles/profile_signin_confirmation_view_controller_browsertest.mm",
           "../browser/ui/cocoa/renderer_context_menu/render_view_context_menu_mac_browsertest.mm",
           "../browser/ui/cocoa/ssl_client_certificate_selector_cocoa_browsertest.mm",
@@ -1912,7 +1918,6 @@ test("browser_tests") {
         "../browser/ui/app_list/app_list_controller_browsertest.cc",
         "../browser/ui/app_list/app_list_service_impl_browsertest.cc",
         "../browser/ui/app_list/search/webstore/webstore_provider_browsertest.cc",
-        "../browser/ui/app_list/speech_recognizer_browsertest.cc",
       ]
     }
     if (enable_service_discovery) {
@@ -2042,9 +2047,6 @@ group("telemetry_perf_unittests") {
 
     # For smoke testing run_telemetry_benchmark_as_googletest
     "//testing/scripts/run_telemetry_benchmark_as_googletest.py",
-
-    # For smoke testing run_multiple_telemetry_benchmarks_as_googletest
-    "//testing/scripts/run_multiple_telemetry_benchmarks_as_googletest.py",
   ]
 
   if (enable_mus) {
@@ -2069,6 +2071,19 @@ group("telemetry_perf_tests") {
   ]
 }
 
+# New target that will replace telemetry_perf_tests when testing
+# is done.
+group("performance_test_suite") {
+  testonly = true
+  deps = [
+    "//chrome/test:telemetry_perf_tests",
+  ]
+
+  data = [
+    "//testing/scripts/run_performance_tests.py",
+  ]
+}
+
 # Difference between this and telemetry_perf_tests is that this runs a devil
 # script before the build, to remove the system webview. See
 # //testing/buildbot/gn_isolate_map.pyl
@@ -2076,21 +2091,6 @@ group("telemetry_perf_webview_tests") {
   testonly = true
   deps = [
     "//chrome/test:telemetry_perf_tests",
-  ]
-}
-
-# New target for new script we're using to execute perf tests. Will replace the
-# current version, once testing has been done. See
-# //testing/buildbot/gn_isolate_map.pyl for differences.
-group("telemetry_perf_tests_new") {
-  testonly = true
-  deps = [
-    "//chrome/test:telemetry_perf_tests",
-  ]
-
-  data = [
-    # Needed for isolate script to execute.
-    "//testing/scripts/run_multiple_telemetry_benchmarks_as_googletest.py",
   ]
 }
 
@@ -2887,8 +2887,6 @@ test("unit_tests") {
       "../browser/ui/omnibox/clipboard_utils_unittest.cc",
       "../browser/ui/omnibox/favicon_cache_unittest.cc",
       "../browser/ui/omnibox/omnibox_controller_unittest.cc",
-      "../browser/ui/omnibox/test_omnibox_client.cc",
-      "../browser/ui/omnibox/test_omnibox_client.h",
       "../browser/ui/page_info/permission_menu_model_unittest.cc",
       "../browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
       "../browser/ui/passwords/password_dialog_controller_impl_unittest.cc",
@@ -3945,7 +3943,6 @@ test("unit_tests") {
         "../browser/ui/cocoa/passwords/save_pending_password_view_controller_unittest.mm",
         "../browser/ui/cocoa/passwords/signin_promo_view_controller_unittest.mm",
         "../browser/ui/cocoa/passwords/update_pending_password_view_controller_unittest.mm",
-        "../browser/ui/cocoa/permission_bubble/permission_bubble_controller_unittest.mm",
         "../browser/ui/cocoa/profiles/avatar_button_controller_unittest.mm",
         "../browser/ui/cocoa/profiles/avatar_button_unittest.mm",
         "../browser/ui/cocoa/profiles/avatar_icon_controller_unittest.mm",
@@ -4048,8 +4045,15 @@ test("unit_tests") {
       "comsupp.lib",
       "oleacc.lib",
       "rpcrt4.lib",
+      "runtimeobject.lib",
       "urlmon.lib",
       "winmm.lib",
+    ]
+
+    ldflags = [
+      "/DELAYLOAD:api-ms-win-core-winrt-error-l1-1-0.dll",
+      "/DELAYLOAD:api-ms-win-core-winrt-l1-1-0.dll",
+      "/DELAYLOAD:api-ms-win-core-winrt-string-l1-1-0.dll",
     ]
 
     if (!is_chrome_branded) {

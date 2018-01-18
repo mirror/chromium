@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -182,7 +183,7 @@ class DisplayPrefsTest : public ash::AshTestBase {
                                        const std::string& key,
                                        bool value) {
     StoreDisplayPropertyForList(list, key,
-                                base::MakeUnique<base::Value>(value));
+                                std::make_unique<base::Value>(value));
   }
 
   void StoreDisplayLayoutPrefForList(const display::DisplayIdList& list,
@@ -196,7 +197,7 @@ class DisplayPrefsTest : public ash::AshTestBase {
     const std::string name = base::Int64ToString(id);
 
     base::DictionaryValue* pref_data = update.Get();
-    auto insets_value = base::MakeUnique<base::DictionaryValue>();
+    auto insets_value = std::make_unique<base::DictionaryValue>();
     insets_value->SetInteger("insets_top", insets.top());
     insets_value->SetInteger("insets_left", insets.left());
     insets_value->SetInteger("insets_bottom", insets.bottom());
@@ -351,6 +352,11 @@ TEST_F(DisplayPrefsTest, BasicStores) {
   display_manager()->SetTouchCalibrationData(
       id2, point_pair_quad_2, touch_size_2, touch_device_identifier_2);
 
+  float zoom_factor_1 = 1.75f;
+  float zoom_factor_2 = 1.60f;
+  display_manager()->UpdateZoomFactor(id1, zoom_factor_1);
+  display_manager()->UpdateZoomFactor(id2, zoom_factor_2);
+
   const base::DictionaryValue* displays =
       local_state()->GetDictionary(prefs::kSecondaryDisplays);
   const base::DictionaryValue* layout_value = nullptr;
@@ -451,6 +457,10 @@ TEST_F(DisplayPrefsTest, BasicStores) {
   EXPECT_FALSE(property->GetInteger("width", &width));
   EXPECT_FALSE(property->GetInteger("height", &height));
 
+  int display_zoom_1;
+  EXPECT_TRUE(property->GetInteger("display_zoom", &display_zoom_1));
+  EXPECT_EQ(display_zoom_1, static_cast<int>(zoom_factor_1 * 100));
+
   // External display's resolution must be stored this time because
   // it's not best.
   int device_scale_factor = 0;
@@ -462,6 +472,10 @@ TEST_F(DisplayPrefsTest, BasicStores) {
   EXPECT_EQ(300, width);
   EXPECT_EQ(200, height);
   EXPECT_EQ(1250, device_scale_factor);
+
+  int display_zoom_2;
+  EXPECT_TRUE(property->GetInteger("display_zoom", &display_zoom_2));
+  EXPECT_EQ(display_zoom_2, static_cast<int>(zoom_factor_2 * 100));
 
   // The layout is swapped.
   EXPECT_TRUE(displays->GetDictionary(key, &layout_value));
@@ -527,7 +541,7 @@ TEST_F(DisplayPrefsTest, BasicStores) {
   // Set new display's selected resolution.
   display_manager()->RegisterDisplayProperty(
       id2 + 1, display::Display::ROTATE_0, 1.0f, nullptr, gfx::Size(500, 400),
-      1.0f);
+      1.0f, 1.0f);
 
   UpdateDisplay("200x200*2, 600x500#600x500|500x400");
 
@@ -550,7 +564,7 @@ TEST_F(DisplayPrefsTest, BasicStores) {
   // Set yet another new display's selected resolution.
   display_manager()->RegisterDisplayProperty(
       id2 + 1, display::Display::ROTATE_0, 1.0f, nullptr, gfx::Size(500, 400),
-      1.0f);
+      1.0f, 1.0f);
   // Disconnect 2nd display first to generate new id for external display.
   UpdateDisplay("200x200*2");
   UpdateDisplay("200x200*2, 500x400#600x500|500x400%60.0f");
@@ -1070,7 +1084,7 @@ TEST_F(DisplayPrefsTest, RestoreUnifiedMode) {
   StoreDisplayBoolPropertyForList(list, "default_unified", true);
   StoreDisplayPropertyForList(
       list, "primary-id",
-      base::MakeUnique<base::Value>(base::Int64ToString(first_display_id)));
+      std::make_unique<base::Value>(base::Int64ToString(first_display_id)));
   display_prefs()->LoadDisplayPreferences(false);
 
   // Should not restore to unified unless unified desktop is enabled.

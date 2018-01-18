@@ -86,7 +86,6 @@ class CORE_EXPORT InputMethodController final
   void CancelComposition();
 
   EphemeralRange CompositionEphemeralRange() const;
-  Range* CompositionRange() const;
 
   void Clear();
   void DocumentAttached(Document*);
@@ -111,6 +110,8 @@ class CORE_EXPORT InputMethodController final
   void WillChangeFocus();
 
  private:
+  friend class InputMethodControllerTest;
+
   Document& GetDocument() const;
   bool IsAvailable() const;
 
@@ -156,6 +157,9 @@ class CORE_EXPORT InputMethodController final
   // Returns true if moved caret successfully.
   bool MoveCaret(int new_caret_position);
 
+  // Returns false if the frame is destroyed, true otherwise.
+  bool DispatchCompositionStartEvent(const String& text) WARN_UNUSED_RESULT;
+
   PlainTextRange CreateSelectionRangeForSetComposition(
       int selection_start,
       int selection_end,
@@ -165,6 +169,8 @@ class CORE_EXPORT InputMethodController final
 
   // Implements |DocumentShutdownObserver|.
   void ContextDestroyed(Document*) final;
+
+  enum class TypingContinuation;
 
   // Returns true if setting selection to specified offsets, otherwise false.
   bool SetEditableSelectionOffsets(const PlainTextRange&, TypingContinuation);

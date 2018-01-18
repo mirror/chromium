@@ -131,7 +131,7 @@ class CONTENT_EXPORT RenderFrameHostManager
         bool* proceed_to_fire_unload) = 0;
     virtual void RenderProcessGoneFromRenderManager(
         RenderViewHost* render_view_host) = 0;
-    virtual void UpdateRenderViewSizeForRenderManager() = 0;
+    virtual void UpdateRenderViewSizeForRenderManager(bool is_main_frame) = 0;
     virtual void CancelModalDialogsForRenderManager() = 0;
     virtual void NotifySwappedFromRenderManager(RenderFrameHost* old_host,
                                                 RenderFrameHost* new_host,
@@ -372,6 +372,11 @@ class CONTENT_EXPORT RenderFrameHostManager
   // Sends updated enforcement of insecure request policy to all frame proxies
   // when the frame changes its setting.
   void OnEnforceInsecureRequestPolicy(blink::WebInsecureRequestPolicy policy);
+
+  // Sends updated enforcement of upgrade insecure navigations set to all frame
+  // proxies when the frame changes its setting.
+  void OnEnforceInsecureNavigationsSet(
+      const std::vector<uint32_t>& insecure_navigations_set);
 
   // Called when the client changes whether the frame's owner element in the
   // embedder document should be collapsed, that is, remove from the layout as

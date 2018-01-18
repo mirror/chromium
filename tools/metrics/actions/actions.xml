@@ -973,6 +973,14 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="Accel_Toggle_Dictation">
+  <owner>dtseng@chromium.org</owner>
+  <description>
+    Metric recorded when the user starts or stops dictation using keyboard
+    shortcut.
+  </description>
+</action>
+
 <action name="Accel_Toggle_High_Contrast">
   <owner>dmazzoni@chromium.org</owner>
   <description>
@@ -1221,6 +1229,10 @@ should be able to be added at any place in this file.
 </action>
 
 <action name="Android.ChromeHome.AcceptedSurvey">
+  <obsolete>
+    Deprecated 1/2018. Replaced with the
+    Android.ChromeHome.Survey.InfoBarClosingState histogram.
+  </obsolete>
   <owner>danielpark@chromium.org</owner>
   <description>
     User clicked on the invite to take a survey in the survey infobar.
@@ -1228,6 +1240,10 @@ should be able to be added at any place in this file.
 </action>
 
 <action name="Android.ChromeHome.ClickedSurveyInfoBarCloseButton">
+  <obsolete>
+    Deprecated 1/2018. Replaced with the
+    Android.ChromeHome.Survey.InfoBarClosingState histogram.
+  </obsolete>
   <owner>danielpark@chromium.org</owner>
   <description>
     User dismissed the survey infobar by tapping on its close button.
@@ -1407,6 +1423,11 @@ should be able to be added at any place in this file.
   <owner>mdjones@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
   <description>User showed the suggestions bottom sheet content.</description>
+</action>
+
+<action name="Android.ChromeHome.Survey.ShowSurveyInfoBar">
+  <owner>danielpark@chromium.org</owner>
+  <description>The survey infobar was displayed.</description>
 </action>
 
 <action name="Android.ContentDetectorActivated">
@@ -11576,6 +11597,15 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="MobileFreTOSLinkTapped">
+  <owner>justincohen@chromium.org</owner>
+  <description>
+    User tapped on the TOS link on the first run welcome view.  This metric is
+    only recorded if and after the TOS are accepted. This metric is specific to
+    iOS.
+  </description>
+</action>
+
 <action name="MobileGoToBackground">
   <owner>tedchoc@chromium.org</owner>
   <description>
@@ -15304,6 +15334,12 @@ should be able to be added at any place in this file.
 <action name="PageLoad" not_user_triggered="true">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
+</action>
+
+<action name="PageLoadInIncognito" not_user_triggered="true">
+  <owner>dullweber@chromium.org</owner>
+  <owner>msramek@chromium.org</owner>
+  <description>A page was loaded in incognito mode.</description>
 </action>
 
 <action name="PageLoadSRP" not_user_triggered="true">

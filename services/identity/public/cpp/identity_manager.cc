@@ -42,6 +42,10 @@ AccountInfo IdentityManager::GetPrimaryAccountInfo() {
   return primary_account_info_;
 }
 
+bool IdentityManager::HasPrimaryAccount() {
+  return !primary_account_info_.account_id.empty();
+}
+
 std::unique_ptr<PrimaryAccountAccessTokenFetcher>
 IdentityManager::CreateAccessTokenFetcherForPrimaryAccount(
     const std::string& oauth_consumer_name,
@@ -79,6 +83,17 @@ void IdentityManager::AddDiagnosticsObserver(DiagnosticsObserver* observer) {
 
 void IdentityManager::RemoveDiagnosticsObserver(DiagnosticsObserver* observer) {
   diagnostics_observer_list_.RemoveObserver(observer);
+}
+
+void IdentityManager::SetPrimaryAccountSynchronouslyForTests(
+    std::string gaia_id,
+    std::string email_address,
+    std::string refresh_token) {
+  signin_manager_->SetAuthenticatedAccountInfo(gaia_id, email_address);
+  primary_account_info_ = signin_manager_->GetAuthenticatedAccountInfo();
+
+  token_service_->UpdateCredentials(primary_account_info_.account_id,
+                                    refresh_token);
 }
 
 void IdentityManager::GoogleSigninSucceeded(const AccountInfo& account_info) {

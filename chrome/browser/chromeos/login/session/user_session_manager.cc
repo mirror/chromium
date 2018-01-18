@@ -128,7 +128,6 @@
 #include "ui/base/ime/chromeos/input_method_descriptor.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/base/ime/chromeos/input_method_util.h"
-#include "ui/message_center/message_center.h"
 #include "url/gurl.h"
 
 #if BUILDFLAG(ENABLE_RLZ)
@@ -1339,21 +1338,9 @@ void UserSessionManager::FinalizePrepareProfile(Profile* profile) {
 
   // Save sync password hash and salt to profile prefs if they are available.
   // These will be used to detect Gaia password reuses.
-  password_manager::metrics_util::IsSyncPasswordHashSaved hash_password_state(
-      password_manager::metrics_util::IsSyncPasswordHashSaved::NOT_SAVED);
   if (user_context_.GetSyncPasswordData().has_value()) {
-    scoped_refptr<password_manager::PasswordStore> password_store =
-        PasswordStoreFactory::GetForProfile(profile,
-                                            ServiceAccessType::EXPLICIT_ACCESS);
-    if (password_store) {
-      password_store->SaveSyncPasswordHash(
-          user_context_.GetSyncPasswordData().value());
-      hash_password_state =
-          password_manager::metrics_util::IsSyncPasswordHashSaved::SAVED;
-    }
+    login::SaveSyncPasswordDataToProfile(user_context_, profile);
   }
-  password_manager::metrics_util::LogIsSyncPasswordHashSaved(
-      hash_password_state);
 
   user_context_.ClearSecrets();
   if (TokenHandlesEnabled()) {
@@ -1839,7 +1826,7 @@ void UserSessionManager::CheckEolStatus(Profile* profile) {
   std::map<Profile*, std::unique_ptr<EolNotification>, ProfileCompare>::iterator
       iter = eol_notification_handler_.find(profile);
   if (iter == eol_notification_handler_.end()) {
-    auto eol_notification = base::MakeUnique<EolNotification>(profile);
+    auto eol_notification = std::make_unique<EolNotification>(profile);
     iter = eol_notification_handler_
                .insert(std::make_pair(profile, std::move(eol_notification)))
                .first;

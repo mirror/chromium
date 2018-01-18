@@ -70,8 +70,7 @@ bool ContentBrowserClient::AllowGpuLaunchRetryOnIOThread() {
 }
 
 GURL ContentBrowserClient::GetEffectiveURL(BrowserContext* browser_context,
-                                           const GURL& url,
-                                           bool is_isolated_origin) {
+                                           const GURL& url) {
   return url;
 }
 
@@ -633,8 +632,12 @@ void ContentBrowserClient::CreateUsbChooserService(
 bool ContentBrowserClient::ShowPaymentHandlerWindow(
     content::BrowserContext* browser_context,
     const GURL& url,
-    base::OnceCallback<void(bool)> callback) {
+    base::OnceCallback<void(bool, int, int)> callback) {
   return false;
+}
+
+bool ContentBrowserClient::ShouldCreateTaskScheduler() {
+  return true;
 }
 
 }  // namespace content

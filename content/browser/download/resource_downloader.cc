@@ -13,24 +13,28 @@
 #include "content/public/browser/web_contents.h"
 #include "storage/browser/fileapi/file_system_context.h"
 
+namespace network {
+struct ResourceResponseHead;
+}
+
 namespace content {
 
 // This object monitors the URLLoaderCompletionStatus change when
 // ResourceDownloader is asking |delegate_| whether download can proceed.
-class URLLoaderStatusMonitor : public mojom::URLLoaderClient {
+class URLLoaderStatusMonitor : public network::mojom::URLLoaderClient {
  public:
   using URLLoaderStatusChangeCallback =
       base::OnceCallback<void(const network::URLLoaderCompletionStatus&)>;
   explicit URLLoaderStatusMonitor(URLLoaderStatusChangeCallback callback);
   ~URLLoaderStatusMonitor() override = default;
 
-  // mojom::URLLoaderClient
+  // network::mojom::URLLoaderClient
   void OnReceiveResponse(
-      const ResourceResponseHead& head,
+      const network::ResourceResponseHead& head,
       const base::Optional<net::SSLInfo>& ssl_info,
-      mojom::DownloadedTempFilePtr downloaded_file) override {}
+      network::mojom::DownloadedTempFilePtr downloaded_file) override {}
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
-                         const ResourceResponseHead& head) override {}
+                         const network::ResourceResponseHead& head) override {}
   void OnDataDownloaded(int64_t data_length, int64_t encoded_length) override {}
   void OnUploadProgress(int64_t current_position,
                         int64_t total_size,
@@ -109,9 +113,9 @@ ResourceDownloader::InterceptNavigationResponse(
     const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
     std::vector<GURL> url_chain,
     const base::Optional<std::string>& suggested_filename,
-    const scoped_refptr<ResourceResponse>& response,
+    const scoped_refptr<network::ResourceResponse>& response,
     net::CertStatus cert_status,
-    mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints) {
+    network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints) {
   auto downloader = std::make_unique<ResourceDownloader>(
       delegate, std::move(resource_request), web_contents_getter, GURL(),
       GURL(), GURL(), DownloadItem::kInvalidId);
@@ -155,14 +159,16 @@ void ResourceDownloader::Start(
           download_url_parameters->GetSaveInfo()),
       is_parallel_request, download_url_parameters->is_transient(),
       download_url_parameters->fetch_error_body(),
+      download_url_parameters->download_source(),
       std::vector<GURL>(1, resource_request_->url));
-  mojom::URLLoaderClientPtr url_loader_client_ptr;
+  network::mojom::URLLoaderClientPtr url_loader_client_ptr;
   url_loader_client_binding_ =
-      std::make_unique<mojo::Binding<mojom::URLLoaderClient>>(
+      std::make_unique<mojo::Binding<network::mojom::URLLoaderClient>>(
           url_loader_client_.get(), mojo::MakeRequest(&url_loader_client_ptr));
 
   // Set up the URLLoader
-  mojom::URLLoaderRequest url_loader_request = mojo::MakeRequest(&url_loader_);
+  network::mojom::URLLoaderRequest url_loader_request =
+      mojo::MakeRequest(&url_loader_);
   if (download_url_parameters->url().SchemeIs(url::kBlobScheme)) {
     BlobURLLoaderFactory::CreateLoaderAndStart(
         std::move(url_loader_request), *(resource_request_.get()),
@@ -173,7 +179,7 @@ void ResourceDownloader::Start(
         std::move(url_loader_request),
         0,  // routing_id
         0,  // request_id
-        mojom::kURLLoadOptionSendSSLInfoWithResponse,
+        network::mojom::kURLLoadOptionSendSSLInfoWithResponse,
         *(resource_request_.get()), std::move(url_loader_client_ptr),
         net::MutableNetworkTrafficAnnotationTag(
             download_url_parameters->GetNetworkTrafficAnnotation()));
@@ -183,11 +189,11 @@ void ResourceDownloader::Start(
 }
 
 void ResourceDownloader::InterceptResponse(
-    const scoped_refptr<ResourceResponse>& response,
+    const scoped_refptr<network::ResourceResponse>& response,
     std::vector<GURL> url_chain,
     const base::Optional<std::string>& suggested_filename,
     net::CertStatus cert_status,
-    mojom::URLLoaderClientEndpointsPtr endpoints) {
+    network::mojom::URLLoaderClientEndpointsPtr endpoints) {
   // Set the URLLoader.
   url_loader_.Bind(std::move(endpoints->url_loader));
 
@@ -197,18 +203,18 @@ void ResourceDownloader::InterceptResponse(
     save_info->suggested_name = base::UTF8ToUTF16(suggested_filename.value());
   url_loader_client_ = std::make_unique<DownloadResponseHandler>(
       resource_request_.get(), this, std::move(save_info), false, false, false,
-      std::move(url_chain));
+      DownloadSource::NAVIGATION, std::move(url_chain));
 
   // Simulate on the new URLLoaderClient calls that happened on the old client.
   net::SSLInfo info;
   info.cert_status = cert_status;
-  url_loader_client_->OnReceiveResponse(response->head,
-                                        base::Optional<net::SSLInfo>(info),
-                                        mojom::DownloadedTempFilePtr());
+  url_loader_client_->OnReceiveResponse(
+      response->head, base::Optional<net::SSLInfo>(info),
+      network::mojom::DownloadedTempFilePtr());
 
   // Bind the new client.
   url_loader_client_binding_ =
-      std::make_unique<mojo::Binding<mojom::URLLoaderClient>>(
+      std::make_unique<mojo::Binding<network::mojom::URLLoaderClient>>(
           url_loader_client_.get(), std::move(endpoints->url_loader_client));
 }
 

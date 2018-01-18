@@ -9,6 +9,7 @@
 
 #include <memory>
 #include <utility>
+#include <vector>
 
 #include "ash/accessibility/accessibility_controller.h"
 #include "ash/accessibility/accessibility_focus_ring_controller.h"
@@ -40,6 +41,7 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_extension_loader.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_highlight_manager.h"
+#include "chrome/browser/chromeos/accessibility/dictation_chromeos.h"
 #include "chrome/browser/chromeos/accessibility/magnification_manager.h"
 #include "chrome/browser/chromeos/accessibility/switch_access_event_handler.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
@@ -131,16 +133,20 @@ class ChromeVoxPanelWidgetObserver : public views::WidgetObserver {
     widget_->AddObserver(this);
   }
 
+  ~ChromeVoxPanelWidgetObserver() override = default;
+
   void OnWidgetClosing(views::Widget* widget) override {
     CHECK_EQ(widget_, widget);
     widget->RemoveObserver(this);
     manager_->OnChromeVoxPanelClosing();
+    // |this| is deleted.
   }
 
   void OnWidgetDestroying(views::Widget* widget) override {
     CHECK_EQ(widget_, widget);
     widget->RemoveObserver(this);
     manager_->OnChromeVoxPanelDestroying();
+    // |this| is deleted.
   }
 
  private:
@@ -578,8 +584,8 @@ void AccessibilityManager::OnTwoFingerTouchStart() {
       extensions::EventRouter::Get(profile());
   CHECK(event_router);
 
-  auto event_args = base::MakeUnique<base::ListValue>();
-  auto event = base::MakeUnique<extensions::Event>(
+  auto event_args = std::make_unique<base::ListValue>();
+  auto event = std::make_unique<extensions::Event>(
       extensions::events::ACCESSIBILITY_PRIVATE_ON_TWO_FINGER_TOUCH_START,
       extensions::api::accessibility_private::OnTwoFingerTouchStart::kEventName,
       std::move(event_args));
@@ -594,8 +600,8 @@ void AccessibilityManager::OnTwoFingerTouchStop() {
       extensions::EventRouter::Get(profile());
   CHECK(event_router);
 
-  auto event_args = base::MakeUnique<base::ListValue>();
-  auto event = base::MakeUnique<extensions::Event>(
+  auto event_args = std::make_unique<base::ListValue>();
+  auto event = std::make_unique<extensions::Event>(
       extensions::events::ACCESSIBILITY_PRIVATE_ON_TWO_FINGER_TOUCH_STOP,
       extensions::api::accessibility_private::OnTwoFingerTouchStop::kEventName,
       std::move(event_args));
@@ -1082,6 +1088,10 @@ void AccessibilityManager::InputMethodChanged(
 }
 
 void AccessibilityManager::OnSessionStateChanged() {
+  // Don't reload ChromeVox during shutdown. http://crrev.com/c/838180
+  if (app_terminating_)
+    return;
+
   if (!chromevox_panel_)
     return;
   if (chromevox_panel_->for_blocked_user_session() ==
@@ -1105,6 +1115,9 @@ void AccessibilityManager::SetProfile(Profile* profile) {
 
   pref_change_registrar_.reset();
   local_state_pref_change_registrar_.reset();
+
+  // Clear all dictation state on profile change.
+  dictation_.reset();
 
   if (profile) {
     // TODO(yoshiki): Move following code to PrefHandler.
@@ -1374,7 +1387,7 @@ void AccessibilityManager::Observe(
       break;
     }
     case chrome::NOTIFICATION_APP_TERMINATING: {
-      chromevox_panel_ = nullptr;
+      app_terminating_ = true;
       break;
     }
   }
@@ -1427,6 +1440,11 @@ void AccessibilityManager::OnShutdown(extensions::ExtensionRegistry* registry) {
 }
 
 void AccessibilityManager::PostLoadChromeVox() {
+  // In browser_tests loading the ChromeVox extension can race with shutdown.
+  // http://crbug.com/801700
+  if (app_terminating_)
+    return;
+
   // Do any setup work needed immediately after ChromeVox actually loads.
   PlayEarcon(SOUND_SPOKEN_FEEDBACK_ENABLED, PlaySoundOption::ALWAYS);
 
@@ -1519,6 +1537,16 @@ void AccessibilityManager::SetKeyboardListenerExtensionId(
 void AccessibilityManager::SetSwitchAccessKeys(const std::set<int>& key_codes) {
   if (switch_access_enabled_)
     switch_access_event_handler_->SetKeysToCapture(key_codes);
+}
+
+void AccessibilityManager::ToggleDictation() {
+  if (!profile_)
+    return;
+
+  if (!dictation_.get())
+    dictation_ = std::make_unique<DictationChromeos>(profile_);
+
+  dictation_->OnToggleDictation();
 }
 
 }  // namespace chromeos

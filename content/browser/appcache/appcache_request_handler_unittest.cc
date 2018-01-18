@@ -93,7 +93,7 @@ class AppCacheRequestHandlerTest
 
     void OnSetSubresourceFactory(
         int host_id,
-        mojom::URLLoaderFactoryPtr url_loader_factory) override {}
+        network::mojom::URLLoaderFactoryPtr url_loader_factory) override {}
   };
 
   // Helper callback to run a test on our io_thread. The io_thread is spun up
@@ -448,7 +448,7 @@ class AppCacheRequestHandlerTest
       // status and the response code.
       DCHECK_EQ(net::OK, delegate_.request_status());
     } else {
-      ResourceResponseHead response;
+      network::ResourceResponseHead response;
       response.headers = info.headers;
       request_->AsURLLoaderRequest()->set_response(response);
     }
@@ -461,7 +461,7 @@ class AppCacheRequestHandlerTest
           url_request_.get(), nullptr, info));
       request_->AsURLRequest()->GetURLRequest()->Start();
     } else {
-      ResourceResponseHead response;
+      network::ResourceResponseHead response;
       response.headers = info.headers;
       request_->AsURLLoaderRequest()->set_response(response);
     }

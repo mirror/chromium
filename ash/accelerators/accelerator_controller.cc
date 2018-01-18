@@ -22,7 +22,6 @@
 #include "ash/media_controller.h"
 #include "ash/multi_profile_uma.h"
 #include "ash/new_window_controller.h"
-#include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/config.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
@@ -647,16 +646,6 @@ void HandleLock() {
   Shell::Get()->session_controller()->LockScreen();
 }
 
-bool CanHandleMoveWindowBetweenDisplays() {
-  if (!switches::IsDisplayMoveWindowAccelsEnabled())
-    return false;
-  display::DisplayManager* display_manager = Shell::Get()->display_manager();
-  // Accelerators to move window between displays on unified desktop mode and
-  // mirror mode is disabled.
-  return !display_manager->IsInUnifiedMode() &&
-         !display_manager->IsInMirrorMode();
-}
-
 PaletteTray* GetPaletteTray() {
   return Shelf::ForWindow(Shell::GetRootWindowForNewWindows())
       ->GetStatusAreaWidget()
@@ -795,6 +784,15 @@ void HandleToggleCapsLock() {
       chromeos::input_method::InputMethodManager::Get();
   chromeos::input_method::ImeKeyboard* keyboard = ime->GetImeKeyboard();
   keyboard->SetCapsLockEnabled(!keyboard->CapsLockIsEnabled());
+}
+
+bool CanHandleToggleDictation() {
+  return chromeos::switches::AreExperimentalAccessibilityFeaturesEnabled();
+}
+
+void HandleToggleDictation() {
+  base::RecordAction(UserMetricsAction("Accel_Toggle_Dictation"));
+  Shell::Get()->accessibility_controller()->ToggleDictation();
 }
 
 void HandleToggleHighContrast() {
@@ -1193,7 +1191,7 @@ bool AcceleratorController::CanPerformAction(
     case MOVE_WINDOW_TO_BELOW_DISPLAY:
     case MOVE_WINDOW_TO_LEFT_DISPLAY:
     case MOVE_WINDOW_TO_RIGHT_DISPLAY:
-      return CanHandleMoveWindowBetweenDisplays();
+      return CanHandleMoveActiveWindowBetweenDisplays();
     case NEW_INCOGNITO_WINDOW:
       return CanHandleNewIncognitoWindow();
     case NEXT_IME:
@@ -1221,6 +1219,8 @@ bool AcceleratorController::CanPerformAction(
       return CanHandleToggleAppList(accelerator, previous_accelerator);
     case TOGGLE_CAPS_LOCK:
       return CanHandleToggleCapsLock(accelerator, previous_accelerator);
+    case TOGGLE_DICTATION:
+      return CanHandleToggleDictation();
     case TOGGLE_MESSAGE_CENTER_BUBBLE:
       return CanHandleToggleMessageCenterBubble();
     case TOGGLE_MIRROR_MODE:
@@ -1543,6 +1543,9 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
       break;
     case TOGGLE_CAPS_LOCK:
       HandleToggleCapsLock();
+      break;
+    case TOGGLE_DICTATION:
+      HandleToggleDictation();
       break;
     case TOGGLE_FULLSCREEN:
       HandleToggleFullscreen(accelerator);

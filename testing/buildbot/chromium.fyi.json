@@ -4102,7 +4102,6 @@
           "memory.leak_detection",
           "--upload-results",
           "--output-format=histograms",
-          "--output-format=json-test-results",
           "--browser=release",
           "--xvfb"
         ],
@@ -4188,7 +4187,7 @@
       },
       {
         "args": [
-          "--enable-viz",
+          "--enable-features=VizDisplayCompositor",
           "--test-launcher-filter-file=../../testing/buildbot/filters/viz.browser_tests.filter"
         ],
         "name": "viz_browser_tests",
@@ -4211,7 +4210,7 @@
       },
       {
         "args": [
-          "--enable-viz",
+          "--enable-features=VizDisplayCompositor",
           "--test-launcher-filter-file=../../testing/buildbot/filters/mojo.fyi.viz.content_browsertests.filter"
         ],
         "name": "viz_content_browsertests",
@@ -4223,7 +4222,7 @@
       },
       {
         "args": [
-          "--enable-viz",
+          "--enable-features=VizDisplayCompositor",
           "--test-launcher-filter-file=../../testing/buildbot/filters/viz.content_unittests.filter"
         ],
         "name": "viz_content_unittests",
@@ -4249,7 +4248,7 @@
       {
         "args": [
           "--xvfb",
-          "--extra-browser-args=--enable-viz",
+          "--extra-browser-args=--enable-features=VizDisplayCompositor",
           "--skip=contrib.cluster_telemetry.screenshot_unittest.ScreenshotUnitTest.testScreenshot",
           "--skip=measurements.tab_switching_unittest.TabSwitchingUnittest.testTabSwitching"
         ],
@@ -4271,7 +4270,7 @@
       },
       {
         "args": [
-          "--extra-browser-args=--enable-viz",
+          "--extra-browser-args=--enable-features=VizDisplayCompositor",
           "--skip=telemetry.internal.actions.scroll_unittest.ScrollActionTest.testWheelScrollDistanceWhileZoomed",
           "--skip=telemetry.internal.backends.chrome_inspector.inspector_page_unittest.InspectorPageTest.testCaptureScreenshot",
           "--skip=telemetry.internal.backends.chrome.tab_list_backend_unittest.TabListBackendTest.testNewTab",
@@ -4486,7 +4485,6 @@
         "name": "mus_browser_tests",
         "swarming": {
           "can_use_on_swarming_builders": true,
-          "hard_timeout": 1500,
           "shards": 10
         },
         "test": "browser_tests"
@@ -4504,7 +4502,7 @@
       },
       {
         "args": [
-          "--enable-viz",
+          "--enable-features=VizDisplayCompositor",
           "--test-launcher-filter-file=../../testing/buildbot/filters/viz.browser_tests.filter"
         ],
         "name": "viz_browser_tests",
@@ -4538,7 +4536,7 @@
       },
       {
         "args": [
-          "--enable-viz",
+          "--enable-features=VizDisplayCompositor",
           "--test-launcher-filter-file=../../testing/buildbot/filters/mojo.fyi.viz.content_browsertests.filter"
         ],
         "name": "viz_content_browsertests",
@@ -4560,7 +4558,7 @@
       },
       {
         "args": [
-          "--enable-viz",
+          "--enable-features=VizDisplayCompositor",
           "--test-launcher-filter-file=../../testing/buildbot/filters/viz.content_unittests.filter"
         ],
         "name": "viz_content_unittests",
@@ -4699,7 +4697,7 @@
       },
       {
         "args": [
-          "--enable-viz",
+          "--enable-features=VizDisplayCompositor",
           "--test-launcher-filter-file=../../testing/buildbot/filters/viz.browser_tests.filter"
         ],
         "name": "viz_browser_tests",
@@ -4722,7 +4720,7 @@
       },
       {
         "args": [
-          "--enable-viz",
+          "--enable-features=VizDisplayCompositor",
           "--test-launcher-filter-file=../../testing/buildbot/filters/mojo.fyi.viz.content_browsertests.filter"
         ],
         "name": "viz_content_browsertests",
@@ -4734,7 +4732,7 @@
       },
       {
         "args": [
-          "--enable-viz",
+          "--enable-features=VizDisplayCompositor",
           "--test-launcher-filter-file=../../testing/buildbot/filters/viz.content_unittests.filter"
         ],
         "name": "viz_content_unittests",

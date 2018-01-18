@@ -25,7 +25,6 @@
 #include "content/common/navigation_params.h"
 #include "content/common/throttling_url_loader.h"
 #include "content/public/common/content_features.h"
-#include "content/public/common/resource_response.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/renderer/fixed_received_data.h"
 #include "content/public/renderer/request_peer.h"
@@ -41,6 +40,7 @@
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
 #include "services/network/public/cpp/resource_request.h"
+#include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
 
 namespace content {
@@ -140,7 +140,8 @@ void ResourceDispatcher::OnUploadProgress(int request_id,
 }
 
 void ResourceDispatcher::OnReceivedResponse(
-    int request_id, const ResourceResponseHead& response_head) {
+    int request_id,
+    const network::ResourceResponseHead& response_head) {
   TRACE_EVENT0("loader", "ResourceDispatcher::OnReceivedResponse");
   PendingRequestInfo* request_info = GetPendingRequestInfo(request_id);
   if (!request_info)
@@ -164,7 +165,7 @@ void ResourceDispatcher::OnReceivedResponse(
         response_head.cert_status);
   }
 
-  ResourceResponseInfo renderer_response_info;
+  network::ResourceResponseInfo renderer_response_info;
   ToResourceResponseInfo(*request_info, response_head, &renderer_response_info);
   request_info->site_isolation_metadata =
       SiteIsolationStatsGatherer::OnReceivedResponse(
@@ -199,14 +200,15 @@ void ResourceDispatcher::OnDownloadedData(int request_id,
 void ResourceDispatcher::OnReceivedRedirect(
     int request_id,
     const net::RedirectInfo& redirect_info,
-    const ResourceResponseHead& response_head) {
+    const network::ResourceResponseHead& response_head,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   TRACE_EVENT0("loader", "ResourceDispatcher::OnReceivedRedirect");
   PendingRequestInfo* request_info = GetPendingRequestInfo(request_id);
   if (!request_info)
     return;
   request_info->response_start = base::TimeTicks::Now();
 
-  ResourceResponseInfo renderer_response_info;
+  network::ResourceResponseInfo renderer_response_info;
   ToResourceResponseInfo(*request_info, response_head, &renderer_response_info);
   if (request_info->peer->OnReceivedRedirect(redirect_info,
                                              renderer_response_info)) {
@@ -225,7 +227,7 @@ void ResourceDispatcher::OnReceivedRedirect(
       FollowPendingRedirect(request_info);
     }
   } else {
-    Cancel(request_id);
+    Cancel(request_id, std::move(task_runner));
   }
 }
 
@@ -271,7 +273,9 @@ void ResourceDispatcher::OnRequestComplete(
   peer->OnCompletedRequest(renderer_status);
 }
 
-bool ResourceDispatcher::RemovePendingRequest(int request_id) {
+bool ResourceDispatcher::RemovePendingRequest(
+    int request_id,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   PendingRequestMap::iterator it = pending_requests_.find(request_id);
   if (it == pending_requests_.end())
     return false;
@@ -285,13 +289,15 @@ bool ResourceDispatcher::RemovePendingRequest(int request_id) {
   // Always delete the pending_request asyncly so that cancelling the request
   // doesn't delete the request context info while its response is still being
   // handled.
-  thread_task_runner_->DeleteSoon(FROM_HERE, it->second.release());
+  task_runner->DeleteSoon(FROM_HERE, it->second.release());
   pending_requests_.erase(it);
 
   return true;
 }
 
-void ResourceDispatcher::Cancel(int request_id) {
+void ResourceDispatcher::Cancel(
+    int request_id,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   PendingRequestMap::iterator it = pending_requests_.find(request_id);
   if (it == pending_requests_.end()) {
     DVLOG(1) << "unknown request";
@@ -300,7 +306,7 @@ void ResourceDispatcher::Cancel(int request_id) {
 
   // Cancel the request if it didn't complete, and clean it up so the bridge
   // will receive no more messages.
-  RemovePendingRequest(request_id);
+  RemovePendingRequest(request_id, std::move(task_runner));
 }
 
 void ResourceDispatcher::SetDefersLoading(int request_id, bool value) {
@@ -369,12 +375,12 @@ void ResourceDispatcher::StartSync(
     const url::Origin& frame_origin,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     SyncLoadResponse* response,
-    mojom::URLLoaderFactory* url_loader_factory,
+    scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles) {
   CheckSchemeForReferrerPolicy(*request);
 
-  mojom::URLLoaderFactoryPtrInfo url_loader_factory_copy;
-  url_loader_factory->Clone(mojo::MakeRequest(&url_loader_factory_copy));
+  std::unique_ptr<SharedURLLoaderFactoryInfo> factory_info =
+      url_loader_factory->Clone();
   base::WaitableEvent event(base::WaitableEvent::ResetPolicy::MANUAL,
                             base::WaitableEvent::InitialState::NOT_SIGNALED);
 
@@ -392,7 +398,7 @@ void ResourceDispatcher::StartSync(
       FROM_HERE,
       base::BindOnce(&SyncLoadContext::StartAsyncWithWaitableEvent,
                      std::move(request), routing_id, task_runner, frame_origin,
-                     traffic_annotation, std::move(url_loader_factory_copy),
+                     traffic_annotation, std::move(factory_info),
                      std::move(throttles), base::Unretained(response),
                      base::Unretained(&event)));
 
@@ -407,9 +413,9 @@ int ResourceDispatcher::StartAsync(
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     bool is_sync,
     std::unique_ptr<RequestPeer> peer,
-    mojom::URLLoaderFactory* url_loader_factory,
+    scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
-    mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints) {
+    network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints) {
   CheckSchemeForReferrerPolicy(*request);
 
   // Compute a unique request_id for this renderer process.
@@ -435,23 +441,23 @@ int ResourceDispatcher::StartAsync(
   std::unique_ptr<URLLoaderClientImpl> client(
       new URLLoaderClientImpl(request_id, this, loading_task_runner));
 
-  uint32_t options = mojom::kURLLoadOptionNone;
+  uint32_t options = network::mojom::kURLLoadOptionNone;
   // TODO(jam): use this flag for ResourceDispatcherHost code path once
   // MojoLoading is the only IPC code path.
   if (base::FeatureList::IsEnabled(features::kNetworkService) &&
       request->fetch_request_context_type != REQUEST_CONTEXT_TYPE_FETCH) {
     // MIME sniffing should be disabled for a request initiated by fetch().
-    options |= mojom::kURLLoadOptionSniffMimeType;
+    options |= network::mojom::kURLLoadOptionSniffMimeType;
   }
   if (is_sync) {
-    options |= mojom::kURLLoadOptionSynchronous;
+    options |= network::mojom::kURLLoadOptionSynchronous;
     request->load_flags |= net::LOAD_IGNORE_LIMITS;
   }
 
   std::unique_ptr<ThrottlingURLLoader> url_loader =
       ThrottlingURLLoader::CreateLoaderAndStart(
-          url_loader_factory, std::move(throttles), routing_id, request_id,
-          options, request.get(), client.get(), traffic_annotation,
+          std::move(url_loader_factory), std::move(throttles), routing_id,
+          request_id, options, request.get(), client.get(), traffic_annotation,
           std::move(loading_task_runner));
   pending_requests_[request_id]->url_loader = std::move(url_loader);
   pending_requests_[request_id]->url_loader_client = std::move(client);
@@ -461,8 +467,8 @@ int ResourceDispatcher::StartAsync(
 
 void ResourceDispatcher::ToResourceResponseInfo(
     const PendingRequestInfo& request_info,
-    const ResourceResponseHead& browser_info,
-    ResourceResponseInfo* renderer_info) const {
+    const network::ResourceResponseHead& browser_info,
+    network::ResourceResponseInfo* renderer_info) const {
   *renderer_info = browser_info;
   if (base::TimeTicks::IsConsistentAcrossProcesses() ||
       request_info.request_start.is_null() ||
@@ -516,7 +522,7 @@ base::TimeTicks ResourceDispatcher::ToRendererCompletionTime(
 
 void ResourceDispatcher::ContinueForNavigation(
     int request_id,
-    mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints) {
+    network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints) {
   DCHECK(url_loader_client_endpoints);
   PendingRequestInfo* request_info = GetPendingRequestInfo(request_id);
   if (!request_info)
@@ -528,8 +534,8 @@ void ResourceDispatcher::ContinueForNavigation(
   // the request. ResourceResponseHead can be empty here because we
   // pull the StreamOverride's one in
   // WebURLLoaderImpl::Context::OnReceivedResponse.
-  client_ptr->OnReceiveResponse(ResourceResponseHead(), base::nullopt,
-                                mojom::DownloadedTempFilePtr());
+  client_ptr->OnReceiveResponse(network::ResourceResponseHead(), base::nullopt,
+                                network::mojom::DownloadedTempFilePtr());
   // TODO(clamy): Move the replaying of redirects from WebURLLoaderImpl here.
 
   // Abort if the request is cancelled.

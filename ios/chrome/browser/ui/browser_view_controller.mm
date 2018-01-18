@@ -189,6 +189,8 @@
 #import "ios/chrome/browser/ui/tabs/requirements/tab_strip_constants.h"
 #import "ios/chrome/browser/ui/tabs/requirements/tab_strip_presentation.h"
 #import "ios/chrome/browser/ui/tabs/tab_strip_legacy_coordinator.h"
+#import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator.h"
+#import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/secondary_toolbar_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/toolbar_coordinator_adaptor.h"
@@ -416,7 +418,6 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     ManageAccountsDelegate,
                                     MFMailComposeViewControllerDelegate,
                                     NetExportTabHelperDelegate,
-                                    NewTabPageControllerObserver,
                                     OverscrollActionsControllerDelegate,
                                     PageInfoPresentation,
                                     PassKitDialogProvider,
@@ -533,9 +534,6 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
   // The image fetcher used to save images and perform image-based searches.
   std::unique_ptr<image_fetcher::IOSImageDataFetcherWrapper> _imageFetcher;
-
-  // Dominant color cache. Key: (NSString*)url, val: (UIColor*)dominantColor.
-  NSMutableDictionary* _dominantColorCache;
 
   // Bridge to register for bookmark changes.
   std::unique_ptr<bookmarks::BookmarkModelBridge> _bookmarkModelBridge;
@@ -689,7 +687,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
     primaryToolbarCoordinator;
 // Secondary toolbar.
 @property(nonatomic, strong)
-    SecondaryToolbarCoordinator* secondaryToolbarCoordinator;
+    AdaptiveToolbarCoordinator* secondaryToolbarCoordinator;
 // Interface object with the toolbars.
 @property(nonatomic, strong)
     id<ToolbarCoordinating, ToolsMenuPresentationStateProvider>
@@ -1675,7 +1673,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 
 - (BOOL)prefersStatusBarHidden {
-  return self.hideStatusBar;
+  BOOL defaultValue = NO;
+  if (IsAdaptiveToolbarEnabled()) {
+    defaultValue = [super prefersStatusBarHidden];
+  }
+  return self.hideStatusBar || defaultValue;
 }
 
 // Called when in the foreground and the OS needs more memory. Release as much
@@ -1878,7 +1880,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _imageFetcher = base::MakeUnique<image_fetcher::IOSImageDataFetcherWrapper>(
       _browserState->GetRequestContext());
   self.imageSaver = [[ImageSaver alloc] initWithBaseViewController:self];
-  _dominantColorCache = [[NSMutableDictionary alloc] init];
 
   // Register for bookmark changed notification (BookmarkModel may be null
   // during testing, so explicitly support this).
@@ -1935,11 +1936,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     topToolbarCoordinator.dispatcher = self.dispatcher;
     [topToolbarCoordinator start];
 
-    SecondaryToolbarCoordinator* bottomToolbarCoordinator =
-        [[SecondaryToolbarCoordinator alloc]
-            initWithBaseViewController:nil
-                          browserState:_browserState];
+    SecondaryToolbarCoordinator* bottomToolbarCoordinator = [
+        [SecondaryToolbarCoordinator alloc] initWithBrowserState:_browserState];
     self.secondaryToolbarCoordinator = bottomToolbarCoordinator;
+    bottomToolbarCoordinator.webStateList = [_model webStateList];
     bottomToolbarCoordinator.dispatcher = self.dispatcher;
     [bottomToolbarCoordinator start];
 
@@ -3738,12 +3738,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
   return self.headerHeight + StatusBarHeight();
 }
 
-#pragma mark - NewTabPageControllerObserver methods.
-
-- (void)selectedPanelDidChange {
-  [self updateToolbar];
-}
-
 #pragma mark - CRWNativeContentProvider methods
 
 // TODO(crbug.com/725241): This method is deprecated and should be removed by
@@ -3790,20 +3784,13 @@ bubblePresenterForFeature:(const base::Feature&)feature
         [[NewTabPageController alloc] initWithUrl:url
                                            loader:self
                                           focuser:self.primaryToolbarCoordinator
-                                      ntpObserver:self
                                      browserState:_browserState
-                                       colorCache:_dominantColorCache
                                   toolbarDelegate:self.toolbarInterface
                                          tabModel:_model
                              parentViewController:self
                                        dispatcher:self.dispatcher
                                     safeAreaInset:safeAreaInset];
     pageController.swipeRecognizerProvider = self.sideSwipeController;
-
-    // Panel is always NTP for iPhone.
-    ntp_home::PanelIdentifier panelType = ntp_home::HOME_PANEL;
-
-    [pageController selectPanel:panelType];
     nativeController = pageController;
   } else if (url_host == kChromeUIOfflineHost &&
              [self hasControllerForURL:url]) {
@@ -4702,6 +4689,15 @@ bubblePresenterForFeature:(const base::Feature&)feature
           [exitingPage removeFromSuperview];
         });
   }
+}
+
+- (void)navigateToMemexTabSwitcher {
+  // TODO(crbug.com/799601): Delete this once its not needed.
+  const GURL memexURL("https://chrome-memex.appspot.com");
+  [self loadURL:memexURL
+               referrer:web::Referrer()
+             transition:ui::PAGE_TRANSITION_LINK
+      rendererInitiated:NO];
 }
 
 #pragma mark - ToolbarOwner (Public)

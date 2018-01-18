@@ -6,8 +6,9 @@
 
 #include <string>
 
+#include "base/command_line.h"
 #include "base/strings/stringprintf.h"
-#include "content/public/common/resource_response.h"
+#include "content/public/common/content_switches.h"
 #include "net/base/load_flags.h"
 #include "net/base/mime_sniffer.h"
 #include "net/http/http_raw_request_headers.h"
@@ -15,21 +16,19 @@
 #include "net/url_request/url_request.h"
 #include "services/network/public/cpp/http_raw_request_response_info.h"
 #include "services/network/public/cpp/resource_request.h"
+#include "services/network/public/cpp/resource_response.h"
+#include "url/gurl.h"
 
 namespace content {
 
-namespace {
-constexpr char kAcceptHeader[] = "Accept";
-constexpr char kFrameAcceptHeader[] =
+const char kAcceptHeader[] = "Accept";
+const char kFrameAcceptHeader[] =
     "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,"
     "image/apng,*/*;q=0.8";
-constexpr char kStylesheetAcceptHeader[] = "text/css,*/*;q=0.1";
-constexpr char kImageAcceptHeader[] = "image/webp,image/apng,image/*,*/*;q=0.8";
-constexpr char kDefaultAcceptHeader[] = "*/*";
-}  //  namespace
+const char kDefaultAcceptHeader[] = "*/*";
 
 bool ShouldSniffContent(net::URLRequest* url_request,
-                        ResourceResponse* response) {
+                        network::ResourceResponse* response) {
   const std::string& mime_type = response->head.mime_type;
 
   std::string content_type_options;
@@ -100,44 +99,6 @@ scoped_refptr<network::HttpRawRequestResponseInfo> BuildRawRequestResponseInfo(
   return info;
 }
 
-void AttachAcceptHeader(ResourceType type, net::URLRequest* request) {
-  const char* accept_value = nullptr;
-  switch (type) {
-    case RESOURCE_TYPE_MAIN_FRAME:
-    case RESOURCE_TYPE_SUB_FRAME:
-      accept_value = kFrameAcceptHeader;
-      break;
-    case RESOURCE_TYPE_STYLESHEET:
-      accept_value = kStylesheetAcceptHeader;
-      break;
-    case RESOURCE_TYPE_FAVICON:
-    case RESOURCE_TYPE_IMAGE:
-      accept_value = kImageAcceptHeader;
-      break;
-    case RESOURCE_TYPE_SCRIPT:
-    case RESOURCE_TYPE_FONT_RESOURCE:
-    case RESOURCE_TYPE_SUB_RESOURCE:
-    case RESOURCE_TYPE_OBJECT:
-    case RESOURCE_TYPE_MEDIA:
-    case RESOURCE_TYPE_WORKER:
-    case RESOURCE_TYPE_SHARED_WORKER:
-    case RESOURCE_TYPE_PREFETCH:
-    case RESOURCE_TYPE_XHR:
-    case RESOURCE_TYPE_PING:
-    case RESOURCE_TYPE_SERVICE_WORKER:
-    case RESOURCE_TYPE_CSP_REPORT:
-    case RESOURCE_TYPE_PLUGIN_RESOURCE:
-      accept_value = kDefaultAcceptHeader;
-      break;
-    case RESOURCE_TYPE_LAST_TYPE:
-      NOTREACHED();
-      break;
-  }
-  // The false parameter prevents overwriting an existing accept header value,
-  // which is needed because JS can manually set an accept header on an XHR.
-  request->SetExtraRequestHeaderByName(kAcceptHeader, accept_value, false);
-}
-
 int BuildLoadFlagsForRequest(const network::ResourceRequest& request) {
   int load_flags = request.load_flags;
 
@@ -153,6 +114,15 @@ int BuildLoadFlagsForRequest(const network::ResourceRequest& request) {
   }
 
   return load_flags;
+}
+
+std::string ComputeReferrer(const GURL& referrer) {
+  if (!referrer.is_valid() || base::CommandLine::ForCurrentProcess()->HasSwitch(
+                                  switches::kNoReferrers)) {
+    return std::string();
+  }
+
+  return referrer.spec();
 }
 
 }  // namespace content

@@ -206,8 +206,8 @@ media::AudioParameters GetAudioHardwareParams() {
       .output_params();
 }
 
-mojom::URLLoaderFactoryPtr GetBlobURLLoaderFactoryGetter() {
-  mojom::URLLoaderFactoryPtr blob_loader_factory;
+network::mojom::URLLoaderFactoryPtr GetBlobURLLoaderFactoryGetter() {
+  network::mojom::URLLoaderFactoryPtr blob_loader_factory;
   RenderThreadImpl::current()->GetRendererHost()->GetBlobURLLoaderFactory(
       mojo::MakeRequest(&blob_loader_factory));
   return blob_loader_factory;
@@ -294,9 +294,7 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
     thread_safe_sender_ = RenderThreadImpl::current()->thread_safe_sender();
     shared_bitmap_manager_ =
         RenderThreadImpl::current()->shared_bitmap_manager();
-    blob_registry_.reset(new WebBlobRegistryImpl(
-        RenderThreadImpl::current()->GetIOTaskRunner().get(),
-        base::ThreadTaskRunnerHandle::Get(), thread_safe_sender_.get()));
+    blob_registry_.reset(new WebBlobRegistryImpl(thread_safe_sender_.get()));
     web_idb_factory_.reset(new WebIDBFactoryImpl(
         sync_message_filter_,
         RenderThreadImpl::current()->GetIOTaskRunner().get()));
@@ -364,18 +362,19 @@ RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactoryGetter() {
           : ChildURLLoaderFactoryGetterImpl::URLLoaderFactoryGetterCallback());
 }
 
-PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
+PossiblyAssociatedInterfacePtr<network::mojom::URLLoaderFactory>
 RendererBlinkPlatformImpl::CreateNetworkURLLoaderFactory() {
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
   DCHECK(render_thread);
-  PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory> url_loader_factory;
+  PossiblyAssociatedInterfacePtr<network::mojom::URLLoaderFactory>
+      url_loader_factory;
 
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    mojom::URLLoaderFactoryPtr factory_ptr;
+    network::mojom::URLLoaderFactoryPtr factory_ptr;
     connector_->BindInterface(mojom::kBrowserServiceName, &factory_ptr);
     url_loader_factory = std::move(factory_ptr);
   } else {
-    mojom::URLLoaderFactoryAssociatedPtr factory_ptr;
+    network::mojom::URLLoaderFactoryAssociatedPtr factory_ptr;
     render_thread->channel()->GetRemoteAssociatedInterface(&factory_ptr);
     url_loader_factory = std::move(factory_ptr);
   }
@@ -384,7 +383,7 @@ RendererBlinkPlatformImpl::CreateNetworkURLLoaderFactory() {
   // avoid thread hops and prevent jank on the main thread from affecting
   // requests from other threads this object should live on the IO thread.
   if (base::FeatureList::IsEnabled(features::kOutOfBlinkCORS)) {
-    mojom::URLLoaderFactoryPtr factory_ptr;
+    network::mojom::URLLoaderFactoryPtr factory_ptr;
     RenderThreadImpl::current()->GetIOTaskRunner()->PostTask(
         FROM_HERE, base::BindOnce(&CORSURLLoaderFactory::CreateAndBind,
                                   url_loader_factory.PassInterface(),

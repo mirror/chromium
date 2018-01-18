@@ -16,7 +16,6 @@
 @synthesize backgroundView = _backgroundView;
 @synthesize toolbarCoordinator = _toolbarCoordinator;
 @synthesize delegate = _delegate;
-@synthesize toolsPopupController = _toolsPopupController;
 @synthesize URLLoader = _URLLoader;
 
 - (instancetype)initWithDispatcher:
@@ -91,10 +90,6 @@
 
 - (void)resetToolbarAfterSideSwipeSnapshot {
   [self.toolbarCoordinator resetToolbarAfterSideSwipeSnapshot];
-}
-
-- (void)navigateToMemexTabSwitcher {
-  [self.toolbarCoordinator navigateToMemexTabSwitcher];
 }
 
 #pragma mark - Abstract Toolbar

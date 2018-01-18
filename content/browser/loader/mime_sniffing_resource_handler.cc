@@ -28,7 +28,6 @@
 #include "content/public/browser/plugin_service.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/resource_dispatcher_host_delegate.h"
-#include "content/public/common/resource_response.h"
 #include "content/public/common/webplugininfo.h"
 #include "net/base/io_buffer.h"
 #include "net/base/mime_sniffer.h"
@@ -37,6 +36,7 @@
 #include "net/http/http_response_headers.h"
 #include "net/url_request/url_request.h"
 #include "ppapi/features/features.h"
+#include "services/network/public/cpp/resource_response.h"
 #include "third_party/WebKit/common/mime_util/mime_util.h"
 #include "url/origin.h"
 
@@ -130,12 +130,11 @@ void MimeSniffingResourceHandler::OnWillStart(
     std::unique_ptr<ResourceController> controller) {
   DCHECK(!has_controller());
 
-  AttachAcceptHeader(GetRequestInfo()->GetResourceType(), request());
   next_handler_->OnWillStart(url, std::move(controller));
 }
 
 void MimeSniffingResourceHandler::OnResponseStarted(
-    ResourceResponse* response,
+    network::ResourceResponse* response,
     std::unique_ptr<ResourceController> controller) {
   DCHECK_EQ(STATE_STARTING, state_);
   DCHECK(!has_controller());
@@ -517,6 +516,7 @@ bool MimeSniffingResourceHandler::MustDownload() {
   bool is_cross_origin =
       (request()->initiator().has_value() &&
        !request()->url_chain().back().SchemeIsBlob() &&
+       !request()->url_chain().back().SchemeIsFileSystem() &&
        !request()->url_chain().back().SchemeIs(url::kAboutScheme) &&
        !request()->url_chain().back().SchemeIs(url::kDataScheme) &&
        request()->initiator()->GetURL() !=

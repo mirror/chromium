@@ -155,6 +155,7 @@
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/TextPosition.h"
+#include "public/platform/WebScrollIntoViewParams.h"
 
 namespace blink {
 
@@ -529,8 +530,8 @@ void Element::scrollIntoViewWithOptions(const ScrollIntoViewOptions& options) {
       ToPhysicalAlignment(options, kVerticalScroll, is_horizontal_writing_mode);
 
   LayoutRect bounds = BoundingBox();
-  GetLayoutObject()->ScrollRectToVisible(bounds, align_x, align_y,
-                                         kProgrammaticScroll, false, behavior);
+  GetLayoutObject()->ScrollRectToVisible(
+      bounds, {align_x, align_y, kProgrammaticScroll, false, behavior});
 
   GetDocument().SetSequentialFocusNavigationStartingPoint(this);
 }
@@ -544,12 +545,14 @@ void Element::scrollIntoViewIfNeeded(bool center_if_needed) {
   LayoutRect bounds = BoundingBox();
   if (center_if_needed) {
     GetLayoutObject()->ScrollRectToVisible(
-        bounds, ScrollAlignment::kAlignCenterIfNeeded,
-        ScrollAlignment::kAlignCenterIfNeeded, kProgrammaticScroll, false);
+        bounds,
+        {ScrollAlignment::kAlignCenterIfNeeded,
+         ScrollAlignment::kAlignCenterIfNeeded, kProgrammaticScroll, false});
   } else {
     GetLayoutObject()->ScrollRectToVisible(
-        bounds, ScrollAlignment::kAlignToEdgeIfNeeded,
-        ScrollAlignment::kAlignToEdgeIfNeeded, kProgrammaticScroll, false);
+        bounds,
+        {ScrollAlignment::kAlignToEdgeIfNeeded,
+         ScrollAlignment::kAlignToEdgeIfNeeded, kProgrammaticScroll, false});
   }
 }
 
@@ -2495,16 +2498,9 @@ ShadowRoot* Element::attachShadow(const ScriptState* script_state,
 ShadowRoot& Element::CreateShadowRootInternal() {
   DCHECK(!ClosedShadowRoot());
   DCHECK(AreAuthorShadowsAllowed());
-  if (AlwaysCreateUserAgentShadowRoot())
-    EnsureLegacyUserAgentShadowRootV0();
+  DCHECK(!AlwaysCreateUserAgentShadowRoot());
   GetDocument().SetShadowCascadeOrder(ShadowCascadeOrder::kShadowCascadeV0);
   return EnsureShadow().AddShadowRoot(*this, ShadowRootType::V0);
-}
-
-ShadowRoot& Element::CreateLegacyUserAgentShadowRootV0() {
-  DCHECK(!GetShadowRoot());
-  return EnsureShadow().AddShadowRoot(*this,
-                                      ShadowRootType::kLegacyUserAgentV0);
 }
 
 ShadowRoot& Element::CreateUserAgentShadowRootV1() {
@@ -2565,17 +2561,6 @@ ShadowRoot* Element::UserAgentShadowRoot() const {
   }
 
   return nullptr;
-}
-
-ShadowRoot& Element::EnsureLegacyUserAgentShadowRootV0() {
-  if (ShadowRoot* shadow_root = UserAgentShadowRoot()) {
-    DCHECK(shadow_root->GetType() == ShadowRootType::kLegacyUserAgentV0);
-    return *shadow_root;
-  }
-  ShadowRoot& shadow_root =
-      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kLegacyUserAgentV0);
-  DidAddUserAgentShadowRoot(shadow_root);
-  return shadow_root;
 }
 
 ShadowRoot& Element::EnsureUserAgentShadowRootV1() {
@@ -2985,7 +2970,8 @@ void Element::UpdateFocusAppearanceWithOptions(
   } else if (GetLayoutObject() &&
              !GetLayoutObject()->IsLayoutEmbeddedContent()) {
     if (!options.preventScroll()) {
-      GetLayoutObject()->ScrollRectToVisible(BoundingBox());
+      GetLayoutObject()->ScrollRectToVisible(BoundingBox(),
+                                             WebScrollIntoViewParams());
     }
   }
 }
@@ -3130,12 +3116,16 @@ void Element::outerHTML(StringOrTrustedHTML& result) const {
 void Element::SetInnerHTMLFromString(const String& html,
                                      ExceptionState& exception_state) {
   probe::breakableLocation(&GetDocument(), "Element.setInnerHTML");
-  if (DocumentFragment* fragment = CreateFragmentForInnerOuterHTML(
-          html, this, kAllowScriptingContent, "innerHTML", exception_state)) {
-    ContainerNode* container = this;
-    if (auto* template_element = ToHTMLTemplateElementOrNull(*this))
-      container = template_element->content();
-    ReplaceChildrenWithFragment(container, fragment, exception_state);
+  if (html.IsEmpty() && !HasNonInBodyInsertionMode()) {
+    setTextContent(html);
+  } else {
+    if (DocumentFragment* fragment = CreateFragmentForInnerOuterHTML(
+            html, this, kAllowScriptingContent, "innerHTML", exception_state)) {
+      ContainerNode* container = this;
+      if (auto* template_element = ToHTMLTemplateElementOrNull(*this))
+        container = template_element->content();
+      ReplaceChildrenWithFragment(container, fragment, exception_state);
+    }
   }
 }
 

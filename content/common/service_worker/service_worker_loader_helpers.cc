@@ -8,12 +8,13 @@
 #include <utility>
 
 #include "base/strings/stringprintf.h"
+#include "content/common/loader_util.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/common/content_features.h"
-#include "content/public/common/resource_response.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/http/http_util.h"
 #include "services/network/public/cpp/resource_request.h"
+#include "services/network/public/cpp/resource_response.h"
 #include "ui/base/page_transition_types.h"
 
 namespace content {
@@ -55,14 +56,12 @@ ServiceWorkerLoaderHelpers::CreateFetchRequest(
   new_request->method = request.method;
   // |blob_uuid| and |blob_size| aren't used in MojoBlobs, so just clear them.
   // The caller is responsible for setting the MojoBlob field |blob| if needed.
-  DCHECK(features::IsMojoBlobsEnabled());
   new_request->blob_uuid.clear();
   new_request->blob_size = 0;
   new_request->credentials_mode = request.fetch_credentials_mode;
   new_request->cache_mode =
       ServiceWorkerFetchRequest::GetCacheModeFromLoadFlags(request.load_flags);
-  new_request->redirect_mode =
-      static_cast<FetchRedirectMode>(request.fetch_redirect_mode);
+  new_request->redirect_mode = request.fetch_redirect_mode;
   new_request->keepalive = request.keepalive;
   new_request->is_reload = ui::PageTransitionCoreTypeIs(
       static_cast<ui::PageTransition>(request.transition_type),
@@ -79,7 +78,7 @@ void ServiceWorkerLoaderHelpers::SaveResponseHeaders(
     const int status_code,
     const std::string& status_text,
     const ServiceWorkerHeaderMap& headers,
-    ResourceResponseHead* out_head) {
+    network::ResourceResponseHead* out_head) {
   // Build a string instead of using HttpResponseHeaders::AddHeader on
   // each header, since AddHeader has O(n^2) performance.
   std::string buf(base::StringPrintf("HTTP/1.1 %d %s\r\n", status_code,
@@ -106,7 +105,7 @@ void ServiceWorkerLoaderHelpers::SaveResponseHeaders(
 // static
 void ServiceWorkerLoaderHelpers::SaveResponseInfo(
     const ServiceWorkerResponse& response,
-    ResourceResponseHead* out_head) {
+    network::ResourceResponseHead* out_head) {
   out_head->was_fetched_via_service_worker = true;
   out_head->was_fallback_required_by_service_worker = false;
   out_head->url_list_via_service_worker = response.url_list;
@@ -121,19 +120,11 @@ void ServiceWorkerLoaderHelpers::SaveResponseInfo(
 base::Optional<net::RedirectInfo>
 ServiceWorkerLoaderHelpers::ComputeRedirectInfo(
     const network::ResourceRequest& original_request,
-    const ResourceResponseHead& response_head,
+    const network::ResourceResponseHead& response_head,
     bool token_binding_negotiated) {
   std::string new_location;
   if (!response_head.headers->IsRedirect(&new_location))
     return base::nullopt;
-
-  std::string referrer_string;
-  net::URLRequest::ReferrerPolicy referrer_policy;
-  Referrer::ComputeReferrerInfo(
-      &referrer_string, &referrer_policy,
-      Referrer(original_request.referrer,
-               Referrer::NetReferrerPolicyToBlinkReferrerPolicy(
-                   original_request.referrer_policy)));
 
   // If the request is a MAIN_FRAME request, the first-party URL gets
   // updated on redirects.
@@ -144,7 +135,8 @@ ServiceWorkerLoaderHelpers::ComputeRedirectInfo(
   return net::RedirectInfo::ComputeRedirectInfo(
       original_request.method, original_request.url,
       original_request.site_for_cookies, first_party_url_policy,
-      referrer_policy, referrer_string, response_head.headers.get(),
+      original_request.referrer_policy,
+      ComputeReferrer(original_request.referrer), response_head.headers.get(),
       response_head.headers->response_code(),
       original_request.url.Resolve(new_location), token_binding_negotiated);
 }

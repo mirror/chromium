@@ -713,16 +713,6 @@ const FeatureEntry::FeatureVariation
          arraysize(kCondensedTileLayoutForLargeScreensEnabled), nullptr}};
 #endif  // OS_ANDROID
 
-#if defined(OS_ANDROID)
-const FeatureEntry::Choice kHerbPrototypeChoices[] = {
-    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flags_ui::kGenericExperimentChoiceDisabled,
-     switches::kTabManagementExperimentTypeDisabled, ""},
-    {flag_descriptions::kHerbPrototypeFlavorElderberry,
-     switches::kTabManagementExperimentTypeElderberry, ""},
-};
-#endif  // OS_ANDROID
-
 const FeatureEntry::Choice kEnableUseZoomForDSFChoices[] = {
     {flag_descriptions::kEnableUseZoomForDsfChoiceDefault, "", ""},
     {flag_descriptions::kEnableUseZoomForDsfChoiceEnabled,
@@ -1013,8 +1003,6 @@ const FeatureEntry::Choice kEnableOutOfProcessHeapProfilingChoices[] = {
      switches::kMemlog, switches::kMemlogModeBrowser},
     {flag_descriptions::kEnableOutOfProcessHeapProfilingModeGpu,
      switches::kMemlog, switches::kMemlogModeGpu},
-    {flag_descriptions::kEnableOutOfProcessHeapProfilingModeRendererSampling,
-     switches::kMemlog, switches::kMemlogModeRendererSampling},
     {flag_descriptions::kEnableOutOfProcessHeapProfilingModeAllRenderers,
      switches::kMemlog, switches::kMemlogModeAllRenderers},
     {flag_descriptions::kEnableOutOfProcessHeapProfilingModeManual,
@@ -1031,8 +1019,12 @@ const FeatureEntry::Choice kOOPHPStackModeChoices[] = {
      switches::kMemlogStackModeMixed},
 };
 
+const FeatureEntry::FeatureParam kOmniboxUIMaxAutocompleteMatches3[] = {
+    {OmniboxFieldTrial::kUIMaxAutocompleteMatchesParam, "3"}};
 const FeatureEntry::FeatureParam kOmniboxUIMaxAutocompleteMatches4[] = {
     {OmniboxFieldTrial::kUIMaxAutocompleteMatchesParam, "4"}};
+const FeatureEntry::FeatureParam kOmniboxUIMaxAutocompleteMatches5[] = {
+    {OmniboxFieldTrial::kUIMaxAutocompleteMatchesParam, "5"}};
 const FeatureEntry::FeatureParam kOmniboxUIMaxAutocompleteMatches6[] = {
     {OmniboxFieldTrial::kUIMaxAutocompleteMatchesParam, "6"}};
 const FeatureEntry::FeatureParam kOmniboxUIMaxAutocompleteMatches8[] = {
@@ -1044,8 +1036,12 @@ const FeatureEntry::FeatureParam kOmniboxUIMaxAutocompleteMatches12[] = {
 
 const FeatureEntry::FeatureVariation
     kOmniboxUIMaxAutocompleteMatchesVariations[] = {
+        {"3 matches", kOmniboxUIMaxAutocompleteMatches3,
+         arraysize(kOmniboxUIMaxAutocompleteMatches3), nullptr},
         {"4 matches", kOmniboxUIMaxAutocompleteMatches4,
          arraysize(kOmniboxUIMaxAutocompleteMatches4), nullptr},
+        {"5 matches", kOmniboxUIMaxAutocompleteMatches5,
+         arraysize(kOmniboxUIMaxAutocompleteMatches5), nullptr},
         {"6 matches", kOmniboxUIMaxAutocompleteMatches6,
          arraysize(kOmniboxUIMaxAutocompleteMatches6), nullptr},
         {"8 matches", kOmniboxUIMaxAutocompleteMatches8,
@@ -1235,10 +1231,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"ui-disable-partial-swap", flag_descriptions::kUiPartialSwapName,
      flag_descriptions::kUiPartialSwapDescription, kOsAll,
      SINGLE_DISABLE_VALUE_TYPE(switches::kUIDisablePartialSwap)},
-    {"enable-prevent-layer-squashing",
-     flag_descriptions::kEnablePreventLayerSquashingName,
-     flag_descriptions::kEnablePreventLayerSquashingDescription, kOsAll,
-     FEATURE_VALUE_TYPE(features::kEnablePreventLayerSquashing)},
 #if BUILDFLAG(ENABLE_WEBRTC)
     {"disable-webrtc-hw-decoding", flag_descriptions::kWebrtcHwDecodingName,
      flag_descriptions::kWebrtcHwDecodingDescription, kOsAndroid | kOsCrOS,
@@ -1601,11 +1593,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kPasswordGenerationDescription, kOsAll,
      ENABLE_DISABLE_VALUE_TYPE(autofill::switches::kEnablePasswordGeneration,
                                autofill::switches::kDisablePasswordGeneration)},
-    {"PasswordForceSaving",
-     flag_descriptions::kPasswordForceSavingName,
+    {"PasswordForceSaving", flag_descriptions::kPasswordForceSavingName,
      flag_descriptions::kPasswordForceSavingDescription, kOsAll,
-     FEATURE_VALUE_TYPE(
-         password_manager::features::kPasswordForceSaving)},
+     FEATURE_VALUE_TYPE(password_manager::features::kPasswordForceSaving)},
     {"enable-manual-password-generation",
      flag_descriptions::kManualPasswordGenerationName,
      flag_descriptions::kManualPasswordGenerationDescription, kOsAll,
@@ -1845,12 +1835,6 @@ const FeatureEntry kFeatureEntries[] = {
      ENABLE_DISABLE_VALUE_TYPE(switches::kEnableTranslateNewUX,
                                switches::kDisableTranslateNewUX)},
 #endif  // OS_MACOSX
-#if defined(OS_LINUX) || defined(OS_WIN)
-    {"translate-2016q2-ui", flag_descriptions::kTranslate2016q2UiName,
-     flag_descriptions::kTranslate2016q2UiDescription,
-     kOsCrOS | kOsWin | kOsLinux,
-     FEATURE_VALUE_TYPE(translate::kTranslateUI2016Q2)},
-#endif  // OS_LINUX || OS_WIN
     {"translate-ranker-enforcement",
      flag_descriptions::kTranslateRankerEnforcementName,
      flag_descriptions::kTranslateRankerEnforcementDescription, kOsAll,
@@ -2249,6 +2233,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"vr-browsing-in-custom-tab", flag_descriptions::kVrBrowsingInCustomTabName,
      flag_descriptions::kVrBrowsingInCustomTabDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kVrBrowsingInCustomTab)},
+    {"vr-icon-in-daydream-home", flag_descriptions::kVrIconInDaydreamHomeName,
+     flag_descriptions::kVrIconInDaydreamHomeDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kVrIconInDaydreamHome)},
     {"vr-launch-intents", flag_descriptions::kVrLaunchIntentsName,
      flag_descriptions::kVrLaunchIntentsDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kVrLaunchIntents)},
@@ -2394,12 +2381,6 @@ const FeatureEntry kFeatureEntries[] = {
          autofill::switches::kEnableOfferUploadCreditCards,
          autofill::switches::kDisableOfferUploadCreditCards)},
 #endif  // TOOLKIT_VIEWS || OS_ANDROID
-#if defined(OS_ANDROID)
-    {"tab-management-experiment-type",
-     flag_descriptions::kHerbPrototypeChoicesName,
-     flag_descriptions::kHerbPrototypeChoicesDescription, kOsAndroid,
-     MULTI_VALUE_TYPE(kHerbPrototypeChoices)},
-#endif  // OS_ANDROID
 #if defined(OS_MACOSX)
     {"mac-md-download-shelf",
      flag_descriptions::kEnableMacMaterialDesignDownloadShelfName,
@@ -2521,6 +2502,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableNtpSnippetsVisibilityName,
      flag_descriptions::kEnableNtpSnippetsVisibilityDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(ntp_snippets::kIncreasedVisibility)},
+    {"enable-contextual-suggestions-above-articles",
+     flag_descriptions::kContextualSuggestionsAboveArticlesName,
+     flag_descriptions::kContextualSuggestionsAboveArticlesDescription,
+     kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kContextualSuggestionsAboveArticles)},
     {"enable-contextual-suggestions-carousel",
      flag_descriptions::kContextualSuggestionsCarouselName,
      flag_descriptions::kContextualSuggestionsCarouselDescription, kOsAndroid,
@@ -2600,12 +2586,13 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kUserActivationV2Description, kOsAll,
      FEATURE_VALUE_TYPE(features::kUserActivationV2)},
 #if BUILDFLAG(ENABLE_WEBRTC) && BUILDFLAG(RTC_USE_H264) && \
-    !defined(MEDIA_DISABLE_FFMPEG)
+    BUILDFLAG(ENABLE_FFMPEG_VIDEO_DECODERS)
     {"enable-webrtc-h264-with-openh264-ffmpeg",
      flag_descriptions::kWebrtcH264WithOpenh264FfmpegName,
      flag_descriptions::kWebrtcH264WithOpenh264FfmpegDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(content::kWebRtcH264WithOpenH264FFmpeg)},
-#endif  // ENABLE_WEBRTC && BUILDFLAG(RTC_USE_H264) && !MEDIA_DISABLE_FFMPEG
+#endif  // ENABLE_WEBRTC && BUILDFLAG(RTC_USE_H264) &&
+        // BUILDFLAG(ENABLE_FFMPEG_VIDEO_DECODERS)
 #if defined(OS_ANDROID)
     {"offlining-recent-pages", flag_descriptions::kOffliningRecentPagesName,
      flag_descriptions::kOffliningRecentPagesDescription, kOsAndroid,
@@ -3517,9 +3504,9 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_DISABLE_VALUE_TYPE(
          ash::switches::kAshDisableTabletAutohideTitlebars)},
 
-    {"disable-tablet-splitview", flag_descriptions::kDisableTabletSplitViewName,
-     flag_descriptions::kDisableTabletSplitViewDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(ash::switches::kAshDisableTabletSplitView)},
+    {"enable-tablet-splitview", flag_descriptions::kEnableTabletSplitViewName,
+     flag_descriptions::kEnableTabletSplitViewDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(ash::switches::kAshEnableTabletSplitView)},
 #endif  // defined(OS_CHROMEOS)
 
     {"enable-parallel-downloading", flag_descriptions::kParallelDownloadingName,
@@ -3542,12 +3529,6 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_WITH_PARAMS_VALUE_TYPE(predictors::kSpeculativePreconnectFeature,
                                     kSpeculativePreconnectFeatureVariations,
                                     "SpeculativePreconnectValidation")},
-
-#if defined(OS_ANDROID)
-    {"enable-async-dns", flag_descriptions::kAsyncDnsName,
-     flag_descriptions::kAsyncDnsDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(features::kAsyncDns)},
-#endif  // defined(OS_ANDROID)
 
     {"enable-overflow-icons-for-media-controls",
      flag_descriptions::kOverflowIconsForMediaControlsName,

@@ -82,7 +82,6 @@
 #include "content/public/renderer/render_view_visitor.h"
 #include "content/renderer/appcache/appcache_dispatcher.h"
 #include "content/renderer/appcache/appcache_frontend_impl.h"
-#include "content/renderer/blob_storage/blob_message_filter.h"
 #include "content/renderer/browser_plugin/browser_plugin_manager.h"
 #include "content/renderer/cache_storage/cache_storage_dispatcher.h"
 #include "content/renderer/cache_storage/cache_storage_message_filter.h"
@@ -736,8 +735,6 @@ void RenderThreadImpl::Init(
       new CacheStorageDispatcher(thread_safe_sender()));
   file_system_dispatcher_.reset(new FileSystemDispatcher());
 
-  blob_message_filter_ = new BlobMessageFilter(GetFileThreadTaskRunner());
-  AddFilter(blob_message_filter_.get());
   vc_manager_.reset(new VideoCaptureImplManager());
 
   browser_plugin_manager_.reset(new BrowserPluginManager());
@@ -1997,6 +1994,9 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       features::IsSurfaceSynchronizationEnabled();
   params.local_surface_id_provider =
       std::make_unique<RendererLocalSurfaceIdProvider>();
+
+  // The renderer runs animations and layout for animate_only BeginFrames.
+  params.wants_animate_only_begin_frames = true;
 
   // In disable gpu vsync mode, also let the renderer tick as fast as it
   // can. The top level begin frame source will also be running as a back

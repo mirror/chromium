@@ -73,9 +73,8 @@ ServiceWorkerURLLoaderJob::ServiceWorkerURLLoaderJob(
             resource_request_.fetch_request_mode);
   DCHECK_EQ(network::mojom::FetchCredentialsMode::kInclude,
             resource_request_.fetch_credentials_mode);
-  DCHECK_EQ(
-      FetchRedirectMode::MANUAL_MODE,
-      static_cast<FetchRedirectMode>(resource_request_.fetch_redirect_mode));
+  DCHECK_EQ(network::mojom::FetchRedirectMode::kManual,
+            resource_request_.fetch_redirect_mode);
   response_head_.load_timing.request_start = base::TimeTicks::Now();
   response_head_.load_timing.request_start_time = base::Time::Now();
 }
@@ -158,8 +157,7 @@ void ServiceWorkerURLLoaderJob::StartRequest() {
   // Dispatch the fetch event.
   fetch_dispatcher_ = std::make_unique<ServiceWorkerFetchDispatcher>(
       std::make_unique<network::ResourceRequest>(resource_request_),
-      active_worker, base::nullopt /* timeout */,
-      net::NetLogWithSource() /* TODO(scottmg): net log? */,
+      active_worker, net::NetLogWithSource() /* TODO(scottmg): net log? */,
       base::BindOnce(&ServiceWorkerURLLoaderJob::DidPrepareFetchEvent,
                      weak_factory_.GetWeakPtr(),
                      base::WrapRefCounted(active_worker)),
@@ -265,8 +263,8 @@ void ServiceWorkerURLLoaderJob::StartResponse(
     scoped_refptr<ServiceWorkerVersion> version,
     blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream,
     blink::mojom::BlobPtr body_as_blob,
-    mojom::URLLoaderRequest request,
-    mojom::URLLoaderClientPtr client) {
+    network::mojom::URLLoaderRequest request,
+    network::mojom::URLLoaderClientPtr client) {
   DCHECK(!binding_.is_bound());
   DCHECK(!url_loader_client_.is_bound());
   binding_.Bind(std::move(request));
@@ -334,8 +332,8 @@ void ServiceWorkerURLLoaderJob::StartResponse(
 }
 
 void ServiceWorkerURLLoaderJob::StartErrorResponse(
-    mojom::URLLoaderRequest request,
-    mojom::URLLoaderClientPtr client) {
+    network::mojom::URLLoaderRequest request,
+    network::mojom::URLLoaderClientPtr client) {
   DCHECK_EQ(Status::kStarted, status_);
   DCHECK(!url_loader_client_.is_bound());
   url_loader_client_ = std::move(client);

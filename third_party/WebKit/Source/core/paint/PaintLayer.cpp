@@ -1884,8 +1884,8 @@ PaintLayer* PaintLayer::HitTestLayer(
     bool applied_transform,
     const HitTestingTransformState* transform_state,
     double* z_offset) {
-  DCHECK(GetLayoutObject().GetDocument().Lifecycle().GetState() >=
-         DocumentLifecycle::kCompositingClean);
+  DCHECK_GE(GetLayoutObject().GetDocument().Lifecycle().GetState(),
+            DocumentLifecycle::kCompositingClean);
 
   if (!IsSelfPaintingLayer() && !HasSelfPaintingLayerDescendant())
     return nullptr;
@@ -3028,10 +3028,7 @@ void PaintLayer::StyleDidChange(StyleDifference diff,
   GetLayoutObject().SetNeedsPaintPropertyUpdate();
 }
 
-LayoutPoint PaintLayer::Location() const {
-#if DCHECK_IS_ON()
-  DCHECK(!needs_position_update_);
-#endif
+LayoutPoint PaintLayer::LocationInternal() const {
   LayoutPoint result(location_);
   PaintLayer* containing_layer = ContainingLayer();
   if (containing_layer && containing_layer->IsRootLayer() &&

@@ -213,6 +213,12 @@ void WebFrameWidgetImpl::SendResizeEventAndRepaint() {
 }
 
 void WebFrameWidgetImpl::ResizeVisualViewport(const WebSize& new_size) {
+  if (!local_root_) {
+    // We should figure out why we get here when there is no local root
+    // (https://crbug.com/792345).
+    return;
+  }
+
   // TODO(alexmos, kenrb): resizing behavior such as this should be changed
   // to use Page messages.  This uses the visual viewport size to set size on
   // both the WebViewImpl size and the Page's VisualViewport. If there are
@@ -267,18 +273,21 @@ void WebFrameWidgetImpl::BeginFrame(double last_frame_time_monotonic) {
     GetPage()->GetValidationMessageClient().LayoutOverlay();
 }
 
-void WebFrameWidgetImpl::UpdateAllLifecyclePhases() {
+void WebFrameWidgetImpl::UpdateLifecycle(LifecycleUpdate requested_update) {
   TRACE_EVENT0("blink", "WebFrameWidgetImpl::updateAllLifecyclePhases");
   if (!local_root_)
     return;
 
-  if (WebDevToolsAgentImpl* devtools = local_root_->DevToolsAgentImpl())
+  bool pre_paint_only = requested_update == LifecycleUpdate::kPrePaint;
+
+  WebDevToolsAgentImpl* devtools = local_root_->DevToolsAgentImpl();
+  if (devtools && !pre_paint_only)
     devtools->PaintOverlay();
 
   DocumentLifecycle::AllowThrottlingScope throttling_scope(
       local_root_->GetFrame()->GetDocument()->Lifecycle());
-  PageWidgetDelegate::UpdateAllLifecyclePhases(*GetPage(),
-                                               *local_root_->GetFrame());
+  PageWidgetDelegate::UpdateLifecycle(*GetPage(), *local_root_->GetFrame(),
+                                      requested_update);
   UpdateLayerTreeBackgroundColor();
 }
 
@@ -575,7 +584,7 @@ void WebFrameWidgetImpl::SetFocus(bool enable) {
           // instead. Note that this has the side effect of moving the
           // caret back to the beginning of the text.
           Position position(element, 0);
-          focused_frame->Selection().SetSelection(
+          focused_frame->Selection().SetSelectionAndEndTyping(
               SelectionInDOMTree::Builder().Collapse(position).Build());
         }
       }

@@ -49,7 +49,6 @@
 #include "content/public/common/renderer_preferences.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/stop_find_action.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/renderer/frame_blame_context.h"
 #include "content/renderer/input/input_target_client_impl.h"
@@ -64,6 +63,7 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "ppapi/features/features.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -119,7 +119,7 @@ struct WebFindOptions;
 class WebLayerTreeView;
 class WebRelatedAppsFetcher;
 struct FramePolicy;
-struct WebRemoteScrollProperties;
+struct WebScrollIntoViewParams;
 }  // namespace blink
 
 namespace gfx {
@@ -129,6 +129,10 @@ class Range;
 
 namespace media {
 class MediaPermission;
+}
+
+namespace network {
+struct ResourceResponseHead;
 }
 
 namespace service_manager {
@@ -174,7 +178,6 @@ struct FrameOwnerProperties;
 struct FrameReplicationState;
 struct NavigationParams;
 struct RequestNavigationParams;
-struct ResourceResponseHead;
 struct ScreenInfo;
 
 class CONTENT_EXPORT RenderFrameImpl
@@ -493,7 +496,7 @@ class CONTENT_EXPORT RenderFrameImpl
       blink::TaskType task_type) override;
   int GetEnabledBindings() const override;
   void SetAccessibilityModeForTest(ui::AXMode new_mode) override;
-  mojom::URLLoaderFactory* GetURLLoaderFactory(
+  network::mojom::URLLoaderFactory* GetURLLoaderFactory(
       const GURL& request_url) override;
 
   // blink::mojom::EngagementClient implementation:
@@ -517,11 +520,11 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // mojom::FrameNavigationControl implementation:
   void CommitNavigation(
-      const ResourceResponseHead& head,
+      const network::ResourceResponseHead& head,
       const GURL& body_url,
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
+      network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       base::Optional<URLLoaderFactoryBundle> subresource_loaders,
       mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info,
       const base::UnguessableToken& devtools_navigation_token) override;
@@ -573,6 +576,7 @@ class CONTENT_EXPORT RenderFrameImpl
       blink::WebSandboxFlags sandbox_flags,
       const blink::ParsedFeaturePolicy& container_policy,
       const blink::WebFrameOwnerProperties& frame_owner_properties) override;
+  blink::WebFrame* FindFrame(const blink::WebString& name) override;
   void DidChangeOpener(blink::WebFrame* frame) override;
   void FrameDetached(DetachType type) override;
   void FrameFocused() override;
@@ -580,6 +584,8 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidChangeName(const blink::WebString& name) override;
   void DidEnforceInsecureRequestPolicy(
       blink::WebInsecureRequestPolicy policy) override;
+  void DidEnforceInsecureNavigationsSet(
+      const std::vector<uint32_t>& set) override;
   void DidChangeFramePolicy(
       blink::WebFrame* child_frame,
       blink::WebSandboxFlags flags,
@@ -647,7 +653,7 @@ class CONTENT_EXPORT RenderFrameImpl
       blink::WebEffectiveConnectionType) override;
   blink::WebURLRequest::PreviewsState GetPreviewsStateForFrame() const override;
   void DidBlockFramebust(const blink::WebURL& url) override;
-  blink::WebString GetInstrumentationToken() override;
+  blink::WebString GetDevToolsFrameToken() override;
   void AbortClientNavigation() override;
   void DidChangeSelection(bool is_empty_selection) override;
   bool HandleCurrentKeyboardEvent() override;
@@ -742,7 +748,7 @@ class CONTENT_EXPORT RenderFrameImpl
   // continuing recursive scrolling in the parent frame's process.
   void ScrollRectToVisibleInParentFrame(
       const blink::WebRect& rect_to_scroll,
-      const blink::WebRemoteScrollProperties& properties) override;
+      const blink::WebScrollIntoViewParams& params) override;
 
   // WebFrameSerializerClient implementation:
   void DidSerializeDataForFrame(
@@ -854,7 +860,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void SyncSelectionIfRequired();
 
   // Sets the custom URLLoaderFactory instance to be used for network requests.
-  void SetCustomURLLoaderFactory(mojom::URLLoaderFactoryPtr factory);
+  void SetCustomURLLoaderFactory(network::mojom::URLLoaderFactoryPtr factory);
 
   void ScrollFocusedEditableElementIntoRect(const gfx::Rect& rect);
   void DidChangeVisibleViewport();
@@ -1095,8 +1101,8 @@ class CONTENT_EXPORT RenderFrameImpl
   blink::WebURLRequest CreateURLRequestForCommit(
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
-      const ResourceResponseHead& head,
+      network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
+      const network::ResourceResponseHead& head,
       const GURL& body_url,
       bool is_same_document_navigation);
 
@@ -1265,7 +1271,7 @@ class CONTENT_EXPORT RenderFrameImpl
   std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
   MakeDidCommitProvisionalLoadParams(blink::WebHistoryCommitType commit_type);
 
-  mojom::URLLoaderFactory* custom_url_loader_factory() {
+  network::mojom::URLLoaderFactory* custom_url_loader_factory() {
     return custom_url_loader_factory_.get();
   }
 
@@ -1565,7 +1571,6 @@ class CONTENT_EXPORT RenderFrameImpl
     bool history_navigation_in_new_child_frame;
     bool client_redirect;
     blink::WebTriggeringEventInfo triggering_event_info;
-    bool cache_disabled;
     blink::WebFormElement form;
     blink::WebSourceLocation source_location;
 
@@ -1585,7 +1590,7 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // This frame might be given a custom default URLLoaderFactory (e.g.
   // for AppCache).
-  PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
+  PossiblyAssociatedInterfacePtr<network::mojom::URLLoaderFactory>
       custom_url_loader_factory_;
 
   // Non-null if this frame is to be controlled by a service worker.

@@ -466,11 +466,11 @@ class CORE_EXPORT Element : public ContainerNode {
   void RecalcStyleForReattach();
   bool NeedsRebuildLayoutTree(
       const WhitespaceAttacher& whitespace_attacher) const {
-    // TODO(futhark@chromium.org): IsActiveSlotOrActiveV0InsertionPoint() can be
-    // replaced by IsActiveV0InsertionPoint() when slots are always part of the
-    // flat tree, and removed completely when Shadow DOM V0 support is removed.
+    // TODO(futhark@chromium.org): !CanParticipateInFlatTree() can be replaced
+    // by IsActiveV0InsertionPoint() when slots are always part of the flat
+    // tree, and removed completely when Shadow DOM V0 support is removed.
     return NeedsReattachLayoutTree() || ChildNeedsReattachLayoutTree() ||
-           IsActiveSlotOrActiveV0InsertionPoint() ||
+           !CanParticipateInFlatTree() ||
            (whitespace_attacher.TraverseIntoDisplayContents() &&
             HasDisplayContentsStyle());
   }
@@ -497,7 +497,6 @@ class CORE_EXPORT Element : public ContainerNode {
                            const ShadowRootInit&,
                            ExceptionState&);
   ShadowRoot& CreateShadowRootInternal();
-  ShadowRoot& CreateLegacyUserAgentShadowRootV0();
   ShadowRoot& CreateUserAgentShadowRootV1();
   ShadowRoot& AttachShadowRootInternal(ShadowRootType,
                                        bool delegates_focus = false);
@@ -511,7 +510,6 @@ class CORE_EXPORT Element : public ContainerNode {
 
   ShadowRoot* ShadowRootIfV1() const;
 
-  ShadowRoot& EnsureLegacyUserAgentShadowRootV0();
   ShadowRoot& EnsureUserAgentShadowRootV1();
 
   bool IsInDescendantTreeOf(const Element* shadow_host) const;
@@ -744,6 +742,11 @@ class CORE_EXPORT Element : public ContainerNode {
   virtual bool IsOutOfRange() const { return false; }
   virtual bool IsClearButtonElement() const { return false; }
   virtual bool IsScriptElement() const { return false; }
+
+  // Elements that may have an insertion mode other than "in body" should
+  // override this and return true.
+  // https://html.spec.whatwg.org/multipage/parsing.html#reset-the-insertion-mode-appropriately
+  virtual bool HasNonInBodyInsertionMode() const { return false; }
 
   bool CanContainRangeEndPoint() const override { return true; }
 

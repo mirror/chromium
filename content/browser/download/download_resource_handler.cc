@@ -27,7 +27,7 @@
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/browser_side_navigation_policy.h"
-#include "content/public/common/resource_response.h"
+#include "services/network/public/cpp/resource_response.h"
 
 namespace content {
 
@@ -111,10 +111,11 @@ void DeleteOnUIThread(
 
 }  // namespace
 
-DownloadResourceHandler::DownloadResourceHandler(net::URLRequest* request)
+DownloadResourceHandler::DownloadResourceHandler(net::URLRequest* request,
+                                                 DownloadSource download_source)
     : ResourceHandler(request),
       tab_info_(new DownloadTabInfo()),
-      core_(request, this, false) {
+      core_(request, this, false, download_source) {
   // Do UI thread initialization for tab_info_ asap after
   // DownloadResourceHandler creation since the tab could be navigated
   // before StartOnUIThread gets called.  This is safe because deletion
@@ -143,13 +144,23 @@ std::unique_ptr<ResourceHandler> DownloadResourceHandler::Create(
     net::URLRequest* request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   std::unique_ptr<ResourceHandler> handler(
-      new DownloadResourceHandler(request));
+      new DownloadResourceHandler(request, DownloadSource::NAVIGATION));
+  return handler;
+}
+
+// static
+std::unique_ptr<ResourceHandler> DownloadResourceHandler::CreateForNewRequest(
+    net::URLRequest* request,
+    DownloadSource download_source) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  std::unique_ptr<ResourceHandler> handler(
+      new DownloadResourceHandler(request, download_source));
   return handler;
 }
 
 void DownloadResourceHandler::OnRequestRedirected(
     const net::RedirectInfo& redirect_info,
-    ResourceResponse* response,
+    network::ResourceResponse* response,
     std::unique_ptr<ResourceController> controller) {
   if (core_.OnRequestRedirected()) {
     controller->Resume();
@@ -160,7 +171,7 @@ void DownloadResourceHandler::OnRequestRedirected(
 
 // Send the download creation information to the download thread.
 void DownloadResourceHandler::OnResponseStarted(
-    ResourceResponse* response,
+    network::ResourceResponse* response,
     std::unique_ptr<ResourceController> controller) {
   // The MIME type in ResourceResponse is the product of
   // MimeTypeResourceHandler.

@@ -52,7 +52,6 @@
 #include "content/public/common/referrer.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/url_constants.h"
-#include "device/geolocation/public/interfaces/geolocation_config.mojom.h"
 #include "device/vr/android/gvr/cardboard_gamepad_data_fetcher.h"
 #include "device/vr/android/gvr/gvr_gamepad_data_fetcher.h"
 #include "device/vr/vr_device.h"
@@ -138,7 +137,7 @@ VrShell::VrShell(JNIEnv* env,
       web_vr_autopresentation_expected_(
           ui_initial_state.web_vr_autopresentation_expected),
       window_(window),
-      compositor_(std::make_unique<VrCompositor>(window_)),
+      compositor_(std::make_unique<VrCompositor>(window_, this)),
       delegate_provider_(delegate),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       reprojected_rendering_(reprojected_rendering),
@@ -983,6 +982,11 @@ void VrShell::OnAssetsLoaded(vr::AssetsLoadStatus status,
 
 void VrShell::OnAssetsComponentReady() {
   ui_->OnAssetsComponentReady();
+}
+
+void VrShell::DidSwapBuffers() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_VrShellImpl_didSwapBuffers(env, j_vr_shell_);
 }
 
 // ----------------------------------------------------------------------------

@@ -94,7 +94,7 @@ class ListValue;
 
 namespace blink {
 struct FramePolicy;
-struct WebRemoteScrollProperties;
+struct WebScrollIntoViewParams;
 }
 
 namespace gfx {
@@ -104,6 +104,7 @@ class Rect;
 
 namespace network {
 class ResourceRequestBody;
+struct ResourceResponse;
 }
 
 namespace content {
@@ -136,7 +137,6 @@ struct ContextMenuParams;
 struct FileChooserParams;
 struct FrameOwnerProperties;
 struct RequestNavigationParams;
-struct ResourceResponse;
 struct SubresourceLoaderParams;
 
 class CONTENT_EXPORT RenderFrameHostImpl
@@ -167,10 +167,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // Passing a null callback will restore the default behavior.
   // This method must be called either on the UI thread or before threads start.
   // This callback is run on the UI thread.
-  using CreateNetworkFactoryCallback =
-      base::Callback<void(mojom::URLLoaderFactoryRequest request,
-                          int process_id,
-                          mojom::URLLoaderFactoryPtrInfo original_factory)>;
+  using CreateNetworkFactoryCallback = base::Callback<void(
+      network::mojom::URLLoaderFactoryRequest request,
+      int process_id,
+      network::mojom::URLLoaderFactoryPtrInfo original_factory)>;
   static void SetNetworkFactoryForTesting(
       const CreateNetworkFactoryCallback& url_loader_factory_callback);
 
@@ -539,8 +539,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // the parameters to create a custom subresource loader in the renderer
   // process, e.g. by AppCache etc.
   void CommitNavigation(
-      ResourceResponse* response,
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
+      network::ResourceResponse* response,
+      network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       std::unique_ptr<StreamHandle> body,
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
@@ -791,6 +791,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnAccessibilityFindInPageResult(
       const AccessibilityHostMsg_FindInPageResultParams& params);
   void OnAccessibilityChildFrameHitTestResult(
+      int action_request_id,
       const gfx::Point& point,
       int child_frame_routing_id,
       int child_frame_browser_plugin_instance_id,
@@ -819,7 +820,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnSetHasReceivedUserGestureBeforeNavigation(bool value);
   void OnScrollRectToVisibleInParentFrame(
       const gfx::Rect& rect_to_scroll,
-      const blink::WebRemoteScrollProperties& properties);
+      const blink::WebScrollIntoViewParams& params);
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
   void OnShowPopup(const FrameHostMsg_ShowPopup_Params& params);
@@ -860,6 +861,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
                      const std::string& unique_name) override;
   void EnforceInsecureRequestPolicy(
       blink::WebInsecureRequestPolicy policy) override;
+  void EnforceInsecureNavigationsSet(const std::vector<uint32_t>& set) override;
   void DidSetFramePolicyHeaders(
       blink::WebSandboxFlags sandbox_flags,
       const blink::ParsedFeaturePolicy& parsed_header) override;

@@ -30,6 +30,7 @@
 #include "content/public/browser/download_url_parameters.h"
 #include "content/public/browser/ssl_status.h"
 #include "services/metrics/public/cpp/ukm_source_id.h"
+#include "services/network/public/interfaces/url_loader.mojom.h"
 
 namespace content {
 class DownloadFileFactory;
@@ -137,13 +138,8 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
   // DownloadInterruptReason enum for information on possible return values.
   static DownloadInterruptReason BeginDownloadRequest(
       std::unique_ptr<net::URLRequest> url_request,
-      const Referrer& referrer,
       ResourceContext* resource_context,
-      bool is_content_initiated,
-      int render_process_id,
-      int render_view_route_id,
-      int render_frame_route_id,
-      bool do_not_prompt_for_login);
+      DownloadUrlParameters* params);
 
   // Continue a navigation that ends up to be a download after it reaches the
   // OnResponseStarted() step. It has to be called on the UI thread.
@@ -151,8 +147,8 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
       std::unique_ptr<network::ResourceRequest> resource_request,
       std::vector<GURL> url_chain,
       const base::Optional<std::string>& suggested_filename,
-      scoped_refptr<ResourceResponse> response,
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
+      scoped_refptr<network::ResourceResponse> response,
+      network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       net::CertStatus cert_status,
       int frame_tree_node_id);
 
@@ -226,9 +222,9 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
       std::unique_ptr<network::ResourceRequest> resource_request,
       std::vector<GURL> url_chain,
       const base::Optional<std::string>& suggested_filename,
-      scoped_refptr<ResourceResponse> response,
+      scoped_refptr<network::ResourceResponse> response,
       net::CertStatus cert_status,
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
+      network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       bool is_download_allowed);
 
   // Called when a navigation turns to be a download. Create a new
@@ -240,9 +236,9 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
       std::unique_ptr<network::ResourceRequest> resource_request,
       std::vector<GURL> url_chain,
       const base::Optional<std::string>& suggested_filename,
-      scoped_refptr<ResourceResponse> response,
+      scoped_refptr<network::ResourceResponse> response,
       net::CertStatus cert_status,
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints);
+      network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints);
 
   // Factory for creation of downloads items.
   std::unique_ptr<DownloadItemFactory> item_factory_;

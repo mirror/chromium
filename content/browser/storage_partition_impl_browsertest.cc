@@ -12,10 +12,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/network_service.mojom.h"
-#include "content/public/common/resource_response.h"
-#include "content/public/common/resource_response_info.h"
-#include "content/public/common/url_loader.mojom.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/test_url_loader_client.h"
 #include "content/shell/browser/shell.h"
@@ -23,6 +19,9 @@
 #include "net/http/http_response_headers.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "services/network/public/cpp/resource_response_info.h"
+#include "services/network/public/interfaces/url_loader.mojom.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -53,7 +52,7 @@ class StoragePartititionImplBrowsertest
 IN_PROC_BROWSER_TEST_P(StoragePartititionImplBrowsertest, NetworkContext) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
-  mojom::URLLoaderFactoryPtr loader_factory;
+  network::mojom::URLLoaderFactoryPtr loader_factory;
   BrowserContext::GetDefaultStoragePartition(
       shell()->web_contents()->GetBrowserContext())
       ->GetNetworkContext()
@@ -63,10 +62,10 @@ IN_PROC_BROWSER_TEST_P(StoragePartititionImplBrowsertest, NetworkContext) {
   TestURLLoaderClient client;
   request.url = embedded_test_server()->GetURL("/set-header?foo: bar");
   request.method = "GET";
-  mojom::URLLoaderPtr loader;
+  network::mojom::URLLoaderPtr loader;
   loader_factory->CreateLoaderAndStart(
-      mojo::MakeRequest(&loader), 2, 1, mojom::kURLLoadOptionNone, request,
-      client.CreateInterfacePtr(),
+      mojo::MakeRequest(&loader), 2, 1, network::mojom::kURLLoadOptionNone,
+      request, client.CreateInterfacePtr(),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   // Just wait until headers are received - if the right headers are received,

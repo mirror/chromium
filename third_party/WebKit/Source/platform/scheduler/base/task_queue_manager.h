@@ -6,6 +6,7 @@
 #define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_BASE_TASK_QUEUE_MANAGER_H_
 
 #include <map>
+#include <random>
 
 #include "base/atomic_sequence_num.h"
 #include "base/cancelable_callback.h"
@@ -26,6 +27,10 @@
 #include "platform/scheduler/base/task_queue_selector.h"
 
 namespace base {
+namespace debug {
+struct CrashKeyString;
+}  // namespace debug
+
 namespace trace_event {
 class ConvertableToTraceFormat;
 }  // namespace trace_event
@@ -145,6 +150,9 @@ class PLATFORM_EXPORT TaskQueueManager
     return task_queue;
   }
 
+  void EnableCrashKeys(const char* file_name_crash_key,
+                       const char* function_name_crash_key);
+
   // Called once to set the Observer. This function is called on the main
   // thread. If |observer| is null, then no callbacks will occur.
   // Note: |observer| is expected to outlive the SchedulerHelper.
@@ -234,6 +242,8 @@ class PLATFORM_EXPORT TaskQueueManager
   };
 
  protected:
+  // Protected functions for testing.
+
   size_t ActiveQueuesCount() { return active_queues_.size(); }
 
   size_t QueuesToShutdownCount() {
@@ -242,6 +252,8 @@ class PLATFORM_EXPORT TaskQueueManager
   }
 
   size_t QueuesToDeleteCount() { return queues_to_delete_.size(); }
+
+  void SetRandomSeed(uint64_t seed);
 
  private:
   // Represents a scheduled delayed DoWork (if any). Only public for testing.
@@ -289,7 +301,25 @@ class PLATFORM_EXPORT TaskQueueManager
     int nesting_depth = 0;
   };
 
-  // TODO(alexclarke): Add a MainThreadOnly struct too.
+  // TODO(scheduler-dev): Review if we really need non-nestable tasks at all.
+  struct NonNestableTask {
+    internal::TaskQueueImpl::Task task;
+    internal::TaskQueueImpl* task_queue;
+    Sequence::WorkType work_type;
+  };
+  using NonNestableTaskDeque = WTF::Deque<NonNestableTask, 8>;
+
+  // TODO(alexclarke): Move more things into MainThreadOnly
+  struct MainThreadOnly {
+    MainThreadOnly() = default;
+
+    int nesting_depth = 0;
+    NonNestableTaskDeque non_nestable_task_queue;
+    // TODO(altimin): Switch to instruction pointer crash key when it's
+    // available.
+    base::debug::CrashKeyString* file_name_crash_key = nullptr;
+    base::debug::CrashKeyString* function_name_crash_key = nullptr;
+  };
 
   // TaskQueueSelector::Observer:
   void OnTaskQueueEnabled(internal::TaskQueueImpl* queue) override;
@@ -334,10 +364,12 @@ class PLATFORM_EXPORT TaskQueueManager
                                       LazyNow time_before_task,
                                       base::TimeTicks* task_start_time);
 
-  void NotifyDidProcessTaskObservers(const internal::TaskQueueImpl::Task& task,
-                                     internal::TaskQueueImpl* queue,
-                                     base::TimeTicks task_start_time,
-                                     base::TimeTicks* time_after_task);
+  void NotifyDidProcessTaskObservers(
+      const internal::TaskQueueImpl::Task& task,
+      internal::TaskQueueImpl* queue,
+      base::Optional<base::TimeDelta> thread_time,
+      base::TimeTicks task_start_time,
+      base::TimeTicks* time_after_task);
 
   bool PostNonNestableDelayedTask(const base::Location& from_here,
                                   const base::Closure& task,
@@ -377,6 +409,8 @@ class PLATFORM_EXPORT TaskQueueManager
   // Deletes queues marked for deletion and empty queues marked for shutdown.
   void CleanUpQueues();
 
+  bool ShouldRecordCPUTimeForTask();
+
   std::set<TimeDomain*> time_domains_;
   std::unique_ptr<RealTimeDomain> real_time_domain_;
 
@@ -406,6 +440,9 @@ class PLATFORM_EXPORT TaskQueueManager
   std::unique_ptr<internal::ThreadController> controller_;
   internal::TaskQueueSelector selector_;
 
+  std::mt19937_64 random_generator_;
+  std::uniform_real_distribution<double> uniform_distribution_;
+
   bool task_was_run_on_quiescence_monitored_queue_ = false;
 
   mutable base::Lock any_thread_lock_;
@@ -420,19 +457,11 @@ class PLATFORM_EXPORT TaskQueueManager
     return any_thread_;
   }
 
-  // TODO(scheduler-dev): Review if we really need non-nestable tasks at all.
-  struct NonNestableTask {
-    internal::TaskQueueImpl::Task task;
-    internal::TaskQueueImpl* task_queue;
-    Sequence::WorkType work_type;
-  };
-  using NonNestableTaskDeque = WTF::Deque<NonNestableTask, 8>;
+  // A check to bail out early during memory corruption.
+  // crbug.com/757940
+  bool Validate();
 
-  // TODO(alexclarke): Move more things into MainThreadOnly
-  struct MainThreadOnly {
-    int nesting_depth = 0;
-    NonNestableTaskDeque non_nestable_task_queue;
-  };
+  int32_t memory_corruption_sentinel_;
 
   MainThreadOnly main_thread_only_;
   MainThreadOnly& main_thread_only() {

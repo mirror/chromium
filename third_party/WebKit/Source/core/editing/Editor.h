@@ -38,9 +38,9 @@
 #include "core/editing/WritingDirection.h"
 #include "core/editing/finder/FindOptions.h"
 #include "core/events/InputEvent.h"
-#include "core/layout/ScrollAlignment.h"
 #include "platform/PasteMode.h"
 #include "platform/heap/Handle.h"
+#include "platform/scroll/ScrollAlignment.h"
 
 namespace blink {
 
@@ -63,7 +63,6 @@ enum class DeleteDirection;
 enum class DeleteMode { kSimple, kSmart };
 enum class InsertMode { kSimple, kSmart };
 enum class DragSourceType { kHTMLSource, kPlainTextSource };
-enum class TypingContinuation { kContinue, kEnd };
 
 enum EditorCommandSource { kCommandFromMenuOrKeyBinding, kCommandFromDOM };
 enum EditorParagraphSeparator {
@@ -245,6 +244,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
                            FindOptions);
 
   const VisibleSelection& Mark() const;  // Mark, to be used as emacs uses it.
+  bool MarkIsDirectional() const;
   void SetMark();
 
   void ComputeAndSetTypingStyle(CSSPropertyValueSet*, InputEvent::InputType);
@@ -330,6 +330,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   EditorParagraphSeparator default_paragraph_separator_;
   bool overwrite_mode_enabled_;
   Member<EditingStyle> typing_style_;
+  bool mark_is_directional_ = false;
 
   explicit Editor(LocalFrame&);
 
@@ -373,6 +374,10 @@ inline void Editor::SetStartNewKillRingSequence(bool flag) {
 
 inline const VisibleSelection& Editor::Mark() const {
   return mark_;
+}
+
+inline bool Editor::MarkIsDirectional() const {
+  return mark_is_directional_;
 }
 
 inline bool Editor::MarkedTextMatchesAreHighlighted() const {

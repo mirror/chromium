@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "cc/layers/solid_color_layer.h"
 #include "cc/layers/surface_layer.h"
+#include "components/viz/common/features.h"
 #include "components/viz/common/frame_sinks/copy_output_result.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/surfaces/surface_id.h"
@@ -31,7 +32,7 @@ scoped_refptr<cc::SurfaceLayer> CreateSurfaceLayer(
     bool surface_opaque) {
   // manager must outlive compositors using it.
   auto layer = cc::SurfaceLayer::Create(surface_manager->reference_factory());
-  layer->SetPrimarySurfaceId(surface_info.id());
+  layer->SetPrimarySurfaceId(surface_info.id(), base::nullopt);
   layer->SetFallbackSurfaceId(surface_info.id());
   layer->SetBounds(surface_info.size_in_pixels());
   layer->SetIsDrawable(true);
@@ -61,7 +62,9 @@ DelegatedFrameHostAndroid::DelegatedFrameHostAndroid(
       host_frame_sink_manager_(host_frame_sink_manager),
       frame_sink_manager_(frame_sink_manager),
       client_(client),
-      begin_frame_source_(this) {
+      begin_frame_source_(this),
+      enable_surface_synchronization_(
+          features::IsSurfaceSynchronizationEnabled()) {
   DCHECK(view_);
   DCHECK(client_);
 
@@ -172,8 +175,9 @@ void DelegatedFrameHostAndroid::AttachToCompositor(
   // until all delegated frames are ready. This improves the resume transition,
   // preventing flashes. Set a 5 second timeout to prevent locking up the
   // browser in cases where the renderer hangs or another factor prevents a
-  // frame from being produced.
-  if (compositor->IsDrawingFirstVisibleFrame()) {
+  // frame from being produced. If we already have delegated content, no need
+  // to take the lock.
+  if (compositor->IsDrawingFirstVisibleFrame() && !HasDelegatedContent()) {
     compositor_attach_until_frame_lock_ =
         compositor->GetCompositorLock(this, base::TimeDelta::FromSeconds(5));
   }
@@ -190,6 +194,16 @@ void DelegatedFrameHostAndroid::DetachFromCompositor() {
   support_->SetNeedsBeginFrame(false);
   registered_parent_compositor_->RemoveChildFrameSink(frame_sink_id_);
   registered_parent_compositor_ = nullptr;
+}
+
+void DelegatedFrameHostAndroid::WasResized() {
+  if (enable_surface_synchronization_) {
+    local_surface_id_ = local_surface_id_allocator_.GenerateId();
+
+    // TODO(ericrk): We should handle updating our surface layer with the new
+    // ID. See similar behavior in delegated_frame_host.cc.
+    // https://crbug.com/801350
+  }
 }
 
 void DelegatedFrameHostAndroid::DidReceiveCompositorFrameAck(
@@ -244,8 +258,13 @@ void DelegatedFrameHostAndroid::CreateNewCompositorFrameSinkSupport() {
       this, frame_sink_id_, is_root, needs_sync_points);
 }
 
-viz::SurfaceId DelegatedFrameHostAndroid::SurfaceId() const {
+const viz::SurfaceId& DelegatedFrameHostAndroid::SurfaceId() const {
   return surface_info_.id();
+}
+
+const viz::LocalSurfaceId& DelegatedFrameHostAndroid::GetLocalSurfaceId()
+    const {
+  return local_surface_id_;
 }
 
 }  // namespace ui

@@ -1005,8 +1005,11 @@ void VRDisplay::ContextDestroyed(ExecutionContext* context) {
 
 bool VRDisplay::HasPendingActivity() const {
   // Prevent V8 from garbage collecting the wrapper object if there are
-  // event listeners attached to it.
-  return GetExecutionContext() && HasEventListeners();
+  // event listeners and/or callbacks attached to it.
+  return GetExecutionContext() &&
+         (HasEventListeners() ||
+          (scripted_animation_controller_ &&
+           scripted_animation_controller_->HasCallback()));
 }
 
 void VRDisplay::FocusChanged() {

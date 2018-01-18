@@ -198,6 +198,18 @@ TEST_F(CORSTest, CheckAccessDetectsAllowOriginMismatch) {
       network::mojom::FetchCredentialsMode::kOmit, origin);
   ASSERT_TRUE(error2);
   EXPECT_EQ(mojom::CORSError::kAllowOriginMismatch, *error2);
+
+  // Allow "null" value to match serialized unique origins.
+  const std::string null_string("null");
+  const url::Origin null_origin;
+  EXPECT_EQ(null_string, null_origin.Serialize());
+
+  base::Optional<mojom::CORSError> error3 = cors::CheckAccess(
+      response_url, response_status_code, null_string /* allow_origin_header */,
+      base::nullopt /* allow_suborigin_header */,
+      base::nullopt /* allow_credentials_header */,
+      network::mojom::FetchCredentialsMode::kOmit, null_origin);
+  EXPECT_FALSE(error3);
 }
 
 // Tests if cors::CheckAccess detects kDisallowCredentialsNotSetToTrue error
@@ -223,6 +235,45 @@ TEST_F(CORSTest, CheckAccessDetectsDisallowCredentialsNotSetToTrue) {
                         network::mojom::FetchCredentialsMode::kInclude, origin);
   ASSERT_TRUE(error2);
   EXPECT_EQ(mojom::CORSError::kDisallowCredentialsNotSetToTrue, *error2);
+}
+
+// Tests if cors::CheckRedirectLocation detects kRedirectDisallowedScheme and
+// kRedirectContainsCredentials errors correctly.
+TEST_F(CORSTest, CheckRedirectLocationDetectsErrors) {
+  // Following URLs should pass.
+  EXPECT_FALSE(cors::CheckRedirectLocation(GURL("http://example.com/"), false));
+  EXPECT_FALSE(
+      cors::CheckRedirectLocation(GURL("https://example.com/"), false));
+  EXPECT_FALSE(cors::CheckRedirectLocation(GURL("data:,Hello"), false));
+  EXPECT_FALSE(
+      cors::CheckRedirectLocation(GURL("file:///not_allow_scheme"), true));
+
+  // Following URLs should result in kRedirectDisallowedScheme.
+  base::Optional<mojom::CORSError> error1 =
+      cors::CheckRedirectLocation(GURL("file:///not_allow_scheme"), false);
+  ASSERT_TRUE(error1);
+  EXPECT_EQ(mojom::CORSError::kRedirectDisallowedScheme, *error1);
+
+  // Following checks should result in the kRedirectContainsCredentials error.
+  base::Optional<mojom::CORSError> error2 = cors::CheckRedirectLocation(
+      GURL("http://yukari:tamura@example.com/"), false);
+  ASSERT_TRUE(error2);
+  EXPECT_EQ(mojom::CORSError::kRedirectContainsCredentials, *error2);
+
+  base::Optional<mojom::CORSError> error3 = cors::CheckRedirectLocation(
+      GURL("http://yukari:tamura@example.com/"), true);
+  ASSERT_TRUE(error3);
+  EXPECT_EQ(mojom::CORSError::kRedirectContainsCredentials, *error3);
+
+  base::Optional<mojom::CORSError> error4 =
+      cors::CheckRedirectLocation(GURL("http://tamura@example.com/"), true);
+  ASSERT_TRUE(error4);
+  EXPECT_EQ(mojom::CORSError::kRedirectContainsCredentials, *error4);
+
+  base::Optional<mojom::CORSError> error5 =
+      cors::CheckRedirectLocation(GURL("http://yukari:@example.com/"), true);
+  ASSERT_TRUE(error5);
+  EXPECT_EQ(mojom::CORSError::kRedirectContainsCredentials, *error5);
 }
 
 }  // namespace

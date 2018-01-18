@@ -177,10 +177,7 @@ TypingCommand::TypingCommand(Document& document,
       granularity_(granularity),
       composition_type_(composition_type),
       kill_ring_(options & kKillRing),
-      opened_by_backward_delete_(false),
-      should_retain_autocorrection_indicator_(options &
-                                              kRetainAutocorrectionIndicator),
-      should_prevent_spell_checking_(options & kPreventSpellChecking) {
+      opened_by_backward_delete_(false) {
   UpdatePreservesTypingStyle(command_type_);
 }
 
@@ -197,8 +194,6 @@ void TypingCommand::DeleteSelection(Document& document, Options options) {
           LastTypingCommandIfStillOpenForTyping(frame)) {
     UpdateSelectionIfDifferentFromCurrentSelection(last_typing_command, frame);
 
-    last_typing_command->SetShouldPreventSpellChecking(options &
-                                                       kPreventSpellChecking);
     // InputMethodController uses this function to delete composition
     // selection.  It won't be aborted.
     last_typing_command->DeleteSelection(options & kSmartDelete,
@@ -237,8 +232,6 @@ void TypingCommand::DeleteKeyPressed(Document& document,
       if (last_typing_command->CommandTypeOfOpenCommand() == kDeleteKey) {
         UpdateSelectionIfDifferentFromCurrentSelection(last_typing_command,
                                                        frame);
-        last_typing_command->SetShouldPreventSpellChecking(
-            options & kPreventSpellChecking);
         EditingState editing_state;
         last_typing_command->DeleteKeyPressed(granularity, options & kKillRing,
                                               &editing_state);
@@ -263,8 +256,6 @@ void TypingCommand::ForwardDeleteKeyPressed(Document& document,
             LastTypingCommandIfStillOpenForTyping(frame)) {
       UpdateSelectionIfDifferentFromCurrentSelection(last_typing_command,
                                                      frame);
-      last_typing_command->SetShouldPreventSpellChecking(options &
-                                                         kPreventSpellChecking);
       last_typing_command->ForwardDeleteKeyPressed(
           granularity, options & kKillRing, editing_state);
       return;
@@ -410,10 +401,6 @@ void TypingCommand::InsertText(
     }
 
     last_typing_command->SetCompositionType(composition_type);
-    last_typing_command->SetShouldRetainAutocorrectionIndicator(
-        options & kRetainAutocorrectionIndicator);
-    last_typing_command->SetShouldPreventSpellChecking(options &
-                                                       kPreventSpellChecking);
     last_typing_command->is_incremental_insertion_ = is_incremental_insertion;
     last_typing_command->selection_start_ = selection_start;
     last_typing_command->input_type_ = input_type;
@@ -444,14 +431,17 @@ void TypingCommand::InsertText(
         current_selection.AsSelection();
     command->SetEndingSelection(
         SelectionForUndoStep::From(current_selection_as_dom));
-    frame->Selection().SetSelection(current_selection_as_dom);
+    frame->Selection().SetSelection(
+        current_selection_as_dom,
+        SetSelectionOptions::Builder()
+            .SetIsDirectional(frame->Selection().IsDirectional())
+            .Build());
   }
 }
 
 bool TypingCommand::InsertLineBreak(Document& document) {
   if (TypingCommand* last_typing_command =
           LastTypingCommandIfStillOpenForTyping(document.GetFrame())) {
-    last_typing_command->SetShouldRetainAutocorrectionIndicator(false);
     EditingState editing_state;
     EventQueueScope event_queue_scope;
     last_typing_command->InsertLineBreak(&editing_state);
@@ -480,7 +470,6 @@ bool TypingCommand::InsertParagraphSeparatorInQuotedContent(
 bool TypingCommand::InsertParagraphSeparator(Document& document) {
   if (TypingCommand* last_typing_command =
           LastTypingCommandIfStillOpenForTyping(document.GetFrame())) {
-    last_typing_command->SetShouldRetainAutocorrectionIndicator(false);
     EditingState editing_state;
     EventQueueScope event_queue_scope;
     last_typing_command->InsertParagraphSeparator(&editing_state);
@@ -810,6 +799,7 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   SelectionModifier selection_modifier(*frame, EndingSelection().AsSelection());
+  selection_modifier.SetSelectionIsDirectional(SelectionIsDirectional());
   selection_modifier.Modify(SelectionModifyAlteration::kExtend,
                             SelectionModifyDirection::kBackward, granularity);
   if (kill_ring && selection_modifier.Selection().IsCaret() &&
@@ -985,6 +975,7 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
   // Do nothing in the case that the caret is at the start of a
   // root editable element or at the start of a document.
   SelectionModifier selection_modifier(*frame, EndingSelection().AsSelection());
+  selection_modifier.SetSelectionIsDirectional(SelectionIsDirectional());
   selection_modifier.Modify(SelectionModifyAlteration::kExtend,
                             SelectionModifyDirection::kForward, granularity);
   if (kill_ring && selection_modifier.Selection().IsCaret() &&

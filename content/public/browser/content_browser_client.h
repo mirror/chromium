@@ -217,12 +217,8 @@ class CONTENT_EXPORT ContentBrowserClient {
 
   // Get the effective URL for the given actual URL, to allow an embedder to
   // group different url schemes in the same SiteInstance.
-  // |is_isolated_origin| specifies whether |url| corresponds to an origin that
-  // requires process isolation.  Certain kinds of effective URLs should be
-  // ignored for such origins.
   virtual GURL GetEffectiveURL(BrowserContext* browser_context,
-                               const GURL& url,
-                               bool is_isolated_origin);
+                               const GURL& url);
 
   // Returns whether all instances of the specified effective URL should be
   // rendered by the same process, rather than using process-per-site-instance.
@@ -946,7 +942,7 @@ class CONTENT_EXPORT ContentBrowserClient {
   // to handle navigation URL requests for schemes not handled by the Network
   // Service. Only called when the Network Service is enabled.
   using NonNetworkURLLoaderFactoryMap =
-      std::map<std::string, std::unique_ptr<mojom::URLLoaderFactory>>;
+      std::map<std::string, std::unique_ptr<network::mojom::URLLoaderFactory>>;
   virtual void RegisterNonNetworkNavigationURLLoaderFactories(
       RenderFrameHost* frame_host,
       NonNetworkURLLoaderFactoryMap* factories);
@@ -1016,11 +1012,20 @@ class CONTENT_EXPORT ContentBrowserClient {
   // PaymentRequest UI surface. Returns true if the ContentBrowserClient
   // implementation supports this operation (desktop Chrome) or false otherwise.
   // |callback| is invoked with true if the window opened successfully, false if
-  // the attempt failed.
+  // the attempt failed. Both the render process and frame IDs are also passed
+  // to |callback|.
   virtual bool ShowPaymentHandlerWindow(
       content::BrowserContext* browser_context,
       const GURL& url,
-      base::OnceCallback<void(bool)> callback);
+      base::OnceCallback<void(bool /* success */,
+                              int /* render_process_id */,
+                              int /* render_frame_id */)> callback);
+
+  // Returns whether a base::TaskScheduler should be created when
+  // BrowserMainLoop starts.
+  // If false, a task scheduler has been created by the embedder, and browser
+  // main loop should skip creating a second one.
+  virtual bool ShouldCreateTaskScheduler();
 };
 
 }  // namespace content

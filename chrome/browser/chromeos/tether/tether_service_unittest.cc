@@ -52,7 +52,6 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/cros_system_api/dbus/shill/dbus-constants.h"
-#include "ui/message_center/message_center.h"
 
 using testing::Invoke;
 using testing::NiceMock;
@@ -219,7 +218,7 @@ class FakeRemoteDeviceProviderFactory
       const std::string& user_private_key,
       cryptauth::SecureMessageDelegate::Factory*
           secure_message_delegate_factory) override {
-    return base::MakeUnique<cryptauth::FakeRemoteDeviceProvider>();
+    return std::make_unique<cryptauth::FakeRemoteDeviceProvider>();
   }
 };
 
@@ -265,7 +264,6 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
     chromeos::DBusThreadManager::Initialize();
     chromeos::NetworkStateTest::SetUp();
 
-    message_center::MessageCenter::Initialize();
     chromeos::NetworkConnect::Initialize(nullptr);
     chromeos::NetworkHandler::Initialize();
 
@@ -273,12 +271,12 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
     profile_ = builder.Build();
 
     fake_power_manager_client_ =
-        base::MakeUnique<chromeos::FakePowerManagerClient>();
+        std::make_unique<chromeos::FakePowerManagerClient>();
 
     fake_cryptauth_service_ =
-        base::MakeUnique<cryptauth::FakeCryptAuthService>();
+        std::make_unique<cryptauth::FakeCryptAuthService>();
     fake_cryptauth_gcm_manager_ =
-        base::MakeUnique<cryptauth::FakeCryptAuthGCMManager>("registrationId");
+        std::make_unique<cryptauth::FakeCryptAuthGCMManager>("registrationId");
     mock_enrollment_manager_ =
         base::WrapUnique(new NiceMock<MockCryptAuthEnrollmentManager>(
             fake_cryptauth_gcm_manager_.get()));
@@ -329,7 +327,6 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
     EXPECT_EQ(test_tether_component_factory_->was_tether_component_active(),
               shutdown_reason_verified_);
 
-    message_center::MessageCenter::Shutdown();
     chromeos::NetworkConnect::Shutdown();
     chromeos::NetworkHandler::Shutdown();
 

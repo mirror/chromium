@@ -203,11 +203,9 @@ class PLATFORM_EXPORT FetchContext
   virtual bool IsMainFrame() const { return true; }
   virtual bool DefersLoading() const { return false; }
   virtual bool IsLoadComplete() const { return false; }
-  virtual bool PageDismissalEventBeingDispatched() const { return false; }
   virtual bool UpdateTimingInfoForIFrameNavigation(ResourceTimingInfo*) {
     return false;
   }
-  virtual void SendImagePing(const KURL&);
 
   virtual void AddWarningConsoleMessage(const String&, LogSource) const;
   virtual void AddErrorConsoleMessage(const String&, LogSource) const;
@@ -265,6 +263,13 @@ class PLATFORM_EXPORT FetchContext
   // with "keepalive" specified).
   // Returns a "detached" fetch context which can be null.
   virtual FetchContext* Detach() { return nullptr; }
+
+  // Returns the updated priority of the resource based on the experiments that
+  // may be currently enabled.
+  virtual ResourceLoadPriority ModifyPriorityForExperiments(
+      ResourceLoadPriority priority) const {
+    return priority;
+  }
 
  protected:
   FetchContext();

@@ -323,7 +323,7 @@ ServiceWorkerURLRequestJob::ServiceWorkerURLRequestJob(
     const ResourceContext* resource_context,
     network::mojom::FetchRequestMode request_mode,
     network::mojom::FetchCredentialsMode credentials_mode,
-    FetchRedirectMode redirect_mode,
+    network::mojom::FetchRedirectMode redirect_mode,
     const std::string& integrity,
     bool keepalive,
     ResourceType resource_type,
@@ -331,7 +331,6 @@ ServiceWorkerURLRequestJob::ServiceWorkerURLRequestJob(
     network::mojom::RequestContextFrameType frame_type,
     scoped_refptr<network::ResourceRequestBody> body,
     ServiceWorkerFetchType fetch_type,
-    const base::Optional<base::TimeDelta>& timeout,
     Delegate* delegate)
     : net::URLRequestJob(request, network_delegate),
       delegate_(delegate),
@@ -352,7 +351,6 @@ ServiceWorkerURLRequestJob::ServiceWorkerURLRequestJob(
       fall_back_required_(false),
       body_(body),
       fetch_type_(fetch_type),
-      timeout_(timeout),
       weak_factory_(this) {
   DCHECK(delegate_) << "ServiceWorkerURLRequestJob requires a delegate";
 }
@@ -615,14 +613,12 @@ void ServiceWorkerURLRequestJob::CreateRequestBodyBlob(std::string* blob_uuid,
   *blob_uuid = blob_builder.uuid();
   *blob_size = request_body_blob_data_handle_->size();
 
-  if (features::IsMojoBlobsEnabled()) {
-    blink::mojom::BlobPtr blob_ptr;
-    storage::BlobImpl::Create(std::make_unique<storage::BlobDataHandle>(
-                                  *request_body_blob_data_handle_),
-                              MakeRequest(&blob_ptr));
-    request_body_blob_handle_ =
-        base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
-  }
+  blink::mojom::BlobPtr blob_ptr;
+  storage::BlobImpl::Create(std::make_unique<storage::BlobDataHandle>(
+                                *request_body_blob_data_handle_),
+                            MakeRequest(&blob_ptr));
+  request_body_blob_handle_ =
+      base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
 }
 
 bool ServiceWorkerURLRequestJob::ShouldRecordNavigationMetrics(
@@ -686,9 +682,9 @@ void ServiceWorkerURLRequestJob::DidDispatchFetchEvent(
     blink::mojom::BlobPtr body_as_blob,
     scoped_refptr<ServiceWorkerVersion> version) {
   // Do not clear |fetch_dispatcher_| if it has dispatched a navigation preload
-  // request to keep the mojom::URLLoader related objects in it, because the
-  // preload response might still need to be streamed even after calling
-  // respondWith().
+  // request to keep the network::mojom::URLLoader related objects in it,
+  // because the preload response might still need to be streamed even after
+  // calling respondWith().
   if (!did_navigation_preload_) {
     fetch_dispatcher_.reset();
   }
@@ -992,7 +988,7 @@ void ServiceWorkerURLRequestJob::RequestBodyFileSizesResolved(bool success) {
   DCHECK(!fetch_dispatcher_);
   fetch_dispatcher_ = std::make_unique<ServiceWorkerFetchDispatcher>(
       CreateFetchRequest(), base::WrapRefCounted(active_worker), resource_type_,
-      timeout_, request()->net_log(),
+      request()->net_log(),
       base::BindOnce(&ServiceWorkerURLRequestJob::DidPrepareFetchEvent,
                      weak_factory_.GetWeakPtr(),
                      base::WrapRefCounted(active_worker)),

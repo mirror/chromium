@@ -62,6 +62,7 @@
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/common/swapped_out_messages.h"
 #include "content/common/view_messages.h"
+#include "content/common/weak_wrapper_shared_url_loader_factory.h"
 #include "content/public/common/appcache_info.h"
 #include "content/public/common/bind_interface_helpers.h"
 #include "content/public/common/bindings_policy.h"
@@ -74,7 +75,6 @@
 #include "content/public/common/file_chooser_params.h"
 #include "content/public/common/isolated_world_ids.h"
 #include "content/public/common/page_state.h"
-#include "content/public/common/resource_response.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_loader_throttle.h"
@@ -177,7 +177,7 @@
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayerSource.h"
 #include "third_party/WebKit/public/platform/WebPoint.h"
-#include "third_party/WebKit/public/platform/WebRemoteScrollProperties.h"
+#include "third_party/WebKit/public/platform/WebScrollIntoViewParams.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
@@ -773,13 +773,17 @@ class RenderFrameImpl::FrameURLLoaderFactory
     DCHECK(frame_);
     frame_->UpdatePeakMemoryStats();
 
-    mojom::URLLoaderFactory* factory;
+    // TODO(crbug.com/796425): Temporarily wrap the raw mojom::URLLoaderFactory
+    // pointer into SharedURLLoaderFactory.
+    scoped_refptr<SharedURLLoaderFactory> factory;
     if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-      factory = frame_->GetSubresourceLoaderFactories().GetFactoryForRequest(
-          request.Url());
+      factory = base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
+          frame_->GetSubresourceLoaderFactories().GetFactoryForRequest(
+              request.Url()));
     } else {
-      factory = frame_->GetDefaultURLLoaderFactoryGetter()->GetFactoryForURL(
-          request.Url(), frame_->custom_url_loader_factory());
+      factory = base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
+          frame_->GetDefaultURLLoaderFactoryGetter()->GetFactoryForURL(
+              request.Url(), frame_->custom_url_loader_factory()));
     }
     DCHECK(factory);
 
@@ -792,7 +796,9 @@ class RenderFrameImpl::FrameURLLoaderFactory
     }
     return std::make_unique<WebURLLoaderImpl>(
         RenderThreadImpl::current()->resource_dispatcher(),
-        std::move(task_runner), factory, std::move(keep_alive_handle));
+        std::move(task_runner),
+
+        std::move(factory), std::move(keep_alive_handle));
   }
 
  private:
@@ -3050,11 +3056,11 @@ void RenderFrameImpl::AllowBindings(int32_t enabled_bindings_flags) {
 // mojom::FrameNavigationControl implementation --------------------------------
 
 void RenderFrameImpl::CommitNavigation(
-    const ResourceResponseHead& head,
+    const network::ResourceResponseHead& head,
     const GURL& body_url,
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params,
-    mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
+    network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
     mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info,
     const base::UnguessableToken& devtools_navigation_token) {
@@ -3747,6 +3753,19 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
   return web_frame;
 }
 
+blink::WebFrame* RenderFrameImpl::FindFrame(const blink::WebString& name) {
+  if (render_view_->renderer_wide_named_frame_lookup()) {
+    for (const auto& it : g_routing_id_frame_map.Get()) {
+      WebLocalFrame* frame = it.second->GetWebFrame();
+      if (frame->AssignedName() == name)
+        return frame;
+    }
+  }
+
+  return GetContentClient()->renderer()->FindFrame(this->GetWebFrame(),
+                                                   name.Utf8());
+}
+
 void RenderFrameImpl::DidChangeOpener(blink::WebFrame* opener) {
   // Only a local frame should be able to update another frame's opener.
   DCHECK(!opener || opener->IsWebLocalFrame());
@@ -3834,6 +3853,11 @@ void RenderFrameImpl::DidChangeName(const blink::WebString& name) {
 void RenderFrameImpl::DidEnforceInsecureRequestPolicy(
     blink::WebInsecureRequestPolicy policy) {
   GetFrameHost()->EnforceInsecureRequestPolicy(policy);
+}
+
+void RenderFrameImpl::DidEnforceInsecureNavigationsSet(
+    const std::vector<uint32_t>& set) {
+  GetFrameHost()->EnforceInsecureNavigationsSet(set);
 }
 
 void RenderFrameImpl::DidChangeFramePolicy(
@@ -4089,7 +4113,6 @@ void RenderFrameImpl::DidStartProvisionalLoad(
     info.is_client_redirect = pending_navigation_info_->client_redirect;
     info.triggering_event_info =
         pending_navigation_info_->triggering_event_info;
-    info.is_cache_disabled = pending_navigation_info_->cache_disabled;
     info.form = pending_navigation_info_->form;
     info.source_location = pending_navigation_info_->source_location;
 
@@ -4587,7 +4610,7 @@ void RenderFrameImpl::DidBlockFramebust(const WebURL& url) {
   Send(new FrameHostMsg_DidBlockFramebust(GetRoutingID(), url));
 }
 
-blink::WebString RenderFrameImpl::GetInstrumentationToken() {
+blink::WebString RenderFrameImpl::GetDevToolsFrameToken() {
   return devtools_frame_token_;
 }
 
@@ -5384,6 +5407,7 @@ RenderFrameImpl::MakeDidCommitProvisionalLoadParams(
   params->origin = frame_origin;
 
   params->insecure_request_policy = frame_->GetInsecureRequestPolicy();
+  params->insecure_navigations_set = frame_->GetInsecureRequestToUpgrade();
 
   params->has_potentially_trustworthy_unique_origin =
       frame_origin.IsUnique() && frame_origin.IsPotentiallyTrustworthy();
@@ -6414,8 +6438,8 @@ void RenderFrameImpl::OpenURL(const NavigationPolicyInfo& info,
 WebURLRequest RenderFrameImpl::CreateURLRequestForCommit(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params,
-    mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
-    const ResourceResponseHead& head,
+    network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
+    const network::ResourceResponseHead& head,
     const GURL& body_url,
     bool is_same_document_navigation) {
   // This will override the url requested by the WebURLLoader, as well as
@@ -6551,7 +6575,7 @@ void RenderFrameImpl::SyncSelectionIfRequired() {
 }
 
 void RenderFrameImpl::SetCustomURLLoaderFactory(
-    mojom::URLLoaderFactoryPtr factory) {
+    network::mojom::URLLoaderFactoryPtr factory) {
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     // When the network service is enabled, all subresource loads go through
     // a factory from |subresource_loader_factories|. In this case we simply
@@ -6669,8 +6693,8 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
             info.url_request.GetFetchRequestMode());
   DCHECK_EQ(network::mojom::FetchCredentialsMode::kInclude,
             info.url_request.GetFetchCredentialsMode());
-  DCHECK(GetFetchRedirectModeForWebURLRequest(info.url_request) ==
-         FetchRedirectMode::MANUAL_MODE);
+  DCHECK_EQ(network::mojom::FetchRedirectMode::kManual,
+            info.url_request.GetFetchRedirectMode());
   DCHECK(frame_->Parent() ||
          info.url_request.GetFrameType() ==
              network::mojom::RequestContextFrameType::kTopLevel);
@@ -6681,16 +6705,6 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
   DCHECK(!info.url_request.RequestorOrigin().IsNull());
   base::Optional<url::Origin> initiator_origin =
       base::Optional<url::Origin>(info.url_request.RequestorOrigin());
-
-  int load_flags = GetLoadFlagsForWebURLRequest(info.url_request);
-
-  // Requests initiated via devtools can have caching disabled.
-  if (info.is_cache_disabled) {
-    // Turn off all caching related flags and set LOAD_BYPASS_CACHE.
-    load_flags &= ~(net::LOAD_VALIDATE_CACHE | net::LOAD_SKIP_CACHE_VALIDATION |
-                    net::LOAD_ONLY_FROM_CACHE | net::LOAD_DISABLE_CACHE);
-    load_flags |= net::LOAD_BYPASS_CACHE;
-  }
 
   bool is_form_submission =
       info.navigation_type == blink::kWebNavigationTypeFormSubmitted ||
@@ -6708,6 +6722,7 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
   if (info.is_client_redirect)
     client_side_redirect_url = frame_->GetDocument().Url();
 
+  int load_flags = GetLoadFlagsForWebURLRequest(info.url_request);
   mojom::BeginNavigationParamsPtr begin_navigation_params =
       mojom::BeginNavigationParams::New(
           GetWebURLRequestHeadersAsString(info.url_request), load_flags,
@@ -7052,10 +7067,10 @@ void RenderFrameImpl::DraggableRegionsChanged() {
 
 void RenderFrameImpl::ScrollRectToVisibleInParentFrame(
     const blink::WebRect& rect_to_scroll,
-    const blink::WebRemoteScrollProperties& properties) {
+    const blink::WebScrollIntoViewParams& params) {
   DCHECK(IsLocalRoot());
   Send(new FrameHostMsg_ScrollRectToVisibleInParentFrame(
-      routing_id_, rect_to_scroll, properties));
+      routing_id_, rect_to_scroll, params));
 }
 
 blink::mojom::PageVisibilityState RenderFrameImpl::GetVisibilityState() const {
@@ -7090,7 +7105,7 @@ void RenderFrameImpl::SetAccessibilityModeForTest(ui::AXMode new_mode) {
   OnSetAccessibilityMode(new_mode);
 }
 
-mojom::URLLoaderFactory* RenderFrameImpl::GetURLLoaderFactory(
+network::mojom::URLLoaderFactory* RenderFrameImpl::GetURLLoaderFactory(
     const GURL& request_url) {
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     return GetSubresourceLoaderFactories().GetFactoryForRequest(request_url);
@@ -7304,7 +7319,6 @@ RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
           info.is_history_navigation_in_new_child_frame),
       client_redirect(info.is_client_redirect),
       triggering_event_info(info.triggering_event_info),
-      cache_disabled(info.is_cache_disabled),
       form(info.form),
       source_location(info.source_location) {}
 

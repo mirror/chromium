@@ -6,6 +6,7 @@
 
 #include <memory.h>
 #include <stddef.h>
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -384,8 +385,10 @@ void DecodeAutoUpdatePolicies(
          i != allowed_connection_types.end(); ++i) {
       list->AppendInteger(*i);
     }
-    new_values_cache->SetValue(kAllowedConnectionTypesForUpdate,
-                               std::move(list));
+    if (!list->empty()) {
+      new_values_cache->SetValue(kAllowedConnectionTypesForUpdate,
+                                 std::move(list));
+    }
   }
 }
 
@@ -603,7 +606,7 @@ void DecodeGenericPolicies(
     const em::CastReceiverNameProto& container(policy.cast_receiver_name());
     if (container.has_name()) {
       new_values_cache->SetValue(
-          kCastReceiverName, base::MakeUnique<base::Value>(container.name()));
+          kCastReceiverName, std::make_unique<base::Value>(container.name()));
     }
   }
 
@@ -613,7 +616,7 @@ void DecodeGenericPolicies(
     if (container.has_unaffiliated_arc_allowed()) {
       new_values_cache->SetValue(
           kUnaffiliatedArcAllowed,
-          base::MakeUnique<base::Value>(container.unaffiliated_arc_allowed()));
+          std::make_unique<base::Value>(container.unaffiliated_arc_allowed()));
     }
   }
 

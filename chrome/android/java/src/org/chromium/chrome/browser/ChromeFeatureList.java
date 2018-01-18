@@ -198,6 +198,8 @@ public abstract class ChromeFeatureList {
     public static final String CONTEXTUAL_SEARCH_SECOND_TAP = "ContextualSearchSecondTap";
     public static final String CONTEXTUAL_SEARCH_TAP_DISABLE_OVERRIDE =
             "ContextualSearchTapDisableOverride";
+    public static final String CONTEXTUAL_SUGGESTIONS_ABOVE_ARTICLES =
+            "ContextualSuggestionsAboveArticles";
     public static final String CONTEXTUAL_SUGGESTIONS_CAROUSEL = "ContextualSuggestionsCarousel";
     public static final String COPYLESS_PASTE = "CopylessPaste";
     public static final String CUSTOM_CONTEXT_MENU = "CustomContextMenu";
@@ -229,6 +231,8 @@ public abstract class ChromeFeatureList {
     public static final String NTP_LAUNCH_AFTER_INACTIVITY = "NTPLaunchAfterInactivity";
     public static final String NTP_SHOW_GOOGLE_G_IN_OMNIBOX = "NTPShowGoogleGInOmnibox";
     public static final String NTP_SNIPPETS_INCREASED_VISIBILITY = "NTPSnippetsIncreasedVisibility";
+    public static final String OFFLINE_PAGES_DESCRIPTIVE_PENDING_STATUS =
+            "OfflinePagesDescriptivePendingStatus";
     public static final String OMNIBOX_SPARE_RENDERER = "OmniboxSpareRenderer";
     public static final String PAY_WITH_GOOGLE_V1 = "PayWithGoogleV1";
     public static final String PROGRESS_BAR_THROTTLE = "ProgressBarThrottle";
@@ -244,6 +248,7 @@ public abstract class ChromeFeatureList {
     public static final String VR_BROWSING = "VrBrowsing";
     public static final String VR_BROWSING_FEEDBACK = "VrBrowsingFeedback";
     public static final String VR_BROWSING_IN_CUSTOM_TAB = "VrBrowsingInCustomTab";
+    public static final String VR_ICON_IN_DAYDREAM_HOME = "VrIconInDaydreamHome";
     public static final String VR_LAUNCH_INTENT = "VrLaunchIntents";
     public static final String WEB_PAYMENTS = "WebPayments";
     public static final String WEB_PAYMENTS_METHOD_SECTION_ORDER_V2 =

@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
 
+#include <memory>
+
 #include "base/macros.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
@@ -19,10 +21,8 @@
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/browser/ui/views/passwords/credentials_item_view.h"
 #include "chrome/browser/ui/views/passwords/credentials_selection_view.h"
-#include "chrome/browser/ui/views/passwords/manage_password_auto_sign_in_view.h"
 #include "chrome/browser/ui/views/passwords/manage_password_items_view.h"
 #include "chrome/browser/ui/views/passwords/manage_password_pending_view.h"
-#include "chrome/browser/ui/views/passwords/manage_password_save_confirmation_view.h"
 #include "chrome/browser/ui/views/passwords/manage_password_sign_in_promo_view.h"
 #include "chrome/browser/ui/views/passwords/manage_password_update_pending_view.h"
 #include "chrome/grit/generated_resources.h"
@@ -250,7 +250,7 @@ void ManagePasswordsBubbleView::Init() {
 
 void ManagePasswordsBubbleView::AddedToWidget() {
   auto title_view =
-      base::MakeUnique<views::StyledLabel>(base::string16(), this);
+      std::make_unique<views::StyledLabel>(base::string16(), this);
   title_view->SetTextContext(views::style::CONTEXT_DIALOG_TITLE);
   UpdateTitleText(title_view.get());
   GetBubbleFrameView()->SetTitleView(std::move(title_view));
@@ -298,47 +298,12 @@ void ManagePasswordsBubbleView::StyledLabelLinkClicked(
   model()->OnBrandLinkClicked();
 }
 
-void ManagePasswordsBubbleView::Refresh() {
-  RemoveAllChildViews(true);
-  initially_focused_view_ = NULL;
-  CreateChild();
-  // Show/hide the close button.
-  GetWidget()->non_client_view()->ResetWindowControls();
-  GetWidget()->UpdateWindowIcon();
-  UpdateTitleText(
-      static_cast<views::StyledLabel*>(GetBubbleFrameView()->title()));
-  if (model()->state() ==
-      password_manager::ui::CHROME_DESKTOP_IOS_PROMO_STATE) {
-    // Update the height and keep the existing width.
-    gfx::Rect bubble_bounds = GetWidget()->GetWindowBoundsInScreen();
-    bubble_bounds.set_height(
-        GetWidget()->GetRootView()->GetHeightForWidth(bubble_bounds.width()));
-    GetWidget()->SetBounds(bubble_bounds);
-  } else {
-    SizeToContents();
-  }
-}
-
 void ManagePasswordsBubbleView::CreateChild() {
   if (model()->state() == password_manager::ui::PENDING_PASSWORD_STATE) {
     AddChildView(new ManagePasswordPendingView(this));
   } else if (model()->state() ==
              password_manager::ui::PENDING_PASSWORD_UPDATE_STATE) {
     AddChildView(new ManagePasswordUpdatePendingView(this));
-  } else if (model()->state() == password_manager::ui::CONFIRMATION_STATE) {
-    AddChildView(new ManagePasswordSaveConfirmationView(this));
-  } else if (model()->state() == password_manager::ui::AUTO_SIGNIN_STATE) {
-    AddChildView(new ManagePasswordAutoSignInView(this));
-  } else if (model()->state() ==
-             password_manager::ui::CHROME_SIGN_IN_PROMO_STATE) {
-    AddChildView(new ManagePasswordSignInPromoView(this));
-#if defined(OS_WIN)
-  } else if (model()->state() ==
-             password_manager::ui::CHROME_DESKTOP_IOS_PROMO_STATE) {
-    AddChildView(new DesktopIOSPromotionBubbleView(
-        model()->GetProfile(),
-        desktop_ios_promotion::PromotionEntryPoint::SAVE_PASSWORD_BUBBLE));
-#endif
   } else {
     // This model state should be handled by separate dialogs.
     NOTREACHED();

@@ -8,6 +8,8 @@ static_library("network_service") {
   sources = [
     "cookie_manager.cc",
     "cookie_manager.h",
+    "proxy_config_service_mojo.cc",
+    "proxy_config_service_mojo.h",
   ]
 
   deps = [
@@ -24,6 +26,7 @@ source_set("tests") {
 
   sources = [
     "cookie_manager_unittest.cc",
+    "proxy_config_service_mojo_unittest.cc",
   ]
 
   deps = [
@@ -31,6 +34,22 @@ source_set("tests") {
     "//mojo/public/cpp/bindings",
     "//net",
     "//net:test_support",
+    "//services/network:network_service",
+    "//services/network/public/interfaces",
+    "//testing/gtest",
+  ]
+}
+
+static_library("test_support") {
+  testonly = true
+
+  sources = [
+    "test/test_data_pipe_getter.cc",
+  ]
+
+  deps = [
+    "//base",
+    "//mojo/public/cpp/bindings",
     "//services/network:network_service",
     "//services/network/public/interfaces",
     "//testing/gtest",

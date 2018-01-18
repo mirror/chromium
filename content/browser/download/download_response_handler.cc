@@ -54,6 +54,7 @@ DownloadResponseHandler::DownloadResponseHandler(
     bool is_parallel_request,
     bool is_transient,
     bool fetch_error_body,
+    DownloadSource download_source,
     std::vector<GURL> url_chain)
     : delegate_(delegate),
       started_(false),
@@ -63,11 +64,12 @@ DownloadResponseHandler::DownloadResponseHandler(
       referrer_(resource_request->referrer),
       is_transient_(is_transient),
       fetch_error_body_(fetch_error_body),
+      download_source_(download_source),
       has_strong_validators_(false),
       is_partial_request_(save_info_->offset > 0),
       abort_reason_(DOWNLOAD_INTERRUPT_REASON_NONE) {
   if (!is_parallel_request)
-    RecordDownloadCount(UNTHROTTLED_COUNT);
+    RecordDownloadCountWithSource(UNTHROTTLED_COUNT, download_source);
   if (resource_request->request_initiator.has_value())
     origin_ = resource_request->request_initiator.value().GetURL();
 }
@@ -75,9 +77,9 @@ DownloadResponseHandler::DownloadResponseHandler(
 DownloadResponseHandler::~DownloadResponseHandler() = default;
 
 void DownloadResponseHandler::OnReceiveResponse(
-    const ResourceResponseHead& head,
+    const network::ResourceResponseHead& head,
     const base::Optional<net::SSLInfo>& ssl_info,
-    mojom::DownloadedTempFilePtr downloaded_file) {
+    network::mojom::DownloadedTempFilePtr downloaded_file) {
   create_info_ = CreateDownloadCreateInfo(head);
 
   if (ssl_info)
@@ -109,7 +111,7 @@ void DownloadResponseHandler::OnReceiveResponse(
 
 std::unique_ptr<DownloadCreateInfo>
 DownloadResponseHandler::CreateDownloadCreateInfo(
-    const ResourceResponseHead& head) {
+    const network::ResourceResponseHead& head) {
   // TODO(qinmin): instead of using NetLogWithSource, introduce new logging
   // class for download.
   auto create_info = std::make_unique<DownloadCreateInfo>(
@@ -134,6 +136,7 @@ DownloadResponseHandler::CreateDownloadCreateInfo(
   create_info->offset = create_info->save_info->offset;
   create_info->mime_type = head.mime_type;
   create_info->fetch_error_body = fetch_error_body_;
+  create_info->download_source = download_source_;
 
   HandleResponseHeaders(head.headers.get(), create_info.get());
   return create_info;
@@ -141,7 +144,7 @@ DownloadResponseHandler::CreateDownloadCreateInfo(
 
 void DownloadResponseHandler::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
-    const ResourceResponseHead& head) {
+    const network::ResourceResponseHead& head) {
   if (is_partial_request_) {
     // A redirect while attempting a partial resumption indicates a potential
     // middle box. Trigger another interruption so that the DownloadItem can
@@ -198,7 +201,7 @@ void DownloadResponseHandler::OnComplete(
 
   // OnComplete() called without OnReceiveResponse(). This should only
   // happen when the request was aborted.
-  create_info_ = CreateDownloadCreateInfo(ResourceResponseHead());
+  create_info_ = CreateDownloadCreateInfo(network::ResourceResponseHead());
   create_info_->result = reason;
 
   OnResponseStarted(mojom::DownloadStreamHandlePtr());

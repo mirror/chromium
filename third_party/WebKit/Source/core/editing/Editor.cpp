@@ -94,9 +94,11 @@
 #include "core/svg/SVGImageElement.h"
 #include "platform/KillRing.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/scroll/ScrollAlignment.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/CharacterNames.h"
+#include "public/platform/WebScrollIntoViewParams.h"
 
 namespace blink {
 
@@ -795,10 +797,11 @@ void Editor::RegisterCommandGroup(CompositeEditCommand* command_group_wrapper) {
 }
 
 Element* Editor::FindEventTargetFrom(const VisibleSelection& selection) const {
-  Element* target = AssociatedElementOf(selection.Start());
+  Element* const target = AssociatedElementOf(selection.Start());
   if (!target)
-    target = GetFrame().GetDocument()->body();
-
+    return GetFrame().GetDocument()->body();
+  if (target->IsInUserAgentShadowRoot())
+    return target->OwnerShadowHost();
   return target;
 }
 
@@ -950,7 +953,10 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
 
   // Don't clear the typing style with this selection change. We do those things
   // elsewhere if necessary.
-  ChangeSelectionAfterCommand(new_selection, SetSelectionOptions());
+  ChangeSelectionAfterCommand(
+      new_selection, SetSelectionOptions::Builder()
+                         .SetIsDirectional(cmd->SelectionIsDirectional())
+                         .Build());
 
   if (!cmd->PreservesTypingStyle())
     ClearTypingStyle();
@@ -966,6 +972,8 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
       undo_stack_->RegisterUndoStep(last_edit_command_->EnsureUndoStep());
     last_edit_command_->EnsureUndoStep()->SetEndingSelection(
         cmd->EnsureUndoStep()->EndingSelection());
+    last_edit_command_->GetUndoStep()->SetSelectionIsDirectional(
+        cmd->GetUndoStep()->SelectionIsDirectional());
     last_edit_command_->AppendCommandToUndoStep(cmd);
   } else {
     // Only register a new undo command if the command passed in is
@@ -989,11 +997,12 @@ void Editor::UnappliedEditing(UndoStep* cmd) {
 
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->StartingSelection(), GetFrame().GetDocument());
-  ChangeSelectionAfterCommand(new_selection,
-                              SetSelectionOptions::Builder()
-                                  .SetShouldCloseTyping(true)
-                                  .SetShouldClearTypingStyle(true)
-                                  .Build());
+  ChangeSelectionAfterCommand(
+      new_selection, SetSelectionOptions::Builder()
+                         .SetShouldCloseTyping(true)
+                         .SetShouldClearTypingStyle(true)
+                         .SetIsDirectional(cmd->SelectionIsDirectional())
+                         .Build());
 
   last_edit_command_ = nullptr;
   undo_stack_->RegisterRedoStep(cmd);
@@ -1012,11 +1021,12 @@ void Editor::ReappliedEditing(UndoStep* cmd) {
 
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->EndingSelection(), GetFrame().GetDocument());
-  ChangeSelectionAfterCommand(new_selection,
-                              SetSelectionOptions::Builder()
-                                  .SetShouldCloseTyping(true)
-                                  .SetShouldClearTypingStyle(true)
-                                  .Build());
+  ChangeSelectionAfterCommand(
+      new_selection, SetSelectionOptions::Builder()
+                         .SetShouldCloseTyping(true)
+                         .SetShouldClearTypingStyle(true)
+                         .SetIsDirectional(cmd->SelectionIsDirectional())
+                         .Build());
 
   last_edit_command_ = nullptr;
   undo_stack_->RegisterUndoStep(cmd);
@@ -1429,13 +1439,15 @@ void Editor::ChangeSelectionAfterCommand(
   // See <rdar://problem/5729315> Some shouldChangeSelectedDOMRange contain
   // Ranges for selections that are no longer valid
   bool selection_did_not_change_dom_position =
-      new_selection == GetFrameSelection().GetSelectionInDOMTree();
+      new_selection == GetFrameSelection().GetSelectionInDOMTree() &&
+      options.IsDirectional() == GetFrameSelection().IsDirectional();
   const bool handle_visible =
       GetFrameSelection().IsHandleVisible() && new_selection.IsRange();
-  GetFrameSelection().SetSelection(new_selection,
-                                   SetSelectionOptions::Builder(options)
-                                       .SetShouldShowHandle(handle_visible)
-                                       .Build());
+  GetFrameSelection().SetSelection(
+      new_selection, SetSelectionOptions::Builder(options)
+                         .SetShouldShowHandle(handle_visible)
+                         .SetIsDirectional(options.IsDirectional())
+                         .Build());
 
   // Some editing operations change the selection visually without affecting its
   // position within the DOM. For example when you press return in the following
@@ -1537,7 +1549,7 @@ bool Editor::FindString(const String& target, FindOptions options) {
   if (!result_range)
     return false;
 
-  GetFrameSelection().SetSelection(
+  GetFrameSelection().SetSelectionAndEndTyping(
       SelectionInDOMTree::Builder()
           .SetBaseAndExtent(EphemeralRange(result_range))
           .Build());
@@ -1556,8 +1568,9 @@ Range* Editor::FindStringAndScrollToVisible(const String& target,
   Node* first_node = next_match->FirstNode();
   first_node->GetLayoutObject()->ScrollRectToVisible(
       LayoutRect(next_match->BoundingBox()),
-      ScrollAlignment::kAlignCenterIfNeeded,
-      ScrollAlignment::kAlignCenterIfNeeded, kUserScroll);
+      WebScrollIntoViewParams(ScrollAlignment::kAlignCenterIfNeeded,
+                              ScrollAlignment::kAlignCenterIfNeeded,
+                              kUserScroll));
   first_node->GetDocument().SetSequentialFocusNavigationStartingPoint(
       first_node);
 
@@ -1711,6 +1724,7 @@ FrameSelection& Editor::GetFrameSelection() const {
 
 void Editor::SetMark() {
   mark_ = GetFrameSelection().ComputeVisibleSelectionInDOMTree();
+  mark_is_directional_ = GetFrameSelection().IsDirectional();
 }
 
 void Editor::ToggleOverwriteModeEnabled() {

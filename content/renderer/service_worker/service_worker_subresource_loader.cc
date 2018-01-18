@@ -25,11 +25,11 @@ namespace content {
 
 namespace {
 
-ResourceResponseHead RewriteServiceWorkerTime(
+network::ResourceResponseHead RewriteServiceWorkerTime(
     base::TimeTicks service_worker_start_time,
     base::TimeTicks service_worker_ready_time,
-    const ResourceResponseHead& response_head) {
-  ResourceResponseHead new_head = response_head;
+    const network::ResourceResponseHead& response_head) {
+  network::ResourceResponseHead new_head = response_head;
   new_head.service_worker_start_time = service_worker_start_time;
   new_head.service_worker_ready_time = service_worker_ready_time;
   return new_head;
@@ -38,13 +38,13 @@ ResourceResponseHead RewriteServiceWorkerTime(
 // A wrapper URLLoaderClient that invokes the given RewriteHeaderCallback
 // whenever a response or redirect is received. It self-destructs when the Mojo
 // connection is closed.
-class HeaderRewritingURLLoaderClient : public mojom::URLLoaderClient {
+class HeaderRewritingURLLoaderClient : public network::mojom::URLLoaderClient {
  public:
-  using RewriteHeaderCallback =
-      base::Callback<ResourceResponseHead(const ResourceResponseHead&)>;
+  using RewriteHeaderCallback = base::Callback<network::ResourceResponseHead(
+      const network::ResourceResponseHead&)>;
 
-  static mojom::URLLoaderClientPtr CreateAndBind(
-      mojom::URLLoaderClientPtr url_loader_client,
+  static network::mojom::URLLoaderClientPtr CreateAndBind(
+      network::mojom::URLLoaderClientPtr url_loader_client,
       RewriteHeaderCallback rewrite_header_callback) {
     return (new HeaderRewritingURLLoaderClient(std::move(url_loader_client),
                                                rewrite_header_callback))
@@ -54,15 +54,16 @@ class HeaderRewritingURLLoaderClient : public mojom::URLLoaderClient {
   ~HeaderRewritingURLLoaderClient() override {}
 
  private:
-  HeaderRewritingURLLoaderClient(mojom::URLLoaderClientPtr url_loader_client,
-                                 RewriteHeaderCallback rewrite_header_callback)
+  HeaderRewritingURLLoaderClient(
+      network::mojom::URLLoaderClientPtr url_loader_client,
+      RewriteHeaderCallback rewrite_header_callback)
       : url_loader_client_(std::move(url_loader_client)),
         binding_(this),
         rewrite_header_callback_(rewrite_header_callback) {}
 
-  mojom::URLLoaderClientPtr CreateInterfacePtrAndBind() {
+  network::mojom::URLLoaderClientPtr CreateInterfacePtrAndBind() {
     DCHECK(!binding_.is_bound());
-    mojom::URLLoaderClientPtr ptr;
+    network::mojom::URLLoaderClientPtr ptr;
     binding_.Bind(mojo::MakeRequest(&ptr));
     binding_.set_connection_error_handler(
         base::Bind(&HeaderRewritingURLLoaderClient::OnClientConnectionError,
@@ -74,19 +75,20 @@ class HeaderRewritingURLLoaderClient : public mojom::URLLoaderClient {
     base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
   }
 
-  // mojom::URLLoaderClient implementation:
+  // network::mojom::URLLoaderClient implementation:
   void OnReceiveResponse(
-      const ResourceResponseHead& response_head,
+      const network::ResourceResponseHead& response_head,
       const base::Optional<net::SSLInfo>& ssl_info,
-      mojom::DownloadedTempFilePtr downloaded_file) override {
+      network::mojom::DownloadedTempFilePtr downloaded_file) override {
     DCHECK(url_loader_client_.is_bound());
     url_loader_client_->OnReceiveResponse(
         rewrite_header_callback_.Run(response_head), ssl_info,
         std::move(downloaded_file));
   }
 
-  void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
-                         const ResourceResponseHead& response_head) override {
+  void OnReceiveRedirect(
+      const net::RedirectInfo& redirect_info,
+      const network::ResourceResponseHead& response_head) override {
     DCHECK(url_loader_client_.is_bound());
     url_loader_client_->OnReceiveRedirect(
         redirect_info, rewrite_header_callback_.Run(response_head));
@@ -126,8 +128,8 @@ class HeaderRewritingURLLoaderClient : public mojom::URLLoaderClient {
     url_loader_client_->OnComplete(status);
   }
 
-  mojom::URLLoaderClientPtr url_loader_client_;
-  mojo::Binding<mojom::URLLoaderClient> binding_;
+  network::mojom::URLLoaderClientPtr url_loader_client_;
+  mojo::Binding<network::mojom::URLLoaderClient> binding_;
   RewriteHeaderCallback rewrite_header_callback_;
 };
 }  // namespace
@@ -135,12 +137,12 @@ class HeaderRewritingURLLoaderClient : public mojom::URLLoaderClient {
 // ServiceWorkerSubresourceLoader -------------------------------------------
 
 ServiceWorkerSubresourceLoader::ServiceWorkerSubresourceLoader(
-    mojom::URLLoaderRequest request,
+    network::mojom::URLLoaderRequest request,
     int32_t routing_id,
     int32_t request_id,
     uint32_t options,
     const network::ResourceRequest& resource_request,
-    mojom::URLLoaderClientPtr client,
+    network::mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
     scoped_refptr<ControllerServiceWorkerConnector> controller_connector,
     scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter)
@@ -509,12 +511,12 @@ ServiceWorkerSubresourceLoaderFactory::
     ~ServiceWorkerSubresourceLoaderFactory() = default;
 
 void ServiceWorkerSubresourceLoaderFactory::CreateLoaderAndStart(
-    mojom::URLLoaderRequest request,
+    network::mojom::URLLoaderRequest request,
     int32_t routing_id,
     int32_t request_id,
     uint32_t options,
     const network::ResourceRequest& resource_request,
-    mojom::URLLoaderClientPtr client,
+    network::mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
   // This loader destructs itself, as we want to transparently switch to the
   // network loader when fallback happens. When that happens the loader unbinds
@@ -527,7 +529,7 @@ void ServiceWorkerSubresourceLoaderFactory::CreateLoaderAndStart(
 }
 
 void ServiceWorkerSubresourceLoaderFactory::Clone(
-    mojom::URLLoaderFactoryRequest request) {
+    network::mojom::URLLoaderFactoryRequest request) {
   NOTREACHED();
 }
 

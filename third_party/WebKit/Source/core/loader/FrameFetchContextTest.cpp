@@ -363,13 +363,16 @@ TEST_F(FrameFetchContextModifyRequestTest, UpgradeInsecureResourceRequests) {
   for (const auto& test : tests) {
     document->InsecureNavigationsToUpgrade()->clear();
 
-    // We always upgrade for FrameTypeNone and FrameTypeNested.
+    // We always upgrade for FrameTypeNone.
     ExpectUpgrade(test.original, WebURLRequest::kRequestContextScript,
                   network::mojom::RequestContextFrameType::kNone,
                   test.upgraded);
+
+    // We never upgrade for FrameTypeNested. This is done on the browser
+    // process.
     ExpectUpgrade(test.original, WebURLRequest::kRequestContextScript,
                   network::mojom::RequestContextFrameType::kNested,
-                  test.upgraded);
+                  test.original);
 
     // We do not upgrade for FrameTypeTopLevel or FrameTypeAuxiliary...
     ExpectUpgrade(test.original, WebURLRequest::kRequestContextScript,
@@ -881,6 +884,55 @@ TEST_F(FrameFetchContextTest, SetFirstPartyCookieAndRequestorOrigin) {
   }
 }
 
+TEST_F(FrameFetchContextTest, ModifyPriorityForLowPriorityIframes) {
+  Settings* settings = document->GetSettings();
+  FrameFetchContext* childFetchContext = CreateChildFrame();
+  GetNetworkStateNotifier().SetNetworkQualityInfoOverride(
+      WebEffectiveConnectionType::kType3G, 1 /* transport_rtt_msec */,
+      10000 /* downlink_throughput_mbps */);
+
+  // Experiment is not enabled, expect default values.
+  EXPECT_EQ(ResourceLoadPriority::kVeryHigh,
+            fetch_context->ModifyPriorityForExperiments(
+                ResourceLoadPriority::kVeryHigh));
+  EXPECT_EQ(ResourceLoadPriority::kVeryHigh,
+            childFetchContext->ModifyPriorityForExperiments(
+                ResourceLoadPriority::kVeryHigh));
+  EXPECT_EQ(ResourceLoadPriority::kMedium,
+            childFetchContext->ModifyPriorityForExperiments(
+                ResourceLoadPriority::kMedium));
+
+  // Low priority iframes enabled but network is not slow enough. Expect default
+  // values.
+  settings->SetLowPriorityIframesThreshold(WebEffectiveConnectionType::kType2G);
+  EXPECT_EQ(ResourceLoadPriority::kVeryHigh,
+            fetch_context->ModifyPriorityForExperiments(
+                ResourceLoadPriority::kVeryHigh));
+  EXPECT_EQ(ResourceLoadPriority::kVeryHigh,
+            childFetchContext->ModifyPriorityForExperiments(
+                ResourceLoadPriority::kVeryHigh));
+  EXPECT_EQ(ResourceLoadPriority::kMedium,
+            childFetchContext->ModifyPriorityForExperiments(
+                ResourceLoadPriority::kMedium));
+
+  // Low priority iframes enabled and network is slow, main frame request's
+  // priorities should not change.
+  GetNetworkStateNotifier().SetNetworkQualityInfoOverride(
+      WebEffectiveConnectionType::kType2G, 1 /* transport_rtt_msec */,
+      10000 /* downlink_throughput_mbps */);
+  EXPECT_EQ(ResourceLoadPriority::kVeryHigh,
+            fetch_context->ModifyPriorityForExperiments(
+                ResourceLoadPriority::kVeryHigh));
+  // Low priority iframes enabled, everything in child frame should be low
+  // priority.
+  EXPECT_EQ(ResourceLoadPriority::kVeryLow,
+            childFetchContext->ModifyPriorityForExperiments(
+                ResourceLoadPriority::kVeryHigh));
+  EXPECT_EQ(ResourceLoadPriority::kVeryLow,
+            childFetchContext->ModifyPriorityForExperiments(
+                ResourceLoadPriority::kMedium));
+}
+
 // Tests if "Save-Data" header is correctly added on the first load and reload.
 TEST_F(FrameFetchContextTest, EnableDataSaver) {
   GetNetworkStateNotifier().SetSaveDataEnabledOverride(true);
@@ -1294,12 +1346,6 @@ TEST_F(FrameFetchContextTest, IsLoadCompleteWhenDetached_2) {
   EXPECT_TRUE(fetch_context->IsLoadComplete());
 }
 
-TEST_F(FrameFetchContextTest, PageDismissalEventBeingDispatchedWhenDetached) {
-  dummy_page_holder = nullptr;
-
-  EXPECT_FALSE(fetch_context->PageDismissalEventBeingDispatched());
-}
-
 TEST_F(FrameFetchContextTest, UpdateTimingInfoForIFrameNavigationWhenDetached) {
   scoped_refptr<ResourceTimingInfo> info =
       ResourceTimingInfo::Create("type", 0.3, false);
@@ -1308,15 +1354,6 @@ TEST_F(FrameFetchContextTest, UpdateTimingInfoForIFrameNavigationWhenDetached) {
 
   fetch_context->UpdateTimingInfoForIFrameNavigation(info.get());
   // Should not crash.
-}
-
-TEST_F(FrameFetchContextTest, SendImagePingWhenDetached) {
-  const KURL url("https://www.example.com/");
-
-  dummy_page_holder = nullptr;
-
-  fetch_context->SendImagePing(url);
-  // Should not crash. Nothing should be sent.
 }
 
 TEST_F(FrameFetchContextTest, AddConsoleMessageWhenDetached) {

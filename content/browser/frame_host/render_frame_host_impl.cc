@@ -2301,6 +2301,11 @@ void RenderFrameHostImpl::EnforceInsecureRequestPolicy(
   frame_tree_node()->SetInsecureRequestPolicy(policy);
 }
 
+void RenderFrameHostImpl::EnforceInsecureNavigationsSet(
+    const std::vector<uint32_t>& set) {
+  frame_tree_node()->SetInsecureNavigationsSet(set);
+}
+
 FrameTreeNode* RenderFrameHostImpl::FindAndVerifyChild(
     int32_t child_frame_routing_id,
     bad_message::BadMessageReason reason) {
@@ -2448,6 +2453,7 @@ void RenderFrameHostImpl::OnAccessibilityEvents(
       detail.id = param.id;
       detail.ax_tree_id = GetAXTreeID();
       detail.event_from = param.event_from;
+      detail.action_request_id = param.action_request_id;
       if (param.update.has_tree_data) {
         detail.update.has_tree_data = true;
         ax_content_tree_data_ = param.update.tree_data;
@@ -2545,6 +2551,7 @@ void RenderFrameHostImpl::OnAccessibilityFindInPageResult(
 }
 
 void RenderFrameHostImpl::OnAccessibilityChildFrameHitTestResult(
+    int action_request_id,
     const gfx::Point& point,
     int child_frame_routing_id,
     int child_frame_browser_plugin_instance_id,
@@ -2568,6 +2575,7 @@ void RenderFrameHostImpl::OnAccessibilityChildFrameHitTestResult(
     return;
 
   ui::AXActionData action_data;
+  action_data.request_id = action_request_id;
   action_data.target_point = point;
   action_data.action = ui::AX_ACTION_HIT_TEST;
   action_data.hit_test_event_to_fire = event_to_fire;
@@ -2756,12 +2764,12 @@ void RenderFrameHostImpl::OnSetHasReceivedUserGestureBeforeNavigation(
 
 void RenderFrameHostImpl::OnScrollRectToVisibleInParentFrame(
     const gfx::Rect& rect_to_scroll,
-    const blink::WebRemoteScrollProperties& properties) {
+    const blink::WebScrollIntoViewParams& params) {
   RenderFrameProxyHost* proxy =
       frame_tree_node_->render_manager()->GetProxyToParent();
   if (!proxy)
     return;
-  proxy->ScrollRectToVisible(rect_to_scroll, properties);
+  proxy->ScrollRectToVisible(rect_to_scroll, params);
 }
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
@@ -3274,7 +3282,7 @@ void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
       base::Optional<SourceLocation>(),
       CSPDisposition::CHECK /* should_check_main_world_csp */,
       false /* started_from_context_menu */, false /* has_user_gesture */);
-  CommitNavigation(nullptr, mojom::URLLoaderClientEndpointsPtr(),
+  CommitNavigation(nullptr, network::mojom::URLLoaderClientEndpointsPtr(),
                    std::unique_ptr<StreamHandle>(), common_params,
                    RequestNavigationParams(), false, base::nullopt,
                    base::UnguessableToken::Create() /* not traced */);
@@ -3418,8 +3426,8 @@ void RenderFrameHostImpl::SendJavaScriptDialogReply(
 }
 
 void RenderFrameHostImpl::CommitNavigation(
-    ResourceResponse* response,
-    mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
+    network::ResourceResponse* response,
+    network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
     std::unique_ptr<StreamHandle> body,
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params,
@@ -3447,8 +3455,8 @@ void RenderFrameHostImpl::CommitNavigation(
   if (common_params.url.SchemeIs(url::kJavaScriptScheme)) {
     DCHECK(!url_loader_client_endpoints && !body);
     GetNavigationControl()->CommitNavigation(
-        ResourceResponseHead(), GURL(), common_params, request_params,
-        mojom::URLLoaderClientEndpointsPtr(),
+        network::ResourceResponseHead(), GURL(), common_params, request_params,
+        network::mojom::URLLoaderClientEndpointsPtr(),
         /*subresource_loader_factories=*/base::nullopt,
         /*controller_service_worker=*/nullptr, devtools_navigation_token);
     return;
@@ -3468,8 +3476,8 @@ void RenderFrameHostImpl::CommitNavigation(
   }
 
   const GURL body_url = body.get() ? body->GetURL() : GURL();
-  const ResourceResponseHead head = response ?
-      response->head : ResourceResponseHead();
+  const network::ResourceResponseHead head =
+      response ? response->head : network::ResourceResponseHead();
   const bool is_same_document =
       FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type);
 
@@ -3482,7 +3490,7 @@ void RenderFrameHostImpl::CommitNavigation(
     // given everything it will need to load any accessible subresources. We
     // however only do this for cross-document navigations, because the
     // alternative would be redundant effort.
-    mojom::URLLoaderFactoryPtr default_factory;
+    network::mojom::URLLoaderFactoryPtr default_factory;
     StoragePartitionImpl* storage_partition =
         static_cast<StoragePartitionImpl*>(BrowserContext::GetStoragePartition(
             GetSiteInstance()->GetBrowserContext(), GetSiteInstance()));
@@ -3496,7 +3504,7 @@ void RenderFrameHostImpl::CommitNavigation(
       std::string scheme = common_params.url.scheme();
       const auto& schemes = URLDataManagerBackend::GetWebUISchemes();
       if (std::find(schemes.begin(), schemes.end(), scheme) != schemes.end()) {
-        mojom::URLLoaderFactoryPtr factory_for_webui =
+        network::mojom::URLLoaderFactoryPtr factory_for_webui =
             CreateWebUIURLLoader(this, scheme);
         if (enabled_bindings_ & BINDINGS_POLICY_WEB_UI) {
           // If the renderer has webui bindings, then don't give it access to
@@ -3518,7 +3526,7 @@ void RenderFrameHostImpl::CommitNavigation(
         storage_partition->GetNetworkContext()->CreateURLLoaderFactory(
             mojo::MakeRequest(&default_factory), GetProcess()->GetID());
       } else {
-        mojom::URLLoaderFactoryPtr original_factory;
+        network::mojom::URLLoaderFactoryPtr original_factory;
         storage_partition->GetNetworkContext()->CreateURLLoaderFactory(
             mojo::MakeRequest(&original_factory), GetProcess()->GetID());
         g_url_loader_factory_callback_for_test.Get().Run(
@@ -3531,7 +3539,7 @@ void RenderFrameHostImpl::CommitNavigation(
     subresource_loader_factories->SetDefaultFactory(std::move(default_factory));
 
     // Everyone gets a blob loader.
-    mojom::URLLoaderFactoryPtr blob_factory;
+    network::mojom::URLLoaderFactoryPtr blob_factory;
     storage_partition->GetBlobURLLoaderFactory()->HandleRequest(
         mojo::MakeRequest(&blob_factory));
     subresource_loader_factories->RegisterFactory(url::kBlobScheme,
@@ -3556,7 +3564,7 @@ void RenderFrameHostImpl::CommitNavigation(
             this, common_params.url, &non_network_url_loader_factories_);
 
     for (auto& factory : non_network_url_loader_factories_) {
-      mojom::URLLoaderFactoryPtr factory_proxy;
+      network::mojom::URLLoaderFactoryPtr factory_proxy;
       factory.second->Clone(mojo::MakeRequest(&factory_proxy));
       subresource_loader_factories->RegisterFactory(factory.first,
                                                     std::move(factory_proxy));
@@ -3624,12 +3632,12 @@ void RenderFrameHostImpl::FailedNavigation(
       static_cast<StoragePartitionImpl*>(BrowserContext::GetStoragePartition(
           GetSiteInstance()->GetBrowserContext(), GetSiteInstance()));
 
-  mojom::URLLoaderFactoryPtr default_factory;
+  network::mojom::URLLoaderFactoryPtr default_factory;
   if (g_url_loader_factory_callback_for_test.Get().is_null()) {
     storage_partition->GetNetworkContext()->CreateURLLoaderFactory(
         mojo::MakeRequest(&default_factory), GetProcess()->GetID());
   } else {
-    mojom::URLLoaderFactoryPtr original_factory;
+    network::mojom::URLLoaderFactoryPtr original_factory;
     storage_partition->GetNetworkContext()->CreateURLLoaderFactory(
         mojo::MakeRequest(&original_factory), GetProcess()->GetID());
     g_url_loader_factory_callback_for_test.Get().Run(

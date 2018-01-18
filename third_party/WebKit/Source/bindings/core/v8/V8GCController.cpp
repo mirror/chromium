@@ -136,7 +136,7 @@ class HeapSnaphotWrapperVisitor : public ScriptWrappableVisitor,
 
   // Collect interesting V8 roots for the heap snapshot. Currently these are
   // DOM nodes.
-  void CollectV8Roots() { isolate_->VisitHandlesWithClassIds(this); }
+  void CollectV8Roots() { isolate()->VisitHandlesWithClassIds(this); }
 
   void VisitPersistentHandle(v8::Persistent<v8::Value>* value,
                              uint16_t class_id) override {
@@ -144,10 +144,10 @@ class HeapSnaphotWrapperVisitor : public ScriptWrappableVisitor,
       return;
 
     v8::Local<v8::Object> wrapper = v8::Local<v8::Object>::New(
-        isolate_, v8::Persistent<v8::Object>::Cast(*value));
-    DCHECK(V8Node::hasInstance(wrapper, isolate_));
+        isolate(), v8::Persistent<v8::Object>::Cast(*value));
+    DCHECK(V8Node::hasInstance(wrapper, isolate()));
     Node* node = V8Node::ToImpl(wrapper);
-    Node* root = V8GCController::OpaqueRootForGC(isolate_, node);
+    Node* root = V8GCController::OpaqueRootForGC(isolate(), node);
     nodes_requiring_tracing_[root].push_back(node);
   }
 
@@ -158,7 +158,7 @@ class HeapSnaphotWrapperVisitor : public ScriptWrappableVisitor,
     current_parent_ = nullptr;
 
     TracePrologue();
-    ActiveScriptWrappableBase::TraceActiveScriptWrappables(isolate_, this);
+    ActiveScriptWrappableBase::TraceActiveScriptWrappables(isolate(), this);
     AdvanceTracing(
         0,
         v8::EmbedderHeapTracer::AdvanceTracingActions(
@@ -191,18 +191,14 @@ class HeapSnaphotWrapperVisitor : public ScriptWrappableVisitor,
   v8::HeapProfiler::RetainerEdges Edges() { return std::move(edges_); }
   v8::HeapProfiler::RetainerGroups Groups() { return std::move(groups_); }
 
+  // ScriptWrappableVisitor overrides.
+
   void MarkWrappersInAllWorlds(
       const ScriptWrappable* traceable) const override {
     // Only mark the main thread wrapper as we cannot properly intercept
     // DOMWrapperMap::markWrapper. This means that edges from the isolated
     // worlds are missing in the snapshot.
     traceable->MarkWrapper(this);
-  }
-
-  void MarkWrapper(const v8::PersistentBase<v8::Value>* value) const override {
-    if (current_parent_ && current_parent_ != value)
-      edges_.push_back(std::make_pair(current_parent_, value));
-    found_v8_wrappers_.insert(value);
   }
 
   void DispatchTraceWrappers(const TraceWrapperBase* traceable) const override {
@@ -213,6 +209,16 @@ class HeapSnaphotWrapperVisitor : public ScriptWrappableVisitor,
       first_script_wrappable_traced_ = true;
       traceable->TraceWrappers(this);
     }
+  }
+
+ protected:
+  // ScriptWrappableVisitor override.
+  void Visit(
+      const TraceWrapperV8Reference<v8::Value>& traced_wrapper) const override {
+    const v8::PersistentBase<v8::Value>* value = &traced_wrapper.Get();
+    if (current_parent_ && current_parent_ != value)
+      edges_.push_back(std::make_pair(current_parent_, value));
+    found_v8_wrappers_.insert(value);
   }
 
  private:

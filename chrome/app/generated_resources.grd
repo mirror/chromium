@@ -5412,15 +5412,18 @@ the Bookmarks menu.">
       <message name="IDS_BROWSER_HANGMONITOR_RENDERER_WAIT" desc="The label of the 'wait' button, which exits the dialog without doing anything and continues to wait for the page to become responsive.">
         Wait
       </message>
-
       <if expr="use_titlecase">
-        <message name="IDS_BROWSER_HANGMONITOR_RENDERER_END" desc="The label of the 'exit' button, which stops the unresponsive page.">
-          Exit Page
+        <message name="IDS_BROWSER_HANGMONITOR_RENDERER_END" desc="The label of the 'exit' button, which stops the unresponsive page. If having no explicit # makes the phrasing awkward, feel free to add a # as necessary. [ICU Syntax]">
+          {NUM_PAGES, plural,
+          =1 {Exit Page}
+          other {Exit Pages}}
         </message>
       </if>
       <if expr="not use_titlecase">
-        <message name="IDS_BROWSER_HANGMONITOR_RENDERER_END" desc="The label of the 'exit' button, which stops the unresponsive page.">
-          Exit page
+        <message name="IDS_BROWSER_HANGMONITOR_RENDERER_END" desc="The label of the 'exit' button, which stops the unresponsive page. If having no explicit # makes the phrasing awkward, feel free to add a # as necessary. [ICU Syntax]">
+          {NUM_PAGES, plural,
+          =1 {Exit page}
+          other {Exit pages}}
         </message>
       </if>
       <message name="IDS_BROWSER_HANGMONITOR_PLUGIN_INFOBAR" desc="The text of the infobar notifying the user that a plugin has hung">
@@ -5953,26 +5956,14 @@ I don't think this site should be blocked!
       <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_SEARCH_ENGINE_NO_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their search engine has been modified, for example by unwanted software or extension, to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default if the user clicks the Restore button.">
         Your search engine was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>.
       </message>
-      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_SEARCH_ENGINE_WITH_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their search engine has been modified by an extension to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
-        Your search engine was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>. To disable extensions that change your search engine, click Restore.
-      </message>
       <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_STARTUP_PAGE_SINGLE_NO_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their startup page setting has been modified, for example by unwanted software or extension, to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
         Your startup page was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>.
-      </message>
-      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_STARTUP_PAGE_SINGLE_WITH_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their startup page has been modified by an extension to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
-        Your startup page was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>. To disable extensions that change your startup page, click Restore.
       </message>
       <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_STARTUP_PAGE_MULTIPLE_NO_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their startup page setting has been modified, for example by unwanted software or extension, to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default if the user clicks the Restore button.">
         Your startup pages were changed to include <ph name="URL">$1<ex>www.some-domain.com</ex></ph>.
       </message>
-      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_STARTUP_PAGE_MULTIPLE_WITH_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their startup page has been modified by an extension to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default if the user clicks the Restore button.">
-        Your startup pages were changed to include <ph name="URL">$1<ex>www.some-domain.com</ex></ph>. To disable extensions that change your startup page, click Restore.
-      </message>
       <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_HOMEPAGE_NO_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their homepage setting has been modified, for example by unwanted software or extension, to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
         Your homepage was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>.
-      </message>
-      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_HOMEPAGE_WITH_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their homepagesetting has been modified by an extension to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
-        Your homepage page was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>. To disable extensions that change your homepage, click Restore.
       </message>
 
       <!-- Upgrade bubble messages -->
@@ -7814,6 +7805,21 @@ I don't think this site should be blocked!
       <message name="IDS_USER_NOT_ALLOWED_BY_POLICY" desc="The error message shown when the user tries to use a profile that is blocked by policy">
         This user has been disabled by your administrator.
       </message>
+      <message name="IDS_OLD_PROFILES_DISABLED_TITLE" desc="The title of the error page shown when the user tries to use an old profile that is disabled by policy">
+        Can't use this profile
+      </message>
+      <message name="IDS_OLD_PROFILES_DISABLED_MESSAGE" desc="The error message shown when the user tries to use an old profile that is disabled by policy">
+        Your administrator has made a system-wide change that disables some old profiles.
+      </message>
+      <message name="IDS_OLD_PROFILES_DISABLED_ADD_PERSON_SUGGESTION" desc="The suggestion that tells the user to create a new profile when the user tries to use an old profile that is disabled by policy">
+        To continue, click OK, then click Add Person to create a new profile for your email address.
+      </message>
+      <message name="IDS_OLD_PROFILES_DISABLED_ADD_PERSON_SUGGESTION_WITH_DOMAIN" desc="The suggestion that tells the user to create a new profile with the domain when the user tries to use an old profile that is disabled by policy">
+        To continue, click OK, then click Add Person to create a new profile for your <ph name="DOMAIN">$1<ex>example.com</ex></ph> email address.
+      </message>
+      <message name="IDS_OLD_PROFILES_DISABLED_REMOVED_OLD_PROFILE" desc="The suggestion that tells the user to delete old profile when the user tries to use an old profile that is disabled by policy">
+        Although you can no longer access your old profile, you can remove it.
+      </message>
       <if expr="is_android">
         <message name="IDS_SYNC_USER_NAME_IN_USE_ERROR" desc="Mobile: An error message shown when a user tries to sign in to sync using a user name that's already in use by another profile.">
           This account is already being used on this device.
@@ -9245,15 +9251,22 @@ Please help our engineers fix this problem. Tell us what happened right before y
         </message>
       </if>
 
-      <message name="IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TITLE" desc="The title text that is used in the manage passwords bubble when the user has generated a password.">
-        Password saved
-      </message>
+      <if expr="use_titlecase">
+        <message name="IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TITLE" desc="In Title Case: The title text that is used in the manage passwords bubble when the user has generated a password.">
+            Password Saved
+        </message>
+      </if>
+      <if expr="not use_titlecase">
+        <message name="IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TITLE" desc="The title text that is used in the manage passwords bubble when the user has generated a password.">
+          Password saved
+        </message>
+      </if>
       <message name="IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TEXT" desc="A message that the browser shows after saving a password it has autogenerated for the user. This message appears in a bubble and contains a link to all the user's saved autogenerated passwords. The link text is a separate string in the translation console and appears here as placeholder text.">
-        Access your passwords from any device at <ph name="SAVED_PASSWORDS_LINK">$1<ex>passwords.google.com</ex></ph>
+        View and manage saved passwords at <ph name="SAVED_PASSWORDS_LINK">$1<ex>passwords.google.com</ex></ph>
       </message>
       <if expr="is_android">
         <message name="IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TEXT_INFOBAR" desc="A message that the browser shows after saving a password it has autogenerated for the user. This message appears in an infobar and contains a link to all the user's saved autogenerated passwords. The link text is a separate string in the translation console and appears here as placeholder text.">
-          Password saved. Access your passwords from any device at <ph name="SAVED_PASSWORDS_LINK">$1<ex>passwords.google.com</ex></ph>
+          Password saved. View and manage saved passwords at <ph name="SAVED_PASSWORDS_LINK">$1<ex>passwords.google.com</ex></ph>
         </message>
       </if>
       <message name="IDS_MANAGE_PASSWORDS_BUBBLE_LINK" desc="The label of the 'Manage passwords' link in the Manage Passwords bubble view">

@@ -73,7 +73,7 @@ void SharedWorkerDevToolsAgentHost::AttachSession(DevToolsSession* session) {
     session->AttachToAgent(EnsureAgent());
 }
 
-void SharedWorkerDevToolsAgentHost::DetachSession(int session_id) {
+void SharedWorkerDevToolsAgentHost::DetachSession(DevToolsSession* session) {
   // Destroying session automatically detaches in renderer.
 }
 
@@ -143,7 +143,7 @@ SharedWorkerDevToolsAgentHost::EnsureAgent() {
   DCHECK_EQ(WORKER_READY, state_);
   DCHECK(worker_host_);
   if (!agent_ptr_)
-    worker_host_->GetDevToolsAgent(mojo::MakeRequest(&agent_ptr_));
+    worker_host_->BindDevToolsAgent(mojo::MakeRequest(&agent_ptr_));
   return agent_ptr_;
 }
 

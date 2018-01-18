@@ -40,7 +40,6 @@
 #include "content/common/renderer.mojom.h"
 #include "content/common/renderer_host.mojom.h"
 #include "content/common/storage_partition_service.mojom.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/renderer/render_thread.h"
 #include "content/public/renderer/url_loader_throttle_provider.h"
 #include "content/renderer/gpu/compositor_dependencies.h"
@@ -55,6 +54,7 @@
 #include "mojo/public/cpp/bindings/thread_safe_interface_ptr.h"
 #include "net/base/network_change_notifier.h"
 #include "net/nqe/effective_connection_type.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/viz/public/interfaces/compositing/compositing_mode_watcher.mojom.h"
@@ -131,7 +131,6 @@ class AppCacheDispatcher;
 class AecDumpMessageFilter;
 class AudioMessageFilter;
 class AudioRendererMixerManager;
-class BlobMessageFilter;
 class BrowserPluginManager;
 class CacheStorageDispatcher;
 class CategorizedWorkerPool;
@@ -655,7 +654,6 @@ class CONTENT_EXPORT RenderThreadImpl
   std::unique_ptr<URLLoaderThrottleProvider> url_loader_throttle_provider_;
 
   // Used on the renderer and IPC threads.
-  scoped_refptr<BlobMessageFilter> blob_message_filter_;
   scoped_refptr<MidiMessageFilter> midi_message_filter_;
   scoped_refptr<ServiceWorkerMessageFilter> service_worker_message_filter_;
 

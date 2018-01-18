@@ -27,6 +27,10 @@ class NetworkDelegate;
 class URLRequest;
 }  // namespace net
 
+namespace network {
+struct ResourceResponseHead;
+}
+
 namespace content {
 class AppCacheJob;
 class AppCacheNavigationHandleCore;
@@ -87,9 +91,9 @@ class CONTENT_EXPORT AppCacheRequestHandler
                          LoaderCallback callback) override;
   // MaybeCreateLoaderForResponse always returns synchronously.
   bool MaybeCreateLoaderForResponse(
-      const ResourceResponseHead& response,
-      mojom::URLLoaderPtr* loader,
-      mojom::URLLoaderClientRequest* client_request) override;
+      const network::ResourceResponseHead& response,
+      network::mojom::URLLoaderPtr* loader,
+      network::mojom::URLLoaderClientRequest* client_request) override;
   base::Optional<SubresourceLoaderParams> MaybeCreateSubresourceLoaderParams()
       override;
 
@@ -102,8 +106,9 @@ class CONTENT_EXPORT AppCacheRequestHandler
   void MaybeCreateSubresourceLoader(
       const network::ResourceRequest& resource_request,
       LoaderCallback callback);
-  void MaybeFallbackForSubresourceResponse(const ResourceResponseHead& response,
-                                           LoaderCallback callback);
+  void MaybeFallbackForSubresourceResponse(
+      const network::ResourceResponseHead& response,
+      LoaderCallback callback);
   void MaybeFallbackForSubresourceRedirect(
       const net::RedirectInfo& redirect_info,
       LoaderCallback callback);

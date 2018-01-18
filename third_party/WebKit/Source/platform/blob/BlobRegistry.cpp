@@ -46,7 +46,6 @@
 #include "platform/wtf/text/StringHash.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebBlobData.h"
 #include "public/platform/WebBlobRegistry.h"
 #include "public/platform/WebString.h"
 
@@ -86,19 +85,6 @@ static void SaveToOriginMap(SecurityOrigin* origin, const KURL& url) {
 static void RemoveFromOriginMap(const KURL& url) {
   if (BlobURL::GetOrigin(url) == "null")
     OriginMap()->erase(url.GetString());
-}
-
-void BlobRegistry::RegisterBlobData(const String& uuid,
-                                    std::unique_ptr<BlobData> data) {
-  GetBlobRegistry()->RegisterBlobData(uuid, WebBlobData(std::move(data)));
-}
-
-void BlobRegistry::AddBlobDataRef(const String& uuid) {
-  GetBlobRegistry()->AddBlobDataRef(uuid);
-}
-
-void BlobRegistry::RemoveBlobDataRef(const String& uuid) {
-  GetBlobRegistry()->RemoveBlobDataRef(uuid);
 }
 
 void BlobRegistry::RegisterPublicBlobURL(SecurityOrigin* origin,

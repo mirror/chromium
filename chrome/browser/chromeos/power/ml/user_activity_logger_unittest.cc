@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/test/test_mock_time_task_runner.h"
+#include "base/time/clock.h"
 #include "base/timer/timer.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/power/ml/idle_event_notifier.h"
@@ -29,6 +30,7 @@ void EqualEvent(const UserActivityEvent::Event& expected_event,
                 const UserActivityEvent::Event& result_event) {
   EXPECT_EQ(expected_event.type(), result_event.type());
   EXPECT_EQ(expected_event.reason(), result_event.reason());
+  EXPECT_EQ(expected_event.log_duration_sec(), result_event.log_duration_sec());
 }
 
 // Testing logger delegate.
@@ -71,7 +73,8 @@ class UserActivityLoggerTest : public testing::Test {
         &delegate_, idle_event_notifier_.get(), &user_activity_detector_,
         &fake_power_manager_client_, &session_manager_,
         mojo::MakeRequest(&observer), &fake_user_manager_);
-    activity_logger_->SetTaskRunnerForTesting(task_runner_);
+    activity_logger_->SetTaskRunnerForTesting(task_runner_,
+                                              task_runner_->GetMockClock());
   }
 
   ~UserActivityLoggerTest() override = default;
@@ -117,6 +120,14 @@ class UserActivityLoggerTest : public testing::Test {
 
   void ReportIdleSleep() { fake_power_manager_client_.SendSuspendDone(); }
 
+  void ReportInactivityDelays(const base::TimeDelta& screen_dim_delay,
+                              const base::TimeDelta& screen_off_delay) {
+    power_manager::PowerManagementPolicy::Delays proto;
+    proto.set_screen_dim_ms(screen_dim_delay.InMilliseconds());
+    proto.set_screen_off_ms(screen_off_delay.InMilliseconds());
+    fake_power_manager_client_.SetInactivityDelays(proto);
+  }
+
   const scoped_refptr<base::TestMockTimeTaskRunner>& GetTaskRunner() {
     return task_runner_;
   }
@@ -139,8 +150,9 @@ class UserActivityLoggerTest : public testing::Test {
 // UserActivityEvent.
 TEST_F(UserActivityLoggerTest, LogAfterIdleEvent) {
   // Trigger an idle event.
-  base::Time now = base::Time::UnixEpoch();
+  base::Time now = GetTaskRunner()->Now();
   ReportIdleEvent({now, now});
+  GetTaskRunner()->FastForwardBy(base::TimeDelta::FromSeconds(2));
   ReportUserActivity(nullptr);
 
   const std::vector<UserActivityEvent>& events = delegate_.events();
@@ -149,6 +161,7 @@ TEST_F(UserActivityLoggerTest, LogAfterIdleEvent) {
   UserActivityEvent::Event expected_event;
   expected_event.set_type(UserActivityEvent::Event::REACTIVATE);
   expected_event.set_reason(UserActivityEvent::Event::USER_ACTIVITY);
+  expected_event.set_log_duration_sec(2);
   EqualEvent(expected_event, events[0].event());
 }
 
@@ -167,7 +180,7 @@ TEST_F(UserActivityLoggerTest, LogBeforeIdleEvent) {
 TEST_F(UserActivityLoggerTest, LogSecondEvent) {
   ReportUserActivity(nullptr);
   // Trigger an idle event.
-  base::Time now = base::Time::UnixEpoch();
+  base::Time now = GetTaskRunner()->Now();
   ReportIdleEvent({now, now});
   // Another user event.
   ReportUserActivity(nullptr);
@@ -178,39 +191,49 @@ TEST_F(UserActivityLoggerTest, LogSecondEvent) {
   UserActivityEvent::Event expected_event;
   expected_event.set_type(UserActivityEvent::Event::REACTIVATE);
   expected_event.set_reason(UserActivityEvent::Event::USER_ACTIVITY);
+  expected_event.set_log_duration_sec(0);
   EqualEvent(expected_event, events[0].event());
 }
 
 // Log multiple events.
 TEST_F(UserActivityLoggerTest, LogMultipleEvents) {
   // Trigger an idle event.
-  base::Time now = base::Time::UnixEpoch();
+  base::Time now = GetTaskRunner()->Now();
   ReportIdleEvent({now, now});
   // First user event.
   ReportUserActivity(nullptr);
 
   // Trigger an idle event.
-  now = base::Time::UnixEpoch();
+  now = GetTaskRunner()->Now();
   ReportIdleEvent({now, now});
   // Second user event.
+  GetTaskRunner()->FastForwardBy(base::TimeDelta::FromSeconds(2));
   ReportUserActivity(nullptr);
 
   const std::vector<UserActivityEvent>& events = delegate_.events();
   ASSERT_EQ(2U, events.size());
 
-  UserActivityEvent::Event expected_event;
-  expected_event.set_type(UserActivityEvent::Event::REACTIVATE);
-  expected_event.set_reason(UserActivityEvent::Event::USER_ACTIVITY);
-  EqualEvent(expected_event, events[0].event());
-  EqualEvent(expected_event, events[1].event());
+  UserActivityEvent::Event expected_event1;
+  expected_event1.set_type(UserActivityEvent::Event::REACTIVATE);
+  expected_event1.set_reason(UserActivityEvent::Event::USER_ACTIVITY);
+  expected_event1.set_log_duration_sec(0);
+
+  UserActivityEvent::Event expected_event2;
+  expected_event2.set_type(UserActivityEvent::Event::REACTIVATE);
+  expected_event2.set_reason(UserActivityEvent::Event::USER_ACTIVITY);
+  expected_event2.set_log_duration_sec(2);
+
+  EqualEvent(expected_event1, events[0].event());
+  EqualEvent(expected_event2, events[1].event());
 }
 
 TEST_F(UserActivityLoggerTest, UserCloseLid) {
   ReportLidEvent(chromeos::PowerManagerClient::LidState::OPEN);
   // Trigger an idle event.
-  base::Time now = base::Time::UnixEpoch();
+  base::Time now = GetTaskRunner()->Now();
   ReportIdleEvent({now, now});
 
+  GetTaskRunner()->FastForwardBy(base::TimeDelta::FromSeconds(2));
   ReportLidEvent(chromeos::PowerManagerClient::LidState::CLOSED);
   const auto& events = delegate_.events();
   ASSERT_EQ(1U, events.size());
@@ -218,13 +241,14 @@ TEST_F(UserActivityLoggerTest, UserCloseLid) {
   UserActivityEvent::Event expected_event;
   expected_event.set_type(UserActivityEvent::Event::OFF);
   expected_event.set_reason(UserActivityEvent::Event::LID_CLOSED);
+  expected_event.set_log_duration_sec(2);
   EqualEvent(expected_event, events[0].event());
 }
 
 TEST_F(UserActivityLoggerTest, PowerChangeActivity) {
   ReportPowerChangeEvent(power_manager::PowerSupplyProperties::AC, 23.0f);
   // Trigger an idle event.
-  base::Time now = base::Time::UnixEpoch();
+  base::Time now = GetTaskRunner()->Now();
   ReportIdleEvent({now, now});
 
   // We don't care about battery percentage change, but only power source.
@@ -237,12 +261,13 @@ TEST_F(UserActivityLoggerTest, PowerChangeActivity) {
   UserActivityEvent::Event expected_event;
   expected_event.set_type(UserActivityEvent::Event::REACTIVATE);
   expected_event.set_reason(UserActivityEvent::Event::POWER_CHANGED);
+  expected_event.set_log_duration_sec(0);
   EqualEvent(expected_event, events[0].event());
 }
 
 TEST_F(UserActivityLoggerTest, VideoActivity) {
   // Trigger an idle event.
-  base::Time now = base::Time::UnixEpoch();
+  base::Time now = GetTaskRunner()->Now();
   ReportIdleEvent({now, now});
 
   ReportVideoStart();
@@ -252,12 +277,13 @@ TEST_F(UserActivityLoggerTest, VideoActivity) {
   UserActivityEvent::Event expected_event;
   expected_event.set_type(UserActivityEvent::Event::REACTIVATE);
   expected_event.set_reason(UserActivityEvent::Event::VIDEO_ACTIVITY);
+  expected_event.set_log_duration_sec(0);
   EqualEvent(expected_event, events[0].event());
 }
 
 TEST_F(UserActivityLoggerTest, SystemIdle) {
   // Trigger an idle event.
-  base::Time now = base::Time::UnixEpoch();
+  base::Time now = GetTaskRunner()->Now();
   ReportIdleEvent({now, now});
 
   ReportScreenIdle();
@@ -269,6 +295,8 @@ TEST_F(UserActivityLoggerTest, SystemIdle) {
   UserActivityEvent::Event expected_event;
   expected_event.set_type(UserActivityEvent::Event::TIMEOUT);
   expected_event.set_reason(UserActivityEvent::Event::SCREEN_OFF);
+  // Idle timeout is 10 seconds.
+  expected_event.set_log_duration_sec(10);
   EqualEvent(expected_event, events[0].event());
 }
 
@@ -276,7 +304,7 @@ TEST_F(UserActivityLoggerTest, SystemIdle) {
 // We should only observe user activity.
 TEST_F(UserActivityLoggerTest, SystemIdleInterrupted) {
   // Trigger an idle event.
-  base::Time now = base::Time::UnixEpoch();
+  base::Time now = GetTaskRunner()->Now();
   ReportIdleEvent({now, now});
 
   ReportScreenIdle();
@@ -291,12 +319,13 @@ TEST_F(UserActivityLoggerTest, SystemIdleInterrupted) {
   UserActivityEvent::Event expected_event;
   expected_event.set_type(UserActivityEvent::Event::REACTIVATE);
   expected_event.set_reason(UserActivityEvent::Event::USER_ACTIVITY);
+  expected_event.set_log_duration_sec(1);
   EqualEvent(expected_event, events[0].event());
 }
 
 TEST_F(UserActivityLoggerTest, ScreenLock) {
   // Trigger an idle event.
-  base::Time now = base::Time::UnixEpoch();
+  base::Time now = GetTaskRunner()->Now();
   ReportIdleEvent({now, now});
 
   ReportScreenLocked();
@@ -306,6 +335,7 @@ TEST_F(UserActivityLoggerTest, ScreenLock) {
   UserActivityEvent::Event expected_event;
   expected_event.set_type(UserActivityEvent::Event::OFF);
   expected_event.set_reason(UserActivityEvent::Event::SCREEN_LOCK);
+  expected_event.set_log_duration_sec(0);
   EqualEvent(expected_event, events[0].event());
 }
 
@@ -365,6 +395,51 @@ TEST_F(UserActivityLoggerTest, UpdateOpenTabsURLsCalledTimes) {
   ReportIdleEvent({});
   ReportUserActivity(nullptr);
   EXPECT_EQ(2, delegate_.num_update_open_tabs_urls_calls());
+}
+
+TEST_F(UserActivityLoggerTest, DimAndOffDelays) {
+  ReportInactivityDelays(
+      base::TimeDelta::FromMilliseconds(2000) /* screen_dim_delay */,
+      base::TimeDelta::FromMilliseconds(3000) /* screen_off_delay */);
+  ReportIdleEvent({});
+  ReportUserActivity(nullptr);
+
+  const auto& events = delegate_.events();
+  ASSERT_EQ(1U, events.size());
+
+  const UserActivityEvent::Features& features = events[0].features();
+  EXPECT_EQ(2, features.on_to_dim_sec());
+  EXPECT_EQ(1, features.dim_to_screen_off_sec());
+}
+
+TEST_F(UserActivityLoggerTest, DimDelays) {
+  ReportInactivityDelays(
+      base::TimeDelta::FromMilliseconds(2000) /* screen_dim_delay */,
+      base::TimeDelta() /* screen_off_delay */);
+  ReportIdleEvent({});
+  ReportUserActivity(nullptr);
+
+  const auto& events = delegate_.events();
+  ASSERT_EQ(1U, events.size());
+
+  const UserActivityEvent::Features& features = events[0].features();
+  EXPECT_EQ(2, features.on_to_dim_sec());
+  EXPECT_TRUE(!features.has_dim_to_screen_off_sec());
+}
+
+TEST_F(UserActivityLoggerTest, OffDelays) {
+  ReportInactivityDelays(
+      base::TimeDelta() /* screen_dim_delay */,
+      base::TimeDelta::FromMilliseconds(4000) /* screen_off_delay */);
+  ReportIdleEvent({});
+  ReportUserActivity(nullptr);
+
+  const auto& events = delegate_.events();
+  ASSERT_EQ(1U, events.size());
+
+  const UserActivityEvent::Features& features = events[0].features();
+  EXPECT_EQ(4, features.dim_to_screen_off_sec());
+  EXPECT_TRUE(!features.has_on_to_dim_sec());
 }
 
 }  // namespace ml

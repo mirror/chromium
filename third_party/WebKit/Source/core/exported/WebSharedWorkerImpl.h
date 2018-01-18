@@ -73,12 +73,8 @@ class CORE_EXPORT WebSharedWorkerImpl final : public WebSharedWorker,
   void OnShadowPageInitialized() override;
 
   // WebDevToolsAgentImpl::Client overrides.
-  bool SendProtocolMessage(int session_id,
-                           int call_id,
-                           const String&,
-                           const String&) override;
   void ResumeStartup() override;
-  const WebString& GetInstrumentationToken() override;
+  const WebString& GetDevToolsFrameToken() override;
 
   // WebSharedWorker methods:
   void StartWorkerContext(
@@ -87,14 +83,14 @@ class CORE_EXPORT WebSharedWorkerImpl final : public WebSharedWorker,
       const WebString& content_security_policy,
       WebContentSecurityPolicyType,
       mojom::IPAddressSpace,
-      const WebString& instrumentation_token,
+      const WebString& devtools_frame_token,
       mojo::ScopedMessagePipeHandle content_settings_handle,
       mojo::ScopedMessagePipeHandle interface_provider) override;
   void Connect(MessagePortChannel) override;
   void TerminateWorkerContext() override;
 
   void PauseWorkerContextOnStart() override;
-  void GetDevToolsAgent(
+  void BindDevToolsAgent(
       mojo::ScopedInterfaceEndpointHandle devtools_agent_request) override;
 
   // Callback methods for SharedWorkerReportingProxy.
@@ -119,7 +115,7 @@ class CORE_EXPORT WebSharedWorkerImpl final : public WebSharedWorker,
   std::unique_ptr<WorkerShadowPage> shadow_page_;
   // Unique worker token used by DevTools to attribute different instrumentation
   // to the same worker.
-  WebString instrumentation_token_;
+  WebString devtools_frame_token_;
 
   std::unique_ptr<WebServiceWorkerNetworkProvider> network_provider_;
 

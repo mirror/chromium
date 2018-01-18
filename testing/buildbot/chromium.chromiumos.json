@@ -909,7 +909,6 @@
         "name": "mus_browser_tests",
         "swarming": {
           "can_use_on_swarming_builders": true,
-          "hard_timeout": 1500,
           "shards": 10
         },
         "test": "browser_tests"
@@ -982,7 +981,7 @@
       },
       {
         "args": [
-          "--enable-viz",
+          "--enable-features=VizDisplayCompositor",
           "--test-launcher-filter-file=../../testing/buildbot/filters/viz.content_browsertests.filter"
         ],
         "name": "viz_content_browsertests",
@@ -1010,7 +1009,7 @@
       },
       {
         "args": [
-          "--enable-viz",
+          "--enable-features=VizDisplayCompositor",
           "--test-launcher-filter-file=../../testing/buildbot/filters/viz.content_unittests.filter"
         ],
         "name": "viz_content_unittests",

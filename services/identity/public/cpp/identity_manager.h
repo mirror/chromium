@@ -59,6 +59,11 @@ class IdentityManager : public SigninManagerBase::Observer,
   // account.
   AccountInfo GetPrimaryAccountInfo();
 
+  // Returns whether the primary account is available, according to the latest
+  // cached information. Simple convenience wrapper over checking whether the
+  // primary account info has a valid account ID.
+  bool HasPrimaryAccount();
+
   // Creates a PrimaryAccountAccessTokenFetcher given the passed-in information.
   std::unique_ptr<PrimaryAccountAccessTokenFetcher>
   CreateAccessTokenFetcherForPrimaryAccount(
@@ -80,6 +85,19 @@ class IdentityManager : public SigninManagerBase::Observer,
   void RemoveObserver(Observer* observer);
   void AddDiagnosticsObserver(DiagnosticsObserver* observer);
   void RemoveDiagnosticsObserver(DiagnosticsObserver* observer);
+
+  // Sets the primary account info synchronously with both the IdentityManager
+  // and its backing SigninManager/ProfileOAuth2TokenService instances. For use
+  // only by tests. Even in testing contexts, use IdentityTestEnvironment if
+  // possible (and IdentityTestEnvironment::MakePrimaryAccountAvailable()). This
+  // method should be used directly only if the production code is using
+  // IdentityManager, but it is not yet feasible to convert the test code to use
+  // IdentityTestEnvironment. Any such usage should only be temporary, i.e.,
+  // should be followed as quickly as possible by conversion of the test to
+  // use IdentityTestEnvironment.
+  void SetPrimaryAccountSynchronouslyForTests(std::string gaia_id,
+                                              std::string email_address,
+                                              std::string refresh_token);
 
  private:
   // SigninManagerBase::Observer:

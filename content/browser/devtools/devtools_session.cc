@@ -29,12 +29,10 @@ bool ShouldSendOnIO(const std::string& method) {
 }  // namespace
 
 DevToolsSession::DevToolsSession(DevToolsAgentHostImpl* agent_host,
-                                 DevToolsAgentHostClient* client,
-                                 int session_id)
+                                 DevToolsAgentHostClient* client)
     : binding_(this),
       agent_host_(agent_host),
       client_(client),
-      session_id_(session_id),
       process_(nullptr),
       host_(nullptr),
       dispatcher_(new protocol::UberDispatcher(this)),
@@ -113,10 +111,10 @@ protocol::Response::Status DevToolsSession::Dispatch(
     base::DictionaryValue* dict_value =
         static_cast<base::DictionaryValue*>(value.get());
 
-    if (delegate->HandleCommand(agent_host_, session_id_, dict_value))
+    if (delegate->HandleCommand(agent_host_, client_, dict_value))
       return protocol::Response::kSuccess;
 
-    if (delegate->HandleAsyncCommand(agent_host_, session_id_, dict_value,
+    if (delegate->HandleAsyncCommand(agent_host_, client_, dict_value,
                                      base::Bind(&DevToolsSession::SendResponse,
                                                 weak_factory_.GetWeakPtr()))) {
       return protocol::Response::kAsync;
@@ -143,41 +141,6 @@ void DevToolsSession::DispatchProtocolMessageToAgent(
 void DevToolsSession::InspectElement(const gfx::Point& point) {
   if (session_ptr_)
     session_ptr_->InspectElement(point);
-}
-
-void DevToolsSession::ReceiveMessageChunk(const DevToolsMessageChunk& chunk) {
-  if (chunk.session_id != session_id_)
-    return;
-
-  if (chunk.is_first) {
-    if (response_message_buffer_size_ != 0)
-      return;
-    if (chunk.is_last) {
-      response_message_buffer_size_ = chunk.data.size();
-    } else {
-      response_message_buffer_size_ = chunk.message_size;
-      response_message_buffer_.reserve(chunk.message_size);
-    }
-  }
-
-  if (response_message_buffer_.size() + chunk.data.size() >
-      response_message_buffer_size_)
-    return;
-  response_message_buffer_.append(chunk.data);
-
-  if (!chunk.is_last)
-    return;
-  if (response_message_buffer_.size() != response_message_buffer_size_)
-    return;
-
-  if (!chunk.post_state.empty())
-    state_cookie_ = chunk.post_state;
-  waiting_for_response_messages_.erase(chunk.call_id);
-  response_message_buffer_size_ = 0;
-  std::string message;
-  message.swap(response_message_buffer_);
-  client_->DispatchProtocolMessage(agent_host_, message);
-  // |this| may be deleted at this point.
 }
 
 void DevToolsSession::sendProtocolResponse(

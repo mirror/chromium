@@ -7110,16 +7110,19 @@ bool Document::IsSecureContext() const {
   return is_secure;
 }
 
-void Document::EnforceInsecureRequestPolicy(WebInsecureRequestPolicy policy) {
-  // Combine the new policy with the existing policy, as a base policy may be
-  // inherited from a remote parent before this page's policy is set. In other
-  // words, insecure requests should be upgraded or blocked if _either_ the
-  // existing policy or the newly enforced policy triggers upgrades or
-  // blockage.
-  SetInsecureRequestPolicy(GetInsecureRequestPolicy() | policy);
-  if (GetFrame())
-    GetFrame()->Client()->DidEnforceInsecureRequestPolicy(
-        GetInsecureRequestPolicy());
+void Document::DidEnforceInsecureRequestPolicy() {
+  if (!GetFrame())
+    return;
+  GetFrame()->Client()->DidEnforceInsecureRequestPolicy(
+      GetInsecureRequestPolicy());
+}
+
+void Document::DidEnforceInsecureNavigationsSet() {
+  if (!GetFrame())
+    return;
+  GetFrame()->Client()->DidEnforceInsecureNavigationsSet(
+      SecurityContext::SerializeInsecureNavigationSet(
+          *InsecureNavigationsToUpgrade()));
 }
 
 void Document::SetShadowCascadeOrder(ShadowCascadeOrder order) {
@@ -7342,6 +7345,7 @@ void Document::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
   visitor->TraceWrappers(scripted_idle_task_controller_);
   visitor->TraceWrappers(intersection_observer_controller_);
   ContainerNode::TraceWrappers(visitor);
+  ExecutionContext::TraceWrappers(visitor);
   Supplementable<Document>::TraceWrappers(visitor);
 }
 

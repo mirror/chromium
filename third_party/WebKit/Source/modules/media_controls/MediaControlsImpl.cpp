@@ -535,7 +535,8 @@ void MediaControlsImpl::InitializeControls() {
   // overflow menu.
   overflow_list_->AppendChild(play_button_->CreateOverflowElement(
       new MediaControlPlayButtonElement(*this)));
-  if (RuntimeEnabledFeatures::PictureInPictureEnabled() && !IsModern()) {
+  if (RuntimeEnabledFeatures::PictureInPictureEnabled() && !IsModern() &&
+      MediaElement().IsHTMLVideoElement()) {
     overflow_list_->AppendChild(
         picture_in_picture_button_->CreateOverflowElement(
             new MediaControlPictureInPictureButtonElement(*this)));
@@ -618,8 +619,10 @@ MediaControlsImpl::ControlsState MediaControlsImpl::State() const {
     case HTMLMediaElement::kNetworkLoading:
       if (MediaElement().getReadyState() == HTMLMediaElement::kHaveNothing)
         return ControlsState::kLoadingMetadata;
-      if (!MediaElement().paused())
+      if (!MediaElement().paused() &&
+          MediaElement().getReadyState() != HTMLMediaElement::kHaveEnoughData) {
         return ControlsState::kBuffering;
+      }
       break;
     case HTMLMediaElement::kNetworkIdle:
       if (MediaElement().getReadyState() == HTMLMediaElement::kHaveNothing)

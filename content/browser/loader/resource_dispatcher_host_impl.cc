@@ -163,16 +163,16 @@ const double kMaxRequestsPerProcessRatio = 0.45;
 void AbortRequestBeforeItStarts(
     IPC::Sender* sender,
     int request_id,
-    mojom::URLLoaderClientPtr url_loader_client) {
-    // Tell the renderer that this request was disallowed.
-    network::URLLoaderCompletionStatus status;
-    status.error_code = net::ERR_ABORTED;
-    status.exists_in_cache = false;
-    // No security info needed, connection not established.
-    status.completion_time = base::TimeTicks();
-    status.encoded_data_length = 0;
-    status.encoded_body_length = 0;
-    url_loader_client->OnComplete(status);
+    network::mojom::URLLoaderClientPtr url_loader_client) {
+  // Tell the renderer that this request was disallowed.
+  network::URLLoaderCompletionStatus status;
+  status.error_code = net::ERR_ABORTED;
+  status.exists_in_cache = false;
+  // No security info needed, connection not established.
+  status.completion_time = base::TimeTicks();
+  status.encoded_data_length = 0;
+  status.encoded_body_length = 0;
+  url_loader_client->OnComplete(status);
 }
 
 void RemoveDownloadFileFromChildSecurityPolicy(int child_id,
@@ -501,7 +501,7 @@ std::unique_ptr<ResourceHandler>
 ResourceDispatcherHostImpl::MaybeInterceptAsStream(
     const base::FilePath& plugin_path,
     net::URLRequest* request,
-    ResourceResponse* response,
+    network::ResourceResponse* response,
     std::string* payload) {
   payload->clear();
   ResourceRequestInfoImpl* info = ResourceRequestInfoImpl::ForRequest(request);
@@ -584,7 +584,7 @@ void ResourceDispatcherHostImpl::DidStartRequest(ResourceLoader* loader) {
 void ResourceDispatcherHostImpl::DidReceiveRedirect(
     ResourceLoader* loader,
     const GURL& new_url,
-    ResourceResponse* response) {
+    network::ResourceResponse* response) {
   ResourceRequestInfoImpl* info = loader->GetRequestInfo();
   if (delegate_) {
     delegate_->OnRequestRedirected(
@@ -594,7 +594,7 @@ void ResourceDispatcherHostImpl::DidReceiveRedirect(
 
 void ResourceDispatcherHostImpl::DidReceiveResponse(
     ResourceLoader* loader,
-    ResourceResponse* response) {
+    network::ResourceResponse* response) {
   ResourceRequestInfoImpl* info = loader->GetRequestInfo();
   net::URLRequest* request = loader->request();
   if (request->was_fetched_via_proxy() &&
@@ -718,8 +718,8 @@ void ResourceDispatcherHostImpl::OnRequestResourceInternal(
     int request_id,
     bool is_sync_load,
     const network::ResourceRequest& request_data,
-    mojom::URLLoaderRequest mojo_request,
-    mojom::URLLoaderClientPtr url_loader_client,
+    network::mojom::URLLoaderRequest mojo_request,
+    network::mojom::URLLoaderClientPtr url_loader_client,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   BeginRequest(requester_info, request_id, request_data, is_sync_load,
@@ -747,8 +747,8 @@ void ResourceDispatcherHostImpl::UpdateRequestForTransfer(
     int request_id,
     const network::ResourceRequest& request_data,
     LoaderMap::iterator iter,
-    mojom::URLLoaderRequest mojo_request,
-    mojom::URLLoaderClientPtr url_loader_client) {
+    network::mojom::URLLoaderRequest mojo_request,
+    network::mojom::URLLoaderClientPtr url_loader_client) {
   DCHECK(requester_info->IsRenderer());
   int child_id = requester_info->child_id();
   ResourceRequestInfoImpl* info = iter->second->GetRequestInfo();
@@ -818,8 +818,8 @@ void ResourceDispatcherHostImpl::CompleteTransfer(
     int request_id,
     const network::ResourceRequest& request_data,
     int route_id,
-    mojom::URLLoaderRequest mojo_request,
-    mojom::URLLoaderClientPtr url_loader_client) {
+    network::mojom::URLLoaderRequest mojo_request,
+    network::mojom::URLLoaderClientPtr url_loader_client) {
   DCHECK(requester_info->IsRenderer());
   // Caller should ensure that |request_data| is associated with a transfer.
   DCHECK(request_data.transferred_request_child_id != -1 ||
@@ -873,8 +873,8 @@ void ResourceDispatcherHostImpl::BeginRequest(
     const network::ResourceRequest& request_data,
     bool is_sync_load,
     int route_id,
-    mojom::URLLoaderRequest mojo_request,
-    mojom::URLLoaderClientPtr url_loader_client,
+    network::mojom::URLLoaderRequest mojo_request,
+    network::mojom::URLLoaderClientPtr url_loader_client,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   int child_id = requester_info->child_id();
@@ -1011,8 +1011,8 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     bool is_sync_load,
     int route_id,
     const net::HttpRequestHeaders& headers,
-    mojom::URLLoaderRequest mojo_request,
-    mojom::URLLoaderClientPtr url_loader_client,
+    network::mojom::URLLoaderRequest mojo_request,
+    network::mojom::URLLoaderClientPtr url_loader_client,
     BlobHandles blob_handles,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     HeaderInterceptorResult interceptor_result) {
@@ -1032,7 +1032,6 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
   }
   int child_id = requester_info->child_id();
   storage::BlobStorageContext* blob_context = nullptr;
-  bool allow_download = false;
   bool do_not_prompt_for_login = false;
   bool report_raw_headers = false;
   int load_flags = BuildLoadFlagsForRequest(request_data);
@@ -1072,7 +1071,7 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
   } else {
     // Log that this request is a service worker navigation preload request
     // here, since navigation preload machinery has no access to netlog.
-    // TODO(falken): Figure out how mojom::URLLoaderClient can
+    // TODO(falken): Figure out how network::mojom::URLLoaderClient can
     // access the request's netlog.
     if (requester_info->IsNavigationPreload()) {
       new_request->net_log().AddEvent(
@@ -1095,22 +1094,13 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
                                std::make_unique<URLRequestServiceWorkerData>());
     }
 
-    // If the request is a MAIN_FRAME request, the first-party URL gets updated
-    // on redirects.
-    if (request_data.resource_type == RESOURCE_TYPE_MAIN_FRAME) {
-      new_request->set_first_party_url_policy(
-          net::URLRequest::UPDATE_FIRST_PARTY_URL_ON_REDIRECT);
-    }
-
     // For PlzNavigate, this request has already been made and the referrer was
     // checked previously. So don't set the referrer for this stream request, or
     // else it will fail for SSL redirects since net/ will think the blob:https
     // for the stream is not a secure scheme (specifically, in the call to
     // ComputeReferrerForRedirect).
-    const Referrer referrer(request_data.referrer,
-                            Referrer::NetReferrerPolicyToBlinkReferrerPolicy(
-                                request_data.referrer_policy));
-    Referrer::SetReferrerForRequest(new_request.get(), referrer);
+    new_request->SetReferrer(ComputeReferrer(request_data.referrer));
+    new_request->set_referrer_policy(request_data.referrer_policy);
 
     new_request->SetExtraRequestHeaders(headers);
 
@@ -1126,9 +1116,6 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
               .get()));
     }
 
-    allow_download = request_data.allow_download &&
-                     IsResourceTypeFrame(
-                         static_cast<ResourceType>(request_data.resource_type));
     do_not_prompt_for_login = request_data.do_not_prompt_for_login;
 
     // Raw headers are sensitive, as they include Cookie/Set-Cookie, so only
@@ -1191,15 +1178,6 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
 
   new_request->SetLoadFlags(load_flags);
 
-  // Update the previews state, but only if this is not using PlzNavigate.
-  PreviewsState previews_state = request_data.previews_state;
-  if (!IsBrowserSideNavigationEnabled()) {
-    previews_state = DetermineEnabledPreviews(
-        request_data.previews_state, delegate_, new_request.get(),
-        resource_context,
-        request_data.resource_type == RESOURCE_TYPE_MAIN_FRAME);
-  }
-
   // Make extra info and read footer (contains request ID).
   ResourceRequestInfoImpl* extra_info = new ResourceRequestInfoImpl(
       requester_info, route_id,
@@ -1211,13 +1189,14 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
       request_data.should_replace_current_entry,
       false,  // is download
       false,  // is stream
-      allow_download, request_data.has_user_gesture,
-      request_data.enable_load_timing, request_data.enable_upload_progress,
-      do_not_prompt_for_login, request_data.keepalive,
+      false,  // allow_download,
+      request_data.has_user_gesture, request_data.enable_load_timing,
+      request_data.enable_upload_progress, do_not_prompt_for_login,
+      request_data.keepalive,
       Referrer::NetReferrerPolicyToBlinkReferrerPolicy(
           request_data.referrer_policy),
       request_data.is_prerendering, resource_context, report_raw_headers,
-      !is_sync_load, previews_state, request_data.request_body,
+      !is_sync_load, request_data.previews_state, request_data.request_body,
       request_data.initiated_in_secure_context,
       base::nullopt);  // suggested_filename
   extra_info->SetBlobHandles(std::move(blob_handles));
@@ -1255,8 +1234,8 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
         blob_context, child_id, request_data.service_worker_provider_id,
         service_worker_mode != ServiceWorkerMode::ALL,
         request_data.fetch_request_mode, request_data.fetch_credentials_mode,
-        static_cast<FetchRedirectMode>(request_data.fetch_redirect_mode),
-        request_data.fetch_integrity, request_data.keepalive,
+        request_data.fetch_redirect_mode, request_data.fetch_integrity,
+        request_data.keepalive,
         static_cast<ResourceType>(request_data.resource_type),
         static_cast<RequestContextType>(
             request_data.fetch_request_context_type),
@@ -1285,8 +1264,8 @@ ResourceDispatcherHostImpl::CreateResourceHandler(
     int route_id,
     int child_id,
     ResourceContext* resource_context,
-    mojom::URLLoaderRequest mojo_request,
-    mojom::URLLoaderClientPtr url_loader_client) {
+    network::mojom::URLLoaderRequest mojo_request,
+    network::mojom::URLLoaderClientPtr url_loader_client) {
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   // Construct the IPC resource handler.
   std::unique_ptr<ResourceHandler> handler;
@@ -1325,13 +1304,13 @@ ResourceDispatcherHostImpl::CreateResourceHandler(
 std::unique_ptr<ResourceHandler>
 ResourceDispatcherHostImpl::CreateBaseResourceHandler(
     net::URLRequest* request,
-    mojom::URLLoaderRequest mojo_request,
-    mojom::URLLoaderClientPtr url_loader_client,
+    network::mojom::URLLoaderRequest mojo_request,
+    network::mojom::URLLoaderClientPtr url_loader_client,
     ResourceType resource_type) {
   std::unique_ptr<ResourceHandler> handler;
   handler.reset(new MojoAsyncResourceHandler(
       request, this, std::move(mojo_request), std::move(url_loader_client),
-      resource_type, mojom::kURLLoadOptionNone));
+      resource_type, network::mojom::kURLLoadOptionNone));
   return handler;
 }
 
@@ -1810,8 +1789,8 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
     const NavigationRequestInfo& info,
     std::unique_ptr<NavigationUIData> navigation_ui_data,
     NavigationURLLoaderImplCore* loader,
-    mojom::URLLoaderClientPtr url_loader_client,
-    mojom::URLLoaderRequest url_loader_request,
+    network::mojom::URLLoaderClientPtr url_loader_client,
+    network::mojom::URLLoaderRequest url_loader_request,
     ServiceWorkerNavigationHandleCore* service_worker_handle_core,
     AppCacheNavigationHandleCore* appcache_handle_core,
     uint32_t url_loader_options,
@@ -1886,6 +1865,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
 
   net::HttpRequestHeaders headers;
   headers.AddHeadersFromString(info.begin_params->headers);
+  headers.SetHeader(kAcceptHeader, kFrameAcceptHeader);
   new_request->SetExtraRequestHeaders(headers);
 
   new_request->SetLoadFlags(load_flags);
@@ -2038,18 +2018,18 @@ void ResourceDispatcherHostImpl::OnRequestResourceWithMojo(
     int32_t request_id,
     uint32_t options,
     const network::ResourceRequest& request,
-    mojom::URLLoaderRequest mojo_request,
-    mojom::URLLoaderClientPtr url_loader_client,
+    network::mojom::URLLoaderRequest mojo_request,
+    network::mojom::URLLoaderClientPtr url_loader_client,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
-  DCHECK_EQ(mojom::kURLLoadOptionNone,
-            options & ~mojom::kURLLoadOptionSynchronous);
+  DCHECK_EQ(network::mojom::kURLLoadOptionNone,
+            options & ~network::mojom::kURLLoadOptionSynchronous);
   if (!url_loader_client) {
     VLOG(1) << "Killed renderer for null client";
     bad_message::ReceivedBadMessage(requester_info->filter(),
                                     bad_message::RDH_NULL_CLIENT);
     return;
   }
-  bool is_sync_load = options & mojom::kURLLoadOptionSynchronous;
+  bool is_sync_load = options & network::mojom::kURLLoadOptionSynchronous;
   OnRequestResourceInternal(requester_info, routing_id, request_id,
                             is_sync_load, request, std::move(mojo_request),
                             std::move(url_loader_client), traffic_annotation);

@@ -296,6 +296,7 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   void SetBackgroundColor(SkColor color) override;
   SkColor background_color() const override;
   void SetNeedsBeginFrames(bool needs_begin_frames) override;
+  void SetWantsAnimateOnlyBeginFrames() override;
 
   // Implementation of RenderWidgetHostViewBase.
   void InitAsPopup(RenderWidgetHostView* parent_host_view,
@@ -610,6 +611,8 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   // applied until the swap completes (see comments in
   // AcceleratedWidgetSwapCompleted).
   SkColor last_frame_root_background_color_ = SK_ColorTRANSPARENT;
+
+  int tab_show_sequence_ = 0;
 
   std::unique_ptr<CursorManager> cursor_manager_;
 

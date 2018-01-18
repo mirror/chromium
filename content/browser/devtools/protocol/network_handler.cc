@@ -39,7 +39,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/resource_response.h"
 #include "net/base/net_errors.h"
 #include "net/base/upload_bytes_element_reader.h"
 #include "net/cookies/canonical_cookie.h"
@@ -50,6 +49,7 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "services/network/public/cpp/http_raw_request_response_info.h"
 #include "services/network/public/cpp/resource_request.h"
+#include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
 
 namespace content {
@@ -636,7 +636,7 @@ std::unique_ptr<Object> getHeaders(const base::StringPairs& pairs) {
   return Object::fromValue(headers_dict.get(), nullptr);
 }
 
-String getProtocol(const GURL& url, const ResourceResponseHead& head) {
+String getProtocol(const GURL& url, const network::ResourceResponseHead& head) {
   std::string protocol = head.alpn_negotiated_protocol;
   if (protocol.empty() || protocol == "unknown") {
     if (head.was_fetched_via_spdy) {
@@ -699,6 +699,7 @@ NetworkHandler::NetworkHandler(const std::string& host_id)
       enabled_(false),
       host_id_(host_id),
       bypass_service_worker_(false),
+      cache_disabled_(false),
       weak_factory_(this) {
   static bool have_configured_service_worker_context = false;
   if (have_configured_service_worker_context)
@@ -742,6 +743,11 @@ Response NetworkHandler::Disable() {
   interception_handle_.reset();
   SetNetworkConditions(nullptr);
   extra_headers_.clear();
+  return Response::FallThrough();
+}
+
+Response NetworkHandler::SetCacheDisabled(bool cache_disabled) {
+  cache_disabled_ = cache_disabled;
   return Response::FallThrough();
 }
 
@@ -1003,7 +1009,7 @@ void NetworkHandler::NavigationPreloadRequestSent(
 void NetworkHandler::NavigationPreloadResponseReceived(
     const std::string& request_id,
     const GURL& url,
-    const ResourceResponseHead& head) {
+    const network::ResourceResponseHead& head) {
   if (!enabled_)
     return;
   std::unique_ptr<DictionaryValue> headers_dict(DictionaryValue::create());
@@ -1316,13 +1322,15 @@ bool NetworkHandler::ShouldCancelNavigation(
 }
 
 void NetworkHandler::WillSendNavigationRequest(net::HttpRequestHeaders* headers,
-                                               bool* skip_service_worker) {
+                                               bool* skip_service_worker,
+                                               bool* disable_cache) {
   headers->SetHeader(kDevToolsEmulateNetworkConditionsClientId, host_id_);
   if (!user_agent_.empty())
     headers->SetHeader(net::HttpRequestHeaders::kUserAgent, user_agent_);
   for (auto& entry : extra_headers_)
     headers->SetHeader(entry.first, entry.second);
   *skip_service_worker |= bypass_service_worker_;
+  *disable_cache |= cache_disabled_;
 }
 
 namespace {

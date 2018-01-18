@@ -49,6 +49,7 @@
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_features.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
+#include "net/base/load_flags.h"
 #include "net/http/http_request_headers.h"
 #include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 
@@ -220,6 +221,7 @@ void RenderFrameDevToolsAgentHost::OnWillSendNavigationRequest(
     FrameTreeNode* frame_tree_node,
     mojom::BeginNavigationParams* begin_params,
     bool* report_raw_headers) {
+  bool disable_cache = false;
   frame_tree_node = GetFrameTreeNodeAncestor(frame_tree_node);
   RenderFrameDevToolsAgentHost* agent_host = FindAgentHost(frame_tree_node);
   if (!agent_host)
@@ -230,9 +232,16 @@ void RenderFrameDevToolsAgentHost::OnWillSendNavigationRequest(
     if (!network->enabled())
       continue;
     *report_raw_headers = true;
-    network->WillSendNavigationRequest(&headers,
-                                       &begin_params->skip_service_worker);
+    network->WillSendNavigationRequest(
+        &headers, &begin_params->skip_service_worker, &disable_cache);
   }
+  if (disable_cache) {
+    begin_params->load_flags &=
+        ~(net::LOAD_VALIDATE_CACHE | net::LOAD_SKIP_CACHE_VALIDATION |
+          net::LOAD_ONLY_FROM_CACHE | net::LOAD_DISABLE_CACHE);
+    begin_params->load_flags |= net::LOAD_BYPASS_CACHE;
+  }
+
   begin_params->headers = headers.ToString();
 }
 
@@ -324,9 +333,9 @@ void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
   }
 }
 
-void RenderFrameDevToolsAgentHost::DetachSession(int session_id) {
+void RenderFrameDevToolsAgentHost::DetachSession(DevToolsSession* session) {
   // Destroying session automatically detaches in renderer.
-  suspended_messages_by_session_id_.erase(session_id);
+  suspended_messages_by_session_.erase(session);
   if (sessions().empty()) {
     frame_trace_recorder_.reset();
     RevokePolicy();
@@ -341,14 +350,13 @@ bool RenderFrameDevToolsAgentHost::DispatchProtocolMessage(
     const std::string& message) {
   int call_id = 0;
   std::string method;
-  int session_id = session->session_id();
   if (session->Dispatch(message, &call_id, &method) !=
       protocol::Response::kFallThrough) {
     return true;
   }
 
   if (!navigation_handles_.empty()) {
-    suspended_messages_by_session_id_[session_id].push_back(
+    suspended_messages_by_session_[session].push_back(
         {call_id, method, message});
     return true;
   }
@@ -413,9 +421,8 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
   UpdateFrameHost(frame_tree_node_->current_frame_host());
 
   if (navigation_handles_.empty()) {
-    for (auto& pair : suspended_messages_by_session_id_) {
-      int session_id = pair.first;
-      DevToolsSession* session = SessionById(session_id);
+    for (auto& pair : suspended_messages_by_session_) {
+      DevToolsSession* session = pair.first;
       for (const Message& message : pair.second) {
         session->DispatchProtocolMessageToAgent(message.call_id, message.method,
                                                 message.message);
@@ -423,7 +430,7 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
                                                         message.message};
       }
     }
-    suspended_messages_by_session_id_.clear();
+    suspended_messages_by_session_.clear();
   }
   if (handle->HasCommitted()) {
     for (auto* target : protocol::TargetHandler::ForAgentHost(this))

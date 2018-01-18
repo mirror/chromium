@@ -462,7 +462,7 @@ std::unique_ptr<ServiceWorkerRequestHandler>
 ServiceWorkerProviderHost::CreateRequestHandler(
     network::mojom::FetchRequestMode request_mode,
     network::mojom::FetchCredentialsMode credentials_mode,
-    FetchRedirectMode redirect_mode,
+    network::mojom::FetchRedirectMode redirect_mode,
     const std::string& integrity,
     bool keepalive,
     ResourceType resource_type,
@@ -668,7 +668,8 @@ ServiceWorkerProviderHost::CompleteStartWorkerPreparation(
       scoped_refptr<ServiceWorkerRegistration>(registration));
   provider_info->client_request = mojo::MakeRequest(&container_);
 
-  mojom::URLLoaderFactoryAssociatedPtrInfo script_loader_factory_ptr_info;
+  network::mojom::URLLoaderFactoryAssociatedPtrInfo
+      script_loader_factory_ptr_info;
   if (ServiceWorkerUtils::IsServicificationEnabled()) {
     mojo::MakeStrongAssociatedBinding(
         std::make_unique<ServiceWorkerScriptURLLoaderFactory>(

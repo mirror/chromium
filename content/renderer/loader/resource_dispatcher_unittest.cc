@@ -21,8 +21,8 @@
 #include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
 #include "content/common/appcache_interfaces.h"
+#include "content/common/weak_wrapper_shared_url_loader_factory.h"
 #include "content/public/common/content_features.h"
-#include "content/public/common/resource_response.h"
 #include "content/public/common/service_worker_modes.h"
 #include "content/public/renderer/fixed_received_data.h"
 #include "content/public/renderer/request_peer.h"
@@ -34,6 +34,7 @@
 #include "net/http/http_response_headers.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "services/network/public/cpp/resource_request.h"
+#include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -54,7 +55,7 @@ static constexpr char kTestPageContents[] =
 
 // Sets up the message sender override for the unit test.
 class ResourceDispatcherTest : public testing::Test,
-                               public mojom::URLLoaderFactory {
+                               public network::mojom::URLLoaderFactory {
  public:
   ResourceDispatcherTest()
       : dispatcher_(new ResourceDispatcher(message_loop_.task_runner())) {}
@@ -65,20 +66,22 @@ class ResourceDispatcherTest : public testing::Test,
   }
 
   void CreateLoaderAndStart(
-      mojom::URLLoaderRequest request,
+      network::mojom::URLLoaderRequest request,
       int32_t routing_id,
       int32_t request_id,
       uint32_t options,
       const network::ResourceRequest& url_request,
-      mojom::URLLoaderClientPtr client,
+      network::mojom::URLLoaderClientPtr client,
       const net::MutableNetworkTrafficAnnotationTag& annotation) override {
     loader_and_clients_.emplace_back(std::move(request), std::move(client));
   }
 
-  void Clone(mojom::URLLoaderFactoryRequest request) override { NOTREACHED(); }
+  void Clone(network::mojom::URLLoaderFactoryRequest request) override {
+    NOTREACHED();
+  }
 
-  void CallOnReceiveResponse(mojom::URLLoaderClient* client) {
-    ResourceResponseHead head;
+  void CallOnReceiveResponse(network::mojom::URLLoaderClient* client) {
+    network::ResourceResponseHead head;
     std::string raw_headers(kTestPageHeaders);
     std::replace(raw_headers.begin(), raw_headers.end(), '\n', '\0');
     head.headers = new net::HttpResponseHeaders(raw_headers);
@@ -116,15 +119,17 @@ class ResourceDispatcherTest : public testing::Test,
     int request_id = dispatcher()->StartAsync(
         std::move(request), 0,
         blink::scheduler::GetSingleThreadTaskRunnerForTesting(), url::Origin(),
-        TRAFFIC_ANNOTATION_FOR_TESTS, false, std::move(peer), this,
+        TRAFFIC_ANNOTATION_FOR_TESTS, false, std::move(peer),
+        base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(this),
         std::vector<std::unique_ptr<URLLoaderThrottle>>(),
-        mojom::URLLoaderClientEndpointsPtr());
+        network::mojom::URLLoaderClientEndpointsPtr());
     peer_context->request_id = request_id;
     return request_id;
   }
 
  protected:
-  std::vector<std::pair<mojom::URLLoaderRequest, mojom::URLLoaderClientPtr>>
+  std::vector<std::pair<network::mojom::URLLoaderRequest,
+                        network::mojom::URLLoaderClientPtr>>
       loader_and_clients_;
   base::MessageLoop message_loop_;
   std::unique_ptr<ResourceDispatcher> dispatcher_;
@@ -166,12 +171,14 @@ class TestResourceDispatcherDelegate : public ResourceDispatcherDelegate {
 
     void OnUploadProgress(uint64_t position, uint64_t size) override {}
 
-    bool OnReceivedRedirect(const net::RedirectInfo& redirect_info,
-                            const ResourceResponseInfo& info) override {
+    bool OnReceivedRedirect(
+        const net::RedirectInfo& redirect_info,
+        const network::ResourceResponseInfo& info) override {
       return false;
     }
 
-    void OnReceivedResponse(const ResourceResponseInfo& info) override {
+    void OnReceivedResponse(
+        const network::ResourceResponseInfo& info) override {
       response_info_ = info;
     }
 
@@ -194,7 +201,7 @@ class TestResourceDispatcherDelegate : public ResourceDispatcherDelegate {
 
    private:
     std::unique_ptr<RequestPeer> original_peer_;
-    ResourceResponseInfo response_info_;
+    network::ResourceResponseInfo response_info_;
     std::string data_;
 
     DISALLOW_COPY_AND_ASSIGN(WrapperPeer);
@@ -210,7 +217,8 @@ TEST_F(ResourceDispatcherTest, DelegateTest) {
   StartAsync(std::move(request), nullptr, &peer_context);
 
   ASSERT_EQ(1u, loader_and_clients_.size());
-  mojom::URLLoaderClientPtr client = std::move(loader_and_clients_[0].second);
+  network::mojom::URLLoaderClientPtr client =
+      std::move(loader_and_clients_[0].second);
   loader_and_clients_.clear();
 
   // Set the delegate that inserts a new peer in OnReceivedResponse.
@@ -257,7 +265,8 @@ TEST_F(ResourceDispatcherTest, CancelDuringCallbackWithWrapperPeer) {
   peer_context.cancel_on_receive_response = true;
 
   ASSERT_EQ(1u, loader_and_clients_.size());
-  mojom::URLLoaderClientPtr client = std::move(loader_and_clients_[0].second);
+  network::mojom::URLLoaderClientPtr client =
+      std::move(loader_and_clients_[0].second);
   loader_and_clients_.clear();
 
   // Set the delegate that inserts a new peer in OnReceivedResponse.
@@ -306,7 +315,7 @@ TEST_F(ResourceDispatcherTest, SerializedPostData) {
 
 class TimeConversionTest : public ResourceDispatcherTest {
  public:
-  void PerformTest(const ResourceResponseHead& response_head) {
+  void PerformTest(const network::ResourceResponseHead& response_head) {
     std::unique_ptr<network::ResourceRequest> request(CreateResourceRequest());
     TestRequestPeer::Context peer_context;
     StartAsync(std::move(request), nullptr, &peer_context);
@@ -317,15 +326,17 @@ class TimeConversionTest : public ResourceDispatcherTest {
     client->OnReceiveResponse(response_head, {}, {});
   }
 
-  const ResourceResponseInfo& response_info() const { return response_info_; }
+  const network::ResourceResponseInfo& response_info() const {
+    return response_info_;
+  }
 
  private:
-  ResourceResponseInfo response_info_;
+  network::ResourceResponseInfo response_info_;
 };
 
 // TODO(simonjam): Enable this when 10829031 lands.
 TEST_F(TimeConversionTest, DISABLED_ProperlyInitialized) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   response_head.request_start = base::TimeTicks::FromInternalValue(5);
   response_head.response_start = base::TimeTicks::FromInternalValue(15);
   response_head.load_timing.request_start_time = base::Time::Now();
@@ -344,7 +355,7 @@ TEST_F(TimeConversionTest, DISABLED_ProperlyInitialized) {
 }
 
 TEST_F(TimeConversionTest, PartiallyInitialized) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   response_head.request_start = base::TimeTicks::FromInternalValue(5);
   response_head.response_start = base::TimeTicks::FromInternalValue(15);
 
@@ -356,7 +367,7 @@ TEST_F(TimeConversionTest, PartiallyInitialized) {
 }
 
 TEST_F(TimeConversionTest, NotInitialized) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
 
   PerformTest(response_head);
 

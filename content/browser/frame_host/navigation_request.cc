@@ -47,7 +47,6 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/origin_util.h"
 #include "content/public/common/request_context_type.h"
-#include "content/public/common/resource_response.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_utils.h"
 #include "content/public/common/web_preferences.h"
@@ -57,6 +56,7 @@
 #include "net/http/http_request_headers.h"
 #include "net/url_request/redirect_info.h"
 #include "services/network/public/cpp/resource_request_body.h"
+#include "services/network/public/cpp/resource_response.h"
 #include "third_party/WebKit/common/sandbox_flags.h"
 #include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
 
@@ -587,7 +587,7 @@ void NavigationRequest::TransferNavigationHandleOwnership(
 
 void NavigationRequest::OnRequestRedirected(
     const net::RedirectInfo& redirect_info,
-    const scoped_refptr<ResourceResponse>& response) {
+    const scoped_refptr<network::ResourceResponse>& response) {
 #if defined(OS_ANDROID)
   base::WeakPtr<NavigationRequest> this_ptr(weak_factory_.GetWeakPtr());
 
@@ -734,8 +734,8 @@ void NavigationRequest::OnRequestRedirected(
 }
 
 void NavigationRequest::OnResponseStarted(
-    const scoped_refptr<ResourceResponse>& response,
-    mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
+    const scoped_refptr<network::ResourceResponse>& response,
+    network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
     std::unique_ptr<StreamHandle> body,
     const net::SSLInfo& ssl_info,
     std::unique_ptr<NavigationData> navigation_data,
@@ -1195,7 +1195,7 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
         // |url_loader_client_endpoints_| is always valid, except in some tests
         // where the TestNavigationLoader is used.
         if (url_loader_client_endpoints_) {
-          mojom::URLLoaderPtr url_loader(
+          network::mojom::URLLoaderPtr url_loader(
               std::move(url_loader_client_endpoints_->url_loader));
           url_loader->ProceedWithResponse();
           url_loader_client_endpoints_->url_loader = url_loader.PassInterface();

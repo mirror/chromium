@@ -15,6 +15,7 @@
 -ChromeSitePerProcessTest.LaunchExternalProtocolFromSubframe
 -ContentFaviconDriverTest.ReloadBypassingCache
 -CredentialManagerBrowserTest.CreatePublicKeyCredentialAlgorithmNotSupported
+-CredentialManagerBrowserTest.CreatePublicKeyCredentialInvalidRp
 -CredentialManagerBrowserTest.MojoConnectionRecreatedAfterNavigation
 -CredentialManagerBrowserTest.StoreInUnloadHandler_CrossSite_OnDemandMojoPipe
 -CredentialManagerBrowserTest.StoreInUnloadHandler_CrossSite_PreestablishedPipe
@@ -366,6 +367,7 @@
 
 # http://crbug.com/705114
 # Remove streams concept from code and replace with data pipe passing.
+-ChromeAcceptHeaderTest.Check
 -ChromeFindRequestManagerTest.FindInPDF
 -ChromeNavigationBrowserTest.CrossSiteRedirectionToPDF
 -ChromeSitePerProcessPDFTest.EmbeddedPDFInsideCrossOriginFrame
@@ -680,6 +682,7 @@
 # Fails because of missing support to navigate to filesystem: URLs.
 # https://crbug.com/797292
 -SBNavigationObserverBrowserTest.DownloadViaHTML5FileApi
+-ProcessManagerBrowserTest.NestedURLNavigationsToExtensionBlocked
 
 # Flakes https://logs.chromium.org/v/?s=chromium%2Fbb%2Fchromium.linux%2FLinux_Tests%2F65822%2F%2B%2Frecipes%2Fsteps%2Fnetwork_service_browser_tests%2F0%2Flogs%2FNoSessionRestoreTest.PRE_CookiesClearedOnExit%2F0
 -NoSessionRestoreTest.CookiesClearedOnExit

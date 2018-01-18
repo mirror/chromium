@@ -88,6 +88,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kContextualSearchMlTapSuppression,
     &kContextualSearchSecondTap,
     &kContextualSearchTapDisableOverride,
+    &kContextualSuggestionsAboveArticles,
     &kContextualSuggestionsCarousel,
     &kCustomContextMenu,
     &kCustomFeedbackUi,
@@ -122,6 +123,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kVideoPersistence,
     &kVrBrowsingFeedback,
     &kVrBrowsingInCustomTab,
+    &kVrIconInDaydreamHome,
     &kVrLaunchIntents,
     &payments::features::kWebPaymentsMethodSectionOrderV2,
     &payments::features::kWebPaymentsModifiers,
@@ -136,6 +138,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &offline_pages::kBackgroundLoaderForDownloadsFeature,
     &offline_pages::kOfflinePagesCTFeature,    // See crbug.com/620421.
     &offline_pages::kOfflinePagesCTV2Feature,  // See crbug.com/734753.
+    &offline_pages::kOfflinePagesDescriptivePendingStatusFeature,
     &offline_pages::kOfflinePagesSharingFeature,
     &omnibox::kAndroidChromeHomePersonalizedSuggestions,
     &password_manager::features::kPasswordExport,
@@ -263,6 +266,9 @@ const base::Feature kContextualSearchTapDisableOverride{
 const base::Feature kContextualSuggestionsCarousel{
     "ContextualSuggestionsCarousel", base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kContextualSuggestionsAboveArticles{
+    "ContextualSuggestionsAboveArticles", base::FEATURE_DISABLED_BY_DEFAULT};
+
 const base::Feature kCustomContextMenu{"CustomContextMenu",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -371,6 +377,9 @@ const base::Feature kVrBrowsingFeedback{"VrBrowsingFeedback",
 
 const base::Feature kVrBrowsingInCustomTab{"VrBrowsingInCustomTab",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kVrIconInDaydreamHome{"VrIconInDaydreamHome",
+                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kVrLaunchIntents{"VrLaunchIntents",
                                      base::FEATURE_DISABLED_BY_DEFAULT};

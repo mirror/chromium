@@ -14,9 +14,9 @@
 #include "net/http/http_request_headers.h"
 #include "net/url_request/url_request.h"
 #include "services/network/public/cpp/resource_request_body.h"
-#include "services/network/public/interfaces/cors.mojom.h"
-#include "services/network/public/interfaces/fetch_api.mojom.h"
-#include "services/network/public/interfaces/request_context_frame_type.mojom.h"
+#include "services/network/public/interfaces/cors.mojom-shared.h"
+#include "services/network/public/interfaces/fetch_api.mojom-shared.h"
+#include "services/network/public/interfaces/request_context_frame_type.mojom-shared.h"
 #include "url/gurl.h"
 #include "url/origin.h"
 
@@ -40,6 +40,11 @@ struct ResourceRequest {
   // setting site_for_cookies = url, but this should ideally only be
   // done if there really is no way to determine the correct value.
   GURL site_for_cookies;
+
+  // First-party URL redirect policy: During server redirects, the first-party
+  // URL for cookies normally doesn't change. However, if this is true, the
+  // the first-party URL should be updated to the URL on every redirect.
+  bool update_first_party_url_on_redirect = false;
 
   // The origin of the context which initiated the request, which will be used
   // for cookie checks like 'First-Party-Only'.
@@ -125,11 +130,8 @@ struct ResourceRequest {
       mojom::FetchCredentialsMode::kOmit;
 
   // The redirect mode used in Fetch API.
-  // Note: this is an enum of type content::FetchRedirectMode.
-  // TODO(jam): emove this if network service shouldn't know about this, or
-  // redefine it in /services/network if it is needed to implement CORS in
-  // network service.
-  int fetch_redirect_mode = 0;
+  mojom::FetchRedirectMode fetch_redirect_mode =
+      mojom::FetchRedirectMode::kFollow;
 
   // The integrity used in Fetch API.
   std::string fetch_integrity;

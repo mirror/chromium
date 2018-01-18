@@ -32,6 +32,7 @@
 #include "core/exported/LocalFrameClientImpl.h"
 
 #include <memory>
+#include <utility>
 
 #include "bindings/core/v8/ScriptController.h"
 #include "core/CoreInitializer.h"
@@ -79,6 +80,7 @@
 #include "public/platform/WebApplicationCacheHost.h"
 #include "public/platform/WebMediaPlayerSource.h"
 #include "public/platform/WebRTCPeerConnectionHandler.h"
+#include "public/platform/WebScrollIntoViewParams.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLError.h"
@@ -577,12 +579,6 @@ NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
           ? WebFrameClient::NavigationPolicyInfo::ArchiveStatus::Present
           : WebFrameClient::NavigationPolicyInfo::ArchiveStatus::Absent;
 
-  // Caching could be disabled for requests initiated by DevTools.
-  // TODO(ananta)
-  // We should extract the network cache state into a global component which
-  // can be queried here and wherever necessary.
-  navigation_info.is_cache_disabled =
-      DevToolsAgent() ? DevToolsAgent()->CacheDisabled() : false;
   if (form)
     navigation_info.form = WebFormElement(form);
 
@@ -920,6 +916,13 @@ void LocalFrameClientImpl::DidEnforceInsecureRequestPolicy(
   web_frame_->Client()->DidEnforceInsecureRequestPolicy(policy);
 }
 
+void LocalFrameClientImpl::DidEnforceInsecureNavigationsSet(
+    const std::vector<unsigned>& set) {
+  if (!web_frame_->Client())
+    return;
+  web_frame_->Client()->DidEnforceInsecureNavigationsSet(set);
+}
+
 void LocalFrameClientImpl::DidChangeFramePolicy(
     Frame* child_frame,
     SandboxFlags flags,
@@ -1112,15 +1115,15 @@ void LocalFrameClientImpl::DidBlockFramebust(const KURL& url) {
   web_frame_->Client()->DidBlockFramebust(url);
 }
 
-String LocalFrameClientImpl::GetInstrumentationToken() {
-  return web_frame_->Client()->GetInstrumentationToken();
+String LocalFrameClientImpl::GetDevToolsFrameToken() const {
+  return web_frame_->Client()->GetDevToolsFrameToken();
 }
 
 void LocalFrameClientImpl::ScrollRectToVisibleInParentFrame(
     const WebRect& rect_to_scroll,
-    const WebRemoteScrollProperties& properties) {
+    const WebScrollIntoViewParams& params) {
   web_frame_->Client()->ScrollRectToVisibleInParentFrame(rect_to_scroll,
-                                                         properties);
+                                                         params);
 }
 
 void LocalFrameClientImpl::SetVirtualTimePauser(
@@ -1149,6 +1152,11 @@ void LocalFrameClientImpl::DidChangeSelection(bool is_selection_empty) {
 void LocalFrameClientImpl::DidChangeContents() {
   if (web_frame_->Client())
     web_frame_->Client()->DidChangeContents();
+}
+
+Frame* LocalFrameClientImpl::FindFrame(const AtomicString& name) const {
+  DCHECK(web_frame_->Client());
+  return ToCoreFrame(web_frame_->Client()->FindFrame(name));
 }
 
 }  // namespace blink

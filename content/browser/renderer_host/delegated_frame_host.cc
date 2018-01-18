@@ -236,6 +236,15 @@ void DelegatedFrameHost::SetNeedsBeginFrames(bool needs_begin_frames) {
   support_->SetNeedsBeginFrame(needs_begin_frames);
 }
 
+void DelegatedFrameHost::SetWantsAnimateOnlyBeginFrames() {
+  if (enable_viz_) {
+    NOTIMPLEMENTED();
+    return;
+  }
+
+  support_->SetWantsAnimateOnlyBeginFrames();
+}
+
 void DelegatedFrameHost::DidNotProduceFrame(const viz::BeginFrameAck& ack) {
   if (enable_viz_) {
     NOTIMPLEMENTED();
@@ -607,9 +616,9 @@ void DelegatedFrameHost::EvictDelegatedFrame() {
     UpdateGutters();
   }
 
-  // TODO(samans): Ensure that with --enable-viz the latest frame is evicted and
-  // that DelegatedFrameHost updates the SurfaceLayer when the frame becomes
-  // visible again.
+  // TODO(samans): Ensure that with VizDisplayCompositor enabled the latest
+  // frame is evicted and that DelegatedFrameHost updates the SurfaceLayer when
+  // the frame becomes visible again.
   if (!enable_viz_)
     support_->EvictCurrentSurface();
 

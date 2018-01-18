@@ -52,6 +52,7 @@
 #include "components/tracing/common/trace_config_file.h"
 #include "components/tracing/common/trace_to_console.h"
 #include "components/tracing/common/tracing_switches.h"
+#include "components/viz/common/features.h"
 #include "components/viz/common/switches.h"
 #include "components/viz/host/forwarding_compositing_mode_reporter_impl.h"
 #include "components/viz/host/host_frame_sink_manager.h"
@@ -106,6 +107,7 @@
 #include "content/public/common/main_function_params.h"
 #include "content/public/common/result_codes.h"
 #include "content/public/common/service_names.mojom.h"
+#include "content/public/common/zygote_features.h"
 #include "device/gamepad/gamepad_service.h"
 #include "gpu/vulkan/features.h"
 #include "media/audio/audio_manager.h"
@@ -142,6 +144,10 @@
 #if defined(USE_AURA)
 #include "content/public/browser/context_factory.h"
 #include "ui/aura/env.h"
+#endif
+
+#if BUILDFLAG(USE_ZYGOTE_HANDLE)
+#include "content/public/common/zygote_handle.h"
 #endif
 
 #if defined(OS_ANDROID)
@@ -211,7 +217,6 @@
 
 #if !defined(OS_ANDROID)
 #include "content/browser/zygote_host/zygote_communication_linux.h"
-#include "content/public/browser/zygote_handle_linux.h"
 #endif  // !defined(OS_ANDROID)
 #endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
 
@@ -256,8 +261,7 @@
 namespace content {
 namespace {
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
-    !defined(OS_FUCHSIA)
+#if BUILDFLAG(USE_ZYGOTE_HANDLE)
 pid_t LaunchZygoteHelper(base::CommandLine* cmd_line,
                          base::ScopedFD* control_fd) {
   GetContentClient()->browser()->AppendExtraCommandLineSwitches(cmd_line, -1);
@@ -287,8 +291,7 @@ void SetupSandbox(const base::CommandLine& parsed_command_line) {
   ZygoteHostImpl::GetInstance()->SetRendererSandboxStatus(
       generic_zygote->GetSandboxStatus());
 }
-#endif  // defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
-        // !defined(OS_FUCHSIA)
+#endif  // BUILDFLAG(USE_ZYGOTE_HANDLE)
 
 #if defined(USE_GLIB)
 static void GLibLogHandler(const gchar* log_domain,
@@ -607,9 +610,11 @@ BrowserMainLoop::BrowserMainLoop(const MainFunctionParams& parameters)
   DCHECK(!g_current_browser_main_loop);
   g_current_browser_main_loop = this;
 
-  // Use an empty string as TaskScheduler name to match the suffix of browser
-  // process TaskScheduler histograms.
-  base::TaskScheduler::Create("");
+  if (GetContentClient()->browser()->ShouldCreateTaskScheduler()) {
+    // Use an empty string as TaskScheduler name to match the suffix of browser
+    // process TaskScheduler histograms.
+    base::TaskScheduler::Create("");
+  }
 }
 
 BrowserMainLoop::~BrowserMainLoop() {
@@ -1444,7 +1449,7 @@ void BrowserMainLoop::GetCompositingModeReporter(
     return;
   }
 
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableViz))
+  if (base::FeatureList::IsEnabled(features::kVizDisplayCompositor))
     forwarding_compositing_mode_reporter_impl_->BindRequest(std::move(request));
   else
     compositing_mode_reporter_impl_->BindRequest(std::move(request));
@@ -1518,7 +1523,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   if (browser_is_viz_host) {
     host_frame_sink_manager_ = std::make_unique<viz::HostFrameSinkManager>();
     BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
-    if (parsed_command_line_.HasSwitch(switches::kEnableViz)) {
+    if (base::FeatureList::IsEnabled(features::kVizDisplayCompositor)) {
       forwarding_compositing_mode_reporter_impl_ =
           std::make_unique<viz::ForwardingCompositingModeReporterImpl>();
 

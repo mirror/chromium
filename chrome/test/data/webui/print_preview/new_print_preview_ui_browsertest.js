@@ -140,6 +140,7 @@ PrintPreviewRestoreStateTest = class extends NewPrintPreviewTest {
     return super.extraLibraries.concat([
       '../test_browser_proxy.js',
       'native_layer_stub.js',
+      'plugin_stub.js',
       'print_preview_test_utils.js',
       'restore_state_test.js',
     ]);
@@ -157,4 +158,32 @@ TEST_F('PrintPreviewRestoreStateTest', 'RestoreTrueValues', function() {
 
 TEST_F('PrintPreviewRestoreStateTest', 'RestoreFalseValues', function() {
   this.runMochaTest(restore_state_test.TestNames.RestoreFalseValues);
+});
+
+TEST_F('PrintPreviewRestoreStateTest', 'SaveValues', function() {
+  this.runMochaTest(restore_state_test.TestNames.SaveValues);
+});
+
+PrintPreviewModelTest = class extends NewPrintPreviewTest {
+  /** @override */
+  get browsePreload() {
+    return 'chrome://print/new/model.html';
+  }
+
+  /** @override */
+  get extraLibraries() {
+    return super.extraLibraries.concat([
+      '../settings/test_util.js',
+      'model_test.js',
+    ]);
+  }
+
+  /** @override */
+  get suiteName() {
+    return model_test.suiteName;
+  }
+};
+
+TEST_F('PrintPreviewModelTest', 'SetStickySettings', function() {
+  this.runMochaTest(model_test.TestNames.SetStickySettings);
 });

@@ -19,10 +19,10 @@
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/common/resource_type.h"
-#include "content/public/common/url_loader.mojom.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "net/log/net_log_with_source.h"
+#include "services/network/public/interfaces/url_loader.mojom.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "third_party/WebKit/common/blob/blob.mojom.h"
 #include "third_party/WebKit/common/service_worker/service_worker_event_status.mojom.h"
 
@@ -58,7 +58,6 @@ class CONTENT_EXPORT ServiceWorkerFetchDispatcher {
   ServiceWorkerFetchDispatcher(
       std::unique_ptr<network::ResourceRequest> request,
       scoped_refptr<ServiceWorkerVersion> version,
-      const base::Optional<base::TimeDelta>& timeout,
       const net::NetLogWithSource& net_log,
       base::OnceClosure prepare_callback,
       FetchCallback fetch_callback);
@@ -67,7 +66,6 @@ class CONTENT_EXPORT ServiceWorkerFetchDispatcher {
       std::unique_ptr<ServiceWorkerFetchRequest> request,
       scoped_refptr<ServiceWorkerVersion> version,
       ResourceType resource_type,
-      const base::Optional<base::TimeDelta>& timeout,
       const net::NetLogWithSource& net_log,
       base::OnceClosure prepare_callback,
       FetchCallback fetch_callback);
@@ -133,7 +131,6 @@ class CONTENT_EXPORT ServiceWorkerFetchDispatcher {
   net::NetLogWithSource net_log_;
   base::OnceClosure prepare_callback_;
   FetchCallback fetch_callback_;
-  base::Optional<base::TimeDelta> timeout_;
   bool did_complete_;
 
   scoped_refptr<URLLoaderAssets> url_loader_assets_;

@@ -243,8 +243,7 @@ Data(const LayoutObject*, LayoutInvalidationReasonForTracing);
 }
 
 namespace InspectorPaintInvalidationTrackingEvent {
-std::unique_ptr<TracedValue> Data(const LayoutObject*,
-                                  const LayoutObject& paint_container);
+std::unique_ptr<TracedValue> Data(const LayoutObject&);
 }
 
 namespace InspectorScrollInvalidationTrackingEvent {
@@ -252,30 +251,35 @@ std::unique_ptr<TracedValue> Data(const LayoutObject&);
 }
 
 namespace InspectorChangeResourcePriorityEvent {
-std::unique_ptr<TracedValue> Data(unsigned long identifier,
+std::unique_ptr<TracedValue> Data(DocumentLoader*,
+                                  unsigned long identifier,
                                   const ResourceLoadPriority&);
 }
 
 namespace InspectorSendRequestEvent {
-std::unique_ptr<TracedValue> Data(unsigned long identifier,
+std::unique_ptr<TracedValue> Data(DocumentLoader*,
+                                  unsigned long identifier,
                                   LocalFrame*,
                                   const ResourceRequest&);
 }
 
 namespace InspectorReceiveResponseEvent {
-std::unique_ptr<TracedValue> Data(unsigned long identifier,
+std::unique_ptr<TracedValue> Data(DocumentLoader*,
+                                  unsigned long identifier,
                                   LocalFrame*,
                                   const ResourceResponse&);
 }
 
 namespace InspectorReceiveDataEvent {
-std::unique_ptr<TracedValue> Data(unsigned long identifier,
+std::unique_ptr<TracedValue> Data(DocumentLoader*,
+                                  unsigned long identifier,
                                   LocalFrame*,
                                   int encoded_data_length);
 }
 
 namespace InspectorResourceFinishEvent {
-std::unique_ptr<TracedValue> Data(unsigned long identifier,
+std::unique_ptr<TracedValue> Data(DocumentLoader*,
+                                  unsigned long identifier,
                                   double finish_time,
                                   bool did_fail,
                                   int64_t encoded_data_length,

@@ -144,8 +144,14 @@ const char kCompositedLayerBordersDescription[] =
     "Renders a border around composited Render Layers to help debug and study "
     "layer compositing.";
 
+const char kContextualSuggestionsAboveArticlesName[] =
+    "Enable Contextual Suggestions Above Articles";
+const char kContextualSuggestionsAboveArticlesDescription[] =
+    "If enabled, shows contextual suggestions in a linear list above "
+    "article suggestions.";
+
 const char kContextualSuggestionsCarouselName[] =
-    "Enable Contextual Suggestions";
+    "Enable Contextual Suggestions Carousel";
 const char kContextualSuggestionsCarouselDescription[] =
     "If enabled, shows contextual suggestions in a horizontal carousel in "
     "bottom sheet content.";
@@ -493,24 +499,25 @@ const char kEnableOutOfProcessHeapProfilingName[] =
     "Out of process heap profiling.";
 const char kEnableOutOfProcessHeapProfilingDescription[] =
     "Creates a profiling service that records stacktraces for all live, "
-    "malloced objects.";
-const char kEnableOutOfProcessHeapProfilingModeMinimal[] =
-    "Profile only the browser and GPU processes.";
-const char kEnableOutOfProcessHeapProfilingModeAll[] = "Profile all processes.";
-const char kEnableOutOfProcessHeapProfilingModeAllRenderers[] =
-    "Profiles all renderers.";
-const char kEnableOutOfProcessHeapProfilingModeBrowser[] =
-    "Profile only the browser processes.";
-const char kEnableOutOfProcessHeapProfilingModeGpu[] =
-    "Profile only the GPU processes.";
+    "malloced objects. Heap dumps can be obtained at chrome://tracing "
+    "[category:memory-infra] and chrome://memory-internals. This setting "
+    "controls which processes are profiled. As long as this setting is not "
+    "disabled, users can start profiling any given process in "
+    "chrome://memory-internals.";
+const char kEnableOutOfProcessHeapProfilingModeMinimal[] = "Browser and GPU";
+const char kEnableOutOfProcessHeapProfilingModeAll[] = "All processes";
+const char kEnableOutOfProcessHeapProfilingModeAllRenderers[] = "All renderers";
+const char kEnableOutOfProcessHeapProfilingModeBrowser[] = "Only browser";
+const char kEnableOutOfProcessHeapProfilingModeGpu[] = "Only GPU.";
 const char kEnableOutOfProcessHeapProfilingModeManual[] =
-    "By default, no processes are profiled. User may choose to start-profiling "
-    "processes via chrome://memory-internals.";
+    "None by default. Visit chrome://memory-internals to choose which "
+    "processes to profile.";
 const char kEnableOutOfProcessHeapProfilingModeRendererSampling[] =
     "Profile a random sampling of renderer processes, ensuring only one is "
     "ever profiled at a time.";
+
 const char kOutOfProcessHeapProfilingKeepSmallAllocations[] =
-    "Keep track of even the small allocations in memlog heap dumps.";
+    "Emit small allocations in memlog heap dumps.";
 const char kOutOfProcessHeapProfilingKeepSmallAllocationsDescription[] =
     "By default, small allocations are pruned from the heap dump. This reduces "
     "the size of the compressed trace by 100x. If pruning is disabled, the "
@@ -523,17 +530,14 @@ const char kOutOfProcessHeapProfilingKeepSmallAllocationsDescription[] =
 const char kOOPHPStackModeName[] =
     "The type of stack to record for memlog heap dumps";
 const char kOOPHPStackModeDescription[] =
-    "By default, memlog heap dumps record a native stack, which requires "
-    "symbolization. It's also possible to record a pseudo stack using trace "
-    "events as identifiers. It's also possible to do a mix of both.";
-const char kOOPHPStackModeMixed[] =
-    "Record a mix of pseudo and native stack frames";
-const char kOOPHPStackModeNative[] =
-    "Record instruction addresses from unwinding the stack. The result "
-    "requires symbolization. Does not produce valid results on Android on "
-    "official arm32 builds. Requires a custom build with frame pointers "
-    "enabled.";
-const char kOOPHPStackModePseudo[] = "Uses trace events as identifiers";
+    "By default, memlog heap dumps record native stacks, which requires a "
+    "post-processing step to symbolize. Requires a custom build with frame "
+    "pointers to work on Android. It's also possible to record a pseudo stack "
+    "using trace events as identifiers. It's also possible to do a mix of "
+    "both.";
+const char kOOPHPStackModeMixed[] = "Mixed";
+const char kOOPHPStackModeNative[] = "Native";
+const char kOOPHPStackModePseudo[] = "Trace events";
 
 const char kEnablePictureInPictureName[] = "Enable picture in picture.";
 const char kEnablePictureInPictureDescription[] =
@@ -1478,10 +1482,6 @@ const char kTraceUploadUrlChoiceEmloading[] = "emloading";
 const char kTraceUploadUrlChoiceQa[] = "QA";
 const char kTraceUploadUrlChoiceTesting[] = "Testing";
 
-const char kTranslate2016q2UiName[] = "Translate 2016Q2 UI";
-const char kTranslate2016q2UiDescription[] =
-    "Improved triggering logic and look for Translate Bubble UI";
-
 const char kTranslateRankerEnforcementName[] =
     "Enforce TranslateRanker decisions";
 const char kTranslateRankerEnforcementDescription[] =
@@ -1499,11 +1499,6 @@ const char kTrySupportedChannelLayoutsDescription[] =
 
 const char kUiPartialSwapName[] = "Partial swap";
 const char kUiPartialSwapDescription[] = "Sets partial swap behavior.";
-
-const char kEnablePreventLayerSquashingName[] = "Prevent layer squashing";
-const char kEnablePreventLayerSquashingDescription[] =
-    "When enabled, the compositor will avoid combining composited layers in "
-    "more situations.";
 
 const char kUseDdljsonApiName[] = "Use new ddljson API for Doodles";
 const char kUseDdljsonApiDescription[] =
@@ -1687,9 +1682,6 @@ const char kAndroidPaymentAppsDescription[] =
 const char kAndroidViewPasswordsName[] = "Copy and view passwords for Android";
 const char kAndroidViewPasswordsDescription[] =
     "Enables copying and viewing passwords in settings.";
-
-const char kAsyncDnsName[] = "Async DNS resolver";
-const char kAsyncDnsDescription[] = "Enables the built-in DNS resolver.";
 
 const char kAutofillAccessoryViewName[] =
     "Autofill suggestions as keyboard accessory view";
@@ -1978,13 +1970,6 @@ const char kGrantNotificationsToDSEName[] =
 const char kGrantNotificationsToDSENameDescription[] =
     "Automatically grant the notifications permission to the Default Search "
     "Engine";
-
-const char kHerbPrototypeChoicesName[] = "Switch preferred flavor of Herb";
-const char kHerbPrototypeChoicesDescription[] =
-    "Switching this option changes which tab management prototype is being "
-    "tested.";
-const char kHerbPrototypeFlavorElderberry[] =
-    "ELDERBERRY: All View Intents in CCT v2";
 
 const char kKeepPrefetchedContentSuggestionsName[] =
     "Keep prefetched content suggestions";
@@ -2504,10 +2489,6 @@ const char kDisableTabletAutohideTitlebarsDescription[] =
     "Disable tablet mode autohide titlebars functionality. The user will be "
     "able to see the titlebar in tablet mode.";
 
-const char kDisableTabletSplitViewName[] = "Disable split view in Tablet mode";
-const char kDisableTabletSplitViewDescription[] =
-    "Disable split view for Chrome OS tablet mode.";
-
 const char kEnablePerUserTimezoneName[] = "Per-user time zone preferences.";
 const char kEnablePerUserTimezoneDescription[] =
     "Chrome OS system timezone preference is stored and handled for each user "
@@ -2550,6 +2531,10 @@ const char kEnableFloatingVirtualKeyboardDescription[] =
 const char kEnableImeMenuName[] = "Enable opt-in IME menu";
 const char kEnableImeMenuDescription[] =
     "Enable access to the new IME menu in the Language Settings page.";
+
+const char kEnableTabletSplitViewName[] = "Split view in Tablet mode";
+const char kEnableTabletSplitViewDescription[] =
+    "Enable split view for Chrome OS tablet mode.";
 
 const char kEnableZipArchiverPackerName[] = "ZIP archiver - Packer";
 const char kEnableZipArchiverPackerDescription[] =
@@ -2819,6 +2804,10 @@ const char kVrBrowsingInCustomTabName[] = "VR browsing in Custom Tabs";
 const char kVrBrowsingInCustomTabDescription[] =
     "Allow browsing within a VR headset while in a Custom Tab.";
 
+const char kVrIconInDaydreamHomeName[] = "Chrome icon in Daydream Home";
+const char kVrIconInDaydreamHomeDescription[] =
+    "Adds an icon to Daydream Home that allows launching Chrome in VR.";
+
 const char kVrLaunchIntentsName[] = "VR intents";
 const char kVrLaunchIntentsDescription[] =
     "Allow intents to launch Chrome in VR mode.";
@@ -2833,7 +2822,8 @@ const char kWebVrAutopresentFromIntentDescription[] =
 #if BUILDFLAG(ENABLE_OPENVR)
 const char kOpenVRName[] = "OpenVR hardware support";
 const char kOpenVRDescription[] =
-    "If enabled, Chrome will use OpenVR devices for VR.";
+    "If enabled, Chrome will use OpenVR devices for VR (supported only on "
+    "Windows 10 or later).";
 #endif  // ENABLE_OPENVR
 
 #endif  // ENABLE_VR

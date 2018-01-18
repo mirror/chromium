@@ -102,8 +102,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   bool AllowGpuLaunchRetryOnIOThread() override;
   void RenderProcessWillLaunch(content::RenderProcessHost* host) override;
   GURL GetEffectiveURL(content::BrowserContext* browser_context,
-                       const GURL& url,
-                       bool is_isolated_origin) override;
+                       const GURL& url) override;
   bool ShouldUseProcessPerSite(content::BrowserContext* browser_context,
                                const GURL& effective_url) override;
   bool DoesSiteRequireDedicatedProcess(content::BrowserContext* browser_context,
@@ -398,7 +397,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   bool ShowPaymentHandlerWindow(
       content::BrowserContext* browser_context,
       const GURL& url,
-      base::OnceCallback<void(bool)> callback) override;
+      base::OnceCallback<void(bool, int, int)> callback) override;
 
  protected:
   static bool HandleWebUI(GURL* url, content::BrowserContext* browser_context);

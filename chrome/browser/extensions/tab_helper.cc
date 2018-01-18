@@ -6,7 +6,6 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
@@ -350,8 +349,8 @@ void TabHelper::OnDidGetWebApplicationInfo(
     const WebApplicationInfo& info) {
   web_app_info_ = info;
 
-  NavigationEntry* entry =
-      web_contents()->GetController().GetLastCommittedEntry();
+  content::WebContents* contents = web_contents();
+  NavigationEntry* entry = contents->GetController().GetLastCommittedEntry();
   if (!entry || last_committed_nav_entry_unique_id_ != entry->GetUniqueID())
     return;
   last_committed_nav_entry_unique_id_ = 0;
@@ -359,15 +358,17 @@ void TabHelper::OnDidGetWebApplicationInfo(
   switch (pending_web_app_action_) {
     case CREATE_HOSTED_APP: {
       if (web_app_info_.app_url.is_empty())
-        web_app_info_.app_url = web_contents()->GetURL();
+        web_app_info_.app_url = contents->GetLastCommittedURL();
 
       if (web_app_info_.title.empty())
-        web_app_info_.title = web_contents()->GetTitle();
+        web_app_info_.title = contents->GetTitle();
       if (web_app_info_.title.empty())
         web_app_info_.title = base::UTF8ToUTF16(web_app_info_.app_url.spec());
 
-      bookmark_app_helper_.reset(new BookmarkAppHelper(
-          profile_, web_app_info_, web_contents(), WebAppInstallSource::MENU));
+      bookmark_app_helper_.reset(
+          new BookmarkAppHelper(profile_, web_app_info_, contents,
+                                InstallableMetrics::GetInstallSource(
+                                    contents, InstallTrigger::MENU)));
       bookmark_app_helper_->Create(base::Bind(
           &TabHelper::FinishCreateBookmarkApp, weak_ptr_factory_.GetWeakPtr()));
       break;
@@ -442,7 +443,7 @@ void TabHelper::DoInlineInstall(
     if (observe_install_stage || observe_download_progress) {
       DCHECK_EQ(0u, install_observers_.count(webstore_item_id));
       install_observers_[webstore_item_id] =
-          base::MakeUnique<InlineInstallObserver>(
+          std::make_unique<InlineInstallObserver>(
               this, web_contents()->GetBrowserContext(), webstore_item_id,
               observe_download_progress, observe_install_stage);
     }

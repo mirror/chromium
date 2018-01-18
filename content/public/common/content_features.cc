@@ -145,6 +145,10 @@ const base::Feature kLazyInitializeMediaControls{
 const base::Feature kLazyParseCSS{"LazyParseCSS",
                                   base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enables lowering the priority of the resources in iframes.
+const base::Feature kLowPriorityIframes{"LowPriorityIframes",
+                                        base::FEATURE_DISABLED_BY_DEFAULT};
+
 // If this feature is enabled, media-device enumerations use a cache that is
 // invalidated upon notifications sent by base::SystemMonitor. If disabled, the
 // cache is considered invalid on every enumeration request.
@@ -180,9 +184,6 @@ const base::Feature kNotificationContentImage{"NotificationContentImage",
 // deemed unresponsive.  See crbug.com/599609.
 const base::Feature kMainThreadBusyScrollIntervention{
     "MainThreadBusyScrollIntervention", base::FEATURE_DISABLED_BY_DEFAULT};
-
-// Blob mojofication.
-const base::Feature kMojoBlobs{"MojoBlobs", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Mojo-based Input Event routing.
 const base::Feature kMojoInputMessages{"MojoInputMessages",
@@ -364,9 +365,6 @@ const base::Feature kTurnOff2DAndOpacityCompositorAnimations{
     "TurnOff2DAndOpacityCompositorAnimations",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kEnablePreventLayerSquashing{
-    "EnablePreventLayerSquashing", base::FEATURE_ENABLED_BY_DEFAULT};
-
 // Use Feature Policy to gate the use of permission features like midi,
 // geolocation, camera, microphone, etc.
 const base::Feature kUseFeaturePolicyForPermissions{
@@ -522,10 +520,5 @@ const base::Feature kV8ContextSnapshot{"V8ContextSnapshot",
 // Enables future V8 VM features
 const base::Feature kV8VmFuture{"V8VmFuture",
                                 base::FEATURE_DISABLED_BY_DEFAULT};
-
-bool IsMojoBlobsEnabled() {
-  return base::FeatureList::IsEnabled(features::kMojoBlobs) ||
-         base::FeatureList::IsEnabled(features::kNetworkService);
-}
 
 }  // namespace features

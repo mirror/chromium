@@ -14,7 +14,6 @@
 #include "ash/system/tray_accessibility.h"
 #include "base/callback.h"
 #include "base/command_line.h"
-#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/browser_process.h"
@@ -164,7 +163,7 @@ class TrayAccessibilityTest
       policy_map.Set(policy::key::kShowAccessibilityOptionsInSystemTrayMenu,
                      policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                      policy::POLICY_SOURCE_CLOUD,
-                     base::MakeUnique<base::Value>(value), nullptr);
+                     std::make_unique<base::Value>(value), nullptr);
       provider_.UpdateChromePolicy(policy_map);
       base::RunLoop().RunUntilIdle();
     } else {
@@ -968,9 +967,7 @@ IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, ShowMenuWithShowOnLoginScreen) {
   EXPECT_TRUE(CanCreateMenuItem());
 }
 
-// Flaky crashes on linux-chromeos-rel and linux-chromeos-dbg.
-// http://crbug.com/801700
-IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, DISABLED_ShowNotification) {
+IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, ShowNotification) {
   const base::string16 BRAILLE_CONNECTED =
       base::ASCIIToUTF16("Braille display connected.");
   const base::string16 CHROMEVOX_ENABLED =

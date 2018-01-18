@@ -35,8 +35,11 @@ class UserActivityLoggerDelegateUkmTest : public TabActivityTestBase {
     UserActivityEvent::Event* event = user_activity_event_.mutable_event();
     event->set_type(UserActivityEvent::Event::REACTIVATE);
     event->set_reason(UserActivityEvent::Event::USER_ACTIVITY);
+    event->set_log_duration_sec(395);
     UserActivityEvent::Features* features =
         user_activity_event_.mutable_features();
+    features->set_on_to_dim_sec(100);
+    features->set_dim_to_screen_off_sec(200);
     features->set_last_activity_time_sec(7300);
     features->set_last_user_activity_time_sec(3800);
     features->set_last_activity_day(UserActivityEvent::Features::MON);
@@ -113,6 +116,9 @@ class UserActivityLoggerDelegateUkmTest : public TabActivityTestBase {
   const UkmMetricMap user_activity_values_ = {
       {UserActivity::kEventTypeName, 1},    // REACTIVATE
       {UserActivity::kEventReasonName, 1},  // USER_ACTIVITY
+      {UserActivity::kEventLogDurationName, 380},
+      {UserActivity::kScreenDimDelayName, 100},
+      {UserActivity::kScreenDimToOffDelayName, 200},
       {UserActivity::kLastActivityTimeName, 2},
       {UserActivity::kLastUserActivityTimeName, 1},
       {UserActivity::kLastActivityDayName, 1},  // MON
@@ -130,12 +136,24 @@ class UserActivityLoggerDelegateUkmTest : public TabActivityTestBase {
   DISALLOW_COPY_AND_ASSIGN(UserActivityLoggerDelegateUkmTest);
 };
 
-TEST_F(UserActivityLoggerDelegateUkmTest, CheckValues) {
+TEST_F(UserActivityLoggerDelegateUkmTest, BucketEveryFivePercents) {
   const std::vector<int> original_values = {0, 14, 15, 100};
   const std::vector<int> buckets = {0, 10, 15, 100};
   for (size_t i = 0; i < original_values.size(); ++i) {
     EXPECT_EQ(buckets[i],
               UserActivityLoggerDelegateUkm::BucketEveryFivePercents(
+                  original_values[i]));
+  }
+}
+
+TEST_F(UserActivityLoggerDelegateUkmTest, ExponentiallyBucketTimestamp) {
+  const std::vector<int> original_values = {0,   18,  59,  60,  62,  69,  72,
+                                            299, 300, 306, 316, 599, 600, 602};
+  const std::vector<int> buckets = {0,   18,  59,  60,  60,  60,  70,
+                                    290, 300, 300, 300, 580, 600, 600};
+  for (size_t i = 0; i < original_values.size(); ++i) {
+    EXPECT_EQ(buckets[i],
+              UserActivityLoggerDelegateUkm::ExponentiallyBucketTimestamp(
                   original_values[i]));
   }
 }

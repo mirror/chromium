@@ -372,21 +372,6 @@
             ]
         }
     ],
-    "AsyncDns": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "AsyncDns"
-                    ]
-                }
-            ]
-        }
-    ],
     "AutofillCreditCardBankNameDisplay": [
         {
             "platforms": [
@@ -442,6 +427,28 @@
             "experiments": [
                 {
                     "name": "Enabled"
+                }
+            ]
+        }
+    ],
+    "AutofillGooglePayBranding": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "ios",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "AutofillCreditCardDropdownGooglePayBranding",
+                        "AutofillUpstreamUseGooglePayBranding",
+                        "AutofillUseNewSettingsNameInDropdown"
+                    ]
                 }
             ]
         }
@@ -1017,6 +1024,28 @@
                     },
                     "enable_features": [
                         "DataReductionProxyMainMenu"
+                    ]
+                }
+            ]
+        }
+    ],
+    "DataReductionProxyRobustConnection": [
+        {
+            "platforms": [
+                "android",
+                "win",
+                "mac",
+                "chromeos",
+                "linux"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "params": {
+                        "warmup_fetch_callback_enabled": "true"
+                    },
+                    "enable_features": [
+                        "DataReductionProxyRobustConnection"
                     ]
                 }
             ]
@@ -1736,6 +1765,28 @@
                     "name": "Enabled",
                     "enable_features": [
                         "LazyParseCSS"
+                    ]
+                }
+            ]
+        }
+    ],
+    "LowPriorityIframes": [
+        {
+            "platforms": [
+                "linux",
+                "mac",
+                "win",
+                "android",
+                "chromeos"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "params": {
+                        "max_effective_connection_type_threshold": "4G"
+                    },
+                    "enable_features": [
+                        "LowPriorityIframes"
                     ]
                 }
             ]
@@ -2752,6 +2803,49 @@
             ]
         }
     ],
+    "RendererSchedulerWakeUpThrottling": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "ios",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "RendererSchedulerWakeUpThrottling",
+                    "params": {
+                        "wake_up_duration_ms": "5"
+                    }
+                }
+            ]
+        }
+    ],
+    "RendererSideResourceScheduler": [
+        {
+            "platforms": [
+                "win",
+                "mac",
+                "linux",
+                "chromeos",
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled_3_1024",
+                    "params": {
+                        "limit": "1024",
+                        "tight_limit": "3"
+                    },
+                    "enable_features": [
+                        "RendererSideResourceScheduler"
+                    ]
+                }
+            ]
+        }
+    ],
     "ReportCertificateErrors": [
         {
             "platforms": [
@@ -3406,12 +3500,13 @@
             ],
             "experiments": [
                 {
-                    "name": "EnabledForPhishingSites",
+                    "name": "LiveRun_BAS_Phishing",
                     "params": {
-                        "enable_presets": "liverun_on_phishing_sites"
+                        "enable_presets": "liverun_on_phishing_sites,liverun_on_better_ads_violating_sites"
                     },
                     "enable_features": [
-                        "SubresourceFilter"
+                        "SubresourceFilter",
+                        "SubresourceFilterExperimentalUI"
                     ]
                 },
                 {
@@ -3484,18 +3579,6 @@
                     "params": {
                         "variant": "draft22"
                     }
-                }
-            ]
-        }
-    ],
-    "TabManagementExperiment": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Elderberry"
                 }
             ]
         }
@@ -3647,28 +3730,17 @@
             ]
         }
     ],
-    "TranslateUI2016Q2": [
+    "TranslateUiLangTrial": [
         {
             "platforms": [
-                "chromeos",
-                "linux",
-                "win"
+                "mac"
             ],
             "experiments": [
                 {
-                    "name": "TranslateUI2016Q2OnGroup",
-                    "enable_features": [
-                        "TranslateUI2016Q2"
-                    ]
+                    "name": "DefaultTranslateLanguage"
                 },
                 {
-                    "name": "DoNotDefaultAlways",
-                    "params": {
-                        "always_translate_offer_threshold": "0"
-                    },
-                    "enable_features": [
-                        "TranslateUI2016Q2"
-                    ]
+                    "name": "EnabledTranslateLanguage"
                 }
             ]
         }

@@ -19,12 +19,12 @@
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "content/child/thread_safe_sender.h"
-#include "content/common/devtools_messages.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_messages.h"
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "content/common/service_worker/service_worker_utils.h"
+#include "content/common/weak_wrapper_shared_url_loader_factory.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/push_event_payload.h"
 #include "content/public/common/referrer.h"
@@ -39,7 +39,6 @@
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/renderer_blink_platform_impl.h"
 #include "content/renderer/service_worker/controller_service_worker_impl.h"
-#include "content/renderer/service_worker/embedded_worker_devtools_agent.h"
 #include "content/renderer/service_worker/embedded_worker_instance_client_impl.h"
 #include "content/renderer/service_worker/service_worker_dispatcher.h"
 #include "content/renderer/service_worker/service_worker_fetch_context_impl.h"
@@ -124,9 +123,12 @@ class WebServiceWorkerNetworkProviderImpl
     if (render_thread && provider_->script_loader_factory() &&
         ServiceWorkerUtils::IsServicificationEnabled() &&
         IsScriptRequest(request)) {
+      // TODO(crbug.com/796425): Temporarily wrap the raw
+      // mojom::URLLoaderFactory pointer into SharedURLLoaderFactory.
       return std::make_unique<WebURLLoaderImpl>(
           render_thread->resource_dispatcher(), std::move(task_runner),
-          provider_->script_loader_factory());
+          base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
+              provider_->script_loader_factory()));
     }
     return nullptr;
   }
@@ -159,11 +161,6 @@ class StreamHandleListener
  private:
   blink::mojom::ServiceWorkerStreamCallbackPtr callback_ptr_;
 };
-
-WebURLRequest::FetchRedirectMode GetBlinkFetchRedirectMode(
-    FetchRedirectMode redirect_mode) {
-  return static_cast<WebURLRequest::FetchRedirectMode>(redirect_mode);
-}
 
 WebURLRequest::RequestContext GetBlinkRequestContext(
     RequestContextType request_context_type) {
@@ -231,8 +228,7 @@ void ToWebServiceWorkerRequest(const network::ResourceRequest& request,
   web_request->SetCredentialsMode(request.fetch_credentials_mode);
   web_request->SetCacheMode(
       ServiceWorkerFetchRequest::GetCacheModeFromLoadFlags(request.load_flags));
-  web_request->SetRedirectMode(GetBlinkFetchRedirectMode(
-      static_cast<FetchRedirectMode>(request.fetch_redirect_mode)));
+  web_request->SetRedirectMode(request.fetch_redirect_mode);
   web_request->SetRequestContext(GetBlinkRequestContext(
       static_cast<RequestContextType>(request.fetch_request_context_type)));
   web_request->SetFrameType(request.fetch_frame_type);
@@ -257,7 +253,7 @@ void ToWebServiceWorkerRequest(const ServiceWorkerFetchRequest& request,
                            blink::WebString::FromUTF8(pair.second));
   }
   if (!request.blob_uuid.empty()) {
-    DCHECK_EQ(request.blob != nullptr, features::IsMojoBlobsEnabled());
+    DCHECK(request.blob);
     mojo::ScopedMessagePipeHandle blob_pipe;
     if (request.blob)
       blob_pipe = request.blob->Clone().PassInterface().PassHandle();
@@ -271,8 +267,7 @@ void ToWebServiceWorkerRequest(const ServiceWorkerFetchRequest& request,
   web_request->SetIsMainResourceLoad(request.is_main_resource_load);
   web_request->SetCredentialsMode(request.credentials_mode);
   web_request->SetCacheMode(request.cache_mode);
-  web_request->SetRedirectMode(
-      GetBlinkFetchRedirectMode(request.redirect_mode));
+  web_request->SetRedirectMode(request.redirect_mode);
   web_request->SetRequestContext(
       GetBlinkRequestContext(request.request_context_type));
   web_request->SetFrameType(request.frame_type);
@@ -301,7 +296,7 @@ void ToWebServiceWorkerResponse(const ServiceWorkerResponse& response,
                             blink::WebString::FromUTF8(pair.second));
   }
   if (!response.blob_uuid.empty()) {
-    DCHECK_EQ(response.blob != nullptr, features::IsMojoBlobsEnabled());
+    DCHECK(response.blob);
     mojo::ScopedMessagePipeHandle blob_pipe;
     if (response.blob)
       blob_pipe = response.blob->Clone().PassInterface().PassHandle();
@@ -478,7 +473,7 @@ struct ServiceWorkerContextClient::WorkerContextData {
 };
 
 class ServiceWorkerContextClient::NavigationPreloadRequest final
-    : public mojom::URLLoaderClient {
+    : public network::mojom::URLLoaderClient {
  public:
   NavigationPreloadRequest(int fetch_event_id,
                            const GURL& url,
@@ -491,9 +486,9 @@ class ServiceWorkerContextClient::NavigationPreloadRequest final
   ~NavigationPreloadRequest() override {}
 
   void OnReceiveResponse(
-      const ResourceResponseHead& response_head,
+      const network::ResourceResponseHead& response_head,
       const base::Optional<net::SSLInfo>& ssl_info,
-      mojom::DownloadedTempFilePtr downloaded_file) override {
+      network::mojom::DownloadedTempFilePtr downloaded_file) override {
     DCHECK(!response_);
     DCHECK(!downloaded_file);
     response_ = std::make_unique<blink::WebURLResponse>();
@@ -504,8 +499,9 @@ class ServiceWorkerContextClient::NavigationPreloadRequest final
     MaybeReportResponseToClient();
   }
 
-  void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
-                         const ResourceResponseHead& response_head) override {
+  void OnReceiveRedirect(
+      const net::RedirectInfo& redirect_info,
+      const network::ResourceResponseHead& response_head) override {
     DCHECK(!response_);
     DCHECK(net::HttpResponseHeaders::IsRedirectResponseCode(
         response_head.headers->response_code()));
@@ -621,8 +617,8 @@ class ServiceWorkerContextClient::NavigationPreloadRequest final
 
   const int fetch_event_id_;
   const GURL url_;
-  mojom::URLLoaderPtr url_loader_;
-  mojo::Binding<mojom::URLLoaderClient> binding_;
+  network::mojom::URLLoaderPtr url_loader_;
+  mojo::Binding<network::mojom::URLLoaderClient> binding_;
 
   std::unique_ptr<blink::WebURLResponse> response_;
   mojo::ScopedDataPipeConsumerHandle body_;
@@ -928,18 +924,6 @@ void ServiceWorkerContextClient::ReportConsoleMessage(
   (*instance_host_)
       ->OnReportConsoleMessage(source, level, message.Utf16(), line_number,
                                blink::WebStringToGURL(source_url));
-}
-
-void ServiceWorkerContextClient::SendDevToolsMessage(
-    int session_id,
-    int call_id,
-    const blink::WebString& message,
-    const blink::WebString& state_cookie) {
-  // Return if this context has been stopped.
-  if (!embedded_worker_client_)
-    return;
-  embedded_worker_client_->devtools_agent()->SendMessage(
-      sender_.get(), session_id, call_id, message.Utf8(), state_cookie.Utf8());
 }
 
 void ServiceWorkerContextClient::DidHandleActivateEvent(

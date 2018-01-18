@@ -26,7 +26,7 @@
 namespace blink {
 struct FramePolicy;
 struct WebRect;
-struct WebRemoteScrollProperties;
+struct WebScrollIntoViewParams;
 }
 
 namespace viz {
@@ -183,6 +183,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void AdvanceFocus(blink::WebFocusType type,
                     blink::WebLocalFrame* source) override;
   void FrameFocused() override;
+  blink::WebString GetDevToolsFrameToken() override;
 
   // IPC handlers
   void OnDidStartLoading();
@@ -220,6 +221,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
       const std::vector<ContentSecurityPolicyHeader>& header);
   void OnResetContentSecurityPolicy();
   void OnEnforceInsecureRequestPolicy(blink::WebInsecureRequestPolicy policy);
+  void OnEnforceInsecureNavigationsSet(const std::vector<uint32_t>& set);
   void OnSetFrameOwnerProperties(const FrameOwnerProperties& properties);
   void OnDidUpdateOrigin(const url::Origin& origin,
                          bool is_potentially_trustworthy_unique_origin);
@@ -227,9 +229,8 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnSetFocusedFrame();
   void OnWillEnterFullscreen();
   void OnSetHasReceivedUserGesture();
-  void OnScrollRectToVisible(
-      const gfx::Rect& rect_to_scroll,
-      const blink::WebRemoteScrollProperties& properties);
+  void OnScrollRectToVisible(const gfx::Rect& rect_to_scroll,
+                             const blink::WebScrollIntoViewParams& params);
   void OnResizeDueToAutoResize(uint64_t sequence_number);
   void OnSetHasReceivedUserGestureBeforeNavigation(bool value);
 
@@ -255,6 +256,11 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
 
   RenderViewImpl* render_view_;
   RenderWidget* render_widget_;
+
+  // Contains string to be used as a frame id in the devtools protocol.
+  // It is derived from the content's devtools_frame_token, is
+  // defined by the browser and passed into Blink upon frame creation.
+  blink::WebString devtools_frame_token_;
 
   // TODO(fsamuel): We might want to unify this with content::ResizeParams.
   // TODO(fsamuel): Most RenderFrameProxys don't host viz::Surfaces and

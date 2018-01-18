@@ -126,8 +126,8 @@ void AppCacheURLLoaderJob::DeleteIfNeeded() {
   delete this;
 }
 
-void AppCacheURLLoaderJob::Start(mojom::URLLoaderRequest request,
-                                 mojom::URLLoaderClientPtr client) {
+void AppCacheURLLoaderJob::Start(network::mojom::URLLoaderRequest request,
+                                 network::mojom::URLLoaderClientPtr client) {
   DCHECK(!binding_.is_bound());
   binding_.Bind(std::move(request));
   client_ = std::move(client);
@@ -261,7 +261,7 @@ void AppCacheURLLoaderJob::SendResponseInfo() {
   const net::HttpResponseInfo* http_info = is_range_request()
                                                ? range_response_info_.get()
                                                : info_->http_response_info();
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   response_head.headers = http_info->headers;
   response_head.appcache_id = cache_id_;
   response_head.appcache_manifest_url = manifest_url_;
@@ -284,7 +284,7 @@ void AppCacheURLLoaderJob::SendResponseInfo() {
   response_head.load_timing = load_timing_info_;
 
   client_->OnReceiveResponse(response_head, http_info->ssl_info,
-                             mojom::DownloadedTempFilePtr());
+                             network::mojom::DownloadedTempFilePtr());
   client_->OnStartLoadingResponseBody(std::move(data_pipe_.consumer_handle));
 }
 

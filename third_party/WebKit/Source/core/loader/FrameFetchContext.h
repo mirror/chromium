@@ -134,9 +134,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   bool IsMainFrame() const override;
   bool DefersLoading() const override;
   bool IsLoadComplete() const override;
-  bool PageDismissalEventBeingDispatched() const override;
   bool UpdateTimingInfoForIFrameNavigation(ResourceTimingInfo*) override;
-  void SendImagePing(const KURL&) override;
 
   const SecurityOrigin* GetSecurityOrigin() const override;
 
@@ -170,6 +168,9 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   FetchContext* Detach() override;
 
   void Trace(blink::Visitor*) override;
+
+  ResourceLoadPriority ModifyPriorityForExperiments(
+      ResourceLoadPriority) const override;
 
  private:
   struct FrozenState;

@@ -23,11 +23,12 @@
 #include "base/time/time.h"
 #include "content/common/content_export.h"
 #include "content/public/common/resource_type.h"
-#include "content/public/common/url_loader.mojom.h"
+#include "content/public/common/shared_url_loader_factory.h"
 #include "content/public/common/url_loader_throttle.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "net/base/request_priority.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "services/network/public/interfaces/url_loader.mojom.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -37,23 +38,22 @@ struct RedirectInfo;
 }
 
 namespace network {
+struct ResourceResponseInfo;
 struct ResourceRequest;
+struct ResourceResponseHead;
 struct URLLoaderCompletionStatus;
+namespace mojom {
+class URLLoaderFactory;
+}
 }
 
 namespace content {
 class RequestPeer;
 class ResourceDispatcherDelegate;
-struct ResourceResponseInfo;
-struct ResourceResponseHead;
 struct SiteIsolationResponseMetaData;
 struct SyncLoadResponse;
 class ThrottlingURLLoader;
 class URLLoaderClientImpl;
-
-namespace mojom {
-class URLLoaderFactory;
-}  // namespace mojom
 
 // This class serves as a communication interface to the ResourceDispatcherHost
 // in the browser process. It can be used from any child process.
@@ -89,7 +89,7 @@ class CONTENT_EXPORT ResourceDispatcher {
       const url::Origin& frame_origin,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       SyncLoadResponse* response,
-      mojom::URLLoaderFactory* url_loader_factory,
+      scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles);
 
   // Call this method to initiate the request. If this method succeeds, then
@@ -109,17 +109,20 @@ class CONTENT_EXPORT ResourceDispatcher {
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       bool is_sync,
       std::unique_ptr<RequestPeer> peer,
-      mojom::URLLoaderFactory* url_loader_factory,
+      scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints);
+      network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints);
 
   // Removes a request from the |pending_requests_| list, returning true if the
   // request was found and removed.
-  bool RemovePendingRequest(int request_id);
+  bool RemovePendingRequest(
+      int request_id,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   // Cancels a request in the |pending_requests_| list.  The request will be
   // removed from the dispatcher as well.
-  virtual void Cancel(int request_id);
+  virtual void Cancel(int request_id,
+                      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   // Toggles the is_deferred attribute for the specified request.
   virtual void SetDefersLoading(int request_id, bool value);
@@ -200,19 +203,22 @@ class CONTENT_EXPORT ResourceDispatcher {
 
   // Message response handlers, called by the message handler for this process.
   void OnUploadProgress(int request_id, int64_t position, int64_t size);
-  void OnReceivedResponse(int request_id, const ResourceResponseHead&);
+  void OnReceivedResponse(int request_id, const network::ResourceResponseHead&);
   void OnReceivedCachedMetadata(int request_id,
                                 const std::vector<uint8_t>& data);
-  void OnReceivedRedirect(int request_id,
-                          const net::RedirectInfo& redirect_info,
-                          const ResourceResponseHead& response_head);
+  void OnReceivedRedirect(
+      int request_id,
+      const net::RedirectInfo& redirect_info,
+      const network::ResourceResponseHead& response_head,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
   void OnDownloadedData(int request_id, int data_len, int encoded_data_length);
   void OnRequestComplete(int request_id,
                          const network::URLLoaderCompletionStatus& status);
 
-  void ToResourceResponseInfo(const PendingRequestInfo& request_info,
-                              const ResourceResponseHead& browser_info,
-                              ResourceResponseInfo* renderer_info) const;
+  void ToResourceResponseInfo(
+      const PendingRequestInfo& request_info,
+      const network::ResourceResponseHead& browser_info,
+      network::ResourceResponseInfo* renderer_info) const;
 
   base::TimeTicks ToRendererCompletionTime(
       const PendingRequestInfo& request_info,
@@ -220,7 +226,7 @@ class CONTENT_EXPORT ResourceDispatcher {
 
   void ContinueForNavigation(
       int request_id,
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints);
+      network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints);
 
   // All pending requests issued to the host
   PendingRequestMap pending_requests_;

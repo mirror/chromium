@@ -1033,6 +1033,13 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
         frame->activation_dependencies.end(),
         append_quads_data.activation_dependencies.begin(),
         append_quads_data.activation_dependencies.end());
+    if (append_quads_data.deadline_in_frames) {
+      if (!frame->deadline_in_frames)
+        frame->deadline_in_frames = 0u;
+
+      frame->deadline_in_frames = std::max(
+          *frame->deadline_in_frames, *append_quads_data.deadline_in_frames);
+    }
   }
 
   // If CommitToActiveTree() is true, then we wait to draw until
@@ -1066,7 +1073,7 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
   DCHECK(frame->render_passes.back()->output_rect.origin().IsOrigin());
 #endif
   bool has_transparent_background =
-      active_tree_->background_color() == SK_ColorTRANSPARENT;
+      SkColorGetA(active_tree_->background_color()) != SK_AlphaOPAQUE;
   if (!has_transparent_background) {
     frame->render_passes.back()->has_transparent_background = false;
     AppendQuadsToFillScreen(
@@ -1872,6 +1879,7 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
 
   viz::CompositorFrameMetadata metadata = MakeCompositorFrameMetadata();
   metadata.may_contain_video = frame->may_contain_video;
+  metadata.deadline_in_frames = frame->deadline_in_frames;
   metadata.activation_dependencies = std::move(frame->activation_dependencies);
 
   RenderFrameMetadata render_frame_metadata = MakeRenderFrameMetadata();
@@ -2540,11 +2548,11 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
   viz::ContextProvider* compositor_context_provider =
       layer_tree_frame_sink_->context_provider();
   if (!compositor_context_provider) {
-    *resource_pool =
-        ResourcePool::Create(resource_provider_.get(), false, GetTaskRunner(),
-                             viz::ResourceTextureHint::kDefault,
-                             ResourcePool::kDefaultExpirationDelay,
-                             settings_.disallow_non_exact_resource_reuse);
+    // This ResourcePool will vend software resources.
+    *resource_pool = std::make_unique<ResourcePool>(
+        resource_provider_.get(), GetTaskRunner(),
+        ResourcePool::kDefaultExpirationDelay,
+        settings_.disallow_non_exact_resource_reuse);
 
     *raster_buffer_provider =
         BitmapRasterBufferProvider::Create(resource_provider_.get());
@@ -2556,11 +2564,13 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
   if (use_gpu_rasterization_) {
     DCHECK(worker_context_provider);
 
-    *resource_pool =
-        ResourcePool::Create(resource_provider_.get(), true, GetTaskRunner(),
-                             viz::ResourceTextureHint::kFramebuffer,
-                             ResourcePool::kDefaultExpirationDelay,
-                             settings_.disallow_non_exact_resource_reuse);
+    // This ResourcePool will vend gpu resources optimized for binding as a
+    // framebuffer for gpu raster.
+    *resource_pool = std::make_unique<ResourcePool>(
+        resource_provider_.get(), GetTaskRunner(),
+        viz::ResourceTextureHint::kFramebuffer,
+        ResourcePool::kDefaultExpirationDelay,
+        settings_.disallow_non_exact_resource_reuse);
 
     int msaa_sample_count = use_msaa_ ? RequestedMSAASampleCount() : 0;
 
@@ -2590,7 +2600,8 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
   }
 
   if (use_zero_copy) {
-    *resource_pool = ResourcePool::CreateForGpuMemoryBufferResources(
+    // This ResourcePool will vend gpu resources backed by gpu memory buffers.
+    *resource_pool = std::make_unique<ResourcePool>(
         resource_provider_.get(), GetTaskRunner(),
         gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
         ResourcePool::kDefaultExpirationDelay,
@@ -2601,8 +2612,9 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
     return;
   }
 
-  *resource_pool = ResourcePool::Create(
-      resource_provider_.get(), true, GetTaskRunner(),
+  // This ResourcePool will vend gpu texture resources.
+  *resource_pool = std::make_unique<ResourcePool>(
+      resource_provider_.get(), GetTaskRunner(),
       viz::ResourceTextureHint::kDefault, ResourcePool::kDefaultExpirationDelay,
       settings_.disallow_non_exact_resource_reuse);
 

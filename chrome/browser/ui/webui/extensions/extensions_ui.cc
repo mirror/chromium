@@ -167,8 +167,12 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
                              IDS_MD_EXTENSIONS_ERROR_CONTEXT_UNKNOWN);
   source->AddLocalizedString("openInDevtool",
                              IDS_MD_EXTENSIONS_ERROR_LAUNCH_DEVTOOLS);
-  source->AddLocalizedString("errorLinesNotShown",
-                             IDS_MD_EXTENSIONS_ERROR_LINES_NOT_SHOWN);
+  source->AddString("errorLinesNotShownSingular",
+                    l10n_util::GetPluralStringFUTF16(
+                        IDS_MD_EXTENSIONS_ERROR_LINES_NOT_SHOWN, 1));
+  source->AddString("errorLinesNotShownPlural",
+                    l10n_util::GetPluralStringFUTF16(
+                        IDS_MD_EXTENSIONS_ERROR_LINES_NOT_SHOWN, 2));
   source->AddLocalizedString("stackTrace", IDS_MD_EXTENSIONS_ERROR_STACK_TRACE);
   // TODO(dpapad): Unify with Settings' IDS_SETTINGS_WEB_STORE.
   source->AddLocalizedString("openChromeWebStore",
@@ -259,8 +263,6 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
                              IDS_MD_EXTENSIONS_LOAD_ERROR_FILE_LABEL);
   source->AddLocalizedString("loadErrorErrorLabel",
                              IDS_MD_EXTENSIONS_LOAD_ERROR_ERROR_LABEL);
-  source->AddLocalizedString("loadErrorCancel",
-                             IDS_MD_EXTENSIONS_LOAD_ERROR_CANCEL);
   source->AddLocalizedString("loadErrorRetry",
                              IDS_MD_EXTENSIONS_LOAD_ERROR_RETRY);
   source->AddLocalizedString("noErrorsToShow",
@@ -282,8 +284,6 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
                              IDS_MD_EXTENSIONS_PACK_DIALOG_KEY_FILE_LABEL);
   source->AddLocalizedString("packDialogContent",
                              IDS_EXTENSION_PACK_DIALOG_HEADING);
-  source->AddLocalizedString("packDialogCancel",
-                             IDS_MD_EXTENSIONS_PACK_DIALOG_CANCEL_BUTTON);
   source->AddLocalizedString("packDialogConfirm",
                              IDS_MD_EXTENSIONS_PACK_DIALOG_CONFIRM_BUTTON);
   source->AddLocalizedString("shortcutNotSet",

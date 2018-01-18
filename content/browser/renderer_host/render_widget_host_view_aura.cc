@@ -25,7 +25,6 @@
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "components/viz/common/frame_sinks/copy_output_result.h"
 #include "components/viz/common/gl_helper.h"
-#include "components/viz/common/switches.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/accessibility/browser_accessibility_state_impl.h"
 #include "content/browser/bad_message.h"
@@ -628,6 +627,11 @@ void RenderWidgetHostViewAura::SetNeedsBeginFrames(bool needs_begin_frames) {
   UpdateNeedsBeginFramesInternal();
 }
 
+void RenderWidgetHostViewAura::SetWantsAnimateOnlyBeginFrames() {
+  if (delegated_frame_host_)
+    delegated_frame_host_->SetWantsAnimateOnlyBeginFrames();
+}
+
 void RenderWidgetHostViewAura::OnBeginFrame(base::TimeTicks frame_time) {
   host_->ProgressFling(frame_time);
   UpdateNeedsBeginFramesInternal();
@@ -702,10 +706,14 @@ void RenderWidgetHostViewAura::WasUnOccluded() {
   if (has_saved_frame) {
     browser_latency_info.AddLatencyNumber(ui::TAB_SHOW_COMPONENT,
                                           host_->GetLatencyComponentId(), 0);
+    browser_latency_info.set_trace_id(++tab_show_sequence_);
   } else {
     renderer_latency_info.AddLatencyNumber(ui::TAB_SHOW_COMPONENT,
                                            host_->GetLatencyComponentId(), 0);
+    renderer_latency_info.set_trace_id(++tab_show_sequence_);
   }
+  TRACE_EVENT_ASYNC_BEGIN0("latency", "TabSwitching::Latency",
+                           tab_show_sequence_);
   host_->WasShown(renderer_latency_info);
 
   aura::Window* root = window_->GetRootWindow();
@@ -1588,6 +1596,10 @@ void RenderWidgetHostViewAura::OnDeviceScaleFactorChanged(
   host_->WasResized();
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized();
+  if (host_->auto_resize_enabled()) {
+    host_->DidAllocateLocalSurfaceIdForAutoResize(
+        host_->last_auto_resize_request_number());
+  }
 
   device_scale_factor_ = new_device_scale_factor;
   const display::Display display =
@@ -1949,7 +1961,7 @@ void RenderWidgetHostViewAura::CreateDelegatedFrameHostClient() {
   }
 
   const bool enable_viz =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableViz);
+      base::FeatureList::IsEnabled(features::kVizDisplayCompositor);
   delegated_frame_host_ = std::make_unique<DelegatedFrameHost>(
       frame_sink_id_, delegated_frame_host_client_.get(),
       features::IsSurfaceSynchronizationEnabled(), enable_viz);
@@ -2181,6 +2193,10 @@ void RenderWidgetHostViewAura::InternalSetBounds(const gfx::Rect& rect) {
   host_->WasResized();
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized();
+  if (host_->auto_resize_enabled()) {
+    host_->DidAllocateLocalSurfaceIdForAutoResize(
+        host_->last_auto_resize_request_number());
+  }
 #if defined(OS_WIN)
   UpdateLegacyWin();
 
@@ -2361,6 +2377,8 @@ void RenderWidgetHostViewAura::OnUpdateTextInputStateCalled(
 
   const TextInputState* state = text_input_manager_->GetTextInputState();
   if (state && state->show_ime_if_needed &&
+      state->type != ui::TEXT_INPUT_TYPE_NONE &&
+      state->mode != ui::TEXT_INPUT_MODE_NONE &&
       GetInputMethod()->GetTextInputClient() == this) {
     GetInputMethod()->ShowImeIfNeeded();
   }

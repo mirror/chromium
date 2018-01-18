@@ -6,6 +6,7 @@
 #define SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_MEMORY_INSTRUMENTATION_GLOBAL_MEMORY_DUMP_H_
 
 #include "base/optional.h"
+#include "services/resource_coordinator/public/cpp/resource_coordinator_export.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 
 namespace memory_instrumentation {
@@ -41,14 +42,19 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT GlobalMemoryDump {
     DISALLOW_COPY_AND_ASSIGN(ProcessDump);
   };
 
-  GlobalMemoryDump(std::vector<mojom::ProcessMemoryDumpPtr> process_dumps);
   ~GlobalMemoryDump();
+
+  // Creates an owned instance of this class wrapping the given mojo struct.
+  static std::unique_ptr<GlobalMemoryDump> MoveFrom(
+      mojom::GlobalMemoryDumpPtr ptr);
 
   const std::forward_list<ProcessDump>& process_dumps() const {
     return process_dumps_;
   }
 
  private:
+  GlobalMemoryDump(std::vector<mojom::ProcessMemoryDumpPtr> process_dumps);
+
   std::forward_list<ProcessDump> process_dumps_;
 
   DISALLOW_COPY_AND_ASSIGN(GlobalMemoryDump);
