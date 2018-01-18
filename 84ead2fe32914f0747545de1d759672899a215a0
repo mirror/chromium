@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6cae1960_a100db6f",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-18T22:23:35Z",
+      "side": 1,
+      "message": "OK, I cleaned this up.",
+      "parentUuid": "1c422902_6eac5cce",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04128e1a_2dadd174",
         "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
         "patchSetId": 11
@@ -449,6 +467,30 @@
     },
     {
       "key": {
+        "uuid": "70d16cbe_90910edd",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-18T22:23:35Z",
+      "side": 1,
+      "message": "In the new code there\u0027s no more icon layer.",
+      "parentUuid": "98122600_1ca6d747",
+      "range": {
+        "startLine": 42,
+        "startChar": 26,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75325e5f_4fc359bb",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
         "patchSetId": 11
@@ -499,6 +541,24 @@
       "revId": "84ead2fe32914f0747545de1d759672899a215a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9206030b_0370a0a1",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-18T22:23:35Z",
+      "side": 1,
+      "message": "Great - a much better option!",
+      "parentUuid": "4f3d52c2_66c6d1df",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -627,6 +687,30 @@
       "revId": "84ead2fe32914f0747545de1d759672899a215a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9592fd7_928995f1",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-18T22:23:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cb23af68_e1676f6a",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 199,
+        "endChar": 40
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -807,6 +891,30 @@
       "side": 1,
       "message": "One, sigh. Two, where is a non-tab-spinner used?",
       "parentUuid": "d674b8ce_a5a82614",
+      "range": {
+        "startLine": 198,
+        "startChar": 2,
+        "endLine": 234,
+        "endChar": 55
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25363307_7318421a",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-18T22:23:35Z",
+      "side": 1,
+      "message": "It\u0027s used in DeviceChooserContentViewCocoa and CardUnmaskPromptViewCocoa.",
+      "parentUuid": "57534a52_2e3345df",
       "range": {
         "startLine": 198,
         "startChar": 2,

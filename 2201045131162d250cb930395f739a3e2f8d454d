@@ -22,6 +22,30 @@
       "revId": "2201045131162d250cb930395f739a3e2f8d454d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab188cc6_b490adfb",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-18T22:23:35Z",
+      "side": 1,
+      "message": "All of this code is gone in the latest patchset (it uses an NSImageView).",
+      "parentUuid": "779a5c46_03b14b2e",
+      "range": {
+        "startLine": 48,
+        "startChar": 43,
+        "endLine": 48,
+        "endChar": 46
+      },
+      "revId": "2201045131162d250cb930395f739a3e2f8d454d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
