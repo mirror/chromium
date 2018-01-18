@@ -39,6 +39,74 @@
       "revId": "897d4c7986c079389540abb8393acdc3b7885243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a777f4_7e3226f6",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T00:54:53Z",
+      "side": 1,
+      "message": "This should be a 2-valued enum, not a bool.\n\nI was thinking about this based on your /*is_api\u003d*/ comments (which, it turns out, are actually style-guide approved BUT not recommended):\n\nhttps://google.github.io/styleguide/cppguide.html\n\n\"Consider changing the function signature to replace a bool argument with an enum argument. This will make the argument values self-describing.\"",
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe73f2e_99e53140",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T00:54:53Z",
+      "side": 1,
+      "message": "Why this change?",
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92c78e2_8d64b7eb",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T00:54:53Z",
+      "side": 1,
+      "message": "Same: Use the enum argument here.",
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a91ebd1_11e28937",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 44406,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T00:54:53Z",
+      "side": 1,
+      "message": "2018-01-18? (Easier to read.) Unless strong convention.",
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

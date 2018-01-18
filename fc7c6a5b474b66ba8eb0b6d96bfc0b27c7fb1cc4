@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5c3b37e5_1c5b907f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T00:54:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e38ea32_f06fdf2f",
+      "range": {
+        "startLine": 12,
+        "startChar": 49,
+        "endLine": 12,
+        "endChar": 50
+      },
+      "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82684ced_9173bf2d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -93,6 +117,30 @@
       "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e1b64b_32e05228",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T00:54:53Z",
+      "side": 1,
+      "message": "Crap, that\u0027s gross.\n\nOK, fair enough. I wish you had not done a rename in the same CL since you are modifying a number of files solely to do the rename (and it wasn\u0027t necessary for branch point). But easier to just land it now.",
+      "parentUuid": "11dbd46e_06dfad9e",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
