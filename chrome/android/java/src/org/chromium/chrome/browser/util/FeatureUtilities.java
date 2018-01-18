@@ -192,6 +192,14 @@ public class FeatureUtilities {
     }
 
     /**
+     * @return Whether Chrome Modern is enabled.
+     */
+    public static boolean isChromeModernDesignEnabled() {
+        // TODO(twellington): Replace with a real check after patch to add feature flag lands.
+        return ChromeFeatureList.isInitialized() ? true : false;
+    }
+
+    /**
      * Cache whether or not Chrome Home and related features are enabled. If this method is called
      * multiple times, the existing cached state is cleared and re-computed.
      */

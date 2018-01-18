@@ -22,6 +22,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.WindowDelegate;
 import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.toolbar.ToolbarDataProvider;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
@@ -392,5 +393,14 @@ public class LocationBarPhone extends LocationBarLayout {
     public void onNativeLibraryReady() {
         super.onNativeLibraryReady();
         if (mBottomSheet != null) updateGoogleG();
+
+        // USE NEW LOCATIONBARLAYOUT METHOD AFTER REBASE
+        // TODO(twellington): Move this to constructor when isModernUiEnabled() is available before
+        // native is loaded.
+        if (FeatureUtilities.isChromeModernDesignEnabled()) {
+            // Modern does not use the incognito badge. Remove the View to save memory.
+            removeView(mIncognitoBadge);
+            mIncognitoBadge = null;
+        }
     }
 }

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import org.chromium.base.ObserverList;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.compositor.LayerTitleCache;
 import org.chromium.chrome.browser.compositor.animation.CompositorAnimationHandler;
@@ -42,6 +43,7 @@ import org.chromium.chrome.browser.tabmodel.TabCreatorManager;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabObserver;
 import org.chromium.chrome.browser.util.ColorUtils;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.ui.base.SPenSupport;
 import org.chromium.ui.resources.ResourceManager;
@@ -421,8 +423,8 @@ public class LayoutManager
                 tab.getContentViewCore() != null && !tab.isShowingSadTab() && !isNativePage;
 
         boolean isNtp = tab.getNativePage() instanceof NewTabPage;
-        boolean useModernDesign =
-                tab.getActivity() != null && tab.getActivity().getBottomSheet() != null;
+        boolean useModernDesign = FeatureUtilities.isChromeModernDesignEnabled()
+                && tab.getActivity() != null && tab.getActivity() instanceof ChromeTabbedActivity;
         boolean needsUpdate = layoutTab.initFromHost(tab.getBackgroundColor(), tab.shouldStall(),
                 canUseLiveTexture, themeColor,
                 ColorUtils.getTextBoxColorForToolbarBackground(
