@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "281baa76_5a53ce7c",
+        "filename": "content/browser/loader/url_loader_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-18T06:29:23Z",
+      "side": 1,
+      "message": "I replaced them with DCHECK_CURRENTLY_ON(BrowserThread::IO).",
+      "parentUuid": "27e8aa9e_019bdf42",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 65
+      },
+      "revId": "97def899c4df6e2577f7bd62d3bdfa159af9b280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84578866_41bbea41",
         "filename": "content/browser/loader/url_loader_factory_impl.h",
         "patchSetId": 4
