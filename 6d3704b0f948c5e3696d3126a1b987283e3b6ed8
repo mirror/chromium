@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fd243c7_3d67af01",
+        "filename": "google_apis/gcm/engine/connection_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2018-01-18T18:48:25Z",
+      "side": 1,
+      "message": "nit: maybe have this be ordered before socket? (in the spirit of inputs before outputs)? Assuming bind semantics don\u0027t dictate the order here.\n\nHere and elsewhere where possible.",
+      "revId": "6d3704b0f948c5e3696d3126a1b987283e3b6ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
