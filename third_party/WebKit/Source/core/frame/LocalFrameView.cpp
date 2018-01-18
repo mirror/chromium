@@ -1762,8 +1762,10 @@ bool LocalFrameView::InvalidateViewportConstrainedObjects() {
     if (layer->IsPaintInvalidationContainer())
       continue;
 
-    if (layer->SubtreeIsInvisible())
+    if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled() &&
+        layer->SubtreeIsInvisible()) {
       continue;
+    }
 
     // invalidate even if there is an ancestor with a filter that moves pixels.
     layout_object
