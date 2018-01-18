@@ -119,7 +119,7 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
 
         mIconBackgroundResId = R.drawable.list_item_icon_modern_bg;
 
-        if (FeatureUtilities.isChromeHomeEnabled()) {
+        if (FeatureUtilities.isChromeModernEnabled()) {
             mIconForegroundColorList = ApiCompatibilityUtils.getColorStateList(
                     context.getResources(), R.color.dark_mode_tint);
         } else {
@@ -329,7 +329,7 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
     @Override
     protected void updateIconView() {
         if (isChecked()) {
-            if (FeatureUtilities.isChromeHomeEnabled()) {
+            if (FeatureUtilities.isChromeModernEnabled()) {
                 mIconView.setBackgroundResource(mIconBackgroundResId);
                 mIconView.getBackground().setLevel(
                         getResources().getInteger(R.integer.list_item_level_selected));
@@ -342,7 +342,7 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
         } else if (mThumbnailBitmap != null) {
             assert !mThumbnailBitmap.isRecycled();
             mIconView.setBackground(null);
-            if (FeatureUtilities.isChromeHomeEnabled()) {
+            if (FeatureUtilities.isChromeModernEnabled()) {
                 RoundedBitmapDrawable roundedIcon = RoundedBitmapDrawableFactory.create(
                         getResources(),
                         Bitmap.createScaledBitmap(mThumbnailBitmap, mIconSize, mIconSize, false));
@@ -353,7 +353,7 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
             }
             mIconView.setTint(null);
         } else {
-            if (FeatureUtilities.isChromeHomeEnabled()) {
+            if (FeatureUtilities.isChromeModernEnabled()) {
                 mIconView.setBackgroundResource(mIconBackgroundResId);
                 mIconView.getBackground().setLevel(
                         getResources().getInteger(R.integer.list_item_level_default));

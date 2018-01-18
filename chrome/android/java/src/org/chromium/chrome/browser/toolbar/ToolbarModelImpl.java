@@ -27,6 +27,7 @@ import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.toolbar.ToolbarModel.ToolbarModelDelegate;
 import org.chromium.chrome.browser.util.ColorUtils;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.components.dom_distiller.core.DomDistillerService;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
@@ -198,7 +199,7 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
 
     @Override
     public int getPrimaryColor() {
-        if (mBottomSheet != null) {
+        if (FeatureUtilities.isChromeModernEnabled()) {
             Resources res = ContextUtils.getApplicationContext().getResources();
             return ColorUtils.getDefaultThemeColor(res, true, isIncognito());
         }
