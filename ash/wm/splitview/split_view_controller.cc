@@ -30,6 +30,8 @@
 #include "ui/aura/window_delegate.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/compositor/layer.h"
+#include "ui/compositor/scoped_layer_animation_settings.h"
+#include "ui/gfx/animation/tween.h"
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/public/activation_client.h"
@@ -278,6 +280,7 @@ void SplitViewController::StartResize(const gfx::Point& location_in_screen) {
   is_resizing_ = true;
   split_view_divider_->UpdateDividerBounds(is_resizing_);
   previous_event_location_ = location_in_screen;
+  initial_divider_position_ = divider_position_;
   base::RecordAction(base::UserMetricsAction("SplitView_ResizeWindows"));
 }
 
@@ -299,6 +302,9 @@ void SplitViewController::Resize(const gfx::Point& location_in_screen) {
   // Update the black scrim layer's bounds and opacity.
   UpdateBlackScrim(modified_location_in_screen);
 
+  // Update the |resizing_gap_layer_| bounds.
+  UpdateResizingGapLayer();
+
   // Update the snapped window/windows and divider's position.
   UpdateSnappedWindowsAndDividerBounds();
 
@@ -309,6 +315,8 @@ void SplitViewController::EndResize(const gfx::Point& location_in_screen) {
   DCHECK(IsSplitViewModeActive());
   // TODO(xdai): Use fade out animation instead of just removing it.
   black_scrim_layer_.reset();
+  resizing_gap_layer_.reset();
+
   is_resizing_ = false;
 
   const gfx::Rect work_area_bounds =
@@ -367,6 +375,7 @@ void SplitViewController::EndSplitView() {
   right_window_ = nullptr;
   split_view_divider_.reset();
   black_scrim_layer_.reset();
+  resizing_gap_layer_.reset();
   default_snap_position_ = NONE;
   divider_position_ = -1;
 
@@ -619,17 +628,66 @@ void SplitViewController::UpdateBlackScrim(
   black_scrim_layer_->SetOpacity(opacity);
 }
 
+void SplitViewController::UpdateResizingGapLayer() {
+  DCHECK(IsSplitViewModeActive());
+
+  if (!is_resizing_)
+    return;
+
+  if (!resizing_gap_layer_) {
+    resizing_gap_layer_ = std::make_unique<ui::Layer>(ui::LAYER_SOLID_COLOR);
+    resizing_gap_layer_->SetColor(SK_ColorBLACK);
+    resizing_gap_layer_->SetOpacity(1.f);
+    GetDefaultSnappedWindow()->GetRootWindow()->layer()->Add(
+        resizing_gap_layer_.get());
+    GetDefaultSnappedWindow()->GetRootWindow()->layer()->StackAtTop(
+        resizing_gap_layer_.get());
+  }
+
+  // Calculate the bounds for |resizing_gap_layer_|.
+  const gfx::Rect work_area_bounds_in_screen =
+      GetDisplayWorkAreaBoundsInScreen(GetDefaultSnappedWindow());
+  const gfx::Rect divider_bounds = SplitViewDivider::GetDividerBoundsInScreen(
+      work_area_bounds_in_screen, screen_orientation_, divider_position_,
+      is_resizing_);
+  gfx::Rect bounds;
+  if (IsCurrentScreenOrientationLandscape()) {
+    if (initial_divider_position_ > divider_bounds.right()) {
+      bounds = gfx::Rect(divider_bounds.right(), divider_bounds.y(),
+                         initial_divider_position_ - divider_bounds.right(),
+                         divider_bounds.height());
+    } else if (initial_divider_position_ < divider_bounds.x()) {
+      bounds = gfx::Rect(initial_divider_position_, divider_bounds.y(),
+                         divider_bounds.x() - initial_divider_position_,
+                         divider_bounds.height());
+    }
+  } else {
+    if (initial_divider_position_ > divider_bounds.bottom()) {
+      bounds = gfx::Rect(divider_bounds.x(), divider_bounds.bottom(),
+                         divider_bounds.width(),
+                         initial_divider_position_ - divider_bounds.bottom());
+    } else if (initial_divider_position_ < divider_bounds.y()) {
+      bounds = gfx::Rect(divider_bounds.x(), initial_divider_position_,
+                         divider_bounds.width(),
+                         divider_bounds.y() - initial_divider_position_);
+    }
+  }
+  resizing_gap_layer_->SetBounds(bounds);
+}
+
 void SplitViewController::UpdateSnappedWindowsAndDividerBounds() {
   DCHECK(IsSplitViewModeActive());
 
-  // Update the snapped windows' bounds.
-  if (left_window_ && wm::GetWindowState(left_window_)->IsSnapped()) {
-    const wm::WMEvent left_window_event(wm::WM_EVENT_SNAP_LEFT);
-    wm::GetWindowState(left_window_)->OnWMEvent(&left_window_event);
-  }
-  if (right_window_ && wm::GetWindowState(right_window_)->IsSnapped()) {
-    const wm::WMEvent right_window_event(wm::WM_EVENT_SNAP_RIGHT);
-    wm::GetWindowState(right_window_)->OnWMEvent(&right_window_event);
+  if (!is_resizing_) {
+    // Update the snapped windows' bounds.
+    if (left_window_ && wm::GetWindowState(left_window_)->IsSnapped()) {
+      const wm::WMEvent left_window_event(wm::WM_EVENT_SNAP_LEFT);
+      wm::GetWindowState(left_window_)->OnWMEvent(&left_window_event);
+    }
+    if (right_window_ && wm::GetWindowState(right_window_)->IsSnapped()) {
+      const wm::WMEvent right_window_event(wm::WM_EVENT_SNAP_RIGHT);
+      wm::GetWindowState(right_window_)->OnWMEvent(&right_window_event);
+    }
   }
 
   // Update divider's bounds.
