@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "20a784cb_65058a64",
+        "filename": "device/vr/test/fake_sensor_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-18T15:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bec13851_c4984908",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "6d30db617c9290bdc781641eb5aa68ec5fb1177c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dc0589a_4a769bc3",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "6d30db617c9290bdc781641eb5aa68ec5fb1177c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2798bea_16e7a925",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-18T15:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dc0589a_4a769bc3",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 13
+      },
+      "revId": "6d30db617c9290bdc781641eb5aa68ec5fb1177c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fe25b8b0_d042caa0",
+        "filename": "services/device/public/interfaces/sensor_provider.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-18T15:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60935e63_2f732e3f",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 66
+      },
+      "revId": "6d30db617c9290bdc781641eb5aa68ec5fb1177c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f9c79d3_15972b06",
         "filename": "services/device/public/interfaces/sensor_provider.mojom",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "6d30db617c9290bdc781641eb5aa68ec5fb1177c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6236fd50_ca1902a5",
+        "filename": "services/device/public/interfaces/sensor_provider.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-18T15:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f9c79d3_15972b06",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 63
+      },
+      "revId": "6d30db617c9290bdc781641eb5aa68ec5fb1177c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5fd37c19_a73bb41f",
+        "filename": "third_party/WebKit/LayoutTests/sensor/resources/generic-sensor-tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-18T15:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8872b03_e80fe40c",
+      "range": {
+        "startLine": 38,
+        "startChar": 47,
+        "endLine": 38,
+        "endChar": 51
+      },
+      "revId": "6d30db617c9290bdc781641eb5aa68ec5fb1177c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8233a95b_23bfeb93",
         "filename": "third_party/WebKit/LayoutTests/sensor/resources/sensor-helpers.js",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "6d30db617c9290bdc781641eb5aa68ec5fb1177c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63559d15_90ae7a0a",
+        "filename": "third_party/WebKit/LayoutTests/sensor/resources/sensor-helpers.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-18T15:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8233a95b_23bfeb93",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 89
+      },
+      "revId": "6d30db617c9290bdc781641eb5aa68ec5fb1177c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
