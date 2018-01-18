@@ -1095,6 +1095,15 @@
         '--enable-features=NetworkService',
         '--test-launcher-filter-file=../../testing/buildbot/filters/mojo.fyi.network_content_browsertests.filter',
       ],
+      'swarming': {
+        'dimension_sets': [
+          {
+            'device_os': 'MMB29Q',
+            'device_type': 'bullhead',
+          },
+        ],
+        'hard_timeout': 960,
+      },
       'test': 'content_browsertests',
     },
   },
