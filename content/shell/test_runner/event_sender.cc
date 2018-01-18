@@ -61,6 +61,7 @@ using blink::WebMouseEvent;
 using blink::WebMouseWheelEvent;
 using blink::WebPagePopup;
 using blink::WebPoint;
+using blink::WebPointerEvent;
 using blink::WebPointerProperties;
 using blink::WebString;
 using blink::WebTouchEvent;
@@ -2808,6 +2809,21 @@ WebInputEventResult EventSender::HandleInputEventOnViewOrPopup(
         scaled_event.get() ? scaled_event.get() : &raw_event;
     return popup->HandleInputEvent(
         blink::WebCoalescedInputEvent(*popup_friendly_event));
+  }
+
+  if (WebInputEvent::IsTouchEventType(raw_event.GetType())) {
+    const WebTouchEvent touch_event =
+        static_cast<const WebTouchEvent&>(raw_event);
+    for (unsigned i = 0; i < touch_event.touches_length; ++i) {
+      const WebTouchPoint& touch_point = touch_event.touches[i];
+      if (touch_point.state != blink::WebTouchPoint::kStateStationary) {
+        const WebPointerEvent& pointer_event =
+            WebPointerEvent(touch_event, touch_point);
+        widget()->HandleInputEvent(
+            blink::WebCoalescedInputEvent(pointer_event));
+      }
+    }
+    return widget()->DispatchBufferedTouchEvents();
   }
 
   std::unique_ptr<WebInputEvent> widget_event =
