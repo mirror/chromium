@@ -908,6 +908,14 @@ CommandHandler.COMMANDS_['paste-into-folder'] = /** @type {Command} */ ({
    */
   canExecute: function(event, fileManager) {
     var entries = CommandUtil.getCommandEntries(event.target);
+    console.log('#entries' + entries.length);
+    if (entries.length == 0)
+      entries = fileManager.getSelection().entries;
+    console.log('#after ' + entries.length);
+    if (entries.length) {
+      console.log('entries0 is ' + entries[0].isDirectory);
+      console.log('entries0 is ' + entries[0].name);
+    }
 
     // Show this item only when one directory is selected.
     if (entries.length !== 1 || !entries[0].isDirectory ||
@@ -923,6 +931,7 @@ CommandHandler.COMMANDS_['paste-into-folder'] = /** @type {Command} */ ({
     event.canExecute = !!fileTransferController &&
         fileTransferController.queryPasteCommandEnabled(directoryEntry);
     event.command.setHidden(false);
+    console.log('#show!');
   }
 });
 
