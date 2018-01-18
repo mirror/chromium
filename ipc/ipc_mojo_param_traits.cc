@@ -12,8 +12,8 @@ namespace IPC {
 
 void ParamTraits<mojo::MessagePipeHandle>::Write(base::Pickle* m,
                                                  const param_type& p) {
-  WriteParam(m, p.is_valid());
-  if (p.is_valid())
+  WriteParam(m, p);
+  if (p)
     MojoMessageHelper::WriteMessagePipeTo(m, mojo::ScopedMessagePipeHandle(p));
 }
 
@@ -43,8 +43,8 @@ void ParamTraits<mojo::MessagePipeHandle>::Log(const param_type& p,
 
 void ParamTraits<mojo::DataPipeConsumerHandle>::Write(base::Pickle* m,
                                                       const param_type& p) {
-  WriteParam(m, p.is_valid());
-  if (!p.is_valid())
+  WriteParam(m, p);
+  if (!p)
     return;
 
   m->WriteAttachment(new internal::MojoHandleAttachment(

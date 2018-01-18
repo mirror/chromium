@@ -154,7 +154,7 @@ class PdfCompositorServiceTest : public service_manager::test::ServiceTest {
     ASSERT_TRUE(handle.IsValid());
     mojo::ScopedSharedBufferHandle buffer_handle =
         mojo::WrapSharedMemoryHandle(handle, handle.GetSize(), true);
-    ASSERT_TRUE(buffer_handle->is_valid());
+    ASSERT_TRUE(*buffer_handle);
     EXPECT_CALL(*this, CallbackOnSuccess(testing::_)).Times(1);
     ptr->CompositePdf(std::move(buffer_handle),
                       base::BindOnce(&PdfCompositorServiceTest::OnCallback,

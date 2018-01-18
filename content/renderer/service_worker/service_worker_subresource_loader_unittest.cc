@@ -614,7 +614,7 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, StreamResponse) {
 
   // Test the body.
   std::string response;
-  EXPECT_TRUE(client->response_body().is_valid());
+  EXPECT_TRUE(client->response_body());
   EXPECT_TRUE(mojo::common::BlockingCopyToString(
       client->response_body_release(), &response));
   EXPECT_EQ(kResponseBody, response);
@@ -728,7 +728,7 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, RedirectResponse) {
 
   // Test the body.
   std::string response;
-  EXPECT_TRUE(client->response_body().is_valid());
+  EXPECT_TRUE(client->response_body());
   EXPECT_TRUE(mojo::common::BlockingCopyToString(
       client->response_body_release(), &response));
   EXPECT_EQ(kResponseBody, response);
