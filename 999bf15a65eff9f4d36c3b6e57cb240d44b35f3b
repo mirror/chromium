@@ -22,6 +22,30 @@
       "revId": "999bf15a65eff9f4d36c3b6e57cb240d44b35f3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8388b21_17af2556",
+        "filename": "net/quic/core/quic_packet_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-18T09:44:42Z",
+      "side": 1,
+      "message": "To avoid dependence on Chrome, we have defined NetworkTrafficAnnotationTag in net and it is just one integer. But as you mentioned we do not want to add the mandatory annotation argument to interfaces that are called by none-Chrome consumers. What we did before for URLFetcher was to have two interfaces, one with annotation and one without, and enforce all calls from Chrome to use the annotated one.\n\nI had added to TODO in connection to continue working on the refactoring after you verify the current state, as I am not familiar with Quic, any suggestions would be vastly appreciated!\n\nWhen Quic puts multiple different requests in the same packet, we just need to ensure that all the requests were previously annotated, and then create a local annotation (hard coded) saying that this request is a merge of some requests that were all annotated. We don\u0027t need any reference to the incoming annotations in it.",
+      "parentUuid": "bca7f8b9_8816ab20",
+      "range": {
+        "startLine": 52,
+        "startChar": 60,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "999bf15a65eff9f4d36c3b6e57cb240d44b35f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
