@@ -22,6 +22,30 @@
       "revId": "947c785dedae5fa7d2931c6023a350d8b6d5a4e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "066cda58_5e9ae9f7",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-18T08:09:20Z",
+      "side": 0,
+      "message": "I think so. https://wicg.github.io/cors-rfc1918/",
+      "parentUuid": "47d3cd80_fe26bfe6",
+      "range": {
+        "startLine": 236,
+        "startChar": 7,
+        "endLine": 236,
+        "endChar": 29
+      },
+      "revId": "947c785dedae5fa7d2931c6023a350d8b6d5a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
