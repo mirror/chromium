@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be90e410_c398e154",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationManagerProxy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T14:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80f83c47_ec90c319",
+      "revId": "b11386a7316936578b23a005feee3d6bd9cca170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e8fc309_8e08525a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "b11386a7316936578b23a005feee3d6bd9cca170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b733496d_070e2f20",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T14:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e8fc309_8e08525a",
+      "revId": "b11386a7316936578b23a005feee3d6bd9cca170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f533ae83_d098910b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T14:23:02Z",
+      "side": 1,
+      "message": "Good suggestion! Done.",
+      "parentUuid": "4e8873e7_2f694b24",
+      "revId": "b11386a7316936578b23a005feee3d6bd9cca170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6afe4e2_bbe84c0f",
         "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1a7aa873_a9e4b1c1",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T14:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6afe4e2_bbe84c0f",
+      "revId": "b11386a7316936578b23a005feee3d6bd9cca170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e96e930_23e9c8a2",
         "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "b11386a7316936578b23a005feee3d6bd9cca170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d8e04e_8d9d7f2f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-18T14:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e96e930_23e9c8a2",
+      "revId": "b11386a7316936578b23a005feee3d6bd9cca170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
