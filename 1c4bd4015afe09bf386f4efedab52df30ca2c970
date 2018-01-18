@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "0b05dc44_ecf1542e",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-18T18:52:48Z",
+      "side": 1,
+      "message": "Ah, I misunderstood your original comment. Changing the function to return a std::string did work, but several of the call sites do not call AddString() directly. Several call sites pass the result of the function to l10n_util::GetStringFUTF16(), which requires a base::string16. It seems cleaner simply to return a base::string16 here directly.",
+      "parentUuid": "146e57f4_f61b9cc4",
+      "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cce28f4f_f0bd130c",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 1
@@ -170,6 +188,24 @@
       "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "294fe898_4ac15d10",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-18T18:52:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "05aac342_83e3b27c",
+      "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
