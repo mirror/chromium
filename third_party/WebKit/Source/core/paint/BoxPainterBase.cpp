@@ -28,7 +28,7 @@ void BoxPainterBase::PaintFillLayers(const PaintInfo& paint_info,
                                      const LayoutRect& rect,
                                      BackgroundImageGeometry& geometry,
                                      BackgroundBleedAvoidance bleed,
-                                     SkBlendMode op) {
+                                     SkBlendMode op) const {
   FillLayerOcclusionOutputList reversed_paint_list;
   bool should_draw_background_in_separate_buffer =
       CalculateFillLayerOcclusionCulling(reversed_paint_list, fill_layer);
@@ -238,7 +238,7 @@ bool BoxPainterBase::ShouldForceWhiteBackgroundForPrintEconomy(
 
 bool BoxPainterBase::CalculateFillLayerOcclusionCulling(
     FillLayerOcclusionOutputList& reversed_paint_list,
-    const FillLayer& fill_layer) {
+    const FillLayer& fill_layer) const {
   bool is_non_associative = false;
   for (auto* current_layer = &fill_layer; current_layer;
        current_layer = current_layer->Next()) {
@@ -464,7 +464,7 @@ void BoxPainterBase::PaintFillLayerBackground(
     Image* image,
     SkBlendMode composite_op,
     const BackgroundImageGeometry& geometry,
-    LayoutRect scrolled_paint_rect) {
+    LayoutRect scrolled_paint_rect) const {
   // Paint the color first underneath all images, culled if background image
   // occludes it.
   // TODO(trchen): In the !bgLayer.hasRepeatXY() case, we could improve the
@@ -524,7 +524,7 @@ void BoxPainterBase::PaintFillLayer(const PaintInfo& paint_info,
                                     const LayoutRect& rect,
                                     BackgroundBleedAvoidance bleed_avoidance,
                                     BackgroundImageGeometry& geometry,
-                                    SkBlendMode op) {
+                                    SkBlendMode op) const {
   GraphicsContext& context = paint_info.context;
   if (rect.IsEmpty())
     return;
