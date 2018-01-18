@@ -39,14 +39,8 @@
 namespace base {
 
 #if defined(OS_WIN)
-// _WINDOWS_ will be defined if Windows.h was included - include Windows.h first
-// to get access to the full struct definition.
-#if defined(_WINDOWS_)
-struct IoCounters : public IO_COUNTERS {
-};
-#else
+// Full declaration is in process_metrics_internal.h.
 struct IoCounters;
-#endif
 #elif defined(OS_POSIX)
 struct IoCounters {
   uint64_t ReadOperationCount;
