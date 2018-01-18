@@ -16,6 +16,24 @@
       "revId": "cb0cc24a14039bcd38ddfebf9b064e0d56d99f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c3b69c_07e53c84",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/ApplicationUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2018-01-18T19:12:34Z",
+      "side": 0,
+      "message": "The original plan was to leave the other checks in but after testing without any checks, the tests ran fine on the bots, so it seemed like the checks are no longer necessary. The original code for this is old and the owners do not seem to remember why and if we still needed this.",
+      "parentUuid": "37765bba_b2a789c7",
+      "revId": "cb0cc24a14039bcd38ddfebf9b064e0d56d99f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
