@@ -16,6 +16,24 @@
       "revId": "5527996ee2e2280d547693ab9df22b8a1273883a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131be06a_dcb66537",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2018-01-18T00:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3f1baa5_0e49f2c5",
+      "revId": "5527996ee2e2280d547693ab9df22b8a1273883a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
