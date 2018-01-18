@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "2eb5b025_28e2f923",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-18T22:58:03Z",
+      "side": 1,
+      "message": "nit: I would rewrite this to reduce the number of the statements here :\nboolean isCompleteAndFailAdjustedPreMarshmallow \u003d isPreMarshmallow() \u0026\u0026 downloadStatus !\u003d DownloadStatus.PAUSE;\nif (isCompleteAndFailAdjustedPreMarshmallow) {\n  relaunchPinnedNotification(getNextNotificationId());\n}",
+      "revId": "6002834c0c1005e3b5dedd24dea79d71a042ea47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6da07247_12e23b76",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
         "patchSetId": 2
