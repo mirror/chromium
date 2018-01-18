@@ -12,6 +12,8 @@ static_library("cast_channel") {
     "cast_channel_util.h",
     "cast_framer.cc",
     "cast_framer.h",
+    "cast_message_handler.cc",
+    "cast_message_handler.h",
     "cast_message_util.cc",
     "cast_message_util.h",
     "cast_socket.cc",
