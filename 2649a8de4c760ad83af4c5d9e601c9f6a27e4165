@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae842911_00e33529",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-18T18:40:24Z",
+      "side": 1,
+      "message": "If I understand this correctly, if an image area is offscreen and focused, then spatial navigation will begin it search from the focused area, not from the frame\u0027s visible area.  Is this intended?",
+      "revId": "2649a8de4c760ad83af4c5d9e601c9f6a27e4165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
