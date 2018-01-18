@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cc00227f_49fcd067",
+        "filename": "chrome/browser/vr/elements/button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-18T17:13:10Z",
+      "side": 1,
+      "message": "I believe the reason we have it as true by default is to be consistent with the web. In the case of our omnibox, we don\u0027t want anything to hide the keyboard, but in general, clicking outside of the textfield should take focus away from it.\n\nI think default-ing to false may fit our use case better and be a better starting point. As you said, we should do this in a follow-up CL :)",
+      "parentUuid": "8b037d36_f1afac83",
+      "revId": "0ea1163e086d51badbf534d32ab7d62f59ee8d4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e992875f_ad53d2f2",
         "filename": "chrome/browser/vr/elements/text_input.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-18T17:02:43Z",
       "side": 1,
       "message": "Do we need the extra check when the delegate does the same check?  This is just for readability right?",
+      "revId": "0ea1163e086d51badbf534d32ab7d62f59ee8d4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a7ed72_80d17058",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-18T17:13:10Z",
+      "side": 1,
+      "message": "Yes this is mainly for readability and there should be no functional change.",
+      "parentUuid": "e992875f_ad53d2f2",
       "revId": "0ea1163e086d51badbf534d32ab7d62f59ee8d4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
