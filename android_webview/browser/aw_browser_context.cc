@@ -235,7 +235,7 @@ void AwBrowserContext::InitUserPrefService() {
       base::MakeRefCounted<policy::ConfigurationPolicyPrefStore>(
           browser_policy_connector_->GetPolicyService(),
           browser_policy_connector_->GetHandlerList(),
-          policy::POLICY_LEVEL_MANDATORY));
+          policy::POLICY_LEVEL_MANDATORY, browser_policy_connector_.get()));
   pref_service_factory.set_read_error_callback(base::Bind(&HandleReadError));
   user_pref_service_ = pref_service_factory.Create(pref_registry);
   pref_change_registrar_.Init(user_pref_service_.get());

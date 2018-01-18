@@ -6,9 +6,11 @@
 #define COMPONENTS_POLICY_CORE_BROWSER_BROWSER_POLICY_CONNECTOR_BASE_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/macros.h"
 #include "components/policy/core/browser/configuration_policy_handler_list.h"
+#include "components/policy/core/browser/configuration_policy_pref_store_error_handler.h"
 #include "components/policy/core/common/schema.h"
 #include "components/policy/core/common/schema_registry.h"
 #include "components/policy/policy_export.h"
@@ -20,10 +22,11 @@ class PolicyService;
 
 // The BrowserPolicyConnectorBase keeps and initializes some core elements of
 // the policy component, mainly the PolicyProviders and the PolicyService.
-class POLICY_EXPORT BrowserPolicyConnectorBase {
+class POLICY_EXPORT BrowserPolicyConnectorBase
+    : public ConfigurationPolicyPrefStoreErrorHandler {
  public:
   // Invoke Shutdown() before deleting, see below.
-  virtual ~BrowserPolicyConnectorBase();
+  ~BrowserPolicyConnectorBase() override;
 
   // Stops the policy providers and cleans up the connector before it can be
   // safely deleted. This must be invoked before the destructor and while the
@@ -83,6 +86,13 @@ class POLICY_EXPORT BrowserPolicyConnectorBase {
   void SetPlatformPolicyProvider(
       std::unique_ptr<ConfigurationPolicyProvider> provider);
 
+  // Must be called when ui::ResourceBundle has been loaded.
+  void LogPolicyErrors();
+
+  // ConfigurationPolicyPrefStoreErrorHandler:
+  void OnConfigurationPolicyErrors(
+      std::unique_ptr<policy::PolicyErrorMap> errors) override;
+
  private:
   // Whether InitPolicyProviders() but not Shutdown() has been invoked.
   bool is_initialized_;
@@ -106,6 +116,11 @@ class POLICY_EXPORT BrowserPolicyConnectorBase {
 
   // Must be deleted before all the policy providers.
   std::unique_ptr<PolicyService> policy_service_;
+
+  // Errors supplied to OnConfigurationPolicyErrors() before the ResourceBundle
+  // has been created are added here. They are flushed once
+  // OnResourceBundleCreated() is called.
+  std::vector<std::unique_ptr<policy::PolicyErrorMap>> pending_errors_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserPolicyConnectorBase);
 };

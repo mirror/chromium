@@ -35,6 +35,7 @@ source_set("internal") {
     "configuration_policy_handler_list.h",
     "configuration_policy_pref_store.cc",
     "configuration_policy_pref_store.h",
+    "configuration_policy_pref_store_error_handler.h",
     "policy_error_map.cc",
     "policy_error_map.h",
     "proxy_policy_handler.cc",
@@ -87,6 +88,8 @@ static_library("test_support") {
   sources = [
     "configuration_policy_pref_store_test.cc",
     "configuration_policy_pref_store_test.h",
+    "test_configuration_policy_pref_store_error_handler.cc",
+    "test_configuration_policy_pref_store_error_handler.h",
   ]
 
   public_deps = [
