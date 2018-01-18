@@ -107,17 +107,18 @@
         </cr-toggle>
       </div>
     </cr-toolbar>
-    <div id="devDrawer" expanded$="[[expanded_]]">
+    <div id="devDrawer" expanded$="[[inDevMode]]">
       <div id="button-strip">
-        <paper-button hidden$="[[!canLoadUnpacked]]" id="load-unpacked"
-            on-tap="onLoadUnpackedTap_">
+        <paper-button id="load-unpacked" tabindex$="[[getTabindex_(inDevMode)]]"
+            hidden$="[[!canLoadUnpacked]]" on-tap="onLoadUnpackedTap_">
           $i18n{toolbarLoadUnpacked}
         </paper-button>
-        <paper-button id="pack-extensions" on-tap="onPackTap_">
+        <paper-button id="pack-extensions"
+            tabindex$="[[getTabindex_(inDevMode)]]" on-tap="onPackTap_">
           $i18n{toolbarPack}
         </paper-button>
-        <paper-button id="update-now" on-tap="onUpdateNowTap_"
-            title="$i18n{toolbarUpdateNowTooltip}">
+        <paper-button id="update-now" tabindex$="[[getTabindex_(inDevMode)]]"
+            on-tap="onUpdateNowTap_" title="$i18n{toolbarUpdateNowTooltip}">
           $i18n{toolbarUpdateNow}
         </paper-button>
 <if expr="chromeos">
