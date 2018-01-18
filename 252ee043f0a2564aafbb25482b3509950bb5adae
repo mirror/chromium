@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d6f1cac5_85eb1673",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T14:12:43Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ce8e9d59_72def4c6",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "feb9a2d6_7ee3c0e3",
         "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.h",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20adc86e_91307ccc",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T14:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feb9a2d6_7ee3c0e3",
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "efc666f0_95c19c91",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T14:12:43Z",
+      "side": 1,
+      "message": "The problem is that r-value params are still banned in G C++ Style Guide :(. Anyways I\u0027ve reorganized this.",
+      "parentUuid": "0fcf75c2_1b61a9ad",
+      "range": {
+        "startLine": 161,
+        "startChar": 12,
+        "endLine": 161,
+        "endChar": 27
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edd4a493_45853dc9",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 4
@@ -85,6 +151,30 @@
       "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a1f455_2c6527ac",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T14:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edd4a493_45853dc9",
+      "range": {
+        "startLine": 169,
+        "startChar": 44,
+        "endLine": 169,
+        "endChar": 76
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "3d583103_0ce953c4",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T14:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a398f65_8498856f",
+      "range": {
+        "startLine": 180,
+        "startChar": 15,
+        "endLine": 180,
+        "endChar": 47
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fdef59e_956d424b",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 4
@@ -131,6 +245,30 @@
       "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f96bd7_92b5fb0a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T14:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fdef59e_956d424b",
+      "range": {
+        "startLine": 191,
+        "startChar": 15,
+        "endLine": 191,
+        "endChar": 47
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "612e6bb3_a4f59ec2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T14:12:43Z",
+      "side": 1,
+      "message": "Yeah I got confused with all the \"name\" variable. Tried to make better variable names in extracted CL.",
+      "parentUuid": "cdcdbf73_90f95273",
+      "range": {
+        "startLine": 372,
+        "startChar": 52,
+        "endLine": 372,
+        "endChar": 57
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daffce62_6f5f096c",
         "filename": "base/task_scheduler/task_scheduler.h",
         "patchSetId": 4
@@ -177,6 +339,30 @@
       "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d0b0b9_32b841c5",
+        "filename": "base/task_scheduler/task_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T14:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daffce62_6f5f096c",
+      "range": {
+        "startLine": 175,
+        "startChar": 21,
+        "endLine": 175,
+        "endChar": 22
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "c0ac9016_062c6982",
+        "filename": "base/task_scheduler/task_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T14:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be49a978_4f980f90",
+      "range": {
+        "startLine": 187,
+        "startChar": 15,
+        "endLine": 187,
+        "endChar": 16
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3c70a99_f586f55f",
         "filename": "base/task_scheduler/task_scheduler_impl.cc",
         "patchSetId": 4
@@ -223,6 +433,30 @@
       "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327adccc_8f92b2a6",
+        "filename": "base/task_scheduler/task_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T14:12:43Z",
+      "side": 1,
+      "message": "Right, I realized that too when extracting the other CL..! I\u0027ve made it two variables but I still construct the compound on this end as I don\u0027t want SchedulerWorkerPoolImpl to be aware of being handed a \"task scheduler name\" (nor could I find a generic enough name for the prefix that it is...",
+      "parentUuid": "e3c70a99_f586f55f",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 73
+      },
+      "revId": "252ee043f0a2564aafbb25482b3509950bb5adae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
