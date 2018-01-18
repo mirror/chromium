@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b524a604_e70bb258",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-18T20:39:10Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this does, and why it is necessary for compiling.\n\nIt seems that the typical way to decalre string constants in Chrome is to use:\n\nextern const char kFoo[];\nin the header, and\nconst char kFoo[] \u003d \"foo\";\nin the cc file.\n\nIf those do not absolutely need to be member variables, consider using this pattern instead.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 35
+      },
+      "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5d380c_572c1f42",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-18T20:39:10Z",
+      "side": 1,
+      "message": "DVLOG(X), where X is the severity level (maybe 2 is a good one for warnings?) instead of LOG. Here and everywhere else.\n\nIf you want to be able to monitor these in the wild, consider adding UMA histograms. I don\u0027t think it is necessary here, since I think this should never happen.\n\nAlso, if this truly should never happen, consider adding a NOTREACHED() or DCHECK(my_condition) that will make it crash in debug mode.",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 20
+      },
+      "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f90f94b1_80f031e9",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-18T20:39:10Z",
+      "side": 1,
+      "message": "DVLOG",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 7
+      },
+      "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26758213_0edf2125",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-18T20:39:10Z",
+      "side": 1,
+      "message": "DVLOG",
+      "range": {
+        "startLine": 113,
+        "startChar": 6,
+        "endLine": 113,
+        "endChar": 9
+      },
+      "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eaf5128_417c2d64",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-18T20:39:10Z",
+      "side": 1,
+      "message": "DVLOG\nand maybe NOTREACHED()",
+      "range": {
+        "startLine": 157,
+        "startChar": 6,
+        "endLine": 157,
+        "endChar": 9
+      },
+      "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c606d95d_32d1a80b",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-18T20:39:10Z",
+      "side": 1,
+      "message": "DVLOG\nand maybe NOTREACHED()",
+      "range": {
+        "startLine": 185,
+        "startChar": 6,
+        "endLine": 185,
+        "endChar": 9
+      },
+      "revId": "ba1b5448c539cdd8244a7e1133b616eddfb4ba1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
