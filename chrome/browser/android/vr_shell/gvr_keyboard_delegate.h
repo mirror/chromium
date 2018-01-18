@@ -7,6 +7,8 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/synchronization/lock.h"
+#include "chrome/browser/android/vr_shell/gvr_keyboard_loader.h"
 #include "chrome/browser/vr/keyboard_delegate.h"
 #include "chrome/browser/vr/keyboard_ui_interface.h"
 #include "third_party/gvr-android-keyboard/src/libraries/headers/vr/gvr/capi/include/gvr_keyboard.h"
@@ -16,6 +18,29 @@ struct TextInputInfo;
 }
 
 namespace vr_shell {
+
+// A helper class that tries to acquire the given Lock while the ScopedTryLock
+// is in scope.
+class ScopedTryLock {
+ public:
+  explicit ScopedTryLock(base::Lock& lock) : lock_(lock) {}
+
+  bool Try() {
+    if (lock_.Try())
+      acquired_lock = true;
+    return acquired_lock;
+  }
+
+  ~ScopedTryLock() {
+    if (acquired_lock)
+      lock_.Release();
+  }
+
+ private:
+  base::Lock& lock_;
+  bool acquired_lock = false;
+  DISALLOW_COPY_AND_ASSIGN(ScopedTryLock);
+};
 
 class GvrKeyboardDelegate : public vr::KeyboardDelegate {
  public:
@@ -30,6 +55,7 @@ class GvrKeyboardDelegate : public vr::KeyboardDelegate {
   typedef base::RepeatingCallback<void(EventType)> OnEventCallback;
 
   // vr::KeyboardDelegate implementation.
+  void RenderingEnabled(bool enabled) override;
   void OnBeginFrame() override;
   void ShowKeyboard() override;
   void HideKeyboard() override;
@@ -47,9 +73,14 @@ class GvrKeyboardDelegate : public vr::KeyboardDelegate {
 
  private:
   GvrKeyboardDelegate();
-  void Init(gvr_keyboard_context* keyboard_context);
+  void CreateKeyboard();
+  void DestroyKeyboard();
   void OnGvrKeyboardEvent(EventType);
   vr::TextInputInfo GetTextInfo();
+
+  // Synchronization for calling the gvr api is is required since we may be
+  // destroying the instance on a different thread.
+  base::Lock mutex_;
 
   vr::KeyboardUiInterface* ui_;
   gvr_keyboard_context* gvr_keyboard_ = nullptr;
