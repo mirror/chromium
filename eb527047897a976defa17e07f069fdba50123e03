@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67d8b98e_7c4a867d",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-18T18:18:34Z",
+      "side": 1,
+      "message": "I don\u0027t think we can guarentee it won\u0027t, because it\u0027s possible that a user will start a navigation then immidiately quit VR, if that happens, however, the values for GetRoundedDurationInSeconds(time_on_page_start_, base::Time::Now()) will be practically the same, so it shouldn\u0027t be in issue.\nI have added a TODO to add a check to make sure that it won\u0027t happen, which I can tackle with the second part of the UKM for 66.",
+      "parentUuid": "ab850e13_841a0d06",
+      "range": {
+        "startLine": 443,
+        "startChar": 9,
+        "endLine": 443,
+        "endChar": 22
+      },
+      "revId": "eb527047897a976defa17e07f069fdba50123e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e59afb3_2a9aed67",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "eb527047897a976defa17e07f069fdba50123e03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae5043c_ebfc07ea",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-18T18:18:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e59afb3_2a9aed67",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "eb527047897a976defa17e07f069fdba50123e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
