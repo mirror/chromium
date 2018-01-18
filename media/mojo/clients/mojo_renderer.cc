@@ -265,6 +265,7 @@ void MojoRenderer::OnVideoNaturalSizeChange(const gfx::Size& size) {
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   if (video_overlay_factory_) {
+    VLOG(0) << "FROM MOJO!";
     video_renderer_sink_->PaintSingleFrame(
         video_overlay_factory_->CreateFrame(size));
   }
