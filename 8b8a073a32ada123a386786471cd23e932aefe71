@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4e7b163_c656a410",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-18T19:21:12Z",
+      "side": 1,
+      "message": "Should we add an early return for this too? Seems like we are not sure what exactly this callback is returning :(",
+      "range": {
+        "startLine": 500,
+        "startChar": 2,
+        "endLine": 500,
+        "endChar": 48
+      },
+      "revId": "8b8a073a32ada123a386786471cd23e932aefe71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
