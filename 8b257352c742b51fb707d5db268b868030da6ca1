@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2137ca2_2008bcc0",
+        "filename": "chromecast/public/media/audio_post_processor2_shlib.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1207509
+      },
+      "writtenOn": "2018-01-18T19:42:50Z",
+      "side": 1,
+      "message": "If an OEM changes the number of output channels in their PostProcessor, they are free to use whatever structure they like so long as it is interleaved.\nAdded a note to that effect.",
+      "parentUuid": "e85b595d_145af8a1",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 53
+      },
+      "revId": "8b257352c742b51fb707d5db268b868030da6ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f5ae9f2_347650ca",
         "filename": "chromecast/public/media/audio_post_processor2_shlib.h",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-17T22:28:55Z",
       "side": 1,
       "message": "Add \"2 for center, etc.\" ?",
+      "revId": "8b257352c742b51fb707d5db268b868030da6ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00511e7_c6d8d014",
+        "filename": "chromecast/public/media/audio_post_processor2_shlib.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1207509
+      },
+      "writtenOn": "2018-01-18T19:42:50Z",
+      "side": 1,
+      "message": "We don\u0027t support pairings/channel selection other than stereo.",
+      "parentUuid": "0f5ae9f2_347650ca",
       "revId": "8b257352c742b51fb707d5db268b868030da6ca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
