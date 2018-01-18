@@ -162,6 +162,14 @@ WebRange WebInputMethodControllerImpl::CompositionRange() {
   return PlainTextRange::Create(*editable, range);
 }
 
+WebRange WebInputMethodControllerImpl::GetWordAroundCaretRange() const {
+  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited. see http://crbug.com/590369 for more details.
+  GetFrame()->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+  
+  return GetFrame()->GetInputMethodController().GetWordAroundCaretRange();
+}
+
 WebRange WebInputMethodControllerImpl::GetSelectionOffsets() const {
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited.  See http://crbug.com/590369 for more details.
