@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36aaf832_2e3e56a8",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1659,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T20:21:31Z",
+      "side": 1,
+      "message": "Reason for this change:\nWithout it, the test is flaky.  The extension message we\u0027re waiting for (MSG_CONTEXTMENU) is fired in response to receiving an extension message from the guest, which is in turn fired when an event listener for \u0027contextmenu\u0027 on document is fired. [1]  My working theory is that native-bindings-implemented messaging is faster, and the contextmenu event is fired before the context menu itself actually appears (a).  This results in the ctx_listener being satisfied and the test finishing before the context menu fully appears (b), and the ContextMenuNotificationObserver would go out of scope - thus not being able to close the menu (c).  Then the menu would appear and we\u0027d block, and the test would timeout (d).  I\u0027ve verified (b), (c), and (d) of this, but not (a), because I have no idea when/how we fire the contextmenu event, so it could possibly be a different cause.\n\nThis change fixes it because we now wait for the menu to show and close before continuing the test.",
+      "revId": "ccf89a5d47db017b9f000412aecf5d6543a6dd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
