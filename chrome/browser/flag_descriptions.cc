@@ -1767,6 +1767,9 @@ const char kChromeHomeSwipeLogicDescription[] =
 const char kChromeHomeSwipeLogicRestrictArea[] = "Restrict swipable area";
 const char kChromeHomeSwipeLogicVelocity[] = "Velocity suppression model";
 
+const char kChromeModernName[] = "Chrome Modern Design";
+const char kChromeModernDescription[] = "Enable modern design for Chrome.";
+
 const char kChromeMemexName[] = "Chrome Memex";
 const char kChromeMemexDescription[] =
     "Enables Chrome Memex homepage on Android. Restricted to opted-in "

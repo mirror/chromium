@@ -628,7 +628,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         activity.getAppMenuHandler().setMenuHighlight(R.id.offline_page_id);
         int yInsetPx = mToolbar.getContext().getResources().getDimensionPixelOffset(
                 R.dimen.text_bubble_menu_anchor_y_inset);
-        mTextBubble.setInsetPx(0, FeatureUtilities.isChromeHomeEnabled() ? yInsetPx : 0, 0,
+        mTextBubble.setInsetPx(0, FeatureUtilities.isChromeModernEnabled() ? yInsetPx : 0, 0,
                 FeatureUtilities.isChromeHomeEnabled() ? 0 : yInsetPx);
         mTextBubble.show();
     }

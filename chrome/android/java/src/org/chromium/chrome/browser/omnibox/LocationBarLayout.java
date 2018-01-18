@@ -1323,7 +1323,7 @@ public class LocationBarLayout extends FrameLayout
             // ImageView#setImageResource is no-op if given resource is the current one.
             mSecurityButton.setImageResource(id);
             mSecurityButton.setTint(getColorStateList(mToolbarDataProvider, getResources(),
-                    mBottomSheet != null));
+                    FeatureUtilities.isChromeModernEnabled()));
         }
 
         updateVerboseStatusVisibility();
@@ -1547,7 +1547,7 @@ public class LocationBarLayout extends FrameLayout
         assert mNativeInitialized || mShowCachedZeroSuggestResults
                 : "Trying to initialize native suggestions list before native init";
         if (mSuggestionList != null) return;
-        mSuggestionListAdapter.setUseModernDesign(mBottomSheet != null);
+        mSuggestionListAdapter.setUseModernDesign(FeatureUtilities.isChromeModernEnabled());
 
         OnLayoutChangeListener suggestionListResizer = new OnLayoutChangeListener() {
             @Override
@@ -1672,7 +1672,7 @@ public class LocationBarLayout extends FrameLayout
     protected Drawable getSuggestionPopupBackground() {
         int omniboxResultsColorForNonIncognito = OMNIBOX_RESULTS_BG_COLOR;
         int omniboxResultsColorForIncognito = OMNIBOX_INCOGNITO_RESULTS_BG_COLOR;
-        if (mBottomSheet != null) {
+        if (FeatureUtilities.isChromeModernEnabled()) {
             omniboxResultsColorForNonIncognito = OMNIBOX_RESULTS_CHROME_HOME_MODERN_BG_COLOR;
             omniboxResultsColorForIncognito = OMNIBOX_INCOGNITO_RESULTS_CHROME_HOME_MODERN_BG_COLOR;
         }

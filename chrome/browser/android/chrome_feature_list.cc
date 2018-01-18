@@ -78,6 +78,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kChromeHomeSwipeLogicVelocity,
     &kChromeSmartSelection,
     &kChromeMemexFeature,
+    &kChromeModern,
     &kContentSuggestionsScrollToLoad,
     &kContentSuggestionsSettings,
     &kContentSuggestionsThumbnailDominantColor,
@@ -224,6 +225,9 @@ const base::Feature kChromeHomeSwipeLogicVelocity{
 
 const base::Feature kChromeMemexFeature{"ChromeMemex",
                                         base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kChromeModern{"ChromeModern",
+                                  base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kChromeSmartSelection{"ChromeSmartSelection",
                                           base::FEATURE_ENABLED_BY_DEFAULT};

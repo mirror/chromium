@@ -1910,6 +1910,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kChromeHomeEnableSurveyName,
      flag_descriptions::kChromeHomeEnableSurveyDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeHomeSurvey)},
+    {"enable-chrome-modern", flag_descriptions::kChromeModernName,
+     flag_descriptions::kChromeModernDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kChromeModern)},
 #endif  // OS_ANDROID
 #if defined(OS_ANDROID)
     {"enable-tab-modal-js-dialog-android",
