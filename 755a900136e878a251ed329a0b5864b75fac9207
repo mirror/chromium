@@ -34,6 +34,24 @@
       "revId": "755a900136e878a251ed329a0b5864b75fac9207",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33184eb_6b4db513",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-18T16:05:05Z",
+      "side": 1,
+      "message": "Resolving too.",
+      "parentUuid": "95e0b246_1b92dade",
+      "revId": "755a900136e878a251ed329a0b5864b75fac9207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
