@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "0f96bac2_7a40e2fa",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T11:06:46Z",
+      "side": 1,
+      "message": "FWIW, I just tried both (Yield() vs Sleep(1)) and both result in the same behaviour in this test (~30ms in success case with Bruce\u0027s fix, ~5500ms w/o Bruce\u0027s fix).\n\nI think we\u0027re okay to leave it as-is.",
+      "parentUuid": "8d58c113_5b6c7083",
+      "range": {
+        "startLine": 213,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 49
+      },
+      "revId": "a1f83bd3b901ee2730bd25e5e56b21f83c4b5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c90fed21_2d405f92",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 8
