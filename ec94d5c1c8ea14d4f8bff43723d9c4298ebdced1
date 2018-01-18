@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "396ea875_4c8e7ce7",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-18T02:57:47Z",
+      "side": 1,
+      "message": "This code looks up the attribute twice.  FastGetAttribute(...) returns null string if the attribute is missing. So,\n\nif (FastGetAttribute(autocapitalizeAttr).IsEmpty())\n\nis enough.",
+      "revId": "ec94d5c1c8ea14d4f8bff43723d9c4298ebdced1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece4f75a_8c405e1c",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-18T02:57:47Z",
+      "side": 1,
+      "message": "According to the specification, this behavior is applied only to INPUT and TEXTAREA.  This code applies it to other form control elements such as SELECT, FIELDSET.",
+      "revId": "ec94d5c1c8ea14d4f8bff43723d9c4298ebdced1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee7a1a9_2264c86b",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-18T02:57:47Z",
+      "side": 1,
+      "message": "return g_empty_string;",
+      "revId": "ec94d5c1c8ea14d4f8bff43723d9c4298ebdced1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
