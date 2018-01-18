@@ -5,33 +5,41 @@
 #ifndef COMPONENTS_PRINTING_BROWSER_PRINT_COMPOSITE_CLIENT_H_
 #define COMPONENTS_PRINTING_BROWSER_PRINT_COMPOSITE_CLIENT_H_
 
-#include "components/printing/service/public/cpp/pdf_compositor_client.h"
+#include "components/printing/service/public/interfaces/pdf_compositor.mojom.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
 namespace printing {
 
 class PrintCompositeClient
-    : public PdfCompositorClient,
-      public content::WebContentsUserData<PrintCompositeClient> {
+    : public content::WebContentsUserData<PrintCompositeClient> {
  public:
   explicit PrintCompositeClient(content::WebContents* web_contents);
   ~PrintCompositeClient() override;
 
   // NOTE: |handle| must be a READ-ONLY base::SharedMemoryHandle, i.e. one
   // acquired by base::SharedMemory::GetReadOnlyHandle().
-  void DoComposite(base::SharedMemoryHandle handle,
-                   uint32_t data_size,
-                   mojom::PdfCompositor::CompositePdfCallback callback);
+  void DoCompositePageToPdf(
+      uint64_t frame_guid,
+      uint32_t page_num,
+      base::SharedMemoryHandle handle,
+      uint32_t data_size,
+      std::vector<mojom::ContentToFrameInfoPtr> subframe_content_info,
+      mojom::PdfCompositor::CompositePageToPdfCallback callback);
+  void DoCompositeDocumentToPdf(
+      uint64_t frame_guid,
+      base::SharedMemoryHandle handle,
+      uint32_t data_size,
+      std::vector<mojom::ContentToFrameInfoPtr> subframe_content_info,
+      mojom::PdfCompositor::CompositeDocumentToPdfCallback callback);
 
   void set_for_preview(bool for_preview) { for_preview_ = for_preview; }
   bool for_preview() const { return for_preview_; }
 
  private:
-  void CreateConnectorRequest();
+  void CreateServiceRequest();
 
-  service_manager::mojom::ConnectorRequest connector_request_;
-  std::unique_ptr<service_manager::Connector> connector_;
+  mojom::PdfCompositorPtr compositor_;
   bool for_preview_;
 
   DISALLOW_COPY_AND_ASSIGN(PrintCompositeClient);
