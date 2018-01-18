@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "cef5245a_4a9b955c",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-18T23:09:21Z",
+      "side": 1,
+      "message": "Ahh okay makes sense didn\u0027t realize entered_ was  only written inside here.\nAnyhow for the future in cases like this use at least a NoBarrier_Read. That is functionally equivalent to just a variable (emits the same code) but prevents that the compiler does fancy things (mostly reordering and optimizations)",
+      "parentUuid": "742951fb_5923f418",
+      "range": {
+        "startLine": 151,
+        "startChar": 1,
+        "endLine": 152,
+        "endChar": 18
+      },
+      "revId": "d9224f86307aecc6e80aae842545236fbd7cdff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c64e4d95_35371de5",
         "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
         "patchSetId": 1

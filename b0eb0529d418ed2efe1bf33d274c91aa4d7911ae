@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d7ea45c_8a1cf055",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-18T23:09:21Z",
+      "side": 1,
+      "message": "might want to take a look tot he logic here\nhttps://cs.chromium.org/chromium/src/base/trace_event/heap_profiler_allocation_context_tracker.cc?type\u003dcs\u0026l\u003d209\n\nMaybe is not a huge deal for you because you don\u0027t unwind all allocations, but when you have frame pointers, FP-based unwinding is way faster than base::StackTrace, that IIRC uses CFI-based unwinding (Call Frame Info from unwind tables)",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 25
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d60751_2ad1f40a",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-18T23:09:21Z",
+      "side": 1,
+      "message": "Also note that you are always constructing Sample (which has inside a vector ctor) even when you don\u0027t need it.\n\nI\u0027d probably do reshuffle this to keep the fastpath faster, like:\n{\nif (LIKELY(!base::subtle::NoBarrier_Load(\u0026running_)))\n  self-\u003enext-\u003ealloc_function(self-\u003enext, size, context);\n\nSample sample;\nif (!Create...)\n return self-\u003enext-\u003ealloc_function(self-\u003enext, size, context);\n\nreturn RecordAlloc(...)\n}\n\nSame below (AllocZeroInit \u0026 co)",
+      "range": {
+        "startLine": 189,
+        "startChar": 11,
+        "endLine": 189,
+        "endChar": 64
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b57dce2_ad51199d",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-18T23:09:21Z",
+      "side": 1,
+      "message": "just checking: I think that when you re-enter you just bail out. but in those cases I think that you make a larger allocation (to fit the magic payload) but then don\u0027t fill it in, because RecordAlloc earlies out. Didn\u0027t reason enough but wonder if you leak the \"alignment\" bit in case of reentrancy",
+      "range": {
+        "startLine": 192,
+        "startChar": 9,
+        "endLine": 192,
+        "endChar": 35
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e005d66_9e8000f2",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-18T23:09:21Z",
+      "side": 1,
+      "message": "note that size \u003d\u003d 0 means Free (it\u0027s a weird realloc semantic)",
+      "range": {
+        "startLine": 234,
+        "startChar": 51,
+        "endLine": 234,
+        "endChar": 55
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
