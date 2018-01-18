@@ -273,6 +273,7 @@ void Ui::OnControllerUpdated(const ControllerModel& controller_model,
   model_->controller = controller_model;
   model_->reticle = reticle_model;
   model_->controller.quiescent = input_manager_->controller_quiescent();
+  model_->controller.focused = input_manager_->controller_focused();
 }
 
 void Ui::OnProjMatrixChanged(const gfx::Transform& proj_matrix) {
