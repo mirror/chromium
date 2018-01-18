@@ -23,6 +23,7 @@ constexpr int kAnimationDistance = 30;
 ContainerFloatingBehavior::ContainerFloatingBehavior(
     KeyboardController* controller) {
   controller_ = controller;
+  default_position_.is_set = false;
 }
 ContainerFloatingBehavior::~ContainerFloatingBehavior() {}
 
@@ -80,9 +81,38 @@ const gfx::Rect ContainerFloatingBehavior::AdjustSetBoundsRequest(
     // the screen.
     keyboard_bounds =
         ContainKeyboardToScreenBounds(keyboard_bounds, display_bounds);
+    SavePosition(keyboard_bounds, display_bounds.size());
   }
 
   return keyboard_bounds;
+}
+
+void ContainerFloatingBehavior::SavePosition(const gfx::Rect& keyboard_bounds,
+                                             const gfx::Size& screen_size) {
+  int left_distance = keyboard_bounds.x();
+  int right_distance =
+      screen_size.width() - (keyboard_bounds.x() + keyboard_bounds.width());
+  int top_distance = keyboard_bounds.y();
+  int bottom_distance =
+      screen_size.height() - (keyboard_bounds.y() + keyboard_bounds.height());
+  if (left_distance < right_distance) {
+    default_position_.horizontal_anchor_direction =
+        HorizontalAnchorDirection::LEFT;
+    default_position_.offset.set_x(left_distance);
+  } else {
+    default_position_.horizontal_anchor_direction =
+        HorizontalAnchorDirection::RIGHT;
+    default_position_.offset.set_x(right_distance);
+  }
+  if (top_distance < bottom_distance) {
+    default_position_.vertical_anchor_direction = VerticalAnchorDirection::TOP;
+    default_position_.offset.set_y(top_distance);
+  } else {
+    default_position_.vertical_anchor_direction =
+        VerticalAnchorDirection::BOTTOM;
+    default_position_.offset.set_y(bottom_distance);
+  }
+  default_position_.is_set = true;
 }
 
 gfx::Rect ContainerFloatingBehavior::ContainKeyboardToScreenBounds(
@@ -119,21 +149,35 @@ bool ContainerFloatingBehavior::IsOverscrollAllowed() const {
 }
 
 bool ContainerFloatingBehavior::UseDefaultPosition() const {
-  // (-1, -1) is used as a sentinel unset value.
-  return default_position_.x() == -1;
+  return !default_position_.is_set;
 }
 
 gfx::Point ContainerFloatingBehavior::GetPositionForShowingKeyboard(
     const gfx::Size& keyboard_size,
     const gfx::Rect& display_bounds) const {
   // Start with the last saved position
-  gfx::Point position = default_position_;
+  gfx::Point position;
   if (UseDefaultPosition()) {
     // If there is none, center the keyboard along the bottom of the screen.
     position.set_x(display_bounds.width() - keyboard_size.width() -
                    kDefaultDistanceFromScreenRight);
     position.set_y(display_bounds.height() - keyboard_size.height() -
                    kDefaultDistanceFromScreenBottom);
+  } else {
+    if (default_position_.horizontal_anchor_direction ==
+        HorizontalAnchorDirection::LEFT) {
+      position.set_x(default_position_.offset.x());
+    } else {
+      position.set_x(display_bounds.width() - default_position_.offset.x() -
+                     keyboard_size.width());
+    }
+    if (default_position_.vertical_anchor_direction ==
+        VerticalAnchorDirection::TOP) {
+      position.set_y(default_position_.offset.y());
+    } else {
+      position.set_y(display_bounds.height() - default_position_.offset.y() -
+                     keyboard_size.height());
+    }
   }
 
   // Make sure that this location is valid according to the current size of the
@@ -145,10 +189,6 @@ gfx::Point ContainerFloatingBehavior::GetPositionForShowingKeyboard(
   return valid_keyboard_bounds.origin();
 }
 
-void ContainerFloatingBehavior::SavePosition(const gfx::Point& position) {
-  default_position_ = position;
-}
-
 bool ContainerFloatingBehavior::IsDragHandle(
     const gfx::Vector2d& offset,
     const gfx::Size& keyboard_size) const {
@@ -156,7 +196,8 @@ bool ContainerFloatingBehavior::IsDragHandle(
 }
 
 void ContainerFloatingBehavior::HandlePointerEvent(
-    const ui::LocatedEvent& event) {
+    const ui::LocatedEvent& event,
+    const gfx::Rect& display_bounds) {
   // Cannot call UI-backed operations without a KeyboardController
   DCHECK(controller_);
   auto kb_offset = gfx::Vector2d(event.x(), event.y());
@@ -205,7 +246,7 @@ void ContainerFloatingBehavior::HandlePointerEvent(
     const gfx::Rect new_bounds =
         gfx::Rect(new_keyboard_location, keyboard_bounds.size());
     controller_->MoveKeyboard(new_bounds);
-    SavePosition(container->bounds().origin());
+    SavePosition(container->bounds(), display_bounds.size());
     handle_drag = true;
   }
   if (!handle_drag && drag_descriptor_) {
@@ -219,9 +260,10 @@ void ContainerFloatingBehavior::SetCanonicalBounds(
     const gfx::Rect& display_bounds) {
   gfx::Point keyboard_location =
       GetPositionForShowingKeyboard(container->bounds().size(), display_bounds);
-  SavePosition(keyboard_location);
-  container->SetBounds(
-      gfx::Rect(keyboard_location, container->bounds().size()));
+  gfx::Rect keyboard_bounds =
+      gfx::Rect(keyboard_location, container->bounds().size());
+  SavePosition(keyboard_bounds, display_bounds.size());
+  container->SetBounds(keyboard_bounds);
 }
 
 bool ContainerFloatingBehavior::TextBlurHidesKeyboard() const {
