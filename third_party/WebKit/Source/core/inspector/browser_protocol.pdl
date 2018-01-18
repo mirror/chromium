@@ -3142,6 +3142,37 @@ experimental domain Memory
       # Memory pressure level of the notification.
       PressureLevel level
 
+  # Start collecting native memory profile.
+  command startSamplingNativeHeapProfile
+    parameters
+      # Average number of bytes between samples.
+      optional integer samplingInterval
+      # Do not randomize intervals between samples.
+      optional boolean suppressRandomness
+
+  # Stop collecting native memory profile.
+  command stopSamplingNativeHeapProfile
+
+  # Retrieve collected native memory profile.
+  command getSamplingNativeHeapProfile
+    returns
+      SamplingNativeHeapProfile profile
+
+  # Heap profile sample.
+  type SamplingNativeHeapProfileNode extends object
+    properties
+      # Size of the sampled allocation.
+      number size
+      # Number of sampled allocations of that size.
+      number count
+      # Execution stack at the point of allocation.
+      array of string stack
+
+  # Array of heap profile samples.
+  type SamplingNativeHeapProfile extends object
+    properties
+      array of SamplingNativeHeapProfileNode samples
+
 # Network domain allows tracking network activities of the page. It exposes information about http,
 # file, data and other requests and responses, their headers, bodies, timing, etc.
 domain Network
