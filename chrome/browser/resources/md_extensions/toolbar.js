@@ -66,7 +66,12 @@ cr.define('extensions', function() {
 
     /** @override */
     ready: function() {
-      this.$.devDrawer.addEventListener('transitionend', () => {
+      this.$.devDrawer.addEventListener('transitionend', (e) => {
+        // Ignore other bubbling 'transitionend' events, like the one coming
+        // from #button-strip.
+        if (e.target != this.$.devDrawer)
+          return;
+
         this.delegate.setProfileInDevMode(this.$['dev-mode'].checked);
       });
     },
