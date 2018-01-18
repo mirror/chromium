@@ -84,6 +84,16 @@ bool ExtensionActionHandler::Parse(Extension* extension,
       return true;  // Don't synthesize actions for component extensions.
     if (extension->was_installed_by_default())
       return true;  // Don't synthesize actions for default extensions.
+#if defined(OS_CHROMEOS)
+    // TODO(isandrk, https://crbug.com/801215): Don't synthesize action for
+    // "Assessment Assistant" extension in order to hide its icon in the chrome
+    // menu to avoid confusing users (temporary until M66 when it will become a
+    // component extension and won't be shown anyway).
+    constexpr char kAssessmentAssistantExtensionId[] =
+        "gndmhdcefbhlchkhipcnnbkcmicncehk";
+    if (extension->id() == kAssessmentAssistantExtensionId)
+      return true;
+#endif
     if (extension->manifest()->HasKey(
             manifest_keys::kSynthesizeExtensionAction)) {
       *error = base::ASCIIToUTF16(base::StringPrintf(
