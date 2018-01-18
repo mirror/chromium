@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bb32c449_d153010f",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 40
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T23:07:15Z",
+      "side": 1,
+      "message": "Right, it still requires a lookup in the utility compositor process, but the goal here is to reduce the number of IPCs being sent across Mojo. Thanks for making this change!",
+      "parentUuid": "0705a4e4_9536bcb5",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "fc8edf3ed0a235787d9ac8d6dbd5fc037e7117a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd5a1426_c5f9bfcb",
         "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
         "patchSetId": 40

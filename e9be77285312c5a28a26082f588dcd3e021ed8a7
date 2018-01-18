@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b775770_4581bfe3",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T23:07:15Z",
+      "side": 1,
+      "message": "Nit: move this to CreateServiceRequest() and call it something like EnsureService(). Same below.",
+      "revId": "e9be77285312c5a28a26082f588dcd3e021ed8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c188fe_9f3f7bf5",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T23:07:15Z",
+      "side": 1,
+      "message": "Note that it\u0027s somewhat inefficient to use flat_map for mutable maps like this, since inserting n items incrementally takes n^2 lg n time, iirc.",
+      "revId": "e9be77285312c5a28a26082f588dcd3e021ed8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde5df6d_2b4fed47",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T23:07:15Z",
+      "side": 1,
+      "message": "I think it\u0027s worth investigating making PdfCompositorImpl per-request rather than per-web contents (that\u0027s my understanding of how PrintCompositeClient works today). Then we don\u0027t need to keep a list of pending requests, since it would just be a straightforward mapping of filling all the pending subframes before generating the result. \n\nWith the way it\u0027s currently written, it\u0027s hard for me to tell what happens if we do something like:\n\n1. Print a page A with two subframes B and C. Subframe C is slow to respond, but we get the content for A and B fairly quickly.\n2. While still waiting for subrame C, the user tries to print page A again. frame_info_map_ will already have a FrameInfo for B... and it\u0027s not clear to me we\u0027d want to overwrite the previous result from AddSubframeContent.\n\nTo prevent this collision, frame_info_map_ would have to be moved into requests_ as well, at which point, the browser needs to keep tracking of the corresponding request. And at that point, moving to per-request PdfCompositorImpl doesn\u0027t seem like a big leap.\n\nThis is probably my biggest concern.\n\nAlso, when are entries removed from frame_info_map_ / requests_? Maybe I\u0027m searching for the wrong thing, but I only see one erase() call.",
+      "revId": "e9be77285312c5a28a26082f588dcd3e021ed8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3cd9e24_6c08c14a",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 44
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T23:07:15Z",
+      "side": 1,
+      "message": "Let\u0027s use a map\u003c\u003e here, since that makes it clear we won\u0027t have duplicate keys.",
+      "range": {
+        "startLine": 31,
+        "startChar": 21,
+        "endLine": 31,
+        "endChar": 46
+      },
+      "revId": "e9be77285312c5a28a26082f588dcd3e021ed8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
