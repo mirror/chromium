@@ -16,6 +16,24 @@
       "revId": "6333e0acced0d49089c777b9c9c3a57cb3683f8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb71ce5d_06fa6ed0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/rellist-feature-detection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-18T10:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "974e8d29_1a7a2b78",
+      "revId": "6333e0acced0d49089c777b9c9c3a57cb3683f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
