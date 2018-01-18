@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f32e857f_f14cdd6a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 111668,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-18T14:25:33Z",
+      "side": 1,
+      "message": "Could be singular. See my comment on another CL: https://chromium-review.googlesource.com/c/chromium/src/+/870390/9/tools/metrics/histograms/histograms.xml#111668",
+      "range": {
+        "startLine": 111668,
+        "startChar": 13,
+        "endLine": 111668,
+        "endChar": 27
+      },
+      "revId": "7e4a0afd6d1b68edc6444575296d10fce001a421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
