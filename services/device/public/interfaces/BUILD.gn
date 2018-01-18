@@ -12,6 +12,7 @@ mojom("interfaces") {
     "geolocation_config.mojom",
     "geolocation_context.mojom",
     "geolocation_control.mojom",
+    "geoposition.mojom",
     "hid.mojom",
     "input_service.mojom",
     "nfc.mojom",
