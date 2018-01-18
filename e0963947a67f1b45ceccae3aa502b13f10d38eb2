@@ -63,6 +63,30 @@
       "revId": "e0963947a67f1b45ceccae3aa502b13f10d38eb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80dcff50_37765ef1",
+        "filename": "ui/views/controls/webview/webview.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-18T00:30:47Z",
+      "side": 1,
+      "message": "I looked at https://chromium-review.googlesource.com/c/chromium/src/+/850593 and you\u0027re still modifying Webview. I\u0027m suggesting this change is entirely done in BrowserView (no need to touch WebView). More specifically your code change is done in BrowserView::OnActiveTabChanged ( https://chromium.googlesource.com/chromium/src/+/master/chrome/browser/ui/views/frame/browser_view.cc#754 ). Before calling SetWebContents(null) it moves focus if necessary and then when resetting it moves focus back.",
+      "parentUuid": "0e1fa4cc_e3c0f289",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 39
+      },
+      "revId": "e0963947a67f1b45ceccae3aa502b13f10d38eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
