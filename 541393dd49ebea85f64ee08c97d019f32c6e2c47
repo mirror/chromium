@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b3db8b0_0505a63c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T23:53:55Z",
+      "side": 1,
+      "message": "Nit\n\nI wouldn\u0027t document where the boolean is used as that is just redundant with the code itself.\n\nThe main thing is that \"the current type represents the type of dialog showing.  The type of dialog can be different from the current Presenter if there was no registered presenter for this type\"\n\nIt describes why we have a seemingly redundant field without being explicit about where it is used which can get quickly outdated (i.e. it\u0027s also used when canceling a dialog right now)",
+      "range": {
+        "startLine": 117,
+        "startChar": 47,
+        "endLine": 117,
+        "endChar": 58
+      },
+      "revId": "541393dd49ebea85f64ee08c97d019f32c6e2c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb86220_8bc62d96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalLifetimeHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T23:53:55Z",
+      "side": 1,
+      "message": "should we add a check that isInteractable() here?  If you\u0027re in the tab switcher and you close the current tab but don\u0027t leave, would this enable tab modal dialogs?",
+      "range": {
+        "startLine": 68,
+        "startChar": 33,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "541393dd49ebea85f64ee08c97d019f32c6e2c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f837dcfe_db1bf297",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T23:53:55Z",
+      "side": 1,
+      "message": "I think this test is getting a bit too bit.  It would be good to test each of your test cases individually I think (or particular interactions).\n\nIt might be good to have things like:\ntab close with app modal\n\ntab close with tab modal\n\nSeeing that the close as expected (or not).",
+      "range": {
+        "startLine": 259,
+        "startChar": 16,
+        "endLine": 259,
+        "endChar": 42
+      },
+      "revId": "541393dd49ebea85f64ee08c97d019f32c6e2c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

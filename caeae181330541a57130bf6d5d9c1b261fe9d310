@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fac3d2c5_9f0660ac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T23:53:55Z",
+      "side": 1,
+      "message": "In VR, I think they only support the concept of APP_MODAL.  They wouldn\u0027t register TAB_MODAL at all and they\u0027d set that as the default.  I think we designed the manager to not have all supported types but always fall back to the default.\n\nALL_TYPES muddles that and I think breaks that model.",
+      "parentUuid": "4b5d6386_403c327f",
+      "range": {
+        "startLine": 91,
+        "startChar": 28,
+        "endLine": 91,
+        "endChar": 37
+      },
+      "revId": "caeae181330541a57130bf6d5d9c1b261fe9d310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cc21499_4d063315",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 2
