@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf4aeaeb_fd510039",
+        "filename": "content/browser/renderer_host/media/video_capture_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-01-18T00:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc9b996b_06cdb6eb",
+      "revId": "510b025548c8d75c85e95453244b74795a057708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4ecb02b_e88ce0b3",
         "filename": "content/browser/renderer_host/media/video_capture_host.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "510b025548c8d75c85e95453244b74795a057708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02219ee_67ca3745",
+        "filename": "content/browser/renderer_host/media/video_capture_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-01-18T00:24:43Z",
+      "side": 1,
+      "message": "Done. Btw does this class get destructed on IO? I am assuming that is the case based on |controllers_| usage. And added DCHECK in dtor as well.",
+      "parentUuid": "f4ecb02b_e88ce0b3",
+      "revId": "510b025548c8d75c85e95453244b74795a057708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "13804602_7e4a6f09",
+        "filename": "content/browser/renderer_host/media/video_capture_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-01-18T00:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a278748c_18e39975",
+      "revId": "510b025548c8d75c85e95453244b74795a057708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23de33ab_0eba58a7",
         "filename": "content/browser/renderer_host/media/video_capture_unittest.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-17T18:29:13Z",
       "side": 1,
       "message": "Instead of swapping out private parts of the instance under test, a cleaner solution would be to pass what we want it to use into the constructor.\n\nWith that and my other suggestions below it may be possible to remove the \"friend VideoCaptureTest\" from VideoCaptureHost.",
+      "revId": "510b025548c8d75c85e95453244b74795a057708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d53c319_87b2a834",
+        "filename": "content/browser/renderer_host/media/video_capture_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-01-18T00:24:43Z",
+      "side": 1,
+      "message": "I added it as a seperate ctor. friend is still necessary for private method calls like Start().",
+      "parentUuid": "23de33ab_0eba58a7",
       "revId": "510b025548c8d75c85e95453244b74795a057708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b7058b30_24c7ced0",
+        "filename": "content/browser/renderer_host/media/video_capture_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-01-18T00:24:43Z",
+      "side": 1,
+      "message": "I wanted to keep using public class methods like the existing but they are doing more than just accessor work. I am changing it to protected and directly accessing instead.",
+      "parentUuid": "92ca72c6_0974113c",
+      "revId": "510b025548c8d75c85e95453244b74795a057708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8750349d_43796d20",
         "filename": "content/browser/renderer_host/media/video_capture_unittest.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "510b025548c8d75c85e95453244b74795a057708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96358674_75dd57b6",
+        "filename": "content/browser/renderer_host/media/video_capture_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-01-18T00:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8750349d_43796d20",
+      "revId": "510b025548c8d75c85e95453244b74795a057708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
