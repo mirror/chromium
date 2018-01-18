@@ -397,7 +397,8 @@ class BASE_EXPORT MessagePumpMac {
 
 // Tasks posted to the message loop are posted under this mode, as well
 // as kCFRunLoopCommonModes.
-extern const CFStringRef BASE_EXPORT kMessageLoopExclusiveRunLoopMode;
+constexpr CFStringRef kMessageLoopExclusiveRunLoopMode =
+    CFSTR("kMessageLoopExclusiveRunLoopMode");
 
 }  // namespace base
 
