@@ -19,17 +19,17 @@ class NET_EXPORT CTVerifier {
  public:
   class NET_EXPORT Observer {
    public:
-    // Called for each Signed Certificate Timestamp from a known log that vas
-    // verified successfully (i.e. the signature verifies). |sct| is the
-    // Signed Certificate Timestamp, |cert| is the certificate it applies to and
-    // |hostname| is the server that presented the certificate (DNS name or IP
-    // address literal). The certificate is needed to calculate the hash of the
-    // log entry, necessary for checking inclusion in the log.
+    // Called after signed certificate timestamps (SCTs) for a certificate have
+    // been verified. The SCTs that verified successfully (e.g. were correctly
+    // signed by a known CT log) are in |scts|, the certificate is |cert| and
+    // |hostname| is the DNS name or IP address literal of the server that
+    // presented the certificate.
     // Note: The observer (whose implementation is expected to exist outside
-    // net/) may store the observed |cert| and |sct|.
-    virtual void OnSCTVerified(base::StringPiece hostname,
-                               X509Certificate* cert,
-                               const ct::SignedCertificateTimestamp* sct) = 0;
+    // net/) may store the observed |cert| and |scts|.
+    virtual void OnSCTsVerified(
+        base::StringPiece hostname,
+        X509Certificate* cert,
+        const std::vector<const ct::SignedCertificateTimestamp*>& scts) = 0;
 
    protected:
     virtual ~Observer() {}

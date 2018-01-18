@@ -55,15 +55,18 @@ TreeStateTracker::TreeStateTracker(
 
 TreeStateTracker::~TreeStateTracker() {}
 
-void TreeStateTracker::OnSCTVerified(base::StringPiece hostname,
-                                     X509Certificate* cert,
-                                     const SignedCertificateTimestamp* sct) {
-  auto it = tree_trackers_.find(sct->log_id);
-  // Ignore if the SCT is from an unknown log.
-  if (it == tree_trackers_.end())
-    return;
+void TreeStateTracker::OnSCTsVerified(
+    base::StringPiece hostname,
+    net::X509Certificate* cert,
+    const std::vector<const net::ct::SignedCertificateTimestamp*>& scts) {
+  for (const auto* sct : scts) {
+    auto it = tree_trackers_.find(sct->log_id);
+    // Ignore if the SCT is from an unknown log.
+    if (it == tree_trackers_.end())
+      return;
 
-  it->second->OnSCTVerified(hostname, cert, sct);
+    it->second->OnSCTVerified(hostname, cert, sct);
+  }
 }
 
 void TreeStateTracker::NewSTHObserved(const SignedTreeHead& sth) {

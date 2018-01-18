@@ -51,10 +51,12 @@ class TreeStateTracker : public net::CTVerifier::Observer,
   ~TreeStateTracker() override;
 
   // net::ct::CTVerifier::Observer implementation.
-  // Delegates to the tree tracker corresponding to the log that issued the SCT.
-  void OnSCTVerified(base::StringPiece hostname,
-                     net::X509Certificate* cert,
-                     const net::ct::SignedCertificateTimestamp* sct) override;
+  // Delegates to tree trackers corresponding to the logs that issued the SCTs.
+  void OnSCTsVerified(
+      base::StringPiece hostname,
+      net::X509Certificate* cert,
+      const std::vector<const net::ct::SignedCertificateTimestamp*>& sct)
+      override;
 
   // net::ct::STHObserver implementation.
   // Delegates to the tree tracker corresponding to the log that issued the STH.

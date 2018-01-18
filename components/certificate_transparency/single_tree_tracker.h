@@ -58,8 +58,7 @@ class LogDnsClient;
 // new STHs are observed (which it does by implementing net::ct::STHObserver).
 // Once connected to sources providing that data, the status for a given SCT
 // can be queried by calling GetLogEntryInclusionCheck.
-class SingleTreeTracker : public net::CTVerifier::Observer,
-                          public net::ct::STHObserver {
+class SingleTreeTracker : public net::ct::STHObserver {
  public:
   enum SCTInclusionStatus {
     // SCT was not observed by this class and is not currently pending
@@ -109,7 +108,7 @@ class SingleTreeTracker : public net::CTVerifier::Observer,
   // here as this callback is invoked during certificate validation.
   void OnSCTVerified(base::StringPiece hostname,
                      net::X509Certificate* cert,
-                     const net::ct::SignedCertificateTimestamp* sct) override;
+                     const net::ct::SignedCertificateTimestamp* sct);
 
   // net::ct::STHObserver implementation.
   // After verification of the signature over the |sth|, uses this

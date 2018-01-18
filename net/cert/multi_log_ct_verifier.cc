@@ -4,6 +4,7 @@
 
 #include "net/cert/multi_log_ct_verifier.h"
 
+#include <algorithm>
 #include <vector>
 
 #include "base/bind.h"
@@ -145,6 +146,17 @@ void MultiLogCTVerifier::Verify(
                    net_log_checked_callback);
 
   LogNumSCTsToUMA(*output_scts);
+
+  if (observer_ == nullptr)
+    return;
+
+  std::vector<const ct::SignedCertificateTimestamp*> verified_scts;
+  for (SignedCertificateTimestampAndStatus sct_and_status : *output_scts) {
+    if (sct_and_status.status == ct::SCT_STATUS_OK) {
+      verified_scts.push_back(sct_and_status.sct.get());
+    }
+  }
+  observer_->OnSCTsVerified(hostname, cert, verified_scts);
 }
 
 void MultiLogCTVerifier::VerifySCTs(
@@ -208,8 +220,6 @@ bool MultiLogCTVerifier::VerifySingleSCT(
   }
 
   AddSCTAndLogStatus(sct, ct::SCT_STATUS_OK, output_scts);
-  if (observer_)
-    observer_->OnSCTVerified(hostname, cert, sct.get());
   return true;
 }
 
