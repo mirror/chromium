@@ -56,6 +56,23 @@
       "revId": "125fe52c06911d024a4032fc69804f2c7ebce9b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5663aab_0240f175",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 1
+      },
+      "lineNbr": 4581,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-18T16:55:57Z",
+      "side": 1,
+      "message": "Let\u0027s be more descriptive:\n\n# Whether to use source size as defined by the page itself. Defaults to false,\n# in which case the content will be scaled to fit the paper size.\noptional boolean usePageDefinedSourceSize",
+      "revId": "125fe52c06911d024a4032fc69804f2c7ebce9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
