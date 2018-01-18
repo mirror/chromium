@@ -79,8 +79,11 @@ if (current_cpu == "arm" || v8_current_cpu == "arm") {
     }
 
     if (arm_float_abi == "") {
-      if (current_os == "android" || target_os == "android") {
+      if (current_os == "android") {
         arm_float_abi = "softfp"
+      } else if (target_os == "android") {
+        # Raspberry Pis require "hard"
+        arm_float_abi = "hard"
       } else if (current_os == "linux" && target_cpu != v8_target_cpu) {
         # Default to the same as Android for V8 simulator builds.
         arm_float_abi = "softfp"
