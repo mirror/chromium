@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e737fe9_3ab3a88b",
+        "filename": "chrome/browser/extensions/api/processes/processes_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T21:21:21Z",
+      "side": 1,
+      "message": "Maybe also check EventRouter::HasEventListener for onUpdatedWithMemory and onUpdated to ensure the counts are 1 and 0, respectively?",
+      "revId": "fbeaa8282e08ce56896797a20690333c9635e129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
