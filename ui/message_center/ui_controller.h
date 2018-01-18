@@ -47,9 +47,6 @@ class MESSAGE_CENTER_EXPORT UiController : public MessageCenterObserver {
   // Returns whether the popup was visible before.
   bool HidePopupBubble();
 
-  // Toggles the visibility of the settings view in the message center bubble.
-  void ShowNotifierSettingsBubble();
-
   bool message_center_visible() { return message_center_visible_; }
   bool popups_visible() { return popups_visible_; }
   UiDelegate* delegate() { return delegate_; }
@@ -66,7 +63,6 @@ class MESSAGE_CENTER_EXPORT UiController : public MessageCenterObserver {
   void OnNotificationClicked(const std::string& notification_id) override;
   void OnNotificationButtonClicked(const std::string& notification_id,
                                    int button_index) override;
-  void OnNotificationSettingsClicked(bool handled) override;
   void OnNotificationDisplayed(const std::string& notification_id,
                                const DisplaySource source) override;
   void OnQuietModeChanged(bool in_quiet_mode) override;

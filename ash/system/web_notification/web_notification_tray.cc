@@ -333,8 +333,7 @@ void WebNotificationTray::DisableAnimationsForTest(bool disable) {
 
 // Public methods.
 
-bool WebNotificationTray::ShowMessageCenterInternal(bool show_settings,
-                                                    bool show_by_click) {
+bool WebNotificationTray::ShowMessageCenter(bool show_by_click) {
   if (!ShouldShowMessageCenter())
     return false;
 
@@ -342,9 +341,7 @@ bool WebNotificationTray::ShowMessageCenterInternal(bool show_settings,
     return true;
 
   if (switches::IsSidebarEnabled()) {
-    SidebarInitMode mode =
-        (!show_settings ? SidebarInitMode::NORMAL
-                        : SidebarInitMode::MESSAGE_CENTER_SETTINGS);
+    SidebarInitMode mode = SidebarInitMode::NORMAL;
     // TODO(yoshiki): Support non-primary desktop on multi-display environment.
     Shell::Get()->GetPrimaryRootWindowController()->sidebar()->Show(mode);
   } else {
@@ -360,9 +357,6 @@ bool WebNotificationTray::ShowMessageCenterInternal(bool show_settings,
     // screen. This padding should be applied in all types of shelf alignment.
     message_center_bubble->SetMaxHeight(max_height - kPaddingFromScreenTop);
 
-    if (show_settings)
-      message_center_bubble->SetSettingsVisible();
-
     // For vertical shelf alignments, anchor to the WebNotificationTray, but for
     // horizontal (i.e. bottom) shelves, anchor to the system tray.
     TrayBackgroundView* anchor_tray = this;
@@ -376,10 +370,6 @@ bool WebNotificationTray::ShowMessageCenterInternal(bool show_settings,
   shelf()->UpdateAutoHideState();
   SetIsActive(true);
   return true;
-}
-
-bool WebNotificationTray::ShowMessageCenter(bool show_by_click) {
-  return ShowMessageCenterInternal(false /* show_settings */, show_by_click);
 }
 
 void WebNotificationTray::HideMessageCenter() {
@@ -501,24 +491,6 @@ bool WebNotificationTray::ShouldEnableExtraKeyboardAccessibility() {
 
 void WebNotificationTray::HideBubble(const views::TrayBubbleView* bubble_view) {
   HideBubbleWithView(bubble_view);
-}
-
-bool WebNotificationTray::ShowNotifierSettings() {
-  if (IsMessageCenterVisible()) {
-    if (switches::IsSidebarEnabled()) {
-      Sidebar* sidebar =
-          RootWindowController::ForWindow(GetWidget()->GetNativeView())
-              ->sidebar();
-      if (sidebar)
-        sidebar->Show(SidebarInitMode::MESSAGE_CENTER_SETTINGS);
-    } else {
-      static_cast<MessageCenterBubble*>(message_center_bubble()->bubble())
-          ->SetSettingsVisible();
-    }
-    return true;
-  }
-  return ShowMessageCenterInternal(true /* show_settings */,
-                                   false /* show_by_click */);
 }
 
 bool WebNotificationTray::IsCommandIdChecked(int command_id) const {

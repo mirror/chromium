@@ -112,16 +112,6 @@ void UiController::HidePopupBubbleInternal() {
   popups_visible_ = false;
 }
 
-void UiController::ShowNotifierSettingsBubble() {
-  if (popups_visible_)
-    HidePopupBubbleInternal();
-
-  message_center_visible_ = delegate_->ShowNotifierSettings();
-  message_center_->SetVisibility(message_center::VISIBILITY_SETTINGS);
-
-  NotifyUiControllerChanged();
-}
-
 void UiController::OnNotificationAdded(const std::string& notification_id) {
   OnMessageCenterChanged();
 }
@@ -145,11 +135,6 @@ void UiController::OnNotificationButtonClicked(
     int button_index) {
   if (popups_visible_)
     OnMessageCenterChanged();
-}
-
-void UiController::OnNotificationSettingsClicked(bool handled) {
-  if (!handled)
-    ShowNotifierSettingsBubble();
 }
 
 void UiController::OnNotificationDisplayed(const std::string& notification_id,

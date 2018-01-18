@@ -49,8 +49,7 @@ class ASH_EXPORT MessageCenterView
  public:
   MessageCenterView(message_center::MessageCenter* message_center,
                     message_center::UiController* ui_controller,
-                    int max_height,
-                    bool initially_settings_visible);
+                    int max_height);
   ~MessageCenterView() override;
 
   void Init();

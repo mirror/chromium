@@ -27,8 +27,4 @@ bool FakeUiDelegate::ShowMessageCenter(bool show_by_click) {
 
 void FakeUiDelegate::HideMessageCenter() {}
 
-bool FakeUiDelegate::ShowNotifierSettings() {
-  return false;
-}
-
 }  // namespace message_center

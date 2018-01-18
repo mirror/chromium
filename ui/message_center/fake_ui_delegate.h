@@ -27,7 +27,6 @@ class FakeUiDelegate : public UiDelegate {
   void HidePopups() override;
   bool ShowMessageCenter(bool show_by_click) override;
   void HideMessageCenter() override;
-  bool ShowNotifierSettings() override;
 
  private:
   std::unique_ptr<UiController> tray_;

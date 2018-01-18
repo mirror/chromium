@@ -34,9 +34,6 @@ class MESSAGE_CENTER_EXPORT UiDelegate {
 
   // Remove the message center from the UI.
   virtual void HideMessageCenter() = 0;
-
-  // Display the notifier settings as a bubble.
-  virtual bool ShowNotifierSettings() = 0;
 };
 
 }  // namespace message_center

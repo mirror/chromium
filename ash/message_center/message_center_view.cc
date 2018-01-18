@@ -132,16 +132,13 @@ class MessageCenterScrollView : public views::ScrollView {
 MessageCenterView::MessageCenterView(
     MessageCenter* message_center,
     message_center::UiController* ui_controller,
-    int max_height,
-    bool initially_settings_visible)
+    int max_height)
     : message_center_(message_center),
       ui_controller_(ui_controller),
-      settings_visible_(initially_settings_visible),
+      settings_visible_(false),
       is_locked_(Shell::Get()->session_controller()->IsScreenLocked()) {
   if (is_locked_)
     mode_ = Mode::LOCKED;
-  else if (initially_settings_visible)
-    mode_ = Mode::SETTINGS;
 
   message_center_->AddObserver(this);
   set_notify_enter_exit_on_child(true);
@@ -149,8 +146,8 @@ MessageCenterView::MessageCenterView(
     SetBackground(views::CreateSolidBackground(kBackgroundColor));
   SetFocusBehavior(views::View::FocusBehavior::NEVER);
 
-  button_bar_ = new MessageCenterButtonBar(
-      this, message_center, initially_settings_visible, GetButtonBarTitle());
+  button_bar_ =
+      new MessageCenterButtonBar(this, message_center, GetButtonBarTitle());
   button_bar_->SetCloseAllButtonEnabled(false);
 
   const int button_height = button_bar_->GetPreferredSize().height();

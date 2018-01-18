@@ -121,8 +121,7 @@ class MockMessageCenterView : public MessageCenterView {
  public:
   MockMessageCenterView(MessageCenter* message_center,
                         UiController* ui_controller,
-                        int max_height,
-                        bool initially_settings_visible);
+                        int max_height);
 
   bool SetRepositionTarget() override;
 
@@ -134,12 +133,8 @@ class MockMessageCenterView : public MessageCenterView {
 
 MockMessageCenterView::MockMessageCenterView(MessageCenter* message_center,
                                              UiController* ui_controller,
-                                             int max_height,
-                                             bool initially_settings_visible)
-    : MessageCenterView(message_center,
-                        ui_controller,
-                        max_height,
-                        initially_settings_visible) {}
+                                             int max_height)
+    : MessageCenterView(message_center, ui_controller, max_height) {}
 
 // Always say that the current reposition session is still active, by
 // returning true. Normally the reposition session is set based on where the
@@ -250,7 +245,7 @@ void MessageCenterViewTest::SetUp() {
 
   // Then create a new MockMessageCenterView with that single notification.
   message_center_view_.reset(
-      new MockMessageCenterView(message_center_.get(), NULL, 600, false));
+      new MockMessageCenterView(message_center_.get(), NULL, 600));
   GetMessageCenterView()->SetBounds(0, 0, 380, 100);
   message_center_view_->SetNotifications(notifications);
   message_center_view_->set_owned_by_client();

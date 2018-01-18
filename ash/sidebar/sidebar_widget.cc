@@ -76,11 +76,8 @@ class SidebarWidget::DelegateView : public views::WidgetDelegateView,
                               ->web_notification_tray()
                               ->message_center_ui_controller();
     gfx::Rect display_bounds = shelf->GetUserWorkAreaBounds();
-    bool initially_message_center_settings_visible =
-        (mode == SidebarInitMode::MESSAGE_CENTER_SETTINGS);
-    message_center_view_ = new MessageCenterView(
-        message_center, ui_controller, display_bounds.height(),
-        initially_message_center_settings_visible);
+    message_center_view_ = new MessageCenterView(message_center, ui_controller,
+                                                 display_bounds.height());
     message_center_view_->SetNotifications(
         message_center->GetVisibleNotifications());
 

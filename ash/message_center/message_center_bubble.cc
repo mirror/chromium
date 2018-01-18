@@ -99,20 +99,12 @@ void MessageCenterBubble::SetMaxHeight(int height) {
     message_center_view_->SetMaxHeight(max_height_);
 }
 
-void MessageCenterBubble::SetSettingsVisible() {
-  if (message_center_view_)
-    message_center_view_->SetSettingsVisible(true);
-  else
-    initially_settings_visible_ = true;
-}
-
 void MessageCenterBubble::InitializeContents(
     views::TrayBubbleView* new_bubble_view) {
   bubble_view_ = new_bubble_view;
   bubble_view_->GetWidget()->AddObserver(this);
   message_center_view_ =
-      new MessageCenterView(message_center_, ui_controller_, max_height_,
-                            initially_settings_visible_);
+      new MessageCenterView(message_center_, ui_controller_, max_height_);
   bubble_view_->AddChildView(new ContentsView(this, message_center_view_));
   message_center_view_->SetMaxHeight(max_height_);
   message_center_view_->Init();
