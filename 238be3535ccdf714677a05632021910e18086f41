@@ -68,6 +68,24 @@
       "revId": "238be3535ccdf714677a05632021910e18086f41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54c909b_10de7c53",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-18T02:33:18Z",
+      "side": 1,
+      "message": "Just to avoid the multiple lookups into the map.  Something like:\nExtensionUpdateData\u0026 data \u003d\n    update_data.insert(std::make_pair(extension_id, info.second)).first.second;\n\nand then:\n\nif (data.install_source.empty() \u0026\u0026\n    ...) {\n  data.install_source \u003d \"ondemand\";\n}\n\nThat way, we only do the map lookup for the key once.",
+      "parentUuid": "646b7f72_c85a3abb",
+      "revId": "238be3535ccdf714677a05632021910e18086f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
