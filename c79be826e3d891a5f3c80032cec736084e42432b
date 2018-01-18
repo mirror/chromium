@@ -16,6 +16,24 @@
       "revId": "c79be826e3d891a5f3c80032cec736084e42432b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1352cb33_ec08d839",
+        "filename": "content/public/child/dwrite_font_proxy_init_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-18T03:05:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "275e5e94_1a0927ec",
+      "revId": "c79be826e3d891a5f3c80032cec736084e42432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
