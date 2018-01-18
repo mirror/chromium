@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "df0c34e1_8b941a5e",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-18T02:09:35Z",
+      "side": 1,
+      "message": "I think I thought it was possible for IsAvailable() to return false even before dispatching beforeinput, but I guess checking GetFrame().Selection().ComputeVisibleSelectionInDOMTree().IsRange() would already have done something bad in that case?",
+      "parentUuid": "c45d8f03_d85cb3bb",
+      "range": {
+        "startLine": 1007,
+        "startChar": 0,
+        "endLine": 1008,
+        "endChar": 17
+      },
+      "revId": "dd8174a0cee5b7358e3f6457a256e378a1fe809d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a600fd3_5530f6a7",
         "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
         "patchSetId": 4
