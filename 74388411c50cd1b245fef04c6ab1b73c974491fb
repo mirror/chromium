@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4c5e6db_9b7fc6b5",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-18T23:58:43Z",
+      "side": 1,
+      "message": "sorry I didn\u0027t notice this earlier, but what I had envisioned was another function alongside FocusBookmarksToolbar, FocusInfobars, FocusAppMenu, etc. I don\u0027t think it makes sense to tack this onto the infobars one.",
+      "range": {
+        "startLine": 1047,
+        "startChar": 0,
+        "endLine": 1049,
+        "endChar": 3
+      },
+      "revId": "74388411c50cd1b245fef04c6ab1b73c974491fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c1b4f9_3a933450",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-18T23:58:43Z",
+      "side": 1,
+      "message": "nit: \"first visible but inactive\"",
+      "range": {
+        "startLine": 226,
+        "startChar": 19,
+        "endLine": 226,
+        "endChar": 33
+      },
+      "revId": "74388411c50cd1b245fef04c6ab1b73c974491fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
