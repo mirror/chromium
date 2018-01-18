@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed4bcffa_95aaf5c9",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3063,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T20:11:37Z",
+      "side": 1,
+      "message": "Does this need to change between Chrome and Chromium, depending on which build we are? In other words should it follow the example of settings_chromium_strings.grdp and settings_google_chrome_strings.grdp strings?",
+      "range": {
+        "startLine": 3063,
+        "startChar": 6,
+        "endLine": 3063,
+        "endChar": 12
+      },
+      "revId": "8ccb544a4695c17a81044cf208097a675ba51327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05e85bf_0b6aa87e",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T20:11:37Z",
+      "side": 1,
+      "message": "Nit: /** @private */",
+      "revId": "8ccb544a4695c17a81044cf208097a675ba51327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43cb1193_b5334ebd",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-18T20:11:37Z",
+      "side": 1,
+      "message": "Are you planning to add some tests for the new link row?\n\nIf so, this should probably be within a function() as done in [1], so that it can be overriden by tests, as done in [2].\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/reset_page/reset_page.js?l\u003d40\n[2] https://cs.chromium.org/chromium/src/chrome/test/data/webui/settings/chrome_cleanup_page_test.js?l\u003d104",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 51
+      },
+      "revId": "8ccb544a4695c17a81044cf208097a675ba51327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
