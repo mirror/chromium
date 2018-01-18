@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8a030f2_0f385899",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T23:54:13Z",
+      "side": 1,
+      "message": "s/was displayed/is displayed ?",
+      "range": {
+        "startLine": 55,
+        "startChar": 60,
+        "endLine": 55,
+        "endChar": 73
+      },
+      "revId": "cf2f5e96447bb833ecd62bc1bb12c6bec6d39998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceca3f6e_aee1143b",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T23:54:13Z",
+      "side": 1,
+      "message": "From description it\u0027s a little bit unclear what HAS_HISTORY_ENTRY, PREPARE_URL_FOR_RELOAD, and PREPARE_URL_FOR_RELOAD mean.\n\n\n\nHAS_HISTORY_ENTRY means that navigation is committed. Right? If so, then maybe we should use \"committed\" term?\n\nWhat is the difference between PREPARE_URL_FOR_RELOAD and PREPARE_URL_FOR_RELOAD ?",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 17
+      },
+      "revId": "cf2f5e96447bb833ecd62bc1bb12c6bec6d39998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3b2123_a6775d81",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T23:54:13Z",
+      "side": 1,
+      "message": "It looks like NavigationContext is present everywhere where SetErrorRetryState/GetErrorRetryState are called. Would it be better to add this API to NavigationContext instead? Or maybe NavigationItem should have this API?",
+      "range": {
+        "startLine": 178,
+        "startChar": 15,
+        "endLine": 178,
+        "endChar": 33
+      },
+      "revId": "cf2f5e96447bb833ecd62bc1bb12c6bec6d39998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
