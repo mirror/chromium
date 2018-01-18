@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b03dfd69_0c77cde4",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-18T21:50:50Z",
+      "side": 1,
+      "message": "This check doesn\u0027t seem right to me, since it\u0027s checking whether the dropped text will result in successful parsing for navigation, but if we\u0027re not navigating, it seems like we wouldn\u0027t care about that.",
+      "revId": "95e9d5c180c3f7fe694904214b2e7592fe08c87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c1aa50_e10e064d",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-18T21:50:50Z",
+      "side": 1,
+      "message": "This block looks like a long copy of the one above, which seems error-prone.  This probably deserves refactoring.",
+      "revId": "95e9d5c180c3f7fe694904214b2e7592fe08c87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
