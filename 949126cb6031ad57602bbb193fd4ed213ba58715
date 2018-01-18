@@ -16,6 +16,24 @@
       "revId": "949126cb6031ad57602bbb193fd4ed213ba58715",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032d84f4_cbe11775",
+        "filename": "ash/system/tray/tray_background_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-18T03:10:10Z",
+      "side": 1,
+      "message": "When all the windows are minimized, the logic at AcceleratorRouter::ShouldProcessAcceleratorNow will return true since the target of the key event is the RootWindow(https://cs.chromium.org/chromium/src/ash/accelerators/accelerator_router.cc?type\u003dcs\u0026l\u003d109).\n\nBut the |clipping_window_| hasn\u0027t been destroyed after close the bubble, when press the keyboard, the target of the key event will be set to the |clipping_window_| here (I guess the event dispatcher dispatch the event to this window in this case?) instead of RootWindow. Then AcceleratorRouter::ShouldProcessAcceleratorNow will return false. So in AcceleratorRouter::ProcessAccelerator it will just return false, will not go further to process the accelerator.\n\nSo I think we should destroy the |clipping_window_| after close the bubble. Then the event dispatcher can dispatch the key event to correct target.",
+      "parentUuid": "e9524bd7_b25ec0bd",
+      "revId": "949126cb6031ad57602bbb193fd4ed213ba58715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
