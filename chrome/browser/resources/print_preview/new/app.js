@@ -49,6 +49,14 @@ Polymer({
         cancelled: false,
       },
     },
+
+    /** @private {boolean} */
+    destinationDialogOpen_: {
+      type: Boolean,
+      notify: true,
+      value: false,
+      observer: 'onDestinationDialogOpen_',
+    },
   },
 
   /** @private {?print_preview.NativeLayer} */
@@ -148,5 +156,17 @@ Polymer({
    */
   onSaveStickySettings_: function(e) {
     this.nativeLayer_.saveAppState(/** @type {string} */ (e.detail));
+  },
+
+  onDestinationDialogOpen_: function() {
+    if (!this.destinationDialogOpen_)
+      return;
+    this.async(() => {
+      this.$$('print-preview-destination-dialog').show();
+    });
+  },
+
+  onDestinationDialogClose_: function() {
+    this.destinationDialogOpen_ = false;
   },
 });
