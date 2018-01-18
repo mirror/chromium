@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f98dd5e_eec5b758",
+        "filename": "ash/public/cpp/ash_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-18T01:26:32Z",
+      "side": 1,
+      "message": "nit: \"If true, a long press of the power button in tablet mode ...\"",
+      "revId": "ccc3e57edceac79851134a3a0c0110434e367748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71bc4cc_cfc1815c",
+        "filename": "ash/public/cpp/ash_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-18T01:26:32Z",
+      "side": 1,
+      "message": "nit: devices (but feel free to remove this second sentence)",
+      "range": {
+        "startLine": 150,
+        "startChar": 60,
+        "endLine": 150,
+        "endChar": 66
+      },
+      "revId": "ccc3e57edceac79851134a3a0c0110434e367748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b223810_08ee5af3",
+        "filename": "ash/system/power/convertible_power_button_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-18T01:26:32Z",
+      "side": 1,
+      "message": "nit: \"Used when ...\"",
+      "revId": "ccc3e57edceac79851134a3a0c0110434e367748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f51473a_3b99c5ec",
+        "filename": "ash/system/power/convertible_power_button_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-18T01:26:32Z",
+      "side": 1,
+      "message": "nit: \"... to show the menu when the power button is long-pressed.\"",
+      "revId": "ccc3e57edceac79851134a3a0c0110434e367748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fc248e_e7fbf029",
+        "filename": "ash/system/power/power_button_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-18T01:26:32Z",
+      "side": 1,
+      "message": "nit: \"... when the power button is long-pressed.\"",
+      "revId": "ccc3e57edceac79851134a3a0c0110434e367748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88e0115_6bb0bd25",
+        "filename": "ash/system/power/power_button_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-18T01:26:32Z",
+      "side": 1,
+      "message": "nit: delete second sentence",
+      "revId": "ccc3e57edceac79851134a3a0c0110434e367748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
