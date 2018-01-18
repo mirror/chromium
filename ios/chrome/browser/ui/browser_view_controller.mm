@@ -3917,8 +3917,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
 // progress of 1.0 fully shows the headers and a progress of 0.0 fully hides
 // them.
 - (void)updateHeadersForFullscreenProgress:(CGFloat)progress {
-  [self setFramesForHeaders:[self headerViews]
-                   atOffset:(1.0 - progress) * [self toolbarHeight]];
+  CGFloat offset = AlignValueToPixel((1.0 - progress) * [self toolbarHeight]);
+  [self setFramesForHeaders:[self headerViews] atOffset:offset];
 }
 
 // Translates the footer view up and down according to |progress|, where a
@@ -3930,8 +3930,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
   UIView* footerView = [self footerView];
   DCHECK(footerView);
   CGRect frame = footerView.frame;
-  frame.origin.y = CGRectGetMaxY(footerView.superview.bounds) -
-                   progress * CGRectGetHeight(frame);
+  frame.origin.y =
+      AlignValueToPixel(CGRectGetMaxY(footerView.superview.bounds) -
+                        progress * CGRectGetHeight(frame));
   footerView.frame = frame;
 }
 
@@ -3941,7 +3942,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (void)updateContentViewTopPaddingForFullscreenProgress:(CGFloat)progress {
   if (self.currentWebState) {
     self.currentWebState->GetWebViewProxy().topContentPadding =
-        progress * [self toolbarHeight];
+        AlignValueToPixel(progress * [self toolbarHeight]);
   }
 }
 
