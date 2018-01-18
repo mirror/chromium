@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da8f2b91_b7d7282d",
+        "filename": "remoting/client/chromoting_session.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2018-01-18T18:02:52Z",
+      "side": 1,
+      "message": "This would be a perfect place to use a default parameter; they\u0027re still prohibited by the style guide, right?",
+      "range": {
+        "startLine": 95,
+        "startChar": 54,
+        "endLine": 95,
+        "endChar": 0
+      },
+      "revId": "d3d4b41832d5201a26b30428a81b070e3c661a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
