@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2310e7ff_028584c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchSelectionController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2018-01-18T15:16:41Z",
+      "side": 1,
+      "message": "Philippe, I think this was an attempt to fix the outcome-writing with no features problem and can be removed now too.  Does that sound right to you?",
+      "range": {
+        "startLine": 394,
+        "startChar": 0,
+        "endLine": 395,
+        "endChar": 0
+      },
+      "revId": "2e3a09d956ad72075b8c67e4bb3e104176441c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
