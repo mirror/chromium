@@ -1033,6 +1033,8 @@ split_static_library("ui") {
       "webui/media_router/media_sink_with_cast_modes.h",
       "webui/media_router/query_result_manager.cc",
       "webui/media_router/query_result_manager.h",
+      "webui/media_router/web_contents_display_observer.cc",
+      "webui/media_router/web_contents_display_observer.h",
       "webui/ntp/app_icon_webui_handler.cc",
       "webui/ntp/app_icon_webui_handler.h",
       "webui/ntp/app_launcher_handler.cc",
