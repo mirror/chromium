@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcc2816a_0e53a896",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-18T17:45:02Z",
+      "side": 1,
+      "message": "How do you know the unretained is safe? don\u0027t think you need SetParent to be a member function, which would avoid the issue.",
+      "range": {
+        "startLine": 48,
+        "startChar": 29,
+        "endLine": 48,
+        "endChar": 39
+      },
+      "revId": "32f17c6698c3f3f9dcca014687aef9bd7415e5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa8ecc9_a772cf5f",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-18T17:45:02Z",
+      "side": 1,
+      "message": "Why do you need SWP_FRAMECHANGED?",
+      "range": {
+        "startLine": 82,
+        "startChar": 43,
+        "endLine": 82,
+        "endChar": 59
+      },
+      "revId": "32f17c6698c3f3f9dcca014687aef9bd7415e5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
