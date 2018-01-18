@@ -16,6 +16,29 @@
       "revId": "897d4c7986c079389540abb8393acdc3b7885243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e14735_3d4acf5f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T00:30:01Z",
+      "side": 1,
+      "message": "nit, you could turn this into a lambda for a bit more terse representation (works nice for runnables IMO)",
+      "range": {
+        "startLine": 648,
+        "startChar": 38,
+        "endLine": 648,
+        "endChar": 46
+      },
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
