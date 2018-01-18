@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b213e812_c592fe8d",
+        "filename": "build/config/gcc/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-18T23:17:11Z",
+      "side": 1,
+      "message": "Remind me again -- what happens w/o this and w/o libcpp_is_static \u003d false? Non-component builds of host binaries find the device version of libc++ or something?",
+      "revId": "e7f109b4c5274061fc1bc15f53c2163830b215e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
