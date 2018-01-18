@@ -1,0 +1,329 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67186a33_92ddefcc",
+        "filename": "ios/chrome/browser/application_context_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e?\n\nSame comment for the rest of files which don\u0027t include memory",
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71b2fff0_8456b12d",
+        "filename": "ios/chrome/browser/providers/chromium_browser_provider.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "We don\u0027t need this linebreak",
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d44b87d_5b70de53",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "We don\u0027t need this linebreak",
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a49737d_a71366ac",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "Linebreak after this",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051c03cc_c0d993f6",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "No need for this linebreak",
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9352e834_736bb90e",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "Linebreak after this",
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c5cf0b6_c00ab2fd",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "No need for linebreak after this",
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f5c5b1_6a054301",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_web_state_list_observer_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "Linebreak after this",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62bea402_f2668f09",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_web_state_list_observer_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "No need for a linebreak",
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b86e44_6dcdd549",
+        "filename": "ios/chrome/browser/ui/toolbar/legacy_toolbar_ui_updater_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "Linebreak after this",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67937e76_69ef5c79",
+        "filename": "ios/chrome/browser/ui/toolbar/legacy_toolbar_ui_updater_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "No need for a linebreak here",
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aca3b88_ce0321aa",
+        "filename": "ios/net/cookies/cookie_store_ios_persistent.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "Linebreak after this",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3072cd_95b18023",
+        "filename": "ios/net/cookies/cookie_store_ios_persistent.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "No need for a linebreak here",
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d444bd5_4b112c21",
+        "filename": "ios/net/cookies/system_cookie_store.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "Linebreak after this",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37daad52_1598d38a",
+        "filename": "ios/net/cookies/system_cookie_store.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "No need for a linebreak here",
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534b997d_6c0ab638",
+        "filename": "ios/web/interstitials/html_web_interstitial_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "Linebreak after this",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459f6918_90e33a4f",
+        "filename": "ios/web/interstitials/html_web_interstitial_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-18T16:09:05Z",
+      "side": 1,
+      "message": "No need for a linebreak here",
+      "revId": "cd2c021575eedf23e03e86df2fb9839fc0948102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
