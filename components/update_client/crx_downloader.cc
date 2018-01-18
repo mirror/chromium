@@ -41,7 +41,7 @@ CrxDownloader::DownloadMetrics::DownloadMetrics()
 // which uses the BITS service.
 std::unique_ptr<CrxDownloader> CrxDownloader::Create(
     bool is_background_download,
-    net::URLRequestContextGetter* context_getter) {
+    const scoped_refptr<net::URLRequestContextGetter>& context_getter) {
   std::unique_ptr<CrxDownloader> url_fetcher_downloader =
       std::make_unique<UrlFetcherDownloader>(nullptr, context_getter);
 
