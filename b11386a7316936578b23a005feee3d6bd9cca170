@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80f83c47_ec90c319",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationManagerProxy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T12:58:05Z",
+      "side": 1,
+      "message": "nit: Android M. We\u0027ll only start using it from O onward, but that doesn\u0027t have to stop other features from doing that if they\u0027re happy with the tradeoffs.",
+      "revId": "b11386a7316936578b23a005feee3d6bd9cca170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8fc309_8e08525a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T12:58:05Z",
+      "side": 1,
+      "message": "nit: documentation, particularly why we only do this for Android O+ while the API is available from M onward.",
+      "revId": "b11386a7316936578b23a005feee3d6bd9cca170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8873e7_2f694b24",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T12:58:05Z",
+      "side": 1,
+      "message": "nit: since there is no duplication, we can consider the branch a bail out and reduce nesting:\n\n    private String[] getActiveNotificationsIds() {\n        if (Build.VERSION.SDK_INT \u003c Build.VERSION_CODES.O) return new String[0];\n        // remainder of code\n    }",
+      "revId": "b11386a7316936578b23a005feee3d6bd9cca170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6afe4e2_bbe84c0f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T12:58:05Z",
+      "side": 1,
+      "message": "This file is only used on Android, so you can drop the #if guard and add this to the alphabetized list above.",
+      "revId": "b11386a7316936578b23a005feee3d6bd9cca170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e96e930_23e9c8a2",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T12:58:05Z",
+      "side": 1,
+      "message": "nit: I\u0027d avoid making the JNI call if |supports_synchronization| is FALSE at this point. Could even rewrite this method as follows, and change the if() in the Java code to an assert.\n\n    auto displayed_notifications \u003d std::make_unique\u003cstd::set\u003cstd::string\u003e\u003e();\n    bool supports_synchronization \u003d ...;\n\n    if (supports_synchronization) {\n      std::vector\u003cstd::string\u003e displayed_notification_vector;  // populate\n      displayed_notifications-\u003eassign(displayed_notification_vector.begin(),\n                                      displayed_notification_vector.end());\n    }\n\n    content::BrowserThread::PostTask(...)",
+      "revId": "b11386a7316936578b23a005feee3d6bd9cca170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
