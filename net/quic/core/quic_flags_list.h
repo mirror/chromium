@@ -122,7 +122,7 @@ QUIC_FLAG(bool,
 // If true, allow stream data and control frames to be acked multiple times.
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_allow_multiple_acks_for_data2,
-          false)
+          true)
 
 // If true, calculate stream sequencer buffer block count in a way that
 // guaranteed to be 2048.
@@ -136,7 +136,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_hq_deframer, true)
 // If true, then 1) at sender, avoid sending empty acks, 2) at receiver, close
 // connection when a ack frame\'s first block length is 0, unless the ack is
 // completely empty.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_strict_ack_handling, false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_strict_ack_handling, true)
 
 // If true, fixes for the two bugs described in crbug.com/723604 will be
 // enabled.
