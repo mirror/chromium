@@ -52,6 +52,7 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
   void CommitScheduledCALayers(CALayer* superlayer,
                                std::unique_ptr<CARendererLayerTree> old_tree,
                                float scale_factor);
+  void PretendCommit();
 
   // Returns the contents used for a given solid color.
   id ContentsForSolidColorForTesting(unsigned int color);
@@ -140,10 +141,14 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     void CommitToCA(CALayer* superlayer,
                     TransformLayer* old_layer,
                     float scale_factor);
+    void PretendCommit();
 
     gfx::Transform transform;
     std::vector<ContentLayer> content_layers;
     base::scoped_nsobject<CALayer> ca_layer;
+
+    int counter = 0;
+    CATransform3D ca_transforms[2];
 
    private:
     DISALLOW_COPY_AND_ASSIGN(TransformLayer);
@@ -197,6 +202,7 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
   bool has_committed_ = false;
   const bool allow_av_sample_buffer_display_layer_ = true;
   const bool allow_solid_color_layers_ = true;
+  int pretend_commit_index_ = -1;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CARendererLayerTree);

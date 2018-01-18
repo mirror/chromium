@@ -272,6 +272,10 @@ class VIZ_SERVICE_EXPORT Surface final : public SurfaceDeadlineClient {
   base::flat_set<SurfaceId> activation_dependencies_;
   base::flat_set<SurfaceId> late_activation_dependencies_;
 
+  bool reuse_surface_frame_ = false;
+  int reuse_surface_frame_counter_ = 0;
+  std::list<CompositorFrame> frames_to_reuse_;
+
   // A map from FrameSinkIds of SurfaceIds that this surface depends on for
   // activation to the latest local_id associated with the given FrameSinkId
   // that this surface is dependent on. This map is used to determine which

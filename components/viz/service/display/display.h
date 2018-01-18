@@ -148,6 +148,9 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   SoftwareRenderer* software_renderer_ = nullptr;
   std::vector<ui::LatencyInfo> stored_latency_info_;
 
+  std::list<CompositorFrame> old_frames_;
+  int reuse_aggregate_result_counter_ = 0;
+
   using PresentedCallbacks = std::vector<Surface::PresentedCallback>;
   PresentedCallbacks presented_callbacks_;
   PresentedCallbacks active_presented_callbacks_;

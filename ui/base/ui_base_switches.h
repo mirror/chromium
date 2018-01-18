@@ -58,6 +58,8 @@ UI_BASE_EXPORT extern const char kMus[];
 UI_BASE_EXPORT extern const char kMusHostingViz[];
 #endif
 
+UI_BASE_EXPORT extern const char kSkipDisplayCounter[];
+
 }  // namespace switches
 
 #endif  // UI_BASE_UI_BASE_SWITCHES_H_

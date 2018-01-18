@@ -14,6 +14,10 @@
 #include <unordered_map>
 #include <utility>
 
+#include "base/command_line.h"
+#include "base/strings/string_number_conversions.h"
+#include "cc/base/switches.h"
+
 #include "base/auto_reset.h"
 #include "base/bind.h"
 #include "base/containers/flat_map.h"
@@ -256,6 +260,26 @@ LayerTreeHostImpl::LayerTreeHostImpl(
       impl_thread_phase_(ImplThreadPhase::IDLE) {
   DCHECK(mutator_host_);
   mutator_host_->SetMutatorHostClient(this);
+
+  base::CommandLine* cl = base::CommandLine::ForCurrentProcess();
+  {
+    std::string string_value =
+        cl->GetSwitchValueASCII(switches::kCalcEmptyFrameCounter);
+    if (string_value != "")
+      base::StringToInt(string_value, &calc_empty_frame_counter_);
+  }
+  {
+    std::string string_value =
+        cl->GetSwitchValueASCII(switches::kSkipUpdateDrawPropertiesCounter);
+    if (string_value != "")
+      base::StringToInt(string_value, &skip_update_draw_properties_counter_);
+  }
+  {
+    std::string string_value =
+        cl->GetSwitchValueASCII(switches::kSendEmptyFrameCounter);
+    if (string_value != "")
+      base::StringToInt(string_value, &send_empty_frame_counter_);
+  }
 
   DCHECK(task_runner_provider_->IsImplThread());
   DidVisibilityChange(this, visible_);
@@ -873,67 +897,109 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
   DCHECK(CanDraw());
   DCHECK(!active_tree_->LayerListIsEmpty());
 
+  if (!settings_.single_thread_proxy_scheduler && !calc_empty_frame_) {
+    if (calc_empty_frame_counter_) {
+      calc_empty_frame_counter_ -= 1;
+      LOG(ERROR) << "Calc empty frames in " << calc_empty_frame_counter_;
+      if (!calc_empty_frame_counter_) {
+        calc_empty_frame_ = true;
+        LOG(ERROR) << "Calc empty frames";
+      }
+    }
+  }
+  if (!settings_.single_thread_proxy_scheduler &&
+      !skip_update_draw_properties_) {
+    if (skip_update_draw_properties_counter_) {
+      skip_update_draw_properties_counter_ -= 1;
+      LOG(ERROR) << "UpdateDrawProperties skipping in "
+                 << skip_update_draw_properties_counter_;
+      if (!skip_update_draw_properties_counter_) {
+        skip_update_draw_properties_ = true;
+        LOG(ERROR) << "UpdateDrawProperties skipping frames";
+      }
+    }
+  }
+  if (!settings_.single_thread_proxy_scheduler && !send_empty_frame_) {
+    if (send_empty_frame_counter_) {
+      send_empty_frame_counter_ -= 1;
+      LOG(ERROR) << "Sending empty frames in " << send_empty_frame_counter_;
+      if (!send_empty_frame_counter_) {
+        send_empty_frame_ = true;
+        LOG(ERROR) << "Sending empty frames";
+      }
+    }
+  }
+
   // For now, we use damage tracking to compute a global scissor. To do this, we
   // must compute all damage tracking before drawing anything, so that we know
   // the root damage rect. The root damage rect is then used to scissor each
   // surface.
-  DamageTracker::UpdateDamageTracking(active_tree_.get(),
-                                      active_tree_->GetRenderSurfaceList());
+  if (!calc_empty_frame_) {
+    DamageTracker::UpdateDamageTracking(active_tree_.get(),
+                                        active_tree_->GetRenderSurfaceList());
 
-  // When touch handle visibility changes there is no visible damage
-  // because touch handles are composited in the browser. However we
-  // still want the browser to be notified that the handles changed
-  // through the |ViewHostMsg_SwapCompositorFrame| IPC so we keep
-  // track of handle visibility changes through |handle_visibility_changed|.
-  bool handle_visibility_changed =
-      active_tree_->GetAndResetHandleVisibilityChanged();
+    // When touch handle visibility changes there is no visible damage
+    // because touch handles are composited in the browser. However we
+    // still want the browser to be notified that the handles changed
+    // through the |ViewHostMsg_SwapCompositorFrame| IPC so we keep
+    // track of handle visibility changes through |handle_visibility_changed|.
+    bool handle_visibility_changed =
+        active_tree_->GetAndResetHandleVisibilityChanged();
 
-  if (!HasDamage(handle_visibility_changed)) {
-    TRACE_EVENT0("cc",
-                 "LayerTreeHostImpl::CalculateRenderPasses::EmptyDamageRect");
-    frame->has_no_damage = true;
-    DCHECK(!resourceless_software_draw_);
-    return DRAW_SUCCESS;
-  }
+    if (!HasDamage(handle_visibility_changed)) {
+      TRACE_EVENT0("cc",
+                   "LayerTreeHostImpl::CalculateRenderPasses::EmptyDamageRect");
+      frame->has_no_damage = true;
+      DCHECK(!resourceless_software_draw_);
+      return DRAW_SUCCESS;
+    }
 
-  TRACE_EVENT_BEGIN2("cc", "LayerTreeHostImpl::CalculateRenderPasses",
-                     "render_surface_list.size()",
-                     static_cast<uint64_t>(frame->render_surface_list->size()),
-                     "RequiresHighResToDraw", RequiresHighResToDraw());
+    TRACE_EVENT_BEGIN2(
+        "cc", "LayerTreeHostImpl::CalculateRenderPasses",
+        "render_surface_list.size()",
+        static_cast<uint64_t>(frame->render_surface_list->size()),
+        "RequiresHighResToDraw", RequiresHighResToDraw());
 
-  // Create the render passes in dependency order.
-  size_t render_surface_list_size = frame->render_surface_list->size();
-  for (size_t i = 0; i < render_surface_list_size; ++i) {
-    size_t surface_index = render_surface_list_size - 1 - i;
-    RenderSurfaceImpl* render_surface =
-        (*frame->render_surface_list)[surface_index];
+    // Create the render passes in dependency order.
+    size_t render_surface_list_size = frame->render_surface_list->size();
+    for (size_t i = 0; i < render_surface_list_size; ++i) {
+      size_t surface_index = render_surface_list_size - 1 - i;
+      RenderSurfaceImpl* render_surface =
+          (*frame->render_surface_list)[surface_index];
 
-    bool is_root_surface =
-        render_surface->EffectTreeIndex() == EffectTree::kContentsRootNodeId;
-    bool should_draw_into_render_pass =
-        is_root_surface || render_surface->contributes_to_drawn_surface() ||
-        render_surface->HasCopyRequest() ||
-        render_surface->ShouldCacheRenderSurface();
-    if (should_draw_into_render_pass)
-      frame->render_passes.push_back(render_surface->CreateRenderPass());
-  }
+      bool is_root_surface =
+          render_surface->EffectTreeIndex() == EffectTree::kContentsRootNodeId;
+      bool should_draw_into_render_pass =
+          is_root_surface || render_surface->contributes_to_drawn_surface() ||
+          render_surface->HasCopyRequest() ||
+          render_surface->ShouldCacheRenderSurface();
+      if (should_draw_into_render_pass)
+        frame->render_passes.push_back(render_surface->CreateRenderPass());
+    }
 
-  // Damage rects for non-root passes aren't meaningful, so set them to be
-  // equal to the output rect.
-  for (size_t i = 0; i + 1 < frame->render_passes.size(); ++i) {
-    viz::RenderPass* pass = frame->render_passes[i].get();
-    pass->damage_rect = pass->output_rect;
-  }
+    // Damage rects for non-root passes aren't meaningful, so set them to be
+    // equal to the output rect.
+    for (size_t i = 0; i + 1 < frame->render_passes.size(); ++i) {
+      viz::RenderPass* pass = frame->render_passes[i].get();
+      pass->damage_rect = pass->output_rect;
+    }
 
-  // When we are displaying the HUD, change the root damage rect to cover the
-  // entire root surface. This will disable partial-swap/scissor optimizations
-  // that would prevent the HUD from updating, since the HUD does not cause
-  // damage itself, to prevent it from messing with damage visualizations. Since
-  // damage visualizations are done off the LayerImpls and RenderSurfaceImpls,
-  // changing the RenderPass does not affect them.
-  if (active_tree_->hud_layer()) {
-    viz::RenderPass* root_pass = frame->render_passes.back().get();
+    // When we are displaying the HUD, change the root damage rect to cover the
+    // entire root surface. This will disable partial-swap/scissor optimizations
+    // that would prevent the HUD from updating, since the HUD does not cause
+    // damage itself, to prevent it from messing with damage visualizations.
+    // Since damage visualizations are done off the LayerImpls and
+    // RenderSurfaceImpls, changing the RenderPass does not affect them.
+    if (active_tree_->hud_layer()) {
+      viz::RenderPass* root_pass = frame->render_passes.back().get();
+      root_pass->damage_rect = root_pass->output_rect;
+    }
+  } else {
+    RenderSurfaceImpl* render_surface = (*frame->render_surface_list)[0];
+    std::unique_ptr<viz::RenderPass> root_pass =
+        render_surface->CreateRenderPass();
     root_pass->damage_rect = root_pass->output_rect;
+    frame->render_passes.push_back(std::move(root_pass));
   }
 
   // Grab this region here before iterating layers. Taking copy requests from
@@ -964,81 +1030,88 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
       active_tree()->property_trees()->effect_tree.HasCopyRequests();
   bool have_missing_animated_tiles = false;
 
-  for (EffectTreeLayerListIterator it(active_tree());
-       it.state() != EffectTreeLayerListIterator::State::END; ++it) {
-    auto target_render_pass_id = it.target_render_surface()->id();
-    viz::RenderPass* target_render_pass =
-        FindRenderPassById(frame->render_passes, target_render_pass_id);
+  // DCHECK(! settings_.single_thread_proxy_scheduler);
 
-    AppendQuadsData append_quads_data;
+  Region full_region(frame->render_passes.back()->output_rect);
+  if (!calc_empty_frame_) {
+    for (EffectTreeLayerListIterator it(active_tree());
+         it.state() != EffectTreeLayerListIterator::State::END; ++it) {
+      auto target_render_pass_id = it.target_render_surface()->id();
+      viz::RenderPass* target_render_pass =
+          FindRenderPassById(frame->render_passes, target_render_pass_id);
 
-    if (it.state() == EffectTreeLayerListIterator::State::TARGET_SURFACE) {
-      RenderSurfaceImpl* render_surface = it.target_render_surface();
-      if (render_surface->HasCopyRequest()) {
-        active_tree()
-            ->property_trees()
-            ->effect_tree.TakeCopyRequestsAndTransformToSurface(
-                render_surface->EffectTreeIndex(),
-                &target_render_pass->copy_requests);
+      AppendQuadsData append_quads_data;
+
+      if (it.state() == EffectTreeLayerListIterator::State::TARGET_SURFACE) {
+        RenderSurfaceImpl* render_surface = it.target_render_surface();
+        if (render_surface->HasCopyRequest()) {
+          active_tree()
+              ->property_trees()
+              ->effect_tree.TakeCopyRequestsAndTransformToSurface(
+                  render_surface->EffectTreeIndex(),
+                  &target_render_pass->copy_requests);
+        }
+      } else if (it.state() ==
+                 EffectTreeLayerListIterator::State::CONTRIBUTING_SURFACE) {
+        RenderSurfaceImpl* render_surface = it.current_render_surface();
+        if (render_surface->contributes_to_drawn_surface()) {
+          render_surface->AppendQuads(draw_mode, target_render_pass,
+                                      &append_quads_data);
+        }
+      } else if (it.state() == EffectTreeLayerListIterator::State::LAYER &&
+                 !it.current_layer()->visible_layer_rect().IsEmpty()) {
+        LayerImpl* layer = it.current_layer();
+        bool occluded =
+            layer->draw_properties().occlusion_in_content_space.IsOccluded(
+                layer->visible_layer_rect());
+        if (!occluded && layer->WillDraw(draw_mode, resource_provider_.get())) {
+          DCHECK_EQ(active_tree_.get(), layer->layer_tree_impl());
+
+          frame->will_draw_layers.push_back(layer);
+          if (layer->may_contain_video())
+            frame->may_contain_video = true;
+
+          layer->AppendQuads(target_render_pass, &append_quads_data);
+        }
+
+        ++layers_drawn;
+
+        rendering_stats_instrumentation_->AddVisibleContentArea(
+            append_quads_data.visible_layer_area);
+        rendering_stats_instrumentation_->AddApproximatedVisibleContentArea(
+            append_quads_data.approximated_visible_content_area);
+        rendering_stats_instrumentation_->AddCheckerboardedVisibleContentArea(
+            append_quads_data.checkerboarded_visible_content_area);
+        rendering_stats_instrumentation_
+            ->AddCheckerboardedNoRecordingContentArea(
+                append_quads_data.checkerboarded_no_recording_content_area);
+        rendering_stats_instrumentation_
+            ->AddCheckerboardedNeedsRasterContentArea(
+                append_quads_data.checkerboarded_needs_raster_content_area);
+
+        num_missing_tiles += append_quads_data.num_missing_tiles;
+        num_incomplete_tiles += append_quads_data.num_incomplete_tiles;
+        checkerboarded_no_recording_content_area +=
+            append_quads_data.checkerboarded_no_recording_content_area;
+        checkerboarded_needs_raster_content_area +=
+            append_quads_data.checkerboarded_needs_raster_content_area;
+        total_visible_area += append_quads_data.visible_layer_area;
+        if (append_quads_data.num_missing_tiles > 0) {
+          have_missing_animated_tiles |=
+              layer->screen_space_transform_is_animating();
+        }
       }
-    } else if (it.state() ==
-               EffectTreeLayerListIterator::State::CONTRIBUTING_SURFACE) {
-      RenderSurfaceImpl* render_surface = it.current_render_surface();
-      if (render_surface->contributes_to_drawn_surface()) {
-        render_surface->AppendQuads(draw_mode, target_render_pass,
-                                    &append_quads_data);
+      frame->activation_dependencies.insert(
+          frame->activation_dependencies.end(),
+          append_quads_data.activation_dependencies.begin(),
+          append_quads_data.activation_dependencies.end());
+      if (append_quads_data.deadline_in_frames) {
+        if (!frame->deadline_in_frames)
+          frame->deadline_in_frames = 0u;
+
+        frame->deadline_in_frames = std::max(
+            *frame->deadline_in_frames, *append_quads_data.deadline_in_frames);
       }
-    } else if (it.state() == EffectTreeLayerListIterator::State::LAYER &&
-               !it.current_layer()->visible_layer_rect().IsEmpty()) {
-      LayerImpl* layer = it.current_layer();
-      bool occluded =
-          layer->draw_properties().occlusion_in_content_space.IsOccluded(
-              layer->visible_layer_rect());
-      if (!occluded && layer->WillDraw(draw_mode, resource_provider_.get())) {
-        DCHECK_EQ(active_tree_.get(), layer->layer_tree_impl());
-
-        frame->will_draw_layers.push_back(layer);
-        if (layer->may_contain_video())
-          frame->may_contain_video = true;
-
-        layer->AppendQuads(target_render_pass, &append_quads_data);
-      }
-
-      ++layers_drawn;
-
-      rendering_stats_instrumentation_->AddVisibleContentArea(
-          append_quads_data.visible_layer_area);
-      rendering_stats_instrumentation_->AddApproximatedVisibleContentArea(
-          append_quads_data.approximated_visible_content_area);
-      rendering_stats_instrumentation_->AddCheckerboardedVisibleContentArea(
-          append_quads_data.checkerboarded_visible_content_area);
-      rendering_stats_instrumentation_->AddCheckerboardedNoRecordingContentArea(
-          append_quads_data.checkerboarded_no_recording_content_area);
-      rendering_stats_instrumentation_->AddCheckerboardedNeedsRasterContentArea(
-          append_quads_data.checkerboarded_needs_raster_content_area);
-
-      num_missing_tiles += append_quads_data.num_missing_tiles;
-      num_incomplete_tiles += append_quads_data.num_incomplete_tiles;
-      checkerboarded_no_recording_content_area +=
-          append_quads_data.checkerboarded_no_recording_content_area;
-      checkerboarded_needs_raster_content_area +=
-          append_quads_data.checkerboarded_needs_raster_content_area;
-      total_visible_area += append_quads_data.visible_layer_area;
-      if (append_quads_data.num_missing_tiles > 0) {
-        have_missing_animated_tiles |=
-            layer->screen_space_transform_is_animating();
-      }
-    }
-    frame->activation_dependencies.insert(
-        frame->activation_dependencies.end(),
-        append_quads_data.activation_dependencies.begin(),
-        append_quads_data.activation_dependencies.end());
-    if (append_quads_data.deadline_in_frames) {
-      if (!frame->deadline_in_frames)
-        frame->deadline_in_frames = 0u;
-
-      frame->deadline_in_frames = std::max(
-          *frame->deadline_in_frames, *append_quads_data.deadline_in_frames);
     }
   }
 
@@ -1074,12 +1147,28 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
 #endif
   bool has_transparent_background =
       SkColorGetA(active_tree_->background_color()) != SK_AlphaOPAQUE;
+
+  if (send_empty_frame_ && !calc_empty_frame_) {
+    if (frame->render_passes.size() > 1) {
+      frame->render_passes[0] = std::move(frame->render_passes.back());
+      frame->render_passes.resize(1);
+    }
+    frame->render_passes.back()->shared_quad_state_list.clear();
+    frame->render_passes.back()->quad_list.clear();
+  }
+
+  const Region& xx_unoccluded_screen_space_region =
+      (calc_empty_frame_ || send_empty_frame_) ? full_region
+                                               : unoccluded_screen_space_region;
   if (!has_transparent_background) {
+    static int counter = 0;
+    counter += 1;
     frame->render_passes.back()->has_transparent_background = false;
-    AppendQuadsToFillScreen(
-        active_tree_->RootScrollLayerDeviceViewportBounds(),
-        frame->render_passes.back().get(), active_tree_->RootRenderSurface(),
-        active_tree_->background_color(), unoccluded_screen_space_region);
+    AppendQuadsToFillScreen(active_tree_->RootScrollLayerDeviceViewportBounds(),
+                            frame->render_passes.back().get(),
+                            active_tree_->RootRenderSurface(),
+                            0xFF00FFFF /*active_tree_->background_color()*/,
+                            xx_unoccluded_screen_space_region);
   }
 
   RemoveRenderPasses(frame);
@@ -1913,6 +2002,8 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
         resources.push_back(resource_id);
     }
   }
+  if (calc_empty_frame_ || send_empty_frame_)
+    DCHECK(resources.empty());
 
   DCHECK_LE(viz::BeginFrameArgs::kStartingFrameNumber,
             frame->begin_frame_ack.sequence_number);

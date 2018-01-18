@@ -42,4 +42,8 @@ uint32_t GetDeadlineToSynchronizeSurfaces() {
   return number_of_frames_to_activation_deadline;
 }
 
+const char kReuseAggregateResultCounter[] = "reuse-aggregate-result-counter";
+const char kReuseSurfaceFrameCounter[] = "reuse-surface-frame-counter";
+const char kSkipRendererCounter[] = "skip-renderer-counter";
+
 }  // namespace switches

@@ -26,6 +26,9 @@ namespace ui {
 
 namespace {
 
+int* g_pretend_commit_index = nullptr;
+int g_current_index = 0;
+
 // This will enqueue |io_surface| to be drawn by |av_layer|. This will
 // retain |cv_pixel_buffer| until it is no longer being displayed.
 bool AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(
@@ -217,6 +220,13 @@ bool CARendererLayerTree::ScheduleCALayer(const CARendererLayerParams& params) {
   return root_layer_.AddContentLayer(this, params);
 }
 
+void CARendererLayerTree::PretendCommit() {
+  CHECK(pretend_commit_index_ != -1);
+  root_layer_.clip_and_sorting_layers[0]
+      .transform_layers[pretend_commit_index_]
+      .PretendCommit();
+}
+
 void CARendererLayerTree::CommitScheduledCALayers(
     CALayer* superlayer,
     std::unique_ptr<CARendererLayerTree> old_tree,
@@ -229,7 +239,10 @@ void CARendererLayerTree::CommitScheduledCALayers(
       old_root_layer = &old_tree->root_layer_;
   }
 
+  pretend_commit_index_ = -1;
+  g_pretend_commit_index = &pretend_commit_index_;
   root_layer_.CommitToCA(superlayer, old_root_layer, scale_factor);
+
   // If there are any extra CALayers in |old_tree| that were not stolen by this
   // tree, they will be removed from the CALayer tree in this deallocation.
   old_tree.reset();
@@ -348,7 +361,10 @@ CARendererLayerTree::TransformLayer::TransformLayer(
 CARendererLayerTree::TransformLayer::TransformLayer(TransformLayer&& layer)
     : transform(layer.transform),
       content_layers(std::move(layer.content_layers)),
-      ca_layer(layer.ca_layer) {
+      ca_layer(layer.ca_layer),
+      counter(layer.counter) {
+  ca_transforms[0] = layer.ca_transforms[0];
+  ca_transforms[1] = layer.ca_transforms[1];
   layer.ca_layer.reset();
 }
 
@@ -628,9 +644,15 @@ void CARendererLayerTree::ClipAndSortingLayer::CommitToCA(
     TransformLayer* old_transform_layer = nullptr;
     if (old_layer && i < old_layer->transform_layers.size())
       old_transform_layer = &old_layer->transform_layers[i];
+    g_current_index = (int)i;
     transform_layers[i].CommitToCA(ca_layer.get(), old_transform_layer,
                                    scale_factor);
   }
+}
+
+void CARendererLayerTree::TransformLayer::PretendCommit() {
+  counter += 1;
+  [ca_layer setTransform:ca_transforms[counter % 2]];
 }
 
 void CARendererLayerTree::TransformLayer::CommitToCA(CALayer* superlayer,
@@ -656,6 +678,13 @@ void CARendererLayerTree::TransformLayer::CommitToCA(CALayer* superlayer,
 
     CATransform3D ca_transform;
     conjugated_transform.matrix().asColMajord(&ca_transform.m11);
+
+    if (old_layer) {
+      counter = old_layer->counter + 1;
+      *g_pretend_commit_index = g_current_index;
+      ca_transforms[1] = old_layer->ca_transforms[0];
+      ca_transforms[0] = ca_transform;
+    }
     [ca_layer setTransform:ca_transform];
   }
 

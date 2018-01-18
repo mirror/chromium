@@ -9,6 +9,10 @@
 #include <utility>
 #include <vector>
 
+#include "base/command_line.h"
+#include "base/strings/string_number_conversions.h"
+#include "components/viz/common/switches.h"
+
 #include "base/auto_reset.h"
 #include "base/containers/circular_deque.h"
 #include "base/metrics/histogram_macros.h"
@@ -85,7 +89,13 @@ DirectRenderer::DirectRenderer(const RendererSettings* settings,
     : settings_(settings),
       output_surface_(output_surface),
       resource_provider_(resource_provider),
-      overlay_processor_(std::make_unique<OverlayProcessor>(output_surface)) {}
+      overlay_processor_(std::make_unique<OverlayProcessor>(output_surface)) {
+  base::CommandLine* cl = base::CommandLine::ForCurrentProcess();
+  std::string string_value =
+      cl->GetSwitchValueASCII(switches::kSkipRendererCounter);
+  if (string_value != "")
+    base::StringToInt(string_value, &skip_renderer_counter_);
+}
 
 DirectRenderer::~DirectRenderer() = default;
 
@@ -271,28 +281,41 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
       render_pass_background_filters_[pass->id] = &pass->background_filters;
   }
 
-  // Create the overlay candidate for the output surface, and mark it as
-  // always handled.
-  if (output_surface_->IsDisplayedAsOverlayPlane()) {
-    cc::OverlayCandidate output_surface_plane;
-    output_surface_plane.display_rect =
-        gfx::RectF(device_viewport_size.width(), device_viewport_size.height());
-    output_surface_plane.format = output_surface_->GetOverlayBufferFormat();
-    output_surface_plane.use_output_surface_for_resource = true;
-    output_surface_plane.overlay_handled = true;
-    current_frame()->overlay_list.push_back(output_surface_plane);
+  if (!skip_renderer_) {
+    if (skip_renderer_counter_) {
+      skip_renderer_counter_ -= 1;
+      LOG(ERROR) << "Skipping renderer in " << skip_renderer_counter_;
+      if (!skip_renderer_counter_) {
+        skip_renderer_ = true;
+        LOG(ERROR) << "Skipping renderer.";
+      }
+    }
   }
 
-  // Attempt to replace some or all of the quads of the root render pass with
-  // overlays.
-  overlay_processor_->ProcessForOverlays(
-      resource_provider_, render_passes_in_draw_order,
-      output_surface_->color_matrix(), render_pass_filters_,
-      render_pass_background_filters_, &current_frame()->overlay_list,
-      &current_frame()->ca_layer_overlay_list,
-      &current_frame()->dc_layer_overlay_list,
-      &current_frame()->root_damage_rect,
-      &current_frame()->root_content_bounds);
+  if (!skip_renderer_) {
+    // Create the overlay candidate for the output surface, and mark it as
+    // always handled.
+    if (output_surface_->IsDisplayedAsOverlayPlane()) {
+      cc::OverlayCandidate output_surface_plane;
+      output_surface_plane.display_rect = gfx::RectF(
+          device_viewport_size.width(), device_viewport_size.height());
+      output_surface_plane.format = output_surface_->GetOverlayBufferFormat();
+      output_surface_plane.use_output_surface_for_resource = true;
+      output_surface_plane.overlay_handled = true;
+      current_frame()->overlay_list.push_back(output_surface_plane);
+    }
+
+    // Attempt to replace some or all of the quads of the root render pass with
+    // overlays.
+    overlay_processor_->ProcessForOverlays(
+        resource_provider_, render_passes_in_draw_order,
+        output_surface_->color_matrix(), render_pass_filters_,
+        render_pass_background_filters_, &current_frame()->overlay_list,
+        &current_frame()->ca_layer_overlay_list,
+        &current_frame()->dc_layer_overlay_list,
+        &current_frame()->root_damage_rect,
+        &current_frame()->root_content_bounds);
+  }
 
   // Draw all non-root render passes except for the root render pass.
   for (const auto& pass : *render_passes_in_draw_order) {
@@ -321,6 +344,7 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
   // We can skip all drawing if the damage rect is now empty.
   bool skip_drawing_root_render_pass =
       current_frame()->root_damage_rect.IsEmpty() && allow_empty_swap_;
+  skip_drawing_root_render_pass |= skip_renderer_;
 
   // If we have to draw but don't support partial swap, the whole output should
   // be considered damaged.
@@ -331,7 +355,7 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
     DrawRenderPassAndExecuteCopyRequests(root_render_pass);
 
   FinishDrawingFrame();
-  render_passes_in_draw_order->clear();
+  // render_passes_in_draw_order->clear();
   render_pass_filters_.clear();
   render_pass_background_filters_.clear();
 

@@ -575,8 +575,9 @@ void GLRenderer::BeginDrawingFrame() {
   // so that drawing can proceed without GL context switching interruptions.
   for (const auto& pass : *current_frame()->render_passes_in_draw_order) {
     for (auto* quad : pass->quad_list) {
-      for (ResourceId resource_id : quad->resources)
+      for (ResourceId resource_id : quad->resources) {
         resource_provider_->WaitSyncToken(resource_id);
+      }
     }
   }
 
@@ -2657,9 +2658,11 @@ void GLRenderer::FinishDrawingFrame() {
   gl_->Disable(GL_BLEND);
   blend_shadow_ = false;
 
-  ScheduleCALayers();
-  ScheduleDCLayers();
-  ScheduleOverlays();
+  if (!skip_renderer_) {
+    ScheduleCALayers();
+    ScheduleDCLayers();
+    ScheduleOverlays();
+  }
 
   TRACE_COUNTER1(TRACE_DISABLED_BY_DEFAULT("cc.debug.triangles"),
                  "Triangles Drawn", num_triangles_drawn_);

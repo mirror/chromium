@@ -130,4 +130,6 @@ const char kMus[] = "mus";
 const char kMusHostingViz[] = "mus-hosting-viz";
 #endif
 
+const char kSkipDisplayCounter[] = "skip-display-counter";
+
 }  // namespace switches

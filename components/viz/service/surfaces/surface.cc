@@ -9,6 +9,10 @@
 
 #include <algorithm>
 
+#include "base/command_line.h"
+#include "base/strings/string_number_conversions.h"
+#include "components/viz/common/switches.h"
+
 #include "base/stl_util.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "components/viz/common/resources/returned_resource.h"
@@ -29,7 +33,13 @@ Surface::Surface(const SurfaceInfo& surface_info,
       surface_manager_(surface_manager),
       surface_client_(std::move(surface_client)),
       deadline_(this, begin_frame_source),
-      needs_sync_tokens_(needs_sync_tokens) {}
+      needs_sync_tokens_(needs_sync_tokens) {
+  base::CommandLine* cl = base::CommandLine::ForCurrentProcess();
+  std::string string_value =
+      cl->GetSwitchValueASCII(switches::kReuseSurfaceFrameCounter);
+  if (string_value != "")
+    base::StringToInt(string_value, &reuse_surface_frame_counter_);
+}
 
 Surface::~Surface() {
   ClearCopyRequests();
@@ -125,6 +135,23 @@ bool Surface::QueueFrame(
     const AggregatedDamageCallback& aggregated_damage_callback,
     PresentedCallback presented_callback) {
   late_activation_dependencies_.clear();
+
+  if (!reuse_surface_frame_) {
+    if (reuse_surface_frame_counter_) {
+      reuse_surface_frame_counter_ -= 1;
+      LOG(ERROR) << "Reusing old surface frames in "
+                 << reuse_surface_frame_counter_;
+      if (!reuse_surface_frame_counter_) {
+        reuse_surface_frame_ = true;
+        LOG(ERROR) << "Reusing old surface frames.";
+      }
+    }
+  }
+
+  if (reuse_surface_frame_) {
+    frame = std::move(frames_to_reuse_.front());
+    frames_to_reuse_.pop_front();
+  }
 
   if (frame.size_in_pixels() != surface_info_.size_in_pixels() ||
       frame.device_scale_factor() != surface_info_.device_scale_factor()) {
@@ -475,6 +502,10 @@ void Surface::UnrefFrameResourcesAndRunCallbacks(
     std::move(frame_data->presented_callback)
         .Run(base::TimeTicks(), base::TimeDelta(), 0);
   }
+
+  frames_to_reuse_.push_back(std::move(frame_data->frame));
+  if (frames_to_reuse_.size() > 2)
+    frames_to_reuse_.pop_front();
 }
 
 void Surface::ClearCopyRequests() {
