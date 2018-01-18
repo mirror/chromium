@@ -67,8 +67,6 @@ KeyedService* DownloadServiceFactory::BuildServiceInstanceFor(
       std::make_pair(download::DownloadClient::BACKGROUND_FETCH,
                      base::MakeUnique<BackgroundFetchDownloadClient>(context)));
 
-  auto* download_manager = content::BrowserContext::GetDownloadManager(context);
-
   base::FilePath storage_dir;
   if (!context->IsOffTheRecord() && !context->GetPath().empty()) {
     storage_dir =
@@ -87,9 +85,9 @@ KeyedService* DownloadServiceFactory::BuildServiceInstanceFor(
   task_scheduler = base::MakeUnique<DownloadTaskSchedulerImpl>(context);
 #endif
 
-  return download::CreateDownloadService(std::move(clients), download_manager,
-                                         storage_dir, background_task_runner,
-                                         std::move(task_scheduler));
+  return download::BuildDownloadService(context, std::move(clients),
+                                        storage_dir, background_task_runner,
+                                        std::move(task_scheduler));
 }
 
 content::BrowserContext* DownloadServiceFactory::GetBrowserContextToUse(
