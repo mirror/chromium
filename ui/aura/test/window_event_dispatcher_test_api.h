@@ -18,6 +18,7 @@ class WindowEventDispatcherTestApi {
   explicit WindowEventDispatcherTestApi(WindowEventDispatcher* dispatcher);
 
   bool HoldingPointerMoves() const;
+  void WaitUntilPointerMovesDispatched();
 
  private:
   WindowEventDispatcher* dispatcher_;
