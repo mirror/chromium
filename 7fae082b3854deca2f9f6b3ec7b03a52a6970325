@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "593fabc7_2175d1a3",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-18T21:42:42Z",
+      "side": 1,
+      "message": "I think one of the try bots caught a bug in our test here: The TimeTicks::Now() calls provide microsecond resolution, but the SystemClock.uptimeMillis() only provides millisecond resolution. So, we have to account for truncation. Meaning:\n\n  lower_bound_ticks \u003d 1000123\n  uptime_millis \u003d 1000  --\u003e converted_ticks \u003d 1000000\n  upper_bound_ticks \u003d 1000456\n\nI think a quick fix would be to just widen the bounds by 1 millisecond on each side (i.e., subtract 1ms from lower_bound and add 1ms to upper_bound).",
+      "range": {
+        "startLine": 915,
+        "startChar": 0,
+        "endLine": 918,
+        "endChar": 55
+      },
+      "revId": "7fae082b3854deca2f9f6b3ec7b03a52a6970325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
