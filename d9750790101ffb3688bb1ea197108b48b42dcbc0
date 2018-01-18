@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "614c7f40_8ca1e396",
+        "filename": "third_party/guava/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-18T01:15:35Z",
+      "side": 1,
+      "message": "One of the nice things about testonly is that gn enforces that it not get used in production targets. I\u0027m concerned about enforcement (or lack thereof) here.",
+      "revId": "d9750790101ffb3688bb1ea197108b48b42dcbc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f66a6f62_bbc07a00",
+        "filename": "third_party/guava/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-18T01:15:35Z",
+      "side": 1,
+      "message": "nit: these should be alphabetical \u0026 Case is no longer working in Chromium, so you can just remove him and put yourself here.",
+      "revId": "d9750790101ffb3688bb1ea197108b48b42dcbc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
