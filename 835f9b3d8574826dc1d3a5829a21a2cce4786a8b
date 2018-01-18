@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1aff6f72_c8b25a72",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-18T09:50:26Z",
+      "side": 1,
+      "message": "\u003e starting rect(existing and this CL): upper edge of B\u0027s rect.\n\u003e starting rect(you suggested): upper edge of A\u0027s rect.\n\nRight... Problem is that NodeRectInAbsoluteCoordinates() doesn\u0027t care about visibility.\n\nI think we need the base case for starting_rect to be \"top of frame\u0027s *visual* viewport\":\n\n // Figure out the starting rect.\n LayoutRect starting_rect \u003d VirtualRectForDirection(type, \"top of frame\u0027s visual viewport\");\n\nWhat do you think? \n\nScrollableArea:: might help you find the visual rect. Doing this would allow us to remove L1406-1410 in the loop body, which would be really nice :)\n\n(\"Visual viewport\" is defined here http://bit.ly/blink-scrolling.)\n\n\u003e I removed section#3 in this commit message because this CL is not different with existing implementation in terms of starting rect. First I want to describe about https://chromium-review.googlesource.com/c/chromium/src/+/870029 , But the point is divided into its own CL. So there is no reason for describing about that in here.\n\nYes. Very good.",
+      "parentUuid": "343b6ccf_abba8997",
+      "range": {
+        "startLine": 1406,
+        "startChar": 0,
+        "endLine": 1410,
+        "endChar": 28
+      },
+      "revId": "835f9b3d8574826dc1d3a5829a21a2cce4786a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9009250_9f941a13",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 28
