@@ -160,6 +160,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
 
   viz::FrameSinkId AllocateFrameSinkId(bool is_guest_view_hack);
 
+  void WasResized(viz::LocalSurfaceId local_surface_id);
+
   // RenderWidgetHost implementation.
   void UpdateTextDirection(blink::WebTextDirection direction) override;
   void NotifyTextDirection() override;
@@ -542,6 +544,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
 
   // Fills in the |resize_params| struct.
   // Returns |false| if the update is redundant, |true| otherwise.
+  bool GetResizeParams(ResizeParams* resize_params,
+                       viz::LocalSurfaceId local_surface_id);
   bool GetResizeParams(ResizeParams* resize_params);
 
   // Sets the |resize_params| that were sent to the renderer bundled with the
@@ -848,6 +852,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
 
   // The current size of the RenderWidget.
   gfx::Size current_size_;
+
+  // If valid, this is the child-generated LocalSurfaceId.
+  viz::LocalSurfaceId received_local_surface_id_;
 
   // Resize information that was previously sent to the renderer.
   std::unique_ptr<ResizeParams> old_resize_params_;
