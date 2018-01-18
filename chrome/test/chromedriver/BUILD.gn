@@ -326,6 +326,35 @@ executable("chromedriver") {
   ]
 }
 
+group("chromedriver_py_tests") {
+  testonly = true
+  deps = [
+    ":chromedriver",
+    "//chrome:chrome",
+  ]
+
+  data = [
+    "client/chromedriver.py",
+    "client/command_executor.py",
+    "client/webelement.py",
+    "chrome_paths.py",
+    "server/server.py",
+    "test/run_py_tests.py",
+    "test/unittest_util.py",
+    "test/webserver.py",
+    "util.py",
+
+    "//build/android/",
+    "//chrome/test/data/chromedriver/",
+    "//testing/xvfb.py",
+    "//third_party/catapult/",
+  ]
+
+  data_deps = [
+    "//chrome/test/chromedriver",
+  ]
+}
+
 test("chromedriver_unittests") {
   sources = [
     "capabilities_unittest.cc",
