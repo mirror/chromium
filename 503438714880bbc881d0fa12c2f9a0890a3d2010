@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74457595_f1376623",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/appearance-affects-role.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-18T22:02:51Z",
+      "side": 1,
+      "message": "This might be a bit drastic. I wonder if there are unintended consequences of applying this to literally every element, including the HTML element and BODY element.\n\nI\u0027d start with just applying it to PROGRESS, and get everything else working first.",
+      "revId": "503438714880bbc881d0fa12c2f9a0890a3d2010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f41c3a9_8dc6583f",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/appearance-affects-role.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-18T22:02:51Z",
+      "side": 1,
+      "message": "This will fail if it\u0027s not in the tree.\n\nHow about this:\n\n1. Use CSS to only make PROGRESS have appearance none\n2. Get the parent of the progress element by id (give the DIV an id)\n3. Now you should definitely get something. Check its children. If its children count is zero then the progress element is being hidden from the tree - check computeAccessibilityIsIgnored.",
+      "revId": "503438714880bbc881d0fa12c2f9a0890a3d2010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
