@@ -2199,6 +2199,41 @@ protocol::Response InspectorDOMAgent::describeNode(
   return Response::OK();
 }
 
+static HTMLFrameOwnerElement* findFrameOwner(Document* document,
+                                             const String& frame_id) {
+  Node* parent_node = document;
+  for (Node* node = parent_node; node;
+       node = FlatTreeTraversal::Next(*node, parent_node)) {
+    if (!node->IsFrameOwnerElement())
+      continue;
+    HTMLFrameOwnerElement* frame_owner = ToHTMLFrameOwnerElement(node);
+    Frame* frame = frame_owner->ContentFrame();
+    if (!frame)
+      continue;
+    String current = IdentifiersFactory::FrameId(frame);
+    if (current == frame_id)
+      return frame_owner;
+
+    if (frame->IsLocalFrame()) {
+      HTMLFrameOwnerElement* result =
+          findFrameOwner(ToLocalFrame(frame)->GetDocument(), frame_id);
+      if (result)
+        return result;
+    }
+  }
+  return nullptr;
+}
+
+protocol::Response InspectorDOMAgent::getFrameOwner(const String& frame_id,
+                                                    int* node_id) {
+  HTMLFrameOwnerElement* frame_owner = findFrameOwner(document_, frame_id);
+  if (!frame_owner)
+    return Response::Error("No iframe owner for given node");
+  *node_id =
+      PushNodePathToFrontend(frame_owner, document_node_to_id_map_.Get());
+  return Response::OK();
+}
+
 Response InspectorDOMAgent::PushDocumentUponHandlelessOperation() {
   if (!document_node_to_id_map_->Contains(document_)) {
     std::unique_ptr<protocol::DOM::Node> root;
