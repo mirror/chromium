@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6acc5f95_48824ac6",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T08:39:34Z",
+      "side": 1,
+      "message": "Done. The idea was to try to always initialize it to the right value to begin with, but I agree that it\u0027s messy. The optimizer *should* do the right thing.",
+      "parentUuid": "d46d9162_7ef54222",
+      "revId": "ce396d5eafb8c4df81e773a0c9c0b6aa33cce5ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eb4ed67_0f51e085",
         "filename": "third_party/WebKit/public/platform/WebResourceTimingInfo.h",
         "patchSetId": 24
@@ -33,6 +51,24 @@
       "revId": "ce396d5eafb8c4df81e773a0c9c0b6aa33cce5ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928787c9_4f22f6fd",
+        "filename": "third_party/WebKit/public/platform/WebResourceTimingInfo.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T08:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5eb4ed67_0f51e085",
+      "revId": "ce396d5eafb8c4df81e773a0c9c0b6aa33cce5ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
