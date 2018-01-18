@@ -128,8 +128,9 @@ const base::Feature kSimpleCachePrefetchExperiment = {
 const char kSimplePrefetchBytesParam[] = "Bytes";
 
 int GetSimpleCachePrefetchSize() {
-  return base::GetFieldTrialParamByFeatureAsInt(kSimpleCachePrefetchExperiment,
-                                                kSimplePrefetchBytesParam, 0);
+  return 32768;
+//  return base::GetFieldTrialParamByFeatureAsInt(kSimpleCachePrefetchExperiment,
+//                                                kSimplePrefetchBytesParam, 0);
 }
 
 SimpleEntryStat::SimpleEntryStat(base::Time last_used,
