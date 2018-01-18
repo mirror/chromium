@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0da36ed3_06ef848c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-18T19:06:34Z",
+      "side": 1,
+      "message": "Please also mention 803531 for clarity.",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "1c139bfa7c41c6b8b92ac59d88b6b7b268dff9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8c03a9e_37569fb7",
         "filename": "chrome/browser/chromeos/policy/user_network_configuration_updater_factory.cc",
         "patchSetId": 1
