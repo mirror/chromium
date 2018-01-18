@@ -149,7 +149,8 @@ class UIThreadSiteDataClearer : public BrowsingDataRemover::Observer {
       remover_->RemoveWithFilterAndReply(
           base::Time(), base::Time::Max(),
           BrowsingDataRemover::DATA_TYPE_COOKIES |
-              BrowsingDataRemover::DATA_TYPE_CHANNEL_IDS,
+              BrowsingDataRemover::DATA_TYPE_CHANNEL_IDS |
+              BrowsingDataRemover::DATA_TYPE_AVOID_CLOSING_CONNECTIONS,
           BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB |
               BrowsingDataRemover::ORIGIN_TYPE_PROTECTED_WEB,
           std::move(domain_filter_builder), this);
@@ -503,6 +504,12 @@ bool ClearSiteDataThrottle::ParseHeader(const std::string& header,
   delegate->AddMessage(
       current_url,
       base::StringPrintf(kConsoleMessageCleared, output_types.c_str()),
+      CONSOLE_MESSAGE_LEVEL_INFO);
+
+  delegate->AddMessage(
+      current_url,
+      "Clearing channel IDs and HTTP authentication cache is currently not "
+      "supported, as it breaks active network connections.",
       CONSOLE_MESSAGE_LEVEL_INFO);
 
   return true;
