@@ -318,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "d8b348a0_1e2b9295",
+        "filename": "base/i18n/rtl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T23:22:48Z",
+      "side": 1,
+      "message": "Actually, this last suggested test case is the only one that will test \"\u0026\u0026 count \u003e 0\". The second-last one would still pass if you removed that check, because count would go negative and the loop to append U+202C would not run. Only the over-terminate-then-re-open case relies on stopping count from going negative.",
+      "parentUuid": "a69ac48a_4ccac583",
+      "revId": "c6e3adc1cc917650a19c13456954e9c6b936d262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c2c15af_b0f8d6a3",
         "filename": "extensions/common/extension.cc",
         "patchSetId": 2
