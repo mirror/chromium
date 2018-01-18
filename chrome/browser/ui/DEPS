@@ -11,6 +11,7 @@ include_rules = [
   "-chrome/browser/ui/views",
   "+mash/public/interfaces",
   "+services/device/public/interfaces",
+  "+services/device/public/cpp/device_features.h",
 ]
 
 specific_include_rules = {
