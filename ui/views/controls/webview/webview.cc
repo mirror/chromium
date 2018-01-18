@@ -34,7 +34,8 @@ WebView::WebView(content::BrowserContext* browser_context)
       embed_fullscreen_widget_mode_enabled_(false),
       is_embedding_fullscreen_widget_(false),
       browser_context_(browser_context),
-      allow_accelerators_(false) {
+      allow_accelerators_(false),
+      adjust_focus_behavior_(true) {
   AddChildView(holder_);  // Takes ownership of |holder_|.
 }
 
@@ -57,8 +58,10 @@ void WebView::SetWebContents(content::WebContents* replacement) {
   DetachWebContents();
   WebContentsObserver::Observe(replacement);
   // web_contents() now returns |replacement| from here onwards.
-  SetFocusBehavior(web_contents() ? FocusBehavior::ALWAYS
-                                  : FocusBehavior::NEVER);
+  if (adjust_focus_behavior_) {
+    SetFocusBehavior(web_contents() ? FocusBehavior::ALWAYS
+                                    : FocusBehavior::NEVER);
+  }
   if (wc_owner_.get() != replacement)
     wc_owner_.reset();
   if (embed_fullscreen_widget_mode_enabled_) {
