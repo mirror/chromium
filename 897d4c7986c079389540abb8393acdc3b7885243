@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "91d20f51_594c3285",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T02:14:11Z",
+      "side": 1,
+      "message": "I still think this should be an enum but up to you if you want to act on this.",
+      "parentUuid": "935cd4fb_264f958c",
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffe73f2e_99e53140",
         "filename": "chrome/browser/extensions/tab_helper.cc",
         "patchSetId": 9
@@ -148,6 +166,24 @@
       "side": 1,
       "message": "Because we use GetLastCommitedEntry() above, which corresponds to GetLastCommitedURL().",
       "parentUuid": "ffe73f2e_99e53140",
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97959ceb_2ae3b578",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T02:14:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "230a7032_d2d3fac5",
       "revId": "897d4c7986c079389540abb8393acdc3b7885243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -218,6 +254,24 @@
       "side": 1,
       "message": "The convention in this file roughly favours explicit month name without a day.",
       "parentUuid": "6a91ebd1_11e28937",
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95f50719_4ceb10cd",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 44406,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-18T02:14:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "39c7d1bf_73f0a97d",
       "revId": "897d4c7986c079389540abb8393acdc3b7885243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
