@@ -263,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "b81db64a_917b1696",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-18T20:59:06Z",
+      "side": 1,
+      "message": "I can imagine a solution of:\nFling.\nKey Press.\nReset scroll position.\n\nWhich should be non-flaky as long as long as we pick the right key to press.\n\nI thought that setting scrollTop cancelled a fling, but that doesn\u0027t appear to be the case at this point.",
+      "parentUuid": "fd5ed815_fd9490a9",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b1a2e9a_ed55161d",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
         "patchSetId": 48
