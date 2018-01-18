@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d52a9e1c_10821781",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1665,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-18T00:24:47Z",
+      "side": 1,
+      "message": "nit: use std::make_unique",
+      "range": {
+        "startLine": 1665,
+        "startChar": 27,
+        "endLine": 1665,
+        "endChar": 60
+      },
+      "revId": "3ef510eff82bf036fbda2bfa1d8400f5c045798f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed8401b_d587b8e2",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-18T00:24:47Z",
+      "side": 1,
+      "message": "ASSSERT_TRUE(success);",
+      "revId": "3ef510eff82bf036fbda2bfa1d8400f5c045798f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac69f8d0_0025f5d6",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-18T00:24:47Z",
+      "side": 1,
+      "message": "can you have separate vars for initial and final zoom values\nI think it would be easier to follow the test flow if zoom changes were\nzoom_factor_1_initial -\u003e zoom_factor_1_final; zoom_factor_2_initial -\u003e zoom_factor_2_final\ninstead of\nzoom_factor_2 -\u003e zoom_factor_1; zoom_factor_1 -\u003e zoom_factor_2",
+      "range": {
+        "startLine": 1673,
+        "startChar": 12,
+        "endLine": 1673,
+        "endChar": 25
+      },
+      "revId": "3ef510eff82bf036fbda2bfa1d8400f5c045798f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
