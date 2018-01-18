@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "821c75df_055e750e",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T09:49:48Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb44373_172a1256",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T09:49:48Z",
+      "side": 1,
+      "message": "Skip the Wait() if (!sampling_started_), then you don\u0027t need the scoped allowance at all (that\u0027s what I care about).",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ee3d9b_90677bc0",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T09:49:48Z",
+      "side": 1,
+      "message": "Actually, maybe we can use the WaitableEvent itself as the bool (with DCHECK that it\u0027s MANUAL as you have).\n\nThen you can:\n\n// If a previous profiling phase is still winding down, wait for it to complete.\nif (!profiling_inactive.IsSignaled())\n  profiling_inactive.Wait();\nprofiling_inactive.Reset();",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8522efdd_b4b7a81a",
+        "filename": "base/profiler/stack_sampling_profiler.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T09:49:48Z",
+      "side": 1,
+      "message": "Add something like: \"Might block on a WaitableEvent if this StackSamplingProfiler is already running (or was recently stopped) while the previous profiling phase winds down.\"",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb3d23e_65ec87c2",
+        "filename": "base/profiler/stack_sampling_profiler.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-18T09:49:48Z",
+      "side": 1,
+      "message": "Don\u0027t need this member, just use kResetPolicy in the impl.",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
