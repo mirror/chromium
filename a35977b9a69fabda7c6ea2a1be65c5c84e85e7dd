@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "111022e5_40da0bee",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-18T02:23:33Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment that we rely on main request ids (and loader ids) being globally unique.",
+      "revId": "a35977b9a69fabda7c6ea2a1be65c5c84e85e7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
