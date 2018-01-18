@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "657e539f_b9974930",
+        "filename": "skia/public/interfaces/skbitmap_for_blink.typemap",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-18T21:27:35Z",
+      "side": 1,
+      "message": "This seems like just a copy of skbitmap.typemap. Does it need to be a separate file?",
+      "revId": "5fb70e468cf4837792461ac205964adabd269314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
