@@ -23,6 +23,7 @@
 #include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
 #include "components/viz/test/begin_frame_args_test.h"
 #include "components/viz/test/compositor_frame_helpers.h"
+#include "components/viz/test/mock_compositor_frame_sink_client.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/renderer_host/input/legacy_input_router_impl.h"
 #include "content/browser/renderer_host/input/touch_emulator.h"
@@ -151,6 +152,14 @@ class MockInputRouter : public InputRouter {
 
 class MockRenderWidgetHost : public RenderWidgetHostImpl {
  public:
+  void set_renderer_compositor_frame_sink_client() {
+    std::unique_ptr<viz::MockCompositorFrameSinkClient>
+        compositor_frame_sink_client =
+            std::make_unique<viz::MockCompositorFrameSinkClient>();
+
+    renderer_compositor_frame_sink_ =
+        compositor_frame_sink_client->BindInterfacePtr();
+  }
 
   // Allow poking at a few private members.
   using RenderWidgetHostImpl::GetResizeParams;
@@ -1725,6 +1734,11 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
   const viz::LocalSurfaceId local_surface_id(1,
                                              base::UnguessableToken::Create());
 
+  // using a mock renderer_compositor_frame_sink_client_ because
+  // renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources)
+  // is called which tries to dereference |receiver_| which is a nullptr
+  host_->set_renderer_compositor_frame_sink_client();
+
   host_->set_new_content_rendering_delay_for_testing(
       base::TimeDelta::FromMicroseconds(10));
 
@@ -1803,6 +1817,12 @@ TEST_F(RenderWidgetHostTest, SwapCompositorFrameWithBadSourceId) {
                      .SetBeginFrameAck(viz::BeginFrameAck(0, 1, true))
                      .SetContentSourceId(99)
                      .Build();
+
+    // using a mock renderer_compositor_frame_sink_client_ because
+    // renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources)
+    // is called which tries to dereference |receiver_| which is a nullptr
+    host_->set_renderer_compositor_frame_sink_client();
+
     host_->SubmitCompositorFrame(local_surface_id, std::move(frame), nullptr,
                                  0);
     EXPECT_FALSE(
@@ -2887,6 +2907,11 @@ TEST_F(RenderWidgetHostTest, FrameToken_RendererCrash) {
   std::vector<IPC::Message> messages3;
   messages1.push_back(ViewHostMsg_DidFirstVisuallyNonEmptyPaint(5));
   messages3.push_back(ViewHostMsg_DidFirstVisuallyNonEmptyPaint(6));
+
+  // using a mock renderer_compositor_frame_sink_client_ because
+  // renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources)
+  // is called which tries to dereference |receiver_| which is a nullptr
+  host_->set_renderer_compositor_frame_sink_client();
 
   // If we don't do this, then RWHI destroys the view in RendererExited and
   // then a crash occurs when we attempt to destroy it again in TearDown().
