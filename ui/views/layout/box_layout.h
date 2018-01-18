@@ -6,6 +6,7 @@
 #define UI_VIEWS_LAYOUT_BOX_LAYOUT_H_
 
 #include <map>
+#include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
@@ -53,6 +54,8 @@ class VIEWS_EXPORT BoxLayout : public LayoutManager {
     CROSS_AXIS_ALIGNMENT_START,
     CROSS_AXIS_ALIGNMENT_CENTER,
     CROSS_AXIS_ALIGNMENT_END,
+    // TODO(calamity): Add cross axis alignments that use the margin-box if
+    // necessary. See https://crbug.com/803024.
   };
 
   // Use |inside_border_insets| to add additional space between the child
@@ -183,11 +186,50 @@ class VIEWS_EXPORT BoxLayout : public LayoutManager {
     View* view_;
     const BoxLayout* layout_;
     gfx::Insets margins_;
+    gfx::Insets sizing_margins_;
 
     DISALLOW_COPY_AND_ASSIGN(ViewWrapper);
   };
 
   using FlexMap = std::map<const View*, int>;
+
+  // Returns a vector of all the preferred sizes of child views.
+  std::vector<gfx::Rect> CalculateChildPreferredSizes() const;
+
+  // Calculate size of the main axis for all children and spacings/margins
+  // between them.
+  int GetTotalMainAxisSize(const std::vector<gfx::Rect>& child_bounds) const;
+
+  // Returns the preferred size along the cross axis.
+  int GetCrossAxisPreferredSize() const;
+
+  // Calculates the positions of all views relative to the inset child area.
+  void CalculateMainAxisPositions(int total_main_axis_size,
+                                  std::vector<gfx::Rect>* child_bounds);
+  void CalculateCrossAxisPositions(int child_area_cross_axis_size,
+                                   const gfx::Insets& max_cross_axis_margin,
+                                   int children_center_line,
+                                   std::vector<gfx::Rect>* child_bounds);
+
+  // Distribute free space amongst children in the ratio of their flex values.
+  void ApplyFlex(int main_free_space,
+                 int flex_sum,
+                 std::vector<gfx::Rect>* child_bounds) const;
+
+  // Sets all |child_bounds| cross axis to |child_area| cross axis.
+  void ApplyStretch(const gfx::Rect& child_area,
+                    std::vector<gfx::Rect>* child_bounds);
+
+  // Recalculates the height of all children based on their width.
+  void UpdateHeightsForWidth(std::vector<gfx::Rect>* child_bounds) const;
+
+  // Returns the amount to offset all children along the main axis.
+  int GetMainAxisOffset(int flex_sum,
+                        int total_main_axis_size,
+                        int main_free_space);
+
+  // Returns where the children would be centered if they had unlimited space.
+  int CalculateIdealCenterLineForChildren() const;
 
   // Returns the flex for the specified |view|.
   int GetFlexForView(const View* view) const;
@@ -219,10 +261,6 @@ class VIEWS_EXPORT BoxLayout : public LayoutManager {
   // Returns the |right| or |bottom| edge of the given inset based on the value
   // of |orientation_|.
   int MainAxisTrailingInset(const gfx::Insets& insets) const;
-
-  // Returns the left (|x|) or top (|y|) edge of the given rect based on the
-  // value of |orientation_|.
-  int CrossAxisLeadingEdge(const gfx::Rect& rect) const;
 
   // Returns the |left| or |top| edge of the given inset based on the value of
   // |orientation_|.
@@ -261,13 +299,11 @@ class VIEWS_EXPORT BoxLayout : public LayoutManager {
   // collapse_margins_spacing_ is true.
   int CrossAxisMarginSizeForView(const ViewWrapper& view) const;
 
-  // Returns the Top or Left size of the margin for the given view or 0 when
-  // collapse_margins_spacing_ is true.
-  int CrossAxisLeadingMarginForView(const ViewWrapper& view) const;
+  void ConstrainToCrossAxisSize(int child_area_cross_axis_size,
+                                std::vector<gfx::Rect>* child_bounds);
 
-  // Adjust the cross axis for |rect| using the given leading and trailing
-  // values.
-  void InsetCrossAxis(gfx::Rect* rect, int leading, int trailing) const;
+  void ConstrainToMainAxisSize(int child_area_main_axis_size,
+                               std::vector<gfx::Rect>* child_bounds);
 
   // The preferred size for the dialog given the width of the child area.
   gfx::Size GetPreferredSizeForChildWidth(const View* host,
