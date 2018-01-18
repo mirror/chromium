@@ -236,7 +236,7 @@ void ReloadExtension(const std::string& extension_id, Profile* profile) {
 //       <appid_2>: { "url": <url2>, "name": <frame_name> },
 //         ... etc ...
 //    }
-const char kUrlKey[] = "url";
+const char kExtensionReloadRequestDictUrlKey[] = "url";
 const char kFrameNameKey[] = "name";
 
 // Defines the backoff policy used for attempting to reload extensions.
@@ -655,7 +655,7 @@ void BackgroundContentsService::LoadBackgroundContentsFromDictionary(
 
   std::string frame_name;
   std::string url;
-  dict->GetString(kUrlKey, &url);
+  dict->GetString(kExtensionReloadRequestDictUrlKey, &url);
   dict->GetString(kFrameNameKey, &frame_name);
   LoadBackgroundContents(profile, GURL(url), frame_name, extension_id);
 }
@@ -745,7 +745,8 @@ void BackgroundContentsService::RegisterBackgroundContents(
 
   // No entry for this application yet, so add one.
   auto dict = base::MakeUnique<base::DictionaryValue>();
-  dict->SetString(kUrlKey, background_contents->GetURL().spec());
+  dict->SetString(kExtensionReloadRequestDictUrlKey,
+                  background_contents->GetURL().spec());
   dict->SetString(kFrameNameKey, contents_map_[appid].frame_name);
   pref->SetWithoutPathExpansion(appid, std::move(dict));
 }
