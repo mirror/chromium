@@ -65,6 +65,7 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   void PreMainMessageLoopStart() override;
   void PostMainMessageLoopStart() override;
   int PreCreateThreads() override;
+  void BrowserThreadsStarted() override;
   void ServiceManagerConnectionStarted(
       content::ServiceManagerConnection* connection) override;
   void PreMainMessageLoopRun() override;
@@ -114,6 +115,9 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // for child processes.
   void SetupOriginTrialsCommandLine(PrefService* local_state);
 
+  // Starts to profile the IO thread.
+  void StartIOThreadProfiling();
+
   // Methods for Main Message Loop -------------------------------------------
 
   int PreCreateThreadsImpl();
@@ -147,9 +151,9 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // Parts are deleted in the inverse order they are added.
   std::vector<ChromeBrowserMainExtraParts*> chrome_extra_parts_;
 
-  // A profiler that periodically samples stack traces. Used to sample startup
-  // behavior.
-  base::StackSamplingProfiler sampling_profiler_;
+  // A profiler that periodically samples stack traces on the UI thread. Used to
+  // sample startup behavior.
+  base::StackSamplingProfiler ui_thread_sampling_profiler_;
 
   // Members initialized after / released before main_message_loop_ ------------
 

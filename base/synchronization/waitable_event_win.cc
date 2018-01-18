@@ -21,7 +21,8 @@ namespace base {
 
 WaitableEvent::WaitableEvent(ResetPolicy reset_policy,
                              InitialState initial_state)
-    : handle_(CreateEvent(nullptr,
+    : policy_(reset_policy),
+      handle_(CreateEvent(nullptr,
                           reset_policy == ResetPolicy::MANUAL,
                           initial_state == InitialState::SIGNALED,
                           nullptr)) {
@@ -31,7 +32,7 @@ WaitableEvent::WaitableEvent(ResetPolicy reset_policy,
 }
 
 WaitableEvent::WaitableEvent(win::ScopedHandle handle)
-    : handle_(std::move(handle)) {
+    : policy_(ResetPolicy::MANUAL), handle_(std::move(handle)) {
   CHECK(handle_.IsValid()) << "Tried to create WaitableEvent from NULL handle";
 }
 
@@ -50,6 +51,10 @@ bool WaitableEvent::IsSignaled() {
   DCHECK(result == WAIT_OBJECT_0 || result == WAIT_TIMEOUT)
       << "Unexpected WaitForSingleObject result " << result;
   return result == WAIT_OBJECT_0;
+}
+
+WaitableEvent::ResetPolicy WaitableEvent::reset_policy() {
+  return policy_;
 }
 
 void WaitableEvent::Wait() {

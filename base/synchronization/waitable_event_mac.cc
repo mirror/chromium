@@ -101,6 +101,10 @@ bool WaitableEvent::IsSignaled() {
   return PeekPort(receive_right_->Name(), policy_ == ResetPolicy::AUTOMATIC);
 }
 
+WaitableEvent::ResetPolicy WaitableEvent::reset_policy() {
+  return policy_;
+}
+
 void WaitableEvent::Wait() {
   bool result = TimedWaitUntil(TimeTicks::Max());
   DCHECK(result) << "TimedWait() should never fail with infinite timeout";

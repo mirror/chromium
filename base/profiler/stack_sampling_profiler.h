@@ -301,6 +301,10 @@ class BASE_EXPORT StackSamplingProfiler {
   // when that sampling is complete and the callback done.
   WaitableEvent profiling_inactive_;
 
+  // Indicates if sampling was started at least once. It is set to true when
+  // sampling starts, and never gets reset.
+  bool sampling_started_ = false;
+
   // Object that does the native sampling. This is created during construction
   // and later passed to the sampling thread when profiling is started.
   std::unique_ptr<NativeStackSampler> native_sampler_;
