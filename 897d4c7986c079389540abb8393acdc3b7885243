@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "c2654453_ff99e7e2",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-18T03:17:28Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "91d20f51_594c3285",
+      "revId": "897d4c7986c079389540abb8393acdc3b7885243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffe73f2e_99e53140",
         "filename": "chrome/browser/extensions/tab_helper.cc",
         "patchSetId": 9
