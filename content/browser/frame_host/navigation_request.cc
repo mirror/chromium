@@ -1103,6 +1103,7 @@ void NavigationRequest::OnStartChecksComplete(
 
 void NavigationRequest::OnRedirectChecksComplete(
     NavigationThrottle::ThrottleCheckResult result) {
+  LOG(ERROR) << "NavigationRequest::OnRedirectChecksComplete";
   DCHECK(result.action() != NavigationThrottle::DEFER);
   DCHECK(result.action() != NavigationThrottle::BLOCK_RESPONSE);
 
@@ -1130,7 +1131,9 @@ void NavigationRequest::OnRedirectChecksComplete(
     return;
   }
 
+  LOG(ERROR) << "loader_->FollowRedirect";
   loader_->FollowRedirect();
+  LOG(ERROR) << "loader_->FollowRedirect done";
 }
 
 void NavigationRequest::OnFailureChecksComplete(
