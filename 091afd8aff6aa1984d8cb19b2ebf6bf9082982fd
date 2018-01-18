@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b50f34e7_db7db231",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-18T10:12:55Z",
+      "side": 1,
+      "message": "For readability we could do:\n\n  if (CanScrollInDirection(container, type))\n    break;\n\n\u003d\u003e And we get only one callsite into ScrollInDirection() :)",
+      "range": {
+        "startLine": 1417,
+        "startChar": 0,
+        "endLine": 1421,
+        "endChar": 20
+      },
+      "revId": "091afd8aff6aa1984d8cb19b2ebf6bf9082982fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
