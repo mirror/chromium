@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cad0a20d_0e4df779",
+        "filename": "content/common/content_switches_internal.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-18T18:44:36Z",
+      "side": 1,
+      "message": "nit: no reason to lose the space before {",
+      "revId": "f337af804f980c9f7f59973d6a390caa720a132f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
