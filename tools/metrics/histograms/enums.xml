@@ -46153,6 +46153,10 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="1" label="GpuFence"/>
 </enum>
 
+<enum name="XRRuntimeAvailable">
+  <int value="0" label="OpenVR"/>
+</enum>
+
 <enum name="YoungGenerationHandling">
   <int value="0" label="Regular Scavenge"/>
   <int value="1" label="Scavenge using fast promotion mode"/>
