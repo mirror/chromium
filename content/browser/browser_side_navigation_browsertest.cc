@@ -662,6 +662,12 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest,
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
                           base::BindOnce(cancel_request, global_id));
 
+  // There is still a pending network read in progress. Receiving a bit of data
+  // allows it to close its buffer and release the mojo data pipe.
+  // To get more information, please see |SocketPosix::read_buf| and
+  // |MojoAsyncResourceHandler::SharedWriter::writer_|.
+  response.Send("...");
+
   // 3) Check that the load stops properly.
   EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
 }
