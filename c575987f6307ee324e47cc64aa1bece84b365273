@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "2d6d0329_3db3e523",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-18T14:52:25Z",
+      "side": 1,
+      "message": "A couple of bullet points with more detail here would be nice.\n\nMaybe mention why we are only implementing it for Android O, and the benefits of this change.",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bfc4f16_d53d6952",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationManagerProxyImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-18T14:52:25Z",
+      "side": 1,
+      "message": "Add a comment about why we only allow this api to be called on O+ despite it being available from API 23",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20f667ac_537bc18c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationManagerProxyImpl.java",
         "patchSetId": 4
@@ -19,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "6210256f_91b648f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-18T14:52:25Z",
+      "side": 1,
+      "message": "micronit: newline here to obviously delineate the paragraphs (also means it will be formatted as paragraphs by tools that display prettified javadoc)",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5591d0fb_b64268f7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
         "patchSetId": 4
@@ -30,6 +81,57 @@
       "writtenOn": "2018-01-18T14:26:37Z",
       "side": 1,
       "message": "I\u0027d rephrase the cause as:\n\n   The data provided by Android is only used on Android O and above because earlier versions were subject to a race condition briefly after showing or closing a notification.",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778589dc_14c9d4bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-18T14:52:25Z",
+      "side": 1,
+      "message": "What would happen if Android returned null here? (Would our jni code crash if we pass \u0027null\u0027 back?)",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9320bd4_45a88a91",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-18T14:52:25Z",
+      "side": 1,
+      "message": "A comment here stating why Oreo is the first version that supports synchronization would be appropriate I think",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb40ef3_5bd99c62",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/notifications/MockNotificationManagerProxy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-18T14:52:25Z",
+      "side": 1,
+      "message": "Actually, is it possible to provide a basic implementation here? (ie is it simple to transform the list of current notifications into this StatusBarNotifications and return them here?)\n\nIf so we could add some tests to NotificationPlatformBridgeTest.java testing the getNotifications javascript call end-to-end, which would be pretty cool.",
       "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
