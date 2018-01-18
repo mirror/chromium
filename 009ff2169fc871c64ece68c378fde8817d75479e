@@ -69,6 +69,24 @@
       "revId": "009ff2169fc871c64ece68c378fde8817d75479e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9034e1d_ced7eaf1",
+        "filename": "components/printing/service/public/cpp/pdf_service_mojo_utils.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-18T07:54:39Z",
+      "side": 1,
+      "message": "Correction: the handle passed in may be read-write, for example, if it is created by mojo::SharedBufferHandle::Create(). But we never need the write access. We can do a follow-up to change this function into GetReadonlyShmFromMojoHandle() or sth similar.",
+      "parentUuid": "1d1a9582_17b3a9ba",
+      "revId": "009ff2169fc871c64ece68c378fde8817d75479e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
