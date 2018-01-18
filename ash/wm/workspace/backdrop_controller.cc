@@ -7,8 +7,6 @@
 #include <memory>
 
 #include "ash/accessibility/accessibility_controller.h"
-#include "ash/accessibility/accessibility_delegate.h"
-#include "ash/public/cpp/app_types.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
 #include "ash/system/tray/system_tray_notifier.h"
@@ -17,7 +15,6 @@
 #include "base/auto_reset.h"
 #include "chromeos/audio/chromeos_sounds.h"
 #include "ui/app_list/app_list_features.h"
-#include "ui/aura/client/aura_constants.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/views/widget/widget.h"
@@ -65,7 +62,9 @@ class BackdropEventHandler : public ui::EventHandler {
 }  // namespace
 
 BackdropController::BackdropController(aura::Window* container)
-    : container_(container), in_restacking_(false) {
+    : container_(container),
+      delegate_(new BackdropDelegate),
+      in_restacking_(false) {
   DCHECK(container_);
   Shell::Get()->AddShellObserver(this);
   Shell::Get()->system_tray_notifier()->AddAccessibilityObserver(this);
@@ -219,20 +218,6 @@ aura::Window* BackdropController::GetTopmostWindowWithBackdrop() {
 }
 
 bool BackdropController::WindowShouldHaveBackdrop(aura::Window* window) {
-  if (window->GetAllPropertyKeys().count(aura::client::kHasBackdrop) &&
-      window->GetProperty(aura::client::kHasBackdrop)) {
-    return true;
-  }
-
-  // If |window| is the current active window and is an ARC app window, |window|
-  // should have a backdrop when spoken feedback is enabled.
-  if (window->GetProperty(aura::client::kAppType) ==
-          static_cast<int>(AppType::ARC_APP) &&
-      wm::IsActiveWindow(window) &&
-      Shell::Get()->accessibility_controller()->IsSpokenFeedbackEnabled()) {
-    return true;
-  }
-
   return delegate_ ? delegate_->HasBackdrop(window) : false;
 }
 
