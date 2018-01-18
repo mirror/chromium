@@ -14,7 +14,7 @@
 #include "content/browser/renderer_host/media/video_capture_controller.h"
 #include "content/browser/renderer_host/media/video_capture_controller_event_handler.h"
 #include "content/common/content_export.h"
-#include "content/common/video_capture.mojom.h"
+#include "media/capture/mojo/video_capture.mojom.h"
 
 namespace content {
 class MediaStreamManager;
@@ -26,14 +26,14 @@ class MediaStreamManager;
 // unique |device_id|, and is paired with a single VideoCaptureController.
 class CONTENT_EXPORT VideoCaptureHost
     : public VideoCaptureControllerEventHandler,
-      public mojom::VideoCaptureHost {
+      public media::mojom::VideoCaptureHost {
  public:
   VideoCaptureHost(int render_process_id,
                    MediaStreamManager* media_stream_manager);
 
   static void Create(int render_process_id,
                      MediaStreamManager* media_stream_manager,
-                     mojom::VideoCaptureHostRequest request);
+                     media::mojom::VideoCaptureHostRequest request);
 
   ~VideoCaptureHost() override;
 
@@ -56,11 +56,11 @@ class CONTENT_EXPORT VideoCaptureHost
   void OnStarted(VideoCaptureControllerID id) override;
   void OnStartedUsingGpuDecode(VideoCaptureControllerID id) override;
 
-  // mojom::VideoCaptureHost implementation
+  // media::mojom::VideoCaptureHost implementation
   void Start(int32_t device_id,
              int32_t session_id,
              const media::VideoCaptureParams& params,
-             mojom::VideoCaptureObserverPtr observer) override;
+             media::mojom::VideoCaptureObserverPtr observer) override;
   void Stop(int32_t device_id) override;
   void Pause(int32_t device_id) override;
   void Resume(int32_t device_id,
@@ -105,7 +105,8 @@ class CONTENT_EXPORT VideoCaptureHost
 
   // VideoCaptureObservers map, each one is used and should be valid between
   // Start() and the corresponding Stop().
-  std::map<int32_t, mojom::VideoCaptureObserverPtr> device_id_to_observer_map_;
+  std::map<int32_t, media::mojom::VideoCaptureObserverPtr>
+      device_id_to_observer_map_;
 
   base::WeakPtrFactory<VideoCaptureHost> weak_factory_;
 
