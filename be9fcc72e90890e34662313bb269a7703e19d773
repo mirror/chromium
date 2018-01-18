@@ -133,6 +133,24 @@
       "revId": "be9fcc72e90890e34662313bb269a7703e19d773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "acab4262_c689486c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-18T06:37:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "db8d34b9_6a3fc901",
+      "revId": "be9fcc72e90890e34662313bb269a7703e19d773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
