@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "851f2691_addfb92c",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-18T07:00:36Z",
+      "side": 0,
+      "message": "Was it not possible to preserve these checks?",
+      "revId": "cd1e6ab16c394b4c9de8501c5bb3d2cfcefa006a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
