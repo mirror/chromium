@@ -56,22 +56,19 @@ class NGBoxFragmentPainter : public BoxPainterBase {
                                  SkBlendMode composite_op,
                                  const BackgroundImageGeometry&,
                                  const LayoutRect&,
-                                 LayoutRect scrolled_paint_rect) override;
+                                 LayoutRect scrolled_paint_rect) const override;
   LayoutRect AdjustForScrolledContent(const PaintInfo&,
                                       const BoxPainterBase::FillLayerInfo&,
-                                      const LayoutRect&) override;
+                                      const LayoutRect&) const override;
 
  private:
   bool IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
       const NGPaintFragment&,
-      const PaintInfo&);
+      const PaintInfo&) const;
   bool IntersectsPaintRect(const PaintInfo&, const LayoutPoint&) const;
 
   void PaintWithAdjustedOffset(PaintInfo&, const LayoutPoint&);
-  void PaintBoxDecorationBackground(const PaintInfo&, const LayoutPoint&);
-  void PaintBoxDecorationBackgroundWithRect(const PaintInfo&,
-                                            const LayoutPoint&,
-                                            const LayoutRect&);
+  void PaintBoxDecorationBackground(const PaintInfo&, const LayoutPoint&) const;
   void PaintAllPhasesAtomically(const PaintInfo&, const LayoutPoint&);
   void PaintChildren(const Vector<std::unique_ptr<NGPaintFragment>>&,
                      const PaintInfo&,
@@ -79,17 +76,30 @@ class NGBoxFragmentPainter : public BoxPainterBase {
   void PaintInlineChildren(const Vector<std::unique_ptr<NGPaintFragment>>&,
                            const PaintInfo&,
                            const LayoutPoint&);
+  void PaintInlineChildrenOutlines(
+      const Vector<std::unique_ptr<NGPaintFragment>>&,
+      const PaintInfo&,
+      const LayoutPoint& paint_offset) const;
   void PaintInlineChildBoxUsingLegacyFallback(const NGPhysicalFragment&,
                                               const PaintInfo&,
-                                              const LayoutPoint&);
+                                              const LayoutPoint&) const;
   void PaintText(const NGPaintFragment&,
                  const PaintInfo&,
                  const LayoutPoint& paint_offset);
   void PaintObject(const PaintInfo&, const LayoutPoint&);
-  void PaintInlineObject(const PaintInfo&, const LayoutPoint&);
+  void PaintBlockFlowContents(const PaintInfo&, const LayoutPoint&);
+  void PaintInlineChild(const NGPaintFragment&,
+                        const PaintInfo&,
+                        const LayoutPoint& paint_offset) const;
+  void PaintInlineBlockChild(const NGPaintFragment&,
+                             const PaintInfo&,
+                             const LayoutPoint& paint_offset) const;
+  void PaintTextChild(const NGPaintFragment&,
+                      const PaintInfo&,
+                      const LayoutPoint& paint_offset) const;
   void PaintContents(const PaintInfo&, const LayoutPoint&);
   void PaintFloats(const PaintInfo&, const LayoutPoint&);
-  void PaintMask(const PaintInfo&, const LayoutPoint&);
+  void PaintMask(const PaintInfo&, const LayoutPoint&) const;
   void PaintClippingMask(const PaintInfo&, const LayoutPoint&);
   void PaintOverflowControlsIfNeeded(const PaintInfo&, const LayoutPoint&);
   void PaintInlineBlock(const PaintInfo&, const LayoutPoint& paint_offset);
@@ -99,7 +109,7 @@ class NGBoxFragmentPainter : public BoxPainterBase {
   void PaintBackground(const PaintInfo&,
                        const LayoutRect&,
                        const Color& background_color,
-                       BackgroundBleedAvoidance = kBackgroundBleedNone);
+                       BackgroundBleedAvoidance = kBackgroundBleedNone) const;
 
   bool VisibleToHitTestRequest(const HitTestRequest&) const;
   bool HitTestChildren(HitTestResult&,

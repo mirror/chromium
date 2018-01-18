@@ -45,10 +45,10 @@ class BoxModelObjectPainter : public BoxPainterBase {
                                  SkBlendMode composite_op,
                                  const BackgroundImageGeometry&,
                                  const LayoutRect&,
-                                 LayoutRect scrolled_paint_rect) override;
+                                 LayoutRect scrolled_paint_rect) const override;
   LayoutRect AdjustForScrolledContent(const PaintInfo&,
                                       const BoxPainterBase::FillLayerInfo&,
-                                      const LayoutRect&) override;
+                                      const LayoutRect&) const override;
   FloatRoundedRect GetBackgroundRoundedRect(
       const LayoutRect&,
       bool include_logical_left_edge,

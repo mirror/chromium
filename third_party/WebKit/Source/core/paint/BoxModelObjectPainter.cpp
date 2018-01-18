@@ -78,7 +78,7 @@ void BoxModelObjectPainter::PaintFillLayerTextFillBox(
     SkBlendMode composite_op,
     const BackgroundImageGeometry& geometry,
     const LayoutRect& rect,
-    LayoutRect scrolled_paint_rect) {
+    LayoutRect scrolled_paint_rect) const {
   // First figure out how big the mask has to be. It should be no bigger
   // than what we need to actually render, so we should intersect the dirty
   // rect with the border box of the background.
@@ -140,7 +140,7 @@ FloatRoundedRect BoxModelObjectPainter::GetBackgroundRoundedRect(
 LayoutRect BoxModelObjectPainter::AdjustForScrolledContent(
     const PaintInfo& paint_info,
     const BoxPainterBase::FillLayerInfo& info,
-    const LayoutRect& rect) {
+    const LayoutRect& rect) const {
   LayoutRect scrolled_paint_rect = rect;
   GraphicsContext& context = paint_info.context;
   if (info.is_clipped_with_local_scrolling &&
