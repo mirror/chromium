@@ -104,6 +104,24 @@
       "revId": "a8b6e77b74fcfcbdc0630e613b84a6e763810e08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41884ead_14a4c5c1",
+        "filename": "third_party/WebKit/public/platform/WebPointerProperties.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T19:08:37Z",
+      "side": 1,
+      "message": "Usually it\u0027s nicer to pass the actual type where it makes sense. Since we are conceptually treating this as a point, it would be nicer to pass it as such.",
+      "parentUuid": "e99b63cf_3ab63214",
+      "revId": "a8b6e77b74fcfcbdc0630e613b84a6e763810e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
