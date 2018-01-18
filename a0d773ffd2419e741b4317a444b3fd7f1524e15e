@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97792128_a44fdfe6",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T04:11:07Z",
+      "side": 1,
+      "message": "Hrm, not really sure if we have any coverage with mouse-lock :/",
+      "revId": "a0d773ffd2419e741b4317a444b3fd7f1524e15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c5910a_43bc080b",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T04:11:07Z",
+      "side": 1,
+      "message": "Add a comment here to mention that for non-begin cases, the target found for the previous phasebegin is used.",
+      "revId": "a0d773ffd2419e741b4317a444b3fd7f1524e15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "268a4d5d_6026d500",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T04:11:07Z",
+      "side": 1,
+      "message": "You don\u0027t need these two lines because you make a copy in line 393, right?",
+      "revId": "a0d773ffd2419e741b4317a444b3fd7f1524e15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9824a335_f49b333b",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T04:11:07Z",
+      "side": 1,
+      "message": "point_in_target-\u003ex(), point_in_target-\u003ey()",
+      "revId": "a0d773ffd2419e741b4317a444b3fd7f1524e15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de5992b_8086b2f9",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T04:11:07Z",
+      "side": 1,
+      "message": "Since we are sending |target_location| to the dispatcher, we could avoid setting the location above (lines 168:171), and instead require the dispatcher to adjust the location as needed (as we are doing here for mouse-wheel events).\n\nSeparate CL, of course.",
+      "revId": "a0d773ffd2419e741b4317a444b3fd7f1524e15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe30b98_f826cc03",
+        "filename": "content/browser/renderer_host/render_widget_targeter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-18T04:11:07Z",
+      "side": 1,
+      "message": "Add a comment here stating that |event| is in |root_view|\u0027s coordinate space. (this is not currently true for mouse-events, but see my comment in .cc)",
+      "revId": "a0d773ffd2419e741b4317a444b3fd7f1524e15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
