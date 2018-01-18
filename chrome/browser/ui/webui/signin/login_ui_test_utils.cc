@@ -5,12 +5,15 @@
 #include "chrome/browser/ui/webui/signin/login_ui_test_utils.h"
 
 #include "base/run_loop.h"
+#include "base/scoped_observer.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/signin/signin_promo.h"
 #include "chrome/browser/signin/signin_tracker_factory.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/signin_view_controller_delegate.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/webui/signin/login_ui_service.h"
+#include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
 #include "chrome/browser/ui/webui/signin/signin_utils.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "content/public/browser/notification_service.h"
@@ -100,6 +103,34 @@ class SignInObserver : public SigninTracker::Observer {
   scoped_refptr<MessageLoopRunner> message_loop_runner_;
 };
 
+// Synchronously waits for the Sync confirmation to be closed.
+class SyncConfirmationClosedObserver : public LoginUIService::Observer {
+ public:
+  void WaitForConfirmationClosed() {
+    DLOG(WARNING) << "##### WaitConfirmationClosed";
+    if (sync_confirmation_closed_)
+      return;
+
+    DLOG(WARNING) << "##### WaitConfirmationClosed: RunLoop";
+    base::RunLoop run_loop;
+    quit_closure_ = run_loop.QuitClosure();
+    run_loop.Run();
+    DLOG(WARNING) << "##### WaitConfirmationClosed: RunLoop done";
+  }
+
+ private:
+  void OnSyncConfirmationUIClosed(
+      LoginUIService::SyncConfirmationUIClosedResult result) override {
+    DLOG(WARNING) << "##### OnSyncConfirmationUIClosed";
+    sync_confirmation_closed_ = true;
+    if (quit_closure_)
+      std::move(quit_closure_).Run();
+  }
+
+  bool sync_confirmation_closed_ = false;
+  base::OnceClosure quit_closure_;
+};
+
 void RunLoopFor(base::TimeDelta duration) {
   base::RunLoop run_loop;
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
@@ -118,6 +149,7 @@ class SigninViewControllerTestUtil {
     NOTREACHED();
     return false;
 #else
+    DLOG(WARNING) << "##### TryDismissSyncConfirmationDialog";
     SigninViewController* signin_view_controller =
         browser->signin_view_controller();
     DCHECK_NE(signin_view_controller, nullptr);
@@ -127,16 +159,29 @@ class SigninViewControllerTestUtil {
         signin_view_controller->GetModalDialogWebContentsForTesting();
     DCHECK_NE(dialog_web_contents, nullptr);
     std::string message;
-    std::string js =
+    std::string find_button_js =
         "if (document.getElementById('confirmButton') == null) {"
         "  window.domAutomationController.send('NotFound');"
         "} else {"
-        "  document.getElementById('confirmButton').click();"
         "  window.domAutomationController.send('Ok');"
         "}";
-    EXPECT_TRUE(content::ExecuteScriptAndExtractString(dialog_web_contents, js,
-                                                       &message));
-    return message == "Ok";
+    DLOG(WARNING) << "##### ExecuteScriptSync";
+    EXPECT_TRUE(content::ExecuteScriptAndExtractString(
+        dialog_web_contents, find_button_js, &message));
+    DLOG(WARNING) << "##### ExecuteScriptSync Done";
+    if (message != "Ok") {
+      DLOG(WARNING) << "confirmButton not found.";
+      return false;
+    }
+
+    // This cannot be a synchronous call, because it closes the window as a side
+    // effect, which may cause the javascript execution to never finish.
+    DLOG(WARNING) << "##### ExecuteScriptASync";
+    content::ExecuteScriptAsync(
+        dialog_web_contents,
+        "document.getElementById('confirmButton').click();");
+    DLOG(WARNING) << "##### ExecuteScriptASync Done";
+    return true;
 #endif
   }
 };
@@ -275,10 +320,20 @@ bool SignInWithUI(Browser* browser,
 }
 
 bool DismissSyncConfirmationDialog(Browser* browser, base::TimeDelta timeout) {
+  SyncConfirmationClosedObserver confirmation_closed_observer;
+  ScopedObserver<LoginUIService, LoginUIService::Observer>
+      scoped_confirmation_closed_observer(&confirmation_closed_observer);
+  scoped_confirmation_closed_observer.Add(
+      LoginUIServiceFactory::GetForProfile(browser->profile()));
+
   const base::Time expire_time = base::Time::Now() + timeout;
   while (base::Time::Now() <= expire_time) {
-    if (SigninViewControllerTestUtil::TryDismissSyncConfirmationDialog(browser))
+    if (SigninViewControllerTestUtil::TryDismissSyncConfirmationDialog(
+            browser)) {
+      confirmation_closed_observer.WaitForConfirmationClosed();
       return true;
+    }
+    DLOG(WARNING) << "Could not dismiss the Sync confirmation, retrying later.";
     RunLoopFor(base::TimeDelta::FromMilliseconds(1000));
   }
   return false;
