@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9d8fcb7_995e0e60",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-18T09:27:25Z",
+      "side": 1,
+      "message": "Why this will not work in mash? I understand that EventRewriter will not work in mash. But this is just for adding another instance of GestureProvider in this class.",
+      "parentUuid": "9b98abdf_4985b06b",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "452b6d81_e5b0a184",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -98,6 +116,24 @@
       "writtenOn": "2018-01-18T05:36:42Z",
       "side": 1,
       "message": "I think this means user will no longer be able to pinch-zoom a web-page. Is that the case? If it is, then is that really what we want to do?",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05a8fd2_c48e0ecb",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-18T09:27:25Z",
+      "side": 1,
+      "message": "Yes, it\u0027s intended behavior. Chrome provides zoom level buttons in its menu. Adding lpalmaro@ for double check.",
+      "parentUuid": "1622de7d_90e07a54",
       "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
