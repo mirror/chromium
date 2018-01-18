@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a588e509_13b35e3c",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-18T19:05:26Z",
+      "side": 1,
+      "message": "let\u0027s find out..",
+      "parentUuid": "cfd071a1_69da3c7f",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bf96fe4_de68a1b8",
         "filename": "content/common/notifications/notification_struct_traits_unittest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50b6f14_beb891d9",
+        "filename": "content/common/notifications/notification_struct_traits_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-18T19:05:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bf96fe4_de68a1b8",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c9b1351a_9ecf3056",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-18T19:05:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a1b5044_46f21876",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbf91392_0018f33c",
         "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.h",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-18T18:43:41Z",
       "side": 1,
       "message": "I think we can just inline this too and return the WebVector\u003c\u003e?",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037ba481_3ac6245d",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-18T19:05:26Z",
+      "side": 1,
+      "message": "Nope doesn\u0027t work, I get \n\n../../mojo/public/cpp/bindings/array_traits.h:72:3: error: static_assert failed due to requirement \u0027internal::AlwaysFalse\u003cWebVector\n\u003cconst SkBitmap\u003e \u003e::value\u0027 \"Cannot find the mojo::ArrayTraits specialization. Did you forget to include the corresponding header fi\nle?\"\n\nI think this is why I started using base::spans in my previous CL for the web vectors in the NotificationData struct..",
+      "parentUuid": "fbf91392_0018f33c",
       "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "722d7c2c_0790b797",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraitsTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-18T19:05:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "933345f3_245b390e",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5cff11f_7b47bf7e",
         "filename": "third_party/WebKit/public/platform/modules/notifications/notification.mojom",
         "patchSetId": 1
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "7187c95c_491fd786",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-18T19:05:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5cff11f_7b47bf7e",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db02e2b_6b721d98",
         "filename": "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom",
         "patchSetId": 1
@@ -118,6 +226,24 @@
       "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ffa3c16_a6b964ee",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-18T19:05:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2db02e2b_6b721d98",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
