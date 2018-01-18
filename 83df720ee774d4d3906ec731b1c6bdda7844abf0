@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5be3a02_a7b2b65f",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 3137,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-18T02:30:30Z",
+      "side": 1,
+      "message": "Let\u0027s reverse the order of conditions like:\n  if (html.IsEmpty() \u0026\u0026 !HasNonInBodyInsertionMode()) {\nin order to avoid to call virtual HasNonInBodyInsertionMode() in non-empty cases.",
+      "revId": "83df720ee774d4d3906ec731b1c6bdda7844abf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
