@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71fb0ad5_cda4fd2d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-18T02:29:45Z",
+      "side": 1,
+      "message": "prepend [Chromecast]",
+      "revId": "ea8436535b764e845293e1301a16a21a1a136d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb824ad_9d8bedd7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-18T02:29:45Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 14,
+        "startChar": 23,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "ea8436535b764e845293e1301a16a21a1a136d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
