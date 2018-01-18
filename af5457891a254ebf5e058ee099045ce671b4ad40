@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "63658b37_4f7e3cf6",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "753d3c15_e0919619",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d9d88a8_7e8a7b3f",
         "filename": "ios/net/chunked_data_stream_uploader.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d9fe06c_60031fcc",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d9d88a8_7e8a7b3f",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5bb71d53_15d60c33",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed5a4947_60b0b1be",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 30
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aa6a44a_1c150e0b",
         "filename": "ios/net/chunked_data_stream_uploader.cc",
         "patchSetId": 5
@@ -103,6 +163,30 @@
       "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5209db29_74e7d001",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aa6a44a_1c150e0b",
+      "range": {
+        "startLine": 77,
+        "startChar": 16,
+        "endLine": 77,
+        "endChar": 17
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -153,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "e0748696_d9a297ea",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53e539bd_e6abfbb4",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fd42e45_e19939b4",
         "filename": "ios/net/chunked_data_stream_uploader.cc",
         "patchSetId": 5
@@ -197,6 +305,30 @@
       "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2f1762_14a9a8d2",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d76b32b_d7e49fab",
+      "range": {
+        "startLine": 98,
+        "startChar": 9,
+        "endLine": 98,
+        "endChar": 19
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -247,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "a0cb4cfa_419e75db",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd10d5da_70bc40af",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a2a6700_cefb1bc3",
         "filename": "ios/net/chunked_data_stream_uploader.h",
         "patchSetId": 5
@@ -267,6 +423,30 @@
       "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fcac1e_23f6c840",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a2a6700_cefb1bc3",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -293,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "1fa9b5a7_fe971445",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9636583b_f38209ec",
+      "range": {
+        "startLine": 27,
+        "startChar": 16,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffde9ff5_8f439663",
         "filename": "ios/net/chunked_data_stream_uploader.h",
         "patchSetId": 5
@@ -313,6 +517,30 @@
       "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deba8217_cbd2066d",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffde9ff5_8f439663",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -339,6 +567,30 @@
     },
     {
       "key": {
+        "uuid": "1e218771_5342076c",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bdd57de_35996f95",
+      "range": {
+        "startLine": 50,
+        "startChar": 43,
+        "endLine": 50,
+        "endChar": 54
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a29e81e_8adcfb08",
         "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
         "patchSetId": 5
@@ -353,6 +605,24 @@
       "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4917788a_dd02e44c",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a29e81e_8adcfb08",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -373,6 +643,24 @@
     },
     {
       "key": {
+        "uuid": "4fa317b1_dcae8959",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4705e2aa_3fb4aa41",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2077138_d995b56b",
         "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
         "patchSetId": 5
@@ -387,6 +675,24 @@
       "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea0dfca_0538530a",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2077138_d995b56b",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -407,6 +713,24 @@
     },
     {
       "key": {
+        "uuid": "75d9950e_7a864001",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2d1eb7c_8c54728b",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e54cc7_25792ee9",
         "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
         "patchSetId": 5
@@ -421,6 +745,24 @@
       "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56bf34e_59a119ec",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90e54cc7_25792ee9",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -447,6 +789,30 @@
     },
     {
       "key": {
+        "uuid": "9b223dc4_c232fc90",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d762ec_959eb62d",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 72
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aa1252f_0b342fce",
         "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
         "patchSetId": 5
@@ -464,6 +830,24 @@
     },
     {
       "key": {
+        "uuid": "fc407ccd_53cc8fbc",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aa1252f_0b342fce",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c365f59_275838fb",
         "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
         "patchSetId": 5
@@ -478,6 +862,24 @@
       "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "170082e8_1f8ba4d5",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c365f59_275838fb",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -504,6 +906,30 @@
     },
     {
       "key": {
+        "uuid": "83d09152_c1a6d37e",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf07ea0b_2e4873be",
+      "range": {
+        "startLine": 166,
+        "startChar": 41,
+        "endLine": 166,
+        "endChar": 47
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9778cf3a_1377e536",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 5
@@ -518,6 +944,24 @@
       "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65844c3b_41d6de23",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9778cf3a_1377e536",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -544,6 +988,30 @@
     },
     {
       "key": {
+        "uuid": "12286053_0aa67a6e",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cd78c71_c5237cc4",
+      "range": {
+        "startLine": 276,
+        "startChar": 8,
+        "endLine": 276,
+        "endChar": 23
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2108a5f2_3a44fe7a",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 5
@@ -567,6 +1035,30 @@
     },
     {
       "key": {
+        "uuid": "1c936a07_33e3ac81",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2108a5f2_3a44fe7a",
+      "range": {
+        "startLine": 714,
+        "startChar": 4,
+        "endLine": 714,
+        "endChar": 65
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e37082cd_387a720e",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 5
@@ -587,6 +1079,30 @@
       "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32af046_8b8b41df",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-18T12:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e37082cd_387a720e",
+      "range": {
+        "startLine": 723,
+        "startChar": 6,
+        "endLine": 725,
+        "endChar": 45
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
