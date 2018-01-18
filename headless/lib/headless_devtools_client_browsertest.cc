@@ -15,6 +15,7 @@
 #include "build/build_config.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/browser_test.h"
 #include "headless/lib/browser/headless_web_contents_impl.h"
@@ -1235,6 +1236,14 @@ HEADLESS_ASYNC_DEVTOOLED_TEST_F(DevToolsAttachAndDetachNotifications);
 class DomTreeExtractionBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
                                      public page::Observer {
  public:
+  void SetUp() override {
+    base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+    // Extracting the RuntimeEnabledFeature out of Blink for this is quite
+    // complicated so this test will always run with RootLayerScrolls enabled.
+    // Remove once this feature ships in stable. crbug.com/417782.
+    command_line->AppendSwitch(switches::kRootLayerScrolls);
+    HeadlessAsyncDevTooledBrowserTest::SetUp();
+  }
   void RunDevTooledTest() override {
     EXPECT_TRUE(embedded_test_server()->Start());
     devtools_client_->GetPage()->AddObserver(this);
