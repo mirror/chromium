@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57cd3889_28531c45",
+        "filename": "mojo/public/tools/bindings/README.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-18T15:27:26Z",
+      "side": 1,
+      "message": "nit: how about \"conditionally enable\" for congruence with the attribute name",
+      "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d04aeb5_f610eaa8",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-18T15:27:26Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think these comments are necessary, the code is short and easy enough to understand",
+      "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
