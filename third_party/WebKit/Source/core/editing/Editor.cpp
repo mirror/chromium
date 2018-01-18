@@ -799,8 +799,9 @@ void Editor::RegisterCommandGroup(CompositeEditCommand* command_group_wrapper) {
 Element* Editor::FindEventTargetFrom(const VisibleSelection& selection) const {
   Element* target = AssociatedElementOf(selection.Start());
   if (!target)
-    target = GetFrame().GetDocument()->body();
-
+    return GetFrame().GetDocument()->body();
+  if (target->IsInUserAgentShadowRoot())
+    return target->OwnerShadowHost();
   return target;
 }
 
