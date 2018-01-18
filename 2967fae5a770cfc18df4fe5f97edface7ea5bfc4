@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7ef02cd9_58aeafbd",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T13:16:31Z",
+      "side": 0,
+      "message": "it\u0027s okay by me if it\u0027s okay with the metrics OWNERS. thanks.",
+      "parentUuid": "d1d7971b_c98855eb",
+      "range": {
+        "startLine": 624,
+        "startChar": 29,
+        "endLine": 624,
+        "endChar": 56
+      },
+      "revId": "2967fae5a770cfc18df4fe5f97edface7ea5bfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ef521d5_6934114f",
         "filename": "chrome/browser/ui/browser_ui_prefs.cc",
         "patchSetId": 2
