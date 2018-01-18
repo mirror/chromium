@@ -89,7 +89,8 @@ class SelectionPaintRange {
   WTF::Optional<unsigned> end_offset_ = WTF::nullopt;
 };
 
-class LayoutSelection final : public GarbageCollected<LayoutSelection> {
+class CORE_EXPORT LayoutSelection final
+    : public GarbageCollected<LayoutSelection> {
  public:
   static LayoutSelection* Create(FrameSelection& frame_selection) {
     return new LayoutSelection(frame_selection);
@@ -113,6 +114,9 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
       const NGPhysicalTextFragment&);
 
   void OnDocumentShutdown();
+
+  // This returns VisibleSelection using LayoutSelection-base canonicalization.
+  static VisibleSelection ComputeVisibleSelection(const SelectionInDOMTree&);
 
   void Trace(blink::Visitor*);
 
