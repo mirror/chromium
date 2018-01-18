@@ -12,7 +12,6 @@
     "disable_brotli_filter=false",
     "disable_file_support=true",
     "disable_ftp_support=true",
-    "enable_precompiled_headers=false",
     "enable_websockets=false",
     "goma_dir=\"$(goma_dir)\"",
     "ios_deployment_target=\"9.0\"",
@@ -21,7 +20,8 @@
     "is_debug=true",
     "target_cpu=\"x64\"",
     "target_os=\"ios\"",
-    "use_platform_icu_alternatives=true"
+    "use_platform_icu_alternatives=true",
+    "use_goma=true"
   ],
   "configuration": "Debug",
   "sdk": "iphonesimulator11.2",
