@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "493f4a9a_73ef1ce4",
+        "filename": "ui/chromeos/ksv/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T01:09:15Z",
+      "side": 1,
+      "message": "nit: I don\u0027t see a dep on //ash/frame, omit this note until it exists?",
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6771cc02_81db74db",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
         "patchSetId": 6
