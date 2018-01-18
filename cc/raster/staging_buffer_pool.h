@@ -31,7 +31,6 @@ class RasterContextProvider;
 }  // namespace viz
 
 namespace cc {
-class Resource;
 
 struct StagingBuffer {
   StagingBuffer(const gfx::Size& size, viz::ResourceFormat format);
@@ -58,7 +57,7 @@ class CC_EXPORT StagingBufferPool
  public:
   ~StagingBufferPool() final;
 
-  StagingBufferPool(base::SequencedTaskRunner* task_runner,
+  StagingBufferPool(scoped_refptr<base::SequencedTaskRunner> task_runner,
                     viz::RasterContextProvider* worker_context_provider,
                     ResourceProvider* resource_provider,
                     bool use_partial_raster,
@@ -70,7 +69,8 @@ class CC_EXPORT StagingBufferPool
                     base::trace_event::ProcessMemoryDump* pmd) override;
 
   std::unique_ptr<StagingBuffer> AcquireStagingBuffer(
-      const Resource* resource,
+      const gfx::Size& size,
+      viz::ResourceFormat format,
       uint64_t previous_content_id);
   void ReleaseStagingBuffer(std::unique_ptr<StagingBuffer> staging_buffer);
 
