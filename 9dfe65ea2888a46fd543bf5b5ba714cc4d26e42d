@@ -358,6 +358,30 @@
     },
     {
       "key": {
+        "uuid": "387cc618_d6e8c250",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-18T19:03:47Z",
+      "side": 1,
+      "message": "So in conclusion, adding a \u003cp\u003e (or anything) before \u003cscript\u003e implicitly created the \u003cbody\u003e and now the test runs and passes just fine. Thanks.",
+      "parentUuid": "25b18d8c_6aef4ebc",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 76
+      },
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9d1ed_4f050bb6",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
         "patchSetId": 48
@@ -423,6 +447,24 @@
       "side": 1,
       "message": "When you call `test(myFunc, \"Test myFunc)`, myFunc is run in the test() call. So:\n\nsetupElements();\ntest(...)\n\nShould guarantee setupElements is called before your test is run.",
       "parentUuid": "b739e9e3_839e57b1",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beeb2d7b_e7908cf3",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-18T19:03:47Z",
+      "side": 1,
+      "message": "Yes. So one test would have the setup element then. Thanks.",
+      "parentUuid": "96fe1436_f47b014f",
       "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
