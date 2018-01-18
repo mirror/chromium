@@ -437,12 +437,14 @@ public class DownloadNotificationService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
+        Log.e("joy", "onStartCommand intent:" + intent);
         // Start a foreground service every time we process a valid intent.  This makes sure we
         // honor the promise that we'll be in the foreground when we start, even if we immediately
         // drop ourselves back.
         if (useForegroundService() && intent != null) startForegroundInternal();
 
         if (intent == null) {
+            Log.e("joy", "intent == null");
             // Record instance of service restarting.
             DownloadNotificationUmaHelper.recordServiceStoppedHistogram(
                     DownloadNotificationUmaHelper.ServiceStopped.START_STICKY, false);
@@ -454,7 +456,8 @@ public class DownloadNotificationService extends Service {
             updateNotificationsForShutdown();
             handleDownloadOperation(
                     new Intent(DownloadNotificationService.ACTION_DOWNLOAD_RESUME_ALL));
-            hideSummaryNotificationIfNecessary(-1);
+            Log.e("joy", "here2");
+            //            hideSummaryNotificationIfNecessary(-1);
         } else if (TextUtils.equals(intent.getAction(),
                            DownloadNotificationService.ACTION_DOWNLOAD_FAIL_SAFE)) {
             hideSummaryNotificationIfNecessary(-1);
@@ -504,6 +507,7 @@ public class DownloadNotificationService extends Service {
     @VisibleForTesting
     @TargetApi(Build.VERSION_CODES.N)
     void stopForegroundInternal(boolean killNotification) {
+        Log.e("joy", "stopForegroundInternal killNotification: " + killNotification);
         if (!useForegroundService()) return;
         stopForeground(killNotification ? STOP_FOREGROUND_REMOVE : STOP_FOREGROUND_DETACH);
     }
@@ -514,6 +518,7 @@ public class DownloadNotificationService extends Service {
      */
     @VisibleForTesting
     void startForegroundInternal() {
+        Log.e("joy", "startForegroundInternal");
         if (!useForegroundService()) return;
         Notification notification =
                 buildSummaryNotification(getApplicationContext(), mNotificationManager);
@@ -532,6 +537,7 @@ public class DownloadNotificationService extends Service {
 
     @VisibleForTesting
     void updateNotificationsForShutdown() {
+        Log.e("joy", "updateNotificationsForShutdown");
         cancelOffTheRecordDownloads();
         List<DownloadSharedPreferenceEntry> entries = mDownloadSharedPreferenceHelper.getEntries();
         for (DownloadSharedPreferenceEntry entry : entries) {
@@ -573,6 +579,7 @@ public class DownloadNotificationService extends Service {
      * @param id The {@link ContentId} of the download that has been started and should be tracked.
      */
     private void startTrackingInProgressDownload(ContentId id) {
+        Log.e("joy", "startTrackingInProgressDownload contentId: " + id);
         if (mDownloadsInProgress.size() == 0) startForegroundInternal();
         if (!mDownloadsInProgress.contains(id)) mDownloadsInProgress.add(id);
     }
@@ -589,8 +596,12 @@ public class DownloadNotificationService extends Service {
      *                            potentially bad state where we cannot dismiss the notification.
      */
     private void stopTrackingInProgressDownload(ContentId id, boolean allowStopForeground) {
+        Log.e("joy", "stopTrackingInProgressDownload contentId: " + id);
         mDownloadsInProgress.remove(id);
-        if (allowStopForeground && mDownloadsInProgress.size() == 0) stopForegroundInternal(false);
+        if (allowStopForeground && mDownloadsInProgress.size() == 0) {
+            Log.e("joy", "stopTrackingInProgressDownload stopForegroundInternal");
+            stopForegroundInternal(false);
+        }
     }
 
     /**
@@ -633,10 +644,19 @@ public class DownloadNotificationService extends Service {
      */
     @SuppressLint("NewApi") // useForegroundService guards StatusBarNotification.getNotification
     boolean hideSummaryNotificationIfNecessary(int notificationIdToIgnore) {
-        if (mDownloadsInProgress.size() > 0) return false;
+        Log.e("joy",
+                "hideSummaryNotificationIfNecessary notificationIdToIgnore: "
+                        + notificationIdToIgnore);
+        if (mDownloadsInProgress.size() > 0) {
+            Log.e("joy", "mDownloadsInProgress size > 0");
+            return false;
+        }
 
         if (useForegroundService()) {
-            if (hasDownloadNotificationsInternal(notificationIdToIgnore)) return false;
+            if (hasDownloadNotificationsInternal(notificationIdToIgnore)) {
+                Log.e("joy", "hasDownloadNotificationsInternal");
+                return false;
+            }
 
             StatusBarNotification notification = getSummaryNotification(mNotificationManager);
             if (notification != null) {
@@ -647,6 +667,7 @@ public class DownloadNotificationService extends Service {
                     // If we are a foreground service and we are hiding the notification, we have no
                     // other downloads notifications showing, so we need to remove the notification
                     // and unregister it from this service at the same time.
+                    Log.e("joy", "no foreground service notifications");
                     stopForegroundInternal(true);
                 } else {
                     // If we are not a foreground service, remove the notification via the
@@ -662,6 +683,7 @@ public class DownloadNotificationService extends Service {
                 // fails inside the framework.
                 // TODO(dtrainor): Add a way to attempt to automatically clean up the notification
                 // shortly after this.
+                Log.e("joy", "no valid summaries so stopForeground");
                 stopForegroundInternal(true);
             }
         } else {
@@ -674,6 +696,7 @@ public class DownloadNotificationService extends Service {
         // a background service.  We might not be unbound from any clients.  When they unbind we
         // will shut down.  That is okay because they will only unbind from us when they are ok with
         // us going away (e.g. we shouldn't be unbound while in the foreground).
+        Log.e("joy", "stopSelf");
         stopSelf();
 
         // Record instance of service being stopped intentionally.
@@ -741,6 +764,7 @@ public class DownloadNotificationService extends Service {
      */
     private void notifyDownloadPending(ContentId id, String fileName, boolean isOffTheRecord,
             boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon) {
+        Log.e("joy", "notifyDownloadPending");
         updateActiveDownloadNotification(id, fileName, Progress.createIndeterminateProgress(), 0, 0,
                 0, isOffTheRecord, canDownloadWhileMetered, true, isTransient, icon);
     }
@@ -878,6 +902,7 @@ public class DownloadNotificationService extends Service {
      */
     public void notifyDownloadPaused(ContentId id, String fileName, boolean isResumable,
             boolean isAutoResumable, boolean isOffTheRecord, boolean isTransient, Bitmap icon) {
+        Log.e("joy", "notifyDownloadPaused");
         DownloadSharedPreferenceEntry entry =
                 mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id);
         if (!isResumable) {
@@ -893,9 +918,10 @@ public class DownloadNotificationService extends Service {
         boolean canDownloadWhileMetered = entry == null ? false : entry.canDownloadWhileMetered;
         // If download is interrupted due to network disconnection, show download pending state.
         if (isAutoResumable) {
+            Log.e("joy", "isAutoResumable");
             notifyDownloadPending(
                     id, fileName, isOffTheRecord, canDownloadWhileMetered, isTransient, icon);
-            stopTrackingInProgressDownload(id, true);
+            stopTrackingInProgressDownload(id, false);
             return;
         }
 
@@ -1124,11 +1150,13 @@ public class DownloadNotificationService extends Service {
      * @param intent Intent with the download operation.
      */
     private void handleDownloadOperation(final Intent intent) {
+        Log.e("joy", "handleDownloadOperation intent.getAction: " + intent.getAction());
         // Process updating the summary notification first.  This has no impact on a specific
         // download.
         if (ACTION_DOWNLOAD_UPDATE_SUMMARY_ICON.equals(intent.getAction())) {
             updateSummaryIcon(mContext, mNotificationManager, mNotificationManagerCompat, -1, null);
             hideSummaryNotificationIfNecessary(-1);
+            Log.e("joy", "here3");
             return;
         }
 
@@ -1138,11 +1166,15 @@ public class DownloadNotificationService extends Service {
         if (entry == null
                 && !(id != null && LegacyHelpers.isLegacyOfflinePage(id)
                            && TextUtils.equals(intent.getAction(), ACTION_DOWNLOAD_OPEN))
-                && !(TextUtils.equals(intent.getAction(), ACTION_NOTIFICATION_CLICKED))) {
+                && !(TextUtils.equals(intent.getAction(), ACTION_NOTIFICATION_CLICKED))
+                && !(TextUtils.equals(intent.getAction(), ACTION_DOWNLOAD_RESUME_ALL))) {
             handleDownloadOperationForMissingNotification(intent);
             hideSummaryNotificationIfNecessary(-1);
+            Log.e("joy", "here4");
             return;
         }
+
+        Log.e("joy", "handling pre-native");
 
         if (ACTION_DOWNLOAD_PAUSE.equals(intent.getAction())) {
             // If browser process already goes away, the download should have already paused. Do
@@ -1152,6 +1184,7 @@ public class DownloadNotificationService extends Service {
                 // build a Java cache for easy access.
                 notifyDownloadPaused(entry.id, entry.fileName, !entry.isOffTheRecord, false,
                         entry.isOffTheRecord, entry.isTransient, null);
+                Log.e("joy", "here0");
                 hideSummaryNotificationIfNecessary(-1);
                 return;
             }
@@ -1168,6 +1201,9 @@ public class DownloadNotificationService extends Service {
         } else if (ACTION_DOWNLOAD_RESUME_ALL.equals(intent.getAction())
                 && (mDownloadSharedPreferenceHelper.getEntries().isEmpty()
                            || DownloadManagerService.hasDownloadManagerService())) {
+            Log.e("joy",
+                    "getEntriesIsEmpty: " + mDownloadSharedPreferenceHelper.getEntries().isEmpty());
+            Log.e("joy", "here1");
             hideSummaryNotificationIfNecessary(-1);
             return;
         } else if (ACTION_DOWNLOAD_OPEN.equals(intent.getAction())) {
@@ -1176,13 +1212,17 @@ public class DownloadNotificationService extends Service {
                 && IntentUtils.safeGetBooleanExtra(intent, EXTRA_NOTIFICATION_DISMISSED, false)) {
             // User canceled a download by dismissing its notification from earlier versions, ignore
             // it. TODO(qinmin): remove this else-if block after M60.
+            Log.e("joy", "here4");
             return;
         }
+
+        Log.e("joy", "getting ready to initialize native");
 
         BrowserParts parts = new EmptyBrowserParts() {
             @Override
             public void finishNativeInitialization() {
                 // Make sure the OfflineContentAggregator bridge is initialized.
+                Log.e("joy", "finishNativeInitialization");
                 OfflineContentAggregatorNotificationBridgeUiFactory.instance();
 
                 DownloadServiceDelegate downloadServiceDelegate =
@@ -1233,9 +1273,12 @@ public class DownloadNotificationService extends Service {
             }
         };
         try {
+            Log.e("joy", "try handle pre native startup");
             ChromeBrowserInitializer.getInstance(mContext).handlePreNativeStartup(parts);
+            Log.e("joy", "try to handle post native startup");
             ChromeBrowserInitializer.getInstance(mContext).handlePostNativeStartup(true, parts);
         } catch (ProcessInitException e) {
+            Log.e("joy", "ProcessInitExecption", e);
             Log.e(TAG, "Unable to load native library.", e);
             ChromeApplication.reportStartupErrorAndExit(e);
         }
@@ -1409,6 +1452,7 @@ public class DownloadNotificationService extends Service {
      * already in progress, do nothing.
      */
     public void resumeAllPendingDownloads() {
+        Log.e("joy", "resumeAllPendingDownloads");
         if (!DownloadManagerService.hasDownloadManagerService()) return;
         List<DownloadSharedPreferenceEntry> entries = mDownloadSharedPreferenceHelper.getEntries();
         for (int i = 0; i < entries.size(); ++i) {
