@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d8436cd_b2a74b1b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/rellist-feature-detection.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-18T13:17:20Z",
+      "side": 1,
+      "message": "nit: Let\u0027s have a link to the spec as a comment.\n\nhttps://html.spec.whatwg.org/multipage/links.html#linkTypes",
+      "revId": "77f33eab0f8efb7d9f6cf6095547e6250b569fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f76d6c1_006ae6fe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/rellist-feature-detection.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-18T13:17:20Z",
+      "side": 1,
+      "message": "link_support_table[0] is hard to say what it is.  I think link_support_table[\u0027link\u0027] and link_support_table[\u0027a_and_area\u0027] is more readable.\n\nOr, you can define:\n\n    let link_support_table \u003d {};\n    link_support_table[\u0027a\u0027] \u003d { supported: [ ... ], unsupported: [ ... ] };\n    link_support_table[\u0027area\u0027] \u003d link_support_table[\u0027a\u0027];",
+      "range": {
+        "startLine": 6,
+        "startChar": 25,
+        "endLine": 8,
+        "endChar": 4
+      },
+      "revId": "77f33eab0f8efb7d9f6cf6095547e6250b569fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93eaa4d3_9cc4acb3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/rellist-feature-detection.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-18T13:17:20Z",
+      "side": 1,
+      "message": "nit: I\u0027m not fluent in English, but I guess that \u0027unsupport\u0027 wouldn\u0027t be a common word for this use case.  Maybe supported/unsupported or support/not_support?",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "77f33eab0f8efb7d9f6cf6095547e6250b569fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c2de670_973f459d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/rellist-feature-detection.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-18T13:17:20Z",
+      "side": 1,
+      "message": "nit: Let\u0027s have an empty line.",
+      "revId": "77f33eab0f8efb7d9f6cf6095547e6250b569fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
