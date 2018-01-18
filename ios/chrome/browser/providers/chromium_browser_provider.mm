@@ -4,11 +4,12 @@
 
 #import "ios/chrome/browser/providers/chromium_browser_provider.h"
 
-#include "base/memory/ptr_util.h"
+#include <memory>
 #import "ios/chrome/browser/providers/chromium_logo_controller.h"
 #import "ios/chrome/browser/providers/chromium_spotlight_provider.h"
 #import "ios/chrome/browser/providers/chromium_voice_search_provider.h"
 #import "ios/chrome/browser/providers/images/chromium_branded_image_provider.h"
+
 #include "ios/chrome/browser/providers/signin/chromium_signin_resources_provider.h"
 #include "ios/chrome/browser/providers/ui/chromium_styled_text_field.h"
 #include "ios/public/provider/chrome/browser/distribution/app_distribution_provider.h"
@@ -22,15 +23,15 @@
 #endif
 
 ChromiumBrowserProvider::ChromiumBrowserProvider()
-    : app_distribution_provider_(base::MakeUnique<AppDistributionProvider>()),
-      branded_image_provider_(base::MakeUnique<ChromiumBrandedImageProvider>()),
-      signin_error_provider_(base::MakeUnique<ios::SigninErrorProvider>()),
+    : app_distribution_provider_(std::make_unique<AppDistributionProvider>()),
+      branded_image_provider_(std::make_unique<ChromiumBrandedImageProvider>()),
+      signin_error_provider_(std::make_unique<ios::SigninErrorProvider>()),
       signin_resources_provider_(
-          base::MakeUnique<ChromiumSigninResourcesProvider>()),
-      user_feedback_provider_(base::MakeUnique<UserFeedbackProvider>()),
-      voice_search_provider_(base::MakeUnique<ChromiumVoiceSearchProvider>()),
-      spotlight_provider_(base::MakeUnique<ChromiumSpotlightProvider>()),
-      external_search_provider_(base::MakeUnique<ExternalSearchProvider>()) {}
+          std::make_unique<ChromiumSigninResourcesProvider>()),
+      user_feedback_provider_(std::make_unique<UserFeedbackProvider>()),
+      voice_search_provider_(std::make_unique<ChromiumVoiceSearchProvider>()),
+      spotlight_provider_(std::make_unique<ChromiumSpotlightProvider>()),
+      external_search_provider_(std::make_unique<ExternalSearchProvider>()) {}
 
 ChromiumBrowserProvider::~ChromiumBrowserProvider() {}
 
@@ -51,7 +52,7 @@ void ChromiumBrowserProvider::SetChromeIdentityServiceForTesting(
 ios::ChromeIdentityService*
 ChromiumBrowserProvider::GetChromeIdentityService() {
   if (!chrome_identity_service_) {
-    chrome_identity_service_ = base::MakeUnique<ios::ChromeIdentityService>();
+    chrome_identity_service_ = std::make_unique<ios::ChromeIdentityService>();
   }
   return chrome_identity_service_.get();
 }
