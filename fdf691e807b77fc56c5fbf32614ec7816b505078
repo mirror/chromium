@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f93040e_eae6078c",
+        "filename": "content/browser/renderer_host/media/video_capture_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-18T17:59:17Z",
+      "side": 1,
+      "message": "Typically, the test case is the one that creates the mock object and, therefore, has direct access to it. Digging it out and casting it from the private parts of the unit under test seems counterintuitive (and breaks encapsulation).\n\nInstead, I recommend to create the mock instance in the test case directly, then keep a pointer to it before std::moving it into the constructor of VideoCaptureHost.",
+      "revId": "fdf691e807b77fc56c5fbf32614ec7816b505078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
