@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d53b5c9a_e6eda1e7",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_item.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T21:02:19Z",
+      "side": 1,
+      "message": "Think this worth documenting so add a comment.\n\ne.g.\n  // Set model updater last to avoid being called during construction.",
+      "revId": "b7b1d5853e542385266bdef660f92237e1eb6d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec8425da_b6300c32",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T21:02:19Z",
+      "side": 1,
+      "message": "nit: Can these just be inline accessors? \n\ni.e.\n  AppListModelUpdater* model_updater() { return model_updater_; }\n  void set_model_updater(AppListModelUpdater* model_updater) {\n    model_updater_ \u003d model_updater;\n  }\n\nYou can leave as-is if you plan to add more stuff to them later.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "b7b1d5853e542385266bdef660f92237e1eb6d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1f6f16_1f6936ff",
+        "filename": "chrome/browser/ui/app_list/extension_app_item.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-18T21:02:19Z",
+      "side": 1,
+      "message": "ditto. Add a comment.",
+      "revId": "b7b1d5853e542385266bdef660f92237e1eb6d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
