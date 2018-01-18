@@ -29,10 +29,19 @@ class BubbleDialogDelegateView;
 class BubbleIconView : public views::InkDropHostView,
                        public views::WidgetObserver {
  public:
+  // The view class name.
+  static const char kViewClassName[];
+
   void Init();
 
   // Invoked when a bubble for this icon is created.
   void OnBubbleCreated(LocationBarBubbleDelegateView* bubble);
+
+  // Returns the bubble instance for the icon.
+  virtual views::BubbleDialogDelegateView* GetBubble() const = 0;
+
+  // views::View:
+  const char* GetClassName() const final;
 
  protected:
   enum ExecuteSource {
@@ -92,9 +101,6 @@ class BubbleIconView : public views::InkDropHostView,
  protected:
   // Calls OnExecuting and runs |command_id_| with a valid |command_updater_|.
   virtual void ExecuteCommand(ExecuteSource source);
-
-  // Returns the bubble instance for the icon.
-  virtual views::BubbleDialogDelegateView* GetBubble() const = 0;
 
   // Gets the given vector icon in the correct color and size based on |active|.
   virtual const gfx::VectorIcon& GetVectorIcon() const = 0;
