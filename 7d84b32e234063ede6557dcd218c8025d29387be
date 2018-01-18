@@ -210,6 +210,30 @@
       "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e62af89_93c99eb9",
+        "filename": "content/renderer/fetchers/resource_fetcher_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-18T15:59:47Z",
+      "side": 1,
+      "message": "I\u0027m not following.  If we have a class that sends a message in its destructor, surely there\u0027s a 0% chance that message would be sent during a crash, but a non-zero chance that message would be sent during deletion?",
+      "parentUuid": "c0fd0c71_1106c3c5",
+      "range": {
+        "startLine": 424,
+        "startChar": 41,
+        "endLine": 424,
+        "endChar": 73
+      },
+      "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
