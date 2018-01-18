@@ -36,7 +36,9 @@
 #include "core/editing/DragCaret.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/LayoutSelection.h"
 #include "core/editing/RenderedPosition.h"
+#include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/VisibleSelection.h"
 #include "core/editing/markers/DocumentMarkerController.h"
@@ -2050,8 +2052,10 @@ bool LocalFrameView::ComputeCompositedSelection(
   if (!frame.View() || frame.View()->ShouldThrottleRendering())
     return false;
 
+  DCHECK(frame.GetDocument());
   const VisibleSelection& visible_selection =
-      frame.Selection().ComputeVisibleSelectionInDOMTree();
+      LayoutSelection::ComputeVisibleSelection(
+          frame.Selection().GetSelectionInDOMTree(), *frame.GetDocument());
   if (!frame.Selection().IsHandleVisible() || frame.Selection().IsHidden())
     return false;
 
