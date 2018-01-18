@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "117e13fc_28f51abd",
+        "filename": "content/browser/devtools/devtools_session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T08:35:43Z",
+      "side": 1,
+      "message": "This feels kind of unfortunate, I wonder if we should have BigString as well... on the Blink side, it would map to WTF::String, and on the Chrome side it would map to std::string. It seems like it\u0027d be a better fit overall. WDYT?",
+      "revId": "c78e7126cf8aaf16dea3dc627ea3435891ee391a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10db815d_02adf954",
+        "filename": "third_party/WebKit/public/web/devtools_agent.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-18T08:35:43Z",
+      "side": 1,
+      "message": "Nit: it might be nice to have a pointer to the format of the devtools protocol messages.\n\nIncidentally, is the protocol format fuzzed at all?",
+      "revId": "c78e7126cf8aaf16dea3dc627ea3435891ee391a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
