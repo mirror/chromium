@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c43a385_abd070c0",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T13:42:17Z",
+      "side": 1,
+      "message": "nit: i think these comments about the mutex belong on the Get{Blocked,Allowed}Log functions; saying something like that the returned Log instance must only be accessed under g_log_mutex.",
+      "revId": "fb620b1ec19a566409af12008d5402b0009e8ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46e9848_d3ad560b",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T13:42:17Z",
+      "side": 1,
+      "message": "nit: make this private",
+      "revId": "fb620b1ec19a566409af12008d5402b0009e8ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153e1dbc_5878b308",
+        "filename": "chrome_elf/whitelist/whitelist_log.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T13:42:17Z",
+      "side": 1,
+      "message": "nit: |log_type|",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "fb620b1ec19a566409af12008d5402b0009e8ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f64aa21_a8591b74",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T13:42:17Z",
+      "side": 1,
+      "message": "nit: prefer the C headers (e.g., stddef.h) over the C++ wrappers unless you really need the wrapper. (discussion in https://groups.google.com/a/chromium.org/d/msg/chromium-dev/W_sXT6YV1Ys/5tzSV4zeCgAJ)",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "fb620b1ec19a566409af12008d5402b0009e8ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed076db_d26a3b40",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T13:42:17Z",
+      "side": 1,
+      "message": "optional nit: not needed, as the language stipulates this.",
+      "range": {
+        "startLine": 78,
+        "startChar": 10,
+        "endLine": 78,
+        "endChar": 14
+      },
+      "revId": "fb620b1ec19a566409af12008d5402b0009e8ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

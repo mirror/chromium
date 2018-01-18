@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "0622e42d_b937bd22",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-18T13:42:17Z",
+      "side": 1,
+      "message": "Thanks for the explanation. Why have N types of logs rather than one log holding events of different types?",
+      "parentUuid": "6a946cf2_3fe050c0",
+      "range": {
+        "startLine": 39,
+        "startChar": 11,
+        "endLine": 39,
+        "endChar": 18
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ec19338_9254e41d",
         "filename": "chrome_elf/whitelist/whitelist_log.cc",
         "patchSetId": 4
