@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "01b570dc_420dc8d8",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-18T04:08:36Z",
+      "side": 1,
+      "message": "It appears that:\n\n- iOS Safari does not support autocapitalize for \u003coutput\u003e or \u003cfieldset\u003e (I can\u0027t edit text inside these elements)\n- Both of these elements *do* inherit the IDL value in iOS Safari",
+      "parentUuid": "d9fdbd4a_2e7a98ff",
+      "revId": "ec94d5c1c8ea14d4f8bff43723d9c4298ebdced1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ee7a1a9_2264c86b",
         "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp",
         "patchSetId": 1
