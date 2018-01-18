@@ -70,6 +70,30 @@
       "revId": "2e3a09d956ad72075b8c67e4bb3e104176441c24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be532ef9_257e8886",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchSelectionController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2018-01-18T16:51:13Z",
+      "side": 1,
+      "message": "Nice catch, I realized that too after making that hasty edit at home...",
+      "parentUuid": "51893e9e_1cbd778d",
+      "range": {
+        "startLine": 394,
+        "startChar": 0,
+        "endLine": 395,
+        "endChar": 0
+      },
+      "revId": "2e3a09d956ad72075b8c67e4bb3e104176441c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
