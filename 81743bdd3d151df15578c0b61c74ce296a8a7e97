@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "02a26685_a8ffdda8",
+        "filename": "content/network/resource_scheduler_client.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-18T07:46:01Z",
+      "side": 1,
+      "message": "Reverted as talked offline.\n\nResourceScheduler::~ResourceScheduler has a DCHECK\n\n DCHECK(client_map_.empty());\n\nI removed ResourceSchedulerClient::has_actually_created_client_ so that all leaks will be covered by the DCHECK. Are you fine with it?",
+      "parentUuid": "6cc7cdea_fa534a0d",
+      "revId": "81743bdd3d151df15578c0b61c74ce296a8a7e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3aeaa64a_9c2db2db",
         "filename": "content/network/url_loader.cc",
         "patchSetId": 19
