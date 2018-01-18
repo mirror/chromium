@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28e2ee7f_b7d20e24",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-18T08:14:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfb0f1df_2cc9325e",
+      "revId": "3b174a1b1f0980510e8b0f5e698bf6bb3f127240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf251cf8_c37cf9d6",
         "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "3b174a1b1f0980510e8b0f5e698bf6bb3f127240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "865d9332_08cd4a63",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-18T08:14:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf251cf8_c37cf9d6",
+      "revId": "3b174a1b1f0980510e8b0f5e698bf6bb3f127240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "b0a2c782_bdb9df8d",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-18T08:14:57Z",
+      "side": 1,
+      "message": "\"// Tells the delegate FrameSinkId has been changed\" is enough. Other stuff is redundant here.",
+      "parentUuid": "da0aea8b_9109ef2d",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 13
+      },
+      "revId": "3b174a1b1f0980510e8b0f5e698bf6bb3f127240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47000fda_c44215f0",
         "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "3b174a1b1f0980510e8b0f5e698bf6bb3f127240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a52d31d_d89a4f68",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-18T08:14:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47000fda_c44215f0",
+      "revId": "3b174a1b1f0980510e8b0f5e698bf6bb3f127240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
