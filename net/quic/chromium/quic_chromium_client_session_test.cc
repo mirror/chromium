@@ -1354,6 +1354,74 @@ TEST_P(QuicChromiumClientSessionTest, MigrateToSocketReadError) {
   EXPECT_TRUE(new_socket_data.AllWriteDataConsumed());
 }
 
+TEST_P(QuicChromiumClientSessionTest, WriteHeadersWithH2StreamDependency) {
+  MockRead reads[] = {MockRead(SYNCHRONOUS, ERR_IO_PENDING, 0)};
+
+  QuicStreamOffset headers_stream_offset = 0;
+  std::unique_ptr<QuicEncryptedPacket> settings_packet(
+      client_maker_.MakeInitialSettingsPacket(1, &headers_stream_offset));
+
+  std::unique_ptr<QuicEncryptedPacket> headers_packet(
+      client_maker_.MakeRequestHeadersPacket(
+          2, 7, true, false, 4,
+          client_maker_.GetRequestHeaders("GET", "https", "/"), 5, nullptr,
+          &headers_stream_offset));
+  MockWrite writes[] = {
+      MockWrite(ASYNC, settings_packet->data(), settings_packet->length(), 1),
+      MockWrite(SYNCHRONOUS, headers_packet->data(), headers_packet->length(),
+                2)};
+
+  socket_data_.reset(new SequencedSocketData(reads, arraysize(reads), writes,
+                                             arraysize(writes)));
+
+  Initialize();
+  CompleteCryptoHandshake();
+
+  // Depending on the value of |client_headers_include_h2_stream_dependency_|,
+  // |client_maker_| would fill |headers_packet|'s parent_stream_id field and
+  // exclusive flag differently.
+  if (client_headers_include_h2_stream_dependency_) {
+    ((QuicSpdySession*)session_.get())
+        ->WriteHeaders(7, client_maker_.GetRequestHeaders("GET", "https", "/"),
+                       false, 4, 5, true, nullptr);
+  } else {
+    ((QuicSpdySession*)session_.get())
+        ->WriteHeaders(7, client_maker_.GetRequestHeaders("GET", "https", "/"),
+                       false, 4, 0, false, nullptr);
+  }
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(socket_data_->AllReadDataConsumed());
+  EXPECT_TRUE(socket_data_->AllWriteDataConsumed());
+}
+
+TEST_P(QuicChromiumClientSessionTest, WritePriorityFrame) {
+  MockRead reads[] = {MockRead(SYNCHRONOUS, ERR_IO_PENDING, 0)};
+
+  QuicStreamOffset headers_stream_offset = 0;
+  std::unique_ptr<QuicEncryptedPacket> settings_packet(
+      client_maker_.MakeInitialSettingsPacket(1, &headers_stream_offset));
+  std::unique_ptr<QuicEncryptedPacket> priority_packet(
+      client_maker_.MakePriorityPacket(2, true, 7, 5, 100, true,
+                                       &headers_stream_offset));
+  MockWrite writes[] = {
+      MockWrite(ASYNC, settings_packet->data(), settings_packet->length(), 1),
+      MockWrite(SYNCHRONOUS, priority_packet->data(), priority_packet->length(),
+                2)};
+
+  socket_data_.reset(new SequencedSocketData(reads, arraysize(reads), writes,
+                                             arraysize(writes)));
+
+  Initialize();
+  CompleteCryptoHandshake();
+
+  session_->WritePriority(7, 5, 100, true);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(socket_data_->AllReadDataConsumed());
+  EXPECT_TRUE(socket_data_->AllWriteDataConsumed());
+}
+
 }  // namespace
 }  // namespace test
 }  // namespace net
