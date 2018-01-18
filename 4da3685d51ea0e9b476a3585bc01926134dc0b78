@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f7e6acc_d15e3c73",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-18T16:02:42Z",
+      "side": 1,
+      "message": "Oh my. Can I clang-format off the \"clang-format on\" line? :D I guess we\u0027ll have to live with this.",
+      "revId": "4da3685d51ea0e9b476a3585bc01926134dc0b78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
