@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f85b00ee_8e41ebc0",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1976,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-18T01:02:19Z",
+      "side": 1,
+      "message": "Since we created the |buffer| which is valid. it should always succeed.",
+      "parentUuid": "f610b17f_8613e4c2",
+      "revId": "009ff2169fc871c64ece68c378fde8817d75479e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44d37981_4bbac43f",
         "filename": "components/printing/service/public/cpp/pdf_service_mojo_utils.cc",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-18T00:36:16Z",
       "side": 1,
       "message": "weili: Do we ever pass in a handle that is read-write?",
+      "revId": "009ff2169fc871c64ece68c378fde8817d75479e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1a9582_17b3a9ba",
+        "filename": "components/printing/service/public/cpp/pdf_service_mojo_utils.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-18T01:02:19Z",
+      "side": 1,
+      "message": "no, always read-only",
+      "parentUuid": "44d37981_4bbac43f",
       "revId": "009ff2169fc871c64ece68c378fde8817d75479e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
