@@ -88,6 +88,24 @@
       "revId": "acc0f84d22f94b1062e11a34d540a1d43f3cf76c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b125bb1b_becce49c",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-18T02:37:38Z",
+      "side": 1,
+      "message": "Added comment explaining why BeginPaint and EndPaintOfUnpaired are called regardless of whether record is null.\n\nIt\u0027s not easy to list all circumstances where record is null. When working on SPv1 I measured and reduced the them to a very low percentage (\u003c1%), but they may still happen anywhere when a DrawingRecorder is created but the enclosed code paints nothing under certain conditions.",
+      "parentUuid": "29cc8066_11200a4a",
+      "revId": "acc0f84d22f94b1062e11a34d540a1d43f3cf76c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
