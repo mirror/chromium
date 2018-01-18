@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32e01991_c5b0f3d7",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_content_browsertests.filter",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-18T17:11:58Z",
+      "side": 1,
+      "message": "can you make the test early exit if network service is disabled instead? that way we can remove this filter file once all tests work with network service",
+      "revId": "9abc8c17a5a8eb8fe19eaba3e80449d693714e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
