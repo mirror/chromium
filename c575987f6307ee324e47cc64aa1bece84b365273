@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20f667ac_537bc18c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationManagerProxyImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T14:26:37Z",
+      "side": 1,
+      "message": "Build.VERSION_CODES.M, on line 108 as well",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5591d0fb_b64268f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-18T14:26:37Z",
+      "side": 1,
+      "message": "I\u0027d rephrase the cause as:\n\n   The data provided by Android is only used on Android O and above because earlier versions were subject to a race condition briefly after showing or closing a notification.",
+      "revId": "c575987f6307ee324e47cc64aa1bece84b365273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
