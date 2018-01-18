@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56055b68_bc290f84",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-18T17:53:02Z",
+      "side": 1,
+      "message": "Are callers prepared to accept nullptr here? It looks like they will weirdly end up creating a blob wrapping a null handle. Should they instead check for nullptr from here and fail to deserialize?",
+      "revId": "8ddb12606e66f96c297fd17bb16072918c4306e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
