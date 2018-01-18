@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32c866da_60aecd6b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/autocapitalization/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-18T03:01:59Z",
+      "side": 1,
+      "message": "Our exporter doesn\u0027t support GitHub-style OWNERS files.",
+      "revId": "e32161046c4249bcfa94e3a86755d342b944c0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f90fd471_7a8ee7e3",
+        "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/element-instance-property-listing-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-18T03:01:59Z",
+      "side": 1,
+      "message": "webexposed tests should not be changed in this CL. This CL doesn\u0027t change Blink\u0027s behavior.",
+      "revId": "e32161046c4249bcfa94e3a86755d342b944c0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
