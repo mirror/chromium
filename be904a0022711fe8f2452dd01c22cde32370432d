@@ -52,6 +52,24 @@
       "revId": "be904a0022711fe8f2452dd01c22cde32370432d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab39cf4_9041b0f2",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-18T09:51:03Z",
+      "side": 1,
+      "message": "That\u0027s a good point! Thank you for your comment.\n\nBut it will not work with nested menu windows.\nImagine the following situation:\n\nThere is a browser window [1] with a menu window on top of it [2] -\n|---------|\n| 1         |\n|   [2]     |\n|______|\n\nWhenever a user opens a menu, it automatically becomes explicitly captured by a client, which means that all the XEvents with XID target to [1] must be rerouted to [2] with modified locations (it means that the event locations on the right side of [2] will have x,y of something like -10, 100). This case works well with your suggestion. \n\nFirst of all, all the windows are stored sequentially. Thus, [1] is first in the check loop and [2] is the second. Thus, handle_next_event_ is true when a mouse pointer is over [1], and it\u0027s known that window_manager_-\u003eevent_grabber() !\u003d [1], but window_manager_-\u003eevent_grabber() \u003d\u003d [2]. Thus, CanDispatchEvent can look the following - \n\nbool X11WindowOzone::CanDispatchEvent(const PlatformEvent\u0026 platform_event) {\n  // handle_next_event_ tells that this translated Event from XEvent had XID target\n  // for this window.\n  if (handle_next_event_ \u0026\u0026\n        window_manager_-\u003eevent_grabber() \u0026\u0026 window_manager_-\u003eevent_grabber() !\u003d this) {\n    auto* event \u003d static_cast\u003cEvent*\u003e(platform_event);\n    if (event-\u003eIsLocatedEvent()) {\n      // Another X11WindowOzone has installed itself as capture. Translate the\n      // event\u0027s location and dispatch to the other.\n      ConvertEventLocationToTargetWindowLocation(\n          window_manager_-\u003eevent_grabber()-\u003eGetBounds().origin(),\n          GetBounds().origin(), event-\u003eAsLocatedEvent());\n    }\n    // As long as another window has installed itself as capture, it must be rerouted to\n    // another window with explicit capture.\n    return false;\n  }\n\n  // The event must have been rerouted, because |this| set explicit capture.\n  if (window_manager_-\u003eevent_grabber() \u0026\u0026 window_manager_-\u003eevent_grabber() \u003d\u003d this) {\n    return true;\n  }\n\n  return handle_next_event_;\n}\n\nTo sum up, this case works well in both directions: when a mouse pointer is over [2], no translations are needed and handle_next_event_ is returned. The event is sent to [2]. When mouse pointer is over [1], the event\u0027s location is translated as other browser code requires and the events are sent to [1].\n\nBut, there is another case. Imagine there is a browser window [1], a menu window [2] and a submenu window [3].\n|----------|\n|    [2][3]|\n| 1         |\n|______|\n\n[2] will have an explicit capture as usual. Which means that whenever\na mouse pointer is over [3], an event\u0027s location must be translated from [3] to [2]. But\nI can\u0027t see a way how to reroute the event back to [2], because the following happens in this case: handle_next_event_ is true for [3], but window_manager_-\u003eevent_grabber() \u003d\u003d [2]. That\nmeans that on second iteration, when [2]::CanDispatchEvent is called, the event\u0027s location\ncannot be translated from [3]::bounds to [2]::bounds. Even if we let the loop go till third iteration, the event\u0027s location will be translated, but there will be no way except a recursive call to window_manager_-\u003eevent_grabber()-\u003eDispatchEvent() to send an event to [2] as MenuController requires.\n\nAnd this is what DesktopWindowTreeHostX11 does as well.\nhttps://cs.chromium.org/chromium/src/ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc?q\u003ddesktop_window_tree_host_x11.cc\u0026dr\u0026pv\u003d1\u0026l\u003d1930\n\nhttps://cs.chromium.org/chromium/src/ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc?q\u003ddesktop_window_tree_host_x11.cc\u0026dr\u0026pv\u003d1\u0026l\u003d1753",
+      "parentUuid": "d6c54bac_4ce70f58",
+      "revId": "be904a0022711fe8f2452dd01c22cde32370432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
