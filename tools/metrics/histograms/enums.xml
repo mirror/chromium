@@ -17652,6 +17652,8 @@ Called by update_net_error_codes.py.-->
   <int value="2343" label="ScrollToFragmentFailWithIsomorphic"/>
   <int value="2344" label="ScrollToFragmentFailWithMixed"/>
   <int value="2345" label="ScrollToFragmentFailWithInvalidEncoding"/>
+  <int value="2346" label="V8HTMLElement_Autocapitalize_AttributeGetter"/>
+  <int value="2347" label="V8HTMLElement_Autocapitalize_AttributeSetter"/>
 </enum>
 
 <enum name="FeedbackSource">
