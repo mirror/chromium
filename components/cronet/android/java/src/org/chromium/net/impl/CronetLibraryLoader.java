@@ -13,6 +13,7 @@ import android.os.Looper;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.net.NetworkChangeNotifier;
 
@@ -121,6 +122,11 @@ public class CronetLibraryLoader {
         } else {
             new Handler(sInitThread.getLooper()).post(r);
         }
+    }
+
+    @CalledByNative
+    private static String getDefaultUserAgent() {
+        return UserAgent.from(ContextUtils.getApplicationContext());
     }
 
     // Native methods are implemented in cronet_library_loader.cc.
