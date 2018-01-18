@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f555a103_9f366b83",
+        "filename": "remoting/client/chromoting_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2018-01-18T01:02:43Z",
+      "side": 1,
+      "message": "Why disable stats logging here, and not (for example) if the connection fails for some other reason?\n\nHaving a specific method to close the connection in case of third party auth failure seems quite narrow. Could you have a generic Close() method that takes an error and sets the state to CLOSED, FAILED or CANCELED, and handles stats and state change logging? Basically a combination of the two changes you\u0027ve made to this file.",
+      "range": {
+        "startLine": 175,
+        "startChar": 28,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "0e2ef6cda26a3ef7a3c8c4ba30a3357c183f779e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
