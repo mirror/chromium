@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45d406ba_ffc88100",
+        "filename": "chrome/browser/chromeos/mobile/mobile_activator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-18T21:28:41Z",
+      "side": 1,
+      "message": "Note: |succeed_on_send_connect| has no effect since the callbacks are empty. Since \u0027succeed_on_send_connect\u0027 will eventually become the default behavior, setting this ti \u0027true\u0027 now.",
+      "revId": "6f8651d21423c5d5f7332d03eb842297eadf8b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "280305a3_fb8d8331",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-18T21:28:41Z",
+      "side": 1,
+      "message": "|succeed_on_connect| \u003d true is more consistent with the Arc api description (\u0027StartConnect\u0027)",
+      "revId": "6f8651d21423c5d5f7332d03eb842297eadf8b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
