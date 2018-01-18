@@ -18,6 +18,10 @@ namespace media {
 class AudioManager;
 }  // namespace media
 
+namespace service_manager {
+class ServiceContextRefFactory;
+}
+
 namespace audio {
 class SystemInfo;
 
@@ -36,8 +40,11 @@ class Service : public service_manager::Service {
     virtual media::AudioManager* GetAudioManager() = 0;
   };
 
-  explicit Service(
-      std::unique_ptr<AudioManagerAccessor> audio_manager_accessor);
+  // Service will attempt to quite if there are no connections to it wihtin
+  // |quit_timeout| interval. If |quit_timeout| is base::TimeDelta() the
+  // service never quits.
+  Service(std::unique_ptr<AudioManagerAccessor> audio_manager_accessor,
+          base::TimeDelta quit_timeout);
   ~Service() final;
 
   // service_manager::Service implementation.
@@ -47,18 +54,27 @@ class Service : public service_manager::Service {
                        mojo::ScopedMessagePipeHandle interface_pipe) final;
   bool OnServiceManagerConnectionLost() final;
 
+  void SetQuitClosureForTesting(base::RepeatingClosure quit_closure);
+
  private:
   void BindSystemInfoRequest(mojom::SystemInfoRequest request);
+
+  void MaybeRequestQuitDelayed();
+  void MaybeRequestQuit();
+
+  base::RepeatingClosure quit_closure_;
+  const base::TimeDelta quit_timeout_;
 
   std::unique_ptr<AudioManagerAccessor> audio_manager_accessor_;
   std::unique_ptr<SystemInfo> system_info_;
 
+  std::unique_ptr<service_manager::ServiceContextRefFactory> ref_factory_;
   service_manager::BinderRegistry registry_;
 
   // Thread it runs on should be the same as the main thread of AudioManager
   // provided by AudioManagerAccessor.
   THREAD_CHECKER(thread_checker_);
-
+  base::WeakPtrFactory<Service> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(Service);
 };
 

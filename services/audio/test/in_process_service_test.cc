@@ -5,11 +5,12 @@
 #include "media/audio/audio_system_test_util.h"
 #include "media/audio/mock_audio_manager.h"
 #include "media/audio/test_audio_thread.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/audio/in_process_audio_manager_accessor.h"
 #include "services/audio/public/cpp/audio_system_to_service_adapter.h"
 #include "services/audio/public/interfaces/constants.mojom.h"
 #include "services/audio/service.h"
-#include "services/audio/system_info.h"
+#include "services/audio/test/service_lifetime_test_template.h"
 #include "services/service_manager/public/cpp/service_context.h"
 #include "services/service_manager/public/cpp/service_test.h"
 #include "services/service_manager/public/interfaces/service_factory.mojom.h"
@@ -25,6 +26,8 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
   class AudioThreadContext
       : public base::RefCountedThreadSafe<AudioThreadContext> {
    public:
+    enum { kQuitTimeoutMs = 10 };
+
     explicit AudioThreadContext(media::AudioManager* audio_manager)
         : audio_manager_(audio_manager) {}
 
@@ -40,7 +43,8 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
       DCHECK(!service_context_);
       service_context_ = std::make_unique<service_manager::ServiceContext>(
           std::make_unique<audio::Service>(
-              std::make_unique<InProcessAudioManagerAccessor>(audio_manager_)),
+              std::make_unique<InProcessAudioManagerAccessor>(audio_manager_),
+              base::TimeDelta::FromMilliseconds(kQuitTimeoutMs)),
           std::move(request));
       service_context_->SetQuitClosure(base::BindRepeating(
           &AudioThreadContext::QuitOnAudioThread, base::Unretained(this)));
@@ -158,17 +162,23 @@ class InProcessServiceTest : public service_manager::test::ServiceTest {
   DISALLOW_COPY_AND_ASSIGN(InProcessServiceTest);
 };
 
+using ServiceLifetimeTestVariations =
+    testing::Types<InProcessServiceTest<false>, InProcessServiceTest<true>>;
+
+INSTANTIATE_TYPED_TEST_CASE_P(InProcessAudioService,
+                              ServiceLifetimeTestTemplate,
+                              ServiceLifetimeTestVariations);
 }  // namespace audio
 
 // AudioSystem interface conformance tests.
 // AudioSystemTestTemplate is defined in media, so should be its instantiations.
 namespace media {
 
-using InProcessServiceTestVariations =
+using AudioSystemTestVariations =
     testing::Types<audio::InProcessServiceTest<false>,
                    audio::InProcessServiceTest<true>>;
 
-INSTANTIATE_TYPED_TEST_CASE_P(InProcessService,
+INSTANTIATE_TYPED_TEST_CASE_P(InProcessAudioService,
                               AudioSystemTestTemplate,
-                              InProcessServiceTestVariations);
+                              AudioSystemTestVariations);
 }  // namespace media
