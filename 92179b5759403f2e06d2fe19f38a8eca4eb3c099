@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd9b1a2b_21badded",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-18T01:37:43Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is what you want..this is going to toggle CLIPBOARD_READ between ALLOW and BLOCK by default. That means that a prompt will never be shown. Don\u0027t we want the default to be either ASK or BLOCK? I suggest looking at an example like geolocation or notifications and copying the plumbing.",
+      "revId": "92179b5759403f2e06d2fe19f38a8eca4eb3c099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
