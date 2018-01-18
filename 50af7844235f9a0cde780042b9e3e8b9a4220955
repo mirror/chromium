@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "132fa7bb_b4df858e",
+        "filename": "ui/ozone/platform/wayland/wayland_keyboard.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-01-18T19:38:13Z",
+      "side": 1,
+      "message": "You need to call wl_callback_add_listener() to receive the pong from the server.",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 157,
+        "endChar": 17
+      },
+      "revId": "50af7844235f9a0cde780042b9e3e8b9a4220955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
