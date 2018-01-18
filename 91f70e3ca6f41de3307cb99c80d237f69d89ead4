@@ -34,6 +34,24 @@
       "revId": "91f70e3ca6f41de3307cb99c80d237f69d89ead4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa11d30b_a4d0fd72",
+        "filename": "chrome/browser/ui/search/new_tab_page_navigation_throttle.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-18T23:48:51Z",
+      "side": 1,
+      "message": "failed requests go through WillFailRequest, and I thought I had all the other cases covered, but I\u0027m using web_contents-\u003eGetURL() above where I meant to be using handle-\u003eGetURL(), so I missed `chrome-search://local...`  Thanks!",
+      "parentUuid": "dca367c4_bf734e0e",
+      "revId": "91f70e3ca6f41de3307cb99c80d237f69d89ead4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
