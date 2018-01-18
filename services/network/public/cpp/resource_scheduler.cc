@@ -76,6 +76,10 @@ const base::Feature kThrottleDelayable{"ThrottleDelayable",
 const base::Feature kRendererSideResourceScheduler{
     "RendererSideResourceScheduler", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// See content/public/common/content_features.h.
+const base::Feature kNetworkService{"NetworkService",
+                                    base::FEATURE_DISABLED_BY_DEFAULT};
+
 enum StartMode { START_SYNC, START_ASYNC };
 
 // Flags identifying various attributes of the request that are used
@@ -416,7 +420,8 @@ class ResourceScheduler::Client {
                 .max_delayable_requests),
         resource_scheduler_(resource_scheduler),
         weak_ptr_factory_(this) {
-    if (base::FeatureList::IsEnabled(kRendererSideResourceScheduler)) {
+    if (base::FeatureList::IsEnabled(kRendererSideResourceScheduler) ||
+        base::FeatureList::IsEnabled(kNetworkService)) {
       // When kRendererSideResourceScheduler is enabled, "layout blocking"
       // concept is moved to the renderer side, so the shceduler works always
       // with the normal mode.
@@ -487,7 +492,8 @@ class ResourceScheduler::Client {
 
   void DeprecatedOnNavigate() {
     deprecated_has_html_body_ = false;
-    if (base::FeatureList::IsEnabled(kRendererSideResourceScheduler)) {
+    if (base::FeatureList::IsEnabled(kRendererSideResourceScheduler) ||
+        base::FeatureList::IsEnabled(kNetworkService)) {
       // When kRendererSideResourceScheduler is enabled, "layout blocking"
       // concept is moved to the renderer side, so the shceduler works always
       // with the normal mode.
