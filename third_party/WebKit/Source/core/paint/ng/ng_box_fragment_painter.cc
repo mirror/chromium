@@ -20,6 +20,7 @@
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintPhase.h"
+#include "core/paint/ScrollRecorder.h"
 #include "core/paint/ScrollableAreaPainter.h"
 #include "core/paint/ng/ng_box_clipper.h"
 #include "core/paint/ng/ng_fragment_painter.h"
@@ -139,13 +140,16 @@ void NGBoxFragmentPainter::PaintObject(const PaintInfo& paint_info,
     // TODO(eae): style.HasBoxDecorationBackground isn't good enough, it needs
     // to check the object as some objects may have box decoration background
     // other than from their own style.
-    // PaintBoxDecorationBackground should be called here but is currently
-    // called during the foreground phase instead for all box types, not just
-    // for inline flow boxes.
-    // The paint phase and inline/block box distinction needs cleanup, but
-    // without this, borders on 'overflow: scroll' are clipped.
-    if (is_visible && style.HasBoxDecorationBackground() && !is_inline_)
+    if (is_visible && style.HasBoxDecorationBackground() && !is_inline_) {
+      const DisplayItemClient& display_item_client = box_fragment_;
+      if (DrawingRecorder::UseCachedDrawingIfPossible(
+              paint_info.context, display_item_client,
+              DisplayItem::kBoxDecorationBackground))
+        return;
+      DrawingRecorder recorder(paint_info.context, display_item_client,
+                               DisplayItem::kBoxDecorationBackground);
       PaintBoxDecorationBackground(paint_info, paint_offset);
+    }
 
     // Record the scroll hit test after the background so background squashing
     // is not affected. Hit test order would be equivalent if this were
@@ -172,26 +176,40 @@ void NGBoxFragmentPainter::PaintObject(const PaintInfo& paint_info,
   //  ObjectPainter(box_fragment_)
   //      .AddPDFURLRectIfNeeded(paint_info, paint_offset);
 
-  // TODO(layout-dev): Add support for scrolling.
-  Optional<PaintInfo> scrolled_paint_info;
+  if (paint_phase != PaintPhase::kSelfOutlineOnly) {
+    Optional<ScopedPaintChunkProperties> scoped_scroll_property;
+    Optional<ScrollRecorder> scroll_recorder;
+    Optional<PaintInfo> scrolled_paint_info;
+    DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+    // TODO(layout-dev): Figure out where paint properties should live.
+    const auto* object_properties =
+        box_fragment_.GetLayoutObject()->FirstFragment().PaintProperties();
+    auto* scroll_translation =
+        object_properties ? object_properties->ScrollTranslation() : nullptr;
+    if (scroll_translation) {
+      scoped_scroll_property.emplace(
+          paint_info.context.GetPaintController(), scroll_translation,
+          box_fragment_, DisplayItem::PaintPhaseToDrawingType(paint_phase));
+      scrolled_paint_info.emplace(paint_info);
+      scrolled_paint_info->UpdateCullRectForScrollingContents(
+          EnclosingIntRect(box_fragment_.OverflowClipRect(
+              paint_offset, kIgnorePlatformOverlayScrollbarSize)),
+          scroll_translation->Matrix().ToAffineTransform());
+    }
 
-  const PaintInfo& contents_paint_info =
-      scrolled_paint_info ? *scrolled_paint_info : paint_info;
+    const PaintInfo& contents_paint_info =
+        scrolled_paint_info ? *scrolled_paint_info : paint_info;
 
-  // Paint our background, border and box-shadow.
-  // TODO(eae): We should only paint box-decorations during the foreground phase
-  // for inline boxes. Split this method into PaintBlock and PaintInline once we
-  // can tell the two types of fragments apart or we've eliminated the extra
-  // block wrapper fragments.
-  if (paint_info.phase == PaintPhase::kForeground && is_inline_)
-    PaintBoxDecorationBackground(paint_info, paint_offset);
-
-  PaintContents(contents_paint_info, paint_offset);
-
-  if (paint_phase == PaintPhase::kFloat ||
-      paint_phase == PaintPhase::kSelection ||
-      paint_phase == PaintPhase::kTextClip)
-    PaintFloats(contents_paint_info, paint_offset);
+    if (box_fragment_.PhysicalFragment().IsBlockFlow()) {
+      PaintBlockFlowContents(contents_paint_info, paint_offset);
+      if (paint_phase == PaintPhase::kFloat ||
+          paint_phase == PaintPhase::kSelection ||
+          paint_phase == PaintPhase::kTextClip)
+        PaintFloats(contents_paint_info, paint_offset);
+    } else {
+      PaintContents(contents_paint_info, paint_offset);
+    }
+  }
 
   if (ShouldPaintSelfOutline(paint_phase))
     NGFragmentPainter(box_fragment_).PaintOutline(paint_info, paint_offset);
@@ -204,45 +222,108 @@ void NGBoxFragmentPainter::PaintObject(const PaintInfo& paint_info,
   //  PaintCarets(paint_info, paint_offset);
 }
 
-void NGBoxFragmentPainter::PaintInlineObject(const PaintInfo& paint_info,
-                                             const LayoutPoint& paint_offset) {
-  DCHECK(!ShouldPaintSelfOutline(paint_info.phase) &&
-         !ShouldPaintDescendantOutlines(paint_info.phase));
-
-  LayoutRect overflow_rect(box_fragment_.VisualOverflowRect());
-  overflow_rect.MoveBy(paint_offset);
-
-  if (!paint_info.GetCullRect().IntersectsCullRect(overflow_rect))
-    return;
-
-  if (paint_info.phase == PaintPhase::kMask) {
-    if (DrawingRecorder::UseCachedDrawingIfPossible(
-            paint_info.context, box_fragment_,
-            DisplayItem::PaintPhaseToDrawingType(paint_info.phase)))
-      return;
-    DrawingRecorder recorder(
-        paint_info.context, box_fragment_,
-        DisplayItem::PaintPhaseToDrawingType(paint_info.phase));
-    PaintMask(paint_info, paint_offset);
+void NGBoxFragmentPainter::PaintBlockFlowContents(
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset) {
+  // Avoid painting descendants of the root element when stylesheets haven't
+  // loaded. This eliminates FOUC.  It's ok not to draw, because later on, when
+  // all the stylesheets do load, styleResolverMayHaveChanged() on Document will
+  // trigger a full paint invalidation.
+  // TODO(layout-dev): Handle without delegating to LayoutObject.
+  LayoutObject* layout_object = box_fragment_.GetLayoutObject();
+  if (layout_object->GetDocument().DidLayoutWithPendingStylesheets() &&
+      !layout_object->IsLayoutView()) {
     return;
   }
+
+  const NGPhysicalBoxFragment& physical =
+      static_cast<const NGPhysicalBoxFragment&>(
+          box_fragment_.PhysicalFragment());
+  if (!physical.ChildrenInline())
+    return PaintContents(paint_info, paint_offset);
+
+  PaintInfo descendants_info = paint_info.ForDescendants();
+  if (ShouldPaintDescendantOutlines(paint_info.phase)) {
+    PaintInlineChildrenOutlines(box_fragment_.Children(), paint_info,
+                                paint_offset);
+  } else {
+    PaintInlineChildren(box_fragment_.Children(), descendants_info,
+                        paint_offset);
+  }
+}
+
+void NGBoxFragmentPainter::PaintInlineChild(
+    const NGPaintFragment& text_fragment,
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset) const {
+  // LayoutRect overflow_rect(box_fragment_.VisualOverflowRect());
+  // overflow_rect.MoveBy(paint_offset);
+  // if (!paint_info.GetCullRect().IntersectsCullRect(overflow_rect))
+  //  return;
+
+  if (DrawingRecorder::UseCachedDrawingIfPossible(
+          paint_info.context, text_fragment,
+          DisplayItem::PaintPhaseToDrawingType(paint_info.phase)))
+    return;
+
+  DrawingRecorder recorder(
+      paint_info.context, text_fragment,
+      DisplayItem::PaintPhaseToDrawingType(paint_info.phase));
+
+  if (paint_info.phase == PaintPhase::kMask)
+    return PaintMask(paint_info, paint_offset);
 
   // Paint our background, border and box-shadow.
   if (paint_info.phase == PaintPhase::kForeground)
     PaintBoxDecorationBackground(paint_info, paint_offset);
 
-  // Paint our children.
-  PaintContents(paint_info, paint_offset);
+  NGTextFragmentPainter text_painter(text_fragment);
+  text_painter.Paint(paint_info, paint_offset);
+
+  /*
+  //  DCHECK(!ShouldPaintSelfOutline(paint_info.phase) &&
+  //         !ShouldPaintDescendantOutlines(paint_info.phase));
+
+    LayoutRect overflow_rect(box_fragment_.VisualOverflowRect());
+    overflow_rect.MoveBy(paint_offset);
+
+    if (!paint_info.GetCullRect().IntersectsCullRect(overflow_rect))
+      return;
+
+    if (paint_info.phase == PaintPhase::kMask) {
+      if (DrawingRecorder::UseCachedDrawingIfPossible(
+              paint_info.context, box_fragment_,
+              DisplayItem::PaintPhaseToDrawingType(paint_info.phase)))
+        return;
+      DrawingRecorder recorder(
+          paint_info.context, box_fragment_,
+          DisplayItem::PaintPhaseToDrawingType(paint_info.phase));
+      PaintMask(paint_info, paint_offset);
+      return;
+    }
+
+    // Paint our background, border and box-shadow.
+    if (paint_info.phase == PaintPhase::kForeground) {
+      const DisplayItemClient& display_item_client = box_fragment_;
+      if (DrawingRecorder::UseCachedDrawingIfPossible(
+              paint_info.context, display_item_client,
+              DisplayItem::kBoxDecorationBackground))
+        return;
+
+      DrawingRecorder recorder(paint_info.context, display_item_client,
+                              DisplayItem::kBoxDecorationBackground);
+
+      PaintBoxDecorationBackground(paint_info, paint_offset);
+    }
+
+    //PaintTextChild(child, paint_info, paint_offset);
+    NGTextFragmentPainter text_painter(child);
+    text_painter.Paint(paint_info, paint_offset);*/
 }
 
 void NGBoxFragmentPainter::PaintContents(const PaintInfo& paint_info,
                                          const LayoutPoint& paint_offset) {
   PaintInfo descendants_info = paint_info.ForDescendants();
-  if (is_inline_) {
-    PaintInlineChildren(box_fragment_.Children(), descendants_info,
-                        paint_offset);
-    return;
-  }
   PaintChildren(box_fragment_.Children(), descendants_info, paint_offset);
 }
 
@@ -250,7 +331,8 @@ void NGBoxFragmentPainter::PaintFloats(const PaintInfo&, const LayoutPoint&) {
   // TODO(eae): Implement once we have a way to distinguish float fragments.
 }
 
-void NGBoxFragmentPainter::PaintMask(const PaintInfo&, const LayoutPoint&) {
+void NGBoxFragmentPainter::PaintMask(const PaintInfo&,
+                                     const LayoutPoint&) const {
   // TODO(eae): Implement.
 }
 
@@ -261,7 +343,7 @@ void NGBoxFragmentPainter::PaintClippingMask(const PaintInfo&,
 
 void NGBoxFragmentPainter::PaintBoxDecorationBackground(
     const PaintInfo& paint_info,
-    const LayoutPoint& paint_offset) {
+    const LayoutPoint& paint_offset) const {
   LayoutRect paint_rect;
   if (!IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
           box_fragment_, paint_info)) {
@@ -273,27 +355,13 @@ void NGBoxFragmentPainter::PaintBoxDecorationBackground(
   }
 
   paint_rect.MoveBy(paint_offset);
-  PaintBoxDecorationBackgroundWithRect(paint_info, paint_offset, paint_rect);
-}
 
-void NGBoxFragmentPainter::PaintBoxDecorationBackgroundWithRect(
-    const PaintInfo& paint_info,
-    const LayoutPoint& paint_offset,
-    const LayoutRect& paint_rect) {
   bool painting_overflow_contents =
       IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
           box_fragment_, paint_info);
   const ComputedStyle& style = box_fragment_.Style();
 
   // TODO(layout-dev): Implement support for painting overflow contents.
-  const DisplayItemClient& display_item_client = box_fragment_;
-  if (DrawingRecorder::UseCachedDrawingIfPossible(
-          paint_info.context, display_item_client,
-          DisplayItem::kBoxDecorationBackground))
-    return;
-
-  DrawingRecorder recorder(paint_info.context, display_item_client,
-                           DisplayItem::kBoxDecorationBackground);
   BoxDecorationData box_decoration_data(box_fragment_.PhysicalFragment());
   GraphicsContextStateSaver state_saver(paint_info.context, false);
 
@@ -351,7 +419,7 @@ static bool RequiresLegacyFallback(const NGPhysicalFragment& fragment) {
 void NGBoxFragmentPainter::PaintInlineChildBoxUsingLegacyFallback(
     const NGPhysicalFragment& fragment,
     const PaintInfo& paint_info,
-    const LayoutPoint& paint_offset) {
+    const LayoutPoint& paint_offset) const {
   LayoutObject* layout_object = fragment.GetLayoutObject();
   DCHECK(layout_object);
   if (layout_object->IsLayoutNGMixin() &&
@@ -417,30 +485,75 @@ void NGBoxFragmentPainter::PaintChildren(
         NGBoxFragmentPainter(*child).Paint(paint_info, paint_offset);
     } else if (fragment.Type() == NGPhysicalFragment::kFragmentLineBox) {
       PaintLineBox(*child, paint_info, paint_offset);
+    } else if (fragment.Type() == NGPhysicalFragment::kFragmentText) {
+      PaintInlineChild(*child, paint_info, paint_offset);
     }
   }
 }
 
 void NGBoxFragmentPainter::PaintInlineChildren(
-    const Vector<std::unique_ptr<NGPaintFragment>>& children,
+    const Vector<std::unique_ptr<NGPaintFragment>>& line_boxes,
     const PaintInfo& paint_info,
     const LayoutPoint& paint_offset) {
-  for (const auto& child : children) {
-    const NGPhysicalFragment& fragment = child->PhysicalFragment();
-    if (fragment.Type() == NGPhysicalFragment::kFragmentText) {
-      PaintText(*child, paint_info, paint_offset);
-    } else if (fragment.Type() == NGPhysicalFragment::kFragmentBox) {
-      if (child->HasSelfPaintingLayer())
-        continue;
-      if (RequiresLegacyFallback(fragment)) {
-        PaintInlineChildBoxUsingLegacyFallback(fragment, paint_info,
-                                               paint_offset);
-      } else {
-        NGBoxFragmentPainter(*child).PaintInlineBox(paint_info, paint_offset,
-                                                    block_paint_offset_);
-      }
+  for (const auto& line_box : line_boxes) {
+    const LayoutPoint child_offset =
+        paint_offset + line_box->Offset().ToLayoutPoint();
+    for (const auto& child : line_box->Children()) {
+      PaintInlineBlockChild(*child, paint_info, child_offset);
     }
   }
+}
+
+void NGBoxFragmentPainter::PaintInlineChildrenOutlines(
+    const Vector<std::unique_ptr<NGPaintFragment>>& line_boxes,
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset) const {
+  // TODO(layout-dev): Implement.
+}
+
+void NGBoxFragmentPainter::PaintInlineBlockChild(
+    const NGPaintFragment& child,
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset) const {
+  // Inline text children should be painted by PaintTextChild.
+  DCHECK(child.PhysicalFragment().IsInlineBlock());
+
+  const NGPhysicalFragment& fragment = child.PhysicalFragment();
+  if (fragment.Type() == NGPhysicalFragment::kFragmentText) {
+    PaintTextChild(child, paint_info, paint_offset);
+  } else if (fragment.Type() == NGPhysicalFragment::kFragmentBox) {
+    if (child.HasSelfPaintingLayer())
+      return;
+
+    if (RequiresLegacyFallback(fragment)) {
+      PaintInlineChildBoxUsingLegacyFallback(fragment, paint_info,
+                                             paint_offset);
+
+    } else {
+      NGBoxFragmentPainter(child).PaintInlineBox(paint_info, paint_offset,
+                                                 paint_offset);
+    }
+  }
+}
+
+void NGBoxFragmentPainter::PaintTextChild(
+    const NGPaintFragment& text_fragment,
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset) const {
+  // Inline blocks should be painted by PaintInlineBlockChild.
+  DCHECK(!text_fragment.PhysicalFragment().IsInlineBlock());
+
+  if (DrawingRecorder::UseCachedDrawingIfPossible(
+          paint_info.context, text_fragment,
+          DisplayItem::PaintPhaseToDrawingType(paint_info.phase)))
+    return;
+
+  DrawingRecorder recorder(
+      paint_info.context, text_fragment,
+      DisplayItem::PaintPhaseToDrawingType(paint_info.phase));
+
+  NGTextFragmentPainter text_painter(text_fragment);
+  text_painter.Paint(paint_info, paint_offset);
 }
 
 void NGBoxFragmentPainter::PaintLineBox(
@@ -494,7 +607,7 @@ void NGBoxFragmentPainter::PaintText(const NGPaintFragment& text_fragment,
 bool NGBoxFragmentPainter::
     IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
         const NGPaintFragment& fragment,
-        const PaintInfo& paint_info) {
+        const PaintInfo& paint_info) const {
   // TODO(layout-dev): Implement once we have support for scrolling.
   return false;
 }
@@ -544,7 +657,7 @@ void NGBoxFragmentPainter::PaintFillLayerTextFillBox(
     SkBlendMode composite_op,
     const BackgroundImageGeometry& geometry,
     const LayoutRect& rect,
-    LayoutRect scrolled_paint_rect) {
+    LayoutRect scrolled_paint_rect) const {
   // First figure out how big the mask has to be. It should be no bigger
   // than what we need to actually render, so we should intersect the dirty
   // rect with the border box of the background.
@@ -576,7 +689,7 @@ void NGBoxFragmentPainter::PaintFillLayerTextFillBox(
 LayoutRect NGBoxFragmentPainter::AdjustForScrolledContent(
     const PaintInfo&,
     const BoxPainterBase::FillLayerInfo&,
-    const LayoutRect& rect) {
+    const LayoutRect& rect) const {
   return rect;
 }
 
@@ -594,7 +707,7 @@ void NGBoxFragmentPainter::PaintBackground(
     const PaintInfo& paint_info,
     const LayoutRect& paint_rect,
     const Color& background_color,
-    BackgroundBleedAvoidance bleed_avoidance) {
+    BackgroundBleedAvoidance bleed_avoidance) const {
   // TODO(eae): Switch to LayoutNG version of BackgroundImageGeometry.
   BackgroundImageGeometry geometry(*static_cast<const LayoutBoxModelObject*>(
       box_fragment_.GetLayoutObject()));

@@ -51,7 +51,7 @@ class BoxPainterBase {
                        const LayoutRect&,
                        BackgroundImageGeometry&,
                        BackgroundBleedAvoidance = kBackgroundBleedNone,
-                       SkBlendMode = SkBlendMode::kSrcOver);
+                       SkBlendMode = SkBlendMode::kSrcOver) const;
 
   void PaintFillLayer(const PaintInfo&,
                       const Color&,
@@ -59,7 +59,7 @@ class BoxPainterBase {
                       const LayoutRect&,
                       BackgroundBleedAvoidance,
                       BackgroundImageGeometry&,
-                      SkBlendMode = SkBlendMode::kSrcOver);
+                      SkBlendMode = SkBlendMode::kSrcOver) const;
 
   static void PaintNormalBoxShadow(const PaintInfo&,
                                    const LayoutRect&,
@@ -98,7 +98,7 @@ class BoxPainterBase {
   // in top-bottom order.
   bool CalculateFillLayerOcclusionCulling(
       FillLayerOcclusionOutputList& reversed_paint_list,
-      const FillLayer&);
+      const FillLayer&) const;
 
   struct FillLayerInfo {
     STACK_ALLOCATED();
@@ -147,20 +147,21 @@ class BoxPainterBase {
                                 Image*,
                                 SkBlendMode,
                                 const BackgroundImageGeometry&,
-                                LayoutRect scrolled_paint_rect);
+                                LayoutRect scrolled_paint_rect) const;
   LayoutRectOutsets BorderOutsets(const FillLayerInfo&) const;
   LayoutRectOutsets PaddingOutsets(const FillLayerInfo&) const;
 
-  virtual void PaintFillLayerTextFillBox(GraphicsContext&,
-                                         const FillLayerInfo&,
-                                         Image*,
-                                         SkBlendMode composite_op,
-                                         const BackgroundImageGeometry&,
-                                         const LayoutRect&,
-                                         LayoutRect scrolled_paint_rect) = 0;
+  virtual void PaintFillLayerTextFillBox(
+      GraphicsContext&,
+      const FillLayerInfo&,
+      Image*,
+      SkBlendMode composite_op,
+      const BackgroundImageGeometry&,
+      const LayoutRect&,
+      LayoutRect scrolled_paint_rect) const = 0;
   virtual LayoutRect AdjustForScrolledContent(const PaintInfo&,
                                               const FillLayerInfo&,
-                                              const LayoutRect&) = 0;
+                                              const LayoutRect&) const = 0;
   virtual FillLayerInfo GetFillLayerInfo(const Color&,
                                          const FillLayer&,
                                          BackgroundBleedAvoidance) const = 0;
