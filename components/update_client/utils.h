@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/callback_forward.h"
+#include "base/memory/ref_counted.h"
 #include "components/update_client/update_client.h"
 
 class GURL;
@@ -43,7 +44,8 @@ std::unique_ptr<net::URLFetcher> SendProtocolRequest(
     const GURL& url,
     const std::string& protocol_request,
     net::URLFetcherDelegate* url_fetcher_delegate,
-    net::URLRequestContextGetter* url_request_context_getter);
+    const scoped_refptr<net::URLRequestContextGetter>&
+        url_request_context_getter);
 
 // Returns true if the url request of |fetcher| was succesful.
 bool FetchSuccess(const net::URLFetcher& fetcher);
