@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7957ee50_aacd2e94",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-18T08:26:59Z",
+      "side": 1,
+      "message": "nit: \u0027from the string\u0027 if it refers to *allow_origin_header",
+      "revId": "56ad3eb29686c5d9b987cb01d061e524ce5c792d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c40736_8d5d27fe",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-18T08:26:59Z",
+      "side": 1,
+      "message": "nit: can accept malformed... -\u003e accepts malformed URL and constructs a valid origin with unexpected fixes, which results in unexpected behavior.",
+      "revId": "56ad3eb29686c5d9b987cb01d061e524ce5c792d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a89f36_c36ac7b3",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-18T08:26:59Z",
+      "side": 1,
+      "message": "nit: would be ok -\u003e should be ok ?",
+      "revId": "56ad3eb29686c5d9b987cb01d061e524ce5c792d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
