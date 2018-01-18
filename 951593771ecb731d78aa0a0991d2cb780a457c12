@@ -2,6 +2,190 @@
   "comments": [
     {
       "key": {
+        "uuid": "e27fde16_a2b9bbb8",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_bypass_protocol.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-18T00:58:18Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be \u0027proxy_resolution_service()\u0027?",
+      "range": {
+        "startLine": 64,
+        "startChar": 26,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "951593771ecb731d78aa0a0991d2cb780a457c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780abc2c_41f151c5",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_bypass_protocol.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-18T00:58:18Z",
+      "side": 1,
+      "message": "It might be clearer to rename this as well, as proxy_resolution_service.",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 15
+      },
+      "revId": "951593771ecb731d78aa0a0991d2cb780a457c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05b4719d_9e25e65f",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_bypass_protocol_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-18T00:58:18Z",
+      "side": 1,
+      "message": "Rename as \u0027proxy_resolution_service_\u0027",
+      "range": {
+        "startLine": 145,
+        "startChar": 42,
+        "endLine": 145,
+        "endChar": 56
+      },
+      "revId": "951593771ecb731d78aa0a0991d2cb780a457c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e723ef_efef6376",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_bypass_stats_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-18T00:58:18Z",
+      "side": 1,
+      "message": "Rename as \u0027proxy_resolution_service\u0027",
+      "range": {
+        "startLine": 600,
+        "startChar": 47,
+        "endLine": 600,
+        "endChar": 60
+      },
+      "revId": "951593771ecb731d78aa0a0991d2cb780a457c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dfd6cdc_5cf9c41a",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_interceptor_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-18T00:58:18Z",
+      "side": 1,
+      "message": "Rename as \u0027proxy_resolution_service_\u0027",
+      "range": {
+        "startLine": 234,
+        "startChar": 4,
+        "endLine": 234,
+        "endChar": 18
+      },
+      "revId": "951593771ecb731d78aa0a0991d2cb780a457c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3adda5bb_6e3a53ef",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-18T00:58:18Z",
+      "side": 1,
+      "message": "Rename as \u0027proxy_resolution_service\u0027",
+      "range": {
+        "startLine": 296,
+        "startChar": 33,
+        "endLine": 296,
+        "endChar": 46
+      },
+      "revId": "951593771ecb731d78aa0a0991d2cb780a457c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66847206_d8d3f740",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-18T00:58:18Z",
+      "side": 1,
+      "message": "Rename as \u0027proxy_resolution_service\u0027",
+      "range": {
+        "startLine": 170,
+        "startChar": 31,
+        "endLine": 170,
+        "endChar": 44
+      },
+      "revId": "951593771ecb731d78aa0a0991d2cb780a457c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb06f130_de27481c",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-18T00:58:18Z",
+      "side": 1,
+      "message": "Rename as \u0027proxy_resolution_service_\u0027",
+      "range": {
+        "startLine": 368,
+        "startChar": 4,
+        "endLine": 368,
+        "endChar": 18
+      },
+      "revId": "951593771ecb731d78aa0a0991d2cb780a457c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b0a41bd_6b9980ed",
         "filename": "content/test/proxy_service_mojo_unittest.cc",
         "patchSetId": 11
