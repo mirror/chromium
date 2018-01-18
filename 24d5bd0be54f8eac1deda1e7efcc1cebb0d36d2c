@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "524632f5_7e12a269",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2018-01-18T22:48:32Z",
+      "side": 1,
+      "message": "This by itself will make us still start the browser process initialization which we shouldn\u0027t do without FRE. What happens if you also override shouldDelayStartup to return true?",
+      "range": {
+        "startLine": 180,
+        "startChar": 22,
+        "endLine": 180,
+        "endChar": 51
+      },
+      "revId": "24d5bd0be54f8eac1deda1e7efcc1cebb0d36d2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ad8b45_30026a34",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2018-01-18T22:48:32Z",
+      "side": 1,
+      "message": "maybe the last two here should be usable? I mean we shouldn\u0027t use any Chrome specific stuff, but copy link is pretty generic code, right?",
+      "range": {
+        "startLine": 174,
+        "startChar": 50,
+        "endLine": 174,
+        "endChar": 78
+      },
+      "revId": "24d5bd0be54f8eac1deda1e7efcc1cebb0d36d2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
