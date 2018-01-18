@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4812e428_861bf55f",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-18T08:37:21Z",
+      "side": 1,
+      "message": "A few thoughts...\n\nThis mimics the \"recently installed hosted app\" case above, which says it treats the navigation as new and clears the forward history.  That\u0027s not ideal-- can you check if this change has that effect?\n\nThere\u0027s some other possibilities we could consider if needed.\n\nFirst, I notice that it might be possible to just set the ReloadType to ReloadType::ORIGINAL_REQUEST_URL and let NavigatorImpl::NavigateToEntry handle it.  However, that looks like it might have an ugly bug where we could end up using the old SiteInstance for the original request URL, and thus putting it in the wrong process.  I should investigate that.  (We\u0027d want to fix it regardless of whether you use that approach or not.)\n\nSecond, in theory we could just change the NavEntry in place (including resetting the URL, SiteInstance, PageState, etc).  But that doesn\u0027t seem like a great option-- the navigation might fail, and then we\u0027d be left on the previous preview page with a NavEntry that no longer matches.\n\nLet me know about the forward history issue and how ORIGINAL_REQUEST_URL behaves, and we can decide which one is better to pursue.",
+      "revId": "44daedc9104b29bb89ab4cb17937c97b56f92b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
