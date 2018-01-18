@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "420292e7_0d91b45c",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-18T18:31:25Z",
+      "side": 1,
+      "message": "\u003e \"Working\" alone isn\u0027t sufficient. We also have style guides and docs and tests...\n\nHuh?  Your initial review comments said it was sufficient.  And best I can tell, zlib has no style guide for C++.\n\n\u003e We want to upstream this. Anything that makes it harder to be accepted upstream means adding burden to maintaining our zlib here.\n\nWe?  Speaking for myself, I do not intend to upstream this.  Any upstreaming is your work to do.  We are nearing out-of-time to continue helping you with zlib, sorry, we must move on now.\n\n\u003e All it would take is for upstream to say \"Why are you using string here?\" and then we could miss a review cycle and potentially wait another year or so before getting another chance.\n\nThe same is true for vector\u003c\u003e.  Even a google query for \"C++ read file into std::string\" vs \"C++ read file into std::vector\" based on the #hits tells me std::string is more common.  Seems likely that vector\u003c\u003e might get push back when upstreaming.\n\nMaybe deal with such upstreaming issues as they come, rather than worry too much, or try to second guess them.",
+      "parentUuid": "9943d5fb_133b1e62",
+      "range": {
+        "startLine": 55,
+        "startChar": 46,
+        "endLine": 55,
+        "endChar": 57
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf4f67c7_16696141",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
