@@ -41,7 +41,6 @@ import org.chromium.chrome.browser.widget.TintedImageButton;
 import org.chromium.chrome.browser.widget.ToolbarProgressBar;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
-import org.chromium.ui.UiUtils;
 
 import javax.annotation.Nullable;
 
@@ -331,9 +330,10 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
     protected void addProgressBarToHierarchy() {
         ViewGroup controlContainer =
                 (ViewGroup) getRootView().findViewById(R.id.control_container);
-        int progressBarPosition = UiUtils.insertAfter(
-                controlContainer, mProgressBar, (View) getParent());
-        assert progressBarPosition >= 0;
+        controlContainer.addView(mProgressBar);
+        // int progressBarPosition = UiUtils.insertAfter(
+        //        controlContainer, mProgressBar, (View) getParent());
+        // assert progressBarPosition >= 0;
         mProgressBar.setProgressBarContainer(controlContainer);
     }
 

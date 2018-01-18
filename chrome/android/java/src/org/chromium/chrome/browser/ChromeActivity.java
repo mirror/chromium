@@ -375,6 +375,11 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                     getControlContainerHeightResource());
         }
 
+        ViewGroup coordinator = (ViewGroup) findViewById(R.id.coordinator);
+        getLayoutInflater().inflate(R.layout.bottom_sheet, coordinator);
+        mBottomSheet = coordinator.findViewById(R.id.bottom_sheet);
+        mBottomSheet.init(coordinator, this);
+
         if (mBottomSheet != null) {
             mBottomSheet.setTabModelSelector(mTabModelSelector);
             mBottomSheet.setFullscreenManager(mFullscreenManager);
@@ -451,13 +456,6 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                 int toolbarLayoutId = getToolbarLayoutId();
                 if (toolbarLayoutId != NO_TOOLBAR_LAYOUT && controlContainer != null) {
                     controlContainer.initWithToolbar(toolbarLayoutId);
-                }
-
-                // Get a handle to the bottom sheet if using the bottom control container.
-                if (controlContainerLayoutId == R.layout.bottom_control_container) {
-                    View coordinator = findViewById(R.id.coordinator);
-                    mBottomSheet = (BottomSheet) findViewById(R.id.bottom_sheet);
-                    mBottomSheet.init(coordinator, controlContainer.getView(), this);
                 }
             } finally {
                 StrictMode.setThreadPolicy(oldPolicy);
@@ -1363,7 +1361,6 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      * @return The resource id that contains how large the browser controls are.
      */
     public int getControlContainerHeightResource() {
-        if (mBottomSheet != null) return R.dimen.bottom_control_container_height;
         return R.dimen.control_container_height;
     }
 
