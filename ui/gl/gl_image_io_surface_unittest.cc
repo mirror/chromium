@@ -36,13 +36,27 @@ class GLImageIOSurfaceTestDelegate : public GLImageTestDelegateBase {
     IOSurfaceRef surface_ref = gfx::CreateIOSurface(size, format);
     IOReturn status = IOSurfaceLock(surface_ref, 0, nullptr);
     EXPECT_NE(status, kIOReturnCannotLock);
+
+    uint8_t corrected_color[4];
+    if (format == gfx::BufferFormat::RGBA_8888) {
+      // GL_RGBA is not supported by CGLTexImageIOSurface2D(), so we pretend it
+      // is GL_BGRA, (see https://crbug.com/533677) swizzle the channels for the
+      // purpose of this test.
+      corrected_color[0] = color[2];
+      corrected_color[1] = color[1];
+      corrected_color[2] = color[0];
+      corrected_color[3] = color[3];
+    } else {
+      memcpy(corrected_color, color, arraysize(corrected_color));
+    }
+
     for (size_t plane = 0; plane < NumberOfPlanesForBufferFormat(format);
          ++plane) {
       void* data = IOSurfaceGetBaseAddressOfPlane(surface_ref, plane);
       GLImageTestSupport::SetBufferDataToColor(
           size.width(), size.height(),
           IOSurfaceGetBytesPerRowOfPlane(surface_ref, plane), plane, format,
-          color, static_cast<uint8_t*>(data));
+          corrected_color, static_cast<uint8_t*>(data));
     }
     IOSurfaceUnlock(surface_ref, 0, nullptr);
 
@@ -65,6 +79,7 @@ class GLImageIOSurfaceTestDelegate : public GLImageTestDelegateBase {
 using GLImageTestTypes = testing::Types<
     GLImageIOSurfaceTestDelegate<gfx::BufferFormat::RGBA_8888>,
     GLImageIOSurfaceTestDelegate<gfx::BufferFormat::BGRA_8888>,
+    GLImageIOSurfaceTestDelegate<gfx::BufferFormat::BGRX_8888>,
     GLImageIOSurfaceTestDelegate<gfx::BufferFormat::RGBA_F16>,
     GLImageIOSurfaceTestDelegate<gfx::BufferFormat::YUV_420_BIPLANAR>,
     GLImageIOSurfaceTestDelegate<gfx::BufferFormat::BGRX_1010102>>;
@@ -81,9 +96,12 @@ INSTANTIATE_TYPED_TEST_CASE_P(GLImageIOSurface,
                               GLImageZeroInitializeTest,
                               GLImageRGBTestTypes);
 
-using GLImageBindTestTypes = testing::Types<
-    GLImageIOSurfaceTestDelegate<gfx::BufferFormat::BGRA_8888>,
-    GLImageIOSurfaceTestDelegate<gfx::BufferFormat::BGRX_1010102>>;
+using GLImageBindTestTypes =
+    testing::Types<GLImageIOSurfaceTestDelegate<gfx::BufferFormat::BGRA_8888>,
+                   GLImageIOSurfaceTestDelegate<gfx::BufferFormat::BGRA_8888>,
+                   GLImageIOSurfaceTestDelegate<gfx::BufferFormat::BGRX_8888>,
+                   GLImageIOSurfaceTestDelegate<gfx::BufferFormat::RGBA_8888>,
+                   GLImageIOSurfaceTestDelegate<gfx::BufferFormat::RGBA_F16>>;
 
 INSTANTIATE_TYPED_TEST_CASE_P(GLImageIOSurface,
                               GLImageBindTest,
