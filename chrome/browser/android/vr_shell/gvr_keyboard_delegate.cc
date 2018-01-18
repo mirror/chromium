@@ -7,6 +7,9 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/android/vr_shell/gvr_util.h"
 #include "chrome/browser/vr/model/camera_model.h"
 #include "chrome/browser/vr/model/text_input_info.h"
@@ -26,15 +29,34 @@ void OnKeyboardEvent(void* closure, GvrKeyboardDelegate::EventType event) {
     callback->Run(event);
 }
 
+void CreateKeyboardTask(
+    void* callback,
+    GvrKeyboardDelegate* delegate,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+  // This call is blocking and takes about 0.5s.
+  auto* keyboard = gvr_keyboard_create(callback, OnKeyboardEvent);
+  if (keyboard) {
+    task_runner->PostTask(
+        FROM_HERE,
+        base::BindOnce(&GvrKeyboardDelegate::OnKeyboardCreated,
+                       base::Unretained(delegate), base::Unretained(keyboard)));
+  }
+}
+
+void DestroyKeyboardTask(gvr_keyboard_context* keyboard) {
+  if (!keyboard)
+    return;
+  gvr_keyboard_destroy(&keyboard);
+}
+
 }  // namespace
 
 std::unique_ptr<GvrKeyboardDelegate> GvrKeyboardDelegate::Create() {
   auto delegate = base::WrapUnique(new GvrKeyboardDelegate());
-  void* callback = reinterpret_cast<void*>(&delegate->keyboard_event_callback_);
-  auto* gvr_keyboard = gvr_keyboard_create(callback, OnKeyboardEvent);
-  if (!gvr_keyboard)
+  if (!load_gvr_sdk())
     return nullptr;
-  delegate->Init(gvr_keyboard);
+
+  delegate->CreateKeyboard();
   return delegate;
 }
 
@@ -43,18 +65,64 @@ GvrKeyboardDelegate::GvrKeyboardDelegate() {
       &GvrKeyboardDelegate::OnGvrKeyboardEvent, base::Unretained(this));
 }
 
-void GvrKeyboardDelegate::Init(gvr_keyboard_context* keyboard_context) {
-  DCHECK(keyboard_context);
-  gvr_keyboard_ = keyboard_context;
+GvrKeyboardDelegate::~GvrKeyboardDelegate() {
+  DestroyKeyboard();
+  close_gvr_sdk();
+}
+
+void GvrKeyboardDelegate::OnKeyboardCreated(gvr_keyboard_context* context) {
+  gvr_keyboard_ = context;
+  creating_keyboard_ = false;
+  if (!gvr_keyboard_)
+    return;
 
   gvr_mat4f matrix;
   gvr_keyboard_get_recommended_world_from_keyboard_matrix(2.0f, &matrix);
   gvr_keyboard_set_world_from_keyboard_matrix(gvr_keyboard_, &matrix);
+
+  if (pending_show_keyboard_)
+    gvr_keyboard_show(gvr_keyboard_);
+
+  if (pending_destroy_keyboard_)
+    DestroyKeyboard();
+
+  pending_show_keyboard_ = false;
+  pending_destroy_keyboard_ = false;
 }
 
-GvrKeyboardDelegate::~GvrKeyboardDelegate() {
-  if (gvr_keyboard_)
-    gvr_keyboard_destroy(&gvr_keyboard_);
+void GvrKeyboardDelegate::CreateKeyboard() {
+  pending_destroy_keyboard_ = false;
+  if (gvr_keyboard_ || creating_keyboard_)
+    return;
+
+  void* callback = reinterpret_cast<void*>(&keyboard_event_callback_);
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::TaskPriority::USER_VISIBLE},
+      base::BindOnce(CreateKeyboardTask, base::Unretained(callback),
+                     base::Unretained(this),
+                     base::ThreadTaskRunnerHandle::Get()));
+  creating_keyboard_ = true;
+}
+
+void GvrKeyboardDelegate::DestroyKeyboard() {
+  if (!gvr_keyboard_) {
+    if (creating_keyboard_)
+      pending_destroy_keyboard_ = true;
+    return;
+  }
+
+  gvr_keyboard_context* keyboard = gvr_keyboard_;
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::TaskPriority::USER_VISIBLE},
+      base::BindOnce(DestroyKeyboardTask, base::Unretained(keyboard)));
+  gvr_keyboard_ = nullptr;
+}
+
+void GvrKeyboardDelegate::RenderingEnabled(bool enabled) {
+  // The GVR keyboard eats up memory while it's loaded, so we may want to
+  // destory it when its not used (see b/72056929). The reason we don't do it
+  // is because re-creating results in dropped frames, perhaps due to cpu
+  // intensive work in the gvr keyboard code.
 }
 
 void GvrKeyboardDelegate::SetUiInterface(vr::KeyboardUiInterface* ui) {
@@ -62,20 +130,31 @@ void GvrKeyboardDelegate::SetUiInterface(vr::KeyboardUiInterface* ui) {
 }
 
 void GvrKeyboardDelegate::OnBeginFrame() {
+  if (!gvr_keyboard_)
+    return;
+
   gvr::ClockTimePoint target_time = gvr::GvrApi::GetTimePointNow();
   gvr_keyboard_set_frame_time(gvr_keyboard_, &target_time);
   gvr_keyboard_advance_frame(gvr_keyboard_);
 }
 
 void GvrKeyboardDelegate::ShowKeyboard() {
-  gvr_keyboard_show(gvr_keyboard_);
+  if (gvr_keyboard_)
+    gvr_keyboard_show(gvr_keyboard_);
+  else if (creating_keyboard_)
+    pending_show_keyboard_ = true;
 }
 
 void GvrKeyboardDelegate::HideKeyboard() {
-  gvr_keyboard_hide(gvr_keyboard_);
+  if (gvr_keyboard_)
+    gvr_keyboard_hide(gvr_keyboard_);
+  pending_show_keyboard_ = false;
 }
 
 void GvrKeyboardDelegate::SetTransform(const gfx::Transform& transform) {
+  if (!gvr_keyboard_)
+    return;
+
   gvr_mat4f matrix;
   TransformToGvrMat(transform, &matrix);
   gvr_keyboard_set_world_from_keyboard_matrix(gvr_keyboard_, &matrix);
@@ -84,6 +163,9 @@ void GvrKeyboardDelegate::SetTransform(const gfx::Transform& transform) {
 bool GvrKeyboardDelegate::HitTest(const gfx::Point3F& ray_origin,
                                   const gfx::Point3F& ray_target,
                                   gfx::Point3F* hit_position) {
+  if (!gvr_keyboard_)
+    return false;
+
   gvr_vec3f start;
   start.x = ray_origin.x();
   start.y = ray_origin.y();
@@ -101,6 +183,9 @@ bool GvrKeyboardDelegate::HitTest(const gfx::Point3F& ray_origin,
 }
 
 void GvrKeyboardDelegate::Draw(const vr::CameraModel& model) {
+  if (!gvr_keyboard_)
+    return;
+
   int eye = model.eye_type;
   gvr::Mat4f view_matrix;
   TransformToGvrMat(model.view_matrix, &view_matrix);
@@ -118,16 +203,25 @@ void GvrKeyboardDelegate::Draw(const vr::CameraModel& model) {
 }
 
 void GvrKeyboardDelegate::OnButtonDown(const gfx::PointF& position) {
+  if (!gvr_keyboard_)
+    return;
+
   gvr_keyboard_update_button_state(
       gvr_keyboard_, gvr::ControllerButton::GVR_CONTROLLER_BUTTON_CLICK, true);
 }
 
 void GvrKeyboardDelegate::OnButtonUp(const gfx::PointF& position) {
+  if (!gvr_keyboard_)
+    return;
+
   gvr_keyboard_update_button_state(
       gvr_keyboard_, gvr::ControllerButton::GVR_CONTROLLER_BUTTON_CLICK, false);
 }
 
 void GvrKeyboardDelegate::UpdateInput(const vr::TextInputInfo& info) {
+  if (!gvr_keyboard_)
+    return;
+
   gvr_keyboard_set_text(gvr_keyboard_, base::UTF16ToUTF8(info.text).c_str());
   gvr_keyboard_set_selection_indices(gvr_keyboard_, info.selection_start,
                                      info.selection_end);
