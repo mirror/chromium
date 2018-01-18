@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1421f14e_0c932a83",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-18T16:18:27Z",
+      "side": 1,
+      "message": "Please append to this comment: \"This MUST BE set to MANUAL for correct operation of the IsSignaled() call in Start(). See the comment there for why.\"",
+      "range": {
+        "startLine": 32,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "821c75df_055e750e",
         "filename": "base/profiler/stack_sampling_profiler.cc",
         "patchSetId": 27
@@ -36,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "9b20404a_d74148c9",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-18T16:18:27Z",
+      "side": 1,
+      "message": "Chances are we\u0027ll still need a base::ScopedAllowBaseSyncPrimitivesForTesting here.",
+      "parentUuid": "3bb44373_172a1256",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42ee3d9b_90677bc0",
         "filename": "base/profiler/stack_sampling_profiler.cc",
         "patchSetId": 27
@@ -53,6 +94,24 @@
     },
     {
       "key": {
+        "uuid": "73a0a677_98de9529",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-18T16:18:27Z",
+      "side": 1,
+      "message": "I\u0027d prefer this approach since it avoids the redundant state on the object.",
+      "parentUuid": "42ee3d9b_90677bc0",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8522efdd_b4b7a81a",
         "filename": "base/profiler/stack_sampling_profiler.h",
         "patchSetId": 27
@@ -64,6 +123,24 @@
       "writtenOn": "2018-01-18T09:49:48Z",
       "side": 1,
       "message": "Add something like: \"Might block on a WaitableEvent if this StackSamplingProfiler is already running (or was recently stopped) while the previous profiling phase winds down.\"",
+      "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90197f9_5ce4af7f",
+        "filename": "base/profiler/stack_sampling_profiler.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-18T16:18:27Z",
+      "side": 1,
+      "message": "sgtm, but I\u0027d reword as: \"Might block on a WaitableEvent if this StackSamplingProfiler was previously started and recently stopped, while the previous profiling phase winds down.\"\n\nCalling Start() repeatedly without intervening Stop()s is not a supported mode of operation.",
+      "parentUuid": "8522efdd_b4b7a81a",
       "revId": "9607084be7cc56fb0b72704f0a8c4ead5f43a685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
