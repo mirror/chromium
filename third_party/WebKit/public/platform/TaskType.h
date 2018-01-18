@@ -142,7 +142,13 @@ enum class TaskType : unsigned {
   // * //components/webcrypto
   kInternalWebCrypto = 27,
 
-  kCount = 28,
+  // Tasks to execute IndexedDB's callbacks. Tasks with this type are posted by:
+  // * //content/renderer/indexed_db
+  kInternalIndexedDB = 28,
+
+  kInternalMedia = 29,
+
+  kCount = 30,
 };
 
 }  // namespace blink
