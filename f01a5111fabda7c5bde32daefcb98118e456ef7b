@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "d2ac9590_2001942a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T01:19:14Z",
+      "side": 1,
+      "message": "I have no good idea why this terrifies me, but it does.  Completely unactionable comment, but changing the root node out might do crazy/wonky/terrifying things.  We\u0027ll have to see.\n\nOne thing that we could consider (and \"might\" be worth it) is to add/remove the view as you enter and exit VR.  I guess the question is whether we\u0027d need this to exist prior to entering to VR for it to function though.",
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561c2d5b_a2138822",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T01:19:14Z",
+      "side": 1,
+      "message": "vrView since we\u0027re in java land",
+      "range": {
+        "startLine": 332,
+        "startChar": 24,
+        "endLine": 332,
+        "endChar": 31
+      },
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afd0057b_bed7a360",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
         "patchSetId": 32
@@ -13,6 +53,24 @@
       "writtenOn": "2018-01-16T16:01:09Z",
       "side": 1,
       "message": "ignorable nit: the return value of this function feels odd given the function\u0027s name. Perhaps you could have a separate accessor for grabbing the compositorview after decoupling or rename the function.",
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da150760_b15e13ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T01:19:14Z",
+      "side": 1,
+      "message": "Maybe this should just be called onEnterVr?  I think it would be fine for the boolean to be mIsInVr instead of the very specific mSizeDecoupledFromParentForVr.  I think it would be ok for a comment where mSizeDecoupledFromParentForVr is used to describe why we are ignoring size and have a single top level vr flag with descriptions of why it needed to be used in each place (at their point of use to make it clearer).",
+      "parentUuid": "afd0057b_bed7a360",
       "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +122,121 @@
       "writtenOn": "2018-01-16T16:01:09Z",
       "side": 1,
       "message": "Could we short circuit if vr browsing is not supported and then assert that we have a mNonVrViews? Here and other places where we check that it\u0027s not null. Likewise for the mNativeVrShell checks.",
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fae689_cd6b077a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T01:19:14Z",
+      "side": 1,
+      "message": ":-/ 2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb78ee65_a2a8973d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T01:19:14Z",
+      "side": 1,
+      "message": "full invalidates are expensive, what is the overhead of this?  Since this is only while in VR it is less applicable to the rest of Chrome, but something you should be aware of as well.",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 41
+      },
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa684af_70440a01",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T01:19:14Z",
+      "side": 1,
+      "message": "are we guaranteed that this will be called before resizeForVr is called?\n\nWondering if we should cache mLayoutParams in onEnterVr, override them here, and ensure they\u0027re non-null in onExitVr (potentially setting them to null there to be clear)",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 21
+      },
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e07c49_aa6687f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T01:19:14Z",
+      "side": 1,
+      "message": "assert child count \u003d\u003d 0?",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 25
+      },
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e06aa152_66a57480",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-18T01:19:14Z",
+      "side": 1,
+      "message": "I would say that we should cache mBackgroundToRestore in onEnterVr",
+      "range": {
+        "startLine": 105,
+        "startChar": 22,
+        "endLine": 105,
+        "endChar": 42
+      },
       "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
