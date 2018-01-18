@@ -61,6 +61,7 @@ bool MouseLockDispatcher::WillHandleMouseEvent(
 
 void MouseLockDispatcher::OnLockMouseACK(bool succeeded) {
   DCHECK(!mouse_locked_ && pending_lock_request_);
+  LOG(ERROR) << "######### MouseLockDispatcher::OnLockMouseACK ";
 
   mouse_locked_ = succeeded;
   pending_lock_request_ = false;

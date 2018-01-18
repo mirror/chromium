@@ -30,13 +30,17 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "components/viz/common/surfaces/local_surface_id.h"
+#include "content/child/child_thread_impl.h"
 #include "content/common/edit_command.h"
+#include "content/common/view_messages.mojom.h"
 #include "content/public/browser/browser_plugin_guest_delegate.h"
 #include "content/public/browser/guest_host.h"
 #include "content/public/browser/readback_types.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/input_event_ack_state.h"
 #include "content/public/common/screen_info.h"
+#include "content/public/common/service_names.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/public/platform/WebDragOperation.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
@@ -323,6 +327,7 @@ class CONTENT_EXPORT BrowserPluginGuest : public GuestHost,
   void OnLockMouse(bool user_gesture,
                    bool privileged);
   void OnLockMouseAck(int instance_id, bool succeeded);
+  mojom::MouseLockStatus* GetMouseLockStatusPtr();
   // Resizes the guest's web contents.
   void OnSetFocus(int instance_id,
                   bool focused,
@@ -479,6 +484,8 @@ class CONTENT_EXPORT BrowserPluginGuest : public GuestHost,
 
   // Weak pointer used to ask GeolocationPermissionContext about geolocation
   // permission.
+  mojom::MouseLockStatusPtr mouse_lock_status_ptr_;
+  mojom::MouseLockStatus* mouse_lock_status_;
   base::WeakPtrFactory<BrowserPluginGuest> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserPluginGuest);
