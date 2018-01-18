@@ -22,6 +22,30 @@
       "revId": "3d257bc72a2090cd638ae3b0de72b6306933df3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b091c6_e46d7c06",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-cue-rendering-after-controls-removed.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2018-01-18T07:52:21Z",
+      "side": 0,
+      "message": "Looking at the past results at [1], all the bots are failing except Linux-[ASAN, MSAN] bots, where the results are opposite.\n\n[1]: https://test-results.appspot.com/dashboards/flakiness_dashboard.html#testType\u003dwebkit_layout_tests\u0026tests\u003dtrack-cue-rendering-after-controls-removed.html",
+      "parentUuid": "e52e7f51_0c766700",
+      "range": {
+        "startLine": 26,
+        "startChar": 21,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "3d257bc72a2090cd638ae3b0de72b6306933df3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
