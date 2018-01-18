@@ -82,6 +82,7 @@
 #include "net/cookies/cookie_store.h"
 #include "net/http/http_transaction_factory.h"
 #include "net/reporting/reporting_browsing_data_remover.h"
+#include "net/reporting/reporting_policy.h"
 #include "net/reporting/reporting_service.h"
 #include "net/url_request/network_error_logging_delegate.h"
 #include "net/url_request/url_request_context.h"
@@ -950,6 +951,11 @@ class MockReportingService : public net::ReportingService {
     return true;
   }
 
+  const net::ReportingPolicy& GetPolicy() const override {
+    NOTREACHED();
+    return dummy_policy_;
+  }
+
   int remove_calls() const { return remove_calls_; }
   int last_data_type_mask() const { return last_data_type_mask_; }
   const base::RepeatingCallback<bool(const GURL&)>& last_origin_filter() const {
@@ -960,6 +966,7 @@ class MockReportingService : public net::ReportingService {
   int remove_calls_ = 0;
   int last_data_type_mask_ = 0;
   base::RepeatingCallback<bool(const GURL&)> last_origin_filter_;
+  net::ReportingPolicy dummy_policy_;
 
   DISALLOW_COPY_AND_ASSIGN(MockReportingService);
 };
