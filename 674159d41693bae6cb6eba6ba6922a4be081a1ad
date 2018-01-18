@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "3c2892fa_3991695e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-18T21:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d779d4f0_c9a859a0",
+      "range": {
+        "startLine": 181,
+        "startChar": 31,
+        "endLine": 181,
+        "endChar": 62
+      },
+      "revId": "674159d41693bae6cb6eba6ba6922a4be081a1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1920708_72c17704",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
         "patchSetId": 1
@@ -68,6 +92,30 @@
       "revId": "674159d41693bae6cb6eba6ba6922a4be081a1ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb842d3_a2328347",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1326,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-18T21:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1920708_72c17704",
+      "range": {
+        "startLine": 1326,
+        "startChar": 20,
+        "endLine": 1326,
+        "endChar": 60
+      },
+      "revId": "674159d41693bae6cb6eba6ba6922a4be081a1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "8e684071_6d4f2317",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1550,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-18T21:30:29Z",
+      "side": 1,
+      "message": "Added a new method to the interface. I think it\u0027ll be better to be explicit than find ourselves using another obscure signal.",
+      "parentUuid": "0b2ce066_154ed974",
+      "range": {
+        "startLine": 1550,
+        "startChar": 50,
+        "endLine": 1550,
+        "endChar": 90
+      },
+      "revId": "674159d41693bae6cb6eba6ba6922a4be081a1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98b76ac4_89d0aef9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
         "patchSetId": 1
@@ -105,6 +177,30 @@
       "writtenOn": "2018-01-18T18:17:18Z",
       "side": 1,
       "message": "Same comment here... it might not actually matter for the search activity since mUseDarkColors is probably never true.",
+      "range": {
+        "startLine": 405,
+        "startChar": 30,
+        "endLine": 405,
+        "endChar": 51
+      },
+      "revId": "674159d41693bae6cb6eba6ba6922a4be081a1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8dbdca8_25b3c20a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-18T21:30:29Z",
+      "side": 1,
+      "message": "Pinged hannah, will update if relevant.",
+      "parentUuid": "98b76ac4_89d0aef9",
       "range": {
         "startLine": 405,
         "startChar": 30,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "3920f5b9_502bd9cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-18T21:30:29Z",
+      "side": 1,
+      "message": "Reverted",
+      "parentUuid": "7caadedd_de99e2b9",
+      "range": {
+        "startLine": 631,
+        "startChar": 51,
+        "endLine": 631,
+        "endChar": 72
+      },
+      "revId": "674159d41693bae6cb6eba6ba6922a4be081a1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "656b2ced_602d638b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
         "patchSetId": 1
@@ -160,6 +280,30 @@
       "revId": "674159d41693bae6cb6eba6ba6922a4be081a1ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7199ef3e_ac869410",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-18T21:30:29Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "656b2ced_602d638b",
+      "range": {
+        "startLine": 202,
+        "startChar": 12,
+        "endLine": 202,
+        "endChar": 52
+      },
+      "revId": "674159d41693bae6cb6eba6ba6922a4be081a1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

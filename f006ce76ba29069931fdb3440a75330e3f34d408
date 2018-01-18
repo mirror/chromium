@@ -22,6 +22,30 @@
       "revId": "f006ce76ba29069931fdb3440a75330e3f34d408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b780ac_bb0a0a34",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/snackbar/SnackbarView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-18T21:30:29Z",
+      "side": 0,
+      "message": "I\u0027m just going to revert these two for now. I pinged hannah, so we\u0027ll see what she says.",
+      "parentUuid": "2ed5cda9_0defb3ab",
+      "range": {
+        "startLine": 243,
+        "startChar": 20,
+        "endLine": 243,
+        "endChar": 58
+      },
+      "revId": "f006ce76ba29069931fdb3440a75330e3f34d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
