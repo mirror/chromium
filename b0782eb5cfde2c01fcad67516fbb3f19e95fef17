@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b18e9379_d1d83e07",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-18T01:03:58Z",
+      "side": 1,
+      "message": "I hope we find a way to do this with NativeTheme... we could eventually have Chrome OS system UI use a different NativeTheme subclass than Chrome, even when Chrome is running on Chrome OS.",
+      "revId": "b0782eb5cfde2c01fcad67516fbb3f19e95fef17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
