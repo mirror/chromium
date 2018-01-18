@@ -48,6 +48,7 @@ class NET_EXPORT_PRIVATE SpdyHttpStream : public SpdyStream::Delegate,
   // HttpStream implementation.
 
   int InitializeStream(const HttpRequestInfo* request_info,
+                       bool can_send_early,
                        RequestPriority priority,
                        const NetLogWithSource& net_log,
                        const CompletionCallback& callback) override;
@@ -165,6 +166,8 @@ class NET_EXPORT_PRIVATE SpdyHttpStream : public SpdyStream::Delegate,
   // owner. Setting to null happens after headers are completely read or upload
   // data stream is uploaded, whichever is later.
   const HttpRequestInfo* request_info_;
+
+  bool can_send_early_;
 
   // |response_info_| is the HTTP response data object which is filled in
   // when a response HEADERS comes in for the stream.
