@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee0f327f_dd16d07e",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T00:05:10Z",
+      "side": 1,
+      "message": "Does it make sense to change request-\u003edata a std::unique_ptr\u003cnet::IOBufferWithSize\u003e and move assign it to send_callback_? That way we could avoid one copy from request-\u003edata to send_buffer_.",
+      "revId": "eff43e310f78e9630185783bdc202f74770a37ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
