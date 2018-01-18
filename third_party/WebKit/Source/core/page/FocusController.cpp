@@ -1385,16 +1385,10 @@ bool FocusController::AdvanceFocusDirectionallyInContainer(
   if (!container)
     return false;
 
-  LayoutRect new_starting_rect = starting_rect;
-
-  if (starting_rect.IsEmpty())
-    new_starting_rect =
-        VirtualRectForDirection(type, NodeRectInAbsoluteCoordinates(container));
-
   // Find the closest node within current container in the direction of the
   // navigation.
   FocusCandidate focus_candidate;
-  FindFocusCandidateInContainer(*container, new_starting_rect, type,
+  FindFocusCandidateInContainer(*container, starting_rect, type,
                                 focus_candidate);
 
   if (focus_candidate.IsNull()) {
@@ -1466,10 +1460,10 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
   // FIXME: Directional focus changes don't yet work with RemoteFrames.
   if (!FocusedOrMainFrame()->IsLocalFrame())
     return false;
-  LocalFrame* cur_frame = ToLocalFrame(FocusedOrMainFrame());
-  DCHECK(cur_frame);
+  LocalFrame* current_frame = ToLocalFrame(FocusedOrMainFrame());
+  DCHECK(current_frame);
 
-  Document* focused_document = cur_frame->GetDocument();
+  Document* focused_document = current_frame->GetDocument();
   if (!focused_document)
     return false;
 
@@ -1480,11 +1474,11 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
     ToDocument(container)->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   // Figure out the starting rect.
-  LayoutRect starting_rect;
+  LayoutRect starting_rect = VirtualRectForDirection(
+      type, FrameRectInAbsoluteCoordinates(current_frame));
   if (focused_element) {
     if (!HasOffscreenRect(focused_element)) {
-      starting_rect = NodeRectInAbsoluteCoordinates(focused_element,
-                                                    true /* ignore border */);
+      starting_rect = NodeRectInAbsoluteCoordinates(focused_element, true);
     } else if (auto* area = ToHTMLAreaElementOrNull(*focused_element)) {
       if (area->ImageElement()) {
         focused_element = area->ImageElement();
