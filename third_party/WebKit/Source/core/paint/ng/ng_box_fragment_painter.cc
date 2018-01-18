@@ -20,6 +20,7 @@
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintPhase.h"
+#include "core/paint/ScrollRecorder.h"
 #include "core/paint/ScrollableAreaPainter.h"
 #include "core/paint/ng/ng_box_clipper.h"
 #include "core/paint/ng/ng_fragment_painter.h"
@@ -172,26 +173,45 @@ void NGBoxFragmentPainter::PaintObject(const PaintInfo& paint_info,
   //  ObjectPainter(box_fragment_)
   //      .AddPDFURLRectIfNeeded(paint_info, paint_offset);
 
-  // TODO(layout-dev): Add support for scrolling.
-  Optional<PaintInfo> scrolled_paint_info;
+  if (paint_phase != PaintPhase::kSelfOutlineOnly) {
+    Optional<ScopedPaintChunkProperties> scoped_scroll_property;
+    Optional<ScrollRecorder> scroll_recorder;
+    Optional<PaintInfo> scrolled_paint_info;
+    DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+    // TODO(layout-dev): Figure out where paint properties should live.
+    const auto* object_properties =
+        box_fragment_.GetLayoutObject()->FirstFragment().PaintProperties();
+    auto* scroll_translation =
+        object_properties ? object_properties->ScrollTranslation() : nullptr;
+    if (scroll_translation) {
+      scoped_scroll_property.emplace(
+          paint_info.context.GetPaintController(), scroll_translation,
+          box_fragment_, DisplayItem::PaintPhaseToDrawingType(paint_phase));
+      scrolled_paint_info.emplace(paint_info);
+      scrolled_paint_info->UpdateCullRectForScrollingContents(
+          EnclosingIntRect(box_fragment_.OverflowClipRect(
+              paint_offset, kIgnorePlatformOverlayScrollbarSize)),
+          scroll_translation->Matrix().ToAffineTransform());
+    }
 
-  const PaintInfo& contents_paint_info =
-      scrolled_paint_info ? *scrolled_paint_info : paint_info;
+    const PaintInfo& contents_paint_info =
+        scrolled_paint_info ? *scrolled_paint_info : paint_info;
 
-  // Paint our background, border and box-shadow.
-  // TODO(eae): We should only paint box-decorations during the foreground phase
-  // for inline boxes. Split this method into PaintBlock and PaintInline once we
-  // can tell the two types of fragments apart or we've eliminated the extra
-  // block wrapper fragments.
-  if (paint_info.phase == PaintPhase::kForeground && is_inline_)
-    PaintBoxDecorationBackground(paint_info, paint_offset);
+    // Paint our background, border and box-shadow.
+    // TODO(eae): We should only paint box-decorations during the foreground
+    // phase for inline boxes. Split this method into PaintBlock and PaintInline
+    // once we can tell the two types of fragments apart or we've eliminated the
+    // extra block wrapper fragments.
+    if (paint_info.phase == PaintPhase::kForeground && is_inline_)
+      PaintBoxDecorationBackground(paint_info, paint_offset);
 
-  PaintContents(contents_paint_info, paint_offset);
+    PaintContents(contents_paint_info, paint_offset);
 
-  if (paint_phase == PaintPhase::kFloat ||
-      paint_phase == PaintPhase::kSelection ||
-      paint_phase == PaintPhase::kTextClip)
-    PaintFloats(contents_paint_info, paint_offset);
+    if (paint_phase == PaintPhase::kFloat ||
+        paint_phase == PaintPhase::kSelection ||
+        paint_phase == PaintPhase::kTextClip)
+      PaintFloats(contents_paint_info, paint_offset);
+  }
 
   if (ShouldPaintSelfOutline(paint_phase))
     NGFragmentPainter(box_fragment_).PaintOutline(paint_info, paint_offset);
