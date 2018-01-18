@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f318333b_131be0eb",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-18T10:12:41Z",
+      "side": 1,
+      "message": "We do expect the invalid case to happen.\nThis can be seen here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/861643/6/content/renderer/render_widget.cc#b2231\n\nPreviously, we would call AutoResizeCompositor(viz::LocalSurfaceId());\nThe default-generated viz::LocalSurfaceId() was invalid.\n\nSo we preserve that behavior when the child isn\u0027t generating its own LocalSurfaceId.",
+      "parentUuid": "31e06bd6_3ec86cb0",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 16
+      },
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97d839fb_157594eb",
         "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
         "patchSetId": 2
@@ -60,6 +84,30 @@
       "writtenOn": "2018-01-12T09:03:11Z",
       "side": 1,
       "message": "Where are these changes used?",
+      "range": {
+        "startLine": 21,
+        "startChar": 24,
+        "endLine": 21,
+        "endChar": 53
+      },
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698b5fe8_c9ba0ebb",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-18T10:12:41Z",
+      "side": 1,
+      "message": "Not yet. This is part of Fady\u0027s proposed solution for resolving the livelock. I believe the idea is for parent-generated LocalSurfaceIds to include the last child_sequence_number. This would be let the child know that the parent has considered its request when making a new request.",
+      "parentUuid": "97d839fb_157594eb",
       "range": {
         "startLine": 21,
         "startChar": 24,
@@ -101,6 +149,24 @@
       "side": 1,
       "message": "Seems like if we do this plumbing we can maybe avoid storing this here as well? Just overwrite the current Id there and then send the new Id down to this class.",
       "parentUuid": "453be282_68061d22",
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80913e29_db3b9df4",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-18T10:12:41Z",
+      "side": 1,
+      "message": "I\u0027m looking at what functions this calls to see how to route |params|.\n\nThis function (RenderWidgetHostImpl::OnResizeOrRepaintACK) calls 2 other functions:\n- RenderWidgetHostImpl::DidCompleteResizeOrRepaint\n- If autoresize is enabled (only happens with \u003cwebview\u003e?), it calls RenderWidgetHostImpl::DelayedAutoResized.\n\n\nInside the first function, there is a notification service which is new to me. Is this something we need to worry about?\nAfter posting a notification, it calls RenderWidgetHostImpl::WasResized, which calls RenderWidgetHostImpl::GetResizeParams.\n\nI think this is one function needs to be updated, right?\nIt seems to get the view\u0027s LocalSurfaceId and use it if it is valid.\nPerhaps it should instead be telling the view of its new child-generated LocalSurfaceId?\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/render_widget_host_impl.cc?l\u003d764\u0026rcl\u003d2a123c2bfe3e7f9711efd7b78f7783b01f127d92\n\n(From here it routes to a few places but I\u0027ll come back to that)\n\nThen it sends a ViewMsg_Resize IPC message.\nThis gets handled by RenderWidget::OnResize, which calls RenderWidget::Resize.\nThis stores a LocalSurfaceId if it was provided.\nhttps://cs.chromium.org/chromium/src/content/renderer/render_widget.cc?l\u003d1325\u0026rcl\u003d714f60fadd13142b1bf533d165ec82357a6bf15d\n\nSo I imagine the ViewMsg_Resize needs to have its LocalSurfaceId updated as well.\n(Again, from here it routes to a few places)\n\nBTW Good news here...looks like IPC messages can indeed use base::Optional??\nI think this might be a difference between IPC_STRUCT_MEMBER and \nIPC_MESSAGE_ROUTED1 ?? Is there a way to see errors from a previous patchset using Gerrit?",
+      "parentUuid": "f738525e_e48a6350",
       "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
