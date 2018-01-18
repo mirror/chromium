@@ -160,6 +160,24 @@
       "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039f071f_eef68e59",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-18T01:08:12Z",
+      "side": 1,
+      "message": "We don\u0027t want to detect the process. We\u0027d want to use a different NativeTheme for different situations.\n\nI still don\u0027t understand this code. In Harmony, kDefaultPlaceholderTextColor is totally ignored. It\u0027s a hack to use that as the indicator for unset color. This is pretty much exactly what Optional is for.",
+      "parentUuid": "7bbda8ce_fa51f77d",
+      "revId": "f5a1b89b4bb66ee2ec50995281e140010c60c052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
