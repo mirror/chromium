@@ -23,7 +23,6 @@
 #endif
 
 const char kPythonPathEnv[] = "PYTHONPATH";
-const char kPythonVirtualEnv[] = "VIRTUAL_ENV";
 
 void ClearPythonPath() {
   std::unique_ptr<base::Environment> env(base::Environment::Create());
@@ -83,53 +82,19 @@ bool GetPyProtoPath(base::FilePath* dir) {
   return false;
 }
 
-#if defined(OS_WIN)
-struct PythonExePath {
-  PythonExePath() {
-    // This is test-only code, so CHECK with a subprocess invocation is ok.
-    base::CommandLine command(base::FilePath(FILE_PATH_LITERAL("cmd")));
-    command.AppendArg("/c");
-    command.AppendArg("python");
-    command.AppendArg("-c");
-    command.AppendArg("import sys; print sys.executable");
-    std::string output;
-    CHECK(GetAppOutput(command, &output));
-    // This does only work if cmd.exe doesn't use a non-US codepage.
-    path_ = base::ASCIIToUTF16(output);
-    TrimWhitespace(path_, base::TRIM_ALL, &path_);
-  }
-  base::string16 path_;
-};
-static base::LazyInstance<PythonExePath>::Leaky g_python_path;
-#endif
-
-bool IsInPythonVirtualEnv() {
-  return base::Environment::Create()->HasVar(kPythonVirtualEnv);
-}
-
 bool GetPythonCommand(base::CommandLine* python_cmd) {
   DCHECK(python_cmd);
 
+// Use vpython to pick up src.git's vpython VirtualEnv spec.
 #if defined(OS_WIN)
-  // Most developers have depot_tools in their path, which only has a
-  // python.bat, not a python.exe.  Go through cmd to find the path to
-  // the python executable.
-  // (Don't just return a a "cmd /c python" command line, because then tests
-  // that try to kill the python process will kill the cmd process instead,
-  // which can cause flakiness.)
-  python_cmd->SetProgram(base::FilePath(g_python_path.Get().path_));
+  python_cmd->SetProgram(base::FilePath(FILE_PATH_LITERAL("vpython.bat")));
 #else
-  python_cmd->SetProgram(base::FilePath(FILE_PATH_LITERAL("python")));
+  python_cmd->SetProgram(base::FilePath(FILE_PATH_LITERAL("vpython")));
 #endif
 
   // Launch python in unbuffered mode, so that python output doesn't mix with
   // gtest output in buildbot log files. See http://crbug.com/147368.
   python_cmd->AppendArg("-u");
-
-  if (!IsInPythonVirtualEnv()) {
-    // Prevent using system-installed libraries. Use hermetic versioned copies.
-    python_cmd->AppendArg("-S");
-  }
 
   return true;
 }
