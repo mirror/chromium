@@ -232,7 +232,7 @@ class ProfileLaunchObserver : public content::NotificationObserver {
   DISALLOW_COPY_AND_ASSIGN(ProfileLaunchObserver);
 };
 
-base::LazyInstance<ProfileLaunchObserver>::DestructorAtExit
+base::LazyInstance<ProfileLaunchObserver>::Leaky
     profile_launch_observer = LAZY_INSTANCE_INITIALIZER;
 
 // Dumps the current set of the browser process's histograms to |output_file|.

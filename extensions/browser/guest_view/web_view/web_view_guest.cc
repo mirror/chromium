@@ -212,7 +212,7 @@ double ConvertZoomLevelToZoomFactor(double zoom_level) {
 
 using WebViewKey = std::pair<int, int>;
 using WebViewKeyToIDMap = std::map<WebViewKey, int>;
-static base::LazyInstance<WebViewKeyToIDMap>::DestructorAtExit
+static base::LazyInstance<WebViewKeyToIDMap>::Leaky
     web_view_key_to_id_map = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

@@ -37,7 +37,7 @@ struct PartnerModelKeeper {
     : loaded(false) {}
 };
 
-base::LazyInstance<PartnerModelKeeper>::DestructorAtExit
+base::LazyInstance<PartnerModelKeeper>::Leaky
     g_partner_model_keeper = LAZY_INSTANCE_INITIALIZER;
 
 const void* const kPartnerBookmarksShimUserDataKey =

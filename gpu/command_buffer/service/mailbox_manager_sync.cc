@@ -25,14 +25,14 @@ namespace gles2 {
 
 namespace {
 
-base::LazyInstance<base::Lock>::DestructorAtExit g_lock =
+base::LazyInstance<base::Lock>::Leaky g_lock =
     LAZY_INSTANCE_INITIALIZER;
 
 #if !defined(OS_MACOSX)
 typedef std::map<SyncToken, std::unique_ptr<gl::GLFence>> SyncTokenToFenceMap;
-base::LazyInstance<SyncTokenToFenceMap>::DestructorAtExit
+base::LazyInstance<SyncTokenToFenceMap>::Leaky
     g_sync_point_to_fence = LAZY_INSTANCE_INITIALIZER;
-base::LazyInstance<base::queue<SyncTokenToFenceMap::iterator>>::DestructorAtExit
+base::LazyInstance<base::queue<SyncTokenToFenceMap::iterator>>::Leaky
     g_sync_points = LAZY_INSTANCE_INITIALIZER;
 #endif
 

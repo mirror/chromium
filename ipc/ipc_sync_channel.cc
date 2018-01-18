@@ -349,7 +349,7 @@ class SyncChannel::ReceivedSyncMsgQueue :
 };
 
 base::LazyInstance<base::ThreadLocalPointer<
-    SyncChannel::ReceivedSyncMsgQueue>>::DestructorAtExit
+    SyncChannel::ReceivedSyncMsgQueue>>::Leaky
     SyncChannel::ReceivedSyncMsgQueue::lazy_tls_ptr_ =
         LAZY_INSTANCE_INITIALIZER;
 

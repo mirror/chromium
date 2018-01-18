@@ -55,7 +55,7 @@ void BrailleDisplayPrivateAPI::Shutdown() {
 }
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<BrailleDisplayPrivateAPI>>::DestructorAtExit
+    BrowserContextKeyedAPIFactory<BrailleDisplayPrivateAPI>>::Leaky
     g_braille_display_private_api_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static

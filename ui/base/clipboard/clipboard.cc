@@ -17,9 +17,9 @@
 
 namespace ui {
 
-base::LazyInstance<Clipboard::AllowedThreadsVector>::DestructorAtExit
+base::LazyInstance<Clipboard::AllowedThreadsVector>::Leaky
     Clipboard::allowed_threads_ = LAZY_INSTANCE_INITIALIZER;
-base::LazyInstance<Clipboard::ClipboardMap>::DestructorAtExit
+base::LazyInstance<Clipboard::ClipboardMap>::Leaky
     Clipboard::clipboard_map_ = LAZY_INSTANCE_INITIALIZER;
 base::LazyInstance<base::Lock>::Leaky Clipboard::clipboard_map_lock_ =
     LAZY_INSTANCE_INITIALIZER;

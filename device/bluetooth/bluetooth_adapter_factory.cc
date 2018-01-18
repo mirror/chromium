@@ -45,7 +45,7 @@ typedef std::vector<BluetoothAdapterFactory::AdapterCallback>
 // List of adapter callbacks to be called once the adapter is initialized.
 // Since Google C++ Style (and clang's static analyzer) forbids us having
 // exit-time destructors we use a lazy instance for it.
-base::LazyInstance<AdapterCallbackList>::DestructorAtExit adapter_callbacks =
+base::LazyInstance<AdapterCallbackList>::Leaky adapter_callbacks =
     LAZY_INSTANCE_INITIALIZER;
 
 void RunAdapterCallbacks() {

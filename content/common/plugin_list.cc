@@ -24,7 +24,7 @@ namespace content {
 
 namespace {
 
-base::LazyInstance<PluginList>::DestructorAtExit g_singleton =
+base::LazyInstance<PluginList>::Leaky g_singleton =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

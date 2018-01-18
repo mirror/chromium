@@ -36,7 +36,7 @@ ExtensionCommandsGlobalRegistry::~ExtensionCommandsGlobalRegistry() {
 }
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<
-    ExtensionCommandsGlobalRegistry>>::DestructorAtExit
+    ExtensionCommandsGlobalRegistry>>::Leaky
     g_extension_commands_global_registry_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static

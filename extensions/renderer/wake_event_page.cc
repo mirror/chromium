@@ -29,7 +29,7 @@ using namespace v8_helpers;
 
 namespace {
 
-base::LazyInstance<WakeEventPage>::DestructorAtExit g_wake_event_page_instance =
+base::LazyInstance<WakeEventPage>::Leaky g_wake_event_page_instance =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

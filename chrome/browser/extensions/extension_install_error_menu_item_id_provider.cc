@@ -15,7 +15,7 @@ namespace {
 
 base::LazyInstance<std::bitset<IDC_EXTENSION_INSTALL_ERROR_LAST -
                                IDC_EXTENSION_INSTALL_ERROR_FIRST +
-                               1>>::DestructorAtExit menu_command_ids =
+                               1>>::Leaky menu_command_ids =
     LAZY_INSTANCE_INITIALIZER;
 
 // Get an available menu ID.

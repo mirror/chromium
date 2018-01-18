@@ -25,7 +25,7 @@ namespace {
 
 const char kFirstRunTabs[] = "first_run_tabs";
 
-base::LazyInstance<installer::MasterPreferences>::DestructorAtExit
+base::LazyInstance<installer::MasterPreferences>::Leaky
     g_master_preferences = LAZY_INSTANCE_INITIALIZER;
 
 bool GetURLFromValue(const base::Value* in_value, std::string* out_value) {

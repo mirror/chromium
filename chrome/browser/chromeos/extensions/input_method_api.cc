@@ -368,7 +368,7 @@ void InputMethodAPI::OnListenerAdded(
 }
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<InputMethodAPI>>::DestructorAtExit g_factory =
+    BrowserContextKeyedAPIFactory<InputMethodAPI>>::Leaky g_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 // static

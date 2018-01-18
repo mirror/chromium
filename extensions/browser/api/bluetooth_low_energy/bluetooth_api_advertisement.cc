@@ -12,7 +12,7 @@ namespace extensions {
 
 // static
 static base::LazyInstance<BrowserContextKeyedAPIFactory<
-    ApiResourceManager<BluetoothApiAdvertisement>>>::DestructorAtExit
+    ApiResourceManager<BluetoothApiAdvertisement>>>::Leaky
     g_server_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static

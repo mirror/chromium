@@ -84,7 +84,7 @@ void SignedInDevicesChangeObserver::OnDeviceInfoChange() {
 }
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<SignedInDevicesManager>>::DestructorAtExit
+    BrowserContextKeyedAPIFactory<SignedInDevicesManager>>::Leaky
     g_signed_in_devices_manager_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static

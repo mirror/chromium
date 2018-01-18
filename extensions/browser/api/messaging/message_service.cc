@@ -147,7 +147,7 @@ MessageService::~MessageService() {
 }
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<MessageService>>::DestructorAtExit g_factory =
+    BrowserContextKeyedAPIFactory<MessageService>>::Leaky g_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 // static

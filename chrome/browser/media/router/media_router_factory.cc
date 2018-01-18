@@ -22,7 +22,7 @@ namespace media_router {
 
 namespace {
 
-base::LazyInstance<MediaRouterFactory>::DestructorAtExit service_factory =
+base::LazyInstance<MediaRouterFactory>::Leaky service_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

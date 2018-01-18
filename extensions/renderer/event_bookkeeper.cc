@@ -16,7 +16,7 @@ namespace extensions {
 
 namespace {
 
-base::LazyInstance<EventBookkeeper>::DestructorAtExit
+base::LazyInstance<EventBookkeeper>::Leaky
     g_main_thread_event_bookkeeper = LAZY_INSTANCE_INITIALIZER;
 
 // Gets a unique string key identifier for a ScriptContext.
