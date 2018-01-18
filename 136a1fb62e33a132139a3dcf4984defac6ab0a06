@@ -16,6 +16,24 @@
       "revId": "136a1fb62e33a132139a3dcf4984defac6ab0a06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3edb858a_366270cb",
+        "filename": "services/network/public/interfaces/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-18T17:58:00Z",
+      "side": 1,
+      "message": "This is only used with uploads, which afaik would usually be cross process even with the new experiments.",
+      "parentUuid": "aa93eb6a_901217ae",
+      "revId": "136a1fb62e33a132139a3dcf4984defac6ab0a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
