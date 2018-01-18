@@ -75,6 +75,13 @@ ACTION_P2(ExitMessageLoop, task_runner, quit_closure) {
   task_runner->PostTask(FROM_HERE, quit_closure);
 }
 
+class MockRenderProcessHostDelegate
+    : public VideoCaptureHost::RenderProcessHostDelegate {
+ public:
+  MOCK_METHOD0(NotifyStreamAdded, void());
+  MOCK_METHOD0(NotifyStreamRemoved, void());
+};
+
 // This is an integration test of VideoCaptureHost in conjunction with
 // MediaStreamManager, VideoCaptureManager, VideoCaptureController, and
 // VideoCaptureDevice.
@@ -271,6 +278,14 @@ class VideoCaptureTest : public testing::Test,
     base::RunLoop().RunUntilIdle();
   }
 
+  static std::unique_ptr<VideoCaptureHost>
+  CreateVideoCaptureHostWithMockDelegate() {
+    std::unique_ptr<MockRenderProcessHostDelegate> mock_delegate =
+        std::make_unique<MockRenderProcessHostDelegate>();
+    return std::make_unique<VideoCaptureHost>(std::move(mock_delegate),
+                                              nullptr);
+  }
+
  private:
   std::unique_ptr<FakeMediaStreamUIProxy> CreateFakeUI() {
     return std::make_unique<FakeMediaStreamUIProxy>(
@@ -349,6 +364,27 @@ TEST_F(VideoCaptureTest, CloseSessionWithoutStopping) {
   EXPECT_CALL(*this, OnStateChanged(mojom::VideoCaptureState::ENDED));
   CloseSession();
   base::RunLoop().RunUntilIdle();
+}
+
+// Tests if RenderProcessHostDelegate methods are called as often as as
+// expected.
+TEST_F(VideoCaptureTest, IncrementMatchesDecrementCalls) {
+  std::unique_ptr<VideoCaptureHost> host =
+      CreateVideoCaptureHostWithMockDelegate();
+  MockRenderProcessHostDelegate* const mock_delegate =
+      static_cast<MockRenderProcessHostDelegate*>(
+          host->render_process_host_delegate_.get());
+  const int kNumNotifyCalls = 3;
+  EXPECT_CALL(*mock_delegate, NotifyStreamAdded()).Times(kNumNotifyCalls);
+  EXPECT_CALL(*mock_delegate, NotifyStreamRemoved()).Times(kNumNotifyCalls);
+
+  EXPECT_EQ(0u, host->number_of_active_streams_);
+  for (int i = 0; i < kNumNotifyCalls; ++i)
+    host->NotifyStreamAdded();
+  EXPECT_EQ(kNumNotifyCalls, static_cast<int>(host->number_of_active_streams_));
+  host->NotifyStreamRemoved();
+  host->NotifyAllStreamsRemoved();
+  EXPECT_EQ(0u, host->number_of_active_streams_);
 }
 
 }  // namespace content
