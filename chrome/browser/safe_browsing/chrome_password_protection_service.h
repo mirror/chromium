@@ -123,6 +123,13 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   bool UserClickedThroughSBInterstitial(
       content::WebContents* web_contents) override;
 
+  bool IsEventLoggingEnabled() override;
+
+  PasswordProtectionTrigger GetPasswordProtectionWarningTriggerPref()
+      const override;
+  PasswordProtectionTrigger GetPasswordProtectionRiskTriggerPref()
+      const override;
+
  protected:
   // PasswordProtectionService overrides.
   // Obtains referrer chain of |event_url| and |event_tab_id| and add this
