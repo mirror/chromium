@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "672d56bd_d5755f83",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1249702
+      },
+      "writtenOn": "2018-01-18T17:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e445c3fe_577832ca",
+      "revId": "125fe52c06911d024a4032fc69804f2c7ebce9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2997827b_f40cd25e",
         "filename": "headless/lib/browser/headless_print_manager.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "125fe52c06911d024a4032fc69804f2c7ebce9b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d658eb9_e53d9286",
+        "filename": "headless/lib/browser/headless_print_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1249702
+      },
+      "writtenOn": "2018-01-18T17:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2997827b_f40cd25e",
+      "revId": "125fe52c06911d024a4032fc69804f2c7ebce9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
