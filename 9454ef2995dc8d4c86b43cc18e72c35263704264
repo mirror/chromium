@@ -16,6 +16,24 @@
       "revId": "9454ef2995dc8d4c86b43cc18e72c35263704264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55286b83_4931e881",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-18T02:05:14Z",
+      "side": 1,
+      "message": "Given what you wrote above, how about EnclosingIntRect?",
+      "parentUuid": "8dc22752_ece152cf",
+      "revId": "9454ef2995dc8d4c86b43cc18e72c35263704264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
