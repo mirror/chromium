@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1597e7d_ec49bd9b",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-18T17:40:11Z",
+      "side": 1,
+      "message": "AddString can also take a std::string so this can just be:\n\nreturn url_without_parameter + \"\u0026b\u003d\" +  base::SysInfo::GetLsbReleaseBoard();",
+      "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce28f4f_f0bd130c",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-18T17:40:11Z",
+      "side": 1,
+      "message": "+dpapad@, +dschyuler@ - It seems a little unfortunate to add this to every help URL, but I don\u0027t see an easy alternative. Here is where this is used:\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/a11y_page/manage_a11y_page.html?type\u003dcs\u0026q\u003da11yLearnMoreUrl\u0026sq\u003dpackage:chromium\u0026l\u003d40\n\nWe could set a \"crosBoard\" string and use a behavior to do this (e.g. href\u003d\"[[getHelpUrl(\u0027a11yLearnMoreUrl\u0027)]]\") but I\u0027m not sure that is any better? It would also loose the advantage of being able to use $i18nRaw.\n\nThoughts?",
+      "revId": "1c4bd4015afe09bf386f4efedab52df30ca2c970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
