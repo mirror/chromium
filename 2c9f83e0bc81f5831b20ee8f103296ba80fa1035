@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e176b00_ea33f3c5",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-18T17:40:21Z",
+      "side": 1,
+      "message": "Please document what dice means, I have no clue.",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "2c9f83e0bc81f5831b20ee8f103296ba80fa1035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
