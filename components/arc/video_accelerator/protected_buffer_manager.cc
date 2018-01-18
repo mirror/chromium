@@ -133,7 +133,7 @@ ProtectedBufferManager::ProtectedSharedMemory::Create(
 
   mojo::ScopedSharedBufferHandle mojo_shared_buffer =
       mojo::SharedBufferHandle::Create(aligned_size);
-  if (!mojo_shared_buffer->is_valid()) {
+  if (!mojo_shared_buffer) {
     VLOGF(1) << "Failed to allocate shared memory";
     return nullptr;
   }

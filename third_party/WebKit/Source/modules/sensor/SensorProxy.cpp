@@ -110,7 +110,7 @@ const SensorConfiguration* SensorProxy::DefaultConfig() const {
 void SensorProxy::UpdateSensorReading() {
   DCHECK(ShouldProcessReadings());
   device::SensorReading reading_data;
-  if (!shared_buffer_handle_->is_valid() ||
+  if (!*shared_buffer_handle_ ||
       !shared_buffer_reader_->GetReading(&reading_data)) {
     HandleSensorError();
     return;
