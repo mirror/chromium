@@ -588,43 +588,74 @@ void UiSceneCreator::CreateSystemIndicators() {
   indicator_layout->SetName(kIndicatorLayout);
   indicator_layout->set_hit_testable(false);
   indicator_layout->set_y_anchoring(TOP);
-  indicator_layout->SetTranslate(0, kIndicatorVerticalOffset,
-                                 kIndicatorDistanceOffset);
-  indicator_layout->set_margin(kIndicatorGap);
+  indicator_layout->set_y_centering(BOTTOM);
+  indicator_layout->SetTranslate(
+      0, kIndicatorVerticalOffsetDMM * kIndicatorDistance,
+      kIndicatorDistanceOffset);
+  indicator_layout->set_margin(kIndicatorGapDMM * kIndicatorDistance);
   VR_BIND_VISIBILITY(indicator_layout, !model->fullscreen_enabled());
 
   for (const auto& indicator : indicators) {
     auto element = std::make_unique<Toast>();
     element->SetName(indicator.name);
     element->SetDrawPhase(kPhaseForeground);
-    element->set_padding(kIndicatorXPadding, kIndicatorYPadding);
-    element->set_corner_radius(kIndicatorCornerRadius);
-    element->SetMargin(kIndicatorMargin);
-    element->AddIcon(indicator.icon, 64, kIndicatorIconSize);
+    element->set_corner_radius(kIndicatorCornerRadiusDMM * kIndicatorDistance);
+    element->SetSize(kIndicatorButtonDiameterDMM * kIndicatorDistance,
+                     kIndicatorButtonDiameterDMM * kIndicatorDistance);
+    element->set_padding(kIndicatorXPaddingDMM * kIndicatorDistance,
+                         kIndicatorYPaddingDMM * kIndicatorDistance);
+
+    element->AddIcon(indicator.icon, 128,
+                     kIndicatorIconSizeDMM * kIndicatorDistance);
     if (indicator.resource_string != 0) {
-      element->AddText(l10n_util::GetStringUTF16(indicator.resource_string),
-                       kIndicatorFontHeightDmm,
+      auto tooltip = std::make_unique<Toast>();
+      tooltip->SetDrawPhase(kPhaseForeground);
+      tooltip->set_corner_radius(kIndicatorTooltipHeightDMM / 2 *
+                                 kIndicatorDistance);
+      tooltip->SetSize(kIndicatorTooltipHeightDMM * kIndicatorDistance,
+                       kIndicatorButtonDiameterDMM * kIndicatorDistance);
+      tooltip->set_padding(kIndicatorTooltipXPaddingDMM * kIndicatorDistance,
+                           kIndicatorTooltipYPaddingDMM * kIndicatorDistance);
+      tooltip->SetTranslate(0,
+          - kIndicatorTooltipOffsetDMM * kIndicatorDistance, 0 );
+
+      tooltip->AddText(l10n_util::GetStringUTF16(indicator.resource_string),
+                       kIndicatorFontHeightDMM * kIndicatorDistance,
                        TextLayoutMode::kSingleLineFixedHeight);
+      tooltip->SetForegroundColor(
+          model_->color_scheme().system_indicator_foreground);
+      tooltip->SetBackgroundColor(
+          model_->color_scheme().system_indicator_tooltip_background);
+      tooltip->SetHoverBackgroundColor(
+          model_->color_scheme().system_indicator_tooltip_background);
+
+      tooltip->SetVisible(false);
+      tooltip->set_requires_layout(false);
+      tooltip->set_contributes_to_parent_bounds(false);
+      element->AddTooltip(std::move(tooltip));
     }
 
-    VR_BIND_COLOR(model_, element.get(),
-                  &ColorScheme::system_indicator_background,
-                  &Toast::SetBackgroundColor);
-    VR_BIND_COLOR(model_, element.get(),
-                  &ColorScheme::system_indicator_foreground,
-                  &Toast::SetForegroundColor);
+    element->SetForegroundColor(
+        model_->color_scheme().system_indicator_foreground);
+    element->SetBackgroundColor(
+        model_->color_scheme().system_indicator_background);
+    element->SetHoverBackgroundColor(
+        model_->color_scheme().system_indicator_background_hover);
+
+    //element->SetVisible(true);
+    //element->set_requires_layout(true);
     element->AddBinding(std::make_unique<Binding<bool>>(
-        VR_BIND_LAMBDA(
-            [](Model* m, bool PermissionsModel::*permission) {
-              return m->permissions.*permission;
-            },
-            base::Unretained(model_), indicator.signal),
-        VR_BIND_LAMBDA(
-            [](UiElement* e, const bool& v) {
-              e->SetVisible(v);
-              e->set_requires_layout(v);
-            },
-            base::Unretained(element.get()))));
+      VR_BIND_LAMBDA(
+          [](Model* m, bool PermissionsModel::*permission) {
+            return m->permissions.*permission;
+          },
+          base::Unretained(model_), indicator.signal),
+      VR_BIND_LAMBDA(
+          [](UiElement* e, const bool& v) {
+            e->SetVisible(v);
+            e->set_requires_layout(v);
+          },
+          base::Unretained(element.get()))));
 
     indicator_layout->AddChild(std::move(element));
   }

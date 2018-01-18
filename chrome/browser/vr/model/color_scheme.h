@@ -76,6 +76,8 @@ struct ColorScheme {
   SkColor exclusive_screen_toast_background;
   SkColor system_indicator_foreground;
   SkColor system_indicator_background;
+  SkColor system_indicator_background_hover;
+  SkColor system_indicator_tooltip_background;
   SkColor audio_permission_prompt_icon_foreground;
   SkColor audio_permission_prompt_background;
   ButtonColors audio_permission_prompt_secondary_button_colors;
