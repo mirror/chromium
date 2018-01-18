@@ -69,6 +69,30 @@
       "revId": "079ad54e478f307f2113feed39863a266709887c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6348e218_3f017169",
+        "filename": "net/quic/core/quic_spdy_session.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2018-01-18T01:36:43Z",
+      "side": 1,
+      "message": "Will do so here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/872113",
+      "parentUuid": "1bb1606f_36dbba35",
+      "range": {
+        "startLine": 110,
+        "startChar": 39,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "079ad54e478f307f2113feed39863a266709887c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
