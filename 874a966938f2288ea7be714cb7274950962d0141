@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "09708bc0_13add5d5",
+        "filename": "content/renderer/loader/resource_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-01-18T10:15:18Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "e977e27c_63ed6454",
+      "revId": "874a966938f2288ea7be714cb7274950962d0141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "624d9721_179033f0",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2018-01-17T11:00:31Z",
       "side": 0,
       "message": "That\u0027s an interesting comment. Given that we move to per-frame task runners and we can reorder (sometimes) tasks between frames, will it cause a problem?",
+      "range": {
+        "startLine": 1262,
+        "startChar": 0,
+        "endLine": 1262,
+        "endChar": 75
+      },
+      "revId": "874a966938f2288ea7be714cb7274950962d0141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f6b4bc4_9575aceb",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1262,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-01-18T10:15:18Z",
+      "side": 0,
+      "message": "I don\u0027t think so and I think it\u0027s ok if the task order is assured in each frame. Now |ResourceDispatcher::thread_task_runner_| usages were removed by me ((https://chromium-review.googlesource.com/c/chromium/src/+/866620\nand https://chromium-review.googlesource.com/c/chromium/src/+/870010), and this CL itself doesn\u0027t change any behavior anyway.\n\nThe comment is added at https://codereview.chromium.org/696693002.\n\n+alexclark@, Is my understanding above correct? Now |RendererDispatcher::thread_task_runner_| is not used and I\u0027m trying to remove this.",
+      "parentUuid": "624d9721_179033f0",
       "range": {
         "startLine": 1262,
         "startChar": 0,
