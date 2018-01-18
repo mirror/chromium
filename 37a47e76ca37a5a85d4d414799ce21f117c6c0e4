@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "abac5bb0_d28ddd5c",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-18T00:08:28Z",
+      "side": 1,
+      "message": "Yes, this is a confusing comment.  I think it might be talking about page focus here -- saying that the main frame already has page focus, but the subframe renderer still needs to learn that it has it.  If there are other existing OOPIFs, they already know about page focus as well.  I can correct it in a followup.\n\nIf an OOPIF were focused when a different OOPIF committed, that would suffer from the same bug and should be similarly fixed by the frame focus fix below.",
+      "parentUuid": "dce9853a_28b29d5c",
+      "range": {
+        "startLine": 2036,
+        "startChar": 9,
+        "endLine": 2036,
+        "endChar": 49
+      },
+      "revId": "37a47e76ca37a5a85d4d414799ce21f117c6c0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca5c2161_ef1361bc",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 3
@@ -205,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "2c7c8022_990c8171",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2048,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-18T00:08:28Z",
+      "side": 1,
+      "message": "I think so.  We should always create proxies before creating a RFH, so when it commits, those proxies had better be around.  If the focused frame were detached before this RFH committed, it should destroy its FTN as well, so |focused_frame| would be null.  I don\u0027t think we should ever have a situation where an OOPIF doesn\u0027t have a proxy for another frame in the same FrameTree, but that said, let\u0027s watching for any crashes here, just to be sure. :)",
+      "parentUuid": "082fd2df_cbbcdbe5",
+      "revId": "37a47e76ca37a5a85d4d414799ce21f117c6c0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6df1dba4_d6fca26d",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 3
@@ -216,6 +258,30 @@
       "writtenOn": "2018-01-17T23:52:44Z",
       "side": 1,
       "message": "Any reason to pick ExecuteScriptAsync over ExecuteScript here and above?  I think it\u0027s safe either way since they\u0027re all to the same process and followed by things that wait for the result (focus_observer.Wait(), NavigateFrameToURL), but it wasn\u0027t clear if there was a need.\n\nNo need to respin the CL for it, unless you spot an issue.",
+      "range": {
+        "startLine": 6387,
+        "startChar": 2,
+        "endLine": 6387,
+        "endChar": 20
+      },
+      "revId": "37a47e76ca37a5a85d4d414799ce21f117c6c0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d03f76c_62751ebb",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6387,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-18T00:08:28Z",
+      "side": 1,
+      "message": "Right, there\u0027s no specific need.  I just followed what we currently do in a similar SubframeWindowFocus test above, but either one should work.",
+      "parentUuid": "6df1dba4_d6fca26d",
       "range": {
         "startLine": 6387,
         "startChar": 2,
