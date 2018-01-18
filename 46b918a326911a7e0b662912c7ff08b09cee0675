@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6d3271d_3f4a1817",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-18T23:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "557ea537_7e18c172",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 25
+      },
+      "revId": "46b918a326911a7e0b662912c7ff08b09cee0675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17fe57f9_727ec154",
         "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.h",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-18T22:59:51Z",
       "side": 1,
       "message": "is it normal to use final? I don\u0027t remember seeing this elsewhere and can\u0027t find any other examples.",
+      "range": {
+        "startLine": 44,
+        "startChar": 35,
+        "endLine": 44,
+        "endChar": 40
+      },
+      "revId": "46b918a326911a7e0b662912c7ff08b09cee0675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5361d3_3fabdf03",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-18T23:52:19Z",
+      "side": 1,
+      "message": "I count 129 instances under chrome/browser of / final;/.\n\nIn any case, it\u0027s part of C++ 11 and is supported by Chrome\u0027s current toolchain:\n../../chrome/browser/ui/views/passwords/manage_passwords_icon_views.h:21:15: error: declaration of \u0027GetClassName\u0027 overrides a \u0027final\u0027 function\nis what you get if you attempt to override.\n\nThis is exactly what I want.",
+      "parentUuid": "17fe57f9_727ec154",
       "range": {
         "startLine": 44,
         "startChar": 35,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1c1acd95_864ff6dc",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-18T23:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4c56d72_18ec32b1",
+      "range": {
+        "startLine": 663,
+        "startChar": 20,
+        "endLine": 663,
+        "endChar": 26
+      },
+      "revId": "46b918a326911a7e0b662912c7ff08b09cee0675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a9c7e08_b6c10efd",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "46b918a326911a7e0b662912c7ff08b09cee0675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562b9ad7_9f1dd5ac",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-18T23:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a9c7e08_b6c10efd",
+      "range": {
+        "startLine": 669,
+        "startChar": 6,
+        "endLine": 669,
+        "endChar": 22
+      },
+      "revId": "46b918a326911a7e0b662912c7ff08b09cee0675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
