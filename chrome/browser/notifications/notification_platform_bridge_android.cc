@@ -4,7 +4,9 @@
 
 #include "chrome/browser/notifications/notification_platform_bridge_android.h"
 
+#include <algorithm>
 #include <memory>
+#include <set>
 #include <utility>
 #include <vector>
 
@@ -15,6 +17,7 @@
 #include "base/logging.h"
 #include "base/strings/nullable_string16.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_display_service_impl.h"
@@ -32,6 +35,9 @@
 #include "ui/gfx/android/java_bitmap.h"
 #include "ui/gfx/image/image.h"
 #include "ui/message_center/notification.h"
+#if defined(OS_ANDROID)
+#include "base/android/build_info.h"
+#endif
 
 using base::android::AttachCurrentThread;
 using base::android::ConvertJavaStringToUTF8;
@@ -40,6 +46,7 @@ using base::android::ConvertUTF16ToJavaString;
 using base::android::ConvertUTF8ToJavaString;
 using base::android::JavaParamRef;
 using base::android::ScopedJavaLocalRef;
+using base::android::AppendJavaStringArrayToStringVector;
 
 namespace {
 
@@ -356,11 +363,26 @@ void NotificationPlatformBridgeAndroid::GetDisplayed(
     const std::string& profile_id,
     bool incognito,
     const GetDisplayedNotificationsCallback& callback) const {
-  auto displayed_notifications = std::make_unique<std::set<std::string>>();
+  bool supports_synchronization =
+      (base::android::BuildInfo::GetInstance()->sdk_int() >=
+       base::android::SDK_VERSION_OREO);
+
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jobjectArray> jstringArray_displayed_notifications =
+      Java_NotificationPlatformBridge_getActiveNotificationsIds(env,
+                                                                java_object_);
+  std::vector<std::string> displayed_notifications;
+  base::android::AppendJavaStringArrayToStringVector(
+      env, jstringArray_displayed_notifications.obj(),
+      &displayed_notifications);
+  auto displayed_notifications_set = std::make_unique<std::set<std::string>>();
+  std::copy(displayed_notifications.begin(), displayed_notifications.end(),
+            std::inserter(*displayed_notifications_set,
+                          displayed_notifications_set->end()));
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
-      base::Bind(callback, base::Passed(&displayed_notifications),
-                 false /* supports_synchronization */));
+      base::Bind(callback, base::Passed(&displayed_notifications_set),
+                 supports_synchronization));
 }
 
 void NotificationPlatformBridgeAndroid::SetReadyCallback(
