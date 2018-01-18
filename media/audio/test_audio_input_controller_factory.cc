@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/single_thread_task_runner.h"
 #include "media/audio/audio_io.h"
 #include "media/audio/audio_manager.h"
 
@@ -56,7 +57,7 @@ TestAudioInputControllerFactory::~TestAudioInputControllerFactory() {
 }
 
 AudioInputController* TestAudioInputControllerFactory::Create(
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    scoped_refptr<base::SequencedTaskRunner> task_runner,
     AudioInputController::SyncWriter* sync_writer,
     AudioManager* audio_manager,
     AudioInputController::EventHandler* event_handler,

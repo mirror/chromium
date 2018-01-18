@@ -11,6 +11,7 @@
 #include <memory>
 #include <string>
 
+#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
 #include "base/strings/string_piece.h"
@@ -63,10 +64,9 @@
 // AudioInputController holds a reference to.  When performing tasks on the
 // audio thread, the controller must not add or release references to the
 // AudioManager or itself (since it in turn holds a reference to the manager).
-//
 
 namespace base {
-class SingleThreadTaskRunner;
+class SequencedTaskRunner;
 }
 
 namespace media {
@@ -151,7 +151,7 @@ class MEDIA_EXPORT AudioInputController
   class Factory {
    public:
     virtual AudioInputController* Create(
-        scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+        scoped_refptr<base::SequencedTaskRunner> task_runner,
         SyncWriter* sync_writer,
         AudioManager* audio_manager,
         EventHandler* event_handler,
@@ -187,7 +187,7 @@ class MEDIA_EXPORT AudioInputController
   // done, the event  handler will receive an OnCreated() call from that same
   // thread. |user_input_monitor| is used for typing detection and can be NULL.
   static scoped_refptr<AudioInputController> CreateForStream(
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
+      const scoped_refptr<base::SequencedTaskRunner>& task_runner,
       EventHandler* event_handler,
       AudioInputStream* stream,
       // External synchronous writer for audio controller.
@@ -255,7 +255,7 @@ class MEDIA_EXPORT AudioInputController
   };
 #endif
 
-  AudioInputController(scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+  AudioInputController(scoped_refptr<base::SequencedTaskRunner> task_runner,
                        EventHandler* handler,
                        SyncWriter* sync_writer,
                        UserInputMonitor* user_input_monitor,
@@ -263,7 +263,7 @@ class MEDIA_EXPORT AudioInputController
                        StreamType type);
   virtual ~AudioInputController();
 
-  const scoped_refptr<base::SingleThreadTaskRunner>& GetTaskRunnerForTesting()
+  const scoped_refptr<base::SequencedTaskRunner>& GetTaskRunnerForTesting()
       const {
     return task_runner_;
   }
@@ -276,11 +276,11 @@ class MEDIA_EXPORT AudioInputController
                 const AudioParameters& params,
                 const std::string& device_id,
                 bool enable_agc);
-  void DoCreateForStream(AudioInputStream* stream_to_control, bool enable_agc);
   void DoRecord();
   void DoClose();
-  void DoReportError();
   void DoSetVolume(double volume);
+  void DoCreateForStream(AudioInputStream* stream_to_control, bool enable_agc);
+  void DoReportError();
   void DoLogAudioLevels(float level_dbfs, int microphone_volume_percent);
 
 #if defined(AUDIO_POWER_MONITORING)
@@ -320,11 +320,8 @@ class MEDIA_EXPORT AudioInputController
 
   static StreamType ParamsToStreamType(const AudioParameters& params);
 
-  // Gives access to the task runner of the creating thread.
-  scoped_refptr<base::SingleThreadTaskRunner> const creator_task_runner_;
-
   // The task runner of audio-manager thread that this object runs on.
-  scoped_refptr<base::SingleThreadTaskRunner> const task_runner_;
+  scoped_refptr<base::SequencedTaskRunner> const task_runner_;
 
   // Contains the AudioInputController::EventHandler which receives state
   // notifications from this class.
