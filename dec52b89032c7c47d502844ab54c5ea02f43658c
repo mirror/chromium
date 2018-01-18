@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "478d2ea2_976a54f4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-18T12:14:37Z",
+      "side": 1,
+      "message": "Should this have if (crashkey_set) { ... } ?",
+      "range": {
+        "startLine": 529,
+        "startChar": 15,
+        "endLine": 529,
+        "endChar": 32
+      },
+      "revId": "dec52b89032c7c47d502844ab54c5ea02f43658c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
