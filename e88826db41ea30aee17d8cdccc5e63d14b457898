@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "7fc7703f_4fb465b1",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T19:37:33Z",
+      "side": 1,
+      "message": "Nit: now that this is the same script as line 46. Maybe we don\u0027t have to define two different variables?",
+      "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d04aeb5_f610eaa8",
         "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
         "patchSetId": 15
@@ -30,6 +47,57 @@
       "writtenOn": "2018-01-18T15:27:26Z",
       "side": 1,
       "message": "nit: I don\u0027t think these comments are necessary, the code is short and easy enough to understand",
+      "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12bf8d62_6fadab03",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T19:37:33Z",
+      "side": 1,
+      "message": "It seems checking hasattr() is more concise and celar than a try-except pattern?",
+      "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eed4193_be297030",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T19:37:33Z",
+      "side": 1,
+      "message": "style nit: 4 more spaces of indent?",
+      "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66867d81_5e501faf",
+        "filename": "mojo/public/tools/bindings/pylib/mojom_tests/parse/conditional_features_unittest.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-18T19:37:33Z",
+      "side": 1,
+      "message": "Some other test cases that may be interesting:\n- multiple EnableIf in the same attribute list?\n[EnableIf\u003dX, EnableIf\u003dY]\nstruct Foo {};\n\n- same-name fields with different EnableIf values? For example,\nenum Foo {\n  [EnableIf\u003dX]\n  kBarValue \u003d 5,\n  [EnableIf\u003dY]\n  kBarValue \u003d 6,\n}\n\nor\n\n[EnableIf\u003dX]\nconst int kFooValue \u003d 123;\n[EnableIf\u003dY]\nconst int kFooValue \u003d 456;",
       "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
