@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "c85a4c2a_dc8b88d2",
+        "filename": "third_party/guava/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-18T15:21:56Z",
+      "side": 1,
+      "message": "\u003e Peter: my point is that I\u0027m not comfortable with having gn accept it, \n\u003e even if the build fails down the line. Marcin\u0027s patch is a good example of why :)\n\nI know what you mean :)\n\n\u003e Perhaps we could limit the visibility of guava_java if it can\u0027t be testonly?\n\nWe have few options:\n\n1. excluding Guava\n2. including only some classes (Splitter)\n3. ignoring lack of some external classes and a little bit pray (unfortunately my patch)\n\nVisibility is not option - I\u0027m already taking Splitter in various places",
+      "parentUuid": "5d398ba3_36426cb9",
+      "revId": "d9750790101ffb3688bb1ea197108b48b42dcbc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f66a6f62_bbc07a00",
         "filename": "third_party/guava/OWNERS",
         "patchSetId": 1
