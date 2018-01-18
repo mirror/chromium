@@ -11,7 +11,8 @@ namespace cc {
 ScopedRasterFlags::ScopedRasterFlags(const PaintFlags* flags,
                                      ImageProvider* image_provider,
                                      const SkMatrix& ctm,
-                                     uint8_t alpha)
+                                     uint8_t alpha,
+                                     bool create_skia_shader)
     : original_flags_(flags) {
   if (flags->HasDiscardableImages() && image_provider) {
     DCHECK(flags->HasShader());
@@ -21,7 +22,7 @@ ScopedRasterFlags::ScopedRasterFlags(const PaintFlags* flags,
       DecodeImageShader(ctm);
     } else if (flags->getShader()->shader_type() ==
                PaintShader::Type::kPaintRecord) {
-      DecodeRecordShader(ctm);
+      DecodeRecordShader(ctm, create_skia_shader);
     } else {
       NOTREACHED();
     }
@@ -93,9 +94,10 @@ void ScopedRasterFlags::DecodeImageShader(const SkMatrix& ctm) {
                              flags()->getShader()->ty(), &matrix));
 }
 
-void ScopedRasterFlags::DecodeRecordShader(const SkMatrix& ctm) {
+void ScopedRasterFlags::DecodeRecordShader(const SkMatrix& ctm,
+                                           bool create_skia_shader) {
   auto decoded_shader = flags()->getShader()->CreateDecodedPaintRecord(
-      ctm, &*decode_stashing_image_provider_);
+      ctm, &*decode_stashing_image_provider_, create_skia_shader);
   if (!decoded_shader) {
     decode_failed_ = true;
     return;
