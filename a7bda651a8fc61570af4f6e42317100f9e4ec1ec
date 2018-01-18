@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a3a3bf5_2656c9f6",
+        "filename": "media/cast/net/udp_transport_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-18T22:12:19Z",
+      "side": 1,
+      "message": "nit: This almost sounds like \"receive.\" Can we call this ReadNextPacketToSend()?",
+      "range": {
+        "startLine": 54,
+        "startChar": 27,
+        "endLine": 54,
+        "endChar": 41
+      },
+      "revId": "a7bda651a8fc61570af4f6e42317100f9e4ec1ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9372c83c_dd3d4cb2",
+        "filename": "media/cast/net/udp_transport_host_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-18T22:12:19Z",
+      "side": 1,
+      "message": "Rather than wrap the UdpTransport, what if we just added this new functionality to the existing UdpTransport class?\n\nFor receiving packets: Use the new StartReceiving(client) API, and upgrade the existing code to use that.\n\nFor sending packets: This could accomplished either the old way, with SendPacket() calls, or the new way, by calling StartSending() and feeding packets through a data pipe.\n\nWDYT?",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "a7bda651a8fc61570af4f6e42317100f9e4ec1ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7910d9b9_db384444",
+        "filename": "media/cast/net/udp_transport_interface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-18T22:12:19Z",
+      "side": 1,
+      "message": "naming suggestion: UdpTransportReceiver",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 24
+      },
+      "revId": "a7bda651a8fc61570af4f6e42317100f9e4ec1ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cee07c0_bd2e793d",
+        "filename": "media/cast/net/udp_transport_interface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-18T22:12:19Z",
+      "side": 1,
+      "message": "In Chromium \"Host\" usually refers to concrete impl class names, not interfaces. It also usually refers to something long-lived in the browser process; but IIUC our use case is to only have an instance running during a mirroring session, right?\n\nSo, how about just calling this UdpTransport, and the impl class UdpTransportImpl?",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "a7bda651a8fc61570af4f6e42317100f9e4ec1ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
