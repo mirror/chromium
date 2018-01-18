@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45f08a73_e3e8a954",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-18T00:06:35Z",
+      "side": 1,
+      "message": "Should we make it a member function of TextControlElement? Something like:\n\nWebTextInputFlags TextControlElement::GetAutocapitalizeFlags() const;",
+      "range": {
+        "startLine": 320,
+        "startChar": 4,
+        "endLine": 320,
+        "endChar": 30
+      },
+      "revId": "a0436f8d3b925e917c43428a9343a498323ae99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
