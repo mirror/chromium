@@ -105,7 +105,7 @@ class PLATFORM_EXPORT ResourceRequest final {
       const KURL& new_site_for_cookies,
       const String& new_referrer,
       ReferrerPolicy new_referrer_policy,
-      WebURLRequest::ServiceWorkerMode new_sw_mode) const;
+      network::mojom::ServiceWorkerMode new_sw_mode) const;
 
   // Gets a copy of the data suitable for passing to another thread.
   std::unique_ptr<CrossThreadResourceRequestData> CopyData() const;
@@ -241,11 +241,11 @@ class PLATFORM_EXPORT ResourceRequest final {
 
   // The service worker mode indicating which service workers should get events
   // for this request.
-  WebURLRequest::ServiceWorkerMode GetServiceWorkerMode() const {
+  network::mojom::ServiceWorkerMode GetServiceWorkerMode() const {
     return service_worker_mode_;
   }
   void SetServiceWorkerMode(
-      WebURLRequest::ServiceWorkerMode service_worker_mode) {
+      network::mojom::ServiceWorkerMode service_worker_mode) {
     service_worker_mode_ = service_worker_mode;
   }
 
@@ -383,7 +383,7 @@ class PLATFORM_EXPORT ResourceRequest final {
   bool keepalive_ : 1;
   bool should_reset_app_cache_ : 1;
   mojom::FetchCacheMode cache_mode_;
-  WebURLRequest::ServiceWorkerMode service_worker_mode_;
+  network::mojom::ServiceWorkerMode service_worker_mode_;
   ResourceLoadPriority priority_;
   int intra_priority_value_;
   int requestor_id_;
@@ -443,7 +443,7 @@ struct CrossThreadResourceRequestData {
   bool report_upload_progress_;
   bool has_user_gesture_;
   bool download_to_file_;
-  WebURLRequest::ServiceWorkerMode service_worker_mode_;
+  network::mojom::ServiceWorkerMode service_worker_mode_;
   bool use_stream_on_response_;
   bool keepalive_;
   bool should_reset_app_cache_;

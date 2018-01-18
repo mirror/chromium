@@ -242,8 +242,8 @@ ResourceRequest FrameLoader::ResourceRequestForReload(
   }
   request.SetServiceWorkerMode(frame_load_type ==
                                        kFrameLoadTypeReloadBypassingCache
-                                   ? WebURLRequest::ServiceWorkerMode::kNone
-                                   : WebURLRequest::ServiceWorkerMode::kAll);
+                                   ? network::mojom::ServiceWorkerMode::kNone
+                                   : network::mojom::ServiceWorkerMode::kAll);
   return request;
 }
 

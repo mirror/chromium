@@ -98,9 +98,8 @@ class WebServiceWorkerNetworkProviderForSharedWorker
             blink::WebURLRequest::kRequestContextSharedWorker &&
         !provider_->IsControlledByServiceWorker() &&
         request.GetServiceWorkerMode() !=
-            blink::WebURLRequest::ServiceWorkerMode::kNone) {
-      request.SetServiceWorkerMode(
-          blink::WebURLRequest::ServiceWorkerMode::kNone);
+            network::mojom::ServiceWorkerMode::kNone) {
+      request.SetServiceWorkerMode(network::mojom::ServiceWorkerMode::kNone);
     }
   }
 

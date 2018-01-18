@@ -41,6 +41,7 @@
 #include "net/log/net_log_event_type.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request.h"
+#include "services/network/public/interfaces/fetch_api.mojom.h"
 
 namespace content {
 
@@ -728,7 +729,7 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreload(
   // for the service worker navigation preload request.
   request.resource_type = RESOURCE_TYPE_SUB_RESOURCE;
   request.priority = original_request->priority();
-  request.service_worker_mode = static_cast<int>(ServiceWorkerMode::NONE);
+  request.service_worker_mode = network::mojom::ServiceWorkerMode::kNone;
   request.do_not_prompt_for_login = true;
   request.render_frame_id = original_info->GetRenderFrameID();
   request.is_main_frame = original_info->IsMainFrame();
@@ -793,7 +794,7 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreloadWithURLLoader(
   // for the service worker navigation preload request.
   resource_request.resource_type = RESOURCE_TYPE_SUB_RESOURCE;
   resource_request.service_worker_mode =
-      static_cast<int>(ServiceWorkerMode::NONE);
+      network::mojom::ServiceWorkerMode::kNone;
   resource_request.do_not_prompt_for_login = true;
   DCHECK(net::HttpUtil::IsValidHeaderValue(
       version_->navigation_preload_state().header));

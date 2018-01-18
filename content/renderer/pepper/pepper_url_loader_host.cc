@@ -18,6 +18,7 @@
 #include "ppapi/host/ppapi_host.h"
 #include "ppapi/proxy/ppapi_messages.h"
 #include "ppapi/shared_impl/ppapi_globals.h"
+#include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebURLError.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
@@ -261,8 +262,8 @@ int32_t PepperURLLoaderHost::InternalOnHostMsgOpen(
   // origin must skip the ServiceWorker.
   web_request.SetServiceWorkerMode(
       host()->permissions().HasPermission(ppapi::PERMISSION_PRIVATE)
-          ? WebURLRequest::ServiceWorkerMode::kNone
-          : WebURLRequest::ServiceWorkerMode::kAll);
+          ? network::mojom::ServiceWorkerMode::kNone
+          : network::mojom::ServiceWorkerMode::kAll);
 
   WebAssociatedURLLoaderOptions options;
   if (!has_universal_access_) {

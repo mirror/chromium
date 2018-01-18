@@ -1077,8 +1077,8 @@ void XMLHttpRequest::CreateRequest(scoped_refptr<EncodedFormData> http_body,
       with_credentials_ ? network::mojom::FetchCredentialsMode::kInclude
                         : network::mojom::FetchCredentialsMode::kSameOrigin);
   request.SetServiceWorkerMode(is_isolated_world_
-                                   ? WebURLRequest::ServiceWorkerMode::kNone
-                                   : WebURLRequest::ServiceWorkerMode::kAll);
+                                   ? network::mojom::ServiceWorkerMode::kNone
+                                   : network::mojom::ServiceWorkerMode::kAll);
   request.SetExternalRequestStateFromRequestorAddressSpace(
       execution_context.GetSecurityContext().AddressSpace());
 

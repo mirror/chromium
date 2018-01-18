@@ -78,9 +78,8 @@ class WebServiceWorkerNetworkProviderForFrame
             network::mojom::RequestContextFrameType::kNested &&
         !provider_->IsControlledByServiceWorker() &&
         request.GetServiceWorkerMode() !=
-            blink::WebURLRequest::ServiceWorkerMode::kNone) {
-      request.SetServiceWorkerMode(
-          blink::WebURLRequest::ServiceWorkerMode::kNone);
+            network::mojom::ServiceWorkerMode::kNone) {
+      request.SetServiceWorkerMode(network::mojom::ServiceWorkerMode::kNone);
     }
   }
 
@@ -127,7 +126,7 @@ class WebServiceWorkerNetworkProviderForFrame
     // S13nServiceWorker:
     // If the service worker mode is not all, no need to intercept the request.
     if (request.GetServiceWorkerMode() !=
-        blink::WebURLRequest::ServiceWorkerMode::kAll) {
+        network::mojom::ServiceWorkerMode::kAll) {
       return nullptr;
     }
 

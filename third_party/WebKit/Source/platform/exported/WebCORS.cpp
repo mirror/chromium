@@ -341,7 +341,7 @@ WebURLRequest CreateAccessControlPreflightRequest(
   preflight_request.SetFetchCredentialsMode(
       network::mojom::FetchCredentialsMode::kOmit);
   preflight_request.SetServiceWorkerMode(
-      WebURLRequest::ServiceWorkerMode::kNone);
+      network::mojom::ServiceWorkerMode::kNone);
   preflight_request.SetHTTPReferrer(request.HttpHeaderField(HTTPNames::Referer),
                                     request.GetReferrerPolicy());
 
@@ -580,7 +580,7 @@ bool IsCORSEnabledRequestMode(network::mojom::FetchRequestMode mode) {
 // PepperURLLoaderHost.
 bool IsNoCORSAllowedContext(
     WebURLRequest::RequestContext context,
-    WebURLRequest::ServiceWorkerMode service_worker_mode) {
+    network::mojom::ServiceWorkerMode service_worker_mode) {
   switch (context) {
     case WebURLRequest::kRequestContextAudio:
     case WebURLRequest::kRequestContextFavicon:
@@ -593,7 +593,7 @@ bool IsNoCORSAllowedContext(
     case WebURLRequest::kRequestContextWorker:
       return true;
     case WebURLRequest::kRequestContextPlugin:
-      return service_worker_mode == WebURLRequest::ServiceWorkerMode::kNone;
+      return service_worker_mode == network::mojom::ServiceWorkerMode::kNone;
     default:
       return false;
   }
