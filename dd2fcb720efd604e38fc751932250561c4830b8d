@@ -16,6 +16,24 @@
       "revId": "dd2fcb720efd604e38fc751932250561c4830b8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec40f18_0250499d",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-18T00:31:00Z",
+      "side": 1,
+      "message": "I think the solution for now is to accept the compromise of harmony leaking into CrOS.\nOnce we remove CrOS UI from the browser process we can isolate harmony to just Chrome.\n\nUntil then, we will respect placeholder_text_color_ when it is set.",
+      "parentUuid": "e5af4181_a01e5594",
+      "revId": "dd2fcb720efd604e38fc751932250561c4830b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
