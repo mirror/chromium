@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "8812411c_5506b4cb",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-18T06:20:26Z",
+      "side": 1,
+      "message": ".",
+      "parentUuid": "a344741f_08308d8d",
+      "revId": "be9fcc72e90890e34662313bb269a7703e19d773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa2f4e94_2f92af33",
         "filename": "third_party/WebKit/Source/platform/loader/cors/CORS.h",
         "patchSetId": 4
@@ -97,6 +115,24 @@
       "revId": "be9fcc72e90890e34662313bb269a7703e19d773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8d34b9_6a3fc901",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-18T06:20:26Z",
+      "side": 1,
+      "message": "I guess this was needed for my earlier prototyping, but is not needed in this CL any more.\nRemoved.",
+      "parentUuid": "f39c6807_2f66bd84",
+      "revId": "be9fcc72e90890e34662313bb269a7703e19d773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
