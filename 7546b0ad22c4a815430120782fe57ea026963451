@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "47ce7283_fdb0a6f7",
+        "filename": "chrome/browser/component_updater/subresource_filter_component_installer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2018-01-18T11:52:16Z",
+      "side": 1,
+      "message": "Task_runners are not actually used in these tests. The only required RulesetService method (IndexAndStoreAndPublishRulesetIfNeeded) is overridden in TestRulesetService and doesn\u0027t use underlying task runners.\n\nI\u0027ve provided nullptr\u0027s instead of task_runner\u0027s on local machine to RulesetService constructor here and all \"SubresourceFilterComponentInstallerTest*\" tests passed.\n\nMay be it would be better to leave that part as is?",
+      "parentUuid": "b4b5184b_60cd3be0",
+      "range": {
+        "startLine": 47,
+        "startChar": 43,
+        "endLine": 47,
+        "endChar": 54
+      },
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a80f350c_ad7279b6",
         "filename": "chrome/browser/component_updater/subresource_filter_component_installer_unittest.cc",
         "patchSetId": 3
@@ -53,6 +77,24 @@
       "writtenOn": "2018-01-17T16:14:06Z",
       "side": 1,
       "message": "Does this need to be updated?",
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561648c4_5fd37fb0",
+        "filename": "chrome/browser/component_updater/subresource_filter_component_installer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2018-01-18T11:52:16Z",
+      "side": 1,
+      "message": "The same question as above.\n\nI\u0027m not sure, do we need to handle task runners when they are not used in these tests?",
+      "parentUuid": "a80f350c_ad7279b6",
       "revId": "7546b0ad22c4a815430120782fe57ea026963451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "5b732234_0a1d9257",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_test_harness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2018-01-18T11:52:16Z",
+      "side": 1,
+      "message": "I\u0027ve tried without success.\n\nExternal code implicitly uses knowledge that blocking task runner and background task runner are ThreadTaskRunnerHandle for the current thread. If we want to separate task runners we need to:\n\n1. TestRulesetPublisher for unit tests should have that code:\n\nvoid TestRulesetPublisher::SetRuleset(\n    const TestRuleset\u0026 unindexed_ruleset,\n    base::TestSimpleTaskRunner* blocking_task_runner,\n    base::TestSimpleTaskRunner* background_task_runner) {\n  ...\n  RulesetDistributionListener listener;\n  ...\n\n  // Wait for indexing started on after startup task (current thread message loop).\n  base::RunLoop().RunUntilIdle();\n\n  // Process indexing (separate TestSimpleTaskRunner tasks queue).\n  background_task_runner-\u003eRunUntilIdle();\n\n  // Process indexing results on UI thread to schedule file opening (current thread message loop).\n  base::RunLoop().RunUntilIdle();\n\n  // Process file opening (separate TestSimpleTaskRunner tasks queue)\n  blocking_task_runner-\u003eRunUntilIdle();\n\n  // Process the current message loop to publish ruleset from file opening task callback.\n  listener.AwaitDistribution();\n}\n\ninstead of the current:\n\nvoid TestRulesetPublisher::SetRuleset(const TestRuleset\u0026 unindexed_ruleset) {\n  ...\n  RulesetDistributionListener listener;\n  ...\n  // All staff belongs to the current thread ThreadTaskRunnerHandle, so just single base::RunLoop is enough.\n  listener.AwaitDistribution();\n}\n\n2. It is required to cheat somehow with navigation simulation so as |AsyncDocumentSubresourceFilter| posts core initialization on blocking pool, while |ActivationStateComputingNavigationThrottle| waits for activation state. And navigation simulator must a) know specific testing task runner b) know when to run its tasks.\n\n\nI\u0027m inclined to opinion that having blocking and background task runners initialized by |base::ThreadTaskRunnerHandle::Get()| is a quite good trade off for |SubresourceFilterTestHarness|.\n\nWhat do you think?",
+      "parentUuid": "8e81c8c9_bcbdef06",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 39
+      },
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ad96364_483ae625",
         "filename": "components/subresource_filter/core/browser/ruleset_service.cc",
         "patchSetId": 3
@@ -96,6 +162,24 @@
       "revId": "7546b0ad22c4a815430120782fe57ea026963451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b857c0c5_0f9243f1",
+        "filename": "components/subresource_filter/core/browser/ruleset_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2018-01-18T11:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ad96364_483ae625",
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "a32219f4_8715cff9",
+        "filename": "components/subresource_filter/core/browser/ruleset_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2018-01-18T11:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edf1f415_304ccd40",
+      "range": {
+        "startLine": 148,
+        "startChar": 32,
+        "endLine": 148,
+        "endChar": 62
+      },
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73b597c1_66f6f10f",
         "filename": "components/subresource_filter/core/browser/ruleset_service_unittest.cc",
         "patchSetId": 3
@@ -136,6 +244,24 @@
       "revId": "7546b0ad22c4a815430120782fe57ea026963451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87dd8a94_4d73c452",
+        "filename": "components/subresource_filter/core/browser/ruleset_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2018-01-18T11:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73b597c1_66f6f10f",
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "9ac58fb0_3f5e334a",
+        "filename": "components/subresource_filter/core/browser/ruleset_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2018-01-18T11:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da96c117_c6041682",
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18577ed0_ab44f827",
         "filename": "components/subresource_filter/core/browser/ruleset_service_unittest.cc",
         "patchSetId": 3
@@ -170,6 +314,24 @@
       "revId": "7546b0ad22c4a815430120782fe57ea026963451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820c9955_eb8a42f1",
+        "filename": "components/subresource_filter/core/browser/ruleset_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2018-01-18T11:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18577ed0_ab44f827",
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
