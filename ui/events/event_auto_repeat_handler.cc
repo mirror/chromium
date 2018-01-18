@@ -16,10 +16,13 @@ constexpr int kRepeatIntervalMs = 50;
 
 }  // namespace
 
-EventAutoRepeatHandler::EventAutoRepeatHandler(Delegate* delegate)
+EventAutoRepeatHandler::EventAutoRepeatHandler(
+    Delegate* delegate,
+    ThrottleStrategy throttle_strategy)
     : repeat_delay_(base::TimeDelta::FromMilliseconds(kRepeatDelayMs)),
       repeat_interval_(base::TimeDelta::FromMilliseconds(kRepeatIntervalMs)),
       delegate_(delegate),
+      throttle_strategy_(throttle_strategy),
       weak_ptr_factory_(this) {
   DCHECK(delegate_);
 }
@@ -83,6 +86,14 @@ void EventAutoRepeatHandler::ScheduleKeyRepeat(const base::TimeDelta& delay) {
 void EventAutoRepeatHandler::OnRepeatTimeout(unsigned int sequence) {
   if (repeat_sequence_ != sequence)
     return;
+
+  if (throttle_strategy_ == ThrottleStrategy::DeferToClient) {
+    if (delegate_->CanDispatchAutoRepeatKey())
+      OnRepeatCommit(repeat_sequence_);
+    return;
+  }
+
+  DCHECK(throttle_strategy_ == ThrottleStrategy::TimerBased);
 
   // Post a task behind any pending key releases in the message loop
   // FIFO. This ensures there's no spurious repeats during periods of UI
