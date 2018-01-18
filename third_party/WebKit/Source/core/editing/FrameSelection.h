@@ -75,6 +75,8 @@ class CORE_EXPORT FrameSelection final
   }
   ~FrameSelection();
 
+  SelectionEditor* GetSelectionEditor() { return selection_editor_; }
+
   bool IsAvailable() const { return LifecycleContext(); }
   // You should not call |document()| when |!isAvailable()|.
   Document& GetDocument() const;

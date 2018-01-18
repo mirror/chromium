@@ -104,6 +104,7 @@
 #include "core/dom/trustedtypes/TrustedHTML.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/SelectionEditor.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/events/BeforeUnloadEvent.h"
@@ -6812,8 +6813,7 @@ void Document::UpdateActiveState(const HitTestRequest& request,
   // chain that we froze at the time the mouse went down.
   bool must_be_in_active_chain = request.Active() && request.Move();
 
-  Element* new_element =
-      SkipDisplayNoneAncestors(inner_element_in_document);
+  Element* new_element = SkipDisplayNoneAncestors(inner_element_in_document);
 
   // Now set the active state for our new object up to the root.
   for (Element* curr = new_element; curr;
@@ -7063,6 +7063,13 @@ bool ShouldInvalidateNodeListCachesForAttr<kNumNodeListInvalidationTypes>(
     const LiveNodeListRegistry&,
     const QualifiedName&) {
   return false;
+}
+
+void Document::NotifyChangeChildren(const ContainerNode& container_node) {
+  if (GetFrame() && GetFrame()->Selection().GetSelectionEditor()) {
+    GetFrame()->Selection().GetSelectionEditor()->DidChangeChildren(
+        container_node);
+  }
 }
 
 bool Document::ShouldInvalidateNodeListCaches(

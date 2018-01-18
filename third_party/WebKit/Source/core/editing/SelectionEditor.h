@@ -65,6 +65,8 @@ class SelectionEditor final : public GarbageCollectedFinalized<SelectionEditor>,
 
   void Trace(blink::Visitor*);
 
+  void DidChangeChildren(const ContainerNode&) final;
+
  private:
   explicit SelectionEditor(LocalFrame&);
 
@@ -73,7 +75,16 @@ class SelectionEditor final : public GarbageCollectedFinalized<SelectionEditor>,
 
   void AssertSelectionValid() const;
   void ClearVisibleSelection();
-  void MarkCacheDirty();
+  void MarkCacheDirty() {
+    if (!cached_visible_selection_in_dom_tree_is_dirty_) {
+      cached_visible_selection_in_dom_tree_ = VisibleSelection();
+      cached_visible_selection_in_dom_tree_is_dirty_ = true;
+    }
+    if (!cached_visible_selection_in_flat_tree_is_dirty_) {
+      cached_visible_selection_in_flat_tree_ = VisibleSelectionInFlatTree();
+      cached_visible_selection_in_flat_tree_is_dirty_ = true;
+    }
+  }
   bool ShouldAlwaysUseDirectionalSelection() const;
 
   // VisibleSelection cache related
@@ -87,7 +98,6 @@ class SelectionEditor final : public GarbageCollectedFinalized<SelectionEditor>,
 
   // Implementation of |SynchronousMutationObsderver| member functions.
   void ContextDestroyed(Document*) final;
-  void DidChangeChildren(const ContainerNode&) final;
   void DidMergeTextNodes(const Text& merged_node,
                          const NodeWithIndex& node_to_be_removed_with_index,
                          unsigned old_length) final;

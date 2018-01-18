@@ -287,6 +287,8 @@ class CORE_EXPORT Document : public ContainerNode,
   static Range* CreateRangeAdjustedToTreeScope(const TreeScope&,
                                                const Position&);
 
+  void NotifyChangeChildren(const ContainerNode&);
+
   // Support JS introspection of frame policy (e.g. feature policy).
   Policy* policy();
 
