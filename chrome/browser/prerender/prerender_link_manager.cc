@@ -87,10 +87,6 @@ class PrerenderLinkManager::PendingPrerenderManager
 
   ~PendingPrerenderManager() override {
     DCHECK(observed_launchers_.empty());
-    for (std::set<PrerenderContents*>::iterator i = observed_launchers_.begin();
-         i != observed_launchers_.end(); ++i) {
-      (*i)->RemoveObserver(this);
-    }
   }
 
   void ObserveLauncher(PrerenderContents* launcher) {
