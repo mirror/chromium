@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e42d3b1b_63b04bd2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-composed-path-with-related-target.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-18T10:24:12Z",
+      "side": 1,
+      "message": "nit: this line can be removed.",
+      "revId": "aa7fe8ef4aaa1186a1102ad1073f0f82742dea16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a99727c_2546a51d",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventPath.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-18T10:24:12Z",
+      "side": 1,
+      "message": "nit: this method can be outside of EventPath (like ShouldStopAtShadowRoot()\nwhich is a file-local function). I don\u0027t have strong opinion to do so.",
+      "revId": "aa7fe8ef4aaa1186a1102ad1073f0f82742dea16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587ff417_c2325b7b",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventPath.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-18T10:24:12Z",
+      "side": 1,
+      "message": "nit: period at the end of the sentence.",
+      "revId": "aa7fe8ef4aaa1186a1102ad1073f0f82742dea16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
