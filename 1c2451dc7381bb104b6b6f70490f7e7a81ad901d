@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "6145628f_8b051641",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2089,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-19T14:24:14Z",
+      "side": 1,
+      "message": "I checked further and figured out that an event can have DT_CMT_SCROLL_Y data only when I run chromium under XWayland in Gnome Shell. Gnome Shell with Xfce or any other xfce session doesn\u0027t bring such a problem.\n\nAnd horizontal_id \u0026 vertical_id have values of -1 for a mouse device DeviceDataManagerX11::GetScrollClassEventDetail.\n\nI propose to leave implicit cast as it is + adding a todo to check further.\nIf you\u0027re ok with it, I\u0027ll create a bug and add a bug number here as well.",
+      "parentUuid": "a9d1af7b_e95d85c9",
+      "revId": "1c2451dc7381bb104b6b6f70490f7e7a81ad901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98ac0d37_155021c4",
         "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
         "patchSetId": 4
