@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "4eabe8ac_52972c75",
+        "filename": "net/http/http_proxy_client_socket_pool.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-19T23:10:06Z",
+      "side": 1,
+      "message": "Agreed, I do not think that I am familiar enough with the socket pools that I could churn out that CL quick enough. I guess if we care enough about it, then we should fix it at some point.",
+      "parentUuid": "0e771a28_c1d5e6cb",
+      "range": {
+        "startLine": 239,
+        "startChar": 30,
+        "endLine": 239,
+        "endChar": 41
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94a86862_4d13fe73",
         "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
         "patchSetId": 8
