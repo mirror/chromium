@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dc243a6_ab8efd61",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-19T17:43:57Z",
+      "side": 1,
+      "message": "Nit: empty line before the comment please.",
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf6cb39_c0ba967f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-19T17:43:57Z",
+      "side": 1,
+      "message": "Can you mark this as @Nullable and explain when it is and when it isn\u0027t null?",
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b12c0e6_972734f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-19T17:43:57Z",
+      "side": 1,
+      "message": "You could return early if the saved instance state is null.",
+      "range": {
+        "startLine": 113,
+        "startChar": 11,
+        "endLine": 113,
+        "endChar": 39
+      },
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e7dde9_0c31cca4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-19T17:43:57Z",
+      "side": 1,
+      "message": "Also, is there a difference between an empty value and null here?",
+      "range": {
+        "startLine": 121,
+        "startChar": 37,
+        "endLine": 121,
+        "endChar": 46
+      },
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d21c05_3f98c7ad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-19T17:43:57Z",
+      "side": 1,
+      "message": "Oh, uh, you already access |uriString| on line 121, so it can\u0027t be null :)",
+      "range": {
+        "startLine": 122,
+        "startChar": 27,
+        "endLine": 122,
+        "endChar": 44
+      },
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3adcab_b7e81c4a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-19T17:43:57Z",
+      "side": 1,
+      "message": "Wait, what nulls out the member?",
+      "range": {
+        "startLine": 160,
+        "startChar": 31,
+        "endLine": 160,
+        "endChar": 70
+      },
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fdd5bab_f2369676",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-19T17:43:57Z",
+      "side": 1,
+      "message": "Nit: maybe extract \"passwords\" to a constant and use the two-parameter File constructor to create subpaths?",
+      "range": {
+        "startLine": 233,
+        "startChar": 82,
+        "endLine": 233,
+        "endChar": 94
+      },
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0125c459_b6b41eba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-19T17:43:57Z",
+      "side": 1,
+      "message": "I think in principle you should close the file if an I/O error occurs (and then of course catch I/O errors during that... that\u0027s Java for ya). There is a helper method StreamUtil.closeQuietly() for that, or you could see whether you can use a Java 8 try-with clause.",
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f80e4f01_25952985",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-19T17:43:57Z",
+      "side": 1,
+      "message": "Nit: all the other exceptions are named |e|; why don\u0027t you rename this one too :)",
+      "range": {
+        "startLine": 260,
+        "startChar": 43,
+        "endLine": 260,
+        "endChar": 44
+      },
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
