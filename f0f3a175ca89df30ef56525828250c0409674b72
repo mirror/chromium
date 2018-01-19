@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54091902_5d8cb61b",
+        "filename": "net/proxy/proxy_config.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T15:16:52Z",
+      "side": 1,
+      "message": "It looks like the source of all the test errors I was running into was one line of code in proxy_config_service_common_unittest.cc, so I just added a cast there.  Let me know if you think this is sufficient, or if a PrintTo function would be preferable.",
+      "parentUuid": "39931d52_f8c147f2",
+      "revId": "f0f3a175ca89df30ef56525828250c0409674b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2f8c24d_05308da3",
         "filename": "net/proxy/proxy_config.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "f0f3a175ca89df30ef56525828250c0409674b72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de29ba4c_31b62cae",
+        "filename": "net/proxy/proxy_config.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T15:16:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2f8c24d_05308da3",
+      "revId": "f0f3a175ca89df30ef56525828250c0409674b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
