@@ -223,6 +223,10 @@ class LocationBarView : public LocationBar,
   // Clears the location bar's state for |contents|.
   void ResetTabState(content::WebContents* contents);
 
+  // Activates the first visible but inactive LocationBarBubbleDelegateView for
+  // accessibility.
+  bool ActivateFirstInactiveBubbleForAccessibility();
+
   // LocationBar:
   void FocusLocation(bool select_all) override;
   void Revert() override;
