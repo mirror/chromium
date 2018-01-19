@@ -17,8 +17,6 @@
 #include "base/task_scheduler/post_task.h"
 #include "content/child/dwrite_font_proxy/dwrite_localized_strings_win.h"
 #include "content/public/child/child_thread.h"
-#include "content/public/common/service_names.mojom.h"
-#include "services/service_manager/public/cpp/connector.h"
 
 namespace mswr = Microsoft::WRL;
 
@@ -264,8 +262,9 @@ HRESULT DWriteFontCollectionProxy::RuntimeClassInitialize(
   DCHECK(factory);
 
   factory_ = factory;
-  if (proxy)
-    SetProxy(std::move(proxy));
+  font_proxy_ = mojom::ThreadSafeDWriteFontProxyPtr::Create(
+      std::move(proxy), base::CreateSequencedTaskRunnerWithTraits(
+                            {base::WithBaseSyncPrimitives()}));
 
   HRESULT hr = factory->RegisterFontCollectionLoader(this);
   DCHECK(SUCCEEDED(hr));
@@ -352,19 +351,7 @@ bool DWriteFontCollectionProxy::CreateFamily(UINT32 family_index) {
   return true;
 }
 
-void DWriteFontCollectionProxy::SetProxy(mojom::DWriteFontProxyPtrInfo proxy) {
-  font_proxy_ = mojom::ThreadSafeDWriteFontProxyPtr::Create(
-      std::move(proxy), base::CreateSequencedTaskRunnerWithTraits(
-                            {base::WithBaseSyncPrimitives()}));
-}
-
 mojom::DWriteFontProxy& DWriteFontCollectionProxy::GetFontProxy() {
-  if (!font_proxy_) {
-    mojom::DWriteFontProxyPtrInfo dwrite_font_proxy;
-    ChildThread::Get()->GetConnector()->BindInterface(
-        mojom::kBrowserServiceName, mojo::MakeRequest(&dwrite_font_proxy));
-    SetProxy(std::move(dwrite_font_proxy));
-  }
   return **font_proxy_;
 }
 
