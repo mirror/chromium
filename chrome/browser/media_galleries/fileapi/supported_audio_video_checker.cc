@@ -54,7 +54,7 @@ class SupportedAudioVideoExtensions {
   DISALLOW_COPY_AND_ASSIGN(SupportedAudioVideoExtensions);
 };
 
-base::LazyInstance<SupportedAudioVideoExtensions>::DestructorAtExit
+base::LazyInstance<SupportedAudioVideoExtensions>::Leaky
     g_audio_video_extensions = LAZY_INSTANCE_INITIALIZER;
 
 base::File OpenBlocking(const base::FilePath& path) {

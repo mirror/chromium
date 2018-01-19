@@ -31,8 +31,8 @@ bool ShouldPauseOnReceiveError(serial::ReceiveError error) {
 }  // namespace
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<SerialEventDispatcher>>::DestructorAtExit
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+    BrowserContextKeyedAPIFactory<SerialEventDispatcher>>::Leaky g_factory =
+    LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<SerialEventDispatcher>*

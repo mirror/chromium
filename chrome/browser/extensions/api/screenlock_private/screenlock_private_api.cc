@@ -145,8 +145,8 @@ void ScreenlockPrivateEventRouter::DispatchEvent(
   EventRouter::Get(browser_context_)->BroadcastEvent(std::move(event));
 }
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<
-    ScreenlockPrivateEventRouter>>::DestructorAtExit
+static base::LazyInstance<
+    BrowserContextKeyedAPIFactory<ScreenlockPrivateEventRouter>>::Leaky
     g_screenlock_private_api_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static

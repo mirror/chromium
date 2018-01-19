@@ -59,7 +59,7 @@ namespace content {
 namespace {
 
 static base::LazyInstance<
-    BrowserChildProcessHostImpl::BrowserChildProcessList>::DestructorAtExit
+    BrowserChildProcessHostImpl::BrowserChildProcessList>::Leaky
     g_child_process_list = LAZY_INSTANCE_INITIALIZER;
 
 base::LazyInstance<base::ObserverList<BrowserChildProcessObserver>>::

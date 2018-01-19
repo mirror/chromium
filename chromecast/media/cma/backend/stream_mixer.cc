@@ -104,7 +104,7 @@ class StreamMixerInstance : public StreamMixer {
   DISALLOW_COPY_AND_ASSIGN(StreamMixerInstance);
 };
 
-base::LazyInstance<StreamMixerInstance>::DestructorAtExit g_mixer_instance =
+base::LazyInstance<StreamMixerInstance>::Leaky g_mixer_instance =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

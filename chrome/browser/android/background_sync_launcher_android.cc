@@ -10,7 +10,7 @@
 using content::BrowserThread;
 
 namespace {
-base::LazyInstance<BackgroundSyncLauncherAndroid>::DestructorAtExit
+base::LazyInstance<BackgroundSyncLauncherAndroid>::Leaky
     g_background_sync_launcher = LAZY_INSTANCE_INITIALIZER;
 
 // Disables the Play Services version check for testing on Chromium build bots.

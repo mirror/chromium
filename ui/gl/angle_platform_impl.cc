@@ -24,7 +24,7 @@ struct PlatformContext {
   CacheProgramCallback cache_program_callback;
 };
 
-base::LazyInstance<PlatformContext>::DestructorAtExit g_platform_context =
+base::LazyInstance<PlatformContext>::Leaky g_platform_context =
     LAZY_INSTANCE_INITIALIZER;
 // Place the function pointers for ANGLEGetDisplayPlatform and
 // ANGLEResetDisplayPlatform in read-only memory after being resolved to prevent

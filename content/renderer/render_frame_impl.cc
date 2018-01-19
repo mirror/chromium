@@ -314,12 +314,11 @@ const PreviewsState kDisabledPreviewsBits =
     PREVIEWS_OFF | PREVIEWS_NO_TRANSFORM;
 
 typedef std::map<int, RenderFrameImpl*> RoutingIDFrameMap;
-static base::LazyInstance<RoutingIDFrameMap>::DestructorAtExit
-    g_routing_id_frame_map = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<RoutingIDFrameMap>::Leaky g_routing_id_frame_map =
+    LAZY_INSTANCE_INITIALIZER;
 
 typedef std::map<blink::WebFrame*, RenderFrameImpl*> FrameMap;
-base::LazyInstance<FrameMap>::DestructorAtExit g_frame_map =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<FrameMap>::Leaky g_frame_map = LAZY_INSTANCE_INITIALIZER;
 
 int64_t ExtractPostId(const WebHistoryItem& item) {
   if (item.IsNull() || item.HttpBody().IsNull())

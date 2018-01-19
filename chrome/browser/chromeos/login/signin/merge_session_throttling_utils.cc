@@ -50,7 +50,7 @@ class ProfileSet : public std::set<Profile*> {
 
 // Set of all of profiles for which restore session is in progress.
 // This static member is accessible only form UI thread.
-base::LazyInstance<ProfileSet>::DestructorAtExit g_blocked_profiles =
+base::LazyInstance<ProfileSet>::Leaky g_blocked_profiles =
     LAZY_INSTANCE_INITIALIZER;
 
 ProfileSet* ProfileSet::Get() {

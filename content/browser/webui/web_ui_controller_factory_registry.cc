@@ -15,7 +15,7 @@
 
 namespace content {
 
-base::LazyInstance<std::vector<WebUIControllerFactory*>>::DestructorAtExit
+base::LazyInstance<std::vector<WebUIControllerFactory*>>::Leaky
     g_web_ui_controller_factories = LAZY_INSTANCE_INITIALIZER;
 
 void WebUIControllerFactory::RegisterFactory(WebUIControllerFactory* factory) {

@@ -74,8 +74,7 @@ struct Static {
   Static() : api(ExtensionAPI::CreateWithDefaultConfiguration()) {}
   std::unique_ptr<ExtensionAPI> api;
 };
-base::LazyInstance<Static>::DestructorAtExit g_global_io_data =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<Static>::Leaky g_global_io_data = LAZY_INSTANCE_INITIALIZER;
 
 void CommonResponseCallback(IPC::Sender* ipc_sender,
                             int routing_id,

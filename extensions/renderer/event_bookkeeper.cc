@@ -16,8 +16,8 @@ namespace extensions {
 
 namespace {
 
-base::LazyInstance<EventBookkeeper>::DestructorAtExit
-    g_main_thread_event_bookkeeper = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<EventBookkeeper>::Leaky g_main_thread_event_bookkeeper =
+    LAZY_INSTANCE_INITIALIZER;
 
 // Gets a unique string key identifier for a ScriptContext.
 // TODO(kalman): Just use pointer equality...?

@@ -32,7 +32,7 @@ const double kDefaultHeightRatio = 0.6;
 const double kMinimumWidthRatio = 0.25;
 const double kMinimumHeightRatio = 0.25;
 
-base::LazyInstance<base::circular_deque<WebContents*>>::DestructorAtExit
+base::LazyInstance<base::circular_deque<WebContents*>>::Leaky
     g_web_contents_stack = LAZY_INSTANCE_INITIALIZER;
 
 // Returns the accelerator which is mapped as hangup button on Chrome OS CFM

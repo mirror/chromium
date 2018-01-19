@@ -21,7 +21,7 @@ namespace {
 // Accessed on the IO thread only.
 using AppCacheHandleMap =
     std::map <int, content::AppCacheNavigationHandleCore*>;
-base::LazyInstance<AppCacheHandleMap>::DestructorAtExit g_appcache_handle_map =
+base::LazyInstance<AppCacheHandleMap>::Leaky g_appcache_handle_map =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
