@@ -10,6 +10,7 @@
 #include "chrome/browser/ui/aura/accessibility/automation_manager_aura.h"
 #include "chrome/common/extensions/chrome_extension_messages.h"
 #include "components/exo/wm_helper.h"
+#include "ui/accessibility/ax_enum_util.h"
 #include "ui/accessibility/platform/ax_android_constants.h"
 #include "ui/aura/window.h"
 #include "ui/views/focus/focus_manager.h"
@@ -183,7 +184,7 @@ void PopulateAXRole(arc::mojom::AccessibilityNodeInfoData* node,
   if (GetStringProperty(node,
                         arc::mojom::AccessibilityStringProperty::CHROME_ROLE,
                         &chrome_role)) {
-    ui::AXRole role_value = ui::ParseAXRole(chrome_role);
+    ui::AXRole role_value = ui::ParseRole(chrome_role);
     if (role_value != ui::AX_ROLE_NONE) {
       out_data->role = role_value;
       return;
