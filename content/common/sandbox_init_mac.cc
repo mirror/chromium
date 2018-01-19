@@ -39,8 +39,7 @@ base::OnceClosure MaybeWrapWithGPUSandboxHook(
         // depending on gpu driver bug workarounds.
         gpu::GPUInfo gpu_info;
         auto* command_line = base::CommandLine::ForCurrentProcess();
-        // TODO(zmo): Collect basic GPUInfo instead.
-        gpu::GetGpuInfoFromCommandLine(*command_line, &gpu_info);
+        gpu::CollectBasicGpuInfo(command_line, &gpu_info);
         gpu::CacheGPUInfo(gpu_info);
         gpu::GpuPreferences gpu_preferences;
         if (command_line->HasSwitch(switches::kGpuPreferences)) {
