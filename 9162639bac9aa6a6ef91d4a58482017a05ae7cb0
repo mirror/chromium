@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3042a4ed_78153709",
+        "filename": "chrome/browser/ui/browser_tab_strip_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T03:17:54Z",
+      "side": 1,
+      "message": "sky: Shouldn\u0027t this check whether |browser| is actually being observed (ie, the result of ShouldTrackBrowser(browser))?",
+      "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
