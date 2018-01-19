@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8db69ed2_26ed97c2",
+        "filename": "device/ctap/ctap_response_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-19T16:24:18Z",
+      "side": 1,
+      "message": "nit: indentation",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 301,
+        "endChar": 31
+      },
+      "revId": "5311bd9f055b957858b1e57e5fb52726d16b9255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6636be_b4061b37",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-19T16:24:18Z",
+      "side": 1,
+      "message": "nit: Is it worth creating a helper method for these operations that you\u0027re repeating multiple times? Can we consolidate some of the other repeated operations in this file as well?",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 0
+      },
+      "revId": "5311bd9f055b957858b1e57e5fb52726d16b9255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d1e2a7e_03397a31",
+        "filename": "device/ctap/device_response_convertor.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-19T16:24:18Z",
+      "side": 1,
+      "message": "nit: just noticed that \"convertor\" should be \"converter\". Please update throughout",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 48
+      },
+      "revId": "5311bd9f055b957858b1e57e5fb52726d16b9255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe149ae9_8d3e087b",
+        "filename": "device/ctap/device_response_convertor.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-19T16:24:18Z",
+      "side": 1,
+      "message": "nit: remove extra space",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "5311bd9f055b957858b1e57e5fb52726d16b9255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
