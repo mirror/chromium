@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "1e26541b_e443f7f3",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-19T22:13:19Z",
+      "side": 1,
+      "message": "It makes me nervous too. However, a map containing all allocations/partitions was deemed to heavyweight and a show stopper. We need to track an unbounded number of allocations.\n\nThe long term solution is for V8 to help us out with a modified ArrayBuffer::Allocator API, that gives us this information. Right now all we know is the raw pointer when it\u0027s freed.",
+      "parentUuid": "65fcebef_23d04d15",
+      "revId": "81f4490cfd76adcc9992a37abb2cc65e0649dc8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3f70d0f_914da28a",
         "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
         "patchSetId": 29
