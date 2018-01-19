@@ -446,7 +446,7 @@ void BrowserWindowCocoa::FocusBookmarksToolbar() {
   // Not needed on the Mac.
 }
 
-void BrowserWindowCocoa::FocusInfobars() {
+void BrowserWindowCocoa::FocusNonModalUIForAccessibility() {
   // Not needed on the Mac.
 }
 
