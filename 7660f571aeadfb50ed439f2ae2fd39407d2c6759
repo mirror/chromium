@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "01834d69_2e7413f8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-indices-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-19T02:35:02Z",
+      "side": 1,
+      "message": "Done.  For some reason TestRunner.assertEquals() wasn\u0027t working... it throws the error, but the test framework didn\u0027t catch it.",
+      "parentUuid": "44d4ead9_dbf89799",
+      "revId": "7660f571aeadfb50ed439f2ae2fd39407d2c6759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "886fda7e_9aee80db",
         "filename": "third_party/WebKit/Source/devtools/front_end/console_test_runner/ConsoleTestRunner.js",
         "patchSetId": 3
@@ -53,6 +71,24 @@
       "writtenOn": "2018-01-19T01:18:58Z",
       "side": 1,
       "message": "This feels fragile.",
+      "revId": "7660f571aeadfb50ed439f2ae2fd39407d2c6759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb744de_dd8e5be5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_test_runner/ConsoleTestRunner.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-19T02:35:02Z",
+      "side": 1,
+      "message": "I\u0027ve Done your computedStyle suggestion!",
+      "parentUuid": "886fda7e_9aee80db",
       "revId": "7660f571aeadfb50ed439f2ae2fd39407d2c6759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "35da2653_7c70b766",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_test_runner/ConsoleTestRunner.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-19T02:35:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ed5e5f10_3d0ce0fa",
+      "revId": "7660f571aeadfb50ed439f2ae2fd39407d2c6759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4759d94_9a5f5df2",
         "filename": "third_party/WebKit/Source/devtools/front_end/console_test_runner/ConsoleTestRunner.js",
         "patchSetId": 3
@@ -87,6 +141,24 @@
       "writtenOn": "2018-01-19T01:18:58Z",
       "side": 1,
       "message": "visibleViewMessages is everything in DOM, not necessarily on screen right?",
+      "revId": "7660f571aeadfb50ed439f2ae2fd39407d2c6759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316cf4ca_82b05410",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_test_runner/ConsoleTestRunner.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-19T02:35:02Z",
+      "side": 1,
+      "message": "Ah, actually visibleViewMessages includes messages that might not be in DOM or on screen.  I need to check isConnected as well.",
+      "parentUuid": "d4759d94_9a5f5df2",
       "revId": "7660f571aeadfb50ed439f2ae2fd39407d2c6759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +179,24 @@
       "revId": "7660f571aeadfb50ed439f2ae2fd39407d2c6759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80634009_06e5422a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_test_runner/ConsoleTestRunner.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-19T02:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a693cb6c_fb64556b",
+      "revId": "7660f571aeadfb50ed439f2ae2fd39407d2c6759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
