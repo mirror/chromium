@@ -22,6 +22,30 @@
       "revId": "a82d54958ce0ec1af81d22aca8b4164518a04987",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491f4a99_39ab6df0",
+        "filename": "content/browser/renderer_host/media/media_devices_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-19T11:24:04Z",
+      "side": 1,
+      "message": "Sorry, I think I misunderstood your comment here in the previous patchset.\nModified the test accordingly. Thanks.",
+      "parentUuid": "4f3f1245_6764ba1d",
+      "range": {
+        "startLine": 519,
+        "startChar": 3,
+        "endLine": 519,
+        "endChar": 4
+      },
+      "revId": "a82d54958ce0ec1af81d22aca8b4164518a04987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
