@@ -24,7 +24,6 @@
 #include "chrome/browser/supervised_user/supervised_user_constants.h"
 #include "chrome/common/chrome_features.h"
 #include "chromeos/cryptohome/mock_async_method_caller.h"
-#include "chromeos/cryptohome/mock_homedir_methods.h"
 #include "components/sync/model/attachments/attachment_service_proxy_for_test.h"
 #include "components/sync/model/fake_sync_change_processor.h"
 #include "components/sync/model/sync_change.h"
@@ -106,9 +105,7 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserPasswordTest,
 // Supervised user signs in for second time, and actual password migration takes
 // place.
 IN_PROC_BROWSER_TEST_F(SupervisedUserPasswordTest, PasswordChangeFromUserTest) {
-  EXPECT_CALL(*mock_homedir_methods_, UpdateKeyEx(_, _, _, _)).Times(1);
   SigninAsSupervisedUser(0, kTestSupervisedUserDisplayName);
-  testing::Mock::VerifyAndClearExpectations(mock_homedir_methods_);
 }
 
 IN_PROC_BROWSER_TEST_F(SupervisedUserPasswordTest,
@@ -132,8 +129,6 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserPasswordTest,
       user_manager::UserManager::Get()->GetUsers().at(0);
 
   SigninAsManager(1);
-
-  EXPECT_CALL(*mock_homedir_methods_, AddKeyEx(_, _, _, _)).Times(1);
 
   std::string sync_id =
       ChromeUserManager::Get()->GetSupervisedUserManager()->GetUserSyncId(
@@ -162,16 +157,12 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserPasswordTest,
   shared_settings_adapter_->AddChange(
       sync_id, supervised_users::kChromeOSPasswordData, password, true, false);
   content::RunAllPendingInMessageLoop();
-
-  testing::Mock::VerifyAndClearExpectations(mock_homedir_methods_);
 }
 
 // After that supervised user signs in, and no password change happens.
 IN_PROC_BROWSER_TEST_F(SupervisedUserPasswordTest,
                        PasswordChangeFromManagerTest) {
-  EXPECT_CALL(*mock_homedir_methods_, UpdateKeyEx(_, _, _, _)).Times(0);
   SigninAsSupervisedUser(1, kTestSupervisedUserDisplayName);
-  testing::Mock::VerifyAndClearExpectations(mock_homedir_methods_);
 }
 
 IN_PROC_BROWSER_TEST_F(SupervisedUserPasswordTest,
@@ -221,8 +212,6 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserPasswordTest,
 
   SigninAsManager(1);
 
-  EXPECT_CALL(*mock_homedir_methods_, AddKeyEx(_, _, _, _)).Times(1);
-
   std::string sync_id =
       ChromeUserManager::Get()->GetSupervisedUserManager()->GetUserSyncId(
           supervised_user->GetAccountId().GetUserEmail());
@@ -250,17 +239,13 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserPasswordTest,
   shared_settings_adapter_->AddChange(
       sync_id, supervised_users::kChromeOSPasswordData, password, true, false);
   content::RunAllPendingInMessageLoop();
-
-  testing::Mock::VerifyAndClearExpectations(mock_homedir_methods_);
 }
 
 // When supervised user signs in, password is already migrated, so no migration
 // should be attempted.
 IN_PROC_BROWSER_TEST_F(SupervisedUserPasswordTest,
                        PasswordChangeUserAndManagerTest) {
-  EXPECT_CALL(*mock_homedir_methods_, UpdateKeyEx(_, _, _, _)).Times(0);
   SigninAsSupervisedUser(1, kTestSupervisedUserDisplayName);
-  testing::Mock::VerifyAndClearExpectations(mock_homedir_methods_);
 }
 
 }  // namespace chromeos

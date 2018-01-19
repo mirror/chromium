@@ -17,8 +17,8 @@
 #include "chrome/browser/chromeos/login/easy_unlock/easy_unlock_key_manager.h"
 #include "chrome/browser/chromeos/login/easy_unlock/easy_unlock_types.h"
 #include "chromeos/cryptohome/cryptohome_util.h"
-#include "chromeos/cryptohome/homedir_methods.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
+#include "chromeos/dbus/cryptohome_client.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/easy_unlock_client.h"
 #include "chromeos/login/auth/key.h"
@@ -346,23 +346,23 @@ void EasyUnlockCreateKeysOperation::OnGetSystemSalt(
   cryptohome::AddKeyRequest request;
   cryptohome::KeyDefinitionToKey(key_def, request.mutable_key());
   request.set_clobber_if_exists(true);
-  cryptohome::HomedirMethods::GetInstance()->AddKeyEx(
+  DBusThreadManager::Get()->GetCryptohomeClient()->AddKeyEx(
       cryptohome::Identification(user_context_.GetAccountId()),
       cryptohome::CreateAuthorizationRequest(auth_key->GetLabel(),
                                              auth_key->GetSecret()),
       request,
-      base::Bind(&EasyUnlockCreateKeysOperation::OnKeyCreated,
-                 weak_ptr_factory_.GetWeakPtr(), index, user_key));
+      base::BindOnce(&EasyUnlockCreateKeysOperation::OnKeyCreated,
+                     weak_ptr_factory_.GetWeakPtr(), index, user_key));
 }
 
 void EasyUnlockCreateKeysOperation::OnKeyCreated(
     size_t index,
     const Key& user_key,
-    bool success,
-    cryptohome::MountError return_code) {
+    base::Optional<cryptohome::BaseReply> reply) {
   DCHECK_EQ(key_creation_index_, index);
 
-  if (!success) {
+  cryptohome::MountError return_code = cryptohome::BaseReplyToMountError(reply);
+  if (return_code != cryptohome::MOUNT_ERROR_NONE) {
     PA_LOG(ERROR) << "Easy unlock failed to create key, code=" << return_code;
     callback_.Run(false);
     return;

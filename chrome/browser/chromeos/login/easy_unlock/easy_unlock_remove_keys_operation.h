@@ -10,6 +10,8 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
+#include "chromeos/dbus/cryptohome/rpc.pb.h"
 #include "chromeos/login/auth/user_context.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
@@ -33,7 +35,7 @@ class EasyUnlockRemoveKeysOperation {
   void OnGetSystemSalt(const std::string& system_salt);
 
   void RemoveKey();
-  void OnKeyRemoved(bool success, cryptohome::MountError return_code);
+  void OnKeyRemoved(base::Optional<cryptohome::BaseReply> reply);
 
   UserContext user_context_;
   RemoveKeysCallback callback_;

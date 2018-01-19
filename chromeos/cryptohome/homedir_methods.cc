@@ -42,46 +42,6 @@ class HomedirMethodsImpl : public HomedirMethods {
                        weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
-  void CheckKeyEx(const Identification& id,
-                  const cryptohome::AuthorizationRequest& auth,
-                  const cryptohome::CheckKeyRequest& request,
-                  const Callback& callback) override {
-    DBusThreadManager::Get()->GetCryptohomeClient()->CheckKeyEx(
-        id, auth, request,
-        base::BindOnce(&HomedirMethodsImpl::OnBaseReplyCallback,
-                       weak_ptr_factory_.GetWeakPtr(), callback));
-  }
-
-  void AddKeyEx(const Identification& id,
-                const AuthorizationRequest& auth,
-                const AddKeyRequest& request,
-                const Callback& callback) override {
-    DBusThreadManager::Get()->GetCryptohomeClient()->AddKeyEx(
-        id, auth, request,
-        base::BindOnce(&HomedirMethodsImpl::OnBaseReplyCallback,
-                       weak_ptr_factory_.GetWeakPtr(), callback));
-  }
-
-  void RemoveKeyEx(const Identification& id,
-                   const AuthorizationRequest& auth,
-                   const RemoveKeyRequest& request,
-                   const Callback& callback) override {
-    DBusThreadManager::Get()->GetCryptohomeClient()->RemoveKeyEx(
-        id, auth, request,
-        base::BindOnce(&HomedirMethodsImpl::OnBaseReplyCallback,
-                       weak_ptr_factory_.GetWeakPtr(), callback));
-  }
-
-  void UpdateKeyEx(const Identification& id,
-                   const AuthorizationRequest& auth,
-                   const UpdateKeyRequest& request,
-                   const Callback& callback) override {
-    DBusThreadManager::Get()->GetCryptohomeClient()->UpdateKeyEx(
-        id, auth, request,
-        base::BindOnce(&HomedirMethodsImpl::OnBaseReplyCallback,
-                       weak_ptr_factory_.GetWeakPtr(), callback));
-  }
-
   void GetAccountDiskUsage(
       const Identification& id,
       const GetAccountDiskUsageCallback& callback) override {
@@ -196,19 +156,6 @@ class HomedirMethodsImpl : public HomedirMethods {
 
     int64_t size = reply->GetExtension(GetAccountDiskUsageReply::reply).size();
     callback.Run(true, size);
-  }
-
-  void OnBaseReplyCallback(const Callback& callback,
-                           base::Optional<BaseReply> reply) {
-    if (!reply.has_value()) {
-      callback.Run(false, MOUNT_ERROR_FATAL);
-      return;
-    }
-    if (reply->has_error() && reply->error() != CRYPTOHOME_ERROR_NOT_SET) {
-      callback.Run(false, CryptohomeErrorToMountError(reply->error()));
-      return;
-    }
-    callback.Run(true, MOUNT_ERROR_NONE);
   }
 
   base::WeakPtrFactory<HomedirMethodsImpl> weak_ptr_factory_;
