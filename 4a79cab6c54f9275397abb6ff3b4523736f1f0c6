@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "81169fd2_ed5f5676",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-19T13:26:44Z",
+      "side": 1,
+      "message": "TraceWrappers should ideally always delegate to the component owning the pointers. In this case that is the worlds/storage.\n\nWe should not reach into other classes objects. (We sometimes did that because it was not possible for other reasons back then but we should really try to keep abstractions as clean as possible.)",
+      "parentUuid": "80bafaee_41390e2d",
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7e07b95_e7d28316",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.cpp",
         "patchSetId": 3
