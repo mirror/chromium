@@ -12,7 +12,6 @@ import org.chromium.base.annotations.MainDex;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -230,37 +229,23 @@ public abstract class CommandLine {
      * @throws RuntimeException if the file size exceeds |sizeLimit|.
      */
     private static char[] readUtf8FileFullyCrashIfTooBig(String fileName, int sizeLimit) {
-        Reader reader = null;
         File f = new File(fileName);
         long fileLength = f.length();
-
-        if (fileLength == 0) {
-            return null;
-        }
-
         if (fileLength > sizeLimit) {
             throw new RuntimeException(
                     "File " + fileName + " length " + fileLength + " exceeds limit " + sizeLimit);
         }
 
-        try {
+        try (Reader reader = new InputStreamReader(new FileInputStream(f), "UTF-8")) {
             char[] buffer = new char[(int) fileLength];
-            reader = new InputStreamReader(new FileInputStream(f), "UTF-8");
+
             int charsRead = reader.read(buffer);
             // Debug check that we've exhausted the input stream (will fail e.g. if the
             // file grew after we inspected its length).
             assert !reader.ready();
-            return charsRead < buffer.length ? Arrays.copyOfRange(buffer, 0, charsRead) : buffer;
-        } catch (FileNotFoundException e) {
-            return null;
+            return Arrays.copyOfRange(buffer, 0, charsRead);
         } catch (IOException e) {
             return null;
-        } finally {
-            try {
-                if (reader != null) reader.close();
-            } catch (IOException e) {
-                Log.e(TAG, "Unable to close file reader.", e);
-            }
         }
     }
 
