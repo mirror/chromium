@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50287cf1_6118d191",
+        "filename": "base/lazy_instance_helpers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-19T16:36:39Z",
+      "side": 1,
+      "message": "I know you mentioned that it could be improved in the CL description, but this WaitableEvent is leaked...",
+      "revId": "73bf41c33e7d04703371db78a5f666ff9cfad883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
