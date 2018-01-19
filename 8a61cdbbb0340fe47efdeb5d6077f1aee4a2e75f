@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb8b9aba_a3f76711",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-19T22:29:54Z",
+      "side": 1,
+      "message": "Optional nit: There\u0027s no need to mark enums as \u003cobsolete\u003e – they\u0027re implicitly obsolete if all histograms that depend on them are obsolete – but it\u0027s fine to do if you prefer to.",
+      "range": {
+        "startLine": 1178,
+        "startChar": 0,
+        "endLine": 1180,
+        "endChar": 13
+      },
+      "revId": "8a61cdbbb0340fe47efdeb5d6077f1aee4a2e75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
