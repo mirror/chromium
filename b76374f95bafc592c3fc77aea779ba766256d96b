@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d3964dd_099451a4",
+        "filename": "third_party/WebKit/Source/core/css/cssom/FilteredComputedStylePropertyMap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-19T22:19:32Z",
+      "side": 1,
+      "message": ".nit period.",
+      "range": {
+        "startLine": 18,
+        "startChar": 40,
+        "endLine": 18,
+        "endChar": 41
+      },
+      "revId": "b76374f95bafc592c3fc77aea779ba766256d96b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
