@@ -28,18 +28,24 @@ bool WeakReference::Flag::IsValid() const {
 
 WeakReference::Flag::~Flag() = default;
 
-WeakReference::WeakReference() = default;
-
-WeakReference::WeakReference(const Flag* flag) : flag_(flag) {
+void WeakReference::Flag::DetachFromSequence() {
+  DCHECK(HasOneRef()) << "Cannot detach from Sequence while WeakPtrs exist.";
+  sequence_checker_.DetachFromSequence();
 }
 
-WeakReference::~WeakReference() = default;
+WeakReference::WeakReference() = default;
+
+WeakReference::WeakReference(const scoped_refptr<Flag>& flag) : flag_(flag) {}
 
 WeakReference::WeakReference(WeakReference&& other) = default;
 
 WeakReference::WeakReference(const WeakReference& other) = default;
 
-bool WeakReference::is_valid() const { return flag_.get() && flag_->IsValid(); }
+WeakReference::~WeakReference() = default;
+
+bool WeakReference::is_valid() const {
+  return flag_ && flag_->IsValid();
+}
 
 WeakReferenceOwner::WeakReferenceOwner() = default;
 
@@ -48,18 +54,21 @@ WeakReferenceOwner::~WeakReferenceOwner() {
 }
 
 WeakReference WeakReferenceOwner::GetRef() const {
-  // If we hold the last reference to the Flag then create a new one.
   if (!HasRefs())
     flag_ = new WeakReference::Flag();
 
-  return WeakReference(flag_.get());
+  return WeakReference(flag_);
 }
 
 void WeakReferenceOwner::Invalidate() {
-  if (flag_.get()) {
+  if (flag_) {
     flag_->Invalidate();
     flag_ = nullptr;
   }
+}
+
+void WeakReferenceOwner::DetachFromSequence() {
+  flag_->DetachFromSequence();
 }
 
 WeakPtrBase::WeakPtrBase() : ptr_(0) {}
