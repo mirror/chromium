@@ -140,8 +140,25 @@ bool TestPasswordStore::FillBlacklistLogins(
 std::vector<std::unique_ptr<autofill::PasswordForm>>
 TestPasswordStore::FillLoginsForSameOrganizationName(
     const std::string& signon_realm) {
-  NOTIMPLEMENTED();
-  return {};
+  // Note: To keep TestPasswordStore simple, and because no tests currently
+  // require anything more complex, this is a simplistic implementation which
+  // assumes that different signon realms mean a different organization.
+  PasswordMap::const_iterator forms_for_realm =
+      stored_passwords_.find(signon_realm);
+  if (forms_for_realm == stored_passwords_.end())
+    return {};
+
+  std::vector<std::unique_ptr<autofill::PasswordForm>> forms;
+  for (const autofill::PasswordForm& form : forms_for_realm->second) {
+    if (!form.blacklisted_by_user)
+      forms.push_back(std::make_unique<autofill::PasswordForm>(form));
+  }
+  return forms;
+}
+
+std::vector<InteractionsStats> TestPasswordStore::GetSiteStatsImpl(
+    const GURL& origin_domain) {
+  return std::vector<InteractionsStats>();
 }
 
 void TestPasswordStore::ReportMetricsImpl(const std::string& sync_username,
@@ -194,12 +211,6 @@ void TestPasswordStore::RemoveSiteStatsImpl(const GURL& origin_domain) {
 }
 
 std::vector<InteractionsStats> TestPasswordStore::GetAllSiteStatsImpl() {
-  NOTIMPLEMENTED();
-  return std::vector<InteractionsStats>();
-}
-
-std::vector<InteractionsStats> TestPasswordStore::GetSiteStatsImpl(
-    const GURL& origin_domain) {
   NOTIMPLEMENTED();
   return std::vector<InteractionsStats>();
 }
