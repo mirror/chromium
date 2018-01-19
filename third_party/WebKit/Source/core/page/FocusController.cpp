@@ -1462,10 +1462,10 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
   // FIXME: Directional focus changes don't yet work with RemoteFrames.
   if (!FocusedOrMainFrame()->IsLocalFrame())
     return false;
-  LocalFrame* cur_frame = ToLocalFrame(FocusedOrMainFrame());
-  DCHECK(cur_frame);
+  LocalFrame* current_frame = ToLocalFrame(FocusedOrMainFrame());
+  DCHECK(current_frame);
 
-  Document* focused_document = cur_frame->GetDocument();
+  Document* focused_document = current_frame->GetDocument();
   if (!focused_document)
     return false;
 
@@ -1475,17 +1475,18 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
   if (container->IsDocumentNode())
     ToDocument(container)->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  // Figure out the starting rect.
-  LayoutRect starting_rect;
+  // Figure out the initial starting rect.
+  LayoutRect starting_rect = VirtualRectForDirection(
+      type, FrameRectInAbsoluteCoordinates(current_frame));
   if (focused_element) {
+    auto* area_element = ToHTMLAreaElementOrNull(*focused_element);
+    if (area_element)
+      focused_element = area_element->ImageElement();
     if (!HasOffscreenRect(focused_element)) {
-      starting_rect = NodeRectInAbsoluteCoordinates(focused_element,
-                                                    true /* ignore border */);
-    } else if (auto* area = ToHTMLAreaElementOrNull(*focused_element)) {
-      if (area->ImageElement()) {
-        focused_element = area->ImageElement();
-        starting_rect = VirtualRectForAreaElementAndDirection(*area, type);
-      }
+      starting_rect =
+          area_element
+              ? VirtualRectForAreaElementAndDirection(*area_element, type)
+              : NodeRectInAbsoluteCoordinates(focused_element, true);
     }
     container = ScrollableAreaOrDocumentOf(focused_element);
   }
@@ -1498,6 +1499,7 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
     if (consumed)
       break;
 
+    // Nothing found in |container| so search the parent container.
     pruned_sub_tree_root = container;
     container = ScrollableAreaOrDocumentOf(container);
     if (container && container->IsDocumentNode())
