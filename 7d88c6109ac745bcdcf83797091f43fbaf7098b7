@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5a754fa_5effb677",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-19T16:10:49Z",
+      "side": 1,
+      "message": "The logic of this helper class is bit hard to follow imo. Ideally we\u0027d just keep EventTimeStack as is but change the type to base::TimeTicks or base::TimeDelta. But I don\u0027t really understand why the logic below is needed. Can you explain?",
+      "revId": "7d88c6109ac745bcdcf83797091f43fbaf7098b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749f14b5_130ad9dc",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-19T16:10:49Z",
+      "side": 1,
+      "message": "LOG(ERROR) and return 1, s we can keep these clients simple and not allow them to run except with ToT chrome.",
+      "revId": "7d88c6109ac745bcdcf83797091f43fbaf7098b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49d559bf_6745d195",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-19T16:10:49Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "7d88c6109ac745bcdcf83797091f43fbaf7098b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
