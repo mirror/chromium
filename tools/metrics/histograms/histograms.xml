@@ -13591,6 +13591,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="DataReductionProxy.Quic.OnAlternativeProxyBroken"
     units="count">
+  <obsolete>
+    As of M65 this has been superceded by Net.AlternateProxyFailed.
+  </obsolete>
   <owner>tbansal@chromium.org</owner>
   <summary>
     Number of times an alternative QUIC proxy was marked as broken.
@@ -41252,6 +41255,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Breakdown of how requests which could potentially make use of an alternate
     protocol use or don't use the protocol. Loaded data for 200 servers and we
     have persisted 1000 MRU servers.
+  </summary>
+</histogram>
+
+<histogram name="Net.AlternateProxyFailed" enum="NetErrorCodes">
+  <owner>tbansal@chromium.org</owner>
+  <summary>
+    Positive net error codes that failed alternative proxy requests end with.
+    Recorded when an alternative job fails, whether or not the main job
+    succeeds.
+
+    As of M65 this superceded DataReductionProxy.Quic.OnAlternativeProxyBroken.
   </summary>
 </histogram>
 
