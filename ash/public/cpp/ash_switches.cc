@@ -46,9 +46,9 @@ const char kAshDisableTabletSplitView[] = "disable-tablet-splitview";
 const char kAshDisableTouchExplorationMode[] =
     "ash-disable-touch-exploration-mode";
 
-// Disables Backbutton on frame for v1 apps.
+// Enables Backbutton on frame for v1 apps.
 // TODO(oshima): Remove this once the feature is launched. crbug.com/749713.
-const char kAshDisableV1AppBackButton[] = "ash-disable-v1-app-back-button";
+const char kAshEnableV1AppBackButton[] = "ash-enable-v1-app-back-button";
 
 // Enables move window between displays accelerators.
 // TODO(warx): Remove this once the feature is launched. crbug.com/773749.
