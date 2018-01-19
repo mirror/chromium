@@ -173,6 +173,24 @@
     },
     {
       "key": {
+        "uuid": "ac632f21_d17eb634",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-19T08:24:07Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to worry about the notification service. Additionally, I wouldn\u0027t try to avoid querying the RenderWidgetHostView\u0027s LocalSurfaceId - instead, I would leave code that queries this as-is and plumb things through such that the RenderWidgetHostView\u0027s LocalSurfaceId is updated with the new, renderer-provided ID. You need to ensure that this propagates through to the RenderWidgetHostView (and subsequent classes) in order for the Browser Compositor to correctly embed the new surface.\n\nAs a first pass, I would just figure out how to propagate the data such that RenderWidgetHostViewBase::GetLocalSurfaceId returns your new ID. I think this involves the following on Aura. Mac/Android will require similar plumbing.\n\n1. RenderWidgetHostImpl::OnResizeOrRepaintACK saves the new surface ID, and calls DelayedAutoResized\n2. RenderWidgetHostImpl::DelayedAutoResized grabs the new surface ID and passes that to RenderWidgetHostDelegate::ResizeDueToAutoResize (needs a new param)\n3. RenderWidgetHostDelegate::ResizeDueToAutoResize is implemented by WebContentsImpl::ResizeDueToAutoResize. This passes the ID to RenderWidgetHostViewBase::ResizeDueToAutoResize (needs new param).\n4.RenderWidgetHostViewBase::ResizeDueToAutoResize is implemented by RenderWidgetHostViewAura::ResizeDueToAutoResize. This passes the new surface ID to RenderWidgetHostViewAura::WasResized (needs a new param).\n5. RenderWidgetHostViewAura::WasResized passes the ID to aura::Window::SetLocalSurfaceId (new function) if the provided ID is valid, otherwise it calls aura::Window::AllocateLocalSurfaceId.\n6. Window::SetLocalSurfaceId passes the ID to aura::WindowPort::SetLocalSurfaceId (new function).\n7. WindowPort::SetLocalSurfaceId is implemented by WindowPortLocal::SetLocalSurfaceId (new function). This sets |local_surface_id_| to the provided ID and calls other code similar to AllocateLocalSurfaceId.\n\nOnce this is set up, you should find that relatively few other changes are needed to RenderWidgetHostImpl.\n\nNote that mac seems to have some bugs relating to surface sync / viz + this UI, so I might focus on Linux for now.",
+      "parentUuid": "80913e29_db3b9df4",
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc2ead2a_4e89b7fa",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 2

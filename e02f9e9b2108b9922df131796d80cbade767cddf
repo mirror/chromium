@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a00aab7c_578d0ae4",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-19T08:24:07Z",
+      "side": 1,
+      "message": "If you plumb the ID through to the view (see my other comment), you can remove this logic and just always query the view.",
+      "range": {
+        "startLine": 766,
+        "startChar": 9,
+        "endLine": 766,
+        "endChar": 25
+      },
+      "revId": "e02f9e9b2108b9922df131796d80cbade767cddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a11300_bad331e9",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-19T08:24:07Z",
+      "side": 1,
+      "message": "If you plumb the ID through to the view (see my other comment), you can drop these changes as well. same below.\n\nBasically, in this file, you shouldn\u0027t really need to touch much other than OnResizeOrRepaintACK and DelayedAutoResized",
+      "range": {
+        "startLine": 807,
+        "startChar": 27,
+        "endLine": 807,
+        "endChar": 42
+      },
+      "revId": "e02f9e9b2108b9922df131796d80cbade767cddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
