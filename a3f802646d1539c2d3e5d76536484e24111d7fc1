@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6533b567_4d46f434",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1212939
+      },
+      "writtenOn": "2018-01-19T21:42:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5afbb0f1_b4effdd5",
+      "range": {
+        "startLine": 374,
+        "startChar": 12,
+        "endLine": 375,
+        "endChar": 32
+      },
+      "revId": "a3f802646d1539c2d3e5d76536484e24111d7fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aad7194_fb00e518",
         "filename": "chrome/browser/chromeos/dbus/finch_features_service_provider_delegate.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "a3f802646d1539c2d3e5d76536484e24111d7fc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315527a7_a5f5bd5b",
+        "filename": "chrome/browser/chromeos/dbus/finch_features_service_provider_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1212939
+      },
+      "writtenOn": "2018-01-19T21:42:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aad7194_fb00e518",
+      "revId": "a3f802646d1539c2d3e5d76536484e24111d7fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ee65c58e_554274b3",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1212939
+      },
+      "writtenOn": "2018-01-19T21:42:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3a3e62b_d2df4c64",
+      "range": {
+        "startLine": 185,
+        "startChar": 28,
+        "endLine": 185,
+        "endChar": 33
+      },
+      "revId": "a3f802646d1539c2d3e5d76536484e24111d7fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94223012_9d62e0fa",
         "filename": "chromeos/dbus/services/chrome_features_service_provider.cc",
         "patchSetId": 1
@@ -85,6 +151,30 @@
       "revId": "a3f802646d1539c2d3e5d76536484e24111d7fc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4128ead_91e06a36",
+        "filename": "chromeos/dbus/services/chrome_features_service_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212939
+      },
+      "writtenOn": "2018-01-19T21:42:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94223012_9d62e0fa",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "a3f802646d1539c2d3e5d76536484e24111d7fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "cfcb0f62_d540ac15",
+        "filename": "chromeos/dbus/services/chrome_features_service_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1212939
+      },
+      "writtenOn": "2018-01-19T21:42:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00db25af_f467a028",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "a3f802646d1539c2d3e5d76536484e24111d7fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98e08907_b287c198",
         "filename": "chromeos/dbus/services/chrome_features_service_provider.h",
         "patchSetId": 1
@@ -122,6 +236,24 @@
       "writtenOn": "2018-01-19T20:45:02Z",
       "side": 1,
       "message": "sorry for not suggesting this earlier (i don\u0027t think i saw a design doc), but if this service becomes generally useful for checking whether features are enabled from outside of chrome, it\u0027s going to be painful to make changes to system_api, this interface, its implementations, the delegate, etc. each time we want to check a new feature.\n\ndid you consider instead just having an IsFeatureEnabled d-bus method that takes the string feature name, e.g. \"Crostini\"?\n\ni don\u0027t know if there are security implications around making it possible for compromised system daemons on chrome os check whether a given feature is enabled. i\u0027m not worried about this given the current permissions, as it looks like the service can only be used by the chronos user, which is the same user that chrome runs as anyway.",
+      "revId": "a3f802646d1539c2d3e5d76536484e24111d7fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d630f8_4b523b2b",
+        "filename": "chromeos/dbus/services/chrome_features_service_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1212939
+      },
+      "writtenOn": "2018-01-19T21:42:58Z",
+      "side": 1,
+      "message": "I did think about making it generic and I didn\u0027t do it exactly because I was not sure about the security implications.\nI don\u0027t have much insight on how other Chrome features will need to be exposed and what restrictions are necessary in the future so I am leaning on this more conservative approach for now.",
+      "parentUuid": "98e08907_b287c198",
       "revId": "a3f802646d1539c2d3e5d76536484e24111d7fc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
