@@ -273,6 +273,306 @@
     },
     {
       "key": {
+        "uuid": "36a5b243_cc1566d6",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-19T10:21:00Z",
+      "side": 1,
+      "message": "Thanks for link and explanation.\n\nI think we would crash a lot if this is true: most of android UI stuff depends on being run on main thread (aka UI thread).\n\nI think also it is always using the same thread, see (same android directory as in your answer):\n * ActivityThread#main (it is application entry point) - it creates single ActivityThread instance,\n * ActivityThread#getLoadedApk - passes this instance to LoadedApk constructor,\n * LoadedApk#makeApplication - uses ActivityThread as mainThread argument to ContextImpl#createAppContext.\n\nAlso: call to createPackageContext would most likely never get to creating new context as one of first lines in ActivityThread#getLoadedApk (called from ContextImpl#createPackageContext) is looking for instance of existing context in its cache.\n\nThis makes this function equivalent to:\n  if (mPackageContext \u003d\u003d null) mPackageContext \u003d ContextUtils.getApplicationContext();\n  return mPackageContext;",
+      "parentUuid": "f99cbb77_675a1ce6",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 87
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7617d258_63f88d17",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-19T10:21:00Z",
+      "side": 1,
+      "message": "shouldn\u0027t it be app context?\n\n(this most likely doesn\u0027t crash as LocalBroadcastManager.getInstance was most likely called before with correct context and it will use only context value from first call).\n\nI think it is worth fixing as we shouldn\u0027t be using activity as a context. I think it would be cleaner if code here used Activity when host activity is needed and context when it needs just context (possibly appContext).\n\nAnyway: I think it doesn\u0027t crash, but you are doing great work building this fragment. I think if you have time it would be nice to make it a bit more future-proof at the same time.\n\nI\u0027ve added \"context\" comment in places where I think we could use this explicit appContext.",
+      "range": {
+        "startLine": 100,
+        "startChar": 46,
+        "endLine": 100,
+        "endChar": 57
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71756e0_cac44f0b",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-19T10:21:00Z",
+      "side": 1,
+      "message": "I think it should be also enabled in fragment mode.",
+      "range": {
+        "startLine": 113,
+        "startChar": 13,
+        "endLine": 113,
+        "endChar": 28
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4257b6de_c4e9c42d",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-19T10:21:00Z",
+      "side": 1,
+      "message": "context",
+      "range": {
+        "startLine": 119,
+        "startChar": 42,
+        "endLine": 119,
+        "endChar": 53
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d3124dc_7b5acec8",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-19T10:21:00Z",
+      "side": 1,
+      "message": "correct context needed.",
+      "range": {
+        "startLine": 123,
+        "startChar": 46,
+        "endLine": 123,
+        "endChar": 57
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea29975c_263bfede",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-19T10:21:00Z",
+      "side": 1,
+      "message": "context",
+      "range": {
+        "startLine": 137,
+        "startChar": 42,
+        "endLine": 137,
+        "endChar": 53
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8de442bd_be112d05",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-19T10:21:00Z",
+      "side": 1,
+      "message": "context",
+      "range": {
+        "startLine": 154,
+        "startChar": 42,
+        "endLine": 154,
+        "endChar": 53
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f3da1f2_5ceef291",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-19T10:21:00Z",
+      "side": 1,
+      "message": "Can we switch that to local broadcast? It doesn\u0027t need to go to other processes.",
+      "range": {
+        "startLine": 175,
+        "startChar": 24,
+        "endLine": 175,
+        "endChar": 35
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53858d5_07318b9d",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-19T10:21:00Z",
+      "side": 1,
+      "message": "context?",
+      "range": {
+        "startLine": 199,
+        "startChar": 59,
+        "endLine": 199,
+        "endChar": 70
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc9c0fa0_36060adc",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-19T10:21:00Z",
+      "side": 1,
+      "message": "context?",
+      "range": {
+        "startLine": 242,
+        "startChar": 55,
+        "endLine": 242,
+        "endChar": 66
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "572bca52_e221e37c",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-19T10:21:00Z",
+      "side": 1,
+      "message": "context",
+      "range": {
+        "startLine": 295,
+        "startChar": 46,
+        "endLine": 295,
+        "endChar": 57
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2ba29aa_423cabae",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-19T10:21:00Z",
+      "side": 1,
+      "message": "context",
+      "range": {
+        "startLine": 300,
+        "startChar": 46,
+        "endLine": 300,
+        "endChar": 57
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "149b1efa_7297a96c",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-19T10:21:00Z",
+      "side": 1,
+      "message": "context",
+      "range": {
+        "startLine": 305,
+        "startChar": 46,
+        "endLine": 305,
+        "endChar": 57
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62b30eb4_afaa2568",
         "filename": "chromecast/browser/android/cast_web_contents_surface_helper.h",
         "patchSetId": 3
