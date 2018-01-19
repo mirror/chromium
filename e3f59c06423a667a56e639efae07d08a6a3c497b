@@ -34,6 +34,24 @@
       "revId": "e3f59c06423a667a56e639efae07d08a6a3c497b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ccaf3a6_ab25ed95",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-19T18:51:52Z",
+      "side": 1,
+      "message": "\u003e I thought that could be riskier since the delegates get attempts at them and that could cause weird behavior... and hopefully all this code is dead with mojo on. Let me know if you feel strongly and want me to change it.. I\u0027m on the fence.\n\nSure, I buy that.",
+      "parentUuid": "7155f930_b80f2f66",
+      "revId": "e3f59c06423a667a56e639efae07d08a6a3c497b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
