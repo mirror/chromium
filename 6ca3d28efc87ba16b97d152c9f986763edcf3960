@@ -16,6 +16,24 @@
       "revId": "6ca3d28efc87ba16b97d152c9f986763edcf3960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e27d93_4a9c62cc",
+        "filename": "content/common/swapped_out_messages.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T15:56:48Z",
+      "side": 0,
+      "message": "This code is dead code since this event isn\u0027t sent via the code that calls this function. ie; the caller of this function is the RenderWidget (https://cs.chromium.org/chromium/src/content/renderer/render_widget.cc?type\u003dcs\u0026q\u003dSwappedOutMessages\u0026sq\u003dpackage:chromium\u0026l\u003d709) which is on the main thread. But the sender for NeedsBeginFrame is all on the compositor side.",
+      "parentUuid": "7307494b_7f8da268",
+      "revId": "6ca3d28efc87ba16b97d152c9f986763edcf3960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
