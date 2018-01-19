@@ -46,6 +46,8 @@ interface AccessibilityController {
   // Starts or stops darkening the screen (e.g. to allow chrome a11y extensions
   // to darken the screen).
   SetDarkenScreen(bool darken);
+
+  BrailleDisplayStateChanged(bool connected);
 };
 
 // Interface for ash to request accessibility service from its client (e.g.
