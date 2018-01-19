@@ -187,6 +187,30 @@
       "revId": "2d197eff520e8be04fe0097f7a3c8b6a98b30201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf36336_26cd745e",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 10012,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-19T07:35:53Z",
+      "side": 1,
+      "message": "Maybe respectCSSPageSize? I\u0027d also prefer pageSize over sourceSize.",
+      "parentUuid": "7e7af4c6_6130cbb7",
+      "range": {
+        "startLine": 10012,
+        "startChar": 37,
+        "endLine": 10012,
+        "endChar": 61
+      },
+      "revId": "2d197eff520e8be04fe0097f7a3c8b6a98b30201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
