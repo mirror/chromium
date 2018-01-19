@@ -17,6 +17,7 @@
 #include "chrome/browser/ui/singleton_tabs.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h"
+#include "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper_delegate_impl.h"
 #include "google_apis/gaia/gaia_urls.h"
 
 SigninDiceInternalsHandler::SigninDiceInternalsHandler(Profile* profile)
@@ -66,9 +67,10 @@ void SigninDiceInternalsHandler::HandleEnableSync(const base::ListValue* args) {
   // DiceTurnSyncOnHelper is suicidal (it will kill itself once it finishes
   // enabling sync).
   new DiceTurnSyncOnHelper(
-      profile_, browser, signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN,
+      profile_, signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN,
       signin_metrics::Reason::REASON_UNKNOWN_REASON, account_id,
-      DiceTurnSyncOnHelper::SigninAbortedMode::KEEP_ACCOUNT);
+      DiceTurnSyncOnHelper::SigninAbortedMode::KEEP_ACCOUNT,
+      std::make_unique<DiceTurnSyncOnHelperDelegateImpl>(browser));
 }
 
 void SigninDiceInternalsHandler::HandleDisableSync(
