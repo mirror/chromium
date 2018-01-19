@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0dd7ba8_0ba6f3b3",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 2270,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T02:47:37Z",
+      "side": 1,
+      "message": "I don\u0027t understand the comment. Is this pointer currently valid but soon to become invalid or is it already invalid?",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743c8249_abf53757",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T02:47:37Z",
+      "side": 1,
+      "message": "You removed the comment about the lifetime, but is it not still the same as before?",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b95871_03646fc9",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T02:47:37Z",
+      "side": 1,
+      "message": "Can we have a TODO to add a task runner id for animation worklet? Or possibly just add the id in this patch.",
+      "range": {
+        "startLine": 33,
+        "startChar": 48,
+        "endLine": 33,
+        "endChar": 74
+      },
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df46c7f_fa5669b0",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T02:47:37Z",
+      "side": 1,
+      "message": "Can you comment how we might be in dispose with no global scope? I assume if we dispose before one has been set above?",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cef67fb_88f9ab29",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T02:47:37Z",
+      "side": 1,
+      "message": "This isn\u0027t really necessary since MustSignal signals on destruction right?",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b01cf59_1e75796b",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T02:47:37Z",
+      "side": 1,
+      "message": "nit: Maybe call this ScopedSignal?",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0706db46_9bc2f708",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorAnimator.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T02:47:37Z",
+      "side": 1,
+      "message": "What does Seal do? Please add comment.",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5029c17_a218d505",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T02:47:37Z",
+      "side": 1,
+      "message": "Set implies that it is destructive, but this is called for all outputs implying its additive. Should this be AddMutationUpdate / AppendMutationUpdate? Or perhaps the client_ should take the entire list of updates.",
+      "range": {
+        "startLine": 51,
+        "startChar": 13,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3711f3_917a7e3d",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T02:47:37Z",
+      "side": 1,
+      "message": "nit: can we call this mutator_thread_ or soemthing similar?",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 15
+      },
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

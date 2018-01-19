@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34a0c66a_3bd265c5",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T02:47:37Z",
+      "side": 0,
+      "message": "Do we delete the animation worklet thread in these tests elsewhere?",
+      "revId": "1eb745fc9923f94a9ce7c780f76696d65dcd9d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
