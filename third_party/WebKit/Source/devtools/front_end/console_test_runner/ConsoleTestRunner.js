@@ -576,3 +576,51 @@ ConsoleTestRunner.dumpStackTraces = function() {
     }
   }
 };
+
+/**
+ * Call this if you plan to use visibleIndices().
+ * Since this clears the console, beware if you care about the log!
+ */
+ConsoleTestRunner.setupVisibleIndices = async function() {
+  if (typeof ConsoleTestRunner._viewportMargin === 'number')
+    return;
+  var consoleView = Console.ConsoleView.instance();
+  var viewport = consoleView._viewport;
+  await TestRunner.evaluateInPagePromise('console.log(1)');
+  viewport.invalidate();
+  var firstRect = consoleView._visibleViewMessages[0]._element.getBoundingClientRect();
+  var viewportRect = viewport.element.getBoundingClientRect();
+  ConsoleTestRunner._viewportMargin = firstRect.top - viewportRect.top;
+  Console.ConsoleView.clearConsole();
+};
+
+/**
+ * Returns actual visible indices. Messages in the margin are treated as NOT visible.
+ * @return {!Array<number>}
+ */
+ConsoleTestRunner.visibleIndices = function() {
+  var consoleView = Console.ConsoleView.instance();
+  var viewport = consoleView._viewport;
+  var viewportRect = viewport.element.getBoundingClientRect();
+
+  if (typeof ConsoleTestRunner._viewportMargin !== 'number') {
+    var msg = 'Please call setupVisibleIndices() first before calling visibleIndices()!';
+    console.error(msg);
+    TestRunner.addResult(msg);
+    return [];
+  }
+
+  var first = -1;
+  var last = -1;
+  for (var i = 0; i < consoleView._visibleViewMessages.length; i++) {
+    var item = consoleView._visibleViewMessages[i];
+    if (!item._element)
+      continue;
+    var itemRect = item._element.getBoundingClientRect();
+    if (first === -1 && itemRect.bottom > viewportRect.top + ConsoleTestRunner._viewportMargin + 1)
+      first = i;
+    if (last === -1 && itemRect.bottom >= viewportRect.bottom - ConsoleTestRunner._viewportMargin - 1)
+      last = i;
+  }
+  return [first, last];
+};

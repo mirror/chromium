@@ -27,13 +27,27 @@
   var consoleView = Console.ConsoleView.instance();
   var viewport = consoleView._viewport;
   const smallCount = 3;
-  const rowHeight = viewportHeight / consoleView.minimumRowHeight();
-  const maxVisibleCount = Math.ceil(rowHeight);
-  const maxActiveCount = Math.ceil(rowHeight * 2);
   var wasShown = [];
   var willHide = [];
+  await ConsoleTestRunner.setupVisibleIndices();
 
-  TestRunner.addResult('Max visible messages count: ' + maxVisibleCount + ', active count: ' + maxActiveCount);
+  // Measure visible/active ranges when in the middle.
+  await logMessages(200);
+  viewport.forceScrollItemToBeFirst(50);
+  var actualVisibleIndices = ConsoleTestRunner.visibleIndices();
+  var actualFirstIndex = actualVisibleIndices[0];
+  var actualLastIndex = actualVisibleIndices[1];
+  var visibleCount = actualLastIndex - actualFirstIndex + 1;
+  var maxActiveCount = viewport._lastActiveIndex - viewport._firstActiveIndex + 1;
+  // Use this because # of active messages below visible area may be different
+  // # of active messages above visible area.
+  var minActiveCount = 2 * (actualFirstIndex - viewport._firstActiveIndex - 1) + visibleCount;
+  var activeCountAbove = actualFirstIndex - viewport._firstActiveIndex;
+  var activeCountBelow = viewport._lastActiveIndex - actualLastIndex;
+  TestRunner.addResult(`activeCountAbove: ${activeCountAbove}, activeCountBelow: ${activeCountBelow}`);
+  clearConsoleAndReset();
+
+  TestRunner.addResult('visibleCount: ' + visibleCount + ', maxActiveCount: ' + maxActiveCount);
 
   function onMessageShown() {
     wasShown.push(this);
@@ -43,10 +57,9 @@
     willHide.push(this);
   }
 
-  function printAndResetCounts(next) {
+  function printAndResetCounts() {
     TestRunner.addResult('Messages shown: ' + wasShown.length + ', hidden: ' + willHide.length);
     resetShowHideCounts();
-    next();
   }
 
   function resetShowHideCounts() {
@@ -54,26 +67,24 @@
     willHide = [];
   }
 
-  function logMessages(count, repeating, callback) {
-    var awaitingMessagesCount = count;
-    function messageAdded() {
-      if (!--awaitingMessagesCount) {
-        viewport.invalidate();
-        callback();
-      } else {
-        ConsoleTestRunner.addConsoleSniffer(messageAdded, false);
+  function logMessages(count, repeating) {
+    TestRunner.addResult('Logging ' + count + ' messages');
+    return new Promise(resolve => {
+      var awaitingMessagesCount = count;
+      function messageAdded() {
+        if (!--awaitingMessagesCount) {
+          viewport.invalidate();
+          resolve();
+        } else {
+          ConsoleTestRunner.addConsoleSniffer(messageAdded, false);
+        }
       }
-    }
-    ConsoleTestRunner.addConsoleSniffer(messageAdded, false);
-    if (!repeating)
-      TestRunner.evaluateInPage(String.sprintf('addMessages(%d)', count));
-    else
-      TestRunner.evaluateInPage(String.sprintf('addRepeatingMessages(%d)', count));
-  }
-
-  function printStuckToBottom() {
-    TestRunner.addResult(
-        'Is at bottom: ' + viewport.element.isScrolledToBottom() + ', should stick: ' + viewport.stickToBottom());
+      ConsoleTestRunner.addConsoleSniffer(messageAdded, false);
+      if (!repeating)
+        TestRunner.evaluateInPage(String.sprintf('addMessages(%d)', count));
+      else
+        TestRunner.evaluateInPage(String.sprintf('addRepeatingMessages(%d)', count));
+    });
   }
 
   function clearConsoleAndReset() {
@@ -85,71 +96,88 @@
   TestRunner.addSniffer(Console.ConsoleViewMessage.prototype, 'willHide', onMessageHidden, true);
 
   TestRunner.runTestSuite([
-    function addSmallCount(next) {
+    async function addSmallCount(next) {
       clearConsoleAndReset();
-      logMessages(smallCount, false, () => printAndResetCounts(next));
+      await logMessages(smallCount, false);
+      printAndResetCounts();
+      next();
     },
 
-    function addMaxVisibleCount(next) {
+    async function addVisibleCount(next) {
       clearConsoleAndReset();
-      logMessages(maxVisibleCount, false, () => printAndResetCounts(next));
+      await logMessages(visibleCount, false);
+      printAndResetCounts();
+      next();
     },
 
-    function addMaxActiveCount(next) {
+    async function addMaxActiveCount(next) {
       clearConsoleAndReset();
-      logMessages(maxActiveCount, false, () => printAndResetCounts(next));
-      printStuckToBottom();
+      await logMessages(maxActiveCount, false);
+      printAndResetCounts();
+      next();
     },
 
-    function addMoreThanMaxActiveCount(next) {
+    async function addMoreThanMaxActiveCount(next) {
       clearConsoleAndReset();
-      logMessages(maxActiveCount, false, step2);
-      function step2() {
-        logMessages(smallCount, false, () => printAndResetCounts(next));
-        printStuckToBottom();
-      }
+      await logMessages(maxActiveCount, false);
+      await logMessages(smallCount, false);
+      printAndResetCounts();
+      next();
     },
 
-    function scrollUpWithinActiveWindow(next) {
+    async function scrollToBottomInPartialActiveWindow(next) {
       clearConsoleAndReset();
-      logMessages(maxActiveCount, false, step2);
-      printStuckToBottom();
-      function step2() {
-        resetShowHideCounts();
-        viewport.forceScrollItemToBeFirst(0);
-        printAndResetCounts(next);
-      }
+      var visiblePlusHalfExtraRows = visibleCount + Math.floor((minActiveCount - visibleCount) / 2) - 1;
+      await logMessages(visiblePlusHalfExtraRows, false);
+      viewport.forceScrollItemToBeFirst(0);
+      resetShowHideCounts();
+      viewport.element.scrollTop = 1000000;
+      viewport.refresh();
+      printAndResetCounts();
+      next();
     },
 
-    function scrollUpToPositionOutsideOfActiveWindow(next) {
+    async function scrollToBottomInActiveWindow(next) {
       clearConsoleAndReset();
-      logMessages(maxActiveCount + smallCount, false, step2);
-      printStuckToBottom();
-      function step2() {
-        resetShowHideCounts();
-        viewport.forceScrollItemToBeFirst(0);
-        printAndResetCounts(next);
-      }
+      await logMessages(minActiveCount, false);
+      viewport.forceScrollItemToBeFirst(0);
+      resetShowHideCounts();
+      viewport.element.scrollTop = 1000000;
+      viewport.refresh();
+      printAndResetCounts();
+      next();
     },
 
-    function logRepeatingMessages(next) {
+    async function scrollToBottomInMoreThanActiveWindow(next) {
       clearConsoleAndReset();
-      logMessages(maxVisibleCount, true, () => printAndResetCounts(next));
+      await logMessages(maxActiveCount + smallCount, false);
+      viewport.forceScrollItemToBeFirst(0);
+      resetShowHideCounts();
+      viewport.element.scrollTop = 1000000;
+      viewport.refresh();
+      printAndResetCounts();
+      next();
     },
 
-    function reorderingMessages(next) {
+    async function logRepeatingMessages(next) {
       clearConsoleAndReset();
-      TestRunner.addResult('Logging ' + smallCount + ' messages');
-      logMessages(smallCount, false, () => printAndResetCounts(step2));
-      function step2() {
-        resetShowHideCounts();
-        TestRunner.addResult('Swapping messages 0 and 1');
-        var temp = consoleView._visibleViewMessages[0];
-        consoleView._visibleViewMessages[0] = consoleView._visibleViewMessages[1];
-        consoleView._visibleViewMessages[1] = temp;
-        viewport.invalidate();
-        printAndResetCounts(next);
-      }
+      await logMessages(visibleCount, true);
+      printAndResetCounts();
+      next();
+    },
+
+    async function reorderingMessages(next) {
+      clearConsoleAndReset();
+      await logMessages(smallCount, false);
+      printAndResetCounts();
+      resetShowHideCounts();
+      TestRunner.addResult('Swapping messages 0 and 1');
+      var temp = consoleView._visibleViewMessages[0];
+      consoleView._visibleViewMessages[0] = consoleView._visibleViewMessages[1];
+      consoleView._visibleViewMessages[1] = temp;
+      viewport.invalidate();
+      printAndResetCounts();
+      next();
     }
   ]);
 })();
