@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "2a37cb1f_05c567e2",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-19T22:28:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7833f33_4f81d545",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c1f8163_ab5e65c9",
         "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
         "patchSetId": 2
@@ -140,6 +158,30 @@
       "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd48ca2b_a69422b2",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-19T22:28:32Z",
+      "side": 1,
+      "message": "Put them in ChromeAppListModelUpdater instead of AppListViewDelegate to make tests happy.",
+      "parentUuid": "dfd76e23_7001a05a",
+      "range": {
+        "startLine": 213,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 43
+      },
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -222,6 +264,24 @@
       "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe2c9aa_e015ae53",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-19T22:28:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcc02413_6248b488",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -395,6 +455,24 @@
     },
     {
       "key": {
+        "uuid": "a6cebc93_76bb80c7",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-19T22:28:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d63af253_1df7e7a8",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cf618d4_b72ffdd8",
         "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
         "patchSetId": 2
@@ -427,6 +505,24 @@
       "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e885be32_0a4768b9",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-19T22:28:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f58745b8_cde5321c",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
