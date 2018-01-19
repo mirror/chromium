@@ -26,6 +26,7 @@
 #include "components/policy/core/common/cloud/device_management_service.h"
 #include "components/policy/core/common/policy_switches.h"
 #include "components/policy/proto/device_management_backend.pb.h"
+#include "components/user_manager/known_user.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
@@ -101,9 +102,6 @@ class BlockingLoginTest
     command_line->AppendSwitchASCII(
         policy::switches::kDeviceManagementUrl,
         embedded_test_server()->GetURL("/device_management").spec());
-
-    command_line->AppendSwitch(
-        chromeos::switches::kAllowFailedPolicyFetchForTest);
   }
 
   void SetUpOnMainThread() override {
@@ -264,6 +262,11 @@ IN_PROC_BROWSER_TEST_P(BlockingLoginTest, LoginBlocksForUser) {
     EXPECT_FALSE(
         user_manager->IsKnownUser(AccountId::FromUserEmail(kUsername)));
   }
+  // TODO(poromov): Remove this code when we fix https://crbug.com/580537,
+  // because policy fetches should succeed once that bug is fixed.
+  user_manager::known_user::SetProfileRequiresPolicy(
+      AccountId::FromUserEmail(GetParam().username),
+      user_manager::known_user::ProfileRequiresPolicy::kNoPolicyRequired);
 
   // Skip the OOBE, go to the sign-in screen, and wait for the login screen to
   // become visible.
