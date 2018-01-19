@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75216c5a_8e2773f1",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-19T23:03:48Z",
+      "side": 1,
+      "message": "Is this intentional? We did not traverse before due to the IsBeingCaptured() check in WasUnOccluded. Seems like we are now doing more work.",
+      "revId": "4a3aba3ac0635687a38eda7e92d63c3ec1762cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f85b85_0a590b74",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-19T23:03:48Z",
+      "side": 1,
+      "message": "Previously, call to WasShown was retaining the should_normally_be_occluded_ bit. If you consider those to be mutually exclusive now, you should combine WasOccluded, WasUnOccluded and WasHidden into the VisibilityChanged.",
+      "revId": "4a3aba3ac0635687a38eda7e92d63c3ec1762cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ded3134_c132dbad",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-19T23:03:48Z",
+      "side": 1,
+      "message": "How do we know it is not OCCLUDED?",
+      "revId": "4a3aba3ac0635687a38eda7e92d63c3ec1762cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1899b4d8_46fbc7f0",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-19T23:03:48Z",
+      "side": 1,
+      "message": "OnSomething is the the right name for a public method. It also clashes with the WasShown/Hidden on WebContents.",
+      "revId": "4a3aba3ac0635687a38eda7e92d63c3ec1762cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199c2e97_30ec690e",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-19T23:03:48Z",
+      "side": 1,
+      "message": "This swaps the default value.",
+      "revId": "4a3aba3ac0635687a38eda7e92d63c3ec1762cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
