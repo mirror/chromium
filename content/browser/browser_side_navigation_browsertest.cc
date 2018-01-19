@@ -35,6 +35,7 @@
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/url_request/url_request_failed_job.h"
+#include "services/network/public/cpp/network_features.h"
 #include "url/gurl.h"
 
 namespace content {

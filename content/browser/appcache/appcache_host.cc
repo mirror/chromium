@@ -16,6 +16,7 @@
 #include "content/browser/appcache/appcache_subresource_url_factory.h"
 #include "content/public/common/content_features.h"
 #include "net/url_request/url_request.h"
+#include "services/network/public/cpp/network_features.h"
 #include "services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "storage/browser/quota/quota_manager_proxy.h"
 

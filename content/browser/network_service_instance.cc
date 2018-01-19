@@ -9,9 +9,9 @@
 #include "content/network/network_service_impl.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
-#include "content/public/common/content_features.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
+#include "services/network/public/cpp/network_features.h"
 #include "services/service_manager/public/cpp/connector.h"
 
 namespace content {
