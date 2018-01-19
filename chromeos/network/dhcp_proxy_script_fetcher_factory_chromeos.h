@@ -9,7 +9,7 @@
 
 #include "base/macros.h"
 #include "chromeos/chromeos_export.h"
-#include "net/proxy/dhcp_proxy_script_fetcher_factory.h"
+#include "net/proxy_resolution/dhcp_proxy_script_fetcher_factory.h"
 
 namespace net {
 class DhcpProxyScriptFetcher;

@@ -5,6 +5,7 @@
 #include "extensions/browser/extension_navigation_throttle.h"
 
 #include <memory>
+#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "components/crx_file/id_util.h"
@@ -14,6 +15,7 @@
 #include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_renderer_host.h"
 #include "content/public/test/web_contents_tester.h"
+#include "extensions/browser/extension_navigation_throttle.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_builder.h"

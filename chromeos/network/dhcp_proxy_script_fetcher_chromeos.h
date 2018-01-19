@@ -11,7 +11,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "chromeos/chromeos_export.h"
-#include "net/proxy/dhcp_proxy_script_fetcher.h"
+#include "net/proxy_resolution/dhcp_proxy_script_fetcher.h"
 #include "url/gurl.h"
 
 namespace base {
