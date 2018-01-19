@@ -21,7 +21,8 @@ DoNothingDhcpProxyScriptFetcher::DoNothingDhcpProxyScriptFetcher() = default;
 DoNothingDhcpProxyScriptFetcher::~DoNothingDhcpProxyScriptFetcher() = default;
 
 int DoNothingDhcpProxyScriptFetcher::Fetch(
-    base::string16* utf16_text, const CompletionCallback& callback) {
+    base::string16* utf16_text, const CompletionCallback& callback,
+	const NetLogWithSource& net_log) {
   return ERR_NOT_IMPLEMENTED;
 }
 
