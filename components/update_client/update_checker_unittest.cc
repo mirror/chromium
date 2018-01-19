@@ -28,6 +28,7 @@
 #include "components/update_client/test_configurator.h"
 #include "components/update_client/update_engine.h"
 #include "components/update_client/url_request_post_interceptor.h"
+#include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
