@@ -36,7 +36,7 @@ ChromeTraceEventAgent* ChromeTraceEventAgent::GetInstance() {
 
 ChromeTraceEventAgent::ChromeTraceEventAgent(
     service_manager::Connector* connector)
-    : binding_(this), enabled_tracing_modes_(0) {
+    : enabled_tracing_modes_(0) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(!g_chrome_trace_event_agent);
   g_chrome_trace_event_agent = this;
@@ -44,16 +44,8 @@ ChromeTraceEventAgent::ChromeTraceEventAgent(
   if (!connector)
     return;
 
-  // Connecto to the agent registry interface.
-  tracing::mojom::AgentRegistryPtr agent_registry;
-  connector->BindInterface(resource_coordinator::mojom::kServiceName,
-                           &agent_registry);
-
-  mojom::AgentPtr agent;
-  binding_.Bind(mojo::MakeRequest(&agent));
-  agent_registry->RegisterAgent(std::move(agent), kChromeTraceEventLabel,
-                                mojom::TraceDataType::ARRAY,
-                                false /* supports_explicit_clock_sync */);
+  Register(connector, kChromeTraceEventLabel, mojom::TraceDataType::ARRAY,
+           false /* supports_explicit_clock_sync */);
 }
 
 ChromeTraceEventAgent::~ChromeTraceEventAgent() {
@@ -101,12 +93,6 @@ void ChromeTraceEventAgent::StopAndFlush(mojom::RecorderPtr recorder) {
   trace_log_needs_me_ = true;
   base::trace_event::TraceLog::GetInstance()->Flush(base::Bind(
       &ChromeTraceEventAgent::OnTraceLogFlush, base::Unretained(this)));
-}
-
-void ChromeTraceEventAgent::RequestClockSyncMarker(
-    const std::string& sync_id,
-    const RequestClockSyncMarkerCallback& callback) {
-  NOTREACHED() << "This agent does not support explicit clock sync";
 }
 
 void ChromeTraceEventAgent::RequestBufferStatus(
