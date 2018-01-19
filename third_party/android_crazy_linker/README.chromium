@@ -89,3 +89,5 @@ Local Modifications:
 
 - Start zip EOCD signature search at size of EOCD record bytes from file end.
 
+- Do not call r_brk() on devices that implement runtime machine instruction translation.
+

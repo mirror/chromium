@@ -12,9 +12,10 @@
 
 #include "crazy_linker_debug.h"
 #include "crazy_linker_globals.h"
+#include "crazy_linker_machine_translation.h"
 #include "crazy_linker_proc_maps.h"
-#include "crazy_linker_util.h"
 #include "crazy_linker_system.h"
+#include "crazy_linker_util.h"
 #include "elf_traits.h"
 
 namespace crazy {
@@ -207,12 +208,30 @@ void ScopedPageReadWriteRemapper::Release() {
   page_prot_ = 0;
 }
 
+// Return true iff it is safe to call the GDB debugger hook function (r_brk())
+// on this device. This operation can crash in certain cases when machine
+// translation is enabled.
+bool ShouldCallRBrk() {
+// Implementation note: always return true for debug builds.
+// Only release builds will probe the system to determine whether
+// machine translation is running, and if so, return false to forbid
+// the debugger hook call.
+#ifndef NDEBUG
+  return !MaybeRunningUnderMachineTranslation();
+#else
+  return false;
+#endif
+}
+
 }  // namespace
 
 bool RDebug::Init() {
   // The address of '_r_debug' is in the DT_DEBUG entry of the current
   // executable.
   init_ = true;
+  call_r_brk_ = ShouldCallRBrk();
+  LOG("%s: call_r_brk_=%s", __PRETTY_FUNCTION__,
+      call_r_brk_ ? "true" : "false");
 
   size_t dynamic_addr = 0;
   size_t dynamic_size = 0;
@@ -275,6 +294,13 @@ bool RDebug::Init() {
 
   LOG("%s: There is no non-0 DT_DEBUG entry in this process\n", __FUNCTION__);
   return false;
+}
+
+void RDebug::CallRBrk(int state) {
+  if (call_r_brk_) {
+    r_debug_->r_state = state;
+    r_debug_->r_brk();
+  }
 }
 
 namespace {
@@ -435,10 +461,6 @@ void RDebug::AddEntryImpl(link_map_t* entry) {
     return;
   }
 
-  // Tell GDB the list is going to be modified.
-  r_debug_->r_state = RT_ADD;
-  r_debug_->r_brk();
-
   // IMPORTANT: GDB expects the first entry in the list to correspond
   // to the executable. So add our new entry just after it. This is ok
   // because by default, the linker is always the second entry, as in:
@@ -465,6 +487,9 @@ void RDebug::AddEntryImpl(link_map_t* entry) {
     return;
   }
 
+  // Tell GDB the list is going to be modified.
+  CallRBrk(RT_ADD);
+
   link_map_t* before = r_debug_->r_map->l_next;
   link_map_t* after = before->l_next;
 
@@ -479,9 +504,8 @@ void RDebug::AddEntryImpl(link_map_t* entry) {
   WriteLinkMapField(&before->l_next, entry);
   WriteLinkMapField(&after->l_prev, entry);
 
-  // Tell GDB that the list modification has completed.
-  r_debug_->r_state = RT_CONSISTENT;
-  r_debug_->r_brk();
+  // Tell GDB the list modification has completed.
+  CallRBrk(RT_CONSISTENT);
 }
 
 void RDebug::DelEntryImpl(link_map_t* entry) {
@@ -491,8 +515,7 @@ void RDebug::DelEntryImpl(link_map_t* entry) {
     return;
 
   // Tell GDB the list is going to be modified.
-  r_debug_->r_state = RT_DELETE;
-  r_debug_->r_brk();
+  CallRBrk(RT_DELETE);
 
   // IMPORTANT: Before modifying the previous and next entries in the
   // list, ensure that they are writable. See comment above for more
@@ -509,8 +532,7 @@ void RDebug::DelEntryImpl(link_map_t* entry) {
   entry->l_next = NULL;
 
   // Tell GDB the list modification has completed.
-  r_debug_->r_state = RT_CONSISTENT;
-  r_debug_->r_brk();
+  CallRBrk(RT_CONSISTENT);
 }
 
 }  // namespace crazy
