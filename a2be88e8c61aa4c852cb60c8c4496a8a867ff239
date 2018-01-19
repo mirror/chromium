@@ -16,6 +16,24 @@
       "revId": "a2be88e8c61aa4c852cb60c8c4496a8a867ff239",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64e0da2_423e4df5",
+        "filename": "components/history/core/browser/history_types.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-19T16:12:18Z",
+      "side": 1,
+      "message": "That sounds good. \n\nbase::Time::Max(), base::Time() actually represents a valid time range because base::Time() for end_ is interpreted as base::Time::Max() but something like base::Time::Max(), base::Time::Min() would work as an invalid value.",
+      "parentUuid": "077b5826_701065f0",
+      "revId": "a2be88e8c61aa4c852cb60c8c4496a8a867ff239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
