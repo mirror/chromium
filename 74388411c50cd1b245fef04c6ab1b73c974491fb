@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "753e04a5_2c1d87d8",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-19T00:20:59Z",
+      "side": 1,
+      "message": "\u003e According to\n\u003e https://www.chromium.org/user-experience/infobars\n\u003e \"...the user can save a password they just entered.\"\n\u003e as an example of an infobar.\n\nThat documentation is woefully out of date as the password infobar became a bubble years ago.\n\n\u003e \n\u003e Are infobars even used anymore?\n\nyes. You can see examples by looking up subclasses of InfobarDelegate (and subclasses of ConfirmInfobarDelegate, etc.). There are over 20 still in use.\n\n\u003e \n\u003e I can rename this to \n\u003e |FocusNonModalUIForAccessibility|\n\u003e to generalize if you\u0027d like.\n\u003e \n\u003e I mostly want to re-use the accelerator which some users might already know.\n\nThat would be OK",
+      "parentUuid": "d20b1683_5c2f58f1",
+      "range": {
+        "startLine": 1047,
+        "startChar": 0,
+        "endLine": 1049,
+        "endChar": 3
+      },
+      "revId": "74388411c50cd1b245fef04c6ab1b73c974491fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5c1b4f9_3a933450",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
         "patchSetId": 10
