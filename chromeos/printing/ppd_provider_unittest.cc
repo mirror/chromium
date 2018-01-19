@@ -659,15 +659,17 @@ TEST_F(PpdProviderTest, ExtractPpdFilters) {
   ref.effective_make_and_model = "printer_b_ref";
   provider->ResolvePpd(ref, base::Bind(&PpdProviderTest::CaptureResolvePpd,
                                        base::Unretained(this)));
+  // Check that mixed case still works, in v2
+  ref.effective_make_and_model = "pRiNteR_B_reF";
+  provider->ResolvePpd(ref, base::Bind(&PpdProviderTest::CaptureResolvePpd,
+                                       base::Unretained(this)));
   scoped_task_environment_.RunUntilIdle();
-
-  ASSERT_EQ(2UL, captured_resolve_ppd_.size());
-  EXPECT_EQ(PpdProvider::SUCCESS, captured_resolve_ppd_[0].code);
-  EXPECT_EQ(kCupsFilterPpdContents, captured_resolve_ppd_[0].ppd_contents);
 
   std::sort(captured_resolve_ppd_[0].ppd_filters.begin(),
             captured_resolve_ppd_[0].ppd_filters.end());
-
+  ASSERT_EQ(3UL, captured_resolve_ppd_.size());
+  EXPECT_EQ(PpdProvider::SUCCESS, captured_resolve_ppd_[0].code);
+  EXPECT_EQ(kCupsFilterPpdContents, captured_resolve_ppd_[0].ppd_contents);
   EXPECT_EQ(
       std::vector<std::string>({"a_different_filter", "filter3", "my_filter"}),
       captured_resolve_ppd_[0].ppd_filters);
@@ -679,6 +681,14 @@ TEST_F(PpdProviderTest, ExtractPpdFilters) {
   EXPECT_EQ(
       std::vector<std::string>({"another_real_filter", "the_real_filter"}),
       captured_resolve_ppd_[1].ppd_filters);
+
+  std::sort(captured_resolve_ppd_[2].ppd_filters.begin(),
+            captured_resolve_ppd_[2].ppd_filters.end());
+  EXPECT_EQ(PpdProvider::SUCCESS, captured_resolve_ppd_[2].code);
+  EXPECT_EQ(kCupsFilter2PpdContents, captured_resolve_ppd_[2].ppd_contents);
+  EXPECT_EQ(
+      std::vector<std::string>({"another_real_filter", "the_real_filter"}),
+      captured_resolve_ppd_[2].ppd_filters);
 }
 
 // Verifies that we can extract the Manufacturer and Model selectison for a

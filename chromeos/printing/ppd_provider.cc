@@ -528,19 +528,24 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
 
   void ResolvePpd(const Printer::PpdReference& reference,
                   ResolvePpdCallback cb) override {
+    // In v2 metadata, we work with lwoercased effective_make_and_models.
+    Printer::PpdReference lowercase_reference(reference);
+    lowercase_reference.effective_make_and_model =
+        base::ToLowerASCII(lowercase_reference.effective_make_and_model);
+
     // Do a sanity check here, so we can assume |reference| is well-formed in
     // the rest of this class.
-    if (!PpdReferenceIsWellFormed(reference)) {
+    if (!PpdReferenceIsWellFormed(lowercase_reference)) {
       FinishPpdResolution(std::move(cb), PpdProvider::INTERNAL_ERROR,
                           std::string());
       return;
     }
     // First step, check the cache.  If the cache lookup fails, we'll (try to)
     // consult the server.
-    ppd_cache_->Find(
-        PpdReferenceToCacheKey(reference),
-        base::BindOnce(&PpdProviderImpl::ResolvePpdCacheLookupDone,
-                       weak_factory_.GetWeakPtr(), reference, std::move(cb)));
+    ppd_cache_->Find(PpdReferenceToCacheKey(lowercase_reference),
+                     base::BindOnce(&PpdProviderImpl::ResolvePpdCacheLookupDone,
+                                    weak_factory_.GetWeakPtr(),
+                                    lowercase_reference, std::move(cb)));
   }
 
   void ReverseLookup(const std::string& effective_make_and_model,
