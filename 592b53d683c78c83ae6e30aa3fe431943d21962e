@@ -52,6 +52,24 @@
       "revId": "592b53d683c78c83ae6e30aa3fe431943d21962e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec93242_a452755f",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-19T03:02:05Z",
+      "side": 1,
+      "message": "I started adding a thread checker instead to remove this bool and realized we still need the image provider to build the picture shader. Eventually it ends up getting accessed here in SkPaint conversion during raster (https://cs.chromium.org/chromium/src/cc/paint/paint_flags.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d118) which has no image provider. . .",
+      "parentUuid": "74ec1a4b_369973be",
+      "revId": "592b53d683c78c83ae6e30aa3fe431943d21962e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
