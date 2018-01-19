@@ -89,8 +89,10 @@ class MockVideoFrameResourceProvider
   ~MockVideoFrameResourceProvider() = default;
 
   MOCK_METHOD1(Initialize, void(viz::ContextProvider*));
-  MOCK_METHOD2(AppendQuads,
-               void(viz::RenderPass*, scoped_refptr<media::VideoFrame>));
+  MOCK_METHOD3(AppendQuads,
+               void(viz::RenderPass*,
+                    scoped_refptr<media::VideoFrame>,
+                    media::VideoRotation));
   MOCK_METHOD0(ReleaseFrameResources, void());
   MOCK_METHOD2(PrepareSendToParent,
                void(const cc::LayerTreeResourceProvider::ResourceIdArray&,
@@ -191,7 +193,7 @@ TEST_F(VideoFrameSubmitterTest,
   EXPECT_CALL(*sink_, DoSubmitCompositorFrame(_, _));
   EXPECT_CALL(*provider_, PutCurrentFrame());
   EXPECT_CALL(*sink_, SetNeedsBeginFrame(false));
-  EXPECT_CALL(*resource_provider_, AppendQuads(_, _));
+  EXPECT_CALL(*resource_provider_, AppendQuads(_, _, _));
   EXPECT_CALL(*resource_provider_, PrepareSendToParent(_, _));
   EXPECT_CALL(*resource_provider_, ReleaseFrameResources());
 
@@ -229,7 +231,7 @@ TEST_F(VideoFrameSubmitterTest, DidReceiveFrameSubmitsFrame) {
           gfx::Size(8, 8), base::TimeDelta())));
   EXPECT_CALL(*sink_, DoSubmitCompositorFrame(_, _));
   EXPECT_CALL(*provider_, PutCurrentFrame());
-  EXPECT_CALL(*resource_provider_, AppendQuads(_, _));
+  EXPECT_CALL(*resource_provider_, AppendQuads(_, _, _));
   EXPECT_CALL(*resource_provider_, PrepareSendToParent(_, _));
   EXPECT_CALL(*resource_provider_, ReleaseFrameResources());
 
@@ -253,7 +255,7 @@ TEST_F(VideoFrameSubmitterTest, OnBeginFrameSubmitsFrame) {
           gfx::Size(8, 8), base::TimeDelta())));
   EXPECT_CALL(*sink_, DoSubmitCompositorFrame(_, _));
   EXPECT_CALL(*provider_, PutCurrentFrame());
-  EXPECT_CALL(*resource_provider_, AppendQuads(_, _));
+  EXPECT_CALL(*resource_provider_, AppendQuads(_, _, _));
   EXPECT_CALL(*resource_provider_, PrepareSendToParent(_, _));
   EXPECT_CALL(*resource_provider_, ReleaseFrameResources());
 

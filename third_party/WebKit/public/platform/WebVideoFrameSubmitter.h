@@ -7,6 +7,7 @@
 
 #include "WebCommon.h"
 #include "cc/layers/video_frame_provider.h"
+#include "media/base/video_rotation.h"
 
 namespace cc {
 class LayerTreeSettings;
@@ -41,6 +42,7 @@ class BLINK_PLATFORM_EXPORT WebVideoFrameSubmitter
   virtual ~WebVideoFrameSubmitter() = default;
   virtual void Initialize(cc::VideoFrameProvider*) = 0;
   virtual void StartSubmitting(const viz::FrameSinkId&) = 0;
+  virtual void SetRotation(media::VideoRotation) = 0;
 };
 
 }  // namespace blink

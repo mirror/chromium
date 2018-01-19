@@ -53,6 +53,7 @@ class PLATFORM_EXPORT VideoFrameSubmitter
   // WebVideoFrameSubmitter implementation.
   void Initialize(cc::VideoFrameProvider*) override;
   void StartSubmitting(const viz::FrameSinkId&) override;
+  void SetRotation(media::VideoRotation) override;
 
   // cc::mojom::CompositorFrameSinkClient implementation.
   void DidReceiveCompositorFrameAck(
@@ -78,6 +79,7 @@ class PLATFORM_EXPORT VideoFrameSubmitter
   std::unique_ptr<VideoFrameResourceProvider> resource_provider_;
 
   bool is_rendering_;
+  media::VideoRotation rotation_;
   gfx::Size current_size_in_pixels_;
   base::WeakPtrFactory<VideoFrameSubmitter> weak_ptr_factory_;
 
