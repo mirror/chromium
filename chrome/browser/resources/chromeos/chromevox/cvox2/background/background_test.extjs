@@ -575,6 +575,8 @@ TEST_F('BackgroundTest', 'NoisySlider', function() {
     <script>
       function update() {
         var s = document.getElementById('slider');
+        // Slider value must actually change otherwise blink suppresses event.
+        s.setAttribute('aria-valuetext', '');
         s.setAttribute('aria-valuetext', 'noisy');
         setTimeout(update, 500);
       }
