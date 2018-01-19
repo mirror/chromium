@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e5dd014_a606fd9f",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-19T23:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4e55aa5_5e61f2e9",
+      "range": {
+        "startLine": 282,
+        "startChar": 38,
+        "endLine": 282,
+        "endChar": 64
+      },
+      "revId": "e79b132ff590548cb6af1d8c0d11f6d62094e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d117570a_31f29f5b",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "e79b132ff590548cb6af1d8c0d11f6d62094e870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6a40d7_923818cf",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-19T23:22:52Z",
+      "side": 1,
+      "message": "Done and reorder the GetSelectedTabContentView()",
+      "parentUuid": "d117570a_31f29f5b",
+      "revId": "e79b132ff590548cb6af1d8c0d11f6d62094e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "8fd14b63_71845de6",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-19T23:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e4bc485_4560bba9",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 6
+      },
+      "revId": "e79b132ff590548cb6af1d8c0d11f6d62094e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb3006e8_8ab46be0",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "e79b132ff590548cb6af1d8c0d11f6d62094e870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7028a063_3b7865ad",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-19T23:22:52Z",
+      "side": 1,
+      "message": "Not necessary. Put back in ctor.",
+      "parentUuid": "fb3006e8_8ab46be0",
+      "revId": "e79b132ff590548cb6af1d8c0d11f6d62094e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "a6c56417_324cdfbc",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-19T23:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00a349b5_1bd92e9e",
+      "revId": "e79b132ff590548cb6af1d8c0d11f6d62094e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec47a4ea_f6abe6fa",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
         "patchSetId": 2
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "41fea94f_dff3778f",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-19T23:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec47a4ea_f6abe6fa",
+      "revId": "e79b132ff590548cb6af1d8c0d11f6d62094e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7120cbb7_f1632a3a",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
         "patchSetId": 2
@@ -130,6 +250,24 @@
       "revId": "e79b132ff590548cb6af1d8c0d11f6d62094e870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21409b91_f44db7ee",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-19T23:22:52Z",
+      "side": 1,
+      "message": "By reading the tests, my understanding is that:\n1. For original test, the tabs aligned in horizontal case: in the CalculatePreferredSize of TabbedPane, it requests space in height for tab_strip. That is why the original tests only test \"width\". As commented: \"it should be as wide as the widest tab\", there is an EXPECT_GE test for width. EXPECT_GT test for height.\nAfter Layout (tabbed_pane_-\u003eSetBounds), it only reserve height for tab_strip and set the rest height of the child bounds (the width should be the same). so it tests EXPECT_LE for width and EXPECT_LT for height.\n\n2. Similarly, for case of tabs aligned in vertical, the CalculatePreferredSize of TabbedPane will request space in width of the tab_strip. So here I add tests for \"height\".",
+      "parentUuid": "7120cbb7_f1632a3a",
+      "revId": "e79b132ff590548cb6af1d8c0d11f6d62094e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
