@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9477449d_7dc97490",
+        "filename": "content/browser/renderer_host/input/main_thread_event_queue_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T18:03:47Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "f7569eba3b08579debd5e48af83e70931c947563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49223de1_efadcff6",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T18:03:47Z",
+      "side": 1,
+      "message": "Can we move this code into a function. Not to make the current function even longer..",
+      "revId": "f7569eba3b08579debd5e48af83e70931c947563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1ec4fb_803ac84f",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T18:03:47Z",
+      "side": 1,
+      "message": "Can\u0027t this be done in the CreateSimulatedWebInputEvents function?",
+      "revId": "f7569eba3b08579debd5e48af83e70931c947563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc483619_29e58a13",
+        "filename": "content/shell/test_runner/event_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2298,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T18:03:47Z",
+      "side": 1,
+      "message": "This code seems silly to prepare a WebTouchEvent and then take it apart to send WebPointerEvents.. you should just send them directly first.",
+      "revId": "f7569eba3b08579debd5e48af83e70931c947563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
