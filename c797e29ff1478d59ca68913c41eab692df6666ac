@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "599cb636_eee4c712",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-19T14:09:17Z",
+      "side": 0,
+      "message": "I\u0027m not sure we should be removing this, as there are WebInputEvent types we don\u0027t handle in the targeter (e.g. KeyBoard events). That being said, those should be DCHECKed earlier, perhaps in FindTargetAndDispatch(), to make sure no one ever tries to send them here.",
+      "range": {
+        "startLine": 284,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 14
+      },
+      "revId": "c797e29ff1478d59ca68913c41eab692df6666ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
