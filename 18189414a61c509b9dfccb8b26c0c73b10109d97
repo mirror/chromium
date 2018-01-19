@@ -22,6 +22,30 @@
       "revId": "18189414a61c509b9dfccb8b26c0c73b10109d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f7dc2d_35bff9e5",
+        "filename": "chrome/browser/ui/views/infobars/confirm_infobar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-19T00:19:05Z",
+      "side": 1,
+      "message": "It\u0027s probably possible to do it in Layout().  A couple comments:\n* The old code also sized during addition, so this is a smaller functional change.  (Not generally a reason that carries much water with me)\n* These buttons\u0027 sizes don\u0027t change, so sizing them at the time we create them, instead of every time we Layout(), makes sense.  (This is the compelling reason IMO)\n* I\u0027d have to ensure we don\u0027t potentially read the size of these before it\u0027s set properly if we don\u0027t size them until Layout().  Might be an issue, might not.\n\nI don\u0027t think it\u0027s actually that weird to ensure fixed-sized objects are sized at the time they\u0027re created, rather than in Layout(), and I can\u0027t see a benefit from moving there, so I\u0027d probably leave it.",
+      "parentUuid": "41d93c0d_e029f5aa",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 32
+      },
+      "revId": "18189414a61c509b9dfccb8b26c0c73b10109d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
