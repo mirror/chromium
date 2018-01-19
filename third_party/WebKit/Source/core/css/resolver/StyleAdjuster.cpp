@@ -628,13 +628,32 @@ void StyleAdjuster::AdjustComputedStyle(StyleResolverState& state,
     }
   }
 
-  // TODO(layout-dev): Once LayoutnG handles inline content editable, we should
-  // get rid of following code fragment.
-  if (RuntimeEnabledFeatures::LayoutNGEnabled() &&
-      style.UserModify() != EUserModify::kReadOnly &&
-      style.Display() == EDisplay::kInline &&
-      parent_style.UserModify() == EUserModify::kReadOnly) {
-    style.SetDisplay(EDisplay::kInlineBlock);
+  if (!style.IsLayoutNGDisabled()) {
+    bool should_disable_layout_ng = !RuntimeEnabledFeatures::LayoutNGEnabled();
+
+    // Content editable is not supported yet.
+    if (!should_disable_layout_ng &&
+        style.UserModify() != EUserModify::kReadOnly) {
+      should_disable_layout_ng = true;
+
+      // Change inline to inline-block because all boxes within an inline
+      // formatting context must use one layout engine.
+      if (style.Display() == EDisplay::kInline &&
+          parent_style.UserModify() == EUserModify::kReadOnly)
+        style.SetDisplay(EDisplay::kInlineBlock);
+    }
+
+    // Form controls are not supported yet.
+    if (!should_disable_layout_ng && element && element->IsInShadowTree()) {
+      if (ShadowRoot* root = element->ContainingShadowRoot()) {
+        if (root->IsUserAgent() && root->host().IsFormControlElement())
+          should_disable_layout_ng = true;
+      }
+    }
+
+    if (should_disable_layout_ng) {
+      style.SetIsLayoutNGDisabled(true);
+    }
   }
 }
 }  // namespace blink
