@@ -19,6 +19,57 @@
     },
     {
       "key": {
+        "uuid": "ecff718c_65684ef8",
+        "filename": "chromeos/network/network_connection_handler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-19T01:00:31Z",
+      "side": 1,
+      "message": "this should work, but I wonder whether the logic could be simplified by adding a property to ConnectRequest to indicate when the callbacks should be called (instead of passing immediate_callbacks around).\nmaybe\nenum {kOnStartConnect, kOnConnectDone} callback_invocation;\n\n(and just clear the callbacks kOnStartConnect callbacks when StartConnect is called)",
+      "revId": "6f8651d21423c5d5f7332d03eb842297eadf8b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b52698f3_363b4a55",
+        "filename": "chromeos/network/network_connection_handler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-19T01:00:31Z",
+      "side": 1,
+      "message": "This will change when ConnectSucceeded observers are called (at least for some requests).",
+      "revId": "6f8651d21423c5d5f7332d03eb842297eadf8b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4eff1c_c252117e",
+        "filename": "chromeos/network/network_connection_handler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-19T01:00:31Z",
+      "side": 1,
+      "message": "Will shill invoke success callback immediately, or wait until connection is requested, (or is it undefined).\nIf it\u0027s the first option, it might make sense to invoke success_callback only when shill request succeeds (i.e. in HandleShillConnectSuccess).",
+      "revId": "6f8651d21423c5d5f7332d03eb842297eadf8b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "280305a3_fb8d8331",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 3
