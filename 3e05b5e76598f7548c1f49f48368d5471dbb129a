@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c37bcba_d6375f99",
+        "filename": "chrome/browser/extensions/api/processes/processes_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-19T18:52:54Z",
+      "side": 1,
+      "message": "nit: this is a bit of an interesting redirect, since this just forwards into EventRouter.  I think it\u0027d be cleaner to just use EventRouter directly.\n\nEventRouter* event_router \u003d EventRouter::Get(profile());\nevent_router-\u003eHasEventListeners(\u003cname\u003e);\n\nI\u0027d also probably just inline this in the test, but I don\u0027t feel too strongly.",
+      "revId": "3e05b5e76598f7548c1f49f48368d5471dbb129a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
