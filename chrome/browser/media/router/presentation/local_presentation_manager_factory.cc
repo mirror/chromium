@@ -16,8 +16,8 @@ namespace media_router {
 
 namespace {
 
-base::LazyInstance<LocalPresentationManagerFactory>::DestructorAtExit
-    service_factory = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<LocalPresentationManagerFactory>::Leaky service_factory =
+    LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 

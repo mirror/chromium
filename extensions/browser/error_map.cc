@@ -17,7 +17,7 @@ namespace {
 // The maximum number of errors to be stored per extension.
 const size_t kMaxErrorsPerExtension = 100;
 
-base::LazyInstance<ErrorList>::DestructorAtExit g_empty_error_list =
+base::LazyInstance<ErrorList>::Leaky g_empty_error_list =
     LAZY_INSTANCE_INITIALIZER;
 
 // An incrementing counter for the next error id. Overflowing this is very

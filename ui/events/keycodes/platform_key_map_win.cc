@@ -268,7 +268,7 @@ void CleanupKeyMapTls(void* data) {
 }
 
 struct PlatformKeyMapInstanceTlsTraits
-    : public base::internal::DestructorAtExitLazyInstanceTraits<
+    : public base::internal::LeakyLazyInstanceTraits<
           base::ThreadLocalStorage::Slot> {
   static base::ThreadLocalStorage::Slot* New(void* instance) {
     // Use placement new to initialize our instance in our preallocated space.

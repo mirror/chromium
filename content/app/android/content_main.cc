@@ -20,10 +20,10 @@ namespace content {
 
 namespace {
 
-LazyInstance<std::unique_ptr<service_manager::MainDelegate>>::DestructorAtExit
+LazyInstance<std::unique_ptr<service_manager::MainDelegate>>::Leaky
     g_service_manager_main_delegate = LAZY_INSTANCE_INITIALIZER;
 
-LazyInstance<std::unique_ptr<ContentMainDelegate>>::DestructorAtExit
+LazyInstance<std::unique_ptr<ContentMainDelegate>>::Leaky
     g_content_main_delegate = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

@@ -366,9 +366,8 @@ TtsAPI::TtsAPI(content::BrowserContext* context) {
 TtsAPI::~TtsAPI() {
 }
 
-static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<TtsAPI>>::DestructorAtExit g_factory =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<BrowserContextKeyedAPIFactory<TtsAPI>>::Leaky
+    g_factory = LAZY_INSTANCE_INITIALIZER;
 
 BrowserContextKeyedAPIFactory<TtsAPI>* TtsAPI::GetFactoryInstance() {
   return g_factory.Pointer();

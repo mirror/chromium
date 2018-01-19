@@ -13,7 +13,7 @@
 namespace keyboard {
 namespace {
 
-base::LazyInstance<GURL>::DestructorAtExit g_override_content_url =
+base::LazyInstance<GURL>::Leaky g_override_content_url =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

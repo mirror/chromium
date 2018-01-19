@@ -55,8 +55,8 @@ struct ResponseInfo {
 };
 
 using PendingResponseMap = std::map<int, std::unique_ptr<ResponseInfo>>;
-static base::LazyInstance<PendingResponseMap>::DestructorAtExit
-    pending_response_map = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<PendingResponseMap>::Leaky pending_response_map =
+    LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 

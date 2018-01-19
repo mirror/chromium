@@ -34,8 +34,7 @@ class ScopedAllowGL {
   static bool IsAllowed();
 
  private:
-  static base::LazyInstance<base::ThreadLocalBoolean>::DestructorAtExit
-      allow_gl;
+  static base::LazyInstance<base::ThreadLocalBoolean>::Leaky allow_gl;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedAllowGL);
 };

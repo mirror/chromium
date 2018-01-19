@@ -268,7 +268,7 @@ void BookmarkManagerPrivateAPI::Shutdown() {
 }
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<BookmarkManagerPrivateAPI>>::DestructorAtExit
+    BrowserContextKeyedAPIFactory<BookmarkManagerPrivateAPI>>::Leaky
     g_bookmark_manager_private_api_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static

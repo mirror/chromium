@@ -28,7 +28,7 @@ namespace web {
 namespace {
 
 // Maps service userIds to associated BrowserState instances.
-base::LazyInstance<std::map<std::string, BrowserState*>>::DestructorAtExit
+base::LazyInstance<std::map<std::string, BrowserState*>>::Leaky
     g_user_id_to_browser_state = LAZY_INSTANCE_INITIALIZER;
 
 // Private key used for safe conversion of base::SupportsUserData to

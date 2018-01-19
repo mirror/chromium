@@ -26,7 +26,7 @@ namespace {
 
 typedef std::map<gfx::AcceleratedWidget,AcceleratedWidgetMac*>
     WidgetToHelperMap;
-base::LazyInstance<WidgetToHelperMap>::DestructorAtExit g_widget_to_helper_map;
+base::LazyInstance<WidgetToHelperMap>::Leaky g_widget_to_helper_map;
 
 }  // namespace
 

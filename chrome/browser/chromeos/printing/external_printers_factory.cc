@@ -16,8 +16,8 @@ namespace chromeos {
 
 namespace {
 
-base::LazyInstance<ExternalPrintersFactory>::DestructorAtExit
-    g_printers_factory = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<ExternalPrintersFactory>::Leaky g_printers_factory =
+    LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
