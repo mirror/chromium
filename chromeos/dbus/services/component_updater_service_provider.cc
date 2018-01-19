@@ -61,7 +61,9 @@ void ComponentUpdaterServiceProvider::LoadComponent(
   // |mount| is an optional parameter, and by default is true.
   bool mount = true;
   if (reader.PopString(&component_name)) {
-    reader.PopBool(&mount);
+    // Resets its parameter to be true on failure.
+    if (!reader.PopBool(&mount))
+      mount = true;
     delegate_->LoadComponent(
         component_name, mount,
         base::Bind(&ComponentUpdaterServiceProvider::OnLoadComponent,
