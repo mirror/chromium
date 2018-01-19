@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b74eb4b1_8ffa7764",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T04:21:34Z",
+      "side": 1,
+      "message": "-orderOut: takes care of it (the inverse of how -addChildWindow: orders the window in).",
+      "parentUuid": "4946413b_77445e7f",
+      "revId": "96ac64f3030f1d737ad1512e16385e496b1a1369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0aa5668_5bf60a11",
         "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "96ac64f3030f1d737ad1512e16385e496b1a1369",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88bc8abc_8c6f93e4",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T04:21:34Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "b0aa5668_5bf60a11",
+      "revId": "96ac64f3030f1d737ad1512e16385e496b1a1369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5b2bff44_7bc0b4c5",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T04:21:34Z",
+      "side": 1,
+      "message": "That\u0027s fair!",
+      "parentUuid": "21d941cb_ac5eb0a1",
+      "revId": "96ac64f3030f1d737ad1512e16385e496b1a1369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db371f2_59d13f8f",
         "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "96ac64f3030f1d737ad1512e16385e496b1a1369",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3beb6cf9_c91b336e",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T04:21:34Z",
+      "side": 1,
+      "message": "Yep, it does — OK, I added some comments :).",
+      "parentUuid": "2db371f2_59d13f8f",
+      "revId": "96ac64f3030f1d737ad1512e16385e496b1a1369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
