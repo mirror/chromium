@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebef4181_e26161ce",
+        "filename": "tools/grit/grit/node/misc.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T11:25:11Z",
+      "side": 1,
+      "message": "nit: helpful error messages",
+      "range": {
+        "startLine": 39,
+        "startChar": 34,
+        "endLine": 39,
+        "endChar": 55
+      },
+      "revId": "0d7e404c99ef7d600e756e2167314548b2c99a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
