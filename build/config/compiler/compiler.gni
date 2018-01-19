@@ -70,6 +70,9 @@ declare_args() {
 
   # Whether or not we should use position independent code.
   use_pic = true
+
+  # Whether or not we should use Identical Code Folding in linker.
+  use_icf = true
 }
 
 assert(!is_cfi || use_thin_lto, "CFI requires ThinLTO")
