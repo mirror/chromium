@@ -10,8 +10,8 @@
 #include "content/browser/loader/url_loader_factory_impl.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/common/content_features.h"
 #include "net/http/http_util.h"
+#include "services/network/public/cpp/network_features.h"
 #include "services/network/public/interfaces/url_loader.mojom.h"
 
 namespace content {

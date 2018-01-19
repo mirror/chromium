@@ -55,6 +55,7 @@
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
 #include "services/network/public/cpp/loader_util.h"
+#include "services/network/public/cpp/network_features.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"

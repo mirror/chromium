@@ -46,6 +46,7 @@
 #include "net/test/embedded_test_server/request_handler_util.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/network/public/cpp/network_features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using prerender::test_utils::DestructionWaiter;

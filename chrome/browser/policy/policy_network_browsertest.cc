@@ -29,7 +29,6 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/storage_partition.h"
-#include "content/public/common/content_features.h"
 #include "content/public/test/browser_test.h"
 #include "content/public/test/browser_test_utils.h"
 #include "net/cert/test_root_certs.h"
@@ -38,6 +37,7 @@
 #include "net/test/test_data_directory.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/network/public/cpp/network_features.h"
 
 #if defined(OS_CHROMEOS)
 #include "chromeos/chromeos_switches.h"

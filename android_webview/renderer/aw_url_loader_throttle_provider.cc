@@ -11,6 +11,7 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/render_thread.h"
+#include "services/network/public/cpp/network_features.h"
 #include "services/service_manager/public/cpp/connector.h"
 
 namespace android_webview {

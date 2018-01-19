@@ -27,6 +27,7 @@
 #include "crypto/sha2.h"
 #include "mojo/public/c/system/types.h"
 #include "net/base/io_buffer.h"
+#include "services/network/public/cpp/network_features.h"
 
 namespace content {
 

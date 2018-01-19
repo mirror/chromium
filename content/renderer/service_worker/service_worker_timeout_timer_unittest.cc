@@ -11,7 +11,7 @@
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/time/tick_clock.h"
 #include "content/common/service_worker/service_worker_utils.h"
-#include "content/public/common/content_features.h"
+#include "services/network/public/cpp/network_features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {

@@ -196,6 +196,7 @@
 #include "ppapi/features/features.h"
 #include "services/device/public/interfaces/battery_monitor.mojom.h"
 #include "services/device/public/interfaces/constants.mojom.h"
+#include "services/network/public/cpp/network_features.h"
 #include "services/network/public/cpp/network_switches.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/resource_coordinator/public/cpp/process_resource_coordinator.h"
