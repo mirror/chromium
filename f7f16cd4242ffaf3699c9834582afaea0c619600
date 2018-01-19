@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "27cd6819_274551e5",
+        "filename": "content/browser/webui/web_ui_data_source_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-19T00:44:22Z",
+      "side": 1,
+      "message": "Thanks for the link.\n\nRegarding separate CL. I think a new CL mentioning something along the lines of\n\n\"Remove usage of deprecated DicionaryValue::SetString from web_ui_data_source_impl\"\n\nwould be a good unit of work for its own CL and probably better for future readers of the repo history.",
+      "parentUuid": "08324dbc_2943ed8b",
+      "revId": "f7f16cd4242ffaf3699c9834582afaea0c619600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "716f253a_b4fbd0ae",
         "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
         "patchSetId": 4
