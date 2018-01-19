@@ -13306,4 +13306,69 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, HitTestNestedFrames) {
   }
 }
 
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
+                       InterfaceProviderRequestIsOptionalForRaceyFirstCommits) {
+  const GURL initial_url(
+      embedded_test_server()->GetURL("a.com", "/empty.html"));
+  const GURL main_frame_url(
+      embedded_test_server()->GetURL("a.com", "/title1.html"));
+  const GURL same_site_subframe_url(
+      embedded_test_server()->GetURL("a.com", "/title2.html"));
+  const GURL cross_site_subframe_url(
+      embedded_test_server()->GetURL("baz.com", "/title2.html"));
+
+  const auto add_frame = base::StringPrintf(
+      "var f = document.createElement(\"iframe\");"
+      "f.src=\"%s\"; "
+      "f.name=\"%s\"; "
+      "document.body.append(f);",
+      same_site_subframe_url.spec().c_str(), "child_frame");
+
+  const auto initiate_cross_site_load = base::StringPrintf(
+      "f.src = \"%s\";", cross_site_subframe_url.spec().c_str());
+
+  ASSERT_TRUE(NavigateToURL(shell(), initial_url));
+  ASSERT_TRUE(NavigateToURL(shell(), main_frame_url));
+
+  {
+    TestNavigationManager same_site_subframe_navigation_manager(
+        shell()->web_contents(), same_site_subframe_url);
+    TestNavigationManager cross_site_subframe_navigation_manager(
+        shell()->web_contents(), cross_site_subframe_url);
+
+    ASSERT_TRUE(ExecuteScript(shell(), add_frame));
+    ASSERT_TRUE(same_site_subframe_navigation_manager.WaitForRequestStart());
+
+    ASSERT_TRUE(ExecuteScript(shell(), initiate_cross_site_load));
+    ASSERT_TRUE(cross_site_subframe_navigation_manager.WaitForRequestStart());
+    same_site_subframe_navigation_manager.WaitForNavigationFinished();
+    cross_site_subframe_navigation_manager.WaitForNavigationFinished();
+  }
+
+  TestNavigationObserver back_load_observer(shell()->web_contents());
+  shell()->web_contents()->GetController().GoBack();
+  back_load_observer.Wait();
+
+  {
+    TestNavigationManager same_site_subframe_navigation_manager(
+        shell()->web_contents(), same_site_subframe_url);
+    TestNavigationManager cross_site_subframe_navigation_manager(
+        shell()->web_contents(), cross_site_subframe_url);
+
+    TestNavigationObserver forward_load_observer(shell()->web_contents());
+    shell()->web_contents()->GetController().GoForward();
+    forward_load_observer.Wait();
+
+    ASSERT_TRUE(ExecuteScript(shell(), add_frame));
+    ASSERT_TRUE(same_site_subframe_navigation_manager.WaitForRequestStart());
+
+    ASSERT_TRUE(ExecuteScript(shell(), initiate_cross_site_load));
+    ASSERT_TRUE(cross_site_subframe_navigation_manager.WaitForRequestStart());
+    ASSERT_TRUE(same_site_subframe_navigation_manager.WaitForResponse());
+    cross_site_subframe_navigation_manager.WaitForNavigationFinished();
+
+    same_site_subframe_navigation_manager.WaitForNavigationFinished();
+  }
+}
+
 }  // namespace content
