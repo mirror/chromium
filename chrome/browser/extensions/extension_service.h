@@ -38,6 +38,7 @@
 #include "extensions/common/extension_set.h"
 #include "extensions/common/manifest.h"
 #include "extensions/features/features.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 #if !BUILDFLAG(ENABLE_EXTENSIONS)
 #error "Extensions must be enabled"
@@ -404,6 +405,8 @@ class ExtensionService
     return external_install_manager_.get();
   }
 
+  service_manager::Connector* connector() const { return connector_.get(); }
+
   //////////////////////////////////////////////////////////////////////////////
   // For Testing
 
@@ -447,6 +450,11 @@ class ExtensionService
 
   void set_external_updates_disabled_for_test(bool value) {
     external_updates_disabled_for_test_ = value;
+  }
+
+  void set_connector_for_test(
+      std::unique_ptr<service_manager::Connector> connector) {
+    connector_ = std::move(connector);
   }
 
  private:
@@ -727,6 +735,9 @@ class ExtensionService
   using InstallGateRegistry = std::map<extensions::ExtensionPrefs::DelayReason,
                                        extensions::InstallGate*>;
   InstallGateRegistry install_delayer_registry_;
+
+  // The connector to the ServiceManager used to bind services.
+  std::unique_ptr<service_manager::Connector> connector_;
 
   FRIEND_TEST_ALL_PREFIXES(ExtensionServiceTest,
                            DestroyingProfileClearsExtensions);

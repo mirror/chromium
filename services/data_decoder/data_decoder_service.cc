@@ -19,6 +19,8 @@ namespace data_decoder {
 
 namespace {
 
+constexpr const int64_t kDefaultDelayBeforeQuitInS = 5;
+
 void OnImageDecoderRequest(
     service_manager::ServiceContextRefFactory* ref_factory,
     mojom::ImageDecoderRequest request) {
@@ -42,7 +44,8 @@ void OnXmlParserRequest(service_manager::ServiceContextRefFactory* ref_factory,
 
 }  // namespace
 
-DataDecoderService::DataDecoderService() : weak_factory_(this) {}
+DataDecoderService::DataDecoderService()
+    : delay_before_quit_s_(kDefaultDelayBeforeQuitInS), weak_factory_(this) {}
 
 DataDecoderService::~DataDecoderService() = default;
 
@@ -72,7 +75,7 @@ void DataDecoderService::MaybeRequestQuitDelayed() {
       FROM_HERE,
       base::Bind(&DataDecoderService::MaybeRequestQuit,
                  weak_factory_.GetWeakPtr()),
-      base::TimeDelta::FromSeconds(5));
+      base::TimeDelta::FromSeconds(delay_before_quit_s_));
 }
 
 void DataDecoderService::MaybeRequestQuit() {

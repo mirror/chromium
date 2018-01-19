@@ -20,7 +20,12 @@ namespace data_decoder {
 // bind the DataDecoder's interfaces. Bypasses the Service Manager entirely.
 class TestDataDecoderService {
  public:
-  TestDataDecoderService();
+  // |delay_before_quit| specifies whether the service should terminate as soon
+  // as it has no more established connections, or whether it should wait a
+  // couple of seconds before quitting.
+  // It useful to disable that delay in tests, some might block until all
+  // process hosts terminate.
+  explicit TestDataDecoderService(bool delay_before_quit);
   ~TestDataDecoderService();
 
   // Returns a connector that can be used to bind DataDecoder's interfaces.
