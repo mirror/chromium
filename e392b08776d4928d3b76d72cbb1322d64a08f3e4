@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "836a8282_c172fee7",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-19T22:56:37Z",
+      "side": 1,
+      "message": "nit: could you move this to the beginning of the function, and coalesce both if (enable_surface_synchronization_) blocks (l.559-580 and l.587-597)",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb283d4c_c2d71dae",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 40
@@ -64,6 +81,23 @@
       "writtenOn": "2018-01-19T22:12:17Z",
       "side": 1,
       "message": "nit: Comment explaining why we need a WasResized here? I guess to plumb the content_source_id to the renderer.",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36388604_6790948c",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-19T22:56:37Z",
+      "side": 1,
+      "message": "nit: Is this related? Could we move to a different CL?",
       "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -115,6 +149,23 @@
       "writtenOn": "2018-01-19T22:12:17Z",
       "side": 1,
       "message": "nit: 0u?",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c4832af_2ee5a6ee",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-19T22:56:37Z",
+      "side": 1,
+      "message": "nit: Is this related? Could we move it to a separate CL?",
       "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
