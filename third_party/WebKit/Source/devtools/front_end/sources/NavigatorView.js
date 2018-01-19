@@ -1003,6 +1003,7 @@ Sources.NavigatorSourceTreeElement = class extends UI.TreeElement {
     this.title = title;
     this.listItemElement.classList.add(
         'navigator-' + uiSourceCode.contentType().name() + '-tree-item', 'navigator-file-tree-item');
+    this.listItemElement.addEventListener('keydown', this._onKeyDown.bind(this), false);
     this.tooltip = uiSourceCode.url();
     this._navigatorView = navigatorView;
     this._uiSourceCode = uiSourceCode;
@@ -1132,6 +1133,16 @@ Sources.NavigatorSourceTreeElement = class extends UI.TreeElement {
   _handleContextMenuEvent(event) {
     this.select();
     this._navigatorView.handleFileContextMenu(event, this._node);
+  }
+
+  /**
+   * @param {!Event} event
+   */
+  _onKeyDown(event) {
+    if (!UI.shortcutRegistry.eventMatchesAction(event, 'sources.rename') || !this._uiSourceCode.canRename())
+      return;
+    this._navigatorView.rename(this._node, false);
+    event.consume(true);
   }
 };
 
