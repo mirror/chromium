@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a397de86_4bd63e29",
+        "filename": "testing/buildbot/waterfalls.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1601,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-19T21:25:14Z",
+      "side": 1,
+      "message": "I\u0027m on the fence about this.\n\nThis is, I think, the first place we use an `args` in waterfalls.pyl; The idea (I suppose) is that *every* test step run on this bot would get this argument, which seems kinda dodgy (non-gtest-based-tests won\u0027t support these args).\n\nOn the other hand, you\u0027d have to override the args for every test suite otherwise, and that\u0027d be annoying too.",
+      "revId": "847bf1240f98f878249250209f2c8fdf50e34626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
