@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b16d86a_87c2fa25",
+        "filename": "testing/buildbot/waterfalls.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-19T00:02:39Z",
+      "side": 1,
+      "message": "Is this line needed? Not sure.",
+      "range": {
+        "startLine": 1130,
+        "startChar": 8,
+        "endLine": 1130,
+        "endChar": 29
+      },
+      "revId": "33513e0c69b9b9d3771ca1113d53a006af25737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
