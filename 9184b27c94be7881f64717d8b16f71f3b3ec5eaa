@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aee9b2f8_310c2649",
+        "filename": "third_party/WebKit/Source/platform/heap/IncrementalMarkingTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-01-19T07:29:27Z",
+      "side": 1,
+      "message": "Change GCState so IsIncrementalMarkingInProgress() returns true",
+      "range": {
+        "startLine": 1388,
+        "startChar": 0,
+        "endLine": 1388,
+        "endChar": 67
+      },
+      "revId": "9184b27c94be7881f64717d8b16f71f3b3ec5eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2557b5_de0f6955",
+        "filename": "third_party/WebKit/Source/platform/heap/IncrementalMarkingTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1395,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-01-19T07:29:27Z",
+      "side": 1,
+      "message": "If we promptly free at the allocation point we simply adjust the allocation point and the promptly_freed_size doesn\u0027t change.",
+      "range": {
+        "startLine": 1395,
+        "startChar": 0,
+        "endLine": 1395,
+        "endChar": 73
+      },
+      "revId": "9184b27c94be7881f64717d8b16f71f3b3ec5eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde8cf53_43a5add1",
+        "filename": "third_party/WebKit/Source/platform/heap/IncrementalMarkingTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-01-19T07:29:27Z",
+      "side": 1,
+      "message": "While adding the test I noticed that we don\u0027t promptly free in ~HeapHashTable() (I have to explicitly call clear() here). We have ConditionalDestructor\u003ckIsGarbageCollected\u003e which removes destructors from HeapHashTable.\nI\u0027ve traced this change to:\nhttps://chromium.googlesource.com/chromium/src/+/37873d4c3124cdee29950f5579a3e61e9ba2ac32%5E%21/\nI haven\u0027t looked into it further but haraken@ can you remember why?",
+      "range": {
+        "startLine": 1400,
+        "startChar": 14,
+        "endLine": 1400,
+        "endChar": 19
+      },
+      "revId": "9184b27c94be7881f64717d8b16f71f3b3ec5eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

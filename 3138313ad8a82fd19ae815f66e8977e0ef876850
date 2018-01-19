@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0844e7c2_b64e6520",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-01-19T07:29:27Z",
+      "side": 1,
+      "message": "HashTable/Vector mark through the backing so the trace callback won\u0027t become a problem. So I\u0027ve removed this.\n\nHeapObjectHeader gets unmark when the object is swept, so I don\u0027t think we can make this a CHECK. I think CheckObjectNotInCallbackStacks should be all the check we need.",
+      "parentUuid": "e862049b_e70a757e",
+      "revId": "3138313ad8a82fd19ae815f66e8977e0ef876850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aab302a5_89b789d7",
         "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
         "patchSetId": 4
