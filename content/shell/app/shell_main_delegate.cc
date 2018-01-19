@@ -191,7 +191,6 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
           switches::kUseGL,
           gl::GetGLImplementationName(gl::GetSoftwareGLImplementation()));
     }
-    command_line.AppendSwitch(switches::kSkipGpuDataLoading);
     command_line.AppendSwitchASCII(
         switches::kTouchEventFeatureDetection,
         switches::kTouchEventFeatureDetectionEnabled);
