@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "661143e9_dd78ce46",
+        "filename": "base/android/library_loader/anchor_functions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-19T16:41:42Z",
+      "side": 0,
+      "message": "Oops, I guess it\u0027s good we\u0027re changing this :)",
+      "range": {
+        "startLine": 80,
+        "startChar": 37,
+        "endLine": 80,
+        "endChar": 69
+      },
+      "revId": "f164b48cc02fbcb3c27cf53910818423fb11e3ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
