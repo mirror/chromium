@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c1f5d40f_37ffaa02",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1249702
+      },
+      "writtenOn": "2018-01-19T02:04:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5d8bc4c_a8ba1806",
+      "range": {
+        "startLine": 187,
+        "startChar": 35,
+        "endLine": 187,
+        "endChar": 41
+      },
+      "revId": "2d197eff520e8be04fe0097f7a3c8b6a98b30201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46c85ebf_54fa5bd4",
         "filename": "components/printing/common/print_messages.h",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "2d197eff520e8be04fe0097f7a3c8b6a98b30201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a75dc662_0c97822b",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1249702
+      },
+      "writtenOn": "2018-01-19T02:04:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "46c85ebf_54fa5bd4",
+      "revId": "2d197eff520e8be04fe0097f7a3c8b6a98b30201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "af6cef03_f3d71e97",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1249702
+      },
+      "writtenOn": "2018-01-19T02:04:58Z",
+      "side": 1,
+      "message": "Done. Good catch, thanks :D",
+      "parentUuid": "2daf5e9a_0b5cae45",
+      "revId": "2d197eff520e8be04fe0097f7a3c8b6a98b30201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "339b64cf_97a0dcbb",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 2
@@ -70,6 +130,30 @@
       "writtenOn": "2018-01-19T01:13:43Z",
       "side": 1,
       "message": "I imagine this name is based on the |kWebPrintScalingOptionSourceSize| constant. Would \"usePageDefinedPaperSize\" make more sense to users? I\u0027m not sure exposing concepts from the internal implementation, where a HTML document is the source of a print job, is intuitive to users.",
+      "range": {
+        "startLine": 10012,
+        "startChar": 37,
+        "endLine": 10012,
+        "endChar": 61
+      },
+      "revId": "2d197eff520e8be04fe0097f7a3c8b6a98b30201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75e4a29_89c7406d",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 10012,
+      "author": {
+        "id": 1249702
+      },
+      "writtenOn": "2018-01-19T02:04:58Z",
+      "side": 1,
+      "message": "Yeah I was modeling the name on kWebPrintScalingOptionSourceSize. I think this is tricky because paper size seems to imply there is a physical printer/paper. Would mentioning @page example in the description help? (I would also like to make the name more succinct + intuitive, only not sure how)",
+      "parentUuid": "339b64cf_97a0dcbb",
       "range": {
         "startLine": 10012,
         "startChar": 37,
