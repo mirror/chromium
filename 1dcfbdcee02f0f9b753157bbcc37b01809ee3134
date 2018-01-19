@@ -176,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "77a103ee_68355064",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2018-01-19T14:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af648cd4_54c04ca6",
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8f3841b_e4f7e2d2",
         "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
         "patchSetId": 35
@@ -199,6 +217,30 @@
     },
     {
       "key": {
+        "uuid": "8f5b9c6d_c7fe0632",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2018-01-19T14:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8f3841b_e4f7e2d2",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 34
+      },
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b3574c6_321ff7ad",
         "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
         "patchSetId": 35
@@ -210,6 +252,30 @@
       "writtenOn": "2018-01-18T15:05:50Z",
       "side": 1,
       "message": "nit/optional/suggestion: Often we call this like HasTimer?",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 21
+      },
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8823e3_58b6f10b",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2018-01-19T14:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b3574c6_321ff7ad",
       "range": {
         "startLine": 102,
         "startChar": 7,
@@ -257,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "06674de4_4c24e3a3",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2018-01-19T14:39:12Z",
+      "side": 1,
+      "message": "I was asked in one of the patches to add it explicitly to be consistent.",
+      "parentUuid": "d95be3f9_ad47eb53",
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b2ce7f4_67f08bb8",
         "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
         "patchSetId": 35
@@ -291,6 +375,30 @@
       "writtenOn": "2018-01-19T13:30:25Z",
       "side": 1,
       "message": "ping?",
+      "parentUuid": "5b2ce7f4_67f08bb8",
+      "range": {
+        "startLine": 174,
+        "startChar": 3,
+        "endLine": 174,
+        "endChar": 64
+      },
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce44eb5_bf87e734",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2018-01-19T14:39:12Z",
+      "side": 1,
+      "message": "It only returns true if timers were created successfully. All other cases return false or fail the test immediately.\nThe CreateTimersCallback helps in doing this.",
       "parentUuid": "5b2ce7f4_67f08bb8",
       "range": {
         "startLine": 174,

@@ -16,6 +16,24 @@
       "revId": "431b1f81d58216b584ad3a69302981e655ab60c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee403619_ffdafb06",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2018-01-19T14:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94177bd5_4790ea44",
+      "revId": "431b1f81d58216b584ad3a69302981e655ab60c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
