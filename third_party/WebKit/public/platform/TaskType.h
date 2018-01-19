@@ -146,7 +146,12 @@ enum class TaskType : unsigned {
   // * //content/renderer/indexed_db
   kInternalIndexedDB = 28,
 
-  kCount = 29,
+  // Tasks to execute media-related things. Tasks with this type are posted by:
+  // * //content/renderer/media
+  // * //media
+  kInternalMedia = 29,
+
+  kCount = 30,
 };
 
 }  // namespace blink
