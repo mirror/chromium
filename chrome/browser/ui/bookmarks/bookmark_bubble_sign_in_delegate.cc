@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/bookmarks/bookmark_bubble_sign_in_delegate.h"
 
+#include <memory>
+
 #include "build/buildflag.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/signin/signin_promo.h"
@@ -19,6 +21,7 @@
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 #include "chrome/browser/signin/account_consistency_mode_manager.h"
 #include "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h"
+#include "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper_delegate_impl.h"
 #endif
 
 BookmarkBubbleSignInDelegate::BookmarkBubbleSignInDelegate(Browser* browser)
@@ -48,10 +51,10 @@ void BookmarkBubbleSignInDelegate::EnableSync(const AccountInfo& account) {
   // DiceTurnSyncOnHelper is suicidal (it will delete itself once it finishes
   // enabling sync).
   new DiceTurnSyncOnHelper(
-      profile_, browser_,
-      signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_BUBBLE,
+      profile_, signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_BUBBLE,
       signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT, account.account_id,
-      DiceTurnSyncOnHelper::SigninAbortedMode::KEEP_ACCOUNT);
+      DiceTurnSyncOnHelper::SigninAbortedMode::KEEP_ACCOUNT,
+      std::make_unique<DiceTurnSyncOnHelperDelegateImpl>(browser_));
 
 // TODO(msarda): Close the bookmarks bubble once the enable sync flow has
 // started.
