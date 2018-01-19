@@ -441,6 +441,8 @@ split_static_library("browser") {
     "download/trusted_sources_manager.h",
     "download/trusted_sources_manager_posix.cc",
     "download/trusted_sources_manager_win.cc",
+    "engagement/engagement_utils.cc",
+    "engagement/engagement_utils.h",
     "engagement/important_sites_usage_counter.cc",
     "engagement/important_sites_usage_counter.h",
     "engagement/important_sites_util.cc",

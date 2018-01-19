@@ -14,6 +14,7 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
+#include "chrome/browser/engagement/engagement_utils.h"
 #include "chrome/browser/engagement/site_engagement_metrics.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings.h"
@@ -36,23 +37,6 @@ const int kMaxDaysSinceShortcutLaunch = 10;
 bool DoublesConsideredDifferent(double value1, double value2, double delta) {
   double abs_difference = fabs(value1 - value2);
   return abs_difference > delta;
-}
-
-std::unique_ptr<base::DictionaryValue> GetScoreDictForSettings(
-    const HostContentSettingsMap* settings,
-    const GURL& origin_url) {
-  if (!settings)
-    return base::MakeUnique<base::DictionaryValue>();
-
-  std::unique_ptr<base::DictionaryValue> value =
-      base::DictionaryValue::From(settings->GetWebsiteSetting(
-          origin_url, origin_url, CONTENT_SETTINGS_TYPE_SITE_ENGAGEMENT,
-          content_settings::ResourceIdentifier(), NULL));
-
-  if (value.get())
-    return value;
-
-  return base::MakeUnique<base::DictionaryValue>();
 }
 
 }  // namespace
@@ -209,14 +193,15 @@ void SiteEngagementScore::UpdateFromVariations(const char* param_name) {
     SiteEngagementScore::GetParamValues()[i].second = param_vals[i];
 }
 
-SiteEngagementScore::SiteEngagementScore(
-    base::Clock* clock,
-    const GURL& origin,
-    HostContentSettingsMap* settings)
+SiteEngagementScore::SiteEngagementScore(base::Clock* clock,
+                                         const GURL& origin,
+                                         HostContentSettingsMap* settings)
     : SiteEngagementScore(
           clock,
           origin,
-          GetScoreDictForSettings(settings, origin)) {
+          GetScoreDictForSettings(settings,
+                                  origin,
+                                  CONTENT_SETTINGS_TYPE_SITE_ENGAGEMENT)) {
   settings_map_ = settings;
 }
 
