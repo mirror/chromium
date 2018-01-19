@@ -46,6 +46,30 @@
       "revId": "91aadfcb3072fbb3db165f3482dfc5b3e812f5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13683335_15bb176c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-19T23:55:27Z",
+      "side": 1,
+      "message": "We should file a bug on that team so they can fix it and we can roll in the new compat library, but we need to fix it before then.  It\u0027s odd that the manager is not displaying it when we use this method on the builder.",
+      "parentUuid": "eba74f64_9b3f5a9b",
+      "range": {
+        "startLine": 1081,
+        "startChar": 1,
+        "endLine": 1084,
+        "endChar": 0
+      },
+      "revId": "91aadfcb3072fbb3db165f3482dfc5b3e812f5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
