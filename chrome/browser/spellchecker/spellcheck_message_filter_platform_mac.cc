@@ -2,29 +2,26 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/spellcheck/browser/spellcheck_message_filter_platform.h"
+#include "chrome/browser/spellchecker/spell_check_host_chrome_impl.h"
 
-#include <algorithm>
-#include <functional>
+// TODO(xiaochengh): Rename this file to spell_check_host_chrome_impl_mac.cc
 
 #include "base/barrier_closure.h"
 #include "base/bind.h"
 #include "chrome/browser/spellchecker/spellcheck_factory.h"
 #include "chrome/browser/spellchecker/spellcheck_service.h"
 #include "components/spellcheck/browser/spellcheck_platform.h"
-#include "components/spellcheck/browser/spelling_service_client.h"
-#include "components/spellcheck/common/spellcheck_messages.h"
-#include "components/spellcheck/common/spellcheck_result.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
+#include "services/service_manager/public/cpp/identity.h"
 
 using content::BrowserThread;
 using content::BrowserContext;
 
 namespace {
 
-bool CompareLocation(const SpellCheckResult& r1,
-                     const SpellCheckResult& r2) {
+bool CompareLocation(const SpellCheckResult& r1, const SpellCheckResult& r2) {
   return r1.location < r2.location;
 }
 
@@ -32,16 +29,18 @@ bool CompareLocation(const SpellCheckResult& r1,
 
 class SpellingRequest {
  public:
-  SpellingRequest(SpellingServiceClient* client,
-                  content::BrowserMessageFilter* destination,
-                  int render_process_id);
+  using RequestTextCheckCallback =
+      spellcheck::mojom::SpellCheckHost::RequestTextCheckCallback;
 
-  void RequestCheck(const base::string16& text,
-                    int route_id,
-                    int identifier,
-                    int document_tag);
+  SpellingRequest(SpellingServiceClient* client,
+                  const base::string16& text,
+                  const service_manager::Identity& renderer_identity,
+                  int document_tag,
+                  RequestTextCheckCallback&& callback);
 
  private:
+  void RequestCheck();
+
   // Request server-side checking for |text_|.
   void RequestRemoteCheck();
 
@@ -59,6 +58,10 @@ class SpellingRequest {
   // Called when local checking is complete.
   void OnLocalCheckCompleted(const std::vector<SpellCheckResult>& results);
 
+  // Called on UI thread when checking is complete.
+  static void ReplyWithResults(RequestTextCheckCallback callback,
+                               std::vector<SpellCheckResult> results);
+
   std::vector<SpellCheckResult> local_results_;
   std::vector<SpellCheckResult> remote_results_;
 
@@ -66,40 +69,33 @@ class SpellingRequest {
   base::RepeatingClosure completion_barrier_;
   bool remote_success_;
 
-  SpellingServiceClient* client_;  // Owned by |destination|.
-  content::BrowserMessageFilter* destination_;  // ref-counted.
-  int render_process_id_;
+  // TODO(xiaochengh): Verify if this is safe
+  SpellingServiceClient* client_;  // not owned.
 
   base::string16 text_;
-  int route_id_;
-  int identifier_;
+  const service_manager::Identity renderer_identity_;
   int document_tag_;
+  RequestTextCheckCallback callback_;
 };
 
-SpellingRequest::SpellingRequest(SpellingServiceClient* client,
-                                 content::BrowserMessageFilter* destination,
-                                 int render_process_id)
+SpellingRequest::SpellingRequest(
+    SpellingServiceClient* client,
+    const base::string16& text,
+    const service_manager::Identity& renderer_identity,
+    int document_tag,
+    RequestTextCheckCallback&& callback)
     : remote_success_(false),
       client_(client),
-      destination_(destination),
-      render_process_id_(render_process_id),
-      route_id_(-1),
-      identifier_(-1),
-      document_tag_(-1) {
-  destination_->AddRef();
+      text_(text),
+      renderer_identity_(renderer_identity),
+      document_tag_(document_tag),
+      callback_(std::move(callback)) {
+  RequestCheck();
 }
 
-void SpellingRequest::RequestCheck(const base::string16& text,
-                                   int route_id,
-                                   int identifier,
-                                   int document_tag) {
-  DCHECK(!text.empty());
+void SpellingRequest::RequestCheck() {
+  DCHECK(!text_.empty());
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  text_ = text;
-  route_id_ = route_id;
-  identifier_ = identifier;
-  document_tag_ = document_tag;
 
   // Send the remote query out. The barrier owns |this|, ensuring it is deleted
   // after completion.
@@ -112,7 +108,7 @@ void SpellingRequest::RequestCheck(const base::string16& text,
 void SpellingRequest::RequestRemoteCheck() {
   BrowserContext* context = NULL;
   content::RenderProcessHost* host =
-      content::RenderProcessHost::FromID(render_process_id_);
+      content::RenderProcessHost::FromRendererIdentity(renderer_identity_);
   if (host)
     context = host->GetBrowserContext();
 
@@ -129,24 +125,27 @@ void SpellingRequest::RequestLocalCheck() {
                      base::Unretained(this)));
 }
 
+// static
+void SpellingRequest::ReplyWithResults(RequestTextCheckCallback callback,
+                                       std::vector<SpellCheckResult> results) {
+  std::move(callback).Run(results);
+}
+
 void SpellingRequest::OnCheckCompleted() {
   // Final completion can happen on any thread - don't DCHECK thread.
-  const std::vector<SpellCheckResult>* check_results = &local_results_;
+  std::vector<SpellCheckResult>* check_results = &local_results_;
   if (remote_success_) {
     std::sort(remote_results_.begin(), remote_results_.end(), CompareLocation);
     std::sort(local_results_.begin(), local_results_.end(), CompareLocation);
-    SpellCheckMessageFilterPlatform::CombineResults(&remote_results_,
-                                                    local_results_);
+    SpellCheckHostChromeImpl::CombineResults(&remote_results_, local_results_);
     check_results = &remote_results_;
   }
 
-  destination_->Send(
-      new SpellCheckMsg_RespondTextCheck(
-          route_id_,
-          identifier_,
-          text_,
-          *check_results));
-  destination_->Release();
+  // Reply from UI thread, since |callback_| must be invoked on UI thread.
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&SpellingRequest::ReplyWithResults, std::move(callback_),
+                     std::move(*check_results)));
 
   // Object is self-managed - at this point, its life span is over.
   // No need to delete, since the OnCheckCompleted callback owns |this|.
@@ -169,37 +168,8 @@ void SpellingRequest::OnLocalCheckCompleted(
   completion_barrier_.Run();
 }
 
-
-SpellCheckMessageFilterPlatform::SpellCheckMessageFilterPlatform(
-    int render_process_id)
-    : BrowserMessageFilter(SpellCheckMsgStart),
-      render_process_id_(render_process_id),
-      client_(new SpellingServiceClient) {
-}
-
-void SpellCheckMessageFilterPlatform::OverrideThreadForMessage(
-    const IPC::Message& message, BrowserThread::ID* thread) {
-  if (message.type() == SpellCheckHostMsg_RequestTextCheck::ID)
-    *thread = BrowserThread::UI;
-}
-
-bool SpellCheckMessageFilterPlatform::OnMessageReceived(
-    const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(SpellCheckMessageFilterPlatform, message)
-    IPC_MESSAGE_HANDLER(SpellCheckHostMsg_CheckSpelling,
-                        OnCheckSpelling)
-    IPC_MESSAGE_HANDLER(SpellCheckHostMsg_FillSuggestionList,
-                        OnFillSuggestionList)
-    IPC_MESSAGE_HANDLER(SpellCheckHostMsg_RequestTextCheck,
-                        OnRequestTextCheck)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  return handled;
-}
-
 // static
-void SpellCheckMessageFilterPlatform::CombineResults(
+void SpellCheckHostChromeImpl::CombineResults(
     std::vector<SpellCheckResult>* remote_results,
     const std::vector<SpellCheckResult>& local_results) {
   std::vector<SpellCheckResult>::const_iterator local_iter(
@@ -207,8 +177,7 @@ void SpellCheckMessageFilterPlatform::CombineResults(
   std::vector<SpellCheckResult>::iterator remote_iter;
 
   for (remote_iter = remote_results->begin();
-       remote_iter != remote_results->end();
-       ++remote_iter) {
+       remote_iter != remote_results->end(); ++remote_iter) {
     // Discard all local results occurring before remote result.
     while (local_iter != local_results.end() &&
            local_iter->location < remote_iter->location) {
@@ -225,25 +194,26 @@ void SpellCheckMessageFilterPlatform::CombineResults(
   }
 }
 
-SpellCheckMessageFilterPlatform::~SpellCheckMessageFilterPlatform() {}
-
-void SpellCheckMessageFilterPlatform::OnCheckSpelling(
-    const base::string16& word,
-    int route_id,
-    bool* correct) {
-  *correct = spellcheck_platform::CheckSpelling(word, ToDocumentTag(route_id));
+void SpellCheckHostChromeImpl::CheckSpelling(const base::string16& word,
+                                             int route_id,
+                                             CheckSpellingCallback callback) {
+  bool correct =
+      spellcheck_platform::CheckSpelling(word, ToDocumentTag(route_id));
+  std::move(callback).Run(correct);
 }
 
-void SpellCheckMessageFilterPlatform::OnFillSuggestionList(
+void SpellCheckHostChromeImpl::FillSuggestionList(
     const base::string16& word,
-    std::vector<base::string16>* suggestions) {
-  spellcheck_platform::FillSuggestionList(word, suggestions);
+    FillSuggestionListCallback callback) {
+  std::vector<base::string16> suggestions;
+  spellcheck_platform::FillSuggestionList(word, &suggestions);
+  std::move(callback).Run(suggestions);
 }
 
-void SpellCheckMessageFilterPlatform::OnRequestTextCheck(
+void SpellCheckHostChromeImpl::RequestTextCheck(
+    const base::string16& text,
     int route_id,
-    int identifier,
-    const base::string16& text) {
+    RequestTextCheckCallback callback) {
   DCHECK(!text.empty());
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -251,18 +221,14 @@ void SpellCheckMessageFilterPlatform::OnRequestTextCheck(
   // language code for text breaking to the renderer. (Text breaking is required
   // for the context menu to show spelling suggestions.) Initialization must
   // happen on UI thread.
-  content::RenderProcessHost* host =
-      content::RenderProcessHost::FromID(render_process_id_);
-  if (host)
-    SpellcheckServiceFactory::GetForRenderer(host->GetChildIdentity());
+  GetSpellcheckService();
 
   // SpellingRequest self-destructs.
-  SpellingRequest* request =
-    new SpellingRequest(client_.get(), this, render_process_id_);
-  request->RequestCheck(text, route_id, identifier, ToDocumentTag(route_id));
+  new SpellingRequest(&client_, text, renderer_identity_,
+                      ToDocumentTag(route_id), std::move(callback));
 }
 
-int SpellCheckMessageFilterPlatform::ToDocumentTag(int route_id) {
+int SpellCheckHostChromeImpl::ToDocumentTag(int route_id) {
   if (!tag_map_.count(route_id))
     tag_map_[route_id] = spellcheck_platform::GetDocumentTag();
   return tag_map_[route_id];
@@ -271,7 +237,7 @@ int SpellCheckMessageFilterPlatform::ToDocumentTag(int route_id) {
 // TODO(groby): We are currently not notified of retired tags. We need
 // to track destruction of RenderViewHosts on the browser process side
 // to update our mappings when a document goes away.
-void SpellCheckMessageFilterPlatform::RetireDocumentTag(int route_id) {
+void SpellCheckHostChromeImpl::RetireDocumentTag(int route_id) {
   spellcheck_platform::CloseDocumentWithTag(ToDocumentTag(route_id));
   tag_map_.erase(route_id);
 }
