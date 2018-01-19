@@ -63,6 +63,11 @@ viz::SurfaceId WindowPortForShutdown::GetSurfaceId() const {
 
 void WindowPortForShutdown::AllocateLocalSurfaceId() {}
 
+void WindowPortForShutdown::SetLocalSurfaceId(
+    viz::LocalSurfaceId local_surface_id) {
+  local_surface_id_ = local_surface_id;
+}
+
 const viz::LocalSurfaceId& WindowPortForShutdown::GetLocalSurfaceId() {
   return local_surface_id_;
 }

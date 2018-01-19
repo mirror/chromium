@@ -692,6 +692,12 @@ viz::FrameSinkId RenderWidgetHostViewChildFrame::GetFrameSinkId() {
   return frame_sink_id_;
 }
 
+void RenderWidgetHostViewChildFrame::SetLocalSurfaceId(
+    viz::LocalSurfaceId local_surface_id) {
+  if (frame_connector_)
+    frame_connector_->SetLocalSurfaceId(local_surface_id);
+}
+
 viz::LocalSurfaceId RenderWidgetHostViewChildFrame::GetLocalSurfaceId() const {
   if (frame_connector_)
     return frame_connector_->local_surface_id();

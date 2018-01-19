@@ -146,6 +146,10 @@ void WindowPortLocal::AllocateLocalSurfaceId() {
     frame_sink_->SetLocalSurfaceId(local_surface_id_);
 }
 
+void WindowPortLocal::SetLocalSurfaceId(viz::LocalSurfaceId local_surface_id) {
+  local_surface_id_ = local_surface_id;
+}
+
 const viz::LocalSurfaceId& WindowPortLocal::GetLocalSurfaceId() {
   if (!local_surface_id_.is_valid())
     AllocateLocalSurfaceId();

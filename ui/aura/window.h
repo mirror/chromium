@@ -362,6 +362,8 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // that does not involve a resize or a device scale factor change.
   void AllocateLocalSurfaceId();
 
+  void SetLocalSurfaceId(viz::LocalSurfaceId);
+
   // Gets the current viz::LocalSurfaceId.
   const viz::LocalSurfaceId& GetLocalSurfaceId() const;
 

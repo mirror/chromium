@@ -138,6 +138,10 @@ class CONTENT_EXPORT FrameConnectorDelegate {
     return viewport_intersection_rect_;
   }
 
+  void SetLocalSurfaceId(viz::LocalSurfaceId local_surface_id) {
+    local_surface_id_ = local_surface_id;
+  }
+
   // Returns the viz::LocalSurfaceId propagated from the parent to be used by
   // this child frame.
   const viz::LocalSurfaceId& local_surface_id() const {

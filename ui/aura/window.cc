@@ -1086,6 +1086,10 @@ void Window::AllocateLocalSurfaceId() {
   port_->AllocateLocalSurfaceId();
 }
 
+void Window::SetLocalSurfaceId(viz::LocalSurfaceId local_surface_id) {
+  port_->SetLocalSurfaceId(local_surface_id);
+}
+
 const viz::LocalSurfaceId& Window::GetLocalSurfaceId() const {
   return port_->GetLocalSurfaceId();
 }

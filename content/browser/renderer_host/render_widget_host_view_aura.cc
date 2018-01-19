@@ -2359,6 +2359,11 @@ viz::FrameSinkId RenderWidgetHostViewAura::GetFrameSinkId() {
   return frame_sink_id_;
 }
 
+void RenderWidgetHostViewAura::SetLocalSurfaceId(
+    viz::LocalSurfaceId local_surface_id) {
+  window_->SetLocalSurfaceId(local_surface_id);
+}
+
 viz::LocalSurfaceId RenderWidgetHostViewAura::GetLocalSurfaceId() const {
   return window_->GetLocalSurfaceId();
 }

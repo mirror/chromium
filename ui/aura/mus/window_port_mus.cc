@@ -405,6 +405,10 @@ void WindowPortMus::AllocateLocalSurfaceId() {
   local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
 }
 
+void WindowPortMus::SetLocalSurfaceId(viz::LocalSurfaceId local_surface_id) {
+  local_surface_id_ = local_surface_id;
+}
+
 const viz::LocalSurfaceId& WindowPortMus::GetLocalSurfaceId() {
   if (switches::IsMusHostingViz())
     return local_surface_id_;

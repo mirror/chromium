@@ -346,6 +346,10 @@ class TestView : public TestRenderWidgetHostView {
   float GetBottomControlsHeight() const override {
     return bottom_controls_height_;
   }
+  void SetLocalSurfaceId(viz::LocalSurfaceId local_surface_id) override {
+    local_surface_id_ = local_surface_id;
+  }
+
   viz::LocalSurfaceId GetLocalSurfaceId() const override {
     return local_surface_id_;
   }

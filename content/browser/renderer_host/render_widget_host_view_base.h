@@ -287,6 +287,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // TODO(fsamuel): Return by const ref.
   virtual viz::FrameSinkId GetFrameSinkId();
 
+  virtual void SetLocalSurfaceId(viz::LocalSurfaceId){};
+
   // Returns the LocalSurfaceId allocated by the parent client for this view.
   // TODO(fsamuel): Return by const ref.
   virtual viz::LocalSurfaceId GetLocalSurfaceId() const;
