@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0bf2c0e_88d9e27e",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-19T18:45:24Z",
+      "side": 1,
+      "message": "I agree, but this comes from the InteractiveDetector, which should be using TimeTicks instead of double in the first place. I think I will followup by replacing improper double usage in that class.\n\nNow, another problem is that core/ does not allow using base::TimeTicks because it is in base. Instead, platform/wtf/Time.h should be used. I don\u0027t understand why platform/ uses the base version, that is a bit confusing. I could change the occurrences to use the TimeTicks defined in platform/ instead to make things a bit cleaner - WDYT?",
+      "parentUuid": "2816cc72_1af81a3a",
+      "range": {
+        "startLine": 82,
+        "startChar": 26,
+        "endLine": 82,
+        "endChar": 49
+      },
+      "revId": "5a5484c8f4b7644771010a0a5bc879c6147d292d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d547686_63460656",
         "filename": "third_party/WebKit/Source/core/loader/EmptyClients.cpp",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2ca634f5_22e57a51",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-19T18:45:24Z",
+      "side": 1,
+      "message": "Do we really need to make this code more complicated? I think using Optional is good when there\u0027s no clear special value, but for time, I think 0 is clear.",
+      "parentUuid": "2d547686_63460656",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 8
+      },
+      "revId": "5a5484c8f4b7644771010a0a5bc879c6147d292d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bddfc5f_9fe666dc",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-18T23:26:23Z",
       "side": 1,
       "message": "Reading the comment in InteractiveDetector.h: \"Detects when a page reaches First Idle\". If it\u0027s done on the page level (given that you\u0027re notifying multiple frames), please plumb it through WebViewScheduler. If it\u0027s done on frame level, please fix the comment.",
+      "range": {
+        "startLine": 373,
+        "startChar": 4,
+        "endLine": 373,
+        "endChar": 73
+      },
+      "revId": "5a5484c8f4b7644771010a0a5bc879c6147d292d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6149ac13_5bbc5e54",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-19T18:45:24Z",
+      "side": 1,
+      "message": "Yes, I believe this is a page-level metric but I don\u0027t know how to pass this on to scheduler at this level. How do I plumb this through the WebViewScheduler? I don\u0027t see any occurrence of this class on Source/core, except in tests and Source/core/exported.",
+      "parentUuid": "7bddfc5f_9fe666dc",
       "range": {
         "startLine": 373,
         "startChar": 4,
