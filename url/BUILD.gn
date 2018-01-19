@@ -73,7 +73,9 @@ component("url") {
   }
 
   # ICU support.
-  if (use_platform_icu_alternatives) {
+  # TODO(peria): The condition after && is to check if all bots run. Drop it.
+  if (use_platform_icu_alternatives &&
+      !(target_os == "android" && !is_android)) {
     if (is_android) {
       sources += [ "url_canon_icu_alternatives_android.cc" ]
       deps += [

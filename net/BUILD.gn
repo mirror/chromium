@@ -2191,7 +2191,9 @@ component("net") {
     }
 
     # ICU support.
-    if (use_platform_icu_alternatives) {
+    # TODO(peria): The condition after && is to check if all bots run. Drop it.
+    if (use_platform_icu_alternatives &&
+        !(target_os == "android" && !is_android)) {
       if (is_android) {
         # Use ICU alternative on Android.
         sources += [ "base/net_string_util_icu_alternatives_android.cc" ]
