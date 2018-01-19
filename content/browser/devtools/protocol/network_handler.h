@@ -28,6 +28,7 @@ struct URLLoaderCompletionStatus;
 }  // namespace network
 
 namespace content {
+class BrowserContext;
 class DevToolsAgentHostImpl;
 class RenderFrameHostImpl;
 struct GlobalRequestID;
@@ -38,6 +39,7 @@ class NavigationThrottle;
 struct GlobalRequestID;
 struct InterceptedRequestInfo;
 struct ResourceRequest;
+class StoragePartition;
 
 namespace protocol {
 
@@ -150,7 +152,8 @@ class NetworkHandler : public DevToolsDomainHandler,
   void SetNetworkConditions(mojom::NetworkConditionsPtr conditions);
 
   std::unique_ptr<Network::Frontend> frontend_;
-  RenderProcessHost* process_;
+  BrowserContext* browser_context_;
+  StoragePartition* storage_partition_;
   RenderFrameHostImpl* host_;
   bool enabled_;
   std::string user_agent_;
