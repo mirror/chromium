@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aee061d6_ea2d8869",
+        "filename": "cc/layers/surface_layer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-19T18:37:29Z",
+      "side": 1,
+      "message": "nit: no need for braces",
+      "revId": "f794b8efce8da2a3b6ba4a144036ed14742fe70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27e79ee_cc017e2f",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-19T18:37:29Z",
+      "side": 1,
+      "message": "this is to me (fsamuel@): I want to rename these things to OnFirstSurfaceActivation for consistency with other places.",
+      "revId": "f794b8efce8da2a3b6ba4a144036ed14742fe70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d24396_9b6417e5",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-19T18:37:29Z",
+      "side": 1,
+      "message": "TODO(fsamuel: This should probably be called OnFirstSurfaceActivation and we should have another callback from LayerTreeFrameSinkLocal that sets the primary immediately on submission. Waiting for the callback will merely slow down exo and ARC++ apps.",
+      "revId": "f794b8efce8da2a3b6ba4a144036ed14742fe70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00333189_8d449712",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-19T18:37:29Z",
+      "side": 1,
+      "message": "TODO(fsamuel): Update this comment.",
+      "revId": "f794b8efce8da2a3b6ba4a144036ed14742fe70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

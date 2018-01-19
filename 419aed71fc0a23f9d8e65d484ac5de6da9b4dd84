@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aea18550_36b21989",
+        "filename": "ui/android/delegated_frame_host_android.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-19T18:37:29Z",
+      "side": 0,
+      "message": "This is exciting! :D",
+      "revId": "419aed71fc0a23f9d8e65d484ac5de6da9b4dd84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
