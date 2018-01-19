@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5afbb0f1_b4effdd5",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-19T20:29:11Z",
+      "side": 1,
+      "message": "Use std::make_unique instead of base::MakeUnique",
+      "range": {
+        "startLine": 374,
+        "startChar": 12,
+        "endLine": 375,
+        "endChar": 32
+      },
+      "revId": "a3f802646d1539c2d3e5d76536484e24111d7fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94223012_9d62e0fa",
+        "filename": "chromeos/dbus/services/chrome_features_service_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-19T20:29:11Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "a3f802646d1539c2d3e5d76536484e24111d7fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
