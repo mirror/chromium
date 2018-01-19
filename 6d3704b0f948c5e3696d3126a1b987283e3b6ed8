@@ -16,6 +16,24 @@
       "revId": "6d3704b0f948c5e3696d3126a1b987283e3b6ed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f460da34_08f3ad96",
+        "filename": "google_apis/gcm/engine/connection_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-19T06:44:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fd243c7_3d67af01",
+      "revId": "6d3704b0f948c5e3696d3126a1b987283e3b6ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
