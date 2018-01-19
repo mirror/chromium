@@ -22,6 +22,8 @@ import android.view.MenuItem;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
+import org.chromium.base.ContentUriUtils;
+import org.chromium.base.ContextUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
@@ -34,6 +36,13 @@ import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.chrome.browser.preferences.TextMessagePreference;
 import org.chromium.ui.text.SpanApplier;
 import org.chromium.ui.widget.Toast;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 
 /**
  * The "Save passwords" screen in Settings, which allows the user to enable or disable password
@@ -52,6 +61,8 @@ public class SavePasswordsPreferences
 
     // The key for saving |mExportRequested| to instance bundle.
     private static final String SAVED_STATE_EXPORT_REQUESTED = "saved-state-export-requested";
+    // The key for saving |mExportFileUri| to instance bundle.
+    private static final String SAVED_STATE_EXPORT_FILE_URI = "saved-state-export-file-uri";
 
     public static final String PREF_SAVE_PASSWORDS_SWITCH = "save_passwords_switch";
     public static final String PREF_AUTOSIGNIN_SWITCH = "autosignin_switch";
@@ -79,6 +90,11 @@ public class SavePasswordsPreferences
     // True if the option to export passwords in the three-dots menu should be disabled due to an
     // ongoing export.
     private boolean mExportOptionSuspended = false;
+    // True if the user just finished the UI flow for confirming a password export.
+    private boolean mExportConfirmed;
+    // content:// URI for the file with exported passwords.
+    private Uri mExportFileUri;
+
     private Preference mLinkPref;
     private ChromeSwitchPreference mSavePasswordsSwitch;
     private ChromeBaseCheckBoxPreference mAutoSignInSwitch;
@@ -94,10 +110,19 @@ public class SavePasswordsPreferences
                 && ReauthenticationManager.isReauthenticationApiAvailable()) {
             setHasOptionsMenu(true);
         }
-        if (savedInstanceState != null
-                && savedInstanceState.containsKey(SAVED_STATE_EXPORT_REQUESTED)) {
-            mExportRequested =
-                    savedInstanceState.getBoolean(SAVED_STATE_EXPORT_REQUESTED, mExportRequested);
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(SAVED_STATE_EXPORT_REQUESTED)) {
+                mExportRequested = savedInstanceState.getBoolean(
+                        SAVED_STATE_EXPORT_REQUESTED, mExportRequested);
+            }
+            if (savedInstanceState.containsKey(SAVED_STATE_EXPORT_FILE_URI)) {
+                String uriString = savedInstanceState.getString(SAVED_STATE_EXPORT_FILE_URI, null);
+                if (uriString.isEmpty()) {
+                    mExportFileUri = Uri.EMPTY;
+                } else if (uriString != null) {
+                    mExportFileUri = Uri.parse(uriString);
+                }
+            }
         }
     }
 
@@ -130,13 +155,12 @@ public class SavePasswordsPreferences
                     .serializePasswords(new Callback<String>() {
                         @Override
                         public void onResult(String serializedPasswords) {
-                            // TODO(crbug.com/788701): Ensure that the SavePasswordsPreferences is
-                            // not dead before trying to use any of its data members.
-                            // TODO(crbug.com/788701): Ensure that the passwords are stored to a
-                            // file here and its URI in saved-state-bundle in case the reauth
-                            // dialogue causes this activity to be killed.
-                            // TODO(crbug.com/788701): Synchronise with end of the UI flow and pass
-                            // the data.
+                            // This callback can get triggered from the native code after
+                            // SavePasswordsPreferences are gone. Give up if that's the case.
+                            if (SavePasswordsPreferences.this == null) return;
+
+                            mExportFileUri = exportPasswordsIntoFile(serializedPasswords);
+                            tryExporting();
                         }
                     });
             if (!ReauthenticationManager.isScreenLockSetUp(getActivity().getApplicationContext())) {
@@ -166,7 +190,8 @@ public class SavePasswordsPreferences
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == AlertDialog.BUTTON_POSITIVE) {
-                    exportAfterWarning();
+                    mExportConfirmed = true;
+                    tryExporting();
                 }
                 // Re-enable exporting, the current one was either finished or dismissed.
                 mExportOptionSuspended = false;
@@ -175,9 +200,92 @@ public class SavePasswordsPreferences
         exportWarningDialogFragment.show(getFragmentManager(), null);
     }
 
-    private void exportAfterWarning() {
-        // TODO(crbug.com/788701): Synchronise with obtaining serialised passwords and pass them to
-        // the intent.
+    /**
+     * Starts the exporting intent if both blocking events are completed: serializing and the
+     * confirmation flow.
+     */
+    private void tryExporting() {
+        // TODO(crbug.com/788701): Display a progress indicator if user
+        // confirmed but serialising is not done yet and dismiss it once called
+        // again with serialising done.
+        if (mExportConfirmed && mExportFileUri != null) sendExportIntent();
+    }
+
+    /**
+     * Call this to abort the export UI flow and display an error description to the user.
+     * @param description A string with a brief explanation of the error.
+     */
+    private void showExportErrorAndAbort(String description) {
+        // TODO(crbug.com/788701): Implement.
+        // Re-enable exporting, the current one was just cancelled.
+        mExportOptionSuspended = false;
+    }
+
+    /**
+     * This method saves the contents of |serializedPasswords| into a temporary file and returns a
+     * sharing URI for it. In case of failure, returns EMPTY.
+     * @param serializedPasswords A string with serialized passwords in CSV format
+     */
+    private Uri exportPasswordsIntoFile(String serializedPasswords) {
+        // First ensure that the "passwords" cache directory exists.
+        try {
+            File passwordsDir =
+                    new File(ContextUtils.getApplicationContext().getCacheDir() + "/passwords");
+            passwordsDir.mkdir();
+        } catch (SecurityException e) {
+            // TODO(crbug.com/788701): Change e.getMessage to an appropriate error, following the
+            // mocks.
+            showExportErrorAndAbort(e.getMessage());
+            return Uri.EMPTY;
+        }
+        // Now create or overwrite the temporary file for exported passwords there and return its
+        // content:// URI.
+        File tempFile;
+        try {
+            tempFile = new File(ContextUtils.getApplicationContext().getCacheDir()
+                    + "/passwords/password-export.csv");
+            tempFile.deleteOnExit();
+            BufferedWriter tempWriter = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(tempFile), Charset.forName("UTF-8")));
+            tempWriter.write(serializedPasswords);
+            tempWriter.close();
+        } catch (IOException e) {
+            // TODO(crbug.com/788701): Change e.getMessage to an appropriate error, following the
+            // mocks.
+            showExportErrorAndAbort(e.getMessage());
+            return Uri.EMPTY;
+        }
+        try {
+            return ContentUriUtils.getContentUriFromFile(tempFile);
+        } catch (IllegalArgumentException ex) {
+            // TODO(crbug.com/788701): Display an error, because the result of Uri.fromFile is not
+            // going to be shareable.
+            showExportErrorAndAbort(ex.getMessage());
+            return Uri.EMPTY;
+        }
+    }
+
+    /**
+     * If the URI of the file with exported passwords is not null, passes it into an implicit
+     * intent, so that the user can use a storage app to save the exported passwords.
+     */
+    private void sendExportIntent() {
+        mExportConfirmed = false;
+        if (mExportFileUri == Uri.EMPTY) return;
+
+        Intent send = new Intent(Intent.ACTION_SEND);
+        send.setType("text/csv");
+        send.putExtra(Intent.EXTRA_STREAM, mExportFileUri);
+
+        try {
+            Intent chooser = Intent.createChooser(send, null);
+            chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            ContextUtils.getApplicationContext().startActivity(chooser);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // TODO(crbug.com/788701): If no app handles it, display the appropriate error.
+            showExportErrorAndAbort(ex.getMessage());
+        }
+        mExportFileUri = null;
     }
 
     /**
@@ -321,6 +429,9 @@ public class SavePasswordsPreferences
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(SAVED_STATE_EXPORT_REQUESTED, mExportRequested);
+        if (mExportFileUri != null) {
+            outState.putString(SAVED_STATE_EXPORT_FILE_URI, mExportFileUri.toString());
+        }
     }
 
     @Override
