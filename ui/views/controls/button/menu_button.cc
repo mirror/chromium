@@ -288,8 +288,9 @@ void MenuButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->role = ui::AX_ROLE_POP_UP_BUTTON;
   node_data->AddState(ui::AX_STATE_HASPOPUP);
   if (enabled()) {
-    node_data->AddIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB,
-                               ui::AX_DEFAULT_ACTION_VERB_OPEN);
+    node_data->AddIntAttribute(
+        ui::AX_ATTR_DEFAULT_ACTION_VERB,
+        static_cast<int32_t>(ui::AX_DEFAULT_ACTION_VERB_OPEN));
   }
 }
 

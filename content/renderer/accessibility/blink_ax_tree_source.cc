@@ -451,7 +451,8 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
   if ((!web_name.IsEmpty() && !web_name.IsNull()) ||
       nameFrom == blink::kWebAXNameFromAttributeExplicitlyEmpty) {
     dst->AddStringAttribute(ui::AX_ATTR_NAME, web_name.Utf8());
-    dst->AddIntAttribute(ui::AX_ATTR_NAME_FROM, AXNameFromFromBlink(nameFrom));
+    dst->AddIntAttribute(ui::AX_ATTR_NAME_FROM,
+                         static_cast<int32_t>(AXNameFromFromBlink(nameFrom)));
     AddIntListAttributeFromWebObjects(
         ui::AX_ATTR_LABELLEDBY_IDS, nameObjects, dst);
   }
@@ -462,8 +463,9 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
       src.Description(nameFrom, descriptionFrom, descriptionObjects);
   if (!web_description.IsEmpty()) {
     dst->AddStringAttribute(ui::AX_ATTR_DESCRIPTION, web_description.Utf8());
-    dst->AddIntAttribute(ui::AX_ATTR_DESCRIPTION_FROM,
-        AXDescriptionFromFromBlink(descriptionFrom));
+    dst->AddIntAttribute(
+        ui::AX_ATTR_DESCRIPTION_FROM,
+        static_cast<int32_t>(AXDescriptionFromFromBlink(descriptionFrom)));
     AddIntListAttributeFromWebObjects(
         ui::AX_ATTR_DESCRIBEDBY_IDS, descriptionObjects, dst);
   }
@@ -477,11 +479,11 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
   switch (src.Restriction()) {
     case blink::kWebAXRestrictionReadOnly:
       dst->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                           ui::AX_RESTRICTION_READ_ONLY);
+                           static_cast<int32_t>(ui::AX_RESTRICTION_READ_ONLY));
       break;
     case blink::kWebAXRestrictionDisabled:
       dst->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                           ui::AX_RESTRICTION_DISABLED);
+                           static_cast<int32_t>(ui::AX_RESTRICTION_DISABLED));
       break;
     case blink::kWebAXRestrictionNone:
       if (src.CanSetValueAttribute())
@@ -536,12 +538,14 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
 
     if (src.AriaCurrentState()) {
       dst->AddIntAttribute(ui::AX_ATTR_ARIA_CURRENT_STATE,
-                           AXAriaCurrentStateFromBlink(src.AriaCurrentState()));
+                           static_cast<int32_t>(AXAriaCurrentStateFromBlink(
+                               src.AriaCurrentState())));
     }
 
     if (src.InvalidState()) {
-      dst->AddIntAttribute(ui::AX_ATTR_INVALID_STATE,
-                           AXInvalidStateFromBlink(src.InvalidState()));
+      dst->AddIntAttribute(
+          ui::AX_ATTR_INVALID_STATE,
+          static_cast<int32_t>(AXInvalidStateFromBlink(src.InvalidState())));
     }
     if (src.InvalidState() == blink::kWebAXInvalidStateOther &&
         src.AriaInvalidValue().length()) {
@@ -550,18 +554,21 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
     }
 
     if (src.CheckedState()) {
-      dst->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE,
-                           AXCheckedStateFromBlink(src.CheckedState()));
+      dst->AddIntAttribute(
+          ui::AX_ATTR_CHECKED_STATE,
+          static_cast<int32_t>(AXCheckedStateFromBlink(src.CheckedState())));
     }
 
     if (src.GetTextDirection()) {
       dst->AddIntAttribute(ui::AX_ATTR_TEXT_DIRECTION,
-                           AXTextDirectionFromBlink(src.GetTextDirection()));
+                           static_cast<int32_t>(AXTextDirectionFromBlink(
+                               src.GetTextDirection())));
     }
 
     if (src.TextStyle()) {
-      dst->AddIntAttribute(ui::AX_ATTR_TEXT_STYLE,
-                           AXTextStyleFromBlink(src.TextStyle()));
+      dst->AddIntAttribute(
+          ui::AX_ATTR_TEXT_STYLE,
+          static_cast<int32_t>(AXTextStyleFromBlink(src.TextStyle())));
     }
 
     if (dst->role == ui::AX_ROLE_INLINE_TEXT_BOX) {
@@ -599,8 +606,9 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
     }
 
     if (src.Action() != blink::WebAXDefaultActionVerb::kNone) {
-      dst->AddIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB,
-                           AXDefaultActionVerbFromBlink(src.Action()));
+      dst->AddIntAttribute(
+          ui::AX_ATTR_DEFAULT_ACTION_VERB,
+          static_cast<int32_t>(AXDefaultActionVerbFromBlink(src.Action())));
     }
 
     if (src.HasComputedStyle()) {
@@ -819,8 +827,9 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
     if ((dst->role == ui::AX_ROLE_ROW_HEADER ||
          dst->role == ui::AX_ROLE_COLUMN_HEADER) &&
         src.SortDirection()) {
-      dst->AddIntAttribute(ui::AX_ATTR_SORT_DIRECTION,
-                           AXSortDirectionFromBlink(src.SortDirection()));
+      dst->AddIntAttribute(
+          ui::AX_ATTR_SORT_DIRECTION,
+          static_cast<int32_t>(AXSortDirectionFromBlink(src.SortDirection())));
     }
   }
 

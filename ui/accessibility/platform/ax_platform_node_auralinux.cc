@@ -80,9 +80,10 @@ static const gchar* ax_platform_node_auralinux_get_name(AtkObject* atk_object) {
   if (!obj)
     return nullptr;
 
+  ui::AXNameFrom name_from =
+      static_cast<ui::AXNameFrom>(obj->GetIntAttribute(ui::AX_ATTR_NAME_FROM));
   if (obj->GetStringAttribute(ui::AX_ATTR_NAME).empty() &&
-      !(obj->GetIntAttribute(ui::AX_ATTR_NAME_FROM) ==
-        ui::AX_NAME_FROM_ATTRIBUTE_EXPLICITLY_EMPTY))
+      name_from != ui::AX_NAME_FROM_ATTRIBUTE_EXPLICITLY_EMPTY)
     return nullptr;
 
   return obj->GetStringAttribute(ui::AX_ATTR_NAME).c_str();
@@ -993,7 +994,8 @@ void AXPlatformNodeAuraLinux::GetAtkState(AtkStateSet* atk_state_set) {
       break;
   }
 
-  switch (GetIntAttribute(ui::AX_ATTR_RESTRICTION)) {
+  switch (static_cast<ui::AXRestriction>(
+      GetIntAttribute(ui::AX_ATTR_RESTRICTION))) {
     case ui::AX_RESTRICTION_NONE:
       atk_state_set_add_state(atk_state_set, ATK_STATE_ENABLED);
       break;
@@ -1003,6 +1005,8 @@ void AXPlatformNodeAuraLinux::GetAtkState(AtkStateSet* atk_state_set) {
       atk_state_set_add_state(atk_state_set, ATK_STATE_READ_ONLY);
 #endif
 #endif
+      break;
+    default:
       break;
   }
 

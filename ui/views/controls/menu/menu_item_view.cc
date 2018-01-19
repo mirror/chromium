@@ -176,7 +176,8 @@ void MenuItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
       const bool is_checked = GetDelegate()->IsItemChecked(GetCommand());
       const ui::AXCheckedState checked_state =
           is_checked ? ui::AX_CHECKED_STATE_TRUE : ui::AX_CHECKED_STATE_FALSE;
-      node_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE, checked_state);
+      node_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE,
+                                 static_cast<int32_t>(checked_state));
     } break;
     case NORMAL:
     case SEPARATOR:

@@ -98,7 +98,7 @@ struct AX_EXPORT AXNodeData {
   // Setting accessibility attributes.
   void AddStringAttribute(AXStringAttribute attribute,
                           const std::string& value);
-  void AddIntAttribute(AXIntAttribute attribute, int value);
+  void AddIntAttribute(AXIntAttribute attribute, int32_t value);
   void AddFloatAttribute(AXFloatAttribute attribute, float value);
   void AddBoolAttribute(AXBoolAttribute attribute, bool value);
   void AddIntListAttribute(AXIntListAttribute attribute,
@@ -129,8 +129,8 @@ struct AX_EXPORT AXNodeData {
   // copyable struct.
   int32_t id = -1;
   AXRole role = AX_ROLE_UNKNOWN;
-  uint32_t state = AX_STATE_NONE;
-  uint32_t actions = AX_ACTION_NONE;
+  uint32_t state = static_cast<uint32_t>(AX_STATE_NONE);
+  uint32_t actions = static_cast<uint32_t>(AX_ACTION_NONE);
   std::vector<std::pair<AXStringAttribute, std::string>> string_attributes;
   std::vector<std::pair<AXIntAttribute, int32_t>> int_attributes;
   std::vector<std::pair<AXFloatAttribute, float>> float_attributes;

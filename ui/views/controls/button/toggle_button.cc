@@ -200,7 +200,8 @@ void ToggleButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->role = ui::AX_ROLE_SWITCH;
   const ui::AXCheckedState checked_state =
       is_on_ ? ui::AX_CHECKED_STATE_TRUE : ui::AX_CHECKED_STATE_FALSE;
-  node_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE, checked_state);
+  node_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE,
+                             static_cast<int32_t>(checked_state));
 }
 
 void ToggleButton::OnFocus() {
