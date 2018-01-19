@@ -402,6 +402,30 @@
       "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc32cdc8_5c73d245",
+        "filename": "content/renderer/fetchers/resource_fetcher_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-19T23:12:25Z",
+      "side": 1,
+      "message": "\u003e John Abd-El-Malek (OOO until Jan 29)\n\u003e Patch Set 11:\n\u003e\n\u003e (1 comment)\n\u003e Can the tests be written without ResourceFetcherTests? Single-process browser tests are something we generally try to avoid and were only added to convert a few tests using an old harness.\n\u003e \n\u003e In this case, can this be tested by executing JS in the browser that causes the renderer to run XHR (possibly sync)? It can get notified when the request has been made by adding a monitor (RegisterRequestMonitor) to the EmbeddedTestServer.\n\u003e \n\u003e As an example of executing script to run XHR, see https://cs.chromium.org/search/?q\u003dfile:browsertest+\"new+xmlhttprequest\"\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nWorks like a charm, thank you for the detailed suggestion!",
+      "parentUuid": "44d980bc_f7341ee2",
+      "range": {
+        "startLine": 424,
+        "startChar": 41,
+        "endLine": 424,
+        "endChar": 73
+      },
+      "revId": "7d84b32e234063ede6557dcd218c8025d29387be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
