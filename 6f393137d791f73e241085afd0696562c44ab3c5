@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39b92d39_b07114d5",
+        "filename": "tools/perf/page_sets/dual_browser_story.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-19T16:35:13Z",
+      "side": 0,
+      "message": "Even if we did not manage to create all browsers (e.g. due to errors) we should still attempt to close all the ones that were started, and clean up all environments.",
+      "revId": "6f393137d791f73e241085afd0696562c44ab3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
