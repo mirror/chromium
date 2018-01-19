@@ -3010,6 +3010,8 @@ void RenderFrameHostImpl::BeginNavigation(
   if (!is_active())
     return;
 
+  LOG(ERROR) << "Receive squelch " << common_params.should_squelch_downloads;
+
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::BeginNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
                common_params.url.possibly_invalid_spec());
@@ -3041,6 +3043,12 @@ void RenderFrameHostImpl::BeginNavigation(
     pending_navigate_ = std::make_unique<PendingNavigation>(
         validated_params, std::move(begin_params));
     return;
+  }
+
+  LOG(ERROR) << "I am right here.";
+  if (common_params.should_squelch_downloads) {
+    LOG(ERROR) << "Should_squelch_downloads: "
+               << validated_params.should_squelch_downloads;
   }
 
   frame_tree_node()->navigator()->OnBeginNavigation(
@@ -3305,7 +3313,8 @@ void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
       GURL(), GURL(), PREVIEWS_OFF, base::TimeTicks::Now(), "GET", nullptr,
       base::Optional<SourceLocation>(),
       CSPDisposition::CHECK /* should_check_main_world_csp */,
-      false /* started_from_context_menu */, false /* has_user_gesture */);
+      false /* started_from_context_menu */, false /* has_user_gesture */,
+      false /* should_squelch_downloads */);
   CommitNavigation(nullptr, network::mojom::URLLoaderClientEndpointsPtr(),
                    std::unique_ptr<StreamHandle>(), common_params,
                    RequestNavigationParams(), false, base::nullopt,
