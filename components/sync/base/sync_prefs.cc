@@ -154,6 +154,7 @@ bool SyncPrefs::IsSyncRequested() const {
 }
 
 void SyncPrefs::SetSyncRequested(bool is_requested) {
+  LOG(ERROR) << "SyncPrefs::SetSyncRequested " << is_requested;
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // See IsSyncRequested for why we use this pref and !is_requested.
   pref_service_->SetBoolean(prefs::kSyncSuppressStart, !is_requested);

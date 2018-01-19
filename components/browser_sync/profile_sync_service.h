@@ -252,6 +252,7 @@ class ProfileSyncService : public syncer::SyncServiceBase,
   void Initialize();
 
   // syncer::SyncService implementation
+  std::string GetAccountIdToUse() const override;
   bool IsFirstSetupComplete() const override;
   bool IsSyncAllowed() const override;
   bool IsSyncActive() const override;

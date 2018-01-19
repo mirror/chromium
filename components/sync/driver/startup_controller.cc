@@ -123,6 +123,8 @@ bool StartupController::TryStart() {
   //   and encryption information to the UI.
   // Do not start up the sync engine if setup has not completed and isn't
   // in progress, unless told to otherwise.
+  bool autosync = true;  // TODO :)
+  bypass_setup_complete_ |= autosync;
   if (setup_in_progress_) {
     return StartUp(STARTUP_IMMEDIATE);
   } else if (sync_prefs_->IsFirstSetupComplete() || bypass_setup_complete_) {

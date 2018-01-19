@@ -434,9 +434,9 @@ SyncCredentials ProfileSyncService::GetCredentials() {
   if (IsLocalSyncEnabled())
     return credentials;
 
-  credentials.account_id = signin_->GetAccountIdToUse();
+  credentials.account_id = GetAccountIdToUse();
   DCHECK(!credentials.account_id.empty());
-  credentials.email = signin_->GetEffectiveUsername();
+  credentials.email = signin_->GetEffectiveUsername();  // TODO
   credentials.sync_token = access_token_;
 
   if (credentials.sync_token.empty())
@@ -620,16 +620,23 @@ void ProfileSyncService::OnGetTokenFailure(
 void ProfileSyncService::OnRefreshTokenAvailable(
     const std::string& account_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  if (account_id == signin_->GetAccountIdToUse())
+  if (account_id == GetAccountIdToUse())
     OnRefreshTokensLoaded();
 }
 
 void ProfileSyncService::OnRefreshTokenRevoked(const std::string& account_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  if (account_id == signin_->GetAccountIdToUse()) {
+  if (account_id == GetAccountIdToUse()) {
     access_token_.clear();
     UpdateAuthErrorState(
         GoogleServiceAuthError(GoogleServiceAuthError::REQUEST_CANCELED));
+  } else if (IsSyncActive() && GetAccountIdToUse().empty()) {
+    // If we were autosyncing to this account, GetAccountIdToUse is already
+    // empty at this point because the refresh token has already been removed.
+    // TODO this is broken if there were multiple signed-in accounts, since
+    // GetAccountIdToUse will just return a remaining one.
+    LOG(ERROR) << "Autosync account signed out, stopping";
+    StopImpl(CLEAR_DATA);
   }
 }
 
@@ -769,6 +776,7 @@ void ProfileSyncService::SetFirstSetupComplete() {
 
 bool ProfileSyncService::IsSyncConfirmationNeeded() const {
   DCHECK(thread_checker_.CalledOnValidThread());
+  // TODO handle autosync case?
   return (!IsLocalSyncEnabled() && IsSignedIn()) && !IsFirstSetupInProgress() &&
          !IsFirstSetupComplete() && IsSyncRequested();
 }
@@ -1354,7 +1362,8 @@ const AuthError& ProfileSyncService::GetAuthError() const {
 }
 
 bool ProfileSyncService::CanConfigureDataTypes() const {
-  return IsFirstSetupComplete() && !IsSetupInProgress();
+  bool autosync = true;  // TODO :)
+  return autosync || (IsFirstSetupComplete() && !IsSetupInProgress());
 }
 
 bool ProfileSyncService::IsFirstSetupInProgress() const {
@@ -1401,17 +1410,32 @@ void ProfileSyncService::TriggerRefresh(const syncer::ModelTypeSet& types) {
     engine_->TriggerRefresh(types);
 }
 
+std::string ProfileSyncService::GetAccountIdToUse() const {
+  // If there is an "authenticated account", i.e. the user explicitly chose to
+  // sign-in to Chrome, then always use that account.
+  std::string account_id = signin_->GetAccountIdToUse();
+  // Otherwise, fall back to the default content area signed-in account.
+  if (account_id.empty()) {
+    auto accounts = oauth2_token_service_->GetAccounts();
+    if (!accounts.empty()) {
+      // TODO the first account isn't necessarily the default one. E.g. when
+      // a new account is added, it can end up first.
+      account_id = accounts.front();
+    }
+  }
+  return account_id;
+}
+
 bool ProfileSyncService::IsSignedIn() const {
   // Sync is logged in if there is a non-empty effective account id.
-  return !signin_->GetAccountIdToUse().empty();
+  return !GetAccountIdToUse().empty();
 }
 
 bool ProfileSyncService::CanEngineStart() const {
   if (IsLocalSyncEnabled())
     return true;
   return CanSyncStart() && oauth2_token_service_ &&
-         oauth2_token_service_->RefreshTokenIsAvailable(
-             signin_->GetAccountIdToUse());
+         oauth2_token_service_->RefreshTokenIsAvailable(GetAccountIdToUse());
 }
 
 bool ProfileSyncService::IsEngineInitialized() const {
@@ -1558,6 +1582,13 @@ syncer::SyncClient* ProfileSyncService::GetSyncClient() const {
 syncer::ModelTypeSet ProfileSyncService::GetPreferredDataTypes() const {
   DCHECK(thread_checker_.CalledOnValidThread());
   const syncer::ModelTypeSet registered_types = GetRegisteredDataTypes();
+  if (!IsFirstSetupComplete()) {
+    const syncer::ModelTypeSet autosync_types = {
+        syncer::AUTOFILL_WALLET_DATA, syncer::AUTOFILL_WALLET_METADATA,
+        syncer::BOOKMARKS};
+    return Intersection(Union(autosync_types, syncer::ControlTypes()),
+                        registered_types);
+  }
   const syncer::ModelTypeSet preferred_types =
       Union(sync_prefs_.GetPreferredDataTypes(registered_types),
             syncer::ControlTypes());
@@ -1804,7 +1835,7 @@ void ProfileSyncService::RequestAccessToken() {
 
   // Invalidate previous token, otherwise token service will return the same
   // token again.
-  const std::string& account_id = signin_->GetAccountIdToUse();
+  const std::string& account_id = GetAccountIdToUse();
   if (!access_token_.empty()) {
     oauth2_token_service_->InvalidateAccessToken(account_id, oauth2_scopes,
                                                  access_token_);
@@ -1900,7 +1931,14 @@ void ProfileSyncService::GoogleSignedOut(const std::string& account_id,
   sync_disabled_by_admin_ = false;
   UMA_HISTOGRAM_ENUMERATION("Sync.StopSource", syncer::SIGN_OUT,
                             syncer::STOP_SOURCE_LIMIT);
-  RequestStop(CLEAR_DATA);
+  bool autosync = true;
+  // If autosync is enabled, don't call RequestStop, because that sets the flag
+  // to suppress sync startup in the future.
+  if (autosync) {
+    StopImpl(CLEAR_DATA);
+  } else {
+    RequestStop(CLEAR_DATA);
+  }
 }
 
 void ProfileSyncService::OnGaiaAccountsInCookieUpdated(
@@ -1927,7 +1965,7 @@ void ProfileSyncService::OnGaiaAccountsInCookieUpdatedWithCallback(
 
 bool ProfileSyncService::HasCookieJarMismatch(
     const std::vector<gaia::ListedAccount>& cookie_jar_accounts) {
-  std::string account_id = signin_->GetAccountIdToUse();
+  std::string account_id = GetAccountIdToUse();
   // Iterate through list of accounts, looking for current sync account.
   for (const auto& account : cookie_jar_accounts) {
     if (account.id == account_id)

@@ -81,6 +81,7 @@ void DataTypeManagerImpl::Configure(ModelTypeSet desired_types,
   if (reason == CONFIGURE_REASON_CATCH_UP)
     catch_up_in_progress_ = true;
 
+  // TODO don't do this for autosync? We certainly don't want SUs.
   desired_types.PutAll(CoreTypes());
 
   ModelTypeSet allowed_types = ControlTypes();
