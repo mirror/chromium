@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "583ace18_0aa6761a",
+        "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.idl",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-19T06:35:21Z",
+      "side": 0,
+      "message": "Please remove kImageCaptureSetOptions from public/platform/web_feature.mojom.\nPlease rename ImageCaptureSetOptions to OBSOLETE_ImageCaptureSetOptions in tools/metrics/histograms/enums.xml.",
+      "revId": "33455ae9ab04dc4d624c1929a02155fab91d8d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
