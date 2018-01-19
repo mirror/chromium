@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd805b86_34e656a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-19T02:23:26Z",
+      "side": 1,
+      "message": "nit: This part is outdated now.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "c355d8c0309092788a89d5c7ad2cbc99888d5497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f251766e_e9b2e4bd",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-19T02:23:26Z",
+      "side": 1,
+      "message": "nit: Perhaps just use std::find?",
+      "revId": "c355d8c0309092788a89d5c7ad2cbc99888d5497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16796ca9_1fb0d514",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-19T02:23:26Z",
+      "side": 1,
+      "message": "nit: Omit \"KeyPermissions::\" here.",
+      "range": {
+        "startLine": 216,
+        "startChar": 24,
+        "endLine": 216,
+        "endChar": 40
+      },
+      "revId": "c355d8c0309092788a89d5c7ad2cbc99888d5497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e4c993_06aa1f68",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-19T02:23:26Z",
+      "side": 1,
+      "message": "nit: Leftover of \"KeyId\".",
+      "range": {
+        "startLine": 643,
+        "startChar": 55,
+        "endLine": 643,
+        "endChar": 60
+      },
+      "revId": "c355d8c0309092788a89d5c7ad2cbc99888d5497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
