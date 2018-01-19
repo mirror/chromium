@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59c55da2_28339a6b",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-19T23:21:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b58b149_5d44ae0c",
+      "revId": "24c23ef97f08a4adc610aaca6682ed3ce71c6e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a1987f6_af3f543e",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a7f87d07_e8d1b751",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-19T23:21:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a1987f6_af3f543e",
+      "revId": "24c23ef97f08a4adc610aaca6682ed3ce71c6e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5ef425d_379cb105",
         "filename": "chrome/common/media_router/discovery/media_sink_service_base.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "24c23ef97f08a4adc610aaca6682ed3ce71c6e00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d80e52f_87d0c6f9",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-19T23:21:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5ef425d_379cb105",
+      "revId": "24c23ef97f08a4adc610aaca6682ed3ce71c6e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
