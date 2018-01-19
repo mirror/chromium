@@ -19,11 +19,16 @@ class Window;
 
 namespace gfx {
 class Rect;
+class Point;
 }
 
 namespace ui {
 class GestureEvent;
 class MouseWheelEvent;
+}
+
+namespace views {
+class Widget;
 }
 
 namespace ash {
@@ -119,6 +124,10 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
   // on the display identified by |display_id|.
   static void ActivateShelfItemOnDisplay(int item_index, int64_t display_id);
 
+  // Shows the top notification for |app_id|.
+  views::Widget* ShowNotificationsForAppId(const std::string& app_id,
+                                           const gfx::Point& origin);
+
   // Handles a gesture |event| coming from a source outside the shelf widget
   // (e.g. the status area widget). Allows support for behaviors like toggling
   // auto-hide with a swipe, even if that gesture event hits another window.
@@ -188,6 +197,8 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
   // OnBoundsChanged is called because of tablet mode. Use this value to sync
   // the animation for AppListButton.
   bool is_tablet_mode_animation_running_ = false;
+
+  std::string app_id_for_showing_notification_;
 
   DISALLOW_COPY_AND_ASSIGN(Shelf);
 };

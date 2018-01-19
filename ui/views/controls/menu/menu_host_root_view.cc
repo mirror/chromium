@@ -14,6 +14,9 @@ MenuHostRootView::MenuHostRootView(Widget* widget, SubmenuView* submenu)
     : internal::RootView(widget), submenu_(submenu) {}
 
 bool MenuHostRootView::OnMousePressed(const ui::MouseEvent& event) {
+  if (!bounds().Contains(event.location()))
+    return false;
+
   return GetMenuController() &&
          GetMenuController()->OnMousePressed(submenu_, event);
 }
