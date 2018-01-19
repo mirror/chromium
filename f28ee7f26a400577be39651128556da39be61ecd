@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd68cd32_ce50427c",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager_commands.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-19T06:46:35Z",
+      "side": 1,
+      "message": "In paste command, it seems we determine its visibility using CommandUtil.getOnlyOneSelectedDirectory(fileManager.getSelection()).\nCould you consider using it to be consistent with paste?",
+      "revId": "f28ee7f26a400577be39651128556da39be61ecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
