@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8d46899_ea7dd139",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T20:30:02Z",
+      "side": 1,
+      "message": "nit: mind changing this comment to something closer to what you have in the commit message, e.g.\n\n  // dbus::MessageReader::PopBool sets its out-param to false on failure.\n\n?",
+      "revId": "ed8b0437aba33c799140c2a49b32f1c54d99c6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
