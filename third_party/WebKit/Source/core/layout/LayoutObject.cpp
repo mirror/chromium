@@ -110,14 +110,6 @@ namespace {
 
 static bool g_modify_layout_tree_structure_any_state = false;
 
-bool ShouldUseNewLayout(const ComputedStyle& style) {
-  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
-    return false;
-  // TODO(layout-dev): Remove user-modify style check once editing handles
-  // LayoutNG.
-  return style.UserModify() == EUserModify::kReadOnly;
-}
-
 }  // namespace
 
 #if DCHECK_IS_ON()
@@ -203,13 +195,13 @@ LayoutObject* LayoutObject::CreateObject(Element* element,
     case EDisplay::kBlock:
     case EDisplay::kFlowRoot:
     case EDisplay::kInlineBlock:
-      if (ShouldUseNewLayout(style))
-        return new LayoutNGBlockFlow(element);
-      return new LayoutBlockFlow(element);
+      if (!style.IsLayoutNGEnabled())
+        return new LayoutBlockFlow(element);
+      return new LayoutNGBlockFlow(element);
     case EDisplay::kListItem:
-      if (ShouldUseNewLayout(style))
-        return new LayoutNGListItem(element);
-      return new LayoutListItem(element);
+      if (!style.IsLayoutNGEnabled())
+        return new LayoutListItem(element);
+      return new LayoutNGListItem(element);
     case EDisplay::kTable:
     case EDisplay::kInlineTable:
       return new LayoutTable(element);
@@ -223,9 +215,9 @@ LayoutObject* LayoutObject::CreateObject(Element* element,
     case EDisplay::kTableColumn:
       return new LayoutTableCol(element);
     case EDisplay::kTableCell:
-      if (RuntimeEnabledFeatures::LayoutNGEnabled())
-        return new LayoutNGTableCell(element);
-      return new LayoutTableCell(element);
+      if (!style.IsLayoutNGEnabled())
+        return new LayoutTableCell(element);
+      return new LayoutNGTableCell(element);
     case EDisplay::kTableCaption:
       return new LayoutTableCaption(element);
     case EDisplay::kWebkitBox:
