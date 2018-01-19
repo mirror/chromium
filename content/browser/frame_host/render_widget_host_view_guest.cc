@@ -721,7 +721,8 @@ void RenderWidgetHostViewGuest::GetScreenInfo(ScreenInfo* screen_info) {
 
 void RenderWidgetHostViewGuest::ResizeDueToAutoResize(
     const gfx::Size& new_size,
-    uint64_t sequence_number) {
+    uint64_t sequence_number,
+    const viz::LocalSurfaceId& surface_id) {
   if (guest_)
     guest_->ResizeDueToAutoResize(new_size, sequence_number);
 }

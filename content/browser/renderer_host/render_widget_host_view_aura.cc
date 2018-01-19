@@ -2046,8 +2046,12 @@ void RenderWidgetHostViewAura::UpdateCursorIfOverSelf() {
   }
 }
 
-void RenderWidgetHostViewAura::WasResized() {
-  window_->AllocateLocalSurfaceId();
+void RenderWidgetHostViewAura::WasResized(
+    const viz::LocalSurfaceId& local_surface_id) {
+  if (local_surface_id.is_valid())
+    window_->SetLocalSurfaceId(local_surface_id);
+  else
+    window_->AllocateLocalSurfaceId();
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized();
   if (host_->auto_resize_enabled()) {
@@ -2489,9 +2493,11 @@ void RenderWidgetHostViewAura::OnSynchronizedDisplayPropertiesChanged() {
   WasResized();
 }
 
-void RenderWidgetHostViewAura::ResizeDueToAutoResize(const gfx::Size& new_size,
-                                                     uint64_t sequence_number) {
-  WasResized();
+void RenderWidgetHostViewAura::ResizeDueToAutoResize(
+    const gfx::Size& new_size,
+    uint64_t sequence_number,
+    const viz::LocalSurfaceId& local_surface_id) {
+  WasResized(local_usrface_id);
 }
 
 }  // namespace content
