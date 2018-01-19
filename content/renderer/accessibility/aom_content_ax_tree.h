@@ -32,6 +32,10 @@ class AomContentAxTree : public blink::ComputedAXTree {
   const std::string GetNameForAXNode(int32_t) override;
   const std::string GetRoleForAXNode(int32_t) override;
 
+  // Get the specified attribute for a given AXID, returning true if the
+  // attribute is present on that corresponding AXNode.
+  bool GetIntAttributeForId(int32_t, blink::AOMIntAttribute, int32_t*) override;
+
  private:
   ui::AXTree tree_;
 

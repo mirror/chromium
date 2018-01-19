@@ -6,6 +6,7 @@
 #define ComputedAXTree_h
 
 #include <string>
+#include "public/platform/AOMEnums.h"
 
 namespace blink {
 
@@ -17,6 +18,8 @@ class ComputedAXTree {
   virtual bool ComputeAccessibilityTree(WebFrame*) = 0;
   virtual const std::string GetNameForAXNode(int32_t) = 0;
   virtual const std::string GetRoleForAXNode(int32_t) = 0;
+
+  virtual bool GetIntAttributeForId(int32_t, AOMIntAttribute, int32_t*) = 0;
 };
 
 }  // namespace blink
