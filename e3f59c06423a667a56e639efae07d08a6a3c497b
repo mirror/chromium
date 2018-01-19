@@ -16,6 +16,24 @@
       "revId": "e3f59c06423a667a56e639efae07d08a6a3c497b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7155f930_b80f2f66",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T18:50:22Z",
+      "side": 1,
+      "message": "I thought that could be riskier since the delegates get attempts at them and that could cause weird behavior... and hopefully all this code is dead with mojo on. Let me know if you feel strongly and want me to change it.. I\u0027m on the fence.",
+      "parentUuid": "32ffaa05_6526e613",
+      "revId": "e3f59c06423a667a56e639efae07d08a6a3c497b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
