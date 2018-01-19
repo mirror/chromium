@@ -23,7 +23,7 @@ PaintFilterEffect* PaintFilterEffect::Create(Filter* filter,
 }
 
 sk_sp<PaintFilter> PaintFilterEffect::CreateImageFilter() {
-  return sk_make_sp<PaintFlagsPaintFilter>(flags_);
+  return PaintFlagsPaintFilter::Make(flags_);
 }
 
 TextStream& PaintFilterEffect::ExternalRepresentation(TextStream& ts,

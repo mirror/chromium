@@ -292,7 +292,7 @@ TEST_F(CCParamTraitsTest, AllQuads) {
   arbitrary_filters1.Append(
       FilterOperation::CreateBlurFilter(arbitrary_float2));
   arbitrary_filters1.Append(
-      cc::FilterOperation::CreateReferenceFilter(sk_make_sp<BlurPaintFilter>(
+      cc::FilterOperation::CreateReferenceFilter(BlurPaintFilter::Make(
           arbitrary_sigma, arbitrary_sigma,
           BlurPaintFilter::TileMode::kClampToBlack_TileMode, nullptr)));
 

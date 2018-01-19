@@ -64,7 +64,7 @@ FloatRect FEOffset::MapEffect(const FloatRect& rect) const {
 sk_sp<PaintFilter> FEOffset::CreateImageFilter() {
   Filter* filter = this->GetFilter();
   PaintFilter::CropRect crop_rect = GetCropRect();
-  return sk_make_sp<OffsetPaintFilter>(
+  return OffsetPaintFilter::Make(
       SkFloatToScalar(filter->ApplyHorizontalScale(dx_)),
       SkFloatToScalar(filter->ApplyVerticalScale(dy_)),
       PaintFilterBuilder::Build(InputEffect(0), OperatingInterpolationSpace()),

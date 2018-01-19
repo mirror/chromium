@@ -199,15 +199,14 @@ sk_sp<PaintFilter> FEComposite::CreateImageFilterInternal(
   PaintFilter::CropRect crop_rect = GetCropRect();
 
   if (type_ == FECOMPOSITE_OPERATOR_ARITHMETIC) {
-    return sk_make_sp<ArithmeticPaintFilter>(
+    return ArithmeticPaintFilter::Make(
         SkFloatToScalar(k1_), SkFloatToScalar(k2_), SkFloatToScalar(k3_),
         SkFloatToScalar(k4_), requires_pm_color_validation,
         std::move(background), std::move(foreground), &crop_rect);
   }
 
-  return sk_make_sp<XfermodePaintFilter>(ToBlendMode(type_),
-                                         std::move(background),
-                                         std::move(foreground), &crop_rect);
+  return XfermodePaintFilter::Make(ToBlendMode(type_), std::move(background),
+                                   std::move(foreground), &crop_rect);
 }
 
 static TextStream& operator<<(TextStream& ts,

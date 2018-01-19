@@ -135,8 +135,7 @@ sk_sp<PaintFilter> FilterEffect::CreateTransparentBlack() const {
   PaintFilter::CropRect rect = GetCropRect();
   sk_sp<SkColorFilter> color_filter =
       SkColorFilter::MakeModeFilter(0, SkBlendMode::kClear);
-  return sk_make_sp<ColorFilterPaintFilter>(std::move(color_filter), nullptr,
-                                            &rect);
+  return ColorFilterPaintFilter::Make(std::move(color_filter), nullptr, &rect);
 }
 
 PaintFilter::CropRect FilterEffect::GetCropRect() const {

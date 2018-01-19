@@ -50,7 +50,7 @@ sk_sp<PaintFilter> FETile::CreateImageFilter() {
   else
     src_rect = InputEffect(0)->FilterPrimitiveSubregion();
   FloatRect dst_rect = FilterPrimitiveSubregion();
-  return sk_make_sp<TilePaintFilter>(src_rect, dst_rect, std::move(input));
+  return TilePaintFilter::Make(src_rect, dst_rect, std::move(input));
 }
 
 TextStream& FETile::ExternalRepresentation(TextStream& ts, int indent) const {
