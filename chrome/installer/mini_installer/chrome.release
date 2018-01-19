@@ -73,6 +73,8 @@ chrome_200_percent.pak: %(VersionDir)s\
 [TOUCH]
 
 [GOOGLE_CHROME]
+chrome_server.exe: %(VersionDir)s\
+
 #
 # Widevine CDM sub-dir
 #

@@ -197,6 +197,7 @@ if (!is_android && !is_mac) {
           "//chrome/install_static:secondary_module",
           "//chrome/installer/util:with_no_strings",
           "//chrome_elf",
+          "//chrome_server",
           "//components/browser_watcher:browser_watcher_client",
           "//components/crash/content/app:run_as_crashpad_handler",
           "//components/crash/core/common",
