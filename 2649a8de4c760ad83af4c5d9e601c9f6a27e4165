@@ -16,6 +16,24 @@
       "revId": "2649a8de4c760ad83af4c5d9e601c9f6a27e4165",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39261380_2cdf924f",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-19T08:39:29Z",
+      "side": 1,
+      "message": "Good point. Not intended. We should be consistent here: visible focusables should win over invisible ones.",
+      "parentUuid": "ae842911_00e33529",
+      "revId": "2649a8de4c760ad83af4c5d9e601c9f6a27e4165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
