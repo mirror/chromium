@@ -6,6 +6,7 @@
 
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
 #include "chrome/browser/ui/passwords/passwords_model_delegate.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "chrome/browser/ui/views/passwords/manage_password_auto_sign_in_view.h"
@@ -114,18 +115,31 @@ void ManagePasswordsBubbleDelegateViewBase::ActivateBubble() {
   g_manage_passwords_bubble_->GetWidget()->Activate();
 }
 
+const content::WebContents*
+ManagePasswordsBubbleDelegateViewBase::GetWebContents() const {
+  return model_->GetWebContents();
+}
+
+base::string16 ManagePasswordsBubbleDelegateViewBase::GetWindowTitle() const {
+  return model_->title();
+}
+
+bool ManagePasswordsBubbleDelegateViewBase::ShouldShowWindowTitle() const {
+  return !model_->title().empty();
+}
+
 ManagePasswordsBubbleDelegateViewBase::ManagePasswordsBubbleDelegateViewBase(
     content::WebContents* web_contents,
     views::View* anchor_view,
     const gfx::Point& anchor_point,
     DisplayReason reason)
     : LocationBarBubbleDelegateView(anchor_view, anchor_point, web_contents),
-      model_(PasswordsModelDelegateFromWebContents(web_contents),
-             reason == AUTOMATIC ? ManagePasswordsBubbleModel::AUTOMATIC
-                                 : ManagePasswordsBubbleModel::USER_ACTION),
+      model_(std::make_unique<ManagePasswordsBubbleModel>(
+          PasswordsModelDelegateFromWebContents(web_contents),
+          reason == AUTOMATIC ? ManagePasswordsBubbleModel::AUTOMATIC
+                              : ManagePasswordsBubbleModel::USER_ACTION)),
       mouse_handler_(
-          std::make_unique<WebContentMouseHandler>(this,
-                                                   model_.GetWebContents())) {}
+          std::make_unique<WebContentMouseHandler>(this, web_contents)) {}
 
 ManagePasswordsBubbleDelegateViewBase::
     ~ManagePasswordsBubbleDelegateViewBase() {
@@ -133,20 +147,14 @@ ManagePasswordsBubbleDelegateViewBase::
     g_manage_passwords_bubble_ = nullptr;
 }
 
-const content::WebContents*
-ManagePasswordsBubbleDelegateViewBase::GetWebContents() const {
-  return model_.GetWebContents();
-}
-
-void ManagePasswordsBubbleDelegateViewBase::CloseBubble() {
+void ManagePasswordsBubbleDelegateViewBase::OnWidgetClosing(
+    views::Widget* widget) {
   mouse_handler_.reset();
-  LocationBarBubbleDelegateView::CloseBubble();
-}
-
-base::string16 ManagePasswordsBubbleDelegateViewBase::GetWindowTitle() const {
-  return model_.title();
-}
-
-bool ManagePasswordsBubbleDelegateViewBase::ShouldShowWindowTitle() const {
-  return !model_.title().empty();
+  // It can be the case that a password bubble is being closed while another
+  // password bubble is being opened. The metrics recorder can be shared between
+  // them and it doesn't understand the sequence [open1, open2, close1, close2].
+  // Therefore, we reset the model early (before the bubble destructor) to get
+  // the following sequence of events [open1, close1, open2, close2].
+  model_.reset();
+  LocationBarBubbleDelegateView::OnWidgetClosing(widget);
 }
