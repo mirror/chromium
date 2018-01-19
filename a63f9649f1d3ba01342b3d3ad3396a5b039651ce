@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ddea039d_6eb6bc33",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-19T01:14:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b526e65d_1bab8bbc",
+      "range": {
+        "startLine": 288,
+        "startChar": 6,
+        "endLine": 290,
+        "endChar": 0
+      },
+      "revId": "a63f9649f1d3ba01342b3d3ad3396a5b039651ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0ab993b_e5961a34",
         "filename": "chrome/test/data/webui/extensions/extension_toolbar_test.js",
         "patchSetId": 7
@@ -68,6 +92,54 @@
       "revId": "a63f9649f1d3ba01342b3d3ad3396a5b039651ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52309060_2c89613b",
+        "filename": "chrome/test/data/webui/extensions/extension_toolbar_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-19T01:14:38Z",
+      "side": 1,
+      "message": "Swapped, also swapped the ListenerMock usage above.",
+      "parentUuid": "f0ab993b_e5961a34",
+      "range": {
+        "startLine": 109,
+        "startChar": 47,
+        "endLine": 109,
+        "endChar": 59
+      },
+      "revId": "a63f9649f1d3ba01342b3d3ad3396a5b039651ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82edb657_446a7616",
+        "filename": "chrome/test/data/webui/extensions/extension_toolbar_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-19T01:14:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c55d54e_5f5fb747",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 11
+      },
+      "revId": "a63f9649f1d3ba01342b3d3ad3396a5b039651ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
