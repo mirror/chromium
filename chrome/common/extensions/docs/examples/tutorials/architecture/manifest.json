@@ -1,0 +1,33 @@
+{
+  "name": "Architecture Example",
+  "version": "1.0",
+  "description": "Shows Architecture of Extensions",
+  "permissions": ["activeTab", "storage", "declarativeContent"],
+  "options_page": "options.html",
+  "page_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/extension_architecture16.png",
+      "32": "images/extension_architecture32.png",
+      "48": "images/extension_architecture48.png",
+      "128": "images/extension_architecture128.png"
+    }
+  },
+  "icons": {
+    "16": "images/extension_architecture16.png",
+    "32": "images/extension_architecture32.png",
+    "48": "images/extension_architecture48.png",
+    "128": "images/extension_architecture128.png"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+   {
+     "matches": ["https://developer.chrome.com/*"],
+     "js": ["content_script.js"]
+   }
+ ],
+  "manifest_version": 2
+}
