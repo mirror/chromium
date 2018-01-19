@@ -146,7 +146,7 @@ void GetSepiaMatrix(float amount, SkScalar matrix[20]) {
 
 sk_sp<PaintFilter> CreateMatrixImageFilter(const SkScalar matrix[20],
                                            sk_sp<PaintFilter> input) {
-  return sk_make_sp<ColorFilterPaintFilter>(
+  return ColorFilterPaintFilter::Make(
       SkColorFilter::MakeMatrixFilterRowMajor255(matrix), std::move(input));
 }
 
@@ -194,12 +194,12 @@ sk_sp<PaintFilter> RenderSurfaceFilters::BuildImageFilter(
         image_filter = CreateMatrixImageFilter(matrix, std::move(image_filter));
         break;
       case FilterOperation::BLUR:
-        image_filter = sk_make_sp<BlurPaintFilter>(op.amount(), op.amount(),
-                                                   op.blur_tile_mode(),
-                                                   std::move(image_filter));
+        image_filter =
+            BlurPaintFilter::Make(op.amount(), op.amount(), op.blur_tile_mode(),
+                                  std::move(image_filter));
         break;
       case FilterOperation::DROP_SHADOW:
-        image_filter = sk_make_sp<DropShadowPaintFilter>(
+        image_filter = DropShadowPaintFilter::Make(
             SkIntToScalar(op.drop_shadow_offset().x()),
             SkIntToScalar(op.drop_shadow_offset().y()),
             SkIntToScalar(op.amount()), SkIntToScalar(op.amount()),
@@ -236,7 +236,7 @@ sk_sp<PaintFilter> RenderSurfaceFilters::BuildImageFilter(
         if (offset.y() <= 0)
           center_offset.set_y(offset.y() / op.amount());
 
-        sk_sp<PaintFilter> zoom_filter = sk_make_sp<MagnifierPaintFilter>(
+        sk_sp<PaintFilter> zoom_filter = MagnifierPaintFilter::Make(
             SkRect::MakeXYWH(
                 (center.x() - src_dimensions.x() / 2.f) + center_offset.x(),
                 (center.y() - src_dimensions.y() / 2.f) + center_offset.y(),
@@ -246,8 +246,8 @@ sk_sp<PaintFilter> RenderSurfaceFilters::BuildImageFilter(
           // TODO(ajuma): When there's a 1-input version of
           // SkMagnifierImageFilter, use that to handle the input filter
           // instead of using an SkComposeImageFilter.
-          image_filter = sk_make_sp<ComposePaintFilter>(
-              std::move(zoom_filter), std::move(image_filter));
+          image_filter = ComposePaintFilter::Make(std::move(zoom_filter),
+                                                  std::move(image_filter));
         } else {
           image_filter = std::move(zoom_filter);
         }
@@ -275,8 +275,8 @@ sk_sp<PaintFilter> RenderSurfaceFilters::BuildImageFilter(
           image_filter =
               CreateMatrixImageFilter(matrix, std::move(image_filter));
         } else if (image_filter) {
-          image_filter = sk_make_sp<ComposePaintFilter>(
-              op.image_filter(), std::move(image_filter));
+          image_filter = ComposePaintFilter::Make(op.image_filter(),
+                                                  std::move(image_filter));
         } else {
           image_filter = op.image_filter();
         }
@@ -286,11 +286,11 @@ sk_sp<PaintFilter> RenderSurfaceFilters::BuildImageFilter(
         SkRegion region;
         for (const gfx::Rect& rect : op.shape())
           region.op(gfx::RectToSkIRect(rect), SkRegion::kUnion_Op);
-        sk_sp<PaintFilter> alpha_filter = sk_make_sp<AlphaThresholdPaintFilter>(
+        sk_sp<PaintFilter> alpha_filter = AlphaThresholdPaintFilter::Make(
             region, op.amount(), op.outer_threshold(), nullptr);
         if (image_filter) {
-          image_filter = sk_make_sp<ComposePaintFilter>(
-              std::move(alpha_filter), std::move(image_filter));
+          image_filter = ComposePaintFilter::Make(std::move(alpha_filter),
+                                                  std::move(image_filter));
         } else {
           image_filter = std::move(alpha_filter);
         }

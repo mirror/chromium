@@ -99,8 +99,8 @@ sk_sp<PaintFilter> FEMorphology::CreateImageFilter() {
       type_ == FEMORPHOLOGY_OPERATOR_DILATE
           ? MorphologyPaintFilter::MorphType::kDilate
           : MorphologyPaintFilter::MorphType::kErode;
-  return sk_make_sp<MorphologyPaintFilter>(morph_type, radius_x, radius_y,
-                                           std::move(input), &rect);
+  return MorphologyPaintFilter::Make(morph_type, radius_x, radius_y,
+                                     std::move(input), &rect);
 }
 
 static TextStream& operator<<(TextStream& ts,
