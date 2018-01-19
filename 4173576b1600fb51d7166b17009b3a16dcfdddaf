@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d117ef1c_2e98caf9",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-19T16:25:02Z",
+      "side": 0,
+      "message": "spurious?",
+      "revId": "4173576b1600fb51d7166b17009b3a16dcfdddaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f71073a0_935a344b",
+        "filename": "components/autofill/core/browser/autofill_assistant.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-19T16:25:02Z",
+      "side": 1,
+      "message": "nit: if you include autofill_manager.h you can skip the include and ref the FormStructureMap typedef.\n\nYou could also forward declare FormStructure and repeat the typedef. I\u0027m less fond of this though.",
+      "revId": "2969601ef330a45f34052c3c2054a5ff4e1e2bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e01f2b_bbed0ee0",
+        "filename": "components/autofill/core/browser/autofill_assistant_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-19T16:25:02Z",
+      "side": 1,
+      "message": "the typedef is visible here, no?",
+      "revId": "2969601ef330a45f34052c3c2054a5ff4e1e2bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
