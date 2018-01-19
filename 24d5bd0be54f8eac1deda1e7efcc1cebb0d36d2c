@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fdba0484_3e52065d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2018-01-19T00:21:54Z",
+      "side": 1,
+      "message": "We have already overrided shouldDelayStartup to return true and call startDelayedNativeInitialization when menu shown. So we can prevent it from executing if FRE is not complete in onMenuShown.",
+      "parentUuid": "524632f5_7e12a269",
+      "range": {
+        "startLine": 180,
+        "startChar": 22,
+        "endLine": 180,
+        "endChar": 51
+      },
+      "revId": "24d5bd0be54f8eac1deda1e7efcc1cebb0d36d2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39ad8b45_30026a34",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "24d5bd0be54f8eac1deda1e7efcc1cebb0d36d2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e486ef5b_9b54dac8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2018-01-19T00:21:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39ad8b45_30026a34",
+      "range": {
+        "startLine": 174,
+        "startChar": 50,
+        "endLine": 174,
+        "endChar": 78
+      },
+      "revId": "24d5bd0be54f8eac1deda1e7efcc1cebb0d36d2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
