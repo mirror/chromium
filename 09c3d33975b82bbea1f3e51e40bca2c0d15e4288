@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50259efd_8f2c9597",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2018-01-19T15:46:44Z",
+      "side": 1,
+      "message": "I think it would be preferable to not overload the abort reason with semantics, and instead have the intention explicitly stated through API. Perhaps we can have a \"bool reject_promise \u003d true\" parameter to Abort?",
+      "revId": "09c3d33975b82bbea1f3e51e40bca2c0d15e4288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
