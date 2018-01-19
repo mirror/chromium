@@ -22,6 +22,23 @@
       "revId": "8a61cdbbb0340fe47efdeb5d6077f1aee4a2e75f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04461844_279faa9f",
+        "filename": "ui/app_list/demo/app_list_demo_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T22:51:32Z",
+      "side": 1,
+      "message": "This looks unused too.",
+      "revId": "8a61cdbbb0340fe47efdeb5d6077f1aee4a2e75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
