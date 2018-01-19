@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff50bf28_db0ce715",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-19T20:30:56Z",
+      "side": 1,
+      "message": "I think you should just use UMA_HISTOGRAM_TIMES() here. The difference between that version and your code is you\u0027re passing 4s as max vs. 10s as max for the default macro. Which is very close and is not much difference since buckets are exponentially sized. So suggest just switching to UMA_HISTOGRAM_TIMES().",
+      "range": {
+        "startLine": 179,
+        "startChar": 51,
+        "endLine": 179,
+        "endChar": 0
+      },
+      "revId": "81f02fcc37118a02db5b99cbd2b7bbb31d7700b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
