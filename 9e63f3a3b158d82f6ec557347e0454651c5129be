@@ -16,6 +16,24 @@
       "revId": "9e63f3a3b158d82f6ec557347e0454651c5129be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7191fe4_c58dd4cb",
+        "filename": "build/secondary/third_party/catapult/devil/devil_arm.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-19T01:16:13Z",
+      "side": 1,
+      "message": "I\u0027ve only ever seen declare_args in .gni files, so I did that. Turns out that they do exist in BUILD.gn files, though. Moved to devil/BUILD.gn.",
+      "parentUuid": "59c031bd_802082a2",
+      "revId": "9e63f3a3b158d82f6ec557347e0454651c5129be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
