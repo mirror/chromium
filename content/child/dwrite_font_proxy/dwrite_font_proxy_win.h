@@ -87,8 +87,6 @@ class DWriteFontCollectionProxy
 
   bool CreateFamily(UINT32 family_index);
 
-  void SetProxy(mojom::DWriteFontProxyPtrInfo);
-
   mojom::DWriteFontProxy& GetFontProxy();
 
  private:
