@@ -96,6 +96,29 @@
     },
     {
       "key": {
+        "uuid": "4d6ac8f4_0e4b51cd",
+        "filename": "base/component_export.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-19T22:34:56Z",
+      "side": 1,
+      "message": "Can we write this as \n\n#define IS_COMPONENT_IMPL(component) IS_##component##_IMPL \u003d\u003d 1\n\ngiven the way that undefined symbols default to 0 when doing arithmetic inside #if s, e.g. if foo.c is\n\n#define IN_IMPL(name) IS_##name##_IMPL \u003d\u003d 1\n#if IN_IMPL(FOO)\nFOO is here.\n#endif\n\nthen\n\ngcc -E foo.c is empty\ngcc -DIS_FOO_IMPL -E foo.c contains FOO is here.",
+      "range": {
+        "startLine": 28,
+        "startChar": 1,
+        "endLine": 29,
+        "endChar": 46
+      },
+      "revId": "4de177d4bcc1dbaaa36149c80d5a7ab44f60d6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db940e0e_b5600bfa",
         "filename": "base/component_export.h",
         "patchSetId": 1
