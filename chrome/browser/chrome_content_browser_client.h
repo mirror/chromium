@@ -28,6 +28,7 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 
 class ChromeContentBrowserClientParts;
+class PictureInPictureWindowController;
 class PrefRegistrySimple;
 
 namespace base {
@@ -61,6 +62,10 @@ enum class Channel;
 namespace url {
 class Origin;
 }
+
+namespace viz {
+class FrameSinkId;
+}  // namespace viz
 
 class ChromeContentBrowserClient : public content::ContentBrowserClient {
  public:
@@ -399,6 +404,11 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       const GURL& url,
       base::OnceCallback<void(bool, int, int)> callback) override;
 
+  void UpdatePictureInPictureSurfaceId(content::RenderFrameHost* frame_host,
+                                       viz::FrameSinkId frame_sink_id,
+                                       uint32_t parent_id,
+                                       base::UnguessableToken nonce) override;
+
  protected:
   static bool HandleWebUI(GURL* url, content::BrowserContext* browser_context);
   static bool HandleWebUIReverse(GURL* url,
@@ -476,6 +486,8 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       service_manager::BinderRegistryWithArgs<content::RenderProcessHost*,
                                               const url::Origin&>>
       worker_interfaces_parameterized_;
+
+  std::unique_ptr<PictureInPictureWindowController> pip_window_controller_;
 
   base::WeakPtrFactory<ChromeContentBrowserClient> weak_factory_;
 
