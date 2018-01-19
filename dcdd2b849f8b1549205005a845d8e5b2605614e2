@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2053291d_e068f991",
+        "filename": "chrome/browser/ui/cocoa/infobars/infobar_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-01-19T13:44:14Z",
+      "side": 1,
+      "message": "This means that the existing, non-Harmony Cocoa infobars will come to all have white backgrounds. Is that intended?",
+      "range": {
+        "startLine": 86,
+        "startChar": 61,
+        "endLine": 86,
+        "endChar": 77
+      },
+      "revId": "dcdd2b849f8b1549205005a845d8e5b2605614e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bffbd31_52b86513",
+        "filename": "chrome/browser/ui/cocoa/infobars/infobar_gradient_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-01-19T13:44:14Z",
+      "side": 1,
+      "message": "now there *really* isn\u0027t a need to use a gradient :) (but I\u0027ll do that TODO in a follow-up CL to this one, no worries)",
+      "range": {
+        "startLine": 41,
+        "startChar": 36,
+        "endLine": 41,
+        "endChar": 44
+      },
+      "revId": "dcdd2b849f8b1549205005a845d8e5b2605614e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
