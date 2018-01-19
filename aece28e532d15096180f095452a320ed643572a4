@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2158c229_076bd0e6",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T02:53:52Z",
+      "side": 1,
+      "message": "I\u0027d prefer a name other than fully opened, since it\u0027s being set because its an unstable angle - not because it\u0027s fully opened. Why not use kMaxStableAngle?",
+      "revId": "aece28e532d15096180f095452a320ed643572a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0110258a_75b66e3f",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T02:53:52Z",
+      "side": 1,
+      "message": "Only reset if we see an angle less than kExitTabletModeAngle or if the lid was opened recently. If the angle changes from 355 -\u003e 354 we don\u0027t need to reset the timer.",
+      "revId": "aece28e532d15096180f095452a320ed643572a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
