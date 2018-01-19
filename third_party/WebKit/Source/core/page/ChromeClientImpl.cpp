@@ -891,8 +891,10 @@ void ChromeClientImpl::UpdateEventRectsForSubframeIfNecessary(
     tree_view->UpdateEventRectsForSubframeIfNecessary();
 }
 
-void ChromeClientImpl::BeginLifecycleUpdates() {
-  if (WebLayerTreeView* tree_view = web_view_->LayerTreeView()) {
+void ChromeClientImpl::BeginLifecycleUpdates(LocalFrame* frame) {
+  WebFrameWidgetBase* widget =
+      WebLocalFrameImpl::FromFrame(frame)->LocalRoot()->FrameWidget();
+  if (WebLayerTreeView* tree_view = widget->GetLayerTreeView()) {
     tree_view->SetDeferCommits(false);
     tree_view->SetNeedsBeginFrame();
   }

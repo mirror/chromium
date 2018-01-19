@@ -109,7 +109,7 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
                      const FloatSize&,
                      const WebOverscrollBehavior&) override {}
 
-  void BeginLifecycleUpdates() override {}
+  void BeginLifecycleUpdates(LocalFrame*) override {}
 
   bool HadFormInteraction() const override { return false; }
 

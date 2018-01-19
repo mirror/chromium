@@ -1024,6 +1024,8 @@ void WebFrameWidgetImpl::InitializeLayerTreeView() {
     GetPage()->LayerTreeViewInitialized(*layer_tree_view_,
                                         local_root_->GetFrame()->View());
 
+    layer_tree_view_->SetDeferCommits(true);
+
     // TODO(kenrb): Currently GPU rasterization is always enabled for OOPIFs.
     // This is okay because it is only necessarily to set the trigger to false
     // for certain cases that affect the top-level frame, but it would be better
@@ -1081,10 +1083,14 @@ void WebFrameWidgetImpl::SetRootGraphicsLayer(GraphicsLayer* layer) {
   if (!layer_tree_view_)
     return;
 
-  if (root_layer_)
+  if (root_layer_) {
     layer_tree_view_->SetRootLayer(*root_layer_);
-  else
+  } else {
+    root_graphics_layer_ = nullptr;
+    root_layer_ = nullptr;
+    layer_tree_view_->SetDeferCommits(true);
     layer_tree_view_->ClearRootLayer();
+  }
 }
 
 void WebFrameWidgetImpl::SetRootLayer(WebLayer* layer) {
@@ -1095,10 +1101,13 @@ void WebFrameWidgetImpl::SetRootLayer(WebLayer* layer) {
   if (!layer_tree_view_)
     return;
 
-  if (root_layer_)
+  if (root_layer_) {
     layer_tree_view_->SetRootLayer(*root_layer_);
-  else
+  } else {
+    root_layer_ = nullptr;
+    layer_tree_view_->SetDeferCommits(true);
     layer_tree_view_->ClearRootLayer();
+  }
 }
 
 WebLayerTreeView* WebFrameWidgetImpl::GetLayerTreeView() const {

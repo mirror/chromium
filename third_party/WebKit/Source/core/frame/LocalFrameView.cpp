@@ -5432,8 +5432,8 @@ void LocalFrameView::BeginLifecycleUpdates() {
   UpdateRenderThrottlingStatus(hidden_for_throttling_, subtree_throttled_);
   // The compositor will "defer commits" for the main frame until we
   // explicitly request them.
-  if (GetFrame().IsMainFrame())
-    GetFrame().GetPage()->GetChromeClient().BeginLifecycleUpdates();
+  if (GetFrame().IsLocalRoot())
+    GetFrame().GetPage()->GetChromeClient().BeginLifecycleUpdates(frame_);
 }
 
 void LocalFrameView::SetInitialViewportSize(const IntSize& viewport_size) {

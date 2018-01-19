@@ -64,7 +64,7 @@ class CORE_EXPORT ChromeClientImpl final : public ChromeClient {
   bool CanTakeFocus(WebFocusType) override;
   void TakeFocus(WebFocusType) override;
   void FocusedNodeChanged(Node* from_node, Node* to_node) override;
-  void BeginLifecycleUpdates() override;
+  void BeginLifecycleUpdates(LocalFrame*) override;
   bool HadFormInteraction() const override;
   void StartDragging(LocalFrame*,
                      const WebDragData&,
