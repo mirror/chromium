@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89680958_829bce8e",
+        "filename": "cc/paint/skia_paint_canvas.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-19T19:30:46Z",
+      "side": 1,
+      "message": "nit: Begin/End is a bit weird here, because it relies on 1 image provider per canvas (which is currently the case, but isn\u0027t really guaranteed). Per offline discussion, we should just remove these APIs. (please do this in a follow up, no need for this patch to get more complicated).",
+      "range": {
+        "startLine": 23,
+        "startChar": 21,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "9a30664761f0ae93de3b7d057feafbe9334ba869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
