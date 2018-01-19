@@ -52,6 +52,24 @@
       "revId": "13fb72a8d4f1535219b6c98015828fc2e981a746",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "596a670d_bc34c01f",
+        "filename": "base/allocator/partition_allocator/spin_lock.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-19T19:00:18Z",
+      "side": 1,
+      "message": "\u003e it was feared it might delay the thread for too long (give all other\n\u003e threads of equal priority a chance to run first)\n\nWell, the scheduler can do that at any random time. Ultimately if we have more CPU-busy threads than cores then occasional delays from the scheduler are inevitable.\n\n\u003e Now, it looks like it\u0027s not delaying the thread enough. :)\n\nYeah. Ultimately this is a fundamental limitation of spin locks. It is impossible to implement them so that they yield \"just the right amount\". If we used base::Lock then we would actually wait on a kernel object if we didn\u0027t get the lock and that would ensure that we would yield not-too-much/not-too-little, but last I checked testing showed that using base::Lock hurt performance too much on some benchmarks.\n\nSo, the best that we can do (the best that is possible with a spin lock) is what we have: busy wait, busy wait with YIELD_THREAD, then loop with Sleep(1). And that\u0027s what we\u0027ve got.\n\nIf we\u0027re not spending enough time in the initial busy loop or in the YIELD_THREAD loop then we can tweak those numbers, but I think the three-part loop series is optimal if we\u0027re doing a spin lock.",
+      "parentUuid": "a877e281_3b6afe51",
+      "revId": "13fb72a8d4f1535219b6c98015828fc2e981a746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
