@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "80bafaee_41390e2d",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T13:07:41Z",
+      "side": 1,
+      "message": "Then can we add a helper like DOMWrapperWorld::GetWrapper() so that ScriptWrappable can get a wrapper without knowing DOMDataStore etc?\n\nWe\u0027re already using the pattern in some places.\n\nvoid TraceWrappers(Visitor* visitor) {\n  visitor-\u003eTraceWrappers(GetSomePointer());\n}",
+      "parentUuid": "f3692b18_90e90d3b",
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7e07b95_e7d28316",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.cpp",
         "patchSetId": 3
