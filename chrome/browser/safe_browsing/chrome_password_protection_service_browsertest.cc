@@ -4,10 +4,12 @@
 #include "chrome/browser/safe_browsing/chrome_password_protection_service.h"
 
 #include "base/run_loop.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/ssl/security_state_tab_helper.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -21,7 +23,11 @@
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/features.h"
 #include "components/security_state/core/security_state.h"
+#include "components/session_manager/core/session_manager.h"
 #include "components/signin/core/browser/account_info.h"
+#include "components/signin/core/browser/account_tracker_service.h"
+#include "components/signin/core/browser/signin_manager.h"
+#include "components/signin/core/browser/signin_manager_base.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -44,6 +50,28 @@ class ChromePasswordProtectionServiceBrowserTest : public InProcessBrowserTest {
     ASSERT_TRUE(embedded_test_server()->Start());
     scoped_feature_list_.InitAndEnableFeature(kGoogleBrandedPhishingWarning);
     InProcessBrowserTest::SetUp();
+  }
+
+  void SetUpOnMainThread() override {
+    InProcessBrowserTest::SetUpOnMainThread();
+
+    // Configure sign-in gmail account.
+    AccountId test_account =
+        AccountId::FromUserEmailGaiaId("test@gmail.com", "gaia_id");
+    AccountInfo info;
+    info.account_id = std::string();
+    info.gaia = test_account.GetUserEmail();
+    info.email = test_account.GetUserEmail();
+    info.full_name = test_account.GetUserEmail();
+    info.given_name = test_account.GetUserEmail();
+    info.hosted_domain = AccountTrackerService::kNoHostedDomainFound;
+    info.locale = test_account.GetUserEmail();
+    info.picture_url = "http://localhost/avatar.jpg";
+    info.is_child_account = false;
+
+    SigninManagerBase* signin_manager = static_cast<SigninManagerBase*>(
+        SigninManagerFactory::GetForProfile(browser()->profile()));
+    signin_manager->SetAuthenticatedAccountInfo(info);
   }
 
   ChromePasswordProtectionService* GetService(bool is_incognito) {
