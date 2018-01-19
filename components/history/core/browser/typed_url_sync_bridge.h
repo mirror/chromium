@@ -27,12 +27,14 @@ class TypedURLSyncBridge : public syncer::ModelTypeSyncBridge,
   // syncer::ModelTypeSyncBridge implementation.
   std::unique_ptr<syncer::MetadataChangeList> CreateMetadataChangeList()
       override;
-  base::Optional<syncer::ModelError> MergeSyncData(
+  void MergeSyncData2(
       std::unique_ptr<syncer::MetadataChangeList> metadata_change_list,
-      syncer::EntityChangeList entity_data) override;
-  base::Optional<syncer::ModelError> ApplySyncChanges(
+      syncer::EntityChangeList entity_data,
+      OptionalErrorCallback callback) override;
+  void ApplySyncChanges2(
       std::unique_ptr<syncer::MetadataChangeList> metadata_change_list,
-      syncer::EntityChangeList entity_changes) override;
+      syncer::EntityChangeList entity_changes,
+      OptionalErrorCallback callback) override;
   void GetData(StorageKeyList storage_keys, DataCallback callback) override;
   void GetAllData(DataCallback callback) override;
   std::string GetClientTag(const syncer::EntityData& entity_data) override;

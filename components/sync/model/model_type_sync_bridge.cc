@@ -55,4 +55,34 @@ ModelTypeChangeProcessor* ModelTypeSyncBridge::change_processor() const {
   return change_processor_.get();
 }
 
+void ModelTypeSyncBridge::MergeSyncData2(
+    std::unique_ptr<MetadataChangeList> metadata_change_list,
+    EntityChangeList entity_data,
+    OptionalErrorCallback callback) {
+  std::move(callback).Run(
+      MergeSyncData(std::move(metadata_change_list), std::move(entity_data)));
+}
+
+void ModelTypeSyncBridge::ApplySyncChanges2(
+    std::unique_ptr<MetadataChangeList> metadata_change_list,
+    EntityChangeList entity_changes,
+    OptionalErrorCallback callback) {
+  std::move(callback).Run(ApplySyncChanges(std::move(metadata_change_list),
+                                           std::move(entity_changes)));
+}
+
+base::Optional<ModelError> ModelTypeSyncBridge::MergeSyncData(
+    std::unique_ptr<MetadataChangeList> metadata_change_list,
+    EntityChangeList entity_data) {
+  CHECK(false);
+  return base::nullopt;
+}
+
+base::Optional<ModelError> ModelTypeSyncBridge::ApplySyncChanges(
+    std::unique_ptr<MetadataChangeList> metadata_change_list,
+    EntityChangeList entity_changes) {
+  CHECK(false);
+  return base::nullopt;
+}
+
 }  // namespace syncer
