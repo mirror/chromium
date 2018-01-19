@@ -86,7 +86,7 @@ sk_sp<PaintFilter> FEGaussianBlur::CreateImageFilter() {
   float std_x = GetFilter()->ApplyHorizontalScale(std_x_);
   float std_y = GetFilter()->ApplyVerticalScale(std_y_);
   PaintFilter::CropRect rect = GetCropRect();
-  return sk_make_sp<BlurPaintFilter>(
+  return BlurPaintFilter::Make(
       SkFloatToScalar(std_x), SkFloatToScalar(std_y),
       BlurPaintFilter::TileMode::kClampToBlack_TileMode, std::move(input),
       &rect);

@@ -200,7 +200,7 @@ TEST_F(StructTraitsTest, FilterOperationDropShadow) {
 
 TEST_F(StructTraitsTest, FilterOperationReferenceFilter) {
   cc::FilterOperation input = cc::FilterOperation::CreateReferenceFilter(
-      sk_make_sp<cc::DropShadowPaintFilter>(
+      cc::DropShadowPaintFilter::Make(
           SkIntToScalar(3), SkIntToScalar(8), SkIntToScalar(4),
           SkIntToScalar(9), SK_ColorBLACK,
           SkDropShadowImageFilter::kDrawShadowAndForeground_ShadowMode,

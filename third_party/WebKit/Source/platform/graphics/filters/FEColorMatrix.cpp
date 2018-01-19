@@ -157,8 +157,8 @@ sk_sp<PaintFilter> FEColorMatrix::CreateImageFilter() {
       PaintFilterBuilder::Build(InputEffect(0), OperatingInterpolationSpace()));
   sk_sp<SkColorFilter> filter = CreateColorFilter(type_, values_);
   PaintFilter::CropRect rect = GetCropRect();
-  return sk_make_sp<ColorFilterPaintFilter>(std::move(filter), std::move(input),
-                                            &rect);
+  return ColorFilterPaintFilter::Make(std::move(filter), std::move(input),
+                                      &rect);
 }
 
 static TextStream& operator<<(TextStream& ts, const ColorMatrixType& type) {

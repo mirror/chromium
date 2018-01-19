@@ -741,9 +741,8 @@ TEST_F(DamageTrackerTest, VerifyDamageForImageFilter) {
   child->SetDrawsContent(true);
 
   FilterOperations filters;
-  filters.Append(
-      FilterOperation::CreateReferenceFilter(sk_make_sp<BlurPaintFilter>(
-          2, 2, BlurPaintFilter::TileMode::kClampToBlack_TileMode, nullptr)));
+  filters.Append(FilterOperation::CreateReferenceFilter(BlurPaintFilter::Make(
+      2, 2, BlurPaintFilter::TileMode::kClampToBlack_TileMode, nullptr)));
 
   // Setting the filter will damage the whole surface.
   child->test_properties()->force_render_surface = true;
@@ -823,9 +822,8 @@ TEST_F(DamageTrackerTest, VerifyDamageForTransformedImageFilter) {
   child->SetDrawsContent(true);
 
   FilterOperations filters;
-  filters.Append(
-      FilterOperation::CreateReferenceFilter(sk_make_sp<BlurPaintFilter>(
-          2, 2, BlurPaintFilter::TileMode::kClampToBlack_TileMode, nullptr)));
+  filters.Append(FilterOperation::CreateReferenceFilter(BlurPaintFilter::Make(
+      2, 2, BlurPaintFilter::TileMode::kClampToBlack_TileMode, nullptr)));
 
   // Setting the filter will damage the whole surface.
   gfx::Transform transform;
