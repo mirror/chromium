@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed89b3d1_1167843a",
+        "filename": "content/browser/utility_process_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-19T00:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4194bc25_48f6cc5e",
+      "revId": "2e8e59b5353d5fb79c77d170f99f587cd24307de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41e7bb7d_272a79a0",
         "filename": "content/network/cache_url_loader.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "06bea73f_bafe0924",
+        "filename": "content/network/cache_url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-19T00:25:42Z",
+      "side": 1,
+      "message": "They\u0027re not used (I had tested this), but done for future proofing. Thanks.",
+      "parentUuid": "41e7bb7d_272a79a0",
+      "revId": "2e8e59b5353d5fb79c77d170f99f587cd24307de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f517e4e_08e2ed34",
         "filename": "headless/lib/browser/headless_browser_impl.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-19T00:19:22Z",
       "side": 1,
       "message": "Is the first \"::\" necessary? (Here and line 148)",
+      "revId": "2e8e59b5353d5fb79c77d170f99f587cd24307de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626f375a_347d0095",
+        "filename": "headless/lib/browser/headless_browser_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-19T00:25:42Z",
+      "side": 1,
+      "message": "yeah, I got compile errors without it.",
+      "parentUuid": "7f517e4e_08e2ed34",
       "revId": "2e8e59b5353d5fb79c77d170f99f587cd24307de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
