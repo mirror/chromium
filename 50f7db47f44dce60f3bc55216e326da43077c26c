@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53c6efa3_6c7200ee",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/module.h.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-19T05:01:39Z",
+      "side": 1,
+      "message": "Did I have to change any build files for this include to work? It seems to build fine without changing anything.",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 69
+      },
+      "revId": "50f7db47f44dce60f3bc55216e326da43077c26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
