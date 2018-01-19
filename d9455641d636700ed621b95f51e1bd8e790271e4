@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "0e771a28_c1d5e6cb",
+        "filename": "net/http/http_proxy_client_socket_pool.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-19T18:12:10Z",
+      "side": 1,
+      "message": "I\u0027m fine with it as-is, just wanted to raise the issue as a case this doesn\u0027t handle ideally - I\u0027d advocating for just splitting the SSL and non-SSL socket pools as a way to fix it, if we care enough fix it (I also think that, going forward, it makes the most sense to treat HTTPS foo.com and HTTP foo.com as different proxies).",
+      "parentUuid": "3eaba2f3_f4f16322",
+      "range": {
+        "startLine": 239,
+        "startChar": 30,
+        "endLine": 239,
+        "endChar": 41
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94a86862_4d13fe73",
         "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
         "patchSetId": 8
