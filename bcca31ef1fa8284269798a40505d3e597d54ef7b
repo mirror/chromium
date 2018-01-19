@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6ec9333_4182e135",
+        "filename": "chrome/browser/chooser_controller/fake_bluetooth_chooser_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-19T01:32:18Z",
+      "side": 1,
+      "message": "What does this accomplish?  Is it needed for a test? (The FakeBluetoothChooser doesn\u0027t actually get displayed).",
+      "revId": "bcca31ef1fa8284269798a40505d3e597d54ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
