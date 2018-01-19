@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16a7a0f4_800c4c42",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ResourceMapping.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-19T00:57:10Z",
+      "side": 1,
+      "message": "This techincally works as is, but I\u0027m a bit scared of an async function on an event.",
+      "revId": "d75a69db124b4c6e4cdaa17ea7ee0a7d36f37525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8ec5df_1e2eff07",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSStyleSheetHeader.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-19T00:57:10Z",
+      "side": 1,
+      "message": "This won\u0027t work if you reload devtools after editing. Fixing that requires requesting a lot of content.",
+      "revId": "d75a69db124b4c6e4cdaa17ea7ee0a7d36f37525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
