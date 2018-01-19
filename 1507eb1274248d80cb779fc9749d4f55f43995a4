@@ -16,6 +16,24 @@
       "revId": "1507eb1274248d80cb779fc9749d4f55f43995a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d12d471_abf039de",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/requestDevice/canonicalizeFilter/no-arguments.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-19T20:08:11Z",
+      "side": 1,
+      "message": "You\u0027re right. I found that in this particular test, document.body is null. Adding \u003cbody\u003e tags produces the correct error message. What I ended up doing is adding a check for when the document has finished loading in bluetooth-helpers.js. Adding the check before executing callWithTrustedClick fixed this test, and didn\u0027t break any other tests.",
+      "parentUuid": "101e71c0_e8871fb2",
+      "revId": "1507eb1274248d80cb779fc9749d4f55f43995a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
