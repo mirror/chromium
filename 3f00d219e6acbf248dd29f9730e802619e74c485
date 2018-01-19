@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4907e5c7_67402ccb",
+        "filename": "device/gamepad/gamepad_shared_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2018-01-19T22:41:44Z",
+      "side": 1,
+      "message": "I tried running with this patch and it failed at the DCHECK(mem) line below. I think it needs\nshared_memory_.Map(options.size)",
+      "range": {
+        "startLine": 13,
+        "startChar": 28,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "3f00d219e6acbf248dd29f9730e802619e74c485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
