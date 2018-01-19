@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45bd5bf5_21146bdc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-19T19:48:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa717029_eb0c0a83",
+      "range": {
+        "startLine": 10,
+        "startChar": 22,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "0520d4f19b30cd4c30434a5998df23e06f2ebe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "716664b8_0625d528",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-21T04:53:19Z",
       "side": 1,
       "message": "nit question: do we have any data for this?",
+      "revId": "0520d4f19b30cd4c30434a5998df23e06f2ebe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743b6052_5605c22e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-19T19:48:47Z",
+      "side": 1,
+      "message": "Probably No, because TextResourceDecoder.cpp doesn\u0027t have UMA code around BOM detection.",
+      "parentUuid": "716664b8_0625d528",
       "revId": "0520d4f19b30cd4c30434a5998df23e06f2ebe2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
