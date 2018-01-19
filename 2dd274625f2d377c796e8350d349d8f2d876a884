@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a975b72e_0a084732",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-19T09:20:15Z",
+      "side": 1,
+      "message": "It was not clear to me that this second request was due to a retry. Let\u0027s change the comment to make it more clear:\n// RemoteSuggestionsSignedInFetcher retries fetching an access token if the first attempt is cancelled. Respond with a valid access token on the retry.",
+      "range": {
+        "startLine": 529,
+        "startChar": 5,
+        "endLine": 529,
+        "endChar": 49
+      },
+      "revId": "2dd274625f2d377c796e8350d349d8f2d876a884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
