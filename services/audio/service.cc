@@ -24,6 +24,7 @@ Service::~Service() {
 
 void Service::OnStart() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DLOG(ERROR) << "*** OnStart";
   registry_.AddInterface<mojom::SystemInfo>(base::BindRepeating(
       &Service::BindSystemInfoRequest, base::Unretained(this)));
 }
@@ -33,6 +34,7 @@ void Service::OnBindInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DLOG(ERROR) << "*** OnBindInterface";
   registry_.BindInterface(interface_name, std::move(interface_pipe));
 }
 
