@@ -118,7 +118,9 @@ HTMLInputElement::HTMLInputElement(Document& document, bool created_by_parser)
       // just to destroy them when the |type| attribute gets set by the parser
       // to something else than 'text'.
       input_type_(created_by_parser ? nullptr : InputType::CreateText(*this)),
-      input_type_view_(input_type_ ? input_type_->CreateView() : nullptr) {
+      input_type_view_(input_type_ ? input_type_->CreateView() : nullptr),
+      assistance_icon_visibility_(AssistanceIconVisibility::kDisabled),
+      assistance_icon_type_(AssistanceType::kNone) {
   SetHasCustomStyleCallbacks();
 }
 
@@ -1959,6 +1961,31 @@ void HTMLInputElement::ChildrenChanged(const ChildrenChange& change) {
   // created when children are added for the first time.
   EnsureUserAgentShadowRootV1();
   ContainerNode::ChildrenChanged(change);
+}
+
+void HTMLInputElement::SetAssistance(AssistanceIconVisibility visibility,
+                                     AssistanceType type,
+                                     AssistanceIconClickedCallback callback) {
+  if (assistance_icon_visibility_ != visibility ||
+      assistance_icon_type_ != type) {
+    assistance_icon_visibility_ = visibility;
+    assistance_icon_type_ = type;
+    input_type_view_->AssistConfigurationChanged();
+  }
+  assistance_icon_callback_ = callback;
+}
+
+AssistanceIconVisibility HTMLInputElement::GetAssistanceIconVisibility() const {
+  return assistance_icon_visibility_;
+}
+
+AssistanceType HTMLInputElement::GetAssistanceIconType() const {
+  return assistance_icon_type_;
+}
+
+AssistanceIconClickedCallback HTMLInputElement::GetAssistanceIconCallback()
+    const {
+  return assistance_icon_callback_;
 }
 
 }  // namespace blink
