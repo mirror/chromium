@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8e253ebf_4e1c4a28",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T20:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "404930ae_7b751152",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d7ea45c_8a1cf055",
         "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff477f29_7d9a535a",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T20:32:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e6205dc5_98a3abd7",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 25
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "2945e17c_cd7d9850",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T20:32:45Z",
+      "side": 1,
+      "message": "Yes, if an allocation does not happen to be sampled (didn\u0027t get into samples_ map) we always return the beginning of the really allocated chunk to the client (although the chunk could be larger than requested), so does the free part.",
+      "parentUuid": "d40e9445_00465e63",
+      "range": {
+        "startLine": 192,
+        "startChar": 9,
+        "endLine": 192,
+        "endChar": 35
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e005d66_9e8000f2",
         "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
         "patchSetId": 2
@@ -308,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "daf1b212_4b75d1ac",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T20:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a38a9fab_2113c1b1",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94a31b76_7291c2dc",
         "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.h",
         "patchSetId": 2
@@ -328,6 +424,30 @@
       "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abf2ea4_34b24ddd",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T20:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94a31b76_7291c2dc",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 30
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
