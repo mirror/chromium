@@ -135,7 +135,6 @@ class BlobMessageFilter;
 class BrowserPluginManager;
 class CacheStorageDispatcher;
 class CategorizedWorkerPool;
-class CompositorForwardingMessageFilter;
 class DomStorageDispatcher;
 class FileSystemDispatcher;
 class FrameSwapMessageQueue;
@@ -317,10 +316,6 @@ class CONTENT_EXPORT RenderThreadImpl
   RendererBlinkPlatformImpl* blink_platform_impl() const {
     DCHECK(blink_platform_impl_);
     return blink_platform_impl_.get();
-  }
-
-  CompositorForwardingMessageFilter* compositor_message_filter() const {
-    return compositor_message_filter_.get();
   }
 
   InputHandlerManager* input_handler_manager() const {
@@ -631,9 +626,6 @@ class CONTENT_EXPORT RenderThreadImpl
   void OnSyncMemoryPressure(
       base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level);
 
-  std::unique_ptr<viz::BeginFrameSource> CreateExternalBeginFrameSource(
-      int routing_id);
-
   std::unique_ptr<viz::SyntheticBeginFrameSource>
   CreateSyntheticBeginFrameSource();
 
@@ -748,7 +740,6 @@ class CONTENT_EXPORT RenderThreadImpl
   base::CancelableCallback<void(const IPC::Message&)> main_input_callback_;
   scoped_refptr<IPC::MessageFilter> input_event_filter_;
   std::unique_ptr<InputHandlerManager> input_handler_manager_;
-  scoped_refptr<CompositorForwardingMessageFilter> compositor_message_filter_;
 
 #if defined(OS_ANDROID)
   scoped_refptr<SynchronousCompositorFilter> sync_compositor_message_filter_;
