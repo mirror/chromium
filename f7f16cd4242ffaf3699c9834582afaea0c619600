@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08324dbc_2943ed8b",
+        "filename": "content/browser/webui/web_ui_data_source_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-19T00:39:19Z",
+      "side": 1,
+      "message": "I put it with the rest of the CL for context, but I am happy to separate it out.\n\nYes, it was getting converted in base::Value here:\n\nhttps://cs.chromium.org/chromium/src/base/values.cc?q\u003dvalues.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d153",
+      "parentUuid": "3beb5067_df3c7ab9",
+      "revId": "f7f16cd4242ffaf3699c9834582afaea0c619600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "716f253a_b4fbd0ae",
         "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
         "patchSetId": 4
