@@ -344,9 +344,6 @@ void RenderWidgetFullscreenPepper::SetLayer(blink::WebLayer* layer) {
 bool RenderWidgetFullscreenPepper::OnMessageReceived(const IPC::Message& msg) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(RenderWidgetFullscreenPepper, msg)
-    IPC_MESSAGE_FORWARD(ViewMsg_LockMouse_ACK,
-                        mouse_lock_dispatcher_.get(),
-                        MouseLockDispatcher::OnLockMouseACK)
     IPC_MESSAGE_FORWARD(ViewMsg_MouseLockLost,
                         mouse_lock_dispatcher_.get(),
                         MouseLockDispatcher::OnMouseLockLost)
