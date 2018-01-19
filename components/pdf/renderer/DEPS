@@ -3,7 +3,7 @@ include_rules = [
   "+gin",
   "+mojo/public/cpp/bindings",
   "+skia/ext",
-  "+third_party/WebKit/common",
+  "+third_party/WebKit/public/common",
   "+ui/accessibility",
   "+ui/gfx",
 ]

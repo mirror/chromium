@@ -38,7 +38,7 @@
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "storage/browser/blob/blob_storage_context.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/WebKit/common/service_worker/service_worker_registration.mojom.h"
+#include "third_party/WebKit/public/common/service_worker/service_worker_registration.mojom.h"
 
 namespace content {
 namespace service_worker_write_to_cache_job_unittest {

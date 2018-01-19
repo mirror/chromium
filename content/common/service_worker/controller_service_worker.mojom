@@ -7,8 +7,8 @@ module content.mojom;
 import "content/common/service_worker/service_worker_fetch_response_callback.mojom";
 import "mojo/common/time.mojom";
 import "services/network/public/interfaces/url_loader.mojom";
-import "third_party/WebKit/common/service_worker/service_worker_event_status.mojom";
-import "third_party/WebKit/common/service_worker/service_worker_object.mojom";
+import "third_party/WebKit/public/common/service_worker/service_worker_event_status.mojom";
+import "third_party/WebKit/public/common/service_worker/service_worker_object.mojom";
 import "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom";
 
 // S13nServiceWorker:
