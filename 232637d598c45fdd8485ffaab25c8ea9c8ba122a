@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f80b4345_345f0e24",
+        "filename": "content/network/network_sandbox_hook_linux.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-19T19:45:24Z",
+      "side": 1,
+      "message": "FWIW, this would probably want to use something like this function eventually ---\n https://cs.chromium.org/chromium/src/chrome/common/chrome_paths_linux.cc?dr\u003dC\u0026l\u003d98\nboth because we only use a specific subdir only (probably don\u0027t want network service writing inside .cache/fontconfig ...), and because of various envvar overrides for that.\n\nThe hardcode for .config/chrome are probably wrong for same reason, too (plus it\u0027s google-chrome[-beta] anyway), and likely wants whatever combines GetDefaultUserDataDirectory with the command-line-flag override for that...",
+      "range": {
+        "startLine": 39,
+        "startChar": 56,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "232637d598c45fdd8485ffaab25c8ea9c8ba122a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
