@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36424906_a5f8ea6c",
+        "filename": "cc/paint/paint_op_buffer_serializer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-19T22:36:07Z",
+      "side": 1,
+      "message": "This line should maybe be \"since those are created instead on the service side when the record is\"",
+      "revId": "ec95a7ed84fde43c57682e9d2d39c3c2fb43b41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6881cef9_e04ec72f",
+        "filename": "cc/paint/scoped_raster_flags.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-19T22:36:07Z",
+      "side": 1,
+      "message": "Could you make this not a default parameter so callers have to decide whether they want shaders or not instead of implicitly getting them?",
+      "revId": "ec95a7ed84fde43c57682e9d2d39c3c2fb43b41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
