@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "7e759b95_653cb612",
+        "filename": "base/component_export.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-19T21:41:54Z",
+      "side": 1,
+      "message": "There\u0027s also inconvenience around exactly how and when the preprocessor decides to attempt an expansion, which explains some of the layered indirections you see.",
+      "parentUuid": "2b9f32e4_5b8c4d7c",
+      "revId": "4de177d4bcc1dbaaa36149c80d5a7ab44f60d6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5aaac18f_fe9428e5",
         "filename": "ipc/BUILD.gn",
         "patchSetId": 1
