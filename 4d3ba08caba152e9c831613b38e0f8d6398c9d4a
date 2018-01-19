@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "319993b9_f40f829b",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-19T21:48:48Z",
+      "side": 1,
+      "message": "Nit: It is more common (perhaps cleaner too), to provide setter methods on the test proxy. Instead of referring to deep paths directly.\n\nbrowserProxy.setAppSettings({...});",
+      "revId": "4d3ba08caba152e9c831613b38e0f8d6398c9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83042b1f_2b1613cb",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-19T21:48:48Z",
+      "side": 1,
+      "message": "General question about this file. Do you find expect* more useful/convenient than assert*, or are you using it just because it is used elsewhere too?",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "4d3ba08caba152e9c831613b38e0f8d6398c9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c742bb_6ae86969",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-19T21:48:48Z",
+      "side": 1,
+      "message": "It seems that we only need the paper-button elements here. How about changing the selector at line 104 as follows?\n\nbuttons \u003d dialog.shadowRoot.querySelectorAll(\u0027.list-item paper-button\u0027);\n\nOr would that not work because each item can have multiple buttons?",
+      "range": {
+        "startLine": 106,
+        "startChar": 33,
+        "endLine": 106,
+        "endChar": 62
+      },
+      "revId": "4d3ba08caba152e9c831613b38e0f8d6398c9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
