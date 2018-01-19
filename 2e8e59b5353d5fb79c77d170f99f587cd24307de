@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4194bc25_48f6cc5e",
+        "filename": "content/browser/utility_process_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-19T00:19:22Z",
+      "side": 1,
+      "message": "nit: if the goal is to keep the list ordered, please swap the two lines above.",
+      "revId": "2e8e59b5353d5fb79c77d170f99f587cd24307de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e7bb7d_272a79a0",
+        "filename": "content/network/cache_url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-19T00:19:22Z",
+      "side": 1,
+      "message": "Double check: does this also clear query and ref?",
+      "revId": "2e8e59b5353d5fb79c77d170f99f587cd24307de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f517e4e_08e2ed34",
+        "filename": "headless/lib/browser/headless_browser_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-19T00:19:22Z",
+      "side": 1,
+      "message": "Is the first \"::\" necessary? (Here and line 148)",
+      "revId": "2e8e59b5353d5fb79c77d170f99f587cd24307de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
