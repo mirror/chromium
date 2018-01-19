@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5c7390_a8e5762a",
+        "filename": "chrome/browser/resources/signin/signin_error/signin_error.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T21:40:01Z",
+      "side": 1,
+      "message": "It seems that #normal-error-message would always have a \u003cp\u003e and \u003ca\u003e tag inside. Would this selector be effective at all?",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "04a29387b51af93941241513469691a15b8fc113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e0f548_3a77bbc6",
+        "filename": "chrome/browser/ui/webui/signin/login_ui_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T21:40:01Z",
+      "side": 1,
+      "message": "nit: const method ?",
+      "revId": "04a29387b51af93941241513469691a15b8fc113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e25db7b_14dc10cf",
+        "filename": "chrome/browser/ui/webui/signin/login_ui_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T21:40:01Z",
+      "side": 1,
+      "message": "nit: initialize to false\ni.e.\n  bool is_displaying_profile_blocking_error_message_ \u003d false;",
+      "revId": "04a29387b51af93941241513469691a15b8fc113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f9ceeb_cdab11de",
+        "filename": "chrome/browser/ui/webui/signin/signin_error_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T21:40:01Z",
+      "side": 1,
+      "message": "nit: const bool",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 6
+      },
+      "revId": "04a29387b51af93941241513469691a15b8fc113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
