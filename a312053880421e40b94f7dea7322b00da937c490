@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29fbed5e_644f9ede",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-19T00:23:50Z",
+      "side": 1,
+      "message": "No need for chromium: prefix.",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "a312053880421e40b94f7dea7322b00da937c490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
