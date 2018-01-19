@@ -22,6 +22,30 @@
       "revId": "e43cdd2c0de37155388246341776062e0887ac0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ed1a0f_94b158b0",
+        "filename": "ui/views/animation/ink_drop_host_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-19T20:20:54Z",
+      "side": 1,
+      "message": "Does this mean removing the second check (details.child \u003d\u003d this), or do I need to traverse the parent hierarchy?",
+      "parentUuid": "c181e9fb_35867e92",
+      "range": {
+        "startLine": 228,
+        "startChar": 25,
+        "endLine": 228,
+        "endChar": 46
+      },
+      "revId": "e43cdd2c0de37155388246341776062e0887ac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
