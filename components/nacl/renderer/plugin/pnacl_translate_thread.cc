@@ -157,7 +157,7 @@ ppapi::proxy::SerializedHandle PnaclTranslateThread::GetHandleForSubprocess(
     int32_t open_flags) {
   DCHECK(file->IsValid());
   IPC::PlatformFileForTransit file_for_transit =
-      IPC::GetPlatformFileForTransit(file->GetPlatformFile(), false);
+      IPC::DuplicatePlatformFileForTransit(*file);
 
   // Using 0 disables any use of quota enforcement for this file handle.
   PP_Resource file_io = 0;

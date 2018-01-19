@@ -118,7 +118,7 @@ bool ManifestService::OpenResource(const char* file, int* fd) {
   // a reply, the file doesn't exist, so provide an fd of -1.
   // See IrtOpenResource() for how this function's result is interpreted.
   if (ipc_fd.is_file())
-    *fd = ipc_fd.descriptor().fd;
+    *fd = ipc_fd.descriptor().GetFile().fd;
   else
     *fd = -1;
   return true;

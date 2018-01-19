@@ -570,11 +570,11 @@ bool NaClIPCAdapter::RewriteMessage(const IPC::Message& msg, uint32_t type) {
         case ppapi::proxy::SerializedHandle::SOCKET: {
           nacl_desc.reset(new NaClDescWrapper(NaClDescSyncSocketMake(
 #if defined(OS_WIN)
-              iter->descriptor().GetHandle()
+              iter->descriptor().GetFile()
 #else
-              iter->descriptor().fd
+              iter->descriptor().GetFile().fd
 #endif
-              )));
+                  )));
           break;
         }
         case ppapi::proxy::SerializedHandle::FILE: {
@@ -582,9 +582,9 @@ bool NaClIPCAdapter::RewriteMessage(const IPC::Message& msg, uint32_t type) {
           // required, wrap it in a NaClDescQuota.
           NaClDesc* desc = NaClDescIoMakeFromHandle(
 #if defined(OS_WIN)
-              iter->descriptor().GetHandle(),
+              iter->descriptor().GetFile(),
 #else
-              iter->descriptor().fd,
+              iter->descriptor().GetFile().fd,
 #endif
               TranslatePepperFileReadWriteOpenFlags(iter->open_flags()));
           if (desc && iter->file_io()) {
@@ -668,9 +668,9 @@ void NaClIPCAdapter::SaveOpenResourceMessage(
     std::unique_ptr<NaClDescWrapper> desc_wrapper(
         new NaClDescWrapper(NaClDescIoMakeFromHandle(
 #if defined(OS_WIN)
-            orig_sh.descriptor().GetHandle(),
+            orig_sh.descriptor().GetFile(),
 #else
-            orig_sh.descriptor().fd,
+            orig_sh.descriptor().GetFile().fd,
 #endif
             NACL_ABI_O_RDONLY)));
 

@@ -435,9 +435,7 @@ void ParamTraits<network::DataElement>::Write(base::Pickle* m,
       break;
     }
     case network::DataElement::TYPE_RAW_FILE: {
-      WriteParam(
-          m, IPC::GetPlatformFileForTransit(p.file().GetPlatformFile(),
-                                            false /* close_source_handle */));
+      WriteParam(m, IPC::DuplicatePlatformFileForTransit(p.file()));
       WriteParam(m, p.path());
       WriteParam(m, p.offset());
       WriteParam(m, p.length());
