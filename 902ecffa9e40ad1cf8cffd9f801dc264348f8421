@@ -16,6 +16,24 @@
       "revId": "902ecffa9e40ad1cf8cffd9f801dc264348f8421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99d114c_3e65cbe1",
+        "filename": "chromeos/network/network_connection_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-19T22:29:29Z",
+      "side": 1,
+      "message": "I searched for \"enum class\" and only found one kStyle example in src/chromeos (system/devicetype.h). I see that they style guide does now recommend kStyle, but I\u0027m going to go with consistency here and leave these as is since OLD_STYLE is still considered acceptable.",
+      "parentUuid": "529178ba_7b6b3652",
+      "revId": "902ecffa9e40ad1cf8cffd9f801dc264348f8421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
