@@ -1568,6 +1568,7 @@ void NormalPage::SweepAndCompact(CompactionContext& context) {
 }
 
 void NormalPage::MakeConsistentForMutator() {
+  LOG(ERROR) << "NormalPage::MakeConsistentForMutator";
   object_start_bit_map()->Clear();
   Address start_of_gap = Payload();
   NormalPageArena* normal_arena = ArenaForNormalPage();
@@ -1593,6 +1594,7 @@ void NormalPage::MakeConsistentForMutator() {
     if (start_of_gap != header_address)
       normal_arena->AddToFreeList(start_of_gap, header_address - start_of_gap);
     if (header->IsMarked()) {
+      LOG(ERROR) << "Unmark p" << header->Payload();
       header->Unmark();
     }
     object_start_bit_map()->SetBit(header_address);
