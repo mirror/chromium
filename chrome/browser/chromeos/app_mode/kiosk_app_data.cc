@@ -25,6 +25,8 @@
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/service_manager_connection.h"
+#include "content/public/common/url_loader_factory.mojom.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/image_loader.h"
 #include "extensions/browser/sandboxed_unpacker.h"
@@ -35,6 +37,7 @@
 #include "extensions/common/manifest_handlers/icons_handler.h"
 #include "extensions/common/manifest_handlers/kiosk_mode_info.h"
 #include "services/network/public/interfaces/url_loader_factory.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/image/image.h"
 
@@ -139,10 +142,12 @@ class KioskAppData::CrxLoader : public extensions::SandboxedUnpackerClient {
       return;
     }
 
-    scoped_refptr<extensions::SandboxedUnpacker> unpacker(
-        new extensions::SandboxedUnpacker(
-            extensions::Manifest::INTERNAL, extensions::Extension::NO_FLAGS,
-            temp_dir_.GetPath(), task_runner_.get(), this));
+    auto unpacker = base::MakeRefCounted<extensions::SandboxedUnpacker>(
+        content::ServiceManagerConnection::GetForProcess()
+            ->GetConnector()
+            ->Clone(),
+        extensions::Manifest::INTERNAL, extensions::Extension::NO_FLAGS,
+        temp_dir_.GetPath(), task_runner_.get(), this);
     unpacker->StartWithCrx(extensions::CRXFileInfo(crx_file_));
   }
 
