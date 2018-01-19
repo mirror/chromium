@@ -16,6 +16,24 @@
       "revId": "292723e0f70baa1522dae2feccc70ef7de8d811d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f65046c_0d4a1bea",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/server-timing/cross_origin.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-19T07:57:34Z",
+      "side": 1,
+      "message": "Since all server timing tests use ASI, and I\u0027m not sure what\u0027s the style guidance here. Let\u0027s land as is and fix in a followup if needed.",
+      "parentUuid": "4766204d_868a444a",
+      "revId": "292723e0f70baa1522dae2feccc70ef7de8d811d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
