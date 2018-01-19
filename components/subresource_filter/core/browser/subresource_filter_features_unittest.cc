@@ -114,8 +114,8 @@ TEST(SubresourceFilterFeaturesTest, ActivationLevel) {
                  << test_case.activation_level_param << "\"");
 
     ScopedExperimentalStateToggle scoped_experimental_state(
-        test_case.feature_enabled ? base::FeatureList::OVERRIDE_ENABLE_FEATURE
-                                  : base::FeatureList::OVERRIDE_USE_DEFAULT,
+        test_case.feature_enabled ? base::FeatureList::OVERRIDE_USE_DEFAULT
+                                  : base::FeatureList::OVERRIDE_DISABLE_FEATURE,
         {{kActivationLevelParameterName, test_case.activation_level_param},
          {kActivationScopeParameterName, kActivationScopeNoSites}});
 
@@ -212,8 +212,8 @@ TEST(SubresourceFilterFeaturesTest, ActivationLevelAndScope) {
                  << test_case.activation_scope_param << "\"");
 
     ScopedExperimentalStateToggle scoped_experimental_state(
-        test_case.feature_enabled ? base::FeatureList::OVERRIDE_ENABLE_FEATURE
-                                  : base::FeatureList::OVERRIDE_USE_DEFAULT,
+        test_case.feature_enabled ? base::FeatureList::OVERRIDE_USE_DEFAULT
+                                  : base::FeatureList::OVERRIDE_DISABLE_FEATURE,
         {{kActivationLevelParameterName, test_case.activation_level_param},
          {kActivationScopeParameterName, test_case.activation_scope_param}});
 
@@ -269,8 +269,8 @@ TEST(SubresourceFilterFeaturesTest, ActivationList) {
                  << test_case.activation_list_param << "\"");
 
     ScopedExperimentalStateToggle scoped_experimental_state(
-        test_case.feature_enabled ? base::FeatureList::OVERRIDE_ENABLE_FEATURE
-                                  : base::FeatureList::OVERRIDE_USE_DEFAULT,
+        test_case.feature_enabled ? base::FeatureList::OVERRIDE_USE_DEFAULT
+                                  : base::FeatureList::OVERRIDE_DISABLE_FEATURE,
         {{kActivationLevelParameterName, kActivationLevelDisabled},
          {kActivationScopeParameterName, kActivationScopeNoSites},
          {kActivationListsParameterName, test_case.activation_list_param}});
@@ -309,8 +309,8 @@ TEST(SubresourceFilterFeaturesTest, ActivationPriority) {
                  << test_case.activation_priority_param << "\"");
 
     ScopedExperimentalStateToggle scoped_experimental_state(
-        test_case.feature_enabled ? base::FeatureList::OVERRIDE_ENABLE_FEATURE
-                                  : base::FeatureList::OVERRIDE_USE_DEFAULT,
+        test_case.feature_enabled ? base::FeatureList::OVERRIDE_USE_DEFAULT
+                                  : base::FeatureList::OVERRIDE_DISABLE_FEATURE,
         {{kActivationPriorityParameterName,
           test_case.activation_priority_param}});
 
@@ -346,8 +346,8 @@ TEST(SubresourceFilterFeaturesTest, PerfMeasurementRate) {
                  << test_case.perf_measurement_param << "\"");
 
     ScopedExperimentalStateToggle scoped_experimental_state(
-        test_case.feature_enabled ? base::FeatureList::OVERRIDE_ENABLE_FEATURE
-                                  : base::FeatureList::OVERRIDE_USE_DEFAULT,
+        test_case.feature_enabled ? base::FeatureList::OVERRIDE_USE_DEFAULT
+                                  : base::FeatureList::OVERRIDE_DISABLE_FEATURE,
         {{kPerformanceMeasurementRateParameterName,
           test_case.perf_measurement_param}});
 
@@ -381,8 +381,8 @@ TEST(SubresourceFilterFeaturesTest, SuppressNotifications) {
                  << test_case.suppress_notifications_param << "\"");
 
     ScopedExperimentalStateToggle scoped_experimental_state(
-        test_case.feature_enabled ? base::FeatureList::OVERRIDE_ENABLE_FEATURE
-                                  : base::FeatureList::OVERRIDE_USE_DEFAULT,
+        test_case.feature_enabled ? base::FeatureList::OVERRIDE_USE_DEFAULT
+                                  : base::FeatureList::OVERRIDE_DISABLE_FEATURE,
         {{kSuppressNotificationsParameterName,
           test_case.suppress_notifications_param}});
 
@@ -416,8 +416,8 @@ TEST(SubresourceFilterFeaturesTest, WhitelistSiteOnReload) {
                  << test_case.whitelist_site_on_reload_param << "\"");
 
     ScopedExperimentalStateToggle scoped_experimental_state(
-        test_case.feature_enabled ? base::FeatureList::OVERRIDE_ENABLE_FEATURE
-                                  : base::FeatureList::OVERRIDE_USE_DEFAULT,
+        test_case.feature_enabled ? base::FeatureList::OVERRIDE_USE_DEFAULT
+                                  : base::FeatureList::OVERRIDE_DISABLE_FEATURE,
         {{kWhitelistSiteOnReloadParameterName,
           test_case.whitelist_site_on_reload_param}});
 
@@ -444,8 +444,8 @@ TEST(SubresourceFilterFeaturesTest, RulesetFlavor) {
                  << test_case.ruleset_flavor_param << "\"");
 
     ScopedExperimentalStateToggle scoped_experimental_state(
-        test_case.feature_enabled ? base::FeatureList::OVERRIDE_ENABLE_FEATURE
-                                  : base::FeatureList::OVERRIDE_USE_DEFAULT,
+        test_case.feature_enabled ? base::FeatureList::OVERRIDE_USE_DEFAULT
+                                  : base::FeatureList::OVERRIDE_DISABLE_FEATURE,
         {{kRulesetFlavorParameterName, test_case.ruleset_flavor_param}});
 
     Configuration actual_configuration;
