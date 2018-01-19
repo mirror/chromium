@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa9d04c8_307c531b",
+        "filename": "ui/arc/notification/arc_notification_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-19T04:15:53Z",
+      "side": 1,
+      "message": "nit: maybe the order should be reversed? set nested, then pinned?",
+      "revId": "664c91138cd752b5ff12f85142a50669b254b517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
