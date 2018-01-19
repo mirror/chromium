@@ -17,7 +17,7 @@
 
 namespace {
 
-base::LazyInstance<base::ThreadLocalPointer<Session>>::DestructorAtExit
+base::LazyInstance<base::ThreadLocalPointer<Session>>::Leaky
     lazy_tls_session = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

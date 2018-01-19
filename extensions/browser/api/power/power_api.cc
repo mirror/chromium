@@ -34,7 +34,7 @@ device::mojom::WakeLockType LevelToWakeLockType(api::power::Level level) {
   return device::mojom::WakeLockType::kPreventDisplaySleep;
 }
 
-base::LazyInstance<BrowserContextKeyedAPIFactory<PowerAPI>>::DestructorAtExit
+base::LazyInstance<BrowserContextKeyedAPIFactory<PowerAPI>>::Leaky
     g_factory = LAZY_INSTANCE_INITIALIZER;
 
 void DoNothing(bool b) {}

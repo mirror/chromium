@@ -26,7 +26,7 @@ using ThreadLocalWorkerThreadObservers =
     base::ThreadLocalPointer<WorkerThreadObservers>;
 
 // Stores a WorkerThreadObservers instance per thread.
-base::LazyInstance<ThreadLocalWorkerThreadObservers>::DestructorAtExit
+base::LazyInstance<ThreadLocalWorkerThreadObservers>::Leaky
     g_observers_tls = LAZY_INSTANCE_INITIALIZER;
 
 // A task-runner that refuses to run any tasks.

@@ -19,7 +19,7 @@ namespace extensions {
 namespace clipboard = api::clipboard;
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<ClipboardAPI>>::DestructorAtExit g_factory =
+    BrowserContextKeyedAPIFactory<ClipboardAPI>>::Leaky g_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 // static

@@ -19,7 +19,7 @@ namespace {
 
 LazyInstance<std::vector<ActionCallback>>::DestructorAtExit g_callbacks =
     LAZY_INSTANCE_INITIALIZER;
-LazyInstance<scoped_refptr<SingleThreadTaskRunner>>::DestructorAtExit
+LazyInstance<scoped_refptr<SingleThreadTaskRunner>>::Leaky
     g_task_runner = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

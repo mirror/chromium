@@ -23,7 +23,7 @@ class AudioSinkManagerInstance : public AudioSinkManager {
   DISALLOW_COPY_AND_ASSIGN(AudioSinkManagerInstance);
 };
 
-base::LazyInstance<AudioSinkManagerInstance>::DestructorAtExit
+base::LazyInstance<AudioSinkManagerInstance>::Leaky
     g_sink_manager_instance = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

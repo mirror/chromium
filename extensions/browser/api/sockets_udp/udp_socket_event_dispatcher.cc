@@ -18,7 +18,7 @@ namespace api {
 using content::BrowserThread;
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<UDPSocketEventDispatcher>>::DestructorAtExit
+    BrowserContextKeyedAPIFactory<UDPSocketEventDispatcher>>::Leaky
     g_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static

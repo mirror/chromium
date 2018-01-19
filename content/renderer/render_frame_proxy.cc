@@ -54,12 +54,12 @@ namespace {
 
 // Facilitates lookup of RenderFrameProxy by routing_id.
 typedef std::map<int, RenderFrameProxy*> RoutingIDProxyMap;
-static base::LazyInstance<RoutingIDProxyMap>::DestructorAtExit
+static base::LazyInstance<RoutingIDProxyMap>::Leaky
     g_routing_id_proxy_map = LAZY_INSTANCE_INITIALIZER;
 
 // Facilitates lookup of RenderFrameProxy by WebRemoteFrame.
 typedef std::map<blink::WebRemoteFrame*, RenderFrameProxy*> FrameProxyMap;
-base::LazyInstance<FrameProxyMap>::DestructorAtExit g_frame_proxy_map =
+base::LazyInstance<FrameProxyMap>::Leaky g_frame_proxy_map =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

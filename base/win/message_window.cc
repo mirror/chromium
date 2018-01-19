@@ -32,7 +32,7 @@ class MessageWindow::WindowClass {
   DISALLOW_COPY_AND_ASSIGN(WindowClass);
 };
 
-static LazyInstance<MessageWindow::WindowClass>::DestructorAtExit
+static LazyInstance<MessageWindow::WindowClass>::Leaky
     g_window_class = LAZY_INSTANCE_INITIALIZER;
 
 MessageWindow::WindowClass::WindowClass()

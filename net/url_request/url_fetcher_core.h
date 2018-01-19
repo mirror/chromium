@@ -353,7 +353,7 @@ class URLFetcherCore : public base::RefCountedThreadSafe<URLFetcherCore>,
 
   const net::NetworkTrafficAnnotationTag traffic_annotation_;
 
-  static base::LazyInstance<Registry>::DestructorAtExit g_registry;
+  static base::LazyInstance<Registry>::Leaky g_registry;
 
   DISALLOW_COPY_AND_ASSIGN(URLFetcherCore);
 };

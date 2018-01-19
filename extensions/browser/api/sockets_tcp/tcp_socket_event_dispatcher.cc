@@ -23,7 +23,7 @@ namespace api {
 using content::BrowserThread;
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<TCPSocketEventDispatcher>>::DestructorAtExit
+    BrowserContextKeyedAPIFactory<TCPSocketEventDispatcher>>::Leaky
     g_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static

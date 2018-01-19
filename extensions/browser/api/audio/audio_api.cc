@@ -57,7 +57,7 @@ bool CanReceiveDeprecatedAudioEvent(content::BrowserContext* context,
 }  // namespace
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<AudioAPI>>::DestructorAtExit g_factory =
+    BrowserContextKeyedAPIFactory<AudioAPI>>::Leaky g_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 void AudioAPI::RegisterUserPrefs(PrefRegistrySimple* registry) {

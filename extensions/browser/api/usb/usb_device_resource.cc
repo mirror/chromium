@@ -22,7 +22,7 @@ using device::UsbDeviceHandle;
 namespace extensions {
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<
-    ApiResourceManager<UsbDeviceResource>>>::DestructorAtExit g_factory =
+    ApiResourceManager<UsbDeviceResource>>>::Leaky g_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 // static

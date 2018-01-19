@@ -69,7 +69,7 @@ class GPU_GLES2_EXPORT MailboxManagerSync : public MailboxManager {
 
     typedef std::map<Mailbox, scoped_refptr<TextureGroup>>
         MailboxToGroupMap;
-    static base::LazyInstance<MailboxToGroupMap>::DestructorAtExit
+    static base::LazyInstance<MailboxToGroupMap>::Leaky
         mailbox_to_group_;
   };
 

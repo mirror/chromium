@@ -153,7 +153,7 @@ device::mojom::SerialStopBits ConvertStopBitsToMojo(
 }  // namespace
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<
-    ApiResourceManager<SerialConnection>>>::DestructorAtExit g_factory =
+    ApiResourceManager<SerialConnection>>>::Leaky g_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 // static

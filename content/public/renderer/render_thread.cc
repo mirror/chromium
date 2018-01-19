@@ -12,7 +12,7 @@ namespace content {
 // Keep the global RenderThread in a TLS slot so it is impossible to access
 // incorrectly from the wrong thread.
 static base::LazyInstance<
-    base::ThreadLocalPointer<RenderThread>>::DestructorAtExit lazy_tls =
+    base::ThreadLocalPointer<RenderThread>>::Leaky lazy_tls =
     LAZY_INSTANCE_INITIALIZER;
 
 RenderThread* RenderThread::Get() {

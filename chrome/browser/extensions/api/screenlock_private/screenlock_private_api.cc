@@ -146,7 +146,7 @@ void ScreenlockPrivateEventRouter::DispatchEvent(
 }
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<
-    ScreenlockPrivateEventRouter>>::DestructorAtExit
+    ScreenlockPrivateEventRouter>>::Leaky
     g_screenlock_private_api_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static

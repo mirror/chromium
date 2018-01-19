@@ -361,7 +361,7 @@ void WebRequestAPI::Shutdown() {
 }
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<WebRequestAPI>>::DestructorAtExit g_factory =
+    BrowserContextKeyedAPIFactory<WebRequestAPI>>::Leaky g_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 // static

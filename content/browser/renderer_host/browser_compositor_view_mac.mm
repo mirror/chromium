@@ -38,7 +38,7 @@ uint32_t g_browser_compositor_count = 0;
 
 // A spare RecyclableCompositorMac kept around for recycling.
 base::LazyInstance<base::circular_deque<
-    std::unique_ptr<RecyclableCompositorMac>>>::DestructorAtExit
+    std::unique_ptr<RecyclableCompositorMac>>>::Leaky
     g_spare_recyclable_compositors;
 
 void ReleaseSpareCompositors() {

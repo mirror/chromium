@@ -19,7 +19,7 @@ namespace extensions {
 
 namespace {
 
-static base::LazyInstance<ManifestHandlerRegistry>::DestructorAtExit
+static base::LazyInstance<ManifestHandlerRegistry>::Leaky
     g_registry = LAZY_INSTANCE_INITIALIZER;
 static ManifestHandlerRegistry* g_registry_override = NULL;
 

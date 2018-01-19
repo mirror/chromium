@@ -74,7 +74,7 @@ class StorageInfoProvider : public SystemInfoProvider {
   bool QueryInfo() override;
 
   static base::LazyInstance<
-      scoped_refptr<StorageInfoProvider>>::DestructorAtExit provider_;
+      scoped_refptr<StorageInfoProvider>>::Leaky provider_;
 
   DISALLOW_COPY_AND_ASSIGN(StorageInfoProvider);
 };

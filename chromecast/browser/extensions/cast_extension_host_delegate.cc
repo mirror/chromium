@@ -51,7 +51,7 @@ bool CastExtensionHostDelegate::CheckMediaAccessPermission(
   return true;
 }
 
-static base::LazyInstance<SerialExtensionHostQueue>::DestructorAtExit g_queue =
+static base::LazyInstance<SerialExtensionHostQueue>::Leaky g_queue =
     LAZY_INSTANCE_INITIALIZER;
 
 ExtensionHostQueue* CastExtensionHostDelegate::GetExtensionHostQueue() const {

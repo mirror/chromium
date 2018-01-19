@@ -14,7 +14,7 @@
 
 namespace {
 
-base::LazyInstance<MTPDeviceMapService>::DestructorAtExit
+base::LazyInstance<MTPDeviceMapService>::Leaky
     g_mtp_device_map_service = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

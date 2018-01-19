@@ -334,7 +334,7 @@ class HWNDMessageHandler::ScopedRedrawLock {
 
 // static HWNDMessageHandler member initialization.
 base::LazyInstance<HWNDMessageHandler::FullscreenWindowMonitorMap>::
-    DestructorAtExit HWNDMessageHandler::fullscreen_monitor_map_ =
+    Leaky HWNDMessageHandler::fullscreen_monitor_map_ =
         LAZY_INSTANCE_INITIALIZER;
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -16,7 +16,7 @@ struct CurrentAppState {
   std::string last_launched_app;
 };
 
-base::LazyInstance<CurrentAppState>::DestructorAtExit g_app_state =
+base::LazyInstance<CurrentAppState>::Leaky g_app_state =
     LAZY_INSTANCE_INITIALIZER;
 
 CurrentAppState* GetAppState() {

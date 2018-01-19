@@ -29,7 +29,7 @@ MediaPlayerEventRouter* MediaPlayerAPI::media_player_event_router() {
 }
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<MediaPlayerAPI>>::DestructorAtExit g_factory =
+    BrowserContextKeyedAPIFactory<MediaPlayerAPI>>::Leaky g_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 // static

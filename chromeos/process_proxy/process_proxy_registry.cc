@@ -29,7 +29,7 @@ const char* ProcessOutputTypeToString(ProcessOutputType type) {
   }
 }
 
-static base::LazyInstance<ProcessProxyRegistry>::DestructorAtExit
+static base::LazyInstance<ProcessProxyRegistry>::Leaky
     g_process_proxy_registry = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

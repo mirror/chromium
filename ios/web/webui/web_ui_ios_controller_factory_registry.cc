@@ -14,7 +14,7 @@
 
 namespace web {
 
-base::LazyInstance<std::vector<WebUIIOSControllerFactory*>>::DestructorAtExit
+base::LazyInstance<std::vector<WebUIIOSControllerFactory*>>::Leaky
     g_factories = LAZY_INSTANCE_INITIALIZER;
 
 void WebUIIOSControllerFactory::RegisterFactory(

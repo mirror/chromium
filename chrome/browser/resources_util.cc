@@ -63,7 +63,7 @@ class ThemeMap {
   StringIntMap id_map_;
 };
 
-static base::LazyInstance<ThemeMap>::DestructorAtExit g_theme_ids =
+static base::LazyInstance<ThemeMap>::Leaky g_theme_ids =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

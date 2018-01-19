@@ -72,7 +72,7 @@ const char WebRtcTestBase::kUndefined[] = "undefined";
 
 namespace {
 
-base::LazyInstance<bool>::DestructorAtExit hit_javascript_errors_ =
+base::LazyInstance<bool>::Leaky hit_javascript_errors_ =
     LAZY_INSTANCE_INITIALIZER;
 
 // Intercepts all log messages. We always attach this handler but only look at

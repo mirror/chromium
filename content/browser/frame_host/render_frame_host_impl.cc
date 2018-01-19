@@ -202,7 +202,7 @@ bool g_allow_data_url_navigation = false;
 typedef std::pair<int32_t, int32_t> RenderFrameHostID;
 typedef base::hash_map<RenderFrameHostID, RenderFrameHostImpl*>
     RoutingIDFrameMap;
-base::LazyInstance<RoutingIDFrameMap>::DestructorAtExit g_routing_id_frame_map =
+base::LazyInstance<RoutingIDFrameMap>::Leaky g_routing_id_frame_map =
     LAZY_INSTANCE_INITIALIZER;
 
 base::LazyInstance<RenderFrameHostImpl::CreateNetworkFactoryCallback>::Leaky

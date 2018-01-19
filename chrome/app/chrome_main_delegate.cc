@@ -159,16 +159,16 @@
 #if !defined(CHROME_MULTIPLE_DLL_BROWSER)
 #include "chrome/child/pdf_child_init.h"
 
-base::LazyInstance<ChromeContentGpuClient>::DestructorAtExit
+base::LazyInstance<ChromeContentGpuClient>::Leaky
     g_chrome_content_gpu_client = LAZY_INSTANCE_INITIALIZER;
-base::LazyInstance<ChromeContentRendererClient>::DestructorAtExit
+base::LazyInstance<ChromeContentRendererClient>::Leaky
     g_chrome_content_renderer_client = LAZY_INSTANCE_INITIALIZER;
-base::LazyInstance<ChromeContentUtilityClient>::DestructorAtExit
+base::LazyInstance<ChromeContentUtilityClient>::Leaky
     g_chrome_content_utility_client = LAZY_INSTANCE_INITIALIZER;
 #endif
 
 #if !defined(CHROME_MULTIPLE_DLL_CHILD)
-base::LazyInstance<ChromeContentBrowserClient>::DestructorAtExit
+base::LazyInstance<ChromeContentBrowserClient>::Leaky
     g_chrome_content_browser_client = LAZY_INSTANCE_INITIALIZER;
 #endif
 

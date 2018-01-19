@@ -183,7 +183,7 @@ class ChromeNativeHandler : public ObjectBackedNativeHandler {
   }
 };
 
-base::LazyInstance<WorkerScriptContextSet>::DestructorAtExit
+base::LazyInstance<WorkerScriptContextSet>::Leaky
     g_worker_script_context_set = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

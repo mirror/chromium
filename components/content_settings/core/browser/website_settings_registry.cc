@@ -13,7 +13,7 @@
 
 namespace {
 
-base::LazyInstance<content_settings::WebsiteSettingsRegistry>::DestructorAtExit
+base::LazyInstance<content_settings::WebsiteSettingsRegistry>::Leaky
     g_instance = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

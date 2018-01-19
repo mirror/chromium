@@ -299,7 +299,7 @@ void ReportPrintSettingsStats(const base::DictionaryValue& settings) {
   }
 }
 
-base::LazyInstance<printing::StickySettings>::DestructorAtExit
+base::LazyInstance<printing::StickySettings>::Leaky
     g_sticky_settings = LAZY_INSTANCE_INITIALIZER;
 
 printing::StickySettings* GetStickySettings() {

@@ -143,7 +143,7 @@ bool g_check_for_pending_resize_ack = true;
 using RenderWidgetHostID = std::pair<int32_t, int32_t>;
 using RoutingIDWidgetMap =
     base::hash_map<RenderWidgetHostID, RenderWidgetHostImpl*>;
-base::LazyInstance<RoutingIDWidgetMap>::DestructorAtExit
+base::LazyInstance<RoutingIDWidgetMap>::Leaky
     g_routing_id_widget_map = LAZY_INSTANCE_INITIALIZER;
 
 // Implements the RenderWidgetHostIterator interface. It keeps a list of
