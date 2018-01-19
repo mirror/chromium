@@ -104,9 +104,11 @@
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseEvent.h"
+#include "third_party/WebKit/public/platform/WebPointerEvent.h"
 #include "third_party/WebKit/public/platform/WebRect.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
+#include "third_party/WebKit/public/platform/WebTouchEvent.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/platform/WebURLError.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
@@ -2301,7 +2303,22 @@ void PepperPluginInstanceImpl::SimulateInputEvent(
   for (std::vector<std::unique_ptr<WebInputEvent>>::iterator it =
            events.begin();
        it != events.end(); ++it) {
-    widget->HandleInputEvent(blink::WebCoalescedInputEvent(*it->get()));
+    if (WebInputEvent::IsTouchEventType(it->get()->GetType())) {
+      const blink::WebTouchEvent& touch_event =
+          static_cast<const blink::WebTouchEvent&>(*it->get());
+      for (unsigned i = 0; i < touch_event.touches_length; ++i) {
+        const blink::WebTouchPoint& touch_point = touch_event.touches[i];
+        if (touch_point.state != blink::WebTouchPoint::kStateStationary) {
+          const blink::WebPointerEvent& pointer_event =
+              blink::WebPointerEvent(touch_event, touch_point);
+          widget->HandleInputEvent(
+              blink::WebCoalescedInputEvent(pointer_event));
+        }
+      }
+      widget->DispatchBufferedTouchEvents();
+    } else {
+      widget->HandleInputEvent(blink::WebCoalescedInputEvent(*it->get()));
+    }
   }
 }
 

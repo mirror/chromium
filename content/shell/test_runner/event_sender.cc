@@ -61,6 +61,7 @@ using blink::WebMouseEvent;
 using blink::WebMouseWheelEvent;
 using blink::WebPagePopup;
 using blink::WebPoint;
+using blink::WebPointerEvent;
 using blink::WebPointerProperties;
 using blink::WebString;
 using blink::WebTouchEvent;
@@ -2011,8 +2012,8 @@ void EventSender::TouchEnd(gin::Arguments* args) {
 }
 
 void EventSender::NotifyStartOfTouchScroll() {
-  WebTouchEvent event(WebInputEvent::kTouchScrollStarted,
-                      WebInputEvent::kNoModifiers, GetCurrentEventTimeSec());
+  WebPointerEvent event = WebPointerEvent::CreatePointerCausesUaActionEvent(
+      WebPointerProperties::PointerType::kUnknown, GetCurrentEventTimeSec());
   HandleInputEventOnViewOrPopup(event);
 }
 
@@ -2293,7 +2294,20 @@ void EventSender::SendCurrentTouchEvent(WebInputEvent::Type type,
   touch_event.touches_length = touch_points_.size();
   for (size_t i = 0; i < touch_points_.size(); ++i)
     touch_event.touches[i] = touch_points_[i];
-  HandleInputEventOnViewOrPopup(touch_event);
+
+  for (unsigned i = 0; i < touch_event.touches_length; ++i) {
+    const WebTouchPoint& touch_point = touch_event.touches[i];
+    if (touch_point.state != blink::WebTouchPoint::kStateStationary) {
+      const WebPointerEvent& pointer_event =
+          WebPointerEvent(touch_event, touch_point);
+      HandleInputEventOnViewOrPopup(pointer_event);
+    }
+  }
+  WebPagePopup* popup = widget()->GetPagePopup();
+  if (popup)
+    popup->DispatchBufferedTouchEvents();
+  else
+    widget()->DispatchBufferedTouchEvents();
 
   for (size_t i = 0; i < touch_points_.size(); ++i) {
     WebTouchPoint* touch_point = &touch_points_[i];
