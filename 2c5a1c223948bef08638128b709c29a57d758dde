@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "163fd26a_53617c1e",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-19T19:45:36Z",
+      "side": 1,
+      "message": "Can you use a ScaledDepthAdjuster? I think if you did that, you wouldn\u0027t have to be multiplying by distance here.",
+      "revId": "2c5a1c223948bef08638128b709c29a57d758dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef5d826d_61580c24",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-19T19:45:36Z",
+      "side": 1,
+      "message": "I presume that the reason that you don\u0027t bind the color here is that since it\u0027s only for WebVR, we never change the colors? If that\u0027s true, can you please add a comment to this effect?",
+      "revId": "2c5a1c223948bef08638128b709c29a57d758dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
