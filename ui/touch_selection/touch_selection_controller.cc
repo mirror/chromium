@@ -88,12 +88,22 @@ void TouchSelectionController::OnSelectionBoundsChanged(
 
   // Swap the Handles when the start and end selection points cross each other.
   if (active_status_ == SELECTION_ACTIVE) {
-    if ((start_selection_handle_->IsActive() &&
-         end_.edge_bottom() == start.edge_bottom()) ||
-        (end_selection_handle_->IsActive() &&
-         end.edge_bottom() == start_.edge_bottom())) {
+    // Horizontal text, selection bounds are vertical.
+    bool need_swap = (start_selection_handle_->IsActive() &&
+                      end_.edge_bottom() == start.edge_bottom()) ||
+                     (end_selection_handle_->IsActive() &&
+                      end.edge_bottom() == start_.edge_bottom());
+
+    // Vertical text, selection bounds are horizontal, start selection bound has
+    // different orientation with end selection bound, i.e. for end selection
+    // bound, end.edge_top().x() > end.edge_bottom().x().
+    need_swap |= (start_selection_handle_->IsActive() &&
+                  end_.edge_bottom() == start.edge_top()) ||
+                 (end_selection_handle_->IsActive() &&
+                  end.edge_bottom() == start_.edge_top());
+
+    if (need_swap)
       start_selection_handle_.swap(end_selection_handle_);
-    }
   }
 
   start_ = start;
