@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "f26f7578_d4fc845b",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T18:22:48Z",
+      "side": 1,
+      "message": "Wouldn\u0027t the same issue occur though? That is, if devtools_web_view has focus, then calling SetWebContents is going to incorrectly move focus, right?",
+      "parentUuid": "1fe4f4d4_d838497d",
+      "range": {
+        "startLine": 761,
+        "startChar": 4,
+        "endLine": 761,
+        "endChar": 22
+      },
+      "revId": "36b0a7f403680b6dd766d57f5c26d873f289d881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14bc6ea1_4cd7a8c5",
         "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
         "patchSetId": 8
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Question: should I test for the exact focus sequence as I am now? Or should I just test to make sure unexpected things never get focused?\nFor example, I could iterate through the focused classes and look for anything that is not \"\" and not WebView::kViewClassName. If there is anything -\u003e fail.",
       "parentUuid": "14bc6ea1_4cd7a8c5",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 16
+      },
+      "revId": "36b0a7f403680b6dd766d57f5c26d873f289d881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f65a5fd_0141bd75",
+        "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T18:22:48Z",
+      "side": 1,
+      "message": "I think you should make sure nothing unexpected gets focus.",
+      "parentUuid": "a8ef04aa_54c19fd5",
       "range": {
         "startLine": 158,
         "startChar": 0,
