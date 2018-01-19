@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "077b5826_701065f0",
+        "filename": "components/history/core/browser/history_types.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-19T15:35:40Z",
+      "side": 1,
+      "message": "IIUC, the following DeletionTimeRange would be valid:\n\n  DeletionTimeRange foo \u003d DeletionTimeRange(base::Time::Max(), base::Time());\n  DCHECK(foo.IsValid());\n\nWouldn\u0027t it be better to remove is_valid_ boolean and instead define IsValid() as the following (not sure about the condition):\n\n  bool DeletionTimeRange::IsValid() const {\n    return begin_.is_null() || end_.is_null() || begin_ \u003c\u003d end_;\n  }\n\nand then define the default constructor as:\n\n  DeletionTimeRange::DeletionTimeRange() : begin_(base::Time::Max(), end_(base::Time()) {}\n\nWDYT?",
+      "revId": "a2be88e8c61aa4c852cb60c8c4496a8a867ff239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
