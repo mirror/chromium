@@ -1089,6 +1089,103 @@ class LayerTreeHostTestSurfaceDamage : public LayerTreeHostTest {
 
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestSurfaceDamage);
 
+// When settings->check_damage_early is true, verify that invalidate is not
+// called when changes to a layer don't cause visible damage.
+class LayerTreeHostTestNoDamageCausesNoInvalidate : public LayerTreeHostTest {
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->using_synchronous_renderer_compositor = true;
+    settings->check_damage_early = true;
+  }
+
+ protected:
+  bool first_frame_invalidate_before_commit_ = false;
+
+  void SetupTree() override {
+    root_ = Layer::Create();
+
+    layer_tree_host()->SetViewportSize(gfx::Size(10, 10));
+
+    layer_tree_host()->SetRootLayer(root_);
+
+    // Translate the root layer past the viewport.
+    gfx::Transform translation;
+    translation.Translate(100, 100);
+    root_->SetTransform(translation);
+
+    root_->SetBounds(gfx::Size(50, 50));
+
+    LayerTreeHostTest::SetupTree();
+  }
+
+  void BeginTest() override { PostSetNeedsCommitToMainThread(); }
+
+  void DidCommit() override {
+    // This does not damage the frame because the root layer is outside the
+    // viewport.
+    if (layer_tree_host()->SourceFrameNumber() == 1)
+      root_->SetOpacity(0.9f);
+  }
+
+  DrawResult PrepareToDrawOnThread(LayerTreeHostImpl* impl,
+                                   LayerTreeHostImpl::FrameData* frame_data,
+                                   DrawResult draw_result) override {
+    PostSetNeedsCommitToMainThread();
+    return draw_result;
+  }
+
+  void CommitCompleteOnThread(LayerTreeHostImpl* impl) override {
+    // This gives us some assurance that invalidates happen before this call,
+    // so invalidating on frame 1 will cause a failure before the test ends.
+    if (impl->active_tree()->source_frame_number() == 0)
+      EXPECT_TRUE(first_frame_invalidate_before_commit_);
+
+    if (impl->active_tree()->source_frame_number() == 1)
+      EndTest();
+  }
+
+  void DidInvalidateLayerTreeFrameSink(LayerTreeHostImpl* impl) override {
+    // Be sure that invalidates happen before commits, so the below failure
+    // works.
+    if (impl->active_tree()->source_frame_number() == 0)
+      first_frame_invalidate_before_commit_ = true;
+
+    // This frame should not cause an invalidate, since there is no visible
+    // damage.
+    if (impl->active_tree()->source_frame_number() == 1)
+      ADD_FAILURE();
+  }
+
+  void AfterTest() override {}
+
+ private:
+  scoped_refptr<Layer> root_;
+};
+
+MULTI_THREAD_TEST_F(LayerTreeHostTestNoDamageCausesNoInvalidate);
+
+// Verify CanDraw() is false until first commit+activate.
+class LayerTreeHostTestCantDrawBeforeCommitActivate : public LayerTreeHostTest {
+ protected:
+  void BeginTest() override { PostSetNeedsCommitToMainThread(); }
+
+  void WillCommitCompleteOnThread(LayerTreeHostImpl* host_impl) override {
+    EXPECT_FALSE(host_impl->CanDraw());
+  }
+
+  void WillActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
+    EXPECT_FALSE(host_impl->CanDraw());
+  }
+
+  void DidActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
+    EXPECT_TRUE(host_impl->CanDraw());
+    EndTest();
+  }
+
+  void AfterTest() override {}
+};
+
+MULTI_THREAD_TEST_F(LayerTreeHostTestCantDrawBeforeCommitActivate);
+
 // Verify damage status of property trees is preserved after commit.
 class LayerTreeHostTestPropertyTreesChangedSync : public LayerTreeHostTest {
  protected:
