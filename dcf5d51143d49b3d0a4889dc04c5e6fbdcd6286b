@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47658f98_a2e47eba",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T05:16:46Z",
+      "side": 1,
+      "message": "nit: order same as in view.h (this comes after GetClassName). reorder in .cc too",
+      "revId": "dcf5d51143d49b3d0a4889dc04c5e6fbdcd6286b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed711717_711fdff1",
+        "filename": "ash/frame/header_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T05:16:46Z",
+      "side": 1,
+      "message": "this is the same comment that\u0027s being deleted in browser_non_client_frame_view_ash.cc - does it need updating?",
+      "revId": "dcf5d51143d49b3d0a4889dc04c5e6fbdcd6286b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220e64b1_1f9ef41e",
+        "filename": "ash/frame/header_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T05:16:46Z",
+      "side": 1,
+      "message": "nit: comment why/when parent() might be null?  (nothing else in header_view.cc has checks for parent()).",
+      "revId": "dcf5d51143d49b3d0a4889dc04c5e6fbdcd6286b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
