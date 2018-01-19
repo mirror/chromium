@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "06b1193c_a0287c62",
+        "filename": "net/http/http_proxy_client_socket_pool.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-19T17:53:43Z",
+      "side": 1,
+      "message": "Whether it works or not, this code is using the longer timeout, no?",
+      "parentUuid": "968547a5_bc0ee741",
+      "range": {
+        "startLine": 239,
+        "startChar": 30,
+        "endLine": 239,
+        "endChar": 41
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94a86862_4d13fe73",
         "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
         "patchSetId": 8
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Done. Interesting, I thought the guidelines to use \"const\" for variables scoped to a method were vague.",
       "parentUuid": "2dacbcf8_2881ebc4",
+      "range": {
+        "startLine": 762,
+        "startChar": 6,
+        "endLine": 762,
+        "endChar": 17
+      },
+      "revId": "d9455641d636700ed621b95f51e1bd8e790271e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b5d4f6c_17f6f79f",
+        "filename": "net/http/http_proxy_client_socket_pool_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-19T17:53:43Z",
+      "side": 1,
+      "message": "In net, we generally use const for compile-time constants, regardless of scope.  i.e., if something\u0027s value is effectively constant, but it comes from other object of function call, we don\u0027t use const.  (GURL foo \u003d url_request.url(), even if it\u0027s effectively always the same, but GURL kFoo(\"http://blah/\"))",
+      "parentUuid": "bd061c22_ba964ab2",
       "range": {
         "startLine": 762,
         "startChar": 6,
