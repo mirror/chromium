@@ -31,6 +31,7 @@
 #include "extensions/browser/updater/extension_cache.h"
 #include "extensions/browser/updater/extension_downloader_test_delegate.h"
 #include "extensions/browser/updater/request_queue_impl.h"
+#include "extensions/common/extension_updater_uma.h"
 #include "extensions/common/extension_urls.h"
 #include "extensions/common/manifest_url_handlers.h"
 #include "google_apis/gaia/identity_provider.h"
@@ -448,6 +449,12 @@ void ExtensionDownloader::StartUpdateCheck(
                                    fetch_data->request_ids(),
                                    ExtensionDownloaderDelegate::DISABLED);
     return;
+  }
+
+  for (auto it = id_set.cbegin(); it != id_set.cend(); ++it) {
+    UMA_HISTOGRAM_ENUMERATION("Extensions.ExtensionUpdaterUpdateCalls",
+                              ExtensionUpdaterUpdateCall::UPDATE_CALL,
+                              ExtensionUpdaterUpdateCall::UPDATE_CALL_COUNT);
   }
 
   RequestQueue<ManifestFetchData>::iterator i;
@@ -961,6 +968,10 @@ void ExtensionDownloader::NotifyExtensionsDownloadFailed(
 
 void ExtensionDownloader::NotifyUpdateFound(const std::string& id,
                                             const std::string& version) {
+  UMA_HISTOGRAM_ENUMERATION("Extensions.ExtensionUpdaterUpdateFounds",
+                            ExtensionUpdaterUpdateFound::UPDATE_FOUND,
+                            ExtensionUpdaterUpdateFound::UPDATE_FOUND_COUNT);
+
   UpdateDetails updateInfo(id, base::Version(version));
   content::NotificationService::current()->Notify(
       extensions::NOTIFICATION_EXTENSION_UPDATE_FOUND,
