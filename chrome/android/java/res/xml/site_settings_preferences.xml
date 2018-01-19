@@ -65,6 +65,10 @@
     <org.chromium.chrome.browser.preferences.website.SiteSettingsPreference
         android:fragment="org.chromium.chrome.browser.preferences.website.SingleCategoryPreferences"
         android:key="sound" />
+    <!-- Clipboard API -->
+    <org.chromium.chrome.browser.preferences.website.SiteSettingsPreference
+        android:fragment="org.chromium.chrome.browser.preferences.website.SingleCategoryPreferences"
+        android:key="clipboard" />
     <!-- Google Translate -->
     <Preference
         android:fragment="org.chromium.chrome.browser.preferences.website.TranslatePreferences"
