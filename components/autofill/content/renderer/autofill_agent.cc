@@ -837,6 +837,7 @@ void AutofillAgent::OnProvisionallySaveForm(const WebFormElement& form,
 }
 
 void AutofillAgent::OnProbablyFormSubmitted() {
+  return;
   FormData form_data;
   if (GetSubmittedForm(&form_data)) {
     FireHostSubmitEvents(form_data, /*known_success=*/false,

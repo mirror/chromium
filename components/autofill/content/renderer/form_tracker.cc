@@ -192,8 +192,8 @@ void FormTracker::FireFormSubmitted(const blink::WebFormElement& form) {
 }
 
 void FormTracker::FireProbablyFormSubmitted() {
-  for (auto& observer : observers_)
-    observer.OnProbablyFormSubmitted();
+  //  for (auto& observer : observers_)
+  //  observer.OnProbablyFormSubmitted();
   ResetLastInteractedElements();
 }
 
