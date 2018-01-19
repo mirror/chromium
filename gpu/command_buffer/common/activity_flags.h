@@ -24,7 +24,7 @@ class GPU_EXPORT ActivityFlagsBase {
 
   void Initialize(mojo::ScopedSharedBufferHandle handle);
   const mojo::SharedBufferHandle& handle() const { return handle_.get(); }
-  bool is_initialized() const { return handle().is_valid(); }
+  bool is_initialized() const { return static_cast<bool>(handle()); }
 
  protected:
   volatile base::subtle::Atomic32* AsAtomic();

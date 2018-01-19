@@ -683,7 +683,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, BlobResponse) {
 
   // Test the body.
   std::string body;
-  EXPECT_TRUE(client_.response_body().is_valid());
+  EXPECT_TRUE(client_.response_body());
   EXPECT_TRUE(mojo::common::BlockingCopyToString(
       client_.response_body_release(), &body));
   EXPECT_EQ(kResponseBody, body);
@@ -752,7 +752,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponse) {
 
   // Test the body.
   std::string response;
-  EXPECT_TRUE(client_.response_body().is_valid());
+  EXPECT_TRUE(client_.response_body());
   EXPECT_TRUE(mojo::common::BlockingCopyToString(
       client_.response_body_release(), &response));
   EXPECT_EQ(kResponseBody, response);
@@ -790,7 +790,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponse_Abort) {
 
   // Test the body.
   std::string response;
-  EXPECT_TRUE(client_.response_body().is_valid());
+  EXPECT_TRUE(client_.response_body());
   EXPECT_TRUE(mojo::common::BlockingCopyToString(
       client_.response_body_release(), &response));
   EXPECT_EQ(kResponseBody, response);
@@ -941,7 +941,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, NavigationPreload) {
   ExpectResponseInfo(info, *expected_info);
 
   std::string response;
-  EXPECT_TRUE(client_.response_body().is_valid());
+  EXPECT_TRUE(client_.response_body());
   EXPECT_TRUE(mojo::common::BlockingCopyToString(
       client_.response_body_release(), &response));
   EXPECT_EQ("this body came from the network", response);

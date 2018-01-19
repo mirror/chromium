@@ -40,27 +40,27 @@ TEST(CoreCppTest, Basic) {
     Handle h0;
     EXPECT_EQ(kInvalidHandleValue, h0.value());
     EXPECT_EQ(kInvalidHandleValue, *h0.mutable_value());
-    EXPECT_FALSE(h0.is_valid());
+    EXPECT_FALSE(h0);
 
     Handle h1(static_cast<MojoHandle>(123));
     EXPECT_EQ(static_cast<MojoHandle>(123), h1.value());
     EXPECT_EQ(static_cast<MojoHandle>(123), *h1.mutable_value());
-    EXPECT_TRUE(h1.is_valid());
+    EXPECT_TRUE(h1);
     *h1.mutable_value() = static_cast<MojoHandle>(456);
     EXPECT_EQ(static_cast<MojoHandle>(456), h1.value());
-    EXPECT_TRUE(h1.is_valid());
+    EXPECT_TRUE(h1);
 
     h1.swap(h0);
     EXPECT_EQ(static_cast<MojoHandle>(456), h0.value());
-    EXPECT_TRUE(h0.is_valid());
-    EXPECT_FALSE(h1.is_valid());
+    EXPECT_TRUE(h0);
+    EXPECT_FALSE(h1);
 
     h1.set_value(static_cast<MojoHandle>(789));
     h0.swap(h1);
     EXPECT_EQ(static_cast<MojoHandle>(789), h0.value());
-    EXPECT_TRUE(h0.is_valid());
+    EXPECT_TRUE(h0);
     EXPECT_EQ(static_cast<MojoHandle>(456), h1.value());
-    EXPECT_TRUE(h1.is_valid());
+    EXPECT_TRUE(h1);
 
     // Make sure copy constructor works.
     Handle h2(h0);
@@ -132,7 +132,7 @@ TEST(CoreCppTest, Basic) {
   // |MessagePipeHandle|/|ScopedMessagePipeHandle| functions:
   {
     MessagePipeHandle h_invalid;
-    EXPECT_FALSE(h_invalid.is_valid());
+    EXPECT_FALSE(h_invalid);
     EXPECT_EQ(MOJO_RESULT_INVALID_ARGUMENT,
               WriteMessageRaw(h_invalid, nullptr, 0, nullptr, 0,
                               MOJO_WRITE_MESSAGE_FLAG_NONE));
@@ -149,12 +149,12 @@ TEST(CoreCppTest, Basic) {
     {
       ScopedMessagePipeHandle h0;
       ScopedMessagePipeHandle h1;
-      EXPECT_FALSE(h0.get().is_valid());
-      EXPECT_FALSE(h1.get().is_valid());
+      EXPECT_FALSE(h0.get());
+      EXPECT_FALSE(h1.get());
 
       CreateMessagePipe(nullptr, &h0, &h1);
-      EXPECT_TRUE(h0.get().is_valid());
-      EXPECT_TRUE(h1.get().is_valid());
+      EXPECT_TRUE(h0.get());
+      EXPECT_TRUE(h1.get());
       EXPECT_NE(h0.get().value(), h1.get().value());
       // Save the handle values, so we can check that things got closed
       // correctly.
@@ -185,7 +185,7 @@ TEST(CoreCppTest, Basic) {
 
       // Test closing |h1| explicitly.
       Close(std::move(h1));
-      EXPECT_FALSE(h1.get().is_valid());
+      EXPECT_FALSE(h1.get());
 
       // Make sure |h1| is closed.
       EXPECT_EQ(MOJO_RESULT_INVALID_ARGUMENT,
@@ -240,7 +240,7 @@ TEST(CoreCppTest, Basic) {
       MojoHandle handles[5];
       handles[0] = mp.handle1.release().value();
       EXPECT_NE(kInvalidHandleValue, handles[0]);
-      EXPECT_FALSE(mp.handle1.get().is_valid());
+      EXPECT_FALSE(mp.handle1.get());
       uint32_t handles_count = 1;
       EXPECT_EQ(MOJO_RESULT_OK,
                 WriteMessageRaw(h1.get(), kHello, kHelloSize - 1, handles,
@@ -313,7 +313,7 @@ TEST(CoreCppTest, TearDownWithMessagesEnqueued) {
     MojoHandle h3_value;
     h3_value = h3.release().value();
     EXPECT_NE(kInvalidHandleValue, h3_value);
-    EXPECT_FALSE(h3.get().is_valid());
+    EXPECT_FALSE(h3.get());
     EXPECT_EQ(MOJO_RESULT_OK,
               WriteMessageRaw(h1.get(), kHello, kHelloSize, &h3_value, 1,
                               MOJO_WRITE_MESSAGE_FLAG_NONE));
@@ -355,7 +355,7 @@ TEST(CoreCppTest, TearDownWithMessagesEnqueued) {
     MojoHandle h3_value;
     h3_value = h3.release().value();
     EXPECT_NE(kInvalidHandleValue, h3_value);
-    EXPECT_FALSE(h3.get().is_valid());
+    EXPECT_FALSE(h3.get());
     EXPECT_EQ(MOJO_RESULT_OK,
               WriteMessageRaw(h1.get(), kHello, kHelloSize, &h3_value, 1,
                               MOJO_WRITE_MESSAGE_FLAG_NONE));

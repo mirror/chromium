@@ -30,7 +30,7 @@ struct ChannelHandle {
   ChannelHandle() {}
   ChannelHandle(mojo::MessagePipeHandle h) : mojo_handle(h) {}
 
-  bool is_mojo_channel_handle() const { return mojo_handle.is_valid(); }
+  bool is_mojo_channel_handle() const { return static_cast<bool>(mojo_handle); }
 
   mojo::MessagePipeHandle mojo_handle;
 };

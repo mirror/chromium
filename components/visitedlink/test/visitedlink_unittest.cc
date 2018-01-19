@@ -122,7 +122,7 @@ class TrackingVisitedLinkEventListener : public VisitedLinkMaster::Listener {
         add_count_(0) {}
 
   void NewTable(mojo::SharedBufferHandle table) override {
-    if (table.is_valid()) {
+    if (table) {
       for (std::vector<VisitedLinkSlave>::size_type i = 0;
            i < g_slaves.size(); i++) {
         g_slaves[i]->UpdateVisitedLinks(

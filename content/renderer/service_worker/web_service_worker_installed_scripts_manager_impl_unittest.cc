@@ -80,7 +80,7 @@ class BrowserSideSender
   void PushDataPipe(const std::string& data,
                     const mojo::DataPipeProducerHandle& handle) {
     // Send |data| with null terminator.
-    ASSERT_TRUE(handle.is_valid());
+    ASSERT_TRUE(handle);
     uint32_t written_bytes = data.size() + 1;
     MojoResult rv = handle.WriteData(data.c_str(), &written_bytes,
                                      MOJO_WRITE_DATA_FLAG_NONE);

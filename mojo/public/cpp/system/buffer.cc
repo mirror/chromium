@@ -18,7 +18,7 @@ ScopedSharedBufferHandle SharedBufferHandle::Create(uint64_t num_bytes) {
 ScopedSharedBufferHandle SharedBufferHandle::Clone(
     SharedBufferHandle::AccessMode access_mode) const {
   ScopedSharedBufferHandle result;
-  if (!is_valid())
+  if (!*this)
     return result;
 
   MojoDuplicateBufferHandleOptions options = {

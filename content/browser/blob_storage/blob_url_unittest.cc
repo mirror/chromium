@@ -292,7 +292,7 @@ class BlobURLRequestJobTest : public testing::TestWithParam<bool> {
                                         TRAFFIC_ANNOTATION_FOR_TESTS));
       url_loader_client.RunUntilComplete();
 
-      if (url_loader_client.response_body().is_valid()) {
+      if (url_loader_client.response_body()) {
         EXPECT_TRUE(mojo::common::BlockingCopyToString(
             url_loader_client.response_body_release(), &response_));
       }

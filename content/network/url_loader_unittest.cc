@@ -615,7 +615,7 @@ TEST_F(URLLoaderTest, GzipTest) {
 TEST_F(URLLoaderTest, ErrorBeforeHeaders) {
   EXPECT_EQ(net::ERR_EMPTY_RESPONSE,
             Load(test_server()->GetURL("/close-socket"), nullptr));
-  EXPECT_FALSE(client()->response_body().is_valid());
+  EXPECT_FALSE(client()->response_body());
 }
 
 TEST_F(URLLoaderTest, SyncErrorWhileReadingBody) {
