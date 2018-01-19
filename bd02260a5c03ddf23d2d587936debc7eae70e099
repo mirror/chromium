@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30e598c5_c507f9fa",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-19T07:51:31Z",
+      "side": 1,
+      "message": "Should it call client-\u003eOnScriptLoadFailed() as well as the failure cases in ConnectToWorker()?",
+      "revId": "bd02260a5c03ddf23d2d587936debc7eae70e099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
