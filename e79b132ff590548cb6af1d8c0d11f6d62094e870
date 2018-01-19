@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4e55aa5_5e61f2e9",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-19T20:47:43Z",
+      "side": 1,
+      "message": "Nit: why not define both `kBorderThicknessHorizontal` and `kBorderThickness` as constexprs next to `kHarmonyTabStripTabHeight` at the top of the file?",
+      "range": {
+        "startLine": 282,
+        "startChar": 38,
+        "endLine": 282,
+        "endChar": 64
+      },
+      "revId": "e79b132ff590548cb6af1d8c0d11f6d62094e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e4bc485_4560bba9",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-19T20:47:43Z",
+      "side": 1,
+      "message": "Nit: enum class?",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 6
+      },
+      "revId": "e79b132ff590548cb6af1d8c0d11f6d62094e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
