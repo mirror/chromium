@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cef023e_059a7209",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog_util.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T06:25:59Z",
+      "side": 1,
+      "message": "Should this be min-height? or does this just limit the height of the dropdown content?",
+      "revId": "87ce55bd4636ca4fec056c3aa68ea29709883d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
