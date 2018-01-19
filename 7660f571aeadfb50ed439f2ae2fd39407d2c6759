@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab53d6f_7086c74f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-indices-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-19T01:07:24Z",
+      "side": 1,
+      "message": "This calculated value differs from the actual visible range since first/lastVisibleIndex() are incorrect.\n\nIt will be corrected in the dependent CL!\nhttps://chromium-review.googlesource.com/c/chromium/src/+/875160",
+      "range": {
+        "startLine": 13,
+        "startChar": 26,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "7660f571aeadfb50ed439f2ae2fd39407d2c6759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
