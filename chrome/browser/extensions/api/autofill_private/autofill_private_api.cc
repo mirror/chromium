@@ -188,6 +188,15 @@ ExtensionFunction::ResponseAction AutofillPrivateSaveAddressFunction::Run() {
 
   std::string guid = address->guid ? *address->guid : "";
   autofill::AutofillProfile profile(guid, kSettingsOrigin);
+  bool is_new_profile = guid.empty();
+  // Try to get the original profile, if it exists.
+  if (!is_new_profile) {
+    autofill::AutofillProfile* existing_profile =
+        personal_data->GetProfileByGUID(guid);
+    if (!existing_profile)
+      return RespondNow(Error(kErrorDataUnavailable));
+    profile = *existing_profile;
+  }
 
   // Strings from JavaScript use UTF-8 encoding. This container is used as an
   // intermediate container for functions which require UTF-16 strings.
@@ -268,7 +277,7 @@ ExtensionFunction::ResponseAction AutofillPrivateSaveAddressFunction::Run() {
   if (address->language_code)
     profile.set_language_code(*address->language_code);
 
-  if (!base::IsValidGUID(profile.guid())) {
+  if (is_new_profile) {
     profile.set_guid(base::GenerateGUID());
     personal_data->AddProfile(profile);
   } else {
@@ -375,6 +384,15 @@ ExtensionFunction::ResponseAction AutofillPrivateSaveCreditCardFunction::Run() {
 
   std::string guid = card->guid ? *card->guid : "";
   autofill::CreditCard credit_card(guid, kSettingsOrigin);
+  bool is_new_card = guid.empty();
+  // Try to get the original card, if it exists.
+  if (!is_new_card) {
+    autofill::CreditCard* existing_card =
+        personal_data->GetCreditCardByGUID(guid);
+    if (!existing_card)
+      return RespondNow(Error(kErrorDataUnavailable));
+    credit_card = *existing_card;
+  }
 
   if (card->name) {
     credit_card.SetRawInfo(autofill::CREDIT_CARD_NAME_FULL,
@@ -399,11 +417,7 @@ ExtensionFunction::ResponseAction AutofillPrivateSaveCreditCardFunction::Run() {
         base::UTF8ToUTF16(*card->expiration_year));
   }
 
-  if (card->billing_address_id) {
-    credit_card.set_billing_address_id(*card->billing_address_id);
-  }
-
-  if (!base::IsValidGUID(credit_card.guid())) {
+  if (is_new_card) {
     credit_card.set_guid(base::GenerateGUID());
     personal_data->AddCreditCard(credit_card);
   } else {

@@ -7,28 +7,6 @@
 // and failures are detected.
 
 var availableTests = [
-  function saveAddress() {
-    var NAME = 'Name';
-
-    var numCalls = 0;
-    var handler = function(addressList) {
-      numCalls++;
-
-      if (numCalls == 1) {
-        chrome.test.assertEq(addressList.length, 0);
-      } else {
-        chrome.test.assertEq(addressList.length, 1);
-        var address = addressList[0];
-        chrome.test.assertEq(address.fullNames[0], NAME);
-        chrome.test.succeed();
-      }
-    }
-
-    chrome.autofillPrivate.onAddressListChanged.addListener(handler);
-    chrome.autofillPrivate.getAddressList(handler);
-    chrome.autofillPrivate.saveAddress({fullNames: [NAME]});
-  },
-
   function getCountryList() {
     var handler = function(countries) {
       var numSeparators = 0;
@@ -83,8 +61,108 @@ var availableTests = [
     chrome.autofillPrivate.getAddressComponents(COUNTRY_CODE, handler);
   },
 
-  function saveCreditCard() {
+  function addNewAddress() {
     var NAME = 'Name';
+    var COMPANY_NAME = 'Company name';
+    var ADDRESS_LEVEL1 = 'Address level 1';
+    var ADDRESS_LEVEL2 = 'Address level 2';
+    var ADDRESS_LEVEL3 = 'Address level 3';
+    var POSTAL_CODE = 'Postal code';
+    var SORTING_CODE = 'Sorting code';
+    var COUNTRY_CODE = 'US';
+    var PHONE = '1 123-123-1234';
+    var EMAIL = 'johndoe@gmail.com';
+
+    var numCalls = 0;
+    var handler = function(addressList) {
+      numCalls++;
+
+      if (numCalls == 1) {
+        chrome.test.assertEq(addressList.length, 0);
+      } else {
+        chrome.test.assertEq(addressList.length, 1);
+        var address = addressList[0];
+        chrome.test.assertEq(address.fullNames[0], NAME);
+        chrome.test.assertEq(address.addressLevel1, ADDRESS_LEVEL1);
+        chrome.test.assertEq(address.addressLevel2, ADDRESS_LEVEL2);
+        chrome.test.assertEq(address.addressLevel3, ADDRESS_LEVEL3);
+        chrome.test.assertEq(address.postalCode, POSTAL_CODE);
+        chrome.test.assertEq(address.sortingCode, SORTING_CODE);
+        chrome.test.assertEq(address.countryCode, COUNTRY_CODE);
+        chrome.test.assertEq(address.phoneNumbers[0], PHONE);
+        chrome.test.assertEq(address.emailAddresses[0], EMAIL);
+        chrome.test.succeed();
+      }
+    }
+
+    chrome.autofillPrivate.onAddressListChanged.addListener(handler);
+    chrome.autofillPrivate.getAddressList(handler);
+    chrome.autofillPrivate.saveAddress({fullNames: [NAME],
+      addressLevel1: ADDRESS_LEVEL1, addressLevel2: ADDRESS_LEVEL2,
+      addressLevel3: ADDRESS_LEVEL3, postalCode: POSTAL_CODE,
+      sortingCode: SORTING_CODE, countryCode: COUNTRY_CODE,
+      phoneNumbers: [PHONE], emailAddresses: [EMAIL]});
+  },
+
+  function updateExistingAddress() {
+    var NAME = 'Name';
+    var COMPANY_NAME = 'Company name';
+    var ADDRESS_LEVEL1 = 'Address level 1';
+    var ADDRESS_LEVEL2 = 'Address level 2';
+    var ADDRESS_LEVEL3 = 'Address level 3';
+    var POSTAL_CODE = 'Postal code';
+    var SORTING_CODE = 'Sorting code';
+    var COUNTRY_CODE = 'US';
+    var PHONE = '1 123-123-1234';
+    var EMAIL = 'johndoe@gmail.com';
+
+    var UPDATED_NAME = 'UpdatedName';
+
+    var generated_guid = "123";
+
+    var numCalls = 0;
+    var handler = function(addressList) {
+      numCalls++;
+
+      if (numCalls == 1) {
+        chrome.test.assertEq(addressList.length, 0);
+      } else if (numCalls == 2) {
+        chrome.test.assertEq(addressList.length, 1);
+        var address = addressList[0];
+        generated_guid = address.guid;
+        chrome.autofillPrivate.saveAddress({guid: generated_guid,
+          fullNames: [UPDATED_NAME]});
+      } else {
+        chrome.test.assertEq(addressList.length, 1);
+        var address = addressList[0];
+        chrome.test.assertEq(address.guid, generated_guid);
+        chrome.test.assertEq(address.fullNames[0], UPDATED_NAME);
+        chrome.test.assertEq(address.addressLevel1, ADDRESS_LEVEL1);
+        chrome.test.assertEq(address.addressLevel2, ADDRESS_LEVEL2);
+        chrome.test.assertEq(address.addressLevel3, ADDRESS_LEVEL3);
+        chrome.test.assertEq(address.postalCode, POSTAL_CODE);
+        chrome.test.assertEq(address.sortingCode, SORTING_CODE);
+        chrome.test.assertEq(address.countryCode, COUNTRY_CODE);
+        chrome.test.assertEq(address.phoneNumbers[0], PHONE);
+        chrome.test.assertEq(address.emailAddresses[0], EMAIL);
+        chrome.test.succeed();
+      }
+    }
+
+    chrome.autofillPrivate.onAddressListChanged.addListener(handler);
+    chrome.autofillPrivate.getAddressList(handler);
+    chrome.autofillPrivate.saveAddress({fullNames: [NAME],
+      addressLevel1: ADDRESS_LEVEL1, addressLevel2: ADDRESS_LEVEL2,
+      addressLevel3: ADDRESS_LEVEL3, postalCode: POSTAL_CODE,
+      sortingCode: SORTING_CODE, countryCode: COUNTRY_CODE,
+      phoneNumbers: [PHONE], emailAddresses: [EMAIL]});
+  },
+
+  function addNewCreditCard() {
+    var NAME = 'Name';
+    var NUMBER = "4111 1111 1111 1111";
+    var EXP_MONTH = "02";
+    var EXP_YEAR = "2999";
 
     var numCalls = 0;
     var handler = function(creditCardList) {
@@ -96,13 +174,57 @@ var availableTests = [
         chrome.test.assertEq(creditCardList.length, 1);
         var creditCard = creditCardList[0];
         chrome.test.assertEq(creditCard.name, NAME);
+        chrome.test.assertEq(creditCard.cardNumber, NUMBER);
+        chrome.test.assertEq(creditCard.expirationMonth, EXP_MONTH);
+        chrome.test.assertEq(creditCard.expirationYear, EXP_YEAR);
         chrome.test.succeed();
       }
     }
 
     chrome.autofillPrivate.onCreditCardListChanged.addListener(handler);
     chrome.autofillPrivate.getCreditCardList(handler);
-    chrome.autofillPrivate.saveCreditCard({name: NAME});
+    chrome.autofillPrivate.saveCreditCard({name: NAME, cardNumber: NUMBER,
+      expirationMonth: EXP_MONTH, expirationYear: EXP_YEAR});
+  },
+
+  function updateExistingCreditCard() {
+    var NAME = 'Name';
+    var NUMBER = "4111 1111 1111 1111";
+    var EXP_MONTH = "02";
+    var EXP_YEAR = "2999";
+
+    var UPDATED_NAME = 'UpdatedName';
+
+    var generated_guid = "123";
+
+    var numCalls = 0;
+    var handler = function(creditCardList) {
+      numCalls++;
+
+      if (numCalls == 1) {
+        chrome.test.assertEq(creditCardList.length, 0);
+      } else if (numCalls == 2) {
+        chrome.test.assertEq(creditCardList.length, 1);
+        var creditCard = creditCardList[0];
+        generated_guid = creditCard.guid;
+        chrome.autofillPrivate.saveCreditCard({guid: generated_guid,
+          name: UPDATED_NAME});
+      } else {
+        chrome.test.assertEq(creditCardList.length, 1);
+        var creditCard = creditCardList[0];
+        chrome.test.assertEq(creditCard.guid, generated_guid);
+        chrome.test.assertEq(creditCard.name, UPDATED_NAME);
+        chrome.test.assertEq(creditCard.cardNumber, NUMBER);
+        chrome.test.assertEq(creditCard.expirationMonth, EXP_MONTH);
+        chrome.test.assertEq(creditCard.expirationYear, EXP_YEAR);
+        chrome.test.succeed();
+      }
+    }
+
+    chrome.autofillPrivate.onCreditCardListChanged.addListener(handler);
+    chrome.autofillPrivate.getCreditCardList(handler);
+    chrome.autofillPrivate.saveCreditCard({name: NAME, cardNumber: NUMBER,
+      expirationMonth: EXP_MONTH, expirationYear: EXP_YEAR});
   },
 
   function removeEntry() {
