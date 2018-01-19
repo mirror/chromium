@@ -33,7 +33,10 @@ ChromeTestExtensionLoader::ChromeTestExtensionLoader(
     : browser_context_(browser_context),
       extension_system_(ExtensionSystem::Get(browser_context)),
       extension_service_(extension_system_->extension_service()),
-      extension_registry_(ExtensionRegistry::Get(browser_context)) {}
+      extension_registry_(ExtensionRegistry::Get(browser_context)) {
+  extension_service_->set_connector_for_test(
+      test_data_decoder_service_.connector()->Clone());
+}
 
 ChromeTestExtensionLoader::~ChromeTestExtensionLoader() {
   // If there was a temporary directory created for a CRX, we need to clean it
