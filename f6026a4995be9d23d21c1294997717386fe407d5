@@ -16,6 +16,24 @@
       "revId": "f6026a4995be9d23d21c1294997717386fe407d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2890cccb_7e02c805",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-19T22:04:53Z",
+      "side": 1,
+      "message": "This already works as initialize() guarantees that receiveOldImage_ is called and that will set oldImagePending_ to false.",
+      "parentUuid": "f34289d2_42ec62f4",
+      "revId": "f6026a4995be9d23d21c1294997717386fe407d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
