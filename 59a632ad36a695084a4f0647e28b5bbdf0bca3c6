@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "a0772f83_61300bf1",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-19T20:15:30Z",
+      "side": 1,
+      "message": "I still re-use this in the block for vertical, as a vertical border thickness.",
+      "parentUuid": "d4d1e7e8_4826f322",
+      "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fa2bdc3_fcb6c547",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-19T20:15:30Z",
+      "side": 1,
+      "message": "Make an adjustment to make the drawn left border of the active Tab be the middle of the left edge and first letter of Tab text.",
+      "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50beb5e0_ef6336af",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
         "patchSetId": 1
@@ -39,6 +74,30 @@
       "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20aa8911_cd1c2308",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-19T20:15:30Z",
+      "side": 1,
+      "message": "I noticed this after uploading. Changed to animating_leading!",
+      "parentUuid": "50beb5e0_ef6336af",
+      "range": {
+        "startLine": 518,
+        "startChar": 9,
+        "endLine": 518,
+        "endChar": 31
+      },
+      "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "a6e8069a_1b27ea0c",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-19T20:15:30Z",
+      "side": 1,
+      "message": "Yes, only orientation needed. Done.",
+      "parentUuid": "bb83407f_91511d97",
+      "range": {
+        "startLine": 581,
+        "startChar": 36,
+        "endLine": 581,
+        "endChar": 40
+      },
+      "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25846fdf_2b32cb8c",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
         "patchSetId": 1
@@ -79,6 +162,24 @@
       "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bbaada2_09b653e5",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-19T20:15:30Z",
+      "side": 1,
+      "message": "Realize we do not to access this.",
+      "parentUuid": "25846fdf_2b32cb8c",
+      "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "2e5da9da_8984046e",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-19T20:15:30Z",
+      "side": 1,
+      "message": "Made the change.",
+      "parentUuid": "a7bcf125_55dfca33",
+      "range": {
+        "startLine": 176,
+        "startChar": 20,
+        "endLine": 176,
+        "endChar": 30
+      },
+      "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a84e1676_51dec6c7",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
         "patchSetId": 1
@@ -119,6 +244,24 @@
       "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7dd257b_6b361057",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-19T20:15:30Z",
+      "side": 1,
+      "message": "Replaced this by orientation and provide accessor for subclasses and TabbedPane.",
+      "parentUuid": "a84e1676_51dec6c7",
+      "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
