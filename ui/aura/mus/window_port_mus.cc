@@ -4,8 +4,10 @@
 
 #include "ui/aura/mus/window_port_mus.h"
 
+#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "components/viz/client/local_surface_id_provider.h"
+#include "components/viz/common/features.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/transient_window_client.h"
@@ -122,6 +124,8 @@ WindowPortMus::RequestLayerTreeFrameSink(
   params.local_surface_id_provider =
       std::make_unique<viz::DefaultLocalSurfaceIdProvider>();
   params.enable_surface_synchronization = true;
+  params.enable_viz =
+      base::FeatureList::IsEnabled(features::kVizDisplayCompositor);
 
   auto layer_tree_frame_sink = std::make_unique<viz::ClientLayerTreeFrameSink>(
       std::move(context_provider), nullptr /* worker_context_provider */,

@@ -13,6 +13,7 @@
 #include "base/allocator/allocator_extension.h"
 #include "base/at_exit.h"
 #include "base/command_line.h"
+#include "base/feature_list.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -1994,6 +1995,8 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       features::IsSurfaceSynchronizationEnabled();
   params.local_surface_id_provider =
       std::make_unique<RendererLocalSurfaceIdProvider>();
+  params.enable_viz =
+      base::FeatureList::IsEnabled(features::kVizDisplayCompositor);
 
   // The renderer runs animations and layout for animate_only BeginFrames.
   params.wants_animate_only_begin_frames = true;
