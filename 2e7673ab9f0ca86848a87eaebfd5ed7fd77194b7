@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3380bc64_98b4aa12",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1468,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-19T14:06:24Z",
+      "side": 1,
+      "message": "false /* has_fetch_handler */",
+      "revId": "2e7673ab9f0ca86848a87eaebfd5ed7fd77194b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
