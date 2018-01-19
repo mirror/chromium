@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c420e647_097707cc",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 2101,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T22:57:56Z",
+      "side": 1,
+      "message": "For some reason it is now possible to call closeSettingsAnimated multiple times. And if it is called when there is no settings visible, the completion block will execute.",
+      "range": {
+        "startLine": 2099,
+        "startChar": 4,
+        "endLine": 2101,
+        "endChar": 3
+      },
+      "revId": "c97bbde3f27d18b36a33ccd652e059a3c5ae3425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81dda164_b7f0a50e",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T22:57:56Z",
+      "side": 1,
+      "message": "nit: formatting.",
+      "range": {
+        "startLine": 51,
+        "startChar": 37,
+        "endLine": 52,
+        "endChar": 69
+      },
+      "revId": "c97bbde3f27d18b36a33ccd652e059a3c5ae3425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "887dcfd5_037a2264",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T22:57:56Z",
+      "side": 1,
+      "message": "This looks fishy.",
+      "range": {
+        "startLine": 56,
+        "startChar": 10,
+        "endLine": 57,
+        "endChar": 76
+      },
+      "revId": "c97bbde3f27d18b36a33ccd652e059a3c5ae3425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ccf29a_b72dbffd",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T22:57:56Z",
+      "side": 1,
+      "message": "The if check is not necessary in conjunction with the DCHECK.",
+      "range": {
+        "startLine": 1051,
+        "startChar": 2,
+        "endLine": 1052,
+        "endChar": 35
+      },
+      "revId": "c97bbde3f27d18b36a33ccd652e059a3c5ae3425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3edba0_8af8806c",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T22:57:56Z",
+      "side": 1,
+      "message": "This will generate a setter as well, but we don\u0027t want to allow external objects to set the sharedInstance. I suggest that you simply define a class method: \n|+(SettingsNavigationController*)sharedSettingsNavigationController|\nPls also comment.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 69
+      },
+      "revId": "c97bbde3f27d18b36a33ccd652e059a3c5ae3425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d5b730b_82bd4531",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T22:57:56Z",
+      "side": 1,
+      "message": "I noticed it\u0027s more common to use dispatch_once to create a sharedInstance in our codebase. What is the difference?",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 138,
+        "endChar": 1
+      },
+      "revId": "c97bbde3f27d18b36a33ccd652e059a3c5ae3425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eae1c4d_2cd4913c",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T22:57:56Z",
+      "side": 1,
+      "message": "This should be removed so external objects can\u0027t set the sharedInstance. And it doesn\u0027t look like it is used anywhere.",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 0
+      },
+      "revId": "c97bbde3f27d18b36a33ccd652e059a3c5ae3425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5812e443_fef3cda5",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T22:57:56Z",
+      "side": 1,
+      "message": "nit: TODO(crbug.com/XXXXX)",
+      "range": {
+        "startLine": 335,
+        "startChar": 4,
+        "endLine": 335,
+        "endChar": 59
+      },
+      "revId": "c97bbde3f27d18b36a33ccd652e059a3c5ae3425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
