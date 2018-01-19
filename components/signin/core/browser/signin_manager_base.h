@@ -148,6 +148,11 @@ class SigninManagerBase : public KeyedService {
   void SetAuthenticatedAccountInfo(const std::string& gaia_id,
                                    const std::string& email);
 
+  // Sets the authenticated user's info.  Internally, this will seed the account
+  // information in AccountTrackerService and pick the right account_id for
+  // this account.
+  void SetAuthenticatedAccountInfo(const AccountInfo& account_info);
+
   // Returns true if there is an authenticated user.
   bool IsAuthenticated() const;
 

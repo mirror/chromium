@@ -179,6 +179,15 @@ void SigninManagerBase::SetAuthenticatedAccountInfo(const std::string& gaia_id,
   SetAuthenticatedAccountId(account_id);
 }
 
+void SigninManagerBase::SetAuthenticatedAccountInfo(
+    const AccountInfo& account_info) {
+  DCHECK(!account_info.gaia.empty());
+  DCHECK(!account_info.email.empty());
+  std::string account_id =
+      account_tracker_service_->SeedAccountInfo(account_info);
+  SetAuthenticatedAccountId(account_id);
+}
+
 void SigninManagerBase::SetAuthenticatedAccountId(
     const std::string& account_id) {
   DCHECK(!account_id.empty());
