@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb4a352e_fa6ebeae",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-19T16:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "233e7d0f_7530ea60",
+      "revId": "ff2906334fce7ee02b4ef0d3c7ea2626e5cff41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ba89973_1b5cca1c",
         "filename": "content/browser/gpu/gpu_process_host.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-11T21:17:35Z",
       "side": 1,
       "message": "We can probably create a helper function for this, and not de-dup with the code below.",
+      "revId": "ff2906334fce7ee02b4ef0d3c7ea2626e5cff41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b680b5_78313264",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-19T16:08:48Z",
+      "side": 1,
+      "message": "factored it out. Templates are spiffy.",
+      "parentUuid": "0ba89973_1b5cca1c",
       "revId": "ff2906334fce7ee02b4ef0d3c7ea2626e5cff41a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3d7533d5_f47f51c1",
+        "filename": "content/gpu/gpu_child_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-19T16:08:48Z",
+      "side": 1,
+      "message": "I don\u0027t understand. What\u0027s your idea?",
+      "parentUuid": "6a6afbea_eec22dd2",
+      "revId": "ff2906334fce7ee02b4ef0d3c7ea2626e5cff41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c95b064_d1799cfa",
         "filename": "content/public/app/mojo/content_gpu_manifest.json",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9d998e90_2b6906e7",
+        "filename": "content/public/app/mojo/content_gpu_manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-19T16:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c95b064_d1799cfa",
+      "revId": "ff2906334fce7ee02b4ef0d3c7ea2626e5cff41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2d07123_e1d50f5c",
         "filename": "gpu/ipc/service/gpu_init.cc",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-11T21:17:35Z",
       "side": 1,
       "message": "I think it\u0027d make sense to just not set using_mojo, and check the cmd flag inside of OzonePlatformGbm? The flag feels like an internal ozone-drm setting that the callers wouldn\u0027t need to worry about?",
+      "revId": "ff2906334fce7ee02b4ef0d3c7ea2626e5cff41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5485b6ba_ac7c020c",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-19T16:08:48Z",
+      "side": 1,
+      "message": "I can do this but... it\u0027s at odds with my longterm scheme to only configure ozone via the params object. How strongly do you feel about it?",
+      "parentUuid": "e2d07123_e1d50f5c",
       "revId": "ff2906334fce7ee02b4ef0d3c7ea2626e5cff41a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
