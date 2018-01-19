@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2700bc19_5d45d3a4",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-19T21:53:02Z",
+      "side": 1,
+      "message": "We need to add (viz::mojom::kHitTestMouse | viz::mojom::kHitTestTouch) as well to handle both mouse and touch events.",
+      "range": {
+        "startLine": 39,
+        "startChar": 24,
+        "endLine": 39,
+        "endChar": 29
+      },
+      "revId": "98324b09490248f4c6fd430ddf7b0ac841e167bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
