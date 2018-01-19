@@ -34,6 +34,24 @@
       "revId": "847bf1240f98f878249250209f2c8fdf50e34626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdab12cb_c3864548",
+        "filename": "testing/buildbot/waterfalls.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1601,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-19T21:42:05Z",
+      "side": 1,
+      "message": "Yeah, I didn\u0027t like any of the alternatives I came up with any better that are doable given the current infrastructure either.\n\nOnce we are generating wrappers for things, we can modify the test() template to add the arguments if `is_asan` is true.",
+      "parentUuid": "492d50d7_6b883e58",
+      "revId": "847bf1240f98f878249250209f2c8fdf50e34626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
