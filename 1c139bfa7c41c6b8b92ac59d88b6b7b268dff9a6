@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98628c23_14c10caa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2018-01-19T13:04:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0da36ed3_06ef848c",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "1c139bfa7c41c6b8b92ac59d88b6b7b268dff9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8c03a9e_37569fb7",
         "filename": "chrome/browser/chromeos/policy/user_network_configuration_updater_factory.cc",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "1c139bfa7c41c6b8b92ac59d88b6b7b268dff9a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8dcc18_94db495e",
+        "filename": "chrome/browser/chromeos/policy/user_network_configuration_updater_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2018-01-19T13:04:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9cd435_54c89ef5",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 73
+      },
+      "revId": "1c139bfa7c41c6b8b92ac59d88b6b7b268dff9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
