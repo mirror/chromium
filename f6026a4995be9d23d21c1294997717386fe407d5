@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f34289d2_42ec62f4",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-19T21:49:31Z",
+      "side": 1,
+      "message": "Maybe also set oldImagePending_ \u003d false here so that if we navigate away and don\u0027t receive the new old image the user navigates away and back they can attempt a discard?",
+      "revId": "f6026a4995be9d23d21c1294997717386fe407d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

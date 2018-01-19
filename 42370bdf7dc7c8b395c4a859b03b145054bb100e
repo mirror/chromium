@@ -34,6 +34,24 @@
       "revId": "42370bdf7dc7c8b395c4a859b03b145054bb100e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209918f5_0a0a84f8",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-19T21:49:31Z",
+      "side": 1,
+      "message": "The best way to handle this would be to use sendWithPromise and have Chrome return the new old image, but as long as it is logically impossible for Chrome to not fire \u0027old-image-changed\u0027 this is fine with the updated documentation. If there are any real edge cases (i.e. not due to a bug in the code) we should either make sure they send \u0027old-image-changed\u0027 anyway or use sendWithPromise.",
+      "parentUuid": "e1a247bd_27598766",
+      "revId": "42370bdf7dc7c8b395c4a859b03b145054bb100e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
