@@ -43,6 +43,7 @@ import org.chromium.chrome.browser.contextmenu.ContextMenuUi;
 import org.chromium.chrome.browser.contextmenu.PlatformContextMenuUi;
 import org.chromium.chrome.browser.contextmenu.ShareContextMenuItem;
 import org.chromium.chrome.browser.contextmenu.TabularContextMenuUi;
+import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.ui.base.WindowAndroid.OnCloseContextMenuListener;
 
 import java.lang.annotation.Retention;
@@ -118,6 +119,7 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
     private final Runnable mOnMenuShownListener;
     private final Callback<Boolean> mOnShareClickedRunnable;
     private final PendingIntent mOnBrowserActionSelectedCallback;
+    private final boolean mShouldInitializeNative;
 
     private final List<Pair<Integer, List<ContextMenuItem>>> mItems;
 
@@ -133,10 +135,13 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
         mActivity = activity;
         mCurrentContextMenuParams = params;
         mOnMenuShownListener = listener;
+        mShouldInitializeNative = FirstRunStatus.getFirstRunFlowComplete();
         mOnMenuShown = new Runnable() {
             @Override
             public void run() {
-                mOnMenuShownListener.run();
+                if (mShouldInitializeNative) {
+                    mOnMenuShownListener.run();
+                }
                 if (mTestDelegate != null) {
                     mTestDelegate.onBrowserActionsMenuShown();
                 }
@@ -165,11 +170,16 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
         ShareContextMenuItem shareItem = new ShareContextMenuItem(R.drawable.ic_share_white_24dp,
                 R.string.browser_actions_share, R.id.browser_actions_share, true);
         shareItem.setCreatorPackageName(sourcePackageName);
-        mBrowserActionsLinkGroup =
-                Arrays.asList(ChromeContextMenuItem.BROWSER_ACTIONS_OPEN_IN_BACKGROUND,
-                        ChromeContextMenuItem.BROWSER_ACTIONS_OPEN_IN_INCOGNITO_TAB,
-                        ChromeContextMenuItem.BROWSER_ACTION_SAVE_LINK_AS,
-                        ChromeContextMenuItem.BROWSER_ACTIONS_COPY_ADDRESS, shareItem);
+        if (mShouldInitializeNative) {
+            mBrowserActionsLinkGroup =
+                    Arrays.asList(ChromeContextMenuItem.BROWSER_ACTIONS_OPEN_IN_BACKGROUND,
+                            ChromeContextMenuItem.BROWSER_ACTIONS_OPEN_IN_INCOGNITO_TAB,
+                            ChromeContextMenuItem.BROWSER_ACTION_SAVE_LINK_AS,
+                            ChromeContextMenuItem.BROWSER_ACTIONS_COPY_ADDRESS, shareItem);
+        } else {
+            mBrowserActionsLinkGroup =
+                    Arrays.asList(ChromeContextMenuItem.BROWSER_ACTIONS_COPY_ADDRESS, shareItem);
+        }
         mMenuItemDelegate = new BrowserActionsContextMenuItemDelegate(mActivity, sourcePackageName);
         mOnBrowserActionSelectedCallback = onBrowserActionSelectedCallback;
         mProgressDialog = new ProgressDialog(mActivity);
