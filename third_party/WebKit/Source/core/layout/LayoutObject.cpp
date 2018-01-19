@@ -110,12 +110,22 @@ namespace {
 
 static bool g_modify_layout_tree_structure_any_state = false;
 
-bool ShouldUseNewLayout(const ComputedStyle& style) {
+inline bool ShouldUseNewLayout(Element* element, const ComputedStyle& style) {
   if (!RuntimeEnabledFeatures::LayoutNGEnabled())
     return false;
+
   // TODO(layout-dev): Remove user-modify style check once editing handles
   // LayoutNG.
-  return style.UserModify() == EUserModify::kReadOnly;
+  if (style.UserModify() != EUserModify::kReadOnly)
+    return false;
+
+  // For the current phase of LayoutNG, objects inside UA shadow do not use
+  // LayoutNG.
+  if (element->IsInShadowTree() &&
+      element->ContainingShadowRoot()->IsUserAgent())
+    return false;
+
+  return true;
 }
 
 }  // namespace
@@ -203,11 +213,11 @@ LayoutObject* LayoutObject::CreateObject(Element* element,
     case EDisplay::kBlock:
     case EDisplay::kFlowRoot:
     case EDisplay::kInlineBlock:
-      if (ShouldUseNewLayout(style))
+      if (ShouldUseNewLayout(element, style))
         return new LayoutNGBlockFlow(element);
       return new LayoutBlockFlow(element);
     case EDisplay::kListItem:
-      if (ShouldUseNewLayout(style))
+      if (ShouldUseNewLayout(element, style))
         return new LayoutNGListItem(element);
       return new LayoutListItem(element);
     case EDisplay::kTable:
@@ -223,7 +233,7 @@ LayoutObject* LayoutObject::CreateObject(Element* element,
     case EDisplay::kTableColumn:
       return new LayoutTableCol(element);
     case EDisplay::kTableCell:
-      if (RuntimeEnabledFeatures::LayoutNGEnabled())
+      if (ShouldUseNewLayout(element, style))
         return new LayoutNGTableCell(element);
       return new LayoutTableCell(element);
     case EDisplay::kTableCaption:
