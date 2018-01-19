@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6a1cb15_b6be8429",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-19T16:17:23Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure about this DCHECK. This CL changes the history observer to send events in a few cases even if no rows were affected. If all_history is true, then deleted_rows will be empty and have no meaning but if all_history is false, it would be possible that deleted_rows are empty. \nI don\u0027t think that it affects the code in any way but I wanted to check :)",
+      "revId": "a2be88e8c61aa4c852cb60c8c4496a8a867ff239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "077b5826_701065f0",
         "filename": "components/history/core/browser/history_types.h",
         "patchSetId": 18
