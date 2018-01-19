@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "773db30a_198e4f25",
+        "filename": "ui/keyboard/container_floating_behavior.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-19T04:31:05Z",
+      "side": 1,
+      "message": "nit: if (!default_position_) { ?",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 34
+      },
+      "revId": "b7e2c6f556c82fecc67cb1971e7f8fd851b2dcb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dcf871a_14537acb",
+        "filename": "ui/keyboard/container_floating_behavior.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-19T04:31:05Z",
+      "side": 1,
+      "message": "Do you need to create this variable?\nMaybe like this? :\n\nif (!default_position_)\n  default_position_ \u003d std::make_unique\u003cKeyboardPosition\u003e();\n\nif (...) {\n  default_position_-\u003ehorizontal_anchor_direction \u003d ...\n  ...\n}\n...",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 55
+      },
+      "revId": "b7e2c6f556c82fecc67cb1971e7f8fd851b2dcb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
