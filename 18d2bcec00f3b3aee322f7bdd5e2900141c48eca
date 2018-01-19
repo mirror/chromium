@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50d1fc83_55408daf",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_machine_translation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-19T15:03:49Z",
+      "side": 1,
+      "message": "Can you use ARCH_CPU_X86_FAMILY instead?",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "18d2bcec00f3b3aee322f7bdd5e2900141c48eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "525d203a_6f9236d2",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_machine_translation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-19T15:03:49Z",
+      "side": 1,
+      "message": "Should we fall back to DetectIntelHoudiniSystemFiles if AndroidNativeBridgeIsInitialized fails to open native bridge or run the initializer instead here?",
+      "range": {
+        "startLine": 86,
+        "startChar": 11,
+        "endLine": 86,
+        "endChar": 43
+      },
+      "revId": "18d2bcec00f3b3aee322f7bdd5e2900141c48eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
