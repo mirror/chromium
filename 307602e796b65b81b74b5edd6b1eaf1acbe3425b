@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f50b523_ea2e3995",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-19T09:00:59Z",
+      "side": 1,
+      "message": "Actually, you can make this a static_assert since kResetPolicy is constexpr :). static_assert is preferable when possible because 1) it\u0027s a compile-time error (notifies dev earlier) and 2) it works in non-dcheck builds",
+      "revId": "307602e796b65b81b74b5edd6b1eaf1acbe3425b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e8a135_986e3129",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-19T09:00:59Z",
+      "side": 1,
+      "message": "Have you tried running tests without this? It should be necessary only you\u0027re running Start() on a TaskScheduler TaskRunner (created from base/task_scheduler/post_task.h) which explicitly does not have the WithBaseSyncPrimitives() traits -- i.e. base::ScopedAllowBaseSyncPrimitivesForTesting is intended to allow waiting on sequences that otherwise do not allow it in the product, to avoid adding traits in production only used by tests.\n\nThe main thread in unit tests is allowed to wait on sync primitives by default.\n\nI\u0027d be surprised if tests don\u0027t pass as I don\u0027t see a single PostTask() in stack_sampling_profiler_unittest.cc and hence assume it\u0027s all on the main test thread.\n\nBasically these asserts were designed to not trip only you\u0027re explicitly doing something you shouldn\u0027t, hence the strict requirements to add an exception as it shouldn\u0027t be needed :)",
+      "revId": "307602e796b65b81b74b5edd6b1eaf1acbe3425b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
