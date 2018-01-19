@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f52563ae_9db7848a",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-19T17:57:50Z",
+      "side": 0,
+      "message": "hmm... unlike the renderer one, this path actually still gets used I think?\n\nThis calls RenderWidgetHostViewAndroid::OnMessageReceived (line 642), which then calls into SynchronousCompositorHost::OnMessageReceived",
+      "revId": "6ca3d28efc87ba16b97d152c9f986763edcf3960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7307494b_7f8da268",
         "filename": "content/common/swapped_out_messages.cc",
         "patchSetId": 1
