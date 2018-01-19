@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0ed48f7_ffffb8ec",
+        "filename": "base/containers/mru_cache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-19T12:52:46Z",
+      "side": 1,
+      "message": "This is from https://chromium-review.googlesource.com/c/chromium/src/+/868510",
+      "revId": "56d1f6e12e6f4b161d3df5fd398b1d0c30c8b5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
