@@ -74,7 +74,7 @@ class SmbProviderClientImpl : public SmbProviderClient {
     options.set_directory_path(directory_path.value());
     CallMethod(smbprovider::kReadDirectoryMethod, options,
                &SmbProviderClientImpl::HandleProtoCallback<
-                   smbprovider::DirectoryEntryList>,
+                   smbprovider::DirectoryEntryListProto>,
                &callback);
   }
 
@@ -86,7 +86,7 @@ class SmbProviderClientImpl : public SmbProviderClient {
     options.set_entry_path(entry_path.value());
     CallMethod(smbprovider::kGetMetadataEntryMethod, options,
                &SmbProviderClientImpl::HandleProtoCallback<
-                   smbprovider::DirectoryEntry>,
+                   smbprovider::DirectoryEntryProto>,
                &callback);
   }
 
