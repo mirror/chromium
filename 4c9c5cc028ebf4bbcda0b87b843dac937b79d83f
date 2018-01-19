@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0925816b_eea7f7a2",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-19T12:01:05Z",
+      "side": 1,
+      "message": "Looks like we do need it, though I\u0027m also puzzled why we should , because I don\u0027t see any code between the BlinkNotificationServiceImpl and the PlatformNotificationService that strips it on Mac... guess it gets stripped beforehand? (which is fine because we can\u0027t display big picture on Mac?)\n\nhttps://ci.chromium.org/buildbot/tryserver.chromium.mac/mac_chromium_rel_ng/631175\n\nI\u0027ll put the ifdef back now",
+      "parentUuid": "a588e509_13b35e3c",
+      "revId": "4c9c5cc028ebf4bbcda0b87b843dac937b79d83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bf96fe4_de68a1b8",
         "filename": "content/common/notifications/notification_struct_traits_unittest.cc",
         "patchSetId": 1
