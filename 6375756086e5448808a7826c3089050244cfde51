@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5d81efe_ed135b95",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorDOMAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2229,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-19T23:19:41Z",
+      "side": 1,
+      "message": "Let\u0027s rather do something like:\n\nFrame* frame \u003d IdentifiersFactory::FrameById(inspected_frames_, frame_id);\nFrameOwner* owner \u003d frame ? frame-\u003eOwner() : nullptr;\nNode* node \u003d owner \u0026\u0026 owner-\u003eIsLocal() ?  ToHTMLFrameOwnerElement(owner) : nullptr;",
+      "revId": "6375756086e5448808a7826c3089050244cfde51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
