@@ -16,6 +16,24 @@
       "revId": "084ab81c4fed60983df3fb3989f6abb43c80f191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05592349_dba02eec",
+        "filename": "android_webview/browser/renderer_host/aw_render_view_host_ext.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2018-01-19T12:56:57Z",
+      "side": 1,
+      "message": "Was that a bug previously, though? The Android docs say that setBackgroundColor sets the background colour for the view, without mentioning iframes.",
+      "parentUuid": "a9f1af14_015c5400",
+      "revId": "084ab81c4fed60983df3fb3989f6abb43c80f191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
