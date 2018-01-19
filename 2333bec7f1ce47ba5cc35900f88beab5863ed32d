@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "4d48211c_b30b9026",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-19T23:25:23Z",
+      "side": 1,
+      "message": "Ah, looks like the disabled tests should also have allow_oobe \u003d true, so I\u0027ve removed the parameter. Nice catch, thanks.",
+      "parentUuid": "a487e82b_c67c5a66",
+      "revId": "2333bec7f1ce47ba5cc35900f88beab5863ed32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abdd9698_0c24783c",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.cc",
         "patchSetId": 3
