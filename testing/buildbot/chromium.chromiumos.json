@@ -65,7 +65,7 @@
       {
         "swarming": {
           "can_use_on_swarming_builders": true,
-          "shards": 20
+          "shards": 10
         },
         "test": "browser_tests"
       },
@@ -463,7 +463,7 @@
       {
         "swarming": {
           "can_use_on_swarming_builders": true,
-          "shards": 20
+          "shards": 10
         },
         "test": "browser_tests"
       },
