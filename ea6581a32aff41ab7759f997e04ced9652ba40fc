@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f86c093d_61614829",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-19T13:30:25Z",
+      "side": 1,
+      "message": "ASSERT",
+      "range": {
+        "startLine": 258,
+        "startChar": 2,
+        "endLine": 258,
+        "endChar": 8
+      },
+      "revId": "ea6581a32aff41ab7759f997e04ced9652ba40fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
