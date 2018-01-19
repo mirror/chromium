@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46b364b1_9f320bc0",
+        "filename": "content/browser/frame_host/frame_tree_node.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T14:54:13Z",
+      "side": 1,
+      "message": "s/RFH/RenderFrameHost that is committing the navigation.",
+      "revId": "53fc22c46b0856c4a7a69c6f37c1ae90f13b1426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29edce01_0182824b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T14:54:13Z",
+      "side": 1,
+      "message": "nit: s/navigation request/|navigation_request_|",
+      "revId": "53fc22c46b0856c4a7a69c6f37c1ae90f13b1426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173fac2a_8d87be84",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 1697,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T14:54:13Z",
+      "side": 1,
+      "message": "Why did this move?",
+      "revId": "53fc22c46b0856c4a7a69c6f37c1ae90f13b1426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ca90fa_12afb0f1",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 4360,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T14:54:13Z",
+      "side": 1,
+      "message": "I would prefer if we did not use auto here but wrote std::unique_ptr to make clear what is happening. Also, I\u0027m not fond of navigation_handle_ownership as a variable name. Maybe result_navigation_handle? Same below.",
+      "revId": "53fc22c46b0856c4a7a69c6f37c1ae90f13b1426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30fe28a7_ed385107",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T14:54:13Z",
+      "side": 1,
+      "message": "Can you update this comment? It seems out-of-date.",
+      "revId": "53fc22c46b0856c4a7a69c6f37c1ae90f13b1426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51c6d31_a0739d4b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T14:54:13Z",
+      "side": 1,
+      "message": "I would rephrase this as:\nHolds an ongoing NavigationRequest that is set to commit in this frame but has not committed yet.",
+      "revId": "53fc22c46b0856c4a7a69c6f37c1ae90f13b1426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d95c308_1cbeca80",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T14:54:13Z",
+      "side": 1,
+      "message": "This comment should be updated, as the transfer navigation logic no longer exists. I still think it\u0027s worthwhile to reset the NavigationRequest here because a swapped out RenderFrameHost should not be trying to commit a navigation.",
+      "revId": "53fc22c46b0856c4a7a69c6f37c1ae90f13b1426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb80078_f7320ef7",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T14:54:13Z",
+      "side": 1,
+      "message": "While we\u0027re there, let\u0027s remove the PlzNavigate comment and IsBrowserSideNavigationEnabled() check (IsBrowserSideNavigationEnabled() always returns true now).",
+      "revId": "53fc22c46b0856c4a7a69c6f37c1ae90f13b1426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
