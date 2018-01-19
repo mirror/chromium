@@ -995,12 +995,16 @@ void RequestCoordinator::UpdateRequestForCompletedAttempt(
     UpdateRequestForAbortedAttempt(request);
   } else if (status == Offliner::RequestStatus::SAVED ||
              status == Offliner::RequestStatus::SAVED_ON_LAST_RETRY) {
-    // Remove the request from the queue if it succeeded.
+    // Remove the request from the queue if it succeeded
     RemoveAttemptedRequest(request,
                            RequestNotifier::BackgroundSavePageResult::SUCCESS);
-  } else if (status == Offliner::RequestStatus::LOADING_FAILED_NO_RETRY) {
+  } else if (status == Offliner::RequestStatus::LOADING_FAILED_NO_RETRY ||
+             status == Offliner::RequestStatus::LOADING_FAILED_DOWNLOAD) {
     RemoveAttemptedRequest(
         request, RequestNotifier::BackgroundSavePageResult::LOADING_FAILURE);
+  } else if (status == Offliner::RequestStatus::DOWNLOAD_THROTTLED) {
+    RemoveAttemptedRequest(
+        request, RequestNotifier::BackgroundSavePageResult::DOWNLOAD_THROTTLED);
   } else if (request.completed_attempt_count() + 1 >=
              policy_->GetMaxCompletedTries()) {
     // Remove from the request queue if we exceeded max retries. The +1
@@ -1031,6 +1035,8 @@ bool RequestCoordinator::ShouldTryNextRequest(
     case Offliner::RequestStatus::REQUEST_COORDINATOR_CANCELED:
     case Offliner::RequestStatus::LOADING_FAILED:
     case Offliner::RequestStatus::LOADING_FAILED_NO_RETRY:
+    case Offliner::RequestStatus::LOADING_FAILED_DOWNLOAD:
+    case Offliner::RequestStatus::DOWNLOAD_THROTTLED:
       return true;
     case Offliner::RequestStatus::FOREGROUND_CANCELED:
     case Offliner::RequestStatus::LOADING_CANCELED:
