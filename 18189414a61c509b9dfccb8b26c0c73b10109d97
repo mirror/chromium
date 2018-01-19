@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41d93c0d_e029f5aa",
+        "filename": "chrome/browser/ui/views/infobars/confirm_infobar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-19T00:13:31Z",
+      "side": 1,
+      "message": "this seems strange, why do we do this here instead of in Layout?",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 32
+      },
+      "revId": "18189414a61c509b9dfccb8b26c0c73b10109d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
