@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f50fa4cc_dd382be0",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-19T04:38:12Z",
+      "side": 1,
+      "message": "@haraken, is there a good place for placing these utility functions to be shared? They are very similar to what paint \u0026 audio worklet uses.",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 20
+      },
+      "revId": "7fa73c7619dea3e3073b26df436a6f096f04e184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
