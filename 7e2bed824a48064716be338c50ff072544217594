@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e5c3d9c_bb2a782a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "changed to \"This CL passes three tests by preventing crashes when ...\". \n\nWould it be better to write \"This CL fixes three tests by preventing crashes when ...\"? I thought \u0027fixes\u0027 could imply that the test itself was incorrect, so went with \u0027passes\u0027.",
+      "parentUuid": "59f821cf_bab895c9",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d4681f4_4bdaef56",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -48,6 +72,54 @@
     },
     {
       "key": {
+        "uuid": "32774595_b21c33c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d4681f4_4bdaef56",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 66
+      },
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "889b13e6_5f35c5b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d4681f4_4bdaef56",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 66
+      },
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efcb93e2_1fc59ff0",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -65,6 +137,42 @@
     },
     {
       "key": {
+        "uuid": "31550f58_5e831565",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efcb93e2_1fc59ff0",
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2d9e362_75d258cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efcb93e2_1fc59ff0",
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "834e341d_29c5efe0",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -76,6 +184,24 @@
       "writtenOn": "2018-01-19T05:26:51Z",
       "side": 1,
       "message": "try to answer more \"why\" rather than \"what\" you did. Why do you need to mock it?",
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36518d10_7c9d1f64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "Added a paragraph above explaining why a mock for |renderer_compositor_frame_sink_| is required.",
+      "parentUuid": "834e341d_29c5efe0",
       "revId": "7e2bed824a48064716be338c50ff072544217594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +248,48 @@
     },
     {
       "key": {
+        "uuid": "d050ded7_a90aaa57",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "Moved function down. Also added a simple function description:\n\n// Stubs out renderer_compositor_frame_sink_client_ with a mock.",
+      "parentUuid": "9fdbd4cd_795078a8",
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997f0abf_95b3f4e7",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47feb127_72e46b70",
+      "range": {
+        "startLine": 155,
+        "startChar": 7,
+        "endLine": 155,
+        "endChar": 48
+      },
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fffe61d6_3d22b09f",
         "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
         "patchSetId": 8
@@ -133,6 +301,24 @@
       "writtenOn": "2018-01-19T05:26:51Z",
       "side": 1,
       "message": "I this the function may not be named correctly:\n- If it\u0027s called \"set_renderer_compositor_frame_sink_client\", I expect it to be more generic, i.e., set |renderer_compositor_frame_sink| to the input that passed in to the function.\n- If it always set to the mocked version, I expect the name to reflect it.",
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144fc576_f5542404",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "I\u0027ve changed the function name to set_mock_renderer_compositor_frame_sink_client_.\n\nDo you think just mock_renderer_compositor_frame_sink_client_ is better?",
+      "parentUuid": "fffe61d6_3d22b09f",
       "revId": "7e2bed824a48064716be338c50ff072544217594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -185,6 +371,54 @@
     },
     {
       "key": {
+        "uuid": "127c344c_86a97aaa",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1737,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2722f141_713b4552",
+      "range": {
+        "startLine": 1737,
+        "startChar": 5,
+        "endLine": 1737,
+        "endChar": 10
+      },
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa8b3df3_9320662b",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1737,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15358eec_d43359c8",
+      "range": {
+        "startLine": 1737,
+        "startChar": 18,
+        "endLine": 1737,
+        "endChar": 56
+      },
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "105b4927_b8e812e2",
         "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
         "patchSetId": 8
@@ -231,6 +465,54 @@
     },
     {
       "key": {
+        "uuid": "6e43fce8_50ef859d",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1739,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "105b4927_b8e812e2",
+      "range": {
+        "startLine": 1739,
+        "startChar": 71,
+        "endLine": 1739,
+        "endChar": 72
+      },
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5ad5c83_b7bcd688",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1739,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "Changed comment to:\n\n// Mocking |renderer_compositor_frame_sink_client_| to prevent crashes in\n// renderer_compositor_frame_sink_-\u003eDidReceiveCompositorFrameAck(resources).",
+      "parentUuid": "d3460882_9e7a0c37",
+      "range": {
+        "startLine": 1738,
+        "startChar": 5,
+        "endLine": 1739,
+        "endChar": 72
+      },
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fda4956_a274b222",
         "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
         "patchSetId": 8
@@ -254,6 +536,30 @@
     },
     {
       "key": {
+        "uuid": "3c62bad0_f67d4e7d",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1821,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fda4956_a274b222",
+      "range": {
+        "startLine": 1821,
+        "startChar": 7,
+        "endLine": 1821,
+        "endChar": 66
+      },
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55fcd59d_d9444346",
         "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
         "patchSetId": 8
@@ -268,6 +574,24 @@
       "revId": "7e2bed824a48064716be338c50ff072544217594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc10358f_21e0f1ec",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2911,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-19T19:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55fcd59d_d9444346",
+      "revId": "7e2bed824a48064716be338c50ff072544217594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
