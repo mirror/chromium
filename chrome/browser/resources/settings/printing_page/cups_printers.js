@@ -186,4 +186,19 @@ Polymer({
     });
   },
 
+  /**
+   * @param {string} searchTerm
+   * @return {boolean} If the 'no-search-results-found' should be shown.
+   * @private
+   */
+  showNoSearchResultsMessage_: function(searchTerm) {
+    if (!searchTerm || !this.printers.length)
+      return false;
+    const filteredPrinters = this.printers.filter(printer => {
+      return printer.printerName.toLowerCase().includes(
+          searchTerm.toLowerCase());
+    });
+    return !filteredPrinters || !filteredPrinters.length;
+  },
+
 });
