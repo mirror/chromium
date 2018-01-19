@@ -34,6 +34,24 @@
       "revId": "eaf5ae20a8bbe2a6c7c39f98385cce0fa5dbb1ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362f86fc_0d76dd78",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-19T09:55:13Z",
+      "side": 1,
+      "message": "TaskScheduler assumes it\u0027s created (but not necessarily started) before threads are created.\n\nThe assumptions that might be broken however is that code in BrowserMainLoop::PreCreateThreads() also assumes it runs before creating threads (e.g. initializing thread-unsafe globals).\n\nSo long as you either call BrowserMainLoop::PreCreateThreads() before creating your threads --  or your threads never touch state in content/chrome (including base APIs like logging.h) -- you\u0027re probably fine.\n\nWhat I\u0027m saying is we should add a note here about the expectations for embedders that override this.",
+      "parentUuid": "7438b1db_80c3c5fc",
+      "revId": "eaf5ae20a8bbe2a6c7c39f98385cce0fa5dbb1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
