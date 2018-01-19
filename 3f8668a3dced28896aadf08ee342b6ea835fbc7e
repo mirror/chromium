@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c7c780c_4e15145d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-19T00:41:39Z",
+      "side": 1,
+      "message": "I guess I\u0027d like to know more about the challenges with making this conditional on VR.  You mention crashes, but it would be good to analyze that to see what you were seeing and if they could be fixed with a common theme.\n\nDeeply nested layouts are considered bad:\nhttps://developer.android.com/training/improving-layouts/optimizing-layout.html\n\nHaving a view that is only needed in one case does seem quite bad to me, so I\u0027d like to make this conditional to VR.  It will be hard to measure the impact of this if we don\u0027t have perf metrics on touch performance, layout time, etc.. for Android.  This isn\u0027t a purely crashing thing, but also a general best practice.\n\nWe spend a not trivial amount of time inflating and starting up our activities (especially on Android Go devices), so I would like to do this as a last approach than the first.  We are also going to be after branch, so maybe we could land this as is and work on cleaning it up over the course of the next branch cycle?",
+      "range": {
+        "startLine": 327,
+        "startChar": 17,
+        "endLine": 327,
+        "endChar": 41
+      },
+      "revId": "3f8668a3dced28896aadf08ee342b6ea835fbc7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
