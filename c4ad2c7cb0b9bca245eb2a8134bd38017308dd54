@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ee2d43f_d7997396",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T05:40:41Z",
+      "side": 1,
+      "message": "We can\u0027t randomly remove a ticker without corrupting the indices of the rest, we should either only remove all of them or change the tickers array to be nullable pointers so that we can delete without removing from the array.\n\nDoes this happen? Do we need to remove random tickers from the array?",
+      "revId": "c4ad2c7cb0b9bca245eb2a8134bd38017308dd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8541e011_71a1914f",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T05:40:41Z",
+      "side": 1,
+      "message": "s/unsigned/size_t",
+      "revId": "c4ad2c7cb0b9bca245eb2a8134bd38017308dd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abf96a7_2e02db2e",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T05:40:41Z",
+      "side": 1,
+      "message": "Why + 1? giving it the same id as index would mean we can directly map to the index in tickers_.",
+      "revId": "c4ad2c7cb0b9bca245eb2a8134bd38017308dd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
