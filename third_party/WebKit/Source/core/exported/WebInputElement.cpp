@@ -140,6 +140,13 @@ bool WebInputElement::ShouldRevealPassword() const {
   return ConstUnwrap<HTMLInputElement>()->ShouldRevealPassword();
 }
 
+void WebInputElement::SetAssistance(AssistanceIconVisibility visibility,
+                                    AssistanceType type,
+                                    AssistanceIconClickedCallback callback) {
+  DCHECK(IsTextField());
+  Unwrap<HTMLInputElement>()->SetAssistance(visibility, type, callback);
+}
+
 WebInputElement::WebInputElement(HTMLInputElement* elem)
     : WebFormControlElement(elem) {}
 

@@ -147,6 +147,10 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   // JavaScript.
   void UserGestureObserved();
 
+  // This is just a dummy function for now that enables the password assist
+  // feature on hover for all password fields.
+  void EnableAssistIconForPasswordFields();
+
   // Given password form data |form_data| and a supplied key |key| for
   // referencing the password info, returns a set of WebInputElements in
   // |elements|, which must be non-null, that the password manager has values

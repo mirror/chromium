@@ -24,6 +24,7 @@ extern const base::Feature kEnableManualFallbacksFillingStandalone;
 extern const base::Feature kEnableManualFallbacksGeneration;
 extern const base::Feature kEnableManualPasswordGeneration;
 extern const base::Feature kEnableManualSaving;
+extern const base::Feature kEnablePasswordAssistIcon;
 extern const base::Feature kEnablePasswordForceSaving;
 extern const base::Feature kEnablePasswordSelection;
 extern const base::Feature kEnableShowAllSavedPasswordsContextMenu;
