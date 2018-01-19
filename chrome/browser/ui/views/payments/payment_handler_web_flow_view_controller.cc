@@ -7,7 +7,9 @@
 #include <memory>
 
 #include "base/base64.h"
+#include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/views/payments/payment_request_views_util.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
@@ -33,6 +35,10 @@ PaymentHandlerWebFlowViewController::PaymentHandlerWebFlowViewController(
 PaymentHandlerWebFlowViewController::~PaymentHandlerWebFlowViewController() {}
 
 base::string16 PaymentHandlerWebFlowViewController::GetSheetTitle() {
+  if (web_contents()) {
+    return base::UTF8ToUTF16(
+        web_contents()->GetLastCommittedURL().GetOrigin().spec());
+  }
   return base::string16();
 }
 
@@ -42,12 +48,20 @@ void PaymentHandlerWebFlowViewController::FillContentView(
   std::unique_ptr<views::WebView> web_view =
       std::make_unique<views::WebView>(profile_);
 
-  // TODO(anthonyvd): Size to the actual available size in the dialog.
-  web_view->SetPreferredSize(gfx::Size(100, 300));
   Observe(web_view->GetWebContents());
   web_view->LoadInitialURL(target_);
 
+  // The webview must get an explicitly set height otherwise the layout doesn't
+  // make it fill its container. This is likely because it has no content at the
+  // time of first layout (nothing has loaded yet). Because of this, set it to.
+  // total_dialog_height - header_height. On the other hand, the width will be
+  // properly set so it can be 0 here.
+  web_view->SetPreferredSize(gfx::Size(0, kDialogHeight - 48));
   content_view->AddChildView(web_view.release());
+}
+
+bool PaymentHandlerWebFlowViewController::ShouldShowSecondaryButton() {
+  return false;
 }
 
 void PaymentHandlerWebFlowViewController::DidFinishNavigation(
@@ -58,6 +72,7 @@ void PaymentHandlerWebFlowViewController::DidFinishNavigation(
              web_contents()->GetMainFrame()->GetRoutingID());
     first_navigation_complete_callback_ = PaymentHandlerOpenWindowCallback();
   }
+  UpdateHeaderView();
 }
 
 }  // namespace payments

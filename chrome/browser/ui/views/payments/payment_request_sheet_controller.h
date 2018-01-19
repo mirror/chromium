@@ -66,6 +66,9 @@ class PaymentRequestSheetController : public views::ButtonListener {
   // calls FillContentView again to re-populate it with updated views.
   void UpdateContentView();
 
+  // Clears and recreates the header view for this sheet.
+  void UpdateHeaderView();
+
   // Update the focus to |focused_view|.
   void UpdateFocus(views::View* focused_view);
 
@@ -159,6 +162,7 @@ class PaymentRequestSheetController : public views::ButtonListener {
   // targets when subclasses don't want to focus anything else.
   std::unique_ptr<views::Button> primary_button_;
   std::unique_ptr<views::Button> secondary_button_;
+  std::unique_ptr<views::View> header_view_;
 
   DISALLOW_COPY_AND_ASSIGN(PaymentRequestSheetController);
 };
