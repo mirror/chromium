@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25159b6b_0cf2b81b",
+        "filename": "chrome/browser/background/background_contents_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T17:36:12Z",
+      "side": 1,
+      "message": "Can you use run_loop.QuitClosure() rather than a lambda?",
+      "range": {
+        "startLine": 140,
+        "startChar": 50,
+        "endLine": 141,
+        "endChar": 69
+      },
+      "revId": "d7eb4b78870d86f1ddb961a13fa83f57c35ef0ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd4c506c_3aefbbf0",
+        "filename": "chrome/browser/sync/sync_error_notifier_ash_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T17:36:12Z",
+      "side": 1,
+      "message": "Does this need to be displayed in TearDown. I\u0027m specifically asking as I believe the way you have things here the profile() is destroyed before the tester. I think this comment applies to all uses in this patch.",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 21
+      },
+      "revId": "d7eb4b78870d86f1ddb961a13fa83f57c35ef0ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
