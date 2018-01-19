@@ -34,6 +34,24 @@
       "revId": "9454ef2995dc8d4c86b43cc18e72c35263704264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11df8ae6_1b095bda",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-19T00:24:03Z",
+      "side": 1,
+      "message": "Done. Yes using EnclosingIntRect will work for being more conservative.\nPersonally I don\u0027t like to give a leeway here and there unless there\u0027s a real need, but I don\u0027t have a strong preference for either in this case.",
+      "parentUuid": "55286b83_4931e881",
+      "revId": "9454ef2995dc8d4c86b43cc18e72c35263704264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
