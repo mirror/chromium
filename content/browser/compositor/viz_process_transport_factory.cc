@@ -509,6 +509,8 @@ void VizProcessTransportFactory::OnEstablishedGpuChannel(
       std::make_unique<viz::DefaultLocalSurfaceIdProvider>();
   params.enable_surface_synchronization =
       features::IsSurfaceSynchronizationEnabled();
+  params.enable_viz =
+      base::FeatureList::IsEnabled(features::kVizDisplayCompositor);
 
   scoped_refptr<viz::ContextProvider> compositor_context;
   scoped_refptr<viz::RasterContextProvider> worker_context;

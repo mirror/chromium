@@ -1994,6 +1994,8 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       features::IsSurfaceSynchronizationEnabled();
   params.local_surface_id_provider =
       std::make_unique<RendererLocalSurfaceIdProvider>();
+  // TODO(gklassen): here.
+  params.enable_viz = true;
 
   // The renderer runs animations and layout for animate_only BeginFrames.
   params.wants_animate_only_begin_frames = true;

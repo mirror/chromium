@@ -122,6 +122,8 @@ WindowPortMus::RequestLayerTreeFrameSink(
   params.local_surface_id_provider =
       std::make_unique<viz::DefaultLocalSurfaceIdProvider>();
   params.enable_surface_synchronization = true;
+  // TODO(gklassen): here.
+  params.enable_viz = true;
 
   auto layer_tree_frame_sink = std::make_unique<viz::ClientLayerTreeFrameSink>(
       std::move(context_provider), nullptr /* worker_context_provider */,
