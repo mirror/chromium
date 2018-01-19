@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "739fc021_fba23678",
+        "filename": "storage/browser/blob/blob_data_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-19T22:28:39Z",
+      "side": 1,
+      "message": "oh, and FWIW I think this was another bit of memory that was missing from the Blob.TotalSize histogram calculations...",
+      "range": {
+        "startLine": 301,
+        "startChar": 6,
+        "endLine": 305,
+        "endChar": 7
+      },
+      "revId": "d85b158e817f7c7935f8e14a2584ed9d6fed459f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
