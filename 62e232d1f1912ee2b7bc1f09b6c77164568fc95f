@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0af17ba_e35e447d",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 53
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-19T16:15:17Z",
+      "side": 1,
+      "message": "Done. And also moved the logic inside test(()\u003d\u003e {}) like it used to be before. Thanks.",
+      "parentUuid": "a88b2b66_305326cf",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 20
+      },
+      "revId": "62e232d1f1912ee2b7bc1f09b6c77164568fc95f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c675b27c_55879d2d",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollCustomization.h",
         "patchSetId": 53
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-18T20:31:19Z",
       "side": 1,
       "message": "If it works in the bots, I\u0027d actually use stdint.h. I suspect the extra defines in this header might be historical and we use stdint.h in other places. As is, it\u0027s not immediately clear why we\u0027d be including double conversion utils in this file. Sorry for the churn.",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 35
+      },
+      "revId": "62e232d1f1912ee2b7bc1f09b6c77164568fc95f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf2a7fc_19adabe5",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollCustomization.h",
+        "patchSetId": 53
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-19T16:15:17Z",
+      "side": 1,
+      "message": "Worked on Linux. Will see how other platforms fare against Linux.",
+      "parentUuid": "c675b27c_55879d2d",
       "range": {
         "startLine": 9,
         "startChar": 10,
