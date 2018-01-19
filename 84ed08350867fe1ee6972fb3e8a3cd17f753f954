@@ -1,0 +1,441 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "786321c0_b3f7875f",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "engercy -\u003e energy?",
+      "range": {
+        "startLine": 188,
+        "startChar": 23,
+        "endLine": 188,
+        "endChar": 30
+      },
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ebf8033_39b100bb",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "note `const` for ObjC types doesn\u0027t mean much -- there\u0027s no way for an objective C method to be marked `const`, and calling methods will always pass a non-const `self` pointer to the method implementation, so adding const can be misleading.",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "985cfa45_c483d2bf",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "perhaps\n\n  // If there\u0027s a pending powered request, run its error callback.\n\nthe current comment suggests a pending power request might not have an error callback (which would fail since that\u0027s not checked).",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fdc551a_4c8590b2",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "I feel like if this was a declared struct rather than a tuple, the code here would be much clearer, and you wouldn\u0027t need a comment, since it would say \"pending_powered_callback_-\u003eerror_callback.Run()\". See go/tott-494.",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3702018_d05da0f7",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "not scoped_nsobject\u0027s get() and operator T() are declared const, but always return non-const T, so it shouldn\u0027t matter that this call is happening in a const method.",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27bd3a5c_57bcc69b",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "the dereference on this line doesn\u0027t look right. The semantics of std::move should be to leave its argument in a reset state already. Dereferencing is giving you a std::tuple - without looking it up I don\u0027t know if that `auto` is resolving to a std::tuple\u0026 or a std::tuple -- either will work (that later will copy, not move: the tuple is copyable since its elements are). Bit if that auto is a reference, then that ref is being destroyed by the reset() and you have a UAF when you run it below.",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff713f22_4b549a1b",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "move this out of the anonymous namespace",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a991a196_347c4f45",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "remove stray \u0027;\u0027",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6357fb_7adc2e6e",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "callabe -\u003e callable.",
+      "range": {
+        "startLine": 151,
+        "startChar": 40,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ae596c_395dca42",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "true -\u003e 1?\n\nAlso how does this work if there are multiple controllers? Can the old state from before running the test be restored?",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f4de13_8134b3a1",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "Maybe !defined(OS_WIN) ? (and comment why it\u0027s not run on Win?)\n\nAlso if it _compiles_ but isn\u0027t expected to run on Windows, it\u0027s usually nicer to do\n\n// Useful comment.\n#if defined(OS_WIN)\n#define MAYBE_TogglePowerFakeAdapter DISABLED_TogglePowerFakeAdapter\n#else\n#define MAYBE_TogglePowerFakeAdapter TogglePowerFakeAdapter\n#endif\nTEST_F(BluetoothTest, MAYBE_TogglePowerFakeAdapter) {\n\n\nThis gives a nicer failure for compile regressions, rather than waiting for a failure on the trybots.",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c7fecc_62f92739",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "same deal - would it make sense to compile these on all platforms, but only run them on Mac? (Otherwise, they should be in bluetooth_adapter_mac_unittest.mm not bluetooth_adapter_unittest.mm right?)",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc64459_05468ed1",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "say why they are not relevant?",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9289dc_3ba0759f",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "This seems heavyweight.. are there more methods you need to add? (TODO?)\n\nE.g. you could declare a function pointer like\n\nclass BluetoothAdapterMac {\n public:\n  typedef void (*SetControllerPowerStateFunction)(int);\n  ..\n  \n  void SetPreferencesForTesting(SetControllerPowerStateFunction function);\n\n};\n\nBluetoothAdapterMac::BluetoothAdapterMac()\n  : ...\n    power_state_function_(\u0026IOBluetoothPreferenceSetControllerPowerState) {\n..\n}",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc95a49b_094a4a4d",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "needs a comment",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea25e77_36c543a2",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "is this needed?",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1666cbdc_b5364d1e",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "can you say more about this? What is |state|? what does the function do? Does it affect all bluetooth controllers? Can you link to a website/github repo that has any info about it?",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea207b7_4dd9063b",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "remove stray \u0027;\u0027",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ee9d14_a4a6a76b",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "since these are trivial implementations, I think they can go in the .h ?  That\u0027s a normal thing to do for these interfacey classes",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69036380_02a7f627",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "comment about the bool -\u003e int conversion?",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccb41ca_44119f7b",
+        "filename": "device/bluetooth/test/mock_bluetooth_preferences_mac.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "comment?",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3685f1a2_8cb9544a",
+        "filename": "device/bluetooth/test/mock_bluetooth_preferences_mac.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "do you need to declare this at all?",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a8200e_f292f6ff",
+        "filename": "device/bluetooth/test/mock_bluetooth_preferences_mac.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "comment like // Weak. Owns |this|. ?",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29bdc9b_9403ec92",
+        "filename": "device/bluetooth/test/mock_bluetooth_preferences_mac.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473f0977_255d228d",
+        "filename": "device/bluetooth/test/mock_bluetooth_preferences_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T00:55:19Z",
+      "side": 1,
+      "message": "style guide prohibits C-style casts - why the `(id)`? can you use base::mac::ObjCCastStrict? Same below (remove `(id)`)",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
