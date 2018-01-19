@@ -115,6 +115,7 @@ class CastContentBrowserClient : public content::ContentBrowserClient {
       const content::MainFunctionParams& parameters) override;
   void RenderProcessWillLaunch(content::RenderProcessHost* host) override;
   bool IsHandledURL(const GURL& url) override;
+  void SiteInstanceGotProcess(content::SiteInstance* site_instance) override;
   void AppendExtraCommandLineSwitches(base::CommandLine* command_line,
                                       int child_process_id) override;
   void OverrideWebkitPrefs(content::RenderViewHost* render_view_host,
