@@ -34,6 +34,24 @@
       "revId": "664c91138cd752b5ff12f85142a50669b254b517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b416f5_0543827f",
+        "filename": "ui/arc/notification/arc_notification_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-19T17:35:48Z",
+      "side": 1,
+      "message": "I just thought, if pinned can work only in nested notification,\nit seems like the nested needs to be set before pinned, conceptually, to me.",
+      "parentUuid": "0f82fa1c_6a63700e",
+      "revId": "664c91138cd752b5ff12f85142a50669b254b517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
