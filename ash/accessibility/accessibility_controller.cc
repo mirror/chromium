@@ -197,6 +197,13 @@ void AccessibilityController::SetDarkenScreen(bool darken) {
   }
 }
 
+void AccessibilityController::BrailleDisplayStateChanged(bool connected) {
+  braille_display_connected_ = connected;
+  if (braille_display_connected_)
+    SetSpokenFeedbackEnabled(true, ash::A11Y_NOTIFICATION_SHOW);
+  NotifyAccessibilityStatusChanged(ash::A11Y_NOTIFICATION_SHOW);
+}
+
 void AccessibilityController::OnSigninScreenPrefServiceInitialized(
     PrefService* prefs) {
   ObservePrefs(prefs);

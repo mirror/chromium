@@ -251,6 +251,8 @@ bool IsBrailleImeActive() {
   InputMethodManager* imm = InputMethodManager::Get();
   std::unique_ptr<InputMethodDescriptors> descriptors =
       imm->GetActiveIMEState()->GetActiveInputMethods();
+  // Spin the message loop to ensure input method sees the pref change.
+  base::RunLoop().RunUntilIdle();
   for (InputMethodDescriptors::const_iterator i = descriptors->begin();
        i != descriptors->end(); ++i) {
     if (i->id() == extension_ime_util::kBrailleImeEngineId)
@@ -299,6 +301,8 @@ class AccessibilityManagerTest : public InProcessBrowserTest {
     braille_controller_.SetAvailable(available);
     braille_controller_.GetObserver()->OnBrailleDisplayStateChanged(
         *braille_controller_.GetDisplayState());
+    // Spin the message loop to ensure ash sees the change.
+    base::RunLoop().RunUntilIdle();
   }
 
   int default_autoclick_delay() const { return default_autoclick_delay_; }
