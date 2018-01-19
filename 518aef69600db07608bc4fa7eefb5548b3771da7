@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2bc7343_5f9a00aa",
+        "filename": "ui/keyboard/container_floating_behavior.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-19T03:39:04Z",
+      "side": 1,
+      "message": "keyboard_bounds.right() ?",
+      "range": {
+        "startLine": 94,
+        "startChar": 30,
+        "endLine": 94,
+        "endChar": 72
+      },
+      "revId": "518aef69600db07608bc4fa7eefb5548b3771da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e2e70e_614b560e",
+        "filename": "ui/keyboard/container_floating_behavior.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-19T03:39:04Z",
+      "side": 1,
+      "message": "keyboard_bounds.bottom() ?",
+      "range": {
+        "startLine": 97,
+        "startChar": 30,
+        "endLine": 97,
+        "endChar": 76
+      },
+      "revId": "518aef69600db07608bc4fa7eefb5548b3771da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20bc020e_6712ef04",
+        "filename": "ui/keyboard/container_floating_behavior.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-19T03:39:04Z",
+      "side": 1,
+      "message": "Can you add a comment about this field? offset from where?",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 20
+      },
+      "revId": "518aef69600db07608bc4fa7eefb5548b3771da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4f0996_7d2b107d",
+        "filename": "ui/keyboard/container_floating_behavior.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-19T03:39:04Z",
+      "side": 1,
+      "message": "How about using std::unique_ptr\u003cKeyboardPosition\u003e and removing is_set field?",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 35
+      },
+      "revId": "518aef69600db07608bc4fa7eefb5548b3771da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
