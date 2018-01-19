@@ -22,6 +22,30 @@
       "revId": "7fae082b3854deca2f9f6b3ec7b03a52a6970325",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c488f59_7941ee3b",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-19T19:16:21Z",
+      "side": 1,
+      "message": "Thank you for figuring out the cause! I subtracted 1ms from the lower bound and would like to keep the upper bound tighter. Also added a note in the header about unfortunate non-monotonic effects. PTAL.",
+      "parentUuid": "593fabc7_2175d1a3",
+      "range": {
+        "startLine": 915,
+        "startChar": 0,
+        "endLine": 918,
+        "endChar": 55
+      },
+      "revId": "7fae082b3854deca2f9f6b3ec7b03a52a6970325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
