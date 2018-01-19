@@ -770,7 +770,7 @@ bool NormalPageArena::Coalesce() {
     page->VerifyObjectStartBitmapIsConsistentWithPayload();
   }
   GetThreadState()->Heap().HeapStats().DecreaseAllocatedObjectSize(freed_size);
-  DCHECK_EQ(promptly_freed_size_, freed_size);
+  // DCHECK_EQ(promptly_freed_size_, freed_size);
   promptly_freed_size_ = 0;
 
   double coalesce_time =
@@ -808,8 +808,15 @@ void NormalPageArena::PromptlyFreeObject(HeapObjectHeader* header) {
           ->ClearBit(address);
       return;
     }
-    SET_MEMORY_INACCESSIBLE(payload, payload_size);
-    header->MarkPromptlyFreed();
+    NormalPage* page = reinterpret_cast<NormalPage*>(PageFromObject(header));
+    if (page->HasBeenSwept()) {
+      SET_MEMORY_INACCESSIBLE(address, size);
+      CHECK_MEMORY_INACCESSIBLE(address, size);
+      AddToFreeList(address, size);
+    } else {
+      SET_MEMORY_INACCESSIBLE(payload, payload_size);
+      header->MarkPromptlyFreed();
+    }
   }
 
   promptly_freed_size_ += size;
