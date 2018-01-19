@@ -424,6 +424,30 @@
       "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb1ae72_e51ad94e",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-19T13:45:22Z",
+      "side": 1,
+      "message": "Thank you for the assert! I guess you are adding the size\u003d\u003d0 to be ignored as well, right? And sorry for causing unexpected investigative trouble here. I\u0027m actually a bit happier that we now know more cases of symbols sharing offset.\n\nIf we enable ICF on instrumented builds, I\u0027d prefer to fail early instead of producing an slightly less efficient orderfile. We chatted offline with lizeb@ where I also mentioned that thinking about ICF in instrumented builds is an extra mental load (at least for me). I don\u0027t mind the support for symbols sharing the address if it is not too much code, so when it rots it will be easy to remove :)\n\nAnyhow, the current state of the code is IMO good to go without the assert (I only suggested the assert under the assumption that you did not do end to end testing yet), let\u0027s land it?",
+      "parentUuid": "84ea1d34_9683c4c0",
+      "range": {
+        "startLine": 248,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 25
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
