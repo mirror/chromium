@@ -598,6 +598,7 @@ class SSLUITestBase : public InProcessBrowserTest {
   }
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitch(switches::kCommittedInterstitials);
     // Browser will both run and display insecure content.
     command_line->AppendSwitch(switches::kAllowRunningInsecureContent);
     // Use process-per-site so that navigating to a same-site page in a
