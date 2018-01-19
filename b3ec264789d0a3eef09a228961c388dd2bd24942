@@ -22,6 +22,30 @@
       "revId": "b3ec264789d0a3eef09a228961c388dd2bd24942",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee94628_8b763f85",
+        "filename": "remoting/protocol/mobile_network_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-19T18:27:46Z",
+      "side": 1,
+      "message": "BasicNetworkManager seems to implement this for iOS and Android, see https://codesearch.chromium.org/chromium/src/third_party/webrtc/rtc_base/network.cc?type\u003dcs\u0026l\u003d780 . If you see it not working correctly in some cases then I\u0027d suggest to fixing it there. There are many other WebRTC clients that need the same feature, so adapter type detection should be reliable.",
+      "parentUuid": "d5ea5d80_a179849f",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 62
+      },
+      "revId": "b3ec264789d0a3eef09a228961c388dd2bd24942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

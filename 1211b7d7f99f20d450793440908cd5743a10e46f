@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c99ed69_1270e15f",
+        "filename": "remoting/client/chromoting_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-19T18:27:46Z",
+      "side": 1,
+      "message": "Do we want to use this feature only on the client side? I makes sense on the host side as well when it runs on a machine with a cellular connection. Maybe implement it feature in ChromiumPortAllocatorFactory, so it\u0027s used everywhere?",
+      "range": {
+        "startLine": 445,
+        "startChar": 37,
+        "endLine": 445,
+        "endChar": 63
+      },
+      "revId": "1211b7d7f99f20d450793440908cd5743a10e46f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e12dd0_236caa8d",
+        "filename": "remoting/protocol/mobile_port_allocator_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-19T18:27:46Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 25,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "1211b7d7f99f20d450793440908cd5743a10e46f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbdea65_68209f26",
+        "filename": "remoting/protocol/mobile_port_allocator_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-19T18:27:46Z",
+      "side": 1,
+      "message": "use std::make_unique please",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 27
+      },
+      "revId": "1211b7d7f99f20d450793440908cd5743a10e46f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
