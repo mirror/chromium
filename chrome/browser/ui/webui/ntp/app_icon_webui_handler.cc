@@ -11,7 +11,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "extensions/browser/extension_registry.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/gfx/codec/png_codec.h"

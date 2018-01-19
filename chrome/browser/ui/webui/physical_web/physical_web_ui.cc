@@ -9,7 +9,7 @@
 #include "base/metrics/user_metrics.h"
 #include "chrome/browser/browser_process_impl.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "components/grit/components_resources.h"
 #include "components/physical_web/data_source/physical_web_data_source.h"
 #include "components/physical_web/webui/physical_web_base_message_handler.h"

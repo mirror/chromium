@@ -20,7 +20,7 @@
 #include "chrome/browser/ui/webui/constrained_web_dialog_ui.h"
 #include "chrome/browser/ui/webui/media_router/media_router_ui.h"
 #include "chrome/browser/ui/webui/media_router/media_router_ui_service.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "components/guest_view/browser/guest_view_base.h"
 #include "components/web_modal/web_contents_modal_dialog_host.h"
 #include "content/public/browser/host_zoom_map.h"

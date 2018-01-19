@@ -15,7 +15,7 @@
 #include "chrome/browser/chromeos/options/network_config_view.h"
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/ui/webui/chromeos/network_element_localized_strings_provider.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/grit/browser_resources.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/network/device_state.h"

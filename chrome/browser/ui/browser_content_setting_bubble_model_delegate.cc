@@ -9,7 +9,7 @@
 #include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/tab_dialogs.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/subresource_filter/core/browser/subresource_filter_constants.h"
 

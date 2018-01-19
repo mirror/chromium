@@ -19,7 +19,7 @@
 #include "base/threading/thread_restrictions.h"
 #include "base/win/scoped_handle.h"
 #include "base/win/windows_version.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"

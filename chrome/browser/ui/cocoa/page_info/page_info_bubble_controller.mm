@@ -31,7 +31,7 @@
 #include "chrome/browser/ui/page_info/page_info_dialog.h"
 #include "chrome/browser/ui/page_info/permission_menu_model.h"
 #import "chrome/browser/ui/tab_dialogs.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/content_settings/core/browser/content_settings_registry.h"
 #include "components/strings/grit/components_chromium_strings.h"

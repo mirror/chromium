@@ -5,7 +5,7 @@
 #include "chrome/browser/obsolete_system/obsolete_system.h"
 
 #include "base/win/windows_version.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 

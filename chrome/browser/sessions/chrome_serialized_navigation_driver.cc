@@ -6,7 +6,7 @@
 
 #include "base/memory/singleton.h"
 #include "build/build_config.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "components/sessions/core/serialized_navigation_entry.h"
 #include "content/public/common/referrer.h"
 

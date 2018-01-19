@@ -18,7 +18,7 @@
 #include "chrome/browser/search/instant_io_context.h"
 #include "chrome/browser/thumbnails/thumbnail_service.h"
 #include "chrome/browser/thumbnails/thumbnail_service_factory.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "components/history/core/browser/top_sites.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/base/escape.h"

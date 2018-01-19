@@ -9,7 +9,7 @@
 
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/suggestions/suggestions_service_factory.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "components/suggestions/webui/suggestions_source.h"
 #include "content/public/browser/url_data_source.h"
 

@@ -7,7 +7,7 @@
 #include <utility>
 
 #include "base/logging.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_entry.h"
 

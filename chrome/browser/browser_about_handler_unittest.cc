@@ -12,7 +12,7 @@
 
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"

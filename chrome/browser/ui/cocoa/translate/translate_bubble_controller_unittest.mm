@@ -14,7 +14,7 @@
 #import "chrome/browser/ui/cocoa/test/cocoa_profile_test.h"
 #include "chrome/browser/ui/cocoa/test/run_loop_testing.h"
 #include "chrome/browser/ui/translate/translate_bubble_model.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "content/public/browser/site_instance.h"
 #include "ui/base/ui_base_features.h"
 

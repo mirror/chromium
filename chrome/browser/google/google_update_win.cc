@@ -34,7 +34,7 @@
 #include "base/time/time.h"
 #include "base/version.h"
 #include "base/win/scoped_bstr.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/install_static/install_util.h"
 #include "chrome/installer/util/google_update_settings.h"

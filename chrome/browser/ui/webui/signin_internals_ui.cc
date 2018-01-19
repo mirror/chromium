@@ -13,7 +13,7 @@
 #include "chrome/browser/signin/about_signin_internals_factory.h"
 #include "chrome/browser/signin/gaia_cookie_manager_service_factory.h"
 #include "chrome/browser/ui/webui/signin/signin_dice_internals_handler.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "components/grit/components_resources.h"
 #include "components/signin/core/browser/about_signin_internals.h"
 #include "components/signin/core/browser/gaia_cookie_manager_service.h"

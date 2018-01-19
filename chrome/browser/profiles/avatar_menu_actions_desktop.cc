@@ -8,7 +8,7 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/chrome_pages.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 
 AvatarMenuActionsDesktop::AvatarMenuActionsDesktop() {
 }
