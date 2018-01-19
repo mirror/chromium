@@ -4,8 +4,8 @@
 
 #include "chrome/browser/notifications/notification_platform_bridge_win.h"
 
-#include <NotificationActivationCallback.h>
 #include <activation.h>
+#include <NotificationActivationCallback.h>
 #include <wrl.h>
 #include <wrl/client.h>
 #include <wrl/event.h>
