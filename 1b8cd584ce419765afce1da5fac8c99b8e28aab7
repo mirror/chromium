@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2de00e76_0ae02abb",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-19T22:46:15Z",
+      "side": 1,
+      "message": "This basic pattern is used for the three test helpers that have static state: they\u0027ve all been updated to hold a pointer, and then tests that use these objects need to instantiate a scoper.\n\nI\u0027m skeptical of the value of keeping destructed_seq_ around (it seems misleading at best, since it will never run) so I\u0027ll probably just remove it in the next patchset.",
+      "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
