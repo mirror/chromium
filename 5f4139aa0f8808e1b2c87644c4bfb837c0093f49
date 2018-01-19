@@ -22,6 +22,30 @@
       "revId": "5f4139aa0f8808e1b2c87644c4bfb837c0093f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec79e88_816ace39",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 5053,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-19T21:46:48Z",
+      "side": 0,
+      "message": "Re-added and marked as obsolete. Yes, the newly added metric is a generalization of this one.",
+      "parentUuid": "542265c6_cfcf1ba0",
+      "range": {
+        "startLine": 5050,
+        "startChar": 0,
+        "endLine": 5053,
+        "endChar": 9
+      },
+      "revId": "5f4139aa0f8808e1b2c87644c4bfb837c0093f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
