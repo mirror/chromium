@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7450e460_5189cf93",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 9
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2018-01-19T22:55:14Z",
+      "side": 1,
+      "message": "How about something like ForceLegacyLayoutForFormControls?",
+      "revId": "6f274efc13dea9333b1fe50ca721d907c7829a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
