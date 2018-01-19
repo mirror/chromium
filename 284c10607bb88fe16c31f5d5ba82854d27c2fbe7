@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4c3a077_beba5460",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-19T01:10:09Z",
+      "side": 1,
+      "message": "nit: could you please add a comment saying what the offset means?",
+      "revId": "284c10607bb88fe16c31f5d5ba82854d27c2fbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86457c4e_b8cd4951",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-19T01:10:09Z",
+      "side": 1,
+      "message": "super nit: add a newline.",
+      "revId": "284c10607bb88fe16c31f5d5ba82854d27c2fbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
