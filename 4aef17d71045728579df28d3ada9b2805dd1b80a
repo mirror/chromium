@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9a85b61_383f1f34",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-19T19:14:46Z",
+      "side": 1,
+      "message": "Remove these usings, type it explicitly",
+      "revId": "4aef17d71045728579df28d3ada9b2805dd1b80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "115a1a6d_2e9cb0bd",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-19T19:14:46Z",
+      "side": 1,
+      "message": "I think these two methods (GetLayoutParams() and GetGradientParams()) can live inside of ScrollableUserListView, ie, just pass LoginDisplayStyle to the ScrollableUserListView constructor.\n\nOther child views contain layout/size logic, so I think it is reasonable for ScrollableUserListView to as well instead of keeping the constants in this file.",
+      "revId": "4aef17d71045728579df28d3ada9b2805dd1b80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89cccbea_2b11d6ff",
+        "filename": "ash/login/ui/scrollable_users_list_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-19T19:14:46Z",
+      "side": 1,
+      "message": "Document each of these values",
+      "revId": "4aef17d71045728579df28d3ada9b2805dd1b80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02895ee_4b6b6446",
+        "filename": "ash/login/ui/scrollable_users_list_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-19T19:14:46Z",
+      "side": 1,
+      "message": "Document each of these values",
+      "revId": "4aef17d71045728579df28d3ada9b2805dd1b80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a42696_d055b65e",
+        "filename": "ash/login/ui/scrollable_users_list_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-19T19:14:46Z",
+      "side": 1,
+      "message": "nit: on_user_view_tap",
+      "revId": "4aef17d71045728579df28d3ada9b2805dd1b80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b56690_7e2b9e09",
+        "filename": "ash/login/ui/scrollable_users_list_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-19T19:14:46Z",
+      "side": 1,
+      "message": "I don\u0027t think these need to be unique_ptr\u003c\u003e",
+      "revId": "4aef17d71045728579df28d3ada9b2805dd1b80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
