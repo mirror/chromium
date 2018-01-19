@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "14a3254a_58cce190",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-19T20:31:58Z",
+      "side": 1,
+      "message": "Normally I thought the container would be expanded/collapsed,\nand its child would be visible/invisible. I don\u0027t normally see\ncollapsed paired with invisible. Does this match another browser?",
+      "revId": "1075bd51b2471fe78c3f0ad112025227e226fdbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57618598_671a4817",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views_browsertest.cc",
         "patchSetId": 3
