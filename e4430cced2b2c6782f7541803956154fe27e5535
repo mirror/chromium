@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "307f05d9_2e034f28",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T18:01:41Z",
+      "side": 1,
+      "message": "How come you are having to add includes to files that previously weren\u0027t including anything from network? AFAICT you aren\u0027t moving the feature, so I wouldn\u0027t expect new includes.",
+      "range": {
+        "startLine": 100,
+        "startChar": 38,
+        "endLine": 100,
+        "endChar": 54
+      },
+      "revId": "e4430cced2b2c6782f7541803956154fe27e5535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ca37d3_bcbb003e",
+        "filename": "services/network/public/cpp/network_features.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T18:01:41Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be in the network namespace like the rest of the code in this directory? Maybe both, network::features::?",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "e4430cced2b2c6782f7541803956154fe27e5535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
