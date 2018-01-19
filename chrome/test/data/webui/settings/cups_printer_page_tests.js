@@ -68,19 +68,23 @@ class TestCupsPrintersBrowserProxy extends TestBrowserProxy {
 }
 
 suite('CupsAddPrinterDialogTests', function() {
-  function fillAddManuallyDialog(addDialog) {
-    const name = addDialog.$$('#printerNameInput');
-    const address = addDialog.$$('#printerAddressInput');
-
+  function getNameInput(addDialog) {
+    let name = addDialog.$$('#printerNameInput');
     assertTrue(!!name);
-    name.value = 'Test printer';
+    return name;
+  }
 
+  function getAddressInput(addDialog) {
+    let address = addDialog.$$('#printerAddressInput');
     assertTrue(!!address);
-    address.value = '127.0.0.1';
+    return address;
+  }
 
-    const addButton = addDialog.$$('#addPrinterButton');
-    assertTrue(!!addButton);
+  function fillAddManuallyDialog(addDialog) {
+    getNameInput(addDialog).value = 'Test Printer';
+    getAddressInput(addDialog).value = '127.0.0.1';
     assertFalse(addButton.disabled);
+    console.log("Fill Add Manually");
   }
 
   function clickAddButton(dialog) {
@@ -95,6 +99,15 @@ suite('CupsAddPrinterDialogTests', function() {
     const cancelButton = dialog.$$('.cancel-button');
     assertTrue(!!cancelButton, 'Button is null');
     MockInteractions.tap(cancelButton);
+  }
+
+  function startAddManually(dialog) {
+    // Start on add manually.
+    dialog.fire('open-manually-add-printer-dialog');
+    Polymer.dom.flush();
+    let manuallyDialog = dialog.$$('add-printer-manually-dialog');
+    assertTrue(!!manuallyDialog);
+    return manuallyDialog;
   }
 
   let page = null;
@@ -399,5 +412,83 @@ suite('CupsAddPrinterDialogTests', function() {
           assertEquals(expectedPrinter, printer.printerId);
           assertDeepEquals(usbInfo, printer.printerUsbInfo);
         });
+  });
+
+  /**
+   * Verify that open-manually-add-printer-dialog only opens the manual dialog.
+   */
+  test('ManuallyOnly', function() {
+    let addDialog = startAddManually(dialog);
+
+    return PolymerTest.flushTasks().then(function() {
+      assertTrue(!!addDialog);
+      assertFalse(!!dialog.$$('add-printer-discovery-dialog'));
+
+      assertTrue(dialog.showManuallyAddDialog_);
+      assertTrue(!!dialog.$$('add-printer-manually-dialog'));
+
+      assertFalse(dialog.showDiscoveryDialog_);
+      assertFalse(!!dialog.$$('add-printer-discovery-dialog'));
+    });
+  });
+
+  /**
+   * Test that the ADD button is disabled initially.
+   */
+  test('AddButtonDisabled', function() {
+    let addButton = startAddManually(dialog).$$('.action-button');
+    assertTrue(!!addButton);
+    assertTrue(addButton.disabled);
+  });
+
+  /**
+   * Test that the Add button is disabled for invalid addresses.
+   */
+  test('InvalidAddress', function() {
+    // Start on add manually.
+    let addDialog = startAddManually(dialog);
+    let addButton = addDialog.$$('.action-button');
+    assertTrue(!!addButton);
+    assertTrue(addButton.disabled);
+
+    getNameInput(addDialog).value = 'Invalid Address';
+    getAddressInput(addDialog).value = '$ $ $ $ $';
+
+    return PolymerTest.flushTasks().then(function() {
+      assertTrue(addButton.disabled);
+    });
+  });
+
+  /**
+   * Test that the Add button is enabled for a valid address.
+   */
+  test('ValidIpAddress', function() {
+    // Start on add manually.
+    let addDialog = startAddManually(dialog);
+    let addButton = addDialog.$$('.action-button');
+    assertTrue(!!addButton);
+    assertTrue(addButton.disabled);
+
+    getNameInput(addDialog).value = 'Valid Ip Address';
+    getAddressInput(addDialog).value = '10.4.2.3';
+
+    return PolymerTest.flushTasks().then(function() {
+      assertFalse(addButton.disabled);
+    });
+  });
+
+  /**
+   * Test that the Add button is enabled for a valid address and port.
+   */
+  test('ValidAddressAndPort', function() {
+    // Start on add manually.
+    let addDialog = startAddManually(dialog);
+
+    getNameInput(addDialog).value = 'Address and Port';
+    getAddressInput(addDialog).value = 'printer.chromium.org:42';
+
+    return PolymerTest.flushTasks().then(function() {
+      assertFalse(addDialog.$$('.action-button').disabled);
+    });
   });
 });
