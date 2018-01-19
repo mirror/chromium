@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "dc26f9de_1d660f6b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T01:29:34Z",
+      "side": 1,
+      "message": "main thread \u003d\u003e main world",
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98cd9022_d47f6cce",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMDataStore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T01:29:34Z",
+      "side": 1,
+      "message": "Can we make DOMDataStore inherit from TraceWrapperBase (instead of creating manually dispatched TraceWrappers)?",
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9053c3e_8d2e9cf7",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T01:29:34Z",
+      "side": 1,
+      "message": "Instead of making this a static method, can we make DOMWrapperMap inherit from TraceWrapperBase and use TraceWrapperBase::TraceWrappers?\n\nScriptWrappable::TraceWrappers can iterate all wrapper maps and call visitor-\u003eTraceWrappers(wrapper_map).\n\nIf we do this, can we probably remove Visit(DOMWrapperMap\u003cScriptWrappable\u003e*, ScriptWrappable*)? (I\u0027m not fully convinced why we need a special Visit method for DOMWrapperMap.)",
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7e07b95_e7d28316",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.cpp",
         "patchSetId": 3
@@ -13,6 +64,30 @@
       "writtenOn": "2018-01-18T17:40:53Z",
       "side": 1,
       "message": "I would be fine with landing this one already. The GC plugin is on the way (needs clang roll) and I already fixed all the issues it found.\n\nKentaro, wdyt?",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00880af5_2d55a96d",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T01:29:34Z",
+      "side": 1,
+      "message": "Sounds reasonable since it will take a few weeks to roll the clang plugin.\n\nJust help me understand: Before Ulan started this refactoring and Michael fixed the parent class tracing, how was main_world_wrapper_ traced?",
+      "parentUuid": "e7e07b95_e7d28316",
       "range": {
         "startLine": 44,
         "startChar": 11,
