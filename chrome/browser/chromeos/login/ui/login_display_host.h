@@ -14,9 +14,15 @@
 #include "chrome/browser/chromeos/login/auth/auth_prewarmer.h"
 #include "chrome/browser/chromeos/login/oobe_screen.h"
 #include "chrome/browser/chromeos/login/ui/login_display.h"
+#include "content/public/browser/notification_observer.h"
 #include "ui/gfx/native_widget_types.h"
 
 class AccountId;
+class ScopedKeepAlive;
+
+namespace wm {
+class ScopedDragDropDisabler;
+}
 
 namespace chromeos {
 
@@ -31,13 +37,13 @@ class WizardController;
 // An interface that defines OOBE/login screen host.
 // Host encapsulates WebUI window OOBE/login controllers,
 // UI implementation (such as LoginDisplay).
-class LoginDisplayHost {
+class LoginDisplayHost : public content::NotificationObserver {
  public:
   // Returns the default LoginDisplayHost instance if it has been created.
   static LoginDisplayHost* default_host() { return default_host_; }
 
   LoginDisplayHost();
-  virtual ~LoginDisplayHost();
+  ~LoginDisplayHost() override;
 
   // Creates UI implementation specific login display instance (views/WebUI).
   // The caller takes ownership of the returned value.
@@ -54,7 +60,7 @@ class LoginDisplayHost {
   virtual WebUILoginView* GetWebUILoginView() const = 0;
 
   // Called when browsing session starts before creating initial browser.
-  virtual void BeforeSessionStart() = 0;
+  void BeforeSessionStart();
 
   // Called when user enters or returns to browsing session so LoginDisplayHost
   // instance may delete itself. |completion_callback| will be invoked when the
@@ -138,13 +144,23 @@ class LoginDisplayHost {
   // Returns true if user is allowed to log in by domain policy.
   bool IsUserWhitelisted(const AccountId& account_id);
 
+  // content::NotificationObserver:
+  void Observe(int type,
+               const content::NotificationSource& source,
+               const content::NotificationDetails& details) override;
+
  protected:
   virtual void OnStartSignInScreen(const LoginScreenContext& context) = 0;
   virtual void OnStartAppLaunch() = 0;
   virtual void OnStartArcKiosk() = 0;
+  // Called when the first browser window is created, but before it's shown.
+  virtual void OnBrowserCreated() = 0;
 
   // Deletes |auth_prewarmer_|.
   void OnAuthPrewarmDone();
+
+  // Marks display host for deletion.
+  void ShutdownDisplayHost();
 
   // Active instance of authentication prewarmer.
   std::unique_ptr<AuthPrewarmer> auth_prewarmer_;
@@ -158,9 +174,26 @@ class LoginDisplayHost {
   // ARC kiosk controller.
   std::unique_ptr<ArcKioskController> arc_kiosk_controller_;
 
+  content::NotificationRegistrar registrar_;
+
  private:
   // Global LoginDisplayHost instance.
   static LoginDisplayHost* default_host_;
+
+  // Has ShutdownDisplayHost() already been called?  Used to avoid posting our
+  // own deletion to the message loop twice if the user logs out while we're
+  // still in the process of cleaning up after login (http://crbug.com/134463).
+  bool shutting_down_ = false;
+
+  // Make sure chrome won't exit while we are at login/oobe screen.
+  std::unique_ptr<ScopedKeepAlive> keep_alive_;
+
+  // Keeps a copy of the old Drag'n'Drop client, so that it would be disabled
+  // during a login session and restored afterwards.
+  std::unique_ptr<wm::ScopedDragDropDisabler> scoped_drag_drop_disabler_;
+
+  // True if session start is in progress.
+  bool session_starting_ = false;
 
   base::WeakPtrFactory<LoginDisplayHost> weak_factory_;
 
