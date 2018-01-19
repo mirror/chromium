@@ -46,6 +46,7 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "ppapi/features/features.h"
+#include "services/network/public/cpp/network_features.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "storage/browser/blob/blob_registry_impl.h"
 #include "storage/browser/blob/blob_storage_context.h"
