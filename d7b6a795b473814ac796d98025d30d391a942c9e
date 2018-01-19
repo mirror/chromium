@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d65c4a08_a5aea63e",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-19T18:47:11Z",
+      "side": 0,
+      "message": "Why is this removed?",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 70
+      },
+      "revId": "d7b6a795b473814ac796d98025d30d391a942c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda6af27_d9e5ca04",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-19T18:47:11Z",
+      "side": 0,
+      "message": "We can still have a similar DCHECK. Do you think it\u0027s not worthwhile?",
+      "range": {
+        "startLine": 153,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 24
+      },
+      "revId": "d7b6a795b473814ac796d98025d30d391a942c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55cd479_830cf605",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-19T18:47:11Z",
+      "side": 0,
+      "message": "Similar to above.",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 62
+      },
+      "revId": "d7b6a795b473814ac796d98025d30d391a942c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617a0927_86cde30a",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-19T18:47:11Z",
+      "side": 0,
+      "message": "Similar to above.",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 25
+      },
+      "revId": "d7b6a795b473814ac796d98025d30d391a942c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
