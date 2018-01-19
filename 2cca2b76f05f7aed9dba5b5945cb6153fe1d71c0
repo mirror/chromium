@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c313c966_0e0756d5",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-19T00:21:07Z",
+      "side": 1,
+      "message": "There is no operator\u003c\u003c implemented for net::ProxyServer so DCHECK_EQ cannot be used.",
+      "parentUuid": "29f12d50_a8b4fc70",
+      "range": {
+        "startLine": 976,
+        "startChar": 2,
+        "endLine": 976,
+        "endChar": 8
+      },
+      "revId": "2cca2b76f05f7aed9dba5b5945cb6153fe1d71c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dc0c3c7_aaa1ac9b",
         "filename": "net/http/http_stream_factory_impl_job_controller.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "2cca2b76f05f7aed9dba5b5945cb6153fe1d71c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b2d7ac_8be2395e",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-19T00:21:07Z",
+      "side": 1,
+      "message": "Given we log the net error it seems like we can collect all the data and filter out the ERR_NETWORK_CHANGED and ERR_INTERNET_DISCONNECTED buckets if necessary?",
+      "parentUuid": "4dc0c3c7_aaa1ac9b",
+      "range": {
+        "startLine": 986,
+        "startChar": 4,
+        "endLine": 987,
+        "endChar": 78
+      },
+      "revId": "2cca2b76f05f7aed9dba5b5945cb6153fe1d71c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
