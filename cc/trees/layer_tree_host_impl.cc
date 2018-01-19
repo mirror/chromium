@@ -2591,6 +2591,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
           worker_context_provider->ContextCapabilities().supports_oop_raster;
     }
 
+    CHECK(oop_raster_enabled);
     *raster_buffer_provider = std::make_unique<GpuRasterBufferProvider>(
         compositor_context_provider, worker_context_provider,
         resource_provider_.get(), settings_.use_distance_field_text,
