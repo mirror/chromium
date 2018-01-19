@@ -16,6 +16,24 @@
       "revId": "064b568ba801bd4cd9b36dd260ab0e4b0808bb8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179d9852_a2af5f45",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 2078,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-19T22:53:22Z",
+      "side": 1,
+      "message": "Interesting, I thought it would be useful to let bots measure stability/performance data as we rampup on canary/dev, and also turn on the feature by default on all developer Chromium builds. The sooner the better?\n\nAnyways, I will remove the config changes for now, and put them in a separate CL for later.",
+      "parentUuid": "fe2cc6e0_82e24ff0",
+      "revId": "064b568ba801bd4cd9b36dd260ab0e4b0808bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
