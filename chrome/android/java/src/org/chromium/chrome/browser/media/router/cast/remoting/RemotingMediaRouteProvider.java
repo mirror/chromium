@@ -14,7 +14,7 @@ import org.chromium.chrome.browser.media.router.MediaRouteProvider;
 import org.chromium.chrome.browser.media.router.cast.BaseMediaRouteProvider;
 import org.chromium.chrome.browser.media.router.cast.ChromeCastSessionManager;
 import org.chromium.chrome.browser.media.router.cast.CreateRouteRequest;
-import org.chromium.chrome.browser.media.router.cast.MediaSink;
+import org.chromium.chrome.browser.media.router.MediaSink;
 import org.chromium.chrome.browser.media.router.cast.MediaSource;
 
 /**

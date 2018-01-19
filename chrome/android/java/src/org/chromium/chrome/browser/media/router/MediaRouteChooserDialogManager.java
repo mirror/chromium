@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.MediaRouteChooserDialogFragment;
 import android.support.v7.media.MediaRouteSelector;
 
-import org.chromium.chrome.browser.media.router.cast.MediaSink;
+import org.chromium.chrome.browser.media.router.MediaSink;
 
 /**
  * Manages the dialog responsible for selecting a {@link MediaSink}.

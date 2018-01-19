@@ -12,8 +12,7 @@ import org.chromium.base.SysUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.chrome.browser.media.router.cast.CastMediaRouteProvider;
-import org.chromium.chrome.browser.media.router.cast.MediaSink;
+import org.chromium.chrome.browser.media.router.caf.CafMediaRouteProvider;
 import org.chromium.chrome.browser.media.router.cast.MediaSource;
 import org.chromium.chrome.browser.media.router.cast.remoting.RemotingMediaRouteProvider;
 
@@ -37,7 +36,7 @@ public class ChromeMediaRouter implements MediaRouteManager {
             new MediaRouteProvider.Factory() {
                 @Override
                 public void addProviders(MediaRouteManager manager) {
-                    MediaRouteProvider castProvider = CastMediaRouteProvider.create(manager);
+                    MediaRouteProvider castProvider = CafMediaRouteProvider.create(manager);
                     manager.addMediaRouteProvider(castProvider);
 
                     MediaRouteProvider remotingProvider =
