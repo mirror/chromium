@@ -22,6 +22,30 @@
       "revId": "b0c10b3d976af77153ad0f47b5085b6a31a01f80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c91a50_91e737b6",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1803,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-19T11:45:56Z",
+      "side": 1,
+      "message": "Hm, yes with the mocked store, the test is not meaningful anyway :( I also didn\u0027t find any better browsingdataremover test so you can just remove it. \nI looked through the password_store code and it looks like the end time is always passed and checked correctly.",
+      "parentUuid": "96820fc4_09cc5250",
+      "range": {
+        "startLine": 1802,
+        "startChar": 0,
+        "endLine": 1803,
+        "endChar": 44
+      },
+      "revId": "b0c10b3d976af77153ad0f47b5085b6a31a01f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
