@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/command_line.h"
+#include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/extensions/blacklist.h"
 #include "chrome/browser/extensions/chrome_app_sorting.h"
@@ -72,6 +73,8 @@ ExtensionService* TestExtensionSystem::CreateExtensionService(
       profile_, command_line, install_directory, ExtensionPrefs::Get(profile_),
       Blacklist::Get(profile_), autoupdate_enabled, extensions_enabled,
       &ready_));
+  extension_service_->set_connector_for_test(
+      test_data_decoder_service_.connector());
   extension_service_->ClearProvidersForTesting();
   return extension_service_.get();
 }
