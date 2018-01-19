@@ -152,6 +152,8 @@ void CacheStorageDispatcherHost::OnCacheStorageKeys(int thread_id,
                                                     const url::Origin& origin) {
   TRACE_EVENT0("CacheStorage",
                "CacheStorageDispatcherHost::OnCacheStorageKeys");
+  DCHECK(false) << "make it fail on purpose.";
+
   if (!OriginCanAccessCacheStorage(origin)) {
     bad_message::ReceivedBadMessage(this, bad_message::CSDH_INVALID_ORIGIN);
     return;
