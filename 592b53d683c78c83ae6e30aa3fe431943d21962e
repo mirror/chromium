@@ -34,6 +34,24 @@
       "revId": "592b53d683c78c83ae6e30aa3fe431943d21962e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ec1a4b_369973be",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-19T01:38:36Z",
+      "side": 1,
+      "message": "I thought through that too, but these are all on temporary flags that don\u0027t stick around.  I don\u0027t think the bool vs lazy intialization of shaders on these temporary flags makes a difference wrt race conditions.  Am I missing something?",
+      "parentUuid": "06159779_b72fc8ce",
+      "revId": "592b53d683c78c83ae6e30aa3fe431943d21962e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
