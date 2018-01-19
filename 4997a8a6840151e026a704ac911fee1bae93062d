@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17f2cb7f_7106b6d7",
+        "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_init_impl_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1134889
+      },
+      "writtenOn": "2018-01-19T06:57:53Z",
+      "side": 1,
+      "message": "It would be nice to keep the logic for creating the mojo channel in one place, if possible. Is there a way that we could move the new logic from inside the FontProxy to here? If not, or if that becomes too complicated, add a comment here that the font proxy will create its own channel if one is not provided (otherwise, it looks like there\u0027s a missing else-block).",
+      "revId": "4997a8a6840151e026a704ac911fee1bae93062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
