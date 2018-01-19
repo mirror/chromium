@@ -140,6 +140,22 @@ Bindings.NetworkProject = class {
   }
 
   /**
+   * @param {!Workspace.UISourceCode} fromUISourceCode
+   * @param {!Workspace.UISourceCode} toUISourceCode
+   */
+  static cloneInitialFrameAttribution(fromUISourceCode, toUISourceCode) {
+    var fromAttribution = fromUISourceCode[Bindings.NetworkProject._frameAttributionSymbol];
+    if (!fromAttribution)
+      return;
+    var toAttribution = new Map();
+    toUISourceCode[Bindings.NetworkProject._frameAttributionSymbol] = toAttribution;
+    for (var frameId of fromAttribution.keys()) {
+      var value = fromAttribution.get(frameId);
+      toAttribution.set(frameId, {frame: value.frame, count: value.count});
+    }
+  }
+
+  /**
    * @param {!Workspace.UISourceCode} uiSourceCode
    * @param {string} frameId
    */
