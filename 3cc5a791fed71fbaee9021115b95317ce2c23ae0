@@ -305,6 +305,30 @@
     },
     {
       "key": {
+        "uuid": "1171dbc5_a269b7e5",
+        "filename": "ios/chrome/browser/broadercaster.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-19T17:00:43Z",
+      "side": 1,
+      "message": "I don\u0027t want to sacrifice subclassability if possible.",
+      "parentUuid": "addb2edf_ef6546b0",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 19
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84108c6b_1e3b415e",
         "filename": "ios/chrome/browser/broadercaster.mm",
         "patchSetId": 6
