@@ -23,6 +23,10 @@ SDK.CSSStyleSheetHeader = class {
     this.startLine = payload.startLine;
     this.startColumn = payload.startColumn;
     this.contentLength = payload.length;
+
+    this.editedStartLine = this.startLine;
+    this.editiedStartColumn = this.startColumn;
+
     if (payload.ownerNode)
       this.ownerNode = new SDK.DeferredDOMNode(cssModel.target(), payload.ownerNode);
     this.setSourceMapURL(payload.sourceMapURL);

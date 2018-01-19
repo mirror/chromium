@@ -55,6 +55,9 @@ SDK.Script = class {
     this.endLine = endLine;
     this.endColumn = endColumn;
 
+    this.editedLineOffset = this.lineOffset;
+    this.editedColumnOffset = this.columnOffset;
+
     this.executionContextId = executionContextId;
     this.hash = hash;
     this._isContentScript = isContentScript;
