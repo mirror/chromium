@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7e3a50e_e2a22b3c",
+        "filename": "third_party/unrar/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-01-19T23:52:09Z",
+      "side": 1,
+      "message": "The only place where it is a dependency right now is already has (safe_browsing_mode \u003d\u003d 1) so it can be safely dropped from here.\nHowever, there\u0027s no plan to build this target when safe_browsing_mode !\u003d 1 so I added it here in order to rule out the possibility of any bot attempting to evaluate the target for Clank.\n\nIf something else needs to depend on it later, we can \"fix\" this then, IMHO.\n\nIf you feel strongly, I can remove the condition.",
+      "parentUuid": "636de961_070ba0f3",
+      "revId": "01d656cad1bbf3521759d1f38d0a675832f83491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fa38edf_31581799",
         "filename": "third_party/unrar/BUILD.gn",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "01d656cad1bbf3521759d1f38d0a675832f83491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de4f42c0_e534145f",
+        "filename": "third_party/unrar/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-01-19T23:52:09Z",
+      "side": 1,
+      "message": "It would always be defined this way in Chromium. Having a separate macro like this would make it easier to upstream changes, if the unrar author decides to do so.",
+      "parentUuid": "9fa38edf_31581799",
+      "revId": "01d656cad1bbf3521759d1f38d0a675832f83491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
