@@ -34,6 +34,24 @@
       "revId": "de0d1afc53492579e100807719df9e09191d84d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb63343_154d52d6",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T06:48:39Z",
+      "side": 1,
+      "message": "yeah - this looks good. (i\u0027m not totally surprised.. doing SizeToFit(kMaxSecondaryLabelWidth) after checking if it\u0027s exceeded might work instead, but what you have is fine).",
+      "parentUuid": "a9123ef7_46642e5e",
+      "revId": "de0d1afc53492579e100807719df9e09191d84d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
