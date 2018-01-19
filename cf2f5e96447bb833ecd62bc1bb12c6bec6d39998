@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "6badc8e8_e495f5c8",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-19T22:21:58Z",
+      "side": 1,
+      "message": "\"Committed\" is a good idea. Will change HAS_HISTORY_ENTRY to COMMITTED_TO_HISTORY.\n\nThe context for PREPARE_URL_FOR_RELOAD and READY_FOR_RELOAD is that when a user navigates back/forward to an entry that previously showed an error, the desired behavior is to try reload the original URL. After our last discussion, the only option I came up with to achieve this without destroying forward history is this (though it\u0027s not pretty):\n1. Allow WKWebView to finish its history navigation to the placeholder page\n2. Then call WKWebView\u0027s |loadHTMLString:baseURL| to change the URL of the current item to the original URL\n3. Call WKWebView\u0027s |reload| to reload the original URL\n\nEach of the three steps will trigger all WKNavigationDelegate callbacks so we need additional states to queue the next action. The state of the NavigationItem will be changed to PREPARE_URL_FOR_RELOAD at the end of step 1 and throughout step 2. Its state change to READY_FOR_RELOAD at the end of step 2 and throughout step 3.\n\nThis is leveraging the fact that |loadHTMLString:baseURL| and |reload| both updates the current WKBackForwardListItem without triggering a new navigation.",
+      "parentUuid": "ceca3f6e_aee1143b",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 17
+      },
+      "revId": "cf2f5e96447bb833ecd62bc1bb12c6bec6d39998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e3b2123_a6775d81",
         "filename": "ios/web/navigation/navigation_manager_impl.h",
         "patchSetId": 4
@@ -59,6 +83,30 @@
       "writtenOn": "2018-01-18T23:54:13Z",
       "side": 1,
       "message": "It looks like NavigationContext is present everywhere where SetErrorRetryState/GetErrorRetryState are called. Would it be better to add this API to NavigationContext instead? Or maybe NavigationItem should have this API?",
+      "range": {
+        "startLine": 178,
+        "startChar": 15,
+        "endLine": 178,
+        "endChar": 33
+      },
+      "revId": "cf2f5e96447bb833ecd62bc1bb12c6bec6d39998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e733ca_69ecb28d",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-19T22:21:58Z",
+      "side": 1,
+      "message": "The state is associated with a NavigationItem and can correspond to multiple NavigationContext\u0027s. Each of the three step above has its own NavigationContext, but they all share the same NavigationItem.\n\nI wouldn\u0027t mind moving the state to NavigationItem. The reason why I decided to leave it in NavigationManager is because I feel the state is not something we\u0027d want to expose to users of the public NavigationItem API. If I add it to NavigationItemImpl API, there are places in CRWWebController that I\u0027d need to use downcast. Since Chrome doesn\u0027t support dynamic_cast, this seems non-ideal.",
+      "parentUuid": "1e3b2123_a6775d81",
       "range": {
         "startLine": 178,
         "startChar": 15,
