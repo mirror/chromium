@@ -69,6 +69,24 @@
       "revId": "307602e796b65b81b74b5edd6b1eaf1acbe3425b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbfc368a_36bb9a40",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-19T20:48:13Z",
+      "side": 1,
+      "message": "No comments, I\u0027m good with any solution as long as the tests pass and it works in the release. :)",
+      "parentUuid": "762c2dc4_53037bd6",
+      "revId": "307602e796b65b81b74b5edd6b1eaf1acbe3425b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
