@@ -16,6 +16,24 @@
       "revId": "6ca3d28efc87ba16b97d152c9f986763edcf3960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8118b613_72fe5898",
+        "filename": "content/renderer/android/synchronous_compositor_filter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T21:29:14Z",
+      "side": 0,
+      "message": "It is replaced with the SinkDestroyed() call on the SynchronousLayerTreeFrameSinkClient which is what SynchronousCompositorProxy implements (which seems like a more direct callback) as opposed going through this lookup table.",
+      "parentUuid": "cfcc8f02_f1a5035f",
+      "revId": "6ca3d28efc87ba16b97d152c9f986763edcf3960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b1dccb4_4a21a491",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T21:29:14Z",
+      "side": 1,
+      "message": "Hmm; after moving the SynchronizeState call here. It kind of gets ugly with rolling the IsReady call into it because I need to lock the mutex and I don\u0027t really want to lock it during the mojo send call. Let me know if you want me to change the adjusted behavior.",
+      "parentUuid": "f8337ef0_f065f367",
+      "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bea6aa6_2d639ad1",
         "filename": "content/browser/android/synchronous_compositor_browser_filter.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-17T23:42:39Z",
       "side": 1,
       "message": "now this is used for actually security checking, make the \"signaled all futures on shutdown\" an explicit separate state",
+      "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576dc8d2_85dbde20",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T21:29:14Z",
+      "side": 1,
+      "message": "I renamed the variable. I use two bools that are locked by appropriate locks.",
+      "parentUuid": "3bea6aa6_2d639ad1",
       "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "15d4fe95_2cb33c92",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T21:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baef6721_24359297",
+      "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b21fd1c2_5f04a9b8",
         "filename": "content/browser/android/synchronous_compositor_browser_filter.cc",
         "patchSetId": 14
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "07e06599_573670e8",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T21:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b21fd1c2_5f04a9b8",
+      "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ee8ead2_960e49ee",
         "filename": "content/browser/android/synchronous_compositor_host.cc",
         "patchSetId": 14
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-17T23:42:39Z",
       "side": 1,
       "message": "why do we need this and all the null checks in ControlHost now?\n\nAlso SynchronousCompositorBrowserFilter is already RefCountedThreadSafe, so I\u0027m not sure what this class gives you exactly. And even then it\u0027s kind of hard to reason about thread safety things. Much easier to just post ControlHost::SetFilter instead?",
+      "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082da948_7f8b1170",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T21:29:14Z",
+      "side": 1,
+      "message": "The filter isn\u0027t created until the render process is actually created and initialized. (see https://cs.chromium.org/chromium/src/content/browser/renderer_host/render_process_host_impl.cc?type\u003dcs\u0026q\u003dSynchronousCompositorBrowserFilter\u0026sq\u003dpackage:chromium\u0026l\u003d1804) \n\nUnfortunately this class is created before the filter is created and ready sometimes. So we need some type of cross thread object between the IO thread and the main thread even when the filter isn\u0027t ready so that we can eventually get a handle to the browser filter. Ultimately this new Object will replace the browser filter once we remove the non-mojo path.",
+      "parentUuid": "0ee8ead2_960e49ee",
       "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "80627e79_8c994fd5",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T21:29:14Z",
+      "side": 1,
+      "message": "Yes it should be fine to simplify it. Technically not because attached_ is set to true always in the non-mojo case. But the IPC messsage filters (https://cs.chromium.org/chromium/src/content/browser/renderer_host/render_process_host_impl.cc?q\u003dRenderProcessHostImpl\u0026sq\u003dpackage:chromium\u0026l\u003d2858) already deal with sync messages being sent when the process isn\u0027t up yet so it shouldn\u0027t be an issue.",
+      "parentUuid": "ad749f7e_01a45173",
+      "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a648883_b683c2d9",
         "filename": "content/browser/android/synchronous_compositor_host.cc",
         "patchSetId": 14
@@ -118,6 +226,24 @@
       "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582fc750_15e10392",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T21:29:14Z",
+      "side": 1,
+      "message": "Ya we can probably do it in the layer tree frame sink. Chrome IPC doesn\u0027t allow sync messages until the channel is ready see: https://cs.chromium.org/chromium/src/content/browser/renderer_host/render_process_host_impl.cc?q\u003dRenderProcessHostImpl\u0026sq\u003dpackage:chromium\u0026l\u003d2858\n\nHowever this doesn\u0027t exist for mojo. So this is basically re-implementing that code in RenderProcessImpl at a higher layer so it is obvious.",
+      "parentUuid": "6a648883_b683c2d9",
+      "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +270,30 @@
     },
     {
       "key": {
+        "uuid": "88a33223_b9dfb801",
+        "filename": "content/browser/android/synchronous_compositor_host.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T21:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a65ff41d_5848ffc1",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 16
+      },
+      "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32b3fd92_0f4a9917",
         "filename": "content/renderer/input/widget_input_handler_manager.cc",
         "patchSetId": 14
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "ef7c4ae4_9fad1072",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T21:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32b3fd92_0f4a9917",
+      "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "972c2096_221825c1",
         "filename": "content/renderer/input/widget_input_handler_manager.cc",
         "patchSetId": 14
@@ -175,6 +343,24 @@
       "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5c2451_9fd50350",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T21:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "972c2096_221825c1",
+      "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +387,30 @@
     },
     {
       "key": {
+        "uuid": "bc67a775_5176742f",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T21:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3887e49_ba89bd00",
+      "range": {
+        "startLine": 135,
+        "startChar": 52,
+        "endLine": 135,
+        "endChar": 59
+      },
+      "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1740a67e_5eea1b53",
         "filename": "content/renderer/input/widget_input_handler_manager.h",
         "patchSetId": 14
@@ -224,6 +434,30 @@
     },
     {
       "key": {
+        "uuid": "3a88e769_73592de8",
+        "filename": "content/renderer/input/widget_input_handler_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T21:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1740a67e_5eea1b53",
+      "range": {
+        "startLine": 153,
+        "startChar": 18,
+        "endLine": 153,
+        "endChar": 27
+      },
+      "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c399c031_011e519b",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 14
@@ -238,6 +472,24 @@
       "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18617841_82b25a27",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T21:29:14Z",
+      "side": 1,
+      "message": "I can use the sync_message_filter() instead as the IPC::Sender...",
+      "parentUuid": "c399c031_011e519b",
+      "revId": "619f516c1b952021b91d57a5037b62091f9966b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
