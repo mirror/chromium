@@ -22,6 +22,30 @@
       "revId": "9a30664761f0ae93de3b7d057feafbe9334ba869",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b32222c2_05936ed5",
+        "filename": "cc/paint/skia_paint_canvas.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-19T19:41:24Z",
+      "side": 1,
+      "message": "Sounds good. Only the at-raster locking uses these APIs, which we plan on removing anyway.",
+      "parentUuid": "89680958_829bce8e",
+      "range": {
+        "startLine": 23,
+        "startChar": 21,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "9a30664761f0ae93de3b7d057feafbe9334ba869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
