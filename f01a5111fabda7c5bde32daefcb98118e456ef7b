@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "98c5736e_58a77b89",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-19T00:13:16Z",
+      "side": 1,
+      "message": "The first prototype added and removed the view as we entered/exited VR but it lead to crashes because various things would asymmetrically handle onDetachedFromWindow/onAttachedToWindow and be left in a bad state.\n\nWe could theoretically fix all of these cases, but I chose to do this instead because it means the rest of Chrome doesn\u0027t have to worry about their window getting detached/attached at arbitrary times.\n\nIf sticking the VR view in between the root view and the content view causes problems (I haven\u0027t encountered any yet), then I\u0027ll have to switch to that approach.",
+      "parentUuid": "d2ac9590_2001942a",
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "561c2d5b_a2138822",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
         "patchSetId": 32
@@ -39,6 +57,30 @@
       "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78fe11e0_34a739d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-19T00:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "561c2d5b_a2138822",
+      "range": {
+        "startLine": 332,
+        "startChar": 24,
+        "endLine": 332,
+        "endChar": 31
+      },
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "28983740_11e6cc22",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-19T00:13:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "da150760_b15e13ed",
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22577957_c8e955ce",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 32
@@ -91,6 +151,24 @@
       "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb749fb_c04a95f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-19T00:13:16Z",
+      "side": 1,
+      "message": "Done. Filed a bug to skip more work when VR browsing is disabled, but I think that\u0027s outside the scope of this CL.",
+      "parentUuid": "22577957_c8e955ce",
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "d1b24442_5568c299",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-19T00:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "421dd04d_d1482c11",
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b6d62bf_82b856c3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 32
@@ -125,6 +221,24 @@
       "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15bae3a_0ad62819",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-19T00:13:16Z",
+      "side": 1,
+      "message": "Done.\n\nI could also just pull the mNativeVrShell !\u003d 0 checks out of this CL. They\u0027re not necessary. I just noticed that we had them some places and not others and thought I\u0027d make it more consistent. The only reason they\u0027re there is to preemptively avoid crashes if we call the wrong function during shutdown or something - like a callback fires later that we expect or something.",
+      "parentUuid": "7b6d62bf_82b856c3",
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +265,30 @@
     },
     {
       "key": {
+        "uuid": "fe23a88d_f54aabe1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-19T00:13:16Z",
+      "side": 1,
+      "message": "Alright, but if this CL takes until 2019 to land I quit ;)",
+      "parentUuid": "27fae689_cd6b077a",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb78ee65_a2a8973d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
         "patchSetId": 32
@@ -171,6 +309,30 @@
       "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086b0e05_df0c306b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-19T00:13:16Z",
+      "side": 1,
+      "message": "We have to fully invalidate because we\u0027re drawing to a texture. If we don\u0027t we get tons of rendering artifacts, or miss things that would normally just be composited like scrolling.",
+      "parentUuid": "bb78ee65_a2a8973d",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 41
+      },
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +359,30 @@
     },
     {
       "key": {
+        "uuid": "48ef05cb_d2b46986",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-19T00:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fa684af_70440a01",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 21
+      },
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03e07c49_aa6687f7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
         "patchSetId": 32
@@ -217,6 +403,30 @@
       "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a94f33_f5ea6182",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-19T00:13:16Z",
+      "side": 1,
+      "message": "1? Done.",
+      "parentUuid": "03e07c49_aa6687f7",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 25
+      },
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +453,30 @@
     },
     {
       "key": {
+        "uuid": "a47b8fd4_f7ee7f6d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-19T00:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e06aa152_66a57480",
+      "range": {
+        "startLine": 105,
+        "startChar": 22,
+        "endLine": 105,
+        "endChar": 42
+      },
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aea90087_12a5d25d",
         "filename": "chrome/browser/android/vr_shell/android_ui_gesture_target.cc",
         "patchSetId": 32
@@ -257,6 +491,24 @@
       "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f805991_b3d2cbe1",
+        "filename": "chrome/browser/android/vr_shell/android_ui_gesture_target.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-19T00:13:16Z",
+      "side": 1,
+      "message": "Not necessarily. The nullness check here is standard practice converting from java objects.",
+      "parentUuid": "aea90087_12a5d25d",
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
