@@ -77,6 +77,8 @@ MEDIA_EXPORT extern const char kVideoUnderflowThresholdMs[];
 
 MEDIA_EXPORT extern const char kDisableRTCSmoothnessAlgorithm[];
 
+MEDIA_EXPORT extern const char kEnableNewEncodeCpuLoadEstimator[];
+
 MEDIA_EXPORT extern const char kForceVideoOverlays[];
 
 MEDIA_EXPORT extern const char kMSEAudioBufferSizeLimit[];
@@ -120,6 +122,7 @@ MEDIA_EXPORT extern const base::Feature kMseBufferByPts;
 MEDIA_EXPORT extern const base::Feature kMseFlacInIsobmff;
 MEDIA_EXPORT extern const base::Feature kNewAudioRenderingMixingStrategy;
 MEDIA_EXPORT extern const base::Feature kNewRemotePlaybackPipeline;
+MEDIA_EXPORT extern const base::Feature kNewEncodeCpuLoadEstimator;
 MEDIA_EXPORT extern const base::Feature kOverflowIconsForMediaControls;
 MEDIA_EXPORT extern const base::Feature kOverlayFullscreenVideo;
 MEDIA_EXPORT extern const base::Feature kPictureInPicture;
