@@ -82,6 +82,7 @@ class CORE_EXPORT PerformanceTiming final : public ScriptWrappable,
   unsigned long long domComplete() const;
   unsigned long long loadEventStart() const;
   unsigned long long loadEventEnd() const;
+  unsigned long long firstEventQueueingTime() const;
 
   // The below are non-spec timings, for Page Load UMA metrics.
 

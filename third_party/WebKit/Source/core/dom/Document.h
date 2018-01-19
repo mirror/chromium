@@ -1135,6 +1135,11 @@ class CORE_EXPORT Document : public ContainerNode,
     contains_validity_style_rules_ = true;
   }
 
+  // Or could make GetTiming return a mutable DocumentTiming. TODO
+  void SetFirstEventQueueingTime(double first_event_queueing_time) {
+    document_timing_.SetFirstEventQueueingTime(first_event_queueing_time);
+  }
+
   void EnqueueResizeEvent();
   void EnqueueScrollEventForNode(Node*);
   void EnqueueAnimationFrameTask(base::OnceClosure);

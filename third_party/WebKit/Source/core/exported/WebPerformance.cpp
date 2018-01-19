@@ -142,6 +142,10 @@ double WebPerformance::LoadEventEnd() const {
   return MillisecondsToSeconds(private_->timing()->loadEventEnd());
 }
 
+double WebPerformance::FirstEventQueueingTime() const {
+  return MillisecondsToSeconds(private_->timing()->firstEventQueueingTime());
+}
+
 double WebPerformance::FirstLayout() const {
   return MillisecondsToSeconds(private_->timing()->FirstLayout());
 }

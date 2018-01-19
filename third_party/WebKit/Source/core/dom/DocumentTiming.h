@@ -45,6 +45,9 @@ class DocumentTiming final {
   void MarkDomContentLoadedEventEnd();
   void MarkDomComplete();
   void MarkFirstLayout();
+  void SetFirstEventQueueingTime(double first_event_queueing_time) {
+    first_event_queueing_time_ = first_event_queueing_time;
+  }
 
   // These return monotonically-increasing seconds.
   double DomLoading() const { return dom_loading_; }
@@ -57,6 +60,7 @@ class DocumentTiming final {
   }
   double DomComplete() const { return dom_complete_; }
   double FirstLayout() const { return first_layout_; }
+  double FirstEventQueueingTime() const { return first_event_queueing_time_; }
 
   void Trace(blink::Visitor*);
 
@@ -70,6 +74,7 @@ class DocumentTiming final {
   double dom_content_loaded_event_end_ = 0.0;
   double dom_complete_ = 0.0;
   double first_layout_ = 0.0;
+  double first_event_queueing_time_ = 0.0;
 
   Member<Document> document_;
 };

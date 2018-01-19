@@ -371,6 +371,8 @@ class PageLoadMetricsObserver {
                                 const PageLoadExtraInfo& extra_info) {}
   virtual void OnFirstLayout(const mojom::PageLoadTiming& timing,
                              const PageLoadExtraInfo& extra_info) {}
+  virtual void OnFirstEventQueueingTime(const mojom::PageLoadTiming& timing,
+                                        const PageLoadExtraInfo& extra_info) {}
   virtual void OnParseStart(const mojom::PageLoadTiming& timing,
                             const PageLoadExtraInfo& extra_info) {}
   virtual void OnParseStop(const mojom::PageLoadTiming& timing,

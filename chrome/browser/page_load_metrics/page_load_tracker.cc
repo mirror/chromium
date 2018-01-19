@@ -134,6 +134,9 @@ void DispatchObserverTimingCallbacks(
   if (new_timing.document_timing->first_layout &&
       !last_timing.document_timing->first_layout)
     observer->OnFirstLayout(new_timing, extra_info);
+  if (new_timing.document_timing->first_event_queueing_time &&
+      !last_timing.document_timing->first_event_queueing_time)
+    observer->OnFirstEventQueueingTime(new_timing, extra_info);
   if (new_timing.paint_timing->first_paint &&
       !last_timing.paint_timing->first_paint)
     observer->OnFirstPaintInPage(new_timing, extra_info);

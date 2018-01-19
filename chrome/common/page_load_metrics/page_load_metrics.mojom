@@ -15,6 +15,9 @@ struct DocumentTiming {
   // Time immediately before the load event is fired.
   mojo.common.mojom.TimeDelta? load_event_start;
 
+  // Queueing Time of the first input event.
+  mojo.common.mojom.TimeDelta? first_event_queueing_time;
+
   // Time when the first layout is completed.
   mojo.common.mojom.TimeDelta? first_layout;
 };

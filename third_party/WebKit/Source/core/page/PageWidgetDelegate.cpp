@@ -33,8 +33,11 @@
 #include "core/dom/AXObjectCache.h"
 #include "core/events/WebInputEventConversion.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/input/EventHandler.h"
+#include "core/loader/DocumentLoadTiming.h"
+#include "core/loader/DocumentLoader.h"
 #include "core/page/AutoscrollController.h"
 #include "core/page/Page.h"
 #include "core/paint/TransformRecorder.h"
@@ -127,6 +130,8 @@ WebInputEventResult PageWidgetDelegate::HandleInputEvent(
     const WebCoalescedInputEvent& coalesced_event,
     LocalFrame* root) {
   const WebInputEvent& event = coalesced_event.Event();
+  ReportFirstEventQueueingTime(event, root);
+
   if (event.GetModifiers() & WebInputEvent::kIsTouchAccessibility &&
       WebInputEvent::IsMouseEventType(event.GetType())) {
     WebMouseEvent mouse_event = TransformWebMouseEvent(
@@ -236,6 +241,26 @@ WebInputEventResult PageWidgetDelegate::HandleInputEvent(
     default:
       return WebInputEventResult::kNotHandled;
   }
+}
+
+void PageWidgetDelegate::ReportFirstEventQueueingTime(
+    const WebInputEvent& event,
+    LocalFrame* root) {
+  if (event.GetType() != WebInputEvent::kMouseDown &&
+      event.GetType() != WebInputEvent::kKeyDown &&
+      event.GetType() != WebInputEvent::kRawKeyDown &&
+      event.GetType() != WebInputEvent::kGestureTap)
+    return;
+  Document* document = root->GetDocument();
+  if (!document)
+    return;
+  if (document->GetTiming().FirstEventQueueingTime())
+    return;
+  document->SetFirstEventQueueingTime(CurrentTimeTicksInSeconds() -
+                                      event.TimeStampSeconds());
+  LocalFrameClient* local_frame_client = root->Client();
+  if (local_frame_client)
+    local_frame_client->DidChangePerformanceTiming();
 }
 
 // ----------------------------------------------------------------

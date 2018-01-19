@@ -99,6 +99,9 @@ class CORE_EXPORT PageWidgetDelegate {
       const WebCoalescedInputEvent& coalesced_event,
       LocalFrame* root);
 
+  static void ReportFirstEventQueueingTime(const WebInputEvent&,
+                                           LocalFrame* root);
+
  private:
   PageWidgetDelegate() {}
 };

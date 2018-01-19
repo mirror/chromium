@@ -5046,4 +5046,45 @@ TEST_P(WebViewTest, DetachPluginInLayout) {
   web_view_helper_.Reset();  // Remove dependency on locally scoped client.
 }
 
+// Check that the first event queueuing time is correctly reported to the
+// document.
+TEST_P(WebViewTest, FirstEventQueueingTimeReported) {
+  WebViewImpl* web_view = web_view_helper_.Initialize();
+  WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
+  FrameTestHelpers::LoadHTMLString(web_view->MainFrameImpl(),
+                                   "<html><body></body></html>", base_url);
+
+  LocalFrame* main_frame = web_view->MainFrameImpl()->GetFrame();
+  ASSERT_NE(nullptr, main_frame);
+
+  Document* document = main_frame->GetDocument();
+  ASSERT_NE(nullptr, document);
+
+  EXPECT_EQ(0, document->GetTiming().FirstEventQueueingTime());
+
+  WebKeyboardEvent key_event1(WebInputEvent::kRawKeyDown,
+                              WebInputEvent::kNoModifiers,
+                              WebInputEvent::kTimeStampForTesting);
+  key_event1.dom_key = Platform::Current()->DomKeyEnumFromString(" ");
+  key_event1.windows_key_code = VKEY_SPACE;
+  key_event1.SetTimeStampSeconds(CurrentTimeTicksInSeconds() - 5);
+  web_view->HandleInputEvent(WebCoalescedInputEvent(key_event1));
+
+  double first_event_queueing_time =
+      document->GetTiming().FirstEventQueueingTime();
+  EXPECT_NE(0, first_event_queueing_time);
+
+  // Sending a second event won't change the FirstEventQueueingTime.
+  WebKeyboardEvent key_event2(WebInputEvent::kRawKeyDown,
+                              WebInputEvent::kNoModifiers,
+                              WebInputEvent::kTimeStampForTesting);
+  key_event2.dom_key = Platform::Current()->DomKeyEnumFromString(" ");
+  key_event2.windows_key_code = VKEY_SPACE;
+  key_event2.SetTimeStampSeconds(CurrentTimeTicksInSeconds() - 1);
+  web_view->HandleInputEvent(WebCoalescedInputEvent(key_event2));
+
+  EXPECT_EQ(first_event_queueing_time,
+            document->GetTiming().FirstEventQueueingTime());
+}
+
 }  // namespace blink

@@ -17,6 +17,7 @@
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_utils.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "third_party/WebKit/public/platform/WebMouseEvent.h"
 
 namespace {
@@ -871,4 +872,22 @@ TEST_F(CorePageLoadMetricsObserverTest, TimeToInteractiveStatusDidNotReachFMP) {
   histogram_tester().ExpectUniqueSample(
       internal::kHistogramTimeToInteractiveStatus,
       internal::TIME_TO_INTERACTIVE_DID_NOT_REACH_FIRST_MEANINGFUL_PAINT, 1);
+}
+
+TEST_F(CorePageLoadMetricsObserverTest, FirstEventQueueingTime) {
+  page_load_metrics::mojom::PageLoadTiming timing;
+  page_load_metrics::InitPageLoadTimingForTest(&timing);
+  timing.navigation_start = base::Time::FromDoubleT(1);
+  timing.document_timing->first_event_queueing_time =
+      base::TimeDelta::FromMilliseconds(5);
+  PopulateRequiredTimingFields(&timing);
+
+  NavigateAndCommit(GURL(kDefaultTestUrl));
+  SimulateTimingUpdate(timing);
+  // Navigate again to force histogram recording.
+  NavigateAndCommit(GURL(kDefaultTestUrl2));
+
+  EXPECT_THAT(histogram_tester().GetAllSamples(
+                  internal::kHistogramFirstEventQueueingTime),
+              testing::ElementsAre(base::Bucket(5, 1)));
 }

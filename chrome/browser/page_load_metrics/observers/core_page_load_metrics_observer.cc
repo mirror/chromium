@@ -9,6 +9,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/metrics/histogram_macros.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
 #include "components/rappor/public/rappor_utils.h"
@@ -89,6 +90,8 @@ const char kBackgroundHistogramLoad[] =
     "PageLoad.DocumentTiming.NavigationToLoadEventFired.Background";
 const char kHistogramFirstLayout[] =
     "PageLoad.DocumentTiming.NavigationToFirstLayout";
+const char kHistogramFirstEventQueueingTime[] =
+    "PageLoad.DocumentTiming.FirstEventQueueingTime";
 const char kBackgroundHistogramFirstLayout[] =
     "PageLoad.DocumentTiming.NavigationToFirstLayout.Background";
 const char kHistogramFirstPaint[] =
@@ -321,6 +324,14 @@ void CorePageLoadMetricsObserver::OnFirstLayout(
     PAGE_LOAD_HISTOGRAM(internal::kBackgroundHistogramFirstLayout,
                         timing.document_timing->first_layout.value());
   }
+}
+
+void CorePageLoadMetricsObserver::OnFirstEventQueueingTime(
+    const page_load_metrics::mojom::PageLoadTiming& timing,
+    const page_load_metrics::PageLoadExtraInfo& extra_info) {
+  UMA_HISTOGRAM_TIMES(
+      internal::kHistogramFirstEventQueueingTime,
+      timing.document_timing->first_event_queueing_time.value());
 }
 
 void CorePageLoadMetricsObserver::OnFirstPaintInPage(

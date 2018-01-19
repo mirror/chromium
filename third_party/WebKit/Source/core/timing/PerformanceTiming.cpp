@@ -310,6 +310,14 @@ unsigned long long PerformanceTiming::FirstLayout() const {
   return MonotonicTimeToIntegerMilliseconds(timing->FirstLayout());
 }
 
+unsigned long long PerformanceTiming::firstEventQueueingTime() const {
+  const DocumentTiming* timing = GetDocumentTiming();
+  if (!timing)
+    return 0;
+
+  return ToIntegerMilliseconds(timing->FirstEventQueueingTime());
+}
+
 unsigned long long PerformanceTiming::FirstPaint() const {
   const PaintTiming* timing = GetPaintTiming();
   if (!timing)
