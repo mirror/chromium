@@ -193,8 +193,7 @@ void ShowLoginWizardFinish(
              ShouldShowSigninScreen(first_screen)) {
     display_host = new chromeos::LoginDisplayHostViews();
   } else {
-    gfx::Rect screen_bounds(chromeos::CalculateScreenBounds(gfx::Size()));
-    display_host = new chromeos::LoginDisplayHostWebUI(screen_bounds);
+    display_host = new chromeos::LoginDisplayHostWebUI();
   }
 
   // Restore system timezone.
@@ -404,10 +403,9 @@ class LoginDisplayHostWebUI::LoginWidgetDelegate
 ////////////////////////////////////////////////////////////////////////////////
 // LoginDisplayHostWebUI, public
 
-LoginDisplayHostWebUI::LoginDisplayHostWebUI(const gfx::Rect& wallpaper_bounds)
-    : wallpaper_bounds_(wallpaper_bounds),
-      oobe_startup_sound_played_(StartupUtils::IsOobeCompleted()),
-      animation_weak_ptr_factory_(this) {
+LoginDisplayHostWebUI::LoginDisplayHostWebUI()
+    : oobe_startup_sound_played_(StartupUtils::IsOobeCompleted()),
+      weak_factory_(this) {
   if (ash_util::IsRunningInMash()) {
     // Animation, and initializing hidden, are not currently supported for Mash.
     finalize_animation_type_ = ANIMATION_NONE;
@@ -937,7 +935,7 @@ void LoginDisplayHostWebUI::ScheduleFadeOutAnimation(int animation_speed_ms) {
   ui::ScopedLayerAnimationSettings animation(layer->GetAnimator());
   animation.AddObserver(new AnimationObserver(
       base::Bind(&LoginDisplayHostWebUI::ShutdownDisplayHost,
-                 animation_weak_ptr_factory_.GetWeakPtr())));
+                 weak_factory_.GetWeakPtr())));
   animation.SetTransitionDuration(
       base::TimeDelta::FromMilliseconds(animation_speed_ms));
   layer->SetOpacity(0);
@@ -1011,7 +1009,7 @@ void LoginDisplayHostWebUI::InitLoginWindowAndView() {
 
   views::Widget::InitParams params(
       views::Widget::InitParams::TYPE_WINDOW_FRAMELESS);
-  params.bounds = wallpaper_bounds();
+  params.bounds = chromeos::CalculateScreenBounds(gfx::Size());
   // Disable fullscreen state for voice interaction OOBE since the shelf should
   // be visible.
   if (!is_voice_interaction_oobe_)
@@ -1175,8 +1173,6 @@ void ShowLoginWizard(OobeScreen first_screen) {
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kNaturalScrollDefault));
 
-  gfx::Rect screen_bounds(chromeos::CalculateScreenBounds(gfx::Size()));
-
   session_manager::SessionManager::Get()->SetSessionState(
       StartupUtils::IsOobeCompleted()
           ? session_manager::SessionState::LOGIN_PRIMARY
@@ -1190,7 +1186,7 @@ void ShowLoginWizard(OobeScreen first_screen) {
     const bool diagnostic_mode = false;
     const bool auto_launch = true;
     // Manages its own lifetime. See ShutdownDisplayHost().
-    auto* display_host = new LoginDisplayHostWebUI(screen_bounds);
+    auto* display_host = new LoginDisplayHostWebUI();
     display_host->StartAppLaunch(auto_launch_app_id, diagnostic_mode,
                                  auto_launch);
     return;
@@ -1204,7 +1200,7 @@ void ShowLoginWizard(OobeScreen first_screen) {
   if (enrollment_config.should_enroll() &&
       first_screen == OobeScreen::SCREEN_UNKNOWN) {
     // Manages its own lifetime. See ShutdownDisplayHost().
-    auto* display_host = new LoginDisplayHostWebUI(screen_bounds);
+    auto* display_host = new LoginDisplayHostWebUI();
     // Shows networks screen instead of enrollment screen to resume the
     // interrupted auto start enrollment flow because enrollment screen does
     // not handle flaky network. See http://crbug.com/332572
