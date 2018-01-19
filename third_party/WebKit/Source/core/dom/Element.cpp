@@ -2516,7 +2516,8 @@ ShadowRoot& Element::AttachShadowRootInternal(ShadowRootType type,
       << type;
   DCHECK(!AlwaysCreateUserAgentShadowRoot());
 
-  GetDocument().SetShadowCascadeOrder(ShadowCascadeOrder::kShadowCascadeV1);
+  if (type != ShadowRootType::kUserAgent)
+    GetDocument().SetShadowCascadeOrder(ShadowCascadeOrder::kShadowCascadeV1);
   ShadowRoot& shadow_root = EnsureShadow().AddShadowRoot(*this, type);
   shadow_root.SetDelegatesFocus(delegates_focus);
   return shadow_root;
