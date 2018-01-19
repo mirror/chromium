@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84798e5b_22964c96",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-19T01:37:17Z",
+      "side": 1,
+      "message": "LayoutBoxContainer has 2 \"bool : 1\" members, those are moved from this class, but sizeof(LayoutBoxContainer) is larger than just 2 bits...",
+      "revId": "304c6a9c23391cc0d17209f21338d2560d555e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
