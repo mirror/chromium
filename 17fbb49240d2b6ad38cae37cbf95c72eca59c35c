@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2b8b575_a19cc212",
+        "filename": "chrome/browser/ui/views/page_info/chosen_object_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-19T05:35:16Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "439127b6_a3a3282e",
+      "revId": "17fbb49240d2b6ad38cae37cbf95c72eca59c35c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf887c8e_e05250bc",
         "filename": "chrome/browser/ui/views/page_info/chosen_object_view.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "17fbb49240d2b6ad38cae37cbf95c72eca59c35c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2950c19_5bdcdb5f",
+        "filename": "chrome/browser/ui/views/page_info/chosen_object_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-19T05:35:16Z",
+      "side": 1,
+      "message": "Done, hopefully the comment is understandable :)",
+      "parentUuid": "bf887c8e_e05250bc",
+      "revId": "17fbb49240d2b6ad38cae37cbf95c72eca59c35c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
