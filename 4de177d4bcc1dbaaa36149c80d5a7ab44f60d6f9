@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "21b89b77_cdfde8c6",
+        "filename": "base/component_export.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-19T22:09:41Z",
+      "side": 1,
+      "message": "Good point. I\u0027d like there to be a public API for testing whether you are currently compiling within the component though, so an underscore seems inappropriate.\n\nI\u0027ve renamed to INSIDE_COMPONENT_IMPL, which should be reminiscent of INSIDE_BLINK used in many places. WDYT?",
+      "parentUuid": "ba332c22_ff5215af",
+      "range": {
+        "startLine": 21,
+        "startChar": 34,
+        "endLine": 21,
+        "endChar": 43
+      },
+      "revId": "4de177d4bcc1dbaaa36149c80d5a7ab44f60d6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db940e0e_b5600bfa",
         "filename": "base/component_export.h",
         "patchSetId": 1
