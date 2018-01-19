@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46c76429_ba0e004b",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-19T02:28:46Z",
+      "side": 0,
+      "message": "Does this mean that the i18n for otherFormsOfBrowsingHistory is obsolete (and should be removed)?\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc?type\u003dcs\u0026q\u003d%5CbotherFormsOfBrowsingHistory%5Cb\u0026sq\u003dpackage:chromium\u0026l\u003d505\n\nAlso, is there a link to the bug that for that being removed? (I\u0027d like to read the discussion on why it was removed).",
+      "revId": "3690f064a874f98fabf26f2d06095cde9e654c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
