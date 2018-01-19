@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "614530c8_26779baf",
+        "filename": "third_party/WebKit/Source/core/layout/custom/DocumentLayoutDefinition.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-19T07:42:04Z",
+      "side": 1,
+      "message": "How about adding a compare function like CSSLayoutDefinition::IsEqual(const CSSLayoutDefinition\u0026 other)?",
+      "revId": "7fa73c7619dea3e3073b26df436a6f096f04e184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f50fa4cc_dd382be0",
         "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
         "patchSetId": 5
@@ -43,6 +60,23 @@
         "endLine": 59,
         "endChar": 20
       },
+      "revId": "7fa73c7619dea3e3073b26df436a6f096f04e184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b22fd2_7c267790",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-19T07:42:04Z",
+      "side": 1,
+      "message": "How about having spec texts on each step in this function like [1]? That would help to clarify differences among current implementation, the referenced spec, and the latest spec, that increases maintenance cost though.\n\n[1] https://chromium.googlesource.com/chromium/src/+/c0c6c25fe6077d60dccd0461fd45e01455feb240/third_party/WebKit/Source/core/workers/Worklet.cpp#32",
       "revId": "7fa73c7619dea3e3073b26df436a6f096f04e184",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
