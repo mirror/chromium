@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86288f64_131b51d8",
+        "filename": "storage/browser/blob/blob_data_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-19T22:20:33Z",
+      "side": 1,
+      "message": "Currently the API of BlobDataBuilder says that you shoud \"Use BlobDataHandle::GetBlobStatus\" to check for an error after creating the blob. We could of course change all the Append* methods to return IsValid() (unclear what they should do if the builder is already in an inconsistent state though?).\n\nI\u0027m not sure what the benefit would be though, since people would still have to check the actually created blob for validity anyway, so we\u0027d only make the code more complicated by also requiring error checking earlier in the process...",
+      "parentUuid": "131aa0b3_6e6d1571",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 28
+      },
+      "revId": "4e9649edd70499069eaffb0651393b5ec29c294b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98278cb5_8832f561",
         "filename": "storage/browser/blob/blob_data_builder.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "93e08f56_34a12e35",
+        "filename": "storage/browser/blob/blob_data_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-19T22:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98278cb5_8832f561",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 48
+      },
+      "revId": "4e9649edd70499069eaffb0651393b5ec29c294b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e666365_d7fdb74a",
         "filename": "storage/browser/blob/blob_entry.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "4e9649edd70499069eaffb0651393b5ec29c294b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae994f7_c37f0361",
+        "filename": "storage/browser/blob/blob_entry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-19T22:20:33Z",
+      "side": 1,
+      "message": "The pop_back at the end makes sure to get rid of the extraneous offset, this seemed simpler than writing some explicit non-range-based for loop just to be able to detect \"last entry\". Added a comment.",
+      "parentUuid": "0e666365_d7fdb74a",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 34
+      },
+      "revId": "4e9649edd70499069eaffb0651393b5ec29c294b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +186,30 @@
       "revId": "4e9649edd70499069eaffb0651393b5ec29c294b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16df951a_f7adf448",
+        "filename": "storage/browser/blob/blob_storage_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-19T22:20:33Z",
+      "side": 1,
+      "message": "This isn\u0027t different from the old code; it\u0027s only purpose (both before and now) is to set the entries size to 0 if the blob is broken. Re-organized the code slightly to make it clearer what is going on.\n\nAlthough I\u0027m not even sure if setting size to 0 is even needed... There\u0027s plenty of other codepaths that can cause a blob to be broken that don\u0027t do so after all...",
+      "parentUuid": "3ed12e55_8320a5c9",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 41
+      },
+      "revId": "4e9649edd70499069eaffb0651393b5ec29c294b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
