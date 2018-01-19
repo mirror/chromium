@@ -885,10 +885,12 @@ CommandHandler.COMMANDS_['paste-into-folder'] = /** @type {Command} */ ({
    * @param {!CommandHandlerDeps} fileManager CommandHandlerDeps to use.
    */
   execute: function(event, fileManager) {
-    var entries = CommandUtil.getCommandEntries(event.target);
-    if (entries.length !== 1 || !entries[0].isDirectory ||
+    // Show this item only when one directory is selected.
+    const targetDirectory =
+        CommandUtil.getOnlyOneSelectedDirectory(fileManager.getSelection());
+    if (!targetDirectory ||
         !CommandUtil.shouldShowMenuItemsForEntry(
-            fileManager.volumeManager, entries[0])) {
+            fileManager.volumeManager, targetDirectory)) {
       return;
     }
 
@@ -896,7 +898,7 @@ CommandHandler.COMMANDS_['paste-into-folder'] = /** @type {Command} */ ({
     // the FileTransferController can distinguish this 'paste-into-folder'
     // command and know the destination directory.
     var handler = function(inEvent) {
-      inEvent.destDirectory = entries[0];
+      inEvent.destDirectory = targetDirectory;
     };
     fileManager.document.addEventListener('paste', handler, true);
     fileManager.document.execCommand('paste');
@@ -907,19 +909,20 @@ CommandHandler.COMMANDS_['paste-into-folder'] = /** @type {Command} */ ({
    * @param {!CommandHandlerDeps} fileManager CommandHandlerDeps to use.
    */
   canExecute: function(event, fileManager) {
-    var entries = CommandUtil.getCommandEntries(event.target);
-
     // Show this item only when one directory is selected.
-    if (entries.length !== 1 || !entries[0].isDirectory ||
+    const targetDirectory =
+        CommandUtil.getOnlyOneSelectedDirectory(fileManager.getSelection());
+    if (!targetDirectory ||
         !CommandUtil.shouldShowMenuItemsForEntry(
-            fileManager.volumeManager, entries[0])) {
+            fileManager.volumeManager, targetDirectory)) {
       event.canExecute = false;
       event.command.setHidden(true);
       return;
     }
 
     var fileTransferController = fileManager.fileTransferController;
-    var directoryEntry = /** @type {DirectoryEntry|FakeEntry} */ (entries[0]);
+    var directoryEntry =
+        /** @type {DirectoryEntry|FakeEntry} */ (targetDirectory);
     event.canExecute = !!fileTransferController &&
         fileTransferController.queryPasteCommandEnabled(directoryEntry);
     event.command.setHidden(false);

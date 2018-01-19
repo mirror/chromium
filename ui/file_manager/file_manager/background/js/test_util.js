@@ -81,6 +81,32 @@ test.util.sync.selectFile = function(contentWindow, filename) {
 };
 
 /**
+ * Fakes toggle selecting the file given by |filename|.
+ *
+ * @param {Window} contentWindow Window to be tested.
+ * @param {string} filename Name of the file to be selected.
+ * @return {boolean} True if file got selected, false otherwise.
+ */
+test.util.sync.toggleSelectFile = function(contentWindow, filename) {
+  const rows = contentWindow.document.querySelectorAll('#detail-table li');
+  for (var index = 0; index < rows.length; ++index) {
+    const listItemQuery = '#detail-table li:nth-of-type(' + (index + 1) + ')';
+    const label =
+        contentWindow.document.querySelector(listItemQuery + ' .filename-label')
+            .textContent;
+    const checkboxQuery = listItemQuery + ' .detail-checkmark';
+    if (!contentWindow.document.querySelector(checkboxQuery)) {
+      console.error('invalid format in row ' + (index + 1));
+      break;
+    }
+    if (filename === label)
+      return test.util.sync.fakeMouseClick(contentWindow, checkboxQuery);
+  }
+  console.error('Failed to toggle file "' + filename + '"');
+  return false;
+};
+
+/**
  * Open the file by selectFile and fakeMouseDoubleClick.
  *
  * @param {Window} contentWindow Window to be tested.
