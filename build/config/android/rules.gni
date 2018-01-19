@@ -2935,6 +2935,35 @@ if (enable_java_templates) {
     }
   }
 
+  # Declare an Android component APK
+  #
+  # Variables
+  #   apk_name:
+  #   java_files:
+  #   jar_excluded_patterns:
+  #   deps:
+  template("android_component_apk") {
+    _lib_target_name = "${target_name}__lib_java"
+
+    android_library(_lib_target_name) {
+      classpath_deps =
+          [ "//components/android_component_loader:component_interface_java" ]
+      if (defined(invoker.deps)) {
+        deps = invoker.deps
+      }
+      java_files = invoker.java_files
+      jar_excluded_patterns = invoker.jar_excluded_patterns
+    }
+
+    android_apk(target_name) {
+      apk_name = invoker.apk_name
+      android_manifest = "java/AndroidManifest.xml"
+      deps = [
+        ":${_lib_target_name}",
+      ]
+    }
+  }
+
   # Generate .java files from .aidl files.
   #
   # This target will store the .java files in a srcjar and should be included in

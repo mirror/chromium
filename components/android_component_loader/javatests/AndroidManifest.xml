@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file. -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="org.chromium.android_component_loader">
+
+	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="22" />
+    <uses-permission android:name="android.permission.RUN_INSTRUMENTATION" />
+    <application>
+        <uses-library android:name="android.test.runner" />
+        <activity android:name="org.chromium.test.broker.OnDeviceInstrumentationBroker"
+            android:exported="true"/>
+    </application>
+    <instrumentation android:name="android.test.InstrumentationTestRunner"
+        android:targetPackage="org.chromium.android_component_loader"
+        android:label="Tests for org.chromium.android_component_loader"/>
+    <instrumentation android:name="org.chromium.base.test.BaseChromiumAndroidJUnitRunner"
+        android:targetPackage="org.chromium.android_component_loader"
+        android:label="Tests for org.chromium.android_component_loader"
+        chromium-junit4="true"/>
+
+</manifest>

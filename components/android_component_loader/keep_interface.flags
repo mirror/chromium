@@ -1,0 +1,1 @@
+-keep class org.chromium.android_component_loader.ComponentInterface { *; }
