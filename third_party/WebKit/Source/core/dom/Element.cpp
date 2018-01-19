@@ -1280,6 +1280,7 @@ ComputedAccessibleNode* Element::GetComputedAccessibleNode() {
   if (!RuntimeEnabledFeatures::AccessibilityObjectModelEnabled())
     return nullptr;
 
+  GetDocument().GetPage()->GetSettings().SetAccessibilityEnabled(true);
   ElementRareData& rare_data = EnsureElementRareData();
   return rare_data.EnsureComputedAccessibleNode(this);
 }
