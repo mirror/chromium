@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43802ffc_6aaf9fcc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-19T07:39:17Z",
+      "side": 1,
+      "message": "Not after a refresh, after rebuildCumulativeHeights. I think the method name removes the need for this comment.",
+      "revId": "25ee5534468b9ffbed3ee9e01989f75a2dc46be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
