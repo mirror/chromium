@@ -16,6 +16,24 @@
       "revId": "cf476928ff7fc1b9377162ead96fe5bdf28f7db4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7b7dab_369e7c99",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorDOMSnapshotAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-19T15:41:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6536a04_47596cb5",
+      "revId": "cf476928ff7fc1b9377162ead96fe5bdf28f7db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
