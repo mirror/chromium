@@ -65,6 +65,7 @@
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/core/spdy_frame_builder.h"
 #include "net/spdy/core/spdy_framer.h"
+#include "net/spdy/chromium/spdy_test_util_common.h"
 #include "net/ssl/ssl_config_service_defaults.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/gtest_util.h"
@@ -77,7 +78,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 #include "url/gurl.h"
-
+  #include <cstdio>
 namespace net {
 namespace test {
 
@@ -345,6 +346,15 @@ class QuicNetworkTransactionTest : public PlatformTest,
         least_unacked, true);
   }
 
+  std::unique_ptr<QuicEncryptedPacket> ConstructClientRstPacket(
+      QuicPacketNumber num,
+      QuicStreamId stream_id,
+      QuicRstStreamErrorCode error_code,
+      size_t bytes_written) {
+    return client_maker_.MakeRstPacket(num, false, stream_id, error_code,
+                                       bytes_written);
+  }
+
   std::unique_ptr<QuicEncryptedPacket>
   ConstructClientAckAndConnectionClosePacket(QuicPacketNumber packet_number,
                                              QuicPacketNumber largest_received,
@@ -407,6 +417,11 @@ class QuicNetworkTransactionTest : public PlatformTest,
     return maker->GetRequestHeaders(method, scheme, path);
   }
 
+  SpdyHeaderBlock ConnectRequestHeaders(const std::string& method,
+                                        const std::string& host_port) {
+    return client_maker_.ConnectRequestHeaders(method, host_port);
+  }
+
   SpdyHeaderBlock GetResponseHeaders(const std::string& status) {
     return server_maker_.GetResponseHeaders(status);
   }
@@ -439,6 +454,21 @@ class QuicNetworkTransactionTest : public PlatformTest,
         packet_number, stream_id, should_include_version, fin, offset, data);
   }
 
+  std::unique_ptr<QuicEncryptedPacket> ConstructClientAckAndDataPacket(
+      QuicPacketNumber packet_number,
+      bool include_version,
+      QuicStreamId stream_id,
+      QuicPacketNumber largest_received,
+      QuicPacketNumber smallest_received,
+      QuicPacketNumber least_unacked,
+      bool fin,
+      QuicStreamOffset offset,
+      QuicStringPiece data) {
+    return client_maker_.MakeAckAndDataPacket(
+        packet_number, include_version, stream_id, largest_received, 
+        smallest_received, least_unacked, fin, offset, data);
+  }
+
   std::unique_ptr<QuicEncryptedPacket> ConstructClientForceHolDataPacket(
       QuicPacketNumber packet_number,
       QuicStreamId stream_id,
@@ -448,6 +478,17 @@ class QuicNetworkTransactionTest : public PlatformTest,
       QuicStringPiece data) {
     return client_maker_.MakeForceHolDataPacket(
         packet_number, stream_id, should_include_version, fin, offset, data);
+  }
+
+  std::unique_ptr<QuicEncryptedPacket> ConstructClientRequestHeadersPacket(
+      QuicPacketNumber packet_number,
+      QuicStreamId stream_id,
+      bool should_include_version,
+      bool fin,
+      SpdyHeaderBlock headers) {
+    return ConstructClientRequestHeadersPacket(packet_number, stream_id,
+                                               should_include_version, fin,
+                                               std::move(headers), nullptr);
   }
 
   std::unique_ptr<QuicEncryptedPacket> ConstructClientRequestHeadersPacket(
@@ -470,10 +511,8 @@ class QuicNetworkTransactionTest : public PlatformTest,
       SpdyHeaderBlock headers,
       QuicStreamId parent_stream_id,
       QuicStreamOffset* offset) {
-    SpdyPriority priority =
-        ConvertRequestPriorityToQuicPriority(DEFAULT_PRIORITY);
-    return client_maker_.MakeRequestHeadersPacketWithOffsetTracking(
-        packet_number, stream_id, should_include_version, fin, priority,
+    return ConstructClientRequestHeadersPacket(
+        packet_number, stream_id, should_include_version, fin, DEFAULT_PRIORITY,
         std::move(headers), parent_stream_id, offset);
   }
 
@@ -482,12 +521,17 @@ class QuicNetworkTransactionTest : public PlatformTest,
       QuicStreamId stream_id,
       bool should_include_version,
       bool fin,
-      SpdyHeaderBlock headers) {
-    return ConstructClientRequestHeadersPacket(packet_number, stream_id,
-                                               should_include_version, fin,
-                                               std::move(headers), nullptr);
+      RequestPriority request_priority,
+      SpdyHeaderBlock headers,
+      QuicStreamId parent_stream_id,
+      QuicStreamOffset* offset) {
+    SpdyPriority priority =
+        ConvertRequestPriorityToQuicPriority(request_priority);
+    return client_maker_.MakeRequestHeadersPacketWithOffsetTracking(
+        packet_number, stream_id, should_include_version, fin, priority,
+        std::move(headers), parent_stream_id, offset);
   }
-
+  
   std::unique_ptr<QuicEncryptedPacket> ConstructClientMultipleDataFramesPacket(
       QuicPacketNumber packet_number,
       QuicStreamId stream_id,
@@ -562,6 +606,8 @@ class QuicNetworkTransactionTest : public PlatformTest,
 
     session_.reset(new HttpNetworkSession(session_params_, session_context_));
     session_->quic_stream_factory()->set_require_confirmation(false);
+    SpdySessionPoolPeer spdy_pool_peer(session_->spdy_session_pool());
+    spdy_pool_peer.SetEnableSendingInitialData(false);
   }
 
   void CreateSession() { return CreateSession(supported_versions_); }
@@ -594,6 +640,17 @@ class QuicNetworkTransactionTest : public PlatformTest,
               response->connection_info);
   }
 
+  void CheckWasSpdyResponse(HttpNetworkTransaction* trans) {
+    const HttpResponseInfo* response = trans->GetResponseInfo();
+    ASSERT_TRUE(response != nullptr);
+    ASSERT_TRUE(response->headers.get() != nullptr);
+    EXPECT_EQ("HTTP/1.1 200", response->headers->GetStatusLine());
+    EXPECT_TRUE(response->was_fetched_via_spdy);
+    EXPECT_TRUE(response->was_alpn_negotiated);
+    EXPECT_EQ(HttpResponseInfo::CONNECTION_INFO_HTTP2,
+              response->connection_info);
+  }
+
   void CheckResponseData(HttpNetworkTransaction* trans,
                          const std::string& expected) {
     std::string response_data;
@@ -605,7 +662,9 @@ class QuicNetworkTransactionTest : public PlatformTest,
     TestCompletionCallback callback;
     int rv = trans->Start(&request_, callback.callback(), net_log_.bound());
     EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+  printf("\nbefore RunTransaction WaitForResult()\n");
     EXPECT_THAT(callback.WaitForResult(), IsOk());
+  printf("\nafter RunTransaction WaitForResult()\n");
   }
 
   void SendRequestAndExpectHttpResponse(const std::string& expected) {
@@ -5944,6 +6003,763 @@ TEST_P(QuicNetworkTransactionTest, QuicServerPushMatchesRequestWithBody) {
   upload_data.AppendData("1", 1, true);
   request_.upload_data_stream = &upload_data;
   SendRequestAndExpectQuicResponse("and hello!");
+}
+
+// Test a CONNECT through a QUIC proxy to an HTTPS/1.1 server 
+TEST_P(QuicNetworkTransactionTest, QuicProxyConnectHttpsServer) {
+  session_params_.enable_quic = true;
+  proxy_service_ =
+      ProxyService::CreateFixedFromPacResult("QUIC proxy.example.org:70");
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset header_stream_offset = 0;
+  mock_quic_data.AddWrite(
+      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(
+      2, GetNthClientInitiatedStreamId(0), true, false,
+      ConnectRequestHeaders("CONNECT", "mail.example.org:443"),
+      &header_stream_offset));
+  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(
+      1, GetNthClientInitiatedStreamId(0), false, false,
+      GetResponseHeaders("200 OK")));
+
+  const char get[] =
+      "GET / HTTP/1.1\r\n"
+      "Host: mail.example.org\r\n"
+      "Connection: keep-alive\r\n\r\n";
+  mock_quic_data.AddWrite(ConstructClientAckAndDataPacket(            // seq 3
+      3, false, GetNthClientInitiatedStreamId(0), 1, 1, 1, false, 0,
+      QuicStringPiece(get, strlen(get))));
+  const char get_resp[] = "HTTP/1.1 200 OK\r\n"
+      "Content-Length: 10\r\n\r\n";
+  mock_quic_data.AddRead(ConstructServerDataPacket(                  // seq 4
+      2, GetNthClientInitiatedStreamId(0), false, false, 0,
+      QuicStringPiece(get_resp, strlen(get_resp))));
+
+  mock_quic_data.AddSynchronousRead(ConstructServerDataPacket(        // seq 5
+      3, GetNthClientInitiatedStreamId(0), false, false, strlen(get_resp),
+      QuicStringPiece("0123456789", 10)));
+  mock_quic_data.AddWrite(ConstructClientAckPacket(4, 3, 2, 1));      // seq 6
+  mock_quic_data.AddWrite(ConstructClientRstPacket(                   // seq 7
+      5, GetNthClientInitiatedStreamId(0), QUIC_STREAM_CANCELLED, strlen(get)));
+  mock_quic_data.AddRead(ASYNC, ERR_IO_PENDING);  // paused           // seq 8
+  mock_quic_data.AddRead(ASYNC, OK);              // No more data to read
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
+
+  CreateSession();
+  
+  request_.url = GURL("https://mail.example.org/");
+  HttpNetworkTransaction trans(DEFAULT_PRIORITY, session_.get());
+  HeadersHandler headers_handler;
+  trans.SetBeforeHeadersSentCallback(
+      base::Bind(&HeadersHandler::OnBeforeHeadersSent,
+                 base::Unretained(&headers_handler)));
+  RunTransaction(&trans);
+  CheckWasHttpResponse(&trans);
+  CheckResponsePort(&trans, 70);
+  CheckResponseData(&trans, "0123456789");
+  EXPECT_TRUE(headers_handler.was_proxied());
+  EXPECT_TRUE(trans.GetResponseInfo()->proxy_server.is_quic());
+
+
+  // Why is this used to tear stuff down???
+  NetworkChangeNotifier::NotifyObserversOfIPAddressChangeForTests();
+  // Empty the current queue.
+  base::RunLoop().RunUntilIdle();
+
+  mock_quic_data.GetSequencedSocketData()->Resume();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(mock_quic_data.AllReadDataConsumed());
+  EXPECT_TRUE(mock_quic_data.AllWriteDataConsumed());
+}
+
+// Test a connect through a QUIC proxy to a HTTP/2 server
+TEST_P(QuicNetworkTransactionTest, QuicProxyConnectSpdyServer) {
+  session_params_.enable_quic = true;
+  proxy_service_ =
+      ProxyService::CreateFixedFromPacResult("QUIC proxy.example.org:70");
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset header_stream_offset = 0;
+  mock_quic_data.AddWrite(
+      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(
+      2, GetNthClientInitiatedStreamId(0), true, false,
+      ConnectRequestHeaders("CONNECT", "mail.example.org:443"),
+      &header_stream_offset));
+  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(
+      1, GetNthClientInitiatedStreamId(0), false, false,
+      GetResponseHeaders("200 OK")));
+
+  SpdyTestUtil spdy_util;
+  
+  SpdySerializedFrame get_frame =
+      spdy_util.ConstructSpdyGet("https://mail.example.org/", 1, LOWEST);
+  mock_quic_data.AddWrite(ConstructClientAckAndDataPacket(          // seq 3
+      3, false, GetNthClientInitiatedStreamId(0), 1, 1, 1, false, 0,
+      QuicStringPiece(get_frame.data(), get_frame.size())));
+  SpdySerializedFrame resp_frame =
+      spdy_util.ConstructSpdyGetReply(nullptr, 0, 1);
+  mock_quic_data.AddRead(ConstructServerDataPacket(                 // seq 4
+      2, GetNthClientInitiatedStreamId(0), false, false, 0,
+      QuicStringPiece(resp_frame.data(), resp_frame.size())));
+
+  SpdySerializedFrame data_frame =
+      spdy_util.ConstructSpdyDataFrame(1, "0123456789", 10, true);
+  mock_quic_data.AddSynchronousRead(ConstructServerDataPacket(      // seq 5
+      3, GetNthClientInitiatedStreamId(0), false, false, resp_frame.size(),
+      QuicStringPiece(data_frame.data(), data_frame.size())));
+
+  mock_quic_data.AddWrite(ConstructClientAckPacket(4, 3, 2, 1));      // seq 6
+  mock_quic_data.AddWrite(ConstructClientRstPacket(
+      5, GetNthClientInitiatedStreamId(0), QUIC_STREAM_CANCELLED,
+      get_frame.size()));
+  mock_quic_data.AddRead(ASYNC, ERR_IO_PENDING);  // paused           // seq 8
+  mock_quic_data.AddRead(ASYNC, OK);              // No more data to read
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+  
+  SSLSocketDataProvider ssl_data(ASYNC, OK);
+  ssl_data.next_proto = kProtoHTTP2;
+  socket_factory_.AddSSLSocketDataProvider(&ssl_data);
+
+  CreateSession();
+
+  request_.url = GURL("https://mail.example.org/");
+  HttpNetworkTransaction trans(DEFAULT_PRIORITY, session_.get());
+  HeadersHandler headers_handler;
+  trans.SetBeforeHeadersSentCallback(
+      base::Bind(&HeadersHandler::OnBeforeHeadersSent,
+                 base::Unretained(&headers_handler)));
+  RunTransaction(&trans);
+  CheckWasSpdyResponse(&trans);
+  CheckResponsePort(&trans, 70);
+  CheckResponseData(&trans, "0123456789");
+  EXPECT_TRUE(headers_handler.was_proxied());
+  EXPECT_TRUE(trans.GetResponseInfo()->proxy_server.is_quic());
+
+
+  // Why is this used to tear stuff down???
+  NetworkChangeNotifier::NotifyObserversOfIPAddressChangeForTests();
+  // Empty the current queue.
+  base::RunLoop().RunUntilIdle();
+
+  mock_quic_data.GetSequencedSocketData()->Resume();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(mock_quic_data.AllReadDataConsumed());
+  EXPECT_TRUE(mock_quic_data.AllWriteDataConsumed());
+}
+
+TEST_P(QuicNetworkTransactionTest, QuicProxyConnectReuseTransportSocket) {
+  session_params_.enable_quic = true;
+  proxy_service_ =
+      ProxyService::CreateFixedFromPacResult("QUIC proxy.example.org:70");
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset header_stream_offset = 0;
+  mock_quic_data.AddWrite(
+      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(
+      2, GetNthClientInitiatedStreamId(0), true, false,
+      ConnectRequestHeaders("CONNECT", "mail.example.org:443"),
+      &header_stream_offset));
+  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(
+      1, GetNthClientInitiatedStreamId(0), false, false,
+      GetResponseHeaders("200 OK")));
+
+  QuicStreamOffset client_data_offset = 0;
+  QuicStreamOffset server_data_offset = 0;
+  const char get_1[] =
+      "GET / HTTP/1.1\r\n"
+      "Host: mail.example.org\r\n"
+      "Connection: keep-alive\r\n\r\n";
+  mock_quic_data.AddWrite(ConstructClientAckAndDataPacket(            // seq 3
+      3, false, GetNthClientInitiatedStreamId(0), 1, 1, 1, false,
+      client_data_offset, QuicStringPiece(get_1, strlen(get_1))));
+  client_data_offset += strlen(get_1);
+
+  const char get_resp_1[] = "HTTP/1.1 200 OK\r\n"
+      "Content-Length: 10\r\n\r\n";
+  mock_quic_data.AddRead(ConstructServerDataPacket(                  // seq 4
+      2, GetNthClientInitiatedStreamId(0), false, false, server_data_offset,
+      QuicStringPiece(get_resp_1, strlen(get_resp_1))));
+  server_data_offset += strlen(get_resp_1);
+
+  mock_quic_data.AddSynchronousRead(ConstructServerDataPacket(        // seq 5
+      3, GetNthClientInitiatedStreamId(0), false, false, server_data_offset,
+      QuicStringPiece("0123456789", 10)));
+  server_data_offset += 10;
+
+  mock_quic_data.AddWrite(ConstructClientAckPacket(4, 3, 2, 1));      // seq 6
+
+  const char get_2[] =
+      "GET /2 HTTP/1.1\r\n"
+      "Host: mail.example.org\r\n"
+      "Connection: keep-alive\r\n\r\n";
+  mock_quic_data.AddWrite(ConstructClientDataPacket(            // seq 7
+      5, GetNthClientInitiatedStreamId(0), false, false, client_data_offset,
+      QuicStringPiece(get_2, strlen(get_2))));
+  client_data_offset += strlen(get_2);
+
+  const char get_resp_2[] = "HTTP/1.1 200 OK\r\n"
+      "Content-Length: 7\r\n\r\n";
+  mock_quic_data.AddRead(ConstructServerDataPacket(                  // seq 8
+      4, GetNthClientInitiatedStreamId(0), false, false, server_data_offset,
+      QuicStringPiece(get_resp_2, strlen(get_resp_2))));
+  server_data_offset += strlen(get_resp_2);
+
+  mock_quic_data.AddSynchronousRead(ConstructServerDataPacket(        // seq 9
+      5, GetNthClientInitiatedStreamId(0), false, false, server_data_offset,
+      QuicStringPiece("0123456", 7)));
+  server_data_offset += 7;
+
+  mock_quic_data.AddWrite(ConstructClientAckPacket(6, 5, 4, 1));      // seq 10
+
+  mock_quic_data.AddWrite(ConstructClientRstPacket(                   // seq 11
+      7, GetNthClientInitiatedStreamId(0), QUIC_STREAM_CANCELLED,
+      client_data_offset));
+  mock_quic_data.AddRead(ASYNC, ERR_IO_PENDING);  // paused           // seq 12
+  mock_quic_data.AddRead(ASYNC, OK);              // No more data to read
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
+
+  CreateSession();
+
+  request_.url = GURL("https://mail.example.org/");
+  HttpNetworkTransaction trans_1(DEFAULT_PRIORITY, session_.get());
+  HeadersHandler headers_handler_1;
+  trans_1.SetBeforeHeadersSentCallback(
+      base::Bind(&HeadersHandler::OnBeforeHeadersSent,
+                 base::Unretained(&headers_handler_1)));
+  RunTransaction(&trans_1);
+  CheckWasHttpResponse(&trans_1);
+  CheckResponsePort(&trans_1, 70);
+  CheckResponseData(&trans_1, "0123456789");
+  EXPECT_TRUE(headers_handler_1.was_proxied());
+  EXPECT_TRUE(trans_1.GetResponseInfo()->proxy_server.is_quic());
+
+  request_.url = GURL("https://mail.example.org/2");
+  HttpNetworkTransaction trans_2(DEFAULT_PRIORITY, session_.get());
+  HeadersHandler headers_handler_2;
+  trans_2.SetBeforeHeadersSentCallback(
+      base::Bind(&HeadersHandler::OnBeforeHeadersSent,
+                 base::Unretained(&headers_handler_2)));
+  RunTransaction(&trans_2);
+  CheckWasHttpResponse(&trans_2);
+  CheckResponsePort(&trans_2, 70);
+  CheckResponseData(&trans_2, "0123456");
+  EXPECT_TRUE(headers_handler_2.was_proxied());
+  EXPECT_TRUE(trans_2.GetResponseInfo()->proxy_server.is_quic());
+
+
+  // Why is this used to tear stuff down???
+  NetworkChangeNotifier::NotifyObserversOfIPAddressChangeForTests();
+  // Empty the current queue.
+  base::RunLoop().RunUntilIdle();
+
+  mock_quic_data.GetSequencedSocketData()->Resume();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(mock_quic_data.AllReadDataConsumed());
+  EXPECT_TRUE(mock_quic_data.AllWriteDataConsumed());
+}
+
+TEST_P(QuicNetworkTransactionTest, QuicProxyConnectReuseQuicSession) {
+  session_params_.enable_quic = true;
+  proxy_service_ =
+      ProxyService::CreateFixedFromPacResult("QUIC proxy.example.org:70");
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset client_header_stream_offset = 0;
+  QuicStreamOffset server_header_stream_offset = 0;
+  mock_quic_data.AddWrite(
+      ConstructInitialSettingsPacket(1, &client_header_stream_offset));
+
+  // CONNECT request and response for first request
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(
+      2, GetNthClientInitiatedStreamId(0), true, false,
+      ConnectRequestHeaders("CONNECT", "mail.example.org:443"),
+      &client_header_stream_offset));
+  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(        // seq 2
+      1, GetNthClientInitiatedStreamId(0), false, false,
+      GetResponseHeaders("200 OK"), &server_header_stream_offset));
+
+  // GET request, response, and data over QUIC tunnel for first request
+  const char get[] =
+      "GET / HTTP/1.1\r\n"
+      "Host: mail.example.org\r\n"
+      "Connection: keep-alive\r\n\r\n";
+  mock_quic_data.AddWrite(ConstructClientAckAndDataPacket(            // seq 3
+      3, false, GetNthClientInitiatedStreamId(0), 1, 1, 1, false, 0,
+      QuicStringPiece(get, strlen(get))));
+  const char get_resp[] = "HTTP/1.1 200 OK\r\n"
+      "Content-Length: 10\r\n\r\n";
+  mock_quic_data.AddRead(ConstructServerDataPacket(                  // seq 4
+      2, GetNthClientInitiatedStreamId(0), false, false, 0,
+      QuicStringPiece(get_resp, strlen(get_resp))));
+  mock_quic_data.AddSynchronousRead(ConstructServerDataPacket(        // seq 5
+      3, GetNthClientInitiatedStreamId(0), false, false, strlen(get_resp),
+      QuicStringPiece("0123456789", 10)));
+  mock_quic_data.AddWrite(ConstructClientAckPacket(4, 3, 2, 1));      // seq 6
+
+  // CONNECT request and response for second request
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(        // seq 7
+      5, GetNthClientInitiatedStreamId(1), false, false,
+      ConnectRequestHeaders("CONNECT", "different.example.org:443"),
+      GetNthClientInitiatedStreamId(0), &client_header_stream_offset));
+  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(        // seq 8
+      4, GetNthClientInitiatedStreamId(1), false, false,
+      GetResponseHeaders("200 OK"), &server_header_stream_offset));
+
+  // GET request, response, and data over QUIC tunnel for second request
+  SpdyTestUtil spdy_util;
+  SpdySerializedFrame get_frame =
+      spdy_util.ConstructSpdyGet("https://different.example.org/", 1, LOWEST);
+  mock_quic_data.AddWrite(ConstructClientAckAndDataPacket(           // seq 9
+      6, false, GetNthClientInitiatedStreamId(1), 4, 4, 1, false, 0,
+      QuicStringPiece(get_frame.data(), get_frame.size())));
+
+  SpdySerializedFrame resp_frame =
+      spdy_util.ConstructSpdyGetReply(nullptr, 0, 1);
+  mock_quic_data.AddRead(ConstructServerDataPacket(                 // seq 10
+      5, GetNthClientInitiatedStreamId(1), false, false, 0,
+      QuicStringPiece(resp_frame.data(), resp_frame.size())));
+
+  SpdySerializedFrame data_frame =
+      spdy_util.ConstructSpdyDataFrame(1, "0123456", 7, true);
+  mock_quic_data.AddRead(ConstructServerDataPacket(                 // seq 11
+      6, GetNthClientInitiatedStreamId(1), false, false, resp_frame.size(),
+      QuicStringPiece(data_frame.data(), data_frame.size())));
+
+  mock_quic_data.AddWrite(ConstructClientAckPacket(7, 6, 5, 1));
+
+  mock_quic_data.AddWrite(ConstructClientRstPacket(           // seq 12
+      8, GetNthClientInitiatedStreamId(0), QUIC_STREAM_CANCELLED, strlen(get)));
+  mock_quic_data.AddWrite(ConstructClientRstPacket(           // seq 13
+      9, GetNthClientInitiatedStreamId(1), QUIC_STREAM_CANCELLED,
+      get_frame.size()));
+
+  mock_quic_data.AddRead(ASYNC, ERR_IO_PENDING);  // paused
+  mock_quic_data.AddRead(ASYNC, OK);              // No more data to read
+
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
+  
+  SSLSocketDataProvider ssl_data(ASYNC, OK);
+  ssl_data.next_proto = kProtoHTTP2;
+  socket_factory_.AddSSLSocketDataProvider(&ssl_data);
+
+  CreateSession();
+{
+  request_.url = GURL("https://mail.example.org/");
+  HttpNetworkTransaction trans(DEFAULT_PRIORITY, session_.get());
+  HeadersHandler headers_handler;
+  trans.SetBeforeHeadersSentCallback(
+      base::Bind(&HeadersHandler::OnBeforeHeadersSent,
+                 base::Unretained(&headers_handler)));
+  RunTransaction(&trans);
+  CheckWasHttpResponse(&trans);
+  CheckResponsePort(&trans, 70);
+  CheckResponseData(&trans, "0123456789");
+  EXPECT_TRUE(headers_handler.was_proxied());
+  EXPECT_TRUE(trans.GetResponseInfo()->proxy_server.is_quic());
+}
+
+{
+  request_.url = GURL("https://different.example.org/");
+  HttpNetworkTransaction trans(DEFAULT_PRIORITY, session_.get());
+  HeadersHandler headers_handler;
+  trans.SetBeforeHeadersSentCallback(
+      base::Bind(&HeadersHandler::OnBeforeHeadersSent,
+                 base::Unretained(&headers_handler)));
+  RunTransaction(&trans);
+  CheckWasSpdyResponse(&trans);
+  CheckResponsePort(&trans, 70);
+  CheckResponseData(&trans, "0123456");
+  EXPECT_TRUE(headers_handler.was_proxied());
+  EXPECT_TRUE(trans.GetResponseInfo()->proxy_server.is_quic());
+}
+
+
+ // Why is this used to tear stuff down???
+  NetworkChangeNotifier::NotifyObserversOfIPAddressChangeForTests();
+  // Empty the current queue.
+  base::RunLoop().RunUntilIdle();
+
+  mock_quic_data.GetSequencedSocketData()->Resume();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(mock_quic_data.AllReadDataConsumed());
+  EXPECT_TRUE(mock_quic_data.AllWriteDataConsumed());
+}
+
+TEST_P(QuicNetworkTransactionTest, QuicProxyConnectFailure) {
+  session_params_.enable_quic = true;
+  proxy_service_ =
+      ProxyService::CreateFixedFromPacResult("QUIC proxy.example.org:70");
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset header_stream_offset = 0;
+  mock_quic_data.AddWrite(
+      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(  // seq 1
+      2, GetNthClientInitiatedStreamId(0), true, false,
+      ConnectRequestHeaders("CONNECT", "mail.example.org:443"),
+      &header_stream_offset));
+  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(  // seq 2
+      1, GetNthClientInitiatedStreamId(0), false, true,
+      GetResponseHeaders("500")));
+  mock_quic_data.AddWrite(ConstructClientAckAndRstPacket(       // seq 3
+      3, GetNthClientInitiatedStreamId(0), QUIC_STREAM_CANCELLED, 1, 1, 1));
+  mock_quic_data.AddRead(ASYNC, ERR_IO_PENDING);  // paused
+  mock_quic_data.AddRead(ASYNC, OK);              // No more data to read
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
+
+  CreateSession();
+
+  request_.url = GURL("https://mail.example.org/");
+  HttpNetworkTransaction trans(DEFAULT_PRIORITY, session_.get());
+  HeadersHandler headers_handler;
+  trans.SetBeforeHeadersSentCallback(
+      base::Bind(&HeadersHandler::OnBeforeHeadersSent,
+                 base::Unretained(&headers_handler)));
+  TestCompletionCallback callback;
+  int rv = trans.Start(&request_, callback.callback(), net_log_.bound());
+  EXPECT_EQ(ERR_IO_PENDING, rv);
+  EXPECT_EQ(ERR_TUNNEL_CONNECTION_FAILED, callback.WaitForResult());
+  EXPECT_EQ(false, headers_handler.was_proxied());
+
+  
+  mock_quic_data.GetSequencedSocketData()->Resume();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(mock_quic_data.AllReadDataConsumed());
+  EXPECT_TRUE(mock_quic_data.AllWriteDataConsumed());
+}
+
+TEST_P(QuicNetworkTransactionTest, QuicProxyConnectBadCertificate) {
+  session_params_.enable_quic = true;
+  proxy_service_ =
+      ProxyService::CreateFixedFromPacResult("QUIC proxy.example.org:70");
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset client_header_stream_offset = 0;
+  QuicStreamOffset server_header_stream_offset = 0;
+  mock_quic_data.AddWrite(
+      ConstructInitialSettingsPacket(1, &client_header_stream_offset));
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(  // seq 1
+      2, GetNthClientInitiatedStreamId(0), true, false,
+      ConnectRequestHeaders("CONNECT", "mail.example.org:443"),
+      &client_header_stream_offset));
+  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(  // seq 2
+      1, GetNthClientInitiatedStreamId(0), false, false,
+      GetResponseHeaders("200 OK"), &server_header_stream_offset));
+  mock_quic_data.AddWrite(ConstructClientAckAndRstPacket(       // seq 3
+      3, GetNthClientInitiatedStreamId(0), QUIC_STREAM_CANCELLED, 1, 1, 1));
+  
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(      // seq 4
+      4, GetNthClientInitiatedStreamId(1), false, false,
+      ConnectRequestHeaders("CONNECT", "mail.example.org:443"),
+      GetNthClientInitiatedStreamId(0), &client_header_stream_offset));
+  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(      // seq 5
+      2, GetNthClientInitiatedStreamId(1), false, false,
+      GetResponseHeaders("200 OK"), &server_header_stream_offset));
+
+  const char get[] =
+      "GET / HTTP/1.1\r\n"
+      "Host: mail.example.org\r\n"
+      "Connection: keep-alive\r\n\r\n";
+  mock_quic_data.AddWrite(ConstructClientAckAndDataPacket(            // seq 6
+      5, false, GetNthClientInitiatedStreamId(1), 2, 2, 1, false, 0,
+      QuicStringPiece(get, strlen(get))));
+  const char get_resp[] = "HTTP/1.1 200 OK\r\n"
+      "Content-Length: 10\r\n\r\n";
+  mock_quic_data.AddRead(ConstructServerDataPacket(                  // seq 7
+      3, GetNthClientInitiatedStreamId(1), false, false, 0,
+      QuicStringPiece(get_resp, strlen(get_resp))));
+
+  mock_quic_data.AddSynchronousRead(ConstructServerDataPacket(        // seq 8
+      4, GetNthClientInitiatedStreamId(1), false, false, strlen(get_resp),
+      QuicStringPiece("0123456789", 10)));
+  mock_quic_data.AddWrite(ConstructClientAckPacket(6, 4, 3, 1));      // seq 9
+  mock_quic_data.AddWrite(ConstructClientRstPacket(
+      7, GetNthClientInitiatedStreamId(1), QUIC_STREAM_CANCELLED, strlen(get)));
+
+  mock_quic_data.AddRead(ASYNC, ERR_IO_PENDING);  // paused           // seq 10
+  mock_quic_data.AddRead(ASYNC, OK);              // No more data to read
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  SSLSocketDataProvider ssl_data_bad_cert(ASYNC, ERR_CERT_AUTHORITY_INVALID);
+  socket_factory_.AddSSLSocketDataProvider(&ssl_data_bad_cert);
+
+  SSLSocketDataProvider ssl_data(ASYNC, OK);
+  socket_factory_.AddSSLSocketDataProvider(&ssl_data);
+
+  CreateSession();
+
+  request_.url = GURL("https://mail.example.org/");
+  HttpNetworkTransaction trans(DEFAULT_PRIORITY, session_.get());
+  HeadersHandler headers_handler;
+  trans.SetBeforeHeadersSentCallback(
+      base::Bind(&HeadersHandler::OnBeforeHeadersSent,
+                 base::Unretained(&headers_handler)));
+  TestCompletionCallback callback;
+  int rv = trans.Start(&request_, callback.callback(), net_log_.bound());
+  EXPECT_EQ(ERR_IO_PENDING, rv);
+  EXPECT_EQ(ERR_CERT_AUTHORITY_INVALID, callback.WaitForResult());
+
+  rv = trans.RestartIgnoringLastError(callback.callback());
+  EXPECT_EQ(ERR_IO_PENDING, rv);
+  EXPECT_EQ(OK, callback.WaitForResult());
+
+  CheckWasHttpResponse(&trans);
+  CheckResponsePort(&trans, 70);
+  CheckResponseData(&trans, "0123456789");
+  EXPECT_EQ(true, headers_handler.was_proxied());
+  EXPECT_TRUE(trans.GetResponseInfo()->proxy_server.is_quic());
+
+
+  // Why is this used to tear stuff down???
+  NetworkChangeNotifier::NotifyObserversOfIPAddressChangeForTests();
+  // Empty the current queue.
+  base::RunLoop().RunUntilIdle();
+
+  mock_quic_data.GetSequencedSocketData()->Resume();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(mock_quic_data.AllReadDataConsumed());
+  EXPECT_TRUE(mock_quic_data.AllWriteDataConsumed());
+}
+
+TEST_P(QuicNetworkTransactionTest, QuicProxyQuicConnectionError) {
+  session_params_.enable_quic = true;
+  proxy_service_ =
+      ProxyService::CreateFixedFromPacResult("QUIC proxy.example.org:70");
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset header_stream_offset = 0;
+  mock_quic_data.AddWrite(
+      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(
+      2, GetNthClientInitiatedStreamId(0), true, false,
+      ConnectRequestHeaders("CONNECT", "mail.example.org:443"),
+      &header_stream_offset));
+  mock_quic_data.AddRead(ASYNC, ERR_CONNECTION_FAILED);
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  CreateSession();
+
+  request_.url = GURL("https://mail.example.org/");
+  HttpNetworkTransaction trans(DEFAULT_PRIORITY, session_.get());
+  HeadersHandler headers_handler;
+  trans.SetBeforeHeadersSentCallback(
+      base::Bind(&HeadersHandler::OnBeforeHeadersSent,
+                 base::Unretained(&headers_handler)));
+  TestCompletionCallback callback;
+  int rv = trans.Start(&request_, callback.callback(), net_log_.bound());
+  EXPECT_EQ(ERR_IO_PENDING, rv);
+  EXPECT_EQ(ERR_QUIC_PROTOCOL_ERROR, callback.WaitForResult());
+
+  EXPECT_TRUE(mock_quic_data.AllReadDataConsumed());
+  EXPECT_TRUE(mock_quic_data.AllWriteDataConsumed());
+}
+
+TEST_P(QuicNetworkTransactionTest, QuicProxyUserAgent) {
+  session_params_.enable_quic = true;
+  proxy_service_ =
+      ProxyService::CreateFixedFromPacResult("QUIC proxy.example.org:70");
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset header_stream_offset = 0;
+  mock_quic_data.AddWrite(
+      ConstructInitialSettingsPacket(1, &header_stream_offset));
+
+  SpdyHeaderBlock headers =
+      ConnectRequestHeaders("CONNECT", "mail.example.org:443");
+  headers["user-agent"] = "Chromium Ultra Awesome X Edition";
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(
+      2, GetNthClientInitiatedStreamId(0), true, false, std::move(headers),
+      &header_stream_offset));
+  // Return an error, so the transaction stops here (this test isn't interested
+  // in the rest).
+  mock_quic_data.AddRead(ASYNC, ERR_CONNECTION_FAILED);
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  request_.url = GURL("https://mail.example.org/");
+  request_.extra_headers.SetHeader(HttpRequestHeaders::kUserAgent,
+                                  "Chromium Ultra Awesome X Edition");
+
+  CreateSession();
+
+  HttpNetworkTransaction trans(DEFAULT_PRIORITY, session_.get());
+  HeadersHandler headers_handler;
+  trans.SetBeforeHeadersSentCallback(
+      base::Bind(&HeadersHandler::OnBeforeHeadersSent,
+                 base::Unretained(&headers_handler)));
+  TestCompletionCallback callback;
+  int rv = trans.Start(&request_, callback.callback(), net_log_.bound());
+  EXPECT_EQ(ERR_IO_PENDING, rv);
+  EXPECT_EQ(ERR_QUIC_PROTOCOL_ERROR, callback.WaitForResult());
+
+  EXPECT_TRUE(mock_quic_data.AllReadDataConsumed());
+  EXPECT_TRUE(mock_quic_data.AllWriteDataConsumed());
+}
+
+// Makes sure the CONNECT request packet contains the correct HTTP/2 stream
+// dependency and weights given the request priority.
+TEST_P(QuicNetworkTransactionTest, QuicProxyRequestPriority) {
+  session_params_.enable_quic = true;
+  proxy_service_ =
+      ProxyService::CreateFixedFromPacResult("QUIC proxy.example.org:70");
+
+  const RequestPriority request_priority = MEDIUM;
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset header_stream_offset = 0;
+  mock_quic_data.AddWrite(
+      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(
+      2, GetNthClientInitiatedStreamId(0), true, false, request_priority,
+      ConnectRequestHeaders("CONNECT", "mail.example.org:443"), 0,
+      &header_stream_offset));
+  // Return an error, so the transaction stops here (this test isn't interested
+  // in the rest).
+  mock_quic_data.AddRead(ASYNC, ERR_CONNECTION_FAILED);
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  CreateSession();
+
+  request_.url = GURL("https://mail.example.org/");
+  HttpNetworkTransaction trans(request_priority, session_.get());
+  TestCompletionCallback callback;
+  int rv = trans.Start(&request_, callback.callback(), net_log_.bound());
+  EXPECT_EQ(ERR_IO_PENDING, rv);
+  EXPECT_EQ(ERR_QUIC_PROTOCOL_ERROR, callback.WaitForResult());
+
+  EXPECT_TRUE(mock_quic_data.AllReadDataConsumed());
+  EXPECT_TRUE(mock_quic_data.AllWriteDataConsumed());
+}
+
+TEST_P(QuicNetworkTransactionTest, QuicProxyAuth) {
+  session_params_.enable_quic = true;
+  proxy_service_ =
+      ProxyService::CreateFixedFromPacResult("QUIC proxy.example.org:70");
+
+  const base::string16 kBaz(base::ASCIIToUTF16("baz"));
+  const base::string16 kFoo(base::ASCIIToUTF16("foo"));
+  
+  MockQuicData mock_quic_data;
+  QuicStreamOffset client_header_stream_offset = 0;
+  QuicStreamOffset server_header_stream_offset = 0;
+  QuicStreamOffset client_data_offset = 0;
+  QuicStreamOffset server_data_offset = 0;
+
+  mock_quic_data.AddWrite(                                          // seq 0
+      ConstructInitialSettingsPacket(1, &client_header_stream_offset));
+  
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(      // seq 1
+      2, GetNthClientInitiatedStreamId(0), true, false,
+      ConnectRequestHeaders("CONNECT", "mail.example.org:443"),
+      &client_header_stream_offset));
+
+  SpdyHeaderBlock headers =
+      GetResponseHeaders("407 Proxy Authentication Required");
+  headers["proxy-authenticate"] = "Basic realm=\"MyRealm1\"";
+  headers["proxy-connection"] = "keep-alive";
+  headers["content-length"] = "10";
+  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(      // seq 2
+      1, GetNthClientInitiatedStreamId(0), false, false,
+      std::move(headers), &server_header_stream_offset));
+
+  mock_quic_data.AddSynchronousRead(ConstructServerDataPacket(      // seq 3
+      2, GetNthClientInitiatedStreamId(0), false, false, server_data_offset,
+      "0123456789"));
+  server_data_offset += 10;
+
+  mock_quic_data.AddWrite(ConstructClientAckPacket(3, 2, 1, 1));    // seq 4
+
+  mock_quic_data.AddWrite(ConstructClientRstPacket(                 // seq 5
+      4, GetNthClientInitiatedStreamId(0), QUIC_STREAM_CANCELLED,
+      client_data_offset));
+
+// Write data not matching!
+  headers = ConnectRequestHeaders("CONNECT", "mail.example.org:443");
+  headers["proxy-authorization"] = "Basic Zm9vOmJheg==";
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(      // seq 6
+      5, GetNthClientInitiatedStreamId(1), false, false, std::move(headers),
+      GetNthClientInitiatedStreamId(0), &client_header_stream_offset));
+
+  // Response to wrong password
+  headers = GetResponseHeaders("407 Proxy Authentication Required");
+  headers["proxy-authenticate"] = "Basic realm=\"MyRealm1\"";
+  headers["proxy-connection"] = "keep-alive";
+  headers["content-length"] = "10";
+  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(      // seq 7
+      3, GetNthClientInitiatedStreamId(1), false, false,
+      std::move(headers), &server_header_stream_offset));
+
+
+  mock_quic_data.AddWrite(ConstructClientAckAndRstPacket(           
+      6, GetNthClientInitiatedStreamId(1), QUIC_STREAM_CANCELLED, 3, 3, 1));  
+
+  mock_quic_data.AddRead(ASYNC, ERR_IO_PENDING);  // paused
+  mock_quic_data.AddRead(ASYNC, OK);              // No more data to read
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  CreateSession();
+
+  request_.url = GURL("https://mail.example.org/");
+  // Ensure that proxy authentication is attempted even
+  // when the no authentication data flag is set.
+  request_.load_flags = LOAD_DO_NOT_SEND_AUTH_DATA;
+
+
+  HttpNetworkTransaction trans(DEFAULT_PRIORITY, session_.get());
+  HeadersHandler headers_handler;
+  trans.SetBeforeHeadersSentCallback(
+      base::Bind(&HeadersHandler::OnBeforeHeadersSent,
+                 base::Unretained(&headers_handler)));
+  RunTransaction(&trans);
+
+  const HttpResponseInfo* response = trans.GetResponseInfo();
+  ASSERT_TRUE(response != nullptr);
+  ASSERT_TRUE(response->headers.get() != nullptr);
+  EXPECT_EQ("HTTP/1.1 407 Proxy Authentication Required",
+            response->headers->GetStatusLine());
+
+  //CheckResponseData(&trans, "0123456789");    // ERR_TUNNEL_CONNECTION_FAILED
+
+  TestCompletionCallback callback;
+  int rv = trans.RestartWithAuth(AuthCredentials(kFoo, kBaz), callback.callback());
+  EXPECT_EQ(ERR_IO_PENDING, rv);
+  EXPECT_EQ(OK, callback.WaitForResult());
+
+  response = trans.GetResponseInfo();
+  ASSERT_TRUE(response != nullptr);
+  ASSERT_TRUE(response->headers.get() != nullptr);
+  EXPECT_EQ("HTTP/1.1 407 Proxy Authentication Required",
+            response->headers->GetStatusLine());
+
+  // Why is this used to tear stuff down???
+  NetworkChangeNotifier::NotifyObserversOfIPAddressChangeForTests();
+  // Empty the current queue.
+  base::RunLoop().RunUntilIdle();
+  
+  mock_quic_data.GetSequencedSocketData()->Resume();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(mock_quic_data.AllReadDataConsumed());
+  EXPECT_TRUE(mock_quic_data.AllWriteDataConsumed());
 }
 
 }  // namespace test
