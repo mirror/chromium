@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f3f1245_6764ba1d",
+        "filename": "content/browser/renderer_host/media/media_devices_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-19T10:34:13Z",
+      "side": 1,
+      "message": "The original test has four subscribers. 1 subscribed to all devices, and 3 that subscribe each to one different device type.\n\nThe new version of the test only has the latter 3 and simulates the events 3 times. Please rewrite to match the original test with 4 subscribers.\n\nAlso, no need to simulate the device changes inside a loop. You just need four MockMediaDevicesListener variables like the original test, and a single round of device-change simulations as in the original test.\n\nThe reason to have the test that way is that it is similar to having one subscriber like MediaDevices (subscribes to everything) and 3 subscribers for each event type (like Pepper).",
+      "range": {
+        "startLine": 519,
+        "startChar": 3,
+        "endLine": 519,
+        "endChar": 4
+      },
+      "revId": "a82d54958ce0ec1af81d22aca8b4164518a04987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
