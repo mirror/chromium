@@ -251,6 +251,24 @@
     },
     {
       "key": {
+        "uuid": "7622b86d_f9e557e0",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T14:49:28Z",
+      "side": 1,
+      "message": "Thanks, I\u0027m now convinced :)\n\nWill take a final look shortly.",
+      "parentUuid": "d783e6e0_76cc2af9",
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7e07b95_e7d28316",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.cpp",
         "patchSetId": 3
