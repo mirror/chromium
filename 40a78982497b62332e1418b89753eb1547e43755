@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cb63c02_0bc621bd",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-19T20:01:10Z",
+      "side": 1,
+      "message": "When do we need to push an empty grid to |grid_list_| for new overview UI? Doesn\u0027t seem right?",
+      "revId": "40a78982497b62332e1418b89753eb1547e43755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d92831_e5f11249",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-19T20:01:10Z",
+      "side": 1,
+      "message": "Why not checking grid_list_.empty()?",
+      "revId": "40a78982497b62332e1418b89753eb1547e43755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623de616_636f139a",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-19T20:01:10Z",
+      "side": 1,
+      "message": "nit: Can you add brief description for the newly added tests?",
+      "revId": "40a78982497b62332e1418b89753eb1547e43755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
