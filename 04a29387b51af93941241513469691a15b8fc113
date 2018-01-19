@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c3d3b12_b4642552",
+        "filename": "chrome/browser/resources/signin/signin_error/signin_error.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2018-01-19T22:29:25Z",
+      "side": 1,
+      "message": "Change it to #normal-error-message p:empty, #normal-error-message a:empty",
+      "parentUuid": "da5c7390_a8e5762a",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "04a29387b51af93941241513469691a15b8fc113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76e0f548_3a77bbc6",
         "filename": "chrome/browser/ui/webui/signin/login_ui_service.h",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "b5e5d912_b9153868",
+        "filename": "chrome/browser/ui/webui/signin/login_ui_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2018-01-19T22:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76e0f548_3a77bbc6",
+      "revId": "04a29387b51af93941241513469691a15b8fc113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e25db7b_14dc10cf",
         "filename": "chrome/browser/ui/webui/signin/login_ui_service.h",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "04a29387b51af93941241513469691a15b8fc113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cbb43a6_f07d4b77",
+        "filename": "chrome/browser/ui/webui/signin/login_ui_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2018-01-19T22:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e25db7b_14dc10cf",
+      "revId": "04a29387b51af93941241513469691a15b8fc113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "04a29387b51af93941241513469691a15b8fc113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e480e772_21aef0e2",
+        "filename": "chrome/browser/ui/webui/signin/signin_error_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2018-01-19T22:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89f9ceeb_cdab11de",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 6
+      },
+      "revId": "04a29387b51af93941241513469691a15b8fc113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
