@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "1f45d296_43d816f4",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-19T13:42:32Z",
+      "side": 1,
+      "message": "1) DOMWrapperWorld::GetWrapper() is more generic than TraceWrappers (DispatchTraceWrappes). So we will have to support cases when GetWrapper is called by other components and properly manage lifetime of the returned Wrapper.\n2) More importantly, what would be the type of DOMWrapperWorld::GetWrapper()? It is not v8::PersistentBase and not TraceWrapperV8Reference. It is the value part of v8::GlobalValueMap\u003cKeyType*, v8::Object, PersistentValueMapTraits\u003e. I think this where where all this complexity is coming from.\n\nIn any case, I still don\u0027t understand the problem with the current approach in the CL?\nDOMWrapperMap, DOMDataStore, and DOMWrapperWorld are not GarbageCollected, but they are already implicitly participating in tracing via MarkWrappersInAllWorlds, MarkWrapper methods.\nThis CL is only making the participation explicit, which I think is good.",
+      "parentUuid": "81169fd2_ed5f5676",
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7e07b95_e7d28316",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.cpp",
         "patchSetId": 3
