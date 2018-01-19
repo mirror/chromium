@@ -424,6 +424,24 @@
     },
     {
       "key": {
+        "uuid": "7180124d_251621ba",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-19T23:16:10Z",
+      "side": 1,
+      "message": "It\u0027s definitely desirable, but I won\u0027t block VR from implementing it\u0027s own solution.",
+      "parentUuid": "4836ec80_56ae12bc",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7fd6c90_d4af7f2e",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 2
