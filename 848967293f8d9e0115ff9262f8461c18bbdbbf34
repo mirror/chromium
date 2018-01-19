@@ -249,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "f99cbb77_675a1ce6",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1259934
+      },
+      "writtenOn": "2018-01-19T04:29:12Z",
+      "side": 1,
+      "message": "Please find it here: https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/app/ContextImpl.java#2028\n\nThe mMainThread will be passed to the newly created context object. I will double think if it is safe to directly use ContextUtils.getApplicationContext(), which is created when creating mediashell application.",
+      "parentUuid": "10b067b6_7ba360e3",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 87
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62b30eb4_afaa2568",
         "filename": "chromecast/browser/android/cast_web_contents_surface_helper.h",
         "patchSetId": 3
