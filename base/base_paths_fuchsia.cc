@@ -11,22 +11,28 @@
 #include "base/files/file_util.h"
 #include "base/path_service.h"
 #include "base/process/process.h"
+#include "base/strings/string_util.h"
 
 namespace base {
 namespace {
 
 constexpr char kPackageRoot[] = "/pkg";
 
-}  // namespace
+bool IsPackaged() {
+  return base::StartsWith(
+      base::CommandLine::ForCurrentProcess()->GetProgram().AsUTF8Unsafe(),
+      kPackageRoot, base::CompareCase::SENSITIVE);
+}
 
 base::FilePath GetPackageRoot() {
-  base::FilePath path_obj(kPackageRoot);
-  if (PathExists(path_obj)) {
-    return path_obj;
+  if (IsPackaged()) {
+    return base::FilePath(kPackageRoot);
   } else {
     return base::FilePath();
   }
 }
+
+}  // namespace
 
 bool PathProviderFuchsia(int key, FilePath* result) {
   switch (key) {
