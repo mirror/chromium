@@ -22,6 +22,8 @@ import android.view.MenuItem;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
+import org.chromium.base.ContentUriUtils;
+import org.chromium.base.ContextUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
@@ -34,6 +36,13 @@ import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.chrome.browser.preferences.TextMessagePreference;
 import org.chromium.ui.text.SpanApplier;
 import org.chromium.ui.widget.Toast;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 
 /**
  * The "Save passwords" screen in Settings, which allows the user to enable or disable password
@@ -79,6 +88,11 @@ public class SavePasswordsPreferences
     // True if the option to export passwords in the three-dots menu should be disabled due to an
     // ongoing export.
     private boolean mExportOptionSuspended = false;
+    // True if the user just finished the UI flow for confirming a password export.
+    private boolean mExportConfirmed;
+    // CSV-encoded saved passwords for export.
+    private String mExportedPasswords;
+
     private Preference mLinkPref;
     private ChromeSwitchPreference mSavePasswordsSwitch;
     private ChromeBaseCheckBoxPreference mAutoSignInSwitch;
@@ -135,8 +149,10 @@ public class SavePasswordsPreferences
                             // TODO(crbug.com/788701): Ensure that the passwords are stored to a
                             // file here and its URI in saved-state-bundle in case the reauth
                             // dialogue causes this activity to be killed.
+                            mExportedPasswords = serializedPasswords;
                             // TODO(crbug.com/788701): Synchronise with end of the UI flow and pass
                             // the data.
+                            tryExporting();
                         }
                     });
             if (!ReauthenticationManager.isScreenLockSetUp(getActivity().getApplicationContext())) {
@@ -166,7 +182,8 @@ public class SavePasswordsPreferences
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == AlertDialog.BUTTON_POSITIVE) {
-                    exportAfterWarning();
+                    mExportConfirmed = true;
+                    tryExporting();
                 }
                 // Re-enable exporting, the current one was either finished or dismissed.
                 mExportOptionSuspended = false;
@@ -175,9 +192,79 @@ public class SavePasswordsPreferences
         exportWarningDialogFragment.show(getFragmentManager(), null);
     }
 
-    private void exportAfterWarning() {
-        // TODO(crbug.com/788701): Synchronise with obtaining serialised passwords and pass them to
-        // the intent.
+    /**
+     * Starts the exporting intent if both blocking events are completed: serializing and the
+     * confirmation flow.
+     */
+    private void tryExporting() {
+        // TODO(crbug.com/788701): Display a progress indicator if user
+        // confirmed but serialising is not done yet and dismiss it once called
+        // again with serialising done.
+        if (mExportConfirmed && mExportedPasswords != null) sendExportIntent();
+    }
+
+    /**
+     * Call this to abort the export UI flow and display an error description to the user.
+     * @param description A string with a brief explanation of the error.
+     */
+    private void showExportError(String description) {
+        // TODO(crbug.com/788701): Implement.
+        // TODO(vabr): Remove the toast.
+        Toast.makeText(getActivity().getApplicationContext(), "Abort: " + description,
+                     Toast.LENGTH_LONG)
+                .show();
+        // Re-enable exporting, the current one was just cancelled.
+        mExportOptionSuspended = false;
+    }
+
+    /**
+     * Grabs the exported passwords and passes them into an implicit intent, so that the user can
+     * use a storage app to save the exported passwords.
+     */
+    private void sendExportIntent() {
+        File tempFile = null;
+        try {
+            File passwordsDir =
+                    new File(ContextUtils.getApplicationContext().getCacheDir() + "/passwords");
+            passwordsDir.mkdir();
+        } catch (SecurityException e) {
+            // TODO(crbug.com/788701): Change e.getMessage to an appropriate error, following the
+            // mocks.
+            showExportError(e.getMessage());
+        }
+        try {
+            tempFile = new File(ContextUtils.getApplicationContext().getCacheDir()
+                    + "/passwords/password-export.csv");
+            tempFile.deleteOnExit();
+            BufferedWriter tempWriter = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(tempFile), Charset.forName("UTF-8")));
+            tempWriter.write(mExportedPasswords);
+            tempWriter.close();
+        } catch (IOException e) {
+            // TODO(crbug.com/788701): Change e.getMessage to an appropriate error, following the
+            // mocks.
+            showExportError(e.getMessage());
+        }
+        Intent send = new Intent(Intent.ACTION_SEND);
+        send.setType("text/csv");
+        try {
+            send.putExtra(Intent.EXTRA_STREAM, ContentUriUtils.getContentUriFromFile(tempFile));
+        } catch (IllegalArgumentException ex) {
+            // TODO(crbug.com/788701): Display an error, because the result of Uri.fromFile is not
+            // going to be shareable.
+            showExportError("Could not share the exported data.");
+        }
+
+        try {
+            Intent chooser = Intent.createChooser(send, null);
+            chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            ContextUtils.getApplicationContext().startActivity(chooser);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // TODO(crbug.com/788701): If no app handles it, display the appropriate error.
+            showExportError("No app.");
+        }
+        mExportedPasswords = null;
+        mExportConfirmed = false;
     }
 
     /**
