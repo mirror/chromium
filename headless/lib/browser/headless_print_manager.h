@@ -27,6 +27,7 @@ struct HEADLESS_EXPORT HeadlessPrintSettings {
 
   gfx::Size paper_size_in_points;
   printing::PageMargins margins_in_points;
+  bool use_page_defined_source_size;
 
   bool landscape;
   bool display_header_footer;

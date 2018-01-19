@@ -273,6 +273,12 @@ std::unique_ptr<base::DictionaryValue> ParsePrintSettings(
   settings->margins_in_points.right =
       margin_right_in_inch * printing::kPointsPerInch;
 
+  if (const base::Value* use_page_defined_source_size =
+          params->FindKey("usePageDefinedSourceSize")) {
+    settings->use_page_defined_source_size =
+        use_page_defined_source_size->GetBool();
+  }
+
   return nullptr;
 }
 #endif

@@ -13,6 +13,18 @@
 
 namespace headless {
 
+TEST(ParsePrintSettingsTest, UsePageDefinedSourceSize) {
+  HeadlessPrintSettings settings;
+  EXPECT_FALSE(settings.use_page_defined_source_size);
+
+  auto params = std::make_unique<base::DictionaryValue>();
+  params->SetBoolean("usePageDefinedSourceSize", true);
+  std::unique_ptr<base::DictionaryValue> response =
+      ParsePrintSettings(0, params.get(), &settings);
+  EXPECT_TRUE(settings.use_page_defined_source_size);
+  EXPECT_EQ(nullptr, response);
+}
+
 TEST(ParsePrintSettingsTest, Landscape) {
   HeadlessPrintSettings settings;
   EXPECT_FALSE(settings.landscape);
