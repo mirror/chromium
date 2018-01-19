@@ -628,13 +628,24 @@ void StyleAdjuster::AdjustComputedStyle(StyleResolverState& state,
     }
   }
 
-  // TODO(layout-dev): Once LayoutnG handles inline content editable, we should
-  // get rid of following code fragment.
-  if (RuntimeEnabledFeatures::LayoutNGEnabled() &&
-      style.UserModify() != EUserModify::kReadOnly &&
-      style.Display() == EDisplay::kInline &&
-      parent_style.UserModify() == EUserModify::kReadOnly) {
-    style.SetDisplay(EDisplay::kInlineBlock);
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled()) {
+    style.SetIsLayoutNGDisabled(true);
+  } else {
+    if (element && element->IsInShadowTree() &&
+        element->ContainingShadowRoot()->IsUserAgent()) {
+      // Objects inside UA shadow is not supported yet.
+      style.SetIsLayoutNGDisabled(true);
+
+    } else if (style.UserModify() != EUserModify::kReadOnly) {
+      // Content editable is not supported yet.
+      //
+      // Also change inline box to inline-block because all boxes within an
+      // inline formatting context must use one engine.
+      if (!parent_style.IsLayoutNGDisabled() &&
+          style.Display() == EDisplay::kInline)
+        style.SetDisplay(EDisplay::kInlineBlock);
+      style.SetIsLayoutNGDisabled(true);
+    }
   }
 }
 }  // namespace blink
