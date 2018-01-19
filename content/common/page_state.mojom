@@ -32,14 +32,6 @@ import "ui/gfx/geometry/mojo/geometry.mojom";
 // Next MinVersion: 2
 
 // Next Ordinal: 4
-struct FileSystemFile {
-  url.mojom.Url filesystem_url@0;
-  uint64 offset@1;
-  uint64 length@2;
-  mojo.common.mojom.Time modification_time@3;
-};
-
-// Next Ordinal: 4
 struct File {
   mojo.common.mojom.String16 path@0;
   uint64 offset@1;
@@ -52,7 +44,6 @@ union Element {
   string blob_uuid@0;
   array<uint8> bytes@1;
   File file@2;
-  FileSystemFile file_system_file@3;
 };
 
 // Next Ordinal: 3
