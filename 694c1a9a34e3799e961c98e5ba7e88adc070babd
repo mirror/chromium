@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22b47b5d_2d9707c1",
+        "filename": "net/base/fuzzer_test_support.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-19T17:05:21Z",
+      "side": 1,
+      "message": "Why static? It would be better to initialize a distinct ScopedTaskEnvironment for each test. That would ensure that tasks posted in a test can\u0027t continue to run after the end of that test.",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "694c1a9a34e3799e961c98e5ba7e88adc070babd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
