@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ffc32dcc_10d8dc09",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-19T22:13:19Z",
+      "side": 1,
+      "message": "This is the Android only mechanism, where they found info collection is slow on startup, so they cache it and read the cache on the next run. I am getting rid of this in the next CL, where we don\u0027t collect GPUInfo on Android on browser startup.",
+      "parentUuid": "46e3d07e_ba5dd470",
+      "revId": "2e92f3907cbc567ab711519d084b24f3d0a5db5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a52b145_c5a3a9c0",
         "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "027a1675_fc1730c4",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-19T22:13:19Z",
+      "side": 1,
+      "message": "This is copied over from original line #476.",
+      "parentUuid": "2a52b145_c5a3a9c0",
+      "range": {
+        "startLine": 554,
+        "startChar": 31,
+        "endLine": 554,
+        "endChar": 40
+      },
+      "revId": "2e92f3907cbc567ab711519d084b24f3d0a5db5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0405868e_76300121",
         "filename": "gpu/config/gpu_info_collector.h",
         "patchSetId": 6
@@ -53,6 +95,30 @@
       "writtenOn": "2018-01-19T19:16:52Z",
       "side": 1,
       "message": "Is it possible to hide the version that doesn\u0027t take base::CommandLine, to avoid adding an overload of this? The fewer APIs the better.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 24
+      },
+      "revId": "2e92f3907cbc567ab711519d084b24f3d0a5db5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6928f4_45575c34",
+        "filename": "gpu/config/gpu_info_collector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-19T22:13:19Z",
+      "side": 1,
+      "message": "This might be challenging because the first function is platform specific, so it has many implementations. The second function is mostly a wrapper around the first one plus a few extra logic, which is universal.",
+      "parentUuid": "0405868e_76300121",
       "range": {
         "startLine": 33,
         "startChar": 0,
