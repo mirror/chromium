@@ -91,6 +91,7 @@ void SetCustomCursorOnResourceThread(
     scoped_refptr<base::SingleThreadTaskRunner> ui_service_task_runner_,
     base::WeakPtr<ThreadedImageCursors> threaded_image_cursors_weak_ptr) {
   if (image_cursors_weak_ptr) {
+    LOG(ERROR) << " %%%%% CREATING ANIMATED CURSOR ON RESOURCE THREAD";
     ui::PlatformCursor platform_cursor = cursor_factory->CreateAnimatedCursor(
         cursor_data->cursor_frames(), cursor_data->hotspot_in_pixels(),
         cursor_data->frame_delay().InMilliseconds(),
@@ -204,6 +205,7 @@ void ThreadedImageCursors::SetCursor(const ui::CursorData& cursor_data,
 void ThreadedImageCursors::SetCursorOnPlatformWindow(
     ui::PlatformCursor platform_cursor,
     ui::PlatformWindow* platform_window) {
+  LOG(ERROR) << " %%%%% SETTING CURSOR ON UI THREAD";
   platform_window->SetCursor(platform_cursor);
 }
 
