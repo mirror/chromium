@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85b87cb5_57e70cf7",
+        "filename": "chrome/common/extensions/extension_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-19T20:00:04Z",
+      "side": 1,
+      "message": "I have rolled this check into the existing tests.",
+      "parentUuid": "a338e1b8_8c5bf979",
+      "revId": "5bac800950c8fcb17c4aa1aee88b3d84ab0ea167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "772df32f_0d494da9",
         "filename": "extensions/common/extension.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-19T18:17:30Z",
       "side": 1,
       "message": "I think we should change name_ to be display_name_, and comment that it is only to be used for display, and guide callers to use non_localized_name_ for a more stable name.  We probably don\u0027t have to worry about changing the name() accessor (given how wide-spread its usage is).",
+      "revId": "5bac800950c8fcb17c4aa1aee88b3d84ab0ea167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d52cc4e_7f686d09",
+        "filename": "extensions/common/extension.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-19T20:00:04Z",
+      "side": 1,
+      "message": "I\u0027ve changed name_ to display_name_. Given the existing comment about displaying here[1], would you still like that we add more to the comment?\n\n[1] https://chromium.googlesource.com/chromium/src/+/b0e3c370f735edef8128ae377f6fe163e02df2b0/extensions/common/extension.h#365",
+      "parentUuid": "772df32f_0d494da9",
       "revId": "5bac800950c8fcb17c4aa1aee88b3d84ab0ea167",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
