@@ -752,4 +752,11 @@
     // First node is after the second one.
     after
   };
+
+  enum AXAutoComplete {
+    kAXAutoCompleteNone,
+    kAXAutoCompleteInline,
+    kAXAutoCompleteList,
+    kAXAutoCompleteBoth,
+  };
 };

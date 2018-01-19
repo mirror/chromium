@@ -593,7 +593,8 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
       dst->AddStringAttribute(ui::AX_ATTR_ACCESS_KEY, src.AccessKey().Utf8());
     }
 
-    if (src.AriaAutoComplete().length()) {
+    if (src.AriaAutoComplete() !=
+        blink::WebAXAutoComplete::kWebAXAutoCompleteNone) {
       dst->AddStringAttribute(ui::AX_ATTR_AUTO_COMPLETE,
                               src.AriaAutoComplete().Utf8());
     }

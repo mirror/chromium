@@ -155,11 +155,46 @@ bool RoleAllowsSelected(AccessibilityRole role) {
 void FillWidgetProperties(AXObject& ax_object,
                           protocol::Array<AXProperty>& properties) {
   AccessibilityRole role = ax_object.RoleValue();
-  String autocomplete = ax_object.AriaAutoComplete();
-  if (!autocomplete.IsEmpty())
-    properties.addItem(
-        CreateProperty(AXPropertyNameEnum::Autocomplete,
-                       CreateValue(autocomplete, AXValueTypeEnum::Token)));
+
+  AccessibilityExpanded expanded = ax_object.IsExpanded();
+  switch (expanded) {
+    case kExpandedUndefined:
+      break;
+    case kExpandedCollapsed:
+      properties.addItem(CreateProperty(
+          AXPropertyNameEnum::Expanded,
+          CreateBooleanValue(false, AXValueTypeEnum::BooleanOrUndefined)));
+      break;
+    case kExpandedExpanded:
+      properties.addItem(CreateProperty(
+          AXPropertyNameEnum::Expanded,
+          CreateBooleanValue(true, AXValueTypeEnum::BooleanOrUndefined)));
+      break;
+  }
+
+  AXAutoComplete autocomplete = ax_object.AriaAutoComplete();
+  switch (autocomplete) {
+    case kAXAutoCompleteNone:
+      properties.addItem(
+          CreateProperty(AXPropertyNameEnum::Autocomplete,
+                         CreateValue("none", AXValueTypeEnum::Token)));
+      break;
+    case kAXAutoCompleteInline:
+      properties.addItem(
+          CreateProperty(AXPropertyNameEnum::Autocomplete,
+                         CreateValue("inline", AXValueTypeEnum::Token)));
+      break;
+    case kAXAutoCompleteList:
+      properties.addItem(
+          CreateProperty(AXPropertyNameEnum::Autocomplete,
+                         CreateValue("list", AXValueTypeEnum::Token)));
+      break;
+    case kAXAutoCompleteBoth:
+      properties.addItem(
+          CreateProperty(AXPropertyNameEnum::Autocomplete,
+                         CreateValue("both", AXValueTypeEnum::Token)));
+      break;
+  }
 
   bool has_popup = ax_object.AriaHasPopup();
   if (has_popup || ax_object.HasAttribute(HTMLNames::aria_haspopupAttr)) {

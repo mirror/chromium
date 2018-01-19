@@ -1174,23 +1174,21 @@ unsigned AXNodeObject::HierarchicalLevel() const {
 }
 
 // TODO: rename this just AutoComplete, it's not only ARIA.
-String AXNodeObject::AriaAutoComplete() const {
+AXAutoComplete AXNodeObject::AriaAutoComplete() const {
   if (IsNativeTextControl() || IsARIATextControl()) {
     const AtomicString& aria_auto_complete =
         GetAOMPropertyOrARIAAttribute(AOMStringProperty::kAutocomplete)
             .DeprecatedLower();
-    // Illegal values must be passed through, according to CORE-AAM.
-    if (!aria_auto_complete.IsNull())
-      return aria_auto_complete == "none" ? String() : aria_auto_complete;
+
   }
 
   if (GetNode() && IsHTMLInputElement(*GetNode())) {
     HTMLInputElement& input = ToHTMLInputElement(*GetNode());
     if (input.DataList())
-      return "list";
+      return kAXAutoCompleteList;
   }
 
-  return String();
+  return kAXAutoCompleteNone;
 }
 
 namespace {

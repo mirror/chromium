@@ -162,7 +162,7 @@ class WebAXObject {
   BLINK_EXPORT void ColorValue(int& r, int& g, int& b) const;
   BLINK_EXPORT unsigned ColorValue() const;
   BLINK_EXPORT WebAXObject AriaActiveDescendant() const;
-  BLINK_EXPORT WebString AriaAutoComplete() const;
+  BLINK_EXPORT WebAXAutoComplete AriaAutoComplete() const;
   BLINK_EXPORT WebAXAriaCurrentState AriaCurrentState() const;
   BLINK_EXPORT bool AriaHasPopup() const;
   BLINK_EXPORT bool IsEditableRoot() const;
