@@ -52,6 +52,24 @@
       "revId": "084ab81c4fed60983df3fb3989f6abb43c80f191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c501a6b2_9f8cd177",
+        "filename": "android_webview/browser/renderer_host/aw_render_view_host_ext.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2018-01-19T14:43:55Z",
+      "side": 1,
+      "message": "Ok, updated to preserve the existing behaviour. I still wonder whether it is what developers expect that iframes don\u0027t inherit the chosen background colour.",
+      "parentUuid": "95441c5f_bde74aa5",
+      "revId": "084ab81c4fed60983df3fb3989f6abb43c80f191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
