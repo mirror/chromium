@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60530bfc_f628b2d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-19T21:40:40Z",
+      "side": 1,
+      "message": "Is this our style recommendation? I thought we had a preference one way or the other, but I couldn\u0027t find which. I went with this because it\u0027s prettier.\n\nFWIW they are equivalent. If you give a compliler -DFOO it\u0027s (unintuitively) the same as -DFOO\u003d1. Not to be confused with -DFOO\u003d",
+      "parentUuid": "702709c0_5913d1b9",
+      "range": {
+        "startLine": 25,
+        "startChar": 37,
+        "endLine": 25,
+        "endChar": 39
+      },
+      "revId": "4de177d4bcc1dbaaa36149c80d5a7ab44f60d6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db940e0e_b5600bfa",
         "filename": "base/component_export.h",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-19T21:36:24Z",
       "side": 1,
       "message": "I\u0027m surprised its this Gnarly.  What am I missing?",
+      "revId": "4de177d4bcc1dbaaa36149c80d5a7ab44f60d6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9f32e4_5b8c4d7c",
+        "filename": "base/component_export.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-19T21:40:40Z",
+      "side": 1,
+      "message": "Needed for conditional expansion.\n\nYou can\u0027t do something more obvious like\n\n#define FOO\n  #if defined(X)\n    BAR\n  #else\n    BAZ\n  #endif",
+      "parentUuid": "db940e0e_b5600bfa",
       "revId": "4de177d4bcc1dbaaa36149c80d5a7ab44f60d6f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
