@@ -16,6 +16,24 @@
       "revId": "3690f064a874f98fabf26f2d06095cde9e654c57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b99a88_2b5b8fa1",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-19T09:21:21Z",
+      "side": 0,
+      "message": "I already removed that in the previous CL as it was only used by the old dialog. (https://chromium-review.googlesource.com/c/chromium/src/+/857059/11/chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc)\n\nWith the launch of the new dialog, the footer was removed and replaced by information shown in the summary of the history checkbox. (https://docs.google.com/presentation/d/1NI9SR2DpFKAsAmvB0-Bn1QydWKruwNzzTro_B88EsTo/edit#slide\u003did.g2123ebcc21_0_16)",
+      "parentUuid": "46c76429_ba0e004b",
+      "revId": "3690f064a874f98fabf26f2d06095cde9e654c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
