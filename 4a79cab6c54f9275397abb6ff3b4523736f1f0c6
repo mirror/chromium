@@ -100,6 +100,30 @@
     },
     {
       "key": {
+        "uuid": "ccb9a583_320ffbc2",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-19T08:50:09Z",
+      "side": 1,
+      "message": "It was traced through ScriptWrappableVisitor::MarkWrappersInAllWorlds [1]. This one dispatched to the DOMWrapperWorld [2] which then also marked then passed the main world wrapper back to the visitor and passed the other ones directly to V8.\n\nThe problem here was that (a) ScriptWrappableVisitor hat internal knowledge on ScriptWrappable., (b) the DOMWrapper world bypassed the visitor for all but the main world. \n\nIn the new approach, ScriptWrappable is no different then other objects which allows us to remove a bunch of special casing.\n\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.cpp?q\u003dMarkWrappersInAllWorlds\u0026l\u003d219\n[2] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.cpp?l\u003d119",
+      "parentUuid": "00880af5_2d55a96d",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cd35ca0_4637a243",
         "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
         "patchSetId": 3
