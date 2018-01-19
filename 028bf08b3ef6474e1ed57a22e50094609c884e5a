@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75cfffbf_31602899",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T17:32:46Z",
+      "side": 1,
+      "message": "Should we be removing the animation handler when the window is destroyed?",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b55f661_8334e4a4",
+        "filename": "ui/base/win/direct_manipulation.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T17:32:46Z",
+      "side": 1,
+      "message": "We probably want to define this with a _features.h header file.. All features tend to be in the same files.. So it is easy to look for them. (probably in https://cs.chromium.org/chromium/src/ui/base/ui_base_features.h?sq\u003dpackage:chromium\u0026dr)",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c50672_061f8459",
+        "filename": "ui/base/win/direct_manipulation.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T17:32:46Z",
+      "side": 1,
+      "message": "Should we check for last_scale_ \u003d\u003d 0?",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487c3e4d_736da4c8",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T17:32:46Z",
+      "side": 1,
+      "message": "These objects should be initialized.. just do it inline here",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3367af_99af4ab5",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T17:32:46Z",
+      "side": 1,
+      "message": "Initialize these variables here...",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31b8733_afb341a5",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T17:32:46Z",
+      "side": 1,
+      "message": "We should definitely describe what this method is doing in comments.",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "931abd48_c1dc34b0",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T17:32:46Z",
+      "side": 1,
+      "message": "The root location is not the same as the client location; you can\u0027t pass cursor_location into both here...",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9640940_b70fdf72",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-19T17:32:46Z",
+      "side": 1,
+      "message": "What is this ref used for?",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
