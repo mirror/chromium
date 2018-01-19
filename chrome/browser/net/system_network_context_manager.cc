@@ -26,6 +26,8 @@
 #include "content/public/network/network_service.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "net/net_features.h"
+#include "services/device/public/cpp/device_features.h"
+#include "services/network/public/cpp/network_features.h"
 
 namespace {
 
