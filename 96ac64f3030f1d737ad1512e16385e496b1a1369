@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4946413b_77445e7f",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T02:50:07Z",
+      "side": 1,
+      "message": "should this also do\n\n  [statusBubbleParentWindow_ removeChildWindow:]?",
+      "revId": "96ac64f3030f1d737ad1512e16385e496b1a1369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0aa5668_5bf60a11",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T02:50:07Z",
+      "side": 1,
+      "message": "(otherwise.. could this still be the old parent?)",
+      "revId": "96ac64f3030f1d737ad1512e16385e496b1a1369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d941cb_ac5eb0a1",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T02:50:07Z",
+      "side": 1,
+      "message": "(The zombie-bad-stuff I was worried about is here -- if AppKit were to take a reference to |self| (which it does a lot for NSWindows), there\u0027s no guarantee the scoped_nsobject in StatusBubbleMac releases the last reference to |self| --\n[statusBubbleParentWindow_ dealloc] then could happen, and this could be a zombie access. I think.)",
+      "revId": "96ac64f3030f1d737ad1512e16385e496b1a1369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db371f2_59d13f8f",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T02:50:07Z",
+      "side": 1,
+      "message": "Maybe\n\n // Note this will order in |self| if it was ordered out by -setStatusBubbleParentWindow:.\n\n(it does right?)",
+      "revId": "96ac64f3030f1d737ad1512e16385e496b1a1369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
