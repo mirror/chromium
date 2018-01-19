@@ -16,6 +16,24 @@
       "revId": "a2eee224229b5649cab1f2e72fd39fd690ff7131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d4284b_4850c829",
+        "filename": "chrome/browser/favicon/content_favicon_driver_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2018-01-19T00:44:25Z",
+      "side": 1,
+      "message": "Thanks for catching that! It turned out to be trickier than I expected to get a fully functional test for this behavior (due to the interplay of Blink doing the blocking and Chrome doing the navigations). I\u0027ve uploaded a new patchset with a new test structure that correctly fails when the policy change is reverted, and passes after making the change.",
+      "parentUuid": "97798c7e_e383675c",
+      "revId": "a2eee224229b5649cab1f2e72fd39fd690ff7131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
