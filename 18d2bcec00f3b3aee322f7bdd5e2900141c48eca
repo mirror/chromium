@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b917806_429265f6",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_machine_translation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-19T16:59:08Z",
+      "side": 1,
+      "message": "I prefer not, since this is a //third-party library that has nothing to do with //base,\nand shouldn\u0027t include Chromium-specific headers like build/build_config.h",
+      "parentUuid": "50d1fc83_55408daf",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "18d2bcec00f3b3aee322f7bdd5e2900141c48eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "525d203a_6f9236d2",
         "filename": "third_party/android_crazy_linker/src/src/crazy_linker_machine_translation.cpp",
         "patchSetId": 4
