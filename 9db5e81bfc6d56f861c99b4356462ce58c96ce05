@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "1a6e2e4d_75a2643f",
+        "filename": "ios/chrome/browser/ui/ui_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-01-19T14:30:53Z",
+      "side": 1,
+      "message": "In the doc, I suggested having a single underlying base::Feature and tests_hook, but still maintaining separate IsFooEnabled() methods, as a way of annotating the code and making it greppable.",
+      "parentUuid": "f16539e5_6fd1d37f",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 29
+      },
+      "revId": "9db5e81bfc6d56f861c99b4356462ce58c96ce05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c019449_0cd194fe",
         "filename": "ios/chrome/browser/ui/ui_util.mm",
         "patchSetId": 4
