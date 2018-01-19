@@ -55,6 +55,10 @@ const base::Feature kEnableManualPasswordGeneration = {
 const base::Feature kEnableUsernameCorrection{"EnableUsernameCorrection",
                                               base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Enables an assist icon in password fields.
+const base::Feature kEnablePasswordAssistIcon{
+    "EnablePasswordAssistIcon", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables password selection while saving username and password details.
 const base::Feature kEnablePasswordSelection{"EnablePasswordSelection",
                                              base::FEATURE_ENABLED_BY_DEFAULT};

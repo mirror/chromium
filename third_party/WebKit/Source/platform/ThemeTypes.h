@@ -94,6 +94,7 @@ enum ControlPart {
   kCaretPart,
   kSearchFieldPart,
   kSearchFieldCancelButtonPart,
+  kAssistButtonPart,
   kTextFieldPart,
   kTextAreaPart,
   kCapsLockIndicatorPart
