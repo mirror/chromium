@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15a95ec6_adb7d9b4",
+        "filename": "content/browser/accessibility/browser_accessibility_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-19T20:07:13Z",
+      "side": 1,
+      "message": "Let\u0027s keep this screen_point",
+      "revId": "6067441547099380363cfc73f39ea271d4c098b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6bcf16c_933a561b",
+        "filename": "content/browser/accessibility/browser_accessibility_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-19T20:07:13Z",
+      "side": 1,
+      "message": "Maybe call this scaled_point",
+      "revId": "6067441547099380363cfc73f39ea271d4c098b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ea2b14_414e9c1a",
+        "filename": "content/browser/accessibility/browser_accessibility_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-19T20:07:13Z",
+      "side": 1,
+      "message": "Are you sure that GetViewBounds().OffsetFromOrigin() is scaled?",
+      "revId": "6067441547099380363cfc73f39ea271d4c098b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
