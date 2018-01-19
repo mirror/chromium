@@ -75,7 +75,9 @@ class MEDIA_EXPORT PipelineImpl : public Pipeline {
   void Start(Demuxer* demuxer,
              std::unique_ptr<Renderer> renderer,
              Client* client,
-             const PipelineStatusCB& seek_cb) override;
+             const PipelineStatusCB& seek_cb,
+             SuspendedStartOption suspended_start_type) override;
+  bool WasStartSuspended() const override;
   void Stop() override;
   void Seek(base::TimeDelta time, const PipelineStatusCB& seek_cb) override;
   void Suspend(const PipelineStatusCB& suspend_cb) override;
@@ -142,7 +144,7 @@ class MEDIA_EXPORT PipelineImpl : public Pipeline {
   void OnVideoDecoderChange(const std::string& name);
 
   // Task completion callbacks from RendererWrapper.
-  void OnSeekDone();
+  void OnSeekDone(bool suspended);
   void OnSuspendDone();
 
   // Parameters passed in the constructor.
@@ -182,6 +184,9 @@ class MEDIA_EXPORT PipelineImpl : public Pipeline {
   // while a seek is pending. Renderer's time cannot be trusted until the seek
   // has completed.
   base::TimeDelta seek_time_;
+
+  // Cached metadata from the demuxer after ReportMetadata() has been called.
+  bool was_start_suspended_;
 
   base::ThreadChecker thread_checker_;
   base::WeakPtrFactory<PipelineImpl> weak_factory_;
