@@ -22,6 +22,30 @@
       "revId": "7b871fd146f36c9fb55b91e9ced7372e854252c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7abf8b_b1f24ac0",
+        "filename": "third_party/WebKit/Source/core/animation/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T02:39:06Z",
+      "side": 1,
+      "message": "Thanks, we decided to go without a full list of interfaces, but perhaps will re-introduce key interfaces as necessary.",
+      "parentUuid": "6168abc8_a051f318",
+      "range": {
+        "startLine": 132,
+        "startChar": 5,
+        "endLine": 132,
+        "endChar": 6
+      },
+      "revId": "7b871fd146f36c9fb55b91e9ced7372e854252c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
