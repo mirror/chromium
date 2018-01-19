@@ -35,12 +35,9 @@ TEST(DhcpProxyScriptFetcherWin, AdapterNamesAndPacURLFromDhcp) {
   // running in, so it just exercises the code to make sure there
   // is no crash and no error returned, but does not assert on the number
   // of interfaces or the information returned via DHCP.
-  std::set<std::string> adapter_names;
-  DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(&adapter_names);
-  for (std::set<std::string>::const_iterator it = adapter_names.begin();
-       it != adapter_names.end();
-       ++it) {
-    const std::string& adapter_name = *it;
+  DhcpAdapterNamesResult adapters_result;
+  DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(&adapters_result);
+  for (const std::string& adapter_name : adapters_result.adapter_names) {
     DhcpProxyScriptAdapterFetcher::GetPacURLFromDhcp(adapter_name);
   }
 }
@@ -275,9 +272,8 @@ class MockDhcpProxyScriptFetcherWin : public DhcpProxyScriptFetcherWin {
     MockAdapterQuery() {
     }
 
-    bool ImplGetCandidateAdapterNames(
-        std::set<std::string>* adapter_names) override {
-      adapter_names->insert(
+    bool ImplGetCandidateAdapterNames(DhcpAdapterNamesResult* result) override {
+      result->adapter_names.insert(
           mock_adapter_names_.begin(), mock_adapter_names_.end());
       return true;
     }
