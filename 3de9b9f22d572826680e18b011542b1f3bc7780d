@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4be77393_c530c270",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-19T00:38:51Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure that bug clarifies anything really...",
+      "revId": "3de9b9f22d572826680e18b011542b1f3bc7780d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
