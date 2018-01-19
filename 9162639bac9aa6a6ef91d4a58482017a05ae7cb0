@@ -16,6 +16,139 @@
       "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5bf825_742d3893",
+        "filename": "chrome/browser/ui/browser_tab_strip_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T18:14:24Z",
+      "side": 1,
+      "message": "Yes, you are right. As should the new function you are adding.",
+      "parentUuid": "3042a4ed_78153709",
+      "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1301bcda_8447065f",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T18:14:24Z",
+      "side": 1,
+      "message": "Any chance you could name this a bit more verbosely, perhaps LogWindowMetricsToUkmRecorder, or just LogWindowMetrics.",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 16
+      },
+      "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf40eea5_11a9798c",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T18:14:24Z",
+      "side": 1,
+      "message": "Can you elaborate on why this needs to be done?",
+      "range": {
+        "startLine": 90,
+        "startChar": 5,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1458bb7_e241458c",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T18:14:24Z",
+      "side": 1,
+      "message": "I agree, please fix tracker (same comment on 158). I recommend fixing tracker in this patch.",
+      "range": {
+        "startLine": 151,
+        "startChar": 3,
+        "endLine": 152,
+        "endChar": 33
+      },
+      "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c03aa1_e9bd5c79",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T18:14:24Z",
+      "side": 1,
+      "message": "I think this code would be less error prone and easier to follow if you create an object per Browser that implements TabStripModelObserver. That way you don\u0027t have to keep figuring out what browser the TabStripModelObserver methods are coming from, you know it by virtue of a single instance per browser.",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 0
+      },
+      "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd019d5_d3ee0d3f",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T18:14:24Z",
+      "side": 1,
+      "message": "How about web_contents_to_browser_? Is there a reason you cache the id and not the Browser*?",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 30
+      },
+      "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
