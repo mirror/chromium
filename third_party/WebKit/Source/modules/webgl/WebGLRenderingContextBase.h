@@ -99,6 +99,7 @@ class WebGLShader;
 class WebGLShaderPrecisionFormat;
 class WebGLUniformLocation;
 class WebGLVertexArrayObjectBase;
+class XRDevice;
 
 class WebGLRenderingContextErrorMessageCallback;
 
@@ -606,6 +607,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   // For use by WebVR, commits the current canvas content similar
   // to the "commit" JS API.
   scoped_refptr<StaticBitmapImage> GetStaticBitmapImage();
+
+  ScriptPromise setCompatibleXRDevice(ScriptState*, const XRDevice*);
 
  protected:
   friend class EXTDisjointTimerQuery;
