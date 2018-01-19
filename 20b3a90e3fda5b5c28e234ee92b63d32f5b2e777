@@ -22,6 +22,30 @@
       "revId": "20b3a90e3fda5b5c28e234ee92b63d32f5b2e777",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aec38b6_e4b183a8",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwAutofillProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-19T19:33:19Z",
+      "side": 1,
+      "message": "In WebView side, we want to keep autofill session alive in this case, WebView will call the commit() if the form isn\u0027t in the new page, otherwise, this is no issue since form is still there. There is still race condition, like Autofill service show the suggestion while WebView loads the new page, but this isn\u0027t issue introduced by this patch.\n\nI used \u0027mRequest \u003d null\u0027 to replace reset(), I can add new method resetRequest() if you think it improves readability.",
+      "parentUuid": "4abce59b_61eec8a1",
+      "range": {
+        "startLine": 369,
+        "startChar": 11,
+        "endLine": 369,
+        "endChar": 47
+      },
+      "revId": "20b3a90e3fda5b5c28e234ee92b63d32f5b2e777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
