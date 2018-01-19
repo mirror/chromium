@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb0ee636_1beca0ec",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T19:54:54Z",
+      "side": 1,
+      "message": "[ref #1]",
+      "range": {
+        "startLine": 18,
+        "startChar": 31,
+        "endLine": 18,
+        "endChar": 48
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83244257_cb9609c2",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T19:54:54Z",
+      "side": 1,
+      "message": "nit: I might make the type of both of these just `CAAnimation` to avoid restricting what subclasses do, unless you need to get at their type-specific guts.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 65
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ecc0d2_2c72aea2",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T19:54:54Z",
+      "side": 1,
+      "message": "nit: this block can be moved to the @implementation and then you won\u0027t need a private @interface.",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 40,
+        "endChar": 1
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9e7d26_d119c4c3",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T19:54:54Z",
+      "side": 1,
+      "message": "[ref #2]",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 33
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a83a35d8_aa7fd7e7",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T19:54:54Z",
+      "side": 1,
+      "message": "optional/unsure/…: It feels odd to me for hiding and showing the view to restart the animation. It shouldn\u0027t be necessary as a performance optimization, at least. Anyway, this didn\u0027t really change in this CL, so it\u0027s probably out of scope.",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 1
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06686022_4c3bbd84",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T19:54:54Z",
+      "side": 1,
+      "message": "nit: if this is from a recent CL — is it needed? If not, then refs #1 and #2 can be deleted, too.",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 1
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6513ba_09cbd173",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_favicon_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T19:54:54Z",
+      "side": 1,
+      "message": "optional: Someone once told me that we try to avoid statics because their cumulative memory impact is usually less desirable than the CPU impact of e.g. looking up this resource each time through this path.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1418c1dd_aaafef3f",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_favicon_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T19:54:54Z",
+      "side": 1,
+      "message": "nit: This should update if the window\u0027s theme changes.",
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23c6562_c53ec22e",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_favicon_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T19:54:54Z",
+      "side": 1,
+      "message": "optional: It might be cleaner to do these with -runAnimationGroup:completionHandler:, mainly because the block gets `context` as an argument so you can just write `context.duration \u003d kSadTabAnimationTime`, etc.), and because things up in slightly more-chronological order.",
+      "range": {
+        "startLine": 94,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 7
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94ebb836_f0da1c24",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T19:54:54Z",
+      "side": 1,
+      "message": "nit: this can move to the @implementation.",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 25,
+        "endChar": 1
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d6073f_bd96caa0",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T19:54:54Z",
+      "side": 1,
+      "message": "nit: This should update if the theme changes while the spinner is visible.",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 19
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
