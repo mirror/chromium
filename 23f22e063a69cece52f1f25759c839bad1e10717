@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7f40eb5_6e1a9a61",
+        "filename": "components/update_client/url_fetcher_downloader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-19T15:06:12Z",
+      "side": 1,
+      "message": "nit: I think https://www.chromium.org/developers/smart-pointer-guidelines recommends passing smart pointers by copy (so they can be moved), so maybe do the following if possible\n\n  UrlFetcherDownloader::UrlFetcherDownloader(\n    std::unique_ptr\u003cCrxDownloader\u003e successor,\n    scoped_refptr\u003cnet::URLRequestContextGetter\u003e context_getter)\n    : CrxDownloader(std::move(successor)),\n      delegate_(std::make_unique\u003cUrlFetcherDelegate\u003e(this)),\n      context_getter_(std::move(context_getter_)) {}",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 69
+      },
+      "revId": "23f22e063a69cece52f1f25759c839bad1e10717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
