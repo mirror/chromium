@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ed75c6c_49b7a2f1",
+        "filename": "third_party/WebKit/Source/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T01:07:59Z",
+      "side": 1,
+      "message": "have",
+      "revId": "f91b0e87f216b8c1001b94149458da13b604a18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa904a1d_6a54aebd",
+        "filename": "third_party/WebKit/Source/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T01:07:59Z",
+      "side": 1,
+      "message": "We should chat with Nico but I think we should consider enabling this flag at some point.\n\nIf tracing to parent classes is missing, it\u0027s clearly a bug.",
+      "revId": "f91b0e87f216b8c1001b94149458da13b604a18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
