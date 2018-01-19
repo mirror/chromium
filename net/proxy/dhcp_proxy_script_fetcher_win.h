@@ -21,12 +21,22 @@
 namespace base {
 class SequencedWorkerPool;
 class TaskRunner;
+class Value;
 }
 
 namespace net {
 
 class DhcpProxyScriptAdapterFetcher;
 class URLRequestContext;
+
+class NET_EXPORT_PRIVATE DhcpAdapterNamesResult {
+public:
+	DhcpAdapterNamesResult();
+	~DhcpAdapterNamesResult();
+
+	std::set<std::string> adapter_names;
+	std::unique_ptr<base::Value> netlog_params;
+};
 
 // Windows-specific implementation.
 class NET_EXPORT_PRIVATE DhcpProxyScriptFetcherWin
@@ -41,16 +51,17 @@ class NET_EXPORT_PRIVATE DhcpProxyScriptFetcherWin
 
   // DhcpProxyScriptFetcher implementation.
   int Fetch(base::string16* utf16_text,
-            const CompletionCallback& callback) override;
+            const CompletionCallback& callback,
+			const NetLogWithSource& net_log) override;
   void Cancel() override;
   void OnShutdown() override;
   const GURL& GetPacURL() const override;
   std::string GetFetcherName() const override;
 
-  // Sets |adapter_names| to contain the name of each network adapter on
+  // Sets |result->adapter_names| to contain the name of each network adapter on
   // this machine that has DHCP enabled and is not a loop-back adapter. Returns
   // false on error.
-  static bool GetCandidateAdapterNames(std::set<std::string>* adapter_names);
+  static bool GetCandidateAdapterNames(DhcpAdapterNamesResult* result);
 
  protected:
   int num_pending_fetchers() const;
@@ -77,7 +88,7 @@ class NET_EXPORT_PRIVATE DhcpProxyScriptFetcherWin
    protected:
     // Virtual method introduced to allow unit testing.
     virtual bool ImplGetCandidateAdapterNames(
-        std::set<std::string>* adapter_names);
+        DhcpAdapterNamesResult* result);
 
     friend class base::RefCountedThreadSafe<AdapterQuery>;
     virtual ~AdapterQuery();
@@ -86,7 +97,7 @@ class NET_EXPORT_PRIVATE DhcpProxyScriptFetcherWin
     // This is constructed on the originating thread, then used on the
     // worker thread, then used again on the originating thread only when
     // the task has completed on the worker thread. No locking required.
-    std::set<std::string> adapter_names_;
+    DhcpAdapterNamesResult adapters_;
 
     DISALLOW_COPY_AND_ASSIGN(AdapterQuery);
   };

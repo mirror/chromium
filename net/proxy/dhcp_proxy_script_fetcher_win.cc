@@ -13,6 +13,8 @@
 #include "base/threading/sequenced_worker_pool.h"
 #include "net/base/net_errors.h"
 #include "net/proxy/dhcp_proxy_script_adapter_fetcher_win.h"
+#include "base/values.h"
+#include "net/log/net_log.h"
 
 #include <winsock2.h>
 #include <iphlpapi.h>
@@ -49,6 +51,9 @@ const int kMaxWaitAfterFirstResultMs = 400;
 
 namespace net {
 
+DhcpAdapterNamesResult::DhcpAdapterNamesResult() = default;
+DhcpAdapterNamesResult::~DhcpAdapterNamesResult() = default;
+
 DhcpProxyScriptFetcherWin::DhcpProxyScriptFetcherWin(
     URLRequestContext* url_request_context)
     : state_(STATE_START),
@@ -70,7 +75,8 @@ DhcpProxyScriptFetcherWin::~DhcpProxyScriptFetcherWin() {
 }
 
 int DhcpProxyScriptFetcherWin::Fetch(base::string16* utf16_text,
-                                     const CompletionCallback& callback) {
+                                     const CompletionCallback& callback,
+                                     const NetLogWithSource& net_log) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (state_ != STATE_START && state_ != STATE_DONE) {
     NOTREACHED();
@@ -303,10 +309,39 @@ base::TimeDelta DhcpProxyScriptFetcherWin::ImplGetMaxWait() {
   return base::TimeDelta::FromMilliseconds(kMaxWaitAfterFirstResultMs);
 }
 
-bool DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(
-    std::set<std::string>* adapter_names) {
-  DCHECK(adapter_names);
-  adapter_names->clear();
+std::unique_ptr<base::Value> MakeAdaptersDictionaryForNetLog(base::TimeTicks start_time, base::TimeTicks end_time, DWORD error, IP_ADAPTER_ADDRESSES* adapter) {
+	std::unique_ptr<base::DictionaryValue> result = std::make_unique<base::DictionaryValue>();
+
+	// Add information on each of the adapters enumerated, including those that were subsequently skipped.
+	base::ListValue adapters_value;
+	for (; adapter; adapter = adapter->Next) {
+		base::DictionaryValue adapter_value;
+
+		adapter_value.SetString("AdapterName", adapter->AdapterName);
+		adapter_value.SetInteger("IfType", adapter->IfType);
+		adapter_value.SetInteger("Flags", adapter->Flags);
+		adapter_value.SetInteger("OperStatus", adapter->OperStatus);
+		adapter_value.SetInteger("TunnelType", adapter->TunnelType);
+
+		// "skipped" means the adapter was not ultimately chosen as a candidate for testing WPAD. This replicates the logic in GetAdapterNames().
+		bool skipped = (adapter->IfType == IF_TYPE_SOFTWARE_LOOPBACK) ||
+			((adapter->Flags & IP_ADAPTER_DHCP_ENABLED) == 0);
+		adapter_value.SetBoolean("skipped", skipped);
+
+		adapters_value.GetList().push_back(std::move(adapter_value));
+	}
+	result->SetKey("adapters", std::move(adapters_value));
+
+	result->SetString("start_time", NetLog::TickCountToString(start_time));
+	result->SetInteger("duration_ms", (end_time - start_time).InMilliseconds());
+
+	return result;
+}
+
+bool DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(DhcpAdapterNamesResult* result) {
+  DCHECK(result);
+  result->adapter_names.clear();
+  base::TimeTicks start_time = base::TimeTicks::Now();
 
   // The GetAdaptersAddresses MSDN page recommends using a size of 15000 to
   // avoid reallocation.
@@ -329,13 +364,17 @@ bool DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(
     ++num_tries;
   } while (error == ERROR_BUFFER_OVERFLOW && num_tries <= 3);
 
+  base::TimeTicks end_time = base::TimeTicks::Now();
+
   if (error == ERROR_NO_DATA) {
     // There are no adapters that we care about.
+	  result->netlog_params = MakeAdaptersDictionaryForNetLog(start_time, end_time, error, nullptr);
     return true;
   }
 
   if (error != ERROR_SUCCESS) {
     LOG(WARNING) << "Unexpected error retrieving WPAD configuration from DHCP.";
+	result->netlog_params = MakeAdaptersDictionaryForNetLog(start_time, end_time, error, nullptr);
     return false;
   }
 
@@ -347,9 +386,10 @@ bool DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(
       continue;
 
     DCHECK(adapter->AdapterName);
-    adapter_names->insert(adapter->AdapterName);
+    result->adapter_names.insert(adapter->AdapterName);
   }
-
+  
+  result->netlog_params = MakeAdaptersDictionaryForNetLog(start_time, end_time, error, adapters.get());
   return true;
 }
 
@@ -357,17 +397,17 @@ DhcpProxyScriptFetcherWin::AdapterQuery::AdapterQuery() {
 }
 
 void DhcpProxyScriptFetcherWin::AdapterQuery::GetCandidateAdapterNames() {
-  ImplGetCandidateAdapterNames(&adapter_names_);
+  ImplGetCandidateAdapterNames(&adapters_);
 }
 
 const std::set<std::string>&
     DhcpProxyScriptFetcherWin::AdapterQuery::adapter_names() const {
-  return adapter_names_;
+  return adapters_.adapter_names;
 }
 
 bool DhcpProxyScriptFetcherWin::AdapterQuery::ImplGetCandidateAdapterNames(
-    std::set<std::string>* adapter_names) {
-  return DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(adapter_names);
+    DhcpAdapterNamesResult* result) {
+  return DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(result);
 }
 
 DhcpProxyScriptFetcherWin::AdapterQuery::~AdapterQuery() {
