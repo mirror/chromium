@@ -84,7 +84,8 @@ ExtensionServiceTestBase::ExtensionServiceTestBase()
     : thread_bundle_(kThreadOptions),
       service_(nullptr),
       testing_local_state_(TestingBrowserProcess::GetGlobal()),
-      registry_(nullptr) {
+      registry_(nullptr),
+      test_data_decoder_service_(/*delay_before_quit=*/false) {
   base::FilePath test_data_dir;
   if (!PathService::Get(chrome::DIR_TEST_DATA, &test_data_dir)) {
     ADD_FAILURE();
@@ -312,6 +313,9 @@ void ExtensionServiceTestBase::CreateExtensionService(
       params.autoupdate_enabled, params.extensions_enabled);
 
   service_->component_loader()->set_ignore_whitelist_for_testing(true);
+
+  service_->set_connector_for_test(
+      test_data_decoder_service_.connector()->Clone());
 
   // When we start up, we want to make sure there is no external provider,
   // since the ExtensionService on Windows will use the Registry as a default
