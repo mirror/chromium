@@ -197,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "5818ed26_d65d02c1",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-19T22:48:45Z",
+      "side": 1,
+      "message": "We don\u0027t create paint property node for the border radius clip applying on the object\u0027s background. We issue clip commands in the background drawing display item instead. I think we can name such paint properties as \"trivial paint properties\" that don\u0027t really need to have paint property nodes. (Tien-Ren mentioned that OverflowScrollsClip could be also a trivial paint property, but it seems not that trivial because it would need dedicated display items.)\n\nIf anything really needs paint properties under custom scrollbars, we will need change many more places to support, e.g. PrePaintTreeWalk should walk into custom scrollbars and we should let OverflowScrollsClip be in the tree builder context. I think we can just ignore that.",
+      "parentUuid": "861a1f1d_27cd76d6",
+      "revId": "1a765d8e9d875efc7bf8df05485c33ef880c9eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fbc083d_80f92711",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 4
