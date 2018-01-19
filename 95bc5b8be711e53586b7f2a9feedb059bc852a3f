@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd0aeeb8_d8825eec",
+        "filename": "ui/gl/gl_image_io_surface_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-19T18:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c131c6c5_66df3a14",
+      "revId": "95bc5b8be711e53586b7f2a9feedb059bc852a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b5a83ae_dfc1318c",
         "filename": "ui/gl/gl_image_io_surface_unittest.cc",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "It\u0027d be 0xAA, up to you what you prefer to do.",
       "parentUuid": "0b5a83ae_dfc1318c",
+      "revId": "95bc5b8be711e53586b7f2a9feedb059bc852a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65aa15c8_7655b509",
+        "filename": "ui/gl/gl_image_io_surface_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-19T18:00:33Z",
+      "side": 1,
+      "message": "Hardcoded 0xAA bc: simpler.",
+      "parentUuid": "5127d972_8d105afc",
       "revId": "95bc5b8be711e53586b7f2a9feedb059bc852a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
