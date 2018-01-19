@@ -65,6 +65,25 @@ using namespace HTMLNames;
 
 namespace {
 
+inline void AdjustStyleForLayoutNG(ComputedStyle& style,
+                                   const ComputedStyle& parent_style,
+                                   Element* element) {
+  // Objects inside UA shadow is not supported yet.
+  if (element->IsInShadowTree() &&
+      element->ContainingShadowRoot()->IsUserAgent()) {
+    style.SetIsLayoutNGDisabled(true);
+    return;
+  }
+
+  // Content editable is not supported yet.
+  if (style.UserModify() != EUserModify::kReadOnly) {
+    if (style.Display() == EDisplay::kInline)
+      style.SetDisplay(EDisplay::kInlineBlock);
+    style.SetIsLayoutNGDisabled(true);
+    return;
+  }
+}
+
 TouchAction AdjustTouchActionForElement(TouchAction touch_action,
                                         const ComputedStyle& style,
                                         Element* element) {
@@ -628,13 +647,12 @@ void StyleAdjuster::AdjustComputedStyle(StyleResolverState& state,
     }
   }
 
-  // TODO(layout-dev): Once LayoutnG handles inline content editable, we should
-  // get rid of following code fragment.
-  if (RuntimeEnabledFeatures::LayoutNGEnabled() &&
-      style.UserModify() != EUserModify::kReadOnly &&
-      style.Display() == EDisplay::kInline &&
-      parent_style.UserModify() == EUserModify::kReadOnly) {
-    style.SetDisplay(EDisplay::kInlineBlock);
+  if (!style.IsLayoutNGDisabled()) {
+    if (!RuntimeEnabledFeatures::LayoutNGEnabled()) {
+      style.SetIsLayoutNGDisabled(true);
+    } else if (style.Display() == EDisplay::kInline) {
+      AdjustStyleForLayoutNG(style, parent_style, element);
+    }
   }
 }
 }  // namespace blink

@@ -1014,5 +1014,11 @@
       keywords: ["no-auto-repeat", "auto-fill", "auto-fit"],
       default_value: "no-auto-repeat",
     },
+    {
+      name: "IsLayoutNGDisabled",
+      field_template: "primitive",
+      default_value: "false",
+      type_name: "bool",
+    },
   ],
 }
