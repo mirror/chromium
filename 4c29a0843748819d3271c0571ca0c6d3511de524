@@ -16,6 +16,24 @@
       "revId": "4c29a0843748819d3271c0571ca0c6d3511de524",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd1075a_1ec6abb1",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1812,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-19T10:53:14Z",
+      "side": 1,
+      "message": "Thank you for the suggestion/hint! I\u0027m not sure have got the idea exactly, but I managed to avoid using |request_id| thing by using both \u0027template\u0027 and \u0027WorkerThread::Observer\u0027 :) PTAnL.",
+      "parentUuid": "11a8bfad_e271e458",
+      "revId": "4c29a0843748819d3271c0571ca0c6d3511de524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
