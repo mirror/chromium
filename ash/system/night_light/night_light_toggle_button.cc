@@ -80,8 +80,7 @@ void NightLightToggleButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->role = ui::AX_ROLE_TOGGLE_BUTTON;
   node_data->AddIntAttribute(
       ui::AX_ATTR_CHECKED_STATE,
-      static_cast<int32_t>(is_enabled ? ui::AX_CHECKED_STATE_TRUE
-                                      : ui::AX_CHECKED_STATE_FALSE));
+      static_cast<int32_t>(is_enabled ? ui::AX_CHECKED_STATE_TRUE : ui::AX_CHECKED_STATE_FALSE));
 }
 
 }  // namespace ash
