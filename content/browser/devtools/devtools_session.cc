@@ -151,7 +151,8 @@ void DevToolsSession::sendProtocolResponse(
 
 void DevToolsSession::sendProtocolNotification(
     std::unique_ptr<protocol::Serializable> message) {
-  client_->DispatchProtocolMessage(agent_host_, message->serialize());
+  std::string data = message->serialize();
+  client_->DispatchProtocolMessage(agent_host_, data);
 }
 
 void DevToolsSession::flushProtocolNotifications() {
