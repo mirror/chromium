@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac567985_11cd05b0",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-19T15:19:32Z",
+      "side": 1,
+      "message": "s/if we except/aside from/\n\n(avoiding \"we\" in comments)",
+      "range": {
+        "startLine": 43,
+        "startChar": 28,
+        "endLine": 43,
+        "endChar": 40
+      },
+      "revId": "058cef261144104f4e61649b757c1a678c4b7b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
