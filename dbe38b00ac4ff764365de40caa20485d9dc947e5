@@ -122,6 +122,109 @@
     },
     {
       "key": {
+        "uuid": "b73edb49_6ffe9a91",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T22:25:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "edd5e0b4_b91d1f78",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cc26c85_19cac53f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T22:25:56Z",
+      "side": 1,
+      "message": "Nit: Add a /* */ comment before nullptr with the parameter name.",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73095aeb_edc8f646",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T22:25:56Z",
+      "side": 1,
+      "message": "Nit: Slight preference to inline these declarations with each function call, instead of reassigning to the same variable repeatedly.",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81db21ac_2ca3a544",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T22:25:56Z",
+      "side": 1,
+      "message": "I\u0027d like to see a test case verifying that cached availability info is used (e.g. expect that FetchDialAppInfo is not called).",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fb5b51_0132eb49",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T22:25:56Z",
+      "side": 1,
+      "message": "Why is observer4 called but not 1,2,3?",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38dbc488_092db259",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T22:25:56Z",
+      "side": 1,
+      "message": "Can you add expectations that the origin whitelist is passed correctly to the observers?",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34a0b0d0_e04cfedd",
         "filename": "chrome/common/media_router/media_source_helper.cc",
         "patchSetId": 12
@@ -168,6 +271,24 @@
       "side": 1,
       "message": "Maybe we can put it into providers/cast? I assume we still want to only have a Cast MRP (which handles custom DIAL launches) but not a DIAL MRP.",
       "parentUuid": "ac56b985_8c381d24",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca782a32_403bae59",
+        "filename": "chrome/common/media_router/media_source_helper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T22:25:56Z",
+      "side": 1,
+      "message": "It seems cleaner to have a separate MRP for DIAL, but I don\u0027t feel strongly about it.  Maybe the Cast MRP design doc have a specific proposal and we can discuss there.\n\nFor this patch, I think a TODO to move this to a more appropriate location would be fine.",
+      "parentUuid": "11338522_853d3f1c",
       "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
