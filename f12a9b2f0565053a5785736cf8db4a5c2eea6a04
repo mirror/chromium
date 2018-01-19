@@ -16,6 +16,24 @@
       "revId": "f12a9b2f0565053a5785736cf8db4a5c2eea6a04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9c57fb_63d18074",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-19T20:11:34Z",
+      "side": 0,
+      "message": "I don\u0027t think we\u0027ve ever hit these DCHECKs.  Otherwise we would probably crash somewhere on the call below, right?  And I haven\u0027t seen any crashes like this.\n\nIf we never expect GetFrameWidget() callers to hit GetWebWidget()-\u003eIsWebFrameWidget() being false, then perhaps we could put a DumpWithoutCrashing there to help catch these cases (perhaps with additional crash keys if we need more info), before returning nullptr.  Do any callers legitimately need to handle a non-null widget that is not a WebFrameWidget?  I\u0027m not sure about calls like RenderWidget::GetInputMethodController from your previous CL.  Those would be false positives for such a DWOC.",
+      "parentUuid": "6abbda5b_0e4c7ca4",
+      "revId": "f12a9b2f0565053a5785736cf8db4a5c2eea6a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
