@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+# pylint: disable=E111
+
 """Implements commands for running and interacting with Fuchsia on QEMU."""
 
 import boot_image
@@ -48,7 +50,7 @@ class QemuTarget(target.Target):
     if self.IsStarted():
       self.Shutdown()
 
-  def Start(self):
+  def Start(self, ram_size_mb=None):
     self._ssh_config_path, boot_image_path = boot_image.CreateBootFS(
         self._output_dir, self._GetTargetSdkArch())
     qemu_path = os.path.join(
@@ -56,8 +58,10 @@ class QemuTarget(target.Target):
         'qemu-system-' + self._GetTargetSdkArch())
     kernel_args = ['devmgr.epoch=%d' % time.time()]
 
+    ram_size_mb = ram_size_mb or 2028
+
     qemu_command = [qemu_path,
-        '-m', '2048',
+        '-m', str(ram_size_mb),
         '-nographic',
         '-kernel', boot_image._GetKernelPath(self._GetTargetSdkArch()),
         '-initrd', boot_image_path,
@@ -117,6 +121,9 @@ class QemuTarget(target.Target):
 
   def Shutdown(self):
     self._qemu_process.kill()
+
+  def GetQemuStdout(self):
+    return self._qemu_process.stdout
 
   def _GetEndpoint(self):
     return ('127.0.0.1', self._host_ssh_port)

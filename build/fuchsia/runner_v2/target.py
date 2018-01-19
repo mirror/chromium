@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+# pylint: skip-file
+
 import os
 import remote_cmd
 import subprocess
@@ -12,6 +14,11 @@ import time
 _SHUTDOWN_CMD = ['dm', 'poweroff']
 _ATTACH_MAX_RETRIES = 10
 _ATTACH_RETRY_INTERVAL = 1
+
+
+class FuchsiaTargetException(Exception):
+  def __init__(self, message):
+    super(FuchsiaTargetException, self).__init__(message)
 
 
 class Target(object):
@@ -94,7 +101,7 @@ class Target(object):
       return 'aarch64'
     elif self._target_cpu == 'x64':
       return 'x86_64'
-    raise Exception('Unknown target_cpu:' + self._target_cpu)
+    raise FuchsiaTargetException('Unknown target_cpu:' + self._target_cpu)
 
   def _AssertStarted(self):
     assert self.IsStarted()
@@ -114,7 +121,7 @@ class Target(object):
       self._vlogger.flush()
       time.sleep(_ATTACH_RETRY_INTERVAL)
     sys.stderr.write(' timeout limit reached.\n')
-    raise Exception('Couldn\'t connect to QEMU using SSH.')
+    raise FuchsiaTargetException('Couldn\'t connect to QEMU using SSH.')
 
   def _GetSshConfigPath(self, path):
     raise NotImplementedError
