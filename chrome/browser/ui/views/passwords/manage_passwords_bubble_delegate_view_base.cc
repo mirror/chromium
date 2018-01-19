@@ -114,6 +114,19 @@ void ManagePasswordsBubbleDelegateViewBase::ActivateBubble() {
   g_manage_passwords_bubble_->GetWidget()->Activate();
 }
 
+const content::WebContents*
+ManagePasswordsBubbleDelegateViewBase::GetWebContents() const {
+  return model_.GetWebContents();
+}
+
+base::string16 ManagePasswordsBubbleDelegateViewBase::GetWindowTitle() const {
+  return model_.title();
+}
+
+bool ManagePasswordsBubbleDelegateViewBase::ShouldShowWindowTitle() const {
+  return !model_.title().empty();
+}
+
 ManagePasswordsBubbleDelegateViewBase::ManagePasswordsBubbleDelegateViewBase(
     content::WebContents* web_contents,
     views::View* anchor_view,
@@ -124,8 +137,7 @@ ManagePasswordsBubbleDelegateViewBase::ManagePasswordsBubbleDelegateViewBase(
              reason == AUTOMATIC ? ManagePasswordsBubbleModel::AUTOMATIC
                                  : ManagePasswordsBubbleModel::USER_ACTION),
       mouse_handler_(
-          std::make_unique<WebContentMouseHandler>(this,
-                                                   model_.GetWebContents())) {}
+          std::make_unique<WebContentMouseHandler>(this, web_contents)) {}
 
 ManagePasswordsBubbleDelegateViewBase::
     ~ManagePasswordsBubbleDelegateViewBase() {
@@ -133,20 +145,14 @@ ManagePasswordsBubbleDelegateViewBase::
     g_manage_passwords_bubble_ = nullptr;
 }
 
-const content::WebContents*
-ManagePasswordsBubbleDelegateViewBase::GetWebContents() const {
-  return model_.GetWebContents();
-}
-
-void ManagePasswordsBubbleDelegateViewBase::CloseBubble() {
+void ManagePasswordsBubbleDelegateViewBase::OnWidgetClosing(
+    views::Widget* widget) {
   mouse_handler_.reset();
-  LocationBarBubbleDelegateView::CloseBubble();
-}
-
-base::string16 ManagePasswordsBubbleDelegateViewBase::GetWindowTitle() const {
-  return model_.title();
-}
-
-bool ManagePasswordsBubbleDelegateViewBase::ShouldShowWindowTitle() const {
-  return !model_.title().empty();
+  // It can be the case that a password bubble is being closed while another
+  // password bubble is being opened. The metrics recorder can be shared between
+  // them and it doesn't understand the sequence [open1, open2, close1, close2].
+  // Therefore, we reset the model early (before the bubble destructor) to get
+  // the following sequence of events [open1, close1, open2, close2].
+  model_.OnBubbleClosing();
+  LocationBarBubbleDelegateView::OnWidgetClosing(widget);
 }
