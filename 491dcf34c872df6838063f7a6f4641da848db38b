@@ -16,6 +16,29 @@
       "revId": "491dcf34c872df6838063f7a6f4641da848db38b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8d13d2_2d7f04b6",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-19T17:30:20Z",
+      "side": 1,
+      "message": "The network service should not know what ChromeUIScheme is.  I think this blocking logic needs to be in Chrome.  (Note that the network stack, left to its own devices, will follow redirects, but fail the next request, since it doesn\u0027t have a handler, at least in the network service path).\n\nThe network service will currently block data and file redirects, since it has handlers for them (Even if the file path isn\u0027t generally used, it\u0027s still needed for PACs, currently, so it has a handler).  I\u0027m not sure if it has an about handler.",
+      "range": {
+        "startLine": 192,
+        "startChar": 24,
+        "endLine": 192,
+        "endChar": 36
+      },
+      "revId": "491dcf34c872df6838063f7a6f4641da848db38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
