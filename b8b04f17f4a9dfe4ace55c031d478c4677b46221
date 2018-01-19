@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bdf01f5_13c9f4c9",
+        "filename": "components/variations/service/safe_seed_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-19T07:04:55Z",
+      "side": 0,
+      "message": "(I decided that this wasn\u0027t worth doing, as it wouldn\u0027t meaningfully expand test coverage, and the LoadSafeSeed API is not really super conducive for these tests, which want to verify that e.g. the signature was saved.)",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 35
+      },
+      "revId": "b8b04f17f4a9dfe4ace55c031d478c4677b46221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
