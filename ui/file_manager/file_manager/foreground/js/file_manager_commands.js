@@ -258,6 +258,28 @@ CommandUtil.getOnlyOneSelectedDirectory = function(selection) {
 };
 
 /**
+ * Returns a single directory targeted by the command.
+ * @param {!Event} event Command event.
+ * @param {!CommandHandlerDeps} fileManager
+ * @return {?DirectoryEntry} Directory entry targetd by the command,
+ *     or null if single directory is not targeted.
+ */
+CommandUtil.getSingleDirectoryTarget = function(event, fileManager) {
+  let entries = CommandUtil.getCommandEntries(event.target);
+  if (entries.length == 0)
+    entries = fileManager.getSelection().entries;
+
+  if (entries.length !== 1)
+    return null;
+  if (!entries[0].isDirectory)
+    return null;
+  if (!CommandUtil.shouldShowMenuItemsForEntry(
+          fileManager.volumeManager, entries[0]))
+    return null;
+  return /** @type {!DirectoryEntry} */ (entries[0]);
+};
+
+/**
  * Returns true if the given entry is the root entry of the volume.
  * @param {VolumeManagerWrapper} volumeManager
  * @param {(!Entry|!FakeEntry)} entry Entry or a fake entry.
@@ -885,18 +907,16 @@ CommandHandler.COMMANDS_['paste-into-folder'] = /** @type {Command} */ ({
    * @param {!CommandHandlerDeps} fileManager CommandHandlerDeps to use.
    */
   execute: function(event, fileManager) {
-    var entries = CommandUtil.getCommandEntries(event.target);
-    if (entries.length !== 1 || !entries[0].isDirectory ||
-        !CommandUtil.shouldShowMenuItemsForEntry(
-            fileManager.volumeManager, entries[0])) {
+    const targetDirectory =
+        CommandUtil.getSingleDirectoryTarget(event, fileManager);
+    if (!targetDirectory)
       return;
-    }
 
     // This handler tweaks the Event object for 'paste' event so that
     // the FileTransferController can distinguish this 'paste-into-folder'
     // command and know the destination directory.
     var handler = function(inEvent) {
-      inEvent.destDirectory = entries[0];
+      inEvent.destDirectory = targetDirectory;
     };
     fileManager.document.addEventListener('paste', handler, true);
     fileManager.document.execCommand('paste');
@@ -907,19 +927,17 @@ CommandHandler.COMMANDS_['paste-into-folder'] = /** @type {Command} */ ({
    * @param {!CommandHandlerDeps} fileManager CommandHandlerDeps to use.
    */
   canExecute: function(event, fileManager) {
-    var entries = CommandUtil.getCommandEntries(event.target);
-
-    // Show this item only when one directory is selected.
-    if (entries.length !== 1 || !entries[0].isDirectory ||
-        !CommandUtil.shouldShowMenuItemsForEntry(
-            fileManager.volumeManager, entries[0])) {
+    const targetDirectory =
+        CommandUtil.getSingleDirectoryTarget(event, fileManager);
+    if (!targetDirectory) {
       event.canExecute = false;
       event.command.setHidden(true);
       return;
     }
 
     var fileTransferController = fileManager.fileTransferController;
-    var directoryEntry = /** @type {DirectoryEntry|FakeEntry} */ (entries[0]);
+    var directoryEntry =
+        /** @type {DirectoryEntry|FakeEntry} */ (targetDirectory);
     event.canExecute = !!fileTransferController &&
         fileTransferController.queryPasteCommandEnabled(directoryEntry);
     event.command.setHidden(false);
