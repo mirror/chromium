@@ -209,6 +209,24 @@
       "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aca9905_221b11e3",
+        "filename": "mojo/public/tools/bindings/pylib/mojom_tests/parse/conditional_features_unittest.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-19T00:38:27Z",
+      "side": 1,
+      "message": "Sounds good. Please consider adding this restriction to the README.md?",
+      "parentUuid": "3ead244f_266cc247",
+      "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

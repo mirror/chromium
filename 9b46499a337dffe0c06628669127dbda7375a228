@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1ac1cfc_e464511f",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-19T00:38:27Z",
+      "side": 1,
+      "message": "nit: use a boolean is sufficient?",
+      "revId": "9b46499a337dffe0c06628669127dbda7375a228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
