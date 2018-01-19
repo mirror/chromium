@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cd9dd2b_2cd84a7f",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-19T23:51:16Z",
+      "side": 1,
+      "message": "nit: Since we no longer use a native Windows tabbed pane, please change this comment and the checks to the following (so long as I\u0027m understanding the test correctly):\n  // TabbedPane width should match the largest child in horizontal mode.\n  EXPECT_EQ(tabbed_pane_-\u003eGetPreferredSize().width(), 20);\n  // TabbedPane reserves extra height for the tab strip in horizontal mode.\n  EXPECT_GT(tabbed_pane_-\u003eGetPreferredSize().height(), 10);\n\nAnd similar for the new test below:\n  // TabbedPane height should match the largest child in vertical mode.\n  EXPECT_EQ(tabbed_pane_-\u003eGetPreferredSize().width(), 20);\n  // TabbedPane reserves extra width for the tab strip in vertical mode.\n  EXPECT_GT(tabbed_pane_-\u003eGetPreferredSize().height(), 10);\n\nMaybe that won\u0027t work if the tab strip is wider than child1 because the tab strip text (\"[tab1] [tab2]\") is wider than 20px... It would be nice if we had explicit test coverage of both scenarios, but I won\u0027t block this CL on that.",
+      "revId": "9bf9073a32b17600258451faaada819d4540d4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

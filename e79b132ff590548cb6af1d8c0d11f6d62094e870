@@ -268,6 +268,24 @@
       "revId": "e79b132ff590548cb6af1d8c0d11f6d62094e870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "795cac06_391274cf",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-19T23:51:16Z",
+      "side": 1,
+      "message": "Ah, ok... I wasn\u0027t reading carefully enough, this is fine.",
+      "parentUuid": "21409b91_f44db7ee",
+      "revId": "e79b132ff590548cb6af1d8c0d11f6d62094e870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
