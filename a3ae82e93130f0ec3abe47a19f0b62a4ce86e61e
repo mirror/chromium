@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48d43483_91f50ae9",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-19T16:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c663098_9a3804ae",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1f37e12_4448f847",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0616a328_94a1d2d0",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-19T16:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1f37e12_4448f847",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c5bc4ebb_5ec1ee2a",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-19T16:24:43Z",
+      "side": 1,
+      "message": "I think so. Let see if tests agree :)",
+      "parentUuid": "8ce62891_600460c2",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f04f26a_e597031a",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "768d14d8_0a8f5d2f",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-19T16:24:43Z",
+      "side": 1,
+      "message": "The current redirect behaviour sounds good to me. I think it also stays consistent with the behaviour that was implemented with DocumentLoader, right?",
+      "parentUuid": "7f04f26a_e597031a",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9c17019_9474f54a",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f63651_b8d23f42",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-19T16:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9c17019_9474f54a",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "40e2238d_817640c5",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-19T16:24:43Z",
+      "side": 1,
+      "message": "I followed Camille\u0027s advice.",
+      "parentUuid": "6f43f653_73d88a03",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76034935_f7299213",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 3
@@ -136,6 +244,24 @@
       "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091bc894_290586ac",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3086,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-19T16:24:43Z",
+      "side": 1,
+      "message": "`has_user_gesture` only works on Android today. I had a few tests failures just because of this. I realise that I might no longer need to expose this to the renderer so I will see if I can simply prevent the bit to be set in the renderer instead of #ifdef this.",
+      "parentUuid": "76034935_f7299213",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
