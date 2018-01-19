@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1bd4a70_5bb2b108",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-19T00:22:37Z",
+      "side": 1,
+      "message": "NIT: Can we change this to \"Failed to parse printer URI\"?",
+      "range": {
+        "startLine": 497,
+        "startChar": 19,
+        "endLine": 497,
+        "endChar": 42
+      },
+      "revId": "6a4699aeeb522c4ae96a45af3b4cb7805c2c7a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
