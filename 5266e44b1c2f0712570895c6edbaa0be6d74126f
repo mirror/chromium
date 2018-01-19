@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e3bbd81a_26e4eb3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuViewPager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-19T23:35:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51cf9c39_a43373e7",
+      "range": {
+        "startLine": 40,
+        "startChar": 34,
+        "endLine": 40,
+        "endChar": 35
+      },
+      "revId": "5266e44b1c2f0712570895c6edbaa0be6d74126f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2bd7ac2_3307f50a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuViewPager.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-18T23:34:13Z",
       "side": 1,
       "message": "what happens if mCanvasWidth \u003d\u003d 0 at this point?  Should we set the right to getMeasuredWith() -- (we\u0027d need to call this after super.onMeasure though).\n\nAlso, do we need to clear the clipBounds ever?  Should we do that on the animation end?\n\nIt also looks like we might be able to isolate all of the clip setting in initAnimator?  Could we set the clip in onAnimationStart and clear it in onAnimationEnd?  We\u0027d need to add the different type of observer, but I think that might work and be a bit clearer.",
+      "range": {
+        "startLine": 112,
+        "startChar": 16,
+        "endLine": 112,
+        "endChar": 29
+      },
+      "revId": "5266e44b1c2f0712570895c6edbaa0be6d74126f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d1a822_bc8609fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuViewPager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-19T23:35:57Z",
+      "side": 1,
+      "message": "Through debugging I found that canvas width is never 0; it\u0027s set to the correct width on the first pass. \n\nRemoved clipBounds on animation end.\n\nThe double setClipBounds was a mistake. setClipBounds is called only in onAnimationUpdate now.",
+      "parentUuid": "c2bd7ac2_3307f50a",
       "range": {
         "startLine": 112,
         "startChar": 16,
