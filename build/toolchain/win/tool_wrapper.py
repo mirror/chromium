@@ -141,10 +141,14 @@ class WinTool(object):
     # For that reason, since going through the shell doesn't seem necessary on
     # non-Windows don't do that there.
     pdb_name = None
+    pe_name = None
     for arg in args:
       m = _LINK_PDB_OUT_ARG.match(arg)
       if m:
         pdb_name = m.group('out')
+      m = _LINK_EXE_OUT_ARG.match(arg)
+      if m:
+        pe_name = m.group('out')
     for retry_count in range(_LINKER_RETRIES):
       retry = False
       link = subprocess.Popen(args, shell=sys.platform == 'win32', env=env,
@@ -167,6 +171,11 @@ class WinTool(object):
       result = link.wait()
       if not retry:
         break
+    if result == 0:
+      # Give the OS cache time to sort itself out. https://crbug.com/644525
+      if pe_name.endswith('.exe') and not pe_name.endswith('chrome.exe'):
+        flush = subprocess.Popen([r"c:\src\code\flush\flush.exe", pe_name], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        flush.wait()
     return result
 
   def ExecAsmWrapper(self, arch, *args):
