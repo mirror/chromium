@@ -215,6 +215,24 @@
     },
     {
       "key": {
+        "uuid": "4272ec42_4c18bdd4",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-19T14:11:46Z",
+      "side": 1,
+      "message": "I see your point now :)\n\nDOMWrapperWorld is not integrated into tracing and we are not calling DispatchTraceWrappers for it. We are merely calling a static function to delegate tracing its implementation details.\n\nThis should always be an exception case as we need a manual write barrier. In this case I don\u0027t see a way to work around that as it is a data structure on the API boundary (storing raw v8::Object*).\n\nNothing changes for the regular architecture: We should always inherit from TraceWrapperBase if SWV should be able to trace it. The object types that we need are: (1) TraceWrapperBase, (2) TraceWrapperV8Reference and (3) the world for raw v8::Objects.\n\nCase (3) was currently hidden because we took a look of hacky short curts. Ideally (2) and (3) would merge to a common type. This would require changing V8\u0027s API though. E.g. one could image having a DOMWrapperStore that somehow stores V8TraceWrapperReference internally. This would introduce quite some churn on both codebases though.",
+      "parentUuid": "af10bb87_fae14a6d",
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7e07b95_e7d28316",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.cpp",
         "patchSetId": 3
