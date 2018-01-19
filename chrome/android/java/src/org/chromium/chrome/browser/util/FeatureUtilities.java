@@ -61,6 +61,7 @@ public class FeatureUtilities {
 
     private static String sCachedHerbFlavor;
     private static boolean sIsHerbFlavorCached;
+    private static Boolean sIsSoleEnabled;
 
     /**
      * Determines whether or not the {@link RecognizerIntent#ACTION_WEB_SEARCH} {@link Intent}
@@ -194,6 +195,7 @@ public class FeatureUtilities {
     public static void cacheNativeFlags() {
         cacheHerbFlavor();
         cacheChromeHomeEnabled();
+        cacheSoleEnabled();
         FirstRunUtils.cacheFirstRunPrefs();
 
         // Propagate DONT_PREFETCH_LIBRARIES feature value to LibraryLoader. This can't
@@ -411,6 +413,33 @@ public class FeatureUtilities {
         }
 
         return false;
+    }
+
+    /**
+     * Cache whether or not Sole integration is enabled.
+     */
+    public static void cacheSoleEnabled() {
+        boolean featureEnabled = ChromeFeatureList.isEnabled(ChromeFeatureList.SOLE_INTEGRATION);
+        ChromePreferenceManager prefManager = ChromePreferenceManager.getInstance();
+        boolean prefEnabled = prefManager.isSoleEnabled();
+        if (featureEnabled == prefEnabled) return;
+
+        prefManager.setSoleEnabled(featureEnabled);
+    }
+
+    /**
+     * @return Whether or not Sole integration is enabled.
+     */
+    public static boolean isSoleEnabled() {
+        if (sIsSoleEnabled == null) {
+            ChromePreferenceManager prefManager = ChromePreferenceManager.getInstance();
+
+            // Allow disk access for preferences while Sole is in experimentation.
+            try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
+                sIsSoleEnabled = prefManager.isSoleEnabled();
+            }
+        }
+        return sIsSoleEnabled;
     }
 
     private static native void nativeSetCustomTabVisible(boolean visible);
