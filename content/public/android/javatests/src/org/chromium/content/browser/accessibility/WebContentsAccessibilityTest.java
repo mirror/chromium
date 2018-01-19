@@ -34,12 +34,14 @@ import org.chromium.base.test.util.UrlUtils;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
+import org.chromium.content_public.browser.WebContentsAccessibility;
 import org.chromium.content_shell_apk.ContentShellActivityTestRule;
 
 import java.lang.reflect.Method;
 
 /**
- * Tests for WebContentsAccessibility.
+ * Tests for WebContentsAccessibility. Actually tests WebContentsAccessibilityImpl that
+ * implements the interface.
  */
 @RunWith(BaseJUnit4ClassRunner.class)
 public class WebContentsAccessibilityTest {
@@ -48,7 +50,7 @@ public class WebContentsAccessibilityTest {
 
     @Before
     public void setUp() throws Exception {
-        WebContentsAccessibility.setAccessibilityEnabledForTesting();
+        WebContentsAccessibilityImpl.setAccessibilityEnabledForTesting();
     }
 
     /**
@@ -77,17 +79,18 @@ public class WebContentsAccessibilityTest {
      * returns something not null.
      */
     private AccessibilityNodeProvider enableAccessibilityAndWaitForNodeProvider() {
-        final ContentViewCore contentViewCore = mActivityTestRule.getContentViewCore();
-        contentViewCore.setAccessibilityState(true);
+        final WebContentsAccessibility wcax =
+                WebContentsAccessibility.fromWebContents(mActivityTestRule.getWebContents());
+        wcax.setState(true);
 
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return contentViewCore.getAccessibilityNodeProvider() != null;
+                return wcax.getAccessibilityNodeProvider() != null;
             }
         });
 
-        return contentViewCore.getAccessibilityNodeProvider();
+        return wcax.getAccessibilityNodeProvider();
     }
 
     AccessibilityEventCallbackHelper mAccessibilityEventCallbackHelper;
@@ -112,8 +115,10 @@ public class WebContentsAccessibilityTest {
 
         // Get the AccessibilityNodeProvider.
         ContentViewCore contentViewCore = mActivityTestRule.getContentViewCore();
-        contentViewCore.setAccessibilityState(true);
-        AccessibilityNodeProvider provider = contentViewCore.getAccessibilityNodeProvider();
+        WebContentsAccessibility wcax =
+                WebContentsAccessibility.fromWebContents(mActivityTestRule.getWebContents());
+        wcax.setState(true);
+        AccessibilityNodeProvider provider = wcax.getAccessibilityNodeProvider();
 
         // Wait until we find a node in the accessibility tree with the text "Text".
         // Whenever the tree is updated, an AccessibilityEvent is fired, so we can just wait until
