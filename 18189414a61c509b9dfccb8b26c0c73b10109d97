@@ -70,6 +70,30 @@
       "revId": "18189414a61c509b9dfccb8b26c0c73b10109d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da5c0bc7_9f49f9a0",
+        "filename": "chrome/browser/ui/views/infobars/confirm_infobar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-19T00:52:50Z",
+      "side": 1,
+      "message": "Doing things in ViewHierarchyChanged is entirely because back when I was writing infobars I was still operating under the mistaken impression that views should always be constructed in response to ViewHierarchyChanged and not in the constructor (due to misunderstanding both ownership and when various work phases ran).\n\nThe cached setting thing is a reasonable concern and I think justifies either doing this in layout or listening to the relevant notifications to catch this (the former seems easier).\n\nI would rather do that as a separate CL, though, since it\u0027s pre-existing behavior that\u0027s orthogonal to this change and I have some concern about the risks of moving it to Layout.  Would that be OK?",
+      "parentUuid": "c7472009_010168eb",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 32
+      },
+      "revId": "18189414a61c509b9dfccb8b26c0c73b10109d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
