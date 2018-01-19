@@ -92,7 +92,10 @@ class ProfilingTestDriver {
   bool ValidateRendererAllocations(base::Value* dump_json);
 
   bool ShouldProfileBrowser();
+  bool ShouldProfileRenderer();
   bool HasPseudoFrames();
+
+  void WaitForProfilingToStartForAllRenderersUIThread();
 
   Options options_;
 

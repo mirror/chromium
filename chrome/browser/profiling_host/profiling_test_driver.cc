@@ -18,6 +18,7 @@
 #include "build/build_config.h"
 #include "chrome/common/profiling/memlog_allocator_shim.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/tracing_controller.h"
 #include "content/public/common/service_manager_connection.h"
 
@@ -42,6 +43,8 @@ constexpr int kVariadicAllocCount = 157;
 constexpr int kPartitionAllocSize = 8 * 23;
 constexpr int kPartitionAllocCount = 107;
 static const char* kPartitionAllocTypeName = "kPartitionAllocTypeName";
+
+
 
 // On success, populates |pid|.
 int NumProcessesWithName(base::Value* dump_json, std::string name, int* pid) {
@@ -325,7 +328,10 @@ bool ProfilingTestDriver::RunTest(const Options& options) {
   if (running_on_ui_thread_) {
     if (!CheckOrStartProfiling())
       return false;
-    MakeTestAllocations();
+    if (ShouldProfileRenderer())
+      WaitForProfilingToStartForAllRenderersUIThread();
+    if (ShouldProfileBrowser())
+      MakeTestAllocations();
     CollectResults(true);
   } else {
     content::BrowserThread::PostTask(
@@ -336,10 +342,20 @@ bool ProfilingTestDriver::RunTest(const Options& options) {
     wait_for_ui_thread_.Wait();
     if (!initialization_success_)
       return false;
-    content::BrowserThread::PostTask(
-        content::BrowserThread::UI, FROM_HERE,
-        base::Bind(&ProfilingTestDriver::MakeTestAllocations,
-                   base::Unretained(this)));
+    if (ShouldProfileRenderer()) {
+      content::BrowserThread::PostTask(
+          content::BrowserThread::UI, FROM_HERE,
+          base::Bind(
+              &ProfilingTestDriver::WaitForProfilingToStartForAllRenderersUIThread,
+              base::Unretained(this)));
+      wait_for_ui_thread_.Wait();
+    }
+    if (ShouldProfileBrowser()) {
+      content::BrowserThread::PostTask(
+          content::BrowserThread::UI, FROM_HERE,
+          base::Bind(&ProfilingTestDriver::MakeTestAllocations,
+                     base::Unretained(this)));
+    }
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
         base::Bind(&ProfilingTestDriver::CollectResults, base::Unretained(this),
@@ -580,8 +596,7 @@ bool ProfilingTestDriver::ValidateRendererAllocations(base::Value* dump_json) {
 
   base::ProcessId renderer_pid = static_cast<base::ProcessId>(pid);
   base::Value* heaps_v2 = FindHeapsV2(renderer_pid, dump_json);
-  if (options_.mode == ProfilingProcessHost::Mode::kAll ||
-      options_.mode == ProfilingProcessHost::Mode::kAllRenderers) {
+  if (ShouldProfileRenderer()) {
     if (!heaps_v2) {
       LOG(ERROR) << "Failed to find heaps v2 for renderer";
       return false;
@@ -620,8 +635,47 @@ bool ProfilingTestDriver::ShouldProfileBrowser() {
          options_.mode == ProfilingProcessHost::Mode::kMinimal;
 }
 
+bool ProfilingTestDriver::ShouldProfileRenderer() {
+  return options_.mode == ProfilingProcessHost::Mode::kAll ||
+         options_.mode == ProfilingProcessHost::Mode::kAllRenderers;
+}
+
 bool ProfilingTestDriver::HasPseudoFrames() {
   return options_.stack_mode != profiling::mojom::StackMode::NATIVE;
+}
+
+void ProfilingTestDriver::WaitForProfilingToStartForAllRenderersUIThread() {
+  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
+  while (true) {
+    std::vector<base::ProcessId> profiled_pids;
+    base::RunLoop run_loop;
+    auto callback = base::BindOnce(
+        [](std::vector<base::ProcessId>* results, base::OnceClosure finished, std::vector<base::ProcessId> pids) {
+          results->swap(pids);
+          std::move(finished).Run();
+        }, &profiled_pids, run_loop.QuitClosure());
+    profiling::ProfilingProcessHost::GetInstance()->GetProfiledPids(std::move(callback));
+    run_loop.Run();
+
+    bool profiling_started = true;
+    size_t renderer_count = 0;
+    for (auto iter = content::RenderProcessHost::AllHostsIterator();
+         !iter.IsAtEnd(); iter.Advance()) {
+      base::ProcessId pid = base::GetProcId(iter.GetCurrentValue()->GetHandle());
+      if (std::find(profiled_pids.begin(), profiled_pids.end(), pid) == profiled_pids.end()) {
+        profiling_started = false;
+        break;
+      }
+      ++renderer_count;
+    }
+
+    if (renderer_count != 0 && profiling_started)
+      break;
+  }
+
+  // When the test is being run on the UI thread, this has no effect. When the
+  // test is being run on a different thread, this wakes up that thread.
+  wait_for_ui_thread_.Signal();
 }
 
 }  // namespace profiling
