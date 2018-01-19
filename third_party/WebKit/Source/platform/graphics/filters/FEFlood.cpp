@@ -67,7 +67,7 @@ bool FEFlood::SetFloodOpacity(float flood_opacity) {
 sk_sp<PaintFilter> FEFlood::CreateImageFilter() {
   Color color = FloodColor().CombineWithAlpha(FloodOpacity());
   PaintFilter::CropRect rect = GetCropRect();
-  return sk_make_sp<ColorFilterPaintFilter>(
+  return ColorFilterPaintFilter::Make(
       SkColorFilter::MakeModeFilter(color.Rgb(), SkBlendMode::kSrc), nullptr,
       &rect);
 }

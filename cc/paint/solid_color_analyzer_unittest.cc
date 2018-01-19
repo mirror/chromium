@@ -263,7 +263,7 @@ TEST_F(SolidColorAnalyzerTest, DrawRectFilterPaint) {
   PaintFlags flags;
   SkColor color = SkColorSetARGB(255, 11, 22, 33);
   flags.setColor(color);
-  flags.setImageFilter(sk_make_sp<OffsetPaintFilter>(10, 10, nullptr));
+  flags.setImageFilter(OffsetPaintFilter::Make(10, 10, nullptr));
   SkRect rect = SkRect::MakeWH(200, 200);
   canvas()->drawRect(rect, flags);
   EXPECT_FALSE(IsSolidColor());

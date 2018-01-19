@@ -428,7 +428,7 @@ sk_sp<PaintFilter> CanvasRenderingContext2DState::ShadowOnlyImageFilter()
     const {
   if (!shadow_only_image_filter_) {
     double sigma = SkBlurRadiusToSigma(shadow_blur_);
-    shadow_only_image_filter_ = sk_make_sp<DropShadowPaintFilter>(
+    shadow_only_image_filter_ = DropShadowPaintFilter::Make(
         shadow_offset_.Width(), shadow_offset_.Height(), sigma, sigma,
         shadow_color_, SkDropShadowImageFilter::kDrawShadowOnly_ShadowMode,
         nullptr);
@@ -440,7 +440,7 @@ sk_sp<PaintFilter>
 CanvasRenderingContext2DState::ShadowAndForegroundImageFilter() const {
   if (!shadow_and_foreground_image_filter_) {
     double sigma = SkBlurRadiusToSigma(shadow_blur_);
-    shadow_and_foreground_image_filter_ = sk_make_sp<DropShadowPaintFilter>(
+    shadow_and_foreground_image_filter_ = DropShadowPaintFilter::Make(
         shadow_offset_.Width(), shadow_offset_.Height(), sigma, sigma,
         shadow_color_,
         SkDropShadowImageFilter::kDrawShadowAndForeground_ShadowMode, nullptr);

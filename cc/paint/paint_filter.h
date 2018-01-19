@@ -127,9 +127,10 @@ class CC_PAINT_EXPORT PaintFilter : public SkRefCnt {
 class CC_PAINT_EXPORT ColorFilterPaintFilter final : public PaintFilter {
  public:
   static constexpr Type kType = Type::kColorFilter;
-  ColorFilterPaintFilter(sk_sp<SkColorFilter> color_filter,
-                         sk_sp<PaintFilter> input,
-                         const CropRect* crop_rect = nullptr);
+  static sk_sp<ColorFilterPaintFilter> Make(
+      sk_sp<SkColorFilter> color_filter,
+      sk_sp<PaintFilter> input,
+      const CropRect* crop_rect = nullptr);
   ~ColorFilterPaintFilter() override;
 
   const sk_sp<SkColorFilter>& color_filter() const { return color_filter_; }
@@ -138,6 +139,10 @@ class CC_PAINT_EXPORT ColorFilterPaintFilter final : public PaintFilter {
   bool operator==(const ColorFilterPaintFilter& other) const;
 
  private:
+  ColorFilterPaintFilter(sk_sp<SkColorFilter> color_filter,
+                         sk_sp<PaintFilter> input,
+                         const CropRect* crop_rect);
+
   sk_sp<SkColorFilter> color_filter_;
   sk_sp<PaintFilter> input_;
 };
@@ -146,11 +151,11 @@ class CC_PAINT_EXPORT BlurPaintFilter final : public PaintFilter {
  public:
   using TileMode = SkBlurImageFilter::TileMode;
   static constexpr Type kType = Type::kBlur;
-  BlurPaintFilter(SkScalar sigma_x,
-                  SkScalar sigma_y,
-                  TileMode tile_mode,
-                  sk_sp<PaintFilter> input,
-                  const CropRect* crop_rect = nullptr);
+  static sk_sp<BlurPaintFilter> Make(SkScalar sigma_x,
+                                     SkScalar sigma_y,
+                                     TileMode tile_mode,
+                                     sk_sp<PaintFilter> input,
+                                     const CropRect* crop_rect = nullptr);
   ~BlurPaintFilter() override;
 
   const sk_sp<PaintFilter>& input() const { return input_; }
@@ -162,6 +167,12 @@ class CC_PAINT_EXPORT BlurPaintFilter final : public PaintFilter {
   bool operator==(const BlurPaintFilter& other) const;
 
  private:
+  BlurPaintFilter(SkScalar sigma_x,
+                  SkScalar sigma_y,
+                  TileMode tile_mode,
+                  sk_sp<PaintFilter> input,
+                  const CropRect* crop_rect);
+
   SkScalar sigma_x_;
   SkScalar sigma_y_;
   TileMode tile_mode_;
@@ -172,14 +183,14 @@ class CC_PAINT_EXPORT DropShadowPaintFilter final : public PaintFilter {
  public:
   using ShadowMode = SkDropShadowImageFilter::ShadowMode;
   static constexpr Type kType = Type::kDropShadow;
-  DropShadowPaintFilter(SkScalar dx,
-                        SkScalar dy,
-                        SkScalar sigma_x,
-                        SkScalar sigma_y,
-                        SkColor color,
-                        ShadowMode shadow_mode,
-                        sk_sp<PaintFilter> input,
-                        const CropRect* crop_rect = nullptr);
+  static sk_sp<DropShadowPaintFilter> Make(SkScalar dx,
+                                           SkScalar dy,
+                                           SkScalar sigma_x,
+                                           SkScalar sigma_y,
+                                           SkColor color,
+                                           ShadowMode shadow_mode,
+                                           sk_sp<PaintFilter> input,
+                                           const CropRect* crop_rect = nullptr);
   ~DropShadowPaintFilter() override;
 
   SkScalar dx() const { return dx_; }
@@ -193,6 +204,15 @@ class CC_PAINT_EXPORT DropShadowPaintFilter final : public PaintFilter {
   bool operator==(const DropShadowPaintFilter& other) const;
 
  private:
+  DropShadowPaintFilter(SkScalar dx,
+                        SkScalar dy,
+                        SkScalar sigma_x,
+                        SkScalar sigma_y,
+                        SkColor color,
+                        ShadowMode shadow_mode,
+                        sk_sp<PaintFilter> input,
+                        const CropRect* crop_rect);
+
   SkScalar dx_;
   SkScalar dy_;
   SkScalar sigma_x_;
@@ -205,10 +225,10 @@ class CC_PAINT_EXPORT DropShadowPaintFilter final : public PaintFilter {
 class CC_PAINT_EXPORT MagnifierPaintFilter final : public PaintFilter {
  public:
   static constexpr Type kType = Type::kMagnifier;
-  MagnifierPaintFilter(const SkRect& src_rect,
-                       SkScalar inset,
-                       sk_sp<PaintFilter> input,
-                       const CropRect* crop_rect = nullptr);
+  static sk_sp<MagnifierPaintFilter> Make(const SkRect& src_rect,
+                                          SkScalar inset,
+                                          sk_sp<PaintFilter> input,
+                                          const CropRect* crop_rect = nullptr);
   ~MagnifierPaintFilter() override;
 
   const SkRect& src_rect() const { return src_rect_; }
@@ -218,6 +238,11 @@ class CC_PAINT_EXPORT MagnifierPaintFilter final : public PaintFilter {
   bool operator==(const MagnifierPaintFilter& other) const;
 
  private:
+  MagnifierPaintFilter(const SkRect& src_rect,
+                       SkScalar inset,
+                       sk_sp<PaintFilter> input,
+                       const CropRect* crop_rect);
+
   SkRect src_rect_;
   SkScalar inset_;
   sk_sp<PaintFilter> input_;
@@ -226,7 +251,8 @@ class CC_PAINT_EXPORT MagnifierPaintFilter final : public PaintFilter {
 class CC_PAINT_EXPORT ComposePaintFilter final : public PaintFilter {
  public:
   static constexpr Type kType = Type::kCompose;
-  ComposePaintFilter(sk_sp<PaintFilter> outer, sk_sp<PaintFilter> inner);
+  static sk_sp<ComposePaintFilter> Make(sk_sp<PaintFilter> outer,
+                                        sk_sp<PaintFilter> inner);
   ~ComposePaintFilter() override;
 
   const sk_sp<PaintFilter>& outer() const { return outer_; }
@@ -235,6 +261,8 @@ class CC_PAINT_EXPORT ComposePaintFilter final : public PaintFilter {
   bool operator==(const ComposePaintFilter& other) const;
 
  private:
+  ComposePaintFilter(sk_sp<PaintFilter> outer, sk_sp<PaintFilter> inner);
+
   sk_sp<PaintFilter> outer_;
   sk_sp<PaintFilter> inner_;
 };
@@ -242,11 +270,12 @@ class CC_PAINT_EXPORT ComposePaintFilter final : public PaintFilter {
 class CC_PAINT_EXPORT AlphaThresholdPaintFilter final : public PaintFilter {
  public:
   static constexpr Type kType = Type::kAlphaThreshold;
-  AlphaThresholdPaintFilter(const SkRegion& region,
-                            SkScalar inner_min,
-                            SkScalar outer_max,
-                            sk_sp<PaintFilter> input,
-                            const CropRect* crop_rect = nullptr);
+  static sk_sp<AlphaThresholdPaintFilter> Make(
+      const SkRegion& region,
+      SkScalar inner_min,
+      SkScalar outer_max,
+      sk_sp<PaintFilter> input,
+      const CropRect* crop_rect = nullptr);
   ~AlphaThresholdPaintFilter() override;
 
   const SkRegion& region() const { return region_; }
@@ -257,6 +286,12 @@ class CC_PAINT_EXPORT AlphaThresholdPaintFilter final : public PaintFilter {
   bool operator==(const AlphaThresholdPaintFilter& other) const;
 
  private:
+  AlphaThresholdPaintFilter(const SkRegion& region,
+                            SkScalar inner_min,
+                            SkScalar outer_max,
+                            sk_sp<PaintFilter> input,
+                            const CropRect* crop_rect);
+
   SkRegion region_;
   SkScalar inner_min_;
   SkScalar outer_max_;
@@ -266,10 +301,10 @@ class CC_PAINT_EXPORT AlphaThresholdPaintFilter final : public PaintFilter {
 class CC_PAINT_EXPORT XfermodePaintFilter final : public PaintFilter {
  public:
   static constexpr Type kType = Type::kXfermode;
-  XfermodePaintFilter(SkBlendMode blend_mode,
-                      sk_sp<PaintFilter> background,
-                      sk_sp<PaintFilter> foreground,
-                      const CropRect* crop_rect = nullptr);
+  static sk_sp<XfermodePaintFilter> Make(SkBlendMode blend_mode,
+                                         sk_sp<PaintFilter> background,
+                                         sk_sp<PaintFilter> foreground,
+                                         const CropRect* crop_rect = nullptr);
   ~XfermodePaintFilter() override;
 
   SkBlendMode blend_mode() const { return blend_mode_; }
@@ -279,6 +314,11 @@ class CC_PAINT_EXPORT XfermodePaintFilter final : public PaintFilter {
   bool operator==(const XfermodePaintFilter& other) const;
 
  private:
+  XfermodePaintFilter(SkBlendMode blend_mode,
+                      sk_sp<PaintFilter> background,
+                      sk_sp<PaintFilter> foreground,
+                      const CropRect* crop_rect);
+
   SkBlendMode blend_mode_;
   sk_sp<PaintFilter> background_;
   sk_sp<PaintFilter> foreground_;
@@ -287,14 +327,14 @@ class CC_PAINT_EXPORT XfermodePaintFilter final : public PaintFilter {
 class CC_PAINT_EXPORT ArithmeticPaintFilter final : public PaintFilter {
  public:
   static constexpr Type kType = Type::kArithmetic;
-  ArithmeticPaintFilter(float k1,
-                        float k2,
-                        float k3,
-                        float k4,
-                        bool enforce_pm_color,
-                        sk_sp<PaintFilter> background,
-                        sk_sp<PaintFilter> foreground,
-                        const CropRect* crop_rect = nullptr);
+  static sk_sp<ArithmeticPaintFilter> Make(float k1,
+                                           float k2,
+                                           float k3,
+                                           float k4,
+                                           bool enforce_pm_color,
+                                           sk_sp<PaintFilter> background,
+                                           sk_sp<PaintFilter> foreground,
+                                           const CropRect* crop_rect = nullptr);
   ~ArithmeticPaintFilter() override;
 
   float k1() const { return k1_; }
@@ -308,6 +348,15 @@ class CC_PAINT_EXPORT ArithmeticPaintFilter final : public PaintFilter {
   bool operator==(const ArithmeticPaintFilter& other) const;
 
  private:
+  ArithmeticPaintFilter(float k1,
+                        float k2,
+                        float k3,
+                        float k4,
+                        bool enforce_pm_color,
+                        sk_sp<PaintFilter> background,
+                        sk_sp<PaintFilter> foreground,
+                        const CropRect* crop_rect);
+
   float k1_;
   float k2_;
   float k3_;
@@ -321,15 +370,16 @@ class CC_PAINT_EXPORT MatrixConvolutionPaintFilter final : public PaintFilter {
  public:
   using TileMode = SkMatrixConvolutionImageFilter::TileMode;
   static constexpr Type kType = Type::kMatrixConvolution;
-  MatrixConvolutionPaintFilter(const SkISize& kernel_size,
-                               const SkScalar* kernel,
-                               SkScalar gain,
-                               SkScalar bias,
-                               const SkIPoint& kernel_offset,
-                               TileMode tile_mode,
-                               bool convolve_alpha,
-                               sk_sp<PaintFilter> input,
-                               const CropRect* crop_rect = nullptr);
+  static sk_sp<MatrixConvolutionPaintFilter> Make(
+      const SkISize& kernel_size,
+      const SkScalar* kernel,
+      SkScalar gain,
+      SkScalar bias,
+      const SkIPoint& kernel_offset,
+      TileMode tile_mode,
+      bool convolve_alpha,
+      sk_sp<PaintFilter> input,
+      const CropRect* crop_rect = nullptr);
   ~MatrixConvolutionPaintFilter() override;
 
   const SkISize& kernel_size() const { return kernel_size_; }
@@ -344,6 +394,16 @@ class CC_PAINT_EXPORT MatrixConvolutionPaintFilter final : public PaintFilter {
   bool operator==(const MatrixConvolutionPaintFilter& other) const;
 
  private:
+  MatrixConvolutionPaintFilter(const SkISize& kernel_size,
+                               const SkScalar* kernel,
+                               SkScalar gain,
+                               SkScalar bias,
+                               const SkIPoint& kernel_offset,
+                               TileMode tile_mode,
+                               bool convolve_alpha,
+                               sk_sp<PaintFilter> input,
+                               const CropRect* crop_rect);
+
   SkISize kernel_size_;
   base::StackVector<SkScalar, 3> kernel_;
   SkScalar gain_;
@@ -359,12 +419,13 @@ class CC_PAINT_EXPORT DisplacementMapEffectPaintFilter final
  public:
   using ChannelSelectorType = SkDisplacementMapEffect::ChannelSelectorType;
   static constexpr Type kType = Type::kDisplacementMapEffect;
-  DisplacementMapEffectPaintFilter(ChannelSelectorType channel_x,
-                                   ChannelSelectorType channel_y,
-                                   SkScalar scale,
-                                   sk_sp<PaintFilter> displacement,
-                                   sk_sp<PaintFilter> color,
-                                   const CropRect* crop_rect = nullptr);
+  static sk_sp<DisplacementMapEffectPaintFilter> Make(
+      ChannelSelectorType channel_x,
+      ChannelSelectorType channel_y,
+      SkScalar scale,
+      sk_sp<PaintFilter> displacement,
+      sk_sp<PaintFilter> color,
+      const CropRect* crop_rect = nullptr);
   ~DisplacementMapEffectPaintFilter() override;
 
   ChannelSelectorType channel_x() const { return channel_x_; }
@@ -376,6 +437,13 @@ class CC_PAINT_EXPORT DisplacementMapEffectPaintFilter final
   bool operator==(const DisplacementMapEffectPaintFilter& other) const;
 
  private:
+  DisplacementMapEffectPaintFilter(ChannelSelectorType channel_x,
+                                   ChannelSelectorType channel_y,
+                                   SkScalar scale,
+                                   sk_sp<PaintFilter> displacement,
+                                   sk_sp<PaintFilter> color,
+                                   const CropRect* crop_rect);
+
   ChannelSelectorType channel_x_;
   ChannelSelectorType channel_y_;
   SkScalar scale_;
@@ -386,10 +454,10 @@ class CC_PAINT_EXPORT DisplacementMapEffectPaintFilter final
 class CC_PAINT_EXPORT ImagePaintFilter final : public PaintFilter {
  public:
   static constexpr Type kType = Type::kImage;
-  ImagePaintFilter(PaintImage image,
-                   const SkRect& src_rect,
-                   const SkRect& dst_rect,
-                   SkFilterQuality filter_quality);
+  static sk_sp<ImagePaintFilter> Make(PaintImage image,
+                                      const SkRect& src_rect,
+                                      const SkRect& dst_rect,
+                                      SkFilterQuality filter_quality);
   ~ImagePaintFilter() override;
 
   const PaintImage& image() const { return image_; }
@@ -400,6 +468,11 @@ class CC_PAINT_EXPORT ImagePaintFilter final : public PaintFilter {
   bool operator==(const ImagePaintFilter& other) const;
 
  private:
+  ImagePaintFilter(PaintImage image,
+                   const SkRect& src_rect,
+                   const SkRect& dst_rect,
+                   SkFilterQuality filter_quality);
+
   PaintImage image_;
   SkRect src_rect_;
   SkRect dst_rect_;
@@ -409,7 +482,8 @@ class CC_PAINT_EXPORT ImagePaintFilter final : public PaintFilter {
 class CC_PAINT_EXPORT RecordPaintFilter final : public PaintFilter {
  public:
   static constexpr Type kType = Type::kPaintRecord;
-  RecordPaintFilter(sk_sp<PaintRecord> record, const SkRect& record_bounds);
+  static sk_sp<RecordPaintFilter> Make(sk_sp<PaintRecord> record,
+                                       const SkRect& record_bounds);
   ~RecordPaintFilter() override;
 
   const sk_sp<PaintRecord>& record() const { return record_; }
@@ -418,6 +492,8 @@ class CC_PAINT_EXPORT RecordPaintFilter final : public PaintFilter {
   bool operator==(const RecordPaintFilter& other) const;
 
  private:
+  RecordPaintFilter(sk_sp<PaintRecord> record, const SkRect& record_bounds);
+
   sk_sp<PaintRecord> record_;
   SkRect record_bounds_;
 };
@@ -425,9 +501,9 @@ class CC_PAINT_EXPORT RecordPaintFilter final : public PaintFilter {
 class CC_PAINT_EXPORT MergePaintFilter final : public PaintFilter {
  public:
   static constexpr Type kType = Type::kMerge;
-  MergePaintFilter(sk_sp<PaintFilter>* const filters,
-                   int count,
-                   const CropRect* crop_rect = nullptr);
+  static sk_sp<MergePaintFilter> Make(sk_sp<PaintFilter>* const filters,
+                                      int count,
+                                      const CropRect* crop_rect = nullptr);
   ~MergePaintFilter() override;
 
   size_t input_count() const { return inputs_->size(); }
@@ -439,6 +515,10 @@ class CC_PAINT_EXPORT MergePaintFilter final : public PaintFilter {
   bool operator==(const MergePaintFilter& other) const;
 
  private:
+  MergePaintFilter(sk_sp<PaintFilter>* const filters,
+                   int count,
+                   const CropRect* crop_rect);
+
   base::StackVector<sk_sp<PaintFilter>, 2> inputs_;
 };
 
@@ -446,11 +526,11 @@ class CC_PAINT_EXPORT MorphologyPaintFilter final : public PaintFilter {
  public:
   enum class MorphType : uint8_t { kDilate, kErode, kMaxMorphType = kErode };
   static constexpr Type kType = Type::kMorphology;
-  MorphologyPaintFilter(MorphType morph_type,
-                        int radius_x,
-                        int radius_y,
-                        sk_sp<PaintFilter> input,
-                        const CropRect* crop_rect = nullptr);
+  static sk_sp<MorphologyPaintFilter> Make(MorphType morph_type,
+                                           int radius_x,
+                                           int radius_y,
+                                           sk_sp<PaintFilter> input,
+                                           const CropRect* crop_rect = nullptr);
   ~MorphologyPaintFilter() override;
 
   MorphType morph_type() const { return morph_type_; }
@@ -461,6 +541,12 @@ class CC_PAINT_EXPORT MorphologyPaintFilter final : public PaintFilter {
   bool operator==(const MorphologyPaintFilter& other) const;
 
  private:
+  MorphologyPaintFilter(MorphType morph_type,
+                        int radius_x,
+                        int radius_y,
+                        sk_sp<PaintFilter> input,
+                        const CropRect* crop_rect);
+
   MorphType morph_type_;
   int radius_x_;
   int radius_y_;
@@ -470,10 +556,10 @@ class CC_PAINT_EXPORT MorphologyPaintFilter final : public PaintFilter {
 class CC_PAINT_EXPORT OffsetPaintFilter final : public PaintFilter {
  public:
   static constexpr Type kType = Type::kOffset;
-  OffsetPaintFilter(SkScalar dx,
-                    SkScalar dy,
-                    sk_sp<PaintFilter> input,
-                    const CropRect* crop_rect = nullptr);
+  static sk_sp<OffsetPaintFilter> Make(SkScalar dx,
+                                       SkScalar dy,
+                                       sk_sp<PaintFilter> input,
+                                       const CropRect* crop_rect = nullptr);
   ~OffsetPaintFilter() override;
 
   SkScalar dx() const { return dx_; }
@@ -483,6 +569,11 @@ class CC_PAINT_EXPORT OffsetPaintFilter final : public PaintFilter {
   bool operator==(const OffsetPaintFilter& other) const;
 
  private:
+  OffsetPaintFilter(SkScalar dx,
+                    SkScalar dy,
+                    sk_sp<PaintFilter> input,
+                    const CropRect* crop_rect);
+
   SkScalar dx_;
   SkScalar dy_;
   sk_sp<PaintFilter> input_;
@@ -491,9 +582,9 @@ class CC_PAINT_EXPORT OffsetPaintFilter final : public PaintFilter {
 class CC_PAINT_EXPORT TilePaintFilter final : public PaintFilter {
  public:
   static constexpr Type kType = Type::kTile;
-  TilePaintFilter(const SkRect& src,
-                  const SkRect& dst,
-                  sk_sp<PaintFilter> input);
+  static sk_sp<TilePaintFilter> Make(const SkRect& src,
+                                     const SkRect& dst,
+                                     sk_sp<PaintFilter> input);
   ~TilePaintFilter() override;
 
   const SkRect& src() const { return src_; }
@@ -503,6 +594,10 @@ class CC_PAINT_EXPORT TilePaintFilter final : public PaintFilter {
   bool operator==(const TilePaintFilter& other) const;
 
  private:
+  TilePaintFilter(const SkRect& src,
+                  const SkRect& dst,
+                  sk_sp<PaintFilter> input);
+
   SkRect src_;
   SkRect dst_;
   sk_sp<PaintFilter> input_;
@@ -516,13 +611,13 @@ class CC_PAINT_EXPORT TurbulencePaintFilter final : public PaintFilter {
     kFractalNoise,
     kMaxTurbulenceType = kFractalNoise
   };
-  TurbulencePaintFilter(TurbulenceType turbulence_type,
-                        SkScalar base_frequency_x,
-                        SkScalar base_frequency_y,
-                        int num_octaves,
-                        SkScalar seed,
-                        const SkISize* tile_size,
-                        const CropRect* crop_rect = nullptr);
+  static sk_sp<TurbulencePaintFilter> Make(TurbulenceType turbulence_type,
+                                           SkScalar base_frequency_x,
+                                           SkScalar base_frequency_y,
+                                           int num_octaves,
+                                           SkScalar seed,
+                                           const SkISize* tile_size,
+                                           const CropRect* crop_rect = nullptr);
   ~TurbulencePaintFilter() override;
 
   TurbulenceType turbulence_type() const { return turbulence_type_; }
@@ -535,6 +630,14 @@ class CC_PAINT_EXPORT TurbulencePaintFilter final : public PaintFilter {
   bool operator==(const TurbulencePaintFilter& other) const;
 
  private:
+  TurbulencePaintFilter(TurbulenceType turbulence_type,
+                        SkScalar base_frequency_x,
+                        SkScalar base_frequency_y,
+                        int num_octaves,
+                        SkScalar seed,
+                        const SkISize* tile_size,
+                        const CropRect* crop_rect);
+
   TurbulenceType turbulence_type_;
   SkScalar base_frequency_x_;
   SkScalar base_frequency_y_;
@@ -546,8 +649,8 @@ class CC_PAINT_EXPORT TurbulencePaintFilter final : public PaintFilter {
 class CC_PAINT_EXPORT PaintFlagsPaintFilter final : public PaintFilter {
  public:
   static constexpr Type kType = Type::kPaintFlags;
-  explicit PaintFlagsPaintFilter(PaintFlags flags,
-                                 const CropRect* crop_rect = nullptr);
+  static sk_sp<PaintFlagsPaintFilter> Make(PaintFlags flags,
+                                           const CropRect* crop_rect = nullptr);
   ~PaintFlagsPaintFilter() override;
 
   const PaintFlags& flags() const { return flags_; }
@@ -555,15 +658,17 @@ class CC_PAINT_EXPORT PaintFlagsPaintFilter final : public PaintFilter {
   bool operator==(const PaintFlagsPaintFilter& other) const;
 
  private:
+  PaintFlagsPaintFilter(PaintFlags flags, const CropRect* crop_rect);
+
   PaintFlags flags_;
 };
 
 class CC_PAINT_EXPORT MatrixPaintFilter final : public PaintFilter {
  public:
   static constexpr Type kType = Type::kMatrix;
-  MatrixPaintFilter(const SkMatrix& matrix,
-                    SkFilterQuality filter_quality,
-                    sk_sp<PaintFilter> input);
+  static sk_sp<MatrixPaintFilter> Make(const SkMatrix& matrix,
+                                       SkFilterQuality filter_quality,
+                                       sk_sp<PaintFilter> input);
   ~MatrixPaintFilter() override;
 
   const SkMatrix& matrix() const { return matrix_; }
@@ -573,6 +678,10 @@ class CC_PAINT_EXPORT MatrixPaintFilter final : public PaintFilter {
   bool operator==(const MatrixPaintFilter& other) const;
 
  private:
+  MatrixPaintFilter(const SkMatrix& matrix,
+                    SkFilterQuality filter_quality,
+                    sk_sp<PaintFilter> input);
+
   SkMatrix matrix_;
   SkFilterQuality filter_quality_;
   sk_sp<PaintFilter> input_;
@@ -584,14 +693,15 @@ class CC_PAINT_EXPORT LightingDistantPaintFilter final : public PaintFilter {
   // kConstant refers to the kd (diffuse) or ks (specular) depending on the
   // LightingType.
   // For specular lighting type only, shininess denotes the specular exponent.
-  LightingDistantPaintFilter(LightingType lighting_type,
-                             const SkPoint3& direction,
-                             SkColor light_color,
-                             SkScalar surface_scale,
-                             SkScalar kconstant,
-                             SkScalar shininess,
-                             sk_sp<PaintFilter> input,
-                             const CropRect* crop_rect = nullptr);
+  static sk_sp<LightingDistantPaintFilter> Make(
+      LightingType lighting_type,
+      const SkPoint3& direction,
+      SkColor light_color,
+      SkScalar surface_scale,
+      SkScalar kconstant,
+      SkScalar shininess,
+      sk_sp<PaintFilter> input,
+      const CropRect* crop_rect = nullptr);
   ~LightingDistantPaintFilter() override;
 
   LightingType lighting_type() const { return lighting_type_; }
@@ -605,6 +715,15 @@ class CC_PAINT_EXPORT LightingDistantPaintFilter final : public PaintFilter {
   bool operator==(const LightingDistantPaintFilter& other) const;
 
  private:
+  LightingDistantPaintFilter(LightingType lighting_type,
+                             const SkPoint3& direction,
+                             SkColor light_color,
+                             SkScalar surface_scale,
+                             SkScalar kconstant,
+                             SkScalar shininess,
+                             sk_sp<PaintFilter> input,
+                             const CropRect* crop_rect);
+
   LightingType lighting_type_;
   SkPoint3 direction_;
   SkColor light_color_;
@@ -620,14 +739,15 @@ class CC_PAINT_EXPORT LightingPointPaintFilter final : public PaintFilter {
   // kConstant refers to the kd (diffuse) or ks (specular) depending on the
   // LightingType.
   // For specular lighting type only, shininess denotes the specular exponent.
-  LightingPointPaintFilter(LightingType lighting_type,
-                           const SkPoint3& location,
-                           SkColor light_color,
-                           SkScalar surface_scale,
-                           SkScalar kconstant,
-                           SkScalar shininess,
-                           sk_sp<PaintFilter> input,
-                           const CropRect* crop_rect = nullptr);
+  static sk_sp<LightingPointPaintFilter> Make(
+      LightingType lighting_type,
+      const SkPoint3& location,
+      SkColor light_color,
+      SkScalar surface_scale,
+      SkScalar kconstant,
+      SkScalar shininess,
+      sk_sp<PaintFilter> input,
+      const CropRect* crop_rect = nullptr);
   ~LightingPointPaintFilter() override;
 
   LightingType lighting_type() const { return lighting_type_; }
@@ -641,6 +761,15 @@ class CC_PAINT_EXPORT LightingPointPaintFilter final : public PaintFilter {
   bool operator==(const LightingPointPaintFilter& other) const;
 
  private:
+  LightingPointPaintFilter(LightingType lighting_type,
+                           const SkPoint3& location,
+                           SkColor light_color,
+                           SkScalar surface_scale,
+                           SkScalar kconstant,
+                           SkScalar shininess,
+                           sk_sp<PaintFilter> input,
+                           const CropRect* crop_rect);
+
   LightingType lighting_type_;
   SkPoint3 location_;
   SkColor light_color_;
@@ -656,17 +785,18 @@ class CC_PAINT_EXPORT LightingSpotPaintFilter final : public PaintFilter {
   // kConstant refers to the kd (diffuse) or ks (specular) depending on the
   // LightingType.
   // For specular lighting type only, shininess denotes the specular exponent.
-  LightingSpotPaintFilter(LightingType lighting_type,
-                          const SkPoint3& location,
-                          const SkPoint3& target,
-                          SkScalar specular_exponent,
-                          SkScalar cutoff_angle,
-                          SkColor light_color,
-                          SkScalar surface_scale,
-                          SkScalar kconstant,
-                          SkScalar shininess,
-                          sk_sp<PaintFilter> input,
-                          const CropRect* crop_rect = nullptr);
+  static sk_sp<LightingSpotPaintFilter> Make(
+      LightingType lighting_type,
+      const SkPoint3& location,
+      const SkPoint3& target,
+      SkScalar specular_exponent,
+      SkScalar cutoff_angle,
+      SkColor light_color,
+      SkScalar surface_scale,
+      SkScalar kconstant,
+      SkScalar shininess,
+      sk_sp<PaintFilter> input,
+      const CropRect* crop_rect = nullptr);
   ~LightingSpotPaintFilter() override;
 
   LightingType lighting_type() const { return lighting_type_; }
@@ -683,6 +813,18 @@ class CC_PAINT_EXPORT LightingSpotPaintFilter final : public PaintFilter {
   bool operator==(const LightingSpotPaintFilter& other) const;
 
  private:
+  LightingSpotPaintFilter(LightingType lighting_type,
+                          const SkPoint3& location,
+                          const SkPoint3& target,
+                          SkScalar specular_exponent,
+                          SkScalar cutoff_angle,
+                          SkColor light_color,
+                          SkScalar surface_scale,
+                          SkScalar kconstant,
+                          SkScalar shininess,
+                          sk_sp<PaintFilter> input,
+                          const CropRect* crop_rect);
+
   LightingType lighting_type_;
   SkPoint3 location_;
   SkPoint3 target_;
