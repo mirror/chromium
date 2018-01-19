@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "f3692b18_90e90d3b",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-19T12:57:59Z",
+      "side": 1,
+      "message": "Is the name \"TraceWrappers\" problematic? If so I can rename it to something different like \"DispatchTraceWrappers\".\n\nI would like to avoid ScriptWrappable knowing internals of DOMWrapperWorld, DOMDataStore, DOMWrapperMap. Without helper methods on these classes. The code is going to look like:\n\nvoid ScriptWrappable::TraceWrappers(Visitor* visitor) {\n  for (DOMWrapperWorld* world : AllWorldsInCurrentThread()) {\n    DOMDataStore\u0026 data_store \u003d world-\u003eDomDataStore();\n    if (data_store.ContainsWrapper(this))\n       visitor-\u003eTraceWrappers(\u0026data_store.wrapper_map().value(), this);\n  }\n}\n\nSo the ScriptWrappable is going to know that DOMWrapperMap is part of DOMDataStore, which is part of DOMWrapperWorld.",
+      "parentUuid": "3939282b_8821037b",
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7e07b95_e7d28316",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.cpp",
         "patchSetId": 3
