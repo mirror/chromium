@@ -16,6 +16,24 @@
       "revId": "44656f586c8631a301c0e7cf51ba473af767353e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ba398e_d2be3298",
+        "filename": "services/network/public/cpp/network_features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-19T05:07:30Z",
+      "side": 1,
+      "message": "Yes (right).",
+      "parentUuid": "ba9dbd14_281dcd05",
+      "revId": "44656f586c8631a301c0e7cf51ba473af767353e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
