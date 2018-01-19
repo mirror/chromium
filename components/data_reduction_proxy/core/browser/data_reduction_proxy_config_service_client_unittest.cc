@@ -922,7 +922,7 @@ TEST_F(DataReductionProxyConfigServiceClientTest,
     // be read from the disk.
     config_client()->SetRemoteConfigApplied(false);
     test_context_->io_data()->test_request_options()->Invalidate();
-    test_context_->data_reduction_proxy_service()->SetIOData(
+    test_context_->data_reduction_proxy_reduction_service()->SetIOData(
         test_context_->io_data()->GetWeakPtr());
     RunUntilIdle();
     EXPECT_NE(test.expect_valid_config,
@@ -1027,9 +1027,9 @@ TEST_F(DataReductionProxyConfigServiceClientTest, MultipleAuthFailures) {
   histogram_tester.ExpectBucketCount(
       "DataReductionProxy.ConfigService.AuthExpired", true, 1);
 
-  DCHECK(test_context_->data_reduction_proxy_service());
+  DCHECK(test_context_->data_reduction_proxy_reduction_service());
   test_context_->io_data()->test_request_options()->Invalidate();
-  test_context_->data_reduction_proxy_service()->SetIOData(
+  test_context_->data_reduction_proxy_reduction_service()->SetIOData(
       test_context_->io_data()->GetWeakPtr());
   test_context_->RunUntilIdle();
 }

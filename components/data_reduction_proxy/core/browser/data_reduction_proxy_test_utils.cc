@@ -286,10 +286,10 @@ void TestDataReductionProxyIOData::SetPingbackReportingFraction(
 }
 
 void TestDataReductionProxyIOData::SetDataReductionProxyService(
-    base::WeakPtr<DataReductionProxyService> data_reduction_proxy_service) {
+    base::WeakPtr<DataReductionProxyService> data_reduction_proxy_reduction_service) {
   if (!service_set_)
     DataReductionProxyIOData::SetDataReductionProxyService(
-        data_reduction_proxy_service);
+        data_reduction_proxy_reduction_service);
 
   service_set_ = true;
 }
@@ -623,13 +623,13 @@ void DataReductionProxyTestContext::InitSettingsWithoutCheck() {
       kDataReductionProxyEnabled, simple_pref_service_.get(), io_data_.get(),
       CreateDataReductionProxyServiceInternal(settings_.get()));
   storage_delegate_->SetStorageDelegate(
-      settings_->data_reduction_proxy_service()->event_store());
+      settings_->data_reduction_proxy_reduction_service()->event_store());
   io_data_->SetDataReductionProxyService(
-      settings_->data_reduction_proxy_service()->GetWeakPtr());
+      settings_->data_reduction_proxy_reduction_service()->GetWeakPtr());
   if (io_data_->config_client())
     io_data_->config_client()->InitializeOnIOThread(
         request_context_getter_.get());
-  settings_->data_reduction_proxy_service()->SetIOData(io_data_->GetWeakPtr());
+  settings_->data_reduction_proxy_reduction_service()->SetIOData(io_data_->GetWeakPtr());
 }
 
 std::unique_ptr<DataReductionProxyService>
@@ -677,7 +677,7 @@ void DataReductionProxyTestContext::
   // |settings_| needs to have been initialized, since a
   // |DataReductionProxyService| is needed in order to issue the secure proxy
   // check.
-  DCHECK(data_reduction_proxy_service());
+  DCHECK(data_reduction_proxy_reduction_service());
 
   // Enable the Data Reduction Proxy, simulating a successful secure proxy
   // check.
@@ -707,17 +707,17 @@ MockDataReductionProxyConfig* DataReductionProxyTestContext::mock_config()
 }
 
 DataReductionProxyService*
-DataReductionProxyTestContext::data_reduction_proxy_service() const {
-  return settings_->data_reduction_proxy_service();
+DataReductionProxyTestContext::data_reduction_proxy_reduction_service() const {
+  return settings_->data_reduction_proxy_reduction_service();
 }
 
 MockDataReductionProxyService*
-DataReductionProxyTestContext::mock_data_reduction_proxy_service()
+DataReductionProxyTestContext::mock_data_reduction_proxy_reduction_service()
     const {
   DCHECK(!(test_context_flags_ & SKIP_SETTINGS_INITIALIZATION));
   DCHECK(test_context_flags_ & USE_MOCK_SERVICE);
   return reinterpret_cast<MockDataReductionProxyService*>(
-      data_reduction_proxy_service());
+      data_reduction_proxy_reduction_service());
 }
 
 MockDataReductionProxyRequestOptions*

@@ -119,11 +119,11 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
     bool data_saver_enabled =
         data_reduction_proxy_settings->IsDataReductionProxyEnabled();
 
-    data_reduction_proxy_settings->data_reduction_proxy_service()
+    data_reduction_proxy_settings->data_reduction_proxy_reduction_service()
         ->UpdateDataUseForHost(0, uncached_size,
                                navigation_handle->GetRedirectChain()[0].host());
 
-    data_reduction_proxy_settings->data_reduction_proxy_service()
+    data_reduction_proxy_settings->data_reduction_proxy_reduction_service()
         ->UpdateContentLengths(0, uncached_size, data_saver_enabled,
                                data_reduction_proxy::HTTPS,
                                "multipart/related");

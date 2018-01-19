@@ -270,7 +270,7 @@ TEST(DataReductionProxySettingsStandaloneTest, TestOnProxyEnabledPrefChange) {
 
   MockDataReductionProxyService* mock_service =
       static_cast<MockDataReductionProxyService*>(
-          drp_test_context->data_reduction_proxy_service());
+          drp_test_context->data_reduction_proxy_reduction_service());
 
   // The pref is disabled, so correspondingly should be the proxy.
   EXPECT_CALL(*mock_service, SetProxyPrefs(false, false));

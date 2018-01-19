@@ -21,7 +21,7 @@ DataReductionProxyClearDataSavingsFunction::Run() {
   data_reduction_proxy::DataReductionProxySettings* settings =
       DataReductionProxyChromeSettingsFactory::GetForBrowserContext(
           browser_context());
-  settings->data_reduction_proxy_service()->compression_stats()->
+  settings->data_reduction_proxy_reduction_service()->compression_stats()->
       ClearDataSavingStatistics();
   return RespondNow(NoArguments());
 }
@@ -32,7 +32,7 @@ DataReductionProxyGetDataUsageFunction::Run() {
   data_reduction_proxy::DataReductionProxySettings* settings =
       DataReductionProxyChromeSettingsFactory::GetForBrowserContext(
           browser_context());
-  settings->data_reduction_proxy_service()
+  settings->data_reduction_proxy_reduction_service()
       ->compression_stats()
       ->GetHistoricalDataUsage(base::Bind(
           &DataReductionProxyGetDataUsageFunction::ReplyWithDataUsage, this));

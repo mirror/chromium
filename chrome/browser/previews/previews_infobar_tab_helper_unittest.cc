@@ -246,7 +246,7 @@ TEST_F(PreviewsInfoBarTabHelperUnitTest, CreateOfflineInfoBar) {
       DataReductionProxyChromeSettingsFactory::GetForBrowserContext(
           web_contents()->GetBrowserContext());
 
-  EXPECT_TRUE(data_reduction_proxy_settings->data_reduction_proxy_service()
+  EXPECT_TRUE(data_reduction_proxy_settings->data_reduction_proxy_reduction_service()
                   ->compression_stats()
                   ->DataUsageMapForTesting()
                   .empty());
@@ -266,18 +266,18 @@ TEST_F(PreviewsInfoBarTabHelperUnitTest, CreateOfflineInfoBar) {
   content::WebContentsTester::For(web_contents())
       ->NavigateAndCommit(GURL(kTestUrl));
 
-  EXPECT_EQ(0, data_reduction_proxy_settings->data_reduction_proxy_service()
+  EXPECT_EQ(0, data_reduction_proxy_settings->data_reduction_proxy_reduction_service()
                    ->compression_stats()
                    ->GetHttpReceivedContentLength());
 
   // Returns the value the total original size of all HTTP content received from
   // the network.
   EXPECT_EQ(expected_file_size,
-            data_reduction_proxy_settings->data_reduction_proxy_service()
+            data_reduction_proxy_settings->data_reduction_proxy_reduction_service()
                 ->compression_stats()
                 ->GetHttpOriginalContentLength());
 
-  EXPECT_FALSE(data_reduction_proxy_settings->data_reduction_proxy_service()
+  EXPECT_FALSE(data_reduction_proxy_settings->data_reduction_proxy_reduction_service()
                    ->compression_stats()
                    ->DataUsageMapForTesting()
                    .empty());
@@ -289,7 +289,7 @@ TEST_F(PreviewsInfoBarTabHelperUnitTest, CreateOfflineInfoBar) {
     host = host.substr(pos + 3);
 
   EXPECT_EQ(expected_file_size,
-            data_reduction_proxy_settings->data_reduction_proxy_service()
+            data_reduction_proxy_settings->data_reduction_proxy_reduction_service()
                 ->compression_stats()
                 ->DataUsageMapForTesting()
                 .find(host)

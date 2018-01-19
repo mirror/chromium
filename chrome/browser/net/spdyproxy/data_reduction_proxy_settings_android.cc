@@ -263,7 +263,7 @@ void DataReductionProxySettingsAndroid::QueryDataUsage(
     jint num_days) {
   DCHECK(num_days <= data_reduction_proxy::kDataUsageHistoryNumDays);
   Settings()
-      ->data_reduction_proxy_service()
+      ->data_reduction_proxy_reduction_service()
       ->compression_stats()
       ->GetHistoricalDataUsage(base::Bind(
           &DataReductionProxySettingsAndroid::OnQueryDataUsageComplete,

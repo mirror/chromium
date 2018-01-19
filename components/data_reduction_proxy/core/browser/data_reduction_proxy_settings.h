@@ -72,7 +72,7 @@ class DataReductionProxySettings : public DataReductionProxyServiceObserver {
       const std::string& data_reduction_proxy_enabled_pref_name,
       PrefService* prefs,
       DataReductionProxyIOData* io_data,
-      std::unique_ptr<DataReductionProxyService> data_reduction_proxy_service);
+      std::unique_ptr<DataReductionProxyService> data_reduction_proxy_reduction_service);
 
   // Sets the |register_synthetic_field_trial_| callback and runs to register
   // the DataReductionProxyEnabled and the DataReductionProxyLoFiEnabled
@@ -136,7 +136,7 @@ class DataReductionProxySettings : public DataReductionProxyServiceObserver {
   // InitDataReductionProxySettings has not been called.
   DataReductionProxyEventStore* GetEventStore() const;
 
-  DataReductionProxyService* data_reduction_proxy_service() {
+  DataReductionProxyService* data_reduction_proxy_reduction_service() {
     return data_reduction_proxy_service_.get();
   }
 

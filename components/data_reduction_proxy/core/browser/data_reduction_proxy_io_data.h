@@ -77,7 +77,7 @@ class DataReductionProxyIOData : public DataReductionProxyEventStorageDelegate {
   // Sets the Data Reduction Proxy service after it has been created.
   // Virtual for testing.
   virtual void SetDataReductionProxyService(
-      base::WeakPtr<DataReductionProxyService> data_reduction_proxy_service);
+      base::WeakPtr<DataReductionProxyService> data_reduction_proxy_reduction_service);
 
   void SetPreviewsDecider(previews::PreviewsDecider* previews_decider);
 

@@ -669,10 +669,10 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
     // |data_reduction_proxy_settings| is null if |profile_| is off the record.
     if (data_reduction_proxy_settings) {
       data_reduction_proxy::DataReductionProxyService*
-          data_reduction_proxy_service =
-              data_reduction_proxy_settings->data_reduction_proxy_service();
-      if (data_reduction_proxy_service) {
-        data_reduction_proxy_service->compression_stats()
+          data_reduction_proxy_reduction_service =
+              data_reduction_proxy_settings->data_reduction_proxy_reduction_service();
+      if (data_reduction_proxy_reduction_service) {
+        data_reduction_proxy_reduction_service->compression_stats()
             ->DeleteBrowsingHistory(delete_begin_, delete_end_);
       }
     }

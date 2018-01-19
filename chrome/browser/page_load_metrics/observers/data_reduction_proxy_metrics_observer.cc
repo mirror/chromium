@@ -473,7 +473,7 @@ DataReductionProxyPingbackClient*
 DataReductionProxyMetricsObserver::GetPingbackClient() const {
   return DataReductionProxyChromeSettingsFactory::GetForBrowserContext(
              browser_context_)
-      ->data_reduction_proxy_service()
+      ->data_reduction_proxy_reduction_service()
       ->pingback_client();
 }
 

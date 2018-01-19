@@ -342,7 +342,7 @@ class DataReductionProxyDelegateTest : public testing::Test {
   int64_t GetSessionNetworkStatsInfoInt64(const char* key) const {
     std::unique_ptr<base::DictionaryValue> session_network_stats_info =
         base::DictionaryValue::From(test_context_->settings()
-                                        ->data_reduction_proxy_service()
+                                        ->data_reduction_proxy_reduction_service()
                                         ->compression_stats()
                                         ->SessionNetworkStatsInfoToValue());
     EXPECT_TRUE(session_network_stats_info);

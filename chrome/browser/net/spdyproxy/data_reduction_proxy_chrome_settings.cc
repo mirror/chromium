@@ -181,7 +181,7 @@ DataReductionProxyChromeSettings::~DataReductionProxyChromeSettings() {
 
 void DataReductionProxyChromeSettings::Shutdown() {
   data_reduction_proxy::DataReductionProxyService* service =
-      data_reduction_proxy_service();
+      data_reduction_proxy_reduction_service();
   if (service)
     service->Shutdown();
 }
@@ -217,7 +217,7 @@ void DataReductionProxyChromeSettings::InitDataReductionProxySettings(
                                      profile_prefs, io_data,
                                      std::move(service));
   io_data->SetDataReductionProxyService(
-      data_reduction_proxy_service()->GetWeakPtr());
+      data_reduction_proxy_reduction_service()->GetWeakPtr());
 
   data_reduction_proxy::DataReductionProxySettings::
       SetCallbackToRegisterSyntheticFieldTrial(

@@ -122,12 +122,12 @@ class DataReductionProxyCompressionStatsTest : public testing::Test {
     drp_test_context_ = DataReductionProxyTestContext::Builder().Build();
 
     compression_stats_.reset(new DataReductionProxyCompressionStats(
-        data_reduction_proxy_service(), pref_service(), base::TimeDelta()));
+        data_reduction_proxy_reduction_service(), pref_service(), base::TimeDelta()));
   }
 
   void ResetCompressionStatsWithDelay(const base::TimeDelta& delay) {
     compression_stats_.reset(new DataReductionProxyCompressionStats(
-        data_reduction_proxy_service(), pref_service(), delay));
+        data_reduction_proxy_reduction_service(), pref_service(), delay));
   }
 
   base::Time FakeNow() const {
@@ -462,8 +462,8 @@ class DataReductionProxyCompressionStatsTest : public testing::Test {
     return drp_test_context_->pref_service();
   }
 
-  DataReductionProxyService* data_reduction_proxy_service() {
-    return drp_test_context_->data_reduction_proxy_service();
+  DataReductionProxyService* data_reduction_proxy_reduction_service() {
+    return drp_test_context_->data_reduction_proxy_reduction_service();
   }
 
   bool IsDataReductionProxyEnabled() {

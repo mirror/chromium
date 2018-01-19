@@ -218,7 +218,7 @@ class TestDataReductionProxyIOData : public DataReductionProxyIOData {
   ~TestDataReductionProxyIOData() override;
 
   void SetDataReductionProxyService(base::WeakPtr<DataReductionProxyService>
-                                        data_reduction_proxy_service) override;
+                                        data_reduction_proxy_reduction_service) override;
 
   DataReductionProxyConfigurator* configurator() const {
     return configurator_.get();
@@ -413,11 +413,11 @@ class DataReductionProxyTestContext {
   // called if built with WithMockConfig.
   MockDataReductionProxyConfig* mock_config() const;
 
-  DataReductionProxyService* data_reduction_proxy_service() const;
+  DataReductionProxyService* data_reduction_proxy_reduction_service() const;
 
   // Returns the underlying |MockDataReductionProxyService|. This can only
   // be called if built with WithMockDataReductionProxyService.
-  MockDataReductionProxyService* mock_data_reduction_proxy_service() const;
+  MockDataReductionProxyService* mock_data_reduction_proxy_reduction_service() const;
 
   // Returns the underlying |MockDataReductionProxyRequestOptions|. This can
   // only be called if built with WithMockRequestOptions.

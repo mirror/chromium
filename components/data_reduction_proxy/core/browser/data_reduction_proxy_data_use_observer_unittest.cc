@@ -67,7 +67,7 @@ class DataReductionProxyDataUseObserverTest : public testing::Test {
   }
 
   MockDataReductionProxyService* mock_drp_service() {
-    return test_context_->mock_data_reduction_proxy_service();
+    return test_context_->mock_data_reduction_proxy_reduction_service();
   }
 
   void SetPreviewsUserData(data_use_measurement::DataUse* data_use,

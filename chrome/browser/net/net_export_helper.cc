@@ -49,7 +49,7 @@ std::unique_ptr<base::Value> GetHistoricNetworkStats(Profile* profile) {
       DataReductionProxyChromeSettingsFactory::GetForBrowserContext(profile);
 
   return data_reduction_proxy_settings
-             ? data_reduction_proxy_settings->data_reduction_proxy_service()
+             ? data_reduction_proxy_settings->data_reduction_proxy_reduction_service()
                    ->compression_stats()
                    ->HistoricNetworkStatsInfoToValue()
              : nullptr;
@@ -99,7 +99,7 @@ std::unique_ptr<base::Value> GetSessionNetworkStats(Profile* profile) {
       DataReductionProxyChromeSettingsFactory::GetForBrowserContext(profile);
 
   return data_reduction_proxy_settings
-             ? data_reduction_proxy_settings->data_reduction_proxy_service()
+             ? data_reduction_proxy_settings->data_reduction_proxy_reduction_service()
                    ->compression_stats()
                    ->SessionNetworkStatsInfoToValue()
              : nullptr;
