@@ -53,6 +53,40 @@
     },
     {
       "key": {
+        "uuid": "69badc37_95313faa",
+        "filename": "ash/system/power/power_button_menu_screen_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-19T23:18:04Z",
+      "side": 1,
+      "message": "nit: move DCHECK to ctor",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971fc756_c50006ba",
+        "filename": "ash/system/power/power_button_menu_screen_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-19T23:18:04Z",
+      "side": 1,
+      "message": "These DCHECK should be never hit in current code and it doesn\u0027t make sense to me you DCHECK here but not on other methods.",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81bd5a3e_c50e3f1c",
         "filename": "ash/system/power/power_button_menu_screen_view.cc",
         "patchSetId": 2
@@ -104,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "a095478a_de333851",
+        "filename": "ash/system/power/power_button_menu_screen_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-19T23:18:04Z",
+      "side": 1,
+      "message": "nit: can this be const?",
+      "parentUuid": "aa99918d_3aa590e3",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69ab230c_d195ea43",
         "filename": "ash/system/power/power_button_menu_view.cc",
         "patchSetId": 2
@@ -121,6 +173,23 @@
         "endLine": 25,
         "endChar": 22
       },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc18d097_ac328a8a",
+        "filename": "ash/system/power/power_button_menu_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-19T23:18:04Z",
+      "side": 1,
+      "message": "So IIUC, there are two cases here:\npower_off_item_ \u0026\u0026 sign_out_item_\npower_off_item_ \u0026\u0026 !sign_out_item_\n\nHowever, the if-else condition doesn\u0027t imply that. Probably DCHECK in else.",
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +224,23 @@
       "writtenOn": "2018-01-19T22:37:02Z",
       "side": 1,
       "message": "nit: move accessor up after d\u0027tor",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd54590_4fbc1023",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-19T23:18:04Z",
+      "side": 1,
+      "message": "Nit: do we need show_power_button_menu_ in PowerButtonController? If it is used in TPBC only, we could get it form command line here.",
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
