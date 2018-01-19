@@ -4,5 +4,6 @@ PASS: History item count should be 1 and is.
 
 
 ============== Back Forward List ==============
+        http://127.0.0.1:8000/history/redirect-js-location-replace-2-seconds.html
 curr->  http://127.0.0.1:8000/history/resources/redirect-target.html#1
 ===============================================

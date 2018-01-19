@@ -19,6 +19,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "base/unguessable_token.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "cc/trees/layer_tree_host.h"
@@ -27,6 +28,8 @@
 #include "content/common/frame_owner_properties.h"
 #include "content/common/frame_replication_state.h"
 #include "content/common/renderer.mojom.h"
+#include "content/common/service_worker/controller_service_worker.mojom.h"
+#include "content/common/url_loader_factory_bundle.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/native_web_keyboard_event.h"
@@ -61,7 +64,9 @@
 #include "net/base/net_errors.h"
 #include "net/cert/cert_status_flags.h"
 #include "services/network/public/cpp/resource_request_body.h"
+#include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
+#include "services/network/public/interfaces/url_loader.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebData.h"
 #include "third_party/WebKit/public/platform/WebHTTPBody.h"
@@ -73,6 +78,7 @@
 #include "third_party/WebKit/public/web/WebDeviceEmulationParams.h"
 #include "third_party/WebKit/public/web/WebDocumentLoader.h"
 #include "third_party/WebKit/public/web/WebFrameContentDumper.h"
+#include "third_party/WebKit/public/web/WebGlobalObjectReusePolicy.h"
 #include "third_party/WebKit/public/web/WebHistoryCommitType.h"
 #include "third_party/WebKit/public/web/WebHistoryItem.h"
 #include "third_party/WebKit/public/web/WebInputMethodController.h"
@@ -2208,12 +2214,24 @@ TEST_F(RenderViewImplTest, HistoryIsProperlyUpdatedOnNavigation) {
   EXPECT_EQ(0, view()->HistoryBackListCount() +
                    view()->HistoryForwardListCount() + 1);
 
-  // Receive a Navigate message with history parameters.
+  // Receive a CommitNavigation message with history parameters.
   RequestNavigationParams request_params;
   request_params.current_history_list_length = 2;
-  request_params.current_history_list_offset = 1;
-  request_params.pending_history_list_offset = 2;
-  frame()->Navigate(CommonNavigationParams(), request_params);
+  request_params.current_history_list_offset = 0;
+  request_params.pending_history_list_offset = 1;
+  request_params.nav_entry_id = 1;
+  frame()->CommitNavigation(
+      network::ResourceResponseHead(), GURL(), CommonNavigationParams(),
+      request_params, network::mojom::URLLoaderClientEndpointsPtr(),
+      URLLoaderFactoryBundle(), mojom::ControllerServiceWorkerInfoPtr(),
+      base::UnguessableToken::Create());
+
+  // Confirm the navigation.
+  blink::WebHistoryItem history_item;
+  history_item.Initialize();
+  frame()->DidCommitProvisionalLoad(
+      history_item, blink::kWebBackForwardCommit,
+      blink::WebGlobalObjectReusePolicy::kCreateNew);
 
   // The history list in RenderView should have been updated.
   EXPECT_EQ(1, view()->HistoryBackListCount());

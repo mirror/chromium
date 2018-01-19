@@ -3116,8 +3116,7 @@ void RenderFrameImpl::CommitNavigation(
       FrameMsg_Navigate_Type::IsReload(common_params.navigation_type);
   bool is_history_navigation = request_params.page_state.IsValid();
   auto cache_mode = blink::mojom::FetchCacheMode::kDefault;
-  RenderFrameImpl::PrepareRenderViewForNavigation(common_params.url,
-                                                  request_params);
+  RenderFrameImpl::PrepareRenderViewForNavigation(common_params.url);
 
   GetContentClient()->SetActiveURL(
       common_params.url, frame_->Top()->GetSecurityOrigin().ToString().Utf8());
@@ -3322,8 +3321,7 @@ void RenderFrameImpl::CommitFailedNavigation(
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories) {
   bool is_reload =
       FrameMsg_Navigate_Type::IsReload(common_params.navigation_type);
-  RenderFrameImpl::PrepareRenderViewForNavigation(common_params.url,
-                                                  request_params);
+  RenderFrameImpl::PrepareRenderViewForNavigation(common_params.url);
 
   GetContentClient()->SetActiveURL(
       common_params.url, frame_->Top()->GetSecurityOrigin().ToString().Utf8());
@@ -5591,7 +5589,19 @@ bool RenderFrameImpl::UpdateNavigationHistory(
   current_history_item_.SetTarget(
       blink::WebString::FromUTF8(unique_name_helper_.value()));
   bool is_new_navigation = commit_type == blink::kWebStandardCommit;
-  if (is_new_navigation) {
+
+  if (request_params.should_clear_history_list) {
+    CHECK_EQ(-1, request_params.current_history_list_offset);
+    CHECK_EQ(0, request_params.current_history_list_length);
+    render_view_->history_list_offset_ = -1;
+    render_view_->history_list_length_ = 0;
+  } else if (request_params.nav_entry_id != 0 &&
+             !request_params.intended_as_new_entry) {
+    render_view_->history_list_offset_ =
+        navigation_state->request_params().pending_history_list_offset;
+    render_view_->history_list_length_ =
+        navigation_state->request_params().current_history_list_length;
+  } else if (is_new_navigation) {
     DCHECK(!navigation_state->common_params().should_replace_current_entry ||
            render_view_->history_list_length_ > 0);
     if (!navigation_state->common_params().should_replace_current_entry) {
@@ -5603,10 +5613,6 @@ bool RenderFrameImpl::UpdateNavigationHistory(
       render_view_->history_list_length_ =
           render_view_->history_list_offset_ + 1;
     }
-  } else if (request_params.nav_entry_id != 0 &&
-             !request_params.intended_as_new_entry) {
-    render_view_->history_list_offset_ =
-        navigation_state->request_params().pending_history_list_offset;
   }
 
   if (commit_type == blink::WebHistoryCommitType::kWebBackForwardCommit)
@@ -6638,23 +6644,12 @@ void RenderFrameImpl::InitializeUserMediaClient() {
 #endif
 }
 
-void RenderFrameImpl::PrepareRenderViewForNavigation(
-    const GURL& url,
-    const RequestNavigationParams& request_params) {
+void RenderFrameImpl::PrepareRenderViewForNavigation(const GURL& url) {
   DCHECK(render_view_->webview());
 
   if (is_main_frame_) {
     for (auto& observer : render_view_->observers_)
       observer.Navigate(url);
-  }
-
-  render_view_->history_list_offset_ =
-      request_params.current_history_list_offset;
-  render_view_->history_list_length_ =
-      request_params.current_history_list_length;
-  if (request_params.should_clear_history_list) {
-    CHECK_EQ(-1, render_view_->history_list_offset_);
-    CHECK_EQ(0, render_view_->history_list_length_);
   }
 }
 

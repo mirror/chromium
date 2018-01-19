@@ -1173,9 +1173,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void InitializeUserMediaClient();
 
   // Does preparation for the navigation to |url|.
-  void PrepareRenderViewForNavigation(
-      const GURL& url,
-      const RequestNavigationParams& request_params);
+  void PrepareRenderViewForNavigation(const GURL& url);
 
   // Sends a FrameHostMsg_BeginNavigation to the browser
   void BeginNavigation(const NavigationPolicyInfo& info);
