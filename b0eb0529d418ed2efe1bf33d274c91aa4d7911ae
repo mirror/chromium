@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "404930ae_7b751152",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-19T17:47:39Z",
+      "side": 1,
+      "message": "fwiw this is identical to base::Align in base/bits.h",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d7ea45c_8a1cf055",
         "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
         "patchSetId": 2
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "Thanks for pointing out. I also have some optimizations in mind that can be implemented. I just didn\u0027t want to include everything into the first patch to not make it bloated. Added a TODO to investigate and implement it later.",
       "parentUuid": "1d7ea45c_8a1cf055",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 25
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6205dc5_98a3abd7",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-19T17:47:39Z",
+      "side": 1,
+      "message": "yeah makes sense. it\u0027s more a suggestion for the future if you have unwind-timing problems.\nWe should really have a reliable and reliably-fast unwind function in base... but that\u0027s another story",
+      "parentUuid": "65a2bd05_22fb17e3",
       "range": {
         "startLine": 136,
         "startChar": 2,
@@ -143,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "d40e9445_00465e63",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-19T17:47:39Z",
+      "side": 1,
+      "message": "nvm I think I was reading this wrong.\nI was worried about the case where you:\n- allocate (N + alignment) instead of N\n- early out because of the reentrancy check\n- when you try to free pass the wrong argument to free(), because you don\u0027t count the alignment, because in turn you didn\u0027t write the magic signature.\n\nBut I guess in that case the start of the allocation, whether N or N+AL is the same, so free will do the right thing?\n\n(In other words I was under the impression that in case of reentrancy you pass a pointer to free() which is off by default_alignemtn_)",
+      "parentUuid": "d295a7f4_59a16e3b",
+      "range": {
+        "startLine": 192,
+        "startChar": 9,
+        "endLine": 192,
+        "endChar": 35
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e005d66_9e8000f2",
         "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
         "patchSetId": 2
@@ -183,6 +254,76 @@
         "startChar": 51,
         "endLine": 234,
         "endChar": 55
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f3c6d16_08920b17",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-19T17:47:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "319884ae_52aca488",
+      "range": {
+        "startLine": 234,
+        "startChar": 51,
+        "endLine": 234,
+        "endChar": 55
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a38a9fab_2113c1b1",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-19T17:47:39Z",
+      "side": 1,
+      "message": "I think it\u0027s unneded now",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a31b76_7291c2dc",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-19T17:47:39Z",
+      "side": 1,
+      "message": "I think this is now unused",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 30
       },
       "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
