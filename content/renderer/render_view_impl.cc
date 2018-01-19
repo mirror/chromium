@@ -1922,6 +1922,8 @@ void RenderViewImpl::OnEnableAutoResize(const gfx::Size& min_size,
   if (!webview())
     return;
 
+  DidEnableAutoResize(min_size, max_size);
+
   auto_resize_mode_ = true;
 
   if (IsUseZoomForDSFEnabled()) {
@@ -1964,6 +1966,8 @@ void RenderViewImpl::OnSetLocalSurfaceIdForAutoResize(
     const viz::LocalSurfaceId& local_surface_id) {
   if (!auto_resize_mode_ || resize_or_repaint_ack_num_ != sequence_number)
     return;
+
+  LOG(ERROR) << "MINMAX" << min_size.ToString() << " " << max_size.ToString();
 
   SetLocalSurfaceIdForAutoResize(sequence_number, screen_info,
                                  local_surface_id);

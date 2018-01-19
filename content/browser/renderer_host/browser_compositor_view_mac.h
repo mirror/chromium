@@ -64,7 +64,8 @@ class CONTENT_EXPORT BrowserCompositorMac : public DelegatedFrameHostClient {
   void OnDidNotProduceFrame(const viz::BeginFrameAck& ack);
   void SetBackgroundColor(SkColor background_color);
   void SetDisplayColorSpace(const gfx::ColorSpace& color_space);
-  void WasResized();
+  void WasResized(
+      const viz::LocalSurfaceId& surface_id = viz::LocalSurfaceId());
   bool HasFrameOfSize(const gfx::Size& desired_size);
   void UpdateVSyncParameters(const base::TimeTicks& timebase,
                              const base::TimeDelta& interval);

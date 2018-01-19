@@ -311,6 +311,10 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
                          int error_code) override;
   void Destroy() override;
   void SetTooltipText(const base::string16& tooltip_text) override;
+  void ResizeDueToAutoResize(
+      const gfx::Size& new_size,
+      uint64_t sequence_number,
+      const viz::LocalSurfaceId& local_surface_id) override;
   gfx::Size GetRequestedRendererSize() const override;
   bool IsSurfaceAvailableForCopy() const override;
   void CopyFromSurface(const gfx::Rect& src_rect,

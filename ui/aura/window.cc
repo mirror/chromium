@@ -1090,6 +1090,10 @@ const viz::LocalSurfaceId& Window::GetLocalSurfaceId() const {
   return port_->GetLocalSurfaceId();
 }
 
+void Window::SetLocalSurfaceId(const viz::LocalSurfaceId& surface_id) {
+  port_->SetLocalSurfaceId(surface_id);
+}
+
 viz::FrameSinkId Window::GetFrameSinkId() const {
   if (IsRootWindow()) {
     DCHECK(host_);
