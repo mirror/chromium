@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3c0d3a0_e6cc887d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/CSS2/floats-clear/clear-applies-to-008-ref.xht",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-19T04:17:42Z",
+      "side": 1,
+      "message": "Is this because of different kerning? Can we instead disable kerning in this test?\n\nFor the background, please refer to:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/853552\nand\nhttps://github.com/w3c/web-platform-tests/issues/9005",
+      "revId": "64345b1704032b0ff367b63afe0823e5eabbd3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
