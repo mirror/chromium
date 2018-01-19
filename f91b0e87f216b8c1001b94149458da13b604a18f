@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "724e518a_c0d3dc60",
+        "filename": "third_party/WebKit/Source/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-19T08:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ed75c6c_49b7a2f1",
+      "revId": "f91b0e87f216b8c1001b94149458da13b604a18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa904a1d_6a54aebd",
         "filename": "third_party/WebKit/Source/BUILD.gn",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-19T01:07:59Z",
       "side": 1,
       "message": "We should chat with Nico but I think we should consider enabling this flag at some point.\n\nIf tracing to parent classes is missing, it\u0027s clearly a bug.",
+      "revId": "f91b0e87f216b8c1001b94149458da13b604a18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2832fbb1_c0099f49",
+        "filename": "third_party/WebKit/Source/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-19T08:21:23Z",
+      "side": 1,
+      "message": "The CL in [1] was generated from these errors and afaik there code base is currently in good shape. So from our side we could turn it on after the next clang roll.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/870120",
+      "parentUuid": "aa904a1d_6a54aebd",
       "revId": "f91b0e87f216b8c1001b94149458da13b604a18f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
