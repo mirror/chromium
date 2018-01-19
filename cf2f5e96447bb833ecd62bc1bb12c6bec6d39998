@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b18703d0_d75b8d9c",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-19T23:25:37Z",
+      "side": 1,
+      "message": "Thank you for the explanation. I think I understand this enum now.\n\nI\u0027m always confused by \"history\" word which means a few different things in chrome for iOS (chrome://history data, window.history JS API). Maybe we should not use HISTORY word at all in the context of navigation item? After looking into diagram again, it looks like non-committed navigation can also be in HAS_HISTORY_ENTRY state (didFailProvisionalNavigation: means that navigation was not committed), so my suggestion to use \"committed\" word was not that good.\n\nWhat do you think about these names? Just some ideas... \n\nNAVIGATION_DID_NOT_FAIL (because \"the error is not displayed\" statement is also true for PREPARE_URL_FOR_RELOAD and READY_TO_RELOAD as well)\nNOT_DISPLAYING_ERROR_FOR_FAILED_NAVIGATION\nDISPLAYING_ERROR_FOR_FAILED_NAVIGATION\nGOING_TO_FAILED_NAVIGATION_ITEM\nFIXING_URL_FOR_FAILED_NAVIGATION",
+      "parentUuid": "6badc8e8_e495f5c8",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 17
+      },
+      "revId": "cf2f5e96447bb833ecd62bc1bb12c6bec6d39998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e3b2123_a6775d81",
         "filename": "ios/web/navigation/navigation_manager_impl.h",
         "patchSetId": 4
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "The state is associated with a NavigationItem and can correspond to multiple NavigationContext\u0027s. Each of the three step above has its own NavigationContext, but they all share the same NavigationItem.\n\nI wouldn\u0027t mind moving the state to NavigationItem. The reason why I decided to leave it in NavigationManager is because I feel the state is not something we\u0027d want to expose to users of the public NavigationItem API. If I add it to NavigationItemImpl API, there are places in CRWWebController that I\u0027d need to use downcast. Since Chrome doesn\u0027t support dynamic_cast, this seems non-ideal.",
       "parentUuid": "1e3b2123_a6775d81",
+      "range": {
+        "startLine": 178,
+        "startChar": 15,
+        "endLine": 178,
+        "endChar": 33
+      },
+      "revId": "cf2f5e96447bb833ecd62bc1bb12c6bec6d39998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6e66fd_94657f4c",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-19T23:25:37Z",
+      "side": 1,
+      "message": "Thanks for the explanation. Can we avoid down-casting by adding new NavigationManager API (like GetPendingItemImpl)? If it\u0027s too much trouble, then lets live this API in NavigationManager.",
+      "parentUuid": "f7e733ca_69ecb28d",
       "range": {
         "startLine": 178,
         "startChar": 15,
