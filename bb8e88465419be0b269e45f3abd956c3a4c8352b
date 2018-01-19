@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f174aeaf_95cd62c1",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-19T21:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "290649e4_1a3e4e71",
+      "revId": "bb8e88465419be0b269e45f3abd956c3a4c8352b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05b6b023_60a24b6a",
         "filename": "ash/system/tray_accessibility_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "bb8e88465419be0b269e45f3abd956c3a4c8352b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32776d1d_20f67b27",
+        "filename": "ash/system/tray_accessibility_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-19T21:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05b6b023_60a24b6a",
+      "revId": "bb8e88465419be0b269e45f3abd956c3a4c8352b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "281ba404_67c1ae1d",
+        "filename": "ash/system/tray_accessibility_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-19T21:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12b7777f_4dc433ab",
+      "revId": "bb8e88465419be0b269e45f3abd956c3a4c8352b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2b39bf8_4dfb4547",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b5b950cc_47f4cfd0",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-19T21:42:40Z",
+      "side": 1,
+      "message": "I moved the run loop after setting signin profile in AccessibilityManager. The first profile setup would call this: [1], which posts a task on browser thread checking braille display connected state. Spin a run loop to ensure this check is done to ensure it would not interrupt with following tests.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/accessibility/accessibility_manager.cc?type\u003dcs\u0026q\u003dupdatebrailleimestate\u0026l\u003d1227",
+      "parentUuid": "f2b39bf8_4dfb4547",
+      "revId": "bb8e88465419be0b269e45f3abd956c3a4c8352b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6d26cf9_69c27ecd",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-19T03:50:02Z",
       "side": 1,
       "message": "Is this waiting on the AccessibilityManager::accelerator_controller_ mojo call? If so, please add an AccessibilityManager::FlushMojoForTesting() and call it here. That will make it clearer what you are waiting for.",
+      "revId": "bb8e88465419be0b269e45f3abd956c3a4c8352b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cba54c9_25aaad7a",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-19T21:42:40Z",
+      "side": 1,
+      "message": "yes, done.",
+      "parentUuid": "b6d26cf9_69c27ecd",
       "revId": "bb8e88465419be0b269e45f3abd956c3a4c8352b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
