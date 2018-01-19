@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9de4e71_3da967cc",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-19T16:19:27Z",
+      "side": 1,
+      "message": "nit: document lifetime, i.e. is parent guaranteed to outlive this (it\u0027s implied by the naming, but just to be explicit)",
+      "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10109c00_6396cf3a",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-19T16:19:27Z",
+      "side": 1,
+      "message": "What is the \"grid\" in this case?  It looks mostly like the content is just a series of rows of views?  (I\u0027m sure I\u0027m just missing it)",
+      "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b45df12_a9e582ce",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-19T16:19:27Z",
+      "side": 1,
+      "message": "I know this was the previous name, but \"issue_advice_view\" sounds a bit weird here - maybe something like \"retained_files\"?",
+      "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a430100_7eba9bd4",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-19T16:19:27Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101017a1_b531651f",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-19T16:19:27Z",
+      "side": 1,
+      "message": "Confirming: so before, the scroll view was only for the permissions that had the extra details, now the scroll view has the entirety of the extension details/permissions - is that right?  And was that a deliberate decision?",
+      "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aede042a_c9510fc4",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-19T16:19:27Z",
+      "side": 1,
+      "message": "Maybe this short else {} block would be better as an early-return?\n\nif (sections.empty()) {\n  set_margins(...);\n  return;\n}\n\n\u003cadd sections\u003e",
+      "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
