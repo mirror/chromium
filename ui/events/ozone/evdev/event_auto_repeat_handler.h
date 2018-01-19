@@ -41,6 +41,8 @@ class EVENTS_EXPORT EventAutoRepeatHandler {
                        bool suppress_auto_repeat,
                        int device_id);
 
+  bool is_running() { return repeat_key_ != KEY_RESERVED; }
+
   // Configuration for key repeat.
   bool IsAutoRepeatEnabled();
   void SetAutoRepeatEnabled(bool enabled);
