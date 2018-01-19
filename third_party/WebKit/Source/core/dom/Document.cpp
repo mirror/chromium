@@ -2062,6 +2062,11 @@ void Document::PropagateStyleToViewport() {
             static_cast<OverscrollBehaviorType>(overscroll_behavior_y)));
   }
 
+  Length scroll_padding_top = overflow_style->ScrollPaddingTop();
+  Length scroll_padding_right = overflow_style->ScrollPaddingRight();
+  Length scroll_padding_bottom = overflow_style->ScrollPaddingBottom();
+  Length scroll_padding_left = overflow_style->ScrollPaddingLeft();
+
   scoped_refptr<ComputedStyle> viewport_style = GetLayoutView()->MutableStyle();
   if (viewport_style->GetWritingMode() != root_writing_mode ||
       viewport_style->Direction() != root_direction ||
@@ -2077,7 +2082,11 @@ void Document::PropagateStyleToViewport() {
       viewport_style->GetScrollSnapType() != snap_type ||
       viewport_style->GetScrollBehavior() != scroll_behavior ||
       viewport_style->OverscrollBehaviorX() != overscroll_behavior_x ||
-      viewport_style->OverscrollBehaviorY() != overscroll_behavior_y) {
+      viewport_style->OverscrollBehaviorY() != overscroll_behavior_y ||
+      viewport_style->ScrollPaddingTop() != scroll_padding_top ||
+      viewport_style->ScrollPaddingRight() != scroll_padding_right ||
+      viewport_style->ScrollPaddingBottom() != scroll_padding_bottom ||
+      viewport_style->ScrollPaddingLeft() != scroll_padding_left) {
     scoped_refptr<ComputedStyle> new_style =
         ComputedStyle::Clone(*viewport_style);
     new_style->SetWritingMode(root_writing_mode);
@@ -2096,6 +2105,10 @@ void Document::PropagateStyleToViewport() {
     new_style->SetScrollBehavior(scroll_behavior);
     new_style->SetOverscrollBehaviorX(overscroll_behavior_x);
     new_style->SetOverscrollBehaviorY(overscroll_behavior_y);
+    new_style->SetScrollPaddingTop(scroll_padding_top);
+    new_style->SetScrollPaddingRight(scroll_padding_right);
+    new_style->SetScrollPaddingBottom(scroll_padding_bottom);
+    new_style->SetScrollPaddingLeft(scroll_padding_left);
     GetLayoutView()->SetStyle(new_style);
     SetupFontBuilder(*new_style);
   }
