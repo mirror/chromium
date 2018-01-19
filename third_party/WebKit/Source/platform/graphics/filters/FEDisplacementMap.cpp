@@ -131,7 +131,7 @@ sk_sp<PaintFilter> FEDisplacementMap::CreateImageFilter() {
   // FIXME : Only applyHorizontalScale is used and applyVerticalScale is ignored
   // This can be fixed by adding a 2nd scale parameter to
   // DisplacementMapEffectPaintFilter.
-  return sk_make_sp<DisplacementMapEffectPaintFilter>(
+  return DisplacementMapEffectPaintFilter::Make(
       type_x, type_y,
       SkFloatToScalar(GetFilter()->ApplyHorizontalScale(scale_)),
       std::move(displ), std::move(color), &crop_rect);

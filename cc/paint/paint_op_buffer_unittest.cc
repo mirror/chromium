@@ -2857,59 +2857,55 @@ TEST(PaintOpBufferTest, ReplacesImagesFromProvider) {
 TEST(PaintOpBufferTest, FilterSerialization) {
   SkScalar scalars[9] = {1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f};
   std::vector<sk_sp<PaintFilter>> filters = {
-      sk_sp<PaintFilter>{new ColorFilterPaintFilter(
-          SkColorFilter::MakeLinearToSRGBGamma(), nullptr)},
-      sk_sp<PaintFilter>{new BlurPaintFilter(
-          0.5f, 0.3f, SkBlurImageFilter::kRepeat_TileMode, nullptr)},
-      sk_sp<PaintFilter>{new DropShadowPaintFilter(
+      ColorFilterPaintFilter::Make(SkColorFilter::MakeLinearToSRGBGamma(),
+                                   nullptr),
+      BlurPaintFilter::Make(0.5f, 0.3f, SkBlurImageFilter::kRepeat_TileMode,
+                            nullptr),
+      DropShadowPaintFilter::Make(
           5.f, 10.f, 0.1f, 0.3f, SK_ColorBLUE,
-          SkDropShadowImageFilter::kDrawShadowOnly_ShadowMode, nullptr)},
-      sk_sp<PaintFilter>{new MagnifierPaintFilter(SkRect::MakeXYWH(5, 6, 7, 8),
-                                                  10.5f, nullptr)},
-      sk_sp<PaintFilter>{new AlphaThresholdPaintFilter(
-          SkRegion(SkIRect::MakeXYWH(0, 0, 100, 200)), 10.f, 20.f, nullptr)},
-      sk_sp<PaintFilter>{new MatrixConvolutionPaintFilter(
+          SkDropShadowImageFilter::kDrawShadowOnly_ShadowMode, nullptr),
+      MagnifierPaintFilter::Make(SkRect::MakeXYWH(5, 6, 7, 8), 10.5f, nullptr),
+      AlphaThresholdPaintFilter::Make(
+          SkRegion(SkIRect::MakeXYWH(0, 0, 100, 200)), 10.f, 20.f, nullptr),
+      MatrixConvolutionPaintFilter::Make(
           SkISize::Make(3, 3), scalars, 30.f, 123.f, SkIPoint::Make(0, 0),
           SkMatrixConvolutionImageFilter::kClampToBlack_TileMode, true,
-          nullptr)},
-      sk_sp<PaintFilter>{
-          new RecordPaintFilter(sk_sp<PaintRecord>{new PaintRecord},
-                                SkRect::MakeXYWH(10, 15, 20, 25))},
-      sk_sp<PaintFilter>{new MorphologyPaintFilter(
-          MorphologyPaintFilter::MorphType::kErode, 15, 30, nullptr)},
-      sk_sp<PaintFilter>{new OffsetPaintFilter(-1.f, -2.f, nullptr)},
-      sk_sp<PaintFilter>{new TilePaintFilter(
-          SkRect::MakeXYWH(1, 2, 3, 4), SkRect::MakeXYWH(4, 3, 2, 1), nullptr)},
-      sk_sp<PaintFilter>{new TurbulencePaintFilter(
+          nullptr),
+      RecordPaintFilter::Make(sk_sp<PaintRecord>{new PaintRecord},
+                              SkRect::MakeXYWH(10, 15, 20, 25)),
+      MorphologyPaintFilter::Make(MorphologyPaintFilter::MorphType::kErode, 15,
+                                  30, nullptr),
+      OffsetPaintFilter::Make(-1.f, -2.f, nullptr),
+      TilePaintFilter::Make(SkRect::MakeXYWH(1, 2, 3, 4),
+                            SkRect::MakeXYWH(4, 3, 2, 1), nullptr),
+      TurbulencePaintFilter::Make(
           TurbulencePaintFilter::TurbulenceType::kFractalNoise, 3.3f, 4.4f, 2,
-          123, nullptr)},
-      sk_sp<PaintFilter>{
-          new MatrixPaintFilter(SkMatrix::I(), kHigh_SkFilterQuality, nullptr)},
-      sk_sp<PaintFilter>{new LightingDistantPaintFilter(
-          PaintFilter::LightingType::kSpecular, SkPoint3::Make(1, 2, 3),
-          SK_ColorCYAN, 1.1f, 2.2f, 3.3f, nullptr)},
-      sk_sp<PaintFilter>{new LightingPointPaintFilter(
-          PaintFilter::LightingType::kDiffuse, SkPoint3::Make(2, 3, 4),
-          SK_ColorRED, 1.2f, 3.4f, 5.6f, nullptr)},
-      sk_sp<PaintFilter>{new LightingSpotPaintFilter(
-          PaintFilter::LightingType::kSpecular, SkPoint3::Make(100, 200, 300),
-          SkPoint3::Make(400, 500, 600), 1, 2, SK_ColorMAGENTA, 3, 4, 5,
-          nullptr)},
-      sk_sp<PaintFilter>{
-          new ImagePaintFilter(CreateDiscardablePaintImage(gfx::Size(100, 100)),
-                               SkRect::MakeWH(50, 50), SkRect::MakeWH(70, 70),
-                               kMedium_SkFilterQuality)}};
+          123, nullptr),
+      MatrixPaintFilter::Make(SkMatrix::I(), kHigh_SkFilterQuality, nullptr),
+      LightingDistantPaintFilter::Make(PaintFilter::LightingType::kSpecular,
+                                       SkPoint3::Make(1, 2, 3), SK_ColorCYAN,
+                                       1.1f, 2.2f, 3.3f, nullptr),
+      LightingPointPaintFilter::Make(PaintFilter::LightingType::kDiffuse,
+                                     SkPoint3::Make(2, 3, 4), SK_ColorRED, 1.2f,
+                                     3.4f, 5.6f, nullptr),
+      LightingSpotPaintFilter::Make(PaintFilter::LightingType::kSpecular,
+                                    SkPoint3::Make(100, 200, 300),
+                                    SkPoint3::Make(400, 500, 600), 1, 2,
+                                    SK_ColorMAGENTA, 3, 4, 5, nullptr),
+      ImagePaintFilter::Make(CreateDiscardablePaintImage(gfx::Size(100, 100)),
+                             SkRect::MakeWH(50, 50), SkRect::MakeWH(70, 70),
+                             kMedium_SkFilterQuality)};
 
-  filters.emplace_back(new ComposePaintFilter(filters[0], filters[1]));
+  filters.emplace_back(ComposePaintFilter::Make(filters[0], filters[1]));
   filters.emplace_back(
-      new XfermodePaintFilter(SkBlendMode::kDst, filters[2], filters[3]));
-  filters.emplace_back(new ArithmeticPaintFilter(
+      XfermodePaintFilter::Make(SkBlendMode::kDst, filters[2], filters[3]));
+  filters.emplace_back(ArithmeticPaintFilter::Make(
       1.1f, 2.2f, 3.3f, 4.4f, false, filters[4], filters[5], nullptr));
-  filters.emplace_back(new DisplacementMapEffectPaintFilter(
+  filters.emplace_back(DisplacementMapEffectPaintFilter::Make(
       SkDisplacementMapEffect::kR_ChannelSelectorType,
       SkDisplacementMapEffect::kG_ChannelSelectorType, 10, filters[6],
       filters[7]));
-  filters.emplace_back(new MergePaintFilter(filters.data(), filters.size()));
+  filters.emplace_back(MergePaintFilter::Make(filters.data(), filters.size()));
 
   std::unique_ptr<char, base::AlignedFreeDeleter> memory(
       static_cast<char*>(base::AlignedAlloc(PaintOpBuffer::kInitialBufferSize,
@@ -3039,9 +3035,9 @@ TEST(PaintOpBufferTest, CustomData) {
 
 TEST(PaintOpBufferTest, SecurityConstrainedImageSerialization) {
   auto image = CreateDiscardablePaintImage(gfx::Size(10, 10));
-  sk_sp<PaintFilter> filter = sk_make_sp<ImagePaintFilter>(
-      image, SkRect::MakeWH(10, 10), SkRect::MakeWH(10, 10),
-      kLow_SkFilterQuality);
+  sk_sp<PaintFilter> filter =
+      ImagePaintFilter::Make(image, SkRect::MakeWH(10, 10),
+                             SkRect::MakeWH(10, 10), kLow_SkFilterQuality);
   const bool enable_security_constraints = true;
 
   std::unique_ptr<char, base::AlignedFreeDeleter> memory(

@@ -107,16 +107,15 @@ sk_sp<PaintFilter> TransformInterpolationSpace(
   if (!color_filter)
     return input;
 
-  return sk_make_sp<ColorFilterPaintFilter>(std::move(color_filter),
-                                            std::move(input));
+  return ColorFilterPaintFilter::Make(std::move(color_filter),
+                                      std::move(input));
 }
 
 void BuildSourceGraphic(FilterEffect* source_graphic,
                         sk_sp<PaintRecord> record,
                         const FloatRect& record_bounds) {
   DCHECK(record);
-  sk_sp<PaintFilter> filter =
-      sk_make_sp<RecordPaintFilter>(record, record_bounds);
+  sk_sp<PaintFilter> filter = RecordPaintFilter::Make(record, record_bounds);
   PopulateSourceGraphicImageFilters(
       source_graphic, std::move(filter),
       source_graphic->OperatingInterpolationSpace());
@@ -155,32 +154,31 @@ sk_sp<PaintFilter> BuildBoxReflectFilter(const BoxReflection& reflection,
       // http://skbug.com/5210
       PaintFilter::CropRect crop_rect(mask_record_bounds);
       SkRect image_rect = SkRect::MakeWH(image.width(), image.height());
-      masked_input = sk_make_sp<XfermodePaintFilter>(
+      masked_input = XfermodePaintFilter::Make(
           SkBlendMode::kSrcIn,
-          sk_make_sp<OffsetPaintFilter>(
+          OffsetPaintFilter::Make(
               mask_record_bounds.x(), mask_record_bounds.y(),
-              sk_make_sp<ImagePaintFilter>(std::move(image), image_rect,
-                                           image_rect, kHigh_SkFilterQuality)),
+              ImagePaintFilter::Make(std::move(image), image_rect, image_rect,
+                                     kHigh_SkFilterQuality)),
           input, &crop_rect);
     } else {
       // If the buffer is excessively big, give up and make an
       // SkPictureImageFilter anyway, even if it might not render.
       PaintFilter::CropRect crop_rect(mask_record_bounds);
-      masked_input = sk_make_sp<XfermodePaintFilter>(
+      masked_input = XfermodePaintFilter::Make(
           SkBlendMode::kSrcOver,
-          sk_make_sp<RecordPaintFilter>(std::move(mask_record),
-                                        mask_record_bounds),
+          RecordPaintFilter::Make(std::move(mask_record), mask_record_bounds),
           input, &crop_rect);
     }
   } else {
     masked_input = input;
   }
-  sk_sp<PaintFilter> flip_image_filter = sk_make_sp<MatrixPaintFilter>(
-      reflection.ReflectionMatrix(), kLow_SkFilterQuality,
-      std::move(masked_input));
-  return sk_make_sp<XfermodePaintFilter>(SkBlendMode::kSrcOver,
-                                         std::move(flip_image_filter),
-                                         std::move(input), nullptr);
+  sk_sp<PaintFilter> flip_image_filter =
+      MatrixPaintFilter::Make(reflection.ReflectionMatrix(),
+                              kLow_SkFilterQuality, std::move(masked_input));
+  return XfermodePaintFilter::Make(SkBlendMode::kSrcOver,
+                                   std::move(flip_image_filter),
+                                   std::move(input), nullptr);
 }
 
 }  // namespace PaintFilterBuilder

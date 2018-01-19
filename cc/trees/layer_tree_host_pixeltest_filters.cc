@@ -263,8 +263,8 @@ class LayerTreeHostCroppedFilterPixelTest
     // result completely.
     FilterOperations filters;
     SkImageFilter::CropRect cropRect(SkRect::MakeXYWH(0, 0, 100, 0));
-    sk_sp<PaintFilter> offset(
-        sk_make_sp<OffsetPaintFilter>(0, 0, nullptr, &cropRect));
+    sk_sp<PaintFilter> offset =
+        OffsetPaintFilter::Make(0, 0, nullptr, &cropRect);
     filters.Append(FilterOperation::CreateReferenceFilter(offset));
     foreground->SetFilters(filters);
 
@@ -298,8 +298,8 @@ class ImageFilterClippedPixelTest : public LayerTreeHostFiltersPixelTest {
     // We filter only the bottom 200x100 pixels of the foreground.
     SkImageFilter::CropRect crop_rect(SkRect::MakeXYWH(0, 100, 200, 100));
     FilterOperations filters;
-    filters.Append(FilterOperation::CreateReferenceFilter(
-        sk_make_sp<ColorFilterPaintFilter>(
+    filters.Append(
+        FilterOperation::CreateReferenceFilter(ColorFilterPaintFilter::Make(
             SkColorFilter::MakeMatrixFilterRowMajor255(matrix), nullptr,
             &crop_rect)));
 
@@ -347,8 +347,8 @@ class ImageFilterNonZeroOriginPixelTest : public LayerTreeHostFiltersPixelTest {
     // Set up a crop rec to filter the bottom 200x100 pixels of the foreground.
     SkImageFilter::CropRect crop_rect(SkRect::MakeXYWH(0, 100, 200, 100));
     FilterOperations filters;
-    filters.Append(FilterOperation::CreateReferenceFilter(
-        sk_make_sp<ColorFilterPaintFilter>(
+    filters.Append(
+        FilterOperation::CreateReferenceFilter(ColorFilterPaintFilter::Make(
             SkColorFilter::MakeMatrixFilterRowMajor255(matrix), nullptr,
             &crop_rect)));
 
@@ -890,7 +890,7 @@ class EnlargedTextureWithCropOffsetFilter
     FilterOperations filters;
     SkImageFilter::CropRect cropRect(SkRect::MakeXYWH(10, 10, 80, 80));
     filters.Append(FilterOperation::CreateReferenceFilter(
-        sk_make_sp<OffsetPaintFilter>(0, 0, nullptr, &cropRect)));
+        OffsetPaintFilter::Make(0, 0, nullptr, &cropRect)));
     filter_layer->SetFilters(filters);
 
     background->AddChild(filter_layer);
@@ -991,8 +991,8 @@ class FilterWithGiantCropRectPixelTest : public LayerTreeHostFiltersPixelTest {
     FilterOperations filters;
     SkImageFilter::CropRect cropRect(
         SkRect::MakeXYWH(-40000, -40000, 80000, 80000));
-    filters.Append(FilterOperation::CreateReferenceFilter(
-        sk_make_sp<ColorFilterPaintFilter>(
+    filters.Append(
+        FilterOperation::CreateReferenceFilter(ColorFilterPaintFilter::Make(
             SkColorFilter::MakeMatrixFilterRowMajor255(matrix), nullptr,
             &cropRect)));
     filter_layer->SetFilters(filters);
@@ -1050,7 +1050,7 @@ class BackgroundFilterWithDeviceScaleFactorTest
         gfx::Rect(0, 100, 200, 100), SkColorSetA(SK_ColorGREEN, 127));
     FilterOperations filters;
     filters.Append(FilterOperation::CreateReferenceFilter(
-        sk_make_sp<OffsetPaintFilter>(0, 80, nullptr)));
+        OffsetPaintFilter::Make(0, 80, nullptr)));
     filtered->SetBackgroundFilters(filters);
     root->AddChild(filtered);
 

@@ -180,6 +180,18 @@ bool PaintFilter::operator==(const PaintFilter& other) const {
   return true;
 }
 
+// static
+sk_sp<ColorFilterPaintFilter> ColorFilterPaintFilter::Make(
+    sk_sp<SkColorFilter> color_filter,
+    sk_sp<PaintFilter> input,
+    const CropRect* crop_rect) {
+  sk_sp<ColorFilterPaintFilter> filter(new ColorFilterPaintFilter(
+      std::move(color_filter), std::move(input), crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
+}
+
 ColorFilterPaintFilter::ColorFilterPaintFilter(
     sk_sp<SkColorFilter> color_filter,
     sk_sp<PaintFilter> input,
@@ -199,6 +211,19 @@ bool ColorFilterPaintFilter::operator==(
   return PaintOp::AreSkFlattenablesEqual(color_filter_.get(),
                                          other.color_filter_.get()) &&
          AreFiltersEqual(input_.get(), other.input_.get());
+}
+
+// static
+sk_sp<BlurPaintFilter> BlurPaintFilter::Make(SkScalar sigma_x,
+                                             SkScalar sigma_y,
+                                             TileMode tile_mode,
+                                             sk_sp<PaintFilter> input,
+                                             const CropRect* crop_rect) {
+  sk_sp<BlurPaintFilter> filter(new BlurPaintFilter(
+      sigma_x, sigma_y, tile_mode, std::move(input), crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
 }
 
 BlurPaintFilter::BlurPaintFilter(SkScalar sigma_x,
@@ -222,6 +247,24 @@ bool BlurPaintFilter::operator==(const BlurPaintFilter& other) const {
          PaintOp::AreEqualEvenIfNaN(sigma_y_, other.sigma_y_) &&
          tile_mode_ == other.tile_mode_ &&
          AreFiltersEqual(input_.get(), other.input_.get());
+}
+
+// static
+sk_sp<DropShadowPaintFilter> DropShadowPaintFilter::Make(
+    SkScalar dx,
+    SkScalar dy,
+    SkScalar sigma_x,
+    SkScalar sigma_y,
+    SkColor color,
+    ShadowMode shadow_mode,
+    sk_sp<PaintFilter> input,
+    const CropRect* crop_rect) {
+  sk_sp<DropShadowPaintFilter> filter(
+      new DropShadowPaintFilter(dx, dy, sigma_x, sigma_y, color, shadow_mode,
+                                std::move(input), crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
 }
 
 DropShadowPaintFilter::DropShadowPaintFilter(SkScalar dx,
@@ -257,6 +300,19 @@ bool DropShadowPaintFilter::operator==(
          AreFiltersEqual(input_.get(), other.input_.get());
 }
 
+// static
+sk_sp<MagnifierPaintFilter> MagnifierPaintFilter::Make(
+    const SkRect& src_rect,
+    SkScalar inset,
+    sk_sp<PaintFilter> input,
+    const CropRect* crop_rect) {
+  sk_sp<MagnifierPaintFilter> filter(
+      new MagnifierPaintFilter(src_rect, inset, std::move(input), crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
+}
+
 MagnifierPaintFilter::MagnifierPaintFilter(const SkRect& src_rect,
                                            SkScalar inset,
                                            sk_sp<PaintFilter> input,
@@ -277,6 +333,16 @@ bool MagnifierPaintFilter::operator==(const MagnifierPaintFilter& other) const {
          AreFiltersEqual(input_.get(), other.input_.get());
 }
 
+// static
+sk_sp<ComposePaintFilter> ComposePaintFilter::Make(sk_sp<PaintFilter> outer,
+                                                   sk_sp<PaintFilter> inner) {
+  sk_sp<ComposePaintFilter> filter(
+      new ComposePaintFilter(std::move(outer), std::move(inner)));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
+}
+
 ComposePaintFilter::ComposePaintFilter(sk_sp<PaintFilter> outer,
                                        sk_sp<PaintFilter> inner)
     : PaintFilter(Type::kCompose, nullptr),
@@ -291,6 +357,20 @@ ComposePaintFilter::~ComposePaintFilter() = default;
 bool ComposePaintFilter::operator==(const ComposePaintFilter& other) const {
   return AreFiltersEqual(outer_.get(), other.outer_.get()) &&
          AreFiltersEqual(inner_.get(), other.inner_.get());
+}
+
+// static
+sk_sp<AlphaThresholdPaintFilter> AlphaThresholdPaintFilter::Make(
+    const SkRegion& region,
+    SkScalar inner_min,
+    SkScalar outer_max,
+    sk_sp<PaintFilter> input,
+    const CropRect* crop_rect) {
+  sk_sp<AlphaThresholdPaintFilter> filter(new AlphaThresholdPaintFilter(
+      region, inner_min, outer_max, std::move(input), crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
 }
 
 AlphaThresholdPaintFilter::AlphaThresholdPaintFilter(const SkRegion& region,
@@ -317,6 +397,19 @@ bool AlphaThresholdPaintFilter::operator==(
          AreFiltersEqual(input_.get(), other.input_.get());
 }
 
+// static
+sk_sp<XfermodePaintFilter> XfermodePaintFilter::Make(
+    SkBlendMode blend_mode,
+    sk_sp<PaintFilter> background,
+    sk_sp<PaintFilter> foreground,
+    const CropRect* crop_rect) {
+  sk_sp<XfermodePaintFilter> filter(new XfermodePaintFilter(
+      blend_mode, std::move(background), std::move(foreground), crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
+}
+
 XfermodePaintFilter::XfermodePaintFilter(SkBlendMode blend_mode,
                                          sk_sp<PaintFilter> background,
                                          sk_sp<PaintFilter> foreground,
@@ -331,6 +424,24 @@ XfermodePaintFilter::XfermodePaintFilter(SkBlendMode blend_mode,
 }
 
 XfermodePaintFilter::~XfermodePaintFilter() = default;
+
+// static
+sk_sp<ArithmeticPaintFilter> ArithmeticPaintFilter::Make(
+    float k1,
+    float k2,
+    float k3,
+    float k4,
+    bool enforce_pm_color,
+    sk_sp<PaintFilter> background,
+    sk_sp<PaintFilter> foreground,
+    const CropRect* crop_rect) {
+  sk_sp<ArithmeticPaintFilter> filter(new ArithmeticPaintFilter(
+      k1, k2, k3, k4, enforce_pm_color, std::move(background),
+      std::move(foreground), crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
+}
 
 bool XfermodePaintFilter::operator==(const XfermodePaintFilter& other) const {
   return blend_mode_ == other.blend_mode_ &&
@@ -370,6 +481,25 @@ bool ArithmeticPaintFilter::operator==(
          enforce_pm_color_ == other.enforce_pm_color_ &&
          AreFiltersEqual(background_.get(), other.background_.get()) &&
          AreFiltersEqual(foreground_.get(), other.foreground_.get());
+}
+
+// static
+sk_sp<MatrixConvolutionPaintFilter> MatrixConvolutionPaintFilter::Make(
+    const SkISize& kernel_size,
+    const SkScalar* kernel,
+    SkScalar gain,
+    SkScalar bias,
+    const SkIPoint& kernel_offset,
+    TileMode tile_mode,
+    bool convolve_alpha,
+    sk_sp<PaintFilter> input,
+    const CropRect* crop_rect) {
+  sk_sp<MatrixConvolutionPaintFilter> filter(new MatrixConvolutionPaintFilter(
+      kernel_size, kernel, gain, bias, kernel_offset, tile_mode, convolve_alpha,
+      std::move(input), crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
 }
 
 MatrixConvolutionPaintFilter::MatrixConvolutionPaintFilter(
@@ -415,6 +545,23 @@ bool MatrixConvolutionPaintFilter::operator==(
          AreFiltersEqual(input_.get(), other.input_.get());
 }
 
+// static
+sk_sp<DisplacementMapEffectPaintFilter> DisplacementMapEffectPaintFilter::Make(
+    ChannelSelectorType channel_x,
+    ChannelSelectorType channel_y,
+    SkScalar scale,
+    sk_sp<PaintFilter> displacement,
+    sk_sp<PaintFilter> color,
+    const CropRect* crop_rect) {
+  sk_sp<DisplacementMapEffectPaintFilter> filter(
+      new DisplacementMapEffectPaintFilter(channel_x, channel_y, scale,
+                                           std::move(displacement),
+                                           std::move(color), crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
+}
+
 DisplacementMapEffectPaintFilter::DisplacementMapEffectPaintFilter(
     ChannelSelectorType channel_x,
     ChannelSelectorType channel_y,
@@ -443,6 +590,18 @@ bool DisplacementMapEffectPaintFilter::operator==(
          AreFiltersEqual(color_.get(), other.color_.get());
 }
 
+// static
+sk_sp<ImagePaintFilter> ImagePaintFilter::Make(PaintImage image,
+                                               const SkRect& src_rect,
+                                               const SkRect& dst_rect,
+                                               SkFilterQuality filter_quality) {
+  sk_sp<ImagePaintFilter> filter(new ImagePaintFilter(
+      std::move(image), src_rect, dst_rect, filter_quality));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
+}
+
 ImagePaintFilter::ImagePaintFilter(PaintImage image,
                                    const SkRect& src_rect,
                                    const SkRect& dst_rect,
@@ -465,6 +624,16 @@ bool ImagePaintFilter::operator==(const ImagePaintFilter& other) const {
          filter_quality_ == other.filter_quality_;
 }
 
+// static
+sk_sp<RecordPaintFilter> RecordPaintFilter::Make(sk_sp<PaintRecord> record,
+                                                 const SkRect& record_bounds) {
+  sk_sp<RecordPaintFilter> filter(
+      new RecordPaintFilter(std::move(record), record_bounds));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
+}
+
 RecordPaintFilter::RecordPaintFilter(sk_sp<PaintRecord> record,
                                      const SkRect& record_bounds)
     : PaintFilter(kType, nullptr),
@@ -479,6 +648,18 @@ RecordPaintFilter::~RecordPaintFilter() = default;
 bool RecordPaintFilter::operator==(const RecordPaintFilter& other) const {
   return !!record_ == !!other.record_ &&
          PaintOp::AreSkRectsEqual(record_bounds_, other.record_bounds_);
+}
+
+// static
+sk_sp<MergePaintFilter> MergePaintFilter::Make(
+    sk_sp<PaintFilter>* const filters,
+    int count,
+    const CropRect* crop_rect) {
+  sk_sp<MergePaintFilter> filter(
+      new MergePaintFilter(filters, count, crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
 }
 
 MergePaintFilter::MergePaintFilter(sk_sp<PaintFilter>* const filters,
@@ -507,6 +688,20 @@ bool MergePaintFilter::operator==(const MergePaintFilter& other) const {
       return false;
   }
   return true;
+}
+
+// static
+sk_sp<MorphologyPaintFilter> MorphologyPaintFilter::Make(
+    MorphType morph_type,
+    int radius_x,
+    int radius_y,
+    sk_sp<PaintFilter> input,
+    const CropRect* crop_rect) {
+  sk_sp<MorphologyPaintFilter> filter(new MorphologyPaintFilter(
+      morph_type, radius_x, radius_y, std::move(input), crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
 }
 
 MorphologyPaintFilter::MorphologyPaintFilter(MorphType morph_type,
@@ -540,6 +735,18 @@ bool MorphologyPaintFilter::operator==(
          AreFiltersEqual(input_.get(), other.input_.get());
 }
 
+// static
+sk_sp<OffsetPaintFilter> OffsetPaintFilter::Make(SkScalar dx,
+                                                 SkScalar dy,
+                                                 sk_sp<PaintFilter> input,
+                                                 const CropRect* crop_rect) {
+  sk_sp<OffsetPaintFilter> filter(
+      new OffsetPaintFilter(dx, dy, std::move(input), crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
+}
+
 OffsetPaintFilter::OffsetPaintFilter(SkScalar dx,
                                      SkScalar dy,
                                      sk_sp<PaintFilter> input,
@@ -560,6 +767,17 @@ bool OffsetPaintFilter::operator==(const OffsetPaintFilter& other) const {
          AreFiltersEqual(input_.get(), other.input_.get());
 }
 
+// static
+sk_sp<TilePaintFilter> TilePaintFilter::Make(const SkRect& src,
+                                             const SkRect& dst,
+                                             sk_sp<PaintFilter> input) {
+  sk_sp<TilePaintFilter> filter(
+      new TilePaintFilter(src, dst, std::move(input)));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
+}
+
 TilePaintFilter::TilePaintFilter(const SkRect& src,
                                  const SkRect& dst,
                                  sk_sp<PaintFilter> input)
@@ -577,6 +795,23 @@ bool TilePaintFilter::operator==(const TilePaintFilter& other) const {
   return PaintOp::AreSkRectsEqual(src_, other.src_) &&
          PaintOp::AreSkRectsEqual(dst_, other.dst_) &&
          AreFiltersEqual(input_.get(), other.input_.get());
+}
+
+// static
+sk_sp<TurbulencePaintFilter> TurbulencePaintFilter::Make(
+    TurbulenceType turbulence_type,
+    SkScalar base_frequency_x,
+    SkScalar base_frequency_y,
+    int num_octaves,
+    SkScalar seed,
+    const SkISize* tile_size,
+    const CropRect* crop_rect) {
+  sk_sp<TurbulencePaintFilter> filter(new TurbulencePaintFilter(
+      turbulence_type, base_frequency_x, base_frequency_y, num_octaves, seed,
+      tile_size, crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
 }
 
 TurbulencePaintFilter::TurbulencePaintFilter(TurbulenceType turbulence_type,
@@ -626,6 +861,17 @@ bool TurbulencePaintFilter::operator==(
          tile_size_ == other.tile_size_;
 }
 
+// static
+sk_sp<PaintFlagsPaintFilter> PaintFlagsPaintFilter::Make(
+    PaintFlags flags,
+    const CropRect* crop_rect) {
+  sk_sp<PaintFlagsPaintFilter> filter(
+      new PaintFlagsPaintFilter(std::move(flags), crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
+}
+
 PaintFlagsPaintFilter::PaintFlagsPaintFilter(PaintFlags flags,
                                              const CropRect* crop_rect)
     : PaintFilter(kType, crop_rect), flags_(std::move(flags)) {
@@ -637,6 +883,17 @@ PaintFlagsPaintFilter::~PaintFlagsPaintFilter() = default;
 bool PaintFlagsPaintFilter::operator==(
     const PaintFlagsPaintFilter& other) const {
   return flags_ == other.flags_;
+}
+
+// static
+sk_sp<MatrixPaintFilter> MatrixPaintFilter::Make(const SkMatrix& matrix,
+                                                 SkFilterQuality filter_quality,
+                                                 sk_sp<PaintFilter> input) {
+  sk_sp<MatrixPaintFilter> filter(
+      new MatrixPaintFilter(matrix, filter_quality, std::move(input)));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
 }
 
 MatrixPaintFilter::MatrixPaintFilter(const SkMatrix& matrix,
@@ -656,6 +913,24 @@ bool MatrixPaintFilter::operator==(const MatrixPaintFilter& other) const {
   return PaintOp::AreSkMatricesEqual(matrix_, other.matrix_) &&
          filter_quality_ == other.filter_quality_ &&
          AreFiltersEqual(input_.get(), other.input_.get());
+}
+
+// static
+sk_sp<LightingDistantPaintFilter> LightingDistantPaintFilter::Make(
+    LightingType lighting_type,
+    const SkPoint3& direction,
+    SkColor light_color,
+    SkScalar surface_scale,
+    SkScalar kconstant,
+    SkScalar shininess,
+    sk_sp<PaintFilter> input,
+    const CropRect* crop_rect) {
+  sk_sp<LightingDistantPaintFilter> filter(new LightingDistantPaintFilter(
+      lighting_type, direction, light_color, surface_scale, kconstant,
+      shininess, std::move(input), crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
 }
 
 LightingDistantPaintFilter::LightingDistantPaintFilter(
@@ -702,6 +977,24 @@ bool LightingDistantPaintFilter::operator==(
          AreFiltersEqual(input_.get(), other.input_.get());
 }
 
+// static
+sk_sp<LightingPointPaintFilter> LightingPointPaintFilter::Make(
+    LightingType lighting_type,
+    const SkPoint3& location,
+    SkColor light_color,
+    SkScalar surface_scale,
+    SkScalar kconstant,
+    SkScalar shininess,
+    sk_sp<PaintFilter> input,
+    const CropRect* crop_rect) {
+  sk_sp<LightingPointPaintFilter> filter(new LightingPointPaintFilter(
+      lighting_type, location, light_color, surface_scale, kconstant, shininess,
+      std::move(input), crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
+}
+
 LightingPointPaintFilter::LightingPointPaintFilter(LightingType lighting_type,
                                                    const SkPoint3& location,
                                                    SkColor light_color,
@@ -743,6 +1036,28 @@ bool LightingPointPaintFilter::operator==(
          PaintOp::AreEqualEvenIfNaN(kconstant_, other.kconstant_) &&
          PaintOp::AreEqualEvenIfNaN(shininess_, other.shininess_) &&
          AreFiltersEqual(input_.get(), other.input_.get());
+}
+
+// static
+sk_sp<LightingSpotPaintFilter> LightingSpotPaintFilter::Make(
+    LightingType lighting_type,
+    const SkPoint3& location,
+    const SkPoint3& target,
+    SkScalar specular_exponent,
+    SkScalar cutoff_angle,
+    SkColor light_color,
+    SkScalar surface_scale,
+    SkScalar kconstant,
+    SkScalar shininess,
+    sk_sp<PaintFilter> input,
+    const CropRect* crop_rect) {
+  sk_sp<LightingSpotPaintFilter> filter(new LightingSpotPaintFilter(
+      lighting_type, location, target, specular_exponent, cutoff_angle,
+      light_color, surface_scale, kconstant, shininess, std::move(input),
+      crop_rect));
+  if (!filter->cached_sk_filter())
+    return nullptr;
+  return filter;
 }
 
 LightingSpotPaintFilter::LightingSpotPaintFilter(LightingType lighting_type,

@@ -142,10 +142,10 @@ sk_sp<PaintFilter> FETurbulence::CreateImageFilter() {
   // a frequency, not a period.
   float base_frequency_x = base_frequency_x_ / GetFilter()->Scale();
   float base_frequency_y = base_frequency_y_ / GetFilter()->Scale();
-  return sk_make_sp<TurbulencePaintFilter>(
-      type, SkFloatToScalar(base_frequency_x),
-      SkFloatToScalar(base_frequency_y), NumOctaves(), SkFloatToScalar(Seed()),
-      StitchTiles() ? &size : nullptr, &rect);
+  return TurbulencePaintFilter::Make(type, SkFloatToScalar(base_frequency_x),
+                                     SkFloatToScalar(base_frequency_y),
+                                     NumOctaves(), SkFloatToScalar(Seed()),
+                                     StitchTiles() ? &size : nullptr, &rect);
 }
 
 static TextStream& operator<<(TextStream& ts, const TurbulenceType& type) {
