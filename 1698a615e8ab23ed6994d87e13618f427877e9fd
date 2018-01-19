@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e7fa472_77bf5619",
+        "filename": "content/browser/devtools/devtools_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-19T02:29:47Z",
+      "side": 1,
+      "message": "I\u0027ll fix this.",
+      "revId": "1698a615e8ab23ed6994d87e13618f427877e9fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
