@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c2e16b8_fbe82cd6",
+        "filename": "content/public/browser/render_frame_host.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-19T04:21:08Z",
+      "side": 1,
+      "message": "since these are only called inside content/, don\u0027t put them on the public interface (i.e. just put them on RenderFrameHostImpl). see https://www.chromium.org/developers/content-module/content-api",
+      "revId": "9b267954736f0244e0a1cffc4dd5cb40a9f64a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
