@@ -112,6 +112,18 @@ class SmbProviderClientImpl : public SmbProviderClient {
                &SmbProviderClientImpl::HandleCloseFileCallback, &callback);
   }
 
+  void DeleteEntry(int32_t mount_id,
+                   const base::FilePath& entry_path,
+                   bool recursive,
+                   StatusCallback callback) override {
+    smbprovider::DeleteEntryOptions options;
+    options.set_mount_id(mount_id);
+    options.set_entry_path(entry_path.value());
+    options.set_recursive(recursive);
+    CallMethod(smbprovider::kDeleteEntryMethod, options,
+               &SmbProviderClientImpl::HandleDeleteEntryCallback, &callback);
+  }
+
  protected:
   // DBusClient override.
   void Init(dbus::Bus* bus) override {
@@ -199,6 +211,17 @@ class SmbProviderClientImpl : public SmbProviderClient {
                                dbus::Response* response) {
     if (!response) {
       DLOG(ERROR) << "CloseFile: failed to call smbprovider";
+      std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED);
+    }
+    dbus::MessageReader reader(response);
+    std::move(callback).Run(GetErrorFromReader(&reader));
+  }
+
+  // Handles D-Bus callback for DeleteEntry.
+  void HandleDeleteEntryCallback(StatusCallback callback,
+                                 dbus::Response* response) {
+    if (!response) {
+      DLOG(ERROR) << "DeleteEntry: failed to call smbprovider";
       std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED);
     }
     dbus::MessageReader reader(response);
