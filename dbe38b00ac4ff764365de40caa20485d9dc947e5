@@ -104,6 +104,41 @@
     },
     {
       "key": {
+        "uuid": "edd5e0b4_b91d1f78",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T05:56:12Z",
+      "side": 1,
+      "message": "We would only need to rescan a sink/app combination if its status is unknown and if there is no pending request for it. In practice, I think this should not be more than a few requests.",
+      "parentUuid": "8037a7bc_8c84dc98",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a0b0d0_e04cfedd",
+        "filename": "chrome/common/media_router/media_source_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T05:56:12Z",
+      "side": 1,
+      "message": "We don\u0027t need to support dial: schemes anymore since they aren\u0027t used anyway.",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac56b985_8c381d24",
         "filename": "chrome/common/media_router/media_source_helper.h",
         "patchSetId": 12
@@ -115,6 +150,24 @@
       "writtenOn": "2018-01-19T00:50:17Z",
       "side": 1,
       "message": "Slightly prefer to keep knowledge of DIAL-specific URLs in a DIAL media route provider, once we have a folder for one.  Add a TODO?",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11338522_853d3f1c",
+        "filename": "chrome/common/media_router/media_source_helper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T05:56:12Z",
+      "side": 1,
+      "message": "Maybe we can put it into providers/cast? I assume we still want to only have a Cast MRP (which handles custom DIAL launches) but not a DIAL MRP.",
+      "parentUuid": "ac56b985_8c381d24",
       "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
