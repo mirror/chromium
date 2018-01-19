@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "846e8ebd_29dc3160",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-19T02:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a329ee2_b917c3f7",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 19
+      },
+      "revId": "6d46d9a0595820171340fd9cd598f3a9f0a627fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e525003_8975dad8",
         "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
         "patchSetId": 11
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "4b0656dd_99d89db6",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-19T02:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e525003_8975dad8",
+      "revId": "6d46d9a0595820171340fd9cd598f3a9f0a627fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f72acad_92bd323d",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
         "patchSetId": 11
@@ -56,6 +98,24 @@
       "revId": "6d46d9a0595820171340fd9cd598f3a9f0a627fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ef9e57_fd4baad5",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-19T02:55:18Z",
+      "side": 1,
+      "message": "To avoid bloating this CL any more, I\u0027ll add a todo to make them actually return a null. That will be implemented in an upcoming CL which adds in the rest of the string properties.",
+      "parentUuid": "8f72acad_92bd323d",
+      "revId": "6d46d9a0595820171340fd9cd598f3a9f0a627fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "8c3f5d50_24a76244",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-19T02:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "807f6a78_a76d4b45",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 20
+      },
+      "revId": "6d46d9a0595820171340fd9cd598f3a9f0a627fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db89a54d_d63ba18c",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
         "patchSetId": 11
@@ -93,6 +177,30 @@
       "writtenOn": "2018-01-18T23:15:00Z",
       "side": 1,
       "message": "This seems optimistic.",
+      "range": {
+        "startLine": 37,
+        "startChar": 49,
+        "endLine": 37,
+        "endChar": 53
+      },
+      "revId": "6d46d9a0595820171340fd9cd598f3a9f0a627fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4854b0d_72aaf1c4",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-19T02:55:18Z",
+      "side": 1,
+      "message": "True. I\u0027ve removed it.",
+      "parentUuid": "db89a54d_d63ba18c",
       "range": {
         "startLine": 37,
         "startChar": 49,
@@ -125,6 +233,30 @@
       "revId": "6d46d9a0595820171340fd9cd598f3a9f0a627fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d449fd0_68dd644e",
+        "filename": "third_party/WebKit/public/platform/ComputedAXTree.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-19T02:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4349001f_d8a496b4",
+      "range": {
+        "startLine": 18,
+        "startChar": 28,
+        "endLine": 18,
+        "endChar": 41
+      },
+      "revId": "6d46d9a0595820171340fd9cd598f3a9f0a627fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
