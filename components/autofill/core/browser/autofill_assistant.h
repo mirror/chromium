@@ -5,13 +5,14 @@
 #ifndef COMPONENTS_AUTOFILL_CORE_BROWSER_AUTOFILL_ASSISTANT_H_
 #define COMPONENTS_AUTOFILL_CORE_BROWSER_AUTOFILL_ASSISTANT_H_
 
+#include <map>
 #include <memory>
-#include <vector>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "components/autofill/core/browser/payments/full_card_request.h"
 #include "components/autofill/core/common/form_data.h"
+#include "components/autofill/core/common/signatures_util.h"
 
 namespace autofill {
 
@@ -32,7 +33,8 @@ class AutofillAssistant : public payments::FullCardRequest::ResultDelegate {
   // Returns whether a credit card assist can be shown. Will go through the
   // forms in |form_structures| and extract the credit card form.
   bool CanShowCreditCardAssist(
-      const std::vector<std::unique_ptr<FormStructure>>& form_structures);
+      const std::map<FormSignature, std::unique_ptr<FormStructure>>&
+          form_structures);
 
   // Will show an assist infobar for the previously extracted form proposing to
   // autofill it. Should only be called if CanShowCreditCardAssist() returned
