@@ -22,6 +22,30 @@
       "revId": "4669df41388b6acc23f52c36d03dd75094f037e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edfdefaf_6ce0d2a3",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_rdebug.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-19T17:01:50Z",
+      "side": 1,
+      "message": "Ah ah, yes, the comment should be moved into the #else section below, and the return should be changed to true.\n\nGenerally speaking, we need to amp the game on linker testing, what we currently have it not good enough, imho.",
+      "parentUuid": "877d13cf_447801f8",
+      "range": {
+        "startLine": 215,
+        "startChar": 24,
+        "endLine": 215,
+        "endChar": 59
+      },
+      "revId": "4669df41388b6acc23f52c36d03dd75094f037e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
