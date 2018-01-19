@@ -1119,6 +1119,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // TODO(creis): Use this for main frames as well when RVH goes away.
   bool render_frame_created_;
 
+  bool current_document_load_failed_;
+
   // When the last BeforeUnload message was sent.
   base::TimeTicks send_before_unload_start_time_;
 

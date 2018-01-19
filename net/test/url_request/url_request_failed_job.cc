@@ -10,7 +10,9 @@
 #include "base/macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_piece.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/base/url_util.h"
 #include "net/http/http_response_headers.h"
@@ -24,6 +26,8 @@ namespace {
 
 const char kMockHostname[] = "mock.failed.request";
 
+const char kResponseParameterName[] = "response";
+
 // String names of failure phases matching FailurePhase enum.
 const char* kFailurePhase[]{
     "start",      // START
@@ -34,6 +38,9 @@ const char* kFailurePhase[]{
 static_assert(arraysize(kFailurePhase) ==
                   URLRequestFailedJob::FailurePhase::MAX_FAILURE_PHASE,
               "kFailurePhase must match FailurePhase enum");
+
+URLRequestFailedJob::ReadRawDataCompleteInterceptor
+    g_read_raw_data_complete_interceptor;
 
 class MockJobInterceptor : public URLRequestInterceptor {
  public:
@@ -57,7 +64,13 @@ class MockJobInterceptor : public URLRequestInterceptor {
         }
       }
     }
-    return new URLRequestFailedJob(request, network_delegate, phase, net_error);
+    std::string response;
+    if (GetValueForKeyInQuery(request->url(), kResponseParameterName,
+                              &response)) {
+      DCHECK_EQ(phase, URLRequestFailedJob::READ_ASYNC);
+    }
+    return new URLRequestFailedJob(request, network_delegate, phase, net_error,
+                                   response);
   }
 
  private:
@@ -67,12 +80,16 @@ class MockJobInterceptor : public URLRequestInterceptor {
 GURL GetMockUrl(const std::string& scheme,
                 const std::string& hostname,
                 URLRequestFailedJob::FailurePhase phase,
-                int net_error) {
+                int net_error,
+                const std::string& response = std::string()) {
   CHECK_GE(phase, URLRequestFailedJob::FailurePhase::START);
   CHECK_LE(phase, URLRequestFailedJob::FailurePhase::READ_ASYNC);
   CHECK_LT(net_error, OK);
-  return GURL(scheme + "://" + hostname + "/error?" + kFailurePhase[phase] +
-              "=" + base::IntToString(net_error));
+  GURL url(scheme + "://" + hostname + "/error?" + kFailurePhase[phase] + "=" +
+           base::IntToString(net_error));
+  if (!response.empty())
+    url = net::AppendQueryParameter(url, kResponseParameterName, response);
+  return url;
 }
 
 }  // namespace
@@ -80,11 +97,13 @@ GURL GetMockUrl(const std::string& scheme,
 URLRequestFailedJob::URLRequestFailedJob(URLRequest* request,
                                          NetworkDelegate* network_delegate,
                                          FailurePhase phase,
-                                         int net_error)
+                                         int net_error,
+                                         std::string response)
     : URLRequestJob(request, network_delegate),
       phase_(phase),
       net_error_(net_error),
       total_received_bytes_(0),
+      response_(std::move(response)),
       weak_factory_(this) {
   CHECK_GE(phase, URLRequestFailedJob::FailurePhase::START);
   CHECK_LE(phase, URLRequestFailedJob::FailurePhase::READ_ASYNC);
@@ -94,8 +113,11 @@ URLRequestFailedJob::URLRequestFailedJob(URLRequest* request,
 URLRequestFailedJob::URLRequestFailedJob(URLRequest* request,
                                          NetworkDelegate* network_delegate,
                                          int net_error)
-    : URLRequestFailedJob(request, network_delegate, START, net_error) {
-}
+    : URLRequestFailedJob(request,
+                          network_delegate,
+                          START,
+                          net_error,
+                          std::string()) {}
 
 void URLRequestFailedJob::Start() {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -108,9 +130,23 @@ int URLRequestFailedJob::ReadRawData(IOBuffer* buf, int buf_size) {
   if (net_error_ == ERR_IO_PENDING || phase_ == READ_SYNC)
     return net_error_;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&URLRequestFailedJob::ReadRawDataComplete,
-                            weak_factory_.GetWeakPtr(), net_error_));
+  int result = net_error_;
+
+  if (!response_.empty()) {
+    size_t chars_written =
+        base::StringPiece(response_).copy(buf->data(), buf_size, 0);
+    total_received_bytes_ += chars_written;
+    response_ = response_.substr(chars_written);
+    result = chars_written;
+  }
+
+  auto task = base::BindOnce(&URLRequestFailedJob::ReadRawDataComplete,
+                             weak_factory_.GetWeakPtr(), result);
+  if (g_read_raw_data_complete_interceptor)
+    g_read_raw_data_complete_interceptor.Run(std::move(task), result);
+  else
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, std::move(task));
+
   return ERR_IO_PENDING;
 }
 
@@ -164,6 +200,13 @@ GURL URLRequestFailedJob::GetMockHttpUrlWithFailurePhase(FailurePhase phase,
 }
 
 // static
+GURL URLRequestFailedJob::GetMockHttpUrlWithPartialResponse(
+    const std::string& response,
+    int net_error) {
+  return GetMockUrl("http", kMockHostname, READ_ASYNC, net_error, response);
+}
+
+// static
 GURL URLRequestFailedJob::GetMockHttpUrlForHostname(
     int net_error,
     const std::string& hostname) {
@@ -175,6 +218,12 @@ GURL URLRequestFailedJob::GetMockHttpsUrlForHostname(
     int net_error,
     const std::string& hostname) {
   return GetMockUrl("https", hostname, START, net_error);
+}
+
+// static
+void URLRequestFailedJob::SetReadRawDataCompleteInterceptor(
+    ReadRawDataCompleteInterceptor interceptor) {
+  g_read_raw_data_complete_interceptor = std::move(interceptor);
 }
 
 URLRequestFailedJob::~URLRequestFailedJob() = default;

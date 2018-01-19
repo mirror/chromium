@@ -484,6 +484,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       routing_id_(routing_id),
       is_waiting_for_swapout_ack_(false),
       render_frame_created_(false),
+      current_document_load_failed_(false),
       is_waiting_for_beforeunload_ack_(false),
       unload_ack_is_for_navigation_(false),
       is_loading_(false),
@@ -1516,6 +1517,8 @@ void RenderFrameHostImpl::OnDidFailLoadWithError(
   GURL validated_url(url);
   GetProcess()->FilterURL(false, &validated_url);
 
+  current_document_load_failed_ = true;
+
   frame_tree_node_->navigator()->DidFailLoadWithError(
       this, validated_url, error_code, error_description);
 }
@@ -1703,6 +1706,9 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
   } else {
     SetLastCommittedSiteUrl(validated_params->url);
   }
+
+  if (!validated_params->was_within_same_document)
+    current_document_load_failed_ = false;
 
   accessibility_reset_count_ = 0;
   frame_tree_node()->navigator()->DidNavigate(this, *validated_params,
@@ -2740,6 +2746,11 @@ void RenderFrameHostImpl::OnDidStopLoading() {
   // of this RenderFrameHost is being tracked.
   if (is_active())
     frame_tree_node_->DidStopLoading();
+
+  if (IsCurrent()) {
+    frame_tree_node_->navigator()->DidStopLoading(
+        this, current_document_load_failed_);
+  }
 }
 
 void RenderFrameHostImpl::OnDidChangeLoadProgress(double load_progress) {
