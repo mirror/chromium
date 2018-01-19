@@ -1,0 +1,740 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86d528ff_86d60833",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 125,
+        "startChar": 29,
+        "endLine": 125,
+        "endChar": 38
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff81451_42ce2f56",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 130,
+        "startChar": 29,
+        "endLine": 130,
+        "endChar": 38
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac1df142_b427b08c",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 465,
+        "startChar": 50,
+        "endLine": 465,
+        "endChar": 59
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caec9d23_c7c76b35",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 466,
+        "startChar": 51,
+        "endLine": 466,
+        "endChar": 60
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b78d315_fab4d28b",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config_service_client_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 925,
+        "startChar": 40,
+        "endLine": 925,
+        "endChar": 49
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee2fe1c_752b6e26",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config_service_client_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 1030,
+        "startChar": 45,
+        "endLine": 1030,
+        "endChar": 54
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc59503_9fc6c35b",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config_service_client_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 1032,
+        "startChar": 38,
+        "endLine": 1032,
+        "endChar": 47
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2100088_ba763ce4",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 70,
+        "startChar": 52,
+        "endLine": 70,
+        "endChar": 61
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a810a1_7709457e",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_delegate_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 345,
+        "startChar": 63,
+        "endLine": 345,
+        "endChar": 72
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27dffab_39a53911",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 193,
+        "startChar": 66,
+        "endLine": 193,
+        "endChar": 75
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58265fb9_c0ba1f62",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 195,
+        "startChar": 34,
+        "endLine": 195,
+        "endChar": 43
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fda66d7_2a5f9f08",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 80,
+        "startChar": 68,
+        "endLine": 80,
+        "endChar": 77
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "942b30e0_927b054d",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_settings.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 76,
+        "startChar": 68,
+        "endLine": 76,
+        "endChar": 77
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3882a7e_50efc9ab",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_settings.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 87,
+        "startChar": 65,
+        "endLine": 87,
+        "endChar": 74
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3e8949_70a83ffe",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_settings.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 75,
+        "startChar": 70,
+        "endLine": 75,
+        "endChar": 79
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e4bf506_9aa43016",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_settings.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 139,
+        "startChar": 50,
+        "endLine": 139,
+        "endChar": 59
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884feb34_270a88fd",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_settings_test_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 101,
+        "startChar": 42,
+        "endLine": 101,
+        "endChar": 51
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ddffd4e_b578e2c8",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_settings_test_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 128,
+        "startChar": 34,
+        "endLine": 128,
+        "endChar": 43
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a444f568_86af5ff2",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_settings_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 273,
+        "startChar": 49,
+        "endLine": 273,
+        "endChar": 58
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51afef3b_81c981bd",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 289,
+        "startChar": 66,
+        "endLine": 289,
+        "endChar": 75
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c096f25_40d30146",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 292,
+        "startChar": 29,
+        "endLine": 292,
+        "endChar": 38
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f42da4_6982b62c",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 626,
+        "startChar": 38,
+        "endLine": 626,
+        "endChar": 47
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c455e4f9_3c2bfffb",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 628,
+        "startChar": 38,
+        "endLine": 628,
+        "endChar": 47
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a5c30c_978aa75e",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 632,
+        "startChar": 34,
+        "endLine": 632,
+        "endChar": 43
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e32932c_a1de343f",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 680,
+        "startChar": 30,
+        "endLine": 680,
+        "endChar": 39
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549659ff_19fdbef9",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 710,
+        "startChar": 52,
+        "endLine": 710,
+        "endChar": 61
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979547a3_bfe4e187",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 711,
+        "startChar": 41,
+        "endLine": 711,
+        "endChar": 50
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc21b7a0_bb5e6c60",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 715,
+        "startChar": 57,
+        "endLine": 715,
+        "endChar": 66
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380ef513_81f33f2d",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 720,
+        "startChar": 27,
+        "endLine": 720,
+        "endChar": 36
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "647cfd9e_cc3b949f",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 221,
+        "startChar": 61,
+        "endLine": 221,
+        "endChar": 70
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33fb00d8_abc4a87d",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 416,
+        "startChar": 50,
+        "endLine": 416,
+        "endChar": 59
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ab0c62_5aaabf9c",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2018-01-19T22:26:16Z",
+      "side": 1,
+      "message": "This has nothing to do with ProxyResolutionService. Please don\u0027t change the name.",
+      "range": {
+        "startLine": 420,
+        "startChar": 59,
+        "endLine": 420,
+        "endChar": 68
+      },
+      "revId": "d60bcfa92a84901dc70f729ad6cd166c42e05ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
