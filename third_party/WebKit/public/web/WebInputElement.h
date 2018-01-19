@@ -33,10 +33,36 @@
 
 #include "WebFormControlElement.h"
 
+#include "base/callback.h"
+
 namespace blink {
 
 class HTMLInputElement;
+class WebInputElement;
 class WebOptionElement;
+
+// Indicates in which cases an assist icon is displayed in a text input field.
+enum class AssistanceIconVisibility {
+  // Don’t show an assist icon in input elements.
+  kDisabled,
+  // An icon is always displayed in input elements. Only if the element is too
+  // small the icon is hidden. Only permitted if IsTextField() returns true.
+  kAlwaysVisible,
+  // An icon is displayed in input elements if the user focuses the element or
+  // hovers the mouse over it.
+  kVisibleOnInteraction
+};
+
+// Indicates which assist types are available for a text input field.
+enum class AssistanceType {
+  // Don’t show an assist icon in input elements.
+  kNone,
+  // Use an assist icon enabling interaction with the password manager.
+  kPasswordManager
+  // More will follow later.
+};
+
+using AssistanceIconClickedCallback = base::RepeatingCallback<void()>;
 
 // Provides readonly access to some properties of a DOM input element node.
 class BLINK_EXPORT WebInputElement final : public WebFormControlElement {
@@ -94,6 +120,12 @@ class BLINK_EXPORT WebInputElement final : public WebFormControlElement {
 
   // Returns true if the text of the element should be visible.
   bool ShouldRevealPassword() const;
+
+  // Configures assistance for the input element. May only be called for types
+  // for which IsTextField() returns true.
+  void SetAssistance(AssistanceIconVisibility,
+                     AssistanceType,
+                     AssistanceIconClickedCallback);
 
 #if INSIDE_BLINK
   WebInputElement(HTMLInputElement*);

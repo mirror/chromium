@@ -129,6 +129,8 @@ class CORE_EXPORT InputTypeView : public GarbageCollectedMixin {
   virtual FormControlState SaveFormControlState() const;
   virtual void RestoreFormControlState(const FormControlState&);
 
+  virtual void AssistConfigurationChanged();
+
   // Validation functions
   virtual bool HasBadInput() const;
 

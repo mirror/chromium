@@ -210,4 +210,41 @@ bool SearchFieldCancelButtonElement::WillRespondToMouseClickEvents() {
   return HTMLDivElement::WillRespondToMouseClickEvents();
 }
 
+// ----------------------------
+inline AssistButtonElement::AssistButtonElement(Document& document,
+                                                AssistButtonOwner& owner)
+    : HTMLDivElement(document), button_owner_(owner) {}
+
+AssistButtonElement* AssistButtonElement::Create(Document& document,
+                                                 AssistButtonOwner& owner) {
+  AssistButtonElement* element = new AssistButtonElement(document, owner);
+  element->SetShadowPseudoId(AtomicString("-webkit-assist-button"));
+  element->setAttribute(idAttr, ShadowElementNames::AssistButton());
+  return element;
+}
+
+void AssistButtonElement::Trace(blink::Visitor* visitor) {
+  visitor->Trace(button_owner_);
+  HTMLDivElement::Trace(visitor);
+}
+
+void AssistButtonElement::DefaultEventHandler(Event* event) {
+  // If the element is visible, on mouseup, notify owner.
+  HTMLInputElement* input(ToHTMLInputElement(OwnerShadowHost()));
+  if (!input || input->IsDisabledOrReadOnly()) {
+    if (!event->DefaultHandled())
+      HTMLDivElement::DefaultEventHandler(event);
+    return;
+  }
+  if (event->type() == EventTypeNames::click && event->IsMouseEvent() &&
+      ToMouseEvent(event)->button() ==
+          static_cast<short>(WebPointerProperties::Button::kLeft)) {
+    if (button_owner_)
+      button_owner_->AssistButtonPressed();
+    event->SetDefaultHandled();
+  }
+  if (!event->DefaultHandled())
+    HTMLDivElement::DefaultEventHandler(event);
+}
+
 }  // namespace blink

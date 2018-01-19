@@ -25,6 +25,7 @@
 #include "core/paint/ThemePainterDefault.h"
 
 #include "core/frame/LocalFrameView.h"
+#include "core/html/forms/HTMLInputElement.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutProgress.h"
 #include "core/layout/LayoutThemeDefault.h"
@@ -483,6 +484,61 @@ bool ThemePainterDefault::PaintSearchFieldCancelButton(
           ? cancel_pressed_image
           : cancel_image,
       Image::kSyncDecode, painting_rect);
+  return false;
+}
+
+bool ThemePainterDefault::PaintAssistButton(
+    const LayoutObject& assist_button_object,
+    const PaintInfo& paint_info,
+    const IntRect& r) {
+  // Get the layoutObject of <input> element.
+  if (!assist_button_object.GetNode())
+    return false;
+
+  Node* input = assist_button_object.GetNode()->OwnerShadowHost();
+  const LayoutObject& base_layout_object = input && input->GetLayoutObject()
+                                               ? *input->GetLayoutObject()
+                                               : assist_button_object;
+  if (!base_layout_object.IsBox())
+    return false;
+  const LayoutBox& input_layout_box = ToLayoutBox(base_layout_object);
+  LayoutRect input_content_box = input_layout_box.ContentBoxRect();
+  // Make sure the scaled button stays square and will fit in its parent's box.
+  LayoutUnit assist_button_size =
+      std::min(input_content_box.Width(),
+               std::min(input_content_box.Height(), LayoutUnit(r.Height())));
+  // Calculate cancel button's coordinates relative to the input element.
+  // Center the button vertically.  Round up though, so if it has to be one
+  // pixel off-center, it will be one pixel closer to the bottom of the field.
+  // This tends to look better with the text.
+  LayoutRect assist_button_rect(
+      assist_button_object.OffsetFromAncestorContainer(&input_layout_box)
+          .Width(),
+      input_content_box.Y() +
+          (input_content_box.Height() - assist_button_size + 1) / 2,
+      assist_button_size, assist_button_size);
+  IntRect painting_rect = ConvertToPaintingRect(
+      input_layout_box, assist_button_object, assist_button_rect, r);
+
+  DEFINE_STATIC_REF(Image, password_assistant_image,
+                    (Image::LoadPlatformResource("passwordAssistant")));
+  DEFINE_STATIC_REF(Image, password_assistant_pressed_image,
+                    (Image::LoadPlatformResource("passwordAssistantPressed")));
+
+  HTMLInputElement* html_element =
+      ToHTMLInputElement(base_layout_object.GetNode());
+  switch (html_element->GetAssistanceIconType()) {
+    case AssistanceType::kNone:
+      NOTREACHED();
+      break;
+    case AssistanceType::kPasswordManager:
+      paint_info.context.DrawImage(
+          LayoutTheme::IsPressed(assist_button_object.GetNode())
+              ? password_assistant_pressed_image
+              : password_assistant_image,
+          Image::kSyncDecode, painting_rect);
+      break;
+  }
   return false;
 }
 

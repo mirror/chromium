@@ -182,6 +182,8 @@ void InputTypeView::RestoreFormControlState(const FormControlState& state) {
   GetElement().setValue(state[0]);
 }
 
+void InputTypeView::AssistConfigurationChanged() {}
+
 bool InputTypeView::HasBadInput() const {
   return false;
 }
