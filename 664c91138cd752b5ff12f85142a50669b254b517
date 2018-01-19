@@ -16,6 +16,24 @@
       "revId": "664c91138cd752b5ff12f85142a50669b254b517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f82fa1c_6a63700e",
+        "filename": "ui/arc/notification/arc_notification_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-19T17:01:29Z",
+      "side": 1,
+      "message": "do you mean we should test both orders? I don\u0027t know why we\u0027d have a preference for one direction or the other, especially in a test.",
+      "parentUuid": "aa9d04c8_307c531b",
+      "revId": "664c91138cd752b5ff12f85142a50669b254b517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
