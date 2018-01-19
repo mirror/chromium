@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e22abd0_fe6037b4",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-19T01:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e835a77c_2ca9bdc0",
+      "revId": "692620a774cac28486ee95fea50a10a66268f3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c198d249_a73f93fb",
         "filename": "chrome/browser/resources/md_extensions/toolbar.js",
         "patchSetId": 14
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6fda2bb3_cbad4738",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-19T01:37:03Z",
+      "side": 1,
+      "message": "I think casting to a boolean is more technically correct, since e.detail is already a boolean. \"!!\" converts a non-boolean to a boolean, which is unnecessary here.",
+      "parentUuid": "c198d249_a73f93fb",
+      "revId": "692620a774cac28486ee95fea50a10a66268f3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df394f26_3374398a",
         "filename": "chrome/browser/resources/md_extensions/toolbar.js",
         "patchSetId": 14
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-19T01:21:09Z",
       "side": 1,
       "message": "Since this is done via and event, can devDrawer.hidden and this.expanded_ get out of sync with each other if dev mode is toggled rapidly?",
+      "revId": "692620a774cac28486ee95fea50a10a66268f3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283a6b3b_e5fd5ad1",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-19T01:37:03Z",
+      "side": 1,
+      "message": "I don\u0027t see a way for |hidden| and |expanded| to be out of sync, or to be more precise to be inconsistent (they are not strictly in sync).\n\nThe genaral flow is described as\n\n1) User cilcks\n2) JS-\u003eC++ message sent\n3) C++ -\u003eJS profile state change\n4) Manager callback executes, which updates inDevMode\n5) inDevMode propagates to toolbar_\n6) onInDevModeChanged fires\n6.1) Hidden is removed *if* we are entering dev mode.\n6.2) A one-time listener is added *if\" we are exiting dev mode.\n7) expanded is updated which triggers the in/out animation\n8) the listener added at 6.2 fires when the transition finishes, and adds |hidden|.\n\nIf between 7 and 8 a new click has occurred by the user, 8 does nothing.",
+      "parentUuid": "df394f26_3374398a",
       "revId": "692620a774cac28486ee95fea50a10a66268f3e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
