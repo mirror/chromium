@@ -233,6 +233,24 @@
     },
     {
       "key": {
+        "uuid": "d783e6e0_76cc2af9",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-19T14:25:05Z",
+      "side": 1,
+      "message": "Addition to Michael reply: \n\nI don\u0027t expect special Visit method for other cases.\n\nThis case is special because  v8::GlobalValueMap\u003cKeyType*, v8::Object, PersistentValueMapTraits\u003e is not convertible to TraceWrapperV8Reference. You can see that it\u0027s special because it has its own RegisterExternallyReferencedObject (https://cs.chromium.org/chromium/src/v8/include/v8-util.h?rcl\u003d7199784766ca3b3926eefc39ab7d748e954acc24\u0026l\u003d213)\n\nAll other case should be able to use the existing Visit methods.",
+      "parentUuid": "4272ec42_4c18bdd4",
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7e07b95_e7d28316",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.cpp",
         "patchSetId": 3
