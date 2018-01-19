@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c56f2a4a_2f97e0b9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/profiling_host/ProfilingProcessHostAndroidTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-19T21:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2c923a4_4b758d88",
+      "range": {
+        "startLine": 73,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 40
+      },
+      "revId": "9f2f5c3d6ef6731092483c2fb051a2d9e665bfb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c728eaca_ab8efdaa",
         "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "995da727_d78f9ecb",
+        "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-19T21:09:51Z",
+      "side": 1,
+      "message": "we don\u0027t have a good mechanism to force and check allocations in the GPU...so we don\u0027t.",
+      "parentUuid": "c728eaca_ab8efdaa",
+      "range": {
+        "startLine": 353,
+        "startChar": 8,
+        "endLine": 353,
+        "endChar": 28
+      },
+      "revId": "9f2f5c3d6ef6731092483c2fb051a2d9e665bfb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "731fa03c_dbf317cd",
         "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-19T19:21:50Z",
       "side": 1,
       "message": "Should this have some sort of timeout logic in case we never break out?",
+      "range": {
+        "startLine": 649,
+        "startChar": 8,
+        "endLine": 649,
+        "endChar": 9
+      },
+      "revId": "9f2f5c3d6ef6731092483c2fb051a2d9e665bfb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f7c4c8_48cb5dcf",
+        "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-19T21:09:51Z",
+      "side": 1,
+      "message": "test harnesses have their own timeouts -- this means we don\u0027t need to put in a bunch of timeouts everywhere. :)",
+      "parentUuid": "731fa03c_dbf317cd",
       "range": {
         "startLine": 649,
         "startChar": 8,
