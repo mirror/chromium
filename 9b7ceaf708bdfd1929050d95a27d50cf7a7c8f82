@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "98b80678_87a3de0b",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2063,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T19:15:28Z",
+      "side": 1,
+      "message": "Having this call here is an odd middle ground. In the previous CL, |-settingsWillBeDismissed| was removed from the public interface, since it was automagically being called from |-willDisappear|. So now is it called twice? Perhaps we should revert the previous CL. https://chromium-review.googlesource.com/c/chromium/src/+/826024",
+      "parentUuid": "b9837c79_42d74c2e",
+      "range": {
+        "startLine": 2063,
+        "startChar": 48,
+        "endLine": 2063,
+        "endChar": 71
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36962e7c_fe98ca33",
         "filename": "ios/chrome/browser/ui/key_commands_provider.h",
         "patchSetId": 8
@@ -213,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "294d8d37_55dc26b9",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T19:15:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1b507373_58b3ac54",
+      "range": {
+        "startLine": 230,
+        "startChar": 26,
+        "endLine": 238,
+        "endChar": 57
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0e0ff92_1068b48e",
         "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
         "patchSetId": 8
@@ -248,6 +296,30 @@
       "side": 1,
       "message": "Yeah this is me trying to be cautious and probably overly so.\n\nWe need to keep \u0027settingsWillBeDismissed\u0027 as it does important cleanup in a number of view controllers, and there is some sensitivity as to timing (i.e. making sure the call happens at the right time.)\n\nFor manual calls to dismiss settings, e.g. through a Done button tap, we have a place to manually call settingsWillBeDismissed (and this is how everything works in the current codebase).\n\nHowever now that Settings is introducing the idea of its presentation and dismissal being through the view controller hierarchy rather than some set of custom protocols laid on top, we needed a mechanism that would trigger the \u0027settingsWillBeDismissed\u0027 clean up flow still. To do this, there\u0027s a call in viewWillDisappear: checking if the view controller is being dismissed, and if so, calling \u0027settingsWillBeDismissed\u0027.\n\nI didn\u0027t have the confidence to remove the manual call/s though as that may change timing slightly of the original behavior; therefore in some cases this will get called twice - once manually and once by the viewWillDisappear call - so I needed to make sure that this method could be called from any number of places.\n\nIn hindsight I could rely on the viewWillDisappear: mechanism for every case, and if there are timing related issues they would be bugs we could fix. I will make this change and remove the manual calls and put the DCHECK back in. \n\nThanks!",
       "parentUuid": "a0e0ff92_1068b48e",
+      "range": {
+        "startLine": 1051,
+        "startChar": 2,
+        "endLine": 1051,
+        "endChar": 35
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4a61444_c7d068d2",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T19:15:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "830c5578_108a9aa4",
       "range": {
         "startLine": 1051,
         "startChar": 2,
@@ -307,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "7dbcb329_8bb4ffa9",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T19:15:28Z",
+      "side": 1,
+      "message": "The dispatcher was added to the delegate only for convenience sake. \nSee this comment: \"Since there a large number of initializers for SettingsNavigationController,\nit would be painful to add a dispatcher parameter to all of them. Instead, since\nall of the initializers already take a delegate parameter, a \n-dispatcherForSettings method is added to the delegate protocol\"\n\non this CL: https://chromium-review.googlesource.com/c/chromium/src/+/570448",
+      "parentUuid": "ef1a4dbb_5f8ad20f",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 55
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7ec0a21_06b659e0",
         "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
         "patchSetId": 8
@@ -342,6 +438,30 @@
       "side": 1,
       "message": "Yes! I think so.",
       "parentUuid": "a7ec0a21_06b659e0",
+      "range": {
+        "startLine": 332,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 71
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cca516e_073ddaea",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T19:15:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5edfbf4a_d42e6834",
       "range": {
         "startLine": 332,
         "startChar": 4,
@@ -401,6 +521,30 @@
     },
     {
       "key": {
+        "uuid": "fca26ef8_748d1d3a",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T19:15:28Z",
+      "side": 1,
+      "message": "I\u0027m not sure which DCHECKs you\u0027re referring to, but I think it\u0027s okay to remove any invalid DCHECKs in general.",
+      "parentUuid": "ff226989_8a9ff7f8",
+      "range": {
+        "startLine": 341,
+        "startChar": 4,
+        "endLine": 343,
+        "endChar": 5
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79d7afbc_0cc478f6",
         "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
         "patchSetId": 8
@@ -436,6 +580,30 @@
       "side": 1,
       "message": "Oh yes, nice spot, thanks!",
       "parentUuid": "79d7afbc_0cc478f6",
+      "range": {
+        "startLine": 372,
+        "startChar": 4,
+        "endLine": 375,
+        "endChar": 80
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b717acc9_6cd75d4f",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T19:15:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1af0f336_e3d829a4",
       "range": {
         "startLine": 372,
         "startChar": 4,
@@ -530,6 +698,30 @@
       "side": 1,
       "message": "It\u0027s true that this file didn\u0027t have anything to do with settings previously, but local presentation of the Settings view controller dictates that certain information (browser state and a dispatcher, essentially) need to be provided to any code that wants to show the Settings menu.\n\nIn the current codebase it\u0027s all in the central MainController.\n\nIn this CL, most of the time Settings is being presented on top of a BrowserViewController and gets its dispatcher and browserState from there. However Settings can also be presented by the tools menu on top of the stack view UI, and the stack view and BVC are disjoint worlds.\n\nWith the magic wormhole of Dispatcher-\u003eMainController cut off, the Stack VC is the lowest place in the hierarchy that can provide these objects, and can do so neatly through the tools menu configuration object.\n\nIs there another way you think this could be done? Thanks!",
       "parentUuid": "b1228b4f_e684a250",
+      "range": {
+        "startLine": 213,
+        "startChar": 34,
+        "endLine": 213,
+        "endChar": 70
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b729f1a8_27b0f9f7",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-19T19:15:28Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to modify this file if you directly inject the browserState at initialization rather than using a delegate callback.",
+      "parentUuid": "2c5d0eb9_3b18037c",
       "range": {
         "startLine": 213,
         "startChar": 34,
