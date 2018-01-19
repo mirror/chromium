@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/command_line.h"
+#include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/extensions/blacklist.h"
 #include "chrome/browser/extensions/chrome_app_sorting.h"
@@ -28,6 +29,7 @@
 #include "extensions/browser/state_store.h"
 #include "extensions/browser/value_store/test_value_store_factory.h"
 #include "extensions/browser/value_store/testing_value_store.h"
+#include "services/data_decoder/public/cpp/test_data_decoder_service.h"
 #if defined(OS_CHROMEOS)
 #include "components/user_manager/user_manager.h"
 #endif
@@ -35,6 +37,40 @@
 using content::BrowserThread;
 
 namespace extensions {
+
+namespace {
+
+class TestExtensionService : public ExtensionService {
+ public:
+  TestExtensionService(Profile* profile,
+                       const base::CommandLine* command_line,
+                       const base::FilePath& install_directory,
+                       extensions::ExtensionPrefs* extension_prefs,
+                       extensions::Blacklist* blacklist,
+                       bool autoupdate_enabled,
+                       bool extensions_enabled,
+                       extensions::OneShotEvent* ready)
+      : ExtensionService(profile,
+                         command_line,
+                         install_directory,
+                         extension_prefs,
+                         blacklist,
+                         autoupdate_enabled,
+                         extensions_enabled,
+                         ready) {}
+
+  service_manager::Connector* GetConnector() override {
+    return test_data_decoder_service_.connector();
+  }
+
+ private:
+  // An instance of the data decoder service that does not require the
+  // ServiceManager.
+  data_decoder::TestDataDecoderService test_data_decoder_service_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestExtensionService);
+};
+}  // namespace
 
 TestExtensionSystem::TestExtensionSystem(Profile* profile)
     : profile_(profile),
@@ -68,7 +104,7 @@ ExtensionService* TestExtensionSystem::CreateExtensionService(
       ExtensionManagementFactory::GetForBrowserContext(profile_)
           ->GetProviders());
   runtime_data_.reset(new RuntimeData(ExtensionRegistry::Get(profile_)));
-  extension_service_.reset(new ExtensionService(
+  extension_service_.reset(new TestExtensionService(
       profile_, command_line, install_directory, ExtensionPrefs::Get(profile_),
       Blacklist::Get(profile_), autoupdate_enabled, extensions_enabled,
       &ready_));
