@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65a2bd05_22fb17e3",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T00:16:35Z",
+      "side": 1,
+      "message": "Thanks for pointing out. I also have some optimizations in mind that can be implemented. I just didn\u0027t want to include everything into the first patch to not make it bloated. Added a TODO to investigate and implement it later.",
+      "parentUuid": "1d7ea45c_8a1cf055",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 25
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69d60751_2ad1f40a",
         "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-18T23:09:21Z",
       "side": 1,
       "message": "Also note that you are always constructing Sample (which has inside a vector ctor) even when you don\u0027t need it.\n\nI\u0027d probably do reshuffle this to keep the fastpath faster, like:\n{\nif (LIKELY(!base::subtle::NoBarrier_Load(\u0026running_)))\n  self-\u003enext-\u003ealloc_function(self-\u003enext, size, context);\n\nSample sample;\nif (!Create...)\n return self-\u003enext-\u003ealloc_function(self-\u003enext, size, context);\n\nreturn RecordAlloc(...)\n}\n\nSame below (AllocZeroInit \u0026 co)",
+      "range": {
+        "startLine": 189,
+        "startChar": 11,
+        "endLine": 189,
+        "endChar": 64
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef2343d_bf705632",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T00:16:35Z",
+      "side": 1,
+      "message": "Yes, I was thinking about similar optimization here. I can do it later if you do not mind.",
+      "parentUuid": "69d60751_2ad1f40a",
       "range": {
         "startLine": 189,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d295a7f4_59a16e3b",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T00:16:35Z",
+      "side": 1,
+      "message": "Yes, it will allocate extra unused 16 (or alignment length whichever is larger) bytes in case of reentrancy. But I don\u0027t see a major issue here. Sorry, I didn\u0027t understand what you mean under \"leak the alignment bit\"?",
+      "parentUuid": "3b57dce2_ad51199d",
+      "range": {
+        "startLine": 192,
+        "startChar": 9,
+        "endLine": 192,
+        "endChar": 35
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e005d66_9e8000f2",
         "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-18T23:09:21Z",
       "side": 1,
       "message": "note that size \u003d\u003d 0 means Free (it\u0027s a weird realloc semantic)",
+      "range": {
+        "startLine": 234,
+        "startChar": 51,
+        "endLine": 234,
+        "endChar": 55
+      },
+      "revId": "b0eb0529d418ed2efe1bf33d274c91aa4d7911ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "319884ae_52aca488",
+        "filename": "third_party/WebKit/common/device_memory/sampling_native_heap_profiler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T00:16:35Z",
+      "side": 1,
+      "message": "The code should be able to handle it correctly.\nHaving the size 0 will make will_sample be false and will not trigger the sample. Also the RecordFree will still be called if the allocation was previously sampled. I\u0027ll add a comment to be careful here.",
+      "parentUuid": "6e005d66_9e8000f2",
       "range": {
         "startLine": 234,
         "startChar": 51,
