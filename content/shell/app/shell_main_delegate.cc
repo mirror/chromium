@@ -361,16 +361,16 @@ void ShellMainDelegate::InitializeResourceBundle() {
   ui::ResourceBundle::GetSharedInstance().AddDataPackFromFileRegion(
       base::File(pak_fd), pak_region, ui::SCALE_FACTOR_100P);
 #else  // defined(OS_ANDROID)
-#if defined(OS_MACOSX)
-  base::FilePath pak_file = GetResourcesPakFilePath();
-#else
   base::FilePath pak_file;
-  bool r = PathService::Get(base::DIR_MODULE, &pak_file);
+#if defined(OS_MACOSX)
+  pak_file = GetResourcesPakFilePath();
+#else   // defined(OS_MACOSX)
+  bool r = PathService::Get(ui::DIR_LOCALES, &pak_file);
   DCHECK(r);
   pak_file = pak_file.Append(FILE_PATH_LITERAL("content_shell.pak"));
-#endif  // defined(OS_MACOSX)
+#endif  // !defined(OS_MACOSX)
   ui::ResourceBundle::InitSharedInstanceWithPakPath(pak_file);
-#endif  // defined(OS_ANDROID)
+#endif  // !defined(OS_ANDROID)
 }
 
 ContentBrowserClient* ShellMainDelegate::CreateContentBrowserClient() {
