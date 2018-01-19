@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cae4345_ac535b58",
+        "filename": "chromecast/gpu/cast_content_gpu_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-19T14:26:32Z",
+      "side": 1,
+      "message": "nit, 2018 (and other added files)",
+      "revId": "82b127aff7a320ef689510caa88ee57b6790d5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3faead13_0e72de8a",
+        "filename": "chromecast/gpu/cast_content_gpu_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-19T14:26:32Z",
+      "side": 1,
+      "message": "nit, #else - code below unreachable",
+      "revId": "82b127aff7a320ef689510caa88ee57b6790d5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7feb7475_54c3219d",
+        "filename": "chromecast/gpu/cast_content_gpu_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-19T14:26:32Z",
+      "side": 1,
+      "message": "nit: prefer std::make_unique over bare new",
+      "revId": "82b127aff7a320ef689510caa88ee57b6790d5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
