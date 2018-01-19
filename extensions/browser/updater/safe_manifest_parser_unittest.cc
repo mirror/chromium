@@ -16,6 +16,8 @@ namespace {
 
 class ExtensionUpdateManifestTest : public testing::Test {
  public:
+  ExtensionUpdateManifestTest() = default;
+
   void TestParseUpdateManifest(const std::string& xml) {
     base::RunLoop run_loop;
     ParseUpdateManifest(

@@ -313,6 +313,9 @@ void ExtensionServiceTestBase::CreateExtensionService(
 
   service_->component_loader()->set_ignore_whitelist_for_testing(true);
 
+  service_->set_connector_for_test(
+      test_data_decoder_service_.connector()->Clone());
+
   // When we start up, we want to make sure there is no external provider,
   // since the ExtensionService on Windows will use the Registry as a default
   // provider and if there is something already registered there then it will

@@ -18,6 +18,9 @@ namespace data_decoder {
 
 // A class that can be used by tests that need access to a Connector that can
 // bind the DataDecoder's interfaces. Bypasses the Service Manager entirely.
+// Note that the service created through this class terminates as soon as there
+// are no more connections bound to it (the non test version waits for a few
+// seconds).
 class TestDataDecoderService {
  public:
   TestDataDecoderService();

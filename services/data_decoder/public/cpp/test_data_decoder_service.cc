@@ -8,11 +8,14 @@
 
 namespace data_decoder {
 
-TestDataDecoderService::TestDataDecoderService()
-    : connector_factory_(
-          service_manager::TestConnectorFactory::CreateForUniqueService(
-              std::make_unique<DataDecoderService>())),
-      connector_(connector_factory_->CreateConnector()) {}
+TestDataDecoderService::TestDataDecoderService() {
+  auto service = std::make_unique<DataDecoderService>();
+  service->set_delay_before_quit(/*delay_in_s=*/0);
+  connector_factory_ =
+      service_manager::TestConnectorFactory::CreateForUniqueService(
+          std::move(service));
+  connector_ = connector_factory_->CreateConnector();
+}
 
 TestDataDecoderService::~TestDataDecoderService() = default;
 
