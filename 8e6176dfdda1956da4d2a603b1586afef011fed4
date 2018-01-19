@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2746d28d_d9bbbb6c",
+        "filename": "components/os_crypt/os_crypt_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-19T18:01:27Z",
+      "side": 1,
+      "message": "I suggest moving those inside GetEncryptionKey so that the error outputs only once and not 1000 times.",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 61
+      },
+      "revId": "8e6176dfdda1956da4d2a603b1586afef011fed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
