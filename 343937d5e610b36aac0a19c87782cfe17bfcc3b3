@@ -34,6 +34,24 @@
       "revId": "343937d5e610b36aac0a19c87782cfe17bfcc3b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5fa671f_b88988c9",
+        "filename": "ash/public/cpp/app_list/app_list_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-19T08:11:47Z",
+      "side": 1,
+      "message": "I guess that would work. Long-term, I think maybe it would be better to represent the invalid state as an Optional\u003cAppListState\u003e though. Would that make sense?",
+      "parentUuid": "a143d2a2_4e1e45ab",
+      "revId": "343937d5e610b36aac0a19c87782cfe17bfcc3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
