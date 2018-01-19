@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b82feb0a_79104b91",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-19T13:00:04Z",
+      "side": 1,
+      "message": "There is not much of a better way doing this.",
+      "revId": "9219f5235ae120cc4edfe7abf0ba0461e9f845d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "657ff7ac_c04d4aa6",
+        "filename": "components/history/core/browser/history_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-19T13:00:04Z",
+      "side": 1,
+      "message": "We should do these later.",
+      "revId": "9219f5235ae120cc4edfe7abf0ba0461e9f845d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88da13b_e77e20ae",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-19T13:00:04Z",
+      "side": 1,
+      "message": "I should probably use base::trace_event same way everything else.",
+      "revId": "9219f5235ae120cc4edfe7abf0ba0461e9f845d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918c9831_8c18a73f",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-19T13:00:04Z",
+      "side": 1,
+      "message": "```scoped_refptr``` is not supported by ```base::trace_event::EstimateMemoryUsage```",
+      "revId": "9219f5235ae120cc4edfe7abf0ba0461e9f845d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
