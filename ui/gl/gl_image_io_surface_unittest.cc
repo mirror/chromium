@@ -15,6 +15,7 @@ namespace gl {
 namespace {
 
 const uint8_t kImageColor[] = {0x30, 0x40, 0x10, 0xFF};
+uint8_t bgrx_image_color[4];
 
 template <gfx::BufferFormat format>
 class GLImageIOSurfaceTestDelegate : public GLImageTestDelegateBase {
@@ -69,7 +70,24 @@ class GLImageIOSurfaceTestDelegate : public GLImageTestDelegateBase {
 
   unsigned GetTextureTarget() const { return GL_TEXTURE_RECTANGLE_ARB; }
 
-  const uint8_t* GetImageColor() { return kImageColor; }
+  const uint8_t* GetImageColor() {
+    if (format != gfx::BufferFormat::BGRX_8888)
+      return kImageColor;
+
+    // BGRX_8888 is actually treated as BGRA because many operations are broken
+    // when binding an IOSurface as GL_RGB, see https://crbug.com/595948. This
+    // makes the alpha value comparison fail, because we're actually writing
+    // something, but expect 0xFF. Correct the alpha comparison for the test.
+    uint8_t actual_data[4];
+    GLImageTestSupport::SetBufferDataToColor(
+        1 /* width */, 1 /* height */, 1 /* stride */, 0 /* plane */,
+        gfx::BufferFormat::BGRX_8888, kImageColor, actual_data);
+    bgrx_image_color[0] = kImageColor[0];
+    bgrx_image_color[1] = kImageColor[1];
+    bgrx_image_color[2] = kImageColor[2];
+    bgrx_image_color[3] = actual_data[3];
+    return bgrx_image_color;
+  }
 
   int GetAdmissibleError() const {
     return format == gfx::BufferFormat::YUV_420_BIPLANAR ? 1 : 0;
@@ -98,9 +116,10 @@ INSTANTIATE_TYPED_TEST_CASE_P(GLImageIOSurface,
                               GLImageRGBTestTypes);
 
 using GLImageBindTestTypes = testing::Types<
-    // TODO(mcasas): enable BGRX_1010102, BGRX_8888, https://crbug.com/803473.
+    // TODO(mcasas): enable BGRX_1010102, https://crbug.com/803473.
     GLImageIOSurfaceTestDelegate<gfx::BufferFormat::BGRA_8888>,
     GLImageIOSurfaceTestDelegate<gfx::BufferFormat::RGBA_8888>,
+    GLImageIOSurfaceTestDelegate<gfx::BufferFormat::BGRX_8888>,
     GLImageIOSurfaceTestDelegate<gfx::BufferFormat::RGBA_F16>>;
 
 INSTANTIATE_TYPED_TEST_CASE_P(GLImageIOSurface,
