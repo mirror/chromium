@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cee0ac9_7ade778b",
+        "filename": "device/gamepad/raw_input_data_fetcher_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-19T20:07:00Z",
+      "side": 1,
+      "message": "+1 for better comments across the board!",
+      "revId": "3f3362c6898a572f50a27c829f37cceaae637ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
