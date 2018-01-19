@@ -46,6 +46,30 @@
       "revId": "c42be6060ef48eef2942de0c6bf6c39852fd860f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8d8248_e23bb249",
+        "filename": "chromecast/browser/cast_browser_main_parts.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-19T18:47:55Z",
+      "side": 0,
+      "message": "Per offline discussion with piman/halliwell, it seems cast doesn\u0027t need GPU to start early, and for TV, it\u0027s better to start on demand. Let\u0027s put back this switch but fix the comment.",
+      "parentUuid": "d18a0fbb_14391a14",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 41
+      },
+      "revId": "c42be6060ef48eef2942de0c6bf6c39852fd860f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
