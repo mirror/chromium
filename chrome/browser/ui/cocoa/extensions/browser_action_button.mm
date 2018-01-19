@@ -40,6 +40,10 @@ NSString* const kBrowserActionButtonDragEndNotification =
 static const CGFloat kAnimationDuration = 0.2;
 static const CGFloat kMinimumDragDistance = 5;
 
+// Set true when a BrowserActionButton is dragged. Set false when the
+// dragging session has ended.
+static bool g_isDraggingSession;
+
 @interface BrowserActionButton ()
 - (void)endDrag;
 - (void)updateHighlightedState;
@@ -316,6 +320,8 @@ void ToolbarActionViewDelegateBridge::DoShowContextMenu() {
 
   [self setFrame:buttonFrame];
   [self setNeedsDisplay:YES];
+
+  g_isDraggingSession = YES;
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kBrowserActionButtonDraggingNotification
       object:self];
@@ -344,6 +350,7 @@ void ToolbarActionViewDelegateBridge::DoShowContextMenu() {
 
 - (void)endDrag {
   isBeingDragged_ = NO;
+  g_isDraggingSession = NO;
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kBrowserActionButtonDragEndNotification object:self];
 }
@@ -572,6 +579,17 @@ void ToolbarActionViewDelegateBridge::DoShowContextMenu() {
         [[browserActionsController_ browser]->window()->GetNativeWindow()
             themeProvider];
   return themeProvider;
+}
+
+- (void)mouseEntered:(NSEvent*)theEvent {
+  // If a BrowserActionButton is currently being dragged, the other buttons
+  // should not be highlighted when the mouse hovers inside of them.
+  if (g_isDraggingSession) {
+    [self setIsMouseInside:NO];
+    return;
+  }
+
+  [super mouseEntered:theEvent];
 }
 
 @end
