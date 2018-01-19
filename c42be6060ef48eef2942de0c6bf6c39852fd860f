@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d500ae10_88022079",
+        "filename": "chromecast/browser/cast_browser_main_parts.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2018-01-19T18:11:39Z",
+      "side": 0,
+      "message": "Will the removal of this flag have any effect on Android devices?",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 41
+      },
+      "revId": "c42be6060ef48eef2942de0c6bf6c39852fd860f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
