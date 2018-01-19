@@ -16,6 +16,24 @@
       "revId": "66892582f3f8a5b001300759426553823e0b0085",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92cea17_39cd3059",
+        "filename": "components/crash/content/app/breakpad_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2018-01-19T09:06:45Z",
+      "side": 1,
+      "message": "That\u0027s what I figured, but we seem to be fine with this ordering.",
+      "parentUuid": "3041cf52_30b65b9b",
+      "revId": "66892582f3f8a5b001300759426553823e0b0085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
