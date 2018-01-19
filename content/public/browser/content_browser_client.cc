@@ -636,4 +636,10 @@ bool ContentBrowserClient::ShowPaymentHandlerWindow(
   return false;
 }
 
+bool ContentBrowserClient::ShouldPermitIndividualAttestationForWebauthnRPID(
+    content::BrowserContext* browser_context,
+    const std::string& rp_id) {
+  return false;
+}
+
 }  // namespace content

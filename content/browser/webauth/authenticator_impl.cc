@@ -10,7 +10,10 @@
 
 #include "base/logging.h"
 #include "base/timer/timer.h"
+#include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
+#include "content/public/common/content_client.h"
 #include "content/public/common/service_manager_connection.h"
 #include "crypto/sha2.h"
 #include "device/u2f/u2f_hid_discovery.h"
@@ -159,11 +162,19 @@ void AuthenticatorImpl::MakeCredential(
     registered_keys.push_back(credential->id);
   }
 
+  const bool individual_attestation =
+      GetContentClient()
+          ->browser()
+          ->ShouldPermitIndividualAttestationForWebauthnRPID(
+              render_frame_host_->GetProcess()->GetBrowserContext(),
+              relying_party_id);
+
   // TODO(kpaulhamus): Mock U2fRegister for unit tests.
   // http://crbug.com/785955.
   u2f_request_ = device::U2fRegister::TryRegistration(
       registered_keys, client_data_hash, application_parameter,
-      relying_party_id, {u2f_discovery_.get()}, std::move(response_callback));
+      relying_party_id, {u2f_discovery_.get()}, individual_attestation,
+      std::move(response_callback));
 }
 
 // Callback to handle the async registration response from a U2fDevice.

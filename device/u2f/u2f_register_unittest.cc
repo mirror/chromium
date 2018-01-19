@@ -29,6 +29,7 @@ using ::testing::_;
 namespace {
 
 constexpr char kTestRelyingPartyId[] = "google.com";
+constexpr bool kNoIndividualAttestation = false;
 
 // EC public key encoded in COSE_Key format.
 // x : F868CE3869605224CE1059C0047EF01B830F2AD93BE27A3211F44E894560E695
@@ -328,7 +329,8 @@ TEST_F(U2fRegisterTest, TestRegisterSuccess) {
   std::vector<std::vector<uint8_t>> registration_keys;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
       registration_keys, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      kTestRelyingPartyId, {&discovery}, std::move(cb.callback()));
+      kTestRelyingPartyId, {&discovery}, kNoIndividualAttestation,
+      std::move(cb.callback()));
   request->Start();
   discovery.AddDevice(std::move(device));
   const std::pair<U2fReturnCode, base::Optional<RegisterResponseData>>&
@@ -358,7 +360,8 @@ TEST_F(U2fRegisterTest, TestDelayedSuccess) {
   std::vector<std::vector<uint8_t>> registration_keys;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
       registration_keys, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      kTestRelyingPartyId, {&discovery}, std::move(cb.callback()));
+      kTestRelyingPartyId, {&discovery}, kNoIndividualAttestation,
+      std::move(cb.callback()));
   request->Start();
   discovery.AddDevice(std::move(device));
   const std::pair<U2fReturnCode, base::Optional<RegisterResponseData>>&
@@ -394,7 +397,8 @@ TEST_F(U2fRegisterTest, TestMultipleDevices) {
   std::vector<std::vector<uint8_t>> registration_keys;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
       registration_keys, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      kTestRelyingPartyId, {&discovery}, std::move(cb.callback()));
+      kTestRelyingPartyId, {&discovery}, kNoIndividualAttestation,
+      std::move(cb.callback()));
   request->Start();
   discovery.AddDevice(std::move(device0));
   discovery.AddDevice(std::move(device1));
@@ -444,7 +448,8 @@ TEST_F(U2fRegisterTest, TestSingleDeviceRegistrationWithExclusionList) {
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
       handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      kTestRelyingPartyId, {&discovery}, std::move(cb.callback()));
+      kTestRelyingPartyId, {&discovery}, kNoIndividualAttestation,
+      std::move(cb.callback()));
   discovery.AddDevice(std::move(device));
 
   const std::pair<U2fReturnCode, base::Optional<RegisterResponseData>>&
@@ -506,7 +511,8 @@ TEST_F(U2fRegisterTest, TestMultipleDeviceRegistrationWithExclusionList) {
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
       handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      kTestRelyingPartyId, {&discovery}, std::move(cb.callback()));
+      kTestRelyingPartyId, {&discovery}, kNoIndividualAttestation,
+      std::move(cb.callback()));
 
   discovery.AddDevice(std::move(device0));
   discovery.AddDevice(std::move(device1));
@@ -561,7 +567,8 @@ TEST_F(U2fRegisterTest, TestSingleDeviceRegistrationWithDuplicateHandle) {
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
       handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      kTestRelyingPartyId, {&discovery}, std::move(cb.callback()));
+      kTestRelyingPartyId, {&discovery}, kNoIndividualAttestation,
+      std::move(cb.callback()));
   discovery.AddDevice(std::move(device));
   const std::pair<U2fReturnCode, base::Optional<RegisterResponseData>>&
       response = cb.WaitForCallback();
@@ -625,7 +632,8 @@ TEST_F(U2fRegisterTest, TestMultipleDeviceRegistrationWithDuplicateHandle) {
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
       handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      kTestRelyingPartyId, {&discovery}, std::move(cb.callback()));
+      kTestRelyingPartyId, {&discovery}, kNoIndividualAttestation,
+      std::move(cb.callback()));
   discovery.AddDevice(std::move(device0));
   discovery.AddDevice(std::move(device1));
   const std::pair<U2fReturnCode, base::Optional<RegisterResponseData>>&
@@ -728,6 +736,47 @@ TEST_F(U2fRegisterTest, TestRegisterResponseData) {
   EXPECT_EQ(GetTestCredentialRawIdBytes(), response->raw_id());
   EXPECT_EQ(GetTestAttestationObjectBytes(),
             response->GetCBOREncodedAttestationObject());
+}
+
+MATCHER_P(IndicatesIndividualAttestation, expected, "") {
+  const std::vector<uint8_t> cmd = arg->GetEncodedCommand();
+  return cmd.size() >= 2 && ((cmd[2] & 0x80) == 0x80) == expected;
+}
+
+TEST_F(U2fRegisterTest, TestIndividualAttestation) {
+  // Test that the individual attestation flag is correctly reflected in the
+  // resulting registration APDU.
+  for (const auto& individual_attestation : {false, true}) {
+    SCOPED_TRACE(individual_attestation);
+    auto device = std::make_unique<MockU2fDevice>();
+
+    MockU2fDiscovery discovery;
+
+    EXPECT_CALL(*device.get(), GetId())
+        .WillRepeatedly(testing::Return("device0"));
+    EXPECT_CALL(*device.get(),
+                DeviceTransactPtr(
+                    IndicatesIndividualAttestation(individual_attestation), _))
+        .WillOnce(testing::Invoke(MockU2fDevice::NoErrorRegister));
+    EXPECT_CALL(*device.get(), TryWinkRef(_))
+        .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
+    EXPECT_CALL(discovery, Start())
+        .WillOnce(
+            testing::Invoke(&discovery, &MockU2fDiscovery::StartSuccessAsync));
+
+    TestRegisterCallback cb;
+    std::vector<std::vector<uint8_t>> registration_keys;
+    std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
+        registration_keys, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+        kTestRelyingPartyId, {&discovery}, individual_attestation,
+        std::move(cb.callback()));
+    request->Start();
+    discovery.AddDevice(std::move(device));
+    const std::pair<U2fReturnCode, base::Optional<RegisterResponseData>>&
+        response = cb.WaitForCallback();
+    EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
+    EXPECT_EQ(GetTestCredentialRawIdBytes(), std::get<1>(response)->raw_id());
+  }
 }
 
 }  // namespace device

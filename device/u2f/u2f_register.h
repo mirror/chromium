@@ -31,6 +31,7 @@ class U2fRegister : public U2fRequest {
               const std::vector<uint8_t>& app_param,
               std::string relying_party_id,
               std::vector<U2fDiscovery*> discoveries,
+              bool individual_attestation_ok,
               RegisterResponseCallback completion_callback);
   ~U2fRegister() override;
 
@@ -40,6 +41,7 @@ class U2fRegister : public U2fRequest {
       const std::vector<uint8_t>& app_param,
       std::string relying_party_id,
       std::vector<U2fDiscovery*> discoveries,
+      bool individual_attestation_ok,
       RegisterResponseCallback completion_callback);
 
  private:
@@ -65,6 +67,9 @@ class U2fRegister : public U2fRequest {
   std::vector<uint8_t> challenge_hash_;
   std::vector<uint8_t> app_param_;
   const std::vector<std::vector<uint8_t>> registered_keys_;
+  // Indicates whether the token should be signaled that using an individual
+  // attestation certificate is acceptable.
+  const bool individual_attestation_ok_;
   RegisterResponseCallback completion_callback_;
 
   // List of authenticators that did not create any of the key handles in the

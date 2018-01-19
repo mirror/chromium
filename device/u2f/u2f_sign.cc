@@ -49,6 +49,7 @@ void U2fSign::TryDevice() {
     // Send registration (Fake enroll) if no keys were provided
     current_device_->Register(
         U2fRequest::GetBogusAppParam(), U2fRequest::GetBogusChallenge(),
+        false /* no individual attestation */,
         base::Bind(&U2fSign::OnTryDevice, weak_factory_.GetWeakPtr(),
                    registered_keys_.cend()));
     return;
@@ -92,6 +93,7 @@ void U2fSign::OnTryDevice(std::vector<std::vector<uint8_t>>::const_iterator it,
         // (Fake enroll) request to device.
         current_device_->Register(
             U2fRequest::GetBogusAppParam(), U2fRequest::GetBogusChallenge(),
+            false /* no individual attestation */,
             base::Bind(&U2fSign::OnTryDevice, weak_factory_.GetWeakPtr(),
                        registered_keys_.cend()));
       }
