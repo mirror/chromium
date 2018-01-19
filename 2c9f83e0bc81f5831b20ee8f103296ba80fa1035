@@ -22,6 +22,30 @@
       "revId": "2c9f83e0bc81f5831b20ee8f103296ba80fa1035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344a581c_9ecbe282",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-19T09:09:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e176b00_ea33f3c5",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "2c9f83e0bc81f5831b20ee8f103296ba80fa1035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
