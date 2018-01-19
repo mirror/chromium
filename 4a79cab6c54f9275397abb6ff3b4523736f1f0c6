@@ -124,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "83c6cb80_218ff8e9",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T09:09:49Z",
+      "side": 1,
+      "message": "Ah, thanks! Makes sense.",
+      "parentUuid": "ccb9a583_320ffbc2",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cd35ca0_4637a243",
         "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
         "patchSetId": 3
