@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5528d1d_1d7e2e19",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2018-01-19T14:06:34Z",
+      "side": 1,
+      "message": "We can certainly put this somewhere else if you prefer. I didn\u0027t find anything existing empty main in the tree.",
+      "range": {
+        "startLine": 407,
+        "startChar": 6,
+        "endLine": 407,
+        "endChar": 29
+      },
+      "revId": "9235881bafdfe16fe73c3a58a169343f84239976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
