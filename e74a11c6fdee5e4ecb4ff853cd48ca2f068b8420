@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d0236d1d_20045608",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-19T10:34:09Z",
+      "side": 1,
+      "message": "SGTM; my original plan was \"UI Updates Phase 1\".",
+      "parentUuid": "9c679ce6_de44593e",
+      "revId": "e74a11c6fdee5e4ecb4ff853cd48ca2f068b8420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b68ca2ef_271a8e7a",
         "filename": "ios/chrome/browser/ui/main/main_feature_flags.h",
         "patchSetId": 2
