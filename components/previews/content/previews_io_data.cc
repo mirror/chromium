@@ -53,6 +53,7 @@ bool AllowedOnReload(PreviewsType type) {
     // Loading these types will always be stale when refreshed.
     case PreviewsType::OFFLINE:
       return false;
+    case PreviewsType::UNSPECIFIED:
     case PreviewsType::NONE:
     case PreviewsType::LAST:
       break;
@@ -71,6 +72,7 @@ bool IsServerWhitelistedType(PreviewsType type) {
     case PreviewsType::LOFI:
     case PreviewsType::AMP_REDIRECTION:
       return false;
+    case PreviewsType::UNSPECIFIED:
     case PreviewsType::NONE:
     case PreviewsType::LAST:
       break;

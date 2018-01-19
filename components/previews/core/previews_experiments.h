@@ -15,6 +15,11 @@
 namespace previews {
 
 enum class PreviewsType {
+  // Special value that indicates that no specific type is identified. This
+  // might be used for checks or logging that applies to any type.
+  UNSPECIFIED = -1,
+
+  // Used to indicate that there is no preview type.
   NONE = 0,
 
   // The user is shown an offline page as a preview.
