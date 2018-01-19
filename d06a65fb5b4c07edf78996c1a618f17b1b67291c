@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a4920635_cc7e256c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-19T14:29:26Z",
+      "side": 1,
+      "message": "Refer to the bug this is blocking in BUG",
+      "revId": "d06a65fb5b4c07edf78996c1a618f17b1b67291c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cfd5902_c814c449",
         "filename": "ui/aura/window_event_dispatcher.cc",
         "patchSetId": 5
