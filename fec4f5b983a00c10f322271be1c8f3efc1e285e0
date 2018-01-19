@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38087c9c_b7931cce",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/CompilerScriptMapping.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-19T22:39:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "798dd874_9eeb2441",
+      "revId": "fec4f5b983a00c10f322271be1c8f3efc1e285e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8098cc5b_260f36b9",
         "filename": "third_party/WebKit/Source/devtools/front_end/bindings/NetworkProject.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "fec4f5b983a00c10f322271be1c8f3efc1e285e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7df2ee4_6880d832",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/NetworkProject.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-19T22:39:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8098cc5b_260f36b9",
+      "revId": "fec4f5b983a00c10f322271be1c8f3efc1e285e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
