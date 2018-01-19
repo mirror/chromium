@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7adf814_5ea3d5a7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-19T21:05:39Z",
+      "side": 1,
+      "message": "I still cant read these expectations. It makes me do a lot of math by hand.",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd06db74_e3b87a9a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-19T21:05:39Z",
+      "side": 1,
+      "message": "I thought hidden meant not visible, but it means removed from DOM.",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "312e5767_af041890",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-19T21:05:39Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these be sets not arrays? What if the same message comes in and then out of view?",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cdd5721_0b7ca2ce",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-19T21:05:39Z",
+      "side": 1,
+      "message": "Id like just an assertion that all the messages are in dom and visible.",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cfad57b_4bbb2aba",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-19T21:05:39Z",
+      "side": 1,
+      "message": "Id like this to be visibleCount+1, and assert that exactly one message is not visible and that all are in DOM.",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d6b014_7720f295",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-19T21:05:39Z",
+      "side": 1,
+      "message": "Id like this to assert that all are in DOM, and more than one is not visible.",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb785e4b_23c21e99",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-19T21:05:39Z",
+      "side": 1,
+      "message": "assert that smallCount is not in DOM, maxActiveCount is in dom, visibleCount is visible.",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773b339e_a0ab37e2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-19T21:05:39Z",
+      "side": 1,
+      "message": "assert visible \u003d\u003d\u003d 1",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "733a0f4c_cda71fe4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-indices-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-19T21:05:39Z",
+      "side": 1,
+      "message": "Will\u0027s last words to me were \"Don\u0027t use TestRunner.assertEquals()\"",
+      "parentUuid": "01834d69_2e7413f8",
+      "revId": "7660f571aeadfb50ed439f2ae2fd39407d2c6759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "886fda7e_9aee80db",
         "filename": "third_party/WebKit/Source/devtools/front_end/console_test_runner/ConsoleTestRunner.js",
         "patchSetId": 3
