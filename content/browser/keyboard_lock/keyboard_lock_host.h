@@ -13,11 +13,16 @@
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
 #include "content/browser/keyboard_lock/active_key_filter.h"
-#include "content/public/browser/render_widget_host_view.h"
+#include "content/browser/keyboard_lock/keyboard_lock_tab_observer.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "ui/base/keyboard_lock/platform_hook.h"
 
 namespace content {
 
+class RenderWidgetHost;
+class WebContents;
+
+// TODO: UPDATE COMMENTS SINCE THESE ARE NO LONGER VALID.
 // Provides the ability to reserve or release keys for the KeyboardLock feature.
 // In order for the keys to be intercepted, two actions must occur:
 // 1.) The javascript for the current page must call |ReserveKeys()|.
@@ -27,10 +32,10 @@ namespace content {
 // not been satisfied yet.  It also allows the hosting class to activate and
 // deactivate the feature without losing the set of keys requested by the
 // webpage.
-class KeyboardLockHost {
+class KeyboardLockHost final : public content::WebContentsObserver {
  public:
-  explicit KeyboardLockHost(RenderWidgetHostView* host_view);
-  virtual ~KeyboardLockHost();
+  explicit KeyboardLockHost(RenderWidgetHost* host);
+  ~KeyboardLockHost() override;
 
   // Updates the set of reserved keyboard keys that should be filtered when the
   // KeyboardLock logic is active.
@@ -40,21 +45,21 @@ class KeyboardLockHost {
   // Clears the set of keys which should be intercepted.
   void ClearReservedKeys();
 
-  // Used to enable or disable the KeyboardLock feature.  Note that this only
-  // takes effect if the webpage has set its reserved keys.
-  void Activate();
-  void Deactivate();
-
  private:
+  // Used to enable or disable the KeyboardLock feature depending on whether the
+  // webpage has requested keyboard lock and the UX is in the appropriate state.
+  void UpdateLockState();
+
   void ReserveKeyCodes(const std::vector<int>& key_codes,
                        base::OnceCallback<void(bool)> done);
 
   THREAD_CHECKER(thread_checker_);
 
-  bool activated_ = false;
-  RenderWidgetHostView* host_view_ = nullptr;
+  RenderWidgetHost* const render_widget_host_;
+  WebContents* web_contents_ = nullptr;
   std::unique_ptr<ActiveKeyFilter> active_key_filter_;
   std::unique_ptr<ui::PlatformHook> platform_hook_;
+  std::unique_ptr<KeyboardLockTabObserver> tab_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(KeyboardLockHost);
 };

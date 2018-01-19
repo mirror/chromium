@@ -11,20 +11,20 @@
 
 namespace content {
 
-class RenderWidgetHostView;
+class RenderWidgetHost;
 
 // Filters out key events which have been requested by the KeyboardLock API.
 // TODO(joedow): Implement selective kb lock, i.e. only trap specific keys.
 class ActiveKeyFilter final : public ui::KeyEventFilter {
  public:
-  explicit ActiveKeyFilter(RenderWidgetHostView* host_view);
+  explicit ActiveKeyFilter(RenderWidgetHost* host);
   ~ActiveKeyFilter() override;
 
   // ui::KeyEventFilter interface.
   bool OnKeyEvent(const ui::KeyEvent& event) override;
 
  private:
-  RenderWidgetHostView* host_view_ = nullptr;
+  RenderWidgetHost* const host_;
 
   DISALLOW_COPY_AND_ASSIGN(ActiveKeyFilter);
 };
