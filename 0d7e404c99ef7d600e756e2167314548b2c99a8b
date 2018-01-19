@@ -22,6 +22,30 @@
       "revId": "0d7e404c99ef7d600e756e2167314548b2c99a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ceea277_fd983820",
+        "filename": "tools/grit/grit/node/misc.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-19T16:43:54Z",
+      "side": 1,
+      "message": "Deleted this class (not necessary unless we change to not give everything ids, which although I think is a good idea, is no longer on my near-term radar).",
+      "parentUuid": "ebef4181_e26161ce",
+      "range": {
+        "startLine": 39,
+        "startChar": 34,
+        "endLine": 39,
+        "endChar": 55
+      },
+      "revId": "0d7e404c99ef7d600e756e2167314548b2c99a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
