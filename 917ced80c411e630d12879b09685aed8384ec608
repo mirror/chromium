@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97e4e211_4fac2ad3",
+        "filename": "media/cast/net/udp_transport_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-19T23:19:02Z",
+      "side": 1,
+      "message": "nit: A little simpler:\n\n  if (mojo_packet_receiver_)\n    mojo_packet_receiver_-\u003eOnPacketReceived(*packet);\n  return true;\n\n...and see next comment...",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 14
+      },
+      "revId": "917ced80c411e630d12879b09685aed8384ec608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e96e80_cee5abb6",
+        "filename": "media/cast/net/udp_transport_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-19T23:19:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we were being too pedantic here about receiving \"stray\" UDP packets. Someday we should figure out if this is necessary. If it\u0027s not necessary, then PacketReceiverCallbackWithStatus need not return a bool. (Note this is related to the new OnPacketReceived() method you\u0027ve added in this change.)",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 7
+      },
+      "revId": "917ced80c411e630d12879b09685aed8384ec608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db7a917_e3e605d0",
+        "filename": "media/cast/net/udp_transport_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-19T23:19:02Z",
+      "side": 1,
+      "message": "This will make a copy of the Packet. Could you add a TODO here to remove the ref-counting in the future, so we can just std::move() the packet pointer? (I think, once we delete the old code calling SendPacket(), the ref-counting can go away.)",
+      "range": {
+        "startLine": 383,
+        "startChar": 31,
+        "endLine": 383,
+        "endChar": 72
+      },
+      "revId": "917ced80c411e630d12879b09685aed8384ec608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ae86ca_b8d3e08d",
+        "filename": "media/cast/net/udp_transport_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-19T23:19:02Z",
+      "side": 1,
+      "message": "I think this should be a private method.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 64
+      },
+      "revId": "917ced80c411e630d12879b09685aed8384ec608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bdf2c07_213582b6",
+        "filename": "media/cast/net/udp_transport_interface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-19T23:19:02Z",
+      "side": 1,
+      "message": "Something to consider: Maybe this should be a data pipe too? In the cast sender case, we\u0027re only receiving small-sized RTCP packets; so the data pipe isn\u0027t necessary for performance. However, in the cast receiver case, we would be receiving audio and video bitstream data as well; so using a data pipe would be desirable.",
+      "range": {
+        "startLine": 32,
+        "startChar": 30,
+        "endLine": 32,
+        "endChar": 60
+      },
+      "revId": "917ced80c411e630d12879b09685aed8384ec608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae98c460_fe658432",
+        "filename": "media/cast/net/udp_transport_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-19T23:19:02Z",
+      "side": 1,
+      "message": "nit: Make this protected.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 55
+      },
+      "revId": "917ced80c411e630d12879b09685aed8384ec608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65b6d95_a429ef20",
+        "filename": "media/cast/net/udp_transport_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-19T23:19:02Z",
+      "side": 1,
+      "message": "We can avoid making a copy of the data if this argument were just std::vector\u003cuint8_t\u003e. Then, line 75 below changes to: packets_.emplace_back(std::move(packet));",
+      "range": {
+        "startLine": 73,
+        "startChar": 24,
+        "endLine": 73,
+        "endChar": 58
+      },
+      "revId": "917ced80c411e630d12879b09685aed8384ec608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
