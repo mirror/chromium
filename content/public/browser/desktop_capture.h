@@ -13,6 +13,10 @@ namespace content {
 // Creates a DesktopCaptureOptions with required settings.
 CONTENT_EXPORT webrtc::DesktopCaptureOptions CreateDesktopCaptureOptions();
 
+// Creats specific DesktopCapturer with required settings.
+CONTENT_EXPORT std::unique_ptr<webrtc::DesktopCapturer> CreateScreenCapturer();
+CONTENT_EXPORT std::unique_ptr<webrtc::DesktopCapturer> CreateWindowCapturer();
+
 }  // namespace content
 
 #endif  // CONTENT_PUBLIC_BROWSER_DESKTOP_CAPTURE_H_
