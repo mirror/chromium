@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38c3c58a_8e45e338",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T00:52:57Z",
+      "side": 1,
+      "message": "I can remove that detail from the comment, but I think the CHECK still makes sense here, and doesn\u0027t in ExtensionRegistrar. ExtensionRegistrar doesn\u0027t know whether a given extension ID ought to correspond to a known path.",
+      "parentUuid": "9cf7b985_a3ed156e",
+      "range": {
+        "startLine": 662,
+        "startChar": 42,
+        "endLine": 662,
+        "endChar": 67
+      },
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65969408_3443aefb",
         "filename": "chrome/browser/extensions/extension_service.h",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-17T20:26:37Z",
       "side": 1,
       "message": "Since we\u0027re updating this method, let\u0027s change this bool to an enum.",
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8de79e_230384d1",
+        "filename": "chrome/browser/extensions/extension_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T00:52:57Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t have much context here: what does this represent beyond enabling/disabling an error dialog?",
+      "parentUuid": "65969408_3443aefb",
       "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f06bbcb4_c8e73f7a",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T00:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27873623_cb5a5aa1",
+      "range": {
+        "startLine": 31,
+        "startChar": 32,
+        "endLine": 31,
+        "endChar": 42
+      },
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbb6d3a2_61673a3a",
         "filename": "extensions/browser/extension_registrar.cc",
         "patchSetId": 4
@@ -85,6 +151,30 @@
       "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66af7a76_2fe774cb",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T00:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbb6d3a2_61673a3a",
+      "range": {
+        "startLine": 71,
+        "startChar": 32,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "6a11cc09_6b9363b8",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T00:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f76d7ea_0a4b29f3",
+      "range": {
+        "startLine": 290,
+        "startChar": 19,
+        "endLine": 290,
+        "endChar": 26
+      },
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77c0a863_17636347",
         "filename": "extensions/browser/extension_registrar.cc",
         "patchSetId": 4
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "dde7bd91_152196c1",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T00:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77c0a863_17636347",
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a4bf468_1d217f10",
         "filename": "extensions/browser/extension_registrar.h",
         "patchSetId": 4
@@ -142,6 +274,24 @@
       "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9916bbe6_e9c87d52",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T00:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a4bf468_1d217f10",
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "fdd425e5_8a21da78",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T00:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d8ec2f6_a1a5e5ed",
+      "range": {
+        "startLine": 142,
+        "startChar": 22,
+        "endLine": 142,
+        "endChar": 30
+      },
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08c323b6_dbaeebfc",
         "filename": "extensions/browser/extension_registrar.h",
         "patchSetId": 4
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "b7ddd85a_cae22d65",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T00:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08c323b6_dbaeebfc",
+      "range": {
+        "startLine": 143,
+        "startChar": 9,
+        "endLine": 143,
+        "endChar": 24
+      },
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2b28927_7b31ba8f",
         "filename": "extensions/browser/extension_registrar.h",
         "patchSetId": 4
@@ -202,6 +400,30 @@
       "writtenOn": "2018-01-17T20:26:37Z",
       "side": 1,
       "message": "Impl methods are a bit annoying (though admittedly sometimes necessary because names are Hard).  Maybe here, though, something like AddExtensionToRegistry[Set]?",
+      "range": {
+        "startLine": 144,
+        "startChar": 19,
+        "endLine": 144,
+        "endChar": 23
+      },
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4384486a_631a0b3e",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T00:52:57Z",
+      "side": 1,
+      "message": "Or just \"AddNewExtension\"?",
+      "parentUuid": "e2b28927_7b31ba8f",
       "range": {
         "startLine": 144,
         "startChar": 19,
