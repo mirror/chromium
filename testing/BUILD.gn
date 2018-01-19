@@ -11,3 +11,9 @@ source_set("gmock_mutant") {
     "//base",
   ]
 }
+
+source_set("empty_main") {
+  sources = [
+    "empty_main.cc",
+  ]
+}

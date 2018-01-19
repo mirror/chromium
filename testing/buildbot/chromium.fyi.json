@@ -4170,6 +4170,11 @@
       "chrome"
     ]
   },
+  "Linux GCC": {
+    "additional_compile_targets": [
+      "empty_main"
+    ]
+  },
   "Linux Viz": {
     "additional_compile_targets": [
       "all"
