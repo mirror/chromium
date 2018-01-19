@@ -8,7 +8,9 @@
 
 #include "base/numerics/safe_conversions.h"
 #include "components/cbor/cbor_writer.h"
+#include "crypto/sha2.h"
 #include "device/ctap/ctap_constants.h"
+#include "device/u2f/u2f_apdu_command.h"
 
 namespace device {
 
@@ -26,8 +28,8 @@ CTAPGetAssertionRequestParam& CTAPGetAssertionRequestParam::operator=(
 
 CTAPGetAssertionRequestParam::~CTAPGetAssertionRequestParam() = default;
 
-base::Optional<std::vector<uint8_t>>
-CTAPGetAssertionRequestParam::SerializeToCBOR() const {
+base::Optional<std::vector<uint8_t>> CTAPGetAssertionRequestParam::Encode()
+    const {
   cbor::CBORValue::MapValue cbor_map;
   cbor_map[cbor::CBORValue(1)] = cbor::CBORValue(rp_id_);
   cbor_map[cbor::CBORValue(2)] = cbor::CBORValue(client_data_hash_);
@@ -72,6 +74,39 @@ CTAPGetAssertionRequestParam::SerializeToCBOR() const {
   cbor_request.insert(cbor_request.end(), serialized_param->begin(),
                       serialized_param->end());
   return cbor_request;
+}
+
+bool CTAPGetAssertionRequestParam::CheckU2fInteropCriteria() const {
+  if (user_verification_required_ || !allow_list_ || !allow_list_->size())
+    return false;
+  return true;
+}
+
+std::vector<uint8_t> CTAPGetAssertionRequestParam::GetU2FApplicationParameter()
+    const {
+  // The application parameter is the SHA-256 hash of the UTF-8 encoding of
+  // the application identity (i.e. relying_party_id) of the application
+  // requesting the registration.
+  std::vector<uint8_t> application_param(crypto::kSHA256Length);
+  crypto::SHA256HashString(rp_id_, application_param.data(),
+                           application_param.size());
+  return application_param;
+}
+
+std::vector<uint8_t> CTAPGetAssertionRequestParam::GetU2FChallengeParameter()
+    const {
+  return client_data_hash_;
+}
+
+std::vector<std::vector<uint8_t>>
+CTAPGetAssertionRequestParam::GetU2FRegisteredKeysParameter() const {
+  std::vector<std::vector<uint8_t>> registered_keys;
+  if (allow_list_) {
+    for (const auto& credential : *allow_list_) {
+      registered_keys.push_back(credential.id());
+    }
+  }
+  return registered_keys;
 }
 
 CTAPGetAssertionRequestParam&
