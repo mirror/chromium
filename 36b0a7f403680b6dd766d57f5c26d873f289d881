@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8cdcc6e_611e3b6c",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T00:48:20Z",
+      "side": 1,
+      "message": "You don\u0027t actually need contents_web_view_ here. That is, replace \"contents_web_view_-\u003eGetWidget()\" with GetWidget() (same comment on line 758).",
+      "range": {
+        "startLine": 754,
+        "startChar": 8,
+        "endLine": 754,
+        "endChar": 39
+      },
+      "revId": "36b0a7f403680b6dd766d57f5c26d873f289d881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9174b450_49aba678",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T00:48:20Z",
+      "side": 1,
+      "message": "Please also comment as to why this doesn\u0027t need to restore focus later on. There is other code already doing that, right?",
+      "range": {
+        "startLine": 757,
+        "startChar": 53,
+        "endLine": 757,
+        "endChar": 77
+      },
+      "revId": "36b0a7f403680b6dd766d57f5c26d873f289d881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34867ce7_f942a73e",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T00:48:20Z",
+      "side": 1,
+      "message": "Are you sure you don\u0027t want similar checks here?",
+      "range": {
+        "startLine": 761,
+        "startChar": 4,
+        "endLine": 761,
+        "endChar": 22
+      },
+      "revId": "36b0a7f403680b6dd766d57f5c26d873f289d881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14bc6ea1_4cd7a8c5",
+        "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-19T00:48:20Z",
+      "side": 1,
+      "message": "#if defined(OS_MACOSX).",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 16
+      },
+      "revId": "36b0a7f403680b6dd766d57f5c26d873f289d881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
