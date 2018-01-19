@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a6169bf_0ab7b26f",
+        "filename": "chromeos/components/tether/connect_tethering_operation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2018-01-19T19:39:36Z",
+      "side": 1,
+      "message": "I think it\u0027s fine for this to be 30 and the other one to be 120. I don\u0027t think we need timeouts quite this long.",
+      "range": {
+        "startLine": 24,
+        "startChar": 73,
+        "endLine": 24,
+        "endChar": 75
+      },
+      "revId": "0d9267eb80971f81df3719cc55ef604f50128aaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
