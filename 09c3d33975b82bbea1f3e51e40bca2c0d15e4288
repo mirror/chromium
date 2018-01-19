@@ -16,6 +16,24 @@
       "revId": "09c3d33975b82bbea1f3e51e40bca2c0d15e4288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e448a4f_fd52c50f",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2018-01-19T16:02:40Z",
+      "side": 1,
+      "message": "Hmm, the reason for doing it this way is that it does not require an API change. The API change means that we cannot back-merge it. I\u0027m not sure if this is a strong reason though.\n\nMoreover, it\u0027s not clear that we overload the abort reason here. If there is no abort reason, then there is also nothing to throw, which is exactly what is happening.",
+      "parentUuid": "50259efd_8f2c9597",
+      "revId": "09c3d33975b82bbea1f3e51e40bca2c0d15e4288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
