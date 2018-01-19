@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3beb5067_df3c7ab9",
+        "filename": "content/browser/webui/web_ui_data_source_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-19T00:28:50Z",
+      "side": 1,
+      "message": "The changes in this file seem unrelated to the remaining of the CL. Should this be split to its own CL?\n\nAlso, not particularly familiar with this file. Trying to understand if the change to utf8 here, before adding to localized_strings_ is OK. Was that converted to utf8 anyway as part of SetString() before?",
+      "revId": "f7f16cd4242ffaf3699c9834582afaea0c619600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716f253a_b4fbd0ae",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-19T00:28:50Z",
+      "side": 1,
+      "message": "Equivalent to\nthis.error_ \u003d error || \u0027\u0027;",
+      "range": {
+        "startLine": 1280,
+        "startChar": 4,
+        "endLine": 1284,
+        "endChar": 24
+      },
+      "revId": "f7f16cd4242ffaf3699c9834582afaea0c619600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
