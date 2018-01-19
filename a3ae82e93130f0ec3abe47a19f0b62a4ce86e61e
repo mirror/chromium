@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "8c663098_9a3804ae",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T13:16:54Z",
+      "side": 1,
+      "message": "nit: put this above the if defined.",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f37e12_4448f847",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T13:16:54Z",
+      "side": 1,
+      "message": "I would move all of this to OnResponseStarted. See comments in frame.mojom about making the activation bit a part of RequestNavigationParams. There are a few calls in OnResponseStarted that update the request_navigation_params_ there based on the final response URL. This would fit better there.",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ce62891_600460c2",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 3
@@ -19,6 +53,40 @@
     },
     {
       "key": {
+        "uuid": "7f04f26a_e597031a",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T13:16:54Z",
+      "side": 1,
+      "message": "What happens in the case of redirects? For example, the navigation is initially for a domain that is not same eTLD+1, but gets redirect to one that is. Should we propagate activation in this case (ie what this code is doing)?",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c17019_9474f54a",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T13:16:54Z",
+      "side": 1,
+      "message": "Renderer-initiated navigations generally don\u0027t take the OpenURL path so the name of this function is a bit misleading. I would prefer something like OpenURLBlockUntilNavigationComplete.",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50e8edea_2c7a5153",
         "filename": "content/common/frame.mojom",
         "patchSetId": 3
@@ -30,6 +98,24 @@
       "writtenOn": "2018-01-19T10:59:50Z",
       "side": 1,
       "message": "Can we create an enum for this arg? A bool param to a method that already takes so many other params can be a bit hard to understand.",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f43f653_73d88a03",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T13:16:54Z",
+      "side": 1,
+      "message": "Could we move this param to RequestNavigationParams? This is the struct that takes params initialized in the browser process that the renderer needs to commit the navigation, so it would be a good fit for this member.",
+      "parentUuid": "50e8edea_2c7a5153",
       "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
