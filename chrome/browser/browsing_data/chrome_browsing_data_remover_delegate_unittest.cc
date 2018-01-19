@@ -1799,6 +1799,20 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemovePasswordsByTimeOnly) {
       ChromeBrowsingDataRemoverDelegate::DATA_TYPE_PASSWORDS, false);
 }
 
+TEST_F(ChromeBrowsingDataRemoverDelegateTest,
+       RemovePasswordsByOlderThanSomeTime) {
+  RemovePasswordsTester tester(GetProfile());
+  base::Callback<bool(const GURL&)> filter =
+      BrowsingDataFilterBuilder::BuildNoopFilter();
+
+  EXPECT_CALL(*tester.store(),
+              RemoveLoginsByURLAndTimeImpl(ProbablySameFilter(filter), _, _))
+      .WillOnce(Return(password_manager::PasswordStoreChangeList()));
+  BlockUntilBrowsingDataRemoved(
+      base::Time(), (base::Time::Now() - base::TimeDelta::FromDays(30)),
+      ChromeBrowsingDataRemoverDelegate::DATA_TYPE_PASSWORDS, false);
+}
+
 // Disabled, since passwords are not yet marked as a filterable datatype.
 TEST_F(ChromeBrowsingDataRemoverDelegateTest,
        DISABLED_RemovePasswordsByOrigin) {
