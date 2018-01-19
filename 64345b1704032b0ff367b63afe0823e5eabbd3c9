@@ -16,6 +16,24 @@
       "revId": "64345b1704032b0ff367b63afe0823e5eabbd3c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882d9e01_c3b56e3c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/CSS2/floats-clear/clear-applies-to-008-ref.xht",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-19T11:01:39Z",
+      "side": 1,
+      "message": "Yes, it\u0027s because of kerning. I\u0027ll disable kerning instead. Done.",
+      "parentUuid": "b3c0d3a0_e6cc887d",
+      "revId": "64345b1704032b0ff367b63afe0823e5eabbd3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
