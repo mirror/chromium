@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d9a09c2_8625b196",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-19T00:45:23Z",
+      "side": 1,
+      "message": "So these changes are necessary to deal with the mock?",
+      "parentUuid": "74f82b0a_e3ccfb3f",
+      "revId": "2333bec7f1ce47ba5cc35900f88beab5863ed32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abdd9698_0c24783c",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-19T00:43:42Z",
       "side": 1,
       "message": "Why is this now necessary?",
+      "revId": "2333bec7f1ce47ba5cc35900f88beab5863ed32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733e992e_80adf043",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-19T00:45:23Z",
+      "side": 1,
+      "message": "Ah, so this prevents the creation of the second LDH?",
+      "parentUuid": "abdd9698_0c24783c",
       "revId": "2333bec7f1ce47ba5cc35900f88beab5863ed32d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
