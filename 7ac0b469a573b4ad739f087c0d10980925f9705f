@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13a49097_1f84a4cc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/feature-policy-header-policy.https.sub.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-19T19:44:41Z",
+      "side": 1,
+      "message": "We may as well call this \u0027same_origin\u0027 to be consistent.",
+      "range": {
+        "startLine": 8,
+        "startChar": 6,
+        "endLine": 8,
+        "endChar": 18
+      },
+      "revId": "7ac0b469a573b4ad739f087c0d10980925f9705f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6e5967_fcf72fa6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/feature-policy-header-policy.https.sub.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-19T19:44:41Z",
+      "side": 1,
+      "message": "I mentioned this in a comment in featurepolicy.js, but I think that I would rename these like:\nvar expected_policy \u003d [{feature: \u0027fullscreen\u0027, allowlist: [\u0027*\u0027]}, ...\n\nto be consistent with our terminology in other places.",
+      "revId": "7ac0b469a573b4ad739f087c0d10980925f9705f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e90f52_afb27239",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/feature-policy-header-policy.https.sub.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-19T19:44:41Z",
+      "side": 1,
+      "message": "nit: \"cross\"",
+      "range": {
+        "startLine": 59,
+        "startChar": 31,
+        "endLine": 59,
+        "endChar": 36
+      },
+      "revId": "7ac0b469a573b4ad739f087c0d10980925f9705f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80418b8d_8eeef514",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/feature-policy-nested-header-policy.https.sub.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-19T19:44:41Z",
+      "side": 1,
+      "message": "Nit: \"cross\"",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 9
+      },
+      "revId": "7ac0b469a573b4ad739f087c0d10980925f9705f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d9f237f_d9382736",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/feature-policy-nested-header-policy.https.sub.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-19T19:44:41Z",
+      "side": 1,
+      "message": "maybe \"is disabled by the first layer subframe\"",
+      "revId": "7ac0b469a573b4ad739f087c0d10980925f9705f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7531025c_68d16421",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-19T19:44:41Z",
+      "side": 1,
+      "message": "It\u0027s hard to parse this, when \u0027allowlist\u0027 is used to name\n - the whole list\n - each element of the list\n - and one of the members of those elements.\nCan we rename one of them?\n\nPerhaps the first argument should be called \"expected_policy\"\n\nAlso, the elements of the list aren\u0027t actually pairs, they seem to be JS objects with keys \"feature\" and \"whitelist\"; we should document that (and probably change the name whitelist)",
+      "revId": "7ac0b469a573b4ad739f087c0d10980925f9705f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
