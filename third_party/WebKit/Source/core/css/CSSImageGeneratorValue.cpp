@@ -37,28 +37,48 @@ using cssvalue::ToCSSConicGradientValue;
 using cssvalue::ToCSSLinearGradientValue;
 using cssvalue::ToCSSRadialGradientValue;
 
-Image* GeneratedImageCache::GetImage(const LayoutSize& size) const {
+Image* GeneratedImageCache::GetImage(const FloatSize& size) const {
   if (size.IsEmpty())
     return nullptr;
-  return images_.at(size);
+
+  DCHECK(sizes_.find(size) != sizes_.end());
+  GeneratedImageMap::const_iterator image_iter = images_.find(size);
+  if (image_iter == images_.end())
+    return nullptr;
+  return image_iter->second.get();
 }
 
-void GeneratedImageCache::PutImage(const LayoutSize& size,
+void GeneratedImageCache::PutImage(const FloatSize& size,
                                    scoped_refptr<Image> image) {
-  images_.insert(size, std::move(image));
+  images_.insert(
+      std::pair<FloatSize, scoped_refptr<Image>>(size, std::move(image)));
 }
 
-void GeneratedImageCache::AddSize(const LayoutSize& size) {
+void GeneratedImageCache::AddSize(const FloatSize& size) {
   if (size.IsEmpty())
     return;
-  sizes_.insert(size);
+
+  ImageSizeCountMap::iterator size_entry = sizes_.find(size);
+  if (size_entry == sizes_.end())
+    sizes_.insert(std::pair<FloatSize, unsigned>(size, 1));
+  else
+    sizes_[size]++;
 }
 
-void GeneratedImageCache::RemoveSize(const LayoutSize& size) {
+void GeneratedImageCache::RemoveSize(const FloatSize& size) {
   if (size.IsEmpty())
     return;
-  if (sizes_.erase(size))
-    images_.erase(size);
+
+  DCHECK(sizes_.find(size) != sizes_.end());
+  if (sizes_.find(size) != sizes_.end()) {
+    unsigned& count = sizes_[size];
+    count--;
+    if (count == 0) {
+      DCHECK(images_.find(size) != images_.end());
+      sizes_.erase(sizes_.find(size));
+      images_.erase(images_.find(size));
+    }
+  }
 }
 
 CSSImageGeneratorValue::CSSImageGeneratorValue(ClassType class_type)
@@ -102,7 +122,7 @@ void CSSImageGeneratorValue::RemoveClient(const ImageResourceObserver* client) {
 }
 
 Image* CSSImageGeneratorValue::GetImage(const ImageResourceObserver* client,
-                                        const LayoutSize& size) {
+                                        const FloatSize& size) {
   ClientSizeCountMap::iterator it = clients_.find(client);
   if (it != clients_.end()) {
     DCHECK(keep_alive_);
@@ -119,7 +139,7 @@ Image* CSSImageGeneratorValue::GetImage(const ImageResourceObserver* client,
   return cached_images_.GetImage(size);
 }
 
-void CSSImageGeneratorValue::PutImage(const LayoutSize& size,
+void CSSImageGeneratorValue::PutImage(const FloatSize& size,
                                       scoped_refptr<Image> image) {
   cached_images_.PutImage(size, std::move(image));
 }
@@ -128,23 +148,23 @@ scoped_refptr<Image> CSSImageGeneratorValue::GetImage(
     const ImageResourceObserver& client,
     const Document& document,
     const ComputedStyle& style,
-    const LayoutSize& container_size) {
+    const FloatSize& target_size) {
   switch (GetClassType()) {
     case kCrossfadeClass:
       return ToCSSCrossfadeValue(this)->GetImage(client, document, style,
-                                                 container_size);
+                                                 target_size);
     case kLinearGradientClass:
       return ToCSSLinearGradientValue(this)->GetImage(client, document, style,
-                                                      container_size);
+                                                      target_size);
     case kPaintClass:
       return ToCSSPaintValue(this)->GetImage(client, document, style,
-                                             container_size);
+                                             target_size);
     case kRadialGradientClass:
       return ToCSSRadialGradientValue(this)->GetImage(client, document, style,
-                                                      container_size);
+                                                      target_size);
     case kConicGradientClass:
       return ToCSSConicGradientValue(this)->GetImage(client, document, style,
-                                                     container_size);
+                                                     target_size);
     default:
       NOTREACHED();
   }
