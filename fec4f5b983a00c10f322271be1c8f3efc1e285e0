@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "798dd874_9eeb2441",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/CompilerScriptMapping.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2018-01-19T19:36:39Z",
+      "side": 1,
+      "message": "can we remove it?",
+      "revId": "fec4f5b983a00c10f322271be1c8f3efc1e285e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8098cc5b_260f36b9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/NetworkProject.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2018-01-19T19:36:39Z",
+      "side": 1,
+      "message": "please add a type annotation",
+      "revId": "fec4f5b983a00c10f322271be1c8f3efc1e285e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
