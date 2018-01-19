@@ -16,6 +16,24 @@
       "revId": "592b53d683c78c83ae6e30aa3fe431943d21962e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06159779_b72fc8ce",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-19T00:37:24Z",
+      "side": 1,
+      "message": "Yeah, I found this plumbing kinda awkward too. We used to create skia objects lazily but had to switch to creating at paint object construction time to avoid weird race conditions (crbug.com/771156).",
+      "parentUuid": "55a22652_19393eb0",
+      "revId": "592b53d683c78c83ae6e30aa3fe431943d21962e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
