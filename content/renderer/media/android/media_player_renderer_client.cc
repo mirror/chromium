@@ -22,7 +22,9 @@ MediaPlayerRendererClient::MediaPlayerRendererClient(
       compositor_task_runner_(std::move(compositor_task_runner)),
       weak_factory_(this) {}
 
-MediaPlayerRendererClient::~MediaPlayerRendererClient() {}
+MediaPlayerRendererClient::~MediaPlayerRendererClient() {
+  stream_texture_wrapper_->ClearReceivedFrameCBOnAnyThread();
+}
 
 void MediaPlayerRendererClient::Initialize(
     media::MediaResource* media_resource,
