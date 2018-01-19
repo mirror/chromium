@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "439127b6_a3a3282e",
+        "filename": "chrome/browser/ui/views/page_info/chosen_object_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T05:25:58Z",
+      "side": 1,
+      "message": "update this :)?",
+      "revId": "17fbb49240d2b6ad38cae37cbf95c72eca59c35c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf887c8e_e05250bc",
+        "filename": "chrome/browser/ui/views/page_info/chosen_object_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T05:25:58Z",
+      "side": 1,
+      "message": "why half? (comment?) it\u0027s unclear whether it\u0027s coincidence that this gives a good result, when really it should be a new metric. E.g. \n // This padding is added to both the top and the bottom of each chosen object row, so use half.",
+      "revId": "17fbb49240d2b6ad38cae37cbf95c72eca59c35c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
