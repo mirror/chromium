@@ -22,6 +22,53 @@
       "revId": "d4534da53c7153078d9ec070067fc4970b1443ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83d502e_74b9e9ab",
+        "filename": "base/component_export.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-19T23:56:56Z",
+      "side": 1,
+      "message": "FWIW, export_template.h has to do something similar… but I think I\u0027d prefer that we not make these easier to reuse until there\u0027s a need.",
+      "parentUuid": "abf73374_dac58ba8",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 68
+      },
+      "revId": "d4534da53c7153078d9ec070067fc4970b1443ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05762cc0_834fb01d",
+        "filename": "base/component_export.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-19T23:56:56Z",
+      "side": 1,
+      "message": "conjunction",
+      "range": {
+        "startLine": 71,
+        "startChar": 56,
+        "endLine": 71,
+        "endChar": 68
+      },
+      "revId": "d4534da53c7153078d9ec070067fc4970b1443ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
