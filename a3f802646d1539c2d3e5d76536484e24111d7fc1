@@ -257,6 +257,24 @@
       "revId": "a3f802646d1539c2d3e5d76536484e24111d7fc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ec727d_21fa23f3",
+        "filename": "chromeos/dbus/services/chrome_features_service_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T21:46:04Z",
+      "side": 1,
+      "message": "okay. seems easy enough to have that discussion later if a second feature needs to be exposed.",
+      "parentUuid": "66d630f8_4b523b2b",
+      "revId": "a3f802646d1539c2d3e5d76536484e24111d7fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
