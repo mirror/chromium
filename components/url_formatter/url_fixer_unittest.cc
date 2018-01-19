@@ -277,9 +277,12 @@ struct FixupCase {
   // a clean way to guess this isn't the new-and-exciting "user" scheme.
   {"user:passwd@www.google.com:8080/", "user:passwd@www.google.com:8080/"},
   // {"file:///c:/foo/bar%20baz.txt", "file:///C:/foo/bar%20baz.txt"},
-  {"ftp.google.com", "ftp://ftp.google.com/"},
-  {"    ftp.google.com", "ftp://ftp.google.com/"},
-  {"FTP.GooGle.com", "ftp://ftp.google.com/"},
+  // Text starting with "ftp." used to default to ftp:// but ftp support is
+  // deprecated so we no longer apply this as a special case. These inputs are
+  // now fixed up with http just like similar inputs.
+  {"ftp.google.com", "http://ftp.google.com/"},
+  {"    ftp.google.com", "http://ftp.google.com/"},
+  {"FTP.GooGle.com", "http://ftp.google.com/"},
   {"ftpblah.google.com", "http://ftpblah.google.com/"},
   {"ftp", "http://ftp/"},
   {"google.ftp.com", "http://google.ftp.com/"},
