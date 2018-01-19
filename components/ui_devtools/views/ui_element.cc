@@ -26,6 +26,8 @@ UIElement::~UIElement() {
 
 std::string UIElement::GetTypeName() const {
   switch (type_) {
+    case UIElementType::ROOT:
+      return "Root";
     case UIElementType::WINDOW:
       return "Window";
     case UIElementType::WIDGET:
