@@ -46,6 +46,30 @@
       "revId": "c91b329575bddd387433859a13785bb9e1a36495",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670fedba_f72a0342",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-19T03:48:38Z",
+      "side": 1,
+      "message": "Ah, I see, thanks! I got somehow confused. I thought all GetBindingCount() was asynchronous.\n\nHow about moving the comment at L.82 to L.78 and L.96 to L.92, and then adding a short comment like \"// The Mojo connection kept by |info| should be released.\" before EXPECT_EQ at L.100?",
+      "parentUuid": "544c36f9_7f5e62c8",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 35
+      },
+      "revId": "c91b329575bddd387433859a13785bb9e1a36495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
