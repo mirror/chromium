@@ -70,6 +70,24 @@
       "revId": "592b53d683c78c83ae6e30aa3fe431943d21962e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9feb2c98_cea4ffa3",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-19T03:04:32Z",
+      "side": 1,
+      "message": "I can may be just restrict the setting to ScopedRasterFlags and have it call CreateSkShader based on it?",
+      "parentUuid": "5ec93242_a452755f",
+      "revId": "592b53d683c78c83ae6e30aa3fe431943d21962e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
