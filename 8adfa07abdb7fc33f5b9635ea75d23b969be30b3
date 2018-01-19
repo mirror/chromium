@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75b47586_5421159e",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b2c060c_919aac7f",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "661616fb_74751462",
         "filename": "content/network/proxy_config_service_mojo.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2115046_b90db4bd",
+        "filename": "content/network/proxy_config_service_mojo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Strange artefact of merge conflict resolution.  Removed.",
+      "parentUuid": "661616fb_74751462",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2f3bcbf7_9439f8da",
+        "filename": "content/network/proxy_config_service_mojo_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd756e5e_1c1fd7ab",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58f20cb9_4c91339d",
         "filename": "content/public/common/proxy_config.typemap",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb41f3c_f28739a7",
+        "filename": "content/public/common/proxy_config.typemap",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58f20cb9_4c91339d",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c114f96b_2e7c15a3",
+        "filename": "content/public/common/proxy_config_traits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edefc5a7_7560d0fa",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a8fa12f_e9546e61",
         "filename": "content/public/common/proxy_config_traits_unittest.cc",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0e72e3_20c2675e",
+        "filename": "content/public/common/proxy_config_traits_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a8fa12f_e9546e61",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "79191c10_81cbf8e0",
+        "filename": "net/proxy_resolution/proxy_config.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "git cl upload is mostly just warning about banned functions and other errors that existed in the renamed files before I renamed them.\n\nI thought that maybe there were some header warnings buried in there somewhere, but taking a closer look, the only thing is a comment about running cl format (which I\u0027m cautious of doing for the sake of not introducing spurious changes).",
+      "parentUuid": "860917df_4d2bf183",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffd01c66_3cb72a24",
         "filename": "net/proxy_resolution/proxy_config_service_linux.cc",
         "patchSetId": 11
@@ -135,6 +261,24 @@
       "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "312d07db_bd2b882e",
+        "filename": "net/proxy_resolution/proxy_config_service_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffd01c66_3cb72a24",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "f19dda7a_c73e2dd4",
+        "filename": "net/proxy_resolution/proxy_config_service_mac.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab3042ea_4ed91cb7",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8173937_aeaae80a",
         "filename": "net/proxy_resolution/proxy_info.h",
         "patchSetId": 11
@@ -169,6 +331,24 @@
       "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d050c30d_eae9ecad",
+        "filename": "net/proxy_resolution/proxy_info.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8173937_aeaae80a",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "605e53c7_01946ae6",
+        "filename": "net/proxy_resolution/proxy_list.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be1ac0b3_26b31dd7",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4feba5bd_0e05b16e",
         "filename": "net/proxy_resolution/proxy_list_unittest.cc",
         "patchSetId": 11
@@ -203,6 +401,24 @@
       "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6bb03f_9cd5132b",
+        "filename": "net/proxy_resolution/proxy_list_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4feba5bd_0e05b16e",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "d00a1139_9545c820",
+        "filename": "net/proxy_resolution/proxy_resolver_mac.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d37e4f5_3b383b6f",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cba69b2_4e22b861",
         "filename": "net/proxy_resolution/proxy_service.h",
         "patchSetId": 11
@@ -237,6 +471,24 @@
       "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d145f2_ed9ef39f",
+        "filename": "net/proxy_resolution/proxy_service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cba69b2_4e22b861",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "d9d756d8_542c8c73",
+        "filename": "net/proxy_resolution/proxy_service_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73eaf461_327ba13c",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cba6372c_9451e80c",
         "filename": "net/url_request/url_request_unittest.cc",
         "patchSetId": 11
@@ -271,6 +541,24 @@
       "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b1e8d5_3ea9360d",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-19T16:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cba6372c_9451e80c",
+      "revId": "8adfa07abdb7fc33f5b9635ea75d23b969be30b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
