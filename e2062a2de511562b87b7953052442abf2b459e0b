@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d14b944f_179b9b06",
+        "filename": "device/bluetooth/bluetooth_adapter_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-19T18:08:50Z",
+      "side": 1,
+      "message": "Would it make sense to move this portion of the logic into the superclass?",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 3
+      },
+      "revId": "e2062a2de511562b87b7953052442abf2b459e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c1a7b1_80a80d91",
+        "filename": "device/bluetooth/bluetooth_adapter_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-19T18:08:50Z",
+      "side": 1,
+      "message": "Is there a race condition here?  i.e., could OnAdapterStateChanged be called during this callback?",
+      "revId": "e2062a2de511562b87b7953052442abf2b459e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921e4a14_359e0bb1",
+        "filename": "device/bluetooth/test/bluetooth_test_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-19T18:08:50Z",
+      "side": 1,
+      "message": "Is this newly needed?  If so, I\u0027m missing the reason.",
+      "revId": "e2062a2de511562b87b7953052442abf2b459e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
