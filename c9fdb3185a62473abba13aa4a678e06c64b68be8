@@ -1,0 +1,602 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fcf2c8b_a318d081",
+        "filename": "ash/system/power/power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "this comment says \"if |show_power_button_menu_| is true and the device is in tablet mode\", but the if condition checks !show_power_button_menu_ || ...Enabled(). am i misunderstanding this?",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5afb40ae_cf326861",
+        "filename": "ash/system/power/power_button_menu_item_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "can you forward-declare gfx::VectorIcon?",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a189ca39_a40c5647",
+        "filename": "ash/system/power/power_button_menu_item_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "please #include \"base/strings/string16.h\"",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81bd5a3e_c50e3f1c",
+        "filename": "ash/system/power/power_button_menu_screen_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: we usually use colons in TODOs, e.g. // TODO(minch): Get the menu bounds ...",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c33aefc_28516e72",
+        "filename": "ash/system/power/power_button_menu_screen_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nice comment -- thanks!",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa99918d_3aa590e3",
+        "filename": "ash/system/power/power_button_menu_screen_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: move accessor up so it appears after d\u0027tor",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ab230c_d195ea43",
+        "filename": "ash/system/power/power_button_menu_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: rounding",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92cff9d0_659e6820",
+        "filename": "ash/system/power/power_button_menu_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "can anything else be the sender, or just these two buttons? consider using a switch statement with NOTREACHED(), e.g.\n\n  switch (sender) {\n    case power_off_item_:\n      ...\n      break;\n\n    case sign_out_item_:\n      ...\n      break;\n\n    default:\n      NOTREACHED() \u003c\u003c \"Unknown button press sender \" \u003c\u003c sender;\n  }",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e10e2f24_e3a2b27b",
+        "filename": "ash/system/power/power_button_menu_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: move accessor up after d\u0027tor",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a7d2a3_2a10120c",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: don\u0027t need .get() when testing unique_ptr",
+      "range": {
+        "startLine": 179,
+        "startChar": 27,
+        "endLine": 179,
+        "endChar": 33
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "792bc84f_a24e8200",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "this doesn\u0027t look like it needs to be an instance method. please make it be a function in the anon namespace instead.",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c633021_743ee5a9",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: auto widget \u003d std::make_unique\u003cviews::Widget\u003e();\n\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Prefer-MakeUnique-to-WrapUnique\n\n(note that it\u0027s outdated and we use std::make_unique now)",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b69289_23f091e3",
+        "filename": "ash/system/power/tablet_power_button_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: please reorder the methods in the public section so that overrides come last:\n\n  c\u0027tor\n  d\u0027tor\n\n  OnPowerButtonEvent\n  IsMenuOpened\n  DismissMenu\n  CancelTabletPowerButton\n\n  // BacklightsForcedOffSetter::Observer:\n  etc.",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fcf0166_25facf0b",
+        "filename": "ash/system/power/tablet_power_button_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: CreateMenuWidget? this seems a bit unspecific otherwise.",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a1157b_6642cccb",
+        "filename": "ash/system/power/tablet_power_button_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: menu_widget_",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81236f4c_af67bcb9",
+        "filename": "ash/system/power/tablet_power_button_controller_test_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "when is controller_ null? none of the other methods check it.",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45eb6f35_cf8968a0",
+        "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "what does HasSignOut mean? please add comments to these methods and consider renaming this to something like MenuHasSignOutItem.",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0819fe22_2524940c",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "what\u0027s the specific delay that you need to advance beyond here? please make this call use the corresponding constant instead of a magic 3000 number.",
+      "range": {
+        "startLine": 698,
+        "startChar": 25,
+        "endLine": 698,
+        "endChar": 64
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4324ca_7da72c7a",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: s/make/turn/",
+      "range": {
+        "startLine": 708,
+        "startChar": 49,
+        "endLine": 708,
+        "endChar": 53
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67a4039_0f146daa",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "you don\u0027t need to check that it\u0027s running before triggering it, do you? just do this:\n\n  ASSERT_TRUE(tablet_test_api_-\u003eTriggerPowerButtonMenuTimeout());",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d81609_869748cf",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "why would this be null? the rest of the code seems to assume that it\u0027s there.",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4149e159_b71d1efb",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "ASSERT_TRUE (since the rest of the test doesn\u0027t make sense if this fails)",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5a7c2d_4c83032d",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: \"not logged in\"",
+      "range": {
+        "startLine": 745,
+        "startChar": 33,
+        "endLine": 745,
+        "endChar": 42
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674abbb5_c699a66d",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "ASSERT_TRUE (since the rest of the test doesn\u0027t make sense if this fails)",
+      "range": {
+        "startLine": 749,
+        "startChar": 2,
+        "endLine": 749,
+        "endChar": 13
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b082181_8f358529",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "ASSERT_TRUE",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e19b5fc_01b0a87a",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: add a blank line after this one",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9d4ecf_cb9166cd",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "since you do this multiple times in this file, how about putting it into a helper method to reduce code duplication?\n\n  void OpenPowerButtonMenu() {\n    PressPowerButton();\n    ASSERT_TRUE(tablet_test_api_-\u003eTriggerPowerButtonMenuTimeout());\n    ReleasePowerButton();\n    ASSERT_TRUE(tablet_test_api_-\u003eIsMenuOpened());\n  }",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe62725_9c4fb89a",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "same here; please add a DismissPowerButtonMenu method for this",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c4c731_1ee49a27",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: logged in",
+      "range": {
+        "startLine": 773,
+        "startChar": 42,
+        "endLine": 773,
+        "endChar": 47
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3dc16e9_ae481ac3",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "was this in the mocks? the behavior of redisplaying the menu when the button is held again while the menu is already visible seems a bit surprising to me.",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6647db89_3d136ff9",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: Tests that we do not show ...",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15eebd94_4e04570f",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-19T22:37:02Z",
+      "side": 1,
+      "message": "nit: s/is/are/ (since \"backlights\" is plural)",
+      "range": {
+        "startLine": 852,
+        "startChar": 49,
+        "endLine": 852,
+        "endChar": 51
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
