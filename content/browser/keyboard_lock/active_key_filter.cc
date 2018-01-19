@@ -6,21 +6,19 @@
 
 #include "content/public/browser/native_web_keyboard_event.h"
 #include "content/public/browser/render_widget_host.h"
-#include "content/public/browser/render_widget_host_view.h"
 #include "ui/events/event.h"
 #include "ui/events/platform/key_event_filter.h"
 
 namespace content {
 
-ActiveKeyFilter::ActiveKeyFilter(RenderWidgetHostView* host_view)
-    : host_view_(host_view) {}
+ActiveKeyFilter::ActiveKeyFilter(RenderWidgetHost* host) : host_(host) {}
 
 ActiveKeyFilter::~ActiveKeyFilter() = default;
 
 bool ActiveKeyFilter::OnKeyEvent(const ui::KeyEvent& event) {
   content::NativeWebKeyboardEvent web_event(event);
   web_event.skip_in_browser = true;
-  host_view_->GetRenderWidgetHost()->ForwardKeyboardEvent(web_event);
+  host_->ForwardKeyboardEvent(web_event);
   return true;
 }
 

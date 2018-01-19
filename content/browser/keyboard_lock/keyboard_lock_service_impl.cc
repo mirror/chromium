@@ -20,8 +20,8 @@ namespace content {
 
 KeyboardLockServiceImpl::KeyboardLockServiceImpl(
     RenderFrameHost* render_frame_host)
-    : web_contents_(WebContents::FromRenderFrameHost(render_frame_host)) {
-  DCHECK(web_contents_);
+    : render_frame_host_(render_frame_host) {
+  DCHECK(render_frame_host_);
 }
 
 KeyboardLockServiceImpl::~KeyboardLockServiceImpl() = default;
@@ -39,9 +39,9 @@ void KeyboardLockServiceImpl::RequestKeyboardLock(
     const std::vector<std::string>& key_codes,
     RequestKeyboardLockCallback callback) {
   // RenderWidgetHostView may change over time so don't store it.
-  RenderWidgetHostView* host_view = web_contents_->GetRenderWidgetHostView();
-  if (host_view) {
-    host_view->ReserveKeys(
+  RenderWidgetHostView* render_widget_host_view = render_frame_host_->GetView();
+  if (render_widget_host_view) {
+    render_widget_host_view->ReserveKeys(
         key_codes, base::BindOnce(
                        [](RequestKeyboardLockCallback&& callback, bool result) {
                          std::move(callback).Run(
@@ -49,15 +49,16 @@ void KeyboardLockServiceImpl::RequestKeyboardLock(
                        },
                        base::Passed(std::move(callback))));
   } else {
+    // TODO(joedow): Return an error here.
     std::move(callback).Run(blink::mojom::KeyboardLockRequestResult::SUCCESS);
   }
 }
 
 void KeyboardLockServiceImpl::CancelKeyboardLock() {
   // RenderWidgetHostView may change over time so don't store it.
-  RenderWidgetHostView* host_view = web_contents_->GetRenderWidgetHostView();
-  if (host_view) {
-    host_view->ClearReservedKeys();
+  RenderWidgetHostView* render_widget_host_view = render_frame_host_->GetView();
+  if (render_widget_host_view) {
+    render_widget_host_view->ClearReservedKeys();
   }
 }
 

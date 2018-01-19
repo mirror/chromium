@@ -33,7 +33,7 @@ class CONTENT_EXPORT KeyboardLockServiceImpl
   void CancelKeyboardLock() override;
 
  private:
-  WebContents* const web_contents_;
+  RenderFrameHost* const render_frame_host_;
 };
 
 }  // namespace content
