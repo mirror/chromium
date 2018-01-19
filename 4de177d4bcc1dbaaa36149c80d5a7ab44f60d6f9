@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b07915e6_8f2aad18",
+        "filename": "base/component_export.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-19T22:47:46Z",
+      "side": 1,
+      "message": "We could do that if this were only used by the public API for users wanting an #if block, but note that it\u0027s also used by the conditional thing above. And in that context (i.e. not an #if), this doesn\u0027t fly. Seems unnecessary to define two separate things in this case. WDYT?",
+      "parentUuid": "4d6ac8f4_0e4b51cd",
+      "range": {
+        "startLine": 28,
+        "startChar": 1,
+        "endLine": 29,
+        "endChar": 46
+      },
+      "revId": "4de177d4bcc1dbaaa36149c80d5a7ab44f60d6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db940e0e_b5600bfa",
         "filename": "base/component_export.h",
         "patchSetId": 1
