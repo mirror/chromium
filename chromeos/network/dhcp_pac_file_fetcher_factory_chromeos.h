@@ -2,19 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROMEOS_NETWORK_DHCP_PROXY_SCRIPT_FETCHER_FACTORY_CHROMEOS_H_
-#define CHROMEOS_NETWORK_DHCP_PROXY_SCRIPT_FETCHER_FACTORY_CHROMEOS_H_
+#ifndef CHROMEOS_NETWORK_DHCP_PAC_FILE_FETCHER_FACTORY_CHROMEOS_H_
+#define CHROMEOS_NETWORK_DHCP_PAC_FILE_FETCHER_FACTORY_CHROMEOS_H_
 
 #include <memory>
 
 #include "base/macros.h"
 #include "chromeos/chromeos_export.h"
-#include "net/proxy/dhcp_proxy_script_fetcher_factory.h"
+#include "net/proxy/dhcp_pac_file_fetcher_factory.h"
 
 namespace net {
 class DhcpProxyScriptFetcher;
 class URLRequestContext;
-}
+}  // namespace net
 
 namespace chromeos {
 
@@ -37,4 +37,4 @@ class CHROMEOS_EXPORT DhcpProxyScriptFetcherFactoryChromeos
 
 }  // namespace chromeos
 
-#endif  // CHROMEOS_NETWORK_DHCP_PROXY_SCRIPT_FETCHER_FACTORY_CHROMEOS_H_
+#endif  // CHROMEOS_NETWORK_DHCP_PAC_FILE_FETCHER_FACTORY_CHROMEOS_H_
