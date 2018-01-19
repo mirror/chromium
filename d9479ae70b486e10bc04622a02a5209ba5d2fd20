@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "6842d6a0_31a8ead2",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 1643,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T14:29:33Z",
+      "side": 1,
+      "message": "To lessen the issue of code duplication, we could also make a DidCommitNavigationInternal that both DidCommitSameDocumentNavigation and DidCommitProvisionalLoad would call. Basically we just move the DidCommitProvisionalLoad code to another function that is called by both methods, with a is_same_document parameter.",
+      "revId": "d9479ae70b486e10bc04622a02a5209ba5d2fd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd508684_4dc3c876",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 4532,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T14:29:33Z",
+      "side": 1,
+      "message": "Ok looking at it some more, I\u0027m wondering if UpdateStateForCommit shouldn\u0027t take a boolean is_same_document parameter, and encompass all the state update we actually do. This way we get\nRenderFrameImpl::DidNavigateWithinPage {\n// Tracing code\nUpdateStateForCommit(..., true /* same_document */);\nGetFrameHost()-\u003eDidCommitSameDocumentNavigation(\n    MakeDidCommitProvisionalLoadParams(commit_type));\n}\n\nAnd\nRenderFrameImpl::DidCommitProvisionalLoad {\n// Tracing code\nUpdateStateForCommit(..., false /* same_document */);\nGetFrameHost()-\u003eDidCommitProvisionalLoad(\n    MakeDidCommitProvisionalLoadParams(commit_type));\n}\n\nThis way we have as little code duplication as possible.",
+      "revId": "d9479ae70b486e10bc04622a02a5209ba5d2fd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fb4b64c_f5b80e01",
         "filename": "content/test/test_render_frame_host.cc",
         "patchSetId": 54
