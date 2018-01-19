@@ -14,6 +14,9 @@
 #include "content/child/dwrite_font_proxy/dwrite_font_proxy_win.h"
 #include "content/child/dwrite_font_proxy/font_fallback_win.h"
 #include "content/child/font_warmup_win.h"
+#include "content/public/child/child_thread.h"
+#include "content/public/common/service_names.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "skia/ext/fontmgr_default_win.h"
 #include "third_party/WebKit/public/web/win/WebFontRendering.h"
 #include "third_party/skia/include/ports/SkFontMgr.h"
@@ -44,11 +47,6 @@ void CreateDirectWriteFactory(IDWriteFactory** factory) {
 
 }  // namespace
 
-void UpdateDWriteFontProxySender(mojom::DWriteFontProxyPtrInfo proxy) {
-  if (g_font_collection)
-    g_font_collection->SetProxy(std::move(proxy));
-}
-
 void InitializeDWriteFontProxy() {
   mswr::ComPtr<IDWriteFactory> factory;
 
@@ -58,6 +56,20 @@ void InitializeDWriteFontProxy() {
     mojom::DWriteFontProxyPtrInfo dwrite_font_proxy;
     if (g_connection_callback_override) {
       dwrite_font_proxy = g_connection_callback_override->Run();
+    } else if (ChildThread::Get()) {
+      ChildThread::Get()->GetConnector()->BindInterface(
+          mojom::kBrowserServiceName, mojo::MakeRequest(&dwrite_font_proxy));
+    } else {
+      // If the ChildThread has not yet been created, it will be created by the
+      // time the MessageLoop starts processing tasks, so defer forwarding the
+      // requet to the connector until then.
+      base::ThreadTaskRunnerHandle::Get()->PostTask(
+          FROM_HERE, base::BindOnce(
+                         [](mojom::DWriteFontProxyRequest request) {
+                           ChildThread::Get()->GetConnector()->BindInterface(
+                               mojom::kBrowserServiceName, std::move(request));
+                         },
+                         mojo::MakeRequest(&dwrite_font_proxy)));
     }
     DWriteFontCollectionProxy::Create(&g_font_collection, factory.Get(),
                                       std::move(dwrite_font_proxy));
