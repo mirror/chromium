@@ -28,6 +28,7 @@
 #include "core/fullscreen/Fullscreen.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutBlock.h"
+#include "core/layout/LayoutBoxContainer.h"
 #include "core/layout/LayoutFullScreen.h"
 #include "core/layout/LayoutGeometryMap.h"
 #include "core/layout/LayoutTheme.h"
@@ -236,8 +237,10 @@ void LayoutInline::StyleDidChange(StyleDifference diff,
       // for our children is our existing containingBlock.
       abs_containing_block = ContainingBlock();
     }
-    if (abs_containing_block)
-      abs_containing_block->RemovePositionedObjects(this, kNewContainingBlock);
+    if (abs_containing_block) {
+      abs_containing_block->RemovePositionedObjects(
+          this, LayoutBoxContainer::kNewContainer);
+    }
   }
 
   PropagateStyleToAnonymousChildren();

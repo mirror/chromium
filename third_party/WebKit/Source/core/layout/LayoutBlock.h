@@ -27,6 +27,7 @@
 #include <memory>
 #include "core/CoreExport.h"
 #include "core/layout/LayoutBox.h"
+#include "core/layout/LayoutBoxContainer.h"
 #include "platform/wtf/ListHashSet.h"
 
 namespace blink {
@@ -35,14 +36,7 @@ struct PaintInfo;
 class LineLayoutBox;
 class WordMeasurement;
 
-typedef WTF::ListHashSet<LayoutBox*, 16> TrackedLayoutBoxListHashSet;
-typedef WTF::HashMap<const LayoutBlock*,
-                     std::unique_ptr<TrackedLayoutBoxListHashSet>>
-    TrackedDescendantsMap;
-typedef WTF::HashMap<const LayoutBox*, LayoutBlock*> TrackedContainerMap;
 typedef Vector<WordMeasurement, 64> WordMeasurements;
-
-enum ContainingBlockState { kNewContainingBlock, kSameContainingBlock };
 
 // LayoutBlock is the class that is used by any LayoutObject
 // that is a containing block.
@@ -101,7 +95,7 @@ enum ContainingBlockState { kNewContainingBlock, kSameContainingBlock };
 //     // Handle out-of-flow positioned objects.
 //     ...
 // }
-class CORE_EXPORT LayoutBlock : public LayoutBox {
+class CORE_EXPORT LayoutBlock : public LayoutBox, public LayoutBoxContainer {
  protected:
   explicit LayoutBlock(ContainerNode*);
   ~LayoutBlock() override;
@@ -156,40 +150,6 @@ class CORE_EXPORT LayoutBlock : public LayoutBox {
                 LayoutObject* before_child = nullptr) override;
 
   virtual void UpdateBlockLayout(bool relayout_children);
-
-  void InsertPositionedObject(LayoutBox*);
-  static void RemovePositionedObject(LayoutBox*);
-  void RemovePositionedObjects(LayoutObject*,
-                               ContainingBlockState = kSameContainingBlock);
-
-  TrackedLayoutBoxListHashSet* PositionedObjects() const {
-    return HasPositionedObjects() ? PositionedObjectsInternal() : nullptr;
-  }
-  bool HasPositionedObjects() const {
-    DCHECK(has_positioned_objects_ ? (PositionedObjectsInternal() &&
-                                      !PositionedObjectsInternal()->IsEmpty())
-                                   : !PositionedObjectsInternal());
-    return has_positioned_objects_;
-  }
-
-  void AddPercentHeightDescendant(LayoutBox*);
-  void RemovePercentHeightDescendant(LayoutBox*);
-  bool HasPercentHeightDescendant(LayoutBox* o) const {
-    return HasPercentHeightDescendants() &&
-           PercentHeightDescendantsInternal()->Contains(o);
-  }
-
-  TrackedLayoutBoxListHashSet* PercentHeightDescendants() const {
-    return HasPercentHeightDescendants() ? PercentHeightDescendantsInternal()
-                                         : nullptr;
-  }
-  bool HasPercentHeightDescendants() const {
-    DCHECK(has_percent_height_descendants_
-               ? (PercentHeightDescendantsInternal() &&
-                  !PercentHeightDescendantsInternal()->IsEmpty())
-               : !PercentHeightDescendantsInternal());
-    return has_percent_height_descendants_;
-  }
 
   void NotifyScrollbarThicknessChanged() {
     width_available_to_children_changed_ = true;
@@ -307,10 +267,6 @@ class CORE_EXPORT LayoutBlock : public LayoutBox {
                                                 LayoutUnit position) const;
   virtual LayoutUnit LogicalRightSelectionOffset(const LayoutBlock* root_block,
                                                  LayoutUnit position) const;
-
-#if DCHECK_IS_ON()
-  void CheckPositionedObjectsNeedLayout();
-#endif
 
   LayoutUnit AvailableLogicalHeightForPercentageComputation() const;
   bool HasDefiniteLogicalHeight() const;
@@ -461,9 +417,6 @@ class CORE_EXPORT LayoutBlock : public LayoutBox {
 
   virtual void RemoveLeftoverAnonymousBlock(LayoutBlock* child);
 
-  TrackedLayoutBoxListHashSet* PositionedObjectsInternal() const;
-  TrackedLayoutBoxListHashSet* PercentHeightDescendantsInternal() const;
-
   // Returns true if the positioned movement-only layout succeeded.
   bool TryLayoutDoingPositionedMovementOnly();
 
@@ -539,8 +492,6 @@ class CORE_EXPORT LayoutBlock : public LayoutBox {
                                      // are adjoining.
   unsigned descendants_with_floats_marked_for_layout_ : 1;
 
-  unsigned has_positioned_objects_ : 1;
-  unsigned has_percent_height_descendants_ : 1;
 
   // When an object ceases to establish a fragmentation context (e.g. the
   // LayoutView when we're no longer printing), we need a deep layout

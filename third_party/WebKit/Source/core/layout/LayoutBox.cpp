@@ -5790,7 +5790,7 @@ void LayoutBox::ClearPreviousVisualRects() {
     scrollable_area->ClearPreviousVisualRects();
 }
 
-void LayoutBox::SetPercentHeightContainer(LayoutBlock* container) {
+void LayoutBox::SetPercentHeightContainer(LayoutObject* container) {
   DCHECK(!container || !PercentHeightContainer());
   if (!container && !rare_data_)
     return;
@@ -5801,8 +5801,11 @@ void LayoutBox::RemoveFromPercentHeightContainer() {
   if (!PercentHeightContainer())
     return;
 
-  DCHECK(PercentHeightContainer()->HasPercentHeightDescendant(this));
-  PercentHeightContainer()->RemovePercentHeightDescendant(this);
+  // TODO(vmpstr): This can act on LayoutObject once the container moves there.
+  DCHECK(PercentHeightContainer()->IsLayoutBlock() &&
+         ToLayoutBlock(PercentHeightContainer())
+             ->HasPercentHeightDescendant(this));
+  ToLayoutBlock(PercentHeightContainer())->RemovePercentHeightDescendant(this);
   // The above call should call this object's
   // setPercentHeightContainer(nullptr).
   DCHECK(!PercentHeightContainer());

@@ -91,7 +91,7 @@ struct LayoutBoxRareData {
 
   LayoutUnit pagination_strut_;
 
-  LayoutBlock* percent_height_container_;
+  LayoutObject* percent_height_container_;
   // For snap area, the owning snap container.
   LayoutBox* snap_container_;
   // For snap container, the descendant snap areas that contribute snap
@@ -1306,10 +1306,10 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
 
   void ClearPreviousVisualRects() override;
 
-  LayoutBlock* PercentHeightContainer() const {
+  LayoutObject* PercentHeightContainer() const {
     return rare_data_ ? rare_data_->percent_height_container_ : nullptr;
   }
-  void SetPercentHeightContainer(LayoutBlock*);
+  void SetPercentHeightContainer(LayoutObject*);
   void RemoveFromPercentHeightContainer();
   void ClearPercentHeightDescendants();
   // For snap areas, returns the snap container that owns us.

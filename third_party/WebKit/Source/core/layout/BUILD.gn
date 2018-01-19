@@ -61,6 +61,8 @@ blink_core_sources("layout") {
     "LayoutBlockFlowLine.cpp",
     "LayoutBox.cpp",
     "LayoutBox.h",
+    "LayoutBoxContainer.cpp",
+    "LayoutBoxContainer.h",
     "LayoutBoxModelObject.cpp",
     "LayoutBoxModelObject.h",
     "LayoutButton.cpp",

@@ -1910,8 +1910,7 @@ void LayoutTableSection::RelayoutCellIfFlexed(LayoutTableCell& cell,
   }
 
   if (!cell_children_flex) {
-    if (TrackedLayoutBoxListHashSet* percent_height_descendants =
-            cell.PercentHeightDescendants()) {
+    if (auto* percent_height_descendants = cell.PercentHeightDescendants()) {
       for (auto* descendant : *percent_height_descendants) {
         if (flex_all_children || ShouldFlexCellChild(cell, descendant)) {
           cell_children_flex = true;
