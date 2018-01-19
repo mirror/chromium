@@ -22,6 +22,30 @@
       "revId": "51a2a2b7a1712b990482ba526b7ef6566bcca020",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057887c4_7d0d24cb",
+        "filename": "third_party/WebKit/LayoutTests/sensor/resources/sensor-helpers.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-19T14:08:16Z",
+      "side": 1,
+      "message": "A leftover from debugging, thanks for the catch!",
+      "parentUuid": "12ce0468_0c24beff",
+      "range": {
+        "startLine": 241,
+        "startChar": 58,
+        "endLine": 241,
+        "endChar": 77
+      },
+      "revId": "51a2a2b7a1712b990482ba526b7ef6566bcca020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
