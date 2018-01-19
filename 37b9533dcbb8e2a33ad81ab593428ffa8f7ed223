@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "749837a6_208fee24",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-19T14:17:12Z",
+      "side": 1,
+      "message": "what does the 1000 here mean?",
+      "range": {
+        "startLine": 276,
+        "startChar": 31,
+        "endLine": 276,
+        "endChar": 32
+      },
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee0ae755_ee7eaeb7",
         "filename": "chrome/browser/vr/platform_controller.h",
         "patchSetId": 3
@@ -64,6 +87,29 @@
       "writtenOn": "2018-01-19T04:07:40Z",
       "side": 1,
       "message": "Are the zero initializers needed, as the default constructor sets them?",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9de9768_30d160ae",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-19T14:17:12Z",
+      "side": 1,
+      "message": "This is cool. We could totally use it for other things, such as gaze based tooltips from Chrome VR FRE.",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 25
+      },
       "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
