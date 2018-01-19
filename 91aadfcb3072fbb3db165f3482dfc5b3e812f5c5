@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c579e2e_699e20e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-01-19T02:10:29Z",
+      "side": 1,
+      "message": "Not sure if we should have this here in downloads or move it to NotificationCompatBuilder.setGroup instead, since there is one more call site here in buildSummaryNotificationWithIcon, although that is not in the call path when foreground-service not enabled.",
+      "range": {
+        "startLine": 1081,
+        "startChar": 1,
+        "endLine": 1084,
+        "endChar": 0
+      },
+      "revId": "91aadfcb3072fbb3db165f3482dfc5b3e812f5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
