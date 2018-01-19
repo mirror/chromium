@@ -84,6 +84,9 @@ class TestRenderFrameHost::NavigationInterceptor
       base::Optional<content::URLLoaderFactoryBundle>
           subresource_loader_factories) override {}
 
+  void UpdateSubresourceLoaderFactories(
+      URLLoaderFactoryBundle subresource_loaders) override{};
+
  private:
   TestRenderFrameHost* const frame_host_;
 
