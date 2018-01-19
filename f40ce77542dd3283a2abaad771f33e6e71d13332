@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d7f21d9_868e0460",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-19T13:09:25Z",
+      "side": 1,
+      "message": "That\u0027s a fair observation :).\nI changed the description to put the enabling first.",
+      "parentUuid": "33bcbba5_77fcaa23",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "f40ce77542dd3283a2abaad771f33e6e71d13332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7044ed43_ddcf3df9",
         "filename": "components/password_manager/core/browser/test_password_store.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f40ce77542dd3283a2abaad771f33e6e71d13332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850a5863_06d33b47",
+        "filename": "components/password_manager/core/browser/test_password_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-19T13:09:25Z",
+      "side": 1,
+      "message": "Good idea! Done.",
+      "parentUuid": "7044ed43_ddcf3df9",
+      "range": {
+        "startLine": 141,
+        "startChar": 19,
+        "endLine": 141,
+        "endChar": 52
+      },
+      "revId": "f40ce77542dd3283a2abaad771f33e6e71d13332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
