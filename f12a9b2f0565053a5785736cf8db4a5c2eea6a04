@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6abbda5b_0e4c7ca4",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-19T16:56:14Z",
+      "side": 0,
+      "message": "This patch would effectively drop these DCHECKs. I am not so certain they would really hit very often. It might be more informativeif we dropped the \"if\" and letting the renderer crash when GetFrameWidget() \u003d\u003d nullptr :P. But some cases might hit way too often: https://crbug.com/668106.\n\nSo I was wondering if it is useful to somehow (if possible) systematically track use cases of GetFrameWidget() _when_ we return nullptr due to GetWebWidget()-\u003eIsWebFrameWidget() being false, i.e., the bad cases.\n\nThat I think would help us track down the sources of the problem. One issue which I am hopefully going to work on soon is the IPCs we send out RenderWidget of a still swapped-out frame. This can be easily avoided by simple flag.",
+      "revId": "f12a9b2f0565053a5785736cf8db4a5c2eea6a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
