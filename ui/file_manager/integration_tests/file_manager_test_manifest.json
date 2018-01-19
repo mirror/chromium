@@ -18,6 +18,7 @@
       "file_manager/details_panel.js",
       "file_manager/directory_tree_context_menu.js",
       "file_manager/drive_specific.js",
+      "file_manager/file_context_menu.js",
       "file_manager/file_dialog.js",
       "file_manager/file_display.js",
       "file_manager/folder_shortcuts.js",
