@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1cc0472_c437dbe0",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 3955,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-19T22:51:53Z",
+      "side": 1,
+      "message": "Do we need to account for the safe area insets here, like we do in |-setFramesForHeaders:atOffset:|?  I think right now, the voice search bar overlaps poorly with the bottom strip on iPhone X.  Feel free to do that in a follow-up CL; this lgtm as is since it doesn\u0027t break existing behavior and sets the groundwork for adaptive toolbar development.",
+      "revId": "cb247287629e21e1332c4267aaeafb39dcd64e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
