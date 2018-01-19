@@ -468,6 +468,57 @@ TEST_F(RTLTest, UnadjustStringForLocaleDirection) {
   EXPECT_EQ(was_rtl, IsRTL());
 }
 
+TEST_F(RTLTest, EnsureTerminatedDirectionalFormatting) {
+  struct {
+    const wchar_t* unformated_text;
+    const wchar_t* formatted_text;
+  } cases[] = {
+      // Tests string without any dir-formatting characters.
+      {L"google.com", L"google.com"},
+      // Tests string with properly terminated dir-formatting character.
+      {L"\x202egoogle.com\x202c", L"\x202egoogle.com\x202c"},
+      // Tests string with over-terminated dir-formatting characters.
+      {L"\x202egoogle\x202c.com\x202c", L"\x202egoogle\x202c.com\x202c"},
+      // Tests string beginning with a dir-formatting character.
+      {L"\x202emoc.elgoog", L"\x202emoc.elgoog\x202c"},
+      // Tests string that over-terminates then re-opens.
+      {L"\x202egoogle\x202c\x202c.\x202eom",
+       L"\x202egoogle\x202c\x202c.\x202eom\x202c"},
+      // Tests string containing a dir-formatting character in the middle.
+      {L"google\x202e.com", L"google\x202e.com\x202c"},
+      // Tests string with multiple dir-formatting characters.
+      {L"\x202egoogle\x202e.com/\x202eguest",
+       L"\x202egoogle\x202e.com/\x202eguest\x202c\x202c\x202c"},
+      // Test the other dir-formatting characters (U+202A, U+202B, and U+202D).
+      {L"\x202agoogle.com", L"\x202agoogle.com\x202c"},
+      {L"\x202bgoogle.com", L"\x202bgoogle.com\x202c"},
+      {L"\x202dgoogle.com", L"\x202dgoogle.com\x202c"},
+  };
+
+  for (size_t i = 0; i < arraysize(cases); ++i) {
+    string16 unsanitized_text = WideToUTF16(cases[i].unformated_text);
+    string16 sanitized_text = WideToUTF16(cases[i].formatted_text);
+    EnsureTerminatedDirectionalFormatting(&unsanitized_text);
+    EXPECT_EQ(sanitized_text, unsanitized_text);
+  }
+}
+
+TEST_F(RTLTest, SanitizeUserSuppliedString) {
+  struct {
+    const wchar_t* unformated_text;
+    const wchar_t* formatted_text;
+  } cases[] = {
+      {L"كبير Google التطبيق", L"\x200e\x202bكبير Google التطبيق\x202c\x200e"},
+  };
+
+  for (size_t i = 0; i < arraysize(cases); ++i) {
+    string16 unsanitized_text = WideToUTF16(cases[i].unformated_text);
+    string16 sanitized_text = WideToUTF16(cases[i].formatted_text);
+    SanitizeUserSuppliedString(&unsanitized_text);
+    EXPECT_EQ(sanitized_text, unsanitized_text);
+  }
+}
+
 class SetICULocaleTest : public PlatformTest {};
 
 TEST_F(SetICULocaleTest, OverlongLocaleId) {
