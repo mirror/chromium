@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "229b0557_ad484296",
+        "filename": "chrome/common/media_router/media_source_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T19:17:10Z",
+      "side": 1,
+      "message": "OK.  Maybe CanConnectToMediaSource could be renamed IsCastMediaSource to be more explicit.  But not necessary for this patch.",
+      "parentUuid": "2a846f0f_8df06d30",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edd948dd_7ed00dd2",
         "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
         "patchSetId": 5
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "0f0f3e95_8e94f07f",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T19:17:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "23fe2ee3_7cb5c44f",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "207ed74e_6feccf60",
         "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
         "patchSetId": 5
@@ -139,6 +175,24 @@
       "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7e9c6ad_806eac9c",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T19:17:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2fd39cb5_682fec18",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +260,24 @@
       "side": 1,
       "message": "then app_id will consists of the entire app_id_param string. It is possible for capabilities to be omitted.",
       "parentUuid": "745a8078_b3ce90a3",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db41046_a561afd8",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T19:17:10Z",
+      "side": 1,
+      "message": "Then shouldn\u0027t cap_start_index be checked against npos?",
+      "parentUuid": "5b388030_96975d45",
       "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -422,6 +494,24 @@
     },
     {
       "key": {
+        "uuid": "6d312fad_25ec2109",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T19:17:10Z",
+      "side": 1,
+      "message": "I\u0027ll file a crbug for this cleanup (explaining the rationale) if one doesn\u0027t already exist.",
+      "parentUuid": "b9209a83_f151d4e4",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3015a6fd_795fd9c7",
         "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
         "patchSetId": 5
@@ -475,6 +565,24 @@
     },
     {
       "key": {
+        "uuid": "b933684a_71baf30d",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T19:17:10Z",
+      "side": 1,
+      "message": "OK.  I guess it depends on if you want a more complex implementation of CastMediaSource, or more complexity in the code that uses CastMediaSource.  This design seems like a fair tradeoff.",
+      "parentUuid": "dc0517c7_9f3e2230",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dba96162_d9d0a992",
         "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
         "patchSetId": 5
@@ -522,6 +630,24 @@
       "side": 1,
       "message": "There is chrome.cast.precache - https://developers.google.com/cast/docs/reference/chrome/chrome.cast#.precache\n\nEssentially, precache is implemented as a getAvailability(), which gets handled as a special case by the Cast MRP to send a broadcast message to all receivers instead of a real sink query. Not the greatest solution, but that\u0027s what we came up with given the limitations of the presentation API.",
       "parentUuid": "6f0cf3cf_34e48866",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f151c68_73f755e8",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T19:17:10Z",
+      "side": 1,
+      "message": "Uh, that\u0027s an \"interesting\" (aka slightly scary) capability and I don\u0027t really understand the use case for it.  Let\u0027s discuss further when you\u0027re back from travels.\n\nFor the purposes of this patch, is it the case that the availability URL is just app ids or a broadcast request, or can they be combined into one URL?\n\nIf they can\u0027t be combined, I would prefer that broadcast URLs be modeled by a completely separate class/object.",
+      "parentUuid": "d5af05fa_bb92bcfd",
       "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
