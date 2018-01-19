@@ -15,6 +15,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "net/base/net_export.h"
 #include "net/http/http_basic_state.h"
 #include "net/http/http_stream.h"
@@ -97,8 +98,17 @@ class NET_EXPORT_PRIVATE HttpBasicStream : public HttpStream {
  private:
   HttpStreamParser* parser() const { return state_.parser(); }
 
+  base::WeakPtr<HttpBasicStream> GetWeakPtr();
+
+  void EnqueueRequest(const HttpRequestHeaders& headers,
+                      HttpResponseInfo* response,
+                      const CompletionCallback& callback,
+                      int rv);
+
   HttpBasicState state_;
   RequestHeadersCallback request_headers_callback_;
+
+  base::WeakPtrFactory<HttpBasicStream> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(HttpBasicStream);
 };

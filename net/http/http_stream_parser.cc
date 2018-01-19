@@ -312,6 +312,10 @@ int HttpStreamParser::SendRequest(
   return result > 0 ? OK : result;
 }
 
+int HttpStreamParser::ConfirmHandshake(const CompletionCallback& callback) {
+  return connection_->socket()->ConfirmHandshake(callback);
+}
+
 int HttpStreamParser::ReadResponseHeaders(const CompletionCallback& callback) {
   DCHECK(io_state_ == STATE_NONE || io_state_ == STATE_DONE);
   DCHECK(callback_.is_null());

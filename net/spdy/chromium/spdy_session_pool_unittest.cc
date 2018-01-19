@@ -726,7 +726,8 @@ TEST_F(SpdySessionPoolTest, IPAddressChanged) {
   spdy_streamA->SetDelegate(&delegateA);
 
   SpdyHeaderBlock headers(spdy_util.ConstructGetHeaderBlock(urlA.spec()));
-  spdy_streamA->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_streamA->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();  // Allow headers to write.
   EXPECT_TRUE(delegateA.send_headers_completed());
@@ -836,7 +837,8 @@ TEST_F(SpdySessionPoolTest, HandleIPAddressChangeThenShutdown) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util.ConstructGetHeaderBlock(url.spec()));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(delegate.send_headers_completed());
@@ -891,7 +893,8 @@ TEST_F(SpdySessionPoolTest, HandleGracefulGoawayThenShutdown) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util.ConstructGetHeaderBlock(url.spec()));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   // Send headers.
   base::RunLoop().RunUntilIdle();

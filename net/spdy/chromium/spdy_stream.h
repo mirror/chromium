@@ -303,6 +303,8 @@ class NET_EXPORT_PRIVATE SpdyStream {
   // Must be used only by |session_|.
   base::WeakPtr<SpdyStream> GetWeakPtr();
 
+  void EnqueueRequestHeaders(int rv);
+
   // Interface for the delegate to use.
 
   // Only one send can be in flight at a time, except for push
@@ -312,8 +314,10 @@ class NET_EXPORT_PRIVATE SpdyStream {
   // when the request headers have completed sending. |send_status| must be
   // MORE_DATA_TO_SEND for bidirectional streams; for request/response streams,
   // it must be MORE_DATA_TO_SEND if the request has data to upload, or
-  // NO_MORE_DATA_TO_SEND if not.
+  // NO_MORE_DATA_TO_SEND if not. |can_send_early| indicates whether this
+  // can be sent as early data.
   int SendRequestHeaders(SpdyHeaderBlock request_headers,
+                         bool can_send_early,
                          SpdySendStatus send_status);
 
   // Sends a DATA frame. The delegate will be notified via

@@ -20,7 +20,8 @@ HttpBasicStream::HttpBasicStream(std::unique_ptr<ClientSocketHandle> connection,
                                  bool http_09_on_non_default_ports_enabled)
     : state_(std::move(connection),
              using_proxy,
-             http_09_on_non_default_ports_enabled) {}
+             http_09_on_non_default_ports_enabled),
+      weak_ptr_factory_(this) {}
 
 HttpBasicStream::~HttpBasicStream() = default;
 
@@ -31,6 +32,25 @@ int HttpBasicStream::InitializeStream(const HttpRequestInfo* request_info,
                                       const CompletionCallback& callback) {
   state_.Initialize(request_info, can_send_early, priority, net_log, callback);
   return OK;
+}
+
+base::WeakPtr<HttpBasicStream> HttpBasicStream::GetWeakPtr() {
+  return weak_ptr_factory_.GetWeakPtr();
+}
+
+void HttpBasicStream::EnqueueRequest(const HttpRequestHeaders& headers,
+                                     HttpResponseInfo* response,
+                                     const CompletionCallback& callback,
+                                     int rv) {
+  if (rv == OK) {
+    // TODO(crbug.com/656607): Add propoer annotation.
+    rv = parser()->SendRequest(state_.GenerateRequestLine(), headers,
+                               NO_TRAFFIC_ANNOTATION_BUG_656607, response,
+                               callback);
+  }
+
+  if (rv != ERR_IO_PENDING)
+    callback.Run(rv);
 }
 
 int HttpBasicStream::SendRequest(const HttpRequestHeaders& headers,
@@ -44,10 +64,21 @@ int HttpBasicStream::SendRequest(const HttpRequestHeaders& headers,
       raw_headers.Add(it.name(), it.value());
     request_headers_callback_.Run(std::move(raw_headers));
   }
-  // TODO(crbug.com/656607): Add propoer annotation.
-  return parser()->SendRequest(state_.GenerateRequestLine(), headers,
-                               NO_TRAFFIC_ANNOTATION_BUG_656607, response,
-                               callback);
+
+  int ret = OK;
+  if (!state_.can_send_early()) {
+    ret = parser()->ConfirmHandshake(
+        base::BindRepeating(&HttpBasicStream::EnqueueRequest, GetWeakPtr(),
+                            headers, response, callback));
+  }
+
+  if (ret != ERR_IO_PENDING) {
+    // TODO(crbug.com/656607): Add propoer annotation.
+    return parser()->SendRequest(state_.GenerateRequestLine(), headers,
+                                 NO_TRAFFIC_ANNOTATION_BUG_656607, response,
+                                 callback);
+  }
+  return ERR_IO_PENDING;
 }
 
 int HttpBasicStream::ReadResponseHeaders(const CompletionCallback& callback) {
