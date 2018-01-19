@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fa8986bb_859999e9",
+        "filename": "ios/chrome/browser/ui/ui_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-19T14:41:08Z",
+      "side": 1,
+      "message": "As I replied, I think we should keep one flag and one helper function for all changes.\n\nAnd in any case, the name of the hook should be changed :)",
+      "parentUuid": "1a6e2e4d_75a2643f",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 29
+      },
+      "revId": "9db5e81bfc6d56f861c99b4356462ce58c96ce05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c019449_0cd194fe",
         "filename": "ios/chrome/browser/ui/ui_util.mm",
         "patchSetId": 4
