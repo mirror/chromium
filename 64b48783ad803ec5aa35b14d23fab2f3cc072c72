@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6950081_5d1ad9b0",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1242,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-19T19:46:18Z",
+      "side": 1,
+      "message": "this should probably go up with the android block on L1224",
+      "range": {
+        "startLine": 1242,
+        "startChar": 12,
+        "endLine": 1242,
+        "endChar": 24
+      },
+      "revId": "64b48783ad803ec5aa35b14d23fab2f3cc072c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
