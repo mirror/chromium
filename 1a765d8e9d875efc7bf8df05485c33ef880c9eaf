@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1777c84_352b13d2",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-19T19:42:14Z",
+      "side": 1,
+      "message": "Why is this snapped here? Shouldn\u0027t it be snapped during paint?",
+      "revId": "1a765d8e9d875efc7bf8df05485c33ef880c9eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406aefc4_dc9b38d5",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-19T19:42:14Z",
+      "side": 1,
+      "message": "Is it worth the performance effort to detect whether this clip is needed?",
+      "revId": "1a765d8e9d875efc7bf8df05485c33ef880c9eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1d9b05_c5dc43ee",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-19T19:42:14Z",
+      "side": 1,
+      "message": "You need to update force_subtree_update according to whether the clip changed, in both\nbranches.",
+      "revId": "1a765d8e9d875efc7bf8df05485c33ef880c9eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
