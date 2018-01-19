@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "343cf8b1_fac392d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-19T18:35:15Z",
+      "side": 1,
+      "message": "can you please run a perf tryjob to make sure that not prefetching data and rodata is not regressing a lot?",
+      "range": {
+        "startLine": 13,
+        "startChar": 27,
+        "endLine": 13,
+        "endChar": 45
+      },
+      "revId": "704a1c90579482c361be5797b5929293329bc333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705ddaec_36688afb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-19T18:35:15Z",
+      "side": 1,
+      "message": "is it from LibraryLoader.asyncPrefetchLibrariesToMemory? or with some more customized measurement?\n\nI see 60ms of CPU time (from the N5X perf bot), but it includes parsing /proc/self/maps twice, forking and recording histograms.\n\n+1 to remove /proc/self/maps parsing anyway",
+      "range": {
+        "startLine": 25,
+        "startChar": 32,
+        "endLine": 25,
+        "endChar": 58
+      },
+      "revId": "704a1c90579482c361be5797b5929293329bc333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97712067_5508bd13",
+        "filename": "base/android/library_loader/anchor_functions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-19T18:35:15Z",
+      "side": 1,
+      "message": "nit: perhaps for consistency it would be better to name it as: \u0027dummy_function_at_the_start_of_text\u0027?",
+      "range": {
+        "startLine": 65,
+        "startChar": 29,
+        "endLine": 65,
+        "endChar": 58
+      },
+      "revId": "704a1c90579482c361be5797b5929293329bc333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21c0b3c_b536d2c6",
+        "filename": "base/android/library_loader/anchor_functions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-19T18:35:15Z",
+      "side": 1,
+      "message": "\"kStartOfText \u003c kEndOfText\" is an obvious consequence of |dummy| being between then, and makes the expression not very symmetric, so I could not resist against commenting here. Probably nothing to be done here",
+      "range": {
+        "startLine": 76,
+        "startChar": 33,
+        "endLine": 76,
+        "endChar": 58
+      },
+      "revId": "704a1c90579482c361be5797b5929293329bc333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e325fba4_fbd6e42b",
+        "filename": "base/android/library_loader/library_prefetcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-19T18:35:15Z",
+      "side": 1,
+      "message": "s/will crash/in case of mistake/ ?",
+      "range": {
+        "startLine": 21,
+        "startChar": 76,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "704a1c90579482c361be5797b5929293329bc333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db1bc3b_167c1989",
+        "filename": "base/android/library_loader/library_prefetcher_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-19T18:35:15Z",
+      "side": 1,
+      "message": "nit: seems not flaky, can we remove the TODO?",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 43
+      },
+      "revId": "704a1c90579482c361be5797b5929293329bc333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
