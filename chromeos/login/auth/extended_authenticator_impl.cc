@@ -12,7 +12,6 @@
 #include "chromeos/cryptohome/async_method_caller.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
 #include "chromeos/cryptohome/cryptohome_util.h"
-#include "chromeos/cryptohome/homedir_methods.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
 #include "chromeos/dbus/cryptohome_client.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -197,12 +196,12 @@ void ExtendedAuthenticatorImpl::DoAuthenticateToCheck(
     const UserContext& user_context) {
   RecordStartMarker("CheckKeyEx");
   const Key* const key = user_context.GetKey();
-  cryptohome::HomedirMethods::GetInstance()->CheckKeyEx(
+  DBusThreadManager::Get()->GetCryptohomeClient()->CheckKeyEx(
       cryptohome::Identification(user_context.GetAccountId()),
       cryptohome::CreateAuthorizationRequest(key->GetLabel(), key->GetSecret()),
       cryptohome::CheckKeyRequest(),
-      base::Bind(&ExtendedAuthenticatorImpl::OnOperationComplete, this,
-                 "CheckKeyEx", user_context, success_callback));
+      base::BindOnce(&ExtendedAuthenticatorImpl::OnOperationComplete, this,
+                     "CheckKeyEx", user_context, success_callback));
 }
 
 void ExtendedAuthenticatorImpl::DoAddKey(const cryptohome::KeyDefinition& key,
@@ -215,13 +214,13 @@ void ExtendedAuthenticatorImpl::DoAddKey(const cryptohome::KeyDefinition& key,
   cryptohome::KeyDefinitionToKey(key, request.mutable_key());
   request.set_clobber_if_exists(clobber_if_exists);
   const Key* const auth_key = user_context.GetKey();
-  cryptohome::HomedirMethods::GetInstance()->AddKeyEx(
+  DBusThreadManager::Get()->GetCryptohomeClient()->AddKeyEx(
       cryptohome::Identification(user_context.GetAccountId()),
       cryptohome::CreateAuthorizationRequest(auth_key->GetLabel(),
                                              auth_key->GetSecret()),
       request,
-      base::Bind(&ExtendedAuthenticatorImpl::OnOperationComplete, this,
-                 "AddKeyEx", user_context, success_callback));
+      base::BindOnce(&ExtendedAuthenticatorImpl::OnOperationComplete, this,
+                     "AddKeyEx", user_context, success_callback));
 }
 
 void ExtendedAuthenticatorImpl::DoUpdateKeyAuthorized(
@@ -235,13 +234,13 @@ void ExtendedAuthenticatorImpl::DoUpdateKeyAuthorized(
   cryptohome::UpdateKeyRequest request;
   cryptohome::KeyDefinitionToKey(key, request.mutable_changes());
   request.set_authorization_signature(signature);
-  cryptohome::HomedirMethods::GetInstance()->UpdateKeyEx(
+  DBusThreadManager::Get()->GetCryptohomeClient()->UpdateKeyEx(
       cryptohome::Identification(user_context.GetAccountId()),
       cryptohome::CreateAuthorizationRequest(auth_key->GetLabel(),
                                              auth_key->GetSecret()),
       request,
-      base::Bind(&ExtendedAuthenticatorImpl::OnOperationComplete, this,
-                 "UpdateKeyAuthorized", user_context, success_callback));
+      base::BindOnce(&ExtendedAuthenticatorImpl::OnOperationComplete, this,
+                     "UpdateKeyAuthorized", user_context, success_callback));
 }
 
 void ExtendedAuthenticatorImpl::DoRemoveKey(const std::string& key_to_remove,
@@ -252,13 +251,13 @@ void ExtendedAuthenticatorImpl::DoRemoveKey(const std::string& key_to_remove,
   cryptohome::RemoveKeyRequest request;
   request.mutable_key()->mutable_data()->set_label(key_to_remove);
   const Key* const auth_key = user_context.GetKey();
-  cryptohome::HomedirMethods::GetInstance()->RemoveKeyEx(
+  DBusThreadManager::Get()->GetCryptohomeClient()->RemoveKeyEx(
       cryptohome::Identification(user_context.GetAccountId()),
       cryptohome::CreateAuthorizationRequest(auth_key->GetLabel(),
                                              auth_key->GetSecret()),
       request,
-      base::Bind(&ExtendedAuthenticatorImpl::OnOperationComplete, this,
-                 "RemoveKeyEx", user_context, success_callback));
+      base::BindOnce(&ExtendedAuthenticatorImpl::OnOperationComplete, this,
+                     "RemoveKeyEx", user_context, success_callback));
 }
 
 void ExtendedAuthenticatorImpl::OnMountComplete(
@@ -304,8 +303,8 @@ void ExtendedAuthenticatorImpl::OnOperationComplete(
     const std::string& time_marker,
     const UserContext& user_context,
     const base::Closure& success_callback,
-    bool success,
-    cryptohome::MountError return_code) {
+    base::Optional<cryptohome::BaseReply> reply) {
+  cryptohome::MountError return_code = cryptohome::BaseReplyToMountError(reply);
   RecordEndMarker(time_marker);
   if (return_code == cryptohome::MOUNT_ERROR_NONE) {
     if (!success_callback.is_null())

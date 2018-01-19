@@ -26,7 +26,6 @@ class CHROMEOS_EXPORT HomedirMethods {
  public:
   // Callbacks that are called back on the UI thread when the results of the
   // respective method calls are ready.
-  typedef base::Callback<void(bool success, MountError return_code)> Callback;
   typedef base::Callback<void(
       bool success,
       MountError return_code,
@@ -44,38 +43,6 @@ class CHROMEOS_EXPORT HomedirMethods {
                             const AuthorizationRequest& auth,
                             const GetKeyDataRequest& request,
                             const GetKeyDataCallback& callback) = 0;
-
-  // Asks cryptohomed to attempt authorization for user identified by |id| using
-  // |auth|. This can be used to unlock a user session.
-  virtual void CheckKeyEx(const Identification& id,
-                          const AuthorizationRequest& auth,
-                          const CheckKeyRequest& request,
-                          const Callback& callback) = 0;
-
-  // Asks cryptohomed to try to add another key for the user identified by |id|
-  // using |auth| to unlock the key.
-  // Key used in |auth| should have the PRIV_ADD privilege.
-  // |callback| will be called with status info on completion.
-  virtual void AddKeyEx(const Identification& id,
-                        const AuthorizationRequest& auth,
-                        const AddKeyRequest& request,
-                        const Callback& callback) = 0;
-
-  // Asks cryptohomed to update the key for the user identified by |id| using
-  // |auth| to unlock the key. Label for |auth| and the requested key have to be
-  // the same. Key used in |auth| should have PRIV_AUTHORIZED_UPDATE privilege.
-  // |callback| will be called with status info on completion.
-  virtual void UpdateKeyEx(const Identification& id,
-                           const AuthorizationRequest& auth,
-                           const UpdateKeyRequest& request,
-                           const Callback& callback) = 0;
-
-  // Asks cryptohomed to remove a specific key for the user identified by |id|
-  // using |auth|.
-  virtual void RemoveKeyEx(const Identification& id,
-                           const AuthorizationRequest& auth,
-                           const RemoveKeyRequest& request,
-                           const Callback& callback) = 0;
 
   // Asks cryptohomed to compute the size of cryptohome for user identified by
   // |id|.

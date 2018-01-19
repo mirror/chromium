@@ -29,7 +29,6 @@
 #include "chrome/browser/supervised_user/supervised_user_constants.h"
 #include "chrome/common/chrome_features.h"
 #include "chromeos/cryptohome/mock_async_method_caller.h"
-#include "chromeos/cryptohome/mock_homedir_methods.h"
 #include "components/sync/model/attachments/attachment_service_proxy_for_test.h"
 #include "components/sync/model/fake_sync_change_processor.h"
 #include "components/sync/model/sync_change.h"
@@ -199,15 +198,7 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserTransactionCleanupTest,
   StartFlowLoginAsManager();
   FillNewUserData(kTestSupervisedUserDisplayName);
 
-  base::RunLoop add_key_wait_loop;
-  mock_homedir_methods_->set_add_key_callback(add_key_wait_loop.QuitClosure());
-  EXPECT_CALL(*mock_homedir_methods_, AddKeyEx(_, _, _, _)).Times(1);
-
   JSEval("$('supervised-user-creation-next-button').click()");
-
-  add_key_wait_loop.Run();
-  testing::Mock::VerifyAndClearExpectations(mock_homedir_methods_);
-  mock_homedir_methods_->set_add_key_callback(base::Closure());
 
   EXPECT_TRUE(registration_utility_stub_->register_was_called());
   EXPECT_EQ(registration_utility_stub_->display_name(),
