@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "529178ba_7b6b3652",
+        "filename": "chromeos/network/network_connection_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-19T22:15:29Z",
+      "side": 1,
+      "message": "nit: I think kStyle is preferred for new enums.",
+      "revId": "902ecffa9e40ad1cf8cffd9f801dc264348f8421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
