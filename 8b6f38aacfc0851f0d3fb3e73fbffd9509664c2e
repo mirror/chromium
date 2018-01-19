@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "666685e1_a5b0373e",
+        "filename": "media/audio/win/audio_low_latency_output_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-19T08:35:01Z",
+      "side": 1,
+      "message": "I suggest comment that the recovery is a workaround for a Windows issue (iiuc).",
+      "revId": "8b6f38aacfc0851f0d3fb3e73fbffd9509664c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c8f9d4_0137c7ea",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-19T08:35:01Z",
+      "side": 1,
+      "message": "PLOG inserts \": \". Remove.",
+      "revId": "8b6f38aacfc0851f0d3fb3e73fbffd9509664c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
