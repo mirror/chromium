@@ -24,6 +24,7 @@
 #include "build/build_config.h"
 #include "cc/input/overscroll_behavior.h"
 #include "cc/input/touch_action.h"
+#include "components/viz/common/surfaces/child_local_surface_id_allocator.h"
 #include "components/viz/common/surfaces/local_surface_id.h"
 #include "content/common/content_export.h"
 #include "content/common/cursors/webcursor.h"
@@ -525,10 +526,16 @@ class CONTENT_EXPORT RenderWidget
       RenderWidgetScreenMetricsEmulator* emulator);
 #endif
 
+  void HandlePotentialLocalSurfaceIdConflict(
+      viz::LocalSurfaceId parent_generated_local_surface_id);
+
   void SetLocalSurfaceIdForAutoResize(
       uint64_t sequence_number,
       const content::ScreenInfo& screen_info,
       const viz::LocalSurfaceId& local_surface_id);
+
+  void DidEnableAutoResize(const gfx::Size& min_size,
+                           const gfx::Size& max_size);
 
   // RenderWidget IPC message handlers
   void OnHandleInputEvent(
@@ -795,6 +802,10 @@ class CONTENT_EXPORT RenderWidget
   gfx::Rect view_screen_rect_;
   gfx::Rect window_screen_rect_;
 
+  gfx::Size min_autoresize_size_;
+  gfx::Size max_autoresize_size_;
+  bool has_autoresize_sizes_ = false;
+
   scoped_refptr<WidgetInputHandlerManager> widget_input_handler_manager_;
 
   std::unique_ptr<RenderWidgetInputHandler> input_handler_;
@@ -949,6 +960,10 @@ class CONTENT_EXPORT RenderWidget
   // TODO(kenrb, fsamuel): This should be removed when SurfaceIDs can be used
   // to replace it. See https://crbug.com/695579.
   uint32_t current_content_source_id_;
+
+  // Sometimes a parent-allocated LocalSurfaceId is used. But other times
+  // the child allocates its own with this.
+  viz::ChildLocalSurfaceIdAllocator child_local_surface_id_allocator_;
 
   viz::LocalSurfaceId local_surface_id_;
 
