@@ -16,6 +16,24 @@
       "revId": "08f6182383fb04a29b665f4bab890515430afd9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b58d04_6bc64685",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 101272,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-19T22:40:45Z",
+      "side": 1,
+      "message": "I\u0027m adding back the none.\n\nThere are other events that could have been used as a baseline, or for scaling the counts, but it would have been somewhat implicit.\n\nWhat we really care about is ratio, especially when compared with other info, like os version.",
+      "parentUuid": "3cce6786_49f23fe4",
+      "revId": "08f6182383fb04a29b665f4bab890515430afd9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
