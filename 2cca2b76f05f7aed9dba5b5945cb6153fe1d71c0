@@ -117,6 +117,30 @@
       "revId": "2cca2b76f05f7aed9dba5b5945cb6153fe1d71c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d678f318_81f63adc",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-19T01:10:14Z",
+      "side": 1,
+      "message": "Talked offline, there was confusion because I typoed the new UMA as Net.AlternateProxyFailed in histograms.xml so it looked like I wasn\u0027t logging it here.",
+      "parentUuid": "b9b18ddd_a9cc77eb",
+      "range": {
+        "startLine": 986,
+        "startChar": 4,
+        "endLine": 987,
+        "endChar": 78
+      },
+      "revId": "2cca2b76f05f7aed9dba5b5945cb6153fe1d71c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
