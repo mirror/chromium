@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a7e8d20_f4648bf8",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2018-01-19T05:52:38Z",
+      "side": 0,
+      "message": "The possible call stack for ResourceSettings used from RendererSettings:\nGpuProcessTransportFactory::GetResourceSettings\nCompositor::Compositor",
+      "parentUuid": "e2063e5e_e36d9c46",
+      "revId": "7c2435c0891a90f79db5f5c3b29ccdf838fda8c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d22a7af_21edd9fb",
         "filename": "cc/resources/resource_provider.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "7c2435c0891a90f79db5f5c3b29ccdf838fda8c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad839755_422d037f",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2018-01-19T05:52:38Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "5d22a7af_21edd9fb",
+      "revId": "7c2435c0891a90f79db5f5c3b29ccdf838fda8c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
