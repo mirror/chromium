@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "393563ef_bfa84d0f",
+        "filename": "third_party/WebKit/Source/modules/quota/DeprecatedStorageQuota.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-19T09:16:59Z",
+      "side": 1,
+      "message": "Hm, yeah something like this is likely not necessary, but I\u0027m cool with removing it in a follow-up given that it\u0027s existing behavior...",
+      "revId": "01ba922ba0c8feea325030ec478645aec700910e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
