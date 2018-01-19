@@ -22,6 +22,30 @@
       "revId": "fb01b483c647cdb8d72d0a04ed4b609676edaf16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d268baca_fe63beec",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-19T19:44:23Z",
+      "side": 0,
+      "message": "Mostly yes.\nThis old test assumed:\n1) 0 duration buffer at the end of a range would instead have dynamic (and only growing) duration based on (1/2 of) fudge room; and that initial duration would be no less than 1ms (minimum fudge room): https://cs.chromium.org/chromium/src/media/filters/source_buffer_stream.cc?q\u003dsource_buffer_stream.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d28\n2) \"Inconsistent\" meaning the fudge room could not *decrease* (causing previous determination that two ranges are adjacent to change to *not* adjacent.) Previous wording here was incomplete. With this change, the fudge room still should not decrease *.\n\n* Verification of this would need a new test that doesn\u0027t depend on the (now removed) logic that subbed the dynamic (1/2 of) fudge room for 0-duration buffers\u0027 duration. I\u0027ll look into adding a replacement test in later patch set of this CL.",
+      "parentUuid": "4e3dbf78_3e4b04fe",
+      "range": {
+        "startLine": 1315,
+        "startChar": 48,
+        "endLine": 1316,
+        "endChar": 34
+      },
+      "revId": "fb01b483c647cdb8d72d0a04ed4b609676edaf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
