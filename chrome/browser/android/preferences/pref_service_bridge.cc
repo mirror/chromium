@@ -166,7 +166,8 @@ static jboolean JNI_PrefServiceBridge_IsContentSettingEnabled(
   // that the functionality provided below is correct.
   DCHECK(content_settings_type == CONTENT_SETTINGS_TYPE_JAVASCRIPT ||
          content_settings_type == CONTENT_SETTINGS_TYPE_POPUPS ||
-         content_settings_type == CONTENT_SETTINGS_TYPE_ADS);
+         content_settings_type == CONTENT_SETTINGS_TYPE_ADS ||
+         content_settings_type == CONTENT_SETTINGS_TYPE_CLIPBOARD_READ);
   ContentSettingsType type =
       static_cast<ContentSettingsType>(content_settings_type);
   return GetBooleanForContentSetting(type);
@@ -181,7 +182,8 @@ static void JNI_PrefServiceBridge_SetContentSettingEnabled(
   // that the new category supports ALLOW/BLOCK pairs and, if not, handle them.
   DCHECK(content_settings_type == CONTENT_SETTINGS_TYPE_JAVASCRIPT ||
          content_settings_type == CONTENT_SETTINGS_TYPE_POPUPS ||
-         content_settings_type == CONTENT_SETTINGS_TYPE_ADS);
+         content_settings_type == CONTENT_SETTINGS_TYPE_ADS ||
+         content_settings_type == CONTENT_SETTINGS_TYPE_CLIPBOARD_READ);
 
   HostContentSettingsMap* host_content_settings_map =
       HostContentSettingsMapFactory::GetForProfile(GetOriginalProfile());
