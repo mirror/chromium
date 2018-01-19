@@ -22,6 +22,30 @@
       "revId": "f3a2abdee21b15701f98f264c4d2459ff5c2cfac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a93e67_b95b481e",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-19T08:29:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9ad2ea0_05ec39ce",
+      "range": {
+        "startLine": 160,
+        "startChar": 17,
+        "endLine": 160,
+        "endChar": 42
+      },
+      "revId": "f3a2abdee21b15701f98f264c4d2459ff5c2cfac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
