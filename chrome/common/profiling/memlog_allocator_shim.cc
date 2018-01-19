@@ -273,14 +273,12 @@ class FrameSerializer {
                   SendBuffer* send_buffers)
       : stack_(stack),
         address_(address),
-        remaining_buffer_size_(initial_buffer_size),
+        stack_end_(stack + initial_buffer_size),
         send_buffers_(send_buffers) {}
 
   void AddAllFrames(const base::trace_event::Backtrace& backtrace) {
     CHECK_LE(backtrace.frame_count, kMaxStackEntries);
-    size_t required_capacity = backtrace.frame_count * sizeof(uint64_t);
-    CHECK_LE(required_capacity, remaining_buffer_size_);
-    remaining_buffer_size_ -= required_capacity;
+    CHECK_LE(backtrace.frame_count, end_ - stack_);
     for (int i = base::checked_cast<int>(backtrace.frame_count) - 1; i >= 0;
          --i) {
       AddFrame(backtrace.frames[i]);
@@ -290,9 +288,7 @@ class FrameSerializer {
   void AddAllInstructionPointers(size_t frame_count,
                                  const void* const* frames) {
     CHECK_LE(frame_count, kMaxStackEntries);
-    size_t required_capacity = frame_count * sizeof(uint64_t);
-    CHECK_LE(required_capacity, remaining_buffer_size_);
-    remaining_buffer_size_ -= required_capacity;
+    CHECK_LE(frame_count, end_ - stack_);
     // If there are too many frames, keep the ones furthest from main().
     for (size_t i = 0; i < frame_count; i++)
       AddInstructionPointer(frames[i]);
@@ -353,12 +349,12 @@ class FrameSerializer {
       base::trace_event::Backtrace::kMaxFrameCount < kMaxStackEntries,
       "Ensure that pseudo-stack frame count won't exceed OOP HP frame buffer.");
   uint64_t* stack_;
+  uint64_t* stack_end_;
 
   // The number of frames that have been written to the stack.
   size_t count_ = 0;
 
   const void* address_;
-  size_t remaining_buffer_size_;
   SendBuffer* send_buffers_;
 };
 
