@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8491b9f_b161d4b5",
+        "filename": "chromecast/graphics/cast_system_gesture_event_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-19T14:34:44Z",
+      "side": 1,
+      "message": "DCHECK(root_window)",
+      "revId": "9265cab4c4ce442d98e85dd08ffea18d2e16188c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99e982b_eda420f4",
+        "filename": "chromecast/graphics/cast_system_gesture_event_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-19T14:34:44Z",
+      "side": 1,
+      "message": "DCHECK that all handlers removed?",
+      "revId": "9265cab4c4ce442d98e85dd08ffea18d2e16188c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4a7b48_0046bd79",
+        "filename": "chromecast/graphics/cast_system_gesture_event_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-19T14:34:44Z",
+      "side": 1,
+      "message": "nit, 2018 (and other added files)",
+      "revId": "9265cab4c4ce442d98e85dd08ffea18d2e16188c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
