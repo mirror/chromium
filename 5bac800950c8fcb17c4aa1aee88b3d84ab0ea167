@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a338e1b8_8c5bf979",
+        "filename": "chrome/common/extensions/extension_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-19T18:17:30Z",
+      "side": 1,
+      "message": "Should we add a test that non_localized_name_ is not sanitized?",
+      "revId": "5bac800950c8fcb17c4aa1aee88b3d84ab0ea167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772df32f_0d494da9",
+        "filename": "extensions/common/extension.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-19T18:17:30Z",
+      "side": 1,
+      "message": "I think we should change name_ to be display_name_, and comment that it is only to be used for display, and guide callers to use non_localized_name_ for a more stable name.  We probably don\u0027t have to worry about changing the name() accessor (given how wide-spread its usage is).",
+      "revId": "5bac800950c8fcb17c4aa1aee88b3d84ab0ea167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
