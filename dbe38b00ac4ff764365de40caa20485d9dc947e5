@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63bad7a2_daa9fed3",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T00:50:17Z",
+      "side": 1,
+      "message": "1. Initialization of complex function-scope static variables is now considered safe, but I don\u0027t see anything about file-scope in the style guide.\n\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts\n\nShould this be moved to a function-scoped static?\n\n2. Are base::flat_map and url::Origin move-only?  If not it would be good to avoid any extra copies.",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce574d2_101f1b6f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T00:50:17Z",
+      "side": 1,
+      "message": "What tells the DialMediaServiceImpl to stop monitoring sinks when the destructor for this class is invoked?  Since this is a global singleton, is it just a matter of the impl being destroyed immediately after this object?",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a4bc22_16067ee3",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T00:50:17Z",
+      "side": 1,
+      "message": "const \u0026",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a961689c_8df5a05d",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T00:50:17Z",
+      "side": 1,
+      "message": "Please document this method.",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88176b69_46fd4f80",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T00:50:17Z",
+      "side": 1,
+      "message": "This looks like a list of observers, not media sources.  Does the comment need to be updated?",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8037a7bc_8c84dc98",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T00:50:17Z",
+      "side": 1,
+      "message": "Why do we need to rescan every sink/app combination on a user gesture?  That could result in a large burst of requests.",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac56b985_8c381d24",
+        "filename": "chrome/common/media_router/media_source_helper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-19T00:50:17Z",
+      "side": 1,
+      "message": "Slightly prefer to keep knowledge of DIAL-specific URLs in a DIAL media route provider, once we have a folder for one.  Add a TODO?",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
