@@ -323,12 +323,10 @@ SkSurface* CanvasResourceProvider::GetSkSurface() const {
 
 PaintCanvas* CanvasResourceProvider::Canvas() {
   if (!canvas_) {
-    std::unique_ptr<cc::ImageProvider> image_provider;
-    if (ImageDecodeCache()) {
-      image_provider = std::make_unique<cc::PlaybackImageProvider>(
-          ImageDecodeCache(), ColorParams().GetStorageGfxColorSpace(),
-          cc::PlaybackImageProvider::Settings());
-    }
+    std::unique_ptr<cc::ImageProvider> image_provider =
+        std::make_unique<cc::PlaybackImageProvider>(
+            ImageDecodeCache(), ColorParams().GetStorageGfxColorSpace(),
+            cc::PlaybackImageProvider::Settings());
 
     if (ColorParams().NeedsSkColorSpaceXformCanvas()) {
       canvas_ = std::make_unique<cc::SkiaPaintCanvas>(
@@ -443,10 +441,9 @@ scoped_refptr<CanvasResource> CanvasResourceProvider::CreateResource() {
 }
 
 cc::ImageDecodeCache* CanvasResourceProvider::ImageDecodeCache() {
-  // TODO(khushalsagar): Hook up a software cache.
-  if (!context_provider_wrapper_)
-    return nullptr;
-  return context_provider_wrapper_->ContextProvider()->ImageDecodeCache();
+  if (context_provider_wrapper_)
+    return context_provider_wrapper_->ContextProvider()->ImageDecodeCache();
+  return &Image::SharedCCDecodeCache();
 }
 
 }  // namespace blink
