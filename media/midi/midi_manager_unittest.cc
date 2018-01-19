@@ -325,7 +325,56 @@ TEST_F(MidiManagerTest, AbortSession) {
   run_loop.RunUntilIdle();
 }
 
-TEST_F(MidiManagerTest, CreatePlatformMidiManager) {
+namespace {
+
+class PlatformMidiManagerTest
+    : public ::testing::TestWithParam<MidiManager::BackendOption> {
+ public:
+  PlatformMidiManagerTest()
+      : message_loop_(std::make_unique<base::MessageLoop>()) {}
+
+ protected:
+  std::unique_ptr<MidiService::ManagerFactory> CreateFactory() {
+    return std::make_unique<ManagerFactory>(GetParam());
+  }
+
+ private:
+  class ManagerFactory : public MidiService::ManagerFactory {
+   public:
+    explicit ManagerFactory(MidiManager::BackendOption option)
+        : option_(option) {}
+    ~ManagerFactory() override = default;
+
+    // MidiService::ManagerFactory implementation.
+    std::unique_ptr<MidiManager> Create(MidiService* service) override {
+      return MidiManager::Create(service, option_);
+    }
+
+    MidiManager::BackendOption option_;
+
+    DISALLOW_COPY_AND_ASSIGN(ManagerFactory);
+  };
+
+  std::unique_ptr<base::MessageLoop> message_loop_;
+
+  DISALLOW_COPY_AND_ASSIGN(PlatformMidiManagerTest);
+};
+
+INSTANTIATE_TEST_CASE_P(
+    Default,
+    PlatformMidiManagerTest,
+    ::testing::Values(MidiManager::BackendOption::kPreferDefault));
+
+#if defined(OS_WIN) || defined(OS_ANDROID)
+INSTANTIATE_TEST_CASE_P(
+    Alternative,
+    PlatformMidiManagerTest,
+    ::testing::Values(MidiManager::BackendOption::kPreferAlternative));
+#endif
+
+}  // namespace
+
+TEST_P(PlatformMidiManagerTest, CreatePlatformMidiManager) {
   // SystemMonitor is needed on Windows.
   base::SystemMonitor system_monitor;
 
@@ -334,7 +383,8 @@ TEST_F(MidiManagerTest, CreatePlatformMidiManager) {
 
   // Use own MidiService instance to construct a real platform dependent
   // MidiManager instance.
-  std::unique_ptr<MidiService> service = std::make_unique<MidiService>();
+  std::unique_ptr<MidiService> service =
+      std::make_unique<MidiService>(CreateFactory());
   service->StartSession(client.get());
 
   Result result = client->WaitForResult();

@@ -38,12 +38,17 @@ bool HasSystemFeatureMidi() {
 
 }  // namespace
 
-MidiManager* MidiManager::Create(MidiService* service) {
-  if (HasSystemFeatureMidi())
-    return new MidiManagerAndroid(service);
-
-  return new MidiManagerUsb(service,
-                            std::make_unique<UsbMidiDeviceFactoryAndroid>());
+std::unique_ptr<MidiManager> MidiManager::Create(MidiService* service,
+                                                 BackendOption option) {
+  // Alternatively select a legacy backend that relies on USB Host API that can
+  // work without the native MIDI API, available only Android M and later
+  // versions.
+  if (!HasSystemFeatureMidi() ||
+      option == MidiManager::BackendOption::kPreferAlternative) {
+    return std::make_unique<MidiManagerUsb>(
+        service, std::make_unique<UsbMidiDeviceFactoryAndroid>());
+  }
+  return std::make_unique<MidiManagerAndroid>(service);
 }
 
 MidiManagerAndroid::MidiManagerAndroid(MidiService* service)

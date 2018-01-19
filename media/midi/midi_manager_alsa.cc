@@ -1382,8 +1382,9 @@ MidiManagerAlsa::CreateScopedSndMidiEventPtr(size_t size) {
   return ScopedSndMidiEventPtr(coder);
 }
 
-MidiManager* MidiManager::Create(MidiService* service) {
-  return new MidiManagerAlsa(service);
+std::unique_ptr<MidiManager> MidiManager::Create(MidiService* service,
+                                                 BackendOption option) {
+  return std::make_unique<MidiManagerAlsa>(service);
 }
 
 }  // namespace midi

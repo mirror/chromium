@@ -113,8 +113,9 @@ MIDITimeStamp SecondsToMIDITimeStamp(double seconds) {
 
 }  // namespace
 
-MidiManager* MidiManager::Create(MidiService* service) {
-  return new MidiManagerMac(service);
+std::unique_ptr<MidiManager> MidiManager::Create(MidiService* service,
+                                                 BackendOption option) {
+  return std::make_unique<MidiManagerMac>(service);
 }
 
 MidiManagerMac::MidiManagerMac(MidiService* service) : MidiManager(service) {}
