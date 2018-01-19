@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a49a1a6f_29e6d5fd",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-19T22:12:17Z",
+      "side": 1,
+      "message": "nit: parent_sequence_number",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f6e3bc_912243c2",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-19T22:12:17Z",
+      "side": 1,
+      "message": "nit: latest_parent_sequence_number? Is this the primary? Maybe primary_parent_sequence_number?",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb283d4c_c2d71dae",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-19T22:12:17Z",
+      "side": 1,
+      "message": "This definitely needs a comment: We only need an ACK on content source ID change if surface synchronization is on or some such thing.",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9ed5fe_e61b2b51",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-19T22:12:17Z",
+      "side": 1,
+      "message": "nit: Comment explaining why we need a WasResized here? I guess to plumb the content_source_id to the renderer.",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12035d6a_5c2c00de",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 1726,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-19T22:12:17Z",
+      "side": 1,
+      "message": "do we have equivalent test coverage?",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4446119_b437f4a9",
+        "filename": "content/browser/screen_orientation/screen_orientation_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-19T22:12:17Z",
+      "side": 1,
+      "message": "I\u0027m not understanding why you\u0027re making changes to this file?",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283f649d_01789dc7",
+        "filename": "content/common/resize_params.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-19T22:12:17Z",
+      "side": 1,
+      "message": "nit: 0u?",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d733c2_39b25805",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-19T22:12:17Z",
+      "side": 1,
+      "message": "Have you tested auto-resize?",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
