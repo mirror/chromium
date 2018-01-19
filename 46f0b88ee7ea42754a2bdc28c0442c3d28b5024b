@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edb0c503_86c283d7",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-19T00:43:29Z",
+      "side": 1,
+      "message": "Deref not needed",
+      "range": {
+        "startLine": 290,
+        "startChar": 10,
+        "endLine": 290,
+        "endChar": 16
+      },
+      "revId": "46f0b88ee7ea42754a2bdc28c0442c3d28b5024b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f26e09f_286d919a",
+        "filename": "components/printing/service/pdf_compositor_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-19T00:43:29Z",
+      "side": 1,
+      "message": "Deref not needed?",
+      "range": {
+        "startLine": 157,
+        "startChar": 17,
+        "endLine": 157,
+        "endChar": 30
+      },
+      "revId": "46f0b88ee7ea42754a2bdc28c0442c3d28b5024b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22b61e5_f36e1714",
+        "filename": "components/viz/client/client_shared_bitmap_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-19T00:43:29Z",
+      "side": 1,
+      "message": "Deref not needed?",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 16
+      },
+      "revId": "46f0b88ee7ea42754a2bdc28c0442c3d28b5024b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b21824_3cc25bf0",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4331,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-19T00:43:29Z",
+      "side": 1,
+      "message": "Deref not needed?",
+      "range": {
+        "startLine": 4331,
+        "startChar": 9,
+        "endLine": 4331,
+        "endChar": 23
+      },
+      "revId": "46f0b88ee7ea42754a2bdc28c0442c3d28b5024b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9e7c37_03843655",
+        "filename": "content/child/child_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-19T00:43:29Z",
+      "side": 1,
+      "message": "Deref not needed?",
+      "range": {
+        "startLine": 722,
+        "startChar": 8,
+        "endLine": 722,
+        "endChar": 16
+      },
+      "revId": "46f0b88ee7ea42754a2bdc28c0442c3d28b5024b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074ab6e6_862849b6",
+        "filename": "content/renderer/device_sensors/device_sensor_event_pump.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-19T00:43:29Z",
+      "side": 1,
+      "message": "Deref not needed?",
+      "range": {
+        "startLine": 217,
+        "startChar": 12,
+        "endLine": 217,
+        "endChar": 32
+      },
+      "revId": "46f0b88ee7ea42754a2bdc28c0442c3d28b5024b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6dff22_c7b2f954",
+        "filename": "mojo/public/cpp/system/handle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-19T00:43:29Z",
+      "side": 1,
+      "message": "Did it not work without the cast?",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 71
+      },
+      "revId": "46f0b88ee7ea42754a2bdc28c0442c3d28b5024b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40a463a_d0d9687a",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoWatcher.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-19T00:43:29Z",
+      "side": 1,
+      "message": "Here and elsewhere, why did you static_cast?",
+      "range": {
+        "startLine": 68,
+        "startChar": 9,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "46f0b88ee7ea42754a2bdc28c0442c3d28b5024b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02693cd2_67f32af4",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-19T00:43:29Z",
+      "side": 1,
+      "message": "You shouldn\u0027t have to dereference this right?",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 113,
+        "endChar": 29
+      },
+      "revId": "46f0b88ee7ea42754a2bdc28c0442c3d28b5024b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
