@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55757838_eabf44fa",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-19T21:04:21Z",
+      "side": 1,
+      "message": "Sounds like it should return a boolean...maybe you should call it WaitForDocumentReady",
+      "revId": "6c8a1270e366b9ca7a481c78611e09bf20ca7188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1ea16c_fb9d3b52",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-19T21:04:21Z",
+      "side": 1,
+      "message": "I\u0027d prefer document.addEventListener(\"DOMContentLoaded\", func, {once: true});",
+      "revId": "6c8a1270e366b9ca7a481c78611e09bf20ca7188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149b1053_40ca1a53",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-19T21:04:21Z",
+      "side": 1,
+      "message": "This should come first and then return if it\u0027s done so that you don\u0027t create an unnecessary listener.",
+      "revId": "6c8a1270e366b9ca7a481c78611e09bf20ca7188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
