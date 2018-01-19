@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3041cf52_30b65b9b",
+        "filename": "components/crash/content/app/breakpad_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2018-01-19T04:57:34Z",
+      "side": 1,
+      "message": "I think that \u003cwindows.h\u003e is intentionally before other headers, at least before other Win32 headers, because some other Win32 headers sometimes depend on that ordering.",
+      "revId": "66892582f3f8a5b001300759426553823e0b0085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
