@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "5fb4b64c_f5b80e01",
+        "filename": "content/test/test_render_frame_host.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-19T10:48:28Z",
+      "side": 1,
+      "message": "Nit: please use { } if the body takes multiple lines, even if the body is only one statement.",
+      "revId": "d9479ae70b486e10bc04622a02a5209ba5d2fd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c1422b2_c4901d2c",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 54
