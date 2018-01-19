@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "e00ed320_ffc3a6b8",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-19T20:51:22Z",
+      "side": 1,
+      "message": "I apologize, you\u0027re right. After testing by putting the focus in a find text field, I was able to see the bug. I\u0027ve modified the code to handle this case.",
+      "parentUuid": "f26f7578_d4fc845b",
+      "range": {
+        "startLine": 761,
+        "startChar": 4,
+        "endLine": 761,
+        "endChar": 22
+      },
+      "revId": "36b0a7f403680b6dd766d57f5c26d873f289d881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14bc6ea1_4cd7a8c5",
         "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
         "patchSetId": 8
@@ -235,6 +259,30 @@
       "revId": "36b0a7f403680b6dd766d57f5c26d873f289d881",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835b29c1_df6fa977",
+        "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-19T20:51:22Z",
+      "side": 1,
+      "message": "I\u0027ve modified it to make sure the last focus is the web view. Anything before that can be \"\" (no focus) or the webview.",
+      "parentUuid": "5f65a5fd_0141bd75",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 16
+      },
+      "revId": "36b0a7f403680b6dd766d57f5c26d873f289d881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
