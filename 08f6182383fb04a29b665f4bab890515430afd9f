@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cce6786_49f23fe4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 101272,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-19T21:45:06Z",
+      "side": 1,
+      "message": "Curious: do you have a histogram or user count that you use to normalize this data / put this number into context?  E.g., if you see 100 users emitting to this histogram in next week\u0027s dev channel, how will you tell if that\u0027s a lot or a little?\n\nYou should probably either revise the histogram (to include the baseline: number of times this area of code is executed and no VR API is found) or at least revise the histogram description to describe what other histogram or user action/count you\u0027ll use to compare this number with.",
+      "revId": "08f6182383fb04a29b665f4bab890515430afd9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
