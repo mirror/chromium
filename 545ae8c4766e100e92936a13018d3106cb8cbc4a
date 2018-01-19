@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e0fae18_01cf2437",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-19T00:10:38Z",
+      "side": 0,
+      "message": "url::Origin::Create will create a unique origin if given an invalid GURL. \n url::Origin::IsSameOriginWith returns false if either of the origins is unique.  I\u0027ve also made sure that the unit tests for IsSameSite cover this kind of scenario.",
+      "range": {
+        "startLine": 158,
+        "startChar": 31,
+        "endLine": 158,
+        "endChar": 55
+      },
+      "revId": "545ae8c4766e100e92936a13018d3106cb8cbc4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fba7db5_f4efabf8",
+        "filename": "content/common/cross_site_document_classifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-19T00:10:38Z",
+      "side": 1,
+      "message": "Both TODOs in this file are covered by https://crrev.com/c/875004",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 18
+      },
+      "revId": "ac36645be48d6ee5f1f48685f31840b98f1c27c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a79d236_5d21c859",
+        "filename": "content/common/cross_site_document_classifier_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-19T00:10:38Z",
+      "side": 1,
+      "message": "I assume that the intent behind this test input was 1) same-eTLD^H^H^Hhost as |frame_origin| and 2) different protocol (https VS http).  Changing s/mail/www/ ensures that (1) still holds.",
+      "range": {
+        "startLine": 89,
+        "startChar": 46,
+        "endLine": 89,
+        "endChar": 49
+      },
+      "revId": "ac36645be48d6ee5f1f48685f31840b98f1c27c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc868fd4_414138c0",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/site-per-process",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-19T00:10:38Z",
+      "side": 1,
+      "message": "I think it is okay to disable the test:\n\n1. The test is disabled elsewhere via LayoutTests/TestExpectations\n2. The test tries to call JSON.parse on (empty because of XSDB) cross-origin (but cross-site) response.  This is blocked because we pass WPT-specific origins to --isolate-origins param when running layout tests in Site Isolation mode.\n\n(see also the bug).",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 16
+      },
+      "revId": "ac36645be48d6ee5f1f48685f31840b98f1c27c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
