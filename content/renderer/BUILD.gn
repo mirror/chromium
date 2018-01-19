@@ -539,6 +539,7 @@ target(link_target_type, "renderer") {
   defines = []
 
   public_deps = [
+    "//content/common",
     "//content/public/common:common_sources",
     "//ipc",
   ]

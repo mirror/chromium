@@ -16,7 +16,11 @@ namespace content {
 
 RenderWidgetMouseLockDispatcher::RenderWidgetMouseLockDispatcher(
     RenderWidget* render_widget)
-    : render_widget_(render_widget) {}
+    : render_widget_(render_widget) {
+  registry_.AddInterface(
+      base::Bind(&RenderWidgetMouseLockDispatcher::OnMouseLockStatusBindRequest,
+                 base::Unretained(this)));
+}
 
 RenderWidgetMouseLockDispatcher::~RenderWidgetMouseLockDispatcher() {}
 
@@ -42,7 +46,6 @@ bool RenderWidgetMouseLockDispatcher::OnMessageReceived(
     const IPC::Message& message) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(RenderWidgetMouseLockDispatcher, message)
-    IPC_MESSAGE_HANDLER(ViewMsg_LockMouse_ACK, OnLockMouseACK)
     IPC_MESSAGE_FORWARD(ViewMsg_MouseLockLost,
                         static_cast<MouseLockDispatcher*>(this),
                         MouseLockDispatcher::OnMouseLockLost)
@@ -51,8 +54,12 @@ bool RenderWidgetMouseLockDispatcher::OnMessageReceived(
   return handled;
 }
 
-void RenderWidgetMouseLockDispatcher::OnLockMouseACK(bool succeeded) {
-  // Notify the base class.
+void RenderWidgetMouseLockDispatcher::OnMouseLockStatusBindRequest(
+    content::mojom::MouseLockStatusRequest request) {
+  binding_set_.AddBinding(this, std::move(request));
+}
+
+void RenderWidgetMouseLockDispatcher::LockMouseACK(bool succeeded) {
   MouseLockDispatcher::OnLockMouseACK(succeeded);
 
   // Mouse Lock removes the system cursor and provides all mouse motion as

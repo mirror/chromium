@@ -7,7 +7,10 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "content/common/view_messages.mojom.h"
 #include "content/renderer/mouse_lock_dispatcher.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 
 namespace IPC {
 class Message;
@@ -18,7 +21,8 @@ namespace content {
 class RenderWidget;
 
 // RenderWidgetMouseLockDispatcher is owned by RenderWidget.
-class RenderWidgetMouseLockDispatcher : public MouseLockDispatcher {
+class RenderWidgetMouseLockDispatcher : public MouseLockDispatcher,
+                                        public content::mojom::MouseLockStatus {
  public:
   explicit RenderWidgetMouseLockDispatcher(RenderWidget* render_widget);
   ~RenderWidgetMouseLockDispatcher() override;
@@ -30,9 +34,13 @@ class RenderWidgetMouseLockDispatcher : public MouseLockDispatcher {
   void SendLockMouseRequest() override;
   void SendUnlockMouseRequest() override;
 
-  void OnLockMouseACK(bool succeeded);
+  void LockMouseACK(bool succeeded) override;
+  void OnMouseLockStatusBindRequest(
+      content::mojom::MouseLockStatusRequest request);
 
   RenderWidget* render_widget_;
+  mojo::BindingSet<content::mojom::MouseLockStatus> binding_set_;
+  service_manager::BinderRegistry registry_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetMouseLockDispatcher);
 };

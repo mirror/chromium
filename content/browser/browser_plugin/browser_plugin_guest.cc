@@ -131,6 +131,7 @@ BrowserPluginGuest::BrowserPluginGuest(bool has_render_view,
       ignore_dragged_url_(true),
       delegate_(delegate),
       can_use_cross_process_frames_(delegate->CanUseCrossProcessFrames()),
+      mouse_lock_status_(nullptr),
       weak_ptr_factory_(this) {
   DCHECK(web_contents);
   DCHECK(delegate);
@@ -990,10 +991,7 @@ void BrowserPluginGuest::OnLockMouse(bool user_gesture,
   if (pending_lock_request_) {
     // Immediately reject the lock because only one pointerLock may be active
     // at a time.
-    RenderWidgetHost* widget_host =
-        web_contents()->GetRenderViewHost()->GetWidget();
-    widget_host->Send(
-        new ViewMsg_LockMouse_ACK(widget_host->GetRoutingID(), false));
+    GetMouseLockStatusPtr()->LockMouseACK(false);
     return;
   }
 
@@ -1009,12 +1007,18 @@ void BrowserPluginGuest::OnLockMouse(bool user_gesture,
                  weak_ptr_factory_.GetWeakPtr()));
 }
 
+mojom::MouseLockStatus* BrowserPluginGuest::GetMouseLockStatusPtr() {
+  if (!mouse_lock_status_) {
+    ChildThreadImpl::current()->current()->GetConnector()->BindInterface(
+        mojom::kBrowserServiceName, &mouse_lock_status_ptr_);
+    mouse_lock_status_ = mouse_lock_status_ptr_.get();
+  }
+  return mouse_lock_status_;
+}
+
 void BrowserPluginGuest::OnLockMouseAck(int browser_plugin_instance_id,
                                         bool succeeded) {
-  RenderWidgetHost* widget_host =
-      web_contents()->GetRenderViewHost()->GetWidget();
-  widget_host->Send(
-      new ViewMsg_LockMouse_ACK(widget_host->GetRoutingID(), succeeded));
+  GetMouseLockStatusPtr()->LockMouseACK(succeeded);
   pending_lock_request_ = false;
   if (succeeded)
     mouse_locked_ = true;

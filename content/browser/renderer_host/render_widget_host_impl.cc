@@ -63,6 +63,7 @@
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
 #include "content/browser/renderer_host/render_widget_host_owner_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
+#include "content/child/child_thread_impl.h"
 #include "content/common/content_constants_internal.h"
 #include "content/common/content_switches_internal.h"
 #include "content/common/cursors/webcursor.h"
@@ -360,6 +361,7 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
       current_content_source_id_(0),
       monitoring_composition_info_(false),
       compositor_frame_sink_binding_(this),
+      mouse_lock_status_(nullptr),
       weak_factory_(this) {
   CHECK(delegate_);
   CHECK_NE(MSG_ROUTING_NONE, routing_id_);
@@ -1854,7 +1856,7 @@ void RenderWidgetHostImpl::RejectMouseLockOrUnlockIfNecessary() {
   DCHECK(!pending_mouse_lock_request_ || !IsMouseLocked());
   if (pending_mouse_lock_request_) {
     pending_mouse_lock_request_ = false;
-    Send(new ViewMsg_LockMouse_ACK(routing_id_, false));
+    GetMouseLockStatusPtr()->LockMouseACK(false);
   } else if (IsMouseLocked()) {
     view_->UnlockMouse();
   }
@@ -2190,7 +2192,7 @@ void RenderWidgetHostImpl::OnImeCancelComposition() {
 void RenderWidgetHostImpl::OnLockMouse(bool user_gesture,
                                        bool privileged) {
   if (pending_mouse_lock_request_) {
-    Send(new ViewMsg_LockMouse_ACK(routing_id_, false));
+    GetMouseLockStatusPtr()->LockMouseACK(false);
     return;
   }
 
@@ -2468,12 +2470,21 @@ bool RenderWidgetHostImpl::GotResponseToLockMouseRequest(bool allowed) {
 
   pending_mouse_lock_request_ = false;
   if (!view_ || !view_->HasFocus()|| !view_->LockMouse()) {
-    Send(new ViewMsg_LockMouse_ACK(routing_id_, false));
+    GetMouseLockStatusPtr()->LockMouseACK(false);
     return false;
   }
 
-  Send(new ViewMsg_LockMouse_ACK(routing_id_, true));
+  GetMouseLockStatusPtr()->LockMouseACK(true);
   return true;
+}
+
+mojom::MouseLockStatus* RenderWidgetHostImpl::GetMouseLockStatusPtr() {
+  if (!mouse_lock_status_) {
+    ChildThreadImpl::current()->current()->GetConnector()->BindInterface(
+        mojom::kBrowserServiceName, &mouse_lock_status_ptr_);
+    mouse_lock_status_ = mouse_lock_status_ptr_.get();
+  }
+  return mouse_lock_status_;
 }
 
 void RenderWidgetHostImpl::DelayedAutoResized() {

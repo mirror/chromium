@@ -39,17 +39,21 @@
 #include "content/browser/renderer_host/input/touch_emulator_client.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
+#include "content/child/child_thread_impl.h"
 #include "content/common/drag_event_source_info.h"
 #include "content/common/input/input_handler.mojom.h"
 #include "content/common/render_widget_surface_properties.h"
 #include "content/common/view_message_enums.h"
+#include "content/common/view_messages.mojom.h"
 #include "content/common/widget.mojom.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/common/input_event_ack_state.h"
 #include "content/public/common/page_zoom.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_constants.h"
 #include "ipc/ipc_listener.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
 #include "services/viz/public/interfaces/hit_test/input_target_client.mojom.h"
 #include "third_party/WebKit/public/platform/WebDisplayMode.h"
@@ -774,6 +778,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // which may get in recursive loops).
   void DelayedAutoResized();
 
+  mojom::MouseLockStatus* GetMouseLockStatusPtr();
   void WindowSnapshotReachedScreen(int snapshot_id);
 
   void OnSnapshotFromSurfaceReceived(int snapshot_id,
@@ -1058,6 +1063,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   mojom::WidgetInputHandlerPtr widget_input_handler_;
   std::unique_ptr<mojom::WidgetInputHandler> legacy_widget_input_handler_;
   viz::mojom::InputTargetClientPtr input_target_client_;
+  mojom::MouseLockStatusPtr mouse_lock_status_ptr_;
+  mojom::MouseLockStatus* mouse_lock_status_;
 
   base::WeakPtrFactory<RenderWidgetHostImpl> weak_factory_;
 

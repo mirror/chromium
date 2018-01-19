@@ -573,6 +573,7 @@ mojom("mojo_bindings") {
     "storage_partition_service.mojom",
     "url_loader_factory_bundle.mojom",
     "video_capture.mojom",
+    "view_messages.mojom",
     "widget.mojom",
   ]
 
