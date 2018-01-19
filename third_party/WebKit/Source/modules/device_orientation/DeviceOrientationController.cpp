@@ -5,12 +5,15 @@
 #include "modules/device_orientation/DeviceOrientationController.h"
 
 #include "core/frame/Deprecation.h"
+#include "core/frame/FrameConsole.h"
 #include "core/frame/HostsUsingFeatures.h"
 #include "core/frame/Settings.h"
+#include "core/inspector/ConsoleMessage.h"
 #include "modules/EventModules.h"
 #include "modules/device_orientation/DeviceOrientationData.h"
 #include "modules/device_orientation/DeviceOrientationDispatcher.h"
 #include "modules/device_orientation/DeviceOrientationEvent.h"
+#include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Assertions.h"
 #include "public/platform/Platform.h"
@@ -79,6 +82,11 @@ void DeviceOrientationController::DidAddEventListener(
           "DeviceSensors.DeviceOrientationCrossOrigin",
           WebURL(GetDocument().Url()));
     }
+
+    LogToConsoleIfPolicyFeaturesDisabled(GetDocument().GetFrame(),
+                                         EventTypeName(),
+                                         {FeaturePolicyFeature::kAccelerometer,
+                                          FeaturePolicyFeature::kGyroscope});
   }
 
   DeviceSingleWindowEventController::DidAddEventListener(window, event_type);
@@ -139,6 +147,31 @@ void DeviceOrientationController::Trace(blink::Visitor* visitor) {
   visitor->Trace(override_orientation_data_);
   DeviceSingleWindowEventController::Trace(visitor);
   Supplement<Document>::Trace(visitor);
+}
+
+// static
+void DeviceOrientationController::LogToConsoleIfPolicyFeaturesDisabled(
+    LocalFrame* frame,
+    const AtomicString& event_name,
+    const Vector<FeaturePolicyFeature>& features) {
+  if (!frame)
+    return;
+
+  bool blocked = std::any_of(features.begin(), features.end(),
+                             [frame](FeaturePolicyFeature feature) {
+                               return !frame->IsFeatureEnabled(feature);
+                             });
+  if (blocked) {
+    String message = String::Format(
+        "The %s events are blocked by feature policy. "
+        "See "
+        "https://github.com/WICG/feature-policy/blob/gh-pages/"
+        "features.md#sensor-features",
+        event_name.Ascii().data());
+    ConsoleMessage* console_message = ConsoleMessage::Create(
+        kJSMessageSource, kWarningMessageLevel, std::move(message));
+    frame->Console().AddMessage(console_message);
+  }
 }
 
 }  // namespace blink

@@ -11,6 +11,7 @@
 #include "modules/device_orientation/DeviceMotionData.h"
 #include "modules/device_orientation/DeviceMotionDispatcher.h"
 #include "modules/device_orientation/DeviceMotionEvent.h"
+#include "modules/device_orientation/DeviceOrientationController.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/Platform.h"
 
@@ -68,6 +69,11 @@ void DeviceMotionController::DidAddEventListener(
       Platform::Current()->RecordRapporURL(
           "DeviceSensors.DeviceMotionCrossOrigin", WebURL(GetDocument().Url()));
     }
+
+    DeviceOrientationController::LogToConsoleIfPolicyFeaturesDisabled(
+        GetDocument().GetFrame(), EventTypeName(),
+        {FeaturePolicyFeature::kAccelerometer,
+         FeaturePolicyFeature::kGyroscope});
   }
 
   DeviceSingleWindowEventController::DidAddEventListener(window, event_type);

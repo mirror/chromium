@@ -59,7 +59,14 @@ void DeviceOrientationAbsoluteController::DidAddEventListener(
     }
   }
 
-  // TODO: add rappor url logging as in DeviceOrientationController.
+  if (!has_event_listener_) {
+    // TODO: add rappor url logging as in DeviceOrientationController.
+
+    LogToConsoleIfPolicyFeaturesDisabled(
+        GetDocument().GetFrame(), EventTypeName(),
+        {FeaturePolicyFeature::kAccelerometer, FeaturePolicyFeature::kGyroscope,
+         FeaturePolicyFeature::kMagnetometer});
+  }
 
   DeviceSingleWindowEventController::DidAddEventListener(window, event_type);
 }
