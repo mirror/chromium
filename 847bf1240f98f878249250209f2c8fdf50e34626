@@ -16,6 +16,24 @@
       "revId": "847bf1240f98f878249250209f2c8fdf50e34626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492d50d7_6b883e58",
+        "filename": "testing/buildbot/waterfalls.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1601,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-19T21:31:00Z",
+      "side": 1,
+      "message": "\u003e I\u0027m on the fence about this.\n\u003e \n\u003e This is, I think, the first place we use an `args` in waterfalls.pyl; The idea (I suppose) is that *every* test step run on this bot would get this argument, which seems kinda dodgy (non-gtest-based-tests won\u0027t support these args).\n\nYep, it is. Had to add logic for it in generate_buildbot_json.py up above.\n\n\u003e \n\u003e On the other hand, you\u0027d have to override the args for every test suite otherwise, and that\u0027d be annoying too.\n\nI thought about how to handle this \u0026 considered:\n\n- what I have here\n- exceptions everywhere\n- a more robust mixin system that lets us say things like \"I want to include these arguments for all gtests\" or what have you\n\nI don\u0027t like the exception one at all. I\u0027m torn between the other two; I suspect we\u0027ll want to be able to express ideas like this, but I also know we want to consolidate on a single Test interface, and I\u0027m not sure whether we\u0027ll need to do the former before we get around to doing the latter.",
+      "parentUuid": "a397de86_4bd63e29",
+      "revId": "847bf1240f98f878249250209f2c8fdf50e34626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
