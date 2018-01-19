@@ -69,6 +69,24 @@
       "revId": "622579786837434bc656cdff238351773f263ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f33de4_050a452e",
+        "filename": "content/shell/browser/layout_test/test_info_extractor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-19T22:08:54Z",
+      "side": 1,
+      "message": "OK.\n\nThis is in a test directory, meant for testonly code, but I guess it depends on how the *ForTesting presubmits are enforced.",
+      "parentUuid": "90bde6f0_c34e01be",
+      "revId": "622579786837434bc656cdff238351773f263ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
