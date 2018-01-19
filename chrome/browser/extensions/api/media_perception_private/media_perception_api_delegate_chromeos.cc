@@ -41,9 +41,7 @@ void MediaPerceptionAPIDelegateChromeOS::LoadCrOSComponent(
     const media_perception::ComponentType& type,
     LoadCrOSComponentCallback load_callback) {
   g_browser_process->platform_part()->cros_component_manager()->Load(
-      GetComponentNameForComponentType(type),
-      component_updater::CrOSComponentManager::MountPolicy::kMount,
-      std::move(load_callback));
+      GetComponentNameForComponentType(type), std::move(load_callback));
 }
 
 }  // namespace extensions
