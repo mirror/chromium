@@ -19,6 +19,8 @@ static_library("router") {
     "discovery/media_sink_service_base.h",
     "discovery/media_sink_service_util.cc",
     "discovery/media_sink_service_util.h",
+    "discovery/media_sink_utils.cc",
+    "discovery/media_sink_utils.h",
     "issue.cc",
     "issue.h",
     "media_route.cc",

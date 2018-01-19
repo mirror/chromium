@@ -21,6 +21,8 @@
 #include "chrome/browser/media/router/test/media_router_mojo_test.h"
 #include "chrome/browser/media/router/test/test_helper.h"
 #include "chrome/common/media_router/media_source_helper.h"
+#include "chrome/common/pref_names.h"
+#include "components/prefs/pref_service.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -36,6 +38,7 @@ namespace {
 const char kOrigin[] = "http://origin/";
 const char kRouteId[] = "routeId";
 const char kSource[] = "source1";
+const char kReceiverIdToken[] = "gxhszucri9k6";
 
 class NullMessageObserver : public RouteMessageObserver {
  public:
@@ -78,6 +81,9 @@ class MediaRouterDesktopTestBase : public MediaRouterMojoTest {
         new DualMediaSinkService(std::move(cast_media_sink_service),
                                  std::make_unique<MockDialMediaSinkService>(
                                      profile()->GetRequestContext())));
+
+    profile()->GetPrefs()->SetString(prefs::kMediaRouterReceiverIdToken,
+                                     kReceiverIdToken);
     return std::unique_ptr<MediaRouterDesktop>(
         new MediaRouterDesktop(profile(), media_sink_service_.get()));
   }
@@ -179,17 +185,24 @@ TEST_F(MediaRouterDesktopTest, ProvideSinks) {
   extra_data.ip_endpoint = net::IPEndPoint(ip_address, 0);
   extra_data.capabilities = 2;
   extra_data.cast_channel_id = 3;
-  MediaSinkInternal expected_sink(sink, extra_data);
-  sinks.push_back(expected_sink);
-  std::string provider_name = "cast";
+  MediaSinkInternal sink_internal(sink, extra_data);
+  sinks.push_back(sink_internal);
 
+  MediaSinkUtils utils(kReceiverIdToken);
+  MediaSinkInternal expected_sink = sink_internal;
+  expected_sink.sink().set_sink_id(utils.GenerateId(sink.id()));
+  std::vector<MediaSinkInternal> expected_sinks = {expected_sink};
+
+  std::string provider_name = "cast";
   // |router()| is already registered with |media_sink_service_| during
   // |SetUp()|.
-  EXPECT_CALL(mock_extension_provider_, ProvideSinks(provider_name, sinks));
+  EXPECT_CALL(mock_extension_provider_,
+              ProvideSinks(provider_name, expected_sinks));
   media_sink_service()->OnSinksDiscovered(provider_name, sinks);
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_CALL(mock_extension_provider_, ProvideSinks(provider_name, sinks));
+  EXPECT_CALL(mock_extension_provider_,
+              ProvideSinks(provider_name, expected_sinks));
   static_cast<MediaRouterDesktop*>(router())->ProvideSinksToExtension();
   base::RunLoop().RunUntilIdle();
 }
@@ -199,6 +212,14 @@ TEST_F(MediaRouterDesktopTest, ProvideSinks) {
 TEST_F(MediaRouterDesktopTest, SendCastJoinRequestsToExtension) {
   TestJoinRoute(kAutoJoinPresentationId);
   TestJoinRoute(kCastPresentationIdPrefix + std::string("123"));
+}
+
+TEST_F(MediaRouterDesktopTest, TestInitMediaSinkUtils) {
+  profile()->GetPrefs()->SetString(prefs::kMediaRouterReceiverIdToken, "");
+  MediaRouterDesktop mr(profile(), media_sink_service());
+  std::string token =
+      profile()->GetPrefs()->GetString(prefs::kMediaRouterReceiverIdToken);
+  EXPECT_FALSE(token.empty());
 }
 
 }  // namespace media_router

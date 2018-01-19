@@ -14,6 +14,8 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/media_router/media_source_helper.h"
+#include "chrome/common/pref_names.h"
+#include "components/prefs/pref_service.h"
 #include "extensions/common/extension.h"
 #if defined(OS_WIN)
 #include "chrome/browser/media/router/mojo/media_route_provider_util_win.h"
@@ -73,6 +75,7 @@ MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context)
       base::BindOnce(&MediaRouterDesktop::OnFirewallCheckComplete,
                      weak_factory_.GetWeakPtr()));
 #endif
+  InitializeMediaSinkUtils(context);
 }
 
 MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context,
@@ -81,6 +84,7 @@ MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context,
       media_sink_service_(media_sink_service),
       weak_factory_(this) {
   InitializeMediaRouteProviders();
+  InitializeMediaSinkUtils(context);
 }
 
 void MediaRouterDesktop::RegisterMediaRouteProvider(
@@ -170,8 +174,18 @@ void MediaRouterDesktop::ProvideSinks(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DVLOG(1) << "Provider [" << provider_name << "] found " << sinks.size()
            << " devices...";
+
+  // Generate sink ID for extension and UI
+  std::vector<MediaSinkInternal> sinks_to_mrp = sinks;
+  std::for_each(
+      sinks_to_mrp.begin(), sinks_to_mrp.end(), [&](MediaSinkInternal& sink) {
+        std::string device_uuid = sink.sink().id();
+        std::string new_id = media_sink_utils_->GenerateId(device_uuid);
+        sink.sink().set_sink_id(new_id);
+      });
+
   media_route_providers_[MediaRouteProviderId::EXTENSION]->ProvideSinks(
-      provider_name, sinks);
+      provider_name, sinks_to_mrp);
 }
 
 void MediaRouterDesktop::InitializeMediaRouteProviders() {
@@ -201,6 +215,23 @@ void MediaRouterDesktop::InitializeWiredDisplayMediaRouteProvider() {
       std::move(wired_display_provider_ptr),
       base::BindOnce([](const std::string& instance_id,
                         mojom::MediaRouteProviderConfigPtr config) {}));
+}
+
+void MediaRouterDesktop::InitializeMediaSinkUtils(
+    content::BrowserContext* context) {
+  auto* pref_service = Profile::FromBrowserContext(context)->GetPrefs();
+  DCHECK(pref_service);
+
+  std::string stored_receiver_id_token =
+      pref_service->GetString(prefs::kMediaRouterReceiverIdToken);
+  if (stored_receiver_id_token.empty()) {
+    media_sink_utils_ = std::make_unique<MediaSinkUtils>();
+    pref_service->SetString(prefs::kMediaRouterReceiverIdToken,
+                            media_sink_utils_->receiver_id_token());
+  } else {
+    media_sink_utils_ =
+        std::make_unique<MediaSinkUtils>(stored_receiver_id_token);
+  }
 }
 
 #if defined(OS_WIN)

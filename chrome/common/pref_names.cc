@@ -2265,6 +2265,8 @@ const char kMediaRouterFirstRunFlowAcknowledged[] =
 // Whether or not the user has enabled Media Remoting. Defaults to true.
 const char kMediaRouterMediaRemotingEnabled[] =
     "media_router.media_remoting.enabled";
+// A random string used to generate per-profile media sink ids.
+const char kMediaRouterReceiverIdToken[] = "media_router.receiver_id_token";
 // A list of website origins on which the user has chosen to use tab mirroring.
 const char kMediaRouterTabMirroringSources[] =
     "media_router.tab_mirroring_sources";
