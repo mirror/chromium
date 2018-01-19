@@ -11,6 +11,9 @@ namespace download {
 
 extern const base::Feature kDownloadServiceFeature;
 
+// Incognito support of download service.
+extern const base::Feature kDownloadServiceIncognito;
+
 }  // namespace download
 
 #endif  // COMPONENTS_DOWNLOAD_PUBLIC_FEATURES_H_
