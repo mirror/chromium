@@ -143,13 +143,14 @@ void DistanceDataForNode(WebFocusType,
                          const FocusCandidate& current,
                          FocusCandidate&);
 LayoutRect NodeRectInAbsoluteCoordinates(Node*, bool ignore_border = false);
-LayoutRect FrameRectInAbsoluteCoordinates(LocalFrame*);
+LayoutRect FrameRectInAbsoluteCoordinates(const LocalFrame*);
 LayoutRect VirtualRectForDirection(WebFocusType,
                                    const LayoutRect& starting_rect,
                                    LayoutUnit width = LayoutUnit());
 LayoutRect VirtualRectForAreaElementAndDirection(HTMLAreaElement&,
                                                  WebFocusType);
 HTMLFrameOwnerElement* FrameOwnerElement(FocusCandidate&);
+LayoutRect FindSearchStartPoint(const LocalFrame*, WebFocusType);
 
 }  // namespace blink
 

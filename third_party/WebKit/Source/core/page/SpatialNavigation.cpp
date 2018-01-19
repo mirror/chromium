@@ -47,7 +47,7 @@ namespace blink {
 using namespace HTMLNames;
 
 static void DeflateIfOverlapped(LayoutRect&, LayoutRect&);
-static LayoutRect RectToAbsoluteCoordinates(LocalFrame* initial_frame,
+static LayoutRect RectToAbsoluteCoordinates(const LocalFrame* initial_frame,
                                             const LayoutRect&);
 static bool IsScrollableNode(const Node*);
 
@@ -412,7 +412,7 @@ bool CanScrollInDirection(const LocalFrame* frame, WebFocusType type) {
   }
 }
 
-static LayoutRect RectToAbsoluteCoordinates(LocalFrame* initial_frame,
+static LayoutRect RectToAbsoluteCoordinates(const LocalFrame* initial_frame,
                                             const LayoutRect& initial_rect) {
   return LayoutRect(
       initial_frame->View()->ContentsToRootFrame(initial_rect.Location()),
@@ -444,7 +444,7 @@ LayoutRect NodeRectInAbsoluteCoordinates(Node* node, bool ignore_border) {
   return rect;
 }
 
-LayoutRect FrameRectInAbsoluteCoordinates(LocalFrame* frame) {
+LayoutRect FrameRectInAbsoluteCoordinates(const LocalFrame* frame) {
   return RectToAbsoluteCoordinates(
       frame,
       LayoutRect(
@@ -717,5 +717,26 @@ HTMLFrameOwnerElement* FrameOwnerElement(FocusCandidate& candidate) {
              ? ToHTMLFrameOwnerElement(candidate.visible_node)
              : nullptr;
 };
+
+LayoutRect FindSearchStartPoint(const LocalFrame* frame,
+                                WebFocusType direction) {
+  Document* focused_document = frame->GetDocument();
+  Element* focused_element = focused_document->FocusedElement();
+
+  LayoutRect starting_rect =
+      VirtualRectForDirection(direction, FrameRectInAbsoluteCoordinates(frame));
+  if (focused_element) {
+    auto* area_element = ToHTMLAreaElementOrNull(focused_element);
+    if (area_element)
+      focused_element = area_element->ImageElement();
+    if (!HasOffscreenRect(focused_element)) {
+      starting_rect =
+          area_element
+              ? VirtualRectForAreaElementAndDirection(*area_element, direction)
+              : NodeRectInAbsoluteCoordinates(focused_element, true);
+    }
+  }
+  return starting_rect;
+}
 
 }  // namespace blink
