@@ -576,3 +576,28 @@ ConsoleTestRunner.dumpStackTraces = function() {
     }
   }
 };
+
+/**
+ * Returns actual visible indices. Messages in the margin are treated as NOT visible.
+ * @return {!{first: number, last: number}}
+ */
+ConsoleTestRunner.visibleIndices = function() {
+  var consoleView = Console.ConsoleView.instance();
+  var viewport = consoleView._viewport;
+  var viewportRect = viewport.element.getBoundingClientRect();
+  var viewportPadding = parseFloat(window.getComputedStyle(viewport.element).paddingTop);
+  var first = -1;
+  var last = -1;
+  for (var i = 0; i < consoleView._visibleViewMessages.length; i++) {
+    // Created message elements may have a bounding rect, but not be connected to DOM.
+    var item = consoleView._visibleViewMessages[i];
+    if (!item._element || !item._element.isConnected)
+      continue;
+    var itemRect = item._element.getBoundingClientRect();
+    if (first === -1 && itemRect.bottom > viewportRect.top + viewportPadding + 1)
+      first = i;
+    if (itemRect.top <= viewportRect.bottom - viewportPadding - 1)
+      last = i;
+  }
+  return {first, last};
+};

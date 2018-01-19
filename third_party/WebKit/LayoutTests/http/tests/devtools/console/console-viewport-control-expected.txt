@@ -1,30 +1,40 @@
 Verifies viewport correctly shows and hides messages while logging and scrolling.
 
-Max visible messages count: 13, active count: 25
+Logging 200 messages
+activeCountAbove: 6, activeCountBelow: 8
+visibleCount: 11, maxActiveCount: 25
 
 Running: addSmallCount
+Logging 3 messages
 Messages shown: 3, hidden: 0
 
-Running: addMaxVisibleCount
-Messages shown: 13, hidden: 0
+Running: addVisibleCount
+Logging 11 messages
+Messages shown: 11, hidden: 0
 
 Running: addMaxActiveCount
-Is at bottom: true, should stick: true
+Logging 25 messages
 Messages shown: 25, hidden: 0
 
 Running: addMoreThanMaxActiveCount
-Is at bottom: true, should stick: true
+Logging 25 messages
+Logging 3 messages
 Messages shown: 28, hidden: 3
 
-Running: scrollUpWithinActiveWindow
-Is at bottom: true, should stick: true
+Running: scrollToBottomInPartialActiveWindow
+Logging 15 messages
 Messages shown: 0, hidden: 0
 
-Running: scrollUpToPositionOutsideOfActiveWindow
-Is at bottom: true, should stick: true
-Messages shown: 3, hidden: 3
+Running: scrollToBottomInActiveWindow
+Logging 21 messages
+Messages shown: 0, hidden: 6
+
+Running: scrollToBottomInMoreThanActiveWindow
+Logging 28 messages
+Messages shown: 3, hidden: 13
 
 Running: logRepeatingMessages
+Logging 11 messages
 Messages shown: 1, hidden: 0
 
 Running: reorderingMessages
