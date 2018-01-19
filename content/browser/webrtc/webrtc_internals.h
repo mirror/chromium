@@ -220,6 +220,7 @@ class CONTENT_EXPORT WebRTCInternals : public RenderProcessHostObserver,
   // Diagnostic audio recording state.
   bool audio_debug_recordings_;
   base::FilePath audio_debug_recordings_file_path_;
+  // std::unique_ptr<audio::DebugRecordingSession> debug_recording_session_;
 
   // Diagnostic event log recording state.
   bool event_log_recordings_;

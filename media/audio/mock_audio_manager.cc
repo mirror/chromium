@@ -127,7 +127,8 @@ std::unique_ptr<AudioLog> MockAudioManager::CreateAudioLog(
 void MockAudioManager::InitializeDebugRecording() {}
 
 void MockAudioManager::EnableDebugRecording(
-    const base::FilePath& base_file_name) {}
+    const AudioDebugRecordingHelper::CreateFileCallback& create_file_callback) {
+}
 
 void MockAudioManager::DisableDebugRecording() {}
 
