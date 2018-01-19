@@ -924,7 +924,7 @@ TEST_P(AppsGridViewTest,
 // container.
 TEST_P(AppsGridViewTest, DISABLED_InitialSelectionInStateStart) {
   // Simulates that the app list is at state start.
-  contents_view_->SetActiveState(AppListModel::STATE_START);
+  contents_view_->SetActiveState(ash::AppListState::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
   EXPECT_TRUE(CheckNoSelection());
 
@@ -945,7 +945,7 @@ TEST_P(AppsGridViewTest, DISABLED_InitialSelectionInStateStart) {
 // nothing while hitting shift+tab key clears selection.
 TEST_P(AppsGridViewTest, DISABLED_ClearSelectionInStateStart) {
   // Simulates that the app list is at state start.
-  contents_view_->SetActiveState(AppListModel::STATE_START);
+  contents_view_->SetActiveState(ash::AppListState::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
 
   // Moves selection to the first app in the suggestions container.
@@ -964,7 +964,7 @@ TEST_P(AppsGridViewTest, DISABLED_ClearSelectionInStateStart) {
 // container.
 TEST_P(AppsGridViewTest, DISABLED_ExpandArrowSelectionInStateStart) {
   // Simulates that the app list is at state start.
-  contents_view_->SetActiveState(AppListModel::STATE_START);
+  contents_view_->SetActiveState(ash::AppListState::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
 
   // Moves selection to the expand arrow.
@@ -1010,7 +1010,7 @@ TEST_P(AppsGridViewTest, DISABLED_ExpandArrowSelectionInStateStart) {
 // move the selection to the expand arrow.
 TEST_P(AppsGridViewTest, DISABLED_SuggestionsContainerSelectionInStateStart) {
   // Simulates that the app list is at state start.
-  contents_view_->SetActiveState(AppListModel::STATE_START);
+  contents_view_->SetActiveState(ash::AppListState::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
   SimulateKeyPress(ui::VKEY_DOWN);
 
