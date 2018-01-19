@@ -312,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "636a4016_db0c8cc4",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 2139,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-19T21:14:55Z",
+      "side": 1,
+      "message": "Good call, thanks! It looks like CanDraw returns false at all the same places that UpdateDrawProperties does, so this should be safe - I\u0027m DCHECKing the return of UpdateDrawProps instead.\n\nI added a test: LayerTreeHostTestCantDrawBeforeCommitActivate, that checks that CanDraw is false until the first commit+activate. Is this the sort of thing you\u0027re hoping to have unit tests for?",
+      "parentUuid": "89b9dee1_71157921",
+      "revId": "739dbbc7e98e8c6beca83b1a0fe905ff79f20a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d365ffdf_ef638169",
         "filename": "cc/trees/layer_tree_host_unittest.cc",
         "patchSetId": 28
