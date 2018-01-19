@@ -34,6 +34,24 @@
       "revId": "084ab81c4fed60983df3fb3989f6abb43c80f191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95441c5f_bde74aa5",
+        "filename": "android_webview/browser/renderer_host/aw_render_view_host_ext.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-19T14:06:07Z",
+      "side": 1,
+      "message": "\u003e Was that a bug previously, though?\n\nNo. Previous one always gets the main frame of the web contents, ie the root frame.\n\n\u003e The Android docs say that setBackgroundColor sets the background colour for the view, without mentioning iframes.\n\nMeaning it probably should only apply to the root frame",
+      "parentUuid": "05592349_dba02eec",
+      "revId": "084ab81c4fed60983df3fb3989f6abb43c80f191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
