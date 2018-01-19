@@ -217,7 +217,8 @@ void PowerButtonController::OnAccelerometerUpdated(
     return;
   if (!force_clamshell_power_button_ && !tablet_controller_) {
     tablet_controller_ = std::make_unique<TabletPowerButtonController>(
-        display_controller_.get(), show_power_button_menu_, tick_clock_.get());
+        display_controller_.get(), backlights_forced_off_setter_,
+        show_power_button_menu_, tick_clock_.get());
   }
 
   if (!screenshot_controller_) {
