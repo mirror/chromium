@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddcf7f2c_4033c566",
+        "filename": "services/resource_coordinator/public/cpp/tracing/default_agent.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2018-01-19T15:32:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure the comments in this function add a whole lot. They comment on what the function is doing, which is already obvious by the code (which is a good thing!).",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "781a5c0ff9c9dfe75d458d710db79db59a772b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a621aa6d_698efe3b",
+        "filename": "services/resource_coordinator/public/cpp/tracing/default_agent.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2018-01-19T15:32:09Z",
+      "side": 1,
+      "message": "My preference is to call this \"NoOpAgent\" instead of \"DefaultAgent\". \"DefaultAgent\" doesn\u0027t really carry any meaning about what the agent _does_, just that it\u0027s a common choice for a base class, which should be obvious anyhow. NoOp actually carries useful information about what the agent does (nothing)",
+      "range": {
+        "startLine": 19,
+        "startChar": 54,
+        "endLine": 19,
+        "endChar": 66
+      },
+      "revId": "781a5c0ff9c9dfe75d458d710db79db59a772b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10051ab_39929254",
+        "filename": "services/resource_coordinator/public/cpp/tracing/default_agent.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2018-01-19T15:32:09Z",
+      "side": 1,
+      "message": "Most of the instances I can find of this type of comment in the header file use a colon after the class name instead of a period:\n\nhttps://cs.chromium.org/search/?q\u003d%5Cs%2B//%5Cs%5CS%2B::%5CS%2B:$+f:.h\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "781a5c0ff9c9dfe75d458d710db79db59a772b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
