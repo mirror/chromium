@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdf37bbf_4002b89a",
+        "filename": "content/browser/webui/web_ui_data_source_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-19T00:54:42Z",
+      "side": 0,
+      "message": "Note: DictionaryValue::SetString (eventually) converts string16 -\u003e std::string.",
+      "revId": "b165dc5211edda5957d621643749d22d71152afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
