@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2e6a739_bc8dab22",
+        "filename": "content/browser/renderer_host/input/main_thread_event_queue_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-19T20:38:25Z",
+      "side": 1,
+      "message": "Missed this one. Removed.",
+      "parentUuid": "9477449d_7dc97490",
+      "revId": "f7569eba3b08579debd5e48af83e70931c947563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49223de1_efadcff6",
         "filename": "content/renderer/input/render_widget_input_handler.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "f7569eba3b08579debd5e48af83e70931c947563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb7b90a5_0df9b89f",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-19T20:38:25Z",
+      "side": 1,
+      "message": "Sure. Makes sense. Done",
+      "parentUuid": "49223de1_efadcff6",
+      "revId": "f7569eba3b08579debd5e48af83e70931c947563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "22e0dae6_3e0301ac",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-19T20:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a1ec4fb_803ac84f",
+      "revId": "f7569eba3b08579debd5e48af83e70931c947563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc483619_29e58a13",
         "filename": "content/shell/test_runner/event_sender.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "f7569eba3b08579debd5e48af83e70931c947563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01de75ca_ffb53e0a",
+        "filename": "content/shell/test_runner/event_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2298,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-19T20:38:25Z",
+      "side": 1,
+      "message": "I removed the setting touch points in the touch event. But the rest of the TouchEvent is being used in the WebPointerEvent constructor. Beyond that I\u0027m going to need to add another constructor to WebPointerEvent and I\u0027m not sure that is worth it only to use it here.",
+      "parentUuid": "dc483619_29e58a13",
+      "revId": "f7569eba3b08579debd5e48af83e70931c947563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
