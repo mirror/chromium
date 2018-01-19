@@ -571,7 +571,7 @@ bool Extension::LoadName(base::string16* error) {
   }
   non_localized_name_ = base::UTF16ToUTF8(localized_name);
   base::i18n::AdjustStringForLocaleDirection(&localized_name);
-  name_ = base::UTF16ToUTF8(localized_name);
+  name_ = base::UTF16ToUTF8(base::CollapseWhitespace(localized_name, true));
   return true;
 }
 
