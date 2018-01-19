@@ -1601,11 +1601,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kPasswordGenerationDescription, kOsAll,
      ENABLE_DISABLE_VALUE_TYPE(autofill::switches::kEnablePasswordGeneration,
                                autofill::switches::kDisablePasswordGeneration)},
-    {"PasswordForceSaving",
-     flag_descriptions::kPasswordForceSavingName,
+    {"PasswordForceSaving", flag_descriptions::kPasswordForceSavingName,
      flag_descriptions::kPasswordForceSavingDescription, kOsAll,
-     FEATURE_VALUE_TYPE(
-         password_manager::features::kPasswordForceSaving)},
+     FEATURE_VALUE_TYPE(password_manager::features::kPasswordForceSaving)},
     {"enable-manual-password-generation",
      flag_descriptions::kManualPasswordGenerationName,
      flag_descriptions::kManualPasswordGenerationDescription, kOsAll,
@@ -3502,7 +3500,7 @@ const FeatureEntry kFeatureEntries[] = {
 
     {"enable-v8-context-snapshot", flag_descriptions::kV8ContextSnapshotName,
      flag_descriptions::kV8ContextSnapshotDescription,
-     kOsDesktop,  // TODO(peria): Add Android support.
+     kOsMac | kOsWin | kOsLinux | kOsAndroid,  // TODO(peria): Support on CrOS.
      FEATURE_VALUE_TYPE(features::kV8ContextSnapshot)},
 
 #if defined(OS_CHROMEOS)
