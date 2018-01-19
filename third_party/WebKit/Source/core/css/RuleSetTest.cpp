@@ -240,6 +240,18 @@ TEST(RuleSetTest, findBestRuleSetAndAdd_PlaceholderPseudo) {
   ASSERT_EQ(2u, rules->size());
 }
 
+TEST(RuleSetTest, findBestRuleSetAndAdd_PseudoMatches) {
+  CSSTestHelper helper;
+
+  helper.AddCSSRules(".a :matches(.b+.c, .d) { }");
+  RuleSet& rule_set = helper.GetRuleSet();
+  AtomicString str("c");
+  const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+  ASSERT_EQ(1u, rules->size());
+  AtomicString class_str("c");
+  ASSERT_EQ(class_str, rules->at(0).Selector().Value());
+}
+
 TEST(RuleSetTest, SelectorIndexLimit) {
   StringBuilder builder;
 
