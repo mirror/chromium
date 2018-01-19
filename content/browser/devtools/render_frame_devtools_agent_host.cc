@@ -47,10 +47,10 @@
 #include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/browser_side_navigation_policy.h"
-#include "content/public/common/content_features.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_request_headers.h"
+#include "services/network/public/cpp/network_features.h"
 #include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 
 #if defined(OS_ANDROID)

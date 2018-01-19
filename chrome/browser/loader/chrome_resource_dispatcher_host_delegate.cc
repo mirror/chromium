@@ -88,6 +88,7 @@
 #include "net/http/http_response_headers.h"
 #include "net/ssl/client_cert_store.h"
 #include "net/url_request/url_request.h"
+#include "services/network/public/cpp/network_features.h"
 #include "services/network/public/cpp/resource_response.h"
 #include "third_party/protobuf/src/google/protobuf/repeated_field.h"
 
