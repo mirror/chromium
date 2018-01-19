@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/command_line.h"
+#include "base/debug/stack_trace.h"
 #include "base/memory/ptr_util.h"
 #include "content/browser/frame_host/navigation_request_info.h"
 #include "content/browser/loader/navigation_url_loader_factory.h"
@@ -29,6 +30,7 @@ std::unique_ptr<NavigationURLLoader> NavigationURLLoader::Create(
     ServiceWorkerNavigationHandle* service_worker_handle,
     AppCacheNavigationHandle* appcache_handle,
     NavigationURLLoaderDelegate* delegate) {
+  base::debug::StackTrace().Print();
   if (g_loader_factory) {
     return g_loader_factory->CreateLoader(
         resource_context, storage_partition, std::move(request_info),
