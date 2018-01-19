@@ -122,6 +122,11 @@ var PeerConnectionUpdateTable = (function() {
           update.type === 'addIceCandidateFailed') {
         valueContainer.parentElement.classList.add('update-log-failure');
       }
+      // Highlight legacy streams API usage.
+      if (update.type === 'addStream' || update.type === 'removeStream') {
+        valueContainer.parentElement.classList.add(
+            'update-log-legacy-api-usage');
+      }
 
       var value = update.value;
       // map internal names and values to names and events from the
