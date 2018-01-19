@@ -296,8 +296,6 @@ void AppListView::Initialize(const InitParams& params) {
   if (is_fullscreen_app_list_enabled_)
     SetState(app_list_state_);
 
-  delegate_->ViewInitialized();
-
   UMA_HISTOGRAM_TIMES(kAppListCreationTimeHistogram,
                       base::Time::Now() - start_time);
   RecordFolderMetrics();
