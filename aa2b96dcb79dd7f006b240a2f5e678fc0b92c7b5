@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20e686fe_b72c59ce",
+        "filename": "components/certificate_transparency/single_tree_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-19T00:06:18Z",
+      "side": 1,
+      "message": "This would need to move ordering of methods if it\u0027s no longer part of the interfaces it\u0027s implementing (in both .h and .cc)",
+      "revId": "aa2b96dcb79dd7f006b240a2f5e678fc0b92c7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8939932_59eceda4",
+        "filename": "components/certificate_transparency/tree_state_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-19T00:06:18Z",
+      "side": 1,
+      "message": "This doesn\u0027t look correct - are you sure you want to abort processing on the first unknown SCT?",
+      "revId": "aa2b96dcb79dd7f006b240a2f5e678fc0b92c7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17df81b3_c6d4fdef",
+        "filename": "components/certificate_transparency/tree_state_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-19T00:06:18Z",
+      "side": 1,
+      "message": "This is now out of date, right?",
+      "revId": "aa2b96dcb79dd7f006b240a2f5e678fc0b92c7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
