@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ca467a9_84495abb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-paint-api/parse-input-arguments-018.https.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T03:26:05Z",
+      "side": 1,
+      "message": "for readability, how about giving this a name like invalid-arguments?",
+      "range": {
+        "startLine": 12,
+        "startChar": 28,
+        "endLine": 12,
+        "endChar": 31
+      },
+      "revId": "4f52f7dc2c8b6e076d4ada239a5054cbe5874de6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75fee4fb_337c1851",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-19T03:26:05Z",
+      "side": 1,
+      "message": "This is a crash bug fix right? Can you put it in a separate patch with corresponding bug?",
+      "revId": "4f52f7dc2c8b6e076d4ada239a5054cbe5874de6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
