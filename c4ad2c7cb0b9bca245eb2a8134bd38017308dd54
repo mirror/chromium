@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8970ae48_b17b8de6",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-19T08:22:12Z",
+      "side": 1,
+      "message": "RemoveTicker was useful because I was thinking of adding support for add/remove tickers on the fly. Given that we probably won\u0027t need this feature, I\u0027ve taken it out so that we will never remove tickers from player_impl. Rather, we create new player if necessary and push properties to its corresponding new player_impl.",
+      "parentUuid": "0ee2d43f_d7997396",
+      "revId": "c4ad2c7cb0b9bca245eb2a8134bd38017308dd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8541e011_71a1914f",
         "filename": "cc/animation/animation_player.h",
         "patchSetId": 20
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fe1ab825_3d65b230",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-19T08:22:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8541e011_71a1914f",
+      "revId": "c4ad2c7cb0b9bca245eb2a8134bd38017308dd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3abf96a7_2e02db2e",
         "filename": "cc/animation/animation_player.h",
         "patchSetId": 20
@@ -50,6 +86,24 @@
       "revId": "c4ad2c7cb0b9bca245eb2a8134bd38017308dd54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49740ae6_d5800e39",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-19T08:22:12Z",
+      "side": 1,
+      "message": "All other ids (player id, group id, animation id) are 1-indexed. +1 to be consistent. But using 0-indexed here may be OK given the circumstances. Done.",
+      "parentUuid": "3abf96a7_2e02db2e",
+      "revId": "c4ad2c7cb0b9bca245eb2a8134bd38017308dd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
