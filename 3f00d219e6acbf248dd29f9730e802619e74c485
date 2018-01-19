@@ -22,6 +22,30 @@
       "revId": "3f00d219e6acbf248dd29f9730e802619e74c485",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e63fa3_8cf2b95d",
+        "filename": "device/gamepad/gamepad_shared_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-19T22:43:17Z",
+      "side": 1,
+      "message": "Thank you for checking. I was wondering about that.",
+      "parentUuid": "4907e5c7_67402ccb",
+      "range": {
+        "startLine": 13,
+        "startChar": 28,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "3f00d219e6acbf248dd29f9730e802619e74c485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
