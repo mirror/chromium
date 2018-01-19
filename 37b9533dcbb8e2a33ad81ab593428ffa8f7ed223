@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71c7bebc_4ce9d6f8",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-19T04:07:40Z",
+      "side": 1,
+      "message": "ControllerHandedness could probably lose the Controller prefix, if you like.",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0ae755_ee7eaeb7",
+        "filename": "chrome/browser/vr/platform_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-19T04:07:40Z",
+      "side": 1,
+      "message": "s/ControllerHandedness/Handedness/:  Shorter, avoids stutter, and clear?",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af444b64_e4e07648",
+        "filename": "chrome/browser/vr/platform_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-19T04:07:40Z",
+      "side": 1,
+      "message": "GetHandedness() to match other getters?",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff256be_395a6da6",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-19T04:07:40Z",
+      "side": 1,
+      "message": "Are the zero initializers needed, as the default constructor sets them?",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63fde12_b495ad94",
+        "filename": "chrome/browser/vr/ui_input_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-19T04:07:40Z",
+      "side": 1,
+      "message": "Should probably explain what focused means, at this has nothing to do with input element focus.",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eea4fa7_5c194149",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-19T04:07:40Z",
+      "side": 1,
+      "message": "Weird number - intentionally not 1280x720?",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3df593f_0a9af67d",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-19T04:07:40Z",
+      "side": 1,
+      "message": "If we\u0027re trending toward direct model poking and away from the UI wrapper, could model_-\u003epush_mode(kModeFullscreen).  Just a thought!",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
