@@ -15,6 +15,10 @@
 #include "base/android/path_utils.h"
 #endif
 
+#if defined(OS_FUCHSIA)
+#include "base/base_paths_fuchsia.h"
+#endif
+
 namespace ui {
 
 bool PathProvider(int key, base::FilePath* result) {
@@ -25,20 +29,23 @@ bool PathProvider(int key, base::FilePath* result) {
   base::FilePath cur;
   switch (key) {
     case DIR_LOCALES:
-      if (!PathService::Get(base::DIR_MODULE, &cur))
-        return false;
-#if defined(OS_MACOSX)
-      // On Mac, locale files are in Contents/Resources, a sibling of the
-      // App dir.
-      cur = cur.DirName();
-      cur = cur.Append(FILE_PATH_LITERAL("Resources"));
-#elif defined(OS_ANDROID)
+#if defined(OS_ANDROID)
       if (!PathService::Get(DIR_RESOURCE_PAKS_ANDROID, &cur))
         return false;
+#elif defined(OS_FUCHSIA)
+      if (!PathService::Get(base::DIR_FUCHSIA_RESOURCES, &cur))
+        return false;
+#elif defined(OS_MACOSX)
+      // On Mac, locale files are in Contents/Resources, a sibling of the
+      // App dir.
+      if (!PathService::Get(base::DIR_MODULE, &cur))
+        return false;
+      cur = cur.DirName().Append(FILE_PATH_LITERAL("Resources"));
 #else
+      if (!PathService::Get(base::DIR_MODULE, &cur))
+        return false;
       cur = cur.Append(FILE_PATH_LITERAL("locales"));
 #endif
-      create_dir = true;
       break;
     // The following are only valid in the development environment, and
     // will fail if executed from an installed executable (because the
@@ -63,6 +70,9 @@ bool PathProvider(int key, base::FilePath* result) {
     case UI_TEST_PAK:
 #if defined(OS_ANDROID)
       if (!PathService::Get(ui::DIR_RESOURCE_PAKS_ANDROID, &cur))
+        return false;
+#elif defined(OS_FUCHSIA)
+      if (!PathService::Get(base::DIR_FUCHSIA_RESOURCES, &cur))
         return false;
 #else
       if (!PathService::Get(base::DIR_MODULE, &cur))
