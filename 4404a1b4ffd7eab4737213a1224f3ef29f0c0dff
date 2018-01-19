@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "84115b59_344162f2",
+        "filename": "tools/cygprofile/orderfile_generator_backend.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-19T09:38:49Z",
+      "side": 1,
+      "message": "Cool. This will be done when cyglog_to_orderfile is overhauled.",
+      "parentUuid": "2e04c645_e800f8ad",
+      "range": {
+        "startLine": 544,
+        "startChar": 23,
+        "endLine": 544,
+        "endChar": 46
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b762596_7a37b9be",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 4
@@ -367,6 +391,30 @@
       "side": 1,
       "message": "I actually checked whether we still disable ICF in instrumented builds, and we do indeed disable it. I guess you already did all the testing and introducing an assert is no longer cheap :(\n\nOK.",
       "parentUuid": "d38b7df9_25f36ac5",
+      "range": {
+        "startLine": 248,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 25
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ea1d34_9683c4c0",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-19T09:38:49Z",
+      "side": 1,
+      "message": "I think there\u0027s two useful things that we do with primary symbols: one is matching with the uninstrumented binary, and the other is doing size analysis.\n\nI\u0027d prefer to not create too many dependencies between how we happen to build things now and how the analysis tools work, it makes it too easy to bake in implicit assumptions that are hard to unwind if, for example, we start instrumenting with ICF for some reason.\n\nAnyway, with that preamble out of the way, here\u0027s something concrete that may alleviate some concerns: I\u0027ve added an assert that if there are multiple symbols at the same offset, their sizes are all the same. This takes care of a major use case in a clean way, I think.",
+      "parentUuid": "bae74c84_41be68b9",
       "range": {
         "startLine": 248,
         "startChar": 2,
