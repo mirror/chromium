@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa36da36_e0df7891",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/device-memory/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2018-01-19T21:13:37Z",
+      "side": 1,
+      "message": "I don\u0027t think this is the right team, or maybe it is.\npanicker@ WDYT?",
+      "range": {
+        "startLine": 1,
+        "startChar": 8,
+        "endLine": 1,
+        "endChar": 31
+      },
+      "revId": "0b3ba8aeba16638772e8246fa428aa866019f2f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
