@@ -150,6 +150,14 @@ NSEvent* KeyEventForWindow(NSWindow* window, NSEvent* event) {
     return YES;  // Pretend it's been handled in an effort to limit damage.
   }
 
+  // Don't allow *re* dispatch to windows showing a modal sheet. These share key
+  // state with the owner window. A re-dispatch can only occur if the window
+  // wasn't showing a sheet for the original event, so an event there should
+  // never be resent to a sheet that has now become attached.
+  // See http://crbug.com/637098.
+  if ([owner_ attachedSheet])
+    return YES;  // Say it was handled, since it probably invoked the sheet.
+
   // Ordinarily, the event's window should be |owner_|. However, when switching
   // between normal and fullscreen mode, we switch out the window, and the
   // event's window might be the previous window (or even an earlier one if the
