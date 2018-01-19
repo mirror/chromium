@@ -197,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "af10bb87_fae14a6d",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T14:01:19Z",
+      "side": 1,
+      "message": "The problem is that we\u0027re introducing multiple ways to trace into non-TraceWrapperBase objects (yeah, I understand that you\u0027re not introducing a new way because you\u0027re just replacing MarkWrappersInAllWorlds etc with DispatchTraceWrappers).\n\nMichael: Are we planning to consistently use DispatchTraceWrappers to trace into non-TraceWrapperBase objects? Then we will need to define a special Visit() for all the cases. It will be hard in some cases because ScriptWrappableVisitor is in platform/ but objects are in core/...\n\nIn other words, what should be a pattern to trace into non-TraceWrapperBase objects?",
+      "parentUuid": "1f45d296_43d816f4",
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7e07b95_e7d28316",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.cpp",
         "patchSetId": 3
