@@ -69,6 +69,24 @@
       "revId": "0cca07ada65cc95d013181390c125e5904de046a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c670e6_a0e83124",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-19T18:27:17Z",
+      "side": 1,
+      "message": "What I\u0027m suggesting is that you can simply do\n\nAddCanGetFilesIdCallback(\n  base::Bind(\u0026WallpaperControllerClient::SetDefaultWallpaper,\n             weak_factory_.GetWeakPtr(), account_id, show_wallpaper));\n\nalways. No need to call SetDefaultWallpaper below when CanGetFilesId is true.",
+      "parentUuid": "2f22bf54_70de0af5",
+      "revId": "0cca07ada65cc95d013181390c125e5904de046a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
