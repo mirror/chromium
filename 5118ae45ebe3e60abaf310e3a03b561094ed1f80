@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "190c741c_5ad74261",
+        "filename": "chrome/browser/background/background_contents_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T16:16:55Z",
+      "side": 1,
+      "message": "Seems like a better/cleaner fix is just to move these up inside the anonymous namespace? Would that work?",
+      "range": {
+        "startLine": 239,
+        "startChar": 11,
+        "endLine": 239,
+        "endChar": 44
+      },
+      "revId": "5118ae45ebe3e60abaf310e3a03b561094ed1f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c45d259_474c1c98",
         "filename": "chrome/browser/supervised_user/experimental/safe_search_url_reporter.cc",
         "patchSetId": 1
