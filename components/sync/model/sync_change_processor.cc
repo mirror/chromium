@@ -28,4 +28,9 @@ void SyncChangeProcessor::RemoveLocalChangeObserver(
   NOTREACHED();
 }
 
+size_t SyncChangeProcessor::EstimateMemoryUsage() const {
+  // TODO(BROWSER-78534): Implement this method for subclasses.
+  return 0u;
+}
+
 }  // namespace syncer

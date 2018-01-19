@@ -78,6 +78,8 @@ class TypedUrlSyncableService : public syncer::SyncableService,
                                        sync_pb::TypedUrlSpecifics* specifics)
       WARN_UNUSED_RESULT;
 
+  size_t EstimateMemoryUsage() const override;
+
  private:
   friend class TypedUrlSyncableServiceTest;
 

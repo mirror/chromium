@@ -142,6 +142,8 @@ class URLIndexPrivateData
   // from the cache or a complete rebuild from the history database.
   void Clear();
 
+  size_t EstimateMemoryUsage() const;
+
  private:
   friend class base::RefCountedThreadSafe<URLIndexPrivateData>;
   ~URLIndexPrivateData();
@@ -185,6 +187,8 @@ class URLIndexPrivateData
     // Creates a cache item for a term which has no results.
     SearchTermCacheItem();
     SearchTermCacheItem(const SearchTermCacheItem& other);
+
+    size_t EstimateMemoryUsage() const;
 
     ~SearchTermCacheItem();
 

@@ -28,6 +28,7 @@
 #include "base/task/cancelable_task_tracker.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
+#include "base/trace_event/memory_dump_provider.h"
 #include "build/build_config.h"
 #include "components/favicon_base/favicon_callback.h"
 #include "components/favicon_base/favicon_usage_data.h"
@@ -79,7 +80,9 @@ class WebHistoryService;
 //
 // This service is thread safe. Each request callback is invoked in the
 // thread that made the request.
-class HistoryService : public syncer::SyncableService, public KeyedService {
+class HistoryService : public syncer::SyncableService,
+                       public KeyedService,
+                       public base::trace_event::MemoryDumpProvider {
  public:
   // Callback for value asynchronously returned by TopHosts().
   typedef base::Callback<void(const TopHostsList&)> TopHostsCallback;
@@ -833,6 +836,11 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
   // and vice versa.
   void NotifyFaviconsChanged(const std::set<GURL>& page_urls,
                              const GURL& icon_url);
+
+  // base::trace_event::MemoryDumpProvider implementation:
+  bool OnMemoryDump(
+      const base::trace_event::MemoryDumpArgs& args,
+      base::trace_event::ProcessMemoryDump* process_memory_dump) override;
 
   base::ThreadChecker thread_checker_;
 

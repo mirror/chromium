@@ -81,6 +81,8 @@ class SyncChangeProcessor {
   // not owned by the SyncChangeProcessor.
   virtual void AddLocalChangeObserver(LocalChangeObserver* observer);
   virtual void RemoveLocalChangeObserver(LocalChangeObserver* observer);
+
+  virtual size_t EstimateMemoryUsage() const;
 };
 
 }  // namespace syncer

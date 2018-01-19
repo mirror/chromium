@@ -63,6 +63,12 @@ void HistoryQuickProvider::Start(const AutocompleteInput& input,
   }
 }
 
+size_t HistoryQuickProvider::EstimateMemoryUsage() const {
+  size_t res = HistoryProvider::EstimateMemoryUsage();
+  res += autocomplete_input_.EstimateMemoryUsage();
+  return res;
+}
+
 HistoryQuickProvider::~HistoryQuickProvider() {
 }
 

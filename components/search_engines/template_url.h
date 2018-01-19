@@ -74,6 +74,9 @@ class TemplateURLRef {
   struct SearchTermsArgs {
     explicit SearchTermsArgs(const base::string16& search_terms);
     SearchTermsArgs(const SearchTermsArgs& other);
+    SearchTermsArgs(SearchTermsArgs&&);
+    SearchTermsArgs& operator=(const SearchTermsArgs&);
+    SearchTermsArgs& operator=(SearchTermsArgs&&);
     ~SearchTermsArgs();
 
     struct ContextualSearchParams {
@@ -87,7 +90,12 @@ class TemplateURLRef {
                              int contextual_cards_version,
                              const std::string& home_country);
       ContextualSearchParams(const ContextualSearchParams& other);
+      ContextualSearchParams(ContextualSearchParams&& other);
+      ContextualSearchParams& operator=(const ContextualSearchParams& other);
+      ContextualSearchParams& operator=(ContextualSearchParams&& other);
       ~ContextualSearchParams();
+
+      size_t EstimateMemoryUsage() const;
 
       // The version of contextual search.
       int version;
@@ -101,6 +109,8 @@ class TemplateURLRef {
       // resides, not where they currently are.
       std::string home_country;
     };
+
+    size_t EstimateMemoryUsage() const;
 
     // The search terms (query).
     base::string16 search_terms;

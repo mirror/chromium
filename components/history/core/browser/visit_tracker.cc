@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include "base/memory/ptr_util.h"
+#include "base/trace_event/memory_usage_estimator.h"
 
 namespace history {
 
@@ -21,6 +22,10 @@ static_assert(kResizeBigTransitionListTo < kMaxItemsInTransitionList,
 VisitTracker::VisitTracker() {}
 
 VisitTracker::~VisitTracker() {}
+
+size_t VisitTracker::Transition::EstimateMemoryUsage() const {
+  return base::trace_event::EstimateMemoryUsage(url);
+}
 
 // This function is potentially slow because it may do up to two brute-force
 // searches of the transitions list. This transitions list is kept to a
@@ -93,6 +98,10 @@ void VisitTracker::CleanupTransitionList(TransitionList* transitions) {
 
   transitions->erase(transitions->begin(),
                      transitions->begin() + kResizeBigTransitionListTo);
+}
+
+size_t VisitTracker::EstimateMemoryUsage() const {
+  return base::trace_event::EstimateMemoryUsage(contexts_);
 }
 
 }  // namespace history

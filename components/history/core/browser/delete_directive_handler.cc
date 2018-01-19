@@ -11,6 +11,7 @@
 #include "base/json/json_writer.h"
 #include "base/rand_util.h"
 #include "base/time/time.h"
+#include "base/trace_event/memory_usage_estimator.h"
 #include "base/values.h"
 #include "components/history/core/browser/history_backend.h"
 #include "components/history/core/browser/history_db_task.h"
@@ -413,6 +414,10 @@ syncer::SyncError DeleteDirectiveHandler::ProcessSyncChanges(
         &internal_tracker_);
   }
   return syncer::SyncError();
+}
+
+size_t DeleteDirectiveHandler::EstimateMemoryUsage() const {
+  return base::trace_event::EstimateMemoryUsage(sync_processor_);
 }
 
 void DeleteDirectiveHandler::FinishProcessing(

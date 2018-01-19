@@ -19,6 +19,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
+#include "base/trace_event/memory_usage_estimator.h"
 #include "base/trace_event/trace_event.h"
 #include "components/bookmarks/browser/bookmark_utils.h"
 #include "components/history/core/browser/history_backend.h"
@@ -646,6 +647,12 @@ void HistoryURLProvider::ExecuteWithDB(HistoryURLProviderParams* params,
   // Return the results (if any) to the originating sequence.
   params->origin_task_runner->PostTask(
       FROM_HERE, base::Bind(&HistoryURLProvider::QueryComplete, this, params));
+}
+
+size_t HistoryURLProvider::EstimateMemoryUsage() const {
+  size_t res = HistoryProvider::EstimateMemoryUsage();
+  res += base::trace_event::EstimateMemoryUsage(scoring_params_);
+  return res;
 }
 
 HistoryURLProvider::~HistoryURLProvider() {
