@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "306a38c7_10f9c73c",
+        "filename": "components/cbor/cbor_values.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-19T09:34:28Z",
+      "side": 1,
+      "message": "super nit: I think this use-case really calls for a ?: operator. :-)",
+      "revId": "43ed956ed4c32946e495185b24293b4a8e0f68d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b37b34_e2d7e795",
+        "filename": "components/cbor/cbor_values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-19T09:34:28Z",
+      "side": 1,
+      "message": "It would be nice to have this also implemented as a constructor for consistency. :-)\n\n@Jan, now that we have a dedicated const char* constructor, do you foresee any more gotchas with having a CBORValue(bool) constructor?",
+      "revId": "43ed956ed4c32946e495185b24293b4a8e0f68d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
