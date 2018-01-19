@@ -276,8 +276,8 @@ MhtmlSaveStatus MHTMLGenerationManager::Job::SendToNextRenderFrame() {
   ipc_params.salt = salt_;
   ipc_params.digests_of_uris_to_skip = digests_of_already_serialized_uris_;
 
-  ipc_params.destination_file = IPC::GetPlatformFileForTransit(
-      browser_file_.GetPlatformFile(), false);  // |close_source_handle|.
+  ipc_params.destination_file =
+      IPC::DuplicatePlatformFileForTransit(browser_file_);
   ipc_params.frame_routing_id_to_content_id =
       CreateFrameRoutingIdToContentId(rfh->GetSiteInstance());
 

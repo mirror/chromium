@@ -325,7 +325,7 @@ void NaClHostMessageFilter::AsyncReturnTemporaryFile(
   if (file.IsValid()) {
     // Don't close our copy of the handle, because PnaclHost will use it
     // when the translation finishes.
-    fd = IPC::GetPlatformFileForTransit(file.GetPlatformFile(), false);
+    fd = IPC::DuplicatePlatformFileForTransit(file);
   }
   Send(new NaClViewMsg_NexeTempFileReply(pp_instance, is_hit, fd));
 }

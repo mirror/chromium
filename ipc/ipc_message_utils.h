@@ -50,10 +50,7 @@ struct FileDescriptor;
 namespace IPC {
 
 struct ChannelHandle;
-
-#if defined(OS_WIN)
 class PlatformFileForTransit;
-#endif
 
 // -----------------------------------------------------------------------------
 // How we send IPC message logs across channels.
@@ -568,7 +565,6 @@ struct IPC_EXPORT ParamTraits<base::SharedMemoryHandle::Type> {
 };
 #endif
 
-#if defined(OS_WIN)
 template <>
 struct IPC_EXPORT ParamTraits<PlatformFileForTransit> {
   typedef PlatformFileForTransit param_type;
@@ -578,7 +574,6 @@ struct IPC_EXPORT ParamTraits<PlatformFileForTransit> {
                    param_type* r);
   static void Log(const param_type& p, std::string* l);
 };
-#endif  // defined(OS_WIN)
 
 template <>
 struct IPC_EXPORT ParamTraits<base::FilePath> {

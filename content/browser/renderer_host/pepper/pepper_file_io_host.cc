@@ -511,8 +511,8 @@ void PepperFileIOHost::SendOpenErrorReply(
 bool PepperFileIOHost::AddFileToReplyContext(
     int32_t open_flags,
     ppapi::host::ReplyMessageContext* reply_context) const {
-  IPC::PlatformFileForTransit transit_file =
-      IPC::GetPlatformFileForTransit(file_.GetPlatformFile(), false);
+  IPC::PlatformFileForTransit transit_file = IPC::GetPlatformFileForTransit(
+      file_.GetPlatformFile(), false, false /* is_async */);
   if (transit_file == IPC::InvalidPlatformFileForTransit())
     return false;
 
