@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4abce59b_61eec8a1",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwAutofillProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-19T18:58:22Z",
+      "side": 1,
+      "message": "Do we still need to call mRequest \u003d null here? We probably want to ignore framework\u0027s request to provide / autofill once reset is called. (in which case virtual id is still valid)\nAlso, we are still checking the nullity of mRequest in multiple places, and inlining mRequest \u003d null is not very readable.",
+      "range": {
+        "startLine": 369,
+        "startChar": 11,
+        "endLine": 369,
+        "endChar": 47
+      },
+      "revId": "20b3a90e3fda5b5c28e234ee92b63d32f5b2e777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
