@@ -12,6 +12,7 @@
 #include "build/build_config.h"
 #include "content/browser/accessibility/browser_accessibility.h"
 #include "content/common/accessibility_messages.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "ui/accessibility/ax_tree_data.h"
 #include "ui/accessibility/ax_tree_serializer.h"
 
@@ -1201,7 +1202,11 @@ void BrowserAccessibilityManager::UseCustomDeviceScaleFactorForTesting(
 }
 
 BrowserAccessibility* BrowserAccessibilityManager::CachingAsyncHitTest(
-    const gfx::Point& screen_point) {
+    const gfx::Point& point) {
+  gfx::Point screen_point =
+      UseZoomForDSFEnabled() ? ScaleToRoundedPoint(point, device_scale_factor())
+                             : point;
+
   BrowserAccessibilityManager* root_manager = GetRootManager();
   if (root_manager && root_manager != this)
     return root_manager->CachingAsyncHitTest(screen_point);
