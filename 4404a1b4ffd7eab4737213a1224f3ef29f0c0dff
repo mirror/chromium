@@ -448,6 +448,30 @@
       "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9138e706_fbe67deb",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-19T14:09:00Z",
+      "side": 1,
+      "message": "This is the good kind of unexpected trouble, as we learned something...\n\nThe size\u003d\u003d0 check seems to work, I\u0027ll upload that now. \n\nGiven what we found about arm floating point libraries, my understand is that this is not just about ICF---the data I\u0027ve been running through is from instrumented binaries only, and so ICF has been disabled.\n\nAn e2e test is in process as we speak :)",
+      "parentUuid": "bfb1ae72_e51ad94e",
+      "range": {
+        "startLine": 248,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 25
+      },
+      "revId": "4404a1b4ffd7eab4737213a1224f3ef29f0c0dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
