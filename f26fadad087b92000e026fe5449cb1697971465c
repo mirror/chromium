@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e48ae15b_68a5fe3a",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-19T22:47:06Z",
+      "side": 1,
+      "message": "Reworked per our whiteboarding session.",
+      "parentUuid": "781cffb0_ef9ca59a",
+      "revId": "f26fadad087b92000e026fe5449cb1697971465c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd0ea14c_138f2ccb",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "24aaa7a7_af87e8aa",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-19T22:47:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd0ea14c_138f2ccb",
+      "revId": "f26fadad087b92000e026fe5449cb1697971465c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95b3d8ca_210cb5c9",
         "filename": "components/previews/core/previews_logger.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "f26fadad087b92000e026fe5449cb1697971465c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18bd8bfb_4a90f4cd",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-19T22:47:06Z",
+      "side": 1,
+      "message": "Done - (wanted your buy-in on the signature refactor before doing that edit)",
+      "parentUuid": "95b3d8ca_210cb5c9",
+      "revId": "f26fadad087b92000e026fe5449cb1697971465c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
