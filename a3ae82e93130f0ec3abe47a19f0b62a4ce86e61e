@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ce62891_600460c2",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-19T10:59:50Z",
+      "side": 1,
+      "message": "Does FrameTreeNode::GetCurrentOrigin() work? I\u0027m guessing this will better respect sandboxed iframes and such.",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e8edea_2c7a5153",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-19T10:59:50Z",
+      "side": 1,
+      "message": "Can we create an enum for this arg? A bool param to a method that already takes so many other params can be a bit hard to understand.",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76034935_f7299213",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3086,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-19T10:59:50Z",
+      "side": 1,
+      "message": "Why Android-specific?",
+      "revId": "a3ae82e93130f0ec3abe47a19f0b62a4ce86e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
