@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49fdb629_b837e160",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-19T09:15:34Z",
+      "side": 1,
+      "message": "nit: image_fetcher_ and image_decoder_ are unique_ptr, and thus are initialized to null by default.\nI think in Chromium we don\u0027t initialize these explicitly in general.",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 59,
+        "endChar": 29
+      },
+      "revId": "c216e3a6bd07b7439e62c821ca4fb57f0cce38e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d448a04_eec20634",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-19T09:15:34Z",
+      "side": 1,
+      "message": "If you want to test this, you probably can use FakeURLFetcherFactory, there is an example in tests here:\nhttps://cs.chromium.org/chromium/src/components/ntp_snippets/remote/cached_image_fetcher_unittest.cc?rcl\u003df142aaa820064f72838eb0632c79465a463c925e\u0026l\u003d132\n\nI see that there is currently no unittest file for this class, so I don\u0027t know how much work it is.",
+      "revId": "c216e3a6bd07b7439e62c821ca4fb57f0cce38e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f72aeec_9abd0295",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-19T09:15:34Z",
+      "side": 1,
+      "message": "Note: this assumes that ImageFetcher has logic in place to de-duplicate requests.\nThis is indeed the case, but is not really documented, so it is a bit hacky to rely on it.\nCould we add a comment in image_fetcher.h expliciting this behavior?\n\nAnother option would be to add a function directly in ImageFetcher which would return whether there are currently pending requests.",
+      "range": {
+        "startLine": 309,
+        "startChar": 2,
+        "endLine": 309,
+        "endChar": 41
+      },
+      "revId": "c216e3a6bd07b7439e62c821ca4fb57f0cce38e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78976615_4ba6811b",
+        "filename": "components/signin/core/browser/account_tracker_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-19T09:15:34Z",
+      "side": 1,
+      "message": "Could we have a small unittest for this? It should be straightforward to add in account_tracker_service_unittest.cc",
+      "revId": "c216e3a6bd07b7439e62c821ca4fb57f0cce38e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
