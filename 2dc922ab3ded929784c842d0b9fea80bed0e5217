@@ -139,6 +139,24 @@
       "revId": "2dc922ab3ded929784c842d0b9fea80bed0e5217",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02d9830a_a9c9b34b",
+        "filename": "third_party/WebKit/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-19T21:41:28Z",
+      "side": 1,
+      "message": "If you want to follow up with PartitionAlloc / BlinkGC-specifics, you would need that to be in Source/platform or Source/core. Move it there for now?",
+      "parentUuid": "baa24a81_c9230ade",
+      "revId": "2dc922ab3ded929784c842d0b9fea80bed0e5217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

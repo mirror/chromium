@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f40ad9f_e1857ce3",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/memory/sampling-native-profile.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-19T21:41:28Z",
+      "side": 1,
+      "message": "This test is going to be flaky for the following reasons:\n- Canvas does not need to allocated memory\n- Allocated memory could be mis-attributed due to sampling nature",
+      "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e9994c_19679141",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-19T21:41:28Z",
+      "side": 1,
+      "message": "You don\u0027t need these lines.",
+      "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbdc1278_c8f1d76a",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-19T21:41:28Z",
+      "side": 1,
+      "message": "SetSamplingInterval",
+      "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef7b808_437aaeba",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-19T21:41:28Z",
+      "side": 1,
+      "message": "Remove the line above \u0026\u0026 call\n\nstartSampling(protocol::Maybe\u003cint\u003e(sampling_interval), protocol::Maybe\u003cbool\u003e());",
+      "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0588d3b1_058a3f49",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-19T21:41:28Z",
+      "side": 1,
+      "message": "move to .cpp",
+      "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261e30b7_2325f734",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-19T21:41:28Z",
+      "side": 1,
+      "message": "Why are these and the handlers below not a part of anonymous namespace in .cpp?",
+      "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4632542_6f9370b2",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-19T21:41:28Z",
+      "side": 1,
+      "message": "Call them kSomething in .cpp.",
+      "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
