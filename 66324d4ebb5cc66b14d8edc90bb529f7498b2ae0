@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f89da0ee_d3104824",
+        "filename": "net/disk_cache/entry_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2856,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-19T19:31:44Z",
+      "side": 1,
+      "message": "So previously (i.e. after the last CL...), the first close would complete after Doom was called; \nso it would freak out and mark it invalid, even though the doom didn\u0027t actually run yet \n(as it happens-after the first close and the open); now that the distinction is there, it only \nhappens after the Close(B) call.",
+      "range": {
+        "startLine": 2856,
+        "startChar": 13,
+        "endLine": 2856,
+        "endChar": 0
+      },
+      "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
