@@ -14,10 +14,16 @@
 
 namespace ui {
 
+enum class ThrottleStrategy { TimerBased, DeferToClient };
+
 class EVENTS_EXPORT EventAutoRepeatHandler {
  public:
   class Delegate {
    public:
+    // Gives the client a change to cancel possible spurios
+    // auto repeat keys. Useful under janky situations.
+    virtual bool CanDispatchAutoRepeatKey() = 0;
+
     virtual void DispatchKey(unsigned int key,
                              bool down,
                              bool repeat,
@@ -25,7 +31,9 @@ class EVENTS_EXPORT EventAutoRepeatHandler {
                              int device_id) = 0;
   };
 
-  explicit EventAutoRepeatHandler(Delegate* delegate);
+  EventAutoRepeatHandler(
+      Delegate* delegate,
+      ThrottleStrategy throttle_strategy = ThrottleStrategy::TimerBased);
   ~EventAutoRepeatHandler();
 
   void UpdateKeyRepeat(unsigned int key,
@@ -56,6 +64,7 @@ class EVENTS_EXPORT EventAutoRepeatHandler {
   base::TimeDelta repeat_interval_;
 
   Delegate* delegate_ = nullptr;
+  ThrottleStrategy throttle_strategy_ = ThrottleStrategy::TimerBased;
 
   base::WeakPtrFactory<EventAutoRepeatHandler> weak_ptr_factory_;
 

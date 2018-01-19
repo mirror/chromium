@@ -82,6 +82,11 @@ bool KeyboardEvdev::SetCurrentLayoutByName(const std::string& layout_name) {
   return result;
 }
 
+bool KeyboardEvdev::CanDispatchAutoRepeatKey() {
+  NOTREACHED();
+  return true;
+}
+
 void KeyboardEvdev::UpdateModifier(int modifier_flag, bool down) {
   if (modifier_flag == EF_NONE)
     return;
