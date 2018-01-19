@@ -52,6 +52,24 @@
       "revId": "cd37ea5b25425e94eaf8940a17b8b79612dd1d94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ff38d7_3849e59d",
+        "filename": "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-19T17:45:32Z",
+      "side": 1,
+      "message": "Thanks for the feedback. I renamed the identifier parameter to service_id.",
+      "parentUuid": "de28d080_f0b73709",
+      "revId": "cd37ea5b25425e94eaf8940a17b8b79612dd1d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
