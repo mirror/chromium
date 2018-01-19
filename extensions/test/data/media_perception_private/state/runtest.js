@@ -13,6 +13,7 @@ function setStateRunning() {
   chrome.mediaPerceptionPrivate.setState({
     status: 'RUNNING',
     deviceContext: 'device_context',
+    configFile: 'guado_rtanalytics.pbtxt',
     videoStreamParam: [
       {
         id: 'FaceDetection',
@@ -49,6 +50,14 @@ function setStateSuspendedButWithDeviceContextFail() {
   chrome.mediaPerceptionPrivate.setState({
     status: 'SUSPENDED',
     deviceContext: 'device_context'
+  }, chrome.test.callbackFail(error));
+}
+
+function setStateSuspendedButWithConfigFileFail() {
+  const error = 'SetState: status must be RUNNING to set configFile.';
+  chrome.mediaPerceptionPrivate.setState({
+    status: 'SUSPENDED',
+    configFile: 'guado_rtanalytics.pbtxt'
   }, chrome.test.callbackFail(error));
 }
 
@@ -91,6 +100,7 @@ chrome.test.runTests([
     getStateRunning,
     setStateUnsettable,
     setStateSuspendedButWithDeviceContextFail,
+    setStateSuspendedButWithConfigFileFail,
     setStateSuspendedButWithVideoStreamParamFail,
     setStateRestarted,
     setStateStopped]);

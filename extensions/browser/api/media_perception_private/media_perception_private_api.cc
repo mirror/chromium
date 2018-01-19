@@ -62,6 +62,13 @@ MediaPerceptionPrivateSetStateFunction::Run() {
         Error("SetState: status must be RUNNING to set videoStreamParam."));
   }
 
+  // Check that config file is only provided with SetState RUNNING.
+  if (params->state.status != media_perception::STATUS_RUNNING &&
+      params->state.config_file.get() != nullptr) {
+    return RespondNow(
+        Error("SetState: status must be RUNNING to set configFile."));
+  }
+
   MediaPerceptionAPIManager* manager =
       MediaPerceptionAPIManager::Get(browser_context());
   manager->SetState(
