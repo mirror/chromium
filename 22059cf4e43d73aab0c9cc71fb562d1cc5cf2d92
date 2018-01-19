@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "c188b108_63cd878b",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T01:02:49Z",
+      "side": 1,
+      "message": "OK. I added a DCHECK with a comment, let me know if it doesn\u0027t look right.",
+      "parentUuid": "cdcaa2dc_557ba58d",
+      "revId": "22059cf4e43d73aab0c9cc71fb562d1cc5cf2d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efffea5c_8416ecc5",
         "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
         "patchSetId": 11

@@ -22,6 +22,30 @@
       "revId": "590215796b6fa6465c8ac43f41682cfaa4cbbaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c646a0f6_2f797774",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-19T01:02:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77bc8fb1_1efce7d5",
+      "range": {
+        "startLine": 110,
+        "startChar": 41,
+        "endLine": 110,
+        "endChar": 45
+      },
+      "revId": "590215796b6fa6465c8ac43f41682cfaa4cbbaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
