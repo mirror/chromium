@@ -46,6 +46,30 @@
       "revId": "20b3a90e3fda5b5c28e234ee92b63d32f5b2e777",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564f2ab7_17ab4752",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwAutofillProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-19T20:22:38Z",
+      "side": 1,
+      "message": "Hmm... I\u0027m not still convinced that this is a safe change. What happens when\n\n1) form is submitted\n2) reset() gets called. (we ignore this)\n3) we start navigation to the new page.\n4) autofill() is called.\n5) navigation finishes.\n6) form is in the new page, so no commit().\n?\n\nIs there any chance that 4) will cause us a trouble? (crash?)\nDo we already have this type of a race condition?\nWould setting mRequest \u003d null on the right events prevent this? Or not preventable at all?\n\nI\u0027m afraid that this is the type of case where we can suffer a lot - not highly testable but is a new scenario for autofill.\n\nAlternatively, would it make sense to\n1) mRequest \u003d null in reset()\n2) New page\u0027s form triggers another startAutofillSession() without calling cancel()\n3) Call commit() when new page does not have a form and it seems like a submit.\n4) Call cancel() when new page does not have a form and it doesn\u0027t seem to be a submit.\n?",
+      "parentUuid": "9aec38b6_e4b183a8",
+      "range": {
+        "startLine": 369,
+        "startChar": 11,
+        "endLine": 369,
+        "endChar": 47
+      },
+      "revId": "20b3a90e3fda5b5c28e234ee92b63d32f5b2e777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
