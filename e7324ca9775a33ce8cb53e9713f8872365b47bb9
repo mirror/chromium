@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ff43b3d1_7a2ff99c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-19T11:31:00Z",
+      "side": 1,
+      "message": "Thanks for highlighting all these concerns!\n\nHow do I check, inside of the onResult method of the callback, that the UI is not dead? Would member variables of SavePasswordsPreferences be null?\n\nThe \"Don\u0027t keep activities\" check is something I need to learn thinking of. https://crbug.com/791652 already deals with Chrome forgetting that it spawned a reauth dialog and doing it in a loop (the fix is not ideal yet and I just realised it also needed more work on L specifically).\n\nThe impact of activity killing on receiving the serialised passwords is indeed that persisting them needs to be done out of memory. The plan so far was to dump them in a file to be able to construct the intent with a content:// URI for that file later, so I just left a TODO here to ensure doing that immediately on receipt of the string.\n\nI\u0027m not sure what happens if the C++ side runs the callback while the Java code is suspended (because the reauth dialog kicked Chrome out). My guess is that because of the AttachCurrentThread, the callback run is postponed until the Java side is alive as well -- is that correct?",
+      "parentUuid": "b103f274_dc91506e",
+      "range": {
+        "startLine": 129,
+        "startChar": 36,
+        "endLine": 129,
+        "endChar": 44
+      },
+      "revId": "e7324ca9775a33ce8cb53e9713f8872365b47bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f271874_30e7bb4d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "e7324ca9775a33ce8cb53e9713f8872365b47bb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff2ff6b_0295aac3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-19T11:31:00Z",
+      "side": 1,
+      "message": "Good catch! The UI design is made so that the user should ever only request the export once until the export is processed (there will be a progress indicator if it takes longer). It does not make much sense to try to be prepared for the user hitting export multiple times and merging that into a single export, and it would not be easily possible with the callbacks (as opposed to the old API I had in the first patch set). So indeed, I am now disabling the menu item and fix the C++ checks as you indicate.\n\nTesting the disabling is a bit tricky -- I can test when the export is cancelled, the menu stays enabled. I cannot really test that it is disabled when the export is under way, because the UI flow itself should prevent the user from accessing the three-dots menu until they cancel or complete the export flow. This prevention is by means of displaying other dialogues or a progress indicator (not implemented yet), continuously blocking the settings screen.",
+      "parentUuid": "5f271874_30e7bb4d",
+      "revId": "e7324ca9775a33ce8cb53e9713f8872365b47bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "e7324ca9775a33ce8cb53e9713f8872365b47bb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92c9158_8201de1e",
+        "filename": "chrome/browser/android/password_ui_view_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-19T11:31:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1d233b5_18d9f251",
+      "range": {
+        "startLine": 149,
+        "startChar": 9,
+        "endLine": 149,
+        "endChar": 14
+      },
+      "revId": "e7324ca9775a33ce8cb53e9713f8872365b47bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
