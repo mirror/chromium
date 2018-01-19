@@ -33,8 +33,7 @@ struct QueueWrapper {
   }
   std::unique_ptr<ExtensionHostQueue> queue;
 };
-base::LazyInstance<QueueWrapper>::DestructorAtExit g_queue =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<QueueWrapper>::Leaky g_queue = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 

@@ -197,7 +197,7 @@ bool IncognitoConnectability::IsInMap(const Extension* extension,
 }
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<IncognitoConnectability>>::DestructorAtExit
+    BrowserContextKeyedAPIFactory<IncognitoConnectability>>::Leaky
     g_incognito_connectability_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static

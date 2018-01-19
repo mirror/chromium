@@ -27,7 +27,7 @@ using sync_file_system::SyncEventObserver;
 namespace extensions {
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<ExtensionSyncEventObserver>>::DestructorAtExit
+    BrowserContextKeyedAPIFactory<ExtensionSyncEventObserver>>::Leaky
     g_extension_sync_event_observer_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static

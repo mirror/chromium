@@ -763,7 +763,7 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   // to keep a raw pointer to the HWNDMessageHandler instance as we track the
   // window destruction and ensure that the map is cleaned up.
   using FullscreenWindowMonitorMap = std::map<HMONITOR, HWNDMessageHandler*>;
-  static base::LazyInstance<FullscreenWindowMonitorMap>::DestructorAtExit
+  static base::LazyInstance<FullscreenWindowMonitorMap>::Leaky
       fullscreen_monitor_map_;
 
   // The WeakPtrFactories below must occur last in the class definition so they

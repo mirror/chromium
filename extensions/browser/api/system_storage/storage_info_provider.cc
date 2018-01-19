@@ -38,7 +38,7 @@ void BuildStorageUnitInfo(const StorageInfo& info, StorageUnitInfo* unit) {
 }  // namespace systeminfo
 
 // Static member intialization.
-base::LazyInstance<scoped_refptr<StorageInfoProvider>>::DestructorAtExit
+base::LazyInstance<scoped_refptr<StorageInfoProvider>>::Leaky
     StorageInfoProvider::provider_ = LAZY_INSTANCE_INITIALIZER;
 
 StorageInfoProvider::StorageInfoProvider() {

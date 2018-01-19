@@ -137,7 +137,7 @@ class AppDualBadgeMap {
   DISALLOW_COPY_AND_ASSIGN(AppDualBadgeMap);
 };
 
-base::LazyInstance<AppDualBadgeMap>::DestructorAtExit g_dual_badge_map =
+base::LazyInstance<AppDualBadgeMap>::Leaky g_dual_badge_map =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

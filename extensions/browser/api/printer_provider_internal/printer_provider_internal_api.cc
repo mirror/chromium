@@ -35,7 +35,7 @@ namespace extensions {
 namespace {
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<PrinterProviderInternalAPI>>::DestructorAtExit
+    BrowserContextKeyedAPIFactory<PrinterProviderInternalAPI>>::Leaky
     g_api_factory = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
