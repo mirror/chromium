@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7073f4f8_2a92377c",
+        "filename": "media/base/media_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1154069
+      },
+      "writtenOn": "2018-01-19T09:18:49Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand this. In rtc_peerconnection_handler.cc, I followed the handling of switches::kDisableRTCSmoothnessAlgorithm, which doesn\u0027t have a corresponding \"feature\". I suspect that is the wrong way, and that a feature is required to wire it ut to an origin-trial.\n\nGuidance appreciated.",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 58
+      },
+      "revId": "b65af11c8157c23aa7172ffaf912f19dedeabc49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
