@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea928c3a_d23f2222",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-19T00:22:03Z",
+      "side": 1,
+      "message": "Changes to the idl require an updated extrens file:\n\npython ./tools/json_schema_compiler/compiler.py -g externs extensions/common/api/system_display.idl \u003e third_party/closure_compiler/externs/system_display.js",
+      "revId": "96b575b6dfdbeae5798e0e4907c0208c403c4bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
