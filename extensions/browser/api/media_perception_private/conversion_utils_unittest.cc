@@ -15,6 +15,7 @@ namespace extensions {
 namespace {
 
 const char kTestDeviceContext[] = "Video camera";
+const char kTestConfigFile[] = "guado_rtanalytics.pbtxt";
 const char kFakePacketLabel1[] = "Packet1";
 const char kFakePacketLabel3[] = "Packet3";
 const char kFakeEntityLabel3[] = "Region3";
@@ -284,6 +285,13 @@ TEST(MediaPerceptionConversionUtilsTest, StateIdlToProto) {
   mri::State state_proto = StateIdlToProto(state);
   EXPECT_EQ(state_proto.status(), mri::State::UNINITIALIZED);
   EXPECT_FALSE(state_proto.has_device_context());
+
+  state.status = media_perception::STATUS_RUNNING;
+  state.config_file = std::make_unique<std::string>(kTestConfigFile);
+  state_proto = StateIdlToProto(state);
+  EXPECT_EQ(state_proto.status(), mri::State::RUNNING);
+  EXPECT_TRUE(state_proto.has_config_file());
+  EXPECT_EQ(state_proto.config_file(), kTestConfigFile);
 
   state.status = media_perception::STATUS_SUSPENDED;
   state.device_context = std::make_unique<std::string>(kTestDeviceContext);

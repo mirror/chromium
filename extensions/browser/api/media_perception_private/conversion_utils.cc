@@ -295,6 +295,9 @@ mri::State StateIdlToProto(const State& state) {
   if (state.device_context)
     state_result.set_device_context(*state.device_context);
 
+  if (state.config_file)
+    state_result.set_config_file(*state.config_file);
+
   if (state.video_stream_param && state.video_stream_param.get() != nullptr) {
     for (size_t i = 0; i < state.video_stream_param.get()->size(); ++i) {
       mri::VideoStreamParam* video_stream_param_result =
