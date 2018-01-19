@@ -94,6 +94,40 @@
     },
     {
       "key": {
+        "uuid": "0b5bd97f_e63a663f",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-01-19T01:59:17Z",
+      "side": 1,
+      "message": "might be nice to check file.IsValid() here? that way we can print the file name in the logging for this code path.",
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876aa99e_2c7046e0",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-01-19T01:59:17Z",
+      "side": 1,
+      "message": "btw, the function takes base::File but it seems that base::PlatformFile is what\u0027s needed here. how about taking PlatformFile instead?",
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72aa9bbe_4f980027",
         "filename": "third_party/zlib/google/zip.cc",
         "patchSetId": 1
@@ -369,6 +403,30 @@
       "side": 1,
       "message": "I\u0027m personally ok with the current approach plus documentation.  I\u0027m also ok with (2) if others prefer it.",
       "parentUuid": "4db301d9_c5f0ad89",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 285,
+        "endChar": 42
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7a285f_09d75d22",
+        "filename": "third_party/zlib/google/zip_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-01-19T01:59:17Z",
+      "side": 1,
+      "message": "the current approach sgtm if it\u0027s clearly documented.",
+      "parentUuid": "7332768e_d854ba74",
       "range": {
         "startLine": 284,
         "startChar": 0,
