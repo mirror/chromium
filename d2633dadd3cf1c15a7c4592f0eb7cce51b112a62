@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb521a92_27f56879",
+        "filename": "chrome/browser/net/load_timing_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-19T16:18:17Z",
+      "side": 1,
+      "message": "Should document what these values are (Not individually, but just say that they are milliseconds after fetch start, or -1 if not present).",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "d2633dadd3cf1c15a7c4592f0eb7cce51b112a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67b44f2_879e79a0",
+        "filename": "chrome/browser/net/load_timing_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-19T16:18:17Z",
+      "side": 1,
+      "message": "Think you can remove these comments, since we\u0027re no longer providing exact differences we could check against.",
+      "range": {
+        "startLine": 119,
+        "startChar": 22,
+        "endLine": 119,
+        "endChar": 31
+      },
+      "revId": "d2633dadd3cf1c15a7c4592f0eb7cce51b112a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
