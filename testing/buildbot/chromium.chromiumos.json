@@ -971,6 +971,7 @@
       {
         "args": [
           "--mus"
+          "--test-launcher-filter-file=../../testing/buildbot/filters/mus.content_browsertests.filter"
         ],
         "name": "mus_content_browsertests",
         "swarming": {
