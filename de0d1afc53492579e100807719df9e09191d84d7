@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fd2eefb_f4dde56b",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T04:45:14Z",
+      "side": 1,
+      "message": "I think we can pass 0 for the preferred height? (GridLayout should query GetHeightForWidth whenever it does layout)\n\nAlternatively, the AddView line below could possibly be re-used by doing\n\n  secondary_label-\u003eSetMaximumWidth(kMaxSecondaryLabelWidth);\n\ni.e. I think the following would work, and is a bit simpler/clearer (but please check):\n\n  if (ui::MaterialDesignController::IsSecondaryUiMaterial())\n    secondary_label-\u003eSetMaximumWidth(kMaxSecondaryLabelWidth);\n\n  layout-\u003eAddView(secondary_label, column_span, 1, views::GridLayout::FILL,\n                      views::GridLayout::CENTER);",
+      "revId": "de0d1afc53492579e100807719df9e09191d84d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
