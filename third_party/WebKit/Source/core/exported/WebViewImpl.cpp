@@ -2470,7 +2470,7 @@ bool WebViewImpl::ScrollFocusedEditableElementIntoView() {
     LayoutObject* layout_object = element->GetLayoutObject();
     if (!layout_object)
       return false;
-    layout_object->ScrollRectToVisible(element->BoundingBox(),
+    layout_object->ScrollRectToVisible(element->BoundingBox(true),
                                        WebScrollIntoViewParams());
     return true;
   }
@@ -2533,7 +2533,7 @@ void WebViewImpl::ComputeScaleAndScrollForFocusedNode(
   LocalFrameView* textbox_view = focused_node->GetDocument().View();
   IntRect textbox_rect_in_document =
       main_frame_view->RootFrameToDocument(textbox_view->AbsoluteToRootFrame(
-          PixelSnappedIntRect(focused_node->Node::BoundingBox())));
+          PixelSnappedIntRect(focused_node->Node::BoundingBox(true))));
 
   if (!zoom_in_to_legible_scale) {
     new_scale = PageScaleFactor();
