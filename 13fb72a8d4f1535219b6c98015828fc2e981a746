@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4b449cc_bf15b897",
+        "filename": "base/allocator/partition_allocator/spin_lock.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2018-01-19T14:21:25Z",
+      "side": 1,
+      "message": "Do we still want to yield the thread at this point? If so, perhaps just once and only where it\u0027s actually implemented (i.e. on posix). In the CL where YIELD_THREAD was added, it was feared it might delay the thread for too long (give all other threads of equal priority a chance to run first). Now, it looks like it\u0027s not delaying the thread enough. :)",
+      "revId": "13fb72a8d4f1535219b6c98015828fc2e981a746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
