@@ -38,6 +38,7 @@ NSString* const kStarTouchId = @"BOOKMARK";
 NSString* const kNewTabTouchId = @"NEW-TAB";
 NSString* const kExitFullscreenTouchId = @"EXIT-FULLSCREEN";
 NSString* const kFullscreenOriginLabelTouchId = @"FULLSCREEN-ORIGIN-LABEL";
+NSString* const kEmojiTouchId = @"EMOJI";
 
 // The button indexes in the back and forward segment control.
 const int kBackSegmentIndex = 0;
@@ -130,6 +131,8 @@ TEST_F(BrowserWindowTouchBarUnitTest, TouchBarItems) {
         containsObject:GetBrowserTouchBarItemId(kStarTouchId)]);
     EXPECT_TRUE([touch_bar_items
         containsObject:GetBrowserTouchBarItemId(kNewTabTouchId)]);
+    EXPECT_TRUE([touch_bar_items
+        containsObject:GetBrowserTouchBarItemId(kEmojiTouchId)]);
 
     prefs->SetBoolean(prefs::kShowHomeButton, false);
     touch_bar_items = [[touch_bar_ makeTouchBar] itemIdentifiers];
@@ -143,6 +146,8 @@ TEST_F(BrowserWindowTouchBarUnitTest, TouchBarItems) {
         containsObject:GetBrowserTouchBarItemId(kStarTouchId)]);
     EXPECT_TRUE([touch_bar_items
         containsObject:GetBrowserTouchBarItemId(kNewTabTouchId)]);
+    EXPECT_TRUE([touch_bar_items
+        containsObject:GetBrowserTouchBarItemId(kEmojiTouchId)]);
   }
 }
 

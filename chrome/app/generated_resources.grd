@@ -1835,8 +1835,11 @@ are declared in build/common.gypi.
                    desc="Customization label for the new tab button in the touch bar.">
           New Tab
         </message>
+        <message name="IDS_TOUCH_BAR_EMOJI_PICKER_CUSTOMIZATION_LABEL" desc="Customization label for the new tab button in the touch bar.">
+          Emoji &amp; Symbols
+        </message>
         <message name="IDS_TOUCH_BAR_EXIT_FULLSCREEN" desc="Text for the exit fullscreen button in the touch bar.">
-        Exit Full Screen
+          Exit Full Screen
         </message>
       </if>
 

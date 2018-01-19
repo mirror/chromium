@@ -60,6 +60,7 @@ NSString* const kStarTouchId = @"BOOKMARK";
 NSString* const kNewTabTouchId = @"NEW-TAB";
 NSString* const kExitFullscreenTouchId = @"EXIT-FULLSCREEN";
 NSString* const kFullscreenOriginLabelTouchId = @"FULLSCREEN-ORIGIN-LABEL";
+NSString* const kEmojiTouchId = @"EMOJI";
 
 // The button indexes in the back and forward segment control.
 const int kBackSegmentIndex = 0;
@@ -246,7 +247,7 @@ class BrowserTouchBarNotificationBridge : public CommandObserver {
 
   NSArray* touchBarItems = @[
     kBackForwardTouchId, kReloadOrStopTouchId, kHomeTouchId, kSearchTouchId,
-    kStarTouchId, kNewTabTouchId
+    kStarTouchId, kNewTabTouchId, kEmojiTouchId
   ];
 
   for (NSString* item in touchBarItems) {
@@ -345,6 +346,11 @@ class BrowserTouchBarNotificationBridge : public CommandObserver {
         setView:[NSTextField labelWithAttributedString:attributedString.get()]];
   } else if ([identifier hasSuffix:kExitFullscreenTouchId]) {
     return nil;
+  } else if ([identifier hasSuffix:kEmojiTouchId]) {
+    [touchBarItem setView:[self emojiTouchBarView]];
+    [touchBarItem setCustomizationLabel:
+                      l10n_util::GetNSString(
+                          IDS_TOUCH_BAR_EMOJI_PICKER_CUSTOMIZATION_LABEL)];
   }
 
   return touchBarItem.autorelease();
@@ -491,6 +497,16 @@ class BrowserTouchBarNotificationBridge : public CommandObserver {
   return searchButton;
 }
 
+- (NSView*)emojiTouchBarView {
+  NSImage* image =
+      CreateNSImageFromIcon(kEmoticonIcon, kTouchBarDefaultIconColor);
+  NSButton* emojiButton =
+      [NSButton buttonWithImage:image
+                         target:self
+                         action:@selector(showCharacterPalette:)];
+  return emojiButton;
+}
+
 - (void)backOrForward:(id)sender {
   NSSegmentedControl* control = sender;
   int command =
@@ -503,6 +519,10 @@ class BrowserTouchBarNotificationBridge : public CommandObserver {
   browser_->exclusive_access_manager()
       ->fullscreen_controller()
       ->ExitExclusiveAccessIfNecessary();
+}
+
+- (void)showCharacterPalette:(id)sender {
+  [NSApp orderFrontCharacterPalette:nil];
 }
 
 - (void)executeCommand:(id)sender {
