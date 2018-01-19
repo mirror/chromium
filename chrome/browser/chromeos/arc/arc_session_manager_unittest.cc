@@ -98,7 +98,7 @@ class FakeLoginDisplayHost : public chromeos::LoginDisplayHost {
   chromeos::WebUILoginView* GetWebUILoginView() const override {
     return nullptr;
   }
-  void Finalize(base::OnceClosure) override {}
+  void OnFinalize() override {}
   void SetStatusAreaVisible(bool visible) override {}
   void StartWizard(chromeos::OobeScreen first_screen) override {
     // Reset the controller first since there could only be one wizard
@@ -113,7 +113,7 @@ class FakeLoginDisplayHost : public chromeos::LoginDisplayHost {
   chromeos::WizardController* GetWizardController() override {
     return wizard_controller_.get();
   }
-  void StartUserAdding(base::OnceClosure completion_callback) override {}
+  void OnStartUserAdding() override {}
   void CancelUserAdding() override {}
   void OnStartSignInScreen(
       const chromeos::LoginScreenContext& context) override {}

@@ -21,24 +21,12 @@ class MockLoginDisplayHost : public LoginDisplayHost {
   MOCK_CONST_METHOD0(GetNativeWindow, gfx::NativeWindow(void));
   MOCK_CONST_METHOD0(GetOobeUI, OobeUI*(void));
   MOCK_CONST_METHOD0(GetWebUILoginView, WebUILoginView*(void));
-
-  // Workaround for move-only args in GMock.
-  MOCK_METHOD1(MockFinalize, void(base::OnceClosure*));
-  void Finalize(base::OnceClosure completion_callback) override {
-    MockFinalize(&completion_callback);
-  }
-
+  MOCK_METHOD0(OnFinalize, void(void));
   MOCK_METHOD1(SetStatusAreaVisible, void(bool));
   MOCK_METHOD0(ShowBackground, void(void));
   MOCK_METHOD1(StartWizard, void(OobeScreen));
   MOCK_METHOD0(GetWizardController, WizardController*(void));
-
-  // Workaround for move-only args in GMock.
-  MOCK_METHOD1(MockStartUserAdding, void(base::OnceClosure*));
-  void StartUserAdding(base::OnceClosure completion_callback) {
-    MockStartUserAdding(&completion_callback);
-  }
-
+  MOCK_METHOD0(OnStartUserAdding, void(void));
   MOCK_METHOD0(CancelUserAdding, void(void));
   MOCK_METHOD1(OnStartSignInScreen, void(const LoginScreenContext&));
   MOCK_METHOD0(ResumeSignInScreen, void(void));

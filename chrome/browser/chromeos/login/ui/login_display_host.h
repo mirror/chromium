@@ -65,7 +65,8 @@ class LoginDisplayHost : public content::NotificationObserver {
   // Called when user enters or returns to browsing session so LoginDisplayHost
   // instance may delete itself. |completion_callback| will be invoked when the
   // instance is gone.
-  virtual void Finalize(base::OnceClosure completion_callback) = 0;
+  void Finalize(base::OnceClosure completion_callback);
+  virtual void OnFinalize() = 0;
 
   // Toggles status area visibility.
   virtual void SetStatusAreaVisible(bool visible) = 0;
@@ -86,7 +87,8 @@ class LoginDisplayHost : public content::NotificationObserver {
   // Starts screen for adding user into session.
   // |completion_callback| is invoked after login display host shutdown.
   // |completion_callback| can be null.
-  virtual void StartUserAdding(base::OnceClosure completion_callback) = 0;
+  void StartUserAdding(base::OnceClosure completion_callback);
+  virtual void OnStartUserAdding() = 0;
 
   // Cancel addint user into session.
   virtual void CancelUserAdding() = 0;
@@ -194,6 +196,9 @@ class LoginDisplayHost : public content::NotificationObserver {
 
   // True if session start is in progress.
   bool session_starting_ = false;
+
+  // Called after host deletion.
+  std::vector<base::OnceClosure> completion_callbacks_;
 
   base::WeakPtrFactory<LoginDisplayHost> weak_factory_;
 

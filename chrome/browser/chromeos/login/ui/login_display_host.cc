@@ -30,6 +30,16 @@ namespace {
 // network requests are made while the system is idle waiting for user input.
 constexpr int64_t kPolicyServiceInitializationDelayMilliseconds = 100;
 
+void ScheduleCompletionCallbacks(std::vector<base::OnceClosure>&& callbacks) {
+  for (auto& callback : callbacks) {
+    if (callback.is_null())
+      continue;
+
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  std::move(callback));
+  }
+}
+
 }  // namespace
 
 // static
@@ -63,14 +73,26 @@ LoginDisplayHost::LoginDisplayHost() : weak_factory_(this) {
 
 LoginDisplayHost::~LoginDisplayHost() {
   default_host_ = nullptr;
+
+  ScheduleCompletionCallbacks(std::move(completion_callbacks_));
 }
 
 void LoginDisplayHost::BeforeSessionStart() {
   session_starting_ = true;
 }
 
+void LoginDisplayHost::Finalize(base::OnceClosure completion_callback) {
+  completion_callbacks_.push_back(std::move(completion_callback));
+  OnFinalize();
+}
+
 AppLaunchController* LoginDisplayHost::GetAppLaunchController() {
   return app_launch_controller_.get();
+}
+
+void LoginDisplayHost::StartUserAdding(base::OnceClosure completion_callback) {
+  completion_callbacks_.push_back(std::move(completion_callback));
+  OnStartUserAdding();
 }
 
 void LoginDisplayHost::StartSignInScreen(const LoginScreenContext& context) {
