@@ -47,7 +47,7 @@ void SendProcessKeyEvent(ui::EventType type,
 }
 
 bool g_keyboard_load_time_logged = false;
-base::LazyInstance<base::Time>::DestructorAtExit g_keyboard_load_time_start =
+base::LazyInstance<base::Time>::Leaky g_keyboard_load_time_start =
     LAZY_INSTANCE_INITIALIZER;
 
 struct keyboard::KeyboardConfig g_keyboard_config;

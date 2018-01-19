@@ -114,7 +114,7 @@ const char kAutocompleteNewPassword[] = "new-password";
 const char kAutocompleteCreditCardPrefix[] = "cc-";
 
 struct LoginAndSignupLazyInstanceTraits
-    : public base::internal::DestructorAtExitLazyInstanceTraits<re2::RE2> {
+    : public base::internal::LeakyLazyInstanceTraits<re2::RE2> {
   static re2::RE2* New(void* instance) {
     return CreateMatcher(instance, kLoginAndSignupRegex);
   }
@@ -316,7 +316,7 @@ const char kPasswordSiteUrlRegex[] =
     "passwords(?:-[a-z-]+\\.corp)?\\.google\\.com";
 
 struct PasswordSiteUrlLazyInstanceTraits
-    : public base::internal::DestructorAtExitLazyInstanceTraits<re2::RE2> {
+    : public base::internal::LeakyLazyInstanceTraits<re2::RE2> {
   static re2::RE2* New(void* instance) {
     return CreateMatcher(instance, kPasswordSiteUrlRegex);
   }

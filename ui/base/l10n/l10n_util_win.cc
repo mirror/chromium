@@ -58,8 +58,8 @@ class OverrideLocaleHolder {
   DISALLOW_COPY_AND_ASSIGN(OverrideLocaleHolder);
 };
 
-base::LazyInstance<OverrideLocaleHolder>::DestructorAtExit
-    override_locale_holder = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<OverrideLocaleHolder>::Leaky override_locale_holder =
+    LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 

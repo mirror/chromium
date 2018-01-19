@@ -321,7 +321,7 @@ class InternalAuthVerificationService {
 
 namespace {
 
-static base::LazyInstance<InternalAuthVerificationService>::DestructorAtExit
+static base::LazyInstance<InternalAuthVerificationService>::Leaky
     g_verification_service = LAZY_INSTANCE_INITIALIZER;
 static base::LazyInstance<base::Lock>::Leaky
     g_verification_service_lock = LAZY_INSTANCE_INITIALIZER;
@@ -424,7 +424,7 @@ class InternalAuthGenerationService : public base::ThreadChecker {
 
 namespace {
 
-static base::LazyInstance<InternalAuthGenerationService>::DestructorAtExit
+static base::LazyInstance<InternalAuthGenerationService>::Leaky
     g_generation_service = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

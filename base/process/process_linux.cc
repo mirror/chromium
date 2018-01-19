@@ -98,8 +98,8 @@ bool Process::CanBackgroundProcesses() {
     return true;
 #endif  // defined(OS_CHROMEOS)
 
-  static LazyInstance<CheckForNicePermission>::DestructorAtExit
-      check_for_nice_permission = LAZY_INSTANCE_INITIALIZER;
+  static LazyInstance<CheckForNicePermission>::Leaky check_for_nice_permission =
+      LAZY_INSTANCE_INITIALIZER;
   return check_for_nice_permission.Get().can_reraise_priority;
 }
 

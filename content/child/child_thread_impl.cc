@@ -89,7 +89,7 @@ namespace {
 // How long to wait for a connection to the browser process before giving up.
 const int kConnectionTimeoutS = 15;
 
-base::LazyInstance<base::ThreadLocalPointer<ChildThreadImpl>>::DestructorAtExit
+base::LazyInstance<base::ThreadLocalPointer<ChildThreadImpl>>::Leaky
     g_lazy_tls = LAZY_INSTANCE_INITIALIZER;
 
 // This isn't needed on Windows because there the sandbox's job object
@@ -230,7 +230,7 @@ void QuitClosure::PostQuitFromNonMainThread() {
   closure_.Run();
 }
 
-base::LazyInstance<QuitClosure>::DestructorAtExit g_quit_closure =
+base::LazyInstance<QuitClosure>::Leaky g_quit_closure =
     LAZY_INSTANCE_INITIALIZER;
 #endif
 

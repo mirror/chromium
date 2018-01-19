@@ -87,14 +87,14 @@ struct FormInputCollection {
   }
 };
 
-#define DECLARE_LAZY_MATCHER(NAME, PATTERN)                                   \
-  struct LabelPatternLazyInstanceTraits_##NAME                                \
-      : public base::internal::DestructorAtExitLazyInstanceTraits<re2::RE2> { \
-    static re2::RE2* New(void* instance) {                                    \
-      return CreateMatcher(instance, PATTERN);                                \
-    }                                                                         \
-  };                                                                          \
-  base::LazyInstance<re2::RE2, LabelPatternLazyInstanceTraits_##NAME> NAME =  \
+#define DECLARE_LAZY_MATCHER(NAME, PATTERN)                                  \
+  struct LabelPatternLazyInstanceTraits_##NAME                               \
+      : public base::internal::LeakyLazyInstanceTraits<re2::RE2> {           \
+    static re2::RE2* New(void* instance) {                                   \
+      return CreateMatcher(instance, PATTERN);                               \
+    }                                                                        \
+  };                                                                         \
+  base::LazyInstance<re2::RE2, LabelPatternLazyInstanceTraits_##NAME> NAME = \
       LAZY_INSTANCE_INITIALIZER;
 
 DECLARE_LAZY_MATCHER(ignored_characters_matcher, R"(\W)");

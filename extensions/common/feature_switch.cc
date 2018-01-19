@@ -68,7 +68,7 @@ class CommonSwitches {
   FeatureSwitch load_media_router_component_extension;
 };
 
-base::LazyInstance<CommonSwitches>::DestructorAtExit g_common_switches =
+base::LazyInstance<CommonSwitches>::Leaky g_common_switches =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

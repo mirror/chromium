@@ -327,8 +327,8 @@ bool IsPeripheralFlagEnabled() {
 }  // namespace
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<BluetoothLowEnergyAPI>>::DestructorAtExit
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+    BrowserContextKeyedAPIFactory<BluetoothLowEnergyAPI>>::Leaky g_factory =
+    LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<BluetoothLowEnergyAPI>*

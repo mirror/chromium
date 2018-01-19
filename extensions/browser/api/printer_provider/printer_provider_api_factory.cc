@@ -12,9 +12,8 @@
 
 namespace {
 
-static base::LazyInstance<
-    extensions::PrinterProviderAPIFactory>::DestructorAtExit g_api_factory =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<extensions::PrinterProviderAPIFactory>::Leaky
+    g_api_factory = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 

@@ -51,7 +51,7 @@ URLOverrides::URLOverrides() {
 URLOverrides::~URLOverrides() {
 }
 
-static base::LazyInstance<URLOverrides::URLOverrideMap>::DestructorAtExit
+static base::LazyInstance<URLOverrides::URLOverrideMap>::Leaky
     g_empty_url_overrides = LAZY_INSTANCE_INITIALIZER;
 
 // static

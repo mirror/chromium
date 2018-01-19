@@ -27,8 +27,8 @@ namespace {
 
 const int kDefaultMeasurementIntervalInSeconds = 1;
 
-base::LazyInstance<ResourceCoordinatorRenderProcessProbe>::DestructorAtExit
-    g_probe = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<ResourceCoordinatorRenderProcessProbe>::Leaky g_probe =
+    LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
