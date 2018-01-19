@@ -779,6 +779,7 @@ void NavigationControllerImpl::LoadURLWithParams(const LoadURLParams& params) {
   entry->SetIsOverridingUserAgent(override);
   entry->set_transferred_global_request_id(
       params.transferred_global_request_id);
+  entry->set_has_user_gesture(params.has_user_gesture);
 
 #if defined(OS_ANDROID)
   if (params.intent_received_timestamp > 0) {
@@ -786,7 +787,6 @@ void NavigationControllerImpl::LoadURLWithParams(const LoadURLParams& params) {
         base::TimeTicks() +
         base::TimeDelta::FromMilliseconds(params.intent_received_timestamp));
   }
-  entry->set_has_user_gesture(params.has_user_gesture);
 #endif
 
   switch (params.load_type) {

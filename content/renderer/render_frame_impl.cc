@@ -3096,11 +3096,13 @@ void RenderFrameImpl::CommitNavigation(
 
   controller_service_worker_info_ = std::move(controller_service_worker_info);
 
+#if defined(OS_ANDROID)
   // If the request was initiated in the context of a user gesture then make
   // sure that the navigation also executes in the context of a user gesture.
   std::unique_ptr<blink::WebScopedUserGesture> gesture(
       common_params.has_user_gesture ? new blink::WebScopedUserGesture(frame_)
                                      : nullptr);
+#endif
 
   browser_side_navigation_pending_ = false;
   browser_side_navigation_pending_url_ = GURL();
@@ -4069,15 +4071,8 @@ void RenderFrameImpl::DidCreateDocumentLoader(
     document_loader->SetSourceLocation(source_location);
   }
 
-  // Mark the loader as user activated if started from a context menu and the
-  // URLs are matching the user activation persistence rules.
-  if (navigation_state->common_params().started_from_context_menu &&
-      WebDocumentLoader::ShouldPersistUserActivation(
-          url::Origin::Create(navigation_state->common_params().url),
-          url::Origin::Create(
-              navigation_state->common_params().referrer.url))) {
+  if (navigation_state->request_params().was_activated)
     document_loader->SetUserActivated();
-  }
 
   // Create the serviceworker's per-document network observing object if it
   // does not exist (When navigation happens within a page, the provider already
