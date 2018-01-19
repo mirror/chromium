@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcf3cdc6_3c33dd1c",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-19T08:37:24Z",
+      "side": 1,
+      "message": "error_reading_file would be a more appropriate name for this parameter",
+      "range": {
+        "startLine": 190,
+        "startChar": 30,
+        "endLine": 190,
+        "endChar": 43
+      },
+      "revId": "abf0ab3f1ee961ed987e6fe0661fbd3e95b600ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de076892_219e16b0",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-19T08:37:24Z",
+      "side": 1,
+      "message": "Note that since this is not a OnceCallback, I\u0027m pretty sure it\u0027s still copying internally.",
+      "range": {
+        "startLine": 911,
+        "startChar": 39,
+        "endLine": 911,
+        "endChar": 58
+      },
+      "revId": "abf0ab3f1ee961ed987e6fe0661fbd3e95b600ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a41aa909_073cf3bd",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-19T08:37:24Z",
+      "side": 1,
+      "message": "FYI, it\u0027s possible to write this as base::Passed(\u0026user_info)",
+      "range": {
+        "startLine": 1165,
+        "startChar": 45,
+        "endLine": 1165,
+        "endChar": 79
+      },
+      "revId": "abf0ab3f1ee961ed987e6fe0661fbd3e95b600ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
