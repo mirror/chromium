@@ -12,7 +12,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.os.UserManager;
 import android.speech.RecognizerIntent;
 
@@ -47,7 +46,6 @@ public class FeatureUtilities {
 
     private static Boolean sHasGoogleAccountAuthenticator;
     private static Boolean sHasRecognitionIntentHandler;
-    private static Boolean sChromeHomeEnabled;
     private static String sChromeHomeSwipeLogicType;
 
     /**
@@ -201,44 +199,25 @@ public class FeatureUtilities {
     /**
      * @return Whether or not chrome should attach the toolbar to the bottom of the screen.
      */
+    @Deprecated
     @CalledByNative
     public static boolean isChromeHomeEnabled() {
-        if (DeviceFormFactor.isTablet()) return false;
-
-        if (sChromeHomeEnabled == null) {
-            ChromePreferenceManager prefManager = ChromePreferenceManager.getInstance();
-
-            // Allow disk access for preferences while Chrome Home is in experimentation.
-            StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
-            try {
-                sChromeHomeEnabled = prefManager.isChromeHomeEnabled();
-            } finally {
-                StrictMode.setThreadPolicy(oldPolicy);
-            }
-
-            // If the browser has been initialized by this point, check the experiment as well to
-            // avoid the restart logic in cacheChromeHomeEnabled.
-            if (ChromeFeatureList.isInitialized()) {
-                boolean chromeHomeExperimentEnabled =
-                        ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME);
-
-                if (chromeHomeExperimentEnabled != sChromeHomeEnabled) {
-                    sChromeHomeEnabled = chromeHomeExperimentEnabled;
-                    ChromePreferenceManager.getInstance().setChromeHomeEnabled(
-                            chromeHomeExperimentEnabled);
-                }
-            }
-            ChromePreferenceManager.setChromeHomeEnabledDate(sChromeHomeEnabled);
-        }
-        return sChromeHomeEnabled;
+        return false;
     }
 
     /**
      * Resets whether Chrome Home is enabled for tests. After this is called, the next call to
      * #isChromeHomeEnabled() will retrieve the value from shared preferences.
      */
-    public static void resetChromeHomeEnabledForTests() {
-        sChromeHomeEnabled = null;
+    @Deprecated
+    public static void resetChromeHomeEnabledForTests() {}
+
+    /**
+     * @return Whether Chrome Duplex, split toolbar Chrome Home, is enabled.
+     */
+    public static boolean isChromeDuplexEnabled() {
+        return ChromeFeatureList.isInitialized()
+                && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_DUPLEX);
     }
 
     /**

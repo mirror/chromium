@@ -1709,6 +1709,10 @@ const char kBackgroundLoaderForDownloadsDescription[] =
     "Enables downloading pages in the background in case page is not yet "
     "loaded in current tab.";
 
+const char kChromeDuplexName[] = "Chrome Duplex";
+const char kChromeDuplexDescription[] =
+    "Enables Chrome Duplex, split toolbar Chrome Home, on Android.";
+
 const char kChromeHomeName[] = "Chrome Home";
 const char kChromeHomeDescription[] =
     "Enables Chrome Home on Android. You must restart the browser"
