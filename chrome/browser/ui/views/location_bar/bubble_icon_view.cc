@@ -19,12 +19,19 @@
 #include "ui/views/animation/ink_drop_impl.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 
+// static
+const char BubbleIconView::kViewClassName[] = "BubbleIconView";
+
 void BubbleIconView::Init() {
   AddChildView(image_);
   image_->set_can_process_events_within_subtree(false);
   image_->EnableCanvasFlippingForRTLUI(true);
   SetInkDropMode(InkDropMode::ON);
   SetFocusBehavior(FocusBehavior::ACCESSIBLE_ONLY);
+}
+
+const char* BubbleIconView::GetClassName() const {
+  return BubbleIconView::kViewClassName;
 }
 
 BubbleIconView::BubbleIconView(CommandUpdater* command_updater, int command_id)
