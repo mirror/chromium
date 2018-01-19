@@ -93,6 +93,30 @@
       "revId": "2cca2b76f05f7aed9dba5b5945cb6153fe1d71c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9b18ddd_a9cc77eb",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-19T00:26:37Z",
+      "side": 1,
+      "message": "I am not sure I understand your question. Here are my thoughts:\n\n1. Currently, Net.AlternateProxyFailed  is not logged anywhere. I believe net error codes to Net.AlternateProxyFailed  should be logged here.\n\n2. The checks for ERR_NETWORK_CHANGED and ERR_INTERNET_DISCONNECTED are here to avoid unnecessarily marking the alt proxies as broken. This ensures that we mark alt proxy as broken only on protocol breakages, and not on connection changes. I think that we still need those checks.",
+      "parentUuid": "78b2d7ac_8be2395e",
+      "range": {
+        "startLine": 986,
+        "startChar": 4,
+        "endLine": 987,
+        "endChar": 78
+      },
+      "revId": "2cca2b76f05f7aed9dba5b5945cb6153fe1d71c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
