@@ -209,20 +209,26 @@ bool OSCrypt::DecryptString(const std::string& ciphertext,
 
   std::unique_ptr<crypto::SymmetricKey> encryption_key(
       GetEncryptionKey(version));
-  if (!encryption_key)
+  if (!encryption_key) {
+    LOG(ERROR) << "Decryption failed: could not get the key";
     return false;
+  }
 
   std::string iv(kIVBlockSizeAES128, ' ');
   crypto::Encryptor encryptor;
-  if (!encryptor.Init(encryption_key.get(), crypto::Encryptor::CBC, iv))
+  if (!encryptor.Init(encryption_key.get(), crypto::Encryptor::CBC, iv)) {
+    LOG(ERROR) << "Decryption failed: corrupt key";
     return false;
+  }
 
   // Strip off the versioning prefix before decrypting.
   std::string raw_ciphertext =
       ciphertext.substr(strlen(kObfuscationPrefix[version]));
 
-  if (!encryptor.Decrypt(raw_ciphertext, plaintext))
+  if (!encryptor.Decrypt(raw_ciphertext, plaintext)) {
+    VLOG(1) << "Decryption failed";
     return false;
+  }
 
   return true;
 }
