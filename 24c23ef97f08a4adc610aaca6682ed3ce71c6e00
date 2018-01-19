@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b58b149_5d44ae0c",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T06:08:58Z",
+      "side": 1,
+      "message": "Can you use insert_or_assign instead?",
+      "revId": "24c23ef97f08a4adc610aaca6682ed3ce71c6e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a1987f6_af3f543e",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T06:08:58Z",
+      "side": 1,
+      "message": "current_sinks_.emplace(sink_id, sink_it.second);",
+      "revId": "24c23ef97f08a4adc610aaca6682ed3ce71c6e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ef425d_379cb105",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T06:08:58Z",
+      "side": 1,
+      "message": "std::move(sinks)",
+      "revId": "24c23ef97f08a4adc610aaca6682ed3ce71c6e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
