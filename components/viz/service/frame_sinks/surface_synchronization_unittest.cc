@@ -1986,8 +1986,11 @@ TEST_F(SurfaceSynchronizationTest, LatestInFlightSurface) {
 
   // Submit a child CompositorFrame to a new SurfaceId and verify that
   // GetLatestInFlightSurface returns the right surface.
-  EXPECT_TRUE(child_support1().SubmitCompositorFrame(
-      child_id3.local_surface_id(), MakeDefaultCompositorFrame()));
+  bool success;
+  child_support1().SubmitCompositorFrame(child_id3.local_surface_id(),
+                                         MakeDefaultCompositorFrame(), nullptr,
+                                         &success);
+  EXPECT_TRUE(success);
 
   // Verify that there is a temporary reference for child_id3.
   EXPECT_TRUE(HasTemporaryReference(child_id3));
