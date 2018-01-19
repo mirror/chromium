@@ -4123,7 +4123,6 @@ split_static_library("browser") {
       "media/webrtc/webrtc_text_log_handler.h",
     ]
     deps += [
-      "//third_party/webrtc/modules/desktop_capture",
       "//third_party/webrtc_overrides",
       "//third_party/webrtc_overrides:init_webrtc",
     ]

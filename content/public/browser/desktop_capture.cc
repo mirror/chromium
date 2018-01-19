@@ -27,4 +27,14 @@ webrtc::DesktopCaptureOptions CreateDesktopCaptureOptions() {
   return options;
 }
 
+std::unique_ptr<webrtc::DesktopCapturer> CreateScreenCapturer() {
+  return webrtc::DesktopCapturer::CreateScreenCapturer(
+      CreateDesktopCaptureOptions());
+}
+
+std::unique_ptr<webrtc::DesktopCapturer> CreateWindowCapturer() {
+  return webrtc::DesktopCapturer::CreateWindowCapturer(
+      CreateDesktopCaptureOptions());
+}
+
 }  // namespace content
