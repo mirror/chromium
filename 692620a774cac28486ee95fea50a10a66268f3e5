@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e835a77c_2ca9bdc0",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-19T01:21:09Z",
+      "side": 1,
+      "message": "Consider making something searchable or a direct reference here.\ne.g.\n/* Duration matches toolbar\u0027s drawer transition (my-super-toolbar #thing). */\nor\n/* Duration matches toolbar\u0027s drawer transition (in my_super_toolbar.html). */",
+      "revId": "692620a774cac28486ee95fea50a10a66268f3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c198d249_a73f93fb",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-19T01:21:09Z",
+      "side": 1,
+      "message": "WDYT of !! rather than casting to a boolean?",
+      "revId": "692620a774cac28486ee95fea50a10a66268f3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df394f26_3374398a",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-19T01:21:09Z",
+      "side": 1,
+      "message": "Since this is done via and event, can devDrawer.hidden and this.expanded_ get out of sync with each other if dev mode is toggled rapidly?",
+      "revId": "692620a774cac28486ee95fea50a10a66268f3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
