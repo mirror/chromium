@@ -163,7 +163,8 @@ class LazyInstance {
 
     return static_cast<Type*>(internal::GetOrCreateLazyPointer(
         &private_instance_, [this]() { return Traits::New(private_buf_); },
-        Traits::kRegisterOnExit ? OnExit : nullptr, this));
+        Traits::kRegisterOnExit ? OnExit : nullptr, this,
+        &construction_event_));
   }
 
   // Returns true if the lazy instance has been created.  Unlike Get() and
@@ -190,6 +191,8 @@ class LazyInstance {
     Traits::Delete(me->instance());
     subtle::NoBarrier_Store(&me->private_instance_, 0);
   }
+
+  WaitableEvent* construction_event_ = nullptr;
 
 // MSVC gives a warning that the alignment expands the size of the
 // LazyInstance struct to make the size a multiple of the alignment. This
