@@ -47,6 +47,11 @@ void ThreadIdNameManager::RegisterThread(PlatformThreadHandle::Handle handle,
       name_to_interned_name_[kDefaultName];
 }
 
+void ThreadIdNameManager::InstallSetNameCallback(SetNameCallback callback) {
+  AutoLock locked(lock_);
+  set_name_callback_ = std::move(callback);
+}
+
 void ThreadIdNameManager::SetName(PlatformThreadId id,
                                   const std::string& name) {
   std::string* leaked_str = nullptr;
@@ -71,6 +76,10 @@ void ThreadIdNameManager::SetName(PlatformThreadId id,
       return;
     }
     thread_handle_to_interned_name_[id_to_handle_iter->second] = leaked_str;
+
+    if (set_name_callback_) {
+      set_name_callback_.Run(leaked_str->c_str());
+    }
   }
 
   // Add the leaked thread name to heap profiler context tracker. The name added

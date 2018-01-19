@@ -147,6 +147,7 @@ extern const char kLoadMediaRouterComponentExtension[];
 extern const char kMakeDefaultBrowser[];
 extern const char kMediaCacheSize[];
 extern const char kMemlog[];
+extern const char kMemlogIncludeThreadNames[];
 extern const char kMemlogKeepSmallAllocations[];
 extern const char kMemlogModeAll[];
 extern const char kMemlogModeAllRenderers[];

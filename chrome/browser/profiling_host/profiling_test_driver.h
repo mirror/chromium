@@ -51,6 +51,9 @@ class ProfilingTestDriver {
     // Starting profiling is an asynchronous operation, so this requires adding
     // some more plumbing. https://crbug.com/753218.
     bool profiling_already_started;
+
+    // Whether to include thread names in native stacks.
+    bool include_thread_names;
   };
 
   ProfilingTestDriver();

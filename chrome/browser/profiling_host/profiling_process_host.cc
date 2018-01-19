@@ -356,7 +356,7 @@ void ProfilingProcessHost::AddClientToProfilingService(
       pid, std::move(client),
       mojo::WrapPlatformFile(pipes.PassSender().release().handle),
       mojo::WrapPlatformFile(pipes.PassReceiver().release().handle),
-      process_type, stack_mode_);
+      process_type, stack_mode_, include_thread_names_);
 }
 
 // static
@@ -434,15 +434,23 @@ profiling::mojom::StackMode ProfilingProcessHost::GetStackModeForStartup() {
 }
 
 // static
+bool ProfilingProcessHost::GetIncludeThreadNamesForStartup() {
+  const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
+  return cmdline->HasSwitch(switches::kMemlogIncludeThreadNames);
+}
+
+// static
 ProfilingProcessHost* ProfilingProcessHost::Start(
     content::ServiceManagerConnection* connection,
     Mode mode,
-    profiling::mojom::StackMode stack_mode) {
+    profiling::mojom::StackMode stack_mode,
+    bool include_thread_names) {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
   CHECK(!has_started_);
   has_started_ = true;
   ProfilingProcessHost* host = GetInstance();
   host->stack_mode_ = stack_mode;
+  host->include_thread_names_ = include_thread_names;
   host->SetMode(mode);
   host->Register();
   host->MakeConnector(connection);
@@ -637,7 +645,7 @@ void ProfilingProcessHost::StartManualProfiling(base::ProcessId pid) {
   if (!has_started_) {
     profiling::ProfilingProcessHost::Start(
         content::ServiceManagerConnection::GetForProcess(), Mode::kManual,
-        GetStackModeForStartup());
+        GetStackModeForStartup(), GetIncludeThreadNamesForStartup());
   } else {
     SetMode(Mode::kManual);
   }
