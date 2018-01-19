@@ -3926,6 +3926,11 @@ void RenderFrameImpl::DidAddMessageToConsole(
       static_cast<int32_t>(source_line), source_name.Utf16()));
 }
 
+void RenderFrameImpl::BloatedPage() {
+  Send(new FrameHostMsg_BloatedTab(routing_id_));
+  CHECK(false);
+}
+
 void RenderFrameImpl::DownloadURL(const blink::WebURLRequest& request,
                                   const blink::WebString& suggested_name) {
   FrameHostMsg_DownloadUrl_Params params;

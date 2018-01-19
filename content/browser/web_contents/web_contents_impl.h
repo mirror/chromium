@@ -1073,6 +1073,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
                       const base::string16& user_input);
 
   // IPC message handlers.
+  void OnBloatedTab(RenderFrameHostImpl* source);
   void OnThemeColorChanged(RenderFrameHostImpl* source, SkColor theme_color);
   void OnDidLoadResourceFromMemoryCache(RenderFrameHostImpl* source,
                                         const GURL& url,

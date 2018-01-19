@@ -389,6 +389,8 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void DidChangeSelection(bool is_selection_empty) {}
 
   virtual void DidChangeContents() {}
+
+  virtual void DispatchBloatedPage() = 0;
 };
 
 }  // namespace blink

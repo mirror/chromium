@@ -834,6 +834,7 @@ bool WebContentsImpl::OnMessageReceived(RenderFrameHostImpl* render_frame_host,
 
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP_WITH_PARAM(WebContentsImpl, message, render_frame_host)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_BloatedTab, OnBloatedTab)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DomOperationResponse,
                         OnDomOperationResponse)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidChangeThemeColor,
@@ -4207,6 +4208,11 @@ void WebContentsImpl::OnAppCacheAccessed(RenderViewHostImpl* source,
   // Notify observers about navigation.
   for (auto& observer : observers_)
     observer.AppCacheAccessed(manifest_url, blocked_by_policy);
+}
+
+void WebContentsImpl::OnBloatedTab(RenderFrameHostImpl* source) {
+  for (auto& observer : observers_)
+    observer.OnRendererBloated(source);
 }
 
 void WebContentsImpl::OnColorChooserFactoryRequest(

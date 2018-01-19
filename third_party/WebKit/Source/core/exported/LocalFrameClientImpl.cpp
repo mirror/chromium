@@ -1151,4 +1151,12 @@ void LocalFrameClientImpl::DidChangeContents() {
     web_frame_->Client()->DidChangeContents();
 }
 
+void LocalFrameClientImpl::DispatchBloatedPage() {
+  if (web_frame_->Client())
+    web_frame_->Client()->BloatedPage();
+  else {
+    CHECK(false);
+  }
+}
+
 }  // namespace blink
