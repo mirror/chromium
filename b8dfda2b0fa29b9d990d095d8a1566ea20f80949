@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1741dddf_4e15a4c1",
+        "filename": "chrome/browser/ui/browser_window.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-19T23:53:49Z",
+      "side": 1,
+      "message": "could you add a concrete explanation of what that is (infobar / bubble)",
+      "range": {
+        "startLine": 201,
+        "startChar": 4,
+        "endLine": 201,
+        "endChar": 67
+      },
+      "revId": "b8dfda2b0fa29b9d990d095d8a1566ea20f80949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0d976c_713dbaed",
+        "filename": "chrome/browser/ui/browser_window.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-19T23:53:49Z",
+      "side": 1,
+      "message": "nit: technically, this should be Ui rather than UI",
+      "range": {
+        "startLine": 202,
+        "startChar": 28,
+        "endLine": 202,
+        "endChar": 30
+      },
+      "revId": "b8dfda2b0fa29b9d990d095d8a1566ea20f80949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
