@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ef147ca_c40439c9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/experimental-features/unsized-image.tentative.https.sub.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-19T20:01:15Z",
+      "side": 1,
+      "message": "What if, instead of \u0027attribute1\u0027 and \u0027value1\u0027, we used\n{attributes: [{name: \u0027width\u0027, value: 500},\n              {name: \u0027height\u0027, value: 800}],\n expected_width: 500,\n expected_height: 800}\n\nand then iterate over the elements of the attributes list?\n\n(Then you\u0027d also avoid the problem on line 52)",
+      "revId": "917671ad86e86e8bee93f790ccc5fb3dbcca880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8891a236_34301832",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/experimental-features/unsized-image.tentative.https.sub.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-19T20:01:15Z",
+      "side": 1,
+      "message": "This is pretty cool -- instead of checking typeof, though, it might be cleaner as\n\nif (\u0027attribute\u0027 in test) { ... }",
+      "revId": "917671ad86e86e8bee93f790ccc5fb3dbcca880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20085614_eddd240a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/experimental-features/unsized-image.tentative.https.sub.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-19T20:01:15Z",
+      "side": 1,
+      "message": "This is going to look odd in most cases -- you\u0027ll get text like \"and attribute undefined\u003dundefined\" because attribute1 and value1 are usually not present.",
+      "revId": "917671ad86e86e8bee93f790ccc5fb3dbcca880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
