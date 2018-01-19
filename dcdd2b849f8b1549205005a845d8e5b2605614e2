@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5e255a91_387c5230",
+        "filename": "chrome/browser/ui/cocoa/infobars/infobar_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-19T20:08:47Z",
+      "side": 1,
+      "message": "Yes; that\u0027s the change I\u0027m making in views as well.",
+      "parentUuid": "2053291d_e068f991",
+      "range": {
+        "startLine": 86,
+        "startChar": 61,
+        "endLine": 86,
+        "endChar": 77
+      },
+      "revId": "dcdd2b849f8b1549205005a845d8e5b2605614e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bffbd31_52b86513",
         "filename": "chrome/browser/ui/cocoa/infobars/infobar_gradient_view.mm",
         "patchSetId": 3
