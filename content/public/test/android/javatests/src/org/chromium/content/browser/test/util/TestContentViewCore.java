@@ -6,19 +6,15 @@ package org.chromium.content.browser.test.util;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
-import android.view.ViewStructure;
-import android.view.accessibility.AccessibilityNodeProvider;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.ContentViewCore.InternalAccessDelegate;
 import org.chromium.content.browser.PopupZoomer;
 import org.chromium.content.browser.WindowAndroidChangedObserver;
-import org.chromium.content.browser.accessibility.WebContentsAccessibility;
 import org.chromium.content.browser.input.SelectPopup;
 import org.chromium.content.browser.input.TextSuggestionHost;
 import org.chromium.content_public.browser.WebContents;
@@ -231,43 +227,6 @@ public class TestContentViewCore implements ContentViewCore {
     public SelectPopup getSelectPopupForTest() {
         return null;
     }
-
-    @Override
-    public boolean supportsAccessibilityAction(int action) {
-        return false;
-    }
-
-    @Override
-    public boolean performAccessibilityAction(int action, Bundle arguments) {
-        return false;
-    }
-
-    @Override
-    public WebContentsAccessibility getWebContentsAccessibility() {
-        return null;
-    }
-
-    @Override
-    public AccessibilityNodeProvider getAccessibilityNodeProvider() {
-        return null;
-    }
-
-    @Override
-    public void onProvideVirtualStructure(ViewStructure structure, boolean ignoreScrollOffset) {}
-
-    @Override
-    public void setObscuredByAnotherView(boolean isObscured) {}
-
-    @Override
-    public boolean isTouchExplorationEnabled() {
-        return false;
-    }
-
-    @Override
-    public void setAccessibilityState(boolean state) {}
-
-    @Override
-    public void setShouldSetAccessibilityFocusOnPageLoad(boolean on) {}
 
     @Override
     public boolean getIsMobileOptimizedHint() {

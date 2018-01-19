@@ -81,6 +81,7 @@ import org.chromium.content_public.browser.NavigationHistory;
 import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.content_public.browser.SelectionPopupController;
 import org.chromium.content_public.browser.WebContents;
+import org.chromium.content_public.browser.WebContentsAccessibility;
 import org.chromium.content_public.browser.WebContentsInternals;
 import org.chromium.content_public.browser.navigation_controller.LoadURLType;
 import org.chromium.content_public.browser.navigation_controller.UserAgentOverrideOption;
@@ -2406,6 +2407,10 @@ public class AwContents implements SmartClipProvider {
         return mWebContents.hasAccessedInitialDocument();
     }
 
+    private WebContentsAccessibility getWebContentsAccessibility() {
+        return WebContentsAccessibility.fromWebContents(mWebContents);
+    }
+
     @TargetApi(Build.VERSION_CODES.M)
     public void onProvideVirtualStructure(ViewStructure structure) {
         if (isDestroyedOrNoOperation(WARN)) return;
@@ -2416,7 +2421,7 @@ public class AwContents implements SmartClipProvider {
         }
         // for webview, the platform already calculates the scroll (as it is a view) in
         // ViewStructure tree. Do not offset for it in the snapshop x,y position calculations.
-        mContentViewCore.onProvideVirtualStructure(structure, true);
+        getWebContentsAccessibility().onProvideVirtualStructure(structure, true);
     }
 
     public void onProvideAutoFillVirtualStructure(ViewStructure structure, int flags) {
@@ -2715,8 +2720,9 @@ public class AwContents implements SmartClipProvider {
     }
 
     public boolean supportsAccessibilityAction(int action) {
-        return isDestroyedOrNoOperation(WARN) ? false
-                : mContentViewCore.supportsAccessibilityAction(action);
+        return isDestroyedOrNoOperation(WARN)
+                ? false
+                : getWebContentsAccessibility().supportsAction(action);
     }
 
     /**
@@ -3545,15 +3551,16 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public AccessibilityNodeProvider getAccessibilityNodeProvider() {
-            return isDestroyedOrNoOperation(WARN) ? null
-                                                  : mContentViewCore.getAccessibilityNodeProvider();
+            return isDestroyedOrNoOperation(WARN)
+                    ? null
+                    : getWebContentsAccessibility().getAccessibilityNodeProvider();
         }
 
         @Override
         public boolean performAccessibilityAction(final int action, final Bundle arguments) {
             return isDestroyedOrNoOperation(WARN)
                     ? false
-                    : mContentViewCore.performAccessibilityAction(action, arguments);
+                    : getWebContentsAccessibility().performAction(View.NO_ID, action, arguments);
         }
     }
 
