@@ -32,7 +32,8 @@ class VIEWS_EXPORT MenuRunnerImplAdapter : public MenuRunnerImplInterface {
                  MenuButton* button,
                  const gfx::Rect& bounds,
                  MenuAnchorPosition anchor,
-                 int32_t types) override;
+                 int32_t types,
+                 views::Widget* sibling) override;
   void Cancel() override;
   base::TimeTicks GetClosingEventTime() const override;
 
