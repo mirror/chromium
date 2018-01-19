@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5755c7e_6547e127",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T04:52:00Z",
+      "side": 1,
+      "message": "is image_fetcher_ ever reset()? (should it be?) Maybe that\u0027s what the ImageFetcherCallback should do (in which case the image_fetcher_impl.cc change might not be necessary)",
+      "revId": "b033ae631f6323cdd84e35159d34b1e63a18f04a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c56b65_71c82c3b",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-19T04:52:00Z",
+      "side": 1,
+      "message": "image_decoder_ becomes null after this. Maybe the caller of FetchAccountImage should just pass in the sandboxed image decoder impl..",
+      "range": {
+        "startLine": 271,
+        "startChar": 8,
+        "endLine": 271,
+        "endChar": 33
+      },
+      "revId": "b033ae631f6323cdd84e35159d34b1e63a18f04a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
