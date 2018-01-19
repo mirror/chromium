@@ -122,6 +122,10 @@ class OfflinePageModelImpl : public OfflinePageModel {
     skip_clearing_original_url_for_testing_ = true;
   }
 
+  void set_skip_consistency_check_for_testing() {
+    skip_consistency_check_for_testing_ = true;
+  }
+
  protected:
   // Adding a protected constructor for testing-only purposes in
   // offline_page_storage_manager_unittest.cc
@@ -303,6 +307,9 @@ class OfflinePageModelImpl : public OfflinePageModel {
 
   // Don't clear original URL if it is same as final URL. For testing only.
   bool skip_clearing_original_url_for_testing_;
+
+  // Don't run consistency check on start up. For testing only.
+  bool skip_consistency_check_for_testing_;
 
   base::WeakPtrFactory<OfflinePageModelImpl> weak_ptr_factory_;
 

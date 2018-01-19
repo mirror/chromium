@@ -333,6 +333,7 @@ OfflinePageModelImpl::OfflinePageModelImpl()
       is_loaded_(false),
       testing_clock_(nullptr),
       skip_clearing_original_url_for_testing_(false),
+      skip_consistency_check_for_testing_(false),
       weak_ptr_factory_(this) {}
 
 OfflinePageModelImpl::OfflinePageModelImpl(
@@ -895,7 +896,8 @@ void OfflinePageModelImpl::OnInitialGetOfflinePagesDone(
   FinalizeModelLoad();
 
   // Ensure necessary cleanup operations are started.
-  CheckMetadataConsistency();
+  if (!skip_consistency_check_for_testing_)
+    CheckMetadataConsistency();
 }
 
 void OfflinePageModelImpl::FinalizeModelLoad() {
