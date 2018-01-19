@@ -296,14 +296,24 @@ GpuVideoAcceleratorFactoriesImpl::VideoFrameOutputFormat(size_t bit_depth) {
   viz::ContextProvider::ScopedContextLock lock(context_provider_);
   auto capabilities = context_provider_->ContextCapabilities();
   if (bit_depth > 8) {
-    // If high bit depth rendering is not enabled and we support RG textures,
-    // use those, albeit at a reduced bit depth of 8 bits per component.
+    // If high bit depth rendering is enabled, bail here, otherwise try and use
+    // XR30 storage, and if not and we support RG textures, use those, albeit at
+    // a reduced bit depth of 8 bits per component.
+    if (rendering_color_space_.IsHDR())
+      return media::GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED;
+
     // TODO(mcasas): continue working on this, avoiding dropping information as
     // long as the hardware may support it https://crbug.com/798485.
-    if (!rendering_color_space_.IsHDR() && capabilities.texture_rg)
+    // TODO(mcasas): remove the |bit_depth| check when libyuv supports more than
+    // just x010ToAR30 conversions, https://crbug.com/libyuv/751.
+    if (capabilities.image_xr30 && bit_depth == 10) {
+      DVLOG(1) << "OutputFormat::XR30";
+      return media::GpuVideoAcceleratorFactories::OutputFormat::XR30;
+    } else if (capabilities.texture_rg) {
+      DVLOG(1) << "OutputFormat::I420";
       return media::GpuVideoAcceleratorFactories::OutputFormat::I420;
-    else
-      return media::GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED;
+    }
+    return media::GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED;
   }
   if (capabilities.image_ycbcr_420v &&
       !capabilities.image_ycbcr_420v_disabled_for_video_frames) {
