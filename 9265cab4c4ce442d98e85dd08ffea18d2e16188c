@@ -36,6 +36,40 @@
     },
     {
       "key": {
+        "uuid": "2a609dc1_d6c6a515",
+        "filename": "chromecast/graphics/cast_system_gesture_event_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-19T14:51:58Z",
+      "side": 1,
+      "message": "No elses (since the if\u0027s end with return; style guide)",
+      "revId": "9265cab4c4ce442d98e85dd08ffea18d2e16188c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9be477c_cf51eeb8",
+        "filename": "chromecast/graphics/cast_system_gesture_event_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-19T14:51:58Z",
+      "side": 1,
+      "message": "or just \u0027auto find \u003d ...\u0027",
+      "revId": "9265cab4c4ce442d98e85dd08ffea18d2e16188c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca4a7b48_0046bd79",
         "filename": "chromecast/graphics/cast_system_gesture_event_handler.h",
         "patchSetId": 5
