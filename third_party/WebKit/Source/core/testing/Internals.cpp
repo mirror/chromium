@@ -915,13 +915,14 @@ DOMRectReadOnly* Internals::absoluteCaretBounds(
 }
 
 String Internals::textAffinity() {
-  if (GetFrame()
-          ->GetPage()
-          ->GetFocusController()
-          .FocusedFrame()
-          ->Selection()
-          .GetSelectionInDOMTree()
-          .Affinity() == TextAffinity::kUpstream) {
+  if (GetFrame() && GetFrame()->GetPage() &&
+      GetFrame()
+              ->GetPage()
+              ->GetFocusController()
+              .FocusedFrame()
+              ->Selection()
+              .GetSelectionInDOMTree()
+              .Affinity() == TextAffinity::kUpstream) {
     return "Upstream";
   }
   return "Downstream";
