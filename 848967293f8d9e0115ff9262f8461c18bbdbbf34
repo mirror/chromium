@@ -154,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "1a77081c_c598ee7d",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1259934
+      },
+      "writtenOn": "2018-01-19T04:21:59Z",
+      "side": 1,
+      "message": "Yes. It\u0027s to be controlled in host activity.",
+      "parentUuid": "444361f0_8748bddf",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 91
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14e5e064_a1c5e5b4",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsFragment.java",
         "patchSetId": 3
