@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "922add71_4facfe0b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-19T19:58:17Z",
+      "side": 1,
+      "message": "Actually I\u0027m not sure. This copies the current spv1 clip applied at https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/paint/ScrollableAreaPainter.cpp?rcl\u003d8cfb6c74d5ece32d20f601781a8e8eae002ecd43\u0026l\u003d176. Also the rect is checked against the integer geometries of scrollbar frame rects.\n\nAny idea?",
+      "parentUuid": "c1777c84_352b13d2",
+      "revId": "1a765d8e9d875efc7bf8df05485c33ef880c9eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "406aefc4_dc9b38d5",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "adadeb2e_1b1970bd",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-19T19:58:17Z",
+      "side": 1,
+      "message": "The purpose of the code is to avoid the property node for the common case that overflow controls don\u0027t overflow. Overflowing overflow controls seem very rare (I saw them only in layout tests). The drawback is more CPU cost here for the common case. Will schedule performance try jobs.",
+      "parentUuid": "406aefc4_dc9b38d5",
+      "revId": "1a765d8e9d875efc7bf8df05485c33ef880c9eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e1d9b05_c5dc43ee",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 4
@@ -47,6 +83,41 @@
       "writtenOn": "2018-01-19T19:42:14Z",
       "side": 1,
       "message": "You need to update force_subtree_update according to whether the clip changed, in both\nbranches.",
+      "revId": "1a765d8e9d875efc7bf8df05485c33ef880c9eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8988ff_6ab28d9c",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-19T19:58:17Z",
+      "side": 1,
+      "message": "I thought the clip node is a leaf, so would not affect any descendant. However, just thought of custom scrollbars which may have clip properties inside of them. Will test the case.",
+      "parentUuid": "4e1d9b05_c5dc43ee",
+      "revId": "1a765d8e9d875efc7bf8df05485c33ef880c9eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fbc083d_80f92711",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1981,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-19T19:58:17Z",
+      "side": 1,
+      "message": "NeedsOverflowControlsClip() should be always shadowed by other conditions so I will put it at the end.",
       "revId": "1a765d8e9d875efc7bf8df05485c33ef880c9eaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
