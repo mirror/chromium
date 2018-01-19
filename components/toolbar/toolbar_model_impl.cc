@@ -37,7 +37,7 @@ ToolbarModelImpl::~ToolbarModelImpl() {
 }
 
 // ToolbarModelImpl Implementation.
-base::string16 ToolbarModelImpl::GetFormattedURL(size_t* prefix_end) const {
+base::string16 ToolbarModelImpl::GetFormattedFullURL(size_t* prefix_end) const {
   GURL url(GetURL());
   // Note that we can't unescape spaces here, because if the user copies this
   // and pastes it into another program, that program may think the URL ends at
