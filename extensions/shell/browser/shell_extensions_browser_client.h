@@ -6,6 +6,8 @@
 #define EXTENSIONS_SHELL_BROWSER_SHELL_EXTENSIONS_BROWSER_CLIENT_H_
 
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
@@ -57,6 +59,13 @@ class ShellExtensionsBrowserClient : public ExtensionsBrowserClient {
       net::NetworkDelegate* network_delegate,
       const base::FilePath& directory_path,
       const std::string& content_security_policy,
+      bool send_cors_header) override;
+  bool MaybeLoadResourceFromResourceBundle(
+      const network::ResourceRequest& request,
+      network::mojom::URLLoaderRequest* loader,
+      const base::FilePath& directory_path,
+      const std::string& content_security_policy,
+      network::mojom::URLLoaderClientPtr* client,
       bool send_cors_header) override;
   bool AllowCrossRendererResourceLoad(const GURL& url,
                                       content::ResourceType resource_type,

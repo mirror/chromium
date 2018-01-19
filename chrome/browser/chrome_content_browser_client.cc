@@ -217,6 +217,7 @@
 #include "content/public/common/web_preferences.h"
 #include "device/usb/public/interfaces/chooser_service.mojom.h"
 #include "device/usb/public/interfaces/device_manager.mojom.h"
+#include "extensions/browser/extension_system.h"
 #include "extensions/features/features.h"
 #include "google_apis/gaia/gaia_urls.h"
 #include "google_apis/google_api_keys.h"
@@ -3712,9 +3713,13 @@ void ChromeContentBrowserClient::RegisterNonNetworkNavigationURLLoaderFactories(
     content::RenderFrameHost* frame_host,
     NonNetworkURLLoaderFactoryMap* factories) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
+  content::BrowserContext* browser_context =
+      frame_host->GetProcess()->GetBrowserContext();
   factories->emplace(
       extensions::kExtensionScheme,
-      extensions::CreateExtensionNavigationURLLoaderFactory(frame_host));
+      extensions::CreateExtensionNavigationURLLoaderFactory(
+          frame_host,
+          extensions::ExtensionSystem::Get(browser_context)->info_map()));
 #endif
 }
 
@@ -3724,8 +3729,11 @@ void ChromeContentBrowserClient::
         const GURL& frame_url,
         NonNetworkURLLoaderFactoryMap* factories) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
+  content::BrowserContext* browser_context =
+      frame_host->GetProcess()->GetBrowserContext();
   auto factory = extensions::MaybeCreateExtensionSubresourceURLLoaderFactory(
-      frame_host, frame_url);
+      frame_host, frame_url,
+      extensions::ExtensionSystem::Get(browser_context)->info_map());
   if (factory)
     factories->emplace(extensions::kExtensionScheme, std::move(factory));
 #endif
