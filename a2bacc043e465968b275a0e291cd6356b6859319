@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "4842a425_d4413169",
+        "filename": "chrome/android/java/res/xml/site_settings_preferences.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-19T00:46:22Z",
+      "side": 1,
+      "message": "We\u0027ve pinged them again to get an answer for the ordering.",
+      "parentUuid": "e24c5cb9_f3c39ee5",
+      "range": {
+        "startLine": 68,
+        "startChar": 9,
+        "endLine": 68,
+        "endChar": 18
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d965e4a7_54de7dab",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/ContentSettingsResources.java",
         "patchSetId": 4
@@ -720,6 +744,30 @@
       "side": 1,
       "message": "I think I saw another comment saying the switch should flip between ASK and BLOCK. It would seem the text here should then be changed to reflect that, something like: \"Ask before reading text and images from the clipboard (recommended)\"\n\nAlthough this should probably be determined by UX (or at least validated by UX).",
       "parentUuid": "71b6f94e_665140e0",
+      "range": {
+        "startLine": 894,
+        "startChar": 8,
+        "endLine": 894,
+        "endChar": 15
+      },
+      "revId": "a2bacc043e465968b275a0e291cd6356b6859319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da51e8eb_2e3e39af",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-19T00:46:22Z",
+      "side": 1,
+      "message": "Done. Changed to Ask/Block (with Ask \u003d recommended)",
+      "parentUuid": "9780f194_1fa83983",
       "range": {
         "startLine": 894,
         "startChar": 8,
