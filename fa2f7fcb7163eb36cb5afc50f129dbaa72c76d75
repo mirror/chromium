@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "c1e51150_164de5ce",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T00:55:11Z",
+      "side": 1,
+      "message": "1 \u003d\u003e WTF_ARRAY_LENGTH",
+      "revId": "fa2f7fcb7163eb36cb5afc50f129dbaa72c76d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514e6baa_6241f3e0",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T00:55:11Z",
+      "side": 1,
+      "message": "// The node options must be serialized since they are passed to and consumed by a worklet thread.",
+      "revId": "fa2f7fcb7163eb36cb5afc50f129dbaa72c76d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a6994d2_9cfa985f",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNodeOptions.idl",
         "patchSetId": 8
