@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "98c13b48_dd24a86c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/rellist-feature-detection.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-19T05:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d8436cd_b2a74b1b",
+      "revId": "77f33eab0f8efb7d9f6cf6095547e6250b569fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f76d6c1_006ae6fe",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/rellist-feature-detection.html",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "77f33eab0f8efb7d9f6cf6095547e6250b569fd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb35ce2_05d29dde",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/rellist-feature-detection.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-19T05:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f76d6c1_006ae6fe",
+      "range": {
+        "startLine": 6,
+        "startChar": 25,
+        "endLine": 8,
+        "endChar": 4
+      },
+      "revId": "77f33eab0f8efb7d9f6cf6095547e6250b569fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "94d1f285_4931e026",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/rellist-feature-detection.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-19T05:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93eaa4d3_9cc4acb3",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "77f33eab0f8efb7d9f6cf6095547e6250b569fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c2de670_973f459d",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/rellist-feature-detection.html",
         "patchSetId": 6
@@ -79,6 +145,24 @@
       "revId": "77f33eab0f8efb7d9f6cf6095547e6250b569fd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "169e6d0f_e54cd7a6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/rellist-feature-detection.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-19T05:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c2de670_973f459d",
+      "revId": "77f33eab0f8efb7d9f6cf6095547e6250b569fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
