@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8d1b303_b0f03a0c",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T06:17:33Z",
+      "side": 1,
+      "message": "could you use \"var(--md-loading-message-color)\"?\n\nthis requires adding\n  \u003clink rel\u003d\"stylesheet\" href\u003d\"chrome://resources/css/md_colors.css\"\u003e\nto settings.html, like bookmarks, history and extensions have done.",
+      "range": {
+        "startLine": 50,
+        "startChar": 16,
+        "endLine": 50,
+        "endChar": 22
+      },
+      "revId": "a9d794f776f8024c304237e395cbcd0485fde340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973d645d_35941ff2",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T06:17:33Z",
+      "side": 1,
+      "message": "Do this here:\n\n  searchTerm \u003d searchTerm.toLowerCase();\n\ninstead of in every iteration of the filter.",
+      "revId": "a9d794f776f8024c304237e395cbcd0485fde340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d8fa58_096dd35e",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T06:17:33Z",
+      "side": 1,
+      "message": "I think this check is unnecessary, the array will always be truthy.",
+      "range": {
+        "startLine": 201,
+        "startChar": 11,
+        "endLine": 201,
+        "endChar": 31
+      },
+      "revId": "a9d794f776f8024c304237e395cbcd0485fde340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
