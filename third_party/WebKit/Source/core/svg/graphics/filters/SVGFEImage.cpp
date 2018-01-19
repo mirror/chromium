@@ -186,8 +186,8 @@ sk_sp<PaintFilter> FEImage::CreateImageFilterForLayoutObject(
   canvas->concat(AffineTransformToSkMatrix(transform));
   builder.EndRecording(*canvas);
 
-  return sk_make_sp<RecordPaintFilter>(
-      paint_recorder.finishRecordingAsPicture(), dst_rect);
+  return RecordPaintFilter::Make(paint_recorder.finishRecordingAsPicture(),
+                                 dst_rect);
 }
 
 sk_sp<PaintFilter> FEImage::CreateImageFilter() {
@@ -209,8 +209,8 @@ sk_sp<PaintFilter> FEImage::CreateImageFilter() {
 
   preserve_aspect_ratio_->TransformRect(dst_rect, src_rect);
 
-  return sk_make_sp<ImagePaintFilter>(std::move(image), src_rect, dst_rect,
-                                      kHigh_SkFilterQuality);
+  return ImagePaintFilter::Make(std::move(image), src_rect, dst_rect,
+                                kHigh_SkFilterQuality);
 }
 
 }  // namespace blink

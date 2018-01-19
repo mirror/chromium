@@ -634,9 +634,9 @@ void PaintOpReader::ReadColorFilterPaintFilter(
     SetInvalid();
   if (!valid_)
     return;
-  filter->reset(new ColorFilterPaintFilter(std::move(color_filter),
-                                           std::move(input),
-                                           crop_rect ? &*crop_rect : nullptr));
+  *filter =
+      ColorFilterPaintFilter::Make(std::move(color_filter), std::move(input),
+                                   crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadBlurPaintFilter(
@@ -647,15 +647,14 @@ void PaintOpReader::ReadBlurPaintFilter(
   BlurPaintFilter::TileMode tile_mode = SkBlurImageFilter::kClamp_TileMode;
   sk_sp<PaintFilter> input;
 
-  ReadSimple(&sigma_x);
-  ReadSimple(&sigma_y);
+  Read(&sigma_x);
+  Read(&sigma_y);
   ReadSimple(&tile_mode);
   Read(&input);
   if (!valid_)
     return;
-  filter->reset(new BlurPaintFilter(sigma_x, sigma_y, tile_mode,
-                                    std::move(input),
-                                    crop_rect ? &*crop_rect : nullptr));
+  *filter = BlurPaintFilter::Make(sigma_x, sigma_y, tile_mode, std::move(input),
+                                  crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadDropShadowPaintFilter(
@@ -670,11 +669,11 @@ void PaintOpReader::ReadDropShadowPaintFilter(
       SkDropShadowImageFilter::kDrawShadowAndForeground_ShadowMode;
   sk_sp<PaintFilter> input;
 
-  ReadSimple(&dx);
-  ReadSimple(&dy);
-  ReadSimple(&sigma_x);
-  ReadSimple(&sigma_y);
-  ReadSimple(&color);
+  Read(&dx);
+  Read(&dy);
+  Read(&sigma_x);
+  Read(&sigma_y);
+  Read(&color);
   ReadSimple(&shadow_mode);
   Read(&input);
 
@@ -682,9 +681,9 @@ void PaintOpReader::ReadDropShadowPaintFilter(
     SetInvalid();
   if (!valid_)
     return;
-  filter->reset(new DropShadowPaintFilter(dx, dy, sigma_x, sigma_y, color,
-                                          shadow_mode, std::move(input),
-                                          crop_rect ? &*crop_rect : nullptr));
+  *filter = DropShadowPaintFilter::Make(dx, dy, sigma_x, sigma_y, color,
+                                        shadow_mode, std::move(input),
+                                        crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadMagnifierPaintFilter(
@@ -694,13 +693,13 @@ void PaintOpReader::ReadMagnifierPaintFilter(
   SkScalar inset = 0.f;
   sk_sp<PaintFilter> input;
 
-  ReadSimple(&src_rect);
-  ReadSimple(&inset);
+  Read(&src_rect);
+  Read(&inset);
   Read(&input);
   if (!valid_)
     return;
-  filter->reset(new MagnifierPaintFilter(src_rect, inset, std::move(input),
-                                         crop_rect ? &*crop_rect : nullptr));
+  *filter = MagnifierPaintFilter::Make(src_rect, inset, std::move(input),
+                                       crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadComposePaintFilter(
@@ -713,7 +712,7 @@ void PaintOpReader::ReadComposePaintFilter(
   Read(&inner);
   if (!valid_)
     return;
-  filter->reset(new ComposePaintFilter(std::move(outer), std::move(inner)));
+  *filter = ComposePaintFilter::Make(std::move(outer), std::move(inner));
 }
 
 void PaintOpReader::ReadAlphaThresholdPaintFilter(
@@ -723,7 +722,7 @@ void PaintOpReader::ReadAlphaThresholdPaintFilter(
   SkScalar inner_min = 0.f;
   SkScalar outer_max = 0.f;
   sk_sp<PaintFilter> input;
-  ReadSimple(&region_size);
+  Read(&region_size);
   if (region_size > kMaxRegionSize)
     SetInvalid();
   if (!valid_)
@@ -731,17 +730,17 @@ void PaintOpReader::ReadAlphaThresholdPaintFilter(
   SkRegion region;
   for (size_t i = 0; i < region_size; ++i) {
     SkIRect rect;
-    ReadSimple(&rect);
+    Read(&rect);
     region.op(rect, SkRegion::kUnion_Op);
   }
-  ReadSimple(&inner_min);
-  ReadSimple(&outer_max);
+  Read(&inner_min);
+  Read(&outer_max);
   Read(&input);
   if (!valid_)
     return;
-  filter->reset(new AlphaThresholdPaintFilter(
-      region, inner_min, outer_max, std::move(input),
-      crop_rect ? &*crop_rect : nullptr));
+  *filter = AlphaThresholdPaintFilter::Make(region, inner_min, outer_max,
+                                            std::move(input),
+                                            crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadXfermodePaintFilter(
@@ -751,7 +750,7 @@ void PaintOpReader::ReadXfermodePaintFilter(
   sk_sp<PaintFilter> background;
   sk_sp<PaintFilter> foreground;
 
-  ReadSimple(&blend_mode_int);
+  Read(&blend_mode_int);
   Read(&background);
   Read(&foreground);
   SkBlendMode blend_mode = SkBlendMode::kClear;
@@ -761,9 +760,9 @@ void PaintOpReader::ReadXfermodePaintFilter(
     return;
   blend_mode = static_cast<SkBlendMode>(blend_mode_int);
 
-  filter->reset(new XfermodePaintFilter(blend_mode, std::move(background),
-                                        std::move(foreground),
-                                        crop_rect ? &*crop_rect : nullptr));
+  *filter = XfermodePaintFilter::Make(blend_mode, std::move(background),
+                                      std::move(foreground),
+                                      crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadArithmeticPaintFilter(
@@ -776,18 +775,18 @@ void PaintOpReader::ReadArithmeticPaintFilter(
   bool enforce_pm_color = false;
   sk_sp<PaintFilter> background;
   sk_sp<PaintFilter> foreground;
-  ReadSimple(&k1);
-  ReadSimple(&k2);
-  ReadSimple(&k3);
-  ReadSimple(&k4);
-  ReadSimple(&enforce_pm_color);
+  Read(&k1);
+  Read(&k2);
+  Read(&k3);
+  Read(&k4);
+  Read(&enforce_pm_color);
   Read(&background);
   Read(&foreground);
   if (!valid_)
     return;
-  filter->reset(new ArithmeticPaintFilter(
+  *filter = ArithmeticPaintFilter::Make(
       k1, k2, k3, k4, enforce_pm_color, std::move(background),
-      std::move(foreground), crop_rect ? &*crop_rect : nullptr));
+      std::move(foreground), crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadMatrixConvolutionPaintFilter(
@@ -812,12 +811,12 @@ void PaintOpReader::ReadMatrixConvolutionPaintFilter(
   }
   std::vector<SkScalar> kernel(size);
   for (size_t i = 0; i < size; ++i)
-    ReadSimple(&kernel[i]);
-  ReadSimple(&gain);
-  ReadSimple(&bias);
+    Read(&kernel[i]);
+  Read(&gain);
+  Read(&bias);
   ReadSimple(&kernel_offset);
-  ReadSimple(&tile_mode_int);
-  ReadSimple(&convolve_alpha);
+  Read(&tile_mode_int);
+  Read(&convolve_alpha);
   Read(&input);
   if (tile_mode_int > SkMatrixConvolutionImageFilter::kMax_TileMode)
     SetInvalid();
@@ -825,9 +824,9 @@ void PaintOpReader::ReadMatrixConvolutionPaintFilter(
     return;
   MatrixConvolutionPaintFilter::TileMode tile_mode =
       static_cast<MatrixConvolutionPaintFilter::TileMode>(tile_mode_int);
-  filter->reset(new MatrixConvolutionPaintFilter(
+  *filter = MatrixConvolutionPaintFilter::Make(
       kernel_size, kernel.data(), gain, bias, kernel_offset, tile_mode,
-      convolve_alpha, std::move(input), crop_rect ? &*crop_rect : nullptr));
+      convolve_alpha, std::move(input), crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadDisplacementMapEffectPaintFilter(
@@ -842,9 +841,9 @@ void PaintOpReader::ReadDisplacementMapEffectPaintFilter(
   sk_sp<PaintFilter> displacement;
   sk_sp<PaintFilter> color;
 
-  ReadSimple(&channel_x_int);
-  ReadSimple(&channel_y_int);
-  ReadSimple(&scale);
+  Read(&channel_x_int);
+  Read(&channel_y_int);
+  Read(&scale);
   Read(&displacement);
   Read(&color);
 
@@ -860,9 +859,9 @@ void PaintOpReader::ReadDisplacementMapEffectPaintFilter(
   DisplacementMapEffectPaintFilter::ChannelSelectorType channel_y =
       static_cast<DisplacementMapEffectPaintFilter::ChannelSelectorType>(
           channel_y_int);
-  filter->reset(new DisplacementMapEffectPaintFilter(
+  *filter = DisplacementMapEffectPaintFilter::Make(
       channel_x, channel_y, scale, std::move(displacement), std::move(color),
-      crop_rect ? &*crop_rect : nullptr));
+      crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadImagePaintFilter(
@@ -884,8 +883,8 @@ void PaintOpReader::ReadImagePaintFilter(
 
   if (!valid_)
     return;
-  filter->reset(
-      new ImagePaintFilter(std::move(image), src_rect, dst_rect, quality));
+  *filter =
+      ImagePaintFilter::Make(std::move(image), src_rect, dst_rect, quality);
 }
 
 void PaintOpReader::ReadRecordPaintFilter(
@@ -893,30 +892,34 @@ void PaintOpReader::ReadRecordPaintFilter(
     const base::Optional<PaintFilter::CropRect>& crop_rect) {
   SkRect record_bounds;
   sk_sp<PaintRecord> record;
-  ReadSimple(&record_bounds);
+  Read(&record_bounds);
   Read(&record);
   if (!valid_)
     return;
-  filter->reset(new RecordPaintFilter(std::move(record), record_bounds));
+  *filter = RecordPaintFilter::Make(std::move(record), record_bounds);
 }
 
 void PaintOpReader::ReadMergePaintFilter(
     sk_sp<PaintFilter>* filter,
     const base::Optional<PaintFilter::CropRect>& crop_rect) {
   size_t input_count = 0;
-  ReadSimple(&input_count);
+  Read(&input_count);
   if (input_count > kMaxMergeFilterCount)
     SetInvalid();
   if (!valid_)
     return;
   std::vector<sk_sp<PaintFilter>> inputs(input_count);
-  for (auto& input : inputs)
+  int i = 0;
+  for (auto& input : inputs) {
+    i++;
     Read(&input);
+    if (!valid_)
+      CHECK(false) << i;
+  }
   if (!valid_)
     return;
-  filter->reset(new MergePaintFilter(inputs.data(),
-                                     static_cast<int>(input_count),
-                                     crop_rect ? &*crop_rect : nullptr));
+  *filter = MergePaintFilter::Make(inputs.data(), static_cast<int>(input_count),
+                                   crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadMorphologyPaintFilter(
@@ -926,9 +929,9 @@ void PaintOpReader::ReadMorphologyPaintFilter(
   int radius_x = 0;
   int radius_y = 0;
   sk_sp<PaintFilter> input;
-  ReadSimple(&morph_type_int);
-  ReadSimple(&radius_x);
-  ReadSimple(&radius_y);
+  Read(&morph_type_int);
+  Read(&radius_x);
+  Read(&radius_y);
   Read(&input);
   if (morph_type_int >
       static_cast<uint32_t>(MorphologyPaintFilter::MorphType::kMaxMorphType)) {
@@ -938,9 +941,9 @@ void PaintOpReader::ReadMorphologyPaintFilter(
     return;
   MorphologyPaintFilter::MorphType morph_type =
       static_cast<MorphologyPaintFilter::MorphType>(morph_type_int);
-  filter->reset(new MorphologyPaintFilter(morph_type, radius_x, radius_y,
-                                          std::move(input),
-                                          crop_rect ? &*crop_rect : nullptr));
+  *filter = MorphologyPaintFilter::Make(morph_type, radius_x, radius_y,
+                                        std::move(input),
+                                        crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadOffsetPaintFilter(
@@ -950,13 +953,13 @@ void PaintOpReader::ReadOffsetPaintFilter(
   SkScalar dy = 0.f;
   sk_sp<PaintFilter> input;
 
-  ReadSimple(&dx);
-  ReadSimple(&dy);
+  Read(&dx);
+  Read(&dy);
   Read(&input);
   if (!valid_)
     return;
-  filter->reset(new OffsetPaintFilter(dx, dy, std::move(input),
-                                      crop_rect ? &*crop_rect : nullptr));
+  *filter = OffsetPaintFilter::Make(dx, dy, std::move(input),
+                                    crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadTilePaintFilter(
@@ -966,12 +969,12 @@ void PaintOpReader::ReadTilePaintFilter(
   SkRect dst = SkRect::MakeEmpty();
   sk_sp<PaintFilter> input;
 
-  ReadSimple(&src);
-  ReadSimple(&dst);
+  Read(&src);
+  Read(&dst);
   Read(&input);
   if (!valid_)
     return;
-  filter->reset(new TilePaintFilter(src, dst, std::move(input)));
+  *filter = TilePaintFilter::Make(src, dst, std::move(input));
 }
 
 void PaintOpReader::ReadTurbulencePaintFilter(
@@ -984,11 +987,11 @@ void PaintOpReader::ReadTurbulencePaintFilter(
   SkScalar seed = 0.f;
   SkISize tile_size = SkISize::MakeEmpty();
 
-  ReadSimple(&turbulence_type_int);
-  ReadSimple(&base_frequency_x);
-  ReadSimple(&base_frequency_y);
-  ReadSimple(&num_octaves);
-  ReadSimple(&seed);
+  Read(&turbulence_type_int);
+  Read(&base_frequency_x);
+  Read(&base_frequency_y);
+  Read(&num_octaves);
+  Read(&seed);
   ReadSimple(&tile_size);
   if (turbulence_type_int >
       static_cast<uint32_t>(
@@ -999,9 +1002,9 @@ void PaintOpReader::ReadTurbulencePaintFilter(
     return;
   TurbulencePaintFilter::TurbulenceType turbulence_type =
       static_cast<TurbulencePaintFilter::TurbulenceType>(turbulence_type_int);
-  filter->reset(new TurbulencePaintFilter(
+  *filter = TurbulencePaintFilter::Make(
       turbulence_type, base_frequency_x, base_frequency_y, num_octaves, seed,
-      &tile_size, crop_rect ? &*crop_rect : nullptr));
+      &tile_size, crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadPaintFlagsPaintFilter(
@@ -1012,8 +1015,8 @@ void PaintOpReader::ReadPaintFlagsPaintFilter(
   Read(&flags);
   if (!valid_)
     return;
-  filter->reset(
-      new PaintFlagsPaintFilter(flags, crop_rect ? &*crop_rect : nullptr));
+  *filter = PaintFlagsPaintFilter::Make(std::move(flags),
+                                        crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadMatrixPaintFilter(
@@ -1030,8 +1033,7 @@ void PaintOpReader::ReadMatrixPaintFilter(
     SetInvalid();
   if (!valid_)
     return;
-  filter->reset(
-      new MatrixPaintFilter(matrix, filter_quality, std::move(input)));
+  *filter = MatrixPaintFilter::Make(matrix, filter_quality, std::move(input));
 }
 
 void PaintOpReader::ReadLightingDistantPaintFilter(
@@ -1045,12 +1047,12 @@ void PaintOpReader::ReadLightingDistantPaintFilter(
   SkScalar shininess = 0.f;
   sk_sp<PaintFilter> input;
 
-  ReadSimple(&lighting_type_int);
+  Read(&lighting_type_int);
   ReadSimple(&direction);
-  ReadSimple(&light_color);
-  ReadSimple(&surface_scale);
-  ReadSimple(&kconstant);
-  ReadSimple(&shininess);
+  Read(&light_color);
+  Read(&surface_scale);
+  Read(&kconstant);
+  Read(&shininess);
   Read(&input);
   if (lighting_type_int >
       static_cast<uint32_t>(PaintFilter::LightingType::kMaxLightingType)) {
@@ -1060,9 +1062,9 @@ void PaintOpReader::ReadLightingDistantPaintFilter(
     return;
   PaintFilter::LightingType lighting_type =
       static_cast<PaintFilter::LightingType>(lighting_type_int);
-  filter->reset(new LightingDistantPaintFilter(
+  *filter = LightingDistantPaintFilter::Make(
       lighting_type, direction, light_color, surface_scale, kconstant,
-      shininess, std::move(input), crop_rect ? &*crop_rect : nullptr));
+      shininess, std::move(input), crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadLightingPointPaintFilter(
@@ -1076,12 +1078,12 @@ void PaintOpReader::ReadLightingPointPaintFilter(
   SkScalar shininess = 0.f;
   sk_sp<PaintFilter> input;
 
-  ReadSimple(&lighting_type_int);
+  Read(&lighting_type_int);
   ReadSimple(&location);
-  ReadSimple(&light_color);
-  ReadSimple(&surface_scale);
-  ReadSimple(&kconstant);
-  ReadSimple(&shininess);
+  Read(&light_color);
+  Read(&surface_scale);
+  Read(&kconstant);
+  Read(&shininess);
   Read(&input);
   if (lighting_type_int >
       static_cast<uint32_t>(PaintFilter::LightingType::kMaxLightingType)) {
@@ -1091,9 +1093,9 @@ void PaintOpReader::ReadLightingPointPaintFilter(
     return;
   PaintFilter::LightingType lighting_type =
       static_cast<PaintFilter::LightingType>(lighting_type_int);
-  filter->reset(new LightingPointPaintFilter(
+  *filter = LightingPointPaintFilter::Make(
       lighting_type, location, light_color, surface_scale, kconstant, shininess,
-      std::move(input), crop_rect ? &*crop_rect : nullptr));
+      std::move(input), crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::ReadLightingSpotPaintFilter(
@@ -1110,15 +1112,15 @@ void PaintOpReader::ReadLightingSpotPaintFilter(
   SkScalar shininess = 0.f;
   sk_sp<PaintFilter> input;
 
-  ReadSimple(&lighting_type_int);
+  Read(&lighting_type_int);
   ReadSimple(&location);
   ReadSimple(&target);
-  ReadSimple(&specular_exponent);
-  ReadSimple(&cutoff_angle);
-  ReadSimple(&light_color);
-  ReadSimple(&surface_scale);
-  ReadSimple(&kconstant);
-  ReadSimple(&shininess);
+  Read(&specular_exponent);
+  Read(&cutoff_angle);
+  Read(&light_color);
+  Read(&surface_scale);
+  Read(&kconstant);
+  Read(&shininess);
   Read(&input);
 
   if (lighting_type_int >
@@ -1129,10 +1131,10 @@ void PaintOpReader::ReadLightingSpotPaintFilter(
     return;
   PaintFilter::LightingType lighting_type =
       static_cast<PaintFilter::LightingType>(lighting_type_int);
-  filter->reset(new LightingSpotPaintFilter(
+  *filter = LightingSpotPaintFilter::Make(
       lighting_type, location, target, specular_exponent, cutoff_angle,
       light_color, surface_scale, kconstant, shininess, std::move(input),
-      crop_rect ? &*crop_rect : nullptr));
+      crop_rect ? &*crop_rect : nullptr);
 }
 
 void PaintOpReader::Read(sk_sp<PaintRecord>* record) {
