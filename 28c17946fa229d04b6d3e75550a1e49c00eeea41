@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "284ac785_cffc836c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/components/DOMPresentationUtils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-19T22:31:48Z",
+      "side": 1,
+      "message": "ls",
+      "range": {
+        "startLine": 311,
+        "startChar": 42,
+        "endLine": 311,
+        "endChar": 57
+      },
+      "revId": "28c17946fa229d04b6d3e75550a1e49c00eeea41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01176b19_0391f755",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogViewColumns.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-19T22:31:48Z",
+      "side": 1,
+      "message": "@dgozman might suggest a better approach to deal with glasspane",
+      "range": {
+        "startLine": 544,
+        "startChar": 11,
+        "endLine": 544,
+        "endChar": 82
+      },
+      "revId": "28c17946fa229d04b6d3e75550a1e49c00eeea41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
