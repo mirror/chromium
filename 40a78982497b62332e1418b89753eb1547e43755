@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5e48c18_8f6c1190",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-19T22:03:50Z",
+      "side": 1,
+      "message": "It is because window grid is also responsible for displaying \"No recent items\".\n\nWindowGrid is always created:\n1. If window blur background and create WindowSelectorItems\n2. If no window blur background and show message",
+      "parentUuid": "9cb63c02_0bc621bd",
+      "revId": "40a78982497b62332e1418b89753eb1547e43755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86d92831_e5f11249",
         "filename": "ash/wm/overview/window_selector.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-19T20:01:10Z",
       "side": 1,
       "message": "Why not checking grid_list_.empty()?",
+      "revId": "40a78982497b62332e1418b89753eb1547e43755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79694f56_22d2e56e",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-19T22:03:50Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "86d92831_e5f11249",
       "revId": "40a78982497b62332e1418b89753eb1547e43755",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "40a78982497b62332e1418b89753eb1547e43755",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5083d054_29511ddb",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-19T22:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "623de616_636f139a",
+      "revId": "40a78982497b62332e1418b89753eb1547e43755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
