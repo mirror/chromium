@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "438cfb8c_6ec7490a",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-19T16:54:46Z",
+      "side": 1,
+      "message": "nit: this is equivalent to it-\u003ereset(), which is more idiomatic.",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 8
+      },
+      "revId": "ea6581a32aff41ab7759f997e04ced9652ba40fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f86c093d_61614829",
         "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
         "patchSetId": 37
