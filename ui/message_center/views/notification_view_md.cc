@@ -41,6 +41,7 @@
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/native_cursor.h"
+#include "ui/views/vector_icons.h"
 #include "ui/views/view_targeter.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
@@ -65,6 +66,7 @@ constexpr gfx::Size kLargeImageMaxSize(328, 218);
 constexpr gfx::Insets kLeftContentPadding(2, 4, 0, 4);
 constexpr gfx::Insets kLeftContentPaddingWithIcon(2, 4, 0, 12);
 constexpr gfx::Insets kNotificationInputPadding(0, 16, 0, 16);
+constexpr gfx::Insets kNotificationInlineReplyIconPadding(0, 14, 0, 14);
 constexpr gfx::Insets kSettingsRowPadding(8, 0, 0, 0);
 constexpr gfx::Insets kSettingsRadioButtonPadding(14, 18, 14, 18);
 constexpr gfx::Insets kSettingsButtonRowPadding(8);
@@ -89,6 +91,12 @@ const SkColor kDimTextColorMD = SkColorSetRGB(0x75, 0x75, 0x75);
 const SkColor kInputTextColor = SkColorSetRGB(0xFF, 0xFF, 0xFF);
 const SkColor kInputPlaceholderColor = SkColorSetARGB(0x8A, 0xFF, 0xFF, 0xFF);
 const SkColor kInputBackgroundColor = SkColorSetRGB(0x33, 0x67, 0xD6);
+
+// The icon color of inline reply input field.
+const SkColor kInlineReplyIconColor = SkColorSetRGB(0xFF, 0xFF, 0xFF);
+
+// The icon size of inline reply input field.
+constexpr int kInlineReplyIconSize = 20;
 
 // Max number of lines for message_view_.
 constexpr int kMaxLinesForMessageView = 1;
@@ -359,12 +367,19 @@ NotificationButtonMD::CreateInkDropHighlight() const {
 // NotificationInputMD /////////////////////////////////////////////////////////
 
 NotificationInputMD::NotificationInputMD(NotificationInputDelegate* delegate)
-    : delegate_(delegate), index_(0) {
+    : delegate_(delegate), index_(0), inline_reply_icon_(nullptr) {
   set_controller(this);
   SetTextColor(kInputTextColor);
   SetBackgroundColor(kInputBackgroundColor);
   set_placeholder_text_color(kInputPlaceholderColor);
   SetBorder(views::CreateEmptyBorder(kNotificationInputPadding));
+  inline_reply_icon_ = new views::ImageView();
+  inline_reply_icon_->SetImage(
+      gfx::CreateVectorIcon(views::kNotificationInlineReplyIcon,
+                            kInlineReplyIconSize, kInlineReplyIconColor));
+  inline_reply_icon_->SetBorder(
+      views::CreateEmptyBorder(kNotificationInlineReplyIconPadding));
+  AddChildView(inline_reply_icon_);
 }
 
 NotificationInputMD::~NotificationInputMD() = default;
@@ -514,7 +529,11 @@ NotificationViewMD::NotificationViewMD(const Notification& notification)
   // |inline_reply_| is a textfield for inline reply.
   inline_reply_ = new NotificationInputMD(this);
   inline_reply_->SetVisible(false);
-
+  auto* inline_reply_layout =
+      inline_reply_->SetLayoutManager(std::make_unique<views::BoxLayout>(
+          views::BoxLayout::kHorizontal, gfx::Insets(), 0));
+  inline_reply_layout->set_main_axis_alignment(
+      views::BoxLayout::MAIN_AXIS_ALIGNMENT_END);
   actions_row_->AddChildView(inline_reply_);
 
   CreateOrUpdateViews(notification);

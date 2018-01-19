@@ -162,6 +162,8 @@ class NotificationInputMD : public views::Textfield,
   size_t index_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationInputMD);
+
+  views::ImageView* inline_reply_icon_;
 };
 
 // View that displays all current types of notification (web, basic, image, and
