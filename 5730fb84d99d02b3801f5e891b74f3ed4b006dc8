@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6d117ab_c1429037",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "18c17746_64a6f22a",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d114733a_9a29c575",
         "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
         "patchSetId": 15
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "5d379cca_afe6259a",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "I totally rewrote the constructor interface - now there are just 4 cases being handled: policy optional (no blocking), policy check required (blocking), policy required (no blocking), policy required (blocking with timeout). Code should be cleaner now and we don\u0027t have the explosion of different cases we used to (policy required/not, timeout allowed/not, blocking/non-blocking) and all the permutations.",
+      "parentUuid": "d114733a_9a29c575",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 45
+      },
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df2f2aa8_f9ec2aca",
         "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
         "patchSetId": 15
@@ -56,6 +98,24 @@
       "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42373b97_d6b99f00",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "I\u0027ve rewritten/modified the tests that I can, but some (like ArcCertStore) are just to unwieldy and complex for me to rewrite.\n\nI\u0027ve added a TODO as you suggest to make sure that people don\u0027t copy/paste this behavior and make the problem worse.",
+      "parentUuid": "df2f2aa8_f9ec2aca",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "5a8ee0cf_74b93d6d",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "Perhaps, but honestly I\u0027d prefer to leave that for a future refactoring. I think this class is cleaner now that I\u0027ve added an |enforcement_type| flag, and I think that\u0027s enough of an improvement that I\u0027d like to land this change and declare a (small) victory.",
+      "parentUuid": "21f2bc73_c2082c4b",
+      "range": {
+        "startLine": 170,
+        "startChar": 48,
+        "endLine": 171,
+        "endChar": 47
+      },
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c8976ec_d18b989c",
         "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
         "patchSetId": 15
@@ -96,6 +180,24 @@
       "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3e8e86_3d8ecfc2",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "Took a different path than what you suggested, but it\u0027s cleaner now.",
+      "parentUuid": "9c8976ec_d18b989c",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "fce3d7de_b04916be",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8156ffe_a9a9bfa7",
+      "range": {
+        "startLine": 184,
+        "startChar": 69,
+        "endLine": 184,
+        "endChar": 70
+      },
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e619647a_70f42779",
         "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
         "patchSetId": 15
@@ -136,6 +262,24 @@
       "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1971cd21_16358dcd",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "Don\u0027t really want to tackle this as part of this CL, tbh. Honestly, if I were going to touch this code again, what I\u0027d do instead is get rid of synchronous profile initialization entirely - there\u0027s really no reason to load the profile synchronously on a browser restart, and it has caused *endless* problems. I might spend a week or two on a hackathon effort to make this happen at some point. But in the meantime I don\u0027t want to pour effort into workarounds.",
+      "parentUuid": "e619647a_70f42779",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "9054e689_4c81f512",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f4ac5c4_2002c0e6",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27b28d74_19784280",
         "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
         "patchSetId": 15
@@ -170,6 +332,24 @@
       "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b8c036_f1862cc4",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "Yes, we overwrite flags here - it\u0027s not currently possible to get current set of flags from session manager. It\u0027s OK to do this (albeit slightly fragile), because:\n\n1) This is for ephemeral sessions, which can\u0027t have any local state/previously set flags.\n2) UserSessionManager doesn\u0027t set flags on browser crash restarts (see the check for kLoginUser).\n\nEven if somehow our kProfileRequiresPolicy flag gets overwritten, all that means is that the session will exit in the case of a browser crash/restart, which is pretty mild behavior. I\u0027ve updated the comment to clarify this.",
+      "parentUuid": "27b28d74_19784280",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "b12d06b0_cd0a7330",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "I\u0027m sympathetic to the idea that this makes the code harder to reason about, but I *do* need this intermediate variable because we want to exit if we get a crash/restart before completing our policy check (see the code below where we call AttemptUserExit()).\n\nI\u0027ve changed the name and hopefully that helps.",
+      "parentUuid": "9e9ab782_11eaeb5a",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e943305_0ef9af0e",
         "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
         "patchSetId": 15
@@ -204,6 +402,24 @@
       "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8391c02_3e3bd07a",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e943305_0ef9af0e",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +440,24 @@
     },
     {
       "key": {
+        "uuid": "fc25cf24_d2a5a96c",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "OK, rewrote this logic and the resulting comments. I think it\u0027s clearer now.",
+      "parentUuid": "074cfbe4_f8982373",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4b3ee4a_498fcc25",
         "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
         "patchSetId": 15
@@ -238,6 +472,24 @@
       "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c781dc33_ec49d7cb",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "Yes, just noticed that the check vs policy_required is no longer necessary. I\u0027ve removed it and rewrote this logic to be (hopefully) clearer.",
+      "parentUuid": "d4b3ee4a_498fcc25",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +510,24 @@
     },
     {
       "key": {
+        "uuid": "e7def1fa_f2c4a3d6",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "Done, and also updated the name/documentation of this comment.",
+      "parentUuid": "3da6539f_55f1d23d",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2996f887_657b405d",
         "filename": "components/user_manager/known_user.h",
         "patchSetId": 15
@@ -275,6 +545,24 @@
     },
     {
       "key": {
+        "uuid": "907ff66a_653cb3b7",
+        "filename": "components/user_manager/known_user.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2996f887_657b405d",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1249bf40_39c6fbb7",
         "filename": "components/user_manager/known_user.h",
         "patchSetId": 15
@@ -289,6 +577,24 @@
       "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38177ec9_e2a354ea",
+        "filename": "components/user_manager/known_user.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-19T15:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1249bf40_39c6fbb7",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
