@@ -15,7 +15,7 @@
 #include "content/browser/loader/url_loader_request_handler.h"
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/common/browser_side_navigation_policy.h"
-#include "content/public/common/content_features.h"
+#include "services/network/public/cpp/network_features.h"
 
 namespace content {
 
