@@ -11,17 +11,28 @@
 #include "public/platform/WebURL.h"
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/notifications/WebNotificationData.h"
+#include "public/platform/modules/notifications/WebNotificationResources.h"
 #include "public/platform/modules/notifications/notification.mojom-blink.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/skia/include/core/SkBitmap.h"
+#include "third_party/skia/include/core/SkColor.h"
+
+namespace blink {
 
 namespace {
 
 const char kNotificationBaseUrl[] = "https://example.com/directory/";
+
+SkBitmap CreateBitmap(const int width, const int height, SkColor color) {
+  SkBitmap bitmap;
+  bitmap.allocN32Pixels(width, height);
+  bitmap.eraseColor(color);
+  return bitmap;
 }
 
-namespace blink {
+}  // namespace
 
-TEST(NotificationStructTraitsTest, Roundtrip) {
+TEST(NotificationStructTraitsTest, NotificationDataRoundtrip) {
   WebNotificationData notification_data;
   notification_data.title = "Notification Title";
   notification_data.direction = WebNotificationData::kDirectionRightToLeft;
@@ -108,6 +119,51 @@ TEST(NotificationStructTraitsTest, Roundtrip) {
               roundtrip_notification_data.actions[i].icon);
     EXPECT_EQ(notification_data.actions[i].placeholder,
               roundtrip_notification_data.actions[i].placeholder);
+  }
+}
+
+TEST(NotificationStructTraitsTest, NotificationResourcesRoundtrip) {
+  WebNotificationResources resources;
+
+  resources.image = CreateBitmap(300, 100, SK_ColorCYAN);
+  resources.icon = CreateBitmap(80, 100, SK_ColorRED);
+  resources.badge = CreateBitmap(50, 40, SK_ColorGREEN);
+
+  WebVector<SkBitmap> action_icons(static_cast<size_t>(2));
+
+  action_icons[0] = CreateBitmap(10, 10, SK_ColorLTGRAY);
+  action_icons[1] = CreateBitmap(11, 11, SK_ColorDKGRAY);
+
+  resources.action_icons = action_icons;
+
+  WebNotificationResources roundtrip_resources;
+
+  ASSERT_TRUE(mojom::blink::NotificationResources::Deserialize(
+      mojom::blink::NotificationResources::Serialize(&resources),
+      &roundtrip_resources));
+
+  EXPECT_EQ(300, roundtrip_resources.image.width());
+  EXPECT_EQ(100, roundtrip_resources.image.height());
+  EXPECT_EQ(SK_ColorCYAN, roundtrip_resources.image.getColor(0, 0));
+
+  EXPECT_EQ(80, roundtrip_resources.icon.width());
+  EXPECT_EQ(100, roundtrip_resources.icon.height());
+  EXPECT_EQ(SK_ColorRED, roundtrip_resources.icon.getColor(0, 0));
+
+  EXPECT_EQ(50, roundtrip_resources.badge.width());
+  EXPECT_EQ(40, roundtrip_resources.badge.height());
+  EXPECT_EQ(SK_ColorGREEN, roundtrip_resources.badge.getColor(0, 0));
+
+  ASSERT_EQ(resources.action_icons.size(),
+            roundtrip_resources.action_icons.size());
+  for (size_t i = 0; i < roundtrip_resources.action_icons.size(); ++i) {
+    SCOPED_TRACE(base::StringPrintf("Action index: %zd", i));
+    EXPECT_EQ(resources.action_icons[0].width(),
+              roundtrip_resources.action_icons[0].width());
+    EXPECT_EQ(resources.action_icons[0].height(),
+              roundtrip_resources.action_icons[0].height());
+    EXPECT_EQ(resources.action_icons[0].getColor(0, 0),
+              roundtrip_resources.action_icons[0].getColor(0, 0));
   }
 }
 
