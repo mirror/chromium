@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8b34c01_82addc8d",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T06:43:03Z",
+      "side": 1,
+      "message": "Nit: are mainly posted by",
+      "revId": "d8329b144abfeeb77f9f076e23ed525df674dd93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
