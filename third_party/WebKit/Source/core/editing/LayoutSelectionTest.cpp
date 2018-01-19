@@ -6,8 +6,10 @@
 
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/ShadowRootInit.h"
+#include "core/editing/EphemeralRange.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/SelectionTemplate.h"
+#include "core/editing/VisibleSelection.h"
 #include "core/editing/testing/EditingTestBase.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
@@ -30,6 +32,14 @@ class LayoutSelectionTest : public EditingTestBase {
       return;
     }
     current_ = current_->NextInPreOrder();
+  }
+
+  std::string ComputeVisibleSelection(const std::string& selection_text) {
+    const SelectionInDOMTree& selection =
+        SetSelectionTextToBody(selection_text);
+    const SelectionInDOMTree& result =
+        LayoutSelection::ComputeLayoutSelection(selection, GetDocument());
+    return GetSelectionTextFromBody(result);
   }
 
 #ifndef NDEBUG
@@ -862,6 +872,20 @@ TEST_F(NGLayoutSelectionTest, MixedBlockFlowsDecendant) {
   EXPECT_EQ(std::make_pair(1u, 3u), Selection().LayoutSelectionStartEndForNG(
                                         GetNGPhysicalTextFragment(foo)));
   EXPECT_EQ(2u, Selection().LayoutSelectionEnd().value());
+}
+
+#define TEST_VISIBLE(expect, sample) \
+  EXPECT_EQ(expect, ComputeVisibleSelection(sample))
+
+TEST_F(LayoutSelectionTest, ComputeVisibleSelection) {
+  TEST_VISIBLE("f^oo<span>b|ar</span>", "f^oo<span>b|ar</span>");
+  TEST_VISIBLE("f|oo", "f|oo");
+  TEST_VISIBLE("<span>foo</span><span>bar</span>",
+               "<span>foo</span>|<span>bar</span>");
+  TEST_VISIBLE("foo^<span style=\"display:none\">bar</span>|baz",
+               "foo^<span style=\"display:none\">bar</span>|baz");
+  TEST_VISIBLE("foo<span style=\"display:none\">bar</span>baz",
+               "foo<span style=\"display:none\">b^a|r</span>baz");
 }
 
 }  // namespace blink

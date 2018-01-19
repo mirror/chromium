@@ -35,6 +35,7 @@
 #include "core/dom/ElementVisibilityObserver.h"
 #include "core/editing/DragCaret.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/LayoutSelection.h"
 #include "core/editing/RenderedPosition.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/events/ErrorEvent.h"
