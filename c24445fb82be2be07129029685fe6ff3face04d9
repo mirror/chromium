@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e7daf01_fc78b9a0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3782,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-19T11:38:18Z",
+      "side": 0,
+      "message": "Let\u0027s use loading_task_runner_ here -- the check that loading task queues have correct time domain is important.",
+      "range": {
+        "startLine": 3782,
+        "startChar": 22,
+        "endLine": 3782,
+        "endChar": 23
+      },
+      "revId": "c24445fb82be2be07129029685fe6ff3face04d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
