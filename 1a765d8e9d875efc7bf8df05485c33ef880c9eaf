@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "861a1f1d_27cd76d6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-19T22:23:27Z",
+      "side": 1,
+      "message": "Are you sure? I found tutorials on the web that suggested CSS like:\n\n::-webkit-scrollbar-thumb {\n    background: red; \n    border-radius: 10px;\n}\n\nWon\u0027t this have a clip?",
+      "parentUuid": "77940f08_2436b302",
+      "revId": "1a765d8e9d875efc7bf8df05485c33ef880c9eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fbc083d_80f92711",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 4
