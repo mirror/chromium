@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "221adbae_d2d79e72",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-19T22:56:19Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "7261f8f7_78bf2574",
+      "range": {
+        "startLine": 185,
+        "startChar": 18,
+        "endLine": 185,
+        "endChar": 50
+      },
+      "revId": "fbdca255c3f886b43912e28e012e016334a8853c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b61bc3b8_f5824c58",
         "filename": "third_party/zlib/google/zip_reader.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "fbdca255c3f886b43912e28e012e016334a8853c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9365fe_08305e52",
+        "filename": "third_party/zlib/google/zip_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-19T22:56:19Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "b61bc3b8_f5824c58",
+      "revId": "fbdca255c3f886b43912e28e012e016334a8853c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
