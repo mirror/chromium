@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "3939282b_8821037b",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T12:42:35Z",
+      "side": 1,
+      "message": "I got the situation.\n\nThen would it be an option to write it like this?\n\nvoid ScriptWrappable::TraceWrappers(Visitor* visitor) {\n  for (auto\u0026 wrapper_map : AllWorldsInCurrentThread()) {\n    visitor-\u003eTraceWrappers(wrapper_map-\u003eDOMDataStore().Get());\n  }\n}\n\nMy point is that we won\u0027t want to add a special TraceWrappers() method every time we want to trace a not-GarbageCollected class.",
+      "parentUuid": "b21804b9_b63cf717",
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7e07b95_e7d28316",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.cpp",
         "patchSetId": 3
