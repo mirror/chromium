@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7bada59_31c3f7be",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-19T03:27:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4c3a077_beba5460",
+      "revId": "284c10607bb88fe16c31f5d5ba82854d27c2fbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86457c4e_b8cd4951",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-19T01:10:09Z",
       "side": 1,
       "message": "super nit: add a newline.",
+      "revId": "284c10607bb88fe16c31f5d5ba82854d27c2fbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0f61b0_77025175",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-19T03:27:13Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "86457c4e_b8cd4951",
       "revId": "284c10607bb88fe16c31f5d5ba82854d27c2fbe7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
