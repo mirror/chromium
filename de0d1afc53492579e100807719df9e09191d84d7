@@ -16,6 +16,24 @@
       "revId": "de0d1afc53492579e100807719df9e09191d84d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9123ef7_46642e5e",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-19T06:10:01Z",
+      "side": 1,
+      "message": "Done (for 0 as preferred height)\n\nI think the SetMaxWidth doesn\u0027t work :( I tried this already and the max width just gets ignored and |secondary_label| wraps at a width less than 140dip. I think if we wanted to go this approach we can make a custom label that accepts a min width and set both, but I think that might be overcomplicating it, WDYT?",
+      "parentUuid": "2fd2eefb_f4dde56b",
+      "revId": "de0d1afc53492579e100807719df9e09191d84d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
