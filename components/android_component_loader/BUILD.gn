@@ -1,0 +1,84 @@
+import("//build/config/android/config.gni")
+import("//build/config/android/rules.gni")
+
+_component_interface_source_files =
+    [ "java/src/org/chromium/android_component_loader/ComponentInterface.java" ]
+
+android_library("component_interface_java") {
+  deps = [
+    ":check_component_interface_api",
+    "//base:base_java",
+  ]
+  proguard_configs = [ "keep_interface.flags" ]
+  java_files = _component_interface_source_files
+}
+
+_api_txt_path = "$target_gen_dir/api.txt"
+
+action("generate_component_interface_api") {
+  script = "generate_api.py"
+  sources = _component_interface_source_files
+  outputs = [
+    _api_txt_path,
+  ]
+  args = [
+    "--input-dir",
+    rebase_path("java/src", root_build_dir),
+    "--output",
+    rebase_path(_api_txt_path, root_build_dir),
+  ]
+}
+
+action("check_component_interface_api") {
+  deps = [
+    ":generate_component_interface_api",
+  ]
+  sources = [
+    _api_txt_path,
+  ]
+  outputs = [
+    "$target_gen_dir/$target_name.stamp",
+  ]
+  script = "api_check.py"
+  args = [
+    "--doclava-dir",
+    "/usr/local/google/code/aosp/out/host/linux-x86/framework",
+    "--old-api",
+    rebase_path("//components/android_component_loader/api.txt",
+                root_build_dir),
+    "--new-api",
+    rebase_path(_api_txt_path, root_build_dir),
+    "--stamp",
+    rebase_path(outputs[0], root_build_dir),
+  ]
+}
+
+android_component_apk("test_component_apk") {
+  apk_name = "TestComponent"
+  java_files = [
+    "java/src/org/chromium/test/component/TestComponent.java",
+    "java/src/org/chromium/test/component/TestComponentInterface.java",
+  ]
+  jar_excluded_patterns = [ "*/TestComponentInterface.class" ]
+}
+
+android_library("android_component_loader_javatests") {
+  testonly = true
+
+  java_files = [
+    "javatests/src/org/chromium/android_component_loader/LoaderTest.java",
+    "java/src/org/chromium/test/component/TestComponentInterface.java",
+  ]
+
+  deps = [
+    ":component_interface_java",
+    "//base:base_java",
+    "//base:base_java_test_support",
+    "//third_party/android_support_test_runner:runner_java",
+    "//third_party/junit",
+  ]
+
+  data_deps = [
+    ":test_component_apk",
+  ]
+}
