@@ -785,6 +785,7 @@ bool NormalPageArena::Coalesce() {
 
 void NormalPageArena::PromptlyFreeObject(HeapObjectHeader* header) {
   DCHECK(!GetThreadState()->SweepForbidden());
+  CHECK(!header->IsMarked());
   Address address = reinterpret_cast<Address>(header);
   Address payload = header->Payload();
   size_t size = header->size();
