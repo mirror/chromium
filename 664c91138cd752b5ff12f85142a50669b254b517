@@ -52,6 +52,24 @@
       "revId": "664c91138cd752b5ff12f85142a50669b254b517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ef0b36_13560636",
+        "filename": "ui/arc/notification/arc_notification_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-19T18:12:15Z",
+      "side": 1,
+      "message": "I see. Well, the *notification* can be \"pinned\" regardless of whether the *view* is nested; it\u0027s just that the view only cares about this field when it\u0027s nested.",
+      "parentUuid": "41b416f5_0543827f",
+      "revId": "664c91138cd752b5ff12f85142a50669b254b517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
