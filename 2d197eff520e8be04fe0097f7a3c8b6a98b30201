@@ -163,6 +163,30 @@
       "revId": "2d197eff520e8be04fe0097f7a3c8b6a98b30201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e7af4c6_6130cbb7",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 10012,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-19T06:50:20Z",
+      "side": 1,
+      "message": "One can think of (static) PDFs as virtual paper. There\u0027s paperWidth / paperHeight parameters ~60 lines above. Of course, now I\u0027m wondering how this boolean interacts with the paper size params.",
+      "parentUuid": "e75e4a29_89c7406d",
+      "range": {
+        "startLine": 10012,
+        "startChar": 37,
+        "endLine": 10012,
+        "endChar": 61
+      },
+      "revId": "2d197eff520e8be04fe0097f7a3c8b6a98b30201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
