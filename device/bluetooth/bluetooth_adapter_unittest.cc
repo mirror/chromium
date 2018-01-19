@@ -720,9 +720,7 @@ TEST_F(BluetoothTest, TogglePowerFakeAdapter) {
 #endif  // defined(OS_ANDROID) || defined(OS_MACOSX) ||defined(OS_LINUX) ||
         // defined(OS_CHROMEOS)
 
-#if defined(OS_MACOSX)
-// The following tests should be implemented on Android as well once pending
-// SetPowered() callbacks are stored (https://crbug.com/803105).
+#if defined(OS_ANDROID) || defined(OS_MACOSX)
 // These tests are not relevant for BlueZ and Windows.
 TEST_F(BluetoothTest, TogglePowerFakeAdapter_Twice) {
   if (!PlatformSupportsLowEnergy()) {
@@ -835,7 +833,7 @@ TEST_F(BluetoothTest, TogglePowerFakeAdapter_DestroyWithPending) {
   // Empty the message loop to make sure posted callbacks get run.
   scoped_task_environment_.RunUntilIdle();
 }
-#endif  // defined(OS_MACOSX)
+#endif  // defined(OS_ANDROID) || defined(OS_MACOSX)
 
 #if defined(OS_ANDROID)
 TEST_F(BluetoothTest, TogglePowerBeforeScan) {
@@ -849,6 +847,7 @@ TEST_F(BluetoothTest, TogglePowerBeforeScan) {
   // Turn off adapter.
   adapter_->SetPowered(false, GetCallback(Call::EXPECTED),
                        GetErrorCallback(Call::NOT_EXPECTED));
+  scoped_task_environment_.RunUntilIdle();
   ASSERT_FALSE(adapter_->IsPowered());
   EXPECT_EQ(1, observer.powered_changed_count());
 
@@ -858,6 +857,7 @@ TEST_F(BluetoothTest, TogglePowerBeforeScan) {
   // Turn on adapter.
   adapter_->SetPowered(true, GetCallback(Call::EXPECTED),
                        GetErrorCallback(Call::NOT_EXPECTED));
+  scoped_task_environment_.RunUntilIdle();
   ASSERT_TRUE(adapter_->IsPowered());
   EXPECT_EQ(2, observer.powered_changed_count());
 

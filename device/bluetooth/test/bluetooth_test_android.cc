@@ -42,9 +42,11 @@ void BluetoothTestAndroid::SetUp() {
 }
 
 void BluetoothTestAndroid::TearDown() {
-  BluetoothAdapter::DeviceList devices = adapter_->GetDevices();
-  for (auto* device : devices) {
-    DeleteDevice(device);
+  if (adapter_) {
+    BluetoothAdapter::DeviceList devices = adapter_->GetDevices();
+    for (auto* device : devices) {
+      DeleteDevice(device);
+    }
   }
   EXPECT_EQ(0, gatt_open_connections_);
 
@@ -541,7 +543,10 @@ void BluetoothTestAndroid::OnFakeAdapterStateChanged(
     JNIEnv* env,
     const JavaParamRef<jobject>& caller,
     const bool powered) {
-  adapter_->NotifyAdapterPoweredChanged(powered);
+  if (adapter_) {
+    static_cast<BluetoothAdapterAndroid*>(adapter_.get())
+        ->OnAdapterStateChanged(env, caller, powered);
+  }
 }
 
 }  // namespace device

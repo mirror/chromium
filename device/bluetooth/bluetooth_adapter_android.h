@@ -143,6 +143,12 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterAndroid final
  private:
   size_t num_discovery_sessions_ = 0;
 
+  // SetPowered() callbacks and pending state.
+  bool powered_pending_ = false;
+  bool powered_state_ = false;
+  base::Closure powered_callback_;
+  ErrorCallback powered_error_callback_;
+
   // Note: This should remain the last member so it'll be destroyed and
   // invalidate its weak pointers before any other members are destroyed.
   base::WeakPtrFactory<BluetoothAdapterAndroid> weak_ptr_factory_;

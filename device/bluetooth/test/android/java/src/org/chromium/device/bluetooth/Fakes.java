@@ -240,15 +240,25 @@ class Fakes {
 
         @Override
         public boolean disable() {
-            mPowered = false;
-            nativeOnFakeAdapterStateChanged(mNativeBluetoothTestAndroid, false);
+            Wrappers.ThreadUtilsWrapper.getInstance().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mPowered = false;
+                    nativeOnFakeAdapterStateChanged(mNativeBluetoothTestAndroid, false);
+                }
+            });
             return true;
         }
 
         @Override
         public boolean enable() {
-            mPowered = true;
-            nativeOnFakeAdapterStateChanged(mNativeBluetoothTestAndroid, true);
+            Wrappers.ThreadUtilsWrapper.getInstance().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mPowered = true;
+                    nativeOnFakeAdapterStateChanged(mNativeBluetoothTestAndroid, true);
+                }
+            });
             return true;
         }
 

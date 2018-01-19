@@ -98,11 +98,25 @@ bool BluetoothAdapterAndroid::IsPowered() const {
 void BluetoothAdapterAndroid::SetPowered(bool powered,
                                          const base::Closure& callback,
                                          const ErrorCallback& error_callback) {
+  if (powered_pending_) {
+    ui_task_runner_->PostTask(FROM_HERE, error_callback);
+    return;
+  }
+
+  if (powered == IsPowered()) {
+    ui_task_runner_->PostTask(FROM_HERE, callback);
+    return;
+  }
+
   if (Java_ChromeBluetoothAdapter_setPowered(AttachCurrentThread(), j_adapter_,
                                              powered)) {
-    callback.Run();
+    // Store pending callbacks until OnAdapterStateChanged() is invoked.
+    powered_pending_ = true;
+    powered_state_ = powered;
+    powered_callback_ = callback;
+    powered_error_callback_ = error_callback;
   } else {
-    error_callback.Run();
+    ui_task_runner_->PostTask(FROM_HERE, error_callback);
   }
 }
 
@@ -162,6 +176,12 @@ void BluetoothAdapterAndroid::OnAdapterStateChanged(
     JNIEnv* env,
     const JavaParamRef<jobject>& caller,
     const bool powered) {
+  if (powered_pending_) {
+    powered_pending_ = false;
+    powered_state_ == powered ? powered_callback_.Run()
+                              : powered_error_callback_.Run();
+  }
+
   NotifyAdapterPoweredChanged(powered);
 }
 
@@ -267,6 +287,9 @@ BluetoothAdapterAndroid::BluetoothAdapterAndroid() : weak_ptr_factory_(this) {
 BluetoothAdapterAndroid::~BluetoothAdapterAndroid() {
   Java_ChromeBluetoothAdapter_onBluetoothAdapterAndroidDestruction(
       AttachCurrentThread(), j_adapter_);
+
+  if (powered_pending_)
+    powered_error_callback_.Run();
 }
 
 void BluetoothAdapterAndroid::PurgeTimedOutDevices() {
