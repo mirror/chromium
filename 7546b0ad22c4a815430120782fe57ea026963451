@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "b457b54b_c944780a",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_test_harness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2018-01-19T05:46:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c78516ca_7bc48b49",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 39
+      },
+      "revId": "7546b0ad22c4a815430120782fe57ea026963451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ad96364_483ae625",
         "filename": "components/subresource_filter/core/browser/ruleset_service.cc",
         "patchSetId": 3
