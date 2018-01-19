@@ -197,6 +197,30 @@
       "revId": "9265cab4c4ce442d98e85dd08ffea18d2e16188c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85bcdd77_ed4464e8",
+        "filename": "chromecast/graphics/cast_system_gesture_event_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1261231
+      },
+      "writtenOn": "2018-01-19T15:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f75b338d_b0905494",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "9265cab4c4ce442d98e85dd08ffea18d2e16188c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
