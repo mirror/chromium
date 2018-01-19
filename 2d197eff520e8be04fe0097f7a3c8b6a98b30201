@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5d8bc4c_a8ba1806",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-19T01:13:43Z",
+      "side": 1,
+      "message": "used (update comment to match variable name)",
+      "range": {
+        "startLine": 187,
+        "startChar": 35,
+        "endLine": 187,
+        "endChar": 41
+      },
+      "revId": "2d197eff520e8be04fe0097f7a3c8b6a98b30201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c85ebf_54fa5bd4",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-19T01:13:43Z",
+      "side": 1,
+      "message": "This seems only necessary because the method in  components/printing/renderer/print_render_frame_helper.cc that reads it acts a bit wonky. I\u0027ll try to see if we can remove this later.",
+      "revId": "2d197eff520e8be04fe0097f7a3c8b6a98b30201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2daf5e9a_0b5cae45",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-19T01:13:43Z",
+      "side": 1,
+      "message": "... and now you need braces again.",
+      "revId": "2d197eff520e8be04fe0097f7a3c8b6a98b30201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339b64cf_97a0dcbb",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 10012,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-19T01:13:43Z",
+      "side": 1,
+      "message": "I imagine this name is based on the |kWebPrintScalingOptionSourceSize| constant. Would \"usePageDefinedPaperSize\" make more sense to users? I\u0027m not sure exposing concepts from the internal implementation, where a HTML document is the source of a print job, is intuitive to users.",
+      "range": {
+        "startLine": 10012,
+        "startChar": 37,
+        "endLine": 10012,
+        "endChar": 61
+      },
+      "revId": "2d197eff520e8be04fe0097f7a3c8b6a98b30201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
