@@ -70,6 +70,23 @@
       "revId": "13fb72a8d4f1535219b6c98015828fc2e981a746",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4e4e3e_f03adad0",
+        "filename": "base/allocator/partition_allocator/spin_lock.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-19T19:48:30Z",
+      "side": 1,
+      "message": "Nit: \"Sleeping should ensure that they make progress.\"",
+      "revId": "13fb72a8d4f1535219b6c98015828fc2e981a746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
