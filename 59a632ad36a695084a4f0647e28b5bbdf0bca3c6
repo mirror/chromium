@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "50beb5e0_ef6336af",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-01-19T12:52:29Z",
+      "side": 1,
+      "message": "this is odd - left is the \"leading\" side and is towards (0,0) but down is the \"trailing\" side and is away from (0,0). I think the meaning of this bool is actually animating_left_or_up (or maybe just animating_leading).",
+      "range": {
+        "startLine": 518,
+        "startChar": 9,
+        "endLine": 518,
+        "endChar": 31
+      },
+      "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb83407f_91511d97",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-01-19T12:52:29Z",
+      "side": 1,
+      "message": "I don\u0027t really like passing the TabbedPane into the TabStrip - can we pass just the properties we need? If it\u0027s just the orientation that should be doable.",
+      "range": {
+        "startLine": 581,
+        "startChar": 36,
+        "endLine": 581,
+        "endChar": 40
+      },
+      "revId": "59a632ad36a695084a4f0647e28b5bbdf0bca3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25846fdf_2b32cb8c",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
         "patchSetId": 1
