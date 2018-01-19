@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86560cbd_ea2794fe",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3513,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-19T14:49:17Z",
+      "side": 1,
+      "message": "Doesn\u0027t presubmit fail on this? Should be camel_case.",
+      "range": {
+        "startLine": 3513,
+        "startChar": 13,
+        "endLine": 3513,
+        "endChar": 34
+      },
+      "revId": "ce89e36ea6ae0e9776544e388ee7909f072a9904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cdb8d5_902b07ff",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3519,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-19T14:49:17Z",
+      "side": 1,
+      "message": "Hmm, if the media stream is inactive, would it not be natural for networkState to become NETWORK_IDLE?",
+      "range": {
+        "startLine": 3519,
+        "startChar": 6,
+        "endLine": 3519,
+        "endChar": 20
+      },
+      "revId": "ce89e36ea6ae0e9776544e388ee7909f072a9904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3007bf34_ecfb4a29",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3530,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-19T14:49:17Z",
+      "side": 1,
+      "message": "Since CouldPlayIfEnoughData() doesn\u0027t involve networkState, would it work to push the MediaSource bits down there? Together with a networkState change, would that fix the problem?",
+      "range": {
+        "startLine": 3530,
+        "startChar": 8,
+        "endLine": 3530,
+        "endChar": 29
+      },
+      "revId": "ce89e36ea6ae0e9776544e388ee7909f072a9904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
