@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28ee7ca5_b6759f22",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-19T06:46:32Z",
+      "side": 1,
+      "message": "If it doesn\u0027t break too many things, please rename this to --tool-arg. Only one other thing uses this in the repo (and it\u0027s not currently in use anyway) so I think it should be fine.",
+      "revId": "6011a453822a3cdd7e42778325a7204fcf1d5cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
