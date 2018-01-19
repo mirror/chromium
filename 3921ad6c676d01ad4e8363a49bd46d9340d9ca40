@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "66a452a7_ee718adf",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-19T19:23:38Z",
+      "side": 1,
+      "message": "It is, as desktop_ios_promo_ isn\u0027t fully defined (see above include) outside of Windows, unless we\u0027re looking to compile and include it on all platforms. Otherwise -\u003eAccept() is an access into an incomplete member.",
+      "parentUuid": "c3481f9d_b2e5d6cd",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 19
+      },
+      "revId": "3921ad6c676d01ad4e8363a49bd46d9340d9ca40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4156785f_6b0fcd56",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "3921ad6c676d01ad4e8363a49bd46d9340d9ca40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144027e8_08931101",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-19T19:23:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4156785f_6b0fcd56",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 52
+      },
+      "revId": "3921ad6c676d01ad4e8363a49bd46d9340d9ca40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
