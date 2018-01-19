@@ -63,6 +63,15 @@ KeyedService* AccountReconcilorFactory::BuildServiceInstanceFor(
 // static
 std::unique_ptr<signin::AccountReconcilorDelegate>
 AccountReconcilorFactory::CreateAccountReconcilorDelegate(Profile* profile) {
+// TODO(sinhak): Remove this when Mirror has been enabled system wide for
+// Chrome OS.
+#if defined(OS_CHROMEOS)
+  // Enable Mirror account reconciliation for Unicorn accounts only.
+  if (profile->IsChild()) {
+    return std::make_unique<signin::MirrorAccountReconcilorDelegate>(
+        SigninManagerFactory::GetForProfile(profile));
+  }
+#endif
   switch (signin::GetAccountConsistencyMethod()) {
     case signin::AccountConsistencyMethod::kMirror:
       return std::make_unique<signin::MirrorAccountReconcilorDelegate>(
