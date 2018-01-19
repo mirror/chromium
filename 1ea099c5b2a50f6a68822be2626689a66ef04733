@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d0f1736_9ba3f2f1",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/memory/sampling-native-profile.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T23:05:06Z",
+      "side": 1,
+      "message": "It does allocate the bitmap synchronously. So I\u0027d keep it as is for now, at least until we instrument JS array buffers. Then we can test them instead.\nAllocated memory cannot be misattributed if/when:\n  - we do not randomize the intervals between samples. We do for tests.\n  - sampling interval is less/equal than the allocation size. It does.",
+      "parentUuid": "1f40ad9f_e1857ce3",
+      "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3e9994c_19679141",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e4bc2a_f49c84fe",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T23:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3e9994c_19679141",
+      "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b34b669b_4954a790",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T23:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbdc1278_c8f1d76a",
+      "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bef7b808_437aaeba",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7dbaf3d_16a647ce",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T23:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bef7b808_437aaeba",
+      "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2c602531_7ac8ee52",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T23:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0588d3b1_058a3f49",
+      "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "261e30b7_2325f734",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "27117c1d_d764519d",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T23:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "261e30b7_2325f734",
+      "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4632542_6f9370b2",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
         "patchSetId": 4
@@ -118,6 +226,24 @@
       "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44207736_6f4d1dc6",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-19T23:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4632542_6f9370b2",
+      "revId": "1ea099c5b2a50f6a68822be2626689a66ef04733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
