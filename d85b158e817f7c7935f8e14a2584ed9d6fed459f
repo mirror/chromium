@@ -22,6 +22,30 @@
       "revId": "d85b158e817f7c7935f8e14a2584ed9d6fed459f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "639ec075_ad8cf2cf",
+        "filename": "storage/browser/blob/blob_data_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-19T22:31:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "739fc021_fba23678",
+      "range": {
+        "startLine": 301,
+        "startChar": 6,
+        "endLine": 305,
+        "endChar": 7
+      },
+      "revId": "d85b158e817f7c7935f8e14a2584ed9d6fed459f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

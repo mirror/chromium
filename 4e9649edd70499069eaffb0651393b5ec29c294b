@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7ec67d73_61e48994",
+        "filename": "storage/browser/blob/blob_data_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-19T22:31:37Z",
+      "side": 1,
+      "message": "huh. yeah I guess you can leave it as-is.",
+      "parentUuid": "86288f64_131b51d8",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 28
+      },
+      "revId": "4e9649edd70499069eaffb0651393b5ec29c294b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98278cb5_8832f561",
         "filename": "storage/browser/blob/blob_data_builder.h",
         "patchSetId": 4
@@ -201,6 +225,30 @@
       "side": 1,
       "message": "This isn\u0027t different from the old code; it\u0027s only purpose (both before and now) is to set the entries size to 0 if the blob is broken. Re-organized the code slightly to make it clearer what is going on.\n\nAlthough I\u0027m not even sure if setting size to 0 is even needed... There\u0027s plenty of other codepaths that can cause a blob to be broken that don\u0027t do so after all...",
       "parentUuid": "3ed12e55_8320a5c9",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 41
+      },
+      "revId": "4e9649edd70499069eaffb0651393b5ec29c294b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef7b8e9b_eb4e92a0",
+        "filename": "storage/browser/blob/blob_storage_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-19T22:31:37Z",
+      "side": 1,
+      "message": "it looks like we default to 0 here, and in SetSharedBlobItems we DCHECK that size is 0...\n\nIt looks like we call set_size(0) a couple other places. I\u0027m not sure.",
+      "parentUuid": "16df951a_f7adf448",
       "range": {
         "startLine": 162,
         "startChar": 0,
