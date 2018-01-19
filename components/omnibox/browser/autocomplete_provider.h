@@ -227,6 +227,9 @@ class AutocompleteProvider
   // culling.
   static const size_t kMaxMatches;
 
+  // Overriding classes should invoke the base class implementation.
+  virtual size_t EstimateMemoryUsage() const;
+
  protected:
   friend class base::RefCountedThreadSafe<AutocompleteProvider>;
   FRIEND_TEST_ALL_PREFIXES(BookmarkProviderTest, InlineAutocompletion);

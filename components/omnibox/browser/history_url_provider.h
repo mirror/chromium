@@ -219,6 +219,8 @@ class HistoryURLProvider : public HistoryProvider {
                      history::HistoryBackend* backend,
                      history::URLDatabase* db);
 
+  size_t EstimateMemoryUsage() const override;
+
  private:
   FRIEND_TEST_ALL_PREFIXES(HistoryURLProviderTest, HUPScoringExperiment);
   FRIEND_TEST_ALL_PREFIXES(HistoryURLProviderTest, DoTrimHttpScheme);

@@ -26,6 +26,7 @@
 #include "base/containers/flat_map.h"
 #include "base/containers/flat_set.h"
 #include "base/containers/linked_list.h"
+#include "base/containers/mru_cache.h"
 #include "base/containers/queue.h"
 #include "base/strings/string16.h"
 
@@ -162,6 +163,12 @@ size_t EstimateMemoryUsage(const base::flat_set<T, C>& set);
 
 template <class K, class V, class C>
 size_t EstimateMemoryUsage(const base::flat_map<K, V, C>& map);
+
+template <class Key,
+          class Payload,
+          class HashOrComp,
+          template <typename, typename, typename> class Map>
+size_t EstimateMemoryUsage(const MRUCacheBase<Key, Payload, HashOrComp, Map>&);
 
 // TODO(dskiba):
 //   std::forward_list
@@ -438,6 +445,12 @@ size_t HashMapBucketCountForTesting(size_t bucket_count) {
   return bucket_count;
 }
 
+template <class MruCacheType>
+size_t DoEstimateMemoryUsageForMruCache(const MruCacheType& mru_cache) {
+  return EstimateMemoryUsage(mru_cache.ordering_) +
+         EstimateMemoryUsage(mru_cache.index_);
+}
+
 }  // namespace internal
 
 template <class V>
@@ -574,6 +587,15 @@ template <class K, class V, class C>
 size_t EstimateMemoryUsage(const base::flat_map<K, V, C>& map) {
   using value_type = typename base::flat_map<K, V, C>::value_type;
   return sizeof(value_type) * map.capacity() + EstimateIterableMemoryUsage(map);
+}
+
+template <class Key,
+          class Payload,
+          class HashOrComp,
+          template <typename, typename, typename> class Map>
+size_t EstimateMemoryUsage(
+    const MRUCacheBase<Key, Payload, HashOrComp, Map>& mru_cache) {
+  return internal::DoEstimateMemoryUsageForMruCache(mru_cache);
 }
 
 }  // namespace trace_event

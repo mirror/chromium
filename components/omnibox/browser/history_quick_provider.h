@@ -37,6 +37,8 @@ class HistoryQuickProvider : public HistoryProvider {
   // TODO(mrossetti): Eliminate this once the HUP has been refactored.
   static void set_disabled(bool disabled) { disabled_ = disabled; }
 
+  size_t EstimateMemoryUsage() const override;
+
  private:
   friend class HistoryQuickProviderTest;
   FRIEND_TEST_ALL_PREFIXES(HistoryQuickProviderTest, Spans);

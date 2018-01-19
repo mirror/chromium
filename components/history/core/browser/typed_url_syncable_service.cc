@@ -939,6 +939,13 @@ bool TypedUrlSyncableService::WriteToTypedUrlSpecifics(
   return true;
 }
 
+size_t TypedUrlSyncableService::EstimateMemoryUsage() const {
+  size_t res = 0;
+  res += base::trace_event::EstimateMemoryUsage(synced_typed_urls_);
+  res += base::trace_event::EstimateMemoryUsage(sync_processor_);
+  return res;
+}
+
 // static
 void TypedUrlSyncableService::UpdateURLRowFromTypedUrlSpecifics(
     const sync_pb::TypedUrlSpecifics& typed_url,

@@ -226,6 +226,8 @@ class AutocompleteInput {
   // Resets all internal variables to the null-constructed state.
   void Clear();
 
+  size_t EstimateMemoryUsage() const;
+
  private:
   friend class AutocompleteProviderTest;
 

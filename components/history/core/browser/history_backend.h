@@ -26,6 +26,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/supports_user_data.h"
 #include "base/task/cancelable_task_tracker.h"
+#include "base/trace_event/memory_dump_provider.h"
 #include "build/build_config.h"
 #include "components/favicon_base/favicon_usage_data.h"
 #include "components/history/core/browser/expire_history_backend.h"
@@ -76,6 +77,8 @@ class QueuedHistoryDBTask {
   bool Run(HistoryBackend* backend, HistoryDatabase* db);
   void DoneRun();
 
+  size_t EstimateMemoryUsage() const;
+
  private:
   std::unique_ptr<HistoryDBTask> task_;
   scoped_refptr<base::SingleThreadTaskRunner> origin_loop_;
@@ -96,7 +99,8 @@ class QueuedHistoryDBTask {
 // functions in the history service. These functions are not documented
 // here, see the history service for behavior.
 class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
-                       public HistoryBackendNotifier {
+                       public HistoryBackendNotifier,
+                       public base::trace_event::MemoryDumpProvider {
  public:
   // Interface implemented by the owner of the HistoryBackend object. Normally,
   // the history service implements this to send stuff back to the main thread.
@@ -851,6 +855,11 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
 
   // Deletes the FTS index database files, which are no longer used.
   void DeleteFTSIndexDatabases();
+
+  // base::trace_event::MemoryDumpProvider implementation:
+  bool OnMemoryDump(
+      const base::trace_event::MemoryDumpArgs& args,
+      base::trace_event::ProcessMemoryDump* process_memory_dump) override;
 
   // Data ----------------------------------------------------------------------
 

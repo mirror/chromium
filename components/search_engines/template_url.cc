@@ -21,6 +21,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/trace_event/memory_usage_estimator.h"
 #include "build/build_config.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/search_engines/search_engines_switches.h"
@@ -192,8 +193,31 @@ TemplateURLRef::SearchTermsArgs::SearchTermsArgs(
 
 TemplateURLRef::SearchTermsArgs::SearchTermsArgs(const SearchTermsArgs& other) =
     default;
+TemplateURLRef::SearchTermsArgs::SearchTermsArgs(SearchTermsArgs&& other) =
+    default;
+auto TemplateURLRef::SearchTermsArgs::SearchTermsArgs::operator=(
+    const SearchTermsArgs& other) -> SearchTermsArgs& = default;
+auto TemplateURLRef::SearchTermsArgs::SearchTermsArgs::operator=(
+    SearchTermsArgs&& other) -> SearchTermsArgs& = default;
 
-TemplateURLRef::SearchTermsArgs::~SearchTermsArgs() {
+TemplateURLRef::SearchTermsArgs::~SearchTermsArgs() = default;
+
+size_t TemplateURLRef::SearchTermsArgs::EstimateMemoryUsage() const {
+  size_t res = 0u;
+
+  res += base::trace_event::EstimateMemoryUsage(search_terms);
+  res += base::trace_event::EstimateMemoryUsage(original_query);
+  res += base::trace_event::EstimateMemoryUsage(assisted_query_stats);
+  res += base::trace_event::EstimateMemoryUsage(current_page_url);
+  res += base::trace_event::EstimateMemoryUsage(session_token);
+  res += base::trace_event::EstimateMemoryUsage(prefetch_query);
+  res += base::trace_event::EstimateMemoryUsage(prefetch_query_type);
+  res += base::trace_event::EstimateMemoryUsage(suggest_query_params);
+  res += base::trace_event::EstimateMemoryUsage(image_thumbnail_content);
+  res += base::trace_event::EstimateMemoryUsage(image_url);
+  res += base::trace_event::EstimateMemoryUsage(contextual_search_params);
+
+  return res;
 }
 
 TemplateURLRef::SearchTermsArgs::ContextualSearchParams::
@@ -211,9 +235,21 @@ TemplateURLRef::SearchTermsArgs::ContextualSearchParams::ContextualSearchParams(
 
 TemplateURLRef::SearchTermsArgs::ContextualSearchParams::ContextualSearchParams(
     const ContextualSearchParams& other) = default;
+TemplateURLRef::SearchTermsArgs::ContextualSearchParams::ContextualSearchParams(
+    ContextualSearchParams&& other) = default;
+
+auto TemplateURLRef::SearchTermsArgs::ContextualSearchParams::operator=(
+    const ContextualSearchParams& other) -> ContextualSearchParams& = default;
+auto TemplateURLRef::SearchTermsArgs::ContextualSearchParams::operator=(
+    ContextualSearchParams&& other) -> ContextualSearchParams& = default;
 
 TemplateURLRef::SearchTermsArgs::ContextualSearchParams::
-    ~ContextualSearchParams() {
+    ~ContextualSearchParams() = default;
+
+size_t
+TemplateURLRef::SearchTermsArgs::ContextualSearchParams::EstimateMemoryUsage()
+    const {
+  return base::trace_event::EstimateMemoryUsage(home_country);
 }
 
 // TemplateURLRef -------------------------------------------------------------

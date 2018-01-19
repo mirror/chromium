@@ -324,6 +324,8 @@ struct AutocompleteMatch {
   // portion in the classification.
   void InlineTailPrefix(const base::string16& common_prefix);
 
+  size_t EstimateMemoryUsage() const;
+
   // The provider of this match, used to remember which provider the user had
   // selected when the input changes. This may be NULL, in which case there is
   // no provider (or memory of the user's selection).

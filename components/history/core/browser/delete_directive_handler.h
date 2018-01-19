@@ -59,6 +59,8 @@ class DeleteDirectiveHandler {
       HistoryService* history_service,
       const syncer::SyncChangeList& change_list);
 
+  size_t EstimateMemoryUsage() const;
+
  private:
   class DeleteDirectiveTask;
   friend class DeleteDirectiveTask;

@@ -26,6 +26,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
+#include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "components/favicon_base/favicon_util.h"
@@ -133,6 +134,10 @@ void QueuedHistoryDBTask::DoneRun() {
                             is_canceled_));
 }
 
+size_t QueuedHistoryDBTask::EstimateMemoryUsage() const {
+  return sizeof(HistoryDBTask);
+}
+
 // HistoryBackendHelper --------------------------------------------------------
 
 // Wrapper around base::SupportsUserData with a public destructor.
@@ -160,9 +165,16 @@ HistoryBackend::HistoryBackend(
       recent_redirects_(kMaxRedirectCount),
       segment_queried_(false),
       backend_client_(std::move(backend_client)),
-      task_runner_(task_runner) {}
+      task_runner_(task_runner) {
+  base::trace_event::MemoryDumpManager::GetInstance()
+      ->RegisterDumpProviderWithSequencedTaskRunner(
+          this, "HistoryBackend", task_runner_, MemoryDumpProvider::Options());
+}
 
 HistoryBackend::~HistoryBackend() {
+  base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
+      this);
+
   DCHECK(scheduled_commit_.IsCancelled()) << "Deleting without cleanup";
   queued_history_db_tasks_.clear();
 
@@ -1442,6 +1454,24 @@ void HistoryBackend::DeleteFTSIndexDatabases() {
   }
   UMA_HISTOGRAM_COUNTS("History.DeleteFTSIndexDatabases",
                        num_databases_deleted);
+}
+
+bool HistoryBackend::OnMemoryDump(
+    const base::trace_event::MemoryDumpArgs& args,
+    base::trace_event::ProcessMemoryDump* process_memory_dump) {
+  size_t res = 0;
+
+  // sql::Connection reports it's own memory - therefor no: db_, thumbnail_db_.
+  res += base::trace_event::EstimateMemoryUsage(recent_redirects_);
+  res += base::trace_event::EstimateMemoryUsage(tracker_);
+  res += base::trace_event::EstimateMemoryUsage(queued_history_db_tasks_);
+  res += base::trace_event::EstimateMemoryUsage(host_ranks_);
+  res += base::trace_event::EstimateMemoryUsage(typed_url_syncable_service_);
+
+  auto* dump = process_memory_dump->GetOrCreateAllocatorDump("history/backend");
+  dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
+                  base::trace_event::MemoryAllocatorDump::kUnitsBytes, res);
+  return true;
 }
 
 void HistoryBackend::GetFavicon(

@@ -33,6 +33,8 @@
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "base/trace_event/memory_dump_manager.h"
+#include "base/trace_event/memory_usage_estimator.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "components/history/core/browser/download_row.h"
@@ -198,9 +200,15 @@ HistoryService::HistoryService(std::unique_ptr<HistoryClient> history_client,
       history_client_(std::move(history_client)),
       visit_delegate_(std::move(visit_delegate)),
       backend_loaded_(false),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+      this, "HistoryService", base::ThreadTaskRunnerHandle::Get());
+}
 
 HistoryService::~HistoryService() {
+  base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
+      this);
+
   DCHECK(thread_checker_.CalledOnValidThread());
   // Shutdown the backend. This does nothing if Cleanup was already invoked.
   Cleanup();
@@ -1237,6 +1245,23 @@ void HistoryService::NotifyFaviconsChanged(const std::set<GURL>& page_urls,
                                            const GURL& icon_url) {
   DCHECK(thread_checker_.CalledOnValidThread());
   favicon_changed_callback_list_.Notify(page_urls, icon_url);
+}
+
+bool HistoryService::OnMemoryDump(
+    const base::trace_event::MemoryDumpArgs& args,
+    base::trace_event::ProcessMemoryDump* process_memory_dump) {
+  size_t res = 0;
+  // history_backend_ is estimated on it's thread.
+  // in_memory_backend_ is a database and is estimated with other sql together.
+  // visit_delegate_
+  // observers_
+  // favicon_changed_callback_list_
+  res += base::trace_event::EstimateMemoryUsage(delete_directive_handler_);
+
+  auto* dump = process_memory_dump->GetOrCreateAllocatorDump("history/service");
+  dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
+                  base::trace_event::MemoryAllocatorDump::kUnitsBytes, res);
+  return true;
 }
 
 }  // namespace history

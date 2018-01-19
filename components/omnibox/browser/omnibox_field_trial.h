@@ -98,6 +98,8 @@ struct HUPScoringParams {
     std::vector<CountMaxRelevance>& buckets() { return buckets_; }
     const std::vector<CountMaxRelevance>& buckets() const { return buckets_; }
 
+    size_t EstimateMemoryUsage() const;
+
    private:
     // History matches with relevance score greater or equal to |relevance_cap_|
     // are not affected by this experiment.
@@ -127,6 +129,8 @@ struct HUPScoringParams {
   };
 
   HUPScoringParams() {}
+
+  size_t EstimateMemoryUsage() const;
 
   ScoreBuckets typed_count_buckets;
 

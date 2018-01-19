@@ -18,6 +18,7 @@
 #include "base/strings/string_util.h"
 #include "base/sys_info.h"
 #include "base/time/time.h"
+#include "base/trace_event/memory_usage_estimator.h"
 #include "components/omnibox/browser/omnibox_switches.h"
 #include "components/omnibox/browser/url_index_private_data.h"
 #include "components/prefs/pref_service.h"
@@ -261,6 +262,19 @@ double HUPScoringParams::ScoreBuckets::HalfLifeTimeDecay(
   const double half_life_intervals =
       time_ms / base::TimeDelta::FromDays(half_life_days_).InMillisecondsF();
   return pow(2.0, -half_life_intervals);
+}
+
+size_t HUPScoringParams::ScoreBuckets::EstimateMemoryUsage() const {
+  return base::trace_event::EstimateMemoryUsage(buckets_);
+}
+
+size_t HUPScoringParams::EstimateMemoryUsage() const {
+  size_t res = 0u;
+
+  res += base::trace_event::EstimateMemoryUsage(typed_count_buckets);
+  res += base::trace_event::EstimateMemoryUsage(visited_count_buckets);
+
+  return res;
 }
 
 #if defined(OS_ANDROID)

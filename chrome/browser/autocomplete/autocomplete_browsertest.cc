@@ -8,6 +8,7 @@
 #include "base/format_macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/trace_event/memory_dump_manager.h"
 #include "build/build_config.h"
 #include "chrome/browser/autocomplete/chrome_autocomplete_scheme_classifier.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
@@ -349,4 +350,26 @@ IN_PROC_BROWSER_TEST_F(AutocompleteBrowserTest, FocusSearch) {
 
     omnibox_view->RevertAll();
   }
+}
+
+IN_PROC_BROWSER_TEST_F(AutocompleteBrowserTest, MemoryTracing) {
+  auto OnMemoryDumpDone =
+      [](base::OnceClosure quit, bool success, uint64_t dump_guid,
+         std::unique_ptr<base::trace_event::ProcessMemoryDump> pmd) {
+        ASSERT_TRUE(success);
+
+        const auto& allocator_dumps = pmd->allocator_dumps();
+        EXPECT_TRUE(allocator_dumps.count("autocomplete/in_memory_url_index"));
+
+        std::move(quit).Run();
+      };
+
+  base::RunLoop run_loop;
+  base::trace_event::MemoryDumpRequestArgs args{
+      1 /* dump_guid*/, base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
+      base::trace_event::MemoryDumpLevelOfDetail::DETAILED};
+
+  base::trace_event::MemoryDumpManager::GetInstance()->CreateProcessDump(
+      args, base::Bind(OnMemoryDumpDone, run_loop.QuitClosure()));
+  run_loop.Run();
 }
