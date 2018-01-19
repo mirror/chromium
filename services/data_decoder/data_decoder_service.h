@@ -5,6 +5,8 @@
 #ifndef SERVICES_DATA_DECODER_DATA_DECODER_SERVICE_H_
 #define SERVICES_DATA_DECODER_DATA_DECODER_SERVICE_H_
 
+#include <stdint.h>
+
 #include <memory>
 
 #include "base/callback.h"
@@ -30,10 +32,17 @@ class DataDecoderService : public service_manager::Service {
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override;
 
+  // Sets the delay the service waits for after the last connection to it is
+  // closed before it quits. If not set, it defaults to 5 seconds.
+  void set_delay_before_quit(int64_t delay_in_s) {
+    delay_before_quit_s_ = delay_in_s;
+  }
+
  private:
   void MaybeRequestQuitDelayed();
   void MaybeRequestQuit();
 
+  int64_t delay_before_quit_s_;
   std::unique_ptr<service_manager::ServiceContextRefFactory> ref_factory_;
   service_manager::BinderRegistry registry_;
   base::WeakPtrFactory<DataDecoderService> weak_factory_;

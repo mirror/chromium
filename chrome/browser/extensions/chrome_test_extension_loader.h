@@ -13,6 +13,7 @@
 #include "base/optional.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest.h"
+#include "services/data_decoder/public/cpp/test_data_decoder_service.h"
 
 namespace base {
 class FilePath;
@@ -156,6 +157,10 @@ class ChromeTestExtensionLoader {
 
   // Whether or not to enforce a minimum manifest version requirement.
   bool require_modern_manifest_version_ = true;
+
+  // An instance of the data decoder service that does not require the
+  // ServiceManager.
+  data_decoder::TestDataDecoderService test_data_decoder_service_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeTestExtensionLoader);
 };
