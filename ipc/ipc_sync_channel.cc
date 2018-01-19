@@ -260,8 +260,8 @@ class SyncChannel::ReceivedSyncMsgQueue :
   }
 
   // Holds a pointer to the per-thread ReceivedSyncMsgQueue object.
-  static base::LazyInstance<base::ThreadLocalPointer<ReceivedSyncMsgQueue>>::
-      DestructorAtExit lazy_tls_ptr_;
+  static base::LazyInstance<
+      base::ThreadLocalPointer<ReceivedSyncMsgQueue>>::Leaky lazy_tls_ptr_;
 
   // Called on the ipc thread to check if we can unblock any current Send()
   // calls based on a queued reply.
@@ -348,8 +348,8 @@ class SyncChannel::ReceivedSyncMsgQueue :
   std::unique_ptr<mojo::SyncEventWatcher> sync_dispatch_watcher_;
 };
 
-base::LazyInstance<base::ThreadLocalPointer<
-    SyncChannel::ReceivedSyncMsgQueue>>::DestructorAtExit
+base::LazyInstance<
+    base::ThreadLocalPointer<SyncChannel::ReceivedSyncMsgQueue>>::Leaky
     SyncChannel::ReceivedSyncMsgQueue::lazy_tls_ptr_ =
         LAZY_INSTANCE_INITIALIZER;
 

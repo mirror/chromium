@@ -13,7 +13,7 @@
 namespace chromeos {
 namespace {
 
-static base::LazyInstance<CupsPrintJobManagerFactory>::DestructorAtExit
+static base::LazyInstance<CupsPrintJobManagerFactory>::Leaky
     g_cups_print_job_manager_factory = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

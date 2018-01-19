@@ -12,7 +12,7 @@
 namespace extensions {
 
 // A device list to be returned when testing.
-static base::LazyInstance<scoped_refptr<StorageDeviceList>>::DestructorAtExit
+static base::LazyInstance<scoped_refptr<StorageDeviceList>>::Leaky
     g_test_device_list = LAZY_INSTANCE_INITIALIZER;
 
 // TODO(haven): Udev code may be duplicated in the Chrome codebase.

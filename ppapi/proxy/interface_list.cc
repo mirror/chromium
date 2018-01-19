@@ -169,8 +169,7 @@ InterfaceProxy* ProxyFactory(Dispatcher* dispatcher) {
   return new ProxyClass(dispatcher);
 }
 
-base::LazyInstance<PpapiPermissions>::DestructorAtExit
-    g_process_global_permissions;
+base::LazyInstance<PpapiPermissions>::Leaky g_process_global_permissions;
 
 }  // namespace
 

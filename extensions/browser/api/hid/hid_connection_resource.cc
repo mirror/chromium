@@ -13,7 +13,7 @@
 namespace extensions {
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<
-    ApiResourceManager<HidConnectionResource>>>::DestructorAtExit g_factory =
+    ApiResourceManager<HidConnectionResource>>>::Leaky g_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 // static

@@ -11,9 +11,8 @@ namespace cloud_print {
 
 // Keep the global CloudPrintTokenStore in a TLS slot so it is impossible to
 // incorrectly from the wrong thread.
-static base::LazyInstance<
-    base::ThreadLocalPointer<CloudPrintTokenStore>>::DestructorAtExit lazy_tls =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<base::ThreadLocalPointer<CloudPrintTokenStore>>::Leaky
+    lazy_tls = LAZY_INSTANCE_INITIALIZER;
 
 // static
 CloudPrintTokenStore* CloudPrintTokenStore::current() {

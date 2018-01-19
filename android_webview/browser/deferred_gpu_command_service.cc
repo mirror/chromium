@@ -26,13 +26,12 @@
 namespace android_webview {
 
 namespace {
-base::LazyInstance<scoped_refptr<DeferredGpuCommandService>>::DestructorAtExit
-    g_service = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<scoped_refptr<DeferredGpuCommandService>>::Leaky g_service =
+    LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
-base::LazyInstance<base::ThreadLocalBoolean>::DestructorAtExit
-    ScopedAllowGL::allow_gl;
+base::LazyInstance<base::ThreadLocalBoolean>::Leaky ScopedAllowGL::allow_gl;
 
 // static
 bool ScopedAllowGL::IsAllowed() {

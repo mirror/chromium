@@ -18,7 +18,7 @@ namespace content {
 namespace {
 
 typedef std::map<int, RenderWidgetHelper*> WidgetHelperMap;
-base::LazyInstance<WidgetHelperMap>::DestructorAtExit g_widget_helpers =
+base::LazyInstance<WidgetHelperMap>::Leaky g_widget_helpers =
     LAZY_INSTANCE_INITIALIZER;
 
 void AddWidgetHelper(int render_process_id,

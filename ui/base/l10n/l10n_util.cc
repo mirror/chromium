@@ -289,12 +289,11 @@ void AdjustParagraphDirectionality(base::string16* paragraph) {
 }
 
 struct AvailableLocalesTraits
-    : base::internal::DestructorAtExitLazyInstanceTraits<
-          std::vector<std::string>> {
+    : base::internal::LeakyLazyInstanceTraits<std::vector<std::string>> {
   static std::vector<std::string>* New(void* instance) {
     std::vector<std::string>* locales =
-        base::internal::DestructorAtExitLazyInstanceTraits<
-            std::vector<std::string>>::New(instance);
+        base::internal::LeakyLazyInstanceTraits<std::vector<std::string>>::New(
+            instance);
     int num_locales = uloc_countAvailable();
     for (int i = 0; i < num_locales; ++i) {
       std::string locale_name = uloc_getAvailable(i);
