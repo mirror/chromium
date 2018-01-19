@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ebc62d18_e3c55e48",
+        "filename": "services/resource_coordinator/public/cpp/tracing/default_agent.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-01-19T16:15:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddcf7f2c_4033c566",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "781a5c0ff9c9dfe75d458d710db79db59a772b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a621aa6d_698efe3b",
         "filename": "services/resource_coordinator/public/cpp/tracing/default_agent.h",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "aa801937_2a9b2a6e",
+        "filename": "services/resource_coordinator/public/cpp/tracing/default_agent.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-01-19T16:15:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a621aa6d_698efe3b",
+      "range": {
+        "startLine": 19,
+        "startChar": 54,
+        "endLine": 19,
+        "endChar": 66
+      },
+      "revId": "781a5c0ff9c9dfe75d458d710db79db59a772b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f10051ab_39929254",
         "filename": "services/resource_coordinator/public/cpp/tracing/default_agent.h",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "781a5c0ff9c9dfe75d458d710db79db59a772b6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd7b4e0_c560f3d2",
+        "filename": "services/resource_coordinator/public/cpp/tracing/default_agent.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-01-19T16:15:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f10051ab_39929254",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "781a5c0ff9c9dfe75d458d710db79db59a772b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
