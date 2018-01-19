@@ -745,6 +745,7 @@
   },
 
   'desktop_chromium_isolated_scripts': {
+    'chromedriver_py_tests': {},
     'content_shell_crash_test': {},
     'metrics_python_tests': {},
     'telemetry_gpu_unittests': {},
