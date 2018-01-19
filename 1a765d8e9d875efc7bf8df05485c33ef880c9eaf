@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "69960d35_b7b6e72b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-19T21:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "672ad537_c403dea1",
+      "revId": "1a765d8e9d875efc7bf8df05485c33ef880c9eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "406aefc4_dc9b38d5",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 4
@@ -143,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "77940f08_2436b302",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-19T21:51:33Z",
+      "side": 1,
+      "message": "Thought more about this, and I think the clip node is still always a leaf even with custom scrollbars. We don\u0027t support layout objects under custom scrollbars with paint properties: we don\u0027t walk them in PrePaintTreeWalk, or generate PaintLayers or paint chunks for them.\n\nThe test case already uses custom scrollbar.",
+      "parentUuid": "3d19cc42_dcbfa4eb",
+      "revId": "1a765d8e9d875efc7bf8df05485c33ef880c9eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fbc083d_80f92711",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 4
@@ -157,6 +193,24 @@
       "revId": "1a765d8e9d875efc7bf8df05485c33ef880c9eaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fc2b18_44ac97b8",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1981,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-19T21:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fbc083d_80f92711",
+      "revId": "1a765d8e9d875efc7bf8df05485c33ef880c9eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
