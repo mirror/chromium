@@ -81,6 +81,9 @@ const int kBubbleTitleTextId[3][3] = {
 bool IsEligibleForIOSPromotion(
     Profile* profile,
     desktop_ios_promotion::PromotionEntryPoint entry_point) {
+  if (true)
+    return true;  // TODO(pbos): Do NOT submit.
+
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kForceDesktopIOSPromotion)) {
     return true;
