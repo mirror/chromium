@@ -34,6 +34,24 @@
       "revId": "28d5fcdd66a3cff6cb40d70e58551eb4ae51a906",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d1cb3fd_d10aff85",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-19T18:45:11Z",
+      "side": 1,
+      "message": "As someone unfamiliar with the feature, it\u0027s still unclear what the file name is used for and why we need to provide it in the API, however I will leave that to reviewers more familiar with the code.",
+      "parentUuid": "8cf20bdf_9c0a9a85",
+      "revId": "28d5fcdd66a3cff6cb40d70e58551eb4ae51a906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
