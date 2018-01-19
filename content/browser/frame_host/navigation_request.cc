@@ -216,6 +216,8 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
     const scoped_refptr<network::ResourceRequestBody>& post_body,
     const base::TimeTicks& navigation_start,
     NavigationControllerImpl* controller) {
+  fprintf(stderr, "\nNavigationRequest::CreateBrowserInitiated: %d",
+          frame_tree_node->navigator()->GetDelegate()->WasDiscarded());
   // A form submission happens either because the navigation is a
   // renderer-initiated form submission that took the OpenURL path or a
   // back/forward/reload navigation the does a form resubmission.
@@ -250,6 +252,11 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
       frame_entry, request_body, dest_url, dest_referrer, navigation_type,
       previews_state, navigation_start);
 
+  fprintf(stderr,
+          "\nNavigationRequest::CreateBrowserInitiated create "
+          "RequestNavigationParams was_discarded: %d",
+          frame_tree_node->navigator()->GetDelegate()->WasDiscarded());
+
   RequestNavigationParams request_params =
       entry.ConstructRequestNavigationParams(
           frame_entry, common_params.url, common_params.method,
@@ -258,13 +265,17 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
           frame_tree_node->has_committed_real_load(),
           controller->GetPendingEntryIndex() == -1,
           controller->GetIndexOfEntry(&entry),
-          controller->GetLastCommittedEntryIndex(),
-          controller->GetEntryCount());
+          controller->GetLastCommittedEntryIndex(), controller->GetEntryCount(),
+          frame_tree_node->navigator()->GetDelegate()->WasDiscarded());
   request_params.post_content_type = post_content_type;
 
   // TODO(jochen): Move suggested_filename from BeginNavigationParams to
   // CommonNavigationParams, now that it's also used here for browser initiated
   // requests.
+  fprintf(
+      stderr,
+      "\nNavigationRequest::CreateBrowserInitiated create NavigationRequest");
+
   std::unique_ptr<NavigationRequest> navigation_request(new NavigationRequest(
       frame_tree_node, common_params,
       mojom::BeginNavigationParams::New(
@@ -315,6 +326,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateRendererInitiated(
       -1,     // |pending_history_list_offset| is set to -1 because
               // history-navigations do not use this path. See comments above.
       current_history_list_offset, current_history_list_length,
+      false,  // was_discarded
       false,  // is_view_source
       false /*should_clear_history_list*/);
   std::unique_ptr<NavigationRequest> navigation_request(new NavigationRequest(
@@ -430,6 +442,8 @@ NavigationRequest::~NavigationRequest() {
 }
 
 void NavigationRequest::BeginNavigation() {
+  fprintf(stderr, "\nNavigationRequest::BeginNavigation was_discarded %d",
+          request_params_.was_discarded);
   DCHECK(!loader_);
   DCHECK(state_ == NOT_STARTED || state_ == WAITING_FOR_RENDERER_RESPONSE);
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationRequest", this,

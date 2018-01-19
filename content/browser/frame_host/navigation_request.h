@@ -200,7 +200,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
     return devtools_navigation_token_;
   }
 
- private:
+  // TODO(fixme)
+  // private:
   // This enum describes the result of a Content Security Policy (CSP) check for
   // the request.
   enum ContentSecurityPolicyCheckResult {

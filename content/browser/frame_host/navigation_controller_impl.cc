@@ -39,6 +39,7 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -683,6 +684,7 @@ void NavigationControllerImpl::LoadURL(
 }
 
 void NavigationControllerImpl::LoadURLWithParams(const LoadURLParams& params) {
+  fprintf(stderr, "\nNavigationControllerImpl::LoadURLWithParams");
   TRACE_EVENT1("browser,navigation",
                "NavigationControllerImpl::LoadURLWithParams",
                "url", params.url.possibly_invalid_spec());
@@ -1837,6 +1839,7 @@ bool NavigationControllerImpl::NeedsReload() const {
 }
 
 void NavigationControllerImpl::SetNeedsReload() {
+  fprintf(stderr, "\nNavigationControllerImpl::SetNeedsReload");
   needs_reload_ = true;
 
   if (last_committed_entry_index_ != -1) {
@@ -1947,6 +1950,9 @@ void NavigationControllerImpl::PruneOldestEntryIfFull() {
 }
 
 void NavigationControllerImpl::NavigateToPendingEntry(ReloadType reload_type) {
+  fprintf(stderr, "\nNavigationControllerImpl::NavigateToPendingEntry");
+  // base::debug::StackTrace st = base::debug::StackTrace();
+  // st.Print();
   DCHECK(pending_entry_);
   needs_reload_ = false;
 
@@ -2060,6 +2066,7 @@ void NavigationControllerImpl::NavigateToPendingEntry(ReloadType reload_type) {
 
 bool NavigationControllerImpl::NavigateToPendingEntryInternal(
     ReloadType reload_type) {
+  fprintf(stderr, "\nNavigationControllerImpl::NavigateToPendingEntryInternal");
   DCHECK(pending_entry_);
   FrameTreeNode* root = delegate_->GetFrameTree()->root();
 
@@ -2195,6 +2202,7 @@ void NavigationControllerImpl::SetActive(bool is_active) {
 }
 
 void NavigationControllerImpl::LoadIfNecessary() {
+  fprintf(stderr, "\nNavigationControllerImpl::LoadIfNecessary");
   if (!needs_reload_)
     return;
 

@@ -340,6 +340,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   uint64_t GetUploadSize() const override;
   uint64_t GetUploadPosition() const override;
   const std::string& GetEncoding() const override;
+  void SetWasDiscarded(bool was_discarded) override;
+  bool WasDiscarded() const override;
   void IncrementCapturerCount(const gfx::Size& capture_size) override;
   void DecrementCapturerCount() override;
   bool IsBeingCaptured() const override;
@@ -1411,6 +1413,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   // hidden. Because it may outlive this WebContents, it enters a disabled state
   // when hidden or preparing for destruction.
   InterstitialPageImpl* interstitial_page_;
+
+  bool was_discarded_;
 
   // Data for current page -----------------------------------------------------
 

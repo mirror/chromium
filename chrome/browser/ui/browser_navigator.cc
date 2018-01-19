@@ -290,6 +290,7 @@ Profile* GetSourceProfile(NavigateParams* params) {
 void LoadURLInContents(WebContents* target_contents,
                        const GURL& url,
                        NavigateParams* params) {
+  fprintf(stderr, "\nLoadURLInContents");
   NavigationController::LoadURLParams load_url_params(url);
   load_url_params.source_site_instance = params->source_site_instance;
   load_url_params.referrer = params->referrer;

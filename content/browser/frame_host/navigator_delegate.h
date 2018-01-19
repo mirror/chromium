@@ -137,6 +137,8 @@ class CONTENT_EXPORT NavigatorDelegate {
   // previews_state in place, and must change it to either a value disabling
   // previews, or a subset of the previews passed in.
   virtual void AdjustPreviewsStateForNavigation(PreviewsState* previews_state);
+
+  virtual bool WasDiscarded() const = 0;
 };
 
 }  // namspace content
