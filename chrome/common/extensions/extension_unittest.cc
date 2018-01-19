@@ -9,22 +9,27 @@
 #include "base/macros.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/utf_string_conversions.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/extensions/command.h"
 #include "chrome/common/extensions/extension_test_util.h"
 #include "chrome/common/extensions/manifest_handlers/content_scripts_handler.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/grit/generated_resources.h"
 #include "components/crx_file/id_util.h"
 #include "extensions/common/extension.h"
+#include "extensions/common/extension_builder.h"
 #include "extensions/common/extension_resource.h"
 #include "extensions/common/file_util.h"
 #include "extensions/common/manifest.h"
 #include "extensions/common/permissions/permissions_data.h"
+#include "extensions/common/value_builder.h"
 #include "net/base/mime_sniffer.h"
 #include "net/dns/mock_host_resolver.h"
 #include "skia/ext/image_operations.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "url/gurl.h"
 
@@ -84,6 +89,134 @@ TEST(ExtensionTest, LocationPriorityTest) {
             Manifest::GetHigherPriorityLocation(
                 Manifest::INTERNAL,
                 Manifest::EXTERNAL_PREF));
+}
+
+TEST(ExtensionTest, EnsureNewLinesInExtensionNameAreCollapsed) {
+  DictionaryBuilder manifest;
+  manifest.Set("name", "Test\n\n\n\n\n\n\n\n\n\n\n\nNew lines\u0085")
+      .Set("manifest_version", 2)
+      .Set("description", "some description");
+  scoped_refptr<const Extension> extension =
+      ExtensionBuilder()
+          .SetManifest(manifest.Build())
+          .MergeManifest(DictionaryBuilder().Set("version", "0.1").Build())
+          .Build();
+  ASSERT_TRUE(extension.get());
+  EXPECT_EQ("TestNew lines", extension->name());
+}
+
+TEST(ExtensionTest, EnsureWhitespacesInExtensionNameAreCollapsed) {
+  DictionaryBuilder manifest;
+  manifest.Set("name", "Test                        Whitespace")
+      .Set("manifest_version", 2)
+      .Set("description", "some description");
+  scoped_refptr<const Extension> extension =
+      ExtensionBuilder()
+          .SetManifest(manifest.Build())
+          .MergeManifest(DictionaryBuilder().Set("version", "0.1").Build())
+          .Build();
+  ASSERT_TRUE(extension.get());
+  EXPECT_EQ("Test Whitespace", extension->name());
+}
+
+// TODO(crbug.com/794252): Disallow empty extension names from being locally
+// loaded.
+TEST(ExtensionTest, EmptyName) {
+  DictionaryBuilder manifest1;
+  manifest1.Set("name", "")
+      .Set("manifest_version", 2)
+      .Set("description", "some description");
+  scoped_refptr<const Extension> extension =
+      ExtensionBuilder()
+          .SetManifest(manifest1.Build())
+          .MergeManifest(DictionaryBuilder().Set("version", "0.1").Build())
+          .Build();
+  ASSERT_TRUE(extension.get());
+  EXPECT_EQ("", extension->name());
+
+  DictionaryBuilder manifest2;
+  manifest2.Set("name", " ")
+      .Set("manifest_version", 2)
+      .Set("description", "some description");
+  extension =
+      ExtensionBuilder()
+          .SetManifest(manifest2.Build())
+          .MergeManifest(DictionaryBuilder().Set("version", "0.1").Build())
+          .Build();
+  ASSERT_TRUE(extension.get());
+  EXPECT_EQ("", extension->name());
+}
+
+TEST(ExtensionTest, RTLName) {
+  // Test the case when a directional override is the first character.
+  DictionaryBuilder manifest1;
+  manifest1.Set("name", "\u202emoc.elgoog")
+      .Set("manifest_version", 2)
+      .Set("description", "some description");
+  scoped_refptr<const Extension> extension =
+      ExtensionBuilder()
+          .SetManifest(manifest1.Build())
+          .MergeManifest(DictionaryBuilder().Set("version", "0.1").Build())
+          .Build();
+  ASSERT_TRUE(extension.get());
+  int id = IDS_EXTENSION_PERMISSIONS_PROMPT_TITLE;
+  EXPECT_EQ(
+      l10n_util::GetStringFUTF16(id,
+                                 base::UTF8ToUTF16("\u202emoc.elgoog\u202c")),
+      l10n_util::GetStringFUTF16(id, base::UTF8ToUTF16(extension->name())));
+  EXPECT_EQ("\u202emoc.elgoog\u202c", extension->name());
+
+  // Test the case when a directional override is within a string.
+  DictionaryBuilder manifest2;
+  manifest2.Set("name", "\u202egoogle\u202e.com/\u202eguest")
+      .Set("manifest_version", 2)
+      .Set("description", "some description");
+  extension =
+      ExtensionBuilder()
+          .SetManifest(manifest2.Build())
+          .MergeManifest(DictionaryBuilder().Set("version", "0.1").Build())
+          .Build();
+  ASSERT_TRUE(extension.get());
+  std::string expected = "\u202egoogle\u202e.com/\u202eguest\u202c\u202c\u202c";
+  EXPECT_EQ(expected, extension->name());
+  EXPECT_EQ(
+      l10n_util::GetStringFUTF16(id, base::UTF8ToUTF16(expected)),
+      l10n_util::GetStringFUTF16(id, base::UTF8ToUTF16(extension->name())));
+
+  // Test the case when there are multiple directional overrides within a
+  // string.
+  DictionaryBuilder manifest3;
+  manifest3.Set("name", "google\u202e.com")
+      .Set("manifest_version", 2)
+      .Set("description", "some description");
+  extension =
+      ExtensionBuilder()
+          .SetManifest(manifest3.Build())
+          .MergeManifest(DictionaryBuilder().Set("version", "0.1").Build())
+          .Build();
+  ASSERT_TRUE(extension.get());
+  expected = "google\u202e.com\u202c";
+  EXPECT_EQ(expected, extension->name());
+  EXPECT_EQ(
+      l10n_util::GetStringFUTF16(id, base::UTF8ToUTF16(expected)),
+      l10n_util::GetStringFUTF16(id, base::UTF8ToUTF16(extension->name())));
+
+  // Test the case when the string contains strong RTL characters.
+  DictionaryBuilder manifest4;
+  manifest4.Set("name", "كبير Google التطبيق")
+      .Set("manifest_version", 2)
+      .Set("description", "some description");
+  extension =
+      ExtensionBuilder()
+          .SetManifest(manifest4.Build())
+          .MergeManifest(DictionaryBuilder().Set("version", "0.1").Build())
+          .Build();
+  ASSERT_TRUE(extension.get());
+  expected = "\u200e\u202bكبير Google التطبيق\u202c\u200e";
+  EXPECT_EQ(expected, extension->name());
+  EXPECT_EQ(
+      l10n_util::GetStringFUTF16(id, base::UTF8ToUTF16(expected)),
+      l10n_util::GetStringFUTF16(id, base::UTF8ToUTF16(extension->name())));
 }
 
 TEST(ExtensionTest, GetResourceURLAndPath) {
