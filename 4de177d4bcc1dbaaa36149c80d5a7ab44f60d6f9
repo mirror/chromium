@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "ba332c22_ff5215af",
+        "filename": "base/component_export.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-19T21:58:10Z",
+      "side": 1,
+      "message": "nit: what if we have component(\"component\"), maybe this needs a trailing _ to avoid conflicting with the -D flag.",
+      "range": {
+        "startLine": 21,
+        "startChar": 34,
+        "endLine": 21,
+        "endChar": 43
+      },
+      "revId": "4de177d4bcc1dbaaa36149c80d5a7ab44f60d6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db940e0e_b5600bfa",
         "filename": "base/component_export.h",
         "patchSetId": 1
