@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "net/proxy/dhcp_proxy_script_fetcher_win.h"
+#include "net/proxy/dhcp_pac_file_fetcher_win.h"
 
 #include <memory>
 #include <vector>
@@ -12,10 +12,10 @@
 #include "base/memory/free_deleter.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "net/base/net_errors.h"
-#include "net/proxy/dhcp_proxy_script_adapter_fetcher_win.h"
+#include "net/proxy/dhcp_pac_file_adapter_fetcher_win.h"
 
-#include <winsock2.h>
 #include <iphlpapi.h>
+#include <winsock2.h>
 
 namespace {
 
@@ -90,10 +90,8 @@ int DhcpProxyScriptFetcherWin::Fetch(base::string16* utf16_text,
       base::Bind(
           &DhcpProxyScriptFetcherWin::AdapterQuery::GetCandidateAdapterNames,
           last_query_.get()),
-      base::Bind(
-          &DhcpProxyScriptFetcherWin::OnGetCandidateAdapterNamesDone,
-          AsWeakPtr(),
-          last_query_));
+      base::Bind(&DhcpProxyScriptFetcherWin::OnGetCandidateAdapterNamesDone,
+                 AsWeakPtr(), last_query_));
 
   return ERR_IO_PENDING;
 }
@@ -129,8 +127,7 @@ void DhcpProxyScriptFetcherWin::CancelImpl() {
     wait_timer_.Stop();
     state_ = STATE_DONE;
 
-    for (FetcherVector::iterator it = fetchers_.begin();
-         it != fetchers_.end();
+    for (FetcherVector::iterator it = fetchers_.begin(); it != fetchers_.end();
          ++it) {
       (*it)->Cancel();
     }
@@ -167,13 +164,11 @@ void DhcpProxyScriptFetcherWin::OnGetCandidateAdapterNamesDone(
   }
 
   for (std::set<std::string>::const_iterator it = adapter_names.begin();
-       it != adapter_names.end();
-       ++it) {
+       it != adapter_names.end(); ++it) {
     std::unique_ptr<DhcpProxyScriptAdapterFetcher> fetcher(
         ImplCreateAdapterFetcher());
-    fetcher->Fetch(
-        *it, base::Bind(&DhcpProxyScriptFetcherWin::OnFetcherDone,
-                        base::Unretained(this)));
+    fetcher->Fetch(*it, base::Bind(&DhcpProxyScriptFetcherWin::OnFetcherDone,
+                                   base::Unretained(this)));
     fetchers_.push_back(std::move(fetcher));
   }
   num_pending_fetchers_ = fetchers_.size();
@@ -201,8 +196,7 @@ void DhcpProxyScriptFetcherWin::OnFetcherDone(int result) {
 
   // If the only pending adapters are those less preferred than one
   // with a valid PAC script, we do not need to wait any longer.
-  for (FetcherVector::iterator it = fetchers_.begin();
-       it != fetchers_.end();
+  for (FetcherVector::iterator it = fetchers_.begin(); it != fetchers_.end();
        ++it) {
     bool did_finish = (*it)->DidFinish();
     int result = (*it)->GetResult();
@@ -219,8 +213,8 @@ void DhcpProxyScriptFetcherWin::OnFetcherDone(int result) {
   // for the rest of the results.
   if (state_ == STATE_NO_RESULTS) {
     state_ = STATE_SOME_RESULTS;
-    wait_timer_.Start(FROM_HERE,
-        ImplGetMaxWait(), this, &DhcpProxyScriptFetcherWin::OnWaitTimer);
+    wait_timer_.Start(FROM_HERE, ImplGetMaxWait(), this,
+                      &DhcpProxyScriptFetcherWin::OnWaitTimer);
   }
 }
 
@@ -240,8 +234,7 @@ void DhcpProxyScriptFetcherWin::TransitionToDone() {
     // preferring "real" network errors to the ERR_PAC_NOT_IN_DHCP error.
     // Default to ERR_ABORTED if no fetcher completed.
     result = ERR_ABORTED;
-    for (FetcherVector::iterator it = fetchers_.begin();
-         it != fetchers_.end();
+    for (FetcherVector::iterator it = fetchers_.begin(); it != fetchers_.end();
          ++it) {
       if ((*it)->DidFinish() && (*it)->GetResult() == OK) {
         result = OK;
@@ -253,8 +246,7 @@ void DhcpProxyScriptFetcherWin::TransitionToDone() {
     if (result != OK) {
       destination_string_->clear();
       for (FetcherVector::iterator it = fetchers_.begin();
-           it != fetchers_.end();
-           ++it) {
+           it != fetchers_.end(); ++it) {
         if ((*it)->DidFinish()) {
           result = (*it)->GetResult();
           if (result != ERR_PAC_NOT_IN_DHCP) {
@@ -289,13 +281,13 @@ scoped_refptr<base::TaskRunner> DhcpProxyScriptFetcherWin::GetTaskRunner() {
 }
 
 DhcpProxyScriptAdapterFetcher*
-    DhcpProxyScriptFetcherWin::ImplCreateAdapterFetcher() {
+DhcpProxyScriptFetcherWin::ImplCreateAdapterFetcher() {
   return new DhcpProxyScriptAdapterFetcher(url_request_context_,
                                            GetTaskRunner());
 }
 
 DhcpProxyScriptFetcherWin::AdapterQuery*
-    DhcpProxyScriptFetcherWin::ImplCreateAdapterQuery() {
+DhcpProxyScriptFetcherWin::ImplCreateAdapterQuery() {
   return new AdapterQuery();
 }
 
@@ -318,14 +310,11 @@ bool DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(
   do {
     adapters.reset(static_cast<IP_ADAPTER_ADDRESSES*>(malloc(adapters_size)));
     // Return only unicast addresses, and skip information we do not need.
-    error = GetAdaptersAddresses(AF_UNSPEC,
-                                 GAA_FLAG_SKIP_ANYCAST |
-                                 GAA_FLAG_SKIP_MULTICAST |
-                                 GAA_FLAG_SKIP_DNS_SERVER |
-                                 GAA_FLAG_SKIP_FRIENDLY_NAME,
-                                 NULL,
-                                 adapters.get(),
-                                 &adapters_size);
+    error = GetAdaptersAddresses(
+        AF_UNSPEC,
+        GAA_FLAG_SKIP_ANYCAST | GAA_FLAG_SKIP_MULTICAST |
+            GAA_FLAG_SKIP_DNS_SERVER | GAA_FLAG_SKIP_FRIENDLY_NAME,
+        NULL, adapters.get(), &adapters_size);
     ++num_tries;
   } while (error == ERROR_BUFFER_OVERFLOW && num_tries <= 3);
 
@@ -353,15 +342,14 @@ bool DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(
   return true;
 }
 
-DhcpProxyScriptFetcherWin::AdapterQuery::AdapterQuery() {
-}
+DhcpProxyScriptFetcherWin::AdapterQuery::AdapterQuery() {}
 
 void DhcpProxyScriptFetcherWin::AdapterQuery::GetCandidateAdapterNames() {
   ImplGetCandidateAdapterNames(&adapter_names_);
 }
 
 const std::set<std::string>&
-    DhcpProxyScriptFetcherWin::AdapterQuery::adapter_names() const {
+DhcpProxyScriptFetcherWin::AdapterQuery::adapter_names() const {
   return adapter_names_;
 }
 
@@ -370,7 +358,6 @@ bool DhcpProxyScriptFetcherWin::AdapterQuery::ImplGetCandidateAdapterNames(
   return DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(adapter_names);
 }
 
-DhcpProxyScriptFetcherWin::AdapterQuery::~AdapterQuery() {
-}
+DhcpProxyScriptFetcherWin::AdapterQuery::~AdapterQuery() {}
 
 }  // namespace net

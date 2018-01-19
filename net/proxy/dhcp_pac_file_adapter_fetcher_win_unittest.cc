@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "net/proxy/dhcp_proxy_script_adapter_fetcher_win.h"
+#include "net/proxy/dhcp_pac_file_adapter_fetcher_win.h"
 
 #include "base/run_loop.h"
 #include "base/synchronization/waitable_event.h"
@@ -12,8 +12,8 @@
 #include "base/timer/timer.h"
 #include "net/base/net_errors.h"
 #include "net/base/test_completion_callback.h"
-#include "net/proxy/mock_proxy_script_fetcher.h"
-#include "net/proxy/proxy_script_fetcher_impl.h"
+#include "net/proxy/mock_pac_file_fetcher.h"
+#include "net/proxy/pac_file_fetcher_impl.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/gtest_util.h"
 #include "net/url_request/url_request_test_util.h"
@@ -37,8 +37,7 @@ const char kPacUrl[] = "http://pacserver/script.pac";
 
 // Version of DhcpProxyScriptAdapterFetcher that mocks out dependencies
 // to allow unit testing.
-class MockDhcpProxyScriptAdapterFetcher
-    : public DhcpProxyScriptAdapterFetcher {
+class MockDhcpProxyScriptAdapterFetcher : public DhcpProxyScriptAdapterFetcher {
  public:
   explicit MockDhcpProxyScriptAdapterFetcher(
       URLRequestContext* context,
@@ -49,8 +48,7 @@ class MockDhcpProxyScriptAdapterFetcher
         configured_url_(kPacUrl),
         fetcher_delay_ms_(1),
         fetcher_result_(OK),
-        pac_script_("bingo") {
-  }
+        pac_script_("bingo") {}
 
   void Cancel() override {
     DhcpProxyScriptAdapterFetcher::Cancel();
@@ -62,9 +60,9 @@ class MockDhcpProxyScriptAdapterFetcher
     // the caller.
     fetcher_ = new MockProxyScriptFetcher();
     if (fetcher_delay_ms_ != -1) {
-      fetcher_timer_.Start(FROM_HERE,
-          base::TimeDelta::FromMilliseconds(fetcher_delay_ms_),
-          this, &MockDhcpProxyScriptAdapterFetcher::OnFetcherTimer);
+      fetcher_timer_.Start(
+          FROM_HERE, base::TimeDelta::FromMilliseconds(fetcher_delay_ms_), this,
+          &MockDhcpProxyScriptAdapterFetcher::OnFetcherTimer);
     }
     return fetcher_;
   }
@@ -115,13 +113,9 @@ class MockDhcpProxyScriptAdapterFetcher
     fetcher_ = NULL;
   }
 
-  bool IsWaitingForFetcher() const {
-    return state() == STATE_WAIT_URL;
-  }
+  bool IsWaitingForFetcher() const { return state() == STATE_WAIT_URL; }
 
-  bool WasCancelled() const {
-    return state() == STATE_CANCEL;
-  }
+  bool WasCancelled() const { return state() == STATE_CANCEL; }
 
   void FinishTest() {
     DCHECK(dhcp_query_.get());
@@ -152,17 +146,13 @@ class FetcherClient {
             worker_pool_->GetTaskRunnerWithShutdownBehavior(
                 base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN))) {}
 
-  ~FetcherClient() {
-    worker_pool_->Shutdown();
-  }
+  ~FetcherClient() { worker_pool_->Shutdown(); }
 
   void WaitForResult(int expected_error) {
     EXPECT_EQ(expected_error, callback_.WaitForResult());
   }
 
-  void RunTest() {
-    fetcher_->Fetch("adapter name", callback_.callback());
-  }
+  void RunTest() { fetcher_->Fetch("adapter name", callback_.callback()); }
 
   void FinishTestAllowCleanup() {
     fetcher_->FinishTest();
@@ -277,8 +267,7 @@ class MockDhcpRealFetchProxyScriptAdapterFetcher
       URLRequestContext* context,
       scoped_refptr<base::TaskRunner> task_runner)
       : MockDhcpProxyScriptAdapterFetcher(context, task_runner),
-        url_request_context_(context) {
-  }
+        url_request_context_(context) {}
 
   // Returns a real proxy script fetcher.
   ProxyScriptFetcher* ImplCreateScriptFetcher() override {
@@ -303,9 +292,8 @@ TEST(DhcpProxyScriptAdapterFetcher, MockDhcpRealFetch) {
   scoped_refptr<base::TaskRunner> runner =
       client.worker_pool_->GetTaskRunnerWithShutdownBehavior(
           base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
-  client.fetcher_.reset(
-      new MockDhcpRealFetchProxyScriptAdapterFetcher(
-          &url_request_context, runner));
+  client.fetcher_.reset(new MockDhcpRealFetchProxyScriptAdapterFetcher(
+      &url_request_context, runner));
   client.fetcher_->configured_url_ = configured_url.spec();
   client.RunTest();
   client.WaitForResult(OK);
@@ -313,8 +301,7 @@ TEST(DhcpProxyScriptAdapterFetcher, MockDhcpRealFetch) {
   EXPECT_THAT(client.fetcher_->GetResult(), IsOk());
   EXPECT_EQ(base::string16(L"-downloadable.pac-\n"),
             client.fetcher_->GetPacScript());
-  EXPECT_EQ(configured_url,
-            client.fetcher_->GetPacURL());
+  EXPECT_EQ(configured_url, client.fetcher_->GetPacURL());
 }
 
 #define BASE_URL "http://corpserver/proxy.pac"
@@ -323,19 +310,16 @@ TEST(DhcpProxyScriptAdapterFetcher, SanitizeDhcpApiString) {
   const size_t kBaseUrlLen = strlen(BASE_URL);
 
   // Default case.
-  EXPECT_EQ(BASE_URL,
-            DhcpProxyScriptAdapterFetcher::SanitizeDhcpApiString(
-                BASE_URL, kBaseUrlLen));
+  EXPECT_EQ(BASE_URL, DhcpProxyScriptAdapterFetcher::SanitizeDhcpApiString(
+                          BASE_URL, kBaseUrlLen));
 
   // Trailing \n and no null-termination.
-  EXPECT_EQ(BASE_URL,
-            DhcpProxyScriptAdapterFetcher::SanitizeDhcpApiString(
-                BASE_URL "\nblablabla", kBaseUrlLen + 1));
+  EXPECT_EQ(BASE_URL, DhcpProxyScriptAdapterFetcher::SanitizeDhcpApiString(
+                          BASE_URL "\nblablabla", kBaseUrlLen + 1));
 
   // Embedded NULLs.
-  EXPECT_EQ(BASE_URL,
-            DhcpProxyScriptAdapterFetcher::SanitizeDhcpApiString(
-                BASE_URL "\0foo\0blat", kBaseUrlLen + 9));
+  EXPECT_EQ(BASE_URL, DhcpProxyScriptAdapterFetcher::SanitizeDhcpApiString(
+                          BASE_URL "\0foo\0blat", kBaseUrlLen + 9));
 }
 
 #undef BASE_URL
